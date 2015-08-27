@@ -22,14 +22,14 @@
 						<input type="hidden" name="_token" value="{{ csrf_token() }}">
 
 						<div class="form-group">
-							<label class="col-md-4 control-label">@lang('words.login_name')</label>
+							<label class="col-md-4 control-label">@lang('trans.login_name')</label>
 							<div class="col-md-6">
 								<input type="text" class="form-control" name="login" value="{{ old('login') }}">
 							</div>
 						</div>
 
 						<div class="form-group">
-							<label class="col-md-4 control-label">@lang('words.password')</label>
+							<label class="col-md-4 control-label">@lang('trans.password')</label>
 							<div class="col-md-6">
 								<input type="password" class="form-control" name="password">
 							</div>
