@@ -41,6 +41,10 @@ $app->singleton(
 	'App\Exceptions\Handler'
 );
 
+$app->singleton(
+	'Illuminate\Foundation\Bootstrap\ConfigureLogging',
+	'App\Bootstrap\ConfigureLogging'
+);
 /*
 |--------------------------------------------------------------------------
 | Return The Application
