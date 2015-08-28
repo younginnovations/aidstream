@@ -1,7 +1,9 @@
 $(document).ready(function(){
 
+    $('#def_lang').val($.cookie('lang'));
     $('#def_lang').change(function(){
-        $('#form_def_lang').submit();
+        $.cookie('lang', $(this).val(), {path: '/'});
+        window.location.reload();
     });
 
 });

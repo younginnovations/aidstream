@@ -52,7 +52,7 @@ return [
 	|
 	*/
 
-	'locale' => 'en',
+	'locale' => isset($_COOKIE['lang']) ? $_COOKIE['lang'] : 'en',
 	'locales' => ['en' => 'English', 'es' => 'Spanish'],
 
 	/*
@@ -193,6 +193,7 @@ return [
 		'URL'       => 'Illuminate\Support\Facades\URL',
 		'Validator' => 'Illuminate\Support\Facades\Validator',
 		'View'      => 'Illuminate\Support\Facades\View',
+		'Form'=> 'Illuminate\Html\FormFacade',
 
 	],
 
