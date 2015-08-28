@@ -34,6 +34,16 @@
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav">
 					<li><a href="{{ url('/') }}">Home</a></li>
+					<li>
+						<form id="form_def_lang" method="post">
+							<input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
+							<select id="def_lang" name="def_lang" class="form-control" style="margin-top: 8px;">
+								@foreach(config('app.locales') as $key => $val)
+									<option value="{{ $key }}">{{ $val }}</option>
+								@endforeach
+							</select>
+						</form>
+					</li>
 				</ul>
 
 				<ul class="nav navbar-nav navbar-right">
@@ -59,5 +69,6 @@
 	<!-- Scripts -->
 	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="{{url('/js/main.js')}}"></script>
 </body>
 </html>
