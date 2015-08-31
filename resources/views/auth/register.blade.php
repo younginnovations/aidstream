@@ -22,6 +22,27 @@
 						<input type="hidden" name="_token" value="{{ csrf_token() }}">
 
 						<div class="form-group">
+							<label class="col-md-4 control-label">Organization Name</label>
+							<div class="col-md-6">
+								<input type="text" class="form-control" name="organization_name" value="{{ old('organization_name') }}">
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-md-4 control-label">Organization Address</label>
+							<div class="col-md-6">
+								<input type="text" class="form-control" name="organization_address" value="{{ old('organization_address') }}">
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-md-4 control-label">Organization User Identifier</label>
+							<div class="col-md-6">
+								<input type="text" class="form-control" name="organization_user_identifier" value="{{ old('organization_user_identifier') }}">
+							</div>
+						</div>
+
+						<div class="form-group">
 							<label class="col-md-4 control-label">First Name</label>
 							<div class="col-md-6">
 								<input type="text" class="form-control" name="first_name" value="{{ old('first_name') }}">
