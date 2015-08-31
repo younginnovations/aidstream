@@ -9,7 +9,7 @@ return [
 	"home"     => "Home",
 	"login_name" => "Username or Email",
 	"password"     => "Password",
-	"logout"     => "Password",
+	"logout"     => "Logout",
 
 ];
 
