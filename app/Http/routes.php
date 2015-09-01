@@ -13,6 +13,9 @@
 
 Route::get('/', 'HomeController@index');
 Route::get('home', 'HomeController@index');
+Route::resource('settings', 'SettingsController@index');
+Route::resource('organization','Organization\OrganizationController');
+Route::resource('organization.reportingOrg','Organization\OrgReportingOrgController');
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',
