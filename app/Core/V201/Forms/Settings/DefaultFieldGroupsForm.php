@@ -7,185 +7,180 @@ class DefaultFieldGroupsForm extends Form
     public function buildForm()
     {
         $this
-            ->add('Check all', 'checkbox', [
-                'label' => 'Check All',
-                'checked' => false,
-                'attr' => ['class' => 'checkAll']
-            ])
             ->add('identification', 'static')
-            ->add('other activity identifier', 'checkbox', [
-                'default_value' => 1,
+            ->add('otherActivityIdentifier', 'checkbox', [
+                'value' => 'Other Activity Identifier',
                 'label' => 'Other Activity Identifier',
                 'checked' => false,
                 'attr' => ['class' => 'field1']
             ])
             ->add('basic activity information', 'static')
             ->add('title', 'checkbox', [
-                'default_value' => 1,
+                'value' => 'Title',
                 'label' => 'Title',
                 'checked' => true,
                 'attr' => ['class' => 'field1']
             ])
             ->add('description', 'checkbox', [
-                'default_value' => 1,
                 'label' => 'Description',
+                'value' => 'Description',
                 'checked' => true,
                 'attr' => ['class' => 'field1']
             ])
-            ->add('activity status', 'checkbox', [
-                'default_value' => 1,
+            ->add('activityStatus', 'checkbox', [
                 'label' => 'Activity Status',
+                'value' => 'Activity Status',
                 'checked' => true,
                 'attr' => ['class' => 'field1']
             ])
-            ->add('activity date', 'checkbox', [
-                'default_value' => 1,
+            ->add('activityDate', 'checkbox', [
                 'label' => 'Activity Date',
+                'value' => 'Activity Date',
                 'checked' => true,
                 'attr' => ['class' => 'field1']
             ])
-            ->add('contact info', 'checkbox', [
-                'default_value' => 1,
-                'label' => 'Contanct Info',
+            ->add('contactInfo', 'checkbox', [
+                'label' => 'Contact Info',
+                'value' => 'Contact Info',
                 'checked' => false,
                 'attr' => ['class' => 'field1']
             ])
-            ->add('activity scope', 'checkbox', [
-                'default_value' => 1,
+            ->add('activityScope', 'checkbox', [
                 'label' => 'Activity Scope',
+                'value' => 'Activity Scope',
                 'checked' => false,
                 'attr' => ['class' => 'field1']
             ])
             ->add('participation organization', 'static')
-            ->add('participating org', 'checkbox', [
-                'default_value' => 1,
+            ->add('participatingOrg', 'checkbox', [
                 'label' => 'Participating Org',
+                'value' => 'Participating Org',
                 'checked' => true,
                 'attr' => ['class' => 'field1']
             ])
             ->add('Geopolitical Information', 'static')
-            ->add('recipient county', 'checkbox', [
-                'default_value' => 1,
+            ->add('recipientCounty', 'checkbox', [
                 'label' => 'Recipient Country',
+                'value' => 'Recipient Country',
                 'checked' => true,
                 'attr' => ['class' => 'field1']
             ])
-            ->add('recipient region', 'checkbox', [
-                'default_value' => 1,
+            ->add('recipientRegion', 'checkbox', [
                 'label' => 'Recipient Region',
+                'value' => 'Recipient Region',
                 'checked' => false,
                 'attr' => ['class' => 'field1']
             ])
             ->add('location', 'checkbox', [
-                'default_value' => 1,
                 'label' => 'Location',
+                'value' => 'Location',
                 'checked' => true,
                 'attr' => ['class' => 'field1']
             ])
             ->add('classifications', 'static')
             ->add('sector', 'checkbox', [
-                'default_value' => 1,
                 'label' => 'Sector',
+                'value' => 'Sector',
                 'checked' => true,
                 'attr' => ['class' => 'field1']
             ])
-            ->add('policy maker', 'checkbox', [
-                'default_value' => 1,
+            ->add('policyMaker', 'checkbox', [
                 'label' => 'Policy Maker',
+                'value' => 'Policy Maker',
                 'checked' => false,
                 'attr' => ['class' => 'field1']
             ])
-            ->add('collaboration type', 'checkbox', [
-                'default_value' => 1,
+            ->add('collaborationType', 'checkbox', [
                 'label' => 'Collaboration Type',
+                'value' => 'Collaboration Type',
                 'checked' => false,
                 'attr' => ['class' => 'field1']
             ])
-            ->add('flow type', 'checkbox', [
-                'default_value' => 1,
+            ->add('flowType', 'checkbox', [
                 'label' => 'Default Flow Type',
+                'value' => 'Default Flow Type',
                 'checked' => false,
                 'attr' => ['class' => 'field1']
             ])
-            ->add('finance type', 'checkbox', [
-                'default_value' => 1,
+            ->add('financeType', 'checkbox', [
                 'label' => 'Default Finance Type',
+                'value' => 'Default Finance Type',
                 'checked' => false,
                 'attr' => ['class' => 'field1']
             ])
-            ->add('aid type', 'checkbox', [
-                'default_value' => 1,
+            ->add('aidType', 'checkbox', [
                 'label' => 'Default Aid Type',
+                'value' => 'Default Aid Type',
                 'checked' => false,
                 'attr' => ['class' => 'field1']
             ])
-            ->add('tied status', 'checkbox', [
-                'default_value' => 1,
+            ->add('tiedStatus', 'checkbox', [
                 'label' => 'Default Tied Status',
+                'value' => 'Default Tied Status',
                 'checked' => false,
                 'attr' => ['class' => 'field1']
             ])
-            ->add('country budget items', 'checkbox', [
-                'default_value' => 1,
+            ->add('countryBudgetItems', 'checkbox', [
                 'label' => 'Country Budget Items',
+                'value' => 'Country Budget Items',
                 'checked' => false,
                 'attr' => ['class' => 'field1']
             ])
             ->add('financial','static')
             ->add('budget', 'checkbox', [
-                'default_value' => 1,
                 'label' => 'Budget',
+                'value' => 'Budget',
                 'checked' => true,
                 'attr' => ['class' => 'field1']
             ])
-            ->add('planned disbursement', 'checkbox', [
-                'default_value' => 1,
+            ->add('plannedDisbursement', 'checkbox', [
                 'label' => 'Planned Disbursement',
+                'value' => 'Planned Disbursement',
                 'checked' => false,
                 'attr' => ['class' => 'field1']
             ])
             ->add('transaction', 'checkbox', [
-                'default_value' => 1,
                 'label' => 'Transaction',
+                'value' => 'Transaction',
                 'checked' => true,
                 'attr' => ['class' => 'field1']
             ])
-            ->add('capital spend', 'checkbox', [
-                'default_value' => 1,
+            ->add('capitalSpend', 'checkbox', [
                 'label' => 'Capital Spend',
+                'value' => 'Capital Spend',
                 'checked' => false,
                 'attr' => ['class' => 'field1']
             ])
             ->add('related documents', 'static')
-            ->add('document link', 'checkbox', [
-                'default_value' => 1,
+            ->add('documentLink', 'checkbox', [
                 'label' => 'Document Link',
+                'value' => 'Document Link',
                 'checked' => true,
                 'attr' => ['class' => 'field1']
             ])
             ->add('relations', 'static')
-            ->add('related activity', 'checkbox', [
-                'default_value' => 1,
+            ->add('relatedActivity', 'checkbox', [
                 'label' => 'Related Activity',
+                'value' => 'Related Activity',
                 'checked' => false,
                 'attr' => ['class' => 'field1']
             ])
             ->add('performance', 'static')
             ->add('conditions', 'checkbox', [
-                'default_value' => 1,
                 'label' => 'conditions',
+                'value' => 'conditions',
                 'checked' => false,
                 'attr' => ['class' => 'field1']
             ])
             ->add('results', 'checkbox', [
-                'default_value' => 1,
                 'label' => 'Results',
+                'value' => 'Results',
                 'checked' => false,
                 'attr' => ['class' => 'field1']
             ])
-            ->add('legacy data', 'checkbox', [
-                'default_value' => 1,
+            ->add('legacyData', 'checkbox', [
                 'label' => 'Legacy Data',
+                'value' => 'Legacy Data',
                 'checked' => false,
                 'attr' => ['class' => 'field1']
             ]);
