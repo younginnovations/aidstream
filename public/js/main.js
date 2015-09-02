@@ -11,4 +11,16 @@ $(document).ready(function(){
         $('input[name="username"]').val($(this).val() + '_admin');
     });
 
+    $('.checkAll').click(function(event) {  //on click
+        if(this.checked) { // check select status
+            $('.field1').each(function() { //loop through each checkbox
+                this.checked = true;  //select all checkboxes with class "checkbox1"
+            });
+        }else{
+            $('.field1').each(function() { //loop through each checkbox
+                this.checked = false; //deselect all checkboxes with class "checkbox1"
+            });
+        }
+    });
+
 });

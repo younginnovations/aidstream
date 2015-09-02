@@ -13,7 +13,10 @@ class OrganizationRepository implements OrganizationRepositoryInterface
     {
         $org = new Organization();
         $org->name = json_encode($input['name']);
-        $org->identifier = $input['identifier'];
+        $org->user_identifier = $input['user_identifier'];
+        $org->address = $input['address'];
+        $org->telephone = $input['telephone'];
+        $org->reporting_org = json_encode($input['reporting_org']);
         $org->save();
     }
 
@@ -41,7 +44,10 @@ class OrganizationRepository implements OrganizationRepositoryInterface
     public function updateOrganization($input, $org)
     {
         $org->name = json_encode($input['name']);
-        $org->identifier = $input['identifier'];
+        $org->user_identifier = $input['user_identifier'];
+        $org->address = $input['address'];
+        $org->telephone = $input['telephone'];
+        $org->reporting_org = json_encode($input['reporting_org']);
         $org->save();
     }
 
