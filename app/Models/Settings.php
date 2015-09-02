@@ -5,22 +5,12 @@ use Illuminate\Database\Eloquent\Model;
 class Settings extends Model {
     protected $table ="settings";
     protected $fileable_key = "settings";
-    protected $fillable     = ['reportingOrganizationInfo',
+    protected $fillable     = [
         'publishingType',
         'registryInfo',
         'defaultFieldValues',
         'defaultFieldGroups'
     ];
-
-    public function buildOrganizationReportingOrganizationInfo()
-    {
-        return json_decode($this->reportingOrganizationInfo, true);
-    }
-
-    public function buildOrganizationPublishingType()
-    {
-        return json_decode($this->publishingType, true);
-    }
 
     public function buildOrganizationRegistryInfo()
     {

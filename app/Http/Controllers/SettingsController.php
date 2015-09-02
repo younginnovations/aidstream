@@ -3,6 +3,7 @@
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App;
+use App\Services\SettingsManager;
 
 use Illuminate\Http\Request;
 use Kris\LaravelFormBuilder\FormBuilder;
@@ -16,17 +17,12 @@ class SettingsController extends Controller {
 	protected $orgDefaultFieldValuesForm;
 	protected $orgDefaultFieldGroupsForm;
 
-/*	function __construct(
-		OrganizationRepositoryInterface $organizationManager,
-		ActivityTitleForm $activityTitleForm,
-		XmlGenerator $xmlGenerator,
-		ActivityManager $activityManager
+	function __construct(
+		SettingsManager $settingsManager
 	) {
 		$this->middleware('auth');
-		$this->xmlGenerator = $xmlGenerator;
-		$this->activityManager = $activityManager;
-		$this->activityTitleForm = $activityTitleForm;
-	}*/
+		$this->settingsManager = $settingsManager;
+	}
 
 	/**
 	 * Display a listing of the resource.
@@ -47,13 +43,9 @@ class SettingsController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function create(FormBuilder $formBuilder)
+	public function create()
 	{
-		$form = $formBuilder->create('App\Core\V201\Forms\SettingsForm', [
-			'method' => 'POST',
-			'url' => route('settings.store')
-		]);
-		return view('settings', compact('form'));
+		//
 	}
 
 	/**
@@ -96,7 +88,13 @@ class SettingsController extends Controller {
 	 */
 	public function update($id)
 	{
-		//
+
+		$input = Input::all();
+		$settings = $this->settingsManager->getSettings($id);
+		$this->settingsManager->updateSettings($input, $settings);
+		Session::flash('message', 'Successfully Edit');
+		return Redirect::to('settings');
+
 	}
 
 	/**

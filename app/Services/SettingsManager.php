@@ -4,13 +4,13 @@ namespace App\Services;
 use App\Core\Version;
 use App;
 
-class OrganizationManager
+class SettingsManager
 {
 
     protected $repo;
     function __construct(Version $version)
     {
-        $this->repo = $version->getSettigsElement()->getRepository();
+        $this->repo = $version->getSettingsElement()->getRepository();
     }
 
     public function getSettings($id)

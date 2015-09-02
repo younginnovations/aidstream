@@ -1,6 +1,7 @@
 $(document).ready(function(){
 
-    $('#def_lang').val($.cookie('lang'));
+    var lang = $.cookie('lang');
+    $('#def_lang').val(lang == undefined ? 'en' : lang);
     $('#def_lang').change(function(){
         $.cookie('lang', $(this).val(), {path: '/'});
         window.location.reload();

@@ -4,7 +4,7 @@ namespace App\Core\V201\Repositories;
 use App\Core\Repositories\SettingsRepositoryInterface;
 use App\Models\Settings;
 
-class SettingsRepository implements OrganizationRepositoryInterface
+class SettingsRepository implements SettingsRepositoryInterface
 {
 
     /**
