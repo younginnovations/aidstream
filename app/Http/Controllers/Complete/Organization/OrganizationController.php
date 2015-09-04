@@ -1,149 +1,96 @@
-<?php namespace App\Http\Controllers\Organization\Complete;
+<?php namespace App\Http\Controllers\Complete\Organization;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App;
-use URL;
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\Session;
-use App\Services\FormCreator\Organization\OrgNameForm;
-use App\Http\Requests\CreateOrganizationRequest;
-use Illuminate\Support\Facades\Input;
-use App\Helpers\JsonHelper;
-use App\Services\Organization\OrganizationManager;
-use App\Generator\XmlGenerator;
-use App\Core\Repositories\OrganizationRepositoryInterface;
+
+use Illuminate\Http\Request;
+
+class OrganizationController extends Controller {
 
 
-class OrganizationController extends Controller
-{
-    protected $arrayToXml;
-    protected $org;
-    protected $orgNameForm;
+	/**
+	 * Create a new controller instance.
+	 *
+	 * @return void
+	 */
+	public function __construct()
+	{
+		$this->middleware('auth');
+	}
 
-    function __construct(
-        OrgNameForm $orgNameForm,
-        XmlGenerator $xmlGenerator,
-        OrganizationManager $organizationManager
-    ) {
-        $this->middleware('auth');
-        $this->xmlGenerator = $xmlGenerator;
-        $this->organizationManager = $organizationManager;
-        $this->orgNameForm = $orgNameForm;
-    }
+	/**
+	 * Display a listing of the resource.
+	 *
+	 * @return Response
+	 */
+	public function index()
+	{
+		//
+	}
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return Response
-     */
-    public function index()
-    {
-        $organizations = $this->organizationManager->getOrganizations();
-        return view('organization.list', compact('organizations'));
-    }
+	/**
+	 * Show the form for creating a new resource.
+	 *
+	 * @return Response
+	 */
+	public function create()
+	{
+		//
+	}
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
-     */
-    public function create()
-    {
-        $form = $this->orgNameForm->create();
-        return view('organization.create', compact('form'));
-    }
+	/**
+	 * Store a newly created resource in storage.
+	 *
+	 * @return Response
+	 */
+	public function store()
+	{
+		//
+	}
 
-    /**
-     * stores data in database
-     * @param CreateOrganizationRequest $request
-     * @return mixed
-     */
-    public function store(CreateOrganizationRequest $request)
-    {
-        $input = Input::all();
-        $this->organizationManager->createOrganization($input);
-        Session::flash('message', 'Successfully created !');
-        return Redirect::to('organization');
-    }
+	/**
+	 * Display the specified resource.
+	 *
+	 * @param  int  $id
+	 * @return Response
+	 */
+	public function show($id)
+	{
+		return view('Organization/store');
 
-    /**
-     * display specific organization data
-     * @param $id
-     * @return \Illuminate\View\View
-     */
-    public function show($id)
-    {
-        $organization = $this->organizationManager->getOrganization($id);
-        $names = JsonHelper::JsonDecode($organization->name);
-        $reportingOrgs = JsonHelper::JsonDecode($organization->reporting_org);
-        $totalBudgets = JsonHelper::JsonDecode($organization->total_budget);
-        $recipientOrgBudgets = JsonHelper::JsonDecode($organization->recipient_org_budget);
-        $recipientCountryBudgets = JsonHelper::JsonDecode($organization->recipient_country_budget); 
-        return view('organization.show', compact('organization', 'names', 'reportingOrgs', 'totalBudgets', 'recipientOrgBudgets', 'recipientCountryBudgets'));
-    }
+	}
 
-    /**
-     * @param $id
-     * @return \Illuminate\View\View
-     */
-    public function edit($id)
-    {
-        $organization = $this->organizationManager->getOrganization($id);
-        $data['identifier'] = $organization->identifier;
-        $data['name'] = $organization->buildOrganizationName();
-        $form = $this->orgNameForm->editForm($data, $organization);
-        return view('organization.edit', compact('form', 'organization'));
-    }
+	/**
+	 * Show the form for editing the specified resource.
+	 *
+	 * @param  int  $id
+	 * @return Response
+	 */
+	public function edit($id)
+	{
+		//
+	}
 
-    /**
-     * @param $id
-     * @param CreateOrganizationRequest $request
-     * @return mixed
-     */
-    public function update($id, CreateOrganizationRequest $request)
-    {
-        $input = Input::all();
-        $organization = $this->organizationManager->getOrganization($id);
-        $this->organizationManager->updateOrganization($input, $organization);
-        Session::flash('message', 'Successfully Edit');
-        return Redirect::to('organization');
-    }
+	/**
+	 * Update the specified resource in storage.
+	 *
+	 * @param  int  $id
+	 * @return Response
+	 */
+	public function update($id)
+	{
+		//
+	}
 
-    /**
-     * @param $id
-     * @return mixed
-     */
-    public function destroy($id)
-    {
-        $organization = $this->organizationManager->getOrganization($id);
-        $this->deleteOrganization($organization);
-        Session::flash('message', 'Successfully deleted !');
-        return Redirect::to('organization');
-    }
+	/**
+	 * Remove the specified resource from storage.
+	 *
+	 * @param  int  $id
+	 * @return Response
+	 */
+	public function destroy($id)
+	{
+		//
+	}
 
-    /**
-     * @param $organization
-     */
-    public function deleteOrganization($organization)
-    {
-        $organization->delete();
-    }
-
-    /**
-     * @return string
-     */
-    public function generateXml()
-    {
-        $this->xmlGenerator->generateFile();
-        return "";
-    }
-
-    /**
-     *
-     */
-    public function generateOrganizationXml()
-    {
-        $this->xmlGenerator->getXml();
-    }
 }
