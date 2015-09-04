@@ -31,12 +31,12 @@ class SettingsRequest extends Request
 
         $rules = [];
 
-/*        foreach($this->reporting_organization_info as $key=>$val) {
+        foreach($this->reporting_organization_info as $key=>$val) {
             $rules["reporting_organization_info.0.$key"] = 'required';
         }
         foreach($this->default_field_values as $key=>$val) {
             $rules["default_field_values.0.$key"] = 'required';
-        }*/
+        }
 
         return $rules;
     }
@@ -49,12 +49,12 @@ class SettingsRequest extends Request
     {
         $messages = [];
 
-/*        foreach($this->reporting_organization_info as $key=>$val) {
+        foreach($this->reporting_organization_info as $key=>$val) {
             $messages["reporting_organization_info.0.$key.required"] = sprintf("The %s is required.", str_replace('_', ' ', $key));
         }
         foreach($this->default_field_values as $key=>$val) {
             $messages["default_field_values.0.$key.required"] = sprintf("The %s is required.", str_replace('_', ' ', $key));
-        }*/
+        }
 
         return $messages;
     }
