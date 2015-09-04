@@ -3,7 +3,9 @@ namespace App\Core\Repositories;
 
 interface SettingsRepositoryInterface
 {
-    public function getSettings($id);
+    public function getSettings($organization_id);
 
-    public function updateSettings($input, $id);
+    public function storeSettings($input, $organization);
+
+    public function updateSettings($input, $organization, $settings);
 }

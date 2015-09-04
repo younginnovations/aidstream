@@ -83,6 +83,8 @@ return [
 
 	'cipher' => MCRYPT_RIJNDAEL_128,
 
+	'default_version' => 'V201',
+
 	/*
 	|--------------------------------------------------------------------------
 	| Logging Configuration

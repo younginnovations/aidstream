@@ -9,12 +9,11 @@ class RegistryInfoForm extends Form
     public function buildForm()
     {
         $this
-            ->add('publisher id', 'text')
-            ->add('api id', 'text')
-            ->add('publish files: ', 'choice', [
+            ->add('publisher_id', 'text')
+            ->add('api_id', 'text')
+            ->add('publish_files: ', 'choice', [
                 'label' => 'Automatically Update the IATI Registry when publishing files:',
                 'choices' => ['no' => 'No', 'yes' => 'Yes'],
-                'selected' => 'no',
                 'expanded' => true,
                 'choice_options' => [
                     'wrapper' => ['class' => 'choice-wrapper']

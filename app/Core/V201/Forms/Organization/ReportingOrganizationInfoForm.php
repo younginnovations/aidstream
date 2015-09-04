@@ -9,12 +9,12 @@ class ReportingOrganizationInfoForm extends Form
     public function buildForm()
     {
         $this
-            ->add('reporting organization identifier', 'text')
-            ->add('reporting organization type', 'select', [
+            ->add('reporting_organization_identifier', 'text')
+            ->add('reporting_organization_type', 'select', [
                 'choices' => ['10' => 'Government', '15' => 'Other Public Sector']
             ])
-            ->add('organization name', 'text')
-            ->add('reporting organization language', 'select', [
+            ->add('organization_name', 'text')
+            ->add('reporting_organization_language', 'select', [
                 'choices' => ['es' => 'Espanish', 'fr' => 'French']
             ]);
     }

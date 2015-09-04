@@ -56,7 +56,7 @@
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{ Auth::user()->first_name . ' ' . Auth::user()->last_name }} <span class="caret"></span></a>
 							<ul class="dropdown-menu" role="menu">
 								<li><a href="{{ url('/auth/logout') }}">@lang('trans.logout')</a></li>
-								@if(Auth::user()->role_id == 2)
+								@if(Auth::user()->role_id == 1)
 								<li><a href="{{ url('/settings') }}">Settings</a></li>
 								@endif
 							</ul>

@@ -12,7 +12,6 @@ class PublishingTypeForm extends Form
             ->add('publishing', 'choice', [
                 'label' => 'Publishing Type',
                 'choices' => ['unsegmented' => 'Unsegmented', 'segmented' => 'Segmented'],
-                'selected' => 'unsegmented',
                 'expanded' => true,
                 'choice_options' => [
                     'wrapper' => ['class' => 'choice-wrapper']

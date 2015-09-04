@@ -3,6 +3,7 @@ namespace App\Core;
 
 use App;
 use Auth;
+use Illuminate\Support\Facades\Session;
 
 class Version
 {
@@ -47,9 +48,13 @@ class Version
 
     public function setVersion()
     {
-        $this->version = "V201";//will be stored in database
+        $this->version = Session::get('version');
+        if(!isset($this->version)) {
+            $this->version = config('app.default_version');
+            Session::put('version', $this->version);
+        }
 //        $this->activityElement = App::make("App\Core\\$this->version\IatiActivity");
-//        $this->organizationElement = App::make("App\Core\\$this->version\IatiOrganization");
+        $this->organizationElement = App::make("App\Core\\$this->version\IatiOrganization");
         $this->settingsElement = App::make("App\Core\\$this->version\IatiSettings");
         return $this;
     }

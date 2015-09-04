@@ -19,9 +19,14 @@ class SettingsManager
 
     }
 
-    public function updateSettings($input, $id)
+    public function storeSettings($input, $organization)
     {
-        $this->repo->updateSettings($input, $id);
+        $this->repo->storeSettings($input, $organization);
+    }
+
+    public function updateSettings($input, $organization, $settings)
+    {
+        $this->repo->updateSettings($input, $organization, $settings);
     }
 
 
