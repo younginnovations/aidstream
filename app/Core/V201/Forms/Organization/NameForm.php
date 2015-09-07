@@ -9,9 +9,13 @@ class NameForm extends Form
     public function buildForm()
     {
         $this
-            ->add('narrative', 'text')
-            ->add('language', 'select', [
-                'choices' => ['es' => 'Espanish', 'fr' => 'French']
+            ->add('narrative', 'collection', [
+                'type' => 'form',
+                'prototype' => true,
+                'options' => [
+                    'class' => 'App\Core\V201\Forms\Organization\NarrativeForm',
+                    'label' => false,
+                ],
             ]);
     }
 }

@@ -1,4 +1,4 @@
-<?php namespace App\app\Core\V201\Forms\Organization;
+<?php namespace App\Core\V201\Forms\Organization;
 
 use Kris\LaravelFormBuilder\Form;
 
