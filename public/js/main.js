@@ -15,4 +15,10 @@ $(document).ready(function(){
         $('.field1').prop('checked', this.checked);
     });
 
+    $('.add-to-collection').on('click', function(e) {
+        var container = $('.collection-container');
+        count = container.children().length;
+        var proto = container.data('prototype').replace(/__NAME__/g, count);
+        container.append(proto);
+    });
 });
