@@ -17,7 +17,7 @@ class OrgReportingOrg extends BaseElement
 
     public function getForm()
     {
-        return "App\Core\V201\Forms\Organization\OrgMultipleReportingOrgForm";
+        return "App\Core\V201\Forms\Organization\ReportingOrganizationInfoForm";
     }
 
     /**

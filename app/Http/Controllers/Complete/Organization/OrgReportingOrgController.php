@@ -38,7 +38,7 @@ class OrgReportingOrgController extends Controller
     public function index($organizationId)
     {
         $organization = $this->organizationManager->getOrganization($organizationId);
-        $data['reportingOrg'] = $organization->buildOrgReportingOrg();
+        $data = $organization->buildOrgReportingOrg()[0];
         $form = $this->orgReportingOrgFormCreator->editForm($data, $organization);
         return view('Organization.reportingOrg.edit', compact('form', 'organization'));
     }
@@ -101,7 +101,7 @@ class OrgReportingOrgController extends Controller
      */
     public function update($organizationId)
     {
-        $input = Input::all();
+        $input['reportingOrg'][0] = Input::all();
         $organization = $this->organizationManager->getOrganization($organizationId);
         $this->orgReportingOrgManager->update($input, $organization);
         Session::flash('message', 'Reporting Organization Updated !');
