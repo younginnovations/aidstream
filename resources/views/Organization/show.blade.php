@@ -18,7 +18,7 @@
 				<div class="panel-heading">Identification</div>
 				<div class="panel-body">
 					<ul class="nav">
-						<li><a href="{{ url('/organization/reporting-organization') }}">Reporting Organization</a></li>
+						<li><a href="{{ url('/organization/' . Session::get('org_id') . '/reportingOrg') }}">Reporting Organization</a></li>
 						<li><a href="{{ url('/organization/organization-identifier') }}">Organization Identifier</a></li>
 						<li><a href="{{ url('/organization/organization-name') }}">Name</a></li>
 					</ul>
