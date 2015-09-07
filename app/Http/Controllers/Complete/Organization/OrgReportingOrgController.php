@@ -1,8 +1,8 @@
-<?php namespace App\Http\Controllers\Organization\Complete;
+<?php namespace App\Http\Controllers\Complete\Organization;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\CreateOrgReportingOrgRequest;
+use App\Http\Requests\CreateOrgReportingOrgRequestManager;
 use App\Services\Organization\OrganizationManager;
 use App\Services\Organization\OrgReportingOrgManager;
 use Session;
@@ -37,8 +37,10 @@ class OrgReportingOrgController extends Controller
      */
     public function index($organizationId)
     {
-//        dd($organizationId);
-
+        $organization = $this->organizationManager->getOrganization($organizationId);
+        $data['reportingOrg'] = $organization->buildOrgReportingOrg();
+        $form = $this->orgReportingOrgFormCreator->editForm($data, $organization);
+        return view('Organization.reportingOrg.edit', compact('form', 'organization'));
     }
 
     /**
@@ -49,20 +51,20 @@ class OrgReportingOrgController extends Controller
     {
         $organization = $this->organizationManager->getOrganization($organizationId);
         $form = $this->orgReportingOrgFormCreator->create($organizationId);
-        return view('organization.reportingOrg.create', compact('form', 'narrativeForm', 'organization'));
+        return view('Organization.reportingOrg.edit', compact('form', 'narrativeForm', 'organization'));
     }
     /**
      * @param $organizationId
-     * @param CreateOrgReportingOrgRequest $request
+     * @param CreateOrgReportingOrgRequestManager $request
      * @return mixed
      */
-    public function store($organizationId, CreateOrgReportingOrgRequest $request)
+    public function store($organizationId, CreateOrgReportingOrgRequestManager $request)
     {
         $input = Input::all();
         $organization = $this->organizationManager->getOrganization($organizationId);
         $this->orgReportingOrgManager->create($organization, $input);
         Session::flash('message', 'Reporting Organization created !');
-        return Redirect::to('organization');
+        return Redirect::to("organization/$organizationId");
     }
 
 
@@ -88,7 +90,7 @@ class OrgReportingOrgController extends Controller
         $organization = $this->organizationManager->getOrganization($organizationId);
         $data['reportingOrg'] = $organization->buildOrgReportingOrg();
         $form = $this->orgReportingOrgFormCreator->editForm($data, $organization);
-        return view('organization.reportingOrg.edit', compact('form', 'organization'));
+        return view('Organization.reportingOrg.edit', compact('form', 'organization'));
     }
 
     /**
@@ -103,7 +105,7 @@ class OrgReportingOrgController extends Controller
         $organization = $this->organizationManager->getOrganization($organizationId);
         $this->orgReportingOrgManager->update($input, $organization);
         Session::flash('message', 'Reporting Organization Updated !');
-        return Redirect::to('organization');
+        return Redirect::to("organization/$organizationId");
     }
 
     /**
