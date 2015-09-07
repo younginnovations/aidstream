@@ -20,7 +20,7 @@
 					<ul class="nav">
 						<li><a href="{{ url('/organization/reporting-organization') }}">Reporting Organization</a></li>
 						<li><a href="{{ url('/organization/organization-identifier') }}">Organization Identifier</a></li>
-						<li><a href="{{ url('/organization/organization-name') }}">Name</a></li>
+						<li><a href="{{ URL::to('organization/' .Session::get('org_id')  . '/name')}}">Name</a></li>
 					</ul>
 				</div>
 			</div>

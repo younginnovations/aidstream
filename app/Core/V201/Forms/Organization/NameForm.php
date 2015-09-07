@@ -1,4 +1,4 @@
-<?php namespace App\app\Core\V201\Forms\Organization;
+<?php namespace App\Core\V201\Forms\Organization;
 
 use Kris\LaravelFormBuilder\Form;
 
@@ -9,12 +9,12 @@ class NameForm extends Form
     public function buildForm()
     {
         $this
-            ->add('narrative', 'collection', [
+            ->add('name', 'collection', [
                 'type' => 'form',
                 'prototype' => true,
                 'options' => [
                     'class' => 'App\Core\V201\Forms\Organization\NarrativeForm',
-                    'label' => false,
+                    'label' => 'Narrative',
                 ],
             ]);
     }

@@ -11,6 +11,10 @@ class IatiOrganization
     {
         return App::make('App\Core\V201\Element\Organization\Name');
     }
+    public function getNameRequest()
+    {
+        return App::make('App\Core\V201\Request\CreateNameRequest');
+    }
 
     public function getOrgReportingOrg()
     {
