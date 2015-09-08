@@ -19,20 +19,21 @@ class NameForm
         $this->formPath = $this->version->getOrganizationElement()->getName()->getForm();
     }
 
-    public function create()
+    public function create($organizationId)
     {
         return $this->formBuilder->create($this->formPath, [
             'method' => 'POST',
-            'url' => route('organization.store')
+            'url' => URL::route('organization.name.store', $organizationId)
         ])->add('Create', 'submit');
     }
 
-    public function editForm($data, $org)
+    public function editForm($data,$organizationId)
     {
         return $this->formBuilder->create($this->formPath, [
             'method' => 'PUT',
             'model' => $data,
-            'url' => URL::route('organization.update', [$org->id])
+            'url' =>URL::route('organization.name.update', [$organizationId])
         ])->add('Update', 'submit');
+
     }
 }

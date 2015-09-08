@@ -2,7 +2,8 @@
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Services\Organization\OrganizationManager;
+use App\Models\Organization\OrganizationData;
+use App\Services\Organization\OrganizationDataManager;
 use App\Services\Organization\OrgNameManager;
 use Session;
 use URL;
@@ -16,19 +17,23 @@ class NameController extends Controller {
 
 	protected $formBuilder;
 	protected $organizationManager;
+	protected $organizationDataManager;
 	protected $nameManager;
 	protected $nameForm;
 	public function __construct(
 		FormBuilder $formBuilder,
-		OrganizationManager $organizationManager,
+		OrganizationDataManager $organizationDataManager,
+//		OrganizationManager $organizationManager,
 		OrgNameManager $nameManager
 	)
 	{
 		$this->middleware('auth');
 		$this->nameForm = $formBuilder;
-		$this->organizationManager = $organizationManager;
+		$this->org_id = Session::get('org_id');
+		$this->organizationDataManager = $organizationDataManager;
+//		$this->organizationManager = $organizationManager;
 		$this->nameManager = $nameManager;
-		$this->settings = $this->orManager->getSettings($this->org_id);
+		$this->nameData = $this->nameManager->getOrganizationNameData($this->org_id);
 	}
 	/**
 	 * Display a listing of the resource.
@@ -37,10 +42,8 @@ class NameController extends Controller {
 	 */
 	public function index($orgId)
 	{
-
-		$organization = $this->organizationManager->getOrganization($orgId);
-		$form = $this->nameForm->create($orgId);
-		return view('Organization.name.create', compact('form', 'organization'));
+		$form = $this->nameForm->editForm($this->nameData, $orgId);
+		return view('Organization.name.create', compact('form'));
 	}
 
 	/**
@@ -58,9 +61,12 @@ class NameController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function store()
+	public function store($orgId, NameRequestManager $nameRequestManager)
 	{
-		//
+		$input = Input::all();
+		$this->nameManager->create($orgId, $input);
+		Session::flash('message', 'Name created !');
+		return Redirect::to('organization/');
 	}
 
 	/**

@@ -2,6 +2,7 @@
 namespace App\Core\V201\Repositories;
 
 use App\Core\Repositories\SettingsRepositoryInterface;
+use App\Models\Organization\OrganizationData;
 use App\Models\Settings;
 use Illuminate\Support\Facades\Session;
 
@@ -64,6 +65,9 @@ class SettingsRepository implements SettingsRepositoryInterface
                 'default_field_values' => json_encode($input['default_field_values']),
                 'default_field_groups' => json_encode($input['default_field_groups']),
                 'version' => $version,
+                'organization_id' => $organization->id,
+            ]);
+            OrganizationData::create([
                 'organization_id' => $organization->id,
             ]);
         } catch (Exception $exception) {

@@ -12,18 +12,19 @@ class OrgNameManager
     {
         $this->repo = $version->getOrganizationElement()->getName()->getRepository();
     }
+
     public function getOrganizationNameData($id)
     {
         return $this->repo->getOrganizationNameData($id);
 
     }
     /**
-     * @param $organizationId
+     * @param $organization
      * @param $input
      */
-    public function create($organizationId, $input)
+    public function create($organization, $input)
     {
-        $this->repo->create($organizationId, $input);
+        $this->repo->create($organization, $input);
     }
 
     /**

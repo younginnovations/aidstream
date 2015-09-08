@@ -9,11 +9,12 @@ class NameRepository
      * @param $organization
      * @param $input
      */
-    public function create($organization, $input)
+    public function create($organization_id, $input)
     {
-        $organization->name = json_encode($input['name']);
-        $organization->save();
+        $organization_id->name = json_encode($input['name']);
+        $organization_id->save();
     }
+
     /**
      * @param $input
      * @param $organization
@@ -24,12 +25,9 @@ class NameRepository
         $organization->save();
     }
 
-    /**
-     * @param $id
-     * @return mixed
-     */
-    public function getOrganizationData($id)
+    public function getOrganizationNameData($organization_id)
     {
-        return OrganizationData::where('organization_id', $org_id)->first();
+        return OrganizationData::where('organization_id', $organization_id)->first();
     }
+
 }

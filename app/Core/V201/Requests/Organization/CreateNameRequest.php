@@ -1,4 +1,4 @@
-<?php namespace App\Core\V201\Request\Organization;
+<?php namespace App\Core\V201\Requests\Organization;
 
 use App\Http\Requests\Request;
 //use Illuminate\Http\Request;

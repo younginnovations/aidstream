@@ -13,7 +13,7 @@ class IatiOrganization
     }
     public function getNameRequest()
     {
-        return App::make('App\Core\V201\Request\CreateNameRequest');
+        return App::make('App\Core\V201\Requests\Organization\CreateNameRequest');
     }
 
     public function getOrgReportingOrg()

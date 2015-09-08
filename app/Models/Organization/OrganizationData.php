@@ -5,7 +5,7 @@ use Illuminate\Database\Eloquent\Model;
 class OrganizationData extends Model {
     protected $table ="organization_data";
     protected $fileable_key = "organization";
-    protected $fillable     = ['name', 'total_budget', 'recipient_org_budget', 'recipient_country_budget', 'document_link'];
+    protected $fillable     = ['name', 'total_budget', 'recipient_org_budget', 'recipient_country_budget', 'document_link', 'organization_id'];
 
     public function getName()
     {
