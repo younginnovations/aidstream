@@ -66,6 +66,7 @@ class SettingsController extends Controller {
 		];
 		if(!empty($model)) $formOptions['model'] = $model;
 		$form = $formBuilder->create('App\Core\V201\Forms\SettingsForm', $formOptions);
+
 		return view('settings', compact('form'));
 	}
 

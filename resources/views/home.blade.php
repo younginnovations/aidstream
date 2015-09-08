@@ -21,7 +21,7 @@
 						<li><a href="#">Add New Activity</a></li>
 						<li><a href="{{ url('/organization/' . Session::get('org_id')) }}">Organization Data</a></li>
 						<li><a href="#">List Published Files</a></li>
-						<li><a href="#">Organization Data</a></li>
+						<li><a href="#">Download My Data</a></li>
 					</ul>
 				</div>
 			</div>
