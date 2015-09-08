@@ -18,34 +18,6 @@ class SettingsRepository implements SettingsRepositoryInterface
         return Settings::where('organization_id', $organization_id)->first();
     }
 
-    public function update($grantId, array $grantDetail)
-    {
-        try {
-            $this->database->beginTransaction();
-            $updateGrant = $this->grant->update($grantId, $grantDetail);
-
-            $this->updateDisbursementDate($grantId, $grantDetail);
-
-            $this->database->commit();
-            $this->logger->info(
-                'Grant Updated',
-                ['for ' => $grantDetail['grant_name']]
-            );
-
-            return $updateGrant;
-        } catch (Exception $exception) {
-            $this->database->rollback();
-
-            $this->logger->error(
-                sprintf('Grant could no be updated due to %s', $exception->getMessage()),
-                [
-                    'grantDetails' => $grantDetail,
-                    'trace' => $exception->getTraceAsString()
-                ]
-            );
-        }
-    }
-
     /**
      * @param $input
      * @param $organization
