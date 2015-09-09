@@ -4,7 +4,7 @@
         <ul class="nav">
             <li><a href="{{ url('/organization/' . Session::get('org_id')) }}">Organization Data</a></li>
             <li><a href="{{ url('/organization/' . Session::get('org_id') . '/reportingOrg') }}">Reporting Organization</a></li>
-            <li><a href="{{ url('/organization/organization-identifier') }}">Organization Identifier</a></li>
+            <li><a href="{{ url('/organization/' . Session::get('org_id') . '/identifier') }}">Organization Identifier</a></li>
             <li><a href="{{ url('/organization/' . Session::get('org_id') . '/name') }}">Name</a></li>
         </ul>
     </div>

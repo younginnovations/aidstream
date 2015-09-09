@@ -14,6 +14,7 @@
 Route::get('/', 'HomeController@index');
 Route::get('home', 'HomeController@index');
 Route::resource('settings', 'Complete\SettingsController');
+Route::get('organization/{id}/identifier','Complete\Organization\OrganizationController@showIdentifier');
 Route::resource('organization','Complete\Organization\OrganizationController');
 Route::resource('organization.reportingOrg','Complete\Organization\OrgReportingOrgController');
 Route::resource('organization.name','Complete\Organization\NameController');
