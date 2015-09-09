@@ -46,12 +46,12 @@ class IatiOrganization
 
     public function getRecipientOrgBudgetRequest()
     {
-        return App::make('App\Core\V201\Request\CreateOrgRecipientOrgBudgetRequest');
+        return App::make('App\Core\V201\Requests\Organization\CreateOrgRecipientOrgBudgetRequest');
     }
 
     public function getCreateOrgReportingOrgRequest()
     {
-        return App::make('App\Core\V201\Request\CreateOrgReportingOrgRequest');
+        return App::make('App\Core\V201\Requests\CreateOrgReportingOrgRequest');
     }
 
     public function getCreateOrgRecipientCountryBudgetRequest()

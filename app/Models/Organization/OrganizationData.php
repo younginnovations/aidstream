@@ -33,13 +33,13 @@ class OrganizationData extends Model {
 
     public function getRecipientOrgBudget()
     {
-        return json_decode($this->recipient_org_budget);
+        return json_decode($this->recipient_organization_budget);
         ;
     }
 
     public function buildRecipientOrgBudget()
     {
-        return json_decode($this->recipient_org_budget, true);
+        return json_decode($this->recipient_organization_budget, true);
         ;
     }
 

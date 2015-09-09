@@ -6,15 +6,13 @@
         <div class="row">
             <div class="col-xs-8">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Reporting Organization</div>
+                    <div class="panel-heading">Recipient Organization Budget</div>
                     <div class="panel-body">
                         {!! form_start($form) !!}
-                        {!! form_row($form->reporting_organization_identifier) !!}
-                        {!! form_row($form->reporting_organization_type) !!}
-                        <div class="collection-container" data-prototype="{{ form_row($form->narrative->prototype()) }}">
-                            {!! form_row($form->narrative) !!}
+                        <div class="collection-container" data-prototype="{{ form_row($form->recipientOrganizationBudget->prototype()) }}">
+                            {!! form_row($form->recipientOrganizationBudget) !!}
                         </div>
-                        <button type="button" class="add-to-collection">Add More Reporting Organization</button>
+                        <button type="button" class="add-to-collection">Add More Recipient Organization Budget</button>
                         {!! form_end($form) !!}
                     </div>
                 </div>

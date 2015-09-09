@@ -19,7 +19,3 @@
         </div>
     </div>
 @endsection
-
-@section('menu')
-    ajsdfljlajsfd
-@endsection

@@ -19,9 +19,9 @@ Route::resource('organization','Complete\Organization\OrganizationController');
 Route::resource('organization.reportingOrg','Complete\Organization\OrgReportingOrgController');
 Route::resource('organization.name','Complete\Organization\NameController');
 Route::resource('organization.total-budget','Complete\Organization\OrgTotalBudgetController');
-//Route::resource('organization.recipient-organization-budget','Complete\Organization\RecipientOrganizationBudgetController');
 Route::resource('organization.recipient-country-budget','Complete\Organization\RecipientCountryBudgetController');
-//Route::resource('organization.document-link','Complete\Organization\DocumentLinkController');
+Route::resource('organization.recipient-organization-budget','Complete\Organization\RecipientOrganizationBudgetController');
+Route::resource('organization.document-link','Complete\Organization\DocumentLinkController');
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',
