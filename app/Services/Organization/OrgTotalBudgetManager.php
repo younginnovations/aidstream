@@ -30,7 +30,7 @@ class OrgTotalBudgetManager
 
     public function getOrganizationTotalBudgetData($id)
     {
-        return $this->repo->getOrganizationNameData($id);
+        return $this->repo->getOrganizationTotalBudgetData($id);
 
     }
 

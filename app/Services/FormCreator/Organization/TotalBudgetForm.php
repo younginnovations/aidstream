@@ -17,12 +17,17 @@ class TotalBudgetForm {
         $this->formPath=$this->version->getOrganizationElement()->getTotalBudget()->getForm();
     }
 
+    /**
+     * @param array $data
+     * @param $organizationId
+     * @return $this
+     */
     public function editForm($data,$organizationId)
     {
         $modal['totalBudget'] = $data;
         return $this->formBuilder->create($this->formPath, [
             'method' => 'PUT',
-            'model' => $data['totalBudget'],
+            'model' => $modal,
             'url' => route('organization.total-budget.update', [$organizationId, 0])
         ])->add('Save', 'submit');
     }

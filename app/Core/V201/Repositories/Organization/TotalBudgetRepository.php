@@ -38,9 +38,9 @@ class TotalBudgetRepository
         return OrganizationData::where('organization_id', $organization_id)->first();
     }
 
-    public function getOrganizationNameData($organization_id)
+    public function getOrganizationTotalBudgetData($organization_id)
     {
-        return json_decode(OrganizationData::where('organization_id', $organization_id)->first()->total_budget);
+        return json_decode(OrganizationData::where('organization_id', $organization_id)->first()->total_budget, true);
     }
 
 }

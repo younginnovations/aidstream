@@ -10,6 +10,7 @@ class TotalBudgetForm extends Form
             ->add('periodStart', 'collection', [
                 'type' => 'form',
                 'prototype' => true,
+                'prototype_name' => '__NAME1__',
                 'options' => [
                     'class' => 'App\Core\V201\Forms\Organization\PeriodStartForm',
                     'label' => false,
@@ -18,6 +19,7 @@ class TotalBudgetForm extends Form
             ->add('periodEnd', 'collection', [
                 'type' => 'form',
                 'prototype' => true,
+                'prototype_name' => '__NAME1__',
                 'options' => [
                     'class' => 'App\Core\V201\Forms\Organization\PeriodEndForm',
                     'label' => false,
@@ -26,6 +28,7 @@ class TotalBudgetForm extends Form
             ->add('value', 'collection', [
                 'type' => 'form',
                 'prototype' => true,
+                'prototype_name' => '__NAME1__',
                 'options' => [
                     'class' => 'App\Core\V201\Forms\Organization\ValueForm',
                     'label' => false,
@@ -34,6 +37,7 @@ class TotalBudgetForm extends Form
             ->add('budgetLine', 'collection', [
                 'type' => 'form',
                 'prototype' => true,
+                'prototype_name' => '__NAME1__',
                 'options' => [
                     'class' => 'App\Core\V201\Forms\Organization\BudgetLineForm',
                     'label' => false,

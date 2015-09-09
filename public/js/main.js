@@ -16,9 +16,10 @@ $(document).ready(function(){
     });
 
     $('.add-to-collection').on('click', function(e) {
+        e.preventDefault();
         var container = $('.collection-container');
-        count = container.children().length;
-        var proto = container.data('prototype').replace(/__NAME__/g, count);
+        var count = container.children('.form-group').length;
+        var proto = container.data('prototype').replace(/__NAME__/g, count).replace(/__NAME1__/g, 0).replace(/__NAME2__/g, 0);
         container.append(proto);
     });
 });

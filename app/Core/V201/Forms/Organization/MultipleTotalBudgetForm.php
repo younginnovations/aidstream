@@ -13,7 +13,8 @@ class MultipleTotalBudgetForm extends Form
                 'options' => [
                     'class' => 'App\Core\V201\Forms\Organization\TotalBudgetForm',
                     'label' => false,
-                ]
+                ],
+                'wrapper' => false
             ]);
     }
 }

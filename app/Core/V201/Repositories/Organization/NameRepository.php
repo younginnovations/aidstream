@@ -40,7 +40,7 @@ class NameRepository
 
     public function getOrganizationNameData($organization_id)
     {
-        return json_decode(OrganizationData::where('organization_id', $organization_id)->first()->name);
+        return json_decode(OrganizationData::where('organization_id', $organization_id)->first()->name, true);
     }
 
 }

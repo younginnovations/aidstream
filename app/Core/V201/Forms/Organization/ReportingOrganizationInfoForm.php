@@ -20,6 +20,7 @@ class ReportingOrganizationInfoForm extends Form
                     'class' => 'App\Core\V201\Forms\Organization\NarrativeForm',
                     'label' => false,
                 ],
+                'wrapper' => false
             ]);
     }
 }

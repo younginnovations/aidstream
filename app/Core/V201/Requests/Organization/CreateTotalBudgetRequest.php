@@ -42,7 +42,7 @@ class CreateTotalBudgetRequest extends Request {
                     $rules['totalBudget.' . $key . '.budgetLine.' . $budgetLineKey . '.value.' . $valueKey . '.value_date'] = 'required';
                 }
                 foreach ($budgetLineVal['narrative'] as $narrativeKey => $narrativeVal) {
-                    $rules['totalBudget.' . $key . '.budgetLine.' . $budgetLineKey . '.narrative.' . $narrativeKey . '.title'] = 'required';
+                    $rules['totalBudget.' . $key . '.budgetLine.' . $budgetLineKey . '.narrative.' . $narrativeKey . '.narrative'] = 'required';
                 }
             }
         }
@@ -71,7 +71,7 @@ class CreateTotalBudgetRequest extends Request {
                     $messages['totalBudget.' . $key . '.budgetLine.' . $budgetLineKey . '.value.' . $valueKey . '.value_date' . '.required'] = sprintf("Date is Required.", $key);
                 }
                 foreach ($budgetLineVal['narrative'] as $narrativeKey => $narrativeVal) {
-                    $messages['totalBudget.' . $key . '.budgetLine.' . $budgetLineKey . '.narrative.' . $narrativeKey . '.title' . '.required'] = sprintf("Title is Required.", $key);
+                    $messages['totalBudget.' . $key . '.budgetLine.' . $budgetLineKey . '.narrative.' . $narrativeKey . '.narrative' . '.required'] = sprintf("Title is Required.", $key);
                 }
             }
         }

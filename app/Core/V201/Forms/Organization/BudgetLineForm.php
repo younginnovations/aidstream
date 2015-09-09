@@ -10,6 +10,7 @@ class BudgetLineForm extends Form
             ->add('reference', 'text')
             ->add('value', 'collection', [
                 'type' => 'form',
+                'prototype_name' => '__NAME2__',
                 'prototype' => true,
                 'options' => [
                     'class' => 'App\Core\V201\Forms\Organization\ValueForm',
@@ -19,6 +20,7 @@ class BudgetLineForm extends Form
             ->add('narrative', 'collection', [
                 'type' => 'form',
                 'prototype' => true,
+                'prototype_name' => '__NAME2__',
                 'options' => [
                     'class' => 'App\Core\V201\Forms\Organization\NarrativeForm',
                     'label' => false,

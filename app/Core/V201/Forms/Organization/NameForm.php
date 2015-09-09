@@ -14,8 +14,9 @@ class NameForm extends Form
                 'prototype' => true,
                 'options' => [
                     'class' => 'App\Core\V201\Forms\Organization\NarrativeForm',
-                    'label' => 'Narrative',
+                    'label' => false,
                 ],
+                'wrapper' => false
             ]);
     }
 }
