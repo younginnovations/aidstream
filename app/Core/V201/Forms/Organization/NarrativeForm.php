@@ -13,7 +13,6 @@ class NarrativeForm extends Form
             ->add('language', 'select', [
                 'choices' => ['es' => 'Espanish', 'fr' => 'French'],
                 'label' => 'Language'
-            ])
-            ->add('add_more_narrative', 'button');
+            ]);
     }
 }
