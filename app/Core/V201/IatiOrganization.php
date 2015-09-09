@@ -39,16 +39,6 @@ class IatiOrganization
         return App::make('App\Core\V201\Element\Organization\RecipientCountryBudget');
     }
 
-    public function getBudgetLine()
-    {
-        return App::make('App\Core\V201\Element\Organization\BudgetLine');
-    }
-
-    public function getNarrative()
-    {
-        return App::make('App\Core\V201\Element\Organization\Narrative');
-    }
-
     public function getRepository()
     {
         return App::make('App\Core\V201\Repositories\Organization\OrganizationRepository');
@@ -64,4 +54,8 @@ class IatiOrganization
         return App::make('App\Core\V201\Request\CreateOrgReportingOrgRequest');
     }
 
+    public function getCreateOrgRecipientCountryBudgetRequest()
+    {
+        return App::make('App\Core\V201\Request\CreateOrgRecipientCountryBudgetRequest');
+    }
 }

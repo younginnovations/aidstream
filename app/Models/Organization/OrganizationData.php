@@ -3,9 +3,10 @@
 use Illuminate\Database\Eloquent\Model;
 
 class OrganizationData extends Model {
-    protected $table ="organization_data";
+    protected $table        ="organization_data";
     protected $fileable_key = "organization";
     protected $fillable     = ['name', 'total_budget', 'recipient_org_budget', 'recipient_country_budget', 'document_link', 'organization_id'];
+    protected $casts        = ['recipient_country_budget' => 'json'];
 
     public function getName()
     {
@@ -44,7 +45,7 @@ class OrganizationData extends Model {
 
     public function getRecipientCountryBudget()
     {
-        return json_decode($this->recipient_country_budget);
+        return $this->recipient_country_budget;
         ;
     }
 

@@ -8,12 +8,18 @@ class NarrativeForm extends Form
 
     public function buildForm()
     {
+        $json = file_get_contents(app_path("Core/V201/Codelist/". config('app.locale'). "/Organization/LanguageCodelist.json"));
+        $response = json_decode($json,true);
+        $language = $response['Language'];
+        $code_arr = [];
+        foreach($language as $val) {
+            $code_arr[$val['code']] = $val['code'] . ' - ' . $val['name'];
+        }
         $this
             ->add('narrative', 'text', ['label' => 'Title', 'rules' => 'required'])
             ->add('language', 'select', [
-                'choices' => ['es' => 'Espanish', 'fr' => 'French'],
+                'choices' => $code_arr,
                 'label' => 'Language'
-            ])
-            ->add('add_more_narrative', 'button');
+            ]);
     }
 }

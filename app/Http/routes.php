@@ -20,10 +20,14 @@ Route::resource('organization.reportingOrg','Complete\Organization\OrgReportingO
 Route::resource('organization.name','Complete\Organization\NameController');
 Route::resource('organization.total-budget','Complete\Organization\OrgTotalBudgetController');
 //Route::resource('organization.recipient-organization-budget','Complete\Organization\RecipientOrganizationBudgetController');
-//Route::resource('organization.recipient-country-budget','Complete\Organization\RecipientOrganizationBudgetController');
+Route::resource('organization.recipient-country-budget','Complete\Organization\RecipientCountryBudgetController');
 //Route::resource('organization.document-link','Complete\Organization\DocumentLinkController');
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',
 	'password' => 'Auth\PasswordController',
 ]);
+
+if (getenv('APP_ENV') == "local") {
+	$router->get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
+}

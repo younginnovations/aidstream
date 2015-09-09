@@ -18,7 +18,7 @@ class ValueForm extends Form
             ->add('amount', 'text')
             ->add('currency', 'select', [
                 'choices' => $code_arr,
-                'label' => 'Language'
+                'label' => 'Currency'
             ])
             ->add('value_date', 'date');
     }

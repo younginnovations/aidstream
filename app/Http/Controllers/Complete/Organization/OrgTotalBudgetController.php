@@ -18,6 +18,10 @@ use Illuminate\Support\Facades\Redirect;
 use App\Services\RequestManager\Organization\TotalBudgetRequestManager;
 use App\Services\FormCreator\Organization\TotalBudgetForm as FormBuilder;
 
+/**
+ * Class OrgTotalBudgetController
+ * @package App\Http\Controllers\Complete\Organization
+ */
 class OrgTotalBudgetController extends Controller {
 
     protected $formBuilder;
@@ -32,10 +36,10 @@ class OrgTotalBudgetController extends Controller {
         $this->totalBudgetForm = $formBuilder;
         $this->totalBudgetManager = $totalBudgetManager;
     }
+
     /**
-     * Display a listing of the resource.
-     *
-     * @return Response
+     * @param $orgId
+     * @return \Illuminate\View\View
      */
     public function index($orgId)
     {
@@ -47,7 +51,7 @@ class OrgTotalBudgetController extends Controller {
     /**
      * Update the specified resource in storage.
      *
-     * @param  int  $id
+     * @param  int  $orgId
      * @return Response
      */
     public function update($orgId, TotalBudgetRequestManager $totalBudgetRequestManager)
