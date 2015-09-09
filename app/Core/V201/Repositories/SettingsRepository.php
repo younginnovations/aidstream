@@ -4,6 +4,7 @@ namespace App\Core\V201\Repositories;
 use App\Core\Repositories\SettingsRepositoryInterface;
 use App\Models\Organization\OrganizationData;
 use App\Models\Settings;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
 class SettingsRepository implements SettingsRepositoryInterface
@@ -25,6 +26,7 @@ class SettingsRepository implements SettingsRepositoryInterface
     public function storeSettings($input, $organization)
     {
         try {
+            DB::beginTransaction();
             $organization->reporting_org = json_encode($input['reporting_organization_info']);
             $organization->save();
 
@@ -42,13 +44,15 @@ class SettingsRepository implements SettingsRepositoryInterface
             OrganizationData::create([
                 'organization_id' => $organization->id,
             ]);
+            DB::commit();
+            Log::info('Organization Settings Inserted');
         } catch (Exception $exception) {
-            $this->database->rollback();
+            DB::rollback();
 
-            $this->logger->error(
+            Log::error(
                 sprintf('Settings could no be updated due to %s', $exception->getMessage()),
                 [
-                    'grantDetails' => $input,
+                    'settings' => $input,
                     'trace' => $exception->getTraceAsString()
                 ]
             );
@@ -64,7 +68,7 @@ class SettingsRepository implements SettingsRepositoryInterface
     public function updateSettings($input, $organization, $settings)
     {
         try {
-
+            DB::beginTransaction();
             $organization->reporting_org = json_encode($input['reporting_organization_info']);
             $organization->save();
 
@@ -78,14 +82,15 @@ class SettingsRepository implements SettingsRepositoryInterface
             $settings->version = $version;
             $settings->organization_id = $organization->id;
             $settings->save();
-
+            DB::commit();
+            Log::info('Organization Settings Updated');
         } catch (Exception $exception) {
-            $this->database->rollback();
+            DB::rollback();
 
-            $this->logger->error(
+            Log::error(
                 sprintf('Settings could no be updated due to %s', $exception->getMessage()),
                 [
-                    'grantDetails' => $input,
+                    'settings' => $input,
                     'trace' => $exception->getTraceAsString()
                 ]
             );

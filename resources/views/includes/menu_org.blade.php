@@ -13,9 +13,9 @@
     <div class="panel-heading">Budgets</div>
     <div class="panel-body">
         <ul class="nav">
-            <li><a href="{{ url('/organization/organization-data') }}">Total Budget</a></li>
-            <li><a href="{{ url('/organization/organization-data') }}">Recipient Organization Budget</a></li>
-            <li><a href="{{ url('/organization/organization-data') }}">Recipient Country Budget</a></li>
+            <li><a href="{{ url('/organization/' . Session::get('org_id') . '/total-budget') }}">Total Budget</a></li>
+            <li><a href="{{ url('/organization/' . Session::get('org_id') . '/recipient-organization-budget') }}">Recipient Organization Budget</a></li>
+            <li><a href="{{ url('/organization/' . Session::get('org_id') . '/recipient-country-budget') }}">Recipient Country Budget</a></li>
         </ul>
     </div>
 </div>
@@ -23,7 +23,7 @@
     <div class="panel-heading">Documents</div>
     <div class="panel-body">
         <ul class="nav">
-            <li><a href="{{ url('/organization/organization-data') }}">Document Link</a></li>
+            <li><a href="{{ url('/organization/' . Session::get('org_id') . '/document-link') }}">Document Link</a></li>
         </ul>
     </div>
 </div>

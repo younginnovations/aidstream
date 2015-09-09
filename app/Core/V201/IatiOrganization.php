@@ -25,7 +25,10 @@ class IatiOrganization
     {
         return App::make('App\Core\V201\Element\Organization\TotalBudget');
     }
-
+    public function getTotalBudgetRequest()
+    {
+        return App::make('App\Core\V201\Requests\Organization\CreateTotalBudgetRequest');
+    }
     public function getRecipientOrgBudget()
     {
         return App::make('App\Core\V201\Element\Organization\RecipientOrgBudget');

@@ -1,7 +1,6 @@
 <?php namespace App\Core\V201\Requests\Organization;
 
 use App\Http\Requests\Request;
-//use Illuminate\Http\Request;
 
 class CreateNameRequest extends Request {
 
@@ -36,8 +35,8 @@ class CreateNameRequest extends Request {
     {
         $messages = [];
         foreach ($this->request->get('name') as $key => $val) {
-            $messages['name.' . $key . '.narrative' . '.required'] = sprintf("Narrative %s is Required.", $key);
-            $messages['name.' . $key . '.narrative' . '.max'] = sprintf("Max(255) Narrative %s .", $key);
+            $messages['name.' . $key . '.narrative' . '.required'] = sprintf("Narrative is Required.", $key);
+            $messages['name.' . $key . '.narrative' . '.max'] = sprintf("Max(255) Narrative .", $key);
         }
         return $messages;
     }

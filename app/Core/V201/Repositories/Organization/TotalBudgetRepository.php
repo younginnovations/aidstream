@@ -5,28 +5,28 @@ use App\Models\Organization\OrganizationData;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
-class NameRepository
+class TotalBudgetRepository
 {
     /**
      * @param $input
      * @param $organization
      */
-    public function update($input, $organizationData)
+    public function update($input, $organization)
     {
         try{
             DB::beginTransaction();
-            $organizationData->name = json_encode($input['name']);
-            $organizationData->save();
+            $organization->total_budget = json_encode($input['totalBudget']);
+            $organization->save();
             DB::commit();
-            Log::info('Organization Name Updated',
-                ['for ' => $organizationData['name']]);
+            Log::info('Organization Total Budget Updated',
+                ['for ' => $organization['total_budget']]);
         } catch (Exception $exception) {
             DB::rollback();
 
             Log::error(
-                sprintf('Organization Name could not be updated due to %s', $exception->getMessage()),
+                sprintf('Organization Total Budget could not be updated due to %s', $exception->getMessage()),
                 [
-                    'OrganizationName' => $input,
+                    'OrganizationTotalBudget' => $input,
                     'trace' => $exception->getTraceAsString()
                 ]
             );
@@ -40,7 +40,7 @@ class NameRepository
 
     public function getOrganizationNameData($organization_id)
     {
-        return json_decode(OrganizationData::where('organization_id', $organization_id)->first()->name);
+        return json_decode(OrganizationData::where('organization_id', $organization_id)->first()->total_budget);
     }
 
 }

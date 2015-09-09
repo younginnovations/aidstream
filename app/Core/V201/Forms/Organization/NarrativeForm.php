@@ -9,7 +9,7 @@ class NarrativeForm extends Form
     public function buildForm()
     {
         $this
-            ->add('narrative', 'text', ['label' => 'Title', 'rules' => 'required'])
+            ->add('title', 'text')
             ->add('language', 'select', [
                 'choices' => ['es' => 'Espanish', 'fr' => 'French'],
                 'label' => 'Language'
