@@ -26,6 +26,10 @@ class CreateRecipientCountryBudgetRequest extends Request {
     {
         $rules = [];
         foreach ($this->request->get('recipientCountryBudget') as $key => $val) {
+            $rules['recipientCountryBudget.' . $key . '.recipientCountry.' . $key . '.code'] = 'required';
+            foreach ($val['narrative'] as $narrativeKey => $narrativeVal) {
+                $rules['recipientCountryBudget.' . $key . '.narrative.' . $narrativeKey . '.narrative'] = 'required';
+            }
             foreach ($val['periodStart'] as $periodStartKey => $periodStartVal) {
                 $rules['recipientCountryBudget.' . $key . '.periodStart.' . $periodStartKey . '.date'] = 'required';
             }
@@ -53,6 +57,10 @@ class CreateRecipientCountryBudgetRequest extends Request {
     {
         $messages = [];
         foreach ($this->request->get('recipientCountryBudget') as $key => $val) {
+            $messages['recipientCountryBudget.' . $key . '.recipientCountry.' . $key . '.code' . '.required'] = sprintf("Code is Required.", $key);;
+            foreach ($val['narrative'] as $narrativeKey => $narrativeVal) {
+                $messages['recipientCountryBudget.' . $key . '.narrative.' . $narrativeKey . '.narrative' . '.required'] = sprintf("Narrative is Required.", $key);;
+            }
             foreach ($val['periodStart'] as $periodStartKey => $periodStartVal) {
                 $messages['recipientCountryBudget.' . $key . '.periodStart.' . $periodStartKey . '.date' . '.required'] = sprintf("Period Start is Required.", $key);
             }
