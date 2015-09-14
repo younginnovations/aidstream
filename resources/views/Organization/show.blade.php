@@ -1,6 +1,9 @@
 @extends('app')
 
 @section('content')
+
+	{{Session::get('message')}}
+
 <div class="container">
 	<div class="row">
 		<div class="col-xs-8">

@@ -2,7 +2,7 @@
 
 use Kris\LaravelFormBuilder\Form;
 
-class NarrativeForm extends Form
+class LanguageCodeForm extends Form
 {
     protected $showFieldErrors = true;
 
@@ -16,7 +16,6 @@ class NarrativeForm extends Form
             $code_arr[$val['code']] = $val['code'] . ' - ' . $val['name'];
         }
         $this
-            ->add('narrative', 'text', ['label' => 'Text', 'rules' => 'required'])
             ->add('language', 'select', [
                 'choices' => $code_arr,
                 'label' => 'Language'

@@ -37,7 +37,9 @@ class OrgReportingOrg extends BaseElement
         return $organizationData;
     }
 
-    
+    /**
+     * @return organization reporting  organization repository
+     */
     public  function getRepository()
     {
         return App::make('App\Core\V201\Repositories\Organization\OrgReportingOrgRepository');

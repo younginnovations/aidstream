@@ -13,8 +13,8 @@
     <div class="panel-heading">Budgets</div>
     <div class="panel-body">
         <ul class="nav">
-            <li><a href="{{ url('/organization/' . Session::get('org_id') . '/total-budget') }}">Total Budget</a></li>
-            <li><a href="{{ url('/organization/' . Session::get('org_id') . '/recipient-organization-budget') }}">Recipient Organization Budget</a></li>
+            <li><a href="{{ route('organization.total-budget.index', Auth::user()->org_id) }}">Total Budget</a></li>
+            <li><a href="{{ route('organization.recipient-organization-budget.index', Auth::user()->org_id)}}">Recipient Organization Budget</a></li>
             <li><a href="{{ url('/organization/' . Session::get('org_id') . '/recipient-country-budget') }}">Recipient Country Budget</a></li>
         </ul>
     </div>

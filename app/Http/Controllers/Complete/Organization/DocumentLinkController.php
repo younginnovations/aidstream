@@ -4,81 +4,60 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
+use App\Services\Organization\DocumentLinkManager;
+use Session;
+use URL;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Redirect;
+use App\Services\RequestManager\Organization\DocumentLinkRequestManager;
+use App\Services\FormCreator\Organization\DocumentLinkForm as FormBuilder;
 
-class DocumentLinkController extends Controller {
 
-	/**
-	 * Display a listing of the resource.
-	 *
-	 * @return Response
-	 */
-	public function index()
-	{
-		//
-	}
+class DocumentLinkController extends Controller
+{
 
-	/**
-	 * Show the form for creating a new resource.
-	 *
-	 * @return Response
-	 */
-	public function create()
-	{
-		//
-	}
+    protected $formBuilder;
+    protected $documentLinkManager;
+    protected $documentLinkForm;
 
-	/**
-	 * Store a newly created resource in storage.
-	 *
-	 * @return Response
-	 */
-	public function store()
-	{
-		//
-	}
+    public function __construct(
+        FormBuilder $formBuilder,
+        DocumentLinkManager $documentLinkManager
+    ) {
+        $this->middleware('auth');
+        $this->documentLinkForm    = $formBuilder;
+        $this->documentLinkManager = $documentLinkManager;
+    }
 
-	/**
-	 * Display the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function show($id)
-	{
-		//
-	}
+    /**
+     * @param $orgId
+     * @return \Illuminate\View\View
+     */
+    public function index($orgId)
+    {
+        $documentLink = $this->documentLinkManager->getDocumentLinkData($orgId);
+        $form         = $this->documentLinkForm->editForm($documentLink, $orgId);
 
-	/**
-	 * Show the form for editing the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function edit($id)
-	{
-		//
-	}
+        return view('Organization.documentLink.documentLink', compact('form', 'documentLink'));
+    }
 
-	/**
-	 * Update the specified resource in storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function update($id)
-	{
-		//
-	}
 
-	/**
-	 * Remove the specified resource from storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function destroy($id)
-	{
-		//
-	}
+    /**
+     * @param                            $orgId
+     * @param DocumentLinkRequestManager $documentLinkRequestManager
+     * @param Request                    $request
+     * @return mixed
+     */
+    public function update($orgId, DocumentLinkRequestManager $documentLinkRequestManager, Request $request)
+    {
+        $input            = $request->all();
+        $organizationData = $this->documentLinkManager->getOrganizationData($orgId);
 
+        if ($this->documentLinkManager->update($input, $organizationData)) {
+            return redirect()->to(sprintf('/organization/%s', $orgId))->withMessage(
+                'Organization Document Link Updated !'
+            );
+        }
+        return redirect()->to->route('organization.document-link.index',$orgId);
+    }
 }
