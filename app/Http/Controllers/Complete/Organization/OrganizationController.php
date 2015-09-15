@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 use App\Services\SettingsManager;
 use App\Services\Organization\OrganizationManager;
 use App\Services\FormCreator\Organization\OrgReportingOrgForm;
+use Illuminate\Http\Request;
 
 /**
  * Class OrganizationController
@@ -59,14 +60,15 @@ class OrganizationController extends Controller
     /**
      * @param $id
      */
-    public function update($id)
+    public function update($id, Request $request)
     {
-        $input = Input::all();
+        $input = $request->all();
         if (isset($input['status'])) {
             $organization = $this->organizationManager->getOrganization($id);
             $this->organizationManager->updateStatus($input, $organization);
         }
-        return Redirect::to("/organization/$id");
+        return redirect()->to->route('organization.index', $id);
+//        return Redirect::to("/organization/$id");
     }
 
     /**

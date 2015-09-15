@@ -9,23 +9,31 @@ class BudgetLineForm extends Form
     {
         $this
             ->add('reference', 'text')
-            ->add('value', 'collection', [
-                'type' => 'form',
-                'prototype_name' => '__NAME2__',
-                'prototype' => true,
-                'options' => [
-                    'class' => 'App\Core\V201\Forms\Organization\ValueForm',
-                    'label' => false,
+            ->add(
+                'value',
+                'collection',
+                [
+                    'type'           => 'form',
+                    'prototype_name' => '__NAME2__',
+                    'prototype'      => true,
+                    'options'        => [
+                        'class' => 'App\Core\V201\Forms\Organization\ValueForm',
+                        'label' => false,
+                    ]
                 ]
-            ])
-            ->add('narrative', 'collection', [
-                'type' => 'form',
-                'prototype' => true,
-                'options' => [
-                    'class' => 'App\Core\V201\Forms\Organization\NarrativeForm',
-                    'label' => false,
-                ],
-            ]);
+            )
+            ->add(
+                'narrative',
+                'collection',
+                [
+                    'type'      => 'form',
+                    'prototype' => true,
+                    'options'   => [
+                        'class' => 'App\Core\V201\Forms\Organization\NarrativeForm',
+                        'label' => false,
+                    ],
+                ]
+            );
 
         new ProtoName($this);
 
