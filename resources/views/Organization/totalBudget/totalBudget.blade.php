@@ -1,6 +1,7 @@
 @extends('app')
 
 @section('content')
+    {{ form_row($form->totalBudget->prototype()->budgetLine->prototype()->narrative) }}
     <div class="container">
         <div class="row">
             <div class="col-xs-8">

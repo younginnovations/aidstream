@@ -1,5 +1,5 @@
 <?php
-namespace App\Core\Repositories;
+namespace app\Core\Repositories;
 
 interface OrganizationRepositoryInterface
 {
@@ -10,4 +10,6 @@ interface OrganizationRepositoryInterface
     public function getOrganization($id);
 
     public function updateOrganization($input, $organization);
+
+    public function updateStatus($input, $organization);
 }

@@ -1,5 +1,6 @@
 <?php namespace App\Core\V201\Forms\Organization;
 
+use App\Core\ProtoName;
 use Kris\LaravelFormBuilder\Form;
 
 class RecipientOrgBudgetForm extends Form
@@ -22,7 +23,7 @@ class RecipientOrgBudgetForm extends Form
                     'class' => 'App\Core\V201\Forms\Organization\NarrativeForm',
                     'label' => false
                 ]
-            ])   
+            ])
             ->add('periodStart', 'collection', [
                 'type' => 'form',
                 'prototype' => true,
@@ -55,5 +56,8 @@ class RecipientOrgBudgetForm extends Form
                     'label' => false,
                 ],
             ]);
+
+        new ProtoName($this);
+
     }
 }

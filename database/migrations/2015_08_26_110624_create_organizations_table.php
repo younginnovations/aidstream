@@ -20,6 +20,7 @@ class CreateOrganizationsTable extends Migration {
 			$table->string('address');
 			$table->string('telephone')->nullable();
 			$table->json('reporting_org')->nullable();
+			$table->integer('status')->default(0);
 			$table->timestamps();
 		});
 	}

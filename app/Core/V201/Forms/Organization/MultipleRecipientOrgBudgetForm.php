@@ -1,9 +1,11 @@
 <?php namespace App\Core\V201\Forms\Organization;
 
+use App\Core\ProtoName;
 use Kris\LaravelFormBuilder\Form;
 
 class MultipleRecipientOrgBudgetForm extends Form
 {
+
     public function buildForm()
     {
         $this
@@ -17,5 +19,9 @@ class MultipleRecipientOrgBudgetForm extends Form
                 'label' => false,
                 'wrapper' => false
             ]);
+
+        new ProtoName($this);
+
     }
+
 }

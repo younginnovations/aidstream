@@ -35,6 +35,11 @@ class OrganizationManager
         $this->repo->updateOrganization($input, $organization);
     }
 
+    public function updateStatus($input, $organization)
+    {
+        $this->repo->updateStatus($input, $organization);
+    }
+
 
 
 }

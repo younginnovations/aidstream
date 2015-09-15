@@ -11,7 +11,8 @@ class Settings extends Model {
         'default_field_values',
         'default_field_groups',
         'version',
-        'organization_id'
+        'organization_id',
+        'status'
     ];
 
     public function buildOrganizationRegistryInfo()

@@ -6,6 +6,7 @@ use App\Models\Organization\OrganizationData;
 use App\Models\Settings;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Log;
 
 class SettingsRepository implements SettingsRepositoryInterface
 {
@@ -35,9 +36,9 @@ class SettingsRepository implements SettingsRepositoryInterface
 
             Settings::create([
                 'publishing_type' => $input['publishing_type'][0]['publishing'],
-                'registry_info' => $input['registry_info'],
-                'default_field_values' => $input['default_field_values'],
-                'default_field_groups' => $input['default_field_groups'],
+                'registry_info' => json_encode($input['registry_info']),
+                'default_field_values' => json_encode($input['default_field_values']),
+                'default_field_groups' => json_encode($input['default_field_groups']),
                 'version' => $version,
                 'organization_id' => $organization->id,
             ]);
@@ -76,9 +77,9 @@ class SettingsRepository implements SettingsRepositoryInterface
             Session::put('version', $version);
 
             $settings->publishing_type = $input['publishing_type'][0]['publishing'];
-            $settings->registry_info = $input['registry_info'];
-            $settings->default_field_values = $input['default_field_values'];
-            $settings->default_field_groups = $input['default_field_groups'];
+            $settings->registry_info = json_encode($input['registry_info']);
+            $settings->default_field_values = json_encode($input['default_field_values']);
+            $settings->default_field_groups = json_encode($input['default_field_groups']);
             $settings->version = $version;
             $settings->organization_id = $organization->id;
             $settings->save();

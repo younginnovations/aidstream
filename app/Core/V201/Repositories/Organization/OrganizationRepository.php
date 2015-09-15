@@ -1,5 +1,5 @@
 <?php
-namespace App\Core\V201\Repositories\Organization;
+namespace app\Core\V201\Repositories\Organization;
 
 use App\Core\Repositories\OrganizationRepositoryInterface;
 use App\Models\Organization\Organization;
@@ -43,12 +43,22 @@ class OrganizationRepository implements OrganizationRepositoryInterface
      */
     public function updateOrganization($input, $org)
     {
-        $org->name = json_encode($input['name']);
+        $org->name = $input['name'];
         $org->user_identifier = $input['user_identifier'];
         $org->address = $input['address'];
         $org->telephone = $input['telephone'];
         $org->reporting_org = json_encode($input['reporting_org']);
+        $org->status = $input['status'];
         $org->save();
     }
 
+    /**
+     * @param $input
+     * @param $org
+     */
+    public function updateStatus($input, $org)
+    {
+        $org->status = $input['status'];
+        $org->save();
+    }
 }

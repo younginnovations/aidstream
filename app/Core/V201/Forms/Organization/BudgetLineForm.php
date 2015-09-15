@@ -1,5 +1,6 @@
 <?php namespace App\Core\V201\Forms\Organization;
 
+use App\Core\ProtoName;
 use Kris\LaravelFormBuilder\Form;
 
 class BudgetLineForm extends Form
@@ -20,11 +21,13 @@ class BudgetLineForm extends Form
             ->add('narrative', 'collection', [
                 'type' => 'form',
                 'prototype' => true,
-                'prototype_name' => '__NAME2__',
                 'options' => [
                     'class' => 'App\Core\V201\Forms\Organization\NarrativeForm',
                     'label' => false,
                 ],
             ]);
+
+        new ProtoName($this);
+
     }
 }
