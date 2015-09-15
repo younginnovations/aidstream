@@ -15,15 +15,6 @@ class OrgReportingOrgManager
     }
 
     /**
-     * @param $organizationId
-     * @param $input
-     */
-    public function create($organizationId, $input)
-    {
-        $this->repo->create($organizationId, $input);
-    }
-
-    /**
      * @param $input
      * @param $organization
      */

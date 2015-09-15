@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
 use App\Services\RequestManager\Organization\RecipientCountryBudgetRequestManager;
 use App\Services\FormCreator\Organization\RecipientCountryBudgetForm as FormBuilder;
+use App\Services\Organization\OrgNameManager;
 
 /**
  * Class OrgRecipientCountryBudgetController
@@ -28,14 +29,17 @@ class RecipientCountryBudgetController extends Controller
     protected $formBuilder;
     protected $recipientCountryBudgetManager;
     protected $recipientCountryBudgetForm;
+    protected $nameManager;
 
     public function __construct(
         FormBuilder $formBuilder,
-        RecipientCountryBudgetManager $recipientCountryBudgetManager
+        RecipientCountryBudgetManager $recipientCountryBudgetManager,
+        OrgNameManager $nameManager
     ) {
         $this->middleware('auth');
         $this->recipientCountryBudgetForm    = $formBuilder;
         $this->recipientCountryBudgetManager = $recipientCountryBudgetManager;
+        $this->nameManager = $nameManager;
     }
 
     /**
@@ -69,6 +73,7 @@ class RecipientCountryBudgetController extends Controller
         $organizationData = $this->recipientCountryBudgetManager->getOrganizationData($orgId);
 
         if ($this->recipientCountryBudgetManager->update($input, $organizationData)) {
+            $this->nameManager->resetStatus($orgId);
             return redirect()->to(sprintf('/organization/%s', $orgId))->withMessage(
                 'Organization Recipient Country Budget Updated !'
             );

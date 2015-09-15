@@ -39,4 +39,20 @@ class NameRepository
         return $this->org->where('organization_id', $organization_id)->first()->name;
     }
 
+    public function getStatus($organization_id)
+    {
+        return $this->org->where('organization_id', $organization_id)->first()->status;
+    }
+
+    public function updateStatus($input, $organizationData)
+    {
+        $organizationData->status = $input['status'];
+        $organizationData->save();
+    }
+
+    public function resetStatus($organization_id)
+    {
+        $this->org->where('organization_id', $organization_id)->update(['status' => 0]);
+    }
+
 }

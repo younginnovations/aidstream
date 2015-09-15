@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
 use App\Services\RequestManager\Organization\DocumentLinkRequestManager;
 use App\Services\FormCreator\Organization\DocumentLinkForm as FormBuilder;
+use App\Services\Organization\OrgNameManager;
 
 
 class DocumentLinkController extends Controller
@@ -19,14 +20,17 @@ class DocumentLinkController extends Controller
     protected $formBuilder;
     protected $documentLinkManager;
     protected $documentLinkForm;
+    protected $nameManager;
 
     public function __construct(
         FormBuilder $formBuilder,
-        DocumentLinkManager $documentLinkManager
+        DocumentLinkManager $documentLinkManager,
+        OrgNameManager $nameManager
     ) {
         $this->middleware('auth');
         $this->documentLinkForm    = $formBuilder;
         $this->documentLinkManager = $documentLinkManager;
+        $this->nameManager = $nameManager;
     }
 
     /**
@@ -54,6 +58,7 @@ class DocumentLinkController extends Controller
         $organizationData = $this->documentLinkManager->getOrganizationData($orgId);
 
         if ($this->documentLinkManager->update($input, $organizationData)) {
+            $this->nameManager->resetStatus($orgId);
             return redirect()->to(sprintf('/organization/%s', $orgId))->withMessage(
                 'Organization Document Link Updated !'
             );

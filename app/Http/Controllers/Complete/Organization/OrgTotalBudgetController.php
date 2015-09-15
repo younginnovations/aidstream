@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
 use App\Services\RequestManager\Organization\TotalBudgetRequestManager;
 use App\Services\FormCreator\Organization\TotalBudgetForm as FormBuilder;
+use App\Services\Organization\OrgNameManager;
 
 /**
  * Class OrgTotalBudgetController
@@ -28,14 +29,17 @@ class OrgTotalBudgetController extends Controller
     protected $formBuilder;
     protected $totalBudgetManager;
     protected $totalBudgetForm;
+    protected $nameManager;
 
     public function __construct(
         FormBuilder $formBuilder,
-        OrgTotalBudgetManager $totalBudgetManager
+        OrgTotalBudgetManager $totalBudgetManager,
+        OrgNameManager $nameManager
     ) {
         $this->middleware('auth');
         $this->totalBudgetForm    = $formBuilder;
         $this->totalBudgetManager = $totalBudgetManager;
+        $this->nameManager = $nameManager;
     }
 
     /**
@@ -63,6 +67,7 @@ class OrgTotalBudgetController extends Controller
         $organizationData = $this->totalBudgetManager->getOrganizationData($orgId);
 
         if ($this->totalBudgetManager->update($input, $organizationData)) {
+            $this->nameManager->resetStatus($orgId);
             return redirect()->to(sprintf('/organization/%s', $orgId))->withMessage(
                 'Organization Total Budget Updated !'
             );
