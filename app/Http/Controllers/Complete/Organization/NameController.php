@@ -48,8 +48,7 @@ class NameController extends Controller {
 		$input = Input::all();
 		$organizationData = $this->nameManager->getOrganizationData($orgId);
 		$this->nameManager->update($input, $organizationData);
-		Session::flash('message', 'Name Updated !');
-		return Redirect::to("/organization/$orgId");
+		return redirect()->route("organization.show", $orgId)->withMessage("Name Updated !");
 	}
 
 }

@@ -6,6 +6,7 @@ use App\Services\SettingsManager;
 use App\Services\Organization\OrganizationManager;
 use App\Services\FormCreator\Organization\OrgReportingOrgForm;
 use Illuminate\Http\Request;
+use App\Services\Organization\OrgNameManager;
 
 /**
  * Class OrganizationController
@@ -32,11 +33,13 @@ class OrganizationController extends Controller
     public function __construct(
         SettingsManager $settingsManager,
         OrganizationManager $organizationManager,
-        OrgReportingOrgForm $orgReportingOrgFormCreator
+        OrgReportingOrgForm $orgReportingOrgFormCreator,
+        OrgNameManager $nameManager
     ) {
         $this->settingsManager            = $settingsManager;
         $this->organizationManager        = $organizationManager;
         $this->orgReportingOrgFormCreator = $orgReportingOrgFormCreator;
+        $this->nameManager = $nameManager;
         $this->middleware('auth');
     }
 
@@ -54,7 +57,8 @@ class OrganizationController extends Controller
         }
         $organization = $this->organizationManager->getOrganization($id);
         $reporting_org = $organization->buildOrgReportingOrg()[0];
-        return view('Organization/show', compact('organization', 'reporting_org'));
+        $orgName = $this->nameManager->getOrganizationNameData($id);
+        return view('Organization/show', compact('organization', 'reporting_org', 'orgName'));
     }
 
     /**
@@ -67,8 +71,7 @@ class OrganizationController extends Controller
             $organization = $this->organizationManager->getOrganization($id);
             $this->organizationManager->updateStatus($input, $organization);
         }
-        return redirect()->to->route('organization.index', $id);
-//        return Redirect::to("/organization/$id");
+        return redirect()->back();
     }
 
     /**
