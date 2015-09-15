@@ -17,6 +17,15 @@ class RecipientCountryForm extends Form
             ->add('code', 'select', [
                 'choices' => $code_arr,
                 'label' => 'Code'
+            ])
+            ->add('narrative', 'collection', [
+                'type' => 'form',
+                'prototype' => true,
+                'prototype_name' => '__NAME2__',
+                'options' => [
+                    'class' => 'App\Core\V201\Forms\Organization\NarrativeForm',
+                    'label' => false,
+                ],
             ]);
     }
 }

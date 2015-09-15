@@ -8,22 +8,47 @@ use Illuminate\Support\Facades\Log;
 class RecipientCountryBudgetRepository
 {
     /**
+     * @var OrganizationData
+     */
+    private $org;
+    /**
+     * @var DB
+     */
+    private $database;
+    /**
+     * @var Log
+     */
+    private $log;
+
+    /**
+     * @param OrganizationData $org
+     * @param DB $database
+     * @param Log $log
+     */
+    function __construct(OrganizationData $org, DB $database, Log $log)
+    {
+        $this->org = $org;
+        $this->database = $database;
+        $this->log = $log;
+    }
+
+    /**
      * @param $input
      * @param $organization
      */
     public function update($input, $organization)
     {
         try{
-            DB::beginTransaction();
+            $this->database->beginTransaction();
             $organization->recipient_country_budget = $input['recipientCountryBudget'];
             $organization->save();
-            DB::commit();
-            Log::info('Recipient Country Budget Updated',
+            $this->database->commit();
+            $this->log->info('Recipient Country Budget Updated',
                 ['for ' => $organization['recipient_country_budget']]);
         } catch (Exception $exception) {
-            DB::rollback();
+            $this->database->rollback();
 
-            Log::error(
+            $this->log->error(
                 sprintf('Recipient Country Budget could not be updated due to %s', $exception->getMessage()),
                 [
                     'OrganizationTotalBudget' => $input,
@@ -35,12 +60,12 @@ class RecipientCountryBudgetRepository
 
     public function getOrganizationData($organization_id)
     {
-        return OrganizationData::where('organization_id', $organization_id)->first();
+        return $this->org->where('organization_id', $organization_id)->first();
     }
 
     public function getRecipientCountryBudgetData($organization_id)
     {
-        return OrganizationData::where('organization_id', $organization_id)->first()->recipient_country_budget;
+        return $this->org->where('organization_id', $organization_id)->first()->recipient_country_budget;
     }
 
 }

@@ -2,24 +2,23 @@
 
 use Kris\LaravelFormBuilder\Form;
 
-class NarrativeForm extends Form
+class CategoryCodeForm extends Form
 {
     protected $showFieldErrors = true;
 
     public function buildForm()
     {
-        $json = file_get_contents(app_path("Core/V201/Codelist/". config('app.locale'). "/Organization/LanguageCodelist.json"));
+        $json = file_get_contents(app_path("Core/V201/Codelist/". config('app.locale'). "/Organization/DocumentcategoryCodelist.json"));
         $response = json_decode($json,true);
-        $language = $response['Language'];
+        $language = $response['DocumentCategory'];
         $code_arr = [];
         foreach($language as $val) {
             $code_arr[$val['code']] = $val['code'] . ' - ' . $val['name'];
         }
         $this
-            ->add('narrative', 'text', ['label' => 'Text', 'rules' => 'required'])
-            ->add('language', 'select', [
+            ->add('category', 'select', [
                 'choices' => $code_arr,
-                'label' => 'Language'
+                'label' => 'Code'
             ]);
     }
 }

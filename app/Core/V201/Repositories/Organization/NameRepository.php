@@ -2,28 +2,53 @@
 namespace App\Core\V201\Repositories\Organization;
 
 use App\Models\Organization\OrganizationData;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Database\DatabaseManager;
+use Illuminate\Log\Writer;
 
 class NameRepository
 {
     /**
+     * @var OrganizationData
+     */
+    private $org;
+    /**
+     * @var DB
+     */
+    private $database;
+    /**
+     * @var Log
+     */
+    private $log;
+
+    /**
+     * @param OrganizationData $org
+     * @param DB $database
+     * @param Log $log
+     */
+    function __construct(OrganizationData $org, DatabaseManager $database, Writer $log)
+    {
+        $this->org = $org;
+        $this->database = $database;
+        $this->log = $log;
+    }
+
+    /**
      * @param $input
-     * @param $organization
+     * @param $organizationData
      */
     public function update($input, $organizationData)
     {
         try{
-            DB::beginTransaction();
+            $this->database->beginTransaction();
             $organizationData->name = json_encode($input['name']);
             $organizationData->save();
-            DB::commit();
-            Log::info('Organization Name Updated',
+            $this->database->commit();
+            $this->log->info('Organization Name Updated',
                 ['for ' => $organizationData['name']]);
         } catch (Exception $exception) {
-            DB::rollback();
+            $this->database->rollback();
 
-            Log::error(
+            $this->log->error(
                 sprintf('Organization Name could not be updated due to %s', $exception->getMessage()),
                 [
                     'OrganizationName' => $input,
@@ -35,12 +60,12 @@ class NameRepository
 
     public function getOrganizationData($organization_id)
     {
-        return OrganizationData::where('organization_id', $organization_id)->first();
+        return $this->org->where('organization_id', $organization_id)->first();
     }
 
     public function getOrganizationNameData($organization_id)
     {
-        return json_decode(OrganizationData::where('organization_id', $organization_id)->first()->name, true);
+        return json_decode($this->org->where('organization_id', $organization_id)->first()->name, true);
     }
 
 }

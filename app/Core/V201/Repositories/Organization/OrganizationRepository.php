@@ -7,6 +7,19 @@ use App\Models\Organization\Organization;
 class OrganizationRepository implements OrganizationRepositoryInterface
 {
     /**
+     * @var Organization
+     */
+    private $org;
+
+    /**
+     * @param Organization $org
+     */
+    function __construct(Organization $org)
+    {
+        $this->org = $org;
+    }
+
+    /**
      * @param $input
      */
     public function createOrganization(array $input)
@@ -25,7 +38,7 @@ class OrganizationRepository implements OrganizationRepositoryInterface
      */
     public function getOrganizations()
     {
-        return Organization::all();
+        return $this->org->all();
     }
 
     /**
@@ -34,7 +47,7 @@ class OrganizationRepository implements OrganizationRepositoryInterface
      */
     public function getOrganization($id)
     {
-        return Organization::findorFail($id);
+        return $this->org->findorFail($id);
     }
 
     /**

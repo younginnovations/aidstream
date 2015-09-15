@@ -15,14 +15,6 @@ class RecipientCountryBudgetForm extends Form
                     'label' => false
                 ]
             ])
-            ->add('narrative', 'collection', [
-                'type' => 'form',
-                'prototype' => true,
-                'options' => [
-                    'class' => 'App\Core\V201\Forms\Organization\NarrativeForm',
-                    'label' => false
-                ]
-            ])
             ->add('periodStart', 'collection', [
                 'type' => 'form',
                 'prototype' => true,

@@ -48,13 +48,13 @@ class RecipientCountryBudgetController extends Controller {
         return view('Organization.recipientCountryBudget.recipientCountryBudget', compact('form', 'recipientCountryBudget'));
     }
 
+
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  int  $orgId
-     * @return Response
+     * @param $orgId
+     * @param RecipientCountryBudgetRequestManager $recipientCountryBudgetRequestManager
+     * @return mixed
      */
-    public function update($orgId)
+    public function update($orgId, RecipientCountryBudgetRequestManager $recipientCountryBudgetRequestManager)
     {
         $input = Input::all();
         $organizationData = $this->recipientCountryBudgetManager->getOrganizationData($orgId);
