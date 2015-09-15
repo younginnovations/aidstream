@@ -9,13 +9,17 @@ class PublishingTypeForm extends Form
     public function buildForm()
     {
         $this
-            ->add('publishing', 'choice', [
-                'label' => 'Publishing Type',
-                'choices' => ['unsegmented' => 'Unsegmented', 'segmented' => 'Segmented'],
-                'expanded' => true,
-                'choice_options' => [
-                    'wrapper' => ['class' => 'choice-wrapper']
+            ->add(
+                'publishing',
+                'choice',
+                [
+                    'label'          => 'Publishing Type',
+                    'choices'        => ['unsegmented' => 'Unsegmented', 'segmented' => 'Segmented'],
+                    'expanded'       => true,
+                    'choice_options' => [
+                        'wrapper' => ['class' => 'choice-wrapper']
+                    ]
                 ]
-            ]);
+            );
     }
 }

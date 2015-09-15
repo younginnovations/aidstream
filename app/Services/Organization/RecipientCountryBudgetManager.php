@@ -3,23 +3,65 @@ namespace App\Services\Organization;
 
 use App\Core\Version;
 use App;
+use Illuminate\Auth\Guard;
+use Illuminate\Contracts\Logging\Log;
 
 class RecipientCountryBudgetManager
 {
 
     protected $repo;
-    function __construct(Version $version)
-    {
-        $this->repo = $version->getOrganizationElement()->getRecipientCountryBudget()->getRepository();
-    }
+    /**
+     * @var Guard
+     */
+    private $auth;
+    /**
+     * @var Log
+     */
+    private $log;
+    /**
+     * @var Version
+     */
+    private $version;
 
     /**
-     * @param $input
-     * @param $organization
+     * @param Version $version
+     * @param Log     $log
+     * @param Guard   $auth
      */
+    function __construct(Version $version, Log $log, Guard $auth)
+    {
+        $this->repo    = $version->getOrganizationElement()->getRecipientCountryBudget()->getRepository();
+        $this->auth    = $auth;
+        $this->log     = $log;
+        $this->version = $version;
+    }
+
     public function update($input, $organization)
     {
-        $this->repo->update($input, $organization);
+        try {
+            $this->repo->update($input, $organization);
+            $this->log->info(
+                'Organization Recipient Country Budget  Updated',
+                ['for ' => $organization['recipient_country_budget']]
+            );
+            $this->log->activity(
+                "organization.recipient_country_updated",
+                ['name' => $this->auth->user()->organization->name]
+            );
+
+            return true;
+        } catch (Exception $exception) {
+
+            $this->log->error(
+                sprintf('Recipient Country Budget could not be updated due to %s', $exception->getMessage()),
+                [
+                    'OrganizationRecipientCountryBudget' => $input,
+                    'trace'                              => $exception->getTraceAsString()
+                ]
+            );
+        }
+
+        return false;
     }
 
     public function getOrganizationData($id)

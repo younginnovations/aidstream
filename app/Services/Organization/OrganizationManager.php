@@ -8,6 +8,7 @@ class OrganizationManager
 {
 
     protected $repo;
+
     function __construct(Version $version)
     {
         $this->repo = $version->getOrganizationElement()->getRepository();
@@ -21,7 +22,7 @@ class OrganizationManager
 
     public function getOrganizations()
     {
-        return  $this->repo->getOrganizations();
+        return $this->repo->getOrganizations();
     }
 
     public function getOrganization($id)
@@ -39,7 +40,6 @@ class OrganizationManager
     {
         $this->repo->updateStatus($input, $organization);
     }
-
 
 
 }

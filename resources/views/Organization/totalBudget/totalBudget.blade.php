@@ -1,7 +1,6 @@
 @extends('app')
 
 @section('content')
-    {{ form_row($form->totalBudget->prototype()->budgetLine->prototype()->narrative) }}
     <div class="container">
         <div class="row">
             <div class="col-xs-8">
@@ -11,7 +10,8 @@
                     <div class="panel-body">
                         <h3>Adding Total Budget...</h3>
                         {!! form_start($form) !!}
-                        <div class="collection-container" data-prototype="{{ form_row($form->totalBudget->prototype()) }}">
+                        <div class="collection-container"
+                             data-prototype="{{ form_row($form->totalBudget->prototype()) }}">
                             {!! form_row($form->totalBudget) !!}
                         </div>
                         <button type="button" class="add-to-collection">Add More Total Budget</button>

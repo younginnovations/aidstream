@@ -10,6 +10,7 @@ class NameRequestManager
     function __construct(Version $version)
     {
         $this->req = $version->getOrganizationElement()->getNameRequest();
+
         return $this->req;
     }
 }

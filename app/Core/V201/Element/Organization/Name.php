@@ -12,6 +12,7 @@ class Name extends BaseElement
     public function setNarrative($narrative)
     {
         $this->narratives[] = $narrative;
+
         return $this;
     }
 
@@ -23,19 +24,19 @@ class Name extends BaseElement
     public function getXmlData($org)
     {
         $orgNameData = array();
-        foreach($org->buildOrgName() as $orgName)
-        {
-            $orgNameData['narrative'] =array(
-                '@value' => $orgName['narrative'],
+        foreach ($org->buildOrgName() as $orgName) {
+            $orgNameData['narrative'] = array(
+                '@value'      => $orgName['narrative'],
                 '@attributes' => array(
                     'xml:lang' => $orgName['language']
                 )
             );
         }
+
         return $orgNameData;
     }
 
-    public  function getRepository()
+    public function getRepository()
     {
         return App::make('App\Core\V201\Repositories\Organization\NameRepository');
     }

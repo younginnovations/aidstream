@@ -12,6 +12,7 @@ class CreateOrgRecipientOrgBudgetRequestManager
     function __construct(Version $version)
     {
         $this->req = $version->getOrganizationElement()->getRecipientOrgBudgetRequest();
+
         return $this->req;
     }
 }

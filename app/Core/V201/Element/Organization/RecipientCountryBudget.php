@@ -12,6 +12,7 @@ class RecipientCountryBudget extends BaseElement
     public function setNarrative($narrative)
     {
         $this->narratives[] = $narrative;
+
         return $this;
     }
 
@@ -23,19 +24,19 @@ class RecipientCountryBudget extends BaseElement
     public function getXmlData($org)
     {
         $orgRecipientCountryData = array();
-        foreach($org->buildOrgRecipientCountryBudget() as $orgRecipientCountry)
-        {
-            $orgRecipientCountryData['narrative'] =array(
-                '@value' => $orgRecipientCountry['narrative'],
+        foreach ($org->buildOrgRecipientCountryBudget() as $orgRecipientCountry) {
+            $orgRecipientCountryData['narrative'] = array(
+                '@value'      => $orgRecipientCountry['narrative'],
                 '@attributes' => array(
                     'xml:lang' => $orgRecipientCountry['language']
                 )
             );
         }
+
         return $orgRecipientCountryData;
     }
 
-    public  function getRepository()
+    public function getRepository()
     {
         return App::make('App\Core\V201\Repositories\Organization\RecipientCountryBudgetRepository');
     }

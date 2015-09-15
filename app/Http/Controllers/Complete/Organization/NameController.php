@@ -38,17 +38,22 @@ class NameController extends Controller {
 	}
 
 	/**
-	 * Update the specified resource in storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function update($orgId, NameRequestManager $nameRequestManager)
+	 * write brief description
+	 * @param                    $orgId
+	 * @param NameRequestManager $nameRequestManager
+	 * @param Request            $request
+	 * @return mixed
+     */
+	public function update($orgId, NameRequestManager $nameRequestManager, Request $request)
 	{
-		$input = Input::all();
+		$input            = $request->all();
 		$organizationData = $this->nameManager->getOrganizationData($orgId);
-		$this->nameManager->update($input, $organizationData);
-		return redirect()->route("organization.show", $orgId)->withMessage("Name Updated !");
-	}
 
+		if ($this->nameManager->update($input, $organizationData)) {
+			return redirect()->to(sprintf('/organization/%s', $orgId))->withMessage(
+				'Organization Name Updated !'
+			);
+		}
+		return redirect()->to->route('organization.name.index',$orgId);
+	}
 }

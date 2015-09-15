@@ -9,14 +9,18 @@ class NameForm extends Form
     public function buildForm()
     {
         $this
-            ->add('name', 'collection', [
-                'type' => 'form',
-                'prototype' => true,
-                'options' => [
-                    'class' => 'App\Core\V201\Forms\Organization\NarrativeForm',
-                    'label' => false,
-                ],
-                'wrapper' => false
-            ]);
+            ->add(
+                'name',
+                'collection',
+                [
+                    'type'      => 'form',
+                    'prototype' => true,
+                    'options'   => [
+                        'class' => 'App\Core\V201\Forms\Organization\NarrativeForm',
+                        'label' => false,
+                    ],
+                    'wrapper'   => false
+                ]
+            );
     }
 }

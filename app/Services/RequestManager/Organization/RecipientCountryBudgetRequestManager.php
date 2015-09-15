@@ -10,6 +10,7 @@ class RecipientCountryBudgetRequestManager
     function __construct(Version $version)
     {
         $this->req = $version->getOrganizationElement()->getRecipientCountryBudgetRequest();
+
         return $this->req;
     }
 }

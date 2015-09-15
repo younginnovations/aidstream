@@ -9,6 +9,6 @@ class AdminController extends Controller
     {
         $activity = UserActivity::all();
 
-        return view('admin.activityLog',compact('activity'));
+        return view('admin.activityLog', compact('activity'));
     }
 }

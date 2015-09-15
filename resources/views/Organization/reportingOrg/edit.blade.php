@@ -11,7 +11,8 @@
                         {!! form_start($form) !!}
                         {!! form_row($form->reporting_organization_identifier) !!}
                         {!! form_row($form->reporting_organization_type) !!}
-                        <div class="collection-container" data-prototype="{{ form_row($form->narrative->prototype()) }}">
+                        <div class="collection-container"
+                             data-prototype="{{ form_row($form->narrative->prototype()) }}">
                             {!! form_row($form->narrative) !!}
                         </div>
                         <button type="button" class="add-to-collection">Add More Reporting Organization</button>

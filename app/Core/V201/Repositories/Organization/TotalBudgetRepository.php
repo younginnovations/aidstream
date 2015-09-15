@@ -22,39 +22,24 @@ class TotalBudgetRepository
 
     /**
      * @param OrganizationData $org
-     * @param DB $database
-     * @param Log $log
+     * @param DB               $database
+     * @param Log              $log
      */
     function __construct(OrganizationData $org, DB $database, Log $log)
     {
-        $this->org = $org;
+        $this->org      = $org;
         $this->database = $database;
-        $this->log = $log;
+        $this->log      = $log;
     }
+
     /**
      * @param $input
      * @param $organization
      */
     public function update($input, $organization)
     {
-        try{
-            $this->database->beginTransaction();
-            $organization->total_budget = json_encode($input['totalBudget']);
-            $organization->save();
-            $this->database->commit();
-            $this->log->info('Organization Total Budget Updated',
-                ['for ' => $organization['total_budget']]);
-        } catch (Exception $exception) {
-            $this->database->rollback();
-
-            $this->log->error(
-                sprintf('Organization Total Budget could not be updated due to %s', $exception->getMessage()),
-                [
-                    'OrganizationTotalBudget' => $input,
-                    'trace' => $exception->getTraceAsString()
-                ]
-            );
-        }
+        $organization->total_budget = $input['totalBudget'];
+        return $organization->save();
     }
 
     public function getOrganizationData($organization_id)
@@ -64,7 +49,7 @@ class TotalBudgetRepository
 
     public function getOrganizationTotalBudgetData($organization_id)
     {
-        return json_decode($this->org->where('organization_id', $organization_id)->first()->total_budget, true);
+        return $this->org->where('organization_id', $organization_id)->first()->total_budget;
     }
 
 }

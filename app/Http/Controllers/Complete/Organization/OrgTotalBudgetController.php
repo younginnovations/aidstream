@@ -22,18 +22,19 @@ use App\Services\FormCreator\Organization\TotalBudgetForm as FormBuilder;
  * Class OrgTotalBudgetController
  * @package App\Http\Controllers\Complete\Organization
  */
-class OrgTotalBudgetController extends Controller {
+class OrgTotalBudgetController extends Controller
+{
 
     protected $formBuilder;
     protected $totalBudgetManager;
     protected $totalBudgetForm;
+
     public function __construct(
         FormBuilder $formBuilder,
         OrgTotalBudgetManager $totalBudgetManager
-    )
-    {
+    ) {
         $this->middleware('auth');
-        $this->totalBudgetForm = $formBuilder;
+        $this->totalBudgetForm    = $formBuilder;
         $this->totalBudgetManager = $totalBudgetManager;
     }
 
@@ -44,23 +45,29 @@ class OrgTotalBudgetController extends Controller {
     public function index($orgId)
     {
         $totalBudget = $this->totalBudgetManager->getOrganizationTotalBudgetData($orgId);
-        $form = $this->totalBudgetForm->editForm($totalBudget, $orgId);
+        $form        = $this->totalBudgetForm->editForm($totalBudget, $orgId);
+
         return view('Organization.totalBudget.totalBudget', compact('form', 'totalBudget'));
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  int  $orgId
-     * @return Response
+     * write brief description
+     * @param                           $orgId
+     * @param TotalBudgetRequestManager $totalBudgetRequestManager
+     * @param Request                   $request
+     * @return mixed
      */
-    public function update($orgId, TotalBudgetRequestManager $totalBudgetRequestManager)
+    public function update($orgId, TotalBudgetRequestManager $totalBudgetRequestManager, Request $request)
     {
-        $input = Input::all();
+        $input            = $request->all();
         $organizationData = $this->totalBudgetManager->getOrganizationData($orgId);
-        $this->totalBudgetManager->update($input, $organizationData);
-        Session::flash('message', 'Total Budget Updated !');
-        return Redirect::to("/organization/$orgId");
-    }
 
+        if ($this->totalBudgetManager->update($input, $organizationData)) {
+            return redirect()->to(sprintf('/organization/%s', $orgId))->withMessage(
+                'Organization Total Budget Updated !'
+            );
+        }
+
+        return redirect()->to->route('organization.total-budget.index', $orgId);
+    }
 }

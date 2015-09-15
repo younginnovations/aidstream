@@ -10,6 +10,7 @@ class TotalBudgetRequestManager
     function __construct(Version $version)
     {
         $this->req = $version->getOrganizationElement()->getTotalBudgetRequest();
+
         return $this->req;
     }
 }

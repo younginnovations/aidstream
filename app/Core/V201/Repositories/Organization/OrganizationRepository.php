@@ -24,12 +24,12 @@ class OrganizationRepository implements OrganizationRepositoryInterface
      */
     public function createOrganization(array $input)
     {
-        $org = new Organization();
-        $org->name = json_encode($input['name']);
+        $org                  = new Organization();
+        $org->name            = json_encode($input['name']);
         $org->user_identifier = $input['user_identifier'];
-        $org->address = $input['address'];
-        $org->telephone = $input['telephone'];
-        $org->reporting_org = json_encode($input['reporting_org']);
+        $org->address         = $input['address'];
+        $org->telephone       = $input['telephone'];
+        $org->reporting_org   = json_encode($input['reporting_org']);
         $org->save();
     }
 
@@ -56,12 +56,12 @@ class OrganizationRepository implements OrganizationRepositoryInterface
      */
     public function updateOrganization($input, $org)
     {
-        $org->name = $input['name'];
+        $org->name            = $input['name'];
         $org->user_identifier = $input['user_identifier'];
-        $org->address = $input['address'];
-        $org->telephone = $input['telephone'];
-        $org->reporting_org = json_encode($input['reporting_org']);
-        $org->status = $input['status'];
+        $org->address         = $input['address'];
+        $org->telephone       = $input['telephone'];
+        $org->reporting_org   = json_encode($input['reporting_org']);
+        $org->status          = $input['status'];
         $org->save();
     }
 

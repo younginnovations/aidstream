@@ -10,7 +10,8 @@
                     <div class="panel-body">
                         <h3>Adding Document Link ...</h3>
                         {!! form_start($form) !!}
-                        <div class="collection-container" data-prototype="{{ form_row($form->documentLink->prototype()) }}">
+                        <div class="collection-container"
+                             data-prototype="{{ form_row($form->documentLink->prototype()) }}">
                             {!! form_row($form->documentLink) !!}
                         </div>
                         <button type="button" class="add-to-collection">Add More</button>

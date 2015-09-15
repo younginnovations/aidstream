@@ -22,14 +22,14 @@ class RecipientCountryBudgetRepository
 
     /**
      * @param OrganizationData $org
-     * @param DB $database
-     * @param Log $log
+     * @param DB               $database
+     * @param Log              $log
      */
     function __construct(OrganizationData $org, DB $database, Log $log)
     {
-        $this->org = $org;
+        $this->org      = $org;
         $this->database = $database;
-        $this->log = $log;
+        $this->log      = $log;
     }
 
     /**
@@ -38,24 +38,8 @@ class RecipientCountryBudgetRepository
      */
     public function update($input, $organization)
     {
-        try{
-            $this->database->beginTransaction();
-            $organization->recipient_country_budget = $input['recipientCountryBudget'];
-            $organization->save();
-            $this->database->commit();
-            $this->log->info('Recipient Country Budget Updated',
-                ['for ' => $organization['recipient_country_budget']]);
-        } catch (Exception $exception) {
-            $this->database->rollback();
-
-            $this->log->error(
-                sprintf('Recipient Country Budget could not be updated due to %s', $exception->getMessage()),
-                [
-                    'OrganizationTotalBudget' => $input,
-                    'trace' => $exception->getTraceAsString()
-                ]
-            );
-        }
+        $organization->recipient_country_budget = $input['recipientCountryBudget'];
+        return $organization->save();
     }
 
     public function getOrganizationData($organization_id)

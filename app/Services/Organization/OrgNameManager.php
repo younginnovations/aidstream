@@ -3,14 +3,37 @@ namespace App\Services\Organization;
 
 use App\Core\Version;
 use App;
+use Illuminate\Auth\Guard;
+use Illuminate\Contracts\Logging\Log;
 
 class OrgNameManager
 {
 
     protected $repo;
-    function __construct(Version $version)
+    /**
+     * @var Guard
+     */
+    private $auth;
+    /**
+     * @var Log
+     */
+    private $log;
+    /**
+     * @var Version
+     */
+    private $version;
+
+    /**
+     * @param Version $version
+     * @param Log     $log
+     * @param Guard   $auth
+     */
+    function __construct(Version $version, Log $log, Guard $auth)
     {
-        $this->repo = $version->getOrganizationElement()->getName()->getRepository();
+        $this->repo    = $version->getOrganizationElement()->getName()->getRepository();
+        $this->auth    = $auth;
+        $this->log     = $log;
+        $this->version = $version;
     }
 
     public function getOrganizationData($id)
@@ -24,14 +47,38 @@ class OrgNameManager
         return $this->repo->getOrganizationNameData($id);
 
     }
+
     /**
+     * write brief description
      * @param $input
      * @param $organization
+     * @return bool
      */
-    public function update($input, $organizationData)
+    public function update($input, $organization)
     {
-        $this->repo->update($input, $organizationData);
+        try {
+            $this->repo->update($input, $organization);
+            $this->log->info(
+                'Organization Name Updated',
+                ['for ' => $organization['name']]
+            );
+            $this->log->activity(
+                "organization.name_updated",
+                ['name' => $this->auth->user()->organization->name]
+            );
+
+            return true;
+        } catch (Exception $exception) {
+
+            $this->log->error(
+                sprintf('Name could not be updated due to %s', $exception->getMessage()),
+                [
+                    'OrganizationName' => $input,
+                    'trace'            => $exception->getTraceAsString()
+                ]
+            );
+        }
+
+        return false;
     }
-
-
 }

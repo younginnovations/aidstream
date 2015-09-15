@@ -12,6 +12,7 @@ class DocumentLink extends BaseElement
     public function setNarrative($narrative)
     {
         $this->narratives[] = $narrative;
+
         return $this;
     }
 
@@ -23,19 +24,19 @@ class DocumentLink extends BaseElement
     public function getXmlData($org)
     {
         $orgDocumentLinkData = array();
-        foreach($org->buildDocumentLink() as $orgDocumentLink)
-        {
-            $orgDocumentLink['narrative'] =array(
-                '@value' => $orgDocumentLink['narrative'],
+        foreach ($org->buildDocumentLink() as $orgDocumentLink) {
+            $orgDocumentLink['narrative'] = array(
+                '@value'      => $orgDocumentLink['narrative'],
                 '@attributes' => array(
                     'xml:lang' => $orgDocumentLink['language']
                 )
             );
         }
+
         return $orgDocumentLinkData;
     }
 
-    public  function getRepository()
+    public function getRepository()
     {
         return App::make('App\Core\V201\Repositories\Organization\DocumentLinkRepository');
     }

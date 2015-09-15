@@ -9,9 +9,13 @@ class VersionInfoForm extends Form
     public function buildForm()
     {
         $this
-            ->add('version', 'select', [
-                'label' => 'Select Version',
-                'choices' => $this->getData('versions')
-            ]);
+            ->add(
+                'version',
+                'select',
+                [
+                    'label'   => 'Select Version',
+                    'choices' => $this->getData('versions')
+                ]
+            );
     }
 }

@@ -22,18 +22,19 @@ use App\Services\FormCreator\Organization\RecipientCountryBudgetForm as FormBuil
  * Class OrgRecipientCountryBudgetController
  * @package App\Http\Controllers\Complete\Organization
  */
-class RecipientCountryBudgetController extends Controller {
+class RecipientCountryBudgetController extends Controller
+{
 
     protected $formBuilder;
     protected $recipientCountryBudgetManager;
     protected $recipientCountryBudgetForm;
+
     public function __construct(
         FormBuilder $formBuilder,
         RecipientCountryBudgetManager $recipientCountryBudgetManager
-    )
-    {
+    ) {
         $this->middleware('auth');
-        $this->recipientCountryBudgetForm = $formBuilder;
+        $this->recipientCountryBudgetForm    = $formBuilder;
         $this->recipientCountryBudgetManager = $recipientCountryBudgetManager;
     }
 
@@ -44,23 +45,35 @@ class RecipientCountryBudgetController extends Controller {
     public function index($orgId)
     {
         $recipientCountryBudget = $this->recipientCountryBudgetManager->getRecipientCountryBudgetData($orgId);
-        $form = $this->recipientCountryBudgetForm->editForm($recipientCountryBudget, $orgId);
-        return view('Organization.recipientCountryBudget.recipientCountryBudget', compact('form', 'recipientCountryBudget'));
-    }
+        $form                   = $this->recipientCountryBudgetForm->editForm($recipientCountryBudget, $orgId);
 
+        return view(
+            'Organization.recipientCountryBudget.recipientCountryBudget',
+            compact('form', 'recipientCountryBudget')
+        );
+    }
 
     /**
-     * @param $orgId
+     * write brief description
+     * @param                                      $orgId
      * @param RecipientCountryBudgetRequestManager $recipientCountryBudgetRequestManager
+     * @param Request                              $request
      * @return mixed
      */
-    public function update($orgId, RecipientCountryBudgetRequestManager $recipientCountryBudgetRequestManager)
-    {
-        $input = Input::all();
+    public function update(
+        $orgId,
+        RecipientCountryBudgetRequestManager $recipientCountryBudgetRequestManager,
+        Request $request
+    ) {
+        $input            = $request->all();
         $organizationData = $this->recipientCountryBudgetManager->getOrganizationData($orgId);
-        $this->recipientCountryBudgetManager->update($input, $organizationData);
-        Session::flash('message', 'Organization Recipient CountryBudget Updated !');
-        return Redirect::to("/organization/$orgId");
-    }
 
+        if ($this->recipientCountryBudgetManager->update($input, $organizationData)) {
+            return redirect()->to(sprintf('/organization/%s', $orgId))->withMessage(
+                'Organization Recipient Country Budget Updated !'
+            );
+        }
+
+        return redirect()->to->route('organization.recipient-country-budget.index', $orgId);
+    }
 }

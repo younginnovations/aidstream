@@ -8,6 +8,7 @@ class OrgReportingOrgManager
 {
 
     protected $repo;
+
     function __construct(Version $version)
     {
         $this->repo = $version->getOrganizationElement()->getOrgReportingOrg()->getRepository();

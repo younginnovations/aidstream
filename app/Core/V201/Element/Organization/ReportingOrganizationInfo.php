@@ -18,7 +18,7 @@ class ReportingOrganizationInfo extends BaseElement
         return "App\Core\V201\Forms\Organization\ReportingOrganizationInfoForm";
     }
 
-    public  function getRepository()
+    public function getRepository()
     {
         return App::make('App\Core\V201\Repositories\Organization\OrganizationRepository');
     }

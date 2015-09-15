@@ -11,6 +11,7 @@ class RecipientOrgBudget extends BaseElement
     public function setNarrative($narrative)
     {
         $this->narratives[] = $narrative;
+
         return $this;
     }
 
@@ -25,17 +26,18 @@ class RecipientOrgBudget extends BaseElement
      */
     public function getXmlData($organization)
     {
-        $organizationData =[];
+        $organizationData   = [];
         $recipientOrgBudget = $organization->buildRecipientOrgBudget();
         foreach ($recipientOrgBudget as $RecipientOrgBudget) {
             $organizationData[] = array(
                 'narrative' => $this->buildNarrative($RecipientOrgBudget['narrative'])
             );
         }
+
         return $organizationData;
     }
 
-    public  function getRepository()
+    public function getRepository()
     {
         return App::make('App\Core\V201\Repositories\Organization\RecipientOrgBudgetRepository');
     }

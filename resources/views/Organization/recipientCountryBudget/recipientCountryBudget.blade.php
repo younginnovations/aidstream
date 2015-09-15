@@ -10,7 +10,8 @@
                     <div class="panel-body">
                         <h3>Adding Recipient Country Budget...</h3>
                         {!! form_start($form) !!}
-                        <div class="collection-container" data-prototype="{{ form_row($form->recipientCountryBudget->prototype()) }}">
+                        <div class="collection-container"
+                             data-prototype="{{ form_row($form->recipientCountryBudget->prototype()) }}">
                             {!! form_row($form->recipientCountryBudget) !!}
                         </div>
                         <button type="button" class="add-to-collection">Add More</button>

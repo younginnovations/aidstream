@@ -58,6 +58,7 @@ class DocumentLinkController extends Controller
                 'Organization Document Link Updated !'
             );
         }
-        return redirect()->to->route('organization.document-link.index',$orgId);
+
+        return redirect()->to->route('organization.document-link.index', $orgId);
     }
 }

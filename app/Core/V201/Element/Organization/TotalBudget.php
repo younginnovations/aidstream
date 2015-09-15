@@ -12,6 +12,7 @@ class TotalBudget extends BaseElement
     public function setNarrative($narrative)
     {
         $this->narratives[] = $narrative;
+
         return $this;
     }
 
@@ -23,19 +24,19 @@ class TotalBudget extends BaseElement
     public function getXmlData($org)
     {
         $orgTotalBudgetData = array();
-        foreach($org->buildOrgTotalBudget() as $orgTotalBudget)
-        {
-            $orgTotalBudgetData['narrative'] =array(
-                '@value' => $orgTotalBudget['narrative'],
+        foreach ($org->buildOrgTotalBudget() as $orgTotalBudget) {
+            $orgTotalBudgetData['narrative'] = array(
+                '@value'      => $orgTotalBudget['narrative'],
                 '@attributes' => array(
                     'xml:lang' => $orgTotalBudget['language']
                 )
             );
         }
+
         return $orgTotalBudgetData;
     }
 
-    public  function getRepository()
+    public function getRepository()
     {
         return App::make('App\Core\V201\Repositories\Organization\TotalBudgetRepository');
     }

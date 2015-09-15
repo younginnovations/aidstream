@@ -39,14 +39,14 @@ class OrganizationController extends Controller
         $this->settingsManager            = $settingsManager;
         $this->organizationManager        = $organizationManager;
         $this->orgReportingOrgFormCreator = $orgReportingOrgFormCreator;
-        $this->nameManager = $nameManager;
+        $this->nameManager                = $nameManager;
         $this->middleware('auth');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return Response
      */
     public function show($id)
@@ -55,9 +55,10 @@ class OrganizationController extends Controller
         if (!isset($settings)) {
             return redirect('/settings');
         }
-        $organization = $this->organizationManager->getOrganization($id);
+        $organization  = $this->organizationManager->getOrganization($id);
         $reporting_org = $organization->buildOrgReportingOrg()[0];
-        $orgName = $this->nameManager->getOrganizationNameData($id);
+        $orgName       = $this->nameManager->getOrganizationNameData($id);
+
         return view('Organization/show', compact('organization', 'reporting_org', 'orgName'));
     }
 
@@ -71,6 +72,7 @@ class OrganizationController extends Controller
             $organization = $this->organizationManager->getOrganization($id);
             $this->organizationManager->updateStatus($input, $organization);
         }
+
         return redirect()->back();
     }
 

@@ -8,16 +8,22 @@ class OrganizationData extends Model
     protected $fillable = [
         'name',
         'total_budget',
-        'recipient_org_budget',
+        'recipient_organization_budget',
         'recipient_country_budget',
         'document_link',
         'organization_id'
     ];
-    protected $casts = ['recipient_country_budget' => 'json', 'document_link' => 'json'];
+    protected $casts = [
+        'name'                          => 'json',
+        'total_budget'                  => 'json',
+        'recipient_organization_budget' => 'json',
+        'recipient_country_budget'      => 'json',
+        'document_link'                 => 'json'
+    ];
 
     public function getName()
     {
-        return json_decode($this->name);
+        return $this->name;
     }
 
     public function buildOrgName()
@@ -27,7 +33,7 @@ class OrganizationData extends Model
 
     public function getTotalBudget()
     {
-        return json_decode($this->total_budget);
+        return $this->total_budget;
     }
 
     public function buildTotalBudget()
@@ -37,12 +43,12 @@ class OrganizationData extends Model
 
     public function getRecipientOrgBudget()
     {
-        return json_decode($this->recipient_organization_budget);
+        return $this->recipient_organization_budget;
     }
 
     public function buildRecipientOrgBudget()
     {
-        return json_decode($this->recipient_organization_budget, true);
+        return $this->recipient_organization_budget;
     }
 
     public function getRecipientCountryBudget()
@@ -57,7 +63,7 @@ class OrganizationData extends Model
 
     public function getDocumentLink()
     {
-        return json_decode($this->document_link);
+        return $this->document_link;
     }
 
     public function buildDocumentLink()

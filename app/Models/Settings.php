@@ -2,10 +2,11 @@
 
 use Illuminate\Database\Eloquent\Model;
 
-class Settings extends Model {
-    protected $table ="settings";
+class Settings extends Model
+{
+    protected $table = "settings";
     protected $fileable_key = "settings";
-    protected $fillable     = [
+    protected $fillable = [
         'publishing_type',
         'registry_info',
         'default_field_values',

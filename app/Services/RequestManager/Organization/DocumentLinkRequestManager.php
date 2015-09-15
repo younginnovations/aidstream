@@ -10,6 +10,7 @@ class DocumentLinkRequestManager
     function __construct(Version $version)
     {
         $this->req = $version->getOrganizationElement()->getDocumentLinkRequest();
+
         return $this->req;
     }
 }

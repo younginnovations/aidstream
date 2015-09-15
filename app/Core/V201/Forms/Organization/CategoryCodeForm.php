@@ -8,17 +8,23 @@ class CategoryCodeForm extends Form
 
     public function buildForm()
     {
-        $json = file_get_contents(app_path("Core/V201/Codelist/". config('app.locale'). "/Organization/DocumentcategoryCodelist.json"));
-        $response = json_decode($json,true);
+        $json     = file_get_contents(
+            app_path("Core/V201/Codelist/" . config('app.locale') . "/Organization/DocumentcategoryCodelist.json")
+        );
+        $response = json_decode($json, true);
         $language = $response['DocumentCategory'];
         $code_arr = [];
-        foreach($language as $val) {
+        foreach ($language as $val) {
             $code_arr[$val['code']] = $val['code'] . ' - ' . $val['name'];
         }
         $this
-            ->add('category', 'select', [
-                'choices' => $code_arr,
-                'label' => 'Code'
-            ]);
+            ->add(
+                'category',
+                'select',
+                [
+                    'choices' => $code_arr,
+                    'label'   => 'Code'
+                ]
+            );
     }
 }
