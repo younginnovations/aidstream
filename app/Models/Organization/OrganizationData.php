@@ -11,7 +11,8 @@ class OrganizationData extends Model
         'recipient_organization_budget',
         'recipient_country_budget',
         'document_link',
-        'organization_id'
+        'organization_id',
+        'status'
     ];
     protected $casts = [
         'name'                          => 'json',

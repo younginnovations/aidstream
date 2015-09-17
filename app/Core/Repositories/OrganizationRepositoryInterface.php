@@ -10,6 +10,4 @@ interface OrganizationRepositoryInterface
     public function getOrganization($id);
 
     public function updateOrganization($input, $organization);
-
-    public function updateStatus($input, $organization);
 }

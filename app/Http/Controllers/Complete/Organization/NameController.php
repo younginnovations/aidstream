@@ -47,13 +47,16 @@ class NameController extends Controller {
 	public function update($orgId, NameRequestManager $nameRequestManager, Request $request)
 	{
 		$input            = $request->all();
+		$input['status'] = 0;
 		$organizationData = $this->nameManager->getOrganizationData($orgId);
 
 		if ($this->nameManager->update($input, $organizationData)) {
+
+			$this->nameManager->resetStatus($orgId);
 			return redirect()->to(sprintf('/organization/%s', $orgId))->withMessage(
 				'Organization Name Updated !'
 			);
 		}
-		return redirect()->to->route('organization.name.index',$orgId);
+		return redirect()->route('organization.name.index',$orgId);
 	}
 }

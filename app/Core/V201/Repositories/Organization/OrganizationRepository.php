@@ -64,14 +64,4 @@ class OrganizationRepository implements OrganizationRepositoryInterface
         $org->status          = $input['status'];
         $org->save();
     }
-
-    /**
-     * @param $input
-     * @param $org
-     */
-    public function updateStatus($input, $org)
-    {
-        $org->status = $input['status'];
-        $org->save();
-    }
 }

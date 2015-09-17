@@ -57,9 +57,32 @@ class OrganizationController extends Controller
         }
         $organization  = $this->organizationManager->getOrganization($id);
         $reporting_org = $organization->buildOrgReportingOrg()[0];
-        $orgName       = $this->nameManager->getOrganizationNameData($id);
+        $organizationData = $this->nameManager->getOrganizationData($id);
 
-        return view('Organization/show', compact('organization', 'reporting_org', 'orgName'));
+        $org_name = $organizationData->name;
+        $total_budget = $organizationData->total_budget;
+        $recipient_organization_budget = $organizationData->recipient_organization_budget;
+        $recipient_country_budget = $organizationData->recipient_country_budget;
+        $document_link = $organizationData->document_link;
+        if(!isset($org_name)) $org_name = [];
+        if(!isset($total_budget)) $total_budget = [];
+        if(!isset($recipient_organization_budget)) $recipient_organization_budget = [];
+        if(!isset($recipient_country_budget)) $recipient_country_budget = [];
+        if(!isset($document_link)) $document_link = [];
+
+        $status = $organizationData->status;
+
+        return view('Organization/show',
+            compact('organization',
+                'reporting_org',
+                'org_name',
+                'total_budget',
+                'recipient_organization_budget',
+                'recipient_country_budget',
+                'document_link',
+                'status'
+            ));
+
     }
 
     /**
@@ -69,10 +92,9 @@ class OrganizationController extends Controller
     {
         $input = $request->all();
         if (isset($input['status'])) {
-            $organization = $this->organizationManager->getOrganization($id);
-            $this->organizationManager->updateStatus($input, $organization);
+            $organizationData = $this->nameManager->getOrganizationData($id);
+            $this->nameManager->updateStatus($input, $organizationData);
         }
-
         return redirect()->back();
     }
 
@@ -86,7 +108,6 @@ class OrganizationController extends Controller
         $organization = $this->organizationManager->getOrganization($id);
         $data         = $organization->buildOrgReportingOrg()[0];
         $form         = $this->orgReportingOrgFormCreator->editForm($data, $organization);
-
         return view('Organization.identifier.edit', compact('form', 'organization'));
     }
 }

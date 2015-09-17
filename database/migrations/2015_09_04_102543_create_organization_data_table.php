@@ -21,6 +21,7 @@ class CreateOrganizationDataTable extends Migration {
 			$table->json('recipient_country_budget')->nullable();
 			$table->json('document_link')->nullable();
 			$table->integer('organization_id');
+			$table->integer('status')->default(0);
 			$table->timestamps();
 
 			$table->foreign('organization_id')->references('id')->on('organizations')->onDelete('cascade');

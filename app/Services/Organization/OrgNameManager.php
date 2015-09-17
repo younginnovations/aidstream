@@ -1,5 +1,5 @@
 <?php
-namespace App\Services\Organization;
+namespace app\Services\Organization;
 
 use App\Core\Version;
 use App;
@@ -9,7 +9,6 @@ use Illuminate\Contracts\Logging\Log;
 
 class OrgNameManager
 {
-
     protected $repo;
     /**
      * @var Guard
@@ -29,7 +28,7 @@ class OrgNameManager
      * @param Log     $log
      * @param Guard   $auth
      */
-    function __construct(Version $version, Log $log, Guard $auth)
+    public function __construct(Version $version, Log $log, Guard $auth)
     {
         $this->repo    = $version->getOrganizationElement()->getName()->getRepository();
         $this->auth    = $auth;
@@ -45,7 +44,6 @@ class OrgNameManager
     public function getOrganizationData($id)
     {
         return $this->repo->getOrganizationData($id);
-
     }
 
     /**
@@ -56,7 +54,6 @@ class OrgNameManager
     public function getOrganizationNameData($id)
     {
         return $this->repo->getOrganizationNameData($id);
-
     }
 
     /**
@@ -80,16 +77,39 @@ class OrgNameManager
 
             return true;
         } catch (Exception $exception) {
-
             $this->log->error(
                 sprintf('Name could not be updated due to %s', $exception->getMessage()),
                 [
                     'OrganizationName' => $input,
-                    'trace'            => $exception->getTraceAsString()
+                    'trace' => $exception->getTraceAsString()
                 ]
             );
         }
-
         return false;
+    }
+    /**
+     * @param $input
+     * @param $organizationData
+     */
+    public function getStatus($organization_id)
+    {
+        return $this->repo->getStatus($organization_id);
+    }
+
+    /**
+     * @param $input
+     * @param $organizationData
+     */
+    public function updateStatus($input, $organizationData)
+    {
+        $this->repo->updateStatus($input, $organizationData);
+    }
+
+    /**
+     * @param $organization_id
+     */
+    public function resetStatus($organization_id)
+    {
+        $this->repo->resetStatus($organization_id);
     }
 }
