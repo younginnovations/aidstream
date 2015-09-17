@@ -21,19 +21,30 @@ class NameRepository
     /**
      * @param $input
      * @param $organizationData
+     * @return bool
      */
-    public function update($input, $organizationData)
+    public function update(array $input, OrganizationData $organizationData)
     {
         $organizationData->name = $input['name'];
 
         return $organizationData->save();
     }
 
+    /**
+     * write brief description
+     * @param $organization_id
+     * @return model
+     */
     public function getOrganizationData($organization_id)
     {
         return $this->org->where('organization_id', $organization_id)->first();
     }
 
+    /**
+     * write brief description
+     * @param $organization_id
+     * @return model
+     */
     public function getOrganizationNameData($organization_id)
     {
         return $this->org->where('organization_id', $organization_id)->first()->name;

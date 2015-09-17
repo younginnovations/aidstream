@@ -39,6 +39,7 @@ class DocumentLinkManager
     /**
      * @param $input
      * @param $organization
+     * @return bool
      */
     public function update($input, $organization)
     {
@@ -68,12 +69,23 @@ class DocumentLinkManager
         return false;
     }
 
+
+    /**
+     * write brief description
+     * @param $id
+     * @return model
+     */
     public function getOrganizationData($id)
     {
         return $this->repo->getOrganizationData($id);
 
     }
 
+    /**
+     * write brief description
+     * @param $id
+     * @return model
+     */
     public function getDocumentLinkData($id)
     {
         return $this->repo->getDocumentLinkData($id);

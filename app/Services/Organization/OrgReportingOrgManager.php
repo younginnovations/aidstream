@@ -3,6 +3,7 @@ namespace App\Services\Organization;
 
 use App\Core\Version;
 use App;
+use App\Models\Organization\Organization;
 
 class OrgReportingOrgManager
 {
@@ -18,7 +19,7 @@ class OrgReportingOrgManager
      * @param $organizationId
      * @param $input
      */
-    public function create($organizationId, $input)
+    public function create($organizationId, array $input)
     {
         $this->repo->create($organizationId, $input);
     }
@@ -27,7 +28,7 @@ class OrgReportingOrgManager
      * @param $input
      * @param $organization
      */
-    public function update($input, $organization)
+    public function update(array $input, Organization $organization)
     {
         $this->repo->update($input, $organization);
     }

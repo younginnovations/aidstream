@@ -3,6 +3,7 @@ namespace App\Services\Organization;
 
 use App\Core\Version;
 use App;
+use App\Models\Organization\OrganizationData;
 use Illuminate\Auth\Guard;
 use Illuminate\Contracts\Logging\Log;
 
@@ -36,12 +37,22 @@ class OrgNameManager
         $this->version = $version;
     }
 
+    /**
+     * write brief description
+     * @param $id
+     * @return model
+     */
     public function getOrganizationData($id)
     {
         return $this->repo->getOrganizationData($id);
 
     }
 
+    /**
+     * write brief description
+     * @param $id
+     * @return model
+     */
     public function getOrganizationNameData($id)
     {
         return $this->repo->getOrganizationNameData($id);
@@ -54,7 +65,7 @@ class OrgNameManager
      * @param $organization
      * @return bool
      */
-    public function update($input, $organization)
+    public function update(array $input, OrganizationData $organization)
     {
         try {
             $this->repo->update($input, $organization);

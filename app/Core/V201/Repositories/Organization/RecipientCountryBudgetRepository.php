@@ -2,8 +2,6 @@
 namespace App\Core\V201\Repositories\Organization;
 
 use App\Models\Organization\OrganizationData;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 
 class RecipientCountryBudgetRepository
 {
@@ -11,42 +9,42 @@ class RecipientCountryBudgetRepository
      * @var OrganizationData
      */
     private $org;
-    /**
-     * @var DB
-     */
-    private $database;
-    /**
-     * @var Log
-     */
-    private $log;
 
     /**
      * @param OrganizationData $org
-     * @param DB               $database
-     * @param Log              $log
      */
-    function __construct(OrganizationData $org, DB $database, Log $log)
+    function __construct(OrganizationData $org)
     {
-        $this->org      = $org;
-        $this->database = $database;
-        $this->log      = $log;
+        $this->org = $org;
     }
 
     /**
      * @param $input
      * @param $organization
+     * @return bool
      */
-    public function update($input, $organization)
+    public function update(array $input, OrganizationData $organization)
     {
         $organization->recipient_country_budget = $input['recipientCountryBudget'];
+
         return $organization->save();
     }
 
+    /**
+     * write brief description
+     * @param $organization_id
+     * @return model
+     */
     public function getOrganizationData($organization_id)
     {
         return $this->org->where('organization_id', $organization_id)->first();
     }
 
+    /**
+     * write brief description
+     * @param $organization_id
+     * @return model
+     */
     public function getRecipientCountryBudgetData($organization_id)
     {
         return $this->org->where('organization_id', $organization_id)->first()->recipient_country_budget;

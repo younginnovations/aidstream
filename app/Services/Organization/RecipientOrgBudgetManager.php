@@ -3,6 +3,7 @@ namespace App\Services\Organization;
 
 use App\Core\Version;
 use App;
+use App\Models\Organization\OrganizationData;
 use Illuminate\Auth\Guard;
 use Illuminate\Contracts\Logging\Log;
 
@@ -36,7 +37,12 @@ class RecipientOrgBudgetManager
         $this->version = $version;
     }
 
-    public function update($input, $organization)
+    /**
+     * @param array            $input
+     * @param OrganizationData $organization
+     * @return bool
+     */
+    public function update(array $input, OrganizationData $organization)
     {
         try {
             $this->repo->update($input, $organization);
@@ -64,12 +70,20 @@ class RecipientOrgBudgetManager
         return false;
     }
 
+    /**
+     * @param $id
+     * @return model
+     */
     public function getOrganizationData($id)
     {
         return $this->repo->getOrganizationData($id);
 
     }
 
+    /**
+     * @param $id
+     * @return model
+     */
     public function getRecipientOrgBudgetData($id)
     {
         return $this->repo->getRecipientOrgBudgetData($id);
