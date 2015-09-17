@@ -3,6 +3,7 @@ namespace App\Services\Organization;
 
 use App\Core\Version;
 use App;
+use App\Models\Organization\OrganizationData;
 use Illuminate\Auth\Guard;
 use Illuminate\Contracts\Logging\Log;
 
@@ -36,7 +37,13 @@ class RecipientCountryBudgetManager
         $this->version = $version;
     }
 
-    public function update($input, $organization)
+    /**
+     * write brief description
+     * @param array            $input
+     * @param OrganizationData $organization
+     * @return bool
+     */
+    public function update(array $input, OrganizationData $organization)
     {
         try {
             $this->repo->update($input, $organization);
@@ -64,12 +71,22 @@ class RecipientCountryBudgetManager
         return false;
     }
 
+    /**
+     * write brief description
+     * @param $id
+     * @return model
+     */
     public function getOrganizationData($id)
     {
         return $this->repo->getOrganizationData($id);
 
     }
 
+    /**
+     * write brief description
+     * @param $id
+     * @return model
+     */
     public function getRecipientCountryBudgetData($id)
     {
         return $this->repo->getRecipientCountryBudgetData($id);

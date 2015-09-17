@@ -1,6 +1,6 @@
-<?php
+<?php namespace Test;
 
-class TestCase extends Illuminate\Foundation\Testing\TestCase {
+class AidstreamTestCase extends \Illuminate\Foundation\Testing\TestCase {
 
 	/**
 	 * Creates the application.
