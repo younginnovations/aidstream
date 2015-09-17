@@ -3,6 +3,7 @@ namespace App\Services\Organization;
 
 use App\Core\Version;
 use App;
+use App\Models\Organization\OrganizationData;
 use Illuminate\Auth\Guard;
 use Illuminate\Contracts\Logging\Log;
 
@@ -41,13 +42,13 @@ class DocumentLinkManager
      * @param $organization
      * @return bool
      */
-    public function update($input, $organization)
+    public function update(array $input, OrganizationData $organization)
     {
         try {
             $this->repo->update($input, $organization);
             $this->log->info(
                 'Document Link Updated',
-                ['for ' => $organization['document_link']]
+                ['for' => $organization->document_link]
             );
             $this->log->activity(
                 "organization.document_link_updated",
