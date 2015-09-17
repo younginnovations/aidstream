@@ -21,14 +21,27 @@ class TotalBudget extends BaseElement
         return "App\Core\V201\Forms\Organization\MultipleTotalBudgetForm";
     }
 
-    public function getXmlData($org)
+    public function getXmlData($orgData)
     {
         $orgTotalBudgetData = array();
-        foreach ($org->buildOrgTotalBudget() as $orgTotalBudget) {
-            $orgTotalBudgetData['narrative'] = array(
-                '@value'      => $orgTotalBudget['narrative'],
-                '@attributes' => array(
-                    'xml:lang' => $orgTotalBudget['language']
+        foreach ($orgData->total_budget as $orgTotalBudget) {
+            $orgTotalBudgetData[] = array(
+                'period-start' => array(
+                    '@attributes' => array(
+                        'iso-date' => $orgTotalBudget['periodStart'][0]['date']
+                    )
+                ),
+                'period-end' => array(
+                    '@attributes' => array(
+                        'iso-date' => $orgTotalBudget['periodEnd'][0]['date']
+                    )
+                ),
+                'value' => array(
+                    '@value'      => $orgTotalBudget['value'][0]['amount'],
+                    '@attributes' => array(
+                        'currency' => $orgTotalBudget['value'][0]['currency'],
+                        'value-date' => $orgTotalBudget['value'][0]['value_date']
+                    )
                 )
             );
         }

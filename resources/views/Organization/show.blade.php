@@ -31,11 +31,16 @@
                             <input type="hidden" name="_method" value="PUT"/>
                             <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
                             <input type="hidden" name="status" value="{{ $status + 1 }}">
+							@if($status == 2)
                             <input type="button" value="{{ $btn_text }}" class="btn_confirm"
-                                   data-title="Confirmation" data-message="Are you sure you want to change status?">
+                                   data-title="Confirmation" data-message="Are you sure you want to Publish?">
+							@else
+                            <input type="submit" value="{{ $btn_text }}">
+							@endif
                         </form>
                     @endif
 
+					@if(!empty($reporting_org))
 					<div class="panel panel-default">
 						<div class="panel-heading">Reporting Organization</div>
 						<div class="panel-body row">
@@ -56,6 +61,7 @@
 							<div class="col-xs-8">{{ $reporting_org['reporting_organization_identifier'] }}</div>
 						</div>
 					</div>
+					@endif
 
 					@if(!empty($org_name))
 					<div class="panel panel-default">

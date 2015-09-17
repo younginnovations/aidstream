@@ -31,8 +31,11 @@ class OrgReportingOrg extends BaseElement
         $orgReportingOrg  = $organization->buildOrgReportingOrg();
         foreach ($orgReportingOrg as $OrgReportingOrg) {
             $organizationData[] = array(
-                '@attributes' => array('type' => $OrgReportingOrg['type']),
-                'narrative'   => $this->buildNarrative($OrgReportingOrg['narrative'])
+                '@attributes' => array(
+                    'type' => $OrgReportingOrg['reporting_organization_type'],
+                    'ref' => $OrgReportingOrg['reporting_organization_identifier']
+                ),
+                'narrative'   => $this->buildNarrative($OrgReportingOrg['narrative']),
             );
         }
 

@@ -83,7 +83,7 @@ return [
 
 	'cipher' => MCRYPT_RIJNDAEL_128,
 
-	'default_version' => 'V201',
+	'default_version' => '2.01',
 
 	/*
 	|--------------------------------------------------------------------------

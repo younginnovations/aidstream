@@ -27,10 +27,32 @@ class RecipientOrgBudget extends BaseElement
     public function getXmlData($organization)
     {
         $organizationData   = [];
-        $recipientOrgBudget = $organization->buildRecipientOrgBudget();
+        $recipientOrgBudget = $organization->recipient_organization_budget;
         foreach ($recipientOrgBudget as $RecipientOrgBudget) {
             $organizationData[] = array(
-                'narrative' => $this->buildNarrative($RecipientOrgBudget['narrative'])
+                'recipient-org' => array(
+                    '@attributes' => array(
+                        'ref' => $RecipientOrgBudget['recipientOrganization'][0]['Ref']
+                    ),
+                    'narrative' => $this->buildNarrative($RecipientOrgBudget['narrative'])
+                ),
+                'period-start' => array(
+                    '@attributes' => array(
+                        'iso-date' => $RecipientOrgBudget['periodStart'][0]['date']
+                    )
+                ),
+                'period-end' => array(
+                    '@attributes' => array(
+                        'iso-date' => $RecipientOrgBudget['periodEnd'][0]['date']
+                    )
+                ),
+                'value' => array(
+                    '@value'      => $RecipientOrgBudget['value'][0]['amount'],
+                    '@attributes' => array(
+                        'currency' => $RecipientOrgBudget['value'][0]['currency'],
+                        'value-date' => $RecipientOrgBudget['value'][0]['value_date']
+                    )
+                )
             );
         }
 

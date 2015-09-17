@@ -56,14 +56,16 @@ class OrganizationController extends Controller
             return redirect('/settings');
         }
         $organization  = $this->organizationManager->getOrganization($id);
-        $reporting_org = $organization->buildOrgReportingOrg()[0];
         $organizationData = $this->nameManager->getOrganizationData($id);
 
+        $reporting_org = $organization->buildOrgReportingOrg()[0];
         $org_name = $organizationData->name;
         $total_budget = $organizationData->total_budget;
         $recipient_organization_budget = $organizationData->recipient_organization_budget;
         $recipient_country_budget = $organizationData->recipient_country_budget;
         $document_link = $organizationData->document_link;
+        if(!isset($reporting_org)) $reporting_org
+            = [];
         if(!isset($org_name)) $org_name = [];
         if(!isset($total_budget)) $total_budget = [];
         if(!isset($recipient_organization_budget)) $recipient_organization_budget = [];
@@ -91,7 +93,16 @@ class OrganizationController extends Controller
     public function update($id, Request $request)
     {
         $input = $request->all();
-        if (isset($input['status'])) {
+        $status = $input['status'];
+        if (isset($status)) {
+            if($status == 1) {
+                $organization = $this->organizationManager->getOrganization($id);
+                $organizationData = $this->nameManager->getOrganizationData($id);
+                if(!isset($organization->reporting_org) || !isset($organizationData->recipient_organization_budget))
+                    return redirect()->back()->withMessage('Organization data is not Complete.');
+            } else if($status == 3) {
+                $this->generateXml($id);
+            }
             $organizationData = $this->nameManager->getOrganizationData($id);
             $this->nameManager->updateStatus($input, $organizationData);
         }
@@ -110,4 +121,14 @@ class OrganizationController extends Controller
         $form         = $this->orgReportingOrgFormCreator->editForm($data, $organization);
         return view('Organization.identifier.edit', compact('form', 'organization'));
     }
+
+    public function generateXml($id) {
+
+        $organization = $this->organizationManager->getOrganization($id);
+        $organizationData = $this->nameManager->getOrganizationData($id);
+        $settings = $this->settingsManager->getSettings($id);
+        $this->organizationManager->generateXmlFile($organization, $organizationData, $settings);
+
+    }
+
 }

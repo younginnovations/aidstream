@@ -15,19 +15,10 @@ class Settings extends Model
         'organization_id',
         'status'
     ];
+    protected $casts = [
+        'registry_info'             => 'json',
+        'default_field_values'      => 'json',
+        'default_field_groups'      => 'json',
+    ];
 
-    public function buildOrganizationRegistryInfo()
-    {
-        return json_decode($this->registry_info, true);
-    }
-
-    public function buildOrganizationDefaultFieldValues()
-    {
-        return json_decode($this->default_field_values, true);
-    }
-
-    public function buildOrganizationDefaultFieldGroups()
-    {
-        return json_decode($this->default_field_groups, true);
-    }
 }

@@ -24,11 +24,20 @@ class DocumentLink extends BaseElement
     public function getXmlData($org)
     {
         $orgDocumentLinkData = array();
-        foreach ($org->buildDocumentLink() as $orgDocumentLink) {
-            $orgDocumentLink['narrative'] = array(
-                '@value'      => $orgDocumentLink['narrative'],
+        foreach ($org->document_link as $orgDocumentLink) {
+            $orgDocumentLinkData[] = array(
                 '@attributes' => array(
-                    'xml:lang' => $orgDocumentLink['language']
+                    'format' => $orgDocumentLink['format'],
+                    'url' => $orgDocumentLink['url']
+                ),
+                'title' => array(
+                    'narrative' => $this->buildNarrative($orgDocumentLink['title'])
+                ),
+                'category' => array(
+                    '@attributes' => array('code' => $orgDocumentLink['category'][0]['category']),
+                ),
+                'language' => array(
+                    '@attributes' => array('code' => $orgDocumentLink['language'][0]['language']),
                 )
             );
         }

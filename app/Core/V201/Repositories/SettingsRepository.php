@@ -32,14 +32,14 @@ class SettingsRepository implements SettingsRepositoryInterface
             $organization->save();
 
             $version = $input['version_form'][0]['version'];
-            Session::put('version', $version);
+            Session::put('version', 'V' . str_replace('.', '', $version));
 
             Settings::create(
                 [
                     'publishing_type'      => $input['publishing_type'][0]['publishing'],
-                    'registry_info'        => json_encode($input['registry_info']),
-                    'default_field_values' => json_encode($input['default_field_values']),
-                    'default_field_groups' => json_encode($input['default_field_groups']),
+                    'registry_info'        => $input['registry_info'],
+                    'default_field_values' => $input['default_field_values'],
+                    'default_field_groups' => $input['default_field_groups'],
                     'version'              => $version,
                     'organization_id'      => $organization->id,
                 ]
@@ -78,12 +78,12 @@ class SettingsRepository implements SettingsRepositoryInterface
             $organization->save();
 
             $version = $input['version_form'][0]['version'];
-            Session::put('version', $version);
+            Session::put('version', 'V' . str_replace('.', '', $version));
 
             $settings->publishing_type      = $input['publishing_type'][0]['publishing'];
-            $settings->registry_info        = json_encode($input['registry_info']);
-            $settings->default_field_values = json_encode($input['default_field_values']);
-            $settings->default_field_groups = json_encode($input['default_field_groups']);
+            $settings->registry_info        = $input['registry_info'];
+            $settings->default_field_values = $input['default_field_values'];
+            $settings->default_field_groups = $input['default_field_groups'];
             $settings->version              = $version;
             $settings->organization_id      = $organization->id;
             $settings->save();

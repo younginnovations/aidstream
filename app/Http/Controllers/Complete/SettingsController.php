@@ -49,11 +49,11 @@ class SettingsController extends Controller
         if (isset($this->settings)) {
             $model['version_form']         = [['version' => $this->settings->version]];
             $model['publishing_type']      = [['publishing' => $this->settings->publishing_type]];
-            $model['registry_info']        = $this->settings->buildOrganizationRegistryInfo();
-            $model['default_field_values'] = $this->settings->buildOrganizationDefaultFieldValues();
-            $model['default_field_groups'] = $this->settings->buildOrganizationDefaultFieldGroups();
+            $model['registry_info']        = $this->settings->registry_info;
+            $model['default_field_values'] = $this->settings->default_field_values;
+            $model['default_field_groups'] = $this->settings->default_field_groups;
         } else {
-            $data  = '{"version_form":[{"version":"V201"}],"reporting_organization_info":[{"reporting_organization_identifier":"","reporting_organization_type":"10","organization_name":"","reporting_organization_language":"es"}],"publishing_type":[{"publishing":"unsegmented"}],"registry_info":[{"publisher_id":"","api_id":"","publish_files: ":"no"}],"default_field_values":[{"default_currency":"AED","default_language":"es","default_hierarchy":"","default_collaboration_type":"1","default_flow_type":"10","default_finance_type":"310","default_aid_type":"A01","Default_tied_status":"3"}],"default_field_groups":[{"title":"Title","description":"Description","activity_status":"Activity Status","activity_date":"Activity Date","participating_org":"Participating Org","recipient_county":"Recipient Country","location":"Location","sector":"Sector","budget":"Budget","transaction":"Transaction","document_ink":"Document Link"}]}';
+            $data  = '{"version_form":[{"version":"2.01"}],"reporting_organization_info":[{"reporting_organization_identifier":"","reporting_organization_type":"10","organization_name":"","reporting_organization_language":"es"}],"publishing_type":[{"publishing":"unsegmented"}],"registry_info":[{"publisher_id":"","api_id":"","publish_files: ":"no"}],"default_field_values":[{"default_currency":"AED","default_language":"es","default_hierarchy":"","default_collaboration_type":"1","default_flow_type":"10","default_finance_type":"310","default_aid_type":"A01","Default_tied_status":"3"}],"default_field_groups":[{"title":"Title","description":"Description","activity_status":"Activity Status","activity_date":"Activity Date","participating_org":"Participating Org","recipient_county":"Recipient Country","location":"Location","sector":"Sector","budget":"Budget","transaction":"Transaction","document_ink":"Document Link"}]}';
             $model = json_decode($data, true);
         }
         if (isset($this->organization)) {

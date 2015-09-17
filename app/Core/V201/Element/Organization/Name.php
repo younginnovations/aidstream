@@ -21,17 +21,12 @@ class Name extends BaseElement
         return "App\Core\V201\Forms\Organization\NameForm";
     }
 
-    public function getXmlData($org)
+    public function getXmlData($orgData)
     {
         $orgNameData = array();
-        foreach ($org->buildOrgName() as $orgName) {
-            $orgNameData['narrative'] = array(
-                '@value'      => $orgName['narrative'],
-                '@attributes' => array(
-                    'xml:lang' => $orgName['language']
-                )
-            );
-        }
+        $orgNameData[] = array(
+            'narrative'   => $this->buildNarrative($orgData->name)
+        );
 
         return $orgNameData;
     }
