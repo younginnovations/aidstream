@@ -48,8 +48,8 @@
 						<div class="panel panel-default">
 							<div class="panel-heading">Default Field Groups</div>
 							<div class="panel-body">
-							<label><input type="checkbox" class="checkAll" /> Check All</label>
-							{!! form_row($form->default_field_groups) !!}
+								<label><input type="checkbox" class="hidden checkAll"/><span class="btn btn-primary">Check All</span></label>
+								{!! form_row($form->default_field_groups) !!}
 							</div>
 						</div>
 

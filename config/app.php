@@ -138,6 +138,7 @@ return [
 		'Illuminate\Translation\TranslationServiceProvider',
 		'Illuminate\Validation\ValidationServiceProvider',
 		'Illuminate\View\ViewServiceProvider',
+		'Illuminate\Broadcasting\BroadcastServiceProvider',
 
 		/*
 		 * Application Service Providers...
@@ -147,6 +148,7 @@ return [
 		'App\Providers\ConfigServiceProvider',
 		'App\Providers\EventServiceProvider',
 		'App\Providers\RouteServiceProvider',
+		'App\Providers\AuthServiceProvider',
 		'Kris\LaravelFormBuilder\FormBuilderServiceProvider',
 		'App\Providers\DevelopmentServiceProvider',
 //		'Barryvdh\Debugbar\ServiceProvider',
@@ -201,6 +203,7 @@ return [
 		'View'      => 'Illuminate\Support\Facades\View',
 		'Form'		=> 'Illuminate\Html\FormFacade',
 		'FormBuilder' => 'Kris\LaravelFormBuilder\Facades\FormBuilder',
+		'Gate' 		=> Illuminate\Support\Facades\Gate::class,
 
 
 	],

@@ -39,7 +39,9 @@ class RouteServiceProvider extends ServiceProvider {
 		{
 			require app_path('Http/routes.php');
 			require app_path('Http/routes/organization.php');
+			require app_path('Http/routes/activity.php');
 		});
 	}
 
 }
+

@@ -22,6 +22,7 @@ class CreateUsersTable extends Migration {
 			$table->string('password', 60);
 			$table->integer('role_id')->nullable();
 			$table->integer('org_id')->nullable();
+			$table->json('user_permission')->nullable();
 			$table->rememberToken();
 			$table->timestamps();
 
