@@ -14,7 +14,8 @@
 		"phpspec/phpspec": "~2.1",
 	    "rap2hpoutre/laravel-log-viewer": "0.3.0",
 	    "barryvdh/laravel-ide-helper": "2.0.6",
-	    "barryvdh/laravel-debugbar": "2.0.4"
+	    "barryvdh/laravel-debugbar": "2.0.4",
+		"mockery/mockery": "^0.9.4"
 	},
 	"autoload": {
 		"classmap": [
@@ -25,9 +26,9 @@
 		}
 	},
 	"autoload-dev": {
-		"classmap": [
-			"tests/TestCase.php"
-		]
+	  "psr-4": {
+		"Test\\": "tests/"
+	  }
 	},
 	"scripts": {
 		"post-install-cmd": [
