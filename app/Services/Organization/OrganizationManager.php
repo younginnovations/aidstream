@@ -1,25 +1,26 @@
 <?php
-namespace App\Services\Organization;
+namespace app\Services\Organization;
 
 use App\Core\Version;
 use App;
 use App\Models\Organization\Organization;
 use App\Models\Organization\OrganizationData;
+use App\Models\OrganizationPublished;
 
 class OrganizationManager
 {
-
     protected $repo;
 
     /**
      * @param Version $version
      */
-    function __construct(Version $version, OrganizationData $orgData)
+    public function __construct(Version $version, OrganizationData $orgData, OrganizationPublished $orgPublished)
     {
         $this->version = $version;
         $this->repo = $version->getOrganizationElement()->getRepository();
         $this->orgElement = $version->getOrganizationElement();
         $this->orgData = $orgData;
+        $this->orgPublished = $orgPublished;
     }
 
 
@@ -46,7 +47,6 @@ class OrganizationManager
     public function getOrganization($id)
     {
         return $this->repo->getOrganization($id);
-
     }
 
     /**
@@ -64,8 +64,7 @@ class OrganizationManager
      */
     public function getOrganizationData($id)
     {
-        return $this->orgData->where('organization_id', $id)->first();
-
+        return $this->repo->getOrganizationData($id);
     }
 
     /**
@@ -94,5 +93,21 @@ class OrganizationManager
         $this->repo->resetStatus($organization_id);
     }
 
+    /**
+     * @param $id
+     * @return model
+     */
+    public function getPublishedFiles($id)
+    {
+        return $this->repo->getPublishedFiles($id);
+    }
 
+    /**
+     * @param $id
+     * @return bool
+     */
+    public function deletePublishedFile($id)
+    {
+        return $this->repo->deletePublishedFile($id);
+    }
 }

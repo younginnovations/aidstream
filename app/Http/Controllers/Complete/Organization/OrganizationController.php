@@ -36,12 +36,14 @@ class OrganizationController extends Controller
         SettingsManager $settingsManager,
         OrganizationManager $organizationManager,
         OrgReportingOrgForm $orgReportingOrgFormCreator,
-        OrgNameManager $nameManager
+        OrgNameManager $nameManager,
+        Request $request
     ) {
         $this->settingsManager            = $settingsManager;
         $this->organizationManager        = $organizationManager;
         $this->orgReportingOrgFormCreator = $orgReportingOrgFormCreator;
         $this->nameManager                = $nameManager;
+        $this->request                = $request;
         $this->middleware('auth');
     }
 
@@ -91,35 +93,12 @@ class OrganizationController extends Controller
 
     /**
      * @param $id
-     */
-    public function update($id, Request $request)
-    {
-/*        $input = $request->all();
-        $status = $input['status'];
-        if (isset($status)) {
-            $status = $input['status'];
-            if($status == 1) {
-                $organization = $this->organizationManager->getOrganization($id);
-                $organizationData = $this->nameManager->getOrganizationData($id);
-                if(!isset($organization->reporting_org) || !isset($organizationData->name))
-                    return redirect()->back()->withMessage('Organization data is not Complete.');
-            } else if($status == 3) {
-                $this->generateXml($id);
-            }
-            $organizationData = $this->nameManager->getOrganizationData($id);
-            $this->nameManager->updateStatus($input, $organizationData);
-        }
-        return redirect()->back();*/
-    }
-
-    /**
-     * @param $id
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function updateStatus($id, Request $request, GenerateXml $generateXml)
+    public function updateStatus($id, GenerateXml $generateXml)
     {
-        $input = $request->all();
+        $input = $this->request->all();
         $this->organizationManager->updateStatus($input, $id, $generateXml);
         return redirect()->back();
     }
@@ -135,6 +114,22 @@ class OrganizationController extends Controller
         $data         = $organization->buildOrgReportingOrg()[0];
         $form         = $this->orgReportingOrgFormCreator->editForm($data, $organization);
         return view('Organization.identifier.edit', compact('form', 'organization'));
+    }
+
+    /**
+     * @param string $action
+     * @param string $id
+     * @return \Illuminate\View\View
+     */
+    public function listPublishedFiles($action = '', $id = '') {
+        if($action == 'delete') {
+            $result = $this->organizationManager->deletePublishedFile($id);
+            $message = $result ? 'File deleted successfully' : 'File couldn\'t be deleted.';
+            return redirect()->back()->withMessage($message);
+        }
+        $org_id = $this->request->session()->get('org_id');
+        $list = $this->organizationManager->getPublishedFiles($org_id);
+        return view('published-files', compact('list'));
     }
 
 }

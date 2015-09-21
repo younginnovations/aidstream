@@ -20,7 +20,7 @@
 						<li><a href="#">List Activities</a></li>
 						<li><a href="#">Add New Activity</a></li>
 						<li><a href="{{ url('/organization/' . Session::get('org_id')) }}">Organization Data</a></li>
-						<li><a href="#">List Published Files</a></li>
+						<li><a href="{{ route('list-published-files') }}">List Published Files</a></li>
 						<li><a href="#">Download My Data</a></li>
 					</ul>
 				</div>

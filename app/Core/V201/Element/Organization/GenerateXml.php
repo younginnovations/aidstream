@@ -6,7 +6,7 @@ use App\Core\V201\Repositories\SettingsRepository;
 use App\Helpers\ArrayToXml;
 use App\Models\Organization\Organization;
 use App\Models\Organization\OrganizationData;
-use App\Models\Organization\OrganizationPublished;
+use App\Models\OrganizationPublished;
 use App\Models\Settings;
 
 class GenerateXml {
