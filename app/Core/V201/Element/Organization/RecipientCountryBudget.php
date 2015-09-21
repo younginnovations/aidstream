@@ -4,11 +4,16 @@ namespace App\Core\V201\Element\Organization;
 
 use App\Core\Elements\BaseElement;
 use App;
+use App\Models\Organization\OrganizationData;
 
 class RecipientCountryBudget extends BaseElement
 {
     protected $narratives = [];
 
+    /**
+     * @param $narrative
+     * @return $this
+     */
     public function setNarrative($narrative)
     {
         $this->narratives[] = $narrative;
@@ -16,15 +21,23 @@ class RecipientCountryBudget extends BaseElement
         return $this;
     }
 
+    /**
+     * @return string
+     */
     public function getForm()
     {
         return "App\Core\V201\Forms\Organization\MultipleRecipientCountryBudgetForm";
     }
 
-    public function getXmlData($org)
+    /**
+     * @param OrganizationData $organizationData
+     * @return array
+     */
+    public function getXmlData(OrganizationData $organizationData)
     {
         $orgRecipientCountryData = array();
-        foreach ($org->recipient_country_budget as $orgRecipientCountry) {
+        $recipientCountryBudget = (array) $organizationData->recipient_country_budget;
+        foreach ($recipientCountryBudget as $orgRecipientCountry) {
             $orgRecipientCountryData[] = array(
                 'recipient-country' => array(
                     '@attributes' => array(
@@ -55,6 +68,9 @@ class RecipientCountryBudget extends BaseElement
         return $orgRecipientCountryData;
     }
 
+    /**
+     * @return Organization recipient country budget repository
+     */
     public function getRepository()
     {
         return App::make('App\Core\V201\Repositories\Organization\RecipientCountryBudgetRepository');

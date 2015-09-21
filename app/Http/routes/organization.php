@@ -5,6 +5,7 @@ $router->group(
     function ($router) {
         $router->get('organization/{id}/identifier', 'OrganizationController@showIdentifier');
         $router->resource('organization', 'OrganizationController');
+        $router->post('organization/{id}/update-status', 'OrganizationController@updateStatus');
         $router->resource('organization.reportingOrg', 'OrgReportingOrgController');
         $router->resource('organization.name', 'NameController');
         $router->resource('organization.total-budget', 'OrgTotalBudgetController');

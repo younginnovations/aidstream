@@ -8,14 +8,14 @@ class NameRepository
     /**
      * @var OrganizationData
      */
-    private $org;
+    private $orgData;
 
     /**
      * @param OrganizationData $org
      */
-    function __construct(OrganizationData $org)
+    function __construct(OrganizationData $orgData)
     {
-        $this->org = $org;
+        $this->orgData = $orgData;
     }
 
     /**
@@ -37,7 +37,7 @@ class NameRepository
      */
     public function getOrganizationData($organization_id)
     {
-        return $this->org->where('organization_id', $organization_id)->first();
+        return $this->orgData->where('organization_id', $organization_id)->first();
     }
 
     /**
@@ -47,23 +47,7 @@ class NameRepository
      */
     public function getOrganizationNameData($organization_id)
     {
-        return $this->org->where('organization_id', $organization_id)->first()->name;
-    }
-
-    public function getStatus($organization_id)
-    {
-        return $this->org->where('organization_id', $organization_id)->first()->status;
-    }
-
-    public function updateStatus($input, $organizationData)
-    {
-        $organizationData->status = $input['status'];
-        $organizationData->save();
-    }
-
-    public function resetStatus($organization_id)
-    {
-        $this->org->where('organization_id', $organization_id)->update(['status' => 0]);
+        return $this->orgData->where('organization_id', $organization_id)->first()->name;
     }
 
 }

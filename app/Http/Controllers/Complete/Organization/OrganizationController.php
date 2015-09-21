@@ -7,6 +7,7 @@ use App\Services\Organization\OrganizationManager;
 use App\Services\FormCreator\Organization\OrgReportingOrgForm;
 use Illuminate\Http\Request;
 use App\Services\Organization\OrgNameManager;
+use App\Core\V201\Element\Organization\GenerateXml;
 
 /**
  * Class OrganizationController
@@ -26,9 +27,10 @@ class OrganizationController extends Controller
     /**
      * Create a new controller instance.
      *
-     * @param SettingsManager     $settingsManager
+     * @param SettingsManager $settingsManager
      * @param OrganizationManager $organizationManager
      * @param OrgReportingOrgForm $orgReportingOrgFormCreator
+     * @param OrgNameManager $nameManager
      */
     public function __construct(
         SettingsManager $settingsManager,
@@ -92,13 +94,14 @@ class OrganizationController extends Controller
      */
     public function update($id, Request $request)
     {
-        $input = $request->all();
+/*        $input = $request->all();
         $status = $input['status'];
         if (isset($status)) {
+            $status = $input['status'];
             if($status == 1) {
                 $organization = $this->organizationManager->getOrganization($id);
                 $organizationData = $this->nameManager->getOrganizationData($id);
-                if(!isset($organization->reporting_org) || !isset($organizationData->recipient_organization_budget))
+                if(!isset($organization->reporting_org) || !isset($organizationData->name))
                     return redirect()->back()->withMessage('Organization data is not Complete.');
             } else if($status == 3) {
                 $this->generateXml($id);
@@ -106,6 +109,18 @@ class OrganizationController extends Controller
             $organizationData = $this->nameManager->getOrganizationData($id);
             $this->nameManager->updateStatus($input, $organizationData);
         }
+        return redirect()->back();*/
+    }
+
+    /**
+     * @param $id
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function updateStatus($id, Request $request, GenerateXml $generateXml)
+    {
+        $input = $request->all();
+        $this->organizationManager->updateStatus($input, $id, $generateXml);
         return redirect()->back();
     }
 
@@ -120,15 +135,6 @@ class OrganizationController extends Controller
         $data         = $organization->buildOrgReportingOrg()[0];
         $form         = $this->orgReportingOrgFormCreator->editForm($data, $organization);
         return view('Organization.identifier.edit', compact('form', 'organization'));
-    }
-
-    public function generateXml($id) {
-
-        $organization = $this->organizationManager->getOrganization($id);
-        $organizationData = $this->nameManager->getOrganizationData($id);
-        $settings = $this->settingsManager->getSettings($id);
-        $this->organizationManager->generateXmlFile($organization, $organizationData, $settings);
-
     }
 
 }

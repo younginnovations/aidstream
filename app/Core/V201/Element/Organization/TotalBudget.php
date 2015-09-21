@@ -24,7 +24,8 @@ class TotalBudget extends BaseElement
     public function getXmlData($orgData)
     {
         $orgTotalBudgetData = array();
-        foreach ($orgData->total_budget as $orgTotalBudget) {
+        $totalBudget = (array) $orgData->total_budget;
+        foreach ($totalBudget as $orgTotalBudget) {
             $orgTotalBudgetData[] = array(
                 'period-start' => array(
                     '@attributes' => array(

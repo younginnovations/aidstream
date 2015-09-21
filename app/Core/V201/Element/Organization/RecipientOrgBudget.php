@@ -27,7 +27,7 @@ class RecipientOrgBudget extends BaseElement
     public function getXmlData($organization)
     {
         $organizationData   = [];
-        $recipientOrgBudget = $organization->recipient_organization_budget;
+        $recipientOrgBudget = (array) $organization->recipient_organization_budget;
         foreach ($recipientOrgBudget as $RecipientOrgBudget) {
             $organizationData[] = array(
                 'recipient-org' => array(

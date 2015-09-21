@@ -9,6 +9,7 @@ namespace App\Http\Controllers\Complete\Organization;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Services\Organization\OrganizationManager;
 use App\Services\Organization\OrgTotalBudgetManager;
 use Session;
 use URL;
@@ -17,7 +18,6 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
 use App\Services\RequestManager\Organization\TotalBudgetRequestManager;
 use App\Services\FormCreator\Organization\TotalBudgetForm as FormBuilder;
-use App\Services\Organization\OrgNameManager;
 
 /**
  * Class OrgTotalBudgetController
@@ -29,17 +29,17 @@ class OrgTotalBudgetController extends Controller
     protected $formBuilder;
     protected $totalBudgetManager;
     protected $totalBudgetForm;
-    protected $nameManager;
+    protected $organizationManager;
 
     public function __construct(
         FormBuilder $formBuilder,
         OrgTotalBudgetManager $totalBudgetManager,
-        OrgNameManager $nameManager
+        OrganizationManager $organizationManager
     ) {
         $this->middleware('auth');
         $this->totalBudgetForm    = $formBuilder;
         $this->totalBudgetManager = $totalBudgetManager;
-        $this->nameManager = $nameManager;
+        $this->organizationManager = $organizationManager;
     }
 
     /**
@@ -67,7 +67,7 @@ class OrgTotalBudgetController extends Controller
         $organizationData = $this->totalBudgetManager->getOrganizationData($orgId);
 
         if ($this->totalBudgetManager->update($input, $organizationData)) {
-            $this->nameManager->resetStatus($orgId);
+            $this->organizationManager->resetStatus($orgId);
             return redirect()->to(sprintf('/organization/%s', $orgId))->withMessage(
                 'Organization Total Budget Updated !'
             );

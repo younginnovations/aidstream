@@ -4,11 +4,16 @@ namespace App\Core\V201\Element\Organization;
 
 use App\Core\Elements\BaseElement;
 use App;
+use App\Models\Organization\OrganizationData;
 
 class DocumentLink extends BaseElement
 {
     protected $narratives = [];
 
+    /**
+     * @param $narrative
+     * @return $this
+     */
     public function setNarrative($narrative)
     {
         $this->narratives[] = $narrative;
@@ -16,15 +21,23 @@ class DocumentLink extends BaseElement
         return $this;
     }
 
+    /**
+     * @return string
+     */
     public function getForm()
     {
         return "App\Core\V201\Forms\Organization\MultipleDocumentLinkForm";
     }
 
-    public function getXmlData($org)
+    /**
+     * @param OrganizationData $organizationData
+     * @return array
+     */
+    public function getXmlData(OrganizationData $organizationData)
     {
         $orgDocumentLinkData = array();
-        foreach ($org->document_link as $orgDocumentLink) {
+        $document_link = (array) $organizationData->document_link;
+        foreach ($document_link as $orgDocumentLink) {
             $orgDocumentLinkData[] = array(
                 '@attributes' => array(
                     'format' => $orgDocumentLink['format'],
@@ -45,6 +58,9 @@ class DocumentLink extends BaseElement
         return $orgDocumentLinkData;
     }
 
+    /**
+     * @return organization document link repository
+     */
     public function getRepository()
     {
         return App::make('App\Core\V201\Repositories\Organization\DocumentLinkRepository');

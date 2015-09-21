@@ -3,12 +3,17 @@ namespace App\Core\V201\Element\Organization;
 
 use App\Core\Elements\BaseElement;
 use App;
+use App\Models\Organization\Organization;
 
 class OrgReportingOrg extends BaseElement
 {
     protected $type;
     protected $narratives = [];
 
+    /**
+     * @param $narrative
+     * @return $this
+     */
     public function setNarrative($narrative)
     {
         $this->narratives[] = $narrative;
@@ -16,19 +21,23 @@ class OrgReportingOrg extends BaseElement
         return $this;
     }
 
+    /**
+     * @return string
+     */
     public function getForm()
     {
         return "App\Core\V201\Forms\Organization\ReportingOrganizationInfoForm";
     }
 
+
     /**
-     * @param $organization
-     * @return mixed
+     * @param Organization $organization
+     * @return array
      */
-    public function getXmlData($organization)
+    public function getXmlData(Organization $organization)
     {
-        $organizationData = [];
-        $orgReportingOrg  = $organization->buildOrgReportingOrg();
+        $organizationData = array();
+        $orgReportingOrg  = (array) $organization->buildOrgReportingOrg();
         foreach ($orgReportingOrg as $OrgReportingOrg) {
             $organizationData[] = array(
                 '@attributes' => array(

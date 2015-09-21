@@ -58,7 +58,7 @@ class OrgReportingOrgController extends Controller
         $input['reportingOrg'][0] = Input::all();
         $organization = $this->organizationManager->getOrganization($organizationId);
         $this->orgReportingOrgManager->update($input, $organization);
-        $this->nameManager->resetStatus($organizationId);
+        $this->organizationManager->resetStatus($organizationId);
         return redirect()->route("organization.show", $organizationId)->withMessage('Reporting Organization Updated !');
     }
 

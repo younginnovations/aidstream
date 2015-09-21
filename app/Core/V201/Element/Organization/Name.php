@@ -4,11 +4,16 @@ namespace App\Core\V201\Element\Organization;
 
 use App\Core\Elements\BaseElement;
 use App;
+use App\Models\Organization\OrganizationData;
 
 class Name extends BaseElement
 {
     protected $narratives = [];
 
+    /**
+     * @param $narrative
+     * @return $this
+     */
     public function setNarrative($narrative)
     {
         $this->narratives[] = $narrative;
@@ -16,21 +21,34 @@ class Name extends BaseElement
         return $this;
     }
 
+    /**
+     * @return string
+     */
     public function getForm()
     {
         return "App\Core\V201\Forms\Organization\NameForm";
     }
 
-    public function getXmlData($orgData)
+    /**
+     * @param OrganizationData $orgData
+     * @return array
+     */
+    public function getXmlData(OrganizationData $orgData)
     {
         $orgNameData = array();
-        $orgNameData[] = array(
-            'narrative'   => $this->buildNarrative($orgData->name)
-        );
+        $name = (array) $orgData->name;
+        if($name) {
+            $orgNameData[] = array(
+                'narrative'   => $this->buildNarrative($name)
+            );
+        }
 
         return $orgNameData;
     }
 
+    /**
+     * @return organization name repository
+     */
     public function getRepository()
     {
         return App::make('App\Core\V201\Repositories\Organization\NameRepository');

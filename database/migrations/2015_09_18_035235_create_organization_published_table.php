@@ -16,7 +16,7 @@ class CreateOrganizationPublishedTable extends Migration {
 		{
 			$table->increments('id');
 			$table->string('filename');
-			$table->integer('published_to_register');
+			$table->integer('published_to_register')->default(0);
 			$table->integer('organization_id');
 			$table->timestamps();
 

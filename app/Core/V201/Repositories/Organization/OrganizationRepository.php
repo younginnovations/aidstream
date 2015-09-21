@@ -3,6 +3,7 @@ namespace app\Core\V201\Repositories\Organization;
 
 use App\Core\Repositories\OrganizationRepositoryInterface;
 use App\Models\Organization\Organization;
+use App\Models\Organization\OrganizationData;
 
 class OrganizationRepository implements OrganizationRepositoryInterface
 {
@@ -14,9 +15,10 @@ class OrganizationRepository implements OrganizationRepositoryInterface
     /**
      * @param Organization $org
      */
-    function __construct(Organization $org)
+    function __construct(Organization $org, OrganizationData $orgData)
     {
         $this->org = $org;
+        $this->orgData = $orgData;
     }
 
     /**
@@ -43,7 +45,7 @@ class OrganizationRepository implements OrganizationRepositoryInterface
 
     /**
      * @param $id
-     * @return mixed
+     * @return model
      */
     public function getOrganization($id)
     {
@@ -64,4 +66,39 @@ class OrganizationRepository implements OrganizationRepositoryInterface
         $org->status          = $input['status'];
         $org->save();
     }
+
+    /**
+     * @param $id
+     * @return model
+     */
+    public function getOrganizationData($id)
+    {
+        return $this->orgData->findorFail($id);
+    }
+
+    public function getStatus($organization_id)
+    {
+        return $this->orgData->where('organization_id', $organization_id)->first()->status;
+    }
+
+    public function updateStatus($input, $id, $generateXml)
+    {
+        $organizationData = $this->getOrganizationData($id);
+        $status = $input['status'];
+        if($status == 1) {
+            $organization = $this->getOrganization($id);
+            if(!isset($organization->reporting_org) || !isset($organizationData->name))
+                return redirect()->back()->withMessage('Organization data is not Complete.');
+        } else if($status == 3) {
+            $generateXml->generate($id);
+        }
+        $organizationData->status = $status;
+        $organizationData->save();
+    }
+
+    public function resetStatus($organization_id)
+    {
+        $this->orgData->where('organization_id', $organization_id)->update(['status' => 0]);
+    }
+
 }

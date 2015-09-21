@@ -3,6 +3,7 @@
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+use App\Services\Organization\OrganizationManager;
 use App\Services\RequestManager\Organization\CreateOrgRecipientOrgBudgetRequestManager;
 use App\Services\FormCreator\Organization\RecipientOrgBudgetForm;
 use App\Services\Organization\RecipientOrgBudgetManager;
@@ -11,7 +12,6 @@ use URL;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
-use App\Services\Organization\OrgNameManager;
 
 class RecipientOrganizationBudgetController extends Controller
 {
@@ -19,17 +19,17 @@ class RecipientOrganizationBudgetController extends Controller
     protected $formBuilder;
     protected $recipientOrgBudgetManager;
     protected $recipientOrgBudgetFormCreator;
-    protected $nameManager;
+    protected $organizationManager;
 
     public function __construct(
         RecipientOrgBudgetForm $recipientOrgBudgetFormCreator,
         RecipientOrgBudgetManager $recipientOrgBudgetManager,
-        OrgNameManager $nameManager
+        OrganizationManager $organizationManager
     ) {
         $this->middleware('auth');
         $this->recipientOrgBudgetFormCreator = $recipientOrgBudgetFormCreator;
         $this->recipientOrgBudgetManager     = $recipientOrgBudgetManager;
-        $this->nameManager = $nameManager;
+        $this->organizationManager = $organizationManager;
     }
 
     /**
@@ -65,7 +65,7 @@ class RecipientOrganizationBudgetController extends Controller
         $organizationData = $this->recipientOrgBudgetManager->getOrganizationData($orgId);
 
         if ($this->recipientOrgBudgetManager->update($input, $organizationData)) {
-            $this->nameManager->resetStatus($orgId);
+            $this->organizationManager->resetStatus($orgId);
             return redirect()->to(sprintf('/organization/%s', $orgId))->withMessage(
                 'Organization Recipient organization Budget Updated !'
             );

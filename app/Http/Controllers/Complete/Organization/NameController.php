@@ -2,6 +2,7 @@
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Services\Organization\OrganizationManager;
 use App\Services\Organization\OrgNameManager;
 use Session;
 use URL;
@@ -18,12 +19,14 @@ class NameController extends Controller {
 	protected $nameForm;
 	public function __construct(
 		FormBuilder $formBuilder,
-		OrgNameManager $nameManager
+		OrgNameManager $nameManager,
+		OrganizationManager $organizationManager
 	)
 	{
 		$this->middleware('auth');
 		$this->nameForm = $formBuilder;
 		$this->nameManager = $nameManager;
+		$this->organizationManager = $organizationManager;
 	}
 	/**
 	 * Display a listing of the resource.
@@ -47,12 +50,11 @@ class NameController extends Controller {
 	public function update($orgId, NameRequestManager $nameRequestManager, Request $request)
 	{
 		$input            = $request->all();
-		$input['status'] = 0;
 		$organizationData = $this->nameManager->getOrganizationData($orgId);
 
 		if ($this->nameManager->update($input, $organizationData)) {
 
-			$this->nameManager->resetStatus($orgId);
+			$this->organizationManager->resetStatus($orgId);
 			return redirect()->to(sprintf('/organization/%s', $orgId))->withMessage(
 				'Organization Name Updated !'
 			);

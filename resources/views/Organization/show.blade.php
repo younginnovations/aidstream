@@ -27,8 +27,8 @@
 					</ol>
 
                     @if($btn_text != "")
-                        <form method="POST" id="change_status">
-                            <input type="hidden" name="_method" value="PUT"/>
+                        <form method="POST" id="change_status" action="{{ url('/organization/' . Auth::user()->org_id . '/update-status') }}">
+                            {{--<input type="hidden" name="_method" value="PUT"/>--}}
                             <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
                             <input type="hidden" name="status" value="{{ $status + 1 }}">
 							@if($status == 2)

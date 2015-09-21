@@ -87,29 +87,5 @@ class OrgNameManager
         }
         return false;
     }
-    /**
-     * @param $input
-     * @param $organizationData
-     */
-    public function getStatus($organization_id)
-    {
-        return $this->repo->getStatus($organization_id);
-    }
 
-    /**
-     * @param $input
-     * @param $organizationData
-     */
-    public function updateStatus($input, $organizationData)
-    {
-        $this->repo->updateStatus($input, $organizationData);
-    }
-
-    /**
-     * @param $organization_id
-     */
-    public function resetStatus($organization_id)
-    {
-        $this->repo->resetStatus($organization_id);
-    }
 }

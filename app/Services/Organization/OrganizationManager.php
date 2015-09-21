@@ -3,71 +3,95 @@ namespace App\Services\Organization;
 
 use App\Core\Version;
 use App;
-use App\Helpers\ArrayToXml;
+use App\Models\Organization\Organization;
+use App\Models\Organization\OrganizationData;
 
 class OrganizationManager
 {
 
     protected $repo;
 
-    function __construct(Version $version, ArrayToXml $arrayToXml)
+    /**
+     * @param Version $version
+     */
+    function __construct(Version $version, OrganizationData $orgData)
     {
         $this->version = $version;
         $this->repo = $version->getOrganizationElement()->getRepository();
         $this->orgElement = $version->getOrganizationElement();
-        $this->arrayToXml = $arrayToXml;
+        $this->orgData = $orgData;
     }
 
 
+    /**
+     * @param array $input
+     */
     public function createOrganization(array $input)
     {
         $this->repo->createOrganization($input);
     }
 
+    /**
+     * @return model
+     */
     public function getOrganizations()
     {
         return $this->repo->getOrganizations();
     }
 
+    /**
+     * @param $id
+     * @return model
+     */
     public function getOrganization($id)
     {
         return $this->repo->getOrganization($id);
 
     }
 
-    public function updateOrganization($input, $organization)
+    /**
+     * @param array $input
+     * @param Organization $organization
+     */
+    public function updateOrganization(array $input, Organization $organization)
     {
         $this->repo->updateOrganization($input, $organization);
     }
 
-    public function generateXmlFile($organization, $organizationData, $settings)
+    /**
+     * @param $id
+     * @return model
+     */
+    public function getOrganizationData($id)
     {
-        $xmlData = array();
-        $xmlData['@attributes'] = array(
-            'version' => $settings->version,
-            'generated-datetime' => gmdate('c')
-        );
-        $xmlData['iati-organisation'] = $this->getXmlData($organization, $organizationData);
-        $xmlData['iati-organisation']['@attributes'] = array(
-            'last-updated-datetime' => gmdate('c', time($settings->updated_at)),
-            'xml:lang' => $settings->default_field_values[0]['default_language'],
-            'default-currency' => $settings->default_field_values[0]['default_currency']
-        );
-        $xml = $this->arrayToXml->createXML('iati-organisations', $xmlData);
-        $filename = $organization->buildOrgReportingOrg()[0]['reporting_organization_identifier'] . '.xml';
-        $xml->save(public_path('uploads/files/organization/' . $filename));
+        return $this->orgData->where('organization_id', $id)->first();
+
     }
 
-    public function getXmlData ($organization, $organizationData) {
-        $xmlOrganization = [];
-        $xmlOrganization['organisation-identifier'] = $organization->buildOrgReportingOrg()[0]['reporting_organization_identifier'];
-        $xmlOrganization['name'] = $this->orgElement->getName()->getXmlData($organizationData);
-        $xmlOrganization['reporting-org'] = $this->orgElement->getOrgReportingOrg()->getXmlData($organization);
-        $xmlOrganization['total-budget'] = $this->orgElement->getTotalBudget()->getXmlData($organizationData);
-        $xmlOrganization['recipient-org-budget'] = $this->orgElement->getRecipientOrgBudget()->getXmlData($organizationData);
-        $xmlOrganization['recipient-country-budget'] = $this->orgElement->getRecipientCountryBudget()->getXmlData($organizationData);
-        $xmlOrganization['document-link'] = $this->orgElement->getDocumentLink()->getXmlData($organizationData);
-        return $xmlOrganization;
+    /**
+     * @param $input
+     * @param $organizationData
+     */
+    public function getStatus($organization_id)
+    {
+        return $this->repo->getStatus($organization_id);
+    }
+
+    /**
+     * @param $input
+     * @param $organizationData
+     */
+    public function updateStatus($input, $id, $generateXml)
+    {
+        $this->repo->updateStatus($input, $id, $generateXml);
+    }
+
+    /**
+     * @param $organization_id
+     */
+    public function resetStatus($organization_id)
+    {
+        $this->repo->resetStatus($organization_id);
     }
 
 
