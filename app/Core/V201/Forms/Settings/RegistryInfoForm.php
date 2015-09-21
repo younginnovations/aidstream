@@ -11,13 +11,17 @@ class RegistryInfoForm extends Form
         $this
             ->add('publisher_id', 'text')
             ->add('api_id', 'text')
-            ->add('publish_files: ', 'choice', [
-                'label' => 'Automatically Update the IATI Registry when publishing files:',
-                'choices' => ['no' => 'No', 'yes' => 'Yes'],
-                'expanded' => true,
-                'choice_options' => [
-                    'wrapper' => ['class' => 'choice-wrapper']
+            ->add(
+                'publish_files: ',
+                'choice',
+                [
+                    'label'          => 'Automatically Update the IATI Registry when publishing files:',
+                    'choices'        => ['no' => 'No', 'yes' => 'Yes'],
+                    'expanded'       => true,
+                    'choice_options' => [
+                        'wrapper' => ['class' => 'choice-wrapper']
+                    ]
                 ]
-            ]);
+            );
     }
 }

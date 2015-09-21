@@ -8,6 +8,7 @@ class SettingsManager
 {
 
     protected $repo;
+
     function __construct(Version $version)
     {
         $this->repo = $version->getSettingsElement()->getRepository();
@@ -28,7 +29,6 @@ class SettingsManager
     {
         $this->repo->updateSettings($input, $organization, $settings);
     }
-
 
 
 }

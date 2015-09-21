@@ -83,7 +83,7 @@ return [
 
 	'cipher' => MCRYPT_RIJNDAEL_128,
 
-	'default_version' => 'V201',
+	'default_version' => '2.01',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -147,7 +147,10 @@ return [
 		'App\Providers\ConfigServiceProvider',
 		'App\Providers\EventServiceProvider',
 		'App\Providers\RouteServiceProvider',
-		'Kris\LaravelFormBuilder\FormBuilderServiceProvider'
+		'Kris\LaravelFormBuilder\FormBuilderServiceProvider',
+		'App\Providers\DevelopmentServiceProvider',
+//		'Barryvdh\Debugbar\ServiceProvider',
+//		'Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider',
 
 	],
 
@@ -197,7 +200,8 @@ return [
 		'Validator' => 'Illuminate\Support\Facades\Validator',
 		'View'      => 'Illuminate\Support\Facades\View',
 		'Form'		=> 'Illuminate\Html\FormFacade',
-		'FormBuilder' => 'Kris\LaravelFormBuilder\Facades\FormBuilder'
+		'FormBuilder' => 'Kris\LaravelFormBuilder\Facades\FormBuilder',
+
 
 	],
 

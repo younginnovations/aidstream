@@ -18,7 +18,7 @@ class RegistryInfo extends BaseElement
         return "App\Core\V201\Forms\Settings\RegistryInfoForm";
     }
 
-    public  function getRepository()
+    public function getRepository()
     {
         return App::make('App\Core\V201\Repositories\Organization\OrganizationRepository');
     }

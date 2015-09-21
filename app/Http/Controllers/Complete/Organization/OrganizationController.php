@@ -1,149 +1,140 @@
-<?php namespace App\Http\Controllers\Organization\Complete;
+<?php namespace app\Http\Controllers\Complete\Organization;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App;
-use URL;
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\Session;
-use App\Services\FormCreator\Organization\OrgNameForm;
-use App\Http\Requests\CreateOrganizationRequest;
-use Illuminate\Support\Facades\Input;
-use App\Helpers\JsonHelper;
+use App\Services\SettingsManager;
 use App\Services\Organization\OrganizationManager;
-use App\Generator\XmlGenerator;
-use App\Core\Repositories\OrganizationRepositoryInterface;
+use App\Services\FormCreator\Organization\OrgReportingOrgForm;
+use Illuminate\Http\Request;
+use App\Services\Organization\OrgNameManager;
+use App\Core\V201\Element\Organization\GenerateXml;
 
-
+/**
+ * Class OrganizationController
+ * @package App\Http\Controllers\Complete\Organization
+ */
 class OrganizationController extends Controller
 {
-    protected $arrayToXml;
-    protected $org;
-    protected $orgNameForm;
+    /**
+     * @var OrganizationManager
+     */
+    protected $organizationManager;
+    /**
+     * @var SettingsManager
+     */
+    protected $settingsManager;
 
-    function __construct(
-        OrgNameForm $orgNameForm,
-        XmlGenerator $xmlGenerator,
-        OrganizationManager $organizationManager
+    /**
+     * Create a new controller instance.
+     *
+     * @param SettingsManager $settingsManager
+     * @param OrganizationManager $organizationManager
+     * @param OrgReportingOrgForm $orgReportingOrgFormCreator
+     * @param OrgNameManager $nameManager
+     */
+    public function __construct(
+        SettingsManager $settingsManager,
+        OrganizationManager $organizationManager,
+        OrgReportingOrgForm $orgReportingOrgFormCreator,
+        OrgNameManager $nameManager
     ) {
+        $this->settingsManager            = $settingsManager;
+        $this->organizationManager        = $organizationManager;
+        $this->orgReportingOrgFormCreator = $orgReportingOrgFormCreator;
+        $this->nameManager                = $nameManager;
         $this->middleware('auth');
-        $this->xmlGenerator = $xmlGenerator;
-        $this->organizationManager = $organizationManager;
-        $this->orgNameForm = $orgNameForm;
     }
 
     /**
-     * Display a listing of the resource.
+     * Display the specified resource.
      *
+     * @param  int $id
      * @return Response
-     */
-    public function index()
-    {
-        $organizations = $this->organizationManager->getOrganizations();
-        return view('organization.list', compact('organizations'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
-     */
-    public function create()
-    {
-        $form = $this->orgNameForm->create();
-        return view('organization.create', compact('form'));
-    }
-
-    /**
-     * stores data in database
-     * @param CreateOrganizationRequest $request
-     * @return mixed
-     */
-    public function store(CreateOrganizationRequest $request)
-    {
-        $input = Input::all();
-        $this->organizationManager->createOrganization($input);
-        Session::flash('message', 'Successfully created !');
-        return Redirect::to('organization');
-    }
-
-    /**
-     * display specific organization data
-     * @param $id
-     * @return \Illuminate\View\View
      */
     public function show($id)
     {
-        $organization = $this->organizationManager->getOrganization($id);
-        $names = JsonHelper::JsonDecode($organization->name);
-        $reportingOrgs = JsonHelper::JsonDecode($organization->reporting_org);
-        $totalBudgets = JsonHelper::JsonDecode($organization->total_budget);
-        $recipientOrgBudgets = JsonHelper::JsonDecode($organization->recipient_org_budget);
-        $recipientCountryBudgets = JsonHelper::JsonDecode($organization->recipient_country_budget); 
-        return view('organization.show', compact('organization', 'names', 'reportingOrgs', 'totalBudgets', 'recipientOrgBudgets', 'recipientCountryBudgets'));
+        $settings = $this->settingsManager->getSettings($id);
+        if (!isset($settings)) {
+            return redirect('/settings');
+        }
+        $organization  = $this->organizationManager->getOrganization($id);
+        $organizationData = $this->nameManager->getOrganizationData($id);
+
+        $reporting_org = $organization->buildOrgReportingOrg()[0];
+        $org_name = $organizationData->name;
+        $total_budget = $organizationData->total_budget;
+        $recipient_organization_budget = $organizationData->recipient_organization_budget;
+        $recipient_country_budget = $organizationData->recipient_country_budget;
+        $document_link = $organizationData->document_link;
+        if(!isset($reporting_org)) $reporting_org
+            = [];
+        if(!isset($org_name)) $org_name = [];
+        if(!isset($total_budget)) $total_budget = [];
+        if(!isset($recipient_organization_budget)) $recipient_organization_budget = [];
+        if(!isset($recipient_country_budget)) $recipient_country_budget = [];
+        if(!isset($document_link)) $document_link = [];
+
+        $status = $organizationData->status;
+
+        return view('Organization/show',
+            compact('organization',
+                'reporting_org',
+                'org_name',
+                'total_budget',
+                'recipient_organization_budget',
+                'recipient_country_budget',
+                'document_link',
+                'status'
+            ));
+
     }
 
     /**
+     * @param $id
+     */
+    public function update($id, Request $request)
+    {
+/*        $input = $request->all();
+        $status = $input['status'];
+        if (isset($status)) {
+            $status = $input['status'];
+            if($status == 1) {
+                $organization = $this->organizationManager->getOrganization($id);
+                $organizationData = $this->nameManager->getOrganizationData($id);
+                if(!isset($organization->reporting_org) || !isset($organizationData->name))
+                    return redirect()->back()->withMessage('Organization data is not Complete.');
+            } else if($status == 3) {
+                $this->generateXml($id);
+            }
+            $organizationData = $this->nameManager->getOrganizationData($id);
+            $this->nameManager->updateStatus($input, $organizationData);
+        }
+        return redirect()->back();*/
+    }
+
+    /**
+     * @param $id
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function updateStatus($id, Request $request, GenerateXml $generateXml)
+    {
+        $input = $request->all();
+        $this->organizationManager->updateStatus($input, $id, $generateXml);
+        return redirect()->back();
+    }
+
+    /**
+     * write brief description
      * @param $id
      * @return \Illuminate\View\View
      */
-    public function edit($id)
+    public function showIdentifier($id)
     {
         $organization = $this->organizationManager->getOrganization($id);
-        $data['identifier'] = $organization->identifier;
-        $data['name'] = $organization->buildOrganizationName();
-        $form = $this->orgNameForm->editForm($data, $organization);
-        return view('organization.edit', compact('form', 'organization'));
+        $data         = $organization->buildOrgReportingOrg()[0];
+        $form         = $this->orgReportingOrgFormCreator->editForm($data, $organization);
+        return view('Organization.identifier.edit', compact('form', 'organization'));
     }
 
-    /**
-     * @param $id
-     * @param CreateOrganizationRequest $request
-     * @return mixed
-     */
-    public function update($id, CreateOrganizationRequest $request)
-    {
-        $input = Input::all();
-        $organization = $this->organizationManager->getOrganization($id);
-        $this->organizationManager->updateOrganization($input, $organization);
-        Session::flash('message', 'Successfully Edit');
-        return Redirect::to('organization');
-    }
-
-    /**
-     * @param $id
-     * @return mixed
-     */
-    public function destroy($id)
-    {
-        $organization = $this->organizationManager->getOrganization($id);
-        $this->deleteOrganization($organization);
-        Session::flash('message', 'Successfully deleted !');
-        return Redirect::to('organization');
-    }
-
-    /**
-     * @param $organization
-     */
-    public function deleteOrganization($organization)
-    {
-        $organization->delete();
-    }
-
-    /**
-     * @return string
-     */
-    public function generateXml()
-    {
-        $this->xmlGenerator->generateFile();
-        return "";
-    }
-
-    /**
-     *
-     */
-    public function generateOrganizationXml()
-    {
-        $this->xmlGenerator->getXml();
-    }
 }

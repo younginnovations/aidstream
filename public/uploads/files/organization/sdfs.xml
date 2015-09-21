@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<iati-organisations version="2.01" generated-datetime="2015-09-21T05:51:31+00:00">
+  <iati-organisation last-updated-datetime="2015-09-21T05:51:31+00:00" xml:lang="es" default-currency="AED">
+    <organisation-identifier>sdfs</organisation-identifier>
+    <name>
+      <narrative xml:lang="aa">jkl</narrative>
+    </name>
+    <reporting-org type="10" ref="sdfs">
+      <narrative xml:lang="aa">ghj</narrative>
+    </reporting-org>
+  </iati-organisation>
+</iati-organisations>

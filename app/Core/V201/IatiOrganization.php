@@ -9,47 +9,66 @@ class IatiOrganization
 
     public function getName()
     {
-        return App::make('App\Core\V201\Element\Organization\Name');
+        return app('App\Core\V201\Element\Organization\Name');
+    }
+
+    public function getNameRequest()
+    {
+        return app('App\Core\V201\Requests\Organization\CreateNameRequest');
     }
 
     public function getOrgReportingOrg()
     {
-        return App::make('App\Core\V201\Element\Organization\OrgReportingOrg');
+        return app('App\Core\V201\Element\Organization\OrgReportingOrg');
     }
 
     public function getTotalBudget()
     {
-        return App::make('App\Core\V201\Element\Organization\TotalBudget');
+        return app('App\Core\V201\Element\Organization\TotalBudget');
+    }
+
+    public function getTotalBudgetRequest()
+    {
+        return app('App\Core\V201\Requests\Organization\CreateTotalBudgetRequest');
     }
 
     public function getRecipientOrgBudget()
     {
-        return App::make('App\Core\V201\Element\Organization\RecipientOrgBudget');
+        return app('App\Core\V201\Element\Organization\RecipientOrgBudget');
     }
 
     public function getRecipientCountryBudget()
     {
-        return App::make('App\Core\V201\Element\Organization\RecipientCountryBudget');
-    }
-
-    public function getBudgetLine()
-    {
-        return App::make('App\Core\V201\Element\Organization\BudgetLine');
-    }
-
-    public function getNarrative()
-    {
-        return App::make('App\Core\V201\Element\Organization\Narrative');
+        return app('App\Core\V201\Element\Organization\RecipientCountryBudget');
     }
 
     public function getRepository()
     {
-        return App::make('App\Core\V201\Repositories\Organization\OrganizationRepository');
+        return app('App\Core\V201\Repositories\Organization\OrganizationRepository');
     }
 
     public function getRecipientOrgBudgetRequest()
     {
-        return App::make('App\Core\V201\Request\CreateOrgRecipientOrgBudgetRequest');
+        return app('App\Core\V201\Requests\Organization\CreateOrgRecipientOrgBudgetRequest');
     }
 
+    public function getCreateOrgReportingOrgRequest()
+    {
+        return app('App\Core\V201\Requests\Organization\CreateOrgReportingOrgRequest');
+    }
+
+    public function getRecipientCountryBudgetRequest()
+    {
+        return app('App\Core\V201\Requests\Organization\CreateRecipientCountryBudgetRequest');
+    }
+
+    public function getDocumentLink()
+    {
+        return app('App\Core\V201\Element\Organization\DocumentLink');
+    }
+
+    public function getDocumentLinkRequest()
+    {
+        return app('App\Core\V201\Requests\Organization\CreateDocumentLinkRequest');
+    }
 }

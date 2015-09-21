@@ -10,6 +10,7 @@ class SettingsRequestManager
     function __construct(Version $version)
     {
         $this->req = $version->getSettingsElement()->getSettingsRequest();
+
         return $this->req;
     }
 }

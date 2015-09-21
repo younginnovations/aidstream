@@ -7,22 +7,28 @@ class OrganizationForm extends Form
 {
     protected $showFieldErrors = true;
     protected $formPath;
-    function __construct(Version $version) {
-        $this->version = $version;
+
+    function __construct(Version $version)
+    {
+        $this->version  = $version;
         $this->formPath = $this->version->getOrganizationElement()->getName()->getNameForm();
     }
 
-    public  function  buildForm()
+    public function  buildForm()
     {
         $this
             ->add('identifier', 'text')
-            ->add('name', 'collection', [
-                'type' => 'form',
-                'prototype' => true,
-                'options' => [
-                    'class' => $this->formPath,
-                    'label' => false,
+            ->add(
+                'name',
+                'collection',
+                [
+                    'type'      => 'form',
+                    'prototype' => true,
+                    'options'   => [
+                        'class' => $this->formPath,
+                        'label' => false,
+                    ]
                 ]
-            ]);
+            );
     }
 }

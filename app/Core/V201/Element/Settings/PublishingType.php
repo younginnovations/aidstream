@@ -18,7 +18,7 @@ class PublishingType extends BaseElement
         return "App\Core\V201\Forms\Settings\PublishingTypeForm";
     }
 
-    public  function getRepository()
+    public function getRepository()
     {
         return App::make('App\Core\V201\Repositories\Organization\OrganizationRepository');
     }
