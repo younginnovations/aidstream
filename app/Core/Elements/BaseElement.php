@@ -7,12 +7,12 @@ class BaseElement
     {
         foreach($narratives as $narrative)
         {
-            $narrativeData[] =array(
+            $narrativeData[] = [
                 '@value' => $narrative['narrative'],
-                '@attributes' => array(
+                '@attributes' => [
                     'xml:lang' => $narrative['language']
-                )
-            );
+                ]
+            ];
         }
         return $narrativeData;
     }

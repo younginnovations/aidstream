@@ -71,4 +71,9 @@ class IatiOrganization
     {
         return app('App\Core\V201\Requests\Organization\CreateDocumentLinkRequest');
     }
+
+    public function getGenerateXml()
+    {
+        return app('App\Core\V201\Element\Organization\GenerateXml');
+    }
 }

@@ -36,16 +36,16 @@ class OrgReportingOrg extends BaseElement
      */
     public function getXmlData(Organization $organization)
     {
-        $organizationData = array();
+        $organizationData = [];
         $orgReportingOrg  = (array) $organization->buildOrgReportingOrg();
         foreach ($orgReportingOrg as $OrgReportingOrg) {
-            $organizationData[] = array(
-                '@attributes' => array(
+            $organizationData[] = [
+                '@attributes' => [
                     'type' => $OrgReportingOrg['reporting_organization_type'],
                     'ref' => $OrgReportingOrg['reporting_organization_identifier']
-                ),
+                ],
                 'narrative'   => $this->buildNarrative($OrgReportingOrg['narrative']),
-            );
+            ];
         }
 
         return $organizationData;

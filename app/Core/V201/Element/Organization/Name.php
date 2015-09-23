@@ -35,12 +35,12 @@ class Name extends BaseElement
      */
     public function getXmlData(OrganizationData $orgData)
     {
-        $orgNameData = array();
+        $orgNameData = [];
         $name = (array) $orgData->name;
         if($name) {
-            $orgNameData[] = array(
+            $orgNameData[] = [
                 'narrative'   => $this->buildNarrative($name)
-            );
+            ];
         }
 
         return $orgNameData;

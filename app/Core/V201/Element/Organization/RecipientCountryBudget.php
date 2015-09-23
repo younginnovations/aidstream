@@ -35,34 +35,34 @@ class RecipientCountryBudget extends BaseElement
      */
     public function getXmlData(OrganizationData $organizationData)
     {
-        $orgRecipientCountryData = array();
+        $orgRecipientCountryData = [];
         $recipientCountryBudget = (array) $organizationData->recipient_country_budget;
         foreach ($recipientCountryBudget as $orgRecipientCountry) {
-            $orgRecipientCountryData[] = array(
-                'recipient-country' => array(
-                    '@attributes' => array(
+            $orgRecipientCountryData[] = [
+                'recipient-country' => [
+                    '@attributes' => [
                         'code' => $orgRecipientCountry['recipientCountry'][0]['code']
-                    ),
+                    ],
                     'narrative' => $this->buildNarrative($orgRecipientCountry['recipientCountry'][0]['narrative'])
-                ),
-                'period-start' => array(
-                    '@attributes' => array(
+                ],
+                'period-start' => [
+                    '@attributes' => [
                         'iso-date' => $orgRecipientCountry['periodStart'][0]['date']
-                    )
-                ),
-                'period-end' => array(
-                    '@attributes' => array(
+                    ]
+                ],
+                'period-end' => [
+                    '@attributes' => [
                         'iso-date' => $orgRecipientCountry['periodEnd'][0]['date']
-                    )
-                ),
-                'value' => array(
+                    ]
+                ],
+                'value' => [
                     '@value'      => $orgRecipientCountry['value'][0]['amount'],
-                    '@attributes' => array(
+                    '@attributes' => [
                         'currency' => $orgRecipientCountry['value'][0]['currency'],
                         'value-date' => $orgRecipientCountry['value'][0]['value_date']
-                    )
-                )
-            );
+                    ]
+                ]
+            ];
         }
 
         return $orgRecipientCountryData;
