@@ -1,20 +1,14 @@
-<?php namespace App\Core\V201\Element\Organization;
+<?php namespace app\Core\V201\Element\Organization;
 
-use App\Core\V201\Repositories\Organization\NameRepository;
-use app\Core\V201\Repositories\Organization\OrganizationRepository;
-use App\Core\V201\Repositories\SettingsRepository;
 use App\Helpers\ArrayToXml;
 use App\Models\Organization\Organization;
 use App\Models\Organization\OrganizationData;
 use App\Models\OrganizationPublished;
 use App\Models\Settings;
 
-class GenerateXml {
-
+class GenerateXml
+{
     protected $arrayToXml;
-    protected $organizationRepo;
-    protected $nameRepo;
-    protected $settingsRepo;
     protected $nameElem;
     protected $reportingOrgElem;
     protected $totalBudgetElem;
@@ -22,42 +16,33 @@ class GenerateXml {
     protected $recipientCountrybudgetElem;
     protected $documentLinkElem;
 
+    /**
+     * @param ArrayToXml $arrayToXml
+     * @param OrganizationPublished $organizationPublished
+     */
     public function __construct(
         ArrayToXml $arrayToXml,
-        OrganizationRepository $organizationRepo,
-        NameRepository $nameRepo,
-        SettingsRepository $settingsRepo,
-        Name $nameElem,
-        OrgReportingOrg $reportingOrgElem,
-        TotalBudget $totalBudgetElem,
-        RecipientOrgBudget $recipientOrgBudgetElem,
-        RecipientCountryBudget $recipientCountrybudgetElem,
-        DocumentLink $documentLinkElem,
         OrganizationPublished $organizationPublished
     ) {
-        $this->arrayToXml = $arrayToXml;
-        $this->organizationRepo = $organizationRepo;
-        $this->nameRepo = $nameRepo;
-        $this->settingsRepo = $settingsRepo;
-        $this->nameElem = $nameElem;
-        $this->reportingOrgElem = $reportingOrgElem;
-        $this->totalBudgetElem = $totalBudgetElem;
-        $this->recipientOrgBudgetElem = $recipientOrgBudgetElem;
-        $this->recipientCountrybudgetElem = $recipientCountrybudgetElem;
-        $this->documentLinkElem = $documentLinkElem;
-        $this->organizationPublished = $organizationPublished;
+        $this->arrayToXml               = $arrayToXml;
+        $this->organizationPublished    = $organizationPublished;
     }
 
     /**
-     * @param $id
+     * @param Organization $organization
+     * @param OrganizationData $organizationData
+     * @param Settings $settings
+     * @param $orgElem
      */
-    public function generate($id) {
-
-        $organization = $this->organizationRepo->getOrganization($id);
-        $organizationData = $this->nameRepo->getOrganizationData($id);
-        $settings = $this->settingsRepo->getSettings($id);
+    public function generate(Organization $organization, OrganizationData $organizationData, Settings $settings, $orgElem)
+    {
+        $this->nameElem                     = $orgElem->getName();
+        $this->reportingOrgElem             = $orgElem->getOrgReportingOrg();
+        $this->totalBudgetElem              = $orgElem->getTotalBudget();
+        $this->recipientOrgBudgetElem       = $orgElem->getRecipientOrgBudget();
+        $this->recipientCountrybudgetElem   = $orgElem->getRecipientCountryBudget();
+        $this->documentLinkElem             = $orgElem->getDocumentLink();
         $this->generateXmlFile($organization, $organizationData, $settings);
-
     }
 
     /**
@@ -81,15 +66,12 @@ class GenerateXml {
         $xml = $this->arrayToXml->createXML('iati-organisations', $xmlData);
         $filename = $organization->buildOrgReportingOrg()[0]['reporting_organization_identifier'] . '.xml';
         $result = $xml->save(public_path('uploads/files/organization/' . $filename));
-        if($result) {
+        if ($result) {
             $published = $this->organizationPublished->firstOrNew(['filename' => $filename, 'organization_id' =>$organization->id]);
-            if($published->exists) {
-                $published->touch();
-            } else {
-                $published->filename = $filename;
-                $published->organization_id = $organization->id;
-                $published->save();
-            }
+            $published->touch();
+            $published->filename = $filename;
+            $published->organization_id = $organization->id;
+            $published->save();
         }
     }
 
@@ -98,7 +80,8 @@ class GenerateXml {
      * @param OrganizationData $organizationData
      * @return array
      */
-    public function getXmlData (Organization $organization, OrganizationData $organizationData) {
+    public function getXmlData(Organization $organization, OrganizationData $organizationData)
+    {
         $xmlOrganization = [];
         $orgIdentifier = $organization->buildOrgReportingOrg()[0]['reporting_organization_identifier'];
         $name = $this->nameElem->getXmlData($organizationData);
@@ -108,20 +91,25 @@ class GenerateXml {
         $recipientCountryBudget = $this->recipientCountrybudgetElem->getXmlData($organizationData);
         $documentLink = $this->documentLinkElem->getXmlData($organizationData);
         $xmlOrganization['organisation-identifier'] = $orgIdentifier;
-        if($name)
+        if ($name) {
             $xmlOrganization['name'] = $name;
-        if($reportingOrg)
+        }
+        if ($reportingOrg) {
             $xmlOrganization['reporting-org'] = $reportingOrg;
-        if($totalBudget)
+        }
+        if ($totalBudget) {
             $xmlOrganization['total-budget'] = $totalBudget;
-        if($recipientOrgBudget)
+        }
+        if ($recipientOrgBudget) {
             $xmlOrganization['recipient-org-budget'] = $recipientOrgBudget;
-        if($recipientCountryBudget)
+        }
+        if ($recipientCountryBudget) {
             $xmlOrganization['recipient-country-budget'] = $recipientCountryBudget;
-        if($documentLink)
+        }
+        if ($documentLink) {
             $xmlOrganization['document-link'] = $documentLink;
+        }
 
         return $xmlOrganization;
     }
-
 }

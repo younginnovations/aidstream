@@ -29,31 +29,31 @@ class RecipientOrgBudget extends BaseElement
         $organizationData   = [];
         $recipientOrgBudget = (array) $organization->recipient_organization_budget;
         foreach ($recipientOrgBudget as $RecipientOrgBudget) {
-            $organizationData[] = array(
-                'recipient-org' => array(
-                    '@attributes' => array(
+            $organizationData[] = [
+                'recipient-org' => [
+                    '@attributes' => [
                         'ref' => $RecipientOrgBudget['recipientOrganization'][0]['Ref']
-                    ),
+                    ],
                     'narrative' => $this->buildNarrative($RecipientOrgBudget['narrative'])
-                ),
-                'period-start' => array(
-                    '@attributes' => array(
+                ],
+                'period-start' => [
+                    '@attributes' => [
                         'iso-date' => $RecipientOrgBudget['periodStart'][0]['date']
-                    )
-                ),
-                'period-end' => array(
-                    '@attributes' => array(
+                    ]
+                ],
+                'period-end' => [
+                    '@attributes' => [
                         'iso-date' => $RecipientOrgBudget['periodEnd'][0]['date']
-                    )
-                ),
-                'value' => array(
+                    ]
+                ],
+                'value' => [
                     '@value'      => $RecipientOrgBudget['value'][0]['amount'],
-                    '@attributes' => array(
+                    '@attributes' => [
                         'currency' => $RecipientOrgBudget['value'][0]['currency'],
                         'value-date' => $RecipientOrgBudget['value'][0]['value_date']
-                    )
-                )
-            );
+                    ]
+                ]
+            ];
         }
 
         return $organizationData;

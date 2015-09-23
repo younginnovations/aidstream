@@ -7,7 +7,6 @@ use App\Services\Organization\OrganizationManager;
 use App\Services\FormCreator\Organization\OrgReportingOrgForm;
 use Illuminate\Http\Request;
 use App\Services\Organization\OrgNameManager;
-use App\Core\V201\Element\Organization\GenerateXml;
 
 /**
  * Class OrganizationController
@@ -96,10 +95,22 @@ class OrganizationController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function updateStatus($id, GenerateXml $generateXml)
+    public function updateStatus($id, Request $request)
     {
-        $input = $this->request->all();
-        $this->organizationManager->updateStatus($input, $id, $generateXml);
+        $input = $request->all();
+        $organization = $this->organizationManager->getOrganization($id);
+        $organizationData = $this->organizationManager->getOrganizationData($id);
+        $settings = $this->settingsManager->getSettings($id);
+        $status = $input['status'];
+        if($status == 1) {
+            if(!isset($organization->reporting_org) || !isset($organizationData->name))
+                return redirect()->back()->withMessage('Organization data is not Complete.');
+        } else if($status == 3) {
+            $orgElem = $this->organizationManager->getOrganizationElement();
+            $generateXml = $orgElem->getGenerateXml();
+            $generateXml->generate($organization, $organizationData, $settings, $orgElem);
+        }
+        $this->organizationManager->updateStatus($input, $organizationData);
         return redirect()->back();
     }
 

@@ -23,6 +23,12 @@ class OrganizationManager
         $this->orgPublished = $orgPublished;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getOrganizationElement() {
+        return $this->orgElement;
+    }
 
     /**
      * @param array $input
@@ -77,12 +83,12 @@ class OrganizationManager
     }
 
     /**
-     * @param $input
-     * @param $organizationData
+     * @param array $input
+     * @param OrganizationData $organizationData
      */
-    public function updateStatus($input, $id, $generateXml)
+    public function updateStatus(array $input, OrganizationData $organizationData)
     {
-        $this->repo->updateStatus($input, $id, $generateXml);
+        $this->repo->updateStatus($input, $organizationData);
     }
 
     /**

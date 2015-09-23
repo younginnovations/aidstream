@@ -86,23 +86,12 @@ class OrganizationRepository implements OrganizationRepositoryInterface
     }
 
     /**
-     * @param $input
-     * @param $id
-     * @param $generateXml
-     * @return mixed
+     * @param array $input
+     * @param OrganizationData $organizationData
      */
-    public function updateStatus($input, $id, $generateXml)
+    public function updateStatus(array $input, OrganizationData $organizationData)
     {
-        $organizationData = $this->getOrganizationData($id);
-        $status = $input['status'];
-        if($status == 1) {
-            $organization = $this->getOrganization($id);
-            if(!isset($organization->reporting_org) || !isset($organizationData->name))
-                return redirect()->back()->withMessage('Organization data is not Complete.');
-        } else if($status == 3) {
-            $generateXml->generate($id);
-        }
-        $organizationData->status = $status;
+        $organizationData->status = $input['status'];
         $organizationData->save();
     }
 
