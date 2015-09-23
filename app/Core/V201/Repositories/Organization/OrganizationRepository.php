@@ -76,11 +76,21 @@ class OrganizationRepository implements OrganizationRepositoryInterface
         return $this->orgData->findorFail($id);
     }
 
+    /**
+     * @param $organization_id
+     * @return model
+     */
     public function getStatus($organization_id)
     {
         return $this->orgData->where('organization_id', $organization_id)->first()->status;
     }
 
+    /**
+     * @param $input
+     * @param $id
+     * @param $generateXml
+     * @return mixed
+     */
     public function updateStatus($input, $id, $generateXml)
     {
         $organizationData = $this->getOrganizationData($id);
@@ -96,9 +106,36 @@ class OrganizationRepository implements OrganizationRepositoryInterface
         $organizationData->save();
     }
 
+    /**
+     * @param $organization_id
+     */
     public function resetStatus($organization_id)
     {
         $this->orgData->where('organization_id', $organization_id)->update(['status' => 0]);
+    }
+
+    /**
+     * @param $id
+     * @return model
+     */
+    public function getPublishedFiles($id)
+    {
+        return $this->orgPublished->where('organization_id', $id)->get();
+    }
+
+    /**
+     * @param $id
+     * @return bool
+     */
+    public function deletePublishedFile($id)
+    {
+        $result = $this->orgPublished->find($id);
+        if($result) {
+            $file = public_path('uploads/files/organization/' .$result->filename);
+            $result = $result->delete();
+            if($result && file_exists($file)) unlink($file);
+        }
+        return $result;
     }
 
 }

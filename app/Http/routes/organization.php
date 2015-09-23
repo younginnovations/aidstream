@@ -19,5 +19,14 @@ $router->group(
         );
         $router->resource('organization.document-link', 'DocumentLinkController');
 
+
+        $router->get(
+            'list-published-files/{action?}/{id?}',
+            [
+                'as' => 'list-published-files',
+                'uses' => 'OrganizationController@listPublishedFiles'
+            ]
+        );
+
     }
 );

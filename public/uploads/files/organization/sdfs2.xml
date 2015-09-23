@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<iati-organisations version="2.01" generated-datetime="2015-09-21T05:45:32+00:00">
-  <iati-organisation last-updated-datetime="2015-09-21T05:45:32+00:00" xml:lang="es" default-currency="AED">
+<iati-organisations version="2.01" generated-datetime="2015-09-22T08:29:07+00:00">
+  <iati-organisation last-updated-datetime="2015-09-22T08:29:07+00:00" xml:lang="es" default-currency="AED">
     <organisation-identifier>sdfs2</organisation-identifier>
     <name>
       <narrative xml:lang="aa">jkl</narrative>
