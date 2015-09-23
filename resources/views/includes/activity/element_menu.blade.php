@@ -1,0 +1,94 @@
+<div class="panel panel-default">
+    <div class="panel-heading">Identification</div>
+    <div class="panel-body">
+        <ul class="nav">
+            <li><a href="#">Reporting Organization</a></li>
+            <li><a href="#">Iati Identifier</a></li>
+            <li><a href="#">Other Identifier</a></li>
+        </ul>
+    </div>
+</div>
+<div class="panel panel-default">
+    <div class="panel-heading">Basic Activity Information</div>
+    <div class="panel-body">
+        <ul class="nav">
+            <li><a href="#">Title</a></li>
+            <li><a href="#">Description</a></li>
+            <li><a href="#">Activity Status</a></li>
+            <li><a href="#">Activity Date</a></li>
+            <li><a href="#">Contact Info</a></li>
+            <li><a href="#">Activity Scope</a></li>
+        </ul>
+    </div>
+</div>
+<div class="panel panel-default">
+    <div class="panel-heading">Participating Organisations</div>
+    <div class="panel-body">
+        <ul class="nav">
+            <li><a href="#">Participating Organisation</a></li>
+        </ul>
+    </div>
+</div>
+<div class="panel panel-default">
+    <div class="panel-heading">Geopolitical Information</div>
+    <div class="panel-body">
+        <ul class="nav">
+            <li><a href="#">Recipient Country</a></li>
+            <li><a href="#">Recipient Region</a></li>
+            <li><a href="#">Location</a></li>
+        </ul>
+    </div>
+</div>
+<div class="panel panel-default">
+    <div class="panel-heading">Classifications</div>
+    <div class="panel-body">
+        <ul class="nav">
+            <li><a href="#">Sector</a></li>
+            <li><a href="#">Country Budget Item</a></li>
+            <li><a href="#">Policy Maker</a></li>
+            <li><a href="#">Collaboration Type</a></li>
+            <li><a href="#">Default Flow Type</a></li>
+            <li><a href="#">Default Finance Type</a></li>
+            <li><a href="#">Default Aid Type</a></li>
+            <li><a href="#">Default Tied Status</a></li>
+        </ul>
+    </div>
+</div>
+<div class="panel panel-default">
+    <div class="panel-heading">Financial</div>
+    <div class="panel-body">
+        <ul class="nav">
+            <li><a href="#">Budget</a></li>
+            <li><a href="#">Planned Disbursement</a></li>
+            <li><a href="#">Capital Send</a></li>
+            <li><a href="#">Transaction</a></li>
+        </ul>
+    </div>
+</div>
+<div class="panel panel-default">
+    <div class="panel-heading">Related Documents</div>
+    <div class="panel-body">
+        <ul class="nav">
+            <li><a href="#">Document Link</a></li>
+        </ul>
+    </div>
+</div>
+<div class="panel panel-default">
+    <div class="panel-heading">Relations</div>
+    <div class="panel-body">
+        <ul class="nav">
+            <li><a href="#">Related Activity</a></li>
+        </ul>
+    </div>
+</div>
+<div class="panel panel-default">
+    <div class="panel-heading">Performance</div>
+    <div class="panel-body">
+        <ul class="nav">
+            <li><a href="#">Legacy Data</a></li>
+            <li><a href="#">Conditions</a></li>
+            <li><a href="#">Result</a></li>
+        </ul>
+    </div>
+</div>
+
