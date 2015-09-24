@@ -2,14 +2,15 @@
 
 return [
 
-	"login" => "Login",
-	"register" => "Register",
-	"remember_me" => "Remember Me",
-	"forgot_password" => "Forgot Your Password",
-	"home"     => "Home",
-	"login_name" => "Username or Email",
-	"password"     => "Password",
-	"logout"     => "Logout",
+    "login"            => "Login",
+    "register"         => "Register",
+    "remember_me"      => "Remember Me",
+    "forgot_password"  => "Forgot Your Password",
+    "home"             => "Home",
+    "login_name"       => "Username or Email",
+    "password"         => "Password",
+    "logout"           => "Logout",
+    "activity_default" => "Activity Default",
 
 ];
 

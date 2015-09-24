@@ -24,6 +24,11 @@ class SettingsController extends Controller
     protected $orgDefaultFieldGroupsForm;
     protected $org_id;
 
+    /**
+     * @param SettingsManager               $settingsManager
+     * @param OrganizationManager           $organizationManager
+     * @param ReportingOrganizationInfoForm $orgReportingOrgInfoForm
+     */
     function __construct(
         SettingsManager $settingsManager,
         OrganizationManager $organizationManager,
@@ -41,6 +46,7 @@ class SettingsController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param FormBuilder $formBuilder
      * @return Response
      */
     public function index(FormBuilder $formBuilder)
@@ -57,7 +63,7 @@ class SettingsController extends Controller
             $model = json_decode($data, true);
         }
         if (isset($this->organization)) {
-            $model['reporting_organization_info'] = $this->organization->buildOrgReportingOrg();
+            $model['reporting_organization_info'] = $this->organization->reporting_org;
         };
         $url         = 'settings.' . (isset($this->settings) ? 'update' : 'store');
         $method      = isset($this->settings) ? 'PUT' : 'POST';
@@ -74,18 +80,9 @@ class SettingsController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
+     * @param SettingsRequestManager $request
      * @return Response
      */
     public function store(SettingsRequestManager $request)
@@ -98,31 +95,10 @@ class SettingsController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int $id
-     * @return Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int $id
-     * @return Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
-     * @param  int $id
+     * @param  int                   $id
+     * @param SettingsRequestManager $request
      * @return Response
      */
     public function update($id, SettingsRequestManager $request)
@@ -133,16 +109,5 @@ class SettingsController extends Controller
 
         return Redirect::to('/');
     }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int $id
-     * @return Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
-
 }
+

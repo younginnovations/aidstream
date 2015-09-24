@@ -11,7 +11,7 @@ class OrgReportingOrgRepository
      */
     public function create(Organization $organization, array $input)
     {
-        $organization->reporting_org = json_encode($input['reportingOrg']);
+        $organization->reporting_org = $input['reportingOrg'];
         $organization->save();
     }
 
@@ -21,7 +21,7 @@ class OrgReportingOrgRepository
      */
     public function update(array $input, Organization $organization)
     {
-        $organization->reporting_org = json_encode($input['reportingOrg']);
+        $organization->reporting_org = $input['reportingOrg'];
         $organization->save();
     }
 

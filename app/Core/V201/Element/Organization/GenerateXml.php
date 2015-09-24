@@ -64,7 +64,7 @@ class GenerateXml
             'default-currency' => $settings->default_field_values[0]['default_currency']
         );
         $xml = $this->arrayToXml->createXML('iati-organisations', $xmlData);
-        $filename = $organization->buildOrgReportingOrg()[0]['reporting_organization_identifier'] . '.xml';
+        $filename = $organization->reporting_org[0]['reporting_organization_identifier'] . '.xml';
         $result = $xml->save(public_path('uploads/files/organization/' . $filename));
         if ($result) {
             $published = $this->organizationPublished->firstOrNew(['filename' => $filename, 'organization_id' =>$organization->id]);
@@ -83,7 +83,7 @@ class GenerateXml
     public function getXmlData(Organization $organization, OrganizationData $organizationData)
     {
         $xmlOrganization = [];
-        $orgIdentifier = $organization->buildOrgReportingOrg()[0]['reporting_organization_identifier'];
+        $orgIdentifier = $organization->reporting_org[0]['reporting_organization_identifier'];
         $name = $this->nameElem->getXmlData($organizationData);
         $reportingOrg = $this->reportingOrgElem->getXmlData($organization);
         $totalBudget = $this->totalBudgetElem->getXmlData($organizationData);
