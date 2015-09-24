@@ -37,7 +37,7 @@ class OrgReportingOrg extends BaseElement
     public function getXmlData(Organization $organization)
     {
         $organizationData = [];
-        $orgReportingOrg  = (array) $organization->buildOrgReportingOrg();
+        $orgReportingOrg  = (array) $organization->reporting_org;
         foreach ($orgReportingOrg as $OrgReportingOrg) {
             $organizationData[] = [
                 '@attributes' => [

@@ -21,6 +21,12 @@ class OrgReportingOrgController extends Controller
     protected $orgReportingOrgManager;
     protected $orgReportingOrgFormCreator;
 
+    /**
+     * @param OrgReportingOrgForm    $orgReportingOrgFormCreator
+     * @param OrganizationManager    $organizationManager
+     * @param OrgReportingOrgManager $orgReportingOrgManager
+     * @param OrgNameManager         $nameManager
+     */
     function __construct(
         OrgReportingOrgForm $orgReportingOrgFormCreator,
         OrganizationManager $organizationManager,
@@ -31,17 +37,18 @@ class OrgReportingOrgController extends Controller
         $this->orgReportingOrgFormCreator = $orgReportingOrgFormCreator;
         $this->organizationManager        = $organizationManager;
         $this->orgReportingOrgManager     = $orgReportingOrgManager;
-        $this->nameManager     = $nameManager;
+        $this->nameManager                = $nameManager;
 
     }
 
     /**
      * @param $organizationId
+     * @return \Illuminate\View\View
      */
     public function index($organizationId)
     {
         $organization = $this->organizationManager->getOrganization($organizationId);
-        $data         = $organization->buildOrgReportingOrg()[0];
+        $data         = $organization->reporting_org[0];
         $form         = $this->orgReportingOrgFormCreator->editForm($data, $organization);
 
         return view('Organization.reportingOrg.edit', compact('form', 'organization'));
@@ -56,10 +63,11 @@ class OrgReportingOrgController extends Controller
     public function update($organizationId)
     {
         $input['reportingOrg'][0] = Input::all();
-        $organization = $this->organizationManager->getOrganization($organizationId);
+        $organization             = $this->organizationManager->getOrganization($organizationId);
         $this->orgReportingOrgManager->update($input, $organization);
         $this->organizationManager->resetStatus($organizationId);
+
         return redirect()->route("organization.show", $organizationId)->withMessage('Reporting Organization Updated !');
     }
-
 }
+

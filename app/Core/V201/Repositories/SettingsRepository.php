@@ -28,7 +28,7 @@ class SettingsRepository implements SettingsRepositoryInterface
     {
         try {
             DB::beginTransaction();
-            $organization->reporting_org = json_encode($input['reporting_organization_info']);
+            $organization->reporting_org     = $input['reporting_organization_info'];
             $organization->save();
 
             $version = $input['version_form'][0]['version'];
@@ -74,7 +74,7 @@ class SettingsRepository implements SettingsRepositoryInterface
     {
         try {
             DB::beginTransaction();
-            $organization->reporting_org = json_encode($input['reporting_organization_info']);
+            $organization->reporting_org = $input['reporting_organization_info'];
             $organization->save();
 
             $version = $input['version_form'][0]['version'];

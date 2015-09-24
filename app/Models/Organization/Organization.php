@@ -4,16 +4,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Organization extends Model
 {
-    protected $table = "organizations";
-    protected $fillable = ['identifier', 'reporting_org'];
-
-    public function getOrgReportingOrg()
-    {
-        return json_decode($this->reporting_org);
-    }
-
-    public function buildOrgReportingOrg()
-    {
-        return json_decode($this->reporting_org, true);
-    }
+    protected $table    = "organizations";
+    protected $fillable = ['name', 'address', 'user_identifier', 'reporting_org'];
+    protected $casts    = ['reporting_org' => 'json'];
 }
