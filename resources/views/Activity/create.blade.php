@@ -26,7 +26,8 @@
                                 </div>
                                 <div>
                                     <div class="col-md-6">Reporting Organisation Identifier:</div>
-                                    <div class="col-md-6">{{ $reportingOrganization[0]['reporting_organization_identifier']  }}</div>
+                                    <div class="col-md-6"
+                                         id="reporting_organization_identifier">{{ $reportingOrganization[0]['reporting_organization_identifier']  }}</div>
                                 </div>
                                 <div>
                                     <div class="col-md-6">Reporting Organisation Type:</div>
@@ -63,6 +64,16 @@
 
                             </div>
                         </div>
+
+                        {!! form_start($form) !!}
+                        <div class="panel panel-default">
+                            <div class="panel-heading">IATI Identifier</div>
+
+                            <div class="panel-body">
+                                {!! form_rest($form) !!}
+                            </div>
+                        </div>
+                        {!! form_end($form) !!}
                     </div>
                 </div>
             </div>
