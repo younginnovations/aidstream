@@ -2,7 +2,7 @@
     <div class="panel-heading">Identification</div>
     <div class="panel-body">
         <ul class="nav">
-            <li><a href="{{ route('activity.show', [$id]) }}">Reporting Organization</a></li>
+            <li><a href="{{ route('activity.reporting-organization.index', [$id]) }}">Reporting Organization</a></li>
             <li><a href="#">Iati Identifier</a></li>
             <li><a href="#">Other Identifier</a></li>
         </ul>

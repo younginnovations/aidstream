@@ -29,7 +29,7 @@
                                     <td><input type="checkbox"/></td>
                                     <td>{{ $key + 1 }}</td>
                                     <td class="activity_title">
-                                        (Activity Title)
+                                        {{ $activity->title ? $activity->title[0]['narrative'] : 'No Title' }}
                                         <div class="activity_actions">
                                             <a href="{{ route('activity.show', [$activity->id]) }}">View</a>
                                             <a href="{{ route('activity.destroy', [$activity->id]) }}">Delete</a>
