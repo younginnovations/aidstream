@@ -7,7 +7,7 @@ $(document).ready(function () {
         window.location.reload();
     });
 
-    $('input[name="organization_user_identifier"]').blur(function () {
+    $('input[name="organization_user_identifier"]').keyup(function () {
         $('input[name="username"]').val($(this).val() + '_admin');
     });
 

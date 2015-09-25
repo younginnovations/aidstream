@@ -7,20 +7,39 @@ class ActivityRepository
 {
     protected $activity;
 
+    /**
+     * @param Activity $activity
+     */
     public function __construct(
         Activity $activity
     ) {
         $this->activity = $activity;
     }
 
-    public function store(array $input)
+    /**
+     * write brief description
+     * @param array $input
+     * @param       $organizationId
+     * @return modal
+     */
+    public function store(array $input, $organizationId)
     {
         unset($input['_token']);
-        $this->activity->create(
+        return $this->activity->create(
             [
                 'identifier'      => $input,
-                'organization_id' => 1
+                'organization_id' => $organizationId
             ]
         );
     }
+
+    /**
+     * write brief description
+     * @param $organizationId
+     * @return modal
+     */
+    public function getActivities($organizationId) {
+        return $this->activity->where('organization_id', $organizationId)->get();
+    }
+
 }
