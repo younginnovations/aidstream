@@ -16,4 +16,8 @@ class IatiActivity
         return app('App\Core\V201\Repositories\Activity\ActivityRepository');
     }
 
+    public function getIatiIdentifierRequest()
+    {
+        return app('App\Core\V201\Requests\Activity\IatiIdentifierRequest');
+    }
 }

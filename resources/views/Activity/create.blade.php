@@ -5,7 +5,7 @@
         <div class="row">
             <div class="col-xs-8">
                 <div class="panel panel-default">
-                    <div class="panel-heading">@lang('trans.home')</div>
+                    <div class="panel-heading">Add Activity</div>
 
                     <div class="panel-body">
                         <div class="panel panel-default">
