@@ -11,6 +11,10 @@ class Identifier
     protected $version;
     protected $formPath;
 
+    /**
+     * @param FormBuilder $formBuilder
+     * @param Version     $version
+     */
     public function __construct(FormBuilder $formBuilder, Version $version)
     {
         $this->formBuilder = $formBuilder;
@@ -18,28 +22,20 @@ class Identifier
         $this->formPath    = $this->version->getActivityElement()->getIdentifier()->getForm();
     }
 
-    public function create()
+    /**
+     * @param $data
+     * @param $activityId
+     * @return edit form
+     */
+    public function editForm($data, $activityId)
     {
-        return $this->formBuilder->create(
-            $this->formPath,
-            [
-                'method' => 'POST',
-                'url'    => route('activity.store')
-            ]
-        )->add('Save', 'submit');
-    }
-
-    public function editForm($data, $organizationId)
-    {
-        /*        $modal['name'] = $data;
-
         return $this->formBuilder->create(
             $this->formPath,
             [
                 'method' => 'PUT',
-                'model'  => $modal,
-                'url'    => route('organization.name.update', [$organizationId, 0])
+                'model'  => $data,
+                'url'    => route('activity.iati-identifier.update', [$activityId, 0])
             ]
-        )->add('Save', 'submit');*/
+        )->add('Save', 'submit');
     }
 }

@@ -1,11 +1,11 @@
 <?php namespace app\Http\Controllers\Complete\Activity;
 
+use App\Core\V201\Requests\Activity\IatiIdentifierRequest;
 use App\Http\Controllers\Controller;
 use App\Services\Organization\OrganizationManager;
 use App\Services\SettingsManager;
 use Illuminate\Session\SessionManager;
 use App\Services\Activity\ActivityManager;
-use Illuminate\Http\Request;
 use App\Services\FormCreator\Activity\Identifier;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
@@ -81,12 +81,7 @@ class ActivityController extends Controller
         return view('Activity.create', compact('form', 'organization', 'reportingOrganization', 'defaultFieldValues'));
     }
 
-    /**
-     * write brief description
-     * @param Request $request
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function store(Request $request)
+    public function store(IatiIdentifierRequest $request)
     {
         $input  = $request->all();
         $result = $this->activityManager->store($input, $this->organization_id);

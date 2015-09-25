@@ -3,7 +3,7 @@
     <div class="panel-body">
         <ul class="nav">
             <li><a href="{{ route('activity.show', [$id]) }}">Reporting Organization</a></li>
-            <li><a href="#">Iati Identifier</a></li>
+            <li><a href="{{ route('activity.iati-identifier.index', $id) }}">Iati Identifier</a></li>
             <li><a href="#">Other Identifier</a></li>
         </ul>
     </div>
