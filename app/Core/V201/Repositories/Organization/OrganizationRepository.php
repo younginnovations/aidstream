@@ -4,6 +4,7 @@ namespace app\Core\V201\Repositories\Organization;
 use App\Core\Repositories\OrganizationRepositoryInterface;
 use App\Models\Organization\Organization;
 use App\Models\Organization\OrganizationData;
+use App\Models\OrganizationPublished;
 
 class OrganizationRepository implements OrganizationRepositoryInterface
 {
@@ -13,16 +14,20 @@ class OrganizationRepository implements OrganizationRepositoryInterface
     private $org;
 
     /**
-     * @param Organization $org
+     * @param Organization          $org
+     * @param OrganizationData      $orgData
+     * @param OrganizationPublished $orgPublished
      */
-    function __construct(Organization $org, OrganizationData $orgData)
+    function __construct(Organization $org, OrganizationData $orgData, OrganizationPublished $orgPublished)
     {
-        $this->org = $org;
-        $this->orgData = $orgData;
+        $this->org          = $org;
+        $this->orgData      = $orgData;
+        $this->orgPublished = $orgPublished;
     }
 
     /**
-     * @param $input
+     * write brief description
+     * @param array $input
      */
     public function createOrganization(array $input)
     {
@@ -86,7 +91,7 @@ class OrganizationRepository implements OrganizationRepositoryInterface
     }
 
     /**
-     * @param array $input
+     * @param array            $input
      * @param OrganizationData $organizationData
      */
     public function updateStatus(array $input, OrganizationData $organizationData)
@@ -119,11 +124,14 @@ class OrganizationRepository implements OrganizationRepositoryInterface
     public function deletePublishedFile($id)
     {
         $result = $this->orgPublished->find($id);
-        if($result) {
-            $file = public_path('uploads/files/organization/' .$result->filename);
+        if ($result) {
+            $file   = public_path('uploads/files/organization/' . $result->filename);
             $result = $result->delete();
-            if($result && file_exists($file)) unlink($file);
+            if ($result && file_exists($file)) {
+                unlink($file);
+            }
         }
+
         return $result;
     }
 

@@ -34,10 +34,16 @@ class ActivityManager
         $this->version = $version;
     }
 
-    public function store(array $input)
+    /**
+     * write brief description
+     * @param array $input
+     * @param       $organizationId
+     * @return bool
+     */
+    public function store(array $input, $organizationId)
     {
         try {
-            $this->repo->store($input);
+            $result = $this->repo->store($input, $organizationId);
             $this->log->info(
                 'Activity identifier added',
                 ['for ' => $input['activity_identifier']]
@@ -51,7 +57,7 @@ class ActivityManager
                 ]
             );
 
-            return true;
+            return $result;
         } catch (Exception $exception) {
             $this->log->error(
                 sprintf('Activity identifier couldn\'t be added due to %s', $exception->getMessage()),
@@ -64,4 +70,15 @@ class ActivityManager
 
         return false;
     }
+
+    /**
+     * write brief description
+     * @param $organizationId
+     * @return modal
+     */
+    public function getActivities($organizationId)
+    {
+        return $this->repo->getActivities($organizationId);
+    }
+
 }

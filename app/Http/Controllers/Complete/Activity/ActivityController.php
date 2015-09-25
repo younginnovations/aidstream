@@ -17,6 +17,7 @@ class ActivityController extends Controller
 {
     protected $identifierForm;
     protected $activityManager;
+    protected $organization_id;
     /**
      * @var SettingsManager
      */
@@ -34,6 +35,8 @@ class ActivityController extends Controller
      * @param SettingsManager     $settingsManager
      * @param SessionManager      $sessionManager
      * @param OrganizationManager $organizationManager
+     * @param Identifier          $identifierForm
+     * @param ActivityManager     $activityManager
      */
     function __construct(
         SettingsManager $settingsManager,
@@ -48,6 +51,19 @@ class ActivityController extends Controller
         $this->organizationManager = $organizationManager;
         $this->identifierForm      = $identifierForm;
         $this->activityManager     = $activityManager;
+        $this->organization_id     = $this->sessionManager->get('org_id');
+    }
+
+
+    /**
+     * write brief description
+     * @return \Illuminate\View\View
+     */
+    public function index()
+    {
+        $activities = $this->activityManager->getActivities($this->organization_id);
+
+        return view('Activity.index', compact('activities'));
     }
 
     /**
@@ -57,22 +73,38 @@ class ActivityController extends Controller
     {
         $this->authorize('add_activity');
         $form                  = $this->identifierForm->create();
-        $orgId                 = $this->sessionManager->get('org_id');
-        $settings              = $this->settingsManager->getSettings($orgId);
+        $settings              = $this->settingsManager->getSettings($this->organization_id);
         $defaultFieldValues    = $settings->default_field_values;
-        $organization          = $this->organizationManager->getOrganization($orgId);
+        $organization          = $this->organizationManager->getOrganization($this->organization_id);
         $reportingOrganization = $organization->reporting_org;
 
         return view('Activity.create', compact('form', 'organization', 'reportingOrganization', 'defaultFieldValues'));
     }
 
+    /**
+     * write brief description
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function store(Request $request)
     {
-        $input   = $request->all();
-        $result  = $this->activityManager->store($input);
-        $message = $result ? 'Activity added successfully.' : 'Failed to add activity.';
+        $input  = $request->all();
+        $result = $this->activityManager->store($input, $this->organization_id);
+        if (!$result) {
+            return redirect()->back();
+        }
 
-        return redirect()->back()->withMessage($message);
+        return redirect()->route('activity.show', [$result->id]);
+    }
+
+    /**
+     * write brief description
+     * @param $id
+     * @return \Illuminate\View\View
+     */
+    public function show($id)
+    {
+        return view('Activity.show', compact('id'));
     }
 
     /**
