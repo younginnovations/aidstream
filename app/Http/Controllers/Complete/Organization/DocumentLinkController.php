@@ -64,6 +64,6 @@ class DocumentLinkController extends Controller
             );
         }
 
-        return redirect()->to->route('organization.document-link.index', $orgId);
+        return redirect()->back();
     }
 }

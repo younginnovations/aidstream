@@ -71,6 +71,6 @@ class RecipientOrganizationBudgetController extends Controller
             );
         }
 
-        return redirect()->to->route('organization.recipient-organization-budget.index', $orgId);
+        return redirect()->back();
     }
 }

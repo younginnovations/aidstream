@@ -5,10 +5,15 @@ use Illuminate\Database\Eloquent\Model;
 class Activity extends Model
 {
     protected $table = "activity_data";
-    protected $fillable = ['identifier', 'organization_id'];
+    protected $fillable = [
+        'identifier',
+        'organization_id',
+        'other_identifier'
+    ];
 
     protected $casts = [
-        'identifier' => 'json'
+        'identifier'       => 'json',
+        'other_identifier' => 'json'
     ];
 
 }
