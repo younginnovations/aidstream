@@ -1,12 +1,14 @@
-<?php
-namespace App\Services\Activity;
+<?php namespace App\Services\Activity;
 
 use App\Core\Version;
-use App;
 use App\Models\Activity\Activity;
 use Illuminate\Auth\Guard;
 use Illuminate\Contracts\Logging\Log;
 
+/**
+ * Class OtherIdentifierManager
+ * @package App\Services\Activity
+ */
 class OtherIdentifierManager
 {
 
@@ -38,6 +40,7 @@ class OtherIdentifierManager
     }
 
     /**
+     * update activity other identifier
      * @param array    $input
      * @param Activity $activity
      * @return bool
@@ -47,7 +50,7 @@ class OtherIdentifierManager
         try {
             $this->repo->update($input, $activity);
             $this->log->info(
-                'Activity Other Identifier  Updated',
+                'Activity Other Identifier  Updated!',
                 ['for ' => $activity['other_identifier']]
             );
             $this->log->activity(
@@ -57,7 +60,6 @@ class OtherIdentifierManager
 
             return true;
         } catch (Exception $exception) {
-
             $this->log->error(
                 sprintf('Other Identifier could not be updated due to %s', $exception->getMessage()),
                 [
@@ -86,6 +88,5 @@ class OtherIdentifierManager
     public function getActivityData($id)
     {
         return $this->repo->getActivityData($id);
-
     }
 }

@@ -2,6 +2,10 @@
 
 use Kris\LaravelFormBuilder\Form;
 
+/**
+ * Class NarrativeForm
+ * @package App\Core\V201\Forms\Activity
+ */
 class NarrativeForm extends Form
 {
     protected $showFieldErrors = true;
@@ -13,9 +17,9 @@ class NarrativeForm extends Form
         );
         $response = json_decode($json, true);
         $language = $response['Language'];
-        $code_arr = [];
+        $codeArr = [];
         foreach ($language as $val) {
-            $code_arr[$val['code']] = $val['code'] . ' - ' . $val['name'];
+            $codeArr[$val['code']] = $val['code'] . ' - ' . $val['name'];
         }
         $this
             ->add('narrative', 'text', ['label' => 'Text', 'rules' => 'required'])
@@ -23,7 +27,7 @@ class NarrativeForm extends Form
                 'language',
                 'select',
                 [
-                    'choices' => $code_arr,
+                    'choices' => $codeArr,
                     'label'   => 'Language'
                 ]
             );

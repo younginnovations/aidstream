@@ -2,6 +2,10 @@
 
 use Kris\LaravelFormBuilder\Form;
 
+/**
+ * Class MultipleOtherIdentifierForm
+ * @package App\Core\V201\Forms\Activity
+ */
 class MultipleOtherIdentifierForm extends Form
 {
     public function buildForm()

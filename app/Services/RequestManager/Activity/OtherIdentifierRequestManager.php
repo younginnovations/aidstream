@@ -3,6 +3,10 @@
 use App\Core\Version;
 Use App;
 
+/**
+ * Class OtherIdentifierRequestManager
+ * @package App\Services\RequestManager\Activity
+ */
 class OtherIdentifierRequestManager
 {
     protected $req;
@@ -17,3 +21,4 @@ class OtherIdentifierRequestManager
         return $this->req;
     }
 }
+

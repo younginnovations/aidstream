@@ -2,6 +2,10 @@
 
 use App\Http\Requests\Request;
 
+/**
+ * Class OtherIdentifierRequest
+ * @package App\Core\V201\Requests\Activity
+ */
 class OtherIdentifierRequest extends Request
 {
 
@@ -25,13 +29,13 @@ class OtherIdentifierRequest extends Request
     public function rules()
     {
         $rules = [];
-        foreach ($this->request->get('otherIdentifier') as $key => $val) {
-            $rules['otherIdentifier.' . $key . '.reference'] = 'required';
-            $rules['otherIdentifier.' . $key . '.type']      = 'required';
-            foreach ($val['ownerOrg'] as $ownerOrgKey => $ownerOrgVal) {
-                $rules['otherIdentifier.' . $key . '.ownerOrg.' . $ownerOrgKey . '.reference'] = 'required';
+        foreach ($this->request->get('otherIdentifier') as $otherIdentifierIndex => $otherIdentifier) {
+            $rules['otherIdentifier.' . $otherIdentifierIndex . '.reference'] = 'required';
+            $rules['otherIdentifier.' . $otherIdentifierIndex . '.type']      = 'required';
+            foreach ($otherIdentifier['ownerOrg'] as $ownerOrgKey => $ownerOrgVal) {
+                $rules['otherIdentifier.' . $otherIdentifierIndex . '.ownerOrg.' . $ownerOrgKey . '.reference'] = 'required';
                 foreach ($ownerOrgVal['narrative'] as $narrativeKey => $narrativeVal) {
-                    $rules['otherIdentifier.' . $key . '.ownerOrg.' . $ownerOrgKey . '.narrative.' . $narrativeKey . '.narrative'] = 'required';
+                    $rules['otherIdentifier.' . $otherIdentifierIndex . '.ownerOrg.' . $ownerOrgKey . '.narrative.' . $narrativeKey . '.narrative'] = 'required';
                 }
             }
         }
@@ -42,19 +46,13 @@ class OtherIdentifierRequest extends Request
     public function messages()
     {
         $messages = [];
-        foreach ($this->request->get('otherIdentifier') as $key => $val) {
-            $messages['otherIdentifier.' . $key . '.reference' . '.required'] = sprintf("Reference is Required.", $key);
-            $messages['otherIdentifier.' . $key . '.type' . '.required']      = sprintf("Type is Required.", $key);
-            foreach ($val['ownerOrg'] as $ownerOrgKey => $ownerOrgVal) {
-                $messages['otherIdentifier.' . $key . '.ownerOrg.' . $ownerOrgKey . '.reference' . '.required'] = sprintf(
-                    "Reference is Required.",
-                    $key
-                );
+        foreach ($this->request->get('otherIdentifier') as $otherIdentifierIndex => $otherIdentifier) {
+            $messages['otherIdentifier.' . $otherIdentifierIndex . '.reference' . '.required'] = "Reference is Required.";
+            $messages['otherIdentifier.' . $otherIdentifierIndex . '.type' . '.required']      = "Type is Required.";
+            foreach ($otherIdentifier['ownerOrg'] as $ownerOrgKey => $ownerOrgVal) {
+                $messages['otherIdentifier.' . $otherIdentifierIndex . '.ownerOrg.' . $ownerOrgKey . '.reference' . '.required'] = "Reference is Required.";
                 foreach ($ownerOrgVal['narrative'] as $narrativeKey => $narrativeVal) {
-                    $messages['otherIdentifier.' . $key . '.ownerOrg.' . $ownerOrgKey . '.narrative.' . $narrativeKey . '.narrative' . '.required'] = sprintf(
-                        "Narrative text is Required.",
-                        $key
-                    );
+                    $messages['otherIdentifier.' . $otherIdentifierIndex . '.ownerOrg.' . $ownerOrgKey . '.narrative.' . $narrativeKey . '.narrative' . '.required'] = "Narrative text is Required.";
                 }
             }
         }

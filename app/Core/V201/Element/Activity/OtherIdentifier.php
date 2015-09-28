@@ -2,6 +2,10 @@
 
 namespace app\Core\V201\Element\Activity;
 
+/**
+ * Class OtherIdentifier
+ * @package app\Core\V201\Element\Activity
+ */
 class OtherIdentifier
 {
     /**
