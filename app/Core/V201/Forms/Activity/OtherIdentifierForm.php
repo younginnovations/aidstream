@@ -2,6 +2,10 @@
 
 use Kris\LaravelFormBuilder\Form;
 
+/**
+ * Class OtherIdentifierForm
+ * @package App\Core\V201\Forms\Activity
+ */
 class OtherIdentifierForm extends Form
 {
     public function buildForm()
@@ -11,9 +15,9 @@ class OtherIdentifierForm extends Form
         );
         $response            = json_decode($json, true);
         $otherIdentifierType = $response['OtherIdentifierType'];
-        $code_arr            = [];
+        $codeArr            = [];
         foreach ($otherIdentifierType as $val) {
-            $code_arr[$val['code']] = $val['code'] . ' - ' . $val['name'];
+            $codeArr[$val['code']] = $val['code'] . ' - ' . $val['name'];
         }
         $this
             ->add('reference', 'text')
@@ -21,7 +25,7 @@ class OtherIdentifierForm extends Form
                 'type',
                 'select',
                 [
-                    'choices' => $code_arr,
+                    'choices' => $codeArr,
                     'label'   => 'Type'
                 ]
             )

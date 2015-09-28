@@ -2,6 +2,10 @@
 
 use Kris\LaravelFormBuilder\Form;
 
+/**
+ * Class OwnerOrgForm
+ * @package App\Core\V201\Forms\Activity
+ */
 class OwnerOrgForm extends Form
 {
     public function buildForm()

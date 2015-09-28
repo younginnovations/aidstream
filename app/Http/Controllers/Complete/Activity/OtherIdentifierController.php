@@ -6,6 +6,10 @@ use App\Services\FormCreator\Activity\OtherIdentifierForm;
 use App\Services\RequestManager\Activity\OtherIdentifierRequestManager;
 use Illuminate\Http\Request;
 
+/**
+ * Class OtherIdentifierController
+ * @package app\Http\Controllers\Complete\Activity
+ */
 class OtherIdentifierController extends Controller
 {
     /**
@@ -21,13 +25,18 @@ class OtherIdentifierController extends Controller
      * @param OtherIdentifierManager $otherIdentifierManager
      * @param OtherIdentifierForm    $otherIdentifierForm
      */
-    function __construct(OtherIdentifierManager $otherIdentifierManager, OtherIdentifierForm $otherIdentifierForm)
+    public function __construct(OtherIdentifierManager $otherIdentifierManager, OtherIdentifierForm $otherIdentifierForm)
     {
         $this->middleware('auth');
         $this->otherIdentifierManager = $otherIdentifierManager;
         $this->otherIdentifierForm    = $otherIdentifierForm;
     }
 
+    /**
+     * view other identifier add or edit page
+     * @param $id
+     * @return \Illuminate\View\View
+     */
     public function index($id)
     {
         $otherIdentifier = $this->otherIdentifierManager->getOtherIdentifierData($id);
@@ -40,19 +49,19 @@ class OtherIdentifierController extends Controller
     }
 
     /**
-     * write brief description
+     * update activity Other Identifier
      * @param OtherIdentifierRequestManager $otherIdentifierRequestManager
      * @param Request                       $request
      * @param                               $id
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(OtherIdentifierRequestManager $otherIdentifierRequestManager, Request $request, $id)
     {
         $input        = $request->all();
         $activityData = $this->otherIdentifierManager->getActivityData($id);
-
         if ($this->otherIdentifierManager->update($input, $activityData)) {
             return redirect()->to(sprintf('/activity/%s', $id))->withMessage(
-                'Activity Other Identifier Updated !'
+                'Other Activity Identifier Updated !'
             );
         }
 

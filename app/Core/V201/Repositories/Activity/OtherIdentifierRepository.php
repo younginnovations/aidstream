@@ -1,8 +1,11 @@
-<?php
-namespace App\Core\V201\Repositories\Activity;
+<?php namespace App\Core\V201\Repositories\Activity;
 
 use App\Models\Activity\Activity;
 
+/**
+ * Class OtherIdentifierRepository
+ * @package App\Core\V201\Repositories\Activity
+ */
 class OtherIdentifierRepository
 {
     /**
@@ -19,13 +22,14 @@ class OtherIdentifierRepository
     }
 
     /**
-     * @param array    $input
+     * update other Identifier
+     * @param array    $activityDetails
      * @param Activity $activity
      * @return bool
      */
-    public function update(array $input, Activity $activity)
+    public function update(array $activityDetails, Activity $activity)
     {
-        $activity->other_identifier = $input['otherIdentifier'];
+        $activity->other_identifier = $activityDetails['otherIdentifier'];
 
         return $activity->save();
     }

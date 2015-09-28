@@ -3,8 +3,11 @@ namespace App\Services\FormCreator\Activity;
 
 use App\Core\Version;
 use Kris\LaravelFormBuilder\FormBuilder;
-use URL;
 
+/**
+ * Class OtherIdentifierForm
+ * @package App\Services\FormCreator\Activity
+ */
 class OtherIdentifierForm
 {
 
@@ -12,6 +15,10 @@ class OtherIdentifierForm
     protected $version;
     protected $formPath;
 
+    /**
+     * @param FormBuilder $formBuilder
+     * @param Version     $version
+     */
     function __construct(FormBuilder $formBuilder, Version $version)
     {
         $this->formBuilder = $formBuilder;
@@ -23,8 +30,9 @@ class OtherIdentifierForm
      * @param array $data
      * @param       $activityId
      * @return $this
+     * return other identifier edit form.
      */
-    public function editForm($data, $activityId)
+    public function editForm(array $data, $activityId)
     {
         $modal['otherIdentifier'] = $data;
 
