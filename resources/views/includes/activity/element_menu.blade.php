@@ -4,8 +4,7 @@
         <ul class="nav">
             <li><a href="{{ route('activity.reporting-organization.index', [$id]) }}">Reporting Organization</a></li>
             <li><a href="{{ route('activity.iati-identifier.index', $id) }}">Iati Identifier</a></li>
-            <li><a href="#">Iati Identifier</a></li>
-            <li><a href="#">Other Identifier</a></li>
+            <li><a href="{{ route('activity.other-identifier.index', $id) }}">Other Identifier</a></li>
         </ul>
     </div>
 </div>

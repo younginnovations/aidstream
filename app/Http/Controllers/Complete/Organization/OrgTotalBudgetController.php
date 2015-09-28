@@ -73,6 +73,6 @@ class OrgTotalBudgetController extends Controller
             );
         }
 
-        return redirect()->to->route('organization.total-budget.index', $orgId);
+        return redirect()->back();
     }
 }

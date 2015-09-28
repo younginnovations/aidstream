@@ -23,6 +23,19 @@ class Identifier
     }
 
     /**
+     * @return $this
+     */
+    public function create()
+    {
+        return $this->formBuilder->create(
+            $this->formPath,
+            [
+                'method' => 'POST',
+                'url'    => route('activity.store')
+            ]
+        )->add('Save', 'submit');
+    }
+    /**
      * @param $data
      * @param $activityId
      * @return edit form

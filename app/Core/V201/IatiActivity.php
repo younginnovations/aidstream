@@ -20,4 +20,15 @@ class IatiActivity
     {
         return app('App\Core\V201\Requests\Activity\IatiIdentifierRequest');
     }
+
+    public function getOtherIdentifier()
+    {
+        return app('App\Core\V201\Element\Activity\OtherIdentifier');
+    }
+
+    public function getOtherIdentifierRequest()
+    {
+        return app('App\Core\V201\Requests\Activity\OtherIdentifierRequest');
+    }
+
 }

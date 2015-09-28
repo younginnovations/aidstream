@@ -6,7 +6,6 @@ $router->group(
         $router->resource('activity', 'ActivityController');
         $router->resource('activity.reporting-organization', 'ReportingOrganization');
         $router->resource('activity.iati-identifier', 'IatiIdentifierController');
+        $router->resource('activity.other-identifier', 'OtherIdentifierController');
     }
 );
-
-

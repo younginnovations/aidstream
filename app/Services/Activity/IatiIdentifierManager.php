@@ -92,5 +92,4 @@ class IatiIdentifierManager
         return $this->iatiIdentifierRepo->getActivityData($id);
 
     }
-
 }
