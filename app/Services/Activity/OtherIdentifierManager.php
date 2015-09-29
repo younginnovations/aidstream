@@ -55,7 +55,11 @@ class OtherIdentifierManager
             );
             $this->log->activity(
                 "activity.other_identifier_updated",
-                ['name' => $this->auth->user()->organization->name]
+                [
+                    'otherIdentifier' => $input['otherIdentifier'],
+                    'organization'    => $this->auth->user()->organization->name,
+                    'organization_id' => $this->auth->user()->organization->id
+                ]
             );
 
             return true;

@@ -8,12 +8,14 @@ class Activity extends Model
     protected $fillable = [
         'identifier',
         'organization_id',
-        'other_identifier'
+        'other_identifier',
+        'title'
     ];
 
     protected $casts = [
         'identifier'       => 'json',
-        'other_identifier' => 'json'
+        'other_identifier' => 'json',
+        'title'            => 'json',
     ];
 
 }

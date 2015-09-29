@@ -5,10 +5,11 @@ use App\Core\Version;
 use Kris\LaravelFormBuilder\FormBuilder;
 
 /**
- * Class OtherIdentifierForm
+ * Class Title
+ * Contains function that return activity title edit form
  * @package App\Services\FormCreator\Activity
  */
-class OtherIdentifierForm
+class Title
 {
 
     protected $formBuilder;
@@ -23,26 +24,27 @@ class OtherIdentifierForm
     {
         $this->formBuilder = $formBuilder;
         $this->version     = $version;
-        $this->formPath    = $this->version->getActivityElement()->getOtherIdentifier()->getForm();
+        $this->formPath    = $this->version->getActivityElement()->getTitle()->getForm();
     }
 
     /**
-     * @param $data
+     * @param array $data
      * @param       $activityId
      * @return $this
-     * return other identifier edit form.
+     * return activity title edit form.
      */
     public function editForm($data, $activityId)
     {
-        $modal['otherIdentifier'] = $data;
+        $model['narrative'] = $data;
 
         return $this->formBuilder->create(
             $this->formPath,
             [
                 'method' => 'PUT',
-                'model'  => $modal,
-                'url'    => route('activity.other-identifier.update', [$activityId, 0])
+                'model'  => $model,
+                'url'    => route('activity.title.update', [$activityId, 0])
             ]
         )->add('Save', 'submit');
     }
 }
+

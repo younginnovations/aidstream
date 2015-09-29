@@ -1,17 +1,18 @@
 <?php namespace app\Core\V201\Element\Activity;
 
 /**
- * Class OtherIdentifier
+ * Class Title
+ * contains the function that returns the title form and title repository
  * @package app\Core\V201\Element\Activity
  */
-class OtherIdentifier
+class Title
 {
     /**
-     * @return string
+     * @return title form
      */
     public function getForm()
     {
-        return "App\Core\V201\Forms\Activity\MultipleOtherIdentifier";
+        return "App\Core\V201\Forms\Activity\Title";
     }
 
     /**
@@ -19,6 +20,6 @@ class OtherIdentifier
      */
     public function getRepository()
     {
-        return App('App\Core\V201\Repositories\Activity\OtherIdentifierRepository');
+        return App('App\Core\V201\Repositories\Activity\Title');
     }
 }
