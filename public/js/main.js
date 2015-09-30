@@ -1,5 +1,59 @@
 $(document).ready(function () {
 
+    /* Convert laravel form builder's form prototype to custom form template */
+    if ($('.collection-container').length > 0) {
+        var proto = $('.collection-container').attr('data-prototype');
+        var result = proto.replace(
+            /"([\w]+)\[__NAME__\][\w\[\]]+"/g,
+            function () {
+                var value = arguments[0];
+                var length = value.search('[__NAME__]');
+                for (var i = 0; i < length; i++)
+                    value = value.replace('[__NAME__]', '[__NAME' + i + '__]');
+                return value;
+            }
+        );
+        $('.collection-container').removeAttr('data-prototype').append(result);
+    }
+
+    /* Add form on click to Add More button */
+    $('form').delegate('.add_to_collection', 'click', function () {
+        var collection = $(this).attr('data-collection');
+        var container = $(this).prev('.collection_form');
+        var parents = $(this).parents('.collection_form');
+        var level = parents.length;
+        var indexString = $(' > .form-group:last-child .form-control', container).eq(0).attr('name');
+        if(indexString == undefined) {
+            indexString = '';
+        }
+        var matchedIndexes = indexString.match(/[\d]+/g);
+        var parentIndexes = [];
+        var newIndex = 0;
+        if(matchedIndexes) {
+            parentIndexes = matchedIndexes.map(function(i){
+                return parseInt(i);
+            });
+            newIndex = parentIndexes[level] + 1;
+        }
+        var protoHtml = level == 0 ? $('.collection-container') : $('.' + collection, '.collection-container');
+        protoHtml.children('label').remove();
+        var proto = protoHtml.html();
+        for (var i = 0; i < level; i++) {
+            proto = proto.replace(
+                new RegExp('__NAME' + i + '__', 'g'),
+                parentIndexes[i]
+            );
+        }
+        proto = proto.replace(new RegExp('__NAME' + level + '__', 'g'), newIndex);
+        proto = proto.replace(/__NAME[\d]+__/g, 0);
+        container.append(proto);
+    });
+
+    /* Removes form on click to Remove This button */
+    $('form').delegate('.remove_from_collection', 'click', function () {
+        $(this).parent('.form-group').remove();
+    });
+
     var lang = $.cookie('lang');
     $('#def_lang').val(lang == undefined ? 'en' : lang);
     $('#def_lang').change(function () {
@@ -17,14 +71,6 @@ $(document).ready(function () {
 
     $('.checkAll').click(function () {
         $('.field1').prop('checked', this.checked);
-    });
-
-    $('.add-to-collection').on('click', function (e) {
-        e.preventDefault();
-        var container = $('.collection-container');
-        var count = container.children('.form-group').length;
-        var proto = container.data('prototype').replace(/__NAME__/g, count).replace(/__NAME1__/g, 0).replace(/__NAME2__/g, 0);
-        container.append(proto);
     });
 
     /*
@@ -61,10 +107,12 @@ $(document).ready(function () {
 
         var popElem = $('#popDialog');
 
-        if (title == undefined)
+        if (title == undefined) {
             $('.modal-header', popElem).addClass('hidden').children('.modal-title').html('');
-        else
+        }
+        else {
             $('.modal-header', popElem).removeClass('hidden').children('.modal-title').html(title);
+        }
 
         $('.modal-body', popElem).html(message);
 

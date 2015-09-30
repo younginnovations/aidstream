@@ -13,13 +13,24 @@ class NameForm extends Form
                 'name',
                 'collection',
                 [
-                    'type'      => 'form',
-                    'prototype' => true,
-                    'options'   => [
+                    'type'    => 'form',
+                    'options' => [
                         'class' => 'App\Core\V201\Forms\Organization\NarrativeForm',
                         'label' => false,
                     ],
-                    'wrapper'   => false
+                    'wrapper' => [
+                        'class' => 'collection_form narrative'
+                    ]
+                ]
+            )
+            ->add(
+                'Add More',
+                'button',
+                [
+                    'attr' => [
+                        'class'           => 'add_to_collection',
+                        'data-collection' => 'narrative'
+                    ]
                 ]
             );
     }

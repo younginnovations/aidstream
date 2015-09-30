@@ -11,13 +11,24 @@ class MultipleTotalBudgetForm extends Form
                 'totalBudget',
                 'collection',
                 [
-                    'type'      => 'form',
-                    'prototype' => true,
-                    'options'   => [
+                    'type'    => 'form',
+                    'options' => [
                         'class' => 'App\Core\V201\Forms\Organization\TotalBudgetForm',
                         'label' => false,
                     ],
-                    'wrapper'   => false
+                    'wrapper' => [
+                        'class' => 'collection_form total_budget'
+                    ]
+                ]
+            )
+            ->add(
+                'Add More',
+                'button',
+                [
+                    'attr' => [
+                        'class'           => 'add_to_collection',
+                        'data-collection' => 'total_budget'
+                    ]
                 ]
             );
     }

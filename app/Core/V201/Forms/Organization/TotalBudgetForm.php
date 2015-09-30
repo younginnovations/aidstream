@@ -11,10 +11,8 @@ class TotalBudgetForm extends Form
                 'periodStart',
                 'collection',
                 [
-                    'type'           => 'form',
-                    'prototype'      => true,
-                    'prototype_name' => '__NAME1__',
-                    'options'        => [
+                    'type'    => 'form',
+                    'options' => [
                         'class' => 'App\Core\V201\Forms\Organization\PeriodStartForm',
                         'label' => false,
                     ]
@@ -24,10 +22,8 @@ class TotalBudgetForm extends Form
                 'periodEnd',
                 'collection',
                 [
-                    'type'           => 'form',
-                    'prototype'      => true,
-                    'prototype_name' => '__NAME1__',
-                    'options'        => [
+                    'type'    => 'form',
+                    'options' => [
                         'class' => 'App\Core\V201\Forms\Organization\PeriodEndForm',
                         'label' => false,
                     ]
@@ -37,10 +33,8 @@ class TotalBudgetForm extends Form
                 'value',
                 'collection',
                 [
-                    'type'           => 'form',
-                    'prototype'      => true,
-                    'prototype_name' => '__NAME1__',
-                    'options'        => [
+                    'type'    => 'form',
+                    'options' => [
                         'class' => 'App\Core\V201\Forms\Organization\ValueForm',
                         'label' => false,
                     ]
@@ -50,13 +44,33 @@ class TotalBudgetForm extends Form
                 'budgetLine',
                 'collection',
                 [
-                    'type'           => 'form',
-                    'prototype'      => true,
-                    'prototype_name' => '__NAME1__',
-                    'options'        => [
+                    'type'    => 'form',
+                    'options' => [
                         'class' => 'App\Core\V201\Forms\Organization\BudgetLineForm',
                         'label' => false,
                     ],
+                    'wrapper' => [
+                        'class' => 'collection_form budget_line'
+                    ]
+                ]
+            )
+            ->add(
+                'Add More',
+                'button',
+                [
+                    'attr' => [
+                        'class'           => 'add_to_collection',
+                        'data-collection' => 'budget_line'
+                    ]
+                ]
+            )
+            ->add(
+                'Remove this',
+                'button',
+                [
+                    'attr' => [
+                        'class' => 'remove_from_collection',
+                    ]
                 ]
             );
     }

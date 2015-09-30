@@ -57,7 +57,6 @@ class SettingsForm extends Form
                 'collection',
                 [
                     'type'      => 'form',
-                    'prototype' => true,
                     'options'   => [
                         'class' => $this->versionForm,
                         'data'  => ['versions' => $this->versions],
@@ -71,7 +70,6 @@ class SettingsForm extends Form
                 'collection',
                 [
                     'type'      => 'form',
-                    'prototype' => true,
                     'options'   => [
                         'class' => $this->formPath,
                         'label' => false
@@ -84,7 +82,6 @@ class SettingsForm extends Form
                 'collection',
                 [
                     'type'      => 'form',
-                    'prototype' => 'true',
                     'options'   => [
                         'class' => $this->publishingType,
                         'label' => false,
@@ -97,7 +94,6 @@ class SettingsForm extends Form
                 'collection',
                 [
                     'type'      => 'form',
-                    'prototype' => 'true',
                     'options'   => [
                         'class' => $this->registryInfo,
                         'label' => false,
@@ -110,7 +106,6 @@ class SettingsForm extends Form
                 'collection',
                 [
                     'type'      => 'form',
-                    'prototype' => 'true',
                     'options'   => [
                         'class' => $this->defaultFieldValues,
                         'label' => false,
@@ -123,7 +118,6 @@ class SettingsForm extends Form
                 'collection',
                 [
                     'type'      => 'form',
-                    'prototype' => 'true',
                     'options'   => [
                         'class' => $this->defaultFieldGroups,
                         'label' => false,

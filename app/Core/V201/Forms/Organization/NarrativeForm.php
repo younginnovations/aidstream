@@ -26,6 +26,15 @@ class NarrativeForm extends Form
                     'choices' => $code_arr,
                     'label'   => 'Language'
                 ]
+            )
+            ->add(
+                'Remove this',
+                'button',
+                [
+                    'attr' => [
+                        'class' => 'remove_from_collection',
+                    ]
+                ]
             );
     }
 }

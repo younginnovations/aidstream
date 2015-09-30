@@ -11,13 +11,24 @@ class MultipleRecipientCountryBudgetForm extends Form
                 'recipientCountryBudget',
                 'collection',
                 [
-                    'type'      => 'form',
-                    'prototype' => true,
-                    'options'   => [
+                    'type'    => 'form',
+                    'options' => [
                         'class' => 'App\Core\V201\Forms\Organization\RecipientCountryBudgetForm',
                         'label' => false,
                     ],
-                    'wrapper'   => false
+                    'wrapper' => [
+                        'class' => 'collection_form recipient_country_budget'
+                    ]
+                ]
+            )
+            ->add(
+                'Add More',
+                'button',
+                [
+                    'attr' => [
+                        'class'           => 'add_to_collection',
+                        'data-collection' => 'recipient_country_budget'
+                    ]
                 ]
             );
     }

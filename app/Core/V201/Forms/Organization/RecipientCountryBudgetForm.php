@@ -11,11 +11,13 @@ class RecipientCountryBudgetForm extends Form
                 'recipientCountry',
                 'collection',
                 [
-                    'type'      => 'form',
-                    'prototype' => true,
-                    'options'   => [
+                    'type'    => 'form',
+                    'options' => [
                         'class' => 'App\Core\V201\Forms\Organization\RecipientCountryForm',
                         'label' => false
+                    ],
+                    'wrapper' => [
+                        'class' => 'collection_form recipient_country'
                     ]
                 ]
             )
@@ -23,9 +25,8 @@ class RecipientCountryBudgetForm extends Form
                 'periodStart',
                 'collection',
                 [
-                    'type'      => 'form',
-                    'prototype' => true,
-                    'options'   => [
+                    'type'    => 'form',
+                    'options' => [
                         'class' => 'App\Core\V201\Forms\Organization\PeriodStartForm',
                         'label' => false,
                     ]
@@ -35,9 +36,8 @@ class RecipientCountryBudgetForm extends Form
                 'periodEnd',
                 'collection',
                 [
-                    'type'      => 'form',
-                    'prototype' => true,
-                    'options'   => [
+                    'type'    => 'form',
+                    'options' => [
                         'class' => 'App\Core\V201\Forms\Organization\PeriodEndForm',
                         'label' => false,
                     ]
@@ -47,9 +47,8 @@ class RecipientCountryBudgetForm extends Form
                 'value',
                 'collection',
                 [
-                    'type'      => 'form',
-                    'prototype' => true,
-                    'options'   => [
+                    'type'    => 'form',
+                    'options' => [
                         'class' => 'App\Core\V201\Forms\Organization\ValueForm',
                         'label' => false,
                     ]
@@ -59,12 +58,33 @@ class RecipientCountryBudgetForm extends Form
                 'budgetLine',
                 'collection',
                 [
-                    'type'      => 'form',
-                    'prototype' => true,
-                    'options'   => [
+                    'type'    => 'form',
+                    'options' => [
                         'class' => 'App\Core\V201\Forms\Organization\BudgetLineForm',
                         'label' => false,
                     ],
+                    'wrapper' => [
+                        'class' => 'collection_form budget_line'
+                    ]
+                ]
+            )
+            ->add(
+                'Add More',
+                'button',
+                [
+                    'attr' => [
+                        'class'           => 'add_to_collection',
+                        'data-collection' => 'budget_line '
+                    ]
+                ]
+            )
+            ->add(
+                'Remove this',
+                'button',
+                [
+                    'attr' => [
+                        'class' => 'remove_from_collection',
+                    ]
                 ]
             );
     }
