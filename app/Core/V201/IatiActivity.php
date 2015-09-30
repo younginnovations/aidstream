@@ -31,4 +31,14 @@ class IatiActivity
         return app('App\Core\V201\Requests\Activity\OtherIdentifierRequest');
     }
 
+    public function getTitle()
+    {
+        return app('App\Core\V201\Element\Activity\Title');
+    }
+
+    public function getTitleRequest()
+    {
+        return app('App\Core\V201\Requests\Activity\Title');
+    }
+
 }

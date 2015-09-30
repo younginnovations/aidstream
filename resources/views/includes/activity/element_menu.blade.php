@@ -12,7 +12,7 @@
     <div class="panel-heading">Basic Activity Information</div>
     <div class="panel-body">
         <ul class="nav">
-            <li><a href="#">Title</a></li>
+            <li><a href="{{ route('activity.title.index', $id) }}">Title</a></li>
             <li><a href="#">Description</a></li>
             <li><a href="#">Activity Status</a></li>
             <li><a href="#">Activity Date</a></li>

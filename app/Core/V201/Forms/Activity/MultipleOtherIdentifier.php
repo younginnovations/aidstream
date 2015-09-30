@@ -3,25 +3,25 @@
 use Kris\LaravelFormBuilder\Form;
 
 /**
- * Class OwnerOrgForm
+ * Class MultipleOtherIdentifier
  * @package App\Core\V201\Forms\Activity
  */
-class OwnerOrgForm extends Form
+class MultipleOtherIdentifier extends Form
 {
     public function buildForm()
     {
         $this
-            ->add('reference', 'text')
             ->add(
-                'narrative',
+                'otherIdentifier',
                 'collection',
                 [
                     'type'      => 'form',
                     'prototype' => true,
                     'options'   => [
-                        'class' => 'App\Core\V201\Forms\Activity\NarrativeForm',
+                        'class' => 'App\Core\V201\Forms\Activity\OtherIdentifier',
                         'label' => false,
                     ],
+                    'wrapper'   => false
                 ]
             );
     }
