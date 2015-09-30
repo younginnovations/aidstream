@@ -1,5 +1,4 @@
-<?php
-namespace app\Services\Activity;
+<?php namespace app\Services\Activity;
 
 use App\Core\Version;
 use Illuminate\Auth\Guard;
@@ -11,15 +10,15 @@ class ActivityManager
     /**
      * @var Guard
      */
-    private $auth;
+    protected $auth;
     /**
      * @var Log
      */
-    private $log;
+    protected $log;
     /**
      * @var Version
      */
-    private $version;
+    protected $version;
 
     /**
      * @param Version $version
@@ -72,13 +71,21 @@ class ActivityManager
     }
 
     /**
-     * write brief description
      * @param $organizationId
      * @return modal
      */
     public function getActivities($organizationId)
     {
         return $this->repo->getActivities($organizationId);
+    }
+
+    /**
+     * @param $activityId
+     * @return modal
+     */
+    public function getActivityData($activityId)
+    {
+        return $this->repo->getActivityData($activityId);
     }
 
 }

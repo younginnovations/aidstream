@@ -13,7 +13,7 @@
     <div class="panel-body">
         <ul class="nav">
             <li><a href="{{ route('activity.title.index', $id) }}">Title</a></li>
-            <li><a href="#">Description</a></li>
+            <li><a href="{{ route('activity.description.index', $id) }}">Description</a></li>
             <li><a href="#">Activity Status</a></li>
             <li><a href="#">Activity Date</a></li>
             <li><a href="#">Contact Info</a></li>
@@ -91,4 +91,3 @@
         </ul>
     </div>
 </div>
-

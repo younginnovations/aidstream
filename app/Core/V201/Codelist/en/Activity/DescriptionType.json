@@ -1,0 +1,32 @@
+{
+  "date-last-modified": "2015-08-26T16:08:18.662174+00:00",
+  "version": "",
+  "name": "DescriptionType",
+  "xml:lang": "en",
+  "DescriptionType": [
+    {
+      "code": "1",
+      "name": "General",
+      "language": "en",
+      "description": "Unstructured, long description of the activity "
+    },
+    {
+      "code": "2",
+      "name": "Objectives",
+      "language": "en",
+      "description": "Specific objectives for the activity, e.g. taken from logical framework"
+    },
+    {
+      "code": "3",
+      "name": "Target Groups",
+      "language": "en",
+      "description": "Details of groups that are intended to benefit from the activity"
+    },
+    {
+      "code": "4",
+      "name": "Other",
+      "language": "en",
+      "description": "For miscellaneous use. A further classification or breakdown may be included in the narrative"
+    }
+  ]
+}

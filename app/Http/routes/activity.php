@@ -8,5 +8,6 @@ $router->group(
         $router->resource('activity.iati-identifier', 'IatiIdentifierController');
         $router->resource('activity.other-identifier', 'OtherIdentifierController');
         $router->resource('activity.title', 'TitleController');
+        $router->resource('activity.description', 'DescriptionController');
     }
 );
