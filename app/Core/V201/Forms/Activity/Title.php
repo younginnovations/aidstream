@@ -15,7 +15,15 @@ class Title extends Form
     public function buildForm()
     {
         $this
-            ->add('title', 'static')
+            ->add(
+                'title',
+                'static',
+                [
+                    'default_value' => 'Title',
+                    'label'         => false,
+                    'wrapper'       => false
+                ]
+            )
             ->add(
                 'narrative',
                 'collection',

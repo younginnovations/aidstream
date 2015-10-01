@@ -24,7 +24,19 @@ class MultipleOtherIdentifier extends Form
                         'class' => 'App\Core\V201\Forms\Activity\OtherIdentifier',
                         'label' => false,
                     ],
-                    'wrapper'   => false
+                    'wrapper'   => [
+                        'class' => 'collection_form other_identifier'
+                    ]
+                ]
+            )
+            ->add(
+                'Add More',
+                'button',
+                [
+                    'attr' => [
+                        'class'           => 'add_to_collection',
+                        'data-collection' => 'other_identifier'
+                    ]
                 ]
             );
     }

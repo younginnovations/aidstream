@@ -23,7 +23,6 @@ class OrganizationForm extends Form
                 'collection',
                 [
                     'type'      => 'form',
-                    'prototype' => true,
                     'options'   => [
                         'class' => $this->formPath,
                         'label' => false,

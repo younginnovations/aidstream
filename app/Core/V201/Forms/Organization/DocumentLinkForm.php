@@ -23,47 +23,108 @@ class DocumentLinkForm extends Form
                 'title',
                 'collection',
                 [
-                    'type'      => 'form',
-                    'prototype' => true,
-                    'options'   => [
+                    'type'    => 'form',
+                    'options' => [
                         'class' => 'App\Core\V201\Forms\Organization\NarrativeForm',
                         'label' => 'Narrative',
                     ],
+                    'wrapper' => [
+                        'class' => 'collection_form narrative'
+                    ]
+                ]
+            )
+            ->add(
+                'Add More1',
+                'button',
+                [
+                    'label' => 'Add More',
+                    'attr'  => [
+                        'class'           => 'add_to_collection',
+                        'data-collection' => 'narrative'
+                    ]
                 ]
             )
             ->add(
                 'category',
                 'collection',
                 [
-                    'type'      => 'form',
-                    'prototype' => true,
-                    'options'   => [
+                    'type'    => 'form',
+                    'options' => [
                         'class' => 'App\Core\V201\Forms\Organization\CategoryCodeForm',
                         'label' => false,
                     ],
+                    'wrapper' => [
+                        'class' => 'collection_form category'
+                    ]
+                ]
+            )
+            ->add(
+                'Add More2',
+                'button',
+                [
+                    'label' => 'Add More',
+                    'attr'  => [
+                        'class'           => 'add_to_collection',
+                        'data-collection' => 'category'
+                    ]
                 ]
             )
             ->add(
                 'language',
                 'collection',
                 [
-                    'type'      => 'form',
-                    'prototype' => true,
-                    'options'   => [
+                    'type'    => 'form',
+                    'options' => [
                         'class' => 'App\Core\V201\Forms\Organization\LanguageCodeForm',
                         'label' => false,
                     ],
+                    'wrapper' => [
+                        'class' => 'collection_form language'
+                    ]
+                ]
+            )
+            ->add(
+                'Add More3',
+                'button',
+                [
+                    'label' => 'Add More',
+                    'attr'  => [
+                        'class'           => 'add_to_collection',
+                        'data-collection' => 'language'
+                    ]
                 ]
             )
             ->add(
                 'recipientCountry',
                 'collection',
                 [
-                    'type'      => 'form',
-                    'prototype' => true,
-                    'options'   => [
+                    'type'    => 'form',
+                    'options' => [
                         'class' => 'App\Core\V201\Forms\Organization\RecipientCountryForm',
                         'label' => false
+                    ],
+                    'wrapper' => [
+                        'class' => 'collection_form recipient_country'
+                    ]
+                ]
+            )
+            ->add(
+                'Add More4',
+                'button',
+                [
+                    'label' => 'Add More',
+                    'attr'  => [
+                        'class'           => 'add_to_collection',
+                        'data-collection' => 'recipient_country'
+                    ]
+                ]
+            )
+            ->add(
+                'Remove this',
+                'button',
+                [
+                    'attr' => [
+                        'class' => 'remove_from_collection',
                     ]
                 ]
             );

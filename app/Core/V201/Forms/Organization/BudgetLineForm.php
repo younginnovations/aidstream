@@ -1,6 +1,5 @@
 <?php namespace App\Core\V201\Forms\Organization;
 
-use App\Core\ProtoName;
 use Kris\LaravelFormBuilder\Form;
 
 class BudgetLineForm extends Form
@@ -13,10 +12,8 @@ class BudgetLineForm extends Form
                 'value',
                 'collection',
                 [
-                    'type'           => 'form',
-                    'prototype_name' => '__NAME2__',
-                    'prototype'      => true,
-                    'options'        => [
+                    'type'    => 'form',
+                    'options' => [
                         'class' => 'App\Core\V201\Forms\Organization\ValueForm',
                         'label' => false,
                     ]
@@ -26,16 +23,34 @@ class BudgetLineForm extends Form
                 'narrative',
                 'collection',
                 [
-                    'type'      => 'form',
-                    'prototype' => true,
-                    'options'   => [
+                    'type'    => 'form',
+                    'options' => [
                         'class' => 'App\Core\V201\Forms\Organization\NarrativeForm',
                         'label' => false,
                     ],
+                    'wrapper' => [
+                        'class' => 'collection_form budget_line_narrative'
+                    ]
+                ]
+            )
+            ->add(
+                'Add More',
+                'button',
+                [
+                    'attr' => [
+                        'class'           => 'add_to_collection',
+                        'data-collection' => 'budget_line_narrative'
+                    ]
+                ]
+            )
+            ->add(
+                'Remove this',
+                'button',
+                [
+                    'attr' => [
+                        'class' => 'remove_from_collection',
+                    ]
                 ]
             );
-
-        new ProtoName($this);
-
     }
 }

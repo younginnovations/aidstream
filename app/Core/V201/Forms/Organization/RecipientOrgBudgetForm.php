@@ -1,6 +1,5 @@
 <?php namespace App\Core\V201\Forms\Organization;
 
-use App\Core\ProtoName;
 use Kris\LaravelFormBuilder\Form;
 
 class RecipientOrgBudgetForm extends Form
@@ -12,9 +11,8 @@ class RecipientOrgBudgetForm extends Form
                 'recipientOrganization',
                 'collection',
                 [
-                    'type'      => 'form',
-                    'prototype' => true,
-                    'options'   => [
+                    'type'    => 'form',
+                    'options' => [
                         'class' => 'App\Core\V201\Forms\Organization\RecipientOrgForm',
                         'label' => false
                     ]
@@ -24,11 +22,23 @@ class RecipientOrgBudgetForm extends Form
                 'narrative',
                 'collection',
                 [
-                    'type'      => 'form',
-                    'prototype' => true,
-                    'options'   => [
+                    'type'    => 'form',
+                    'options' => [
                         'class' => 'App\Core\V201\Forms\Organization\NarrativeForm',
                         'label' => false
+                    ],
+                    'wrapper' => [
+                        'class' => 'collection_form narrative'
+                    ]
+                ]
+            )
+            ->add(
+                'Add More',
+                'button',
+                [
+                    'attr' => [
+                        'class'           => 'add_to_collection',
+                        'data-collection' => 'narrative'
                     ]
                 ]
             )
@@ -36,9 +46,8 @@ class RecipientOrgBudgetForm extends Form
                 'periodStart',
                 'collection',
                 [
-                    'type'      => 'form',
-                    'prototype' => true,
-                    'options'   => [
+                    'type'    => 'form',
+                    'options' => [
                         'class' => 'App\Core\V201\Forms\Organization\PeriodStartForm',
                         'label' => false,
                     ]
@@ -48,9 +57,8 @@ class RecipientOrgBudgetForm extends Form
                 'periodEnd',
                 'collection',
                 [
-                    'type'      => 'form',
-                    'prototype' => true,
-                    'options'   => [
+                    'type'    => 'form',
+                    'options' => [
                         'class' => 'App\Core\V201\Forms\Organization\PeriodEndForm',
                         'label' => false,
                     ]
@@ -60,9 +68,8 @@ class RecipientOrgBudgetForm extends Form
                 'value',
                 'collection',
                 [
-                    'type'      => 'form',
-                    'prototype' => true,
-                    'options'   => [
+                    'type'    => 'form',
+                    'options' => [
                         'class' => 'App\Core\V201\Forms\Organization\ValueForm',
                         'label' => false,
                     ]
@@ -72,16 +79,35 @@ class RecipientOrgBudgetForm extends Form
                 'budgetLine',
                 'collection',
                 [
-                    'type'      => 'form',
-                    'prototype' => true,
-                    'options'   => [
+                    'type'    => 'form',
+                    'options' => [
                         'class' => 'App\Core\V201\Forms\Organization\BudgetLineForm',
                         'label' => false,
                     ],
+                    'wrapper' => [
+                        'class' => 'collection_form budget_line'
+                    ]
+                ]
+            )
+            ->add(
+                'Add More1',
+                'button',
+                [
+                    'label' => 'Add More',
+                    'attr'  => [
+                        'class'           => 'add_to_collection',
+                        'data-collection' => 'budget_line'
+                    ]
+                ]
+            )
+            ->add(
+                'Remove this',
+                'button',
+                [
+                    'attr' => [
+                        'class' => 'remove_from_collection',
+                    ]
                 ]
             );
-
-        new ProtoName($this);
-
     }
 }

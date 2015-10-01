@@ -40,6 +40,18 @@ class OtherIdentifier extends Form
                         'class' => 'App\Core\V201\Forms\Activity\OwnerOrg',
                         'label' => false,
                     ],
+                    'wrapper'   => [
+                        'class' => 'collection_form owner_organization'
+                    ]
+                ]
+            )
+            ->add(
+                'Remove this',
+                'button',
+                [
+                    'attr' => [
+                        'class' => 'remove_from_collection',
+                    ]
                 ]
             );
     }

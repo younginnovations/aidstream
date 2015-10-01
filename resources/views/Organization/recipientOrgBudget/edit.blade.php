@@ -8,13 +8,11 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">Recipient Organization Budget</div>
                     <div class="panel-body">
-                        {!! form_start($form) !!}
-                        <div class="collection-container"
+                        {!! form($form) !!}
+
+                        <div class="collection-container hidden"
                              data-prototype="{{ form_row($form->recipientOrganizationBudget->prototype()) }}">
-                            {!! form_row($form->recipientOrganizationBudget) !!}
                         </div>
-                        <button type="button" class="add-to-collection">Add More Recipient Organization Budget</button>
-                        {!! form_end($form) !!}
                     </div>
                 </div>
             </div>

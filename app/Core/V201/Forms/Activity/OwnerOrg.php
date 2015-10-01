@@ -23,6 +23,19 @@ class OwnerOrg extends Form
                         'class' => 'App\Core\V201\Forms\Activity\Narrative',
                         'label' => false,
                     ],
+                    'wrapper'   => [
+                        'class' => 'collection_form owner_organization_narrative'
+                    ]
+                ]
+            )
+            ->add(
+                'Add More',
+                'button',
+                [
+                    'attr' => [
+                        'class'           => 'add_to_collection',
+                        'data-collection' => 'owner_organization_narrative'
+                    ]
                 ]
             );
     }

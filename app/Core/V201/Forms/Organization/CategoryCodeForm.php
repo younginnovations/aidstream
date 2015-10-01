@@ -25,6 +25,15 @@ class CategoryCodeForm extends Form
                     'choices' => $code_arr,
                     'label'   => 'Code'
                 ]
+            )
+            ->add(
+                'Remove this',
+                'button',
+                [
+                    'attr' => [
+                        'class' => 'remove_from_collection',
+                    ]
+                ]
             );
     }
 }

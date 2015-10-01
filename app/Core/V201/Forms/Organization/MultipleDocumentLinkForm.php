@@ -11,13 +11,24 @@ class MultipleDocumentLinkForm extends Form
                 'documentLink',
                 'collection',
                 [
-                    'type'      => 'form',
-                    'prototype' => true,
-                    'options'   => [
+                    'type'    => 'form',
+                    'options' => [
                         'class' => 'App\Core\V201\Forms\Organization\DocumentLinkForm',
                         'label' => false,
                     ],
-                    'wrapper'   => false
+                    'wrapper' => [
+                        'class' => 'collection_form document_link'
+                    ]
+                ]
+            )
+            ->add(
+                'Add More',
+                'button',
+                [
+                    'attr' => [
+                        'class'           => 'add_to_collection',
+                        'data-collection' => 'document_link'
+                    ]
                 ]
             );
     }

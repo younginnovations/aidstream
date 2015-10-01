@@ -28,13 +28,24 @@ class RecipientCountryForm extends Form
                 'narrative',
                 'collection',
                 [
-                    'type'           => 'form',
-                    'prototype'      => true,
-                    'prototype_name' => '__NAME2__',
-                    'options'        => [
+                    'type'    => 'form',
+                    'options' => [
                         'class' => 'App\Core\V201\Forms\Organization\NarrativeForm',
                         'label' => false,
                     ],
+                    'wrapper' => [
+                        'class' => 'collection_form recipient_country_narrative'
+                    ]
+                ]
+            )
+            ->add(
+                'Add More',
+                'button',
+                [
+                    'attr' => [
+                        'class'           => 'add_to_collection',
+                        'data-collection' => 'recipient_country_narrative'
+                    ]
                 ]
             );
     }
