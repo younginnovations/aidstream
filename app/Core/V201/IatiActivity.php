@@ -53,4 +53,14 @@ class IatiActivity
     {
         return app('App\Core\V201\Requests\Activity\Description');
     }
+
+    public function getActivityStatus()
+    {
+        return app('App\Core\V201\Element\Activity\ActivityStatus');
+    }
+
+    public function getActivityStatusRequest()
+    {
+        return app('App\Core\V201\Requests\Activity\ActivityStatus');
+    }
 }
