@@ -1,0 +1,32 @@
+{
+  "date-last-modified": "2015-08-26T16:08:17.961164+00:00",
+  "version": "",
+  "name": "ActivityDateType",
+  "xml:lang": "en",
+  "ActivityDateType": [
+    {
+      "code": "1",
+      "name": "Planned start",
+      "language": "en",
+      "description": "The date on which the activity is planned to start, for example the date of the first planned disbursement or when physical activity starts."
+    },
+    {
+      "code": "2",
+      "name": "Actual start",
+      "language": "en",
+      "description": "The actual date the activity starts, for example the date of the first disbursement or when physical activity starts."
+    },
+    {
+      "code": "3",
+      "name": "Planned End",
+      "language": "en",
+      "description": "The date on which the activity is planned to end, for example the date of the last planned disbursement or when physical activity is complete."
+    },
+    {
+      "code": "4",
+      "name": "Actual end",
+      "language": "en",
+      "description": "The actual date the activity ends, for example the date of the last disbursement or when physical activity is complete."
+    }
+  ]
+}

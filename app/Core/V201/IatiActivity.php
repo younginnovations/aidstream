@@ -53,4 +53,14 @@ class IatiActivity
     {
         return app('App\Core\V201\Requests\Activity\Description');
     }
+
+    public function getActivityDate()
+    {
+        return app('App\Core\V201\Element\Activity\ActivityDate');
+    }
+
+    public function getActivityDateRequest()
+    {
+        return app('App\Core\V201\Requests\Activity\ActivityDate');
+    }
 }
