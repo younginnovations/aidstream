@@ -37,8 +37,8 @@ class CreateActivityDataTable extends Migration
                 $table->json('default_aid_type')->nullable();
                 $table->json('default_tied_status')->nullable();
                 $table->json('budget')->nullable();
-                $table->json('planned_disbusrement')->nullable();
-                $table->json('capital_send')->nullable();
+                $table->json('planned_disbursement')->nullable();
+                $table->json('capital_spend')->nullable();
                 $table->json('document_link')->nullable();
                 $table->json('related_activity')->nullable();
                 $table->json('legacy_data')->nullable();

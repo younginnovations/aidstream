@@ -1,8 +1,11 @@
-<?php
-namespace App\Core\V201;
+<?php namespace App\Core\V201;
 
 use App;
 
+/**
+ * Class IatiActivity
+ * @package App\Core\V201
+ */
 class IatiActivity
 {
 
@@ -41,4 +44,13 @@ class IatiActivity
         return app('App\Core\V201\Requests\Activity\Title');
     }
 
+    public function getDescription()
+    {
+        return app('App\Core\V201\Element\Activity\Description');
+    }
+
+    public function getDescriptionRequest()
+    {
+        return app('App\Core\V201\Requests\Activity\Description');
+    }
 }

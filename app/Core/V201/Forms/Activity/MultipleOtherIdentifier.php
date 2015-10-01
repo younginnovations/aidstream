@@ -8,6 +8,9 @@ use Kris\LaravelFormBuilder\Form;
  */
 class MultipleOtherIdentifier extends Form
 {
+    /**
+     * builds multiple activity description form
+     */
     public function buildForm()
     {
         $this
