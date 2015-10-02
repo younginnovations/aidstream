@@ -73,4 +73,14 @@ class IatiActivity
     {
         return app('App\Core\V201\Requests\Activity\ActivityDate');
     }
+
+    public function getActivityScope()
+    {
+        return app('App\Core\V201\Element\Activity\ActivityScope');
+    }
+
+    public function getActivityScopeRequest()
+    {
+        return app('App\Core\V201\Requests\Activity\ActivityScope');
+    }
 }

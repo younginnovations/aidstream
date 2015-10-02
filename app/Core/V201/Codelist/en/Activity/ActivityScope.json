@@ -1,0 +1,56 @@
+{
+  "date-last-modified": "2015-08-26T16:08:18.533168+00:00",
+  "version": "",
+  "name": "ActivityScope",
+  "xml:lang": "en",
+  "ActivityScope": [
+    {
+      "code": "1",
+      "name": "Global",
+      "language": "en",
+      "description": "The activity scope is global"
+    },
+    {
+      "code": "2",
+      "name": "Regional",
+      "language": "en",
+      "description": "The activity scope is a supranational region"
+    },
+    {
+      "code": "3",
+      "name": "Multi-national",
+      "language": "en",
+      "description": "The activity scope covers multiple countries, that don't constitute a region"
+    },
+    {
+      "code": "4",
+      "name": "National",
+      "language": "en",
+      "description": "The activity scope covers one country"
+    },
+    {
+      "code": "5",
+      "name": "Sub-national: Multi-first-level administrative areas",
+      "language": "en",
+      "description": "The activity scope covers more than one first-level subnational administrative areas (e.g. counties, provinces, states)"
+    },
+    {
+      "code": "6",
+      "name": "Sub-national: Single first-level administrative area",
+      "language": "en",
+      "description": "The activity scope covers one first-level subnational administrative area (e.g. country, province, state)"
+    },
+    {
+      "code": "7",
+      "name": "Sub-national: Single second-level administrative area",
+      "language": "en",
+      "description": "The activity scope covers one second-level subnational administrative area (e.g. municipality or district)"
+    },
+    {
+      "code": "8",
+      "name": "Single location",
+      "language": "en",
+      "description": "The activity scope covers one single location (e.g. town, village, farm)"
+    }
+  ]
+}

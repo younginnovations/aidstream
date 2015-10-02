@@ -17,7 +17,7 @@
             <li><a href="{{ route('activity.activity-status.index', $id) }}">Activity Status</a></li>
             <li><a href="{{ route('activity.activity-date.index', $id) }}">Activity Date</a></li>
             <li><a href="#">Contact Info</a></li>
-            <li><a href="#">Activity Scope</a></li>
+            <li><a href="{{ route('activity.activity-scope.index', $id) }}">Activity Scope</a></li>
         </ul>
     </div>
 </div>
