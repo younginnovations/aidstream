@@ -14,7 +14,7 @@
         <ul class="nav">
             <li><a href="{{ route('activity.title.index', $id) }}">Title</a></li>
             <li><a href="{{ route('activity.description.index', $id) }}">Description</a></li>
-            <li><a href="#">Activity Status</a></li>
+            <li><a href="{{ route('activity.activity-status.index', $id) }}">Activity Status</a></li>
             <li><a href="#">Activity Date</a></li>
             <li><a href="#">Contact Info</a></li>
             <li><a href="#">Activity Scope</a></li>

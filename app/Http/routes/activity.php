@@ -9,5 +9,6 @@ $router->group(
         $router->resource('activity.other-identifier', 'OtherIdentifierController');
         $router->resource('activity.title', 'TitleController');
         $router->resource('activity.description', 'DescriptionController');
+        $router->resource('activity.activity-status', 'ActivityStatusController');
     }
 );
