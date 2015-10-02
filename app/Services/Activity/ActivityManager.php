@@ -87,5 +87,4 @@ class ActivityManager
     {
         return $this->repo->getActivityData($activityId);
     }
-
 }

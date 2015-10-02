@@ -73,4 +73,14 @@ class IatiActivity
     {
         return app('App\Core\V201\Requests\Activity\ActivityDate');
     }
+
+    public function getContactInfo()
+    {
+        return app('App\Core\V201\Element\Activity\ContactInfo');
+    }
+
+    public function getContactInfoRequest()
+    {
+        return app('App\Core\V201\Requests\Activity\ContactInfo');
+    }
 }

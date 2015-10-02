@@ -27,7 +27,7 @@ class Narrative extends Form
         }
 
         $this
-            ->add('narrative', 'text', ['label' => 'Text', 'rules' => 'required'])
+            ->add('narrative', 'text', ['label' => $this->getData('narrativeLabel') ? $this->getData('narrativeLabel') : 'Text', 'rules' => 'required'])
             ->add(
                 'language',
                 'select',

@@ -11,5 +11,6 @@ $router->group(
         $router->resource('activity.description', 'DescriptionController');
         $router->resource('activity.activity-status', 'ActivityStatusController');
         $router->resource('activity.activity-date', 'ActivityDateController');
+        $router->resource('activity.contact-info', 'ContactInfoController');
     }
 );
