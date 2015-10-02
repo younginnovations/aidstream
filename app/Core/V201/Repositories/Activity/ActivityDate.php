@@ -2,11 +2,12 @@
 
 use App\Models\Activity\Activity;
 
+
 /**
- * Class Description
+ * Class ActivityDate
  * @package App\Core\V201\Repositories\Activity
  */
-class Description
+class ActivityDate
 {
     /**
      * @var Activity
@@ -22,14 +23,14 @@ class Description
     }
 
     /**
-     * update other Identifier
+     * update activity date
      * @param array    $activityDetails
      * @param Activity $activity
      * @return bool
      */
     public function update(array $activityDetails, Activity $activity)
     {
-        $activity->description = $activityDetails['description'];
+        $activity->activity_date = $activityDetails['activity_date'];
 
         return $activity->save();
     }
@@ -38,9 +39,9 @@ class Description
      * @param $activityId
      * @return model
      */
-    public function getDescriptionData($activityId)
+    public function getActivityDateData($activityId)
     {
-        return $this->activity->findorFail($activityId)->description;
+        return $this->activity->findorFail($activityId)->activity_date;
     }
 
 }

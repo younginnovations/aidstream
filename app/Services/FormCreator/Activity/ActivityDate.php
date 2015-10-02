@@ -1,0 +1,47 @@
+<?php namespace App\Services\FormCreator\Activity;
+
+use App\Core\Version;
+use Kris\LaravelFormBuilder\FormBuilder;
+
+/**
+ * Class ActivityDate
+ * @package App\Services\FormCreator\Activity
+ */
+class ActivityDate
+{
+
+    protected $formBuilder;
+    protected $version;
+    protected $formPath;
+
+    /**
+     * @param FormBuilder $formBuilder
+     * @param Version     $version
+     */
+    function __construct(FormBuilder $formBuilder, Version $version)
+    {
+        $this->formBuilder = $formBuilder;
+        $this->version     = $version;
+        $this->formPath    = $this->version->getActivityElement()->getActivityDate()->getForm();
+    }
+
+    /**
+     * @param array $data
+     * @param       $activityId
+     * @return $this
+     * return activity activity date edit form.
+     */
+    public function editForm($data, $activityId)
+    {
+        $model['activity_date'] = $data;
+
+        return $this->formBuilder->create(
+            $this->formPath,
+            [
+                'method' => 'PUT',
+                'model'  => $model,
+                'url'    => route('activity.activity-date.update', [$activityId, 0])
+            ]
+        )->add('Save', 'submit');
+    }
+}

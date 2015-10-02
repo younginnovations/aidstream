@@ -6,4 +6,5 @@ return [
     'title_updated'            => 'Activity title ":title" updated for ":organization - :organization_id"',
     'description_updated'      => 'Activity description ":description" updated for ":organization - :organization_id"',
     'activity_status_updated'  => 'Activity status ":activityStatus" updated for ":organization - :organization_id"',
+    'activity_date_updated'    => 'Activity activity date ":activityDate" updated for ":organization - :organization_id"',
 ];
