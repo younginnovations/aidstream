@@ -3,3 +3,4 @@
 .env
 .idea/
 _ide_helper.php
+/public/uploads
