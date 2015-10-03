@@ -60,3 +60,29 @@ Classes inside each of the above directories are properly written within corresp
 We follow [PSR-2](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-2-coding-style-guide.md) for 
 coding standard. To check if your code 
 matches the projects quality checks please see [codeclimate](https://codeclimate.com/repos/55f540606956805fc2010677/feed).
+
+## Tests
+
+There are two types of tests for AidStream, one for unit testing and other one is smoke testing with Hookah library.
+
+### Unit Tests
+
+Unit tests are in the `tests\app` folder. They can be run with the following command:
+
+```
+./vendor/bin/phpunit tests/app 
+```
+
+### Smoke Tests with Hookah
+
+Smoke tests are in the `tests\Smoke` folder, they can be run with the following commands:
+
+```
+./vendor/bin/phpunit tests/Smoke 
+```
+
+To run the tests faster in parallel run it with paraunit like below:
+
+```
+./vendor/bin/paratest --colors -m 2 -p 4 --stop-on-failure --path= tests/Smoke
+```
