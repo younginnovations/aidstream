@@ -2,9 +2,9 @@
 
 use App\Core\V201\Repositories\Organization\DocumentLinkRepository;
 use Mockery as m;
-use Test\AidstreamTestCase;
+use Test\AidStreamTestCase;
 
-class DocumentLinkRepositoryTest extends AidstreamTestCase
+class DocumentLinkRepositoryTest extends AidStreamTestCase
 {
 
     protected $documentLinkRepository;

@@ -3,10 +3,10 @@
 use Illuminate\Foundation\Testing\TestCase;
 
 /**
- * Class AidstreamTestCase
+ * Class AidStreamTestCase
  * @package Test
  */
-abstract class AidstreamTestCase extends TestCase {
+abstract class AidStreamTestCase extends TestCase {
 
 	/**
 	 * Creates the application.
