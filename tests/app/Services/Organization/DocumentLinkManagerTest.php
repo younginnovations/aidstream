@@ -2,9 +2,9 @@
 
 use App\Services\Organization\DocumentLinkManager;
 use Mockery as m;
-use Test\AidstreamTestCase;
+use Test\AidStreamTestCase;
 
-class DocumentLinkManagerTest extends AidstreamTestCase
+class DocumentLinkManagerTest extends AidStreamTestCase
 {
     protected $version;
     protected $logger;
