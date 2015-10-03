@@ -3,6 +3,8 @@ box: wercker/php
 
 build:
   steps:
+    - install-packages:
+        packages: gawk
     - script:
         name: cache composer dependencies
         code: export COMPOSER_CACHE_DIR="$WERCKER_CACHE_DIR/composer" && mkdir -p $COMPOSER_CACHE_DIR
@@ -15,3 +17,7 @@ build:
     - script:
         name: PHPUnit Hookah tests
         code: ./vendor/bin/paratest --colors -m 2 -p 4 --stop-on-failure --path= tests/Smoke
+  after-steps:
+     - hipchat-notify:
+        token: $HIPCHAT_TOKEN
+        room-id: 1267700
