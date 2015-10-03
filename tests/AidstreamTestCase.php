@@ -2,6 +2,10 @@
 
 use Illuminate\Foundation\Testing\TestCase;
 
+/**
+ * Class AidstreamTestCase
+ * @package Test
+ */
 abstract class AidstreamTestCase extends TestCase {
 
 	/**

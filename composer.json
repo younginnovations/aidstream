@@ -15,7 +15,9 @@
 	    "rap2hpoutre/laravel-log-viewer": "0.4.2",
 	    "barryvdh/laravel-ide-helper": "2.1.0",
 	    "barryvdh/laravel-debugbar": "2.0.6",
-		"mockery/mockery": "^0.9.4"
+		"mockery/mockery": "^0.9.4",
+	  	"yipl/hookah":	"~0.4",
+	  	"brianium/paratest": "~0.12"
 	},
 	"autoload": {
 		"classmap": [
