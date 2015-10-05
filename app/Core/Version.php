@@ -15,7 +15,7 @@ class Version
     protected $settingsElement;
     protected $repository;
     protected $formElement;
-    protected $iatiAttibutes = array();
+    protected $iatiAttributes = [];
 
     public function __construct()
     {
@@ -63,17 +63,17 @@ class Version
     /**
      * @return array
      */
-    public function getIatiAttibutes()
+    public function getIatiAttributes()
     {
-        return $this->iatiAttibutes;
+        return $this->iatiAttributes;
     }
 
     /**
-     * @param array $iatiAttibutes
+     * @param array $iatiAttributes
      */
-    public function setIatiAttibutes($iatiAttibutes)
+    public function setIatiAttributes($iatiAttributes)
     {
-        $this->iatiAttibutes = $iatiAttibutes;
+        $this->iatiAttributes = $iatiAttributes;
     }
 
     public function getActivityElement()
@@ -108,5 +108,4 @@ class Version
     {
         return $this->settingsElement;
     }
-
 }

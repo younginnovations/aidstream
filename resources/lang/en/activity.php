@@ -8,4 +8,5 @@ return [
     'activity_status_updated'  => 'Activity status ":activityStatus" updated for ":organization - :organization_id"',
     'activity_date_updated'    => 'Activity activity date ":activityDate" updated for ":organization - :organization_id"',
     'contact_info_updated'     => 'Activity contact info ":contactInfo" updated for ":organization - :organization_id"',
+    'activity_scope_updated'   => 'Activity activity scope ":activityScope" updated for ":organization - :organization_id"',
 ];

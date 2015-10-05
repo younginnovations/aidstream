@@ -12,5 +12,6 @@ $router->group(
         $router->resource('activity.activity-status', 'ActivityStatusController');
         $router->resource('activity.activity-date', 'ActivityDateController');
         $router->resource('activity.contact-info', 'ContactInfoController');
+        $router->resource('activity.activity-scope', 'ActivityScopeController');
     }
 );

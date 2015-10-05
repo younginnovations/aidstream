@@ -34,7 +34,7 @@ class ActivityManager
     }
 
     /**
-     * write brief description
+     * insert activity identifier
      * @param array $input
      * @param       $organizationId
      * @return bool
