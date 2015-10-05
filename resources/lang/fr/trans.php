@@ -11,4 +11,3 @@ return [
     "logout"           => "Se déconnecter",
     "activity_default" => "Activité défaut",
 ];
-

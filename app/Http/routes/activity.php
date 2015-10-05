@@ -13,5 +13,6 @@ $router->group(
         $router->resource('activity.activity-date', 'ActivityDateController');
         $router->resource('activity.contact-info', 'ContactInfoController');
         $router->resource('activity.activity-scope', 'ActivityScopeController');
+        $router->resource('activity.recipient-country', 'RecipientCountryController');
     }
 );
