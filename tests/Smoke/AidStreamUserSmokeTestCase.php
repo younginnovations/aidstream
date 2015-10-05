@@ -41,7 +41,7 @@ class AidStreamUserSmokeTestCase extends BaseUserTestCase
      * @todo get username/password from env
      */
     protected $users =  [
-        ['role'=> 'admin', 'identifier' => 'yipl_admin', 'password' => 'admin123'],
+        ['role'=> 'admin', 'identifier' => 'lo_admin', 'password' => 'lunek123'],
     ];
 
     /**
