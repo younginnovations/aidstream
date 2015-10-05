@@ -21,5 +21,5 @@ build:
      - script:
         name: Notify Hipchat
         code: |
-            wget https://gist.githubusercontent.com/geshan/129993c475decb2c1f5a/raw/41a946dde363411105cbd23d3a9deef7399f6bc1/hipchat-notifier-wercker.py
+            wget https://gist.githubusercontent.com/geshan/129993c475decb2c1f5a/raw/c548168ed75ef1bf62ebe1281a0a0b0c85e5484a/hipchat-notifier-wercker.py
             python hipchat-notifier-wercker.py --project $WERCKER_GIT_REPOSITORY --room 1267700 --token $HIPCHAT_TOKEN
