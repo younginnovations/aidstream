@@ -4,7 +4,7 @@ box: wercker/php
 build:
   steps:
     - install-packages:
-        packages: gawk git python wget
+        packages: gawk git wget
     - script:
         name: cache composer dependencies
         code: export COMPOSER_CACHE_DIR="$WERCKER_CACHE_DIR/composer" && mkdir -p $COMPOSER_CACHE_DIR
@@ -21,5 +21,5 @@ build:
      - script:
         name: Notify Hipchat
         code: |
-            wget https://gist.githubusercontent.com/geshan/129993c475decb2c1f5a/raw/c548168ed75ef1bf62ebe1281a0a0b0c85e5484a/hipchat-notifier-wercker.py
+            wget https://gist.githubusercontent.com/geshan/129993c475decb2c1f5a/raw/29e2360e83169d0919958ccd568448cdba3d3bfa/hipchat-notifier-wercker.py
             python hipchat-notifier-wercker.py --project $WERCKER_GIT_REPOSITORY --room 1267700 --token $HIPCHAT_TOKEN
