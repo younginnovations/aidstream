@@ -4,6 +4,8 @@
 
 User friendly interfaces within the platform enhance an effortless entry, update and publish of the aid data in the IATI format for organisations that want to publish IATI data. The system hides all the complexities and technicalities of the xml. With AidStream, the necessity to understand the details of the IATI standard becomes lesser. All that needs to be done is to register into the system, enter the data and publish it. The data will be easily published to the IATI registry . In addition, AidStream guarantees high security, proper maintenance and easy accessability of the aid data.
 
+[![wercker status](https://app.wercker.com/status/c1afa54ce0c0a4972f17b3b4c4f72e73/m/master "wercker status")](https://app.wercker.com/project/bykey/c1afa54ce0c0a4972f17b3b4c4f72e73)
+
 ## Install
 
 AidStream can be cloned after having access to the gitlab repository and installed following the procedure given below:
@@ -60,3 +62,36 @@ Classes inside each of the above directories are properly written within corresp
 We follow [PSR-2](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-2-coding-style-guide.md) for 
 coding standard. To check if your code 
 matches the projects quality checks please see [codeclimate](https://codeclimate.com/repos/55f540606956805fc2010677/feed).
+
+[![Code Climate](https://codeclimate.com/repos/55f540606956805fc2010677/badges/dab7b46f5a489b6104ed/gpa.svg)](https://codeclimate.com/repos/55f540606956805fc2010677/feed)
+
+## Tests
+
+There are two types of tests for AidStream, one for unit testing and other one is smoke testing with Hookah library.
+
+### Unit Tests
+
+Unit tests are in the `tests\app` folder. They can be run with the following command:
+
+```
+./vendor/bin/phpunit tests/app 
+```
+
+### Smoke Tests with Hookah
+
+Smoke tests are in the `tests\Smoke` folder, they can be run with the following commands:
+
+```
+./vendor/bin/phpunit tests/Smoke 
+```
+
+To run the tests faster in parallel run it with paraunit like below:
+
+```
+./vendor/bin/paratest --colors -m 2 -p 4 --stop-on-failure --path= tests/Smoke
+```
+
+## Continuous Integration
+
+On each push the hookah test will run on [Wercker](https://app.wercker.com/#applications/560f9c92d77c55dc7303a957) CI. It
+also sends notification to hipchat on [Build-Bot](https://yipl.hipchat.com/chat/room/1267700) room.

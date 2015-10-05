@@ -2,7 +2,11 @@
 
 use Illuminate\Foundation\Testing\TestCase;
 
-abstract class AidstreamTestCase extends TestCase {
+/**
+ * Class AidStreamTestCase
+ * @package Test
+ */
+abstract class AidStreamTestCase extends TestCase {
 
 	/**
 	 * Creates the application.
