@@ -1,4 +1,4 @@
-#wercker file
+#wercker file with hipchat
 box: wercker/php
 
 build:
