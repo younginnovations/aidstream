@@ -1,0 +1,32 @@
+{
+  "date-last-modified": "2015-08-26T16:08:18.546567+00:00",
+  "version": "",
+  "name": "OrganisationRole",
+  "xml:lang": "en",
+  "OrganisationRole": [
+    {
+      "code": "1",
+      "name": "Funding",
+      "language": "en",
+      "description": "The government or organisation which provides funds to the activity."
+    },
+    {
+      "code": "2",
+      "name": "Accountable",
+      "language": "en",
+      "description": "An organisation responsible for oversight of the activity and its outcomes"
+    },
+    {
+      "code": "3",
+      "name": "Extending",
+      "language": "en",
+      "description": "An organisation that manages the budget and direction of an activity on behalf of the funding organisation"
+    },
+    {
+      "code": "4",
+      "name": "Implementing",
+      "language": "en",
+      "description": "The organisation that physically carries out the activity or intervention. "
+    }
+  ]
+}

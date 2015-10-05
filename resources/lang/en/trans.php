@@ -1,7 +1,6 @@
 <?php
 
 return [
-
     "login"            => "Login",
     "register"         => "Register",
     "remember_me"      => "Remember Me",
@@ -11,5 +10,4 @@ return [
     "password"         => "Password",
     "logout"           => "Logout",
     "activity_default" => "Activity Default",
-
 ];

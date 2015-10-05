@@ -25,7 +25,8 @@
     <div class="panel-heading">Participating Organisations</div>
     <div class="panel-body">
         <ul class="nav">
-            <li><a href="#">Participating Organisation</a></li>
+            <li><a href="{{ route('activity.participating-organization.index', $id) }}">Participating Organisation</a>
+            </li>
         </ul>
     </div>
 </div>
