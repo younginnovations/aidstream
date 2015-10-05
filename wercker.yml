@@ -14,7 +14,7 @@ build:
               [ -d $COMPOSER_CACHE_DIR/vendor ] && cp -Rf $COMPOSER_CACHE_DIR/vendor vendor
     - script:
         name: install dependencies
-        code: composer install --no-interaction --prefer-dist
+        code: composer install --no-interaction --prefer-source
     - script:
         name: copy vendor to cache
         code: cp -Rf vendor $COMPOSER_CACHE_DIR
