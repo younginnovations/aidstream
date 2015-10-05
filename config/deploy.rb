@@ -99,6 +99,10 @@ namespace :aidstream do
     task :create_uploads_folder do
         on roles(:all) do
             execute "mkdir #{shared_path}/uploads"
+            execute "mkdir #{shared_path}/uploads/files"
+            execute "mkdir #{shared_path}/uploads/files/organization"
+            execute "mkdir #{shared_path}/uploads/files/activity"
+            execute "mkdir #{shared_path}/uploads/temp"
             execute :chmod, "-R 777 #{shared_path}/uploads/"
         end
     end
