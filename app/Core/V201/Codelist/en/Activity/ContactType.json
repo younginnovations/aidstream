@@ -1,0 +1,32 @@
+{
+  "date-last-modified": "2015-08-26T16:08:19.125968+00:00",
+  "version": "",
+  "name": "ContactType",
+  "xml:lang": "en",
+  "ContactType": [
+    {
+      "code": "1",
+      "name": "General Enquiries",
+      "language": "en",
+      "description": "General Enquiries"
+    },
+    {
+      "code": "2",
+      "name": "Project Management",
+      "language": "en",
+      "description": "Project Management"
+    },
+    {
+      "code": "3",
+      "name": "Financial Management",
+      "language": "en",
+      "description": "Financial Management"
+    },
+    {
+      "code": "4",
+      "name": "Communications",
+      "language": "en",
+      "description": "Communications"
+    }
+  ]
+}
