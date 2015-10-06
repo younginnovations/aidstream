@@ -9,11 +9,10 @@ use App\Http\Requests\Request;
 class RecipientCountry extends Request
 {
 
-    protected $redirect;
     /**
      * @var Validation
      */
-    private $validation;
+    protected $validation;
 
     /**
      * @param Validation $validation
