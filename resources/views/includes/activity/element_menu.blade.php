@@ -34,7 +34,7 @@
     <div class="panel-body">
         <ul class="nav">
             <li><a href="{{ route('activity.recipient-country.index', $id) }}">Recipient Country</a></li>
-            <li><a href="#">Recipient Region</a></li>
+            <li><a href="{{ route('activity.recipient-region.index', $id) }}">Recipient Region</a></li>
             <li><a href="#">Location</a></li>
         </ul>
     </div>
