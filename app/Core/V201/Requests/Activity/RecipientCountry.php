@@ -54,7 +54,7 @@ class RecipientCountry extends Request
     }
 
     /**
-     * returns rules for recipient country
+     * returns rules for recipient country form
      * @param $formFields
      * @return array
      */
@@ -76,7 +76,7 @@ class RecipientCountry extends Request
     }
 
     /**
-     * returns messages for recipient country rules
+     * returns messages for recipient country form rules
      * @param $formFields
      * @return array
      */

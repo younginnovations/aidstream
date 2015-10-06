@@ -1,8 +1,8 @@
 <?php namespace App\Core\V201\Forms\Organization;
 
-use Kris\LaravelFormBuilder\Form;
+use App\Core\AidStreamForm;
 
-class NarrativeForm extends Form
+class NarrativeForm extends AidStreamForm
 {
     protected $showFieldErrors = true;
 
@@ -27,14 +27,6 @@ class NarrativeForm extends Form
                     'label'   => 'Language'
                 ]
             )
-            ->add(
-                'Remove this',
-                'button',
-                [
-                    'attr' => [
-                        'class' => 'remove_from_collection',
-                    ]
-                ]
-            );
+            ->removeButton('remove', 'total_budget');
     }
 }

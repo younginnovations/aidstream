@@ -1,12 +1,20 @@
 <?php namespace App\Core\V201\Requests\Organization;
 
 use App\Http\Requests\Request;
-use App\Models\OrganizationData;
-use Illuminate\Foundation\Http\FormRequest;
 
-class CreateTotalBudgetRequest extends Request {
+class CreateTotalBudgetRequest extends Request
+{
 
-    protected $redirect;
+    /**
+     * @var Validation
+     */
+    protected $validation;
+
+    function __construct(Validation $validation)
+    {
+        $this->validation = $validation;
+    }
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -24,58 +32,55 @@ class CreateTotalBudgetRequest extends Request {
      */
     public function rules()
     {
-        $rules = [];
-        foreach ($this->request->get('totalBudget') as $key => $val) {
-            foreach ($val['periodStart'] as $periodStartKey => $periodStartVal) {
-                $rules['totalBudget.' . $key . '.periodStart.' . $periodStartKey . '.date'] = 'required';
-            }
-            foreach ($val['periodEnd'] as $periodEndKey => $periodEndVal) {
-                $rules['totalBudget.' . $key . '.periodEnd.' . $periodEndKey . '.date'] = 'required';
-            }
-            foreach ($val['value'] as $valueKey => $valueVal) {
-                $rules['totalBudget.' . $key . '.value.' . $valueKey . '.amount'] = 'required|numeric';
-                $rules['totalBudget.' . $key . '.value.' . $valueKey . '.value_date'] = 'required';
-            }
-            foreach ($val['budgetLine'] as $budgetLineKey => $budgetLineVal) {
-                foreach ($budgetLineVal['value'] as $valueKey => $valueVal) {
-                    $rules['totalBudget.' . $key . '.budgetLine.' . $budgetLineKey . '.value.' . $valueKey . '.amount'] = 'required|numeric';
-                    $rules['totalBudget.' . $key . '.budgetLine.' . $budgetLineKey . '.value.' . $valueKey . '.value_date'] = 'required';
-                }
-                foreach ($budgetLineVal['narrative'] as $narrativeKey => $narrativeVal) {
-                    $rules['totalBudget.' . $key . '.budgetLine.' . $budgetLineKey . '.narrative.' . $narrativeKey . '.narrative'] = 'required';
-                }
-            }
-        }
-        return $rules;
+        return $this->addRulesForTotalBudget($this->request->get('totalBudget'));
     }
 
     public function messages()
     {
-        $messages = [];
-        foreach ($this->request->get('totalBudget') as $key => $val) {
-            foreach ($val['periodStart'] as $periodStartKey => $periodStartVal) {
-                $messages['totalBudget.' . $key . '.periodStart.' . $periodStartKey . '.date' . '.required'] = sprintf("Period Start is Required.", $key);
-            }
-            foreach ($val['periodEnd'] as $periodEndKey => $periodEndVal) {
-                $messages['totalBudget.' . $key . '.periodEnd.' . $periodStartKey . '.date' . '.required'] = sprintf("Period End is Required.", $key);
-            }
-            foreach ($val['value'] as $valueKey => $valueVal) {
-                $messages['totalBudget.' . $key . '.value.' . $valueKey . '.amount' . '.required'] = sprintf("Amount is Required.", $key);
-                $messages['totalBudget.' . $key . '.value.' . $valueKey . '.amount' . '.numeric'] = sprintf("Amount should be numeric.", $key);
-                $messages['totalBudget.' . $key . '.value.' . $valueKey . '.value_date' . '.required'] = sprintf("Date is Required.", $key);
-            }
-            foreach ($val['budgetLine'] as $budgetLineKey => $budgetLineVal) {
-                foreach ($budgetLineVal['value'] as $valueKey => $valueVal) {
-                    $messages['totalBudget.' . $key . '.budgetLine.' . $budgetLineKey . '.value.' . $valueKey . '.amount' . '.required'] = sprintf("Amount is Required.", $key);
-                    $messages['totalBudget.' . $key . '.budgetLine.' . $budgetLineKey . '.value.' . $valueKey . '.amount' . '.numeric'] = sprintf("Amount should be numeric.", $key);
-                    $messages['totalBudget.' . $key . '.budgetLine.' . $budgetLineKey . '.value.' . $valueKey . '.value_date' . '.required'] = sprintf("Date is Required.", $key);
-                }
-                foreach ($budgetLineVal['narrative'] as $narrativeKey => $narrativeVal) {
-                    $messages['totalBudget.' . $key . '.budgetLine.' . $budgetLineKey . '.narrative.' . $narrativeKey . '.narrative' . '.required'] = sprintf("Title is Required.", $key);
-                }
-            }
-        }
-        return $messages;
+        return $this->addMessagesForTotalBudget($this->request->get('totalBudget'));
     }
 
+    /**
+     * returns rules for total budget form
+     * @param $formFields
+     * @return array
+     */
+    public function addRulesForTotalBudget($formFields)
+    {
+        $rules = [];
+        foreach ($formFields as $totalBudgetIndex => $totalBudget) {
+            $totalBudgetForm = 'totalBudget.' . $totalBudgetIndex;
+            $rules           = array_merge(
+                $rules,
+                $this->validation->addRulesForPeriodStart($totalBudget['periodStart'], $totalBudgetForm),
+                $this->validation->addRulesForPeriodEnd($totalBudget['periodEnd'], $totalBudgetForm),
+                $this->validation->addRulesForValue($totalBudget['value'], $totalBudgetForm),
+                $this->validation->addRulesForBudgetLine($totalBudget['budgetLine'], $totalBudgetForm)
+            );
+        }
+
+        return $rules;
+    }
+
+    /**
+     * returns messages for total budget form rules
+     * @param $formFields
+     * @return array
+     */
+    public function addMessagesForTotalBudget($formFields)
+    {
+        $messages = [];
+        foreach ($formFields as $totalBudgetIndex => $totalBudget) {
+            $totalBudgetForm = 'totalBudget.' . $totalBudgetIndex;
+            $messages        = array_merge(
+                $messages,
+                $this->validation->addMessagesForPeriodStart($totalBudget['periodStart'], $totalBudgetForm),
+                $this->validation->addMessagesForPeriodEnd($totalBudget['periodEnd'], $totalBudgetForm),
+                $this->validation->addMessagesForValue($totalBudget['value'], $totalBudgetForm),
+                $this->validation->addMessagesBudgetLine($totalBudget['budgetLine'], $totalBudgetForm)
+            );
+        }
+
+        return $messages;
+    }
 }

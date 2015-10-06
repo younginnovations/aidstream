@@ -1,8 +1,8 @@
 <?php namespace App\Core\V201\Forms\Organization;
 
-use Kris\LaravelFormBuilder\Form;
+use App\Core\AidStreamForm;
 
-class BudgetLineForm extends Form
+class BudgetLineForm extends AidStreamForm
 {
     public function buildForm()
     {
@@ -33,24 +33,7 @@ class BudgetLineForm extends Form
                     ]
                 ]
             )
-            ->add(
-                'Add More',
-                'button',
-                [
-                    'attr' => [
-                        'class'           => 'add_to_collection',
-                        'data-collection' => 'budget_line_narrative'
-                    ]
-                ]
-            )
-            ->add(
-                'Remove this',
-                'button',
-                [
-                    'attr' => [
-                        'class' => 'remove_from_collection',
-                    ]
-                ]
-            );
+            ->addButton('add', 'budget_line_narrative')
+            ->removeButton('remove', 'total_budget');
     }
 }
