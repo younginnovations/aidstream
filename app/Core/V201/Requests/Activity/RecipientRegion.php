@@ -52,7 +52,7 @@ class RecipientRegion extends Request
     }
 
     /**
-     * returns messages for recipient region messages
+     * returns rules for recipient region
      * @param $formFields
      * @return array|mixed
      */
@@ -74,7 +74,7 @@ class RecipientRegion extends Request
     }
 
     /**
-     * returns messages for recipient region messages
+     * returns messages for recipient region m
      * @param $formFields
      * @return array|mixed
      */
