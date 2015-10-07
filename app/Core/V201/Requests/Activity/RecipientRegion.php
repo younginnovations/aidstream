@@ -2,11 +2,25 @@
 
 use App\Http\Requests\Request;
 
+/**
+ * Class RecipientRegion
+ * @package App\Core\V201\Requests\Activity
+ */
 class RecipientRegion extends Request
 {
 
-    protected $redirect;
-    protected $messages;
+    /**
+     * @var Validation
+     */
+    protected $validation;
+
+    /**
+     * @param Validation $validation
+     */
+    function __construct(Validation $validation)
+    {
+        $this->validation = $validation;
+    }
 
     /**
      * Determine if the user is authorized to make this request.
@@ -25,22 +39,7 @@ class RecipientRegion extends Request
      */
     public function rules()
     {
-        $rules    = [];
-        $messages = [];
-        foreach ($this->request->get('recipient_region') as $recipientRegionIndex => $recipientRegion) {
-            $rules['recipient_region.' . $recipientRegionIndex . '.region_code']          = 'required';
-            $rules['recipient_region.' . $recipientRegionIndex . '.region_code.required'] = 'Recipient region code is required';
-            $rules['recipient_region.' . $recipientRegionIndex . '.percentage']           = 'numeric|max:100';
-            $rules['recipient_region.' . $recipientRegionIndex . '.percentage.numeric']   = 'Recipient region code should be numeric';
-            $rules['recipient_region.' . $recipientRegionIndex . '.percentage.max']       = 'Recipient region code should be less than 100';
-            foreach ($recipientRegion['narrative'] as $narrativeKey => $narrative) {
-                $rules['recipient_region.' . $recipientRegionIndex . '.narrative.' . $narrativeKey . '.narrative']             = 'required';
-                $messages['recipient_region.' . $recipientRegionIndex . '.narrative.' . $narrativeKey . '.narrative.required'] = 'Recipient Country narrative is required';
-            }
-        }
-        $this->messages = $messages;
-
-        return $rules;
+        return $this->addRulesForRecipientRegion($this->request->get('recipient_region'));
     }
 
     /**
@@ -49,6 +48,51 @@ class RecipientRegion extends Request
      */
     public function messages()
     {
-        return $this->messages;
+        return $this->addMessagesForRecipientRegion($this->request->get('recipient_region'));
+    }
+
+    /**
+     * returns messages for recipient region messages
+     * @param $formFields
+     * @return array|mixed
+     */
+    public function addRulesForRecipientRegion($formFields)
+    {
+        $rules = [];
+        foreach ($formFields as $recipientRegionIndex => $recipientRegion) {
+            $recipientRegionForm                          = 'recipient_region.' . $recipientRegionIndex;
+            $rules[$recipientRegionForm . '.region_code'] = 'required';
+            $rules[$recipientRegionForm . '.percentage']  = 'numeric|max:100';
+            $rules                                        = $this->validation->addRulesForNarrative(
+                $recipientRegion['narrative'],
+                $recipientRegionForm,
+                $rules
+            );
+        }
+
+        return $rules;
+    }
+
+    /**
+     * returns messages for recipient region messages
+     * @param $formFields
+     * @return array|mixed
+     */
+    public function addMessagesForRecipientRegion($formFields)
+    {
+        $messages = [];
+        foreach ($formFields as $recipientRegionIndex => $recipientRegion) {
+            $recipientRegionForm                                      = 'recipient_region.' . $recipientRegionIndex;
+            $messages[$recipientRegionForm . '.region_code.required'] = 'Recipient region code is required';
+            $messages[$recipientRegionForm . '.percentage.numeric']   = 'Percentage should be numeric.';
+            $messages[$recipientRegionForm . '.percentage.max']       = 'Percentage should be less than or equal to 100';
+            $messages                                                 = $this->validation->addMessagesForNarrative(
+                $recipientRegion['narrative'],
+                $recipientRegionForm,
+                $messages
+            );
+        }
+
+        return $messages;
     }
 }
