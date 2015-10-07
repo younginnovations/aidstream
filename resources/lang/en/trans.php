@@ -13,5 +13,3 @@ return [
     "activity_default" => "Activity Default",
 
 ];
-
-?>

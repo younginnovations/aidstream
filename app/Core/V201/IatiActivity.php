@@ -93,4 +93,15 @@ class IatiActivity
     {
         return app('App\Core\V201\Requests\Activity\ActivityScope');
     }
+
+    public function getRecipientCountry()
+    {
+        return app('App\Core\V201\Element\Activity\RecipientCountry');
+    }
+
+    public function getRecipientCountryRequest()
+    {
+        return app('App\Core\V201\Requests\Activity\RecipientCountryRequest');
+    }
+
 }
