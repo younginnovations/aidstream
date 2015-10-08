@@ -1,12 +1,12 @@
 <?php namespace App\Core\V201\Forms\Activity;
 
-use Kris\LaravelFormBuilder\Form;
+use App\Core\Form\BaseForm;
 
 /**
  * Class MultipleParticipatingOrganization
  * @package App\Core\V201\Forms\Activity
  */
-class MultipleParticipatingOrganization extends Form
+class MultipleParticipatingOrganization extends BaseForm
 {
     /**
      * builds activity Participating Organization
@@ -25,19 +25,10 @@ class MultipleParticipatingOrganization extends Form
                         'label' => false,
                     ],
                     'wrapper'   => [
-                        'class' => 'collection_form participatingOrganization'
+                        'class' => 'collection_form participating_organization'
                     ]
                 ]
             )
-            ->add(
-                'Add More',
-                'button',
-                [
-                    'attr' => [
-                        'class'           => 'add_to_collection',
-                        'data-collection' => 'participatingOrganization'
-                    ]
-                ]
-            );
+            ->addAddMoreButton('add', 'participating_organization');
     }
 }

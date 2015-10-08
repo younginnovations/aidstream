@@ -1,26 +1,13 @@
 <?php namespace App\Core\V201\Forms\Activity;
 
-use Kris\LaravelFormBuilder\Form;
+use App\Core\Form\BaseForm;
 
 /**
  * Class ParticipatingOrganization
  * @package App\Core\V201\Forms\Activity
  */
-class ParticipatingOrganization extends Form
+class ParticipatingOrganization extends BaseForm
 {
-    /**
-     * @var CodeList
-     */
-    protected $codeList;
-
-    /**
-     * @param CodeList $codeList
-     */
-    function __construct(CodeList $codeList)
-    {
-        $this->codeList = $codeList;
-    }
-
     /**
      * builds activity participating organization form
      */
@@ -31,7 +18,7 @@ class ParticipatingOrganization extends Form
                 'organization_role',
                 'select',
                 [
-                    'choices' => $this->codeList->getCodeList('OrganisationRole'),
+                    'choices' => $this->getCodeList('OrganisationRole', 'Activity'),
                     'label'   => 'Organization Role'
                 ]
             )
@@ -40,44 +27,12 @@ class ParticipatingOrganization extends Form
                 'organization_type',
                 'select',
                 [
-                    'choices' => $this->codeList->getCodeList('OrganisationType'),
+                    'choices' => $this->getCodeList('OrganisationType', 'Activity'),
                     'label'   => 'Organization Type'
                 ]
             )
-            ->add(
-                'narrative',
-                'collection',
-                [
-                    'type'      => 'form',
-                    'prototype' => true,
-                    'options'   => [
-                        'class' => 'App\Core\V201\Forms\Activity\Narrative',
-                        'label' => false,
-                        'data'  => ['narrativeLabel' => 'Organization Name']
-                    ],
-                    'wrapper'   => [
-                        'class' => 'collection_form narrative'
-                    ]
-                ]
-            )
-            ->add(
-                'Add More',
-                'button',
-                [
-                    'attr' => [
-                        'class'           => 'add_to_collection',
-                        'data-collection' => 'narrative'
-                    ]
-                ]
-            )
-            ->add(
-                'Remove this',
-                'button',
-                [
-                    'attr' => [
-                        'class' => 'remove_from_collection',
-                    ]
-                ]
-            );
+            ->getNarrative('narrative', 'Organization Name')
+            ->addAddMoreButton('add', 'narrative')
+            ->addRemoveThisButton('remove');
     }
 }

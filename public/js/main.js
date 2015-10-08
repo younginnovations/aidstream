@@ -23,14 +23,14 @@ $(document).ready(function () {
         var parents = $(this).parents('.collection_form');
         var level = parents.length;
         var indexString = $(' > .form-group:last-child .form-control', container).eq(0).attr('name');
-        if(indexString == undefined) {
+        if (indexString == undefined) {
             indexString = '';
         }
         var matchedIndexes = indexString.match(/[\d]+/g);
         var parentIndexes = [];
         var newIndex = 0;
-        if(matchedIndexes) {
-            parentIndexes = matchedIndexes.map(function(i){
+        if (matchedIndexes) {
+            parentIndexes = matchedIndexes.map(function (i) {
                 return parseInt(i);
             });
             newIndex = parentIndexes[level] + 1;
@@ -129,5 +129,18 @@ $(document).ready(function () {
         popElem.modal('show');
 
     });
+
+    /* change the sector field according to the  sector vocabulary selected */
+    $("form").delegate('.sector_vocabulary', 'change', function () {
+        var parent = $(this).parent('.form-group');
+        if ($(this).val() !== "1") {
+            parent.siblings('.sector_text').removeClass('hidden');
+            parent.siblings('.sector_select').addClass('hidden');
+        } else {
+            parent.siblings('.sector_select').removeClass('hidden');
+            parent.siblings('.sector_text').addClass('hidden');
+        }
+    });
+    $('.sector_vocabulary').trigger('change');
 
 });

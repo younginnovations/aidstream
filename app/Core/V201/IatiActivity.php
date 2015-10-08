@@ -114,4 +114,13 @@ class IatiActivity
         return app('App\Core\V201\Requests\Activity\RecipientCountryRequest');
     }
 
+    public function getSector()
+    {
+        return app('App\Core\V201\Element\Activity\Sector');
+    }
+
+    public function getSectorRequest()
+    {
+        return app('App\Core\V201\Requests\Activity\Sector');
+    }
 }

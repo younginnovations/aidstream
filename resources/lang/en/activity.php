@@ -10,4 +10,5 @@ return [
     'contact_info_updated'               => 'Activity contact info ":contactInfo" updated for ":organization - :organization_id"',
     'activity_scope_updated'             => 'Activity activity scope ":activityScope" updated for ":organization - :organization_id"',
     'participating_organization_updated' => 'Activity participating organization ":participatingOrganization" updated for ":organization - :organization_id"',
+    'sector_updated'                     => 'Activity sector ":sector" updated for ":organization - :organization_id"',
 ];

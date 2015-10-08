@@ -46,4 +46,3 @@ class IatiSettings
         return App::make('App\Core\V201\Requests\SettingsRequest');
     }
 }
-?>

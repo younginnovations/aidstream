@@ -1,26 +1,26 @@
-<?php namespace App\Core\V201\Forms\Organization;
+<?php namespace App\Core\V201\Forms\Activity;
 
 use App\Core\Form\BaseForm;
 
-class MultipleTotalBudgetForm extends BaseForm
+class Sectors extends BaseForm
 {
     public function buildForm()
     {
         $this
             ->add(
-                'totalBudget',
+                'sector',
                 'collection',
                 [
                     'type'    => 'form',
                     'options' => [
-                        'class' => 'App\Core\V201\Forms\Organization\TotalBudgetForm',
+                        'class' => 'App\Core\V201\Forms\Activity\Sector',
                         'label' => false,
                     ],
                     'wrapper' => [
-                        'class' => 'collection_form total_budget'
+                        'class' => 'collection_form sector'
                     ]
                 ]
             )
-            ->addAddMoreButton('add', 'total_budget');
+            ->addAddMoreButton('add', 'sector');
     }
 }
