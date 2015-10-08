@@ -12,7 +12,7 @@ class Validation
      * @param $formFields
      * @param $formBase
      * @param $rules
-     * @return mixed
+     * @return array
      */
     public function addRulesForNarrative($formFields, $formBase, $rules)
     {
@@ -28,7 +28,7 @@ class Validation
      * @param $formFields
      * @param $formBase
      * @param $messages
-     * @return mixed
+     * @return array
      */
     public function addMessagesForNarrative($formFields, $formBase, $messages)
     {
