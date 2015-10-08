@@ -54,7 +54,7 @@ class DescriptionManager
             $this->log->activity(
                 "activity.description_updated",
                 [
-                    'title'           => $activityDetails['description'],
+                    'description'     => $activityDetails['description'],
                     'organization'    => $this->auth->user()->organization->name,
                     'organization_id' => $this->auth->user()->organization->id
                 ]
@@ -65,8 +65,8 @@ class DescriptionManager
             $this->log->error(
                 sprintf('Activity Description could not be updated due to %s', $exception->getMessage()),
                 [
-                    'Title' => $activityDetails,
-                    'trace' => $exception->getTraceAsString()
+                    'Description' => $activityDetails,
+                    'trace'       => $exception->getTraceAsString()
                 ]
             );
         }

@@ -94,6 +94,16 @@ class IatiActivity
         return app('App\Core\V201\Requests\Activity\ActivityScope');
     }
 
+    public function getParticipatingOrganization()
+    {
+        return app('App\Core\V201\Element\Activity\ParticipatingOrganization');
+    }
+
+    public function getParticipatingOrganizationRequest()
+    {
+        return app('App\Core\V201\Requests\Activity\ParticipatingOrganization');
+    }
+
     public function getRecipientCountry()
     {
         return app('App\Core\V201\Element\Activity\RecipientCountry');
