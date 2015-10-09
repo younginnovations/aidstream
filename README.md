@@ -105,4 +105,4 @@ To open a merge request you can simply do it with adding `#mr` to the commit mes
 you. If it does not open in the first push try doing a commit amend and force push or make changes with a second commit
 and do a second push.
 
-Gitomate will also run a code climate analysis for the branch on each push on [code climate](http://gitlab.yipl.com.np/internal/gitomate).
+Gitomate will also run a code climate analysis for the branch on each push on [code climate](https://codeclimate.com/repos/55f540606956805fc2010677/branches).
