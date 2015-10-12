@@ -1,8 +1,8 @@
 <?php namespace App\Core\V201\Forms\Organization;
 
-use App\Core\AidStreamForm;
+use App\Core\Form\BaseForm;
 
-class TotalBudgetForm extends AidStreamForm
+class TotalBudgetForm extends BaseForm
 {
     public function buildForm()
     {
@@ -54,7 +54,7 @@ class TotalBudgetForm extends AidStreamForm
                     ]
                 ]
             )
-            ->addButton('add', 'budget_line')
-            ->removeButton('remove', 'total_budget');
+            ->addAddMoreButton('add', 'budget_line')
+            ->addRemoveThisButton('remove');
     }
 }

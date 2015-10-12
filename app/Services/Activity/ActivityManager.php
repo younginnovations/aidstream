@@ -1,12 +1,16 @@
-<?php namespace app\Services\Activity;
+<?php namespace App\Services\Activity;
 
 use App\Core\Version;
 use Illuminate\Auth\Guard;
-use Illuminate\Contracts\Logging\Log;
+use Illuminate\Contracts\Logging\Log as Logger;
 
+/**
+ * Class ActivityManager
+ * @package App\Services\Activity
+ */
 class ActivityManager
 {
-    protected $repo;
+    protected $activityRepo;
     /**
      * @var Guard
      */
@@ -14,7 +18,7 @@ class ActivityManager
     /**
      * @var Log
      */
-    protected $log;
+    protected $logger;
     /**
      * @var Version
      */
@@ -22,15 +26,15 @@ class ActivityManager
 
     /**
      * @param Version $version
-     * @param Log     $log
+     * @param Logger  $logger
      * @param Guard   $auth
      */
-    public function __construct(Version $version, Log $log, Guard $auth)
+    public function __construct(Version $version, Guard $auth, Logger $logger)
     {
-        $this->repo    = $version->getActivityElement()->getRepository();
-        $this->auth    = $auth;
-        $this->log     = $log;
-        $this->version = $version;
+        $this->activityRepo = $version->getActivityElement()->getRepository();
+        $this->auth         = $auth;
+        $this->logger       = $logger;
+        $this->version      = $version;
     }
 
     /**
@@ -42,12 +46,12 @@ class ActivityManager
     public function store(array $input, $organizationId)
     {
         try {
-            $result = $this->repo->store($input, $organizationId);
-            $this->log->info(
+            $result = $this->activityRepo->store($input, $organizationId);
+            $this->logger->info(
                 'Activity identifier added',
                 ['for ' => $input['activity_identifier']]
             );
-            $this->log->activity(
+            $this->logger->activity(
                 "activity.added",
                 [
                     'identifier'      => $input['activity_identifier'],
@@ -58,7 +62,7 @@ class ActivityManager
 
             return $result;
         } catch (Exception $exception) {
-            $this->log->error(
+            $this->logger->error(
                 sprintf('Activity identifier couldn\'t be added due to %s', $exception->getMessage()),
                 [
                     'ActivityIdentifier' => $input,
@@ -76,7 +80,7 @@ class ActivityManager
      */
     public function getActivities($organizationId)
     {
-        return $this->repo->getActivities($organizationId);
+        return $this->activityRepo->getActivities($organizationId);
     }
 
     /**
@@ -85,6 +89,6 @@ class ActivityManager
      */
     public function getActivityData($activityId)
     {
-        return $this->repo->getActivityData($activityId);
+        return $this->activityRepo->getActivityData($activityId);
     }
 }

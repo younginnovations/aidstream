@@ -1,12 +1,12 @@
 <?php namespace App\Core\V201\Forms\Activity;
 
-use Kris\LaravelFormBuilder\Form;
+use App\Core\Form\BaseForm;
 
 /**
  * Class Narrative
  * @package App\Core\V201\Forms\Activity
  */
-class Narrative extends Form
+class Narrative extends BaseForm
 {
     protected $showFieldErrors = true;
 
@@ -15,35 +15,16 @@ class Narrative extends Form
      */
     public function buildForm()
     {
-        $languageCodeList  = file_get_contents(
-            app_path("Core/V201/Codelist/" . config('app.locale') . "/Organization/LanguageCodelist.json")
-        );
-        $languages     = json_decode($languageCodeList, true);
-        $language      = $languages['Language'];
-        $languageCodes = [];
-
-        foreach ($language as $narrativeLanguage) {
-            $languageCodes[$narrativeLanguage['code']] = $narrativeLanguage['code'] . ' - ' . $narrativeLanguage['name'];
-        }
-
         $this
-            ->add('narrative', 'text', ['label' => $this->getData('narrativeLabel') ? $this->getData('narrativeLabel') : 'Text', 'rules' => 'required'])
+            ->add('narrative', 'text', ['label' => $this->getData('label'), 'rules' => 'required'])
             ->add(
                 'language',
                 'select',
                 [
-                    'choices' => $languageCodes,
+                    'choices' => $this->getCodeList('Language', 'Activity'),
                     'label'   => 'Language'
                 ]
             )
-            ->add(
-                'Remove this',
-                'button',
-                [
-                    'attr' => [
-                        'class' => 'remove_from_collection',
-                    ]
-                ]
-            );
+            ->addRemoveThisButton('remove_from_collection');
     }
 }
