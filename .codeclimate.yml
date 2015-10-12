@@ -4,5 +4,6 @@ languages:
   JavaScript: true
   PHP: true
 exclude_paths:
+- "tests/*"
 - "public/js/jquery.cookie.js"
 - "public/js/bootstrap.min.js"
