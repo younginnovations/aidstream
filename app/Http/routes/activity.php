@@ -17,5 +17,6 @@ $router->group(
         $router->resource('activity.recipient-country', 'RecipientCountryController');
         $router->resource('activity.recipient-region', 'RecipientRegionController');
         $router->resource('activity.sector', 'SectorController');
+        $router->resource('activity.country-budget-items', 'CountryBudgetItemController');
     }
 );

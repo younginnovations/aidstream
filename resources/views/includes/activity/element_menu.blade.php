@@ -35,7 +35,7 @@
     <div class="panel-body">
         <ul class="nav">
             <li><a href="{{ route('activity.recipient-country.index', $id) }}">Recipient Country</a></li>
-            <li><a href="{{ route('activity.recipient-region.index', $id) }}">Recipient Region</a></li>
+            <li><a href="#">Recipient Region</a></li>
             <li><a href="#">Location</a></li>
         </ul>
     </div>
@@ -45,7 +45,7 @@
     <div class="panel-body">
         <ul class="nav">
             <li><a href="{{ route('activity.sector.index', $id) }}">Sector</a></li>
-            <li><a href="#">Country Budget Item</a></li>
+            <li><a href="{{ route('activity.country-budget-items.index', $id) }}">Country Budget Item</a></li>
             <li><a href="#">Policy Maker</a></li>
             <li><a href="#">Collaboration Type</a></li>
             <li><a href="#">Default Flow Type</a></li>

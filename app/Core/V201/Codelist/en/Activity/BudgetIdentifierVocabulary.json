@@ -1,0 +1,38 @@
+{
+  "date-last-modified": "2015-08-26T16:08:18.485289+00:00",
+  "version": "",
+  "name": "BudgetIdentifierVocabulary",
+  "xml:lang": "en",
+  "BudgetIdentifierVocabulary": [
+    {
+      "code": "1",
+      "name": "IATI",
+      "language": "en",
+      "description": "The budget identifier reported uses IATI budget identifier categories"
+    },
+    {
+      "code": "2",
+      "name": "Country Chart of Accounts",
+      "language": "en",
+      "description": "The budget identifier reported corresponds to the recipient country chart of accounts"
+    },
+    {
+      "code": "3",
+      "name": "Other Country System",
+      "language": "en",
+      "description": "The budget identifier reported corresponds to a recipient country system other than the chart of accounts"
+    },
+    {
+      "code": "4",
+      "name": "Reporting Organisation",
+      "language": "en",
+      "description": "The budget identifier reported corresponds to categories that are specific to the reporting organisation"
+    },
+    {
+      "code": "5",
+      "name": "Other",
+      "language": "en",
+      "description": "The budget identifier reported uses a different vocabulary, not specified in the codelist "
+    }
+  ]
+}
