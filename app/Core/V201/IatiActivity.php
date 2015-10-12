@@ -123,6 +123,7 @@ class IatiActivity
     {
         return app('App\Core\V201\Requests\Activity\RecipientRegion');
     }
+
     public function getSector()
     {
         return app('App\Core\V201\Element\Activity\Sector');
@@ -131,5 +132,15 @@ class IatiActivity
     public function getSectorRequest()
     {
         return app('App\Core\V201\Requests\Activity\Sector');
+    }
+
+    public function getCountryBudgetItem()
+    {
+        return app('App\Core\V201\Element\Activity\CountryBudgetItem');
+    }
+
+    public function getCountryBudgetItemRequest()
+    {
+        return app('App\Core\V201\Requests\Activity\CountryBudgetItem');
     }
 }
