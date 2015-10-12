@@ -114,6 +114,15 @@ class IatiActivity
         return app('App\Core\V201\Requests\Activity\RecipientCountryRequest');
     }
 
+    public function getRecipientRegion()
+    {
+        return app('App\Core\V201\Element\Activity\RecipientRegion');
+    }
+
+    public function getRecipientRegionRequest()
+    {
+        return app('App\Core\V201\Requests\Activity\RecipientRegion');
+    }
     public function getSector()
     {
         return app('App\Core\V201\Element\Activity\Sector');

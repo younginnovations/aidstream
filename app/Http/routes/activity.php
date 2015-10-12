@@ -15,6 +15,7 @@ $router->group(
         $router->resource('activity.activity-scope', 'ActivityScopeController');
         $router->resource('activity.participating-organization', 'ParticipatingOrganizationController');
         $router->resource('activity.recipient-country', 'RecipientCountryController');
+        $router->resource('activity.recipient-region', 'RecipientRegionController');
         $router->resource('activity.sector', 'SectorController');
     }
 );

@@ -45,7 +45,7 @@ class RecipientCountryManagerTest extends AidStreamTestCase
     {
         $organizationModel = m::mock(Organization::class);
         $organizationModel->shouldReceive('getAttribute')->once()->with('name')->andReturn('organizationName');
-        $organizationModel->shouldReceive('getAttribute')->once()->with('id')->andReturn(1);
+         $organizationModel->shouldReceive('getAttribute')->once()->with('id')->andReturn(1);
         $user = m::mock('App\User');
         $user->shouldReceive('getAttribute')->twice()->with('organization')->andReturn($organizationModel);
         $this->auth->shouldReceive('user')->twice()->andReturn($user);

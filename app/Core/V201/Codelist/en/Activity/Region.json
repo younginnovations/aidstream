@@ -1,0 +1,93 @@
+{
+  "date-last-modified": "2015-08-26T16:08:18.536544+00:00",
+  "version": "",
+  "name": "Region",
+  "xml:lang": "en",
+  "Region": [
+    {
+      "code": "88",
+      "name": "States Ex-Yugoslavia, unspecified",
+      "language": "en"
+    },
+    {
+      "code": "89",
+      "name": "Europe, regional",
+      "language": "en"
+    },
+    {
+      "code": "189",
+      "name": "North of Sahara, regional",
+      "language": "en"
+    },
+    {
+      "code": "289",
+      "name": "South of Sahara, regional",
+      "language": "en"
+    },
+    {
+      "code": "298",
+      "name": "Africa, regional",
+      "language": "en"
+    },
+    {
+      "code": "380",
+      "name": "West Indies, regional",
+      "language": "en"
+    },
+    {
+      "code": "389",
+      "name": "North and Central America, regional",
+      "language": "en"
+    },
+    {
+      "code": "489",
+      "name": "South America, regional",
+      "language": "en"
+    },
+    {
+      "code": "498",
+      "name": "America, regional",
+      "language": "en"
+    },
+    {
+      "code": "589",
+      "name": "Middle East, regional",
+      "language": "en"
+    },
+    {
+      "code": "619",
+      "name": "Central Asia, regional",
+      "language": "en"
+    },
+    {
+      "code": "679",
+      "name": "South Asia, regional",
+      "language": "en"
+    },
+    {
+      "code": "689",
+      "name": "South and Central Asia, regional",
+      "language": "en"
+    },
+    {
+      "code": "789",
+      "name": "Far East Asia, regional",
+      "language": "en"
+    },
+    {
+      "code": "798",
+      "name": "Asia, regional",
+      "language": "en"
+    },
+    {
+      "code": "889",
+      "name": "Oceania, regional",
+      "language": "en"
+    },
+    {
+      "code": "998",
+      "name": "Developing countries, unspecified",
+      "language": "en"
+    }
+  ]
+}
