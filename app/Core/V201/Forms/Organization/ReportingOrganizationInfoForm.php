@@ -1,8 +1,8 @@
 <?php namespace App\Core\V201\Forms\Organization;
 
-use Kris\LaravelFormBuilder\Form;
+use App\Core\Form\BaseForm;
 
-class ReportingOrganizationInfoForm extends Form
+class ReportingOrganizationInfoForm extends BaseForm
 {
     protected $showFieldErrors = true;
 
@@ -31,15 +31,6 @@ class ReportingOrganizationInfoForm extends Form
                     ]
                 ]
             )
-            ->add(
-                'Add More',
-                'button',
-                [
-                    'attr' => [
-                        'class'           => 'add_to_collection',
-                        'data-collection' => 'narrative'
-                    ]
-                ]
-            );
+            ->addAddMoreButton('add_narrative', 'narrative');
     }
 }

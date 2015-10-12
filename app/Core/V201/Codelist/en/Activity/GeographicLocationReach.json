@@ -1,0 +1,20 @@
+{
+  "date-last-modified": "2015-08-26T16:08:17.950340+00:00",
+  "version": "",
+  "name": "GeographicLocationReach",
+  "xml:lang": "en",
+  "GeographicLocationReach": [
+    {
+      "code": "1",
+      "name": "Activity",
+      "language": "en",
+      "description": "The location specifies where the activity is carried out"
+    },
+    {
+      "code": "2",
+      "name": "Intended Beneficiaries",
+      "language": "en",
+      "description": "The location specifies where the intended beneficiaries of the activity live"
+    }
+  ]
+}

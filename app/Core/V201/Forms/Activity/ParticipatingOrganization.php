@@ -33,6 +33,6 @@ class ParticipatingOrganization extends BaseForm
             )
             ->getNarrative('narrative', 'Organization Name')
             ->addAddMoreButton('add', 'narrative')
-            ->addRemoveThisButton('remove');
+            ->addRemoveThisButton('remove_narrative');
     }
 }

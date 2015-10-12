@@ -111,7 +111,17 @@ class IatiActivity
 
     public function getRecipientCountryRequest()
     {
-        return app('App\Core\V201\Requests\Activity\RecipientCountryRequest');
+        return app('App\Core\V201\Requests\Activity\RecipientCountry');
+    }
+
+    public function getLocation()
+    {
+        return app('App\Core\V201\Element\Activity\Location');
+    }
+
+    public function getLocationRequest()
+    {
+        return app('App\Core\V201\Requests\Activity\Location');
     }
 
     public function getRecipientRegion()

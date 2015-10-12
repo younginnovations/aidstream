@@ -115,6 +115,7 @@ class OrganizationController extends Controller
         $organizationData = $this->organizationManager->getOrganizationData($id);
         $settings         = $this->settingsManager->getSettings($id);
         $status           = $input['status'];
+
         if ($status == 1) {
             if (!isset($organization->reporting_org) || !isset($organizationData->name)) {
                 return redirect()->back()->withMessage('Organization data is not Complete.');

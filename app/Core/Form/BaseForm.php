@@ -57,9 +57,7 @@ class BaseForm extends Form
     public function getCodeList($codeListName, $codeListType)
     {
         $codeListContent = file_get_contents(
-            app_path(
-                "Core/" . session()->get('version') . "/Codelist/" . config('app.locale') . "/$codeListType/$codeListName.json"
-            )
+            app_path("Core/V201/Codelist/" . config('app.locale') . "/$codeListType/$codeListName.json")
         );
         $codeListData    = json_decode($codeListContent, true);
         $codeList        = $codeListData[$codeListName];
@@ -72,41 +70,4 @@ class BaseForm extends Form
         return $data;
     }
 
-    /**
-     * get percentage form
-     * @return $this
-     */
-    public function getPercentage()
-    {
-        return $this->add(
-            'percentage',
-            'text'
-        );
-    }
-
-    /**
-     * get narrative form
-     * @param        $className
-     * @param string $label
-     * @return $this
-     */
-    public function getNarrative($className, $label = 'text')
-    {
-        return $this->add(
-            'narrative',
-            'collection',
-            [
-                'type'      => 'form',
-                'prototype' => true,
-                'options'   => [
-                    'class' => 'App\Core\V201\Forms\Activity\Narrative',
-                    'label' => false,
-                    'data' => ['label' => $label]
-                ],
-                'wrapper'   => [
-                    'class' => "collection_form $className"
-                ]
-            ]
-        );
-    }
 }

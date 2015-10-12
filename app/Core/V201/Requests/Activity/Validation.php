@@ -11,11 +11,11 @@ class Validation
      * returns rules for narrative
      * @param $formFields
      * @param $formBase
-     * @param $rules
      * @return array
      */
-    public function addRulesForNarrative($formFields, $formBase, $rules)
+    public function addRulesForNarrative($formFields, $formBase)
     {
+        $rules = [];
         foreach ($formFields as $narrativeIndex => $narrative) {
             $rules[$formBase . '.narrative.' . $narrativeIndex . '.narrative'] = 'required';
         }
@@ -27,11 +27,11 @@ class Validation
      * returns messages for narrative
      * @param $formFields
      * @param $formBase
-     * @param $messages
      * @return array
      */
-    public function addMessagesForNarrative($formFields, $formBase, $messages)
+    public function addMessagesForNarrative($formFields, $formBase)
     {
+        $messages = [];
         foreach ($formFields as $narrativeIndex => $narrative) {
             $messages[$formBase . '.narrative.' . $narrativeIndex . '.narrative.required'] = 'Narrative text is required';
         }
