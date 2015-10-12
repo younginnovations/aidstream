@@ -1,0 +1,8 @@
+# Settings for code climate
+languages:
+  Ruby: true
+  JavaScript: true
+  PHP: true
+exclude_paths:
+- "public/js/jquery.cookie.js"
+- "public/js/bootstrap.min.js"
