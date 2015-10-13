@@ -42,7 +42,7 @@ class SectorManagerTest extends AidStreamTestCase
     {
         $orgModel = m::mock(Organization::class);
         $orgModel->shouldReceive('getAttribute')->once()->with('name')->andReturn('orgName');
-        $orgModel->shouldREceive('getAttribute')->once()->with('id')->andReturn(1);
+        $orgModel->shouldReceive('getAttribute')->once()->with('id')->andReturn(1);
         $user = m::mock(User::class);
         $user->shouldReceive('getAttribute')->twice()->with('organization')->andReturn($orgModel);
         $this->auth->shouldReceive('user')->twice()->andReturn($user);
