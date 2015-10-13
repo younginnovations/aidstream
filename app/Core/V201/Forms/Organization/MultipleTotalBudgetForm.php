@@ -11,7 +11,7 @@ class MultipleTotalBudgetForm extends BaseForm
                 'totalBudget',
                 'collection',
                 [
-                    'type'    => 'form',
+                    'type' => 'form',
                     'options' => [
                         'class' => 'App\Core\V201\Forms\Organization\TotalBudgetForm',
                         'label' => false,

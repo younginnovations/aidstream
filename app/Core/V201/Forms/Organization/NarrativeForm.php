@@ -14,10 +14,10 @@ class NarrativeForm extends BaseForm
                 'language',
                 'select',
                 [
-                    'choices' => $this->getCodeList('Language', 'Activity'),
-                    'label'   => 'Language'
+                    'choices' => $this->addCodeList('Language', 'Organization'),
+                    'label' => 'Language'
                 ]
             )
-            ->removeButton('remove');
+            ->addRemoveThisButton('remove');
     }
 }

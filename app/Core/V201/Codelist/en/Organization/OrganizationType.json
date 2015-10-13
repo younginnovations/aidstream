@@ -1,0 +1,58 @@
+{
+  "date-last-modified": "2015-08-26T16:08:17.956289+00:00",
+  "version": "",
+  "name": "OrganisationType",
+  "xml:lang": "en",
+  "OrganizationType": [
+    {
+      "code": "10",
+      "name": "Government",
+      "language": "en"
+    },
+    {
+      "code": "15",
+      "name": "Other Public Sector",
+      "language": "en"
+    },
+    {
+      "code": "21",
+      "name": "International NGO",
+      "language": "en"
+    },
+    {
+      "code": "22",
+      "name": "National NGO",
+      "language": "en"
+    },
+    {
+      "code": "23",
+      "name": "Regional NGO",
+      "language": "en"
+    },
+    {
+      "code": "30",
+      "name": "Public Private Partnership",
+      "language": "en"
+    },
+    {
+      "code": "40",
+      "name": "Multilateral",
+      "language": "en"
+    },
+    {
+      "code": "60",
+      "name": "Foundation",
+      "language": "en"
+    },
+    {
+      "code": "70",
+      "name": "Private Sector",
+      "language": "en"
+    },
+    {
+      "code": "80",
+      "name": "Academic, Training and Research",
+      "language": "en"
+    }
+  ]
+}

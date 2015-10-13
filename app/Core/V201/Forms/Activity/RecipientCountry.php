@@ -16,7 +16,7 @@ class RecipientCountry extends Form
     public function buildForm()
     {
         $countryCodeList = file_get_contents(
-            app_path("Core/V201/Codelist/" . config('app.locale') . "/Organization/CountryCodelist.json")
+            app_path("Core/V201/Codelist/" . config('app.locale') . "/Organization/Country.json")
         );
         $countryList     = json_decode($countryCodeList, true);
         $countries       = $countryList['Country'];

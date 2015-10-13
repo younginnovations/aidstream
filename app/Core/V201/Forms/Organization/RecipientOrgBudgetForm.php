@@ -1,8 +1,8 @@
 <?php namespace App\Core\V201\Forms\Organization;
 
-use Kris\LaravelFormBuilder\Form;
+use App\Core\Form\BaseForm;
 
-class RecipientOrgBudgetForm extends Form
+class RecipientOrgBudgetForm extends BaseForm
 {
     public function buildForm()
     {
@@ -11,103 +11,20 @@ class RecipientOrgBudgetForm extends Form
                 'recipientOrganization',
                 'collection',
                 [
-                    'type'    => 'form',
+                    'type' => 'form',
                     'options' => [
                         'class' => 'App\Core\V201\Forms\Organization\RecipientOrgForm',
                         'label' => false
                     ]
                 ]
             )
-            ->add(
-                'narrative',
-                'collection',
-                [
-                    'type'    => 'form',
-                    'options' => [
-                        'class' => 'App\Core\V201\Forms\Organization\NarrativeForm',
-                        'label' => false
-                    ],
-                    'wrapper' => [
-                        'class' => 'collection_form narrative'
-                    ]
-                ]
-            )
-            ->add(
-                'Add More',
-                'button',
-                [
-                    'attr' => [
-                        'class'           => 'add_to_collection',
-                        'data-collection' => 'narrative'
-                    ]
-                ]
-            )
-            ->add(
-                'periodStart',
-                'collection',
-                [
-                    'type'    => 'form',
-                    'options' => [
-                        'class' => 'App\Core\V201\Forms\Organization\PeriodStartForm',
-                        'label' => false,
-                    ]
-                ]
-            )
-            ->add(
-                'periodEnd',
-                'collection',
-                [
-                    'type'    => 'form',
-                    'options' => [
-                        'class' => 'App\Core\V201\Forms\Organization\PeriodEndForm',
-                        'label' => false,
-                    ]
-                ]
-            )
-            ->add(
-                'value',
-                'collection',
-                [
-                    'type'    => 'form',
-                    'options' => [
-                        'class' => 'App\Core\V201\Forms\Organization\ValueForm',
-                        'label' => false,
-                    ]
-                ]
-            )
-            ->add(
-                'budgetLine',
-                'collection',
-                [
-                    'type'    => 'form',
-                    'options' => [
-                        'class' => 'App\Core\V201\Forms\Organization\BudgetLineForm',
-                        'label' => false,
-                    ],
-                    'wrapper' => [
-                        'class' => 'collection_form budget_line'
-                    ]
-                ]
-            )
-            ->add(
-                'Add More1',
-                'button',
-                [
-                    'label' => 'Add More',
-                    'attr'  => [
-                        'class'           => 'add_to_collection',
-                        'data-collection' => 'budget_line'
-                    ]
-                ]
-            )
-            ->add(
-                'Remove this',
-                'button',
-                [
-                    'attr' => [
-                        'class' => 'remove_from_collection',
-                    ]
-                ]
-            );
+            ->addNarrative('narrative')
+            ->addAddMoreButton('add_narrative', 'narrative')
+            ->addPeriodStart('Organization')
+            ->addPeriodEnd('Organization')
+            ->addValue('Organization')
+            ->addBudgetLine('Organization')
+            ->addAddMoreButton('add_budget_line', 'budget_line')
+            ->addRemoveThisButton('remove_recipient_org_budget');
     }
 }

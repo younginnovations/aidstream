@@ -1,8 +1,8 @@
 <?php namespace App\Core\V201\Forms\Organization;
 
-use Kris\LaravelFormBuilder\Form;
+use App\Core\Form\BaseForm;
 
-class MultipleDocumentLinkForm extends Form
+class MultipleDocumentLinkForm extends BaseForm
 {
     public function buildForm()
     {
@@ -11,7 +11,7 @@ class MultipleDocumentLinkForm extends Form
                 'documentLink',
                 'collection',
                 [
-                    'type'    => 'form',
+                    'type' => 'form',
                     'options' => [
                         'class' => 'App\Core\V201\Forms\Organization\DocumentLinkForm',
                         'label' => false,
@@ -21,15 +21,6 @@ class MultipleDocumentLinkForm extends Form
                     ]
                 ]
             )
-            ->add(
-                'Add More',
-                'button',
-                [
-                    'attr' => [
-                        'class'           => 'add_to_collection',
-                        'data-collection' => 'document_link'
-                    ]
-                ]
-            );
+            ->addAddMoreButton('add_document_link', 'document_link');
     }
 }
