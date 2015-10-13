@@ -22,8 +22,8 @@ class BaseForm extends Form
             'button',
             [
                 'label' => 'Add More',
-                'attr' => [
-                    'class' => 'add_to_collection',
+                'attr'  => [
+                    'class'           => 'add_to_collection',
                     'data-collection' => $formClass
                 ]
             ]
@@ -42,7 +42,7 @@ class BaseForm extends Form
             'button',
             [
                 'label' => 'Remove This',
-                'attr' => [
+                'attr'  => [
                     'class' => 'remove_from_collection',
                 ]
             ]
@@ -61,9 +61,9 @@ class BaseForm extends Form
                 "Core/" . session()->get('version') . "/Codelist/" . config('app.locale') . "/$codeListType/$codeListName.json"
             )
         );
-        $codeListData = json_decode($codeListContent, true);
-        $codeList = $codeListData[$codeListName];
-        $data = [];
+        $codeListData    = json_decode($codeListContent, true);
+        $codeList        = $codeListData[$codeListName];
+        $data            = [];
 
         foreach ($codeList as $list) {
             $data[$list['code']] = $list['code'] . ' - ' . $list['name'];
@@ -96,14 +96,14 @@ class BaseForm extends Form
             'narrative',
             'collection',
             [
-                'type' => 'form',
+                'type'      => 'form',
                 'prototype' => true,
-                'options' => [
+                'options'   => [
                     'class' => 'App\Core\V201\Forms\Activity\Narrative',
                     'label' => false,
                     'data' => ['label' => $label]
                 ],
-                'wrapper' => [
+                'wrapper'   => [
                     'class' => "collection_form $className"
                 ]
             ]

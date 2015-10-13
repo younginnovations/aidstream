@@ -25,7 +25,7 @@ class DocumentLinkForm extends BaseForm
                 'category',
                 'collection',
                 [
-                    'type' => 'form',
+                    'type'    => 'form',
                     'options' => [
                         'class' => 'App\Core\V201\Forms\Organization\CategoryCodeForm',
                         'label' => false,
@@ -36,26 +36,12 @@ class DocumentLinkForm extends BaseForm
                 ]
             )
             ->addAddMoreButton('add_category', 'category')
-            ->add(
-                'language',
-                'collection',
-                [
-                    'type' => 'form',
-                    'options' => [
-                        'class' => 'App\Core\V201\Forms\Organization\LanguageCodeForm',
-                        'label' => false,
-                    ],
-                    'wrapper' => [
-                        'class' => 'collection_form language'
-                    ]
-                ]
-            )
             ->addAddMoreButton('add_language', 'language')
             ->add(
                 'recipientCountry',
                 'collection',
                 [
-                    'type' => 'form',
+                    'type'    => 'form',
                     'options' => [
                         'class' => 'App\Core\V201\Forms\Organization\RecipientCountryForm',
                         'label' => false
