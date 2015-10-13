@@ -13,6 +13,9 @@ return [
     'sector_updated'                     => 'Activity sector ":sector" updated for ":organization - :organization_id"',
     'recipient_country_updated'          => 'Activity country region":recipientCountry" updated for ":organization - :organization_id"',
     'recipient_region_updated'           => 'Activity recipient region":recipientRegion" updated for ":organization - :organization_id"',
+    'activity.added'                     => 'New Activity identifier":identifier" updated for ":organization - :organization_id"',
+    'activity.step_two_completed'        => 'Activity step two":title" and ":description" updated for ":organization - :organization_id"',
+    'activity.step_three_completed'      => 'Activity step two":activityStatus" and ":activityDate" updated for ":organization - :organization_id"',
     'country_budget_items_updated'       => 'Activity country budget items ":countryBudgetItems" updated for ":organization - :organization_id"',
     'location_updated'                   => 'Activity Location ":location" updated for ":organization - :organization_id"',
 ];

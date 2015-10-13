@@ -1,12 +1,13 @@
 <?php namespace App\Core\V201;
 
 use App;
+use App\Core\V201\Wizard\WizardIatiActivity;
 
 /**
  * Class IatiActivity
  * @package App\Core\V201
  */
-class IatiActivity
+class IatiActivity extends WizardIatiActivity
 {
 
     public function getIdentifier()
