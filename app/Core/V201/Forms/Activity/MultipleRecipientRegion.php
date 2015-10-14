@@ -1,12 +1,12 @@
 <?php namespace App\Core\V201\Forms\Activity;
 
-use Kris\LaravelFormBuilder\Form;
+use App\Core\Form\BaseForm;
 
 /**
  * Class MultipleRecipientRegion
  * @package App\Core\V201\Forms\Activity
  */
-class MultipleRecipientRegion extends Form
+class MultipleRecipientRegion extends BaseForm
 {
     /**
      * builds activity Recipient Region form
@@ -14,30 +14,7 @@ class MultipleRecipientRegion extends Form
     public function buildForm()
     {
         $this
-            ->add(
-                'recipient_region',
-                'collection',
-                [
-                    'type'      => 'form',
-                    'prototype' => true,
-                    'options'   => [
-                        'class' => 'App\Core\V201\Forms\Activity\RecipientRegion',
-                        'label' => false,
-                    ],
-                    'wrapper'   => [
-                        'class' => 'collection_form recipient_region'
-                    ]
-                ]
-            )
-            ->add(
-                'Add More',
-                'button',
-                [
-                    'attr' => [
-                        'class'           => 'add_to_collection',
-                        'data-collection' => 'recipient_region'
-                    ]
-                ]
-            );
+            ->addCollection('recipient_region', 'Activity\RecipientRegion', 'recipient_region')
+            ->addAddMoreButton('add_recipient_region', 'recipient_region');
     }
 }

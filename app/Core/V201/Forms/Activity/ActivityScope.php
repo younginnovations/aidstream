@@ -1,12 +1,12 @@
 <?php namespace App\Core\V201\Forms\Activity;
 
-use Kris\LaravelFormBuilder\Form;
+use App\Core\Form\BaseForm;
 
 /**
  * Class ActivityScope
  * @package App\Core\V201\Forms\Activity
  */
-class ActivityScope extends Form
+class ActivityScope extends BaseForm
 {
     protected $showFieldErrors = true;
 
@@ -15,24 +15,13 @@ class ActivityScope extends Form
      */
     public function buildForm()
     {
-        $activityScopeCodeList = file_get_contents(
-            app_path("Core/V201/Codelist/" . config('app.locale') . "/Activity/ActivityScope.json")
-        );
-        $activityScopeCodes    = json_decode($activityScopeCodeList, true);
-        $activityScope         = $activityScopeCodes['ActivityScope'];
-        $activityScopeCode     = [];
-
-        foreach ($activityScope as $activity) {
-            $activityScopeCode[$activity['code']] = $activity['code'] . ' - ' . $activity['name'];
-        }
-
         $this
             ->add(
                 'activity_scope',
                 'select',
                 [
-                    'choices' => $activityScopeCode,
-                    'label'   => 'Activity scope'
+                    'choices' => $this->addCodeList('ActivityScope', 'Activity'),
+                    'label' => 'Activity scope'
                 ]
             );
     }

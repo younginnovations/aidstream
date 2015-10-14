@@ -22,7 +22,7 @@ class Narrative extends BaseForm
                 'select',
                 [
                     'choices' => $this->addCodeList('Language', 'Activity'),
-                    'label'   => 'Language'
+                    'label' => 'Language'
                 ]
             )
             ->addRemoveThisButton('remove_from_collection');

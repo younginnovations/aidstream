@@ -1,12 +1,12 @@
 <?php namespace App\Core\V201\Forms\Activity;
 
-use Kris\LaravelFormBuilder\Form;
+use App\Core\Form\BaseForm;
 
 /**
  * Class Telephone
  * @package App\Core\V201\Forms\Activity
  */
-class Telephone extends Form
+class Telephone extends BaseForm
 {
     /**
      * builds the contact info telephone form
@@ -15,14 +15,6 @@ class Telephone extends Form
     {
         $this
             ->add('telephone', 'text')
-            ->add(
-                'Remove this',
-                'button',
-                [
-                    'attr' => [
-                        'class' => 'remove_from_collection',
-                    ]
-                ]
-            );
+            ->addRemoveThisButton('remove_telephone');
     }
 }

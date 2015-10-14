@@ -1,12 +1,12 @@
 <?php namespace App\Core\V201\Forms\Activity;
 
-use Kris\LaravelFormBuilder\Form;
+use App\Core\Form\BaseForm;
 
 /**
  * Class Email
  * @package App\Core\V201\Forms\Activity
  */
-class Email extends Form
+class Email extends BaseForm
 {
     /**
      * builds the contact info email form
@@ -15,14 +15,6 @@ class Email extends Form
     {
         $this
             ->add('email', 'text')
-            ->add(
-                'Remove this',
-                'button',
-                [
-                    'attr' => [
-                        'class' => 'remove_from_collection',
-                    ]
-                ]
-            );
+            ->addRemoveThisButton('remove_email');
     }
 }

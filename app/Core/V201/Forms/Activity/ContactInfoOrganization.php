@@ -1,12 +1,12 @@
 <?php namespace App\Core\V201\Forms\Activity;
 
-use Kris\LaravelFormBuilder\Form;
+use App\Core\Form\BaseForm;
 
 /**
  * Class ContactInfoOrganization
  * @package App\Core\V201\Forms\Activity
  */
-class ContactInfoOrganization extends Form
+class ContactInfoOrganization extends BaseForm
 {
     /**
      * builds the contact info organization form
@@ -14,31 +14,7 @@ class ContactInfoOrganization extends Form
     public function buildForm()
     {
         $this
-            ->add(
-                'narrative',
-                'collection',
-                [
-                    'type'      => 'form',
-                    'prototype' => true,
-                    'options'   => [
-                        'class' => 'App\Core\V201\Forms\Activity\Narrative',
-                        'label' => false,
-                        'data'  => ['narrativeLabel' => 'Organization Name']
-                    ],
-                    'wrapper'   => [
-                        'class' => 'collection_form title'
-                    ]
-                ]
-            )
-            ->add(
-                'Add More',
-                'button',
-                [
-                    'attr' => [
-                        'class'           => 'add_to_collection',
-                        'data-collection' => 'title'
-                    ]
-                ]
-            );
+            ->addNarrative('title')
+            ->addAddMoreButton('add_title', 'title');
     }
 }
