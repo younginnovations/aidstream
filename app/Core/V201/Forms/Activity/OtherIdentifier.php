@@ -1,32 +1,23 @@
 <?php namespace App\Core\V201\Forms\Activity;
 
-use Kris\LaravelFormBuilder\Form;
+use App\Core\Form\BaseForm;
 
 /**
  * Class OtherIdentifier
  * Activity other identifier form to collect activity other identifier
  * @package App\Core\V201\Forms\Activity
  */
-class OtherIdentifier extends Form
+class OtherIdentifier extends BaseForm
 {
     public function buildForm()
     {
-        $json                 = file_get_contents(
-            app_path("Core/V201/Codelist/" . config('app.locale') . "/Activity/OtherIdentifierType.json")
-        );
-        $otherIdentifierTypes = json_decode($json, true);
-        $otherIdentifierType  = $otherIdentifierTypes['OtherIdentifierType'];
-        $typeCodes            = [];
-        foreach ($otherIdentifierType as $otherIdentifier) {
-            $typeCodes[$otherIdentifier['code']] = $otherIdentifier['code'] . ' - ' . $otherIdentifier['name'];
-        }
         $this
             ->add('reference', 'text')
             ->add(
                 'type',
                 'select',
                 [
-                    'choices' => $typeCodes,
+                    'choices' => $this->getCodeList('OtherIdentifierType', 'Activity'),
                     'label'   => 'Type'
                 ]
             )
@@ -45,14 +36,6 @@ class OtherIdentifier extends Form
                     ]
                 ]
             )
-            ->add(
-                'Remove this',
-                'button',
-                [
-                    'attr' => [
-                        'class' => 'remove_from_collection',
-                    ]
-                ]
-            );
+            ->addRemoveThisButton('remove_other_identifier');
     }
 }

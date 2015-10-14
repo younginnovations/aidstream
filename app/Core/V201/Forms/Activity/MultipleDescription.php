@@ -1,12 +1,12 @@
 <?php namespace App\Core\V201\Forms\Activity;
 
-use Kris\LaravelFormBuilder\Form;
+use App\Core\Form\BaseForm;
 
 /**
  * Class MultipleDescription
  * @package App\Core\V201\Forms\Activity
  */
-class MultipleDescription extends Form
+class MultipleDescription extends BaseForm
 {
     /**
      * builds activity description form
@@ -29,15 +29,6 @@ class MultipleDescription extends Form
                     ]
                 ]
             )
-            ->add(
-                'Add More',
-                'button',
-                [
-                    'attr' => [
-                        'class'           => 'add_to_collection',
-                        'data-collection' => 'description'
-                    ]
-                ]
-            );
+            ->addAddMoreButton('add_description', 'description');
     }
 }

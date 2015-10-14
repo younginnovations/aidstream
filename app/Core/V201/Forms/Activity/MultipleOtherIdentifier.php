@@ -1,12 +1,12 @@
 <?php namespace App\Core\V201\Forms\Activity;
 
-use Kris\LaravelFormBuilder\Form;
+use App\Core\Form\BaseForm;
 
 /**
  * Class MultipleOtherIdentifier
  * @package App\Core\V201\Forms\Activity
  */
-class MultipleOtherIdentifier extends Form
+class MultipleOtherIdentifier extends BaseForm
 {
     /**
      * builds multiple activity description form
@@ -29,15 +29,6 @@ class MultipleOtherIdentifier extends Form
                     ]
                 ]
             )
-            ->add(
-                'Add More',
-                'button',
-                [
-                    'attr' => [
-                        'class'           => 'add_to_collection',
-                        'data-collection' => 'other_identifier'
-                    ]
-                ]
-            );
+            ->addAddMoreButton('add_other_identifier', 'other_identifier');
     }
 }

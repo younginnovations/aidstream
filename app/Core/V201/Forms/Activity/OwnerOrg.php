@@ -1,42 +1,19 @@
 <?php namespace App\Core\V201\Forms\Activity;
 
-use Kris\LaravelFormBuilder\Form;
+use App\Core\Form\BaseForm;
 
 /**
  * Class OwnerOrg
  * Contains the function that creates Owner Org Form
  * @package App\Core\V201\Forms\Activity
  */
-class OwnerOrg extends Form
+class OwnerOrg extends BaseForm
 {
     public function buildForm()
     {
         $this
             ->add('reference', 'text')
-            ->add(
-                'narrative',
-                'collection',
-                [
-                    'type'      => 'form',
-                    'prototype' => true,
-                    'options'   => [
-                        'class' => 'App\Core\V201\Forms\Activity\Narrative',
-                        'label' => false,
-                    ],
-                    'wrapper'   => [
-                        'class' => 'collection_form owner_organization_narrative'
-                    ]
-                ]
-            )
-            ->add(
-                'Add More',
-                'button',
-                [
-                    'attr' => [
-                        'class'           => 'add_to_collection',
-                        'data-collection' => 'owner_organization_narrative'
-                    ]
-                ]
-            );
+            ->getNarrative('owner_organization_narrative')
+            ->addAddMoreButton('add_owner_organization_narrative', 'owner_organization_narrative');
     }
 }

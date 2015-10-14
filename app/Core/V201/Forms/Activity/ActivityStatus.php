@@ -1,12 +1,12 @@
 <?php namespace App\Core\V201\Forms\Activity;
 
-use Kris\LaravelFormBuilder\Form;
+use App\Core\Form\BaseForm;
 
 /**
  * Class ActivityStatus
  * @package App\Core\V201\Forms\Activity
  */
-class ActivityStatus extends Form
+class ActivityStatus extends BaseForm
 {
     protected $showFieldErrors = true;
 
@@ -15,23 +15,12 @@ class ActivityStatus extends Form
      */
     public function buildForm()
     {
-        $activityStatusCodeList = file_get_contents(
-            app_path("Core/V201/Codelist/" . config('app.locale') . "/Activity/ActivityStatus.json")
-        );
-        $activityStatusCodes    = json_decode($activityStatusCodeList, true);
-        $activityStatus         = $activityStatusCodes['ActivityStatus'];
-        $activityStatusCode     = [];
-
-        foreach ($activityStatus as $activity) {
-            $activityStatusCode[$activity['code']] = $activity['code'] . ' - ' . $activity['name'];
-        }
-
         $this
             ->add(
                 'activity_status',
                 'select',
                 [
-                    'choices' => $activityStatusCode,
+                    'choices' => $this->getCodeList('ActivityStatus', 'Activity'),
                     'label'   => 'Activity status'
                 ]
             );

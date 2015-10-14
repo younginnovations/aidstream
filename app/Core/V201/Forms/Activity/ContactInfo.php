@@ -1,35 +1,24 @@
 <?php namespace App\Core\V201\Forms\Activity;
 
-use Kris\LaravelFormBuilder\Form;
+use App\Core\Form\BaseForm;
 
 /**
  * Class ContactInfo
  * @package App\Core\V201\Forms\Activity
  */
-class ContactInfo extends Form
+class ContactInfo extends BaseForm
 {
     /**
      * builds activity Contact Info form
      */
     public function buildForm()
     {
-        $contactTypeCodeList = file_get_contents(
-            app_path("Core/V201/Codelist/" . config('app.locale') . "/Activity/ContactType.json")
-        );
-        $contactTypes        = json_decode($contactTypeCodeList, true);
-        $contactType         = $contactTypes['ContactType'];
-        $contactTypeCode     = [];
-
-        foreach ($contactType as $contact) {
-            $contactTypeCode[$contact['code']] = $contact['code'] . ' - ' . $contact['name'];
-        }
-
         $this
             ->add(
                 'type',
                 'select',
                 [
-                    'choices' => $contactTypeCode,
+                    'choices' => $this->getCodeList('ContactType', 'Activity'),
                     'label'   => 'Contact Type'
                 ]
             )
@@ -108,17 +97,7 @@ class ContactInfo extends Form
                     ]
                 ]
             )
-            ->add(
-                'Add More1',
-                'button',
-                [
-                    'label' => 'Add More',
-                    'attr'  => [
-                        'class'           => 'add_to_collection',
-                        'data-collection' => 'telephoneNarrative'
-                    ]
-                ]
-            )
+            ->addAddMoreButton('add_telephoneNarrative', 'telephoneNarrative')
             ->add(
                 'email',
                 'collection',
@@ -134,17 +113,7 @@ class ContactInfo extends Form
                     ]
                 ]
             )
-            ->add(
-                'Add More2',
-                'button',
-                [
-                    'label' => 'Add More',
-                    'attr'  => [
-                        'class'           => 'add_to_collection',
-                        'data-collection' => 'emailNarrative'
-                    ]
-                ]
-            )
+            ->addAddMoreButton('add_emailNarrative', 'emailNarrative')
             ->add(
                 'website',
                 'collection',
@@ -160,17 +129,7 @@ class ContactInfo extends Form
                     ]
                 ]
             )
-            ->add(
-                'Add More3',
-                'button',
-                [
-                    'label' => 'Add More',
-                    'attr'  => [
-                        'class'           => 'add_to_collection',
-                        'data-collection' => 'websiteNarrative'
-                    ]
-                ]
-            )
+            ->addAddMoreButton('add_websiteNarrative', 'websiteNarrative')
             ->add(
                 'mailing_address',
                 'collection',
@@ -186,25 +145,7 @@ class ContactInfo extends Form
                     ]
                 ]
             )
-            ->add(
-                'Add More4',
-                'button',
-                [
-                    'label' => 'Add More',
-                    'attr'  => [
-                        'class'           => 'add_to_collection',
-                        'data-collection' => 'mailingAddressNarrative'
-                    ]
-                ]
-            )
-            ->add(
-                'Remove this',
-                'button',
-                [
-                    'attr' => [
-                        'class' => 'remove_from_collection',
-                    ]
-                ]
-            );
+            ->addAddMoreButton('add_mailingAddressNarrative', 'mailingAddressNarrative')
+            ->addRemoveThisButton('remove_contact_info');
     }
 }

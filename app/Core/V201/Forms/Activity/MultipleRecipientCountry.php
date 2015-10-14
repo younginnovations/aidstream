@@ -1,12 +1,12 @@
 <?php namespace App\Core\V201\Forms\Activity;
 
-use Kris\LaravelFormBuilder\Form;
+use App\Core\Form\BaseForm;
 
 /**
  * Class MultipleRecipientCountry
  * @package App\Core\V201\Forms\Activity
  */
-class MultipleRecipientCountry extends Form
+class MultipleRecipientCountry extends BaseForm
 {
     /**
      * builds recipient country form
@@ -29,15 +29,6 @@ class MultipleRecipientCountry extends Form
                     ]
                 ]
             )
-            ->add(
-                'Add More',
-                'button',
-                [
-                    'attr' => [
-                        'class'           => 'add_to_collection',
-                        'data-collection' => 'recipient_country'
-                    ]
-                ]
-            );
+            ->addAddMoreButton('add_recipient_country', 'recipient_country');
     }
 }

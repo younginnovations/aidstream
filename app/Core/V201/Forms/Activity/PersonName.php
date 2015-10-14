@@ -1,12 +1,12 @@
 <?php namespace App\Core\V201\Forms\Activity;
 
-use Kris\LaravelFormBuilder\Form;
+use App\Core\Form\BaseForm;
 
 /**
  * Class PersonName
  * @package App\Core\V201\Forms\Activity
  */
-class PersonName extends Form
+class PersonName extends BaseForm
 {
     /**
      * builds the contact info Person Name form
@@ -14,30 +14,7 @@ class PersonName extends Form
     public function buildForm()
     {
         $this
-            ->add(
-                'narrative',
-                'collection',
-                [
-                    'type'      => 'form',
-                    'prototype' => true,
-                    'options'   => [
-                        'class' => 'App\Core\V201\Forms\Activity\Narrative',
-                        'label' => false,
-                    ],
-                    'wrapper'   => [
-                        'class' => 'collection_form personNameNarrative'
-                    ]
-                ]
-            )
-            ->add(
-                'Add More',
-                'button',
-                [
-                    'attr' => [
-                        'class'           => 'add_to_collection',
-                        'data-collection' => 'personNameNarrative'
-                    ]
-                ]
-            );
+            ->getNarrative('personNameNarrative')
+            ->addAddMoreButton('add_personNameNarrative', 'personNameNarrative');
     }
 }
