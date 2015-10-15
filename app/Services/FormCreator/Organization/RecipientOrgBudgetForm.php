@@ -21,7 +21,7 @@ class RecipientOrgBudgetForm
 
     public function editForm($data, $organizationId)
     {
-        $modal['recipientOrganizationBudget'] = $data;
+        $modal['recipient_organization_budget'] = $data;
 
         return $this->formBuilder->create(
             $this->formPath,
@@ -33,6 +33,4 @@ class RecipientOrgBudgetForm
         )->add('Update', 'submit');
 
     }
-
-
 }

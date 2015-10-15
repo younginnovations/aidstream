@@ -43,5 +43,4 @@ class ActivityDate
     {
         return $this->activity->findorFail($activityId)->activity_date;
     }
-
 }

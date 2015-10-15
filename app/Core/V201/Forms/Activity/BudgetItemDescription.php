@@ -14,7 +14,7 @@ class BudgetItemDescription extends BaseForm
     public function buildForm()
     {
         $this
-            ->getNarrative('narrative')
+            ->addNarrative('narrative')
             ->addAddMoreButton('add_narrative', 'narrative')
             ->addRemoveThisButton('remove_description');
     }

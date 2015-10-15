@@ -11,7 +11,7 @@
                         {!! form($form) !!}
 
                         <div class="collection-container hidden"
-                             data-prototype="{{ form_row($form->narrative->prototype()) }}">
+                             data-prototype="{{ form_row($form->reporting_org->prototype()) }}">
                         </div>
                     </div>
                 </div>

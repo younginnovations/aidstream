@@ -25,7 +25,7 @@ class TotalBudgetRepository
      */
     public function update(array $input, OrganizationData $organization)
     {
-        $organization->total_budget = $input['totalBudget'];
+        $organization->total_budget = $input['total_budget'];
 
         return $organization->save();
     }
@@ -49,5 +49,4 @@ class TotalBudgetRepository
     {
         return $this->org->where('organization_id', $organization_id)->first()->total_budget;
     }
-
 }

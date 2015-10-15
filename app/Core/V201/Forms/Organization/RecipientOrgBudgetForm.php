@@ -7,7 +7,7 @@ class RecipientOrgBudgetForm extends BaseForm
     public function buildForm()
     {
         $this
-            ->addCollection('recipientOrganization', 'Organization\RecipientOrgForm')
+            ->addCollection('recipient_organization', 'Organization\RecipientOrgForm')
             ->addNarrative('narrative')
             ->addAddMoreButton('add_narrative', 'narrative')
             ->addPeriodStart('Organization')

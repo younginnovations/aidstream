@@ -19,7 +19,7 @@ class ContactInfo extends BaseForm
                 'select',
                 [
                     'choices' => $this->addCodeList('ContactType', 'Activity'),
-                    'label' => 'Contact Type'
+                    'label'   => 'Contact Type'
                 ]
             )
             ->addCollection('organization', 'Activity\ContactInfoOrganization')

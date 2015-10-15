@@ -42,5 +42,4 @@ class RecipientRegion
     {
         return $this->activity->findOrFail($activityId)->recipient_region;
     }
-
 }
