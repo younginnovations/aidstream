@@ -8,32 +8,9 @@ class BudgetLineForm extends BaseForm
     {
         $this
             ->add('reference', 'text')
-            ->add(
-                'value',
-                'collection',
-                [
-                    'type'    => 'form',
-                    'options' => [
-                        'class' => 'App\Core\V201\Forms\Organization\ValueForm',
-                        'label' => false,
-                    ]
-                ]
-            )
-            ->add(
-                'narrative',
-                'collection',
-                [
-                    'type'    => 'form',
-                    'options' => [
-                        'class' => 'App\Core\V201\Forms\Organization\NarrativeForm',
-                        'label' => false,
-                    ],
-                    'wrapper' => [
-                        'class' => 'collection_form budget_line_narrative'
-                    ]
-                ]
-            )
+            ->addValue('Organization')
+            ->addNarrative('budget_line_narrative')
             ->addAddMoreButton('add', 'budget_line_narrative')
-            ->addRemoveThisButton('remove');
+            ->addRemoveThisButton('remove_budget_line');
     }
 }

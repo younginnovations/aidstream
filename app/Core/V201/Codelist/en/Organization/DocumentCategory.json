@@ -3,7 +3,7 @@
   "version": "",
   "name": "DocumentCategory",
   "xml:lang": "en",
-  "DocumentCategory": [
+  "DocumentCategory":[
     {
       "category": "A",
       "code": "A01",

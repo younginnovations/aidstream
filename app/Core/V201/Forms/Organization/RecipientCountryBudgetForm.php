@@ -1,8 +1,8 @@
 <?php namespace App\Core\V201\Forms\Organization;
 
-use Kris\LaravelFormBuilder\Form;
+use App\Core\Form\BaseForm;
 
-class RecipientCountryBudgetForm extends Form
+class RecipientCountryBudgetForm extends BaseForm
 {
     public function buildForm()
     {
@@ -11,7 +11,7 @@ class RecipientCountryBudgetForm extends Form
                 'recipientCountry',
                 'collection',
                 [
-                    'type'    => 'form',
+                    'type' => 'form',
                     'options' => [
                         'class' => 'App\Core\V201\Forms\Organization\RecipientCountryForm',
                         'label' => false
@@ -21,71 +21,11 @@ class RecipientCountryBudgetForm extends Form
                     ]
                 ]
             )
-            ->add(
-                'periodStart',
-                'collection',
-                [
-                    'type'    => 'form',
-                    'options' => [
-                        'class' => 'App\Core\V201\Forms\Organization\PeriodStartForm',
-                        'label' => false,
-                    ]
-                ]
-            )
-            ->add(
-                'periodEnd',
-                'collection',
-                [
-                    'type'    => 'form',
-                    'options' => [
-                        'class' => 'App\Core\V201\Forms\Organization\PeriodEndForm',
-                        'label' => false,
-                    ]
-                ]
-            )
-            ->add(
-                'value',
-                'collection',
-                [
-                    'type'    => 'form',
-                    'options' => [
-                        'class' => 'App\Core\V201\Forms\Organization\ValueForm',
-                        'label' => false,
-                    ]
-                ]
-            )
-            ->add(
-                'budgetLine',
-                'collection',
-                [
-                    'type'    => 'form',
-                    'options' => [
-                        'class' => 'App\Core\V201\Forms\Organization\BudgetLineForm',
-                        'label' => false,
-                    ],
-                    'wrapper' => [
-                        'class' => 'collection_form budget_line'
-                    ]
-                ]
-            )
-            ->add(
-                'Add More',
-                'button',
-                [
-                    'attr' => [
-                        'class'           => 'add_to_collection',
-                        'data-collection' => 'budget_line '
-                    ]
-                ]
-            )
-            ->add(
-                'Remove this',
-                'button',
-                [
-                    'attr' => [
-                        'class' => 'remove_from_collection',
-                    ]
-                ]
-            );
+            ->addPeriodStart('Organization')
+            ->addPeriodEnd('Organization')
+            ->addValue('Organization')
+            ->addBudgetLine('Organization')
+            ->addAddMoreButton('add_budget_line', 'budget_line')
+            ->addRemoveThisButton('remove_recipient_country_budget');
     }
 }

@@ -1,8 +1,8 @@
 <?php namespace App\Core\V201\Forms\Organization;
 
-use Kris\LaravelFormBuilder\Form;
+use App\Core\Form\BaseForm;
 
-class MultipleRecipientCountryBudgetForm extends Form
+class MultipleRecipientCountryBudgetForm extends BaseForm
 {
     public function buildForm()
     {
@@ -11,7 +11,7 @@ class MultipleRecipientCountryBudgetForm extends Form
                 'recipientCountryBudget',
                 'collection',
                 [
-                    'type'    => 'form',
+                    'type' => 'form',
                     'options' => [
                         'class' => 'App\Core\V201\Forms\Organization\RecipientCountryBudgetForm',
                         'label' => false,
@@ -21,15 +21,6 @@ class MultipleRecipientCountryBudgetForm extends Form
                     ]
                 ]
             )
-            ->add(
-                'Add More',
-                'button',
-                [
-                    'attr' => [
-                        'class'           => 'add_to_collection',
-                        'data-collection' => 'recipient_country_budget'
-                    ]
-                ]
-            );
+            ->addAddMoreButton('add_recipient_country_budget', 'recipient_country_budget');
     }
 }

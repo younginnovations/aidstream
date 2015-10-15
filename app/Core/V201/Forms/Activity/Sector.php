@@ -18,7 +18,7 @@ class Sector extends BaseForm
                 'vocabulary',
                 'select',
                 [
-                    'choices' => $this->getCodeList('SectorVocabulary', 'Activity'),
+                    'choices' => $this->addCodeList('SectorVocabulary', 'Activity'),
                     'attr'    => ['class' => 'form-control sector_vocabulary']
                 ]
             )
@@ -26,7 +26,7 @@ class Sector extends BaseForm
                 'sector_select',
                 'select',
                 [
-                    'choices' => $this->getCodeList('Sector', 'Activity'),
+                    'choices' => $this->addCodeList('Sector', 'Activity'),
                     'label'   => 'Sector',
                     'wrapper' => ['class' => 'form-group sector_select']
                 ]
@@ -39,8 +39,8 @@ class Sector extends BaseForm
                     'wrapper' => ['class' => 'form-group hidden sector_text']
                 ]
             )
-            ->getPercentage()
-            ->getNarrative('sector_narrative')
+            ->addPercentage()
+            ->addNarrative('sector_narrative')
             ->addAddMoreButton('add', 'sector_narrative')
             ->addRemoveThisButton('remove');
     }

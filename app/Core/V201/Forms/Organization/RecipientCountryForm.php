@@ -1,52 +1,22 @@
 <?php namespace App\Core\V201\Forms\Organization;
 
-use Kris\LaravelFormBuilder\Form;
+use App\Core\Form\BaseForm;
 
-class RecipientCountryForm extends Form
+class RecipientCountryForm extends BaseForm
 {
     public function buildForm()
     {
-        $json     = file_get_contents(
-            app_path("Core/V201/Codelist/" . config('app.locale') . "/Organization/CountryCodelist.json")
-        );
-        $response = json_decode($json, true);
-        $country  = $response['Country'];
-        $code_arr = [];
-        foreach ($country as $val) {
-            $code_arr[$val['code']] = $val['code'] . ' - ' . $val['name'];
-        }
         $this
             ->add(
                 'code',
                 'select',
                 [
-                    'choices' => $code_arr,
-                    'label'   => 'Code'
+                    'choices' => $this->addCodeList('Country', 'Organization'),
+                    'label' => 'Code'
                 ]
             )
-            ->add(
-                'narrative',
-                'collection',
-                [
-                    'type'    => 'form',
-                    'options' => [
-                        'class' => 'App\Core\V201\Forms\Organization\NarrativeForm',
-                        'label' => false,
-                    ],
-                    'wrapper' => [
-                        'class' => 'collection_form recipient_country_narrative'
-                    ]
-                ]
-            )
-            ->add(
-                'Add More',
-                'button',
-                [
-                    'attr' => [
-                        'class'           => 'add_to_collection',
-                        'data-collection' => 'recipient_country_narrative'
-                    ]
-                ]
-            );
+            ->addNarrative('recipient_country_narrative')
+            ->addAddMoreButton('add_recipient_country_narrative', 'recipient_country_narrative')
+            ->addRemoveThisButton('remove_recipient_country');
     }
 }

@@ -1,10 +1,9 @@
 <?php namespace App\Core\V201\Forms\Organization;
 
-use Kris\LaravelFormBuilder\Form;
+use App\Core\Form\BaseForm;
 
-class MultipleRecipientOrgBudgetForm extends Form
+class MultipleRecipientOrgBudgetForm extends BaseForm
 {
-
     public function buildForm()
     {
         $this
@@ -12,7 +11,7 @@ class MultipleRecipientOrgBudgetForm extends Form
                 'recipientOrganizationBudget',
                 'collection',
                 [
-                    'type'    => 'form',
+                    'type' => 'form',
                     'options' => [
                         'class' => 'App\Core\V201\Forms\Organization\RecipientOrgBudgetForm',
                         'label' => false,
@@ -22,16 +21,6 @@ class MultipleRecipientOrgBudgetForm extends Form
                     ]
                 ]
             )
-            ->add(
-                'Add More',
-                'button',
-                [
-                    'attr' => [
-                        'class'           => 'add_to_collection',
-                        'data-collection' => 'recipient_organization_budget'
-                    ]
-                ]
-            );
+            ->addAddMoreButton('add_recipient_organization_budget', 'recipient_organization_budget');
     }
-
 }

@@ -1,8 +1,8 @@
 <?php namespace App\Core\V201\Forms\Organization;
 
-use Kris\LaravelFormBuilder\Form;
+use App\Core\Form\BaseForm;
 
-class DocumentLinkForm extends Form
+class DocumentLinkForm extends BaseForm
 {
     public function buildForm()
     {
@@ -16,39 +16,16 @@ class DocumentLinkForm extends Form
                         'msword' => 'application/msword - Microsoft Word',
                         'msexel' => 'application/msexel - Microsoft Exel'
                     ],
-                    'label'   => 'Format'
+                    'label' => 'Format'
                 ]
             )
-            ->add(
-                'title',
-                'collection',
-                [
-                    'type'    => 'form',
-                    'options' => [
-                        'class' => 'App\Core\V201\Forms\Organization\NarrativeForm',
-                        'label' => 'Narrative',
-                    ],
-                    'wrapper' => [
-                        'class' => 'collection_form narrative'
-                    ]
-                ]
-            )
-            ->add(
-                'Add More1',
-                'button',
-                [
-                    'label' => 'Add More',
-                    'attr'  => [
-                        'class'           => 'add_to_collection',
-                        'data-collection' => 'narrative'
-                    ]
-                ]
-            )
+            ->addNarrative('narrative')
+            ->addAddMoreButton('add_narrative', 'narrative')
             ->add(
                 'category',
                 'collection',
                 [
-                    'type'    => 'form',
+                    'type' => 'form',
                     'options' => [
                         'class' => 'App\Core\V201\Forms\Organization\CategoryCodeForm',
                         'label' => false,
@@ -58,22 +35,12 @@ class DocumentLinkForm extends Form
                     ]
                 ]
             )
-            ->add(
-                'Add More2',
-                'button',
-                [
-                    'label' => 'Add More',
-                    'attr'  => [
-                        'class'           => 'add_to_collection',
-                        'data-collection' => 'category'
-                    ]
-                ]
-            )
+            ->addAddMoreButton('add_category', 'category')
             ->add(
                 'language',
                 'collection',
                 [
-                    'type'    => 'form',
+                    'type' => 'form',
                     'options' => [
                         'class' => 'App\Core\V201\Forms\Organization\LanguageCodeForm',
                         'label' => false,
@@ -83,22 +50,12 @@ class DocumentLinkForm extends Form
                     ]
                 ]
             )
-            ->add(
-                'Add More3',
-                'button',
-                [
-                    'label' => 'Add More',
-                    'attr'  => [
-                        'class'           => 'add_to_collection',
-                        'data-collection' => 'language'
-                    ]
-                ]
-            )
+            ->addAddMoreButton('add_language', 'language')
             ->add(
                 'recipientCountry',
                 'collection',
                 [
-                    'type'    => 'form',
+                    'type' => 'form',
                     'options' => [
                         'class' => 'App\Core\V201\Forms\Organization\RecipientCountryForm',
                         'label' => false
@@ -108,25 +65,7 @@ class DocumentLinkForm extends Form
                     ]
                 ]
             )
-            ->add(
-                'Add More4',
-                'button',
-                [
-                    'label' => 'Add More',
-                    'attr'  => [
-                        'class'           => 'add_to_collection',
-                        'data-collection' => 'recipient_country'
-                    ]
-                ]
-            )
-            ->add(
-                'Remove this',
-                'button',
-                [
-                    'attr' => [
-                        'class' => 'remove_from_collection',
-                    ]
-                ]
-            );
+            ->addAddMoreButton('add_recipient_country', 'recipient_country')
+            ->addRemoveThisButton('remove_document_link');
     }
 }

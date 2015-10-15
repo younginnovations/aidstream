@@ -18,7 +18,7 @@ class ParticipatingOrganization extends BaseForm
                 'organization_role',
                 'select',
                 [
-                    'choices' => $this->getCodeList('OrganisationRole', 'Activity'),
+                    'choices' => $this->addCodeList('OrganisationRole', 'Activity'),
                     'label'   => 'Organization Role'
                 ]
             )
@@ -27,11 +27,11 @@ class ParticipatingOrganization extends BaseForm
                 'organization_type',
                 'select',
                 [
-                    'choices' => $this->getCodeList('OrganisationType', 'Activity'),
+                    'choices' => $this->addCodeList('OrganisationType', 'Activity'),
                     'label'   => 'Organization Type'
                 ]
             )
-            ->getNarrative('narrative', 'Organization Name')
+            ->addNarrative('narrative', 'Organization Name')
             ->addAddMoreButton('add', 'narrative')
             ->addRemoveThisButton('remove');
     }

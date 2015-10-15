@@ -21,7 +21,7 @@ class Narrative extends BaseForm
                 'language',
                 'select',
                 [
-                    'choices' => $this->getCodeList('Language', 'Activity'),
+                    'choices' => $this->addCodeList('Language', 'Activity'),
                     'label'   => 'Language'
                 ]
             )

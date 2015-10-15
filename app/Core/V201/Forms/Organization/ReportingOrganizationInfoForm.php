@@ -1,8 +1,8 @@
 <?php namespace App\Core\V201\Forms\Organization;
 
-use Kris\LaravelFormBuilder\Form;
+use App\Core\Form\BaseForm;
 
-class ReportingOrganizationInfoForm extends Form
+class ReportingOrganizationInfoForm extends Baseform
 {
     protected $showFieldErrors = true;
 
@@ -14,32 +14,10 @@ class ReportingOrganizationInfoForm extends Form
                 'reporting_organization_type',
                 'select',
                 [
-                    'choices' => ['10' => 'Government', '15' => 'Other Public Sector']
+                    'choices' => $this->addCodeList('OrganizationType', 'Organization')
                 ]
             )
-            ->add(
-                'narrative',
-                'collection',
-                [
-                    'type'    => 'form',
-                    'options' => [
-                        'class' => 'App\Core\V201\Forms\Organization\NarrativeForm',
-                        'label' => false,
-                    ],
-                    'wrapper' => [
-                        'class' => 'collection_form narrative'
-                    ]
-                ]
-            )
-            ->add(
-                'Add More',
-                'button',
-                [
-                    'attr' => [
-                        'class'           => 'add_to_collection',
-                        'data-collection' => 'narrative'
-                    ]
-                ]
-            );
+            ->addNarrative('narrative')
+            ->addAddMoreButton('add_narrative', 'narrative');
     }
 }

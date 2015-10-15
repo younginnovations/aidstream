@@ -2,7 +2,7 @@
 
 use Kris\LaravelFormBuilder\Form;
 
-class PeriodEndForm extends Form
+class PeriodEnd extends Form
 {
     public function buildForm()
     {

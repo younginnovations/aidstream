@@ -1,8 +1,8 @@
 <?php namespace App\Core\V201\Forms\Organization;
 
-use Kris\LaravelFormBuilder\Form;
+use App\Core\Form\BaseForm;
 
-class NameForm extends Form
+class NameForm extends BaseForm
 {
     protected $showFieldErrors = true;
 
@@ -13,7 +13,7 @@ class NameForm extends Form
                 'name',
                 'collection',
                 [
-                    'type'    => 'form',
+                    'type' => 'form',
                     'options' => [
                         'class' => 'App\Core\V201\Forms\Organization\NarrativeForm',
                         'label' => false,
@@ -23,15 +23,6 @@ class NameForm extends Form
                     ]
                 ]
             )
-            ->add(
-                'Add More',
-                'button',
-                [
-                    'attr' => [
-                        'class'           => 'add_to_collection',
-                        'data-collection' => 'narrative'
-                    ]
-                ]
-            );
+            ->addAddMoreButton('add_name', 'narrative');
     }
 }
