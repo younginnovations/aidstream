@@ -16,8 +16,6 @@ class ActivityScope
      */
     function __construct(Version $version)
     {
-        $this->req = $version->getActivityElement()->getActivityScopeRequest();
-
-        return $this->req;
+        return $version->getActivityElement()->getActivityScopeRequest();
     }
 }
