@@ -1,10 +1,9 @@
-#wercker file with Hipchat
-box: wercker/php
+box: 
+  id: geshan/laravel-alpine
+  cmd: /bin/sh
 
 build:
   steps:
-    - install-packages:
-        packages: gawk git wget
     - script:
         name: cache composer dependencies
         code: export COMPOSER_CACHE_DIR="$WERCKER_CACHE_DIR/composer" && mkdir -p $COMPOSER_CACHE_DIR
@@ -18,6 +17,9 @@ build:
     - script:
         name: copy vendor to cache
         code: cp -Rf vendor $COMPOSER_CACHE_DIR
+    - script:
+        name: fix sym links
+        code: ln -sf ../phpunit/phpunit/phpunit vendor/bin/phpunit && ln -sf ../brianium/paratest/bin/paratest vendor/bin/paratest
     - script:
         name: PHPUnit Unit tests
         code: ./vendor/bin/phpunit tests/app
