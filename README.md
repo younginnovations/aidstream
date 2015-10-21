@@ -4,7 +4,7 @@
 
 User friendly interfaces within the platform enhance an effortless entry, update and publish of the aid data in the IATI format for organisations that want to publish IATI data. The system hides all the complexities and technicalities of the xml. With AidStream, the necessity to understand the details of the IATI standard becomes lesser. All that needs to be done is to register into the system, enter the data and publish it. The data will be easily published to the IATI registry . In addition, AidStream guarantees high security, proper maintenance and easy accessability of the aid data.
 
-[![wercker status](https://app.wercker.com/status/c1afa54ce0c0a4972f17b3b4c4f72e73/m/master "wercker status")](https://app.wercker.com/project/bykey/c1afa54ce0c0a4972f17b3b4c4f72e73)
+[![wercker status](https://app.wercker.com/status/c1afa54ce0c0a4972f17b3b4c4f72e73/m/master "wercker status")](https://app.wercker.com/project/bykey/c1afa54ce0c0a4972f17b3b4c4f72e73) 
 
 ## Install
 
