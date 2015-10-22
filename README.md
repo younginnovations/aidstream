@@ -94,7 +94,8 @@ To run the tests faster in parallel run it with paraunit like below:
 ## Continuous Integration
 
 On each push the hookah test will run on [Wercker](https://app.wercker.com/#applications/560f9c92d77c55dc7303a957) CI. It
-also sends notification to hipchat on [Build-Bot](https://yipl.hipchat.com/chat/room/1267700) room.
+also sends notification to hipchat on [Build-Bot](https://yipl.hipchat.com/chat/room/1267700) room. Tests run on Wercker's 
+Docker setup.
 
 ## Integration with Gitomate
 
