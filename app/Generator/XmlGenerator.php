@@ -35,7 +35,6 @@ class XmlGenerator {
         header( 'Content-Type: text/xml' );
         header( 'Content-Disposition: attachment;filename='.$filename.'.xml');
         echo $xml->saveXML();
-        exit;
     }
 
     /**

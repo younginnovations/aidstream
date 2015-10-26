@@ -1,5 +1,10 @@
 <?php
 
+$language = Cookie::get('language');
+if (isset($language)) {
+    App::setLocale($language);
+}
+
 $router->get('/', 'HomeController@index');
 $router->get('home', 'HomeController@index');
 $router->resource('settings', 'Complete\SettingsController');

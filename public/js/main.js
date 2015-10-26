@@ -8,8 +8,9 @@ $(document).ready(function () {
             function () {
                 var value = arguments[0];
                 var length = value.search('[__NAME__]');
-                for (var i = 0; i < length; i++)
+                for (var i = 0; i < length; i++) {
                     value = value.replace('[__NAME__]', '[__NAME' + i + '__]');
+                }
                 return value;
             }
         );
@@ -23,7 +24,7 @@ $(document).ready(function () {
         var parents = $(this).parents('.collection_form');
         var level = parents.length;
         var indexString = $(' > .form-group:last-child .form-control', container).eq(0).attr('name');
-        if (indexString == undefined) {
+        if (indexString === undefined) {
             indexString = '';
         }
         var matchedIndexes = indexString.match(/[\d]+/g);
@@ -35,7 +36,7 @@ $(document).ready(function () {
             });
             newIndex = parentIndexes[level] + 1;
         }
-        var protoHtml = level == 0 ? $('.collection-container') : $('.' + collection, '.collection-container');
+        var protoHtml = level === 0 ? $('.collection-container') : $('.' + collection, '.collection-container');
         protoHtml.children('label').remove();
         var proto = protoHtml.html();
         for (var i = 0; i < level; i++) {
@@ -54,10 +55,10 @@ $(document).ready(function () {
         $(this).parent('.form-group').remove();
     });
 
-    var lang = $.cookie('lang');
-    $('#def_lang').val(lang == undefined ? 'en' : lang);
+    var language = $.cookie('language');
+    $('#def_lang').val(language === undefined ? 'en' : language);
     $('#def_lang').change(function () {
-        $.cookie('lang', $(this).val(), {path: '/'});
+        $.cookie('language', $(this).val(), {path: '/'});
         window.location.reload();
     });
 
@@ -89,25 +90,23 @@ $(document).ready(function () {
         var formId = $(this).parents('form').attr('id');
 
         if ($('#popDialog').length == 0) {
-            $('body').append('\
-                <div class="modal" id="popDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="z-index: 9999">\
-                    <div class="modal-dialog">\
-                        <div class="modal-content">\
-                            <div class="modal-header">\
-                                <h4 class="modal-title" id="myModalLabel"></h4>\
-                            </div>\
-                            <div class="modal-body">\
-                            </div>\
-                            <div class="modal-footer">\
-                            </div>\
-                        </div>\
-                    </div>\
-                </div>');
+            $('body').append('' +
+            '<div class="modal" id="popDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="z-index: 9999">' +
+                '<div class="modal-dialog">' +
+                    '<div class="modal-content">' +
+                        '<div class="modal-header">' +
+                            '<h4 class="modal-title" id="myModalLabel"></h4>' +
+                        '</div>' +
+                        '<div class="modal-body"></div>' +
+                        '<div class="modal-footer"></div>' +
+                    '</div>' +
+                '</div>' +
+            '</div>');
         }
 
         var popElem = $('#popDialog');
 
-        if (title == undefined) {
+        if (title === undefined) {
             $('.modal-header', popElem).addClass('hidden').children('.modal-title').html('');
         }
         else {
@@ -116,10 +115,10 @@ $(document).ready(function () {
 
         $('.modal-body', popElem).html(message);
 
-        var buttons = '\
-            <button class="btn btn-primary btn_yes" type="button">Yes</button>\
-            <button class="btn btn-default" type="button"  data-dismiss="modal">No</button>\
-        ';
+        var buttons = '' +
+            '<button class="btn btn-primary btn_yes" type="button">Yes</button>' +
+            '<button class="btn btn-default" type="button"  data-dismiss="modal">No</button>';
+
         $('.modal-footer', popElem).html(buttons);
 
         $('body').undelegate('.btn_yes', 'click').delegate('.btn_yes', 'click', function () {
