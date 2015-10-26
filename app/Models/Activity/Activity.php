@@ -83,4 +83,13 @@ class Activity extends Model
 
         return $identifier . '(' . $title . ')';
     }
+
+    /**
+     * activity belongs to organization
+     */
+    protected function organization()
+    {
+        return $this->belongsTo('App\Models\Organization\Organization', 'organization_id');
+    }
+
 }

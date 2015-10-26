@@ -1,0 +1,160 @@
+<?php namespace App\SuperAdmin\Repositories;
+
+use App\Models\Organization\Organization;
+use App\Models\Settings;
+use App\SuperAdmin\Repositories\SuperAdminInterfaces\SuperAdmin as SuperAdminInterface;
+use App\User;
+use Illuminate\Contracts\Logging\Log as Logger;
+use Psr\Log\LoggerInterface;
+use Illuminate\Database\DatabaseManager;
+
+/**
+ * Class SuperAdmin
+ * @package App\SuperAdmin\Repositories
+ */
+class SuperAdmin implements SuperAdminInterface
+{
+    /**
+     * @var Organization
+     */
+    protected $organization;
+    /**
+     * @var DatabaseManager
+     */
+    protected $database;
+    /**
+     * @var Logger
+     */
+    protected $logger;
+    /**
+     * @var Settings
+     */
+    protected $settings;
+    /**
+     * @var User
+     */
+    protected $user;
+    /**
+     * @var LoggerInterface
+     */
+    protected $loggerInterface;
+
+    /**
+     * @param User            $user
+     * @param Settings        $settings
+     * @param Organization    $organization
+     * @param DatabaseManager $database
+     * @param Logger          $logger
+     * @param LoggerInterface $loggerInterface
+     */
+    public function __construct(
+        User $user,
+        Settings $settings,
+        Organization $organization,
+        DatabaseManager $database,
+        Logger $logger,
+        LoggerInterface $loggerInterface
+    ) {
+        $this->organization    = $organization;
+        $this->database        = $database;
+        $this->logger          = $logger;
+        $this->settings        = $settings;
+        $this->user            = $user;
+        $this->loggerInterface = $loggerInterface;
+    }
+
+    /**
+     * get all organization data with their users and activities
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     */
+    public function getOrganizations()
+    {
+        return $this->organization->with(['users', 'activities'])->orderBy('name', 'asc')->get();
+    }
+
+    /**
+     * get organization by its id
+     * @param $id
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     */
+    public function getOrganizationById($id)
+    {
+        return $this->organization->findOrFail($id);
+    }
+
+    /**
+     * get organization with user information
+     * @param $orgId
+     * @return array
+     */
+    public function getOrganizationUserById($orgId)
+    {
+        return $organization = $this->organization->with('users')->findOrFail($orgId)->toArray();
+    }
+
+    /**
+     * add or update organization by superadmin
+     * @param null  $orgId
+     * @param array $orgDetails
+     * @return mixed|void
+     */
+    public function saveOrganization(array $orgDetails, $orgId = null)
+    {
+        try {
+            $this->database->beginTransaction();
+
+            $orgData      = [
+                'name'            => $orgDetails['organization_information'][0]['name'],
+                'address'         => $orgDetails['organization_information'][0]['address'],
+                'user_identifier' => $orgDetails['organization_information'][0]['user_identifier'],
+            ];
+            $organization = $this->organization->firstOrNew(['id' => $orgId]);
+            $organization->fill($orgData)->save();
+
+            $adminData = [
+                'first_name' => $orgDetails['admin_information'][0]['first_name'],
+                'last_name'  => $orgDetails['admin_information'][0]['last_name'],
+                'username'   => $orgDetails['admin_information'][0]['username'],
+                'email'      => $orgDetails['admin_information'][0]['email'],
+                'password'   => bcrypt($orgDetails['admin_information'][0]['password']),
+                'role_id'    => 1,
+                'org_id'     => $organization->id
+            ];
+            $user      = $this->user->firstOrNew(['org_id' => $organization->id]);
+            $user->fill($adminData)->save();
+
+            $settingsData = [
+                'default_field_values' => $orgDetails['default_field_values'],
+                'default_field_groups' => $orgDetails['default_field_groups'],
+                'organization_id'      => $organization->id
+            ];
+            $settings     = $this->settings->firstOrNew(['organization_id' => $organization->id]);
+            $settings->fill($settingsData)->save();
+
+            $this->database->commit();
+
+            $this->loggerInterface->info(($orgId) ? 'Organization information Updated' : 'Organization added');
+            $this->logger->activity(
+                ($orgId) ? "organization_updated" : "organization_added",
+                [
+                    'user_id'         => $user->id,
+                    'organization_id' => $orgId
+                ]
+            );
+        } catch (Exception $exception) {
+            $this->database->rollback();
+
+            $this->loggerInterface->error(
+                sprintf(
+                    'organization information could no be %s due to %s',
+                    ($orgId) ? 'updated' : 'added',
+                    $exception->getMessage()
+                ),
+                [
+                    'settings' => $orgDetails,
+                    'trace'    => $exception->getTraceAsString()
+                ]
+            );
+        }
+    }
+}

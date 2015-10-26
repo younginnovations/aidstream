@@ -11,7 +11,7 @@
                     </div>
                 </div>
             </div>
-            @include('includes.side_bar_menu')
+            @include('includes.superAdmin.side_bar_menu')
         </div>
     </div>
 @endsection

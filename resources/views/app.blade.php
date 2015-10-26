@@ -32,12 +32,17 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Aidstream</a>
+            <a class="navbar-brand"
+               href="#">{{Auth::user() ? "Aidstream(" . Session::get('version') . ")" : "Aidstream"}}</a>
         </div>
 
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li><a href="{{ url('/') }}">@lang('trans.home')</a></li>
+                <li>
+                    @if(Auth::user())
+                        <a href="{{ Auth::user()->role_id == 3 ? url('admin/dashboard') : url('/')  }}">@lang('trans.home')</a>
+                    @endif
+                </li>
                 <li>
                     <form id="form_def_lang" method="post">
                         <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
@@ -55,7 +60,11 @@
                     <li><a href="{{ url('/auth/login') }}">@lang('trans.login')</a></li>
                     <li><a href="{{ url('/auth/register') }}">@lang('trans.register')</a></li>
                 @else
-                    {{--<li><a href="{{ URL::to('organization/create') }}">Create organization</a></li>--}}
+                    <li>
+                        @if(Session::get('role_id') == 3 && Session::get('org_id'))
+                            <span><a href="{{ route('admin.switch-back') }}" class="pull-left">Switch Back</a> You are masquerading as </span>
+                        @endif
+                    </li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
                            aria-expanded="false">{{ Auth::user()->first_name . ' ' . Auth::user()->last_name }} <span

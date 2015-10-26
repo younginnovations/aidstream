@@ -7,6 +7,7 @@ if (isset($language)) {
 
 $router->get('/', 'HomeController@index');
 $router->get('home', 'HomeController@index');
+$router->get('admin/dashboard', 'HomeController@adminDashboard');
 $router->resource('settings', 'Complete\SettingsController');
 
 $router->get(

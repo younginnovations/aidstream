@@ -86,9 +86,7 @@ class CountryBudgetItemManagerTest extends AidStreamTestCase
 
     public function testItShouldGetCountryBudgetItemDataWithCertainId()
     {
-        $this->countryBudgetItemRepo->shouldReceive('getCountryBudgetItemData')->once()->with(1)->andReturn(
-            $this->activity
-        );
+        $this->countryBudgetItemRepo->shouldReceive('getCountryBudgetItemData')->once()->with(1)->andReturn($this->activity);
         $this->assertInstanceOf(
             'App\Models\Activity\Activity',
             $this->countryBudgetItemManager->getCountryBudgetItemData(1)

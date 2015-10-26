@@ -15,11 +15,11 @@ class CreateSettingsTable extends Migration {
 		Schema::create('settings', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->string('publishing_type');
-			$table->json('registry_info');
+			$table->string('publishing_type')->default('segmented');
+			$table->json('registry_info')->nullable();
 			$table->json('default_field_values');
 			$table->json('default_field_groups');
-			$table->string('version', 16);
+			$table->string('version', 16)->default('2.01');
 			$table->integer('organization_id');
 			$table->timestamps();
 

@@ -18,4 +18,6 @@ return [
     'activity.step_three_completed'      => 'Activity step two":activityStatus" and ":activityDate" updated for ":organization - :organization_id"',
     'country_budget_items_updated'       => 'Activity country budget items ":countryBudgetItems" updated for ":organization - :organization_id"',
     'location_updated'                   => 'Activity Location ":location" updated for ":organization - :organization_id"',
+    'organization_added'                 => 'New organization added with organization id ":organization_id" and user id ":user_id"',
+    'organization_updated'               => 'Organization updated with organization id ":organization_id" and user id ":user_id"',
 ];
