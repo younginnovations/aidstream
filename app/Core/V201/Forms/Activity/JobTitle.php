@@ -1,12 +1,12 @@
 <?php namespace App\Core\V201\Forms\Activity;
 
-use Kris\LaravelFormBuilder\Form;
+use App\Core\Form\BaseForm;
 
 /**
  * Class JobTitle
  * @package App\Core\V201\Forms\Activity
  */
-class JobTitle extends Form
+class JobTitle extends BaseForm
 {
     /**
      * builds the contact info Job Title form
@@ -14,30 +14,7 @@ class JobTitle extends Form
     public function buildForm()
     {
         $this
-            ->add(
-                'narrative',
-                'collection',
-                [
-                    'type'      => 'form',
-                    'prototype' => true,
-                    'options'   => [
-                        'class' => 'App\Core\V201\Forms\Activity\Narrative',
-                        'label' => false,
-                    ],
-                    'wrapper'   => [
-                        'class' => 'collection_form jobTitleNarrative'
-                    ]
-                ]
-            )
-            ->add(
-                'Add More',
-                'button',
-                [
-                    'attr' => [
-                        'class'           => 'add_to_collection',
-                        'data-collection' => 'jobTitleNarrative'
-                    ]
-                ]
-            );
+            ->addNarrative('jobTitleNarrative')
+            ->addAddMoreButton('add_jobTitleNarrative', 'jobTitleNarrative');
     }
 }

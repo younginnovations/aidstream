@@ -1,12 +1,12 @@
 <?php namespace App\Core\V201\Forms\Activity;
 
-use Kris\LaravelFormBuilder\Form;
+use App\Core\Form\BaseForm;
 
 /**
  * Class Website
  * @package App\Core\V201\Forms\Activity
  */
-class Website extends Form
+class Website extends BaseForm
 {
     /**
      * builds the contact info Website form
@@ -15,14 +15,6 @@ class Website extends Form
     {
         $this
             ->add('website', 'text')
-            ->add(
-                'Remove this',
-                'button',
-                [
-                    'attr' => [
-                        'class' => 'remove_from_collection',
-                    ]
-                ]
-            );
+            ->addRemoveThisButton('remove_website');
     }
 }

@@ -7,20 +7,7 @@ class RecipientCountryBudgetForm extends BaseForm
     public function buildForm()
     {
         $this
-            ->add(
-                'recipientCountry',
-                'collection',
-                [
-                    'type' => 'form',
-                    'options' => [
-                        'class' => 'App\Core\V201\Forms\Organization\RecipientCountryForm',
-                        'label' => false
-                    ],
-                    'wrapper' => [
-                        'class' => 'collection_form recipient_country'
-                    ]
-                ]
-            )
+            ->addCollection('recipientCountry', 'Organization\RecipientCountryForm', 'recipient_country')
             ->addPeriodStart('Organization')
             ->addPeriodEnd('Organization')
             ->addValue('Organization')

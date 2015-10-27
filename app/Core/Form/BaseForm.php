@@ -118,7 +118,7 @@ class BaseForm extends Form
             [
                 'type' => 'form',
                 'options' => [
-                    'class' => sprintf("App\Core\V201\Forms\%s\PeriodStart", $folder),
+                    'class' => sprintf('App\Core\V201\Forms\%s\PeriodStart', $folder),
                     'label' => false,
                 ]
             ]
@@ -133,7 +133,7 @@ class BaseForm extends Form
             [
                 'type' => 'form',
                 'options' => [
-                    'class' => sprintf("App\Core\V201\Forms\%s\PeriodEnd", $folder),
+                    'class' => sprintf('App\Core\V201\Forms\%s\PeriodEnd', $folder),
                     'label' => false,
                 ]
             ]
@@ -148,7 +148,7 @@ class BaseForm extends Form
             [
                 'type' => 'form',
                 'options' => [
-                    'class' => sprintf("App\Core\V201\Forms\%s\ValueForm", $folder)
+                    'class' => sprintf('App\Core\V201\Forms\%s\ValueForm', $folder)
                 ]
             ]
         );
@@ -162,11 +162,29 @@ class BaseForm extends Form
             [
                 'type' => 'form',
                 'options' => [
-                    'class' => sprintf("App\Core\V201\Forms\%s\BudgetLineForm", $folder),
+                    'class' => sprintf('App\Core\V201\Forms\%s\BudgetLineForm', $folder),
                     'label' => false,
                 ],
                 'wrapper' => [
                     'class' => 'collection_form budget_line'
+                ]
+            ]
+        );
+    }
+
+    public function addCollection($name, $file, $class = "")
+    {
+        return $this->add(
+            $name,
+            'collection',
+            [
+                'type' => 'form',
+                'options' => [
+                    'class' => sprintf('App\Core\%s\Forms\%s', session()->get('version'), $file),
+                    'label' => false,
+                ],
+                'wrapper' => [
+                    'class' => sprintf('collection %s', $class)
                 ]
             ]
         );

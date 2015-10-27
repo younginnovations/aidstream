@@ -1,12 +1,12 @@
 <?php namespace App\Core\V201\Forms\Activity;
 
-use Kris\LaravelFormBuilder\Form;
+use App\Core\Form\BaseForm;
 
 /**
  * Class MultipleActivityDate
  * @package App\Core\V201\Forms\Activity
  */
-class MultipleActivityDate extends Form
+class MultipleActivityDate extends BaseForm
 {
     /**
      * builds activity date form
@@ -14,30 +14,7 @@ class MultipleActivityDate extends Form
     public function buildForm()
     {
         $this
-            ->add(
-                'activity_date',
-                'collection',
-                [
-                    'type'      => 'form',
-                    'prototype' => true,
-                    'options'   => [
-                        'class' => 'App\Core\V201\Forms\Activity\ActivityDate',
-                        'label' => false,
-                    ],
-                    'wrapper'   => [
-                        'class' => 'collection_form Activity_date'
-                    ]
-                ]
-            )
-            ->add(
-                'Add More',
-                'button',
-                [
-                    'attr' => [
-                        'class'           => 'add_to_collection',
-                        'data-collection' => 'Activity_date'
-                    ]
-                ]
-            );
+            ->addCollection('activity_date', 'Activity\ActivityDate', 'Activity_date')
+            ->addAddMoreButton('add_Activity_date', 'Activity_date');
     }
 }

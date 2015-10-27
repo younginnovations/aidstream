@@ -1,12 +1,12 @@
 <?php namespace App\Core\V201\Forms\Activity;
 
-use Kris\LaravelFormBuilder\Form;
+use App\Core\Form\BaseForm;
 
 /**
  * Class Department
  * @package App\Core\V201\Forms\Activity
  */
-class Department extends Form
+class Department extends BaseForm
 {
     /**
      * builds the contact info department form
@@ -14,30 +14,7 @@ class Department extends Form
     public function buildForm()
     {
         $this
-            ->add(
-                'narrative',
-                'collection',
-                [
-                    'type'      => 'form',
-                    'prototype' => true,
-                    'options'   => [
-                        'class' => 'App\Core\V201\Forms\Activity\Narrative',
-                        'label' => false,
-                    ],
-                    'wrapper'   => [
-                        'class' => 'collection_form departmentNarrative'
-                    ]
-                ]
-            )
-            ->add(
-                'Add More',
-                'button',
-                [
-                    'attr' => [
-                        'class'           => 'add_to_collection',
-                        'data-collection' => 'departmentNarrative'
-                    ]
-                ]
-            );
+            ->addNarrative('departmentNarrative')
+            ->addAddMoreButton('add_departmentNarrative', 'departmentNarrative');
     }
 }
