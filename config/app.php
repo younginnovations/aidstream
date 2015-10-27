@@ -52,7 +52,7 @@ return [
 	|
 	*/
 
-	'locale' => isset($_COOKIE['lang']) ? $_COOKIE['lang'] : 'en',
+	'locale' => 'en',
 	'locales' => ['en' => 'English', 'fr' => 'French'],
 
 	/*
