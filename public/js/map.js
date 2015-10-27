@@ -1,8 +1,10 @@
+/* exported initMap */
+/* globals L */
+
 function initMap(elem, latlng) {
+    var center = [52.48626, -1.89042];
     if (latlng) {
-        var center = latlng;
-    } else {
-        var center = [52.48626, -1.89042];
+        center = latlng;
     }
     var map = new L.Map(elem, {
         center: center,

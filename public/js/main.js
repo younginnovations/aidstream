@@ -89,7 +89,7 @@ $(document).ready(function () {
         var message = $(this).attr('data-message');
         var formId = $(this).parents('form').attr('id');
 
-        if ($('#popDialog').length == 0) {
+        if ($('#popDialog').length === 0) {
             $('body').append('' +
             '<div class="modal" id="popDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="z-index: 9999">' +
                 '<div class="modal-dialog">' +
