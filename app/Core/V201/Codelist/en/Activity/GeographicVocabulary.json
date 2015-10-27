@@ -1,0 +1,40 @@
+{
+  "date-last-modified": "2015-08-26T16:08:18.401134+00:00",
+  "version": "",
+  "name": "GeographicVocabulary",
+  "xml:lang": "en",
+  "GeographicVocabulary": [
+    {
+      "code": "A1",
+      "name": "Global Admininistrative Unit Layers",
+      "language": "en"
+    },
+    {
+      "code": "A2",
+      "name": "UN Second Administrative Level Boundary Project",
+      "language": "en",
+      "description": "Note: the unsalb.org website is no longer accessible, and public access to the boundaries resources has been removed http://www.ungiwg.org/content/united-nations-international-and-administrative-boundaries-resources"
+    },
+    {
+      "code": "A3",
+      "name": "Global Administrative Areas",
+      "language": "en"
+    },
+    {
+      "code": "A4",
+      "name": "ISO Country (3166-1 alpha-2)",
+      "language": "en"
+    },
+    {
+      "code": "G1",
+      "name": "Geonames",
+      "language": "en"
+    },
+    {
+      "code": "G2",
+      "name": "OpenStreetMap",
+      "language": "en",
+      "description": "Note: the code should be formed by prefixing the relevant OpenStreetMap ID with node/ way/ or relation/ as appropriate, e.g. node/1234567"
+    }
+  ]
+}

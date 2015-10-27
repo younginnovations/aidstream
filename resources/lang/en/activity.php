@@ -14,4 +14,5 @@ return [
     'recipient_country_updated'          => 'Activity country region":recipientCountry" updated for ":organization - :organization_id"',
     'recipient_region_updated'           => 'Activity recipient region":recipientRegion" updated for ":organization - :organization_id"',
     'country_budget_items_updated'       => 'Activity country budget items ":countryBudgetItems" updated for ":organization - :organization_id"',
+    'location_updated'                   => 'Activity Location ":location" updated for ":organization - :organization_id"',
 ];

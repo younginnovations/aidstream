@@ -22,8 +22,8 @@ class BaseForm extends Form
             'button',
             [
                 'label' => 'Add More',
-                'attr' => [
-                    'class' => 'add_to_collection',
+                'attr'  => [
+                    'class'           => 'add_to_collection',
                     'data-collection' => $formClass
                 ]
             ]
@@ -42,7 +42,7 @@ class BaseForm extends Form
             'button',
             [
                 'label' => 'Remove This',
-                'attr' => [
+                'attr'  => [
                     'class' => 'remove_from_collection',
                 ]
             ]
@@ -54,16 +54,16 @@ class BaseForm extends Form
      * @param $codeListName
      * @return array
      */
-    public function addCodeList($codeListName, $codeListType)
+    public function getCodeList($codeListName, $codeListType)
     {
         $codeListContent = file_get_contents(
             app_path(
                 "Core/" . session()->get('version') . "/Codelist/" . config('app.locale') . "/$codeListType/$codeListName.json"
             )
         );
-        $codeListData = json_decode($codeListContent, true);
-        $codeList = $codeListData[$codeListName];
-        $data = [];
+        $codeListData    = json_decode($codeListContent, true);
+        $codeList        = $codeListData[$codeListName];
+        $data            = [];
 
         foreach ($codeList as $list) {
             $data[$list['code']] = $list['code'] . ' - ' . $list['name'];
@@ -76,7 +76,7 @@ class BaseForm extends Form
      * get percentage form
      * @return $this
      */
-    public function addPercentage()
+    public function getPercentage()
     {
         return $this->add(
             'percentage',
@@ -90,101 +90,21 @@ class BaseForm extends Form
      * @param string $label
      * @return $this
      */
-    public function addNarrative($className, $label = 'Text')
+    public function getNarrative($className, $label = 'text')
     {
         return $this->add(
             'narrative',
             'collection',
             [
-                'type' => 'form',
+                'type'      => 'form',
                 'prototype' => true,
-                'options' => [
+                'options'   => [
                     'class' => 'App\Core\V201\Forms\Activity\Narrative',
                     'label' => false,
                     'data' => ['label' => $label]
                 ],
-                'wrapper' => [
+                'wrapper'   => [
                     'class' => "collection_form $className"
-                ]
-            ]
-        );
-    }
-
-    public function addPeriodStart($folder)
-    {
-        return $this->add(
-            'period_start',
-            'collection',
-            [
-                'type' => 'form',
-                'options' => [
-                    'class' => sprintf('App\Core\V201\Forms\%s\PeriodStart', $folder),
-                    'label' => false,
-                ]
-            ]
-        );
-    }
-
-    public function addPeriodEnd($folder)
-    {
-        return $this->add(
-            'periodEnd',
-            'collection',
-            [
-                'type' => 'form',
-                'options' => [
-                    'class' => sprintf('App\Core\V201\Forms\%s\PeriodEnd', $folder),
-                    'label' => false,
-                ]
-            ]
-        );
-    }
-
-    public function addValue($folder)
-    {
-        return $this->add(
-            'value',
-            'collection',
-            [
-                'type' => 'form',
-                'options' => [
-                    'class' => sprintf('App\Core\V201\Forms\%s\ValueForm', $folder)
-                ]
-            ]
-        );
-    }
-
-    public function addBudgetLine($folder)
-    {
-        return $this->add(
-            'budgetLine',
-            'collection',
-            [
-                'type' => 'form',
-                'options' => [
-                    'class' => sprintf('App\Core\V201\Forms\%s\BudgetLineForm', $folder),
-                    'label' => false,
-                ],
-                'wrapper' => [
-                    'class' => 'collection_form budget_line'
-                ]
-            ]
-        );
-    }
-
-    public function addCollection($name, $file, $class = "")
-    {
-        return $this->add(
-            $name,
-            'collection',
-            [
-                'type' => 'form',
-                'options' => [
-                    'class' => sprintf('App\Core\%s\Forms\%s', session()->get('version'), $file),
-                    'label' => false,
-                ],
-                'wrapper' => [
-                    'class' => sprintf('collection %s', $class)
                 ]
             ]
         );

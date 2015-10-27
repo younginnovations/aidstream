@@ -1,0 +1,20 @@
+{
+  "date-last-modified": "2015-08-26T16:08:18.209287+00:00",
+  "version": "",
+  "name": "GeographicExactness",
+  "xml:lang": "en",
+  "GeographicExactness": [
+    {
+      "code": "1",
+      "name": "Exact",
+      "language": "en",
+      "description": "The designated geographic location is exact"
+    },
+    {
+      "code": "2",
+      "name": "Approximate",
+      "language": "en",
+      "description": "The designated geographic location is approximate"
+    }
+  ]
+}

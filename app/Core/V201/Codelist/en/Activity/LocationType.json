@@ -1,0 +1,5464 @@
+{
+  "date-last-modified": "2015-08-26T16:08:17.501440+00:00",
+  "version": "",
+  "name": "LocationType",
+  "xml:lang": "en",
+  "LocationType": [
+    {
+      "category": "S",
+      "code": "AIRQ",
+      "name": "abandoned airfield",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "abandoned airfield"
+    },
+    {
+      "category": "S",
+      "code": "CMPQ",
+      "name": "abandoned camp",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "abandoned camp"
+    },
+    {
+      "category": "H",
+      "code": "CNLQ",
+      "name": "abandoned canal",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "abandoned canal"
+    },
+    {
+      "category": "S",
+      "code": "MFGQ",
+      "name": "abandoned factory",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "abandoned factory"
+    },
+    {
+      "category": "S",
+      "code": "FRMQ",
+      "name": "abandoned farm",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "abandoned farm"
+    },
+    {
+      "category": "S",
+      "code": "MNQ",
+      "name": "abandoned mine",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "abandoned mine"
+    },
+    {
+      "category": "S",
+      "code": "MSSNQ",
+      "name": "abandoned mission",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "abandoned mission"
+    },
+    {
+      "category": "S",
+      "code": "OILQ",
+      "name": "abandoned oil well",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "abandoned oil well"
+    },
+    {
+      "category": "S",
+      "code": "PPQ",
+      "name": "abandoned police post",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "abandoned police post"
+    },
+    {
+      "category": "P",
+      "code": "PPLQ",
+      "name": "abandoned populated place",
+      "language": "en",
+      "category-name": "Populated Place",
+      "description": "abandoned populated place"
+    },
+    {
+      "category": "S",
+      "code": "PRNQ",
+      "name": "abandoned prison",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "abandoned prison"
+    },
+    {
+      "category": "R",
+      "code": "RRQ",
+      "name": "abandoned railroad",
+      "language": "en",
+      "category-name": "Streets/Highways/Roads",
+      "description": "abandoned railroad"
+    },
+    {
+      "category": "S",
+      "code": "RSTNQ",
+      "name": "abandoned railroad station",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "abandoned railroad station"
+    },
+    {
+      "category": "S",
+      "code": "RSTPQ",
+      "name": "abandoned railroad stop",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "abandoned railroad stop"
+    },
+    {
+      "category": "H",
+      "code": "STMQ",
+      "name": "abandoned watercourse",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "a former stream or distributary no longer carrying flowing water, but still evident due to lakes, wetland, topographic or vegetation patterns"
+    },
+    {
+      "category": "H",
+      "code": "WLLQ",
+      "name": "abandoned well",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "abandoned well"
+    },
+    {
+      "category": "A",
+      "code": "ADMD",
+      "name": "administrative division",
+      "language": "en",
+      "category-name": "Administrative Region",
+      "description": "an administrative division of a political entity, undifferentiated as to administrative level"
+    },
+    {
+      "category": "S",
+      "code": "ADMF",
+      "name": "administrative facility",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a government building"
+    },
+    {
+      "category": "L",
+      "code": "AGRC",
+      "name": "agricultural colony",
+      "language": "en",
+      "category-name": "Area",
+      "description": "a tract of land set aside for agricultural settlement"
+    },
+    {
+      "category": "S",
+      "code": "AGRF",
+      "name": "agricultural facility",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a building and/or tract of land used for improving agriculture"
+    },
+    {
+      "category": "L",
+      "code": "RESA",
+      "name": "agricultural reserve",
+      "language": "en",
+      "category-name": "Area",
+      "description": "a tract of land reserved for agricultural reclamation and/or development"
+    },
+    {
+      "category": "S",
+      "code": "SCHA",
+      "name": "agricultural school",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a school with a curriculum focused on agriculture"
+    },
+    {
+      "category": "S",
+      "code": "AIRB",
+      "name": "airbase",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "an area used to store supplies, provide barracks for air force personnel, hangars and runways for aircraft, and from which operations are initiated"
+    },
+    {
+      "category": "S",
+      "code": "AIRF",
+      "name": "airfield",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a place on land where aircraft land and take off; no facilities provided for the commercial handling of passengers and cargo"
+    },
+    {
+      "category": "S",
+      "code": "AIRP",
+      "name": "airport",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a place where aircraft regularly land and take off, with runways, navigational aids, and major facilities for the commercial handling of passengers and cargo"
+    },
+    {
+      "category": "S",
+      "code": "AMTH",
+      "name": "amphitheater",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "an oval or circular structure with rising tiers of seats about a stage or open space"
+    },
+    {
+      "category": "H",
+      "code": "STMA",
+      "name": "anabranch",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "a diverging branch flowing out of a main stream and rejoining it downstream"
+    },
+    {
+      "category": "H",
+      "code": "ANCH",
+      "name": "anchorage",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "an area where vessels may anchor"
+    },
+    {
+      "category": "R",
+      "code": "RDA",
+      "name": "ancient road",
+      "language": "en",
+      "category-name": "Streets/Highways/Roads",
+      "description": "the remains of a road used by ancient cultures"
+    },
+    {
+      "category": "S",
+      "code": "ANS",
+      "name": "ancient site",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a place where archeological remains, old structures, or cultural artifacts are located"
+    },
+    {
+      "category": "S",
+      "code": "WALLA",
+      "name": "ancient wall",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "the remains of a linear defensive stone structure"
+    },
+    {
+      "category": "S",
+      "code": "BLDA",
+      "name": "apartment building",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a building containing several individual apartments"
+    },
+    {
+      "category": "S",
+      "code": "AQC",
+      "name": "aquaculture facility",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "facility or area for the cultivation of aquatic animals and plants, especially fish, shellfish, and seaweed, in natural or controlled marine or freshwater environments; underwater agriculture"
+    },
+    {
+      "category": "H",
+      "code": "CNLA",
+      "name": "aqueduct",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "a conduit used to carry water"
+    },
+    {
+      "category": "S",
+      "code": "ARCH",
+      "name": "arch",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a natural or man-made structure in the form of an arch"
+    },
+    {
+      "category": "L",
+      "code": "LAND",
+      "name": "Arctic land",
+      "language": "en",
+      "category-name": "Area",
+      "description": "a tract of land in the Arctic"
+    },
+    {
+      "category": "L",
+      "code": "AREA",
+      "name": "area",
+      "language": "en",
+      "category-name": "Area",
+      "description": "a tract of land without homogeneous character or boundaries"
+    },
+    {
+      "category": "T",
+      "code": "ISLF",
+      "name": "artificial island",
+      "language": "en",
+      "category-name": "Hypsographic",
+      "description": "an island created by landfill or diking and filling in a wetland, bay, or lagoon"
+    },
+    {
+      "category": "L",
+      "code": "RNGA",
+      "name": "artillery range",
+      "language": "en",
+      "category-name": "Area",
+      "description": "a tract of land used for artillery firing practice"
+    },
+    {
+      "category": "T",
+      "code": "ASPH",
+      "name": "asphalt lake",
+      "language": "en",
+      "category-name": "Hypsographic",
+      "description": "a small basin containing naturally occurring asphalt"
+    },
+    {
+      "category": "S",
+      "code": "ASTR",
+      "name": "astronomical station",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a point on the earth whose position has been determined by observations of celestial bodies"
+    },
+    {
+      "category": "S",
+      "code": "ASYL",
+      "name": "asylum",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a facility where the insane are cared for and protected"
+    },
+    {
+      "category": "S",
+      "code": "ATHF",
+      "name": "athletic field",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a tract of land used for playing team sports, and athletic track and field events"
+    },
+    {
+      "category": "T",
+      "code": "ATOL",
+      "name": "atoll(s)",
+      "language": "en",
+      "category-name": "Hypsographic",
+      "description": "a ring-shaped coral reef which has closely spaced islands on it encircling a lagoon"
+    },
+    {
+      "category": "S",
+      "code": "CTRA",
+      "name": "atomic center",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a facility where atomic research is carried out"
+    },
+    {
+      "category": "T",
+      "code": "BDLD",
+      "name": "badlands",
+      "language": "en",
+      "category-name": "Hypsographic",
+      "description": "an area characterized by a maze of very closely spaced, deep, narrow, steep-sided ravines, and sharp crests and pinnacles"
+    },
+    {
+      "category": "S",
+      "code": "BSTN",
+      "name": "baling station",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a facility for baling agricultural products"
+    },
+    {
+      "category": "S",
+      "code": "ESTB",
+      "name": "banana plantation",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "an estate that specializes in the growing of bananas"
+    },
+    {
+      "category": "S",
+      "code": "BAN",
+      "name": "bank",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "an establishment for the custody, loan, exchange or issue of money, for the extension of credit, and for facilitating the transmission of funds"
+    },
+    {
+      "category": "H",
+      "code": "BNK",
+      "name": "bank(s)",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "an elevation, typically located on a shelf, over which the depth of water is relatively shallow but sufficient for most surface navigation"
+    },
+    {
+      "category": "T",
+      "code": "BAR",
+      "name": "bar",
+      "language": "en",
+      "category-name": "Hypsographic",
+      "description": "a shallow ridge or mound of coarse unconsolidated material in a stream channel, at the mouth of a stream, estuary, or lagoon and in the wave-break zone along coasts"
+    },
+    {
+      "category": "S",
+      "code": "BRKS",
+      "name": "barracks",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a building for lodging military personnel"
+    },
+    {
+      "category": "L",
+      "code": "BTL",
+      "name": "battlefield",
+      "language": "en",
+      "category-name": "Area",
+      "description": "a site of a land battle of historical importance"
+    },
+    {
+      "category": "H",
+      "code": "BAY",
+      "name": "bay",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "a coastal indentation between two capes or headlands, larger than a cove but smaller than a gulf"
+    },
+    {
+      "category": "H",
+      "code": "BAYS",
+      "name": "bays",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "coastal indentations between two capes or headlands, larger than a cove but smaller than a gulf"
+    },
+    {
+      "category": "T",
+      "code": "BCH",
+      "name": "beach",
+      "language": "en",
+      "category-name": "Hypsographic",
+      "description": "a shore zone of coarse unconsolidated sediment that extends from the low-water line to the highest reach of storm waves"
+    },
+    {
+      "category": "T",
+      "code": "RDGB",
+      "name": "beach ridge",
+      "language": "en",
+      "category-name": "Hypsographic",
+      "description": "a ridge of sand just inland and parallel to the beach, usually in series"
+    },
+    {
+      "category": "T",
+      "code": "BCHS",
+      "name": "beaches",
+      "language": "en",
+      "category-name": "Hypsographic",
+      "description": "a shore zone of coarse unconsolidated sediment that extends from the low-water line to the highest reach of storm waves"
+    },
+    {
+      "category": "S",
+      "code": "BCN",
+      "name": "beacon",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a fixed artificial navigation mark"
+    },
+    {
+      "category": "T",
+      "code": "BNCH",
+      "name": "bench",
+      "language": "en",
+      "category-name": "Hypsographic",
+      "description": "a long, narrow bedrock platform bounded by steeper slopes above and below, usually overlooking a waterbody"
+    },
+    {
+      "category": "H",
+      "code": "BGHT",
+      "name": "bight(s)",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "an open body of water forming a slight recession in a coastline"
+    },
+    {
+      "category": "T",
+      "code": "BLHL",
+      "name": "blowhole(s)",
+      "language": "en",
+      "category-name": "Hypsographic",
+      "description": "a hole in coastal rock through which sea water is forced by a rising tide or waves and spurted through an outlet into the air"
+    },
+    {
+      "category": "T",
+      "code": "BLOW",
+      "name": "blowout(s)",
+      "language": "en",
+      "category-name": "Hypsographic",
+      "description": "a small depression in sandy terrain, caused by wind erosion"
+    },
+    {
+      "category": "S",
+      "code": "BTYD",
+      "name": "boatyard",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a waterside facility for servicing, repairing, and building small vessels"
+    },
+    {
+      "category": "H",
+      "code": "BOG",
+      "name": "bog(s)",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "a wetland characterized by peat forming sphagnum moss, sedge, and other acid-water plants"
+    },
+    {
+      "category": "S",
+      "code": "PSTB",
+      "name": "border post",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a post or station at an international boundary for the regulation of movement of people and goods"
+    },
+    {
+      "category": "T",
+      "code": "BLDR",
+      "name": "boulder field",
+      "language": "en",
+      "category-name": "Hypsographic",
+      "description": "a high altitude or high latitude bare, flat area covered with large angular rocks"
+    },
+    {
+      "category": "S",
+      "code": "BP",
+      "name": "boundary marker",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a fixture marking a point along a boundary"
+    },
+    {
+      "category": "S",
+      "code": "BRKW",
+      "name": "breakwater",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a structure erected to break the force of waves at the entrance to a harbor or port"
+    },
+    {
+      "category": "S",
+      "code": "MFGB",
+      "name": "brewery",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "one or more buildings where beer is brewed"
+    },
+    {
+      "category": "S",
+      "code": "BDG",
+      "name": "bridge",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a structure erected across an obstacle such as a stream, road, etc., in order to carry roads, railroads, and pedestrians across"
+    },
+    {
+      "category": "A",
+      "code": "ZNB",
+      "name": "buffer zone",
+      "language": "en",
+      "category-name": "Administrative Region",
+      "description": "a zone recognized as a buffer between two nations in which military presence is minimal or absent"
+    },
+    {
+      "category": "S",
+      "code": "BLDG",
+      "name": "building(s)",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a structure built for permanent use, as a house, factory, etc."
+    },
+    {
+      "category": "S",
+      "code": "BUR",
+      "name": "burial cave(s)",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a cave used for human burials"
+    },
+    {
+      "category": "V",
+      "code": "BUSH",
+      "name": "bush(es)",
+      "language": "en",
+      "category-name": "Vegetation",
+      "description": "a small clump of conspicuous bushes in an otherwise bare area"
+    },
+    {
+      "category": "L",
+      "code": "CTRB",
+      "name": "business center",
+      "language": "en",
+      "category-name": "Area",
+      "description": "a place where a number of businesses are located"
+    },
+    {
+      "category": "T",
+      "code": "BUTE",
+      "name": "butte(s)",
+      "language": "en",
+      "category-name": "Hypsographic",
+      "description": "a small, isolated, usually flat-topped hill with steep sides"
+    },
+    {
+      "category": "S",
+      "code": "CARN",
+      "name": "cairn",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a heap of stones erected as a landmark or for other purposes"
+    },
+    {
+      "category": "T",
+      "code": "CLDA",
+      "name": "caldera",
+      "language": "en",
+      "category-name": "Hypsographic",
+      "description": "a depression measuring kilometers across formed by the collapse of a volcanic mountain"
+    },
+    {
+      "category": "S",
+      "code": "CMP",
+      "name": "camp(s)",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a site occupied by tents, huts, or other shelters for temporary use"
+    },
+    {
+      "category": "H",
+      "code": "CNL",
+      "name": "canal",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "an artificial watercourse"
+    },
+    {
+      "category": "H",
+      "code": "CNLB",
+      "name": "canal bend",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "a conspicuously curved or bent section of a canal"
+    },
+    {
+      "category": "H",
+      "code": "TNLC",
+      "name": "canal tunnel",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "a tunnel through which a canal passes"
+    },
+    {
+      "category": "H",
+      "code": "STMC",
+      "name": "canalized stream",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "a stream that has been substantially ditched, diked, or straightened"
+    },
+    {
+      "category": "S",
+      "code": "MFGC",
+      "name": "cannery",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a building where food items are canned"
+    },
+    {
+      "category": "T",
+      "code": "CNYN",
+      "name": "canyon",
+      "language": "en",
+      "category-name": "Hypsographic",
+      "description": "a deep, narrow valley with steep sides cutting into a plateau or mountainous area"
+    },
+    {
+      "category": "T",
+      "code": "CAPE",
+      "name": "cape",
+      "language": "en",
+      "category-name": "Hypsographic",
+      "description": "a land area, more prominent than a point, projecting into the sea and marking a notable change in coastal direction"
+    },
+    {
+      "category": "P",
+      "code": "PPLC",
+      "name": "capital of a political entity",
+      "language": "en",
+      "category-name": "Populated Place",
+      "description": "capital of a political entity"
+    },
+    {
+      "category": "R",
+      "code": "RTE",
+      "name": "caravan route",
+      "language": "en",
+      "category-name": "Streets/Highways/Roads",
+      "description": "the route taken by caravans"
+    },
+    {
+      "category": "S",
+      "code": "CSNO",
+      "name": "casino",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a building used for entertainment, especially gambling"
+    },
+    {
+      "category": "S",
+      "code": "CSTL",
+      "name": "castle",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a large fortified building or set of buildings"
+    },
+    {
+      "category": "S",
+      "code": "TNKD",
+      "name": "cattle dipping tank",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a small artificial pond used for immersing cattle in chemically treated water for disease control"
+    },
+    {
+      "category": "R",
+      "code": "CSWY",
+      "name": "causeway",
+      "language": "en",
+      "category-name": "Streets/Highways/Roads",
+      "description": "a raised roadway across wet ground or shallow water"
+    },
+    {
+      "category": "S",
+      "code": "CAVE",
+      "name": "cave(s)",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "an underground passageway or chamber, or cavity on the side of a cliff"
+    },
+    {
+      "category": "S",
+      "code": "CMTY",
+      "name": "cemetery",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a burial place or ground"
+    },
+    {
+      "category": "H",
+      "code": "CHN",
+      "name": "channel",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "the deepest part of a stream, bay, lagoon, or strait, through which the main current flows"
+    },
+    {
+      "category": "S",
+      "code": "MNCR",
+      "name": "chrome mine(s)",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a mine where chrome ore is extracted"
+    },
+    {
+      "category": "S",
+      "code": "CH",
+      "name": "church",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a building for public Christian worship"
+    },
+    {
+      "category": "T",
+      "code": "CRQ",
+      "name": "cirque",
+      "language": "en",
+      "category-name": "Hypsographic",
+      "description": "a bowl-like hollow partially surrounded by cliffs or steep slopes at the head of a glaciated valley"
+    },
+    {
+      "category": "T",
+      "code": "CRQS",
+      "name": "cirques",
+      "language": "en",
+      "category-name": "Hypsographic",
+      "description": "bowl-like hollows partially surrounded by cliffs or steep slopes at the head of a glaciated valley"
+    },
+    {
+      "category": "L",
+      "code": "CLG",
+      "name": "clearing",
+      "language": "en",
+      "category-name": "Area",
+      "description": "an area in a forest with trees removed"
+    },
+    {
+      "category": "T",
+      "code": "CFT",
+      "name": "cleft(s)",
+      "language": "en",
+      "category-name": "Hypsographic",
+      "description": "a deep narrow slot, notch, or groove in a coastal cliff"
+    },
+    {
+      "category": "T",
+      "code": "CLF",
+      "name": "cliff(s)",
+      "language": "en",
+      "category-name": "Hypsographic",
+      "description": "a high, steep to perpendicular slope overlooking a waterbody or lower area"
+    },
+    {
+      "category": "S",
+      "code": "HSPC",
+      "name": "clinic",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a medical facility associated with a hospital for outpatients"
+    },
+    {
+      "category": "S",
+      "code": "MNC",
+      "name": "coal mine(s)",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a mine where coal is extracted"
+    },
+    {
+      "category": "L",
+      "code": "COLF",
+      "name": "coalfield",
+      "language": "en",
+      "category-name": "Area",
+      "description": "a region in which coal deposits of possible economic value occur"
+    },
+    {
+      "category": "L",
+      "code": "CST",
+      "name": "coast",
+      "language": "en",
+      "category-name": "Area",
+      "description": "a zone of variable width straddling the shoreline"
+    },
+    {
+      "category": "S",
+      "code": "STNC",
+      "name": "coast guard station",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a facility from which the coast is guarded by armed vessels"
+    },
+    {
+      "category": "V",
+      "code": "GRVC",
+      "name": "coconut grove",
+      "language": "en",
+      "category-name": "Vegetation",
+      "description": "a planting of coconut trees"
+    },
+    {
+      "category": "S",
+      "code": "SCHC",
+      "name": "college",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "the grounds and buildings of an institution of higher learning"
+    },
+    {
+      "category": "L",
+      "code": "CMN",
+      "name": "common",
+      "language": "en",
+      "category-name": "Area",
+      "description": "a park or pasture for community use"
+    },
+    {
+      "category": "S",
+      "code": "COMC",
+      "name": "communication center",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a facility, including buildings, antennae, towers and electronic equipment for receiving and transmitting information"
+    },
+    {
+      "category": "S",
+      "code": "CTRCM",
+      "name": "community center",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a facility for community recreation and other activities"
+    },
+    {
+      "category": "L",
+      "code": "CNS",
+      "name": "concession area",
+      "language": "en",
+      "category-name": "Area",
+      "description": "a lease of land by a government for economic development, e.g., mining, forestry"
+    },
+    {
+      "category": "T",
+      "code": "CONE",
+      "name": "cone(s)",
+      "language": "en",
+      "category-name": "Hypsographic",
+      "description": "a conical landform composed of mud or volcanic material"
+    },
+    {
+      "category": "H",
+      "code": "CNFL",
+      "name": "confluence",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "a place where two or more streams or intermittent streams flow together"
+    },
+    {
+      "category": "U",
+      "code": "CRSU",
+      "name": "continental rise",
+      "language": "en",
+      "category-name": "Undersea",
+      "description": "a gentle slope rising from oceanic depths towards the foot of a continental slope"
+    },
+    {
+      "category": "S",
+      "code": "CVNT",
+      "name": "convent",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a building where a community of nuns lives in seclusion"
+    },
+    {
+      "category": "S",
+      "code": "MNCU",
+      "name": "copper mine(s)",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a mine where copper ore is extracted"
+    },
+    {
+      "category": "S",
+      "code": "MFGCU",
+      "name": "copper works",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a facility for processing copper ore"
+    },
+    {
+      "category": "H",
+      "code": "RFC",
+      "name": "coral reef(s)",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "a surface-navigation hazard composed of coral"
+    },
+    {
+      "category": "S",
+      "code": "CRRL",
+      "name": "corral(s)",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a pen or enclosure for confining or capturing animals"
+    },
+    {
+      "category": "T",
+      "code": "CRDR",
+      "name": "corridor",
+      "language": "en",
+      "category-name": "Hypsographic",
+      "description": "a strip or area of land having significance as an access way"
+    },
+    {
+      "category": "S",
+      "code": "ESTC",
+      "name": "cotton plantation",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "an estate specializing in the cultivation of cotton"
+    },
+    {
+      "category": "S",
+      "code": "HSEC",
+      "name": "country house",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a large house, mansion, or chateau, on a large estate"
+    },
+    {
+      "category": "S",
+      "code": "CTHSE",
+      "name": "courthouse",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a building in which courts of law are held"
+    },
+    {
+      "category": "H",
+      "code": "COVE",
+      "name": "cove(s)",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "a small coastal indentation, smaller than a bay"
+    },
+    {
+      "category": "H",
+      "code": "LKC",
+      "name": "crater lake",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "a lake in a crater or caldera"
+    },
+    {
+      "category": "H",
+      "code": "LKSC",
+      "name": "crater lakes",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "lakes in a crater or caldera"
+    },
+    {
+      "category": "T",
+      "code": "CRTR",
+      "name": "crater(s)",
+      "language": "en",
+      "category-name": "Hypsographic",
+      "description": "a generally circular saucer or bowl-shaped depression caused by volcanic or meteorite explosive action"
+    },
+    {
+      "category": "T",
+      "code": "CUET",
+      "name": "cuesta(s)",
+      "language": "en",
+      "category-name": "Hypsographic",
+      "description": "an asymmetric ridge formed on tilted strata"
+    },
+    {
+      "category": "V",
+      "code": "CULT",
+      "name": "cultivated area",
+      "language": "en",
+      "category-name": "Vegetation",
+      "description": "an area under cultivation"
+    },
+    {
+      "category": "H",
+      "code": "CRNT",
+      "name": "current",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "a horizontal flow of water in a given direction with uniform velocity"
+    },
+    {
+      "category": "S",
+      "code": "CSTM",
+      "name": "customs house",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a building in a port where customs and duties are paid, and where vessels are entered and cleared"
+    },
+    {
+      "category": "S",
+      "code": "PSTC",
+      "name": "customs post",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a building at an international boundary where customs and duties are paid on goods"
+    },
+    {
+      "category": "H",
+      "code": "CUTF",
+      "name": "cutoff",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "a channel formed as a result of a stream cutting through a meander neck"
+    },
+    {
+      "category": "S",
+      "code": "DARY",
+      "name": "dairy",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a facility for the processing, sale and distribution of milk or milk products"
+    },
+    {
+      "category": "S",
+      "code": "DAM",
+      "name": "dam",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a barrier constructed across a stream to impound water"
+    },
+    {
+      "category": "U",
+      "code": "DEPU",
+      "name": "deep",
+      "language": "en",
+      "category-name": "Undersea",
+      "description": "a localized deep area within the confines of a larger feature, such as a trough, basin or trench"
+    },
+    {
+      "category": "T",
+      "code": "DLTA",
+      "name": "delta",
+      "language": "en",
+      "category-name": "Hypsographic",
+      "description": "a flat plain formed by alluvial deposits at the mouth of a stream"
+    },
+    {
+      "category": "A",
+      "code": "PCLD",
+      "name": "dependent political entity",
+      "language": "en",
+      "category-name": "Administrative Region",
+      "description": "dependent political entity"
+    },
+    {
+      "category": "T",
+      "code": "DPR",
+      "name": "depression(s)",
+      "language": "en",
+      "category-name": "Hypsographic",
+      "description": "a low area surrounded by higher land and usually characterized by interior drainage"
+    },
+    {
+      "category": "T",
+      "code": "DSRT",
+      "name": "desert",
+      "language": "en",
+      "category-name": "Hypsographic",
+      "description": "a large area with little or no vegetation due to extreme environmental conditions"
+    },
+    {
+      "category": "P",
+      "code": "PPLW",
+      "name": "destroyed populated place",
+      "language": "en",
+      "category-name": "Populated Place",
+      "description": "a village, town or city destroyed by a natural disaster, or by war"
+    },
+    {
+      "category": "S",
+      "code": "MNDT",
+      "name": "diatomite mine(s)",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a place where diatomaceous earth is extracted"
+    },
+    {
+      "category": "S",
+      "code": "DIKE",
+      "name": "dike",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "an earth or stone embankment usually constructed for flood or stream control"
+    },
+    {
+      "category": "S",
+      "code": "DIP",
+      "name": "diplomatic facility",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "office, residence, or facility of a foreign government, which may include an embassy, consulate, chancery, office of charge d\u2019affaires, or other diplomatic, economic, military, or cultural mission"
+    },
+    {
+      "category": "S",
+      "code": "HSPD",
+      "name": "dispensary",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a building where medical or dental aid is dispensed"
+    },
+    {
+      "category": "H",
+      "code": "STMD",
+      "name": "distributary(-ies)",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "a branch which flows away from the main stream, as in a delta or irrigation canal"
+    },
+    {
+      "category": "H",
+      "code": "DTCH",
+      "name": "ditch",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "a small artificial watercourse dug for draining or irrigating the land"
+    },
+    {
+      "category": "H",
+      "code": "DTCHM",
+      "name": "ditch mouth(s)",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "an area where a drainage ditch enters a lagoon, lake or bay"
+    },
+    {
+      "category": "T",
+      "code": "DVD",
+      "name": "divide",
+      "language": "en",
+      "category-name": "Hypsographic",
+      "description": "a line separating adjacent drainage basins"
+    },
+    {
+      "category": "H",
+      "code": "DCK",
+      "name": "dock(s)",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "a waterway between two piers, or cut into the land for the berthing of ships"
+    },
+    {
+      "category": "H",
+      "code": "DCKB",
+      "name": "docking basin",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "a part of a harbor where ships dock"
+    },
+    {
+      "category": "S",
+      "code": "DCKY",
+      "name": "dockyard",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a facility for servicing, building, or repairing ships"
+    },
+    {
+      "category": "L",
+      "code": "BSND",
+      "name": "drainage basin",
+      "language": "en",
+      "category-name": "Area",
+      "description": "an area drained by a stream"
+    },
+    {
+      "category": "H",
+      "code": "CNLD",
+      "name": "drainage canal",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "an artificial waterway carrying water away from a wetland or from drainage ditches"
+    },
+    {
+      "category": "H",
+      "code": "DTCHD",
+      "name": "drainage ditch",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "a ditch which serves to drain the land"
+    },
+    {
+      "category": "S",
+      "code": "DCKD",
+      "name": "dry dock",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a dock providing support for a vessel, and means for removing the water so that the bottom of the vessel can be exposed"
+    },
+    {
+      "category": "T",
+      "code": "SBED",
+      "name": "dry stream bed",
+      "language": "en",
+      "category-name": "Hypsographic",
+      "description": "a channel formerly containing the water of a stream"
+    },
+    {
+      "category": "T",
+      "code": "DUNE",
+      "name": "dune(s)",
+      "language": "en",
+      "category-name": "Hypsographic",
+      "description": "a wave form, ridge or star shape feature composed of sand"
+    },
+    {
+      "category": "L",
+      "code": "RGNE",
+      "name": "economic region",
+      "language": "en",
+      "category-name": "Area",
+      "description": "a region of a country established for economic development or for statistical purposes"
+    },
+    {
+      "category": "T",
+      "code": "SCRP",
+      "name": "escarpment",
+      "language": "en",
+      "category-name": "Hypsographic",
+      "description": "a long line of cliffs or steep slopes separating level surfaces above and below"
+    },
+    {
+      "category": "S",
+      "code": "EST",
+      "name": "estate(s)",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a large commercialized agricultural landholding with associated buildings and other facilities"
+    },
+    {
+      "category": "H",
+      "code": "ESTY",
+      "name": "estuary",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "a funnel-shaped stream mouth or embayment where fresh water mixes with sea water under tidal influences"
+    },
+    {
+      "category": "S",
+      "code": "STNE",
+      "name": "experiment station",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a facility for carrying out experiments"
+    },
+    {
+      "category": "S",
+      "code": "FCL",
+      "name": "facility",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a building or buildings housing a center, institute, foundation, hospital, prison, mission, courthouse, etc."
+    },
+    {
+      "category": "S",
+      "code": "CTRF",
+      "name": "facility center",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a place where more than one facility is situated"
+    },
+    {
+      "category": "S",
+      "code": "MFG",
+      "name": "factory",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "one or more buildings where goods are manufactured, processed or fabricated"
+    },
+    {
+      "category": "T",
+      "code": "FAN",
+      "name": "fan(s)",
+      "language": "en",
+      "category-name": "Hypsographic",
+      "description": "a fan-shaped wedge of coarse alluvium with apex merging with a mountain stream bed and the fan spreading out at a low angle slope onto an adjacent plain"
+    },
+    {
+      "category": "S",
+      "code": "FRM",
+      "name": "farm",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a tract of land with associated buildings devoted to agriculture"
+    },
+    {
+      "category": "P",
+      "code": "PPLF",
+      "name": "farm village",
+      "language": "en",
+      "category-name": "Populated Place",
+      "description": "a populated place where the population is largely engaged in agricultural activities"
+    },
+    {
+      "category": "S",
+      "code": "FRMS",
+      "name": "farms",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "tracts of land with associated buildings devoted to agriculture"
+    },
+    {
+      "category": "S",
+      "code": "FRMT",
+      "name": "farmstead",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "the buildings and adjacent service areas of a farm"
+    },
+    {
+      "category": "S",
+      "code": "FY",
+      "name": "ferry",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a boat or other floating conveyance and terminal facilities regularly used to transport people and vehicles across a waterbody"
+    },
+    {
+      "category": "S",
+      "code": "FYT",
+      "name": "ferry terminal",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a place where ferries pick-up and discharge passengers, vehicles and or cargo"
+    },
+    {
+      "category": "L",
+      "code": "FLD",
+      "name": "field(s)",
+      "language": "en",
+      "category-name": "Area",
+      "description": "an open as opposed to wooded area"
+    },
+    {
+      "category": "S",
+      "code": "FIRE",
+      "name": "fire station",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "building housing firefighters and/or fire fighting equipment"
+    },
+    {
+      "category": "A",
+      "code": "ADM1",
+      "name": "first-order administrative division",
+      "language": "en",
+      "category-name": "Administrative Region",
+      "description": "a primary administrative division of a country, such as a state in the United States"
+    },
+    {
+      "category": "H",
+      "code": "FISH",
+      "name": "fishing area",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "a fishing ground, bank or area where fishermen go to catch fish"
+    },
+    {
+      "category": "H",
+      "code": "PNDSF",
+      "name": "fishponds",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "ponds or enclosures in which fish are kept or raised"
+    },
+    {
+      "category": "T",
+      "code": "FSR",
+      "name": "fissure",
+      "language": "en",
+      "category-name": "Hypsographic",
+      "description": "a crack associated with volcanism"
+    },
+    {
+      "category": "H",
+      "code": "FJD",
+      "name": "fjord",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "a long, narrow, steep-walled, deep-water arm of the sea at high latitudes, usually along mountainous coasts"
+    },
+    {
+      "category": "H",
+      "code": "FJDS",
+      "name": "fjords",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "long, narrow, steep-walled, deep-water arms of the sea at high latitudes, usually along mountainous coasts"
+    },
+    {
+      "category": "T",
+      "code": "FORD",
+      "name": "ford",
+      "language": "en",
+      "category-name": "Hypsographic",
+      "description": "a shallow part of a stream which can be crossed on foot or by land vehicle"
+    },
+    {
+      "category": "L",
+      "code": "RESF",
+      "name": "forest reserve",
+      "language": "en",
+      "category-name": "Area",
+      "description": "a forested area set aside for preservation or controlled use"
+    },
+    {
+      "category": "S",
+      "code": "STNF",
+      "name": "forest station",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a collection of buildings and facilities for carrying out forest management"
+    },
+    {
+      "category": "V",
+      "code": "FRST",
+      "name": "forest(s)",
+      "language": "en",
+      "category-name": "Vegetation",
+      "description": "an area dominated by tree vegetation"
+    },
+    {
+      "category": "H",
+      "code": "INLTQ",
+      "name": "former inlet",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "an inlet which has been filled in, or blocked by deposits"
+    },
+    {
+      "category": "S",
+      "code": "MLSGQ",
+      "name": "former sugar mill",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a sugar mill no longer used as a sugar mill"
+    },
+    {
+      "category": "S",
+      "code": "FT",
+      "name": "fort",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a defensive structure or earthworks"
+    },
+    {
+      "category": "V",
+      "code": "FRSTF",
+      "name": "fossilized forest",
+      "language": "en",
+      "category-name": "Vegetation",
+      "description": "a forest fossilized by geologic processes and now exposed at the earth's surface"
+    },
+    {
+      "category": "S",
+      "code": "FNDY",
+      "name": "foundry",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a building or works where metal casting is carried out"
+    },
+    {
+      "category": "A",
+      "code": "ADM4",
+      "name": "fourth-order administrative division",
+      "language": "en",
+      "category-name": "Administrative Region",
+      "description": "a subdivision of a third-order administrative division"
+    },
+    {
+      "category": "S",
+      "code": "ZNF",
+      "name": "free trade zone",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "an area, usually a section of a port, where goods may be received and shipped free of customs duty and of most customs regulations"
+    },
+    {
+      "category": "A",
+      "code": "PCLF",
+      "name": "freely associated state",
+      "language": "en",
+      "category-name": "Administrative Region",
+      "description": "freely associated state"
+    },
+    {
+      "category": "S",
+      "code": "DPOF",
+      "name": "fuel depot",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "an area where fuel is stored"
+    },
+    {
+      "category": "T",
+      "code": "GAP",
+      "name": "gap",
+      "language": "en",
+      "category-name": "Hypsographic",
+      "description": "a low place in a ridge, not used for transportation"
+    },
+    {
+      "category": "S",
+      "code": "GDN",
+      "name": "garden(s)",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "an enclosure for displaying selected plant or animal life"
+    },
+    {
+      "category": "S",
+      "code": "GOSP",
+      "name": "gas-oil separator plant",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a facility for separating gas from oil"
+    },
+    {
+      "category": "L",
+      "code": "GASF",
+      "name": "gasfield",
+      "language": "en",
+      "category-name": "Area",
+      "description": "an area containing a subterranean store of natural gas of economic value"
+    },
+    {
+      "category": "S",
+      "code": "GATE",
+      "name": "gate",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a controlled access entrance or exit"
+    },
+    {
+      "category": "H",
+      "code": "GYSR",
+      "name": "geyser",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "a type of hot spring with intermittent eruptions of jets of hot water and steam"
+    },
+    {
+      "category": "S",
+      "code": "GHAT",
+      "name": "gh\u0101t",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a set of steps leading to a river, which are of religious significance, and at their base is usually a platform for bathing"
+    },
+    {
+      "category": "H",
+      "code": "GLCR",
+      "name": "glacier(s)",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "a mass of ice, usually at high latitudes or high elevations, with sufficient thickness to flow away from the source area in lobes, tongues, or masses"
+    },
+    {
+      "category": "S",
+      "code": "MNAU",
+      "name": "gold mine(s)",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a mine where gold ore, or alluvial gold is extracted"
+    },
+    {
+      "category": "S",
+      "code": "RECG",
+      "name": "golf course",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a recreation field where golf is played"
+    },
+    {
+      "category": "T",
+      "code": "GRGE",
+      "name": "gorge(s)",
+      "language": "en",
+      "category-name": "Hypsographic",
+      "description": "a short, narrow, steep-sided section of a stream valley"
+    },
+    {
+      "category": "V",
+      "code": "GRSLD",
+      "name": "grassland",
+      "language": "en",
+      "category-name": "Vegetation",
+      "description": "an area dominated by grass vegetation"
+    },
+    {
+      "category": "S",
+      "code": "GRVE",
+      "name": "grave",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a burial site"
+    },
+    {
+      "category": "L",
+      "code": "GVL",
+      "name": "gravel area",
+      "language": "en",
+      "category-name": "Area",
+      "description": "an area covered with gravel"
+    },
+    {
+      "category": "L",
+      "code": "GRAZ",
+      "name": "grazing area",
+      "language": "en",
+      "category-name": "Area",
+      "description": "an area of grasses and shrubs used for grazing"
+    },
+    {
+      "category": "S",
+      "code": "GHSE",
+      "name": "guest house",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a house used to provide lodging for paying guests"
+    },
+    {
+      "category": "H",
+      "code": "GULF",
+      "name": "gulf",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "a large recess in the coastline, larger than a bay"
+    },
+    {
+      "category": "S",
+      "code": "HLT",
+      "name": "halting place",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a place where caravans stop for rest"
+    },
+    {
+      "category": "T",
+      "code": "HMCK",
+      "name": "hammock(s)",
+      "language": "en",
+      "category-name": "Hypsographic",
+      "description": "a patch of ground, distinct from and slightly above the surrounding plain or wetland. Often occurs in groups"
+    },
+    {
+      "category": "S",
+      "code": "AIRG",
+      "name": "hangar",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a covered and usually enclosed area for housing and repairing aircraft"
+    },
+    {
+      "category": "T",
+      "code": "VALG",
+      "name": "hanging valley",
+      "language": "en",
+      "category-name": "Hypsographic",
+      "description": "a valley the floor of which is notably higher than the valley or shore to which it leads; most common in areas that have been glaciated"
+    },
+    {
+      "category": "H",
+      "code": "HBR",
+      "name": "harbor(s)",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "a haven or space of deep water so sheltered by the adjacent land as to afford a safe anchorage for ships"
+    },
+    {
+      "category": "T",
+      "code": "HDLD",
+      "name": "headland",
+      "language": "en",
+      "category-name": "Hypsographic",
+      "description": "a high projection of land extending into a large body of water beyond the line of the coast"
+    },
+    {
+      "category": "H",
+      "code": "STMH",
+      "name": "headwaters",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "the source and upper part of a stream, including the upper drainage basin"
+    },
+    {
+      "category": "V",
+      "code": "HTH",
+      "name": "heath",
+      "language": "en",
+      "category-name": "Vegetation",
+      "description": "an upland moor or sandy area dominated by low shrubby vegetation including heather"
+    },
+    {
+      "category": "S",
+      "code": "AIRH",
+      "name": "heliport",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a place where helicopters land and take off"
+    },
+    {
+      "category": "S",
+      "code": "HERM",
+      "name": "hermitage",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a secluded residence, usually for religious sects"
+    },
+    {
+      "category": "T",
+      "code": "HLL",
+      "name": "hill",
+      "language": "en",
+      "category-name": "Hypsographic",
+      "description": "a rounded elevation of limited extent rising above the surrounding land with local relief of less than 300m"
+    },
+    {
+      "category": "T",
+      "code": "HLLS",
+      "name": "hills",
+      "language": "en",
+      "category-name": "Hypsographic",
+      "description": "rounded elevations of limited extent rising above the surrounding land with local relief of less than 300m"
+    },
+    {
+      "category": "A",
+      "code": "ADMDH",
+      "name": "historical administrative division",
+      "language": "en",
+      "category-name": "Administrative Region",
+      "description": "a former administrative division of a political entity, undifferentiated as to administrative level"
+    },
+    {
+      "category": "A",
+      "code": "ADM1H",
+      "name": "historical first-order administrative division",
+      "language": "en",
+      "category-name": "Administrative Region",
+      "description": "a former first-order administrative division"
+    },
+    {
+      "category": "A",
+      "code": "ADM4H",
+      "name": "historical fourth-order administrative division",
+      "language": "en",
+      "category-name": "Administrative Region",
+      "description": "a former fourth-order administrative division"
+    },
+    {
+      "category": "A",
+      "code": "PCLH",
+      "name": "historical political entity",
+      "language": "en",
+      "category-name": "Administrative Region",
+      "description": "a former political entity"
+    },
+    {
+      "category": "P",
+      "code": "PPLH",
+      "name": "historical populated place",
+      "language": "en",
+      "category-name": "Populated Place",
+      "description": "a populated place that no longer exists"
+    },
+    {
+      "category": "R",
+      "code": "RRH",
+      "name": "historical railroad",
+      "language": "en",
+      "category-name": "Streets/Highways/Roads",
+      "description": "a former permanent twin steel-rail track on which freight and passenger cars move long distances"
+    },
+    {
+      "category": "S",
+      "code": "RSTNH",
+      "name": "historical railroad station",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a former facility comprising ticket office, platforms, etc. for loading and unloading train passengers and freight"
+    },
+    {
+      "category": "L",
+      "code": "RGNH",
+      "name": "historical region",
+      "language": "en",
+      "category-name": "Area",
+      "description": "a former area distinguished by one or more observable physical or cultural characteristics"
+    },
+    {
+      "category": "A",
+      "code": "ADM2H",
+      "name": "historical second-order administrative division",
+      "language": "en",
+      "category-name": "Administrative Region",
+      "description": "a former second-order administrative division"
+    },
+    {
+      "category": "S",
+      "code": "HSTS",
+      "name": "historical site",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a place of historical importance"
+    },
+    {
+      "category": "A",
+      "code": "ADM3H",
+      "name": "historical third-order administrative division",
+      "language": "en",
+      "category-name": "Administrative Region",
+      "description": "a former third-order administrative division"
+    },
+    {
+      "category": "U",
+      "code": "UFHU",
+      "name": "historical undersea feature",
+      "language": "en",
+      "category-name": "Undersea",
+      "description": "an undersea feature whose existence has been subsequently disproved"
+    },
+    {
+      "category": "S",
+      "code": "HMSD",
+      "name": "homestead",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a residence, owner's or manager's, on a sheep or cattle station, woolshed, outcamp, or Aboriginal outstation, specific to Australia and New Zealand"
+    },
+    {
+      "category": "S",
+      "code": "HSP",
+      "name": "hospital",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a building in which sick or injured, especially those confined to bed, are medically treated"
+    },
+    {
+      "category": "H",
+      "code": "SPNT",
+      "name": "hot spring(s)",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "a place where hot ground water flows naturally out of the ground"
+    },
+    {
+      "category": "S",
+      "code": "HTL",
+      "name": "hotel",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a building providing lodging and/or meals for the public"
+    },
+    {
+      "category": "S",
+      "code": "HSE",
+      "name": "house(s)",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a building used as a human habitation"
+    },
+    {
+      "category": "L",
+      "code": "DEVH",
+      "name": "housing development",
+      "language": "en",
+      "category-name": "Area",
+      "description": "a tract of land on which many houses of similar design are built according to a development plan"
+    },
+    {
+      "category": "L",
+      "code": "RESH",
+      "name": "hunting reserve",
+      "language": "en",
+      "category-name": "Area",
+      "description": "a tract of land used primarily for hunting"
+    },
+    {
+      "category": "S",
+      "code": "HUT",
+      "name": "hut",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a small primitive house"
+    },
+    {
+      "category": "S",
+      "code": "HUTS",
+      "name": "huts",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "small primitive houses"
+    },
+    {
+      "category": "S",
+      "code": "PSH",
+      "name": "hydroelectric power station",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a building where electricity is generated from water power"
+    },
+    {
+      "category": "H",
+      "code": "CAPG",
+      "name": "icecap",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "a dome-shaped mass of glacial ice covering an area of mountain summits or other high lands; smaller than an ice sheet"
+    },
+    {
+      "category": "H",
+      "code": "DPRG",
+      "name": "icecap depression",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "a comparatively depressed area on an icecap"
+    },
+    {
+      "category": "H",
+      "code": "DOMG",
+      "name": "icecap dome",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "a comparatively elevated area on an icecap"
+    },
+    {
+      "category": "H",
+      "code": "RDGG",
+      "name": "icecap ridge",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "a linear elevation on an icecap"
+    },
+    {
+      "category": "A",
+      "code": "PCLI",
+      "name": "independent political entity",
+      "language": "en",
+      "category-name": "Administrative Region",
+      "description": "independent political entity"
+    },
+    {
+      "category": "L",
+      "code": "INDS",
+      "name": "industrial area",
+      "language": "en",
+      "category-name": "Area",
+      "description": "an area characterized by industrial activity"
+    },
+    {
+      "category": "H",
+      "code": "INLT",
+      "name": "inlet",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "a narrow waterway extending into the land, or connecting a bay or lagoon with a larger body of water"
+    },
+    {
+      "category": "S",
+      "code": "STNI",
+      "name": "inspection station",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a station at which vehicles, goods, and people are inspected"
+    },
+    {
+      "category": "T",
+      "code": "TRGD",
+      "name": "interdune trough(s)",
+      "language": "en",
+      "category-name": "Hypsographic",
+      "description": "a long wind-swept trough between parallel longitudinal dunes"
+    },
+    {
+      "category": "T",
+      "code": "INTF",
+      "name": "interfluve",
+      "language": "en",
+      "category-name": "Hypsographic",
+      "description": "a relatively undissected upland between adjacent stream valleys"
+    },
+    {
+      "category": "H",
+      "code": "LKI",
+      "name": "intermittent lake",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "intermittent lake"
+    },
+    {
+      "category": "H",
+      "code": "LKSI",
+      "name": "intermittent lakes",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "intermittent lakes"
+    },
+    {
+      "category": "H",
+      "code": "LKOI",
+      "name": "intermittent oxbow lake",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "intermittent oxbow lake"
+    },
+    {
+      "category": "H",
+      "code": "PNDI",
+      "name": "intermittent pond",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "intermittent pond"
+    },
+    {
+      "category": "H",
+      "code": "PNDSI",
+      "name": "intermittent ponds",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "intermittent ponds"
+    },
+    {
+      "category": "H",
+      "code": "POOLI",
+      "name": "intermittent pool",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "intermittent pool"
+    },
+    {
+      "category": "H",
+      "code": "RSVI",
+      "name": "intermittent reservoir",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "intermittent reservoir"
+    },
+    {
+      "category": "H",
+      "code": "LKNI",
+      "name": "intermittent salt lake",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "intermittent salt lake"
+    },
+    {
+      "category": "H",
+      "code": "LKSNI",
+      "name": "intermittent salt lakes",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "intermittent salt lakes"
+    },
+    {
+      "category": "H",
+      "code": "PNDNI",
+      "name": "intermittent salt pond(s)",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "intermittent salt pond(s)"
+    },
+    {
+      "category": "H",
+      "code": "STMI",
+      "name": "intermittent stream",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "intermittent stream"
+    },
+    {
+      "category": "H",
+      "code": "WTLDI",
+      "name": "intermittent wetland",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "intermittent wetland"
+    },
+    {
+      "category": "S",
+      "code": "RDIN",
+      "name": "intersection",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a junction of two or more highways by a system of separate levels that permit traffic to pass from one to another without the crossing of traffic streams"
+    },
+    {
+      "category": "S",
+      "code": "MNFE",
+      "name": "iron mine(s)",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a mine where iron ore is extracted"
+    },
+    {
+      "category": "L",
+      "code": "FLDI",
+      "name": "irrigated field(s)",
+      "language": "en",
+      "category-name": "Area",
+      "description": "a tract of level or terraced land which is irrigated"
+    },
+    {
+      "category": "H",
+      "code": "CNLI",
+      "name": "irrigation canal",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "a canal which serves as a main conduit for irrigation water"
+    },
+    {
+      "category": "H",
+      "code": "DTCHI",
+      "name": "irrigation ditch",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "a ditch which serves to distribute irrigation water"
+    },
+    {
+      "category": "H",
+      "code": "SYSI",
+      "name": "irrigation system",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "a network of ditches and one or more of the following elements: water supply, reservoir, canal, pump, well, drain, etc."
+    },
+    {
+      "category": "T",
+      "code": "ISL",
+      "name": "island",
+      "language": "en",
+      "category-name": "Hypsographic",
+      "description": "a tract of land, smaller than a continent, surrounded by water at high water"
+    },
+    {
+      "category": "T",
+      "code": "ISLS",
+      "name": "islands",
+      "language": "en",
+      "category-name": "Hypsographic",
+      "description": "tracts of land, smaller than a continent, surrounded by water at high water"
+    },
+    {
+      "category": "P",
+      "code": "STLMT",
+      "name": "Israeli settlement",
+      "language": "en",
+      "category-name": "Populated Place",
+      "description": "Israeli settlement"
+    },
+    {
+      "category": "T",
+      "code": "ISTH",
+      "name": "isthmus",
+      "language": "en",
+      "category-name": "Hypsographic",
+      "description": "a narrow strip of land connecting two larger land masses and bordered by water"
+    },
+    {
+      "category": "S",
+      "code": "JTY",
+      "name": "jetty",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a structure built out into the water at a river mouth or harbor entrance to regulate currents and silting"
+    },
+    {
+      "category": "T",
+      "code": "KRST",
+      "name": "karst area",
+      "language": "en",
+      "category-name": "Hypsographic",
+      "description": "a distinctive landscape developed on soluble rock such as limestone characterized by sinkholes, caves, disappearing streams, and underground drainage"
+    },
+    {
+      "category": "S",
+      "code": "CMPLA",
+      "name": "labor camp",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a camp used by migrant or temporary laborers"
+    },
+    {
+      "category": "H",
+      "code": "LGN",
+      "name": "lagoon",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "a shallow coastal waterbody, completely or partly separated from a larger body of water by a barrier island, coral reef or other depositional feature"
+    },
+    {
+      "category": "H",
+      "code": "LGNS",
+      "name": "lagoons",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "shallow coastal waterbodies, completely or partly separated from a larger body of water by a barrier island, coral reef or other depositional feature"
+    },
+    {
+      "category": "H",
+      "code": "LK",
+      "name": "lake",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "a large inland body of standing water"
+    },
+    {
+      "category": "H",
+      "code": "LBED",
+      "name": "lake bed(s)",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "a dried up or drained area of a former lake"
+    },
+    {
+      "category": "H",
+      "code": "CHNL",
+      "name": "lake channel(s)",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "that part of a lake having water deep enough for navigation between islands, shoals, etc."
+    },
+    {
+      "category": "L",
+      "code": "RGNL",
+      "name": "lake region",
+      "language": "en",
+      "category-name": "Area",
+      "description": "a tract of land distinguished by numerous lakes"
+    },
+    {
+      "category": "H",
+      "code": "LKS",
+      "name": "lakes",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "large inland bodies of standing water"
+    },
+    {
+      "category": "T",
+      "code": "ISLT",
+      "name": "land-tied island",
+      "language": "en",
+      "category-name": "Hypsographic",
+      "description": "a coastal island connected to the mainland by barrier beaches, levees or dikes"
+    },
+    {
+      "category": "S",
+      "code": "LNDF",
+      "name": "landfill",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a place for trash and garbage disposal in which the waste is buried between layers of earth to build up low-lying land"
+    },
+    {
+      "category": "S",
+      "code": "LDNG",
+      "name": "landing",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a place where boats receive or discharge passengers and freight, but lacking most port facilities"
+    },
+    {
+      "category": "T",
+      "code": "LAVA",
+      "name": "lava area",
+      "language": "en",
+      "category-name": "Hypsographic",
+      "description": "an area of solidified lava"
+    },
+    {
+      "category": "S",
+      "code": "MNPB",
+      "name": "lead mine(s)",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a mine where lead ore is extracted"
+    },
+    {
+      "category": "A",
+      "code": "LTER",
+      "name": "leased area",
+      "language": "en",
+      "category-name": "Administrative Region",
+      "description": "a tract of land leased by the United Kingdom from the People's Republic of China to form part of Hong Kong"
+    },
+    {
+      "category": "S",
+      "code": "LEPC",
+      "name": "leper colony",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a settled area inhabited by lepers in relative isolation"
+    },
+    {
+      "category": "S",
+      "code": "HSPL",
+      "name": "leprosarium",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "an asylum or hospital for lepers"
+    },
+    {
+      "category": "T",
+      "code": "LEV",
+      "name": "levee",
+      "language": "en",
+      "category-name": "Hypsographic",
+      "description": "a natural low embankment bordering a distributary or meandering stream; often built up artificially to control floods"
+    },
+    {
+      "category": "S",
+      "code": "LTHSE",
+      "name": "lighthouse",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a distinctive structure exhibiting a major navigation light"
+    },
+    {
+      "category": "S",
+      "code": "MFGLM",
+      "name": "limekiln",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a furnace in which limestone is reduced to lime"
+    },
+    {
+      "category": "S",
+      "code": "GOVL",
+      "name": "local government office",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a facility housing local governmental offices, usually a city, town, or village hall"
+    },
+    {
+      "category": "L",
+      "code": "LCTY",
+      "name": "locality",
+      "language": "en",
+      "category-name": "Area",
+      "description": "a minor area or place of unspecified or mixed character and indefinite boundaries"
+    },
+    {
+      "category": "S",
+      "code": "LOCK",
+      "name": "lock(s)",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a basin in a waterway with gates at each end by means of which vessels are passed from one water level to another"
+    },
+    {
+      "category": "S",
+      "code": "CMPL",
+      "name": "logging camp",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a camp used by loggers"
+    },
+    {
+      "category": "H",
+      "code": "STMSB",
+      "name": "lost river",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "a surface stream that disappears into an underground channel, or dries up in an arid area"
+    },
+    {
+      "category": "L",
+      "code": "MVA",
+      "name": "maneuver area",
+      "language": "en",
+      "category-name": "Area",
+      "description": "a tract of land where military field exercises are carried out"
+    },
+    {
+      "category": "T",
+      "code": "ISLM",
+      "name": "mangrove island",
+      "language": "en",
+      "category-name": "Hypsographic",
+      "description": "a mangrove swamp surrounded by a waterbody"
+    },
+    {
+      "category": "H",
+      "code": "MGV",
+      "name": "mangrove swamp",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "a tropical tidal mud flat characterized by mangrove vegetation"
+    },
+    {
+      "category": "S",
+      "code": "MAR",
+      "name": "marina",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a harbor facility for small boats, yachts, etc."
+    },
+    {
+      "category": "H",
+      "code": "CHNM",
+      "name": "marine channel",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "that part of a body of water deep enough for navigation through an area otherwise not suitable"
+    },
+    {
+      "category": "S",
+      "code": "SCHN",
+      "name": "maritime school",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a school at which maritime sciences form the core of the curriculum"
+    },
+    {
+      "category": "S",
+      "code": "MKT",
+      "name": "market",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a place where goods are bought and sold at regular intervals"
+    },
+    {
+      "category": "H",
+      "code": "MRSH",
+      "name": "marsh(es)",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "a wetland dominated by grass-like vegetation"
+    },
+    {
+      "category": "V",
+      "code": "MDW",
+      "name": "meadow",
+      "language": "en",
+      "category-name": "Vegetation",
+      "description": "a small, poorly drained area dominated by grassy vegetation"
+    },
+    {
+      "category": "T",
+      "code": "NKM",
+      "name": "meander neck",
+      "language": "en",
+      "category-name": "Hypsographic",
+      "description": "a narrow strip of land between the two limbs of a meander loop at its narrowest point"
+    },
+    {
+      "category": "S",
+      "code": "CTRM",
+      "name": "medical center",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a complex of health care buildings including two or more of the following: hospital, medical school, clinic, pharmacy, doctor's offices, etc."
+    },
+    {
+      "category": "T",
+      "code": "MESA",
+      "name": "mesa(s)",
+      "language": "en",
+      "category-name": "Hypsographic",
+      "description": "a flat-topped, isolated elevation with steep slopes on all sides, less extensive than a plateau"
+    },
+    {
+      "category": "S",
+      "code": "STNM",
+      "name": "meteorological station",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a station at which weather elements are recorded"
+    },
+    {
+      "category": "L",
+      "code": "MILB",
+      "name": "military base",
+      "language": "en",
+      "category-name": "Area",
+      "description": "a place used by an army or other armed service for storing arms and supplies, and for accommodating and training troops, a base from which operations can be initiated"
+    },
+    {
+      "category": "S",
+      "code": "INSM",
+      "name": "military installation",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a facility for use of and control by armed forces"
+    },
+    {
+      "category": "S",
+      "code": "SCHM",
+      "name": "military school",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a school at which military science forms the core of the curriculum"
+    },
+    {
+      "category": "S",
+      "code": "ML",
+      "name": "mill(s)",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a building housing machines for transforming, shaping, finishing, grinding, or extracting products"
+    },
+    {
+      "category": "S",
+      "code": "MN",
+      "name": "mine(s)",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a site where mineral ores are extracted from the ground by excavating surface pits and subterranean passages"
+    },
+    {
+      "category": "L",
+      "code": "MNA",
+      "name": "mining area",
+      "language": "en",
+      "category-name": "Area",
+      "description": "an area of mine sites where minerals and ores are extracted"
+    },
+    {
+      "category": "S",
+      "code": "CMPMN",
+      "name": "mining camp",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a camp used by miners"
+    },
+    {
+      "category": "S",
+      "code": "MSSN",
+      "name": "mission",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a place characterized by dwellings, school, church, hospital and other facilities operated by a religious group for the purpose of providing charitable services and to propagate religion"
+    },
+    {
+      "category": "S",
+      "code": "MOLE",
+      "name": "mole",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a massive structure of masonry or large stones serving as a pier or breakwater"
+    },
+    {
+      "category": "S",
+      "code": "MSTY",
+      "name": "monastery",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a building and grounds where a community of monks lives in seclusion"
+    },
+    {
+      "category": "S",
+      "code": "MNMT",
+      "name": "monument",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a commemorative structure or statue"
+    },
+    {
+      "category": "H",
+      "code": "MOOR",
+      "name": "moor(s)",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "an area of open ground overlaid with wet peaty soils"
+    },
+    {
+      "category": "T",
+      "code": "MRN",
+      "name": "moraine",
+      "language": "en",
+      "category-name": "Hypsographic",
+      "description": "a mound, ridge, or other accumulation of glacial till"
+    },
+    {
+      "category": "S",
+      "code": "MSQE",
+      "name": "mosque",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a building for public Islamic worship"
+    },
+    {
+      "category": "T",
+      "code": "MND",
+      "name": "mound(s)",
+      "language": "en",
+      "category-name": "Hypsographic",
+      "description": "a low, isolated, rounded hill"
+    },
+    {
+      "category": "T",
+      "code": "MT",
+      "name": "mountain",
+      "language": "en",
+      "category-name": "Hypsographic",
+      "description": "an elevation standing high above the surrounding area with small summit area, steep slopes and local relief of 300m or more"
+    },
+    {
+      "category": "T",
+      "code": "MTS",
+      "name": "mountains",
+      "language": "en",
+      "category-name": "Hypsographic",
+      "description": "a mountain range or a group of mountains or high ridges"
+    },
+    {
+      "category": "H",
+      "code": "FLTM",
+      "name": "mud flat(s)",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "a relatively level area of mud either between high and low tide lines, or subject to flooding"
+    },
+    {
+      "category": "S",
+      "code": "MFGM",
+      "name": "munitions plant",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a factory where ammunition is made"
+    },
+    {
+      "category": "S",
+      "code": "MUS",
+      "name": "museum",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a building where objects of permanent interest in one or more of the arts and sciences are preserved and exhibited"
+    },
+    {
+      "category": "H",
+      "code": "NRWS",
+      "name": "narrows",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "a navigable narrow part of a bay, strait, river, etc."
+    },
+    {
+      "category": "R",
+      "code": "TNLN",
+      "name": "natural tunnel",
+      "language": "en",
+      "category-name": "Streets/Highways/Roads",
+      "description": "a cave that is open at both ends"
+    },
+    {
+      "category": "L",
+      "code": "RESN",
+      "name": "nature reserve",
+      "language": "en",
+      "category-name": "Area",
+      "description": "an area reserved for the maintenance of a natural habitat"
+    },
+    {
+      "category": "L",
+      "code": "NVB",
+      "name": "naval base",
+      "language": "en",
+      "category-name": "Area",
+      "description": "an area used to store supplies, provide barracks for troops and naval personnel, a port for naval vessels, and from which operations are initiated"
+    },
+    {
+      "category": "H",
+      "code": "CNLN",
+      "name": "navigation canal(s)",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "a watercourse constructed for navigation of vessels"
+    },
+    {
+      "category": "H",
+      "code": "CHNN",
+      "name": "navigation channel",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "a buoyed channel of sufficient depth for the safe navigation of vessels"
+    },
+    {
+      "category": "S",
+      "code": "MNNI",
+      "name": "nickel mine(s)",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a mine where nickel ore is extracted"
+    },
+    {
+      "category": "S",
+      "code": "NOV",
+      "name": "novitiate",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a religious house or school where novices are trained"
+    },
+    {
+      "category": "S",
+      "code": "PSN",
+      "name": "nuclear power station",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "nuclear power station"
+    },
+    {
+      "category": "T",
+      "code": "NTK",
+      "name": "nunatak",
+      "language": "en",
+      "category-name": "Hypsographic",
+      "description": "a rock or mountain peak protruding through glacial ice"
+    },
+    {
+      "category": "T",
+      "code": "NTKS",
+      "name": "nunataks",
+      "language": "en",
+      "category-name": "Hypsographic",
+      "description": "rocks or mountain peaks protruding through glacial ice"
+    },
+    {
+      "category": "S",
+      "code": "NSY",
+      "name": "nursery(-ies)",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a place where plants are propagated for transplanting or grafting"
+    },
+    {
+      "category": "L",
+      "code": "OAS",
+      "name": "oasis(-es)",
+      "language": "en",
+      "category-name": "Area",
+      "description": "an area in a desert made productive by the availability of water"
+    },
+    {
+      "category": "S",
+      "code": "OBPT",
+      "name": "observation point",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a wildlife or scenic observation point"
+    },
+    {
+      "category": "S",
+      "code": "OBS",
+      "name": "observatory",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a facility equipped for observation of atmospheric or space phenomena"
+    },
+    {
+      "category": "H",
+      "code": "OCN",
+      "name": "ocean",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "one of the major divisions of the vast expanse of salt water covering part of the earth"
+    },
+    {
+      "category": "S",
+      "code": "BLDO",
+      "name": "office building",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "commercial building where business and/or services are conducted"
+    },
+    {
+      "category": "S",
+      "code": "CMPO",
+      "name": "oil camp",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a camp used by oilfield workers"
+    },
+    {
+      "category": "S",
+      "code": "ESTO",
+      "name": "oil palm plantation",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "an estate specializing in the cultivation of oil palm trees"
+    },
+    {
+      "category": "R",
+      "code": "OILP",
+      "name": "oil pipeline",
+      "language": "en",
+      "category-name": "Streets/Highways/Roads",
+      "description": "a pipeline used for transporting oil"
+    },
+    {
+      "category": "S",
+      "code": "OILJ",
+      "name": "oil pipeline junction",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a section of an oil pipeline where two or more pipes join together"
+    },
+    {
+      "category": "S",
+      "code": "TRMO",
+      "name": "oil pipeline terminal",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a tank farm or loading facility at the end of an oil pipeline"
+    },
+    {
+      "category": "S",
+      "code": "PMPO",
+      "name": "oil pumping station",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a facility for pumping oil through a pipeline"
+    },
+    {
+      "category": "S",
+      "code": "OILR",
+      "name": "oil refinery",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a facility for converting crude oil into refined petroleum products"
+    },
+    {
+      "category": "S",
+      "code": "OILW",
+      "name": "oil well",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a well from which oil may be pumped"
+    },
+    {
+      "category": "L",
+      "code": "OILF",
+      "name": "oilfield",
+      "language": "en",
+      "category-name": "Area",
+      "description": "an area containing a subterranean store of petroleum of economic value"
+    },
+    {
+      "category": "V",
+      "code": "GRVO",
+      "name": "olive grove",
+      "language": "en",
+      "category-name": "Vegetation",
+      "description": "a planting of olive trees"
+    },
+    {
+      "category": "S",
+      "code": "MLO",
+      "name": "olive oil mill",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a mill where oil is extracted from olives"
+    },
+    {
+      "category": "V",
+      "code": "OCH",
+      "name": "orchard(s)",
+      "language": "en",
+      "category-name": "Vegetation",
+      "description": "a planting of fruit or nut trees"
+    },
+    {
+      "category": "S",
+      "code": "MLM",
+      "name": "ore treatment plant",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a facility for improving the metal content of ore by concentration"
+    },
+    {
+      "category": "H",
+      "code": "OVF",
+      "name": "overfalls",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "an area of breaking waves caused by the meeting of currents or by waves moving against the current"
+    },
+    {
+      "category": "H",
+      "code": "LKO",
+      "name": "oxbow lake",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "a crescent-shaped lake commonly found adjacent to meandering streams"
+    },
+    {
+      "category": "S",
+      "code": "PGDA",
+      "name": "pagoda",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a tower-like storied structure, usually a Buddhist shrine"
+    },
+    {
+      "category": "S",
+      "code": "PAL",
+      "name": "palace",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a large stately house, often a royal or presidential residence"
+    },
+    {
+      "category": "V",
+      "code": "GRVP",
+      "name": "palm grove",
+      "language": "en",
+      "category-name": "Vegetation",
+      "description": "a planting of palm trees"
+    },
+    {
+      "category": "L",
+      "code": "RESP",
+      "name": "palm tree reserve",
+      "language": "en",
+      "category-name": "Area",
+      "description": "an area of palm trees where use is controlled"
+    },
+    {
+      "category": "T",
+      "code": "PAN",
+      "name": "pan",
+      "language": "en",
+      "category-name": "Hypsographic",
+      "description": "a near-level shallow, natural depression or basin, usually containing an intermittent lake, pond, or pool"
+    },
+    {
+      "category": "T",
+      "code": "PANS",
+      "name": "pans",
+      "language": "en",
+      "category-name": "Hypsographic",
+      "description": "a near-level shallow, natural depression or basin, usually containing an intermittent lake, pond, or pool"
+    },
+    {
+      "category": "A",
+      "code": "PRSH",
+      "name": "parish",
+      "language": "en",
+      "category-name": "Administrative Region",
+      "description": "an ecclesiastical district"
+    },
+    {
+      "category": "L",
+      "code": "PRK",
+      "name": "park",
+      "language": "en",
+      "category-name": "Area",
+      "description": "an area, often of forested land, maintained as a place of beauty, or for recreation"
+    },
+    {
+      "category": "S",
+      "code": "PRKGT",
+      "name": "park gate",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a controlled access to a park"
+    },
+    {
+      "category": "S",
+      "code": "PRKHQ",
+      "name": "park headquarters",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a park administrative facility"
+    },
+    {
+      "category": "S",
+      "code": "GARG",
+      "name": "parking garage",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a building or underground facility used exclusively for parking vehicles"
+    },
+    {
+      "category": "S",
+      "code": "PKLT",
+      "name": "parking lot",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "an area used for parking vehicles"
+    },
+    {
+      "category": "T",
+      "code": "PASS",
+      "name": "pass",
+      "language": "en",
+      "category-name": "Hypsographic",
+      "description": "a break in a mountain range or other high obstruction, used for transportation from one side to the other [See also gap]"
+    },
+    {
+      "category": "S",
+      "code": "PSTP",
+      "name": "patrol post",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a post from which patrols are sent out"
+    },
+    {
+      "category": "T",
+      "code": "PK",
+      "name": "peak",
+      "language": "en",
+      "category-name": "Hypsographic",
+      "description": "a pointed elevation atop a mountain, ridge, or other hypsographic feature"
+    },
+    {
+      "category": "T",
+      "code": "PKS",
+      "name": "peaks",
+      "language": "en",
+      "category-name": "Hypsographic",
+      "description": "pointed elevations atop a mountain, ridge, or other hypsographic features"
+    },
+    {
+      "category": "L",
+      "code": "PEAT",
+      "name": "peat cutting area",
+      "language": "en",
+      "category-name": "Area",
+      "description": "an area where peat is harvested"
+    },
+    {
+      "category": "T",
+      "code": "PEN",
+      "name": "peninsula",
+      "language": "en",
+      "category-name": "Hypsographic",
+      "description": "an elongate area of land projecting into a body of water and nearly surrounded by water"
+    },
+    {
+      "category": "L",
+      "code": "BSNP",
+      "name": "petroleum basin",
+      "language": "en",
+      "category-name": "Area",
+      "description": "an area underlain by an oil-rich structural basin"
+    },
+    {
+      "category": "S",
+      "code": "MFGPH",
+      "name": "phosphate works",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a facility for producing fertilizer"
+    },
+    {
+      "category": "S",
+      "code": "PIER",
+      "name": "pier",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a structure built out into navigable water on piles providing berthing for ships and recreation"
+    },
+    {
+      "category": "V",
+      "code": "GRVPN",
+      "name": "pine grove",
+      "language": "en",
+      "category-name": "Vegetation",
+      "description": "a planting of pine trees"
+    },
+    {
+      "category": "S",
+      "code": "MNPL",
+      "name": "placer mine(s)",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a place where heavy metals are concentrated and running water is used to extract them from unconsolidated sediments"
+    },
+    {
+      "category": "T",
+      "code": "PLN",
+      "name": "plain(s)",
+      "language": "en",
+      "category-name": "Hypsographic",
+      "description": "an extensive area of comparatively level to gently undulating land, lacking surface irregularities, and usually adjacent to a higher area"
+    },
+    {
+      "category": "T",
+      "code": "PLAT",
+      "name": "plateau",
+      "language": "en",
+      "category-name": "Hypsographic",
+      "description": "an elevated plain with steep slopes on one or more sides, and often with incised streams"
+    },
+    {
+      "category": "T",
+      "code": "PT",
+      "name": "point",
+      "language": "en",
+      "category-name": "Hypsographic",
+      "description": "a tapering piece of land projecting into a body of water, less prominent than a cape"
+    },
+    {
+      "category": "T",
+      "code": "PTS",
+      "name": "points",
+      "language": "en",
+      "category-name": "Hypsographic",
+      "description": "tapering pieces of land projecting into a body of water, less prominent than a cape"
+    },
+    {
+      "category": "T",
+      "code": "PLDR",
+      "name": "polder",
+      "language": "en",
+      "category-name": "Hypsographic",
+      "description": "an area reclaimed from the sea by diking and draining"
+    },
+    {
+      "category": "S",
+      "code": "PP",
+      "name": "police post",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a building in which police are stationed"
+    },
+    {
+      "category": "A",
+      "code": "PCL",
+      "name": "political entity",
+      "language": "en",
+      "category-name": "Administrative Region",
+      "description": "political entity"
+    },
+    {
+      "category": "H",
+      "code": "PND",
+      "name": "pond",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "a small standing waterbody"
+    },
+    {
+      "category": "H",
+      "code": "PNDS",
+      "name": "ponds",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "small standing waterbodies"
+    },
+    {
+      "category": "H",
+      "code": "POOL",
+      "name": "pool(s)",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "a small and comparatively still, deep part of a larger body of water such as a stream or harbor; or a small body of standing water"
+    },
+    {
+      "category": "P",
+      "code": "PPLL",
+      "name": "populated locality",
+      "language": "en",
+      "category-name": "Populated Place",
+      "description": "an area similar to a locality but with a small group of dwellings or other buildings"
+    },
+    {
+      "category": "P",
+      "code": "PPL",
+      "name": "populated place",
+      "language": "en",
+      "category-name": "Populated Place",
+      "description": "a city, town, village, or other agglomeration of buildings where people live and work"
+    },
+    {
+      "category": "P",
+      "code": "PPLS",
+      "name": "populated places",
+      "language": "en",
+      "category-name": "Populated Place",
+      "description": "cities, towns, villages, or other agglomerations of buildings where people live and work"
+    },
+    {
+      "category": "L",
+      "code": "PRT",
+      "name": "port",
+      "language": "en",
+      "category-name": "Area",
+      "description": "a place provided with terminal and transfer facilities for loading and discharging waterborne cargo or passengers, usually located in a harbor"
+    },
+    {
+      "category": "R",
+      "code": "PTGE",
+      "name": "portage",
+      "language": "en",
+      "category-name": "Streets/Highways/Roads",
+      "description": "a place where boats, goods, etc., are carried overland between navigable waters"
+    },
+    {
+      "category": "S",
+      "code": "PO",
+      "name": "post office",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a public building in which mail is received, sorted and distributed"
+    },
+    {
+      "category": "S",
+      "code": "PS",
+      "name": "power station",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a facility for generating electric power"
+    },
+    {
+      "category": "S",
+      "code": "PRN",
+      "name": "prison",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a facility for confining prisoners"
+    },
+    {
+      "category": "R",
+      "code": "PRMN",
+      "name": "promenade",
+      "language": "en",
+      "category-name": "Streets/Highways/Roads",
+      "description": "a place for public walking, usually along a beach front"
+    },
+    {
+      "category": "T",
+      "code": "PROM",
+      "name": "promontory(-ies)",
+      "language": "en",
+      "category-name": "Hypsographic",
+      "description": "a bluff or prominent hill overlooking or projecting into a lowland"
+    },
+    {
+      "category": "S",
+      "code": "PYR",
+      "name": "pyramid",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "an ancient massive structure of square ground plan with four triangular faces meeting at a point and used for enclosing tombs"
+    },
+    {
+      "category": "S",
+      "code": "PYRS",
+      "name": "pyramids",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "ancient massive structures of square ground plan with four triangular faces meeting at a point and used for enclosing tombs"
+    },
+    {
+      "category": "S",
+      "code": "MNQR",
+      "name": "quarry(-ies)",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a surface mine where building stone or gravel and sand, etc. are extracted"
+    },
+    {
+      "category": "S",
+      "code": "QUAY",
+      "name": "quay",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a structure of solid construction along a shore or bank which provides berthing for ships and which generally provides cargo handling facilities"
+    },
+    {
+      "category": "L",
+      "code": "QCKS",
+      "name": "quicksand",
+      "language": "en",
+      "category-name": "Area",
+      "description": "an area where loose sand with water moving through it may become unstable when heavy objects are placed at the surface, causing them to sink"
+    },
+    {
+      "category": "S",
+      "code": "RECR",
+      "name": "racetrack",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a track where races are held"
+    },
+    {
+      "category": "S",
+      "code": "OBSR",
+      "name": "radio observatory",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a facility equipped with an array of antennae for receiving radio waves from space"
+    },
+    {
+      "category": "S",
+      "code": "STNR",
+      "name": "radio station",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a facility for producing and transmitting information by radio waves"
+    },
+    {
+      "category": "R",
+      "code": "RR",
+      "name": "railroad",
+      "language": "en",
+      "category-name": "Streets/Highways/Roads",
+      "description": "a permanent twin steel-rail track on which freight and passenger cars move long distances"
+    },
+    {
+      "category": "R",
+      "code": "RJCT",
+      "name": "railroad junction",
+      "language": "en",
+      "category-name": "Streets/Highways/Roads",
+      "description": "a place where two or more railroad tracks join"
+    },
+    {
+      "category": "S",
+      "code": "RSD",
+      "name": "railroad siding",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a short track parallel to and joining the main track"
+    },
+    {
+      "category": "S",
+      "code": "RSGNL",
+      "name": "railroad signal",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a signal at the entrance of a particular section of track governing the movement of trains"
+    },
+    {
+      "category": "S",
+      "code": "RSTN",
+      "name": "railroad station",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a facility comprising ticket office, platforms, etc. for loading and unloading train passengers and freight"
+    },
+    {
+      "category": "S",
+      "code": "RSTP",
+      "name": "railroad stop",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a place lacking station facilities where trains stop to pick up and unload passengers and freight"
+    },
+    {
+      "category": "R",
+      "code": "TNLRR",
+      "name": "railroad tunnel",
+      "language": "en",
+      "category-name": "Streets/Highways/Roads",
+      "description": "a tunnel through which a railroad passes"
+    },
+    {
+      "category": "R",
+      "code": "RYD",
+      "name": "railroad yard",
+      "language": "en",
+      "category-name": "Streets/Highways/Roads",
+      "description": "a system of tracks used for the making up of trains, and switching and storing freight cars"
+    },
+    {
+      "category": "S",
+      "code": "RNCH",
+      "name": "ranch(es)",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a large farm specializing in extensive grazing of livestock"
+    },
+    {
+      "category": "H",
+      "code": "RPDS",
+      "name": "rapids",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "a turbulent section of a stream associated with a steep, irregular stream bed"
+    },
+    {
+      "category": "H",
+      "code": "RVN",
+      "name": "ravine(s)",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "a small, narrow, deep, steep-sided stream channel, smaller than a gorge"
+    },
+    {
+      "category": "H",
+      "code": "RCH",
+      "name": "reach",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "a straight section of a navigable stream or channel between two bends"
+    },
+    {
+      "category": "H",
+      "code": "RF",
+      "name": "reef(s)",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "a surface-navigation hazard composed of consolidated material"
+    },
+    {
+      "category": "S",
+      "code": "PRNJ",
+      "name": "reformatory",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a facility for confining, training, and reforming young law offenders"
+    },
+    {
+      "category": "S",
+      "code": "CMPRF",
+      "name": "refugee camp",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a camp used by refugees"
+    },
+    {
+      "category": "L",
+      "code": "RGN",
+      "name": "region",
+      "language": "en",
+      "category-name": "Area",
+      "description": "an area distinguished by one or more observable physical or cultural characteristics"
+    },
+    {
+      "category": "S",
+      "code": "CTRR",
+      "name": "religious center",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a facility where more than one religious activity is carried out, e.g., retreat, school, monastery, worship"
+    },
+    {
+      "category": "P",
+      "code": "PPLR",
+      "name": "religious populated place",
+      "language": "en",
+      "category-name": "Populated Place",
+      "description": "a populated place whose population is largely engaged in religious occupations"
+    },
+    {
+      "category": "S",
+      "code": "RLG",
+      "name": "religious site",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "an ancient site of significant religious importance"
+    },
+    {
+      "category": "S",
+      "code": "ITTR",
+      "name": "research institute",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a facility where research is carried out"
+    },
+    {
+      "category": "L",
+      "code": "RESV",
+      "name": "reservation",
+      "language": "en",
+      "category-name": "Area",
+      "description": "a tract of land set aside for aboriginal, tribal, or native populations"
+    },
+    {
+      "category": "L",
+      "code": "RES",
+      "name": "reserve",
+      "language": "en",
+      "category-name": "Area",
+      "description": "a tract of public land reserved for future use or restricted as to use"
+    },
+    {
+      "category": "H",
+      "code": "RSV",
+      "name": "reservoir(s)",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "an artificial pond or lake"
+    },
+    {
+      "category": "S",
+      "code": "RSRT",
+      "name": "resort",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a specialized facility for vacation, health, or participation sports activities"
+    },
+    {
+      "category": "S",
+      "code": "RHSE",
+      "name": "resthouse",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a structure maintained for the rest and shelter of travelers"
+    },
+    {
+      "category": "S",
+      "code": "RLGR",
+      "name": "retreat",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a place of temporary seclusion, especially for religious groups"
+    },
+    {
+      "category": "T",
+      "code": "RDGE",
+      "name": "ridge(s)",
+      "language": "en",
+      "category-name": "Hypsographic",
+      "description": "a long narrow elevation with steep sides, and a more or less continuous crest"
+    },
+    {
+      "category": "R",
+      "code": "RD",
+      "name": "road",
+      "language": "en",
+      "category-name": "Streets/Highways/Roads",
+      "description": "an open way with improved surface for transportation of animals, people and vehicles"
+    },
+    {
+      "category": "R",
+      "code": "RDB",
+      "name": "road bend",
+      "language": "en",
+      "category-name": "Streets/Highways/Roads",
+      "description": "a conspicuously curved or bent section of a road"
+    },
+    {
+      "category": "R",
+      "code": "RDCUT",
+      "name": "road cut",
+      "language": "en",
+      "category-name": "Streets/Highways/Roads",
+      "description": "an excavation cut through a hill or ridge for a road"
+    },
+    {
+      "category": "R",
+      "code": "RDJCT",
+      "name": "road junction",
+      "language": "en",
+      "category-name": "Streets/Highways/Roads",
+      "description": "a place where two or more roads join"
+    },
+    {
+      "category": "R",
+      "code": "TNLRD",
+      "name": "road tunnel",
+      "language": "en",
+      "category-name": "Streets/Highways/Roads",
+      "description": "a tunnel through which a road passes"
+    },
+    {
+      "category": "H",
+      "code": "RDST",
+      "name": "roadstead",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "an open anchorage affording less protection than a harbor"
+    },
+    {
+      "category": "T",
+      "code": "RK",
+      "name": "rock",
+      "language": "en",
+      "category-name": "Hypsographic",
+      "description": "a conspicuous, isolated rocky mass"
+    },
+    {
+      "category": "T",
+      "code": "HMDA",
+      "name": "rock desert",
+      "language": "en",
+      "category-name": "Hypsographic",
+      "description": "a relatively sand-free, high bedrock plateau in a hot desert, with or without a gravel veneer"
+    },
+    {
+      "category": "T",
+      "code": "RKFL",
+      "name": "rockfall",
+      "language": "en",
+      "category-name": "Hypsographic",
+      "description": "an irregular mass of fallen rock at the base of a cliff or steep slope"
+    },
+    {
+      "category": "T",
+      "code": "RKS",
+      "name": "rocks",
+      "language": "en",
+      "category-name": "Hypsographic",
+      "description": "conspicuous, isolated rocky masses"
+    },
+    {
+      "category": "S",
+      "code": "RKRY",
+      "name": "rookery",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a breeding place of a colony of birds or seals"
+    },
+    {
+      "category": "S",
+      "code": "ESTR",
+      "name": "rubber plantation",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "an estate which specializes in growing and tapping rubber trees"
+    },
+    {
+      "category": "S",
+      "code": "RUIN",
+      "name": "ruin(s)",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a destroyed or decayed structure which is no longer functional"
+    },
+    {
+      "category": "S",
+      "code": "BDGQ",
+      "name": "ruined bridge",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a destroyed or decayed bridge which is no longer functional"
+    },
+    {
+      "category": "S",
+      "code": "DAMQ",
+      "name": "ruined dam",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a destroyed or decayed dam which is no longer functional"
+    },
+    {
+      "category": "H",
+      "code": "SBKH",
+      "name": "sabkha(s)",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "a salt flat or salt encrusted plain subject to periodic inundation from flooding or high tides"
+    },
+    {
+      "category": "T",
+      "code": "SDL",
+      "name": "saddle",
+      "language": "en",
+      "category-name": "Hypsographic",
+      "description": "a broad, open pass crossing a ridge or between hills or mountains"
+    },
+    {
+      "category": "L",
+      "code": "SALT",
+      "name": "salt area",
+      "language": "en",
+      "category-name": "Area",
+      "description": "a shallow basin or flat where salt accumulates after periodic inundation"
+    },
+    {
+      "category": "H",
+      "code": "MFGN",
+      "name": "salt evaporation ponds",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "diked salt ponds used in the production of solar evaporated salt"
+    },
+    {
+      "category": "H",
+      "code": "LKN",
+      "name": "salt lake",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "an inland body of salt water with no outlet"
+    },
+    {
+      "category": "H",
+      "code": "LKSN",
+      "name": "salt lakes",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "inland bodies of salt water with no outlet"
+    },
+    {
+      "category": "H",
+      "code": "MRSHN",
+      "name": "salt marsh",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "a flat area, subject to periodic salt water inundation, dominated by grassy salt-tolerant plants"
+    },
+    {
+      "category": "S",
+      "code": "MNN",
+      "name": "salt mine(s)",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a mine from which salt is extracted"
+    },
+    {
+      "category": "H",
+      "code": "PNDN",
+      "name": "salt pond",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "a small standing body of salt water often in a marsh or swamp, usually along a seacoast"
+    },
+    {
+      "category": "H",
+      "code": "PNDSN",
+      "name": "salt ponds",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "small standing bodies of salt water often in a marsh or swamp, usually along a seacoast"
+    },
+    {
+      "category": "S",
+      "code": "SNTR",
+      "name": "sanatorium",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a facility where victims of physical or mental disorders are treated"
+    },
+    {
+      "category": "T",
+      "code": "SAND",
+      "name": "sand area",
+      "language": "en",
+      "category-name": "Hypsographic",
+      "description": "a tract of land covered with sand"
+    },
+    {
+      "category": "T",
+      "code": "ERG",
+      "name": "sandy desert",
+      "language": "en",
+      "category-name": "Hypsographic",
+      "description": "an extensive tract of shifting sand and sand dunes"
+    },
+    {
+      "category": "S",
+      "code": "STNS",
+      "name": "satellite station",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a facility for tracking and communicating with orbiting satellites"
+    },
+    {
+      "category": "S",
+      "code": "MLSW",
+      "name": "sawmill",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a mill where logs or lumber are sawn to specified shapes and sizes"
+    },
+    {
+      "category": "S",
+      "code": "SCH",
+      "name": "school",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "building(s) where instruction in one or more branches of knowledge takes place"
+    },
+    {
+      "category": "A",
+      "code": "ADMS",
+      "name": "school district",
+      "language": "en",
+      "category-name": "Administrative Region",
+      "description": "school district"
+    },
+    {
+      "category": "S",
+      "code": "STNB",
+      "name": "scientific research base",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a scientific facility used as a base from which research is carried out or monitored"
+    },
+    {
+      "category": "V",
+      "code": "SCRB",
+      "name": "scrubland",
+      "language": "en",
+      "category-name": "Vegetation",
+      "description": "an area of low trees, bushes, and shrubs stunted by some environmental limitation"
+    },
+    {
+      "category": "H",
+      "code": "SEA",
+      "name": "sea",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "a large body of salt water more or less confined by continuous land or chains of islands forming a subdivision of an ocean"
+    },
+    {
+      "category": "U",
+      "code": "SCNU",
+      "name": "seachannel",
+      "language": "en",
+      "category-name": "Undersea",
+      "description": "a continuously sloping, elongated depression commonly found in fans or plains and customarily bordered by levees on one or two sides"
+    },
+    {
+      "category": "U",
+      "code": "SCSU",
+      "name": "seachannels",
+      "language": "en",
+      "category-name": "Undersea",
+      "description": "continuously sloping, elongated depressions commonly found in fans or plains and customarily bordered by levees on one or two sides"
+    },
+    {
+      "category": "U",
+      "code": "SMU",
+      "name": "seamount",
+      "language": "en",
+      "category-name": "Undersea",
+      "description": "an elevation rising generally more than 1,000 meters and of limited extent across the summit"
+    },
+    {
+      "category": "U",
+      "code": "SMSU",
+      "name": "seamounts",
+      "language": "en",
+      "category-name": "Undersea",
+      "description": "elevations rising generally more than 1,000 meters and of limited extent across the summit"
+    },
+    {
+      "category": "H",
+      "code": "AIRS",
+      "name": "seaplane landing area",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "a place on a waterbody where floatplanes land and take off"
+    },
+    {
+      "category": "P",
+      "code": "PPLA",
+      "name": "seat of a first-order administrative division",
+      "language": "en",
+      "category-name": "Populated Place",
+      "description": "seat of a first-order administrative division (PPLC takes precedence over PPLA)"
+    },
+    {
+      "category": "P",
+      "code": "PPLA4",
+      "name": "seat of a fourth-order administrative division",
+      "language": "en",
+      "category-name": "Populated Place",
+      "description": "seat of a fourth-order administrative division"
+    },
+    {
+      "category": "P",
+      "code": "PPLA2",
+      "name": "seat of a second-order administrative division",
+      "language": "en",
+      "category-name": "Populated Place",
+      "description": "seat of a second-order administrative division"
+    },
+    {
+      "category": "P",
+      "code": "PPLA3",
+      "name": "seat of a third-order administrative division",
+      "language": "en",
+      "category-name": "Populated Place",
+      "description": "seat of a third-order administrative division"
+    },
+    {
+      "category": "A",
+      "code": "ADM2",
+      "name": "second-order administrative division",
+      "language": "en",
+      "category-name": "Administrative Region",
+      "description": "a subdivision of a first-order administrative division"
+    },
+    {
+      "category": "H",
+      "code": "BNKX",
+      "name": "section of bank",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "section of bank"
+    },
+    {
+      "category": "H",
+      "code": "CNLX",
+      "name": "section of canal",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "section of canal"
+    },
+    {
+      "category": "S",
+      "code": "ESTX",
+      "name": "section of estate",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "section of estate"
+    },
+    {
+      "category": "H",
+      "code": "HBRX",
+      "name": "section of harbor",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "section of harbor"
+    },
+    {
+      "category": "A",
+      "code": "PCLIX",
+      "name": "section of independent political entity",
+      "language": "en",
+      "category-name": "Administrative Region",
+      "description": "section of independent political entity"
+    },
+    {
+      "category": "H",
+      "code": "STMIX",
+      "name": "section of intermittent stream",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "section of intermittent stream"
+    },
+    {
+      "category": "T",
+      "code": "ISLX",
+      "name": "section of island",
+      "language": "en",
+      "category-name": "Hypsographic",
+      "description": "section of island"
+    },
+    {
+      "category": "H",
+      "code": "LGNX",
+      "name": "section of lagoon",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "section of lagoon"
+    },
+    {
+      "category": "H",
+      "code": "LKX",
+      "name": "section of lake",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "section of lake"
+    },
+    {
+      "category": "T",
+      "code": "PENX",
+      "name": "section of peninsula",
+      "language": "en",
+      "category-name": "Hypsographic",
+      "description": "section of peninsula"
+    },
+    {
+      "category": "T",
+      "code": "PLNX",
+      "name": "section of plain",
+      "language": "en",
+      "category-name": "Hypsographic",
+      "description": "section of plain"
+    },
+    {
+      "category": "T",
+      "code": "PLATX",
+      "name": "section of plateau",
+      "language": "en",
+      "category-name": "Hypsographic",
+      "description": "section of plateau"
+    },
+    {
+      "category": "P",
+      "code": "PPLX",
+      "name": "section of populated place",
+      "language": "en",
+      "category-name": "Populated Place",
+      "description": "section of populated place"
+    },
+    {
+      "category": "H",
+      "code": "RFX",
+      "name": "section of reef",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "section of reef"
+    },
+    {
+      "category": "H",
+      "code": "STMX",
+      "name": "section of stream",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "section of stream"
+    },
+    {
+      "category": "T",
+      "code": "VALX",
+      "name": "section of valley",
+      "language": "en",
+      "category-name": "Hypsographic",
+      "description": "section of valley"
+    },
+    {
+      "category": "H",
+      "code": "WADX",
+      "name": "section of wadi",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "section of wadi"
+    },
+    {
+      "category": "H",
+      "code": "FLLSX",
+      "name": "section of waterfall(s)",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "section of waterfall(s)"
+    },
+    {
+      "category": "A",
+      "code": "PCLS",
+      "name": "semi-independent political entity",
+      "language": "en",
+      "category-name": "Administrative Region",
+      "description": "semi-independent political entity"
+    },
+    {
+      "category": "S",
+      "code": "SWT",
+      "name": "sewage treatment plant",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "facility for the processing of sewage and/or wastewater"
+    },
+    {
+      "category": "S",
+      "code": "SHPF",
+      "name": "sheepfold",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a fence or wall enclosure for sheep and other small herd animals"
+    },
+    {
+      "category": "H",
+      "code": "SHOL",
+      "name": "shoal(s)",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "a surface-navigation hazard composed of unconsolidated material"
+    },
+    {
+      "category": "S",
+      "code": "SHOPC",
+      "name": "shopping center or mall",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "an urban shopping area featuring a variety of shops surrounding a usually open-air concourse reserved for pedestrian traffic; or a large suburban building or group of buildings containing various shops with associated passageways"
+    },
+    {
+      "category": "T",
+      "code": "SHOR",
+      "name": "shore",
+      "language": "en",
+      "category-name": "Hypsographic",
+      "description": "a narrow zone bordering a waterbody which covers and uncovers at high and low water, respectively"
+    },
+    {
+      "category": "S",
+      "code": "SHRN",
+      "name": "shrine",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a structure or place memorializing a person or religious concept"
+    },
+    {
+      "category": "H",
+      "code": "SILL",
+      "name": "sill",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "the low part of a gap or saddle separating basins"
+    },
+    {
+      "category": "T",
+      "code": "SINK",
+      "name": "sinkhole",
+      "language": "en",
+      "category-name": "Hypsographic",
+      "description": "a small crater-shape depression in a karst area"
+    },
+    {
+      "category": "S",
+      "code": "ESTSL",
+      "name": "sisal plantation",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "an estate that specializes in growing sisal"
+    },
+    {
+      "category": "T",
+      "code": "SLID",
+      "name": "slide",
+      "language": "en",
+      "category-name": "Hypsographic",
+      "description": "a mound of earth material, at the base of a slope and the associated scoured area"
+    },
+    {
+      "category": "T",
+      "code": "SLP",
+      "name": "slope(s)",
+      "language": "en",
+      "category-name": "Hypsographic",
+      "description": "a surface with a relatively uniform slope angle"
+    },
+    {
+      "category": "S",
+      "code": "SLCE",
+      "name": "sluice",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a conduit or passage for carrying off surplus water from a waterbody, usually regulated by means of a sluice gate"
+    },
+    {
+      "category": "L",
+      "code": "SNOW",
+      "name": "snowfield",
+      "language": "en",
+      "category-name": "Area",
+      "description": "an area of permanent snow and ice forming the accumulation area of a glacier"
+    },
+    {
+      "category": "H",
+      "code": "SD",
+      "name": "sound",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "a long arm of the sea forming a channel between the mainland and an island or islands; or connecting two larger bodies of water"
+    },
+    {
+      "category": "S",
+      "code": "SPA",
+      "name": "spa",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a resort area usually developed around a medicinal spring"
+    },
+    {
+      "category": "S",
+      "code": "CTRS",
+      "name": "space center",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a facility for launching, tracking, or controlling satellites and space vehicles"
+    },
+    {
+      "category": "S",
+      "code": "SPLY",
+      "name": "spillway",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a passage or outlet through which surplus water flows over, around or through a dam"
+    },
+    {
+      "category": "T",
+      "code": "SPIT",
+      "name": "spit",
+      "language": "en",
+      "category-name": "Hypsographic",
+      "description": "a narrow, straight or curved continuation of a beach into a waterbody"
+    },
+    {
+      "category": "H",
+      "code": "SPNG",
+      "name": "spring(s)",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "a place where ground water flows naturally out of the ground"
+    },
+    {
+      "category": "T",
+      "code": "SPUR",
+      "name": "spur(s)",
+      "language": "en",
+      "category-name": "Hypsographic",
+      "description": "a subordinate ridge projecting outward from a hill, mountain or other elevation"
+    },
+    {
+      "category": "S",
+      "code": "SQR",
+      "name": "square",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a broad, open, public area near the center of a town or city"
+    },
+    {
+      "category": "S",
+      "code": "STBL",
+      "name": "stable",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a building for the shelter and feeding of farm animals, especially horses"
+    },
+    {
+      "category": "S",
+      "code": "STDM",
+      "name": "stadium",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a structure with an enclosure for athletic games with tiers of seats for spectators"
+    },
+    {
+      "category": "S",
+      "code": "STPS",
+      "name": "steps",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "stones or slabs placed for ease in ascending or descending a steep slope"
+    },
+    {
+      "category": "R",
+      "code": "STKR",
+      "name": "stock route",
+      "language": "en",
+      "category-name": "Streets/Highways/Roads",
+      "description": "a route taken by livestock herds"
+    },
+    {
+      "category": "T",
+      "code": "REG",
+      "name": "stony desert",
+      "language": "en",
+      "category-name": "Hypsographic",
+      "description": "a desert plain characterized by a surface veneer of gravel and stones"
+    },
+    {
+      "category": "S",
+      "code": "RET",
+      "name": "store",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a building where goods and/or services are offered for sale"
+    },
+    {
+      "category": "S",
+      "code": "SHSE",
+      "name": "storehouse",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a building for storing goods, especially provisions"
+    },
+    {
+      "category": "H",
+      "code": "STRT",
+      "name": "strait",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "a relatively narrow waterway, usually narrower and less extensive than a sound, connecting two larger bodies of water"
+    },
+    {
+      "category": "H",
+      "code": "STM",
+      "name": "stream",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "a body of running water moving to a lower level in a channel on land"
+    },
+    {
+      "category": "H",
+      "code": "BNKR",
+      "name": "stream bank",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "a sloping margin of a stream channel which normally confines the stream to its channel on land"
+    },
+    {
+      "category": "H",
+      "code": "STMB",
+      "name": "stream bend",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "a conspicuously curved or bent segment of a stream"
+    },
+    {
+      "category": "S",
+      "code": "STMGS",
+      "name": "stream gauging station",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "named place where a measuring station for a watercourse, reservoir or other water body exists"
+    },
+    {
+      "category": "H",
+      "code": "STMM",
+      "name": "stream mouth(s)",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "a place where a stream discharges into a lagoon, lake, or the sea"
+    },
+    {
+      "category": "H",
+      "code": "STMS",
+      "name": "streams",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "bodies of running water moving to a lower level in a channel on land"
+    },
+    {
+      "category": "R",
+      "code": "ST",
+      "name": "street",
+      "language": "en",
+      "category-name": "Streets/Highways/Roads",
+      "description": "a paved urban thoroughfare"
+    },
+    {
+      "category": "S",
+      "code": "DAMSB",
+      "name": "sub-surface dam",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a dam put down to bedrock in a sand river"
+    },
+    {
+      "category": "S",
+      "code": "SUBW",
+      "name": "subway",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a railroad used for mass public transportation primarily in urban areas, all or part of the system may be located below, above, or at ground level"
+    },
+    {
+      "category": "S",
+      "code": "SUBS",
+      "name": "subway station",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a facility comprising ticket office, platforms, etc. for loading and unloading subway passengers"
+    },
+    {
+      "category": "S",
+      "code": "MLSG",
+      "name": "sugar mill",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a facility where sugar cane is processed into raw sugar"
+    },
+    {
+      "category": "S",
+      "code": "ESTSG",
+      "name": "sugar plantation",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "an estate that specializes in growing sugar cane"
+    },
+    {
+      "category": "S",
+      "code": "MFGSG",
+      "name": "sugar refinery",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a facility for converting raw sugar into refined sugar"
+    },
+    {
+      "category": "H",
+      "code": "SPNS",
+      "name": "sulphur spring(s)",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "a place where sulphur ground water flows naturally out of the ground"
+    },
+    {
+      "category": "H",
+      "code": "SWMP",
+      "name": "swamp",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "a wetland dominated by tree vegetation"
+    },
+    {
+      "category": "S",
+      "code": "SYG",
+      "name": "synagogue",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a place for Jewish worship and religious instruction"
+    },
+    {
+      "category": "U",
+      "code": "TMTU",
+      "name": "tablemount (or guyot)",
+      "language": "en",
+      "category-name": "Undersea",
+      "description": "a seamount having a comparatively smooth, flat top"
+    },
+    {
+      "category": "U",
+      "code": "TMSU",
+      "name": "tablemounts (or guyots)",
+      "language": "en",
+      "category-name": "Undersea",
+      "description": "seamounts having a comparatively smooth, flat top"
+    },
+    {
+      "category": "T",
+      "code": "TAL",
+      "name": "talus slope",
+      "language": "en",
+      "category-name": "Hypsographic",
+      "description": "a steep concave slope formed by an accumulation of loose rock fragments at the base of a cliff or steep slope"
+    },
+    {
+      "category": "S",
+      "code": "OILT",
+      "name": "tank farm",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a tract of land occupied by large, cylindrical, metal tanks in which oil or liquid petrochemicals are stored"
+    },
+    {
+      "category": "S",
+      "code": "ESTT",
+      "name": "tea plantation",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "an estate which specializes in growing tea bushes"
+    },
+    {
+      "category": "S",
+      "code": "SCHT",
+      "name": "technical school",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "post-secondary school with a specifically technical or vocational curriculum"
+    },
+    {
+      "category": "S",
+      "code": "TMPL",
+      "name": "temple(s)",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "an edifice dedicated to religious worship"
+    },
+    {
+      "category": "S",
+      "code": "AIRT",
+      "name": "terminal",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "airport facilities for the handling of freight and passengers"
+    },
+    {
+      "category": "T",
+      "code": "TRR",
+      "name": "terrace",
+      "language": "en",
+      "category-name": "Hypsographic",
+      "description": "a long, narrow alluvial platform bounded by steeper slopes above and below, usually overlooking a waterbody"
+    },
+    {
+      "category": "A",
+      "code": "TERR",
+      "name": "territory",
+      "language": "en",
+      "category-name": "Administrative Region",
+      "description": "territory"
+    },
+    {
+      "category": "A",
+      "code": "ADM3",
+      "name": "third-order administrative division",
+      "language": "en",
+      "category-name": "Administrative Region",
+      "description": "a subdivision of a second-order administrative division"
+    },
+    {
+      "category": "H",
+      "code": "CRKT",
+      "name": "tidal creek(s)",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "a meandering channel in a coastal wetland subject to bi-directional tidal currents"
+    },
+    {
+      "category": "H",
+      "code": "FLTT",
+      "name": "tidal flat(s)",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "a large flat area of mud or sand attached to the shore and alternately covered and uncovered by the tide"
+    },
+    {
+      "category": "S",
+      "code": "MNSN",
+      "name": "tin mine(s)",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a mine where tin ore is extracted"
+    },
+    {
+      "category": "S",
+      "code": "TOLL",
+      "name": "toll gate/barrier",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "highway toll collection station"
+    },
+    {
+      "category": "S",
+      "code": "TMB",
+      "name": "tomb(s)",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a structure for interring bodies"
+    },
+    {
+      "category": "S",
+      "code": "TOWR",
+      "name": "tower",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a high conspicuous structure, typically much higher than its diameter"
+    },
+    {
+      "category": "S",
+      "code": "RDCR",
+      "name": "traffic circle",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a road junction formed around a central circle about which traffic moves in one direction only"
+    },
+    {
+      "category": "R",
+      "code": "TRL",
+      "name": "trail",
+      "language": "en",
+      "category-name": "Streets/Highways/Roads",
+      "description": "a path, track, or route used by pedestrians, animals, or off-road vehicles"
+    },
+    {
+      "category": "S",
+      "code": "TRANT",
+      "name": "transit terminal",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "facilities for the handling of vehicular freight and passengers"
+    },
+    {
+      "category": "V",
+      "code": "TREE",
+      "name": "tree(s)",
+      "language": "en",
+      "category-name": "Vegetation",
+      "description": "a conspicuous tree used as a landmark"
+    },
+    {
+      "category": "S",
+      "code": "TRIG",
+      "name": "triangulation station",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a point on the earth whose position has been determined by triangulation"
+    },
+    {
+      "category": "L",
+      "code": "TRB",
+      "name": "tribal area",
+      "language": "en",
+      "category-name": "Area",
+      "description": "a tract of land used by nomadic or other tribes"
+    },
+    {
+      "category": "V",
+      "code": "TUND",
+      "name": "tundra",
+      "language": "en",
+      "category-name": "Vegetation",
+      "description": "a marshy, treeless, high latitude plain, dominated by mosses, lichens, and low shrub vegetation under permafrost conditions"
+    },
+    {
+      "category": "R",
+      "code": "TNL",
+      "name": "tunnel",
+      "language": "en",
+      "category-name": "Streets/Highways/Roads",
+      "description": "a subterranean passageway for transportation"
+    },
+    {
+      "category": "R",
+      "code": "TNLS",
+      "name": "tunnels",
+      "language": "en",
+      "category-name": "Streets/Highways/Roads",
+      "description": "subterranean passageways for transportation"
+    },
+    {
+      "category": "H",
+      "code": "CNLSB",
+      "name": "underground irrigation canal(s)",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "a gently inclined underground tunnel bringing water for irrigation from aquifers"
+    },
+    {
+      "category": "H",
+      "code": "LKSB",
+      "name": "underground lake",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "a standing body of water in a cave"
+    },
+    {
+      "category": "U",
+      "code": "APNU",
+      "name": "undersea apron",
+      "language": "en",
+      "category-name": "Undersea",
+      "description": "a gentle slope, with a generally smooth surface, particularly found around groups of islands and seamounts"
+    },
+    {
+      "category": "U",
+      "code": "ARCU",
+      "name": "undersea arch",
+      "language": "en",
+      "category-name": "Undersea",
+      "description": "a low bulge around the southeastern end of the island of Hawaii"
+    },
+    {
+      "category": "U",
+      "code": "ARRU",
+      "name": "undersea arrugado",
+      "language": "en",
+      "category-name": "Undersea",
+      "description": "an area of subdued corrugations off Baja California"
+    },
+    {
+      "category": "U",
+      "code": "BNKU",
+      "name": "undersea bank",
+      "language": "en",
+      "category-name": "Undersea",
+      "description": "an elevation, typically located on a shelf, over which the depth of water is relatively shallow but sufficient for safe surface navigation"
+    },
+    {
+      "category": "U",
+      "code": "BKSU",
+      "name": "undersea banks",
+      "language": "en",
+      "category-name": "Undersea",
+      "description": "elevations, typically located on a shelf, over which the depth of water is relatively shallow but sufficient for safe surface navigation"
+    },
+    {
+      "category": "U",
+      "code": "BSNU",
+      "name": "undersea basin",
+      "language": "en",
+      "category-name": "Undersea",
+      "description": "a depression more or less equidimensional in plan and of variable extent"
+    },
+    {
+      "category": "U",
+      "code": "BNCU",
+      "name": "undersea bench",
+      "language": "en",
+      "category-name": "Undersea",
+      "description": "a small terrace"
+    },
+    {
+      "category": "U",
+      "code": "BDLU",
+      "name": "undersea borderland",
+      "language": "en",
+      "category-name": "Undersea",
+      "description": "a region adjacent to a continent, normally occupied by or bordering a shelf, that is highly irregular with depths well in excess of those typical of a shelf"
+    },
+    {
+      "category": "U",
+      "code": "CNYU",
+      "name": "undersea canyon",
+      "language": "en",
+      "category-name": "Undersea",
+      "description": "a relatively narrow, deep depression with steep sides, the bottom of which generally has a continuous slope"
+    },
+    {
+      "category": "U",
+      "code": "CNSU",
+      "name": "undersea canyons",
+      "language": "en",
+      "category-name": "Undersea",
+      "description": "relatively narrow, deep depressions with steep sides, the bottom of which generally has a continuous slope"
+    },
+    {
+      "category": "U",
+      "code": "CDAU",
+      "name": "undersea cordillera",
+      "language": "en",
+      "category-name": "Undersea",
+      "description": "an entire mountain system including the subordinate ranges, interior plateaus, and basins"
+    },
+    {
+      "category": "U",
+      "code": "ESCU",
+      "name": "undersea escarpment (or scarp)",
+      "language": "en",
+      "category-name": "Undersea",
+      "description": "an elongated and comparatively steep slope separating flat or gently sloping areas"
+    },
+    {
+      "category": "U",
+      "code": "FANU",
+      "name": "undersea fan",
+      "language": "en",
+      "category-name": "Undersea",
+      "description": "a relatively smooth feature normally sloping away from the lower termination of a canyon or canyon system"
+    },
+    {
+      "category": "U",
+      "code": "FLTU",
+      "name": "undersea flat",
+      "language": "en",
+      "category-name": "Undersea",
+      "description": "a small level or nearly level area"
+    },
+    {
+      "category": "U",
+      "code": "FRKU",
+      "name": "undersea fork",
+      "language": "en",
+      "category-name": "Undersea",
+      "description": "a branch of a canyon or valley"
+    },
+    {
+      "category": "U",
+      "code": "FRSU",
+      "name": "undersea forks",
+      "language": "en",
+      "category-name": "Undersea",
+      "description": "a branch of a canyon or valley"
+    },
+    {
+      "category": "U",
+      "code": "FRZU",
+      "name": "undersea fracture zone",
+      "language": "en",
+      "category-name": "Undersea",
+      "description": "an extensive linear zone of irregular topography of the sea floor, characterized by steep-sided or asymmetrical ridges, troughs, or escarpments"
+    },
+    {
+      "category": "U",
+      "code": "FURU",
+      "name": "undersea furrow",
+      "language": "en",
+      "category-name": "Undersea",
+      "description": "a closed, linear, narrow, shallow depression"
+    },
+    {
+      "category": "U",
+      "code": "GAPU",
+      "name": "undersea gap",
+      "language": "en",
+      "category-name": "Undersea",
+      "description": "a narrow break in a ridge or rise"
+    },
+    {
+      "category": "U",
+      "code": "GLYU",
+      "name": "undersea gully",
+      "language": "en",
+      "category-name": "Undersea",
+      "description": "a small valley-like feature"
+    },
+    {
+      "category": "U",
+      "code": "HLLU",
+      "name": "undersea hill",
+      "language": "en",
+      "category-name": "Undersea",
+      "description": "an elevation rising generally less than 500 meters"
+    },
+    {
+      "category": "U",
+      "code": "HLSU",
+      "name": "undersea hills",
+      "language": "en",
+      "category-name": "Undersea",
+      "description": "elevations rising generally less than 500 meters"
+    },
+    {
+      "category": "U",
+      "code": "HOLU",
+      "name": "undersea hole",
+      "language": "en",
+      "category-name": "Undersea",
+      "description": "a small depression of the sea floor"
+    },
+    {
+      "category": "U",
+      "code": "KNLU",
+      "name": "undersea knoll",
+      "language": "en",
+      "category-name": "Undersea",
+      "description": "an elevation rising generally more than 500 meters and less than 1,000 meters and of limited extent across the summit"
+    },
+    {
+      "category": "U",
+      "code": "KNSU",
+      "name": "undersea knolls",
+      "language": "en",
+      "category-name": "Undersea",
+      "description": "elevations rising generally more than 500 meters and less than 1,000 meters and of limited extent across the summits"
+    },
+    {
+      "category": "U",
+      "code": "LDGU",
+      "name": "undersea ledge",
+      "language": "en",
+      "category-name": "Undersea",
+      "description": "a rocky projection or outcrop, commonly linear and near shore"
+    },
+    {
+      "category": "U",
+      "code": "LEVU",
+      "name": "undersea levee",
+      "language": "en",
+      "category-name": "Undersea",
+      "description": "an embankment bordering a canyon, valley, or seachannel"
+    },
+    {
+      "category": "U",
+      "code": "MDVU",
+      "name": "undersea median valley",
+      "language": "en",
+      "category-name": "Undersea",
+      "description": "the axial depression of the mid-oceanic ridge system"
+    },
+    {
+      "category": "U",
+      "code": "MESU",
+      "name": "undersea mesa",
+      "language": "en",
+      "category-name": "Undersea",
+      "description": "an isolated, extensive, flat-topped elevation on the shelf, with relatively steep sides"
+    },
+    {
+      "category": "U",
+      "code": "MOTU",
+      "name": "undersea moat",
+      "language": "en",
+      "category-name": "Undersea",
+      "description": "an annular depression that may not be continuous, located at the base of many seamounts, islands, and other isolated elevations"
+    },
+    {
+      "category": "U",
+      "code": "MNDU",
+      "name": "undersea mound",
+      "language": "en",
+      "category-name": "Undersea",
+      "description": "a low, isolated, rounded hill"
+    },
+    {
+      "category": "U",
+      "code": "MTU",
+      "name": "undersea mountain",
+      "language": "en",
+      "category-name": "Undersea",
+      "description": "a well-delineated subdivision of a large and complex positive feature"
+    },
+    {
+      "category": "U",
+      "code": "MTSU",
+      "name": "undersea mountains",
+      "language": "en",
+      "category-name": "Undersea",
+      "description": "well-delineated subdivisions of a large and complex positive feature"
+    },
+    {
+      "category": "U",
+      "code": "PKU",
+      "name": "undersea peak",
+      "language": "en",
+      "category-name": "Undersea",
+      "description": "a prominent elevation, part of a larger feature, either pointed or of very limited extent across the summit"
+    },
+    {
+      "category": "U",
+      "code": "PKSU",
+      "name": "undersea peaks",
+      "language": "en",
+      "category-name": "Undersea",
+      "description": "prominent elevations, part of a larger feature, either pointed or of very limited extent across the summit"
+    },
+    {
+      "category": "U",
+      "code": "PNLU",
+      "name": "undersea pinnacle",
+      "language": "en",
+      "category-name": "Undersea",
+      "description": "a high tower or spire-shaped pillar of rock or coral, alone or cresting a summit"
+    },
+    {
+      "category": "U",
+      "code": "PLNU",
+      "name": "undersea plain",
+      "language": "en",
+      "category-name": "Undersea",
+      "description": "a flat, gently sloping or nearly level region"
+    },
+    {
+      "category": "U",
+      "code": "PLTU",
+      "name": "undersea plateau",
+      "language": "en",
+      "category-name": "Undersea",
+      "description": "a comparatively flat-topped feature of considerable extent, dropping off abruptly on one or more sides"
+    },
+    {
+      "category": "U",
+      "code": "PLFU",
+      "name": "undersea platform",
+      "language": "en",
+      "category-name": "Undersea",
+      "description": "a flat or gently sloping underwater surface extending seaward from the shore"
+    },
+    {
+      "category": "U",
+      "code": "PRVU",
+      "name": "undersea province",
+      "language": "en",
+      "category-name": "Undersea",
+      "description": "a region identifiable by a group of similar physiographic features whose characteristics are markedly in contrast with surrounding areas"
+    },
+    {
+      "category": "U",
+      "code": "RMPU",
+      "name": "undersea ramp",
+      "language": "en",
+      "category-name": "Undersea",
+      "description": "a gentle slope connecting areas of different elevations"
+    },
+    {
+      "category": "U",
+      "code": "RNGU",
+      "name": "undersea range",
+      "language": "en",
+      "category-name": "Undersea",
+      "description": "a series of associated ridges or seamounts"
+    },
+    {
+      "category": "U",
+      "code": "RAVU",
+      "name": "undersea ravine",
+      "language": "en",
+      "category-name": "Undersea",
+      "description": "a small canyon"
+    },
+    {
+      "category": "U",
+      "code": "RFU",
+      "name": "undersea reef",
+      "language": "en",
+      "category-name": "Undersea",
+      "description": "a surface-navigation hazard composed of consolidated material"
+    },
+    {
+      "category": "U",
+      "code": "RFSU",
+      "name": "undersea reefs",
+      "language": "en",
+      "category-name": "Undersea",
+      "description": "surface-navigation hazards composed of consolidated material"
+    },
+    {
+      "category": "U",
+      "code": "RDGU",
+      "name": "undersea ridge",
+      "language": "en",
+      "category-name": "Undersea",
+      "description": "a long narrow elevation with steep sides"
+    },
+    {
+      "category": "U",
+      "code": "RDSU",
+      "name": "undersea ridges",
+      "language": "en",
+      "category-name": "Undersea",
+      "description": "long narrow elevations with steep sides"
+    },
+    {
+      "category": "U",
+      "code": "RISU",
+      "name": "undersea rise",
+      "language": "en",
+      "category-name": "Undersea",
+      "description": "a broad elevation that rises gently, and generally smoothly, from the sea floor"
+    },
+    {
+      "category": "U",
+      "code": "SDLU",
+      "name": "undersea saddle",
+      "language": "en",
+      "category-name": "Undersea",
+      "description": "a low part, resembling in shape a saddle, in a ridge or between contiguous seamounts"
+    },
+    {
+      "category": "U",
+      "code": "SHFU",
+      "name": "undersea shelf",
+      "language": "en",
+      "category-name": "Undersea",
+      "description": "a zone adjacent to a continent (or around an island) that extends from the low water line to a depth at which there is usually a marked increase of slope towards oceanic depths"
+    },
+    {
+      "category": "U",
+      "code": "EDGU",
+      "name": "undersea shelf edge",
+      "language": "en",
+      "category-name": "Undersea",
+      "description": "a line along which there is a marked increase of slope at the outer margin of a continental shelf or island shelf"
+    },
+    {
+      "category": "U",
+      "code": "SHVU",
+      "name": "undersea shelf valley",
+      "language": "en",
+      "category-name": "Undersea",
+      "description": "a valley on the shelf, generally the shoreward extension of a canyon"
+    },
+    {
+      "category": "U",
+      "code": "SHLU",
+      "name": "undersea shoal",
+      "language": "en",
+      "category-name": "Undersea",
+      "description": "a surface-navigation hazard composed of unconsolidated material"
+    },
+    {
+      "category": "U",
+      "code": "SHSU",
+      "name": "undersea shoals",
+      "language": "en",
+      "category-name": "Undersea",
+      "description": "hazards to surface navigation composed of unconsolidated material"
+    },
+    {
+      "category": "U",
+      "code": "SILU",
+      "name": "undersea sill",
+      "language": "en",
+      "category-name": "Undersea",
+      "description": "the low part of an underwater gap or saddle separating basins, including a similar feature at the mouth of a fjord"
+    },
+    {
+      "category": "U",
+      "code": "SLPU",
+      "name": "undersea slope",
+      "language": "en",
+      "category-name": "Undersea",
+      "description": "the slope seaward from the shelf edge to the beginning of a continental rise or the point where there is a general reduction in slope"
+    },
+    {
+      "category": "U",
+      "code": "SPRU",
+      "name": "undersea spur",
+      "language": "en",
+      "category-name": "Undersea",
+      "description": "a subordinate elevation, ridge, or rise projecting outward from a larger feature"
+    },
+    {
+      "category": "U",
+      "code": "TERU",
+      "name": "undersea terrace",
+      "language": "en",
+      "category-name": "Undersea",
+      "description": "a relatively flat horizontal or gently inclined surface, sometimes long and narrow, which is bounded by a steeper ascending slope on one side and by a steep descending slope on the opposite side"
+    },
+    {
+      "category": "U",
+      "code": "TNGU",
+      "name": "undersea tongue",
+      "language": "en",
+      "category-name": "Undersea",
+      "description": "an elongate (tongue-like) extension of a flat sea floor into an adjacent higher feature"
+    },
+    {
+      "category": "U",
+      "code": "TRNU",
+      "name": "undersea trench",
+      "language": "en",
+      "category-name": "Undersea",
+      "description": "a long, narrow, characteristically very deep and asymmetrical depression of the sea floor, with relatively steep sides"
+    },
+    {
+      "category": "U",
+      "code": "TRGU",
+      "name": "undersea trough",
+      "language": "en",
+      "category-name": "Undersea",
+      "description": "a long depression of the sea floor characteristically flat bottomed and steep sided, and normally shallower than a trench"
+    },
+    {
+      "category": "U",
+      "code": "VALU",
+      "name": "undersea valley",
+      "language": "en",
+      "category-name": "Undersea",
+      "description": "a relatively shallow, wide depression, the bottom of which usually has a continuous gradient"
+    },
+    {
+      "category": "U",
+      "code": "VLSU",
+      "name": "undersea valleys",
+      "language": "en",
+      "category-name": "Undersea",
+      "description": "a relatively shallow, wide depression, the bottom of which usually has a continuous gradient"
+    },
+    {
+      "category": "S",
+      "code": "USGE",
+      "name": "United States Government Establishment",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a facility operated by the United States Government in Panama"
+    },
+    {
+      "category": "T",
+      "code": "UPLD",
+      "name": "upland",
+      "language": "en",
+      "category-name": "Hypsographic",
+      "description": "an extensive interior region of high land with low to moderate surface relief"
+    },
+    {
+      "category": "T",
+      "code": "VAL",
+      "name": "valley",
+      "language": "en",
+      "category-name": "Hypsographic",
+      "description": "an elongated depression usually traversed by a stream"
+    },
+    {
+      "category": "T",
+      "code": "VALS",
+      "name": "valleys",
+      "language": "en",
+      "category-name": "Hypsographic",
+      "description": "elongated depressions usually traversed by a stream"
+    },
+    {
+      "category": "S",
+      "code": "VETF",
+      "name": "veterinary facility",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a building or camp at which veterinary services are available"
+    },
+    {
+      "category": "V",
+      "code": "VIN",
+      "name": "vineyard",
+      "language": "en",
+      "category-name": "Vegetation",
+      "description": "a planting of grapevines"
+    },
+    {
+      "category": "V",
+      "code": "VINS",
+      "name": "vineyards",
+      "language": "en",
+      "category-name": "Vegetation",
+      "description": "plantings of grapevines"
+    },
+    {
+      "category": "T",
+      "code": "VLC",
+      "name": "volcano",
+      "language": "en",
+      "category-name": "Hypsographic",
+      "description": "a conical elevation composed of volcanic materials with a crater at the top"
+    },
+    {
+      "category": "H",
+      "code": "WAD",
+      "name": "wadi",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "a valley or ravine, bounded by relatively steep banks, which in the rainy season becomes a watercourse; found primarily in North Africa and the Middle East"
+    },
+    {
+      "category": "H",
+      "code": "WADB",
+      "name": "wadi bend",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "a conspicuously curved or bent segment of a wadi"
+    },
+    {
+      "category": "H",
+      "code": "WADJ",
+      "name": "wadi junction",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "a place where two or more wadies join"
+    },
+    {
+      "category": "H",
+      "code": "WADM",
+      "name": "wadi mouth",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "the lower terminus of a wadi where it widens into an adjoining floodplain, depression, or waterbody"
+    },
+    {
+      "category": "H",
+      "code": "WADS",
+      "name": "wadies",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "valleys or ravines, bounded by relatively steep banks, which in the rainy season become watercourses; found primarily in North Africa and the Middle East"
+    },
+    {
+      "category": "S",
+      "code": "WALL",
+      "name": "wall",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a thick masonry structure, usually enclosing a field or building, or forming the side of a structure"
+    },
+    {
+      "category": "S",
+      "code": "MLWTR",
+      "name": "water mill",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a mill powered by running water"
+    },
+    {
+      "category": "S",
+      "code": "PMPW",
+      "name": "water pumping station",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a facility for pumping water from a major well or through a pipeline"
+    },
+    {
+      "category": "H",
+      "code": "RSVT",
+      "name": "water tank",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "a contained pool or tank of water at, below, or above ground level"
+    },
+    {
+      "category": "H",
+      "code": "WTRC",
+      "name": "watercourse",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "a natural, well-defined channel produced by flowing water, or an artificial channel designed to carry flowing water"
+    },
+    {
+      "category": "H",
+      "code": "FLLS",
+      "name": "waterfall(s)",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "a perpendicular or very steep descent of the water of a stream"
+    },
+    {
+      "category": "H",
+      "code": "WTRH",
+      "name": "waterhole(s)",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "a natural hole, hollow, or small depression that contains water, used by man and animals, especially in arid areas"
+    },
+    {
+      "category": "S",
+      "code": "WTRW",
+      "name": "waterworks",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a facility for supplying potable water through a water source and a system of pumps and filtration beds"
+    },
+    {
+      "category": "S",
+      "code": "WEIR",
+      "name": "weir(s)",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a small dam in a stream, designed to raise the water level or to divert stream flow through a desired channel"
+    },
+    {
+      "category": "H",
+      "code": "WLL",
+      "name": "well",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "a cylindrical hole, pit, or tunnel drilled or dug down to a depth from which water, oil, or gas can be pumped or brought to the surface"
+    },
+    {
+      "category": "H",
+      "code": "WLLS",
+      "name": "wells",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "cylindrical holes, pits, or tunnels drilled or dug down to a depth from which water, oil, or gas can be pumped or brought to the surface"
+    },
+    {
+      "category": "H",
+      "code": "WTLD",
+      "name": "wetland",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "an area subject to inundation, usually characterized by bog, marsh, or swamp vegetation"
+    },
+    {
+      "category": "S",
+      "code": "STNW",
+      "name": "whaling station",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a facility for butchering whales and processing train oil"
+    },
+    {
+      "category": "S",
+      "code": "WHRF",
+      "name": "wharf(-ves)",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a structure of open rather than solid construction along a shore or a bank which provides berthing for ships and cargo-handling facilities"
+    },
+    {
+      "category": "H",
+      "code": "WHRL",
+      "name": "whirlpool",
+      "language": "en",
+      "category-name": "Hydrographic",
+      "description": "a turbulent, rotating movement of water in a stream"
+    },
+    {
+      "category": "L",
+      "code": "RESW",
+      "name": "wildlife reserve",
+      "language": "en",
+      "category-name": "Area",
+      "description": "a tract of public land reserved for the preservation of wildlife"
+    },
+    {
+      "category": "S",
+      "code": "MLWND",
+      "name": "windmill",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a mill or water pump powered by wind"
+    },
+    {
+      "category": "S",
+      "code": "WRCK",
+      "name": "wreck",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "the site of the remains of a wrecked vessel"
+    },
+    {
+      "category": "A",
+      "code": "ZN",
+      "name": "zone",
+      "language": "en",
+      "category-name": "Administrative Region",
+      "description": "zone"
+    },
+    {
+      "category": "S",
+      "code": "ZOO",
+      "name": "zoo",
+      "language": "en",
+      "category-name": "Spot Features",
+      "description": "a zoological garden or park where wild animals are kept for exhibition"
+    }
+  ]
+}

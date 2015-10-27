@@ -18,6 +18,6 @@ class NarrativeForm extends BaseForm
                     'label' => 'Language'
                 ]
             )
-            ->addRemoveThisButton('remove');
+            ->removeButton('remove');
     }
 }
