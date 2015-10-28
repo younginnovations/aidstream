@@ -34,6 +34,7 @@ class ParticipatingOrganization extends ActivityBaseRequest
     public function addRulesForParticipatingOrg($formFields)
     {
         $rules = [];
+
         foreach ($formFields as $participatingOrgIndex => $participatingOrg) {
             $participatingOrgForm                                = 'participating_organization.' . $participatingOrgIndex;
             $rules[$participatingOrgForm . '.organization_role'] = 'required';
@@ -57,6 +58,7 @@ class ParticipatingOrganization extends ActivityBaseRequest
     public function addMessagesForParticipatingOrg($formFields)
     {
         $messages = [];
+
         foreach ($formFields as $participatingOrgIndex => $participatingOrg) {
             $participatingOrgForm                                            = 'participating_organization.' . $participatingOrgIndex;
             $messages[$participatingOrgForm . '.organization_role.required'] = 'Organization role is required';

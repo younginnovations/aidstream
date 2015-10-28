@@ -11,36 +11,27 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use Kris\LaravelFormBuilder\FormBuilder;
-use App\Core\V201\Forms\Organization\ReportingOrganizationInfoForm;
 
 class SettingsController extends Controller
 {
 
+    protected $settingsManager;
+    protected $settings;
     protected $organization;
-    protected $orgReportingOrgInfoForm;
-    protected $orgPublishingTypeForm;
-    protected $orgRegistryInfoForm;
-    protected $orgDefaultFieldValuesForm;
-    protected $orgDefaultFieldGroupsForm;
-    protected $org_id;
 
     /**
-     * @param SettingsManager               $settingsManager
-     * @param OrganizationManager           $organizationManager
-     * @param ReportingOrganizationInfoForm $orgReportingOrgInfoForm
+     * @param SettingsManager     $settingsManager
+     * @param OrganizationManager $organizationManager
      */
     function __construct(
         SettingsManager $settingsManager,
-        OrganizationManager $organizationManager,
-        ReportingOrganizationInfoForm $orgReportingOrgInfoForm
+        OrganizationManager $organizationManager
     ) {
         $this->middleware('auth');
-        $this->settingsManager         = $settingsManager;
-        $this->org_id                  = Session::get('org_id');
-        $this->organizationManager     = $organizationManager;
-        $this->settings                = $this->settingsManager->getSettings($this->org_id);
-        $this->organization            = $this->organizationManager->getOrganization($this->org_id);
-        $this->orgReportingOrgInfoForm = $orgReportingOrgInfoForm;
+        $this->settingsManager     = $settingsManager;
+        $org_id                    = Session::get('org_id');
+        $this->settings            = $settingsManager->getSettings($org_id);
+        $this->organization        = $organizationManager->getOrganization($org_id);
     }
 
     /**

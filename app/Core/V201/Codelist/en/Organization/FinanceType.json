@@ -1,0 +1,357 @@
+{
+  "date-last-modified": "2015-10-16T10:42:20.844773+00:00",
+  "version": "",
+  "name": "FinanceType",
+  "xml:lang": "en",
+  "FinanceType": [
+    {
+      "category": "100",
+      "code": "110",
+      "name": "Aid grant excluding debt reorganisation",
+      "language": "en",
+      "category-description": "Transfers in cash or in kind for which no legal debt is incurred by the recipient.",
+      "category-name": "GRANT"
+    },
+    {
+      "category": "100",
+      "code": "111",
+      "name": "Subsidies to national private investors",
+      "language": "en",
+      "category-description": "Transfers in cash or in kind for which no legal debt is incurred by the recipient.",
+      "category-name": "GRANT"
+    },
+    {
+      "category": "200",
+      "code": "210",
+      "name": "Interest subsidy grant in AF",
+      "language": "en",
+      "category-description": "Subsidies to soften the terms of private export credits, or loans or credits by the banking sector.",
+      "category-name": "INTEREST SUBSIDY"
+    },
+    {
+      "category": "200",
+      "code": "211",
+      "name": "Interest subsidy to national private exporters",
+      "language": "en",
+      "category-description": "Subsidies to soften the terms of private export credits, or loans or credits by the banking sector.",
+      "category-name": "INTEREST SUBSIDY"
+    },
+    {
+      "category": "300",
+      "code": "310",
+      "name": "Deposit basis",
+      "language": "en",
+      "category-description": "Payments to multilateral agencies in the form of notes and similar instruments, unconditionally cashable at sight by the recipient institutions.",
+      "category-name": "CAPITAL SUBSCRIPTION"
+    },
+    {
+      "category": "300",
+      "code": "311",
+      "name": "Encashment basis",
+      "language": "en",
+      "category-description": "Payments to multilateral agencies in the form of notes and similar instruments, unconditionally cashable at sight by the recipient institutions.",
+      "category-name": "CAPITAL SUBSCRIPTION"
+    },
+    {
+      "category": "400",
+      "code": "410",
+      "name": "Aid loan excluding debt reorganisation",
+      "language": "en",
+      "category-description": "Transfers in cash or in kind for which the recipient incurs legal debt.",
+      "category-name": "LOAN"
+    },
+    {
+      "category": "400",
+      "code": "411",
+      "name": "Investment-related loan to developing countries",
+      "language": "en",
+      "category-description": "Transfers in cash or in kind for which the recipient incurs legal debt.",
+      "category-name": "LOAN"
+    },
+    {
+      "category": "400",
+      "code": "412",
+      "name": "Loan in a joint venture with the recipient",
+      "language": "en",
+      "category-description": "Transfers in cash or in kind for which the recipient incurs legal debt.",
+      "category-name": "LOAN"
+    },
+    {
+      "category": "400",
+      "code": "413",
+      "name": "Loan to national private investor",
+      "language": "en",
+      "category-description": "Transfers in cash or in kind for which the recipient incurs legal debt.",
+      "category-name": "LOAN"
+    },
+    {
+      "category": "400",
+      "code": "414",
+      "name": "Loan to national private exporter",
+      "language": "en",
+      "category-description": "Transfers in cash or in kind for which the recipient incurs legal debt.",
+      "category-name": "LOAN"
+    },
+    {
+      "category": "450",
+      "code": "451",
+      "name": "Non-banks guaranteed export credits",
+      "language": "en",
+      "category-description": "Official or private loans which are primarily export-facilitating in purpose. They are usually tied to a specific export from the extending country and not represented by a negotiable instrument.",
+      "category-name": "EXPORT CREDIT"
+    },
+    {
+      "category": "450",
+      "code": "452",
+      "name": "Non-banks non-guaranteed portions of guaranteed export credits",
+      "language": "en",
+      "category-description": "Official or private loans which are primarily export-facilitating in purpose. They are usually tied to a specific export from the extending country and not represented by a negotiable instrument.",
+      "category-name": "EXPORT CREDIT"
+    },
+    {
+      "category": "450",
+      "code": "453",
+      "name": "Bank export credits",
+      "language": "en",
+      "category-description": "Official or private loans which are primarily export-facilitating in purpose. They are usually tied to a specific export from the extending country and not represented by a negotiable instrument.",
+      "category-name": "EXPORT CREDIT"
+    },
+    {
+      "category": "500",
+      "code": "510",
+      "name": "Acquisition of equity as part of a joint venture with the recipient",
+      "language": "en",
+      "category-description": "Investment in a country on the DAC List of ODA Recipients that is not made to acquire a lasting interest in an enterprise.",
+      "category-name": "EQUITY"
+    },
+    {
+      "category": "500",
+      "code": "511",
+      "name": "Acquisition of equity not part of joint venture in developing countries",
+      "language": "en",
+      "category-description": "Investment in a country on the DAC List of ODA Recipients that is not made to acquire a lasting interest in an enterprise.",
+      "category-name": "EQUITY"
+    },
+    {
+      "category": "500",
+      "code": "512",
+      "name": "Other acquisition of equity. Investment in a country on the DAC List of ODA Recipients that is not made to acquire a lasting interest in an enterprise.",
+      "language": "en",
+      "category-description": "Investment in a country on the DAC List of ODA Recipients that is not made to acquire a lasting interest in an enterprise.",
+      "category-name": "EQUITY"
+    },
+    {
+      "category": "600",
+      "code": "610",
+      "name": "Debt forgiveness: ODA claims (P)",
+      "language": "en",
+      "category-description": "Debt cancellations, debt conversions, debt rescheduling within or outside the framework of the Paris Club.",
+      "category-name": "DEBT RELIEF"
+    },
+    {
+      "category": "600",
+      "code": "611",
+      "name": "Debt forgiveness: ODA claims (I)",
+      "language": "en",
+      "category-description": "Debt cancellations, debt conversions, debt rescheduling within or outside the framework of the Paris Club.",
+      "category-name": "DEBT RELIEF"
+    },
+    {
+      "category": "600",
+      "code": "612",
+      "name": "Debt forgiveness: OOF claims (P)",
+      "language": "en",
+      "category-description": "Debt cancellations, debt conversions, debt rescheduling within or outside the framework of the Paris Club.",
+      "category-name": "DEBT RELIEF"
+    },
+    {
+      "category": "600",
+      "code": "613",
+      "name": "Debt forgiveness: OOF claims (I)",
+      "language": "en",
+      "category-description": "Debt cancellations, debt conversions, debt rescheduling within or outside the framework of the Paris Club.",
+      "category-name": "DEBT RELIEF"
+    },
+    {
+      "category": "600",
+      "code": "614",
+      "name": "Debt forgiveness: Private claims (P)",
+      "language": "en",
+      "category-description": "Debt cancellations, debt conversions, debt rescheduling within or outside the framework of the Paris Club.",
+      "category-name": "DEBT RELIEF"
+    },
+    {
+      "category": "600",
+      "code": "615",
+      "name": "Debt forgiveness: Private claims (I)",
+      "language": "en",
+      "category-description": "Debt cancellations, debt conversions, debt rescheduling within or outside the framework of the Paris Club.",
+      "category-name": "DEBT RELIEF"
+    },
+    {
+      "category": "600",
+      "code": "616",
+      "name": "Debt forgiveness: OOF claims (DSR)",
+      "language": "en",
+      "category-description": "Debt cancellations, debt conversions, debt rescheduling within or outside the framework of the Paris Club.",
+      "category-name": "DEBT RELIEF"
+    },
+    {
+      "category": "600",
+      "code": "617",
+      "name": "Debt forgiveness: Private claims (DSR)",
+      "language": "en",
+      "category-description": "Debt cancellations, debt conversions, debt rescheduling within or outside the framework of the Paris Club.",
+      "category-name": "DEBT RELIEF"
+    },
+    {
+      "category": "600",
+      "code": "618",
+      "name": "Debt forgiveness: Other",
+      "language": "en",
+      "category-description": "Debt cancellations, debt conversions, debt rescheduling within or outside the framework of the Paris Club.",
+      "category-name": "DEBT RELIEF"
+    },
+    {
+      "category": "600",
+      "code": "620",
+      "name": "Debt rescheduling: ODA claims (P)",
+      "language": "en",
+      "category-description": "Debt cancellations, debt conversions, debt rescheduling within or outside the framework of the Paris Club.",
+      "category-name": "DEBT RELIEF"
+    },
+    {
+      "category": "600",
+      "code": "621",
+      "name": "Debt rescheduling: ODA claims (I)",
+      "language": "en",
+      "category-description": "Debt cancellations, debt conversions, debt rescheduling within or outside the framework of the Paris Club.",
+      "category-name": "DEBT RELIEF"
+    },
+    {
+      "category": "600",
+      "code": "622",
+      "name": "Debt rescheduling: OOF claims (P)",
+      "language": "en",
+      "category-description": "Debt cancellations, debt conversions, debt rescheduling within or outside the framework of the Paris Club.",
+      "category-name": "DEBT RELIEF"
+    },
+    {
+      "category": "600",
+      "code": "623",
+      "name": "Debt rescheduling: OOF claims (I)",
+      "language": "en",
+      "category-description": "Debt cancellations, debt conversions, debt rescheduling within or outside the framework of the Paris Club.",
+      "category-name": "DEBT RELIEF"
+    },
+    {
+      "category": "600",
+      "code": "624",
+      "name": "Debt rescheduling: Private claims (P)",
+      "language": "en",
+      "category-description": "Debt cancellations, debt conversions, debt rescheduling within or outside the framework of the Paris Club.",
+      "category-name": "DEBT RELIEF"
+    },
+    {
+      "category": "600",
+      "code": "625",
+      "name": "Debt rescheduling: Private claims (I)",
+      "language": "en",
+      "category-description": "Debt cancellations, debt conversions, debt rescheduling within or outside the framework of the Paris Club.",
+      "category-name": "DEBT RELIEF"
+    },
+    {
+      "category": "600",
+      "code": "626",
+      "name": "Debt rescheduling: OOF claims (DSR)",
+      "language": "en",
+      "category-description": "Debt cancellations, debt conversions, debt rescheduling within or outside the framework of the Paris Club.",
+      "category-name": "DEBT RELIEF"
+    },
+    {
+      "category": "600",
+      "code": "627",
+      "name": "Debt rescheduling: Private claims (DSR)",
+      "language": "en",
+      "category-description": "Debt cancellations, debt conversions, debt rescheduling within or outside the framework of the Paris Club.",
+      "category-name": "DEBT RELIEF"
+    },
+    {
+      "category": "600",
+      "code": "630",
+      "name": "Debt rescheduling: OOF claim (DSR - original loan principal)",
+      "language": "en",
+      "category-description": "Debt cancellations, debt conversions, debt rescheduling within or outside the framework of the Paris Club.",
+      "category-name": "DEBT RELIEF"
+    },
+    {
+      "category": "600",
+      "code": "631",
+      "name": "Debt rescheduling: OOF claim (DSR - original loan interest)",
+      "language": "en",
+      "category-description": "Debt cancellations, debt conversions, debt rescheduling within or outside the framework of the Paris Club.",
+      "category-name": "DEBT RELIEF"
+    },
+    {
+      "category": "600",
+      "code": "632",
+      "name": "Debt rescheduling: Private claim (DSR - original loan principal)",
+      "language": "en",
+      "category-description": "Debt cancellations, debt conversions, debt rescheduling within or outside the framework of the Paris Club.",
+      "category-name": "DEBT RELIEF"
+    },
+    {
+      "category": "700",
+      "code": "710",
+      "name": "Foreign direct investment",
+      "language": "en",
+      "category-description": "Investment made by a private entity resident in a reporting country to acquire or add to a lasting interest(1) in an enterprise in a country on the DAC List of ODA Recipients.",
+      "category-name": "INVESTMENT"
+    },
+    {
+      "category": "700",
+      "code": "711",
+      "name": "Other foreign direct investment, including reinvested earnings",
+      "language": "en",
+      "category-description": "Investment made by a private entity resident in a reporting country to acquire or add to a lasting interest(1) in an enterprise in a country on the DAC List of ODA Recipients.",
+      "category-name": "INVESTMENT"
+    },
+    {
+      "category": "800",
+      "code": "810",
+      "name": "Bank bonds",
+      "language": "en",
+      "category-description": "Acquisition of bonds issued by developing countries.",
+      "category-name": "BONDS"
+    },
+    {
+      "category": "800",
+      "code": "811",
+      "name": "Non-bank bonds",
+      "language": "en",
+      "category-description": "Acquisition of bonds issued by developing countries.",
+      "category-name": "BONDS"
+    },
+    {
+      "category": "900",
+      "category-name": "OTHER SECURITIES/CLAIMS",
+      "code": "910",
+      "name": "Other bank securities/claims",
+      "language": "en"
+    },
+    {
+      "category": "900",
+      "category-name": "OTHER SECURITIES/CLAIMS",
+      "code": "911",
+      "name": "Other non-bank securities/claims",
+      "language": "en"
+    },
+    {
+      "category": "900",
+      "category-name": "OTHER SECURITIES/CLAIMS",
+      "code": "912",
+      "name": "Securities and other instruments issued by multilateral agencies",
+      "language": "en"
+    }
+  ]
+}

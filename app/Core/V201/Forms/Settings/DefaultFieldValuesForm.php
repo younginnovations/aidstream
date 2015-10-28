@@ -1,8 +1,9 @@
 <?php namespace App\Core\V201\Forms\Settings;
 
-use Kris\LaravelFormBuilder\Form;
 
-class DefaultFieldValuesForm extends Form
+use App\Core\Form\BaseForm;
+
+class DefaultFieldValuesForm extends BaseForm
 {
     public function buildForm()
     {
@@ -11,14 +12,14 @@ class DefaultFieldValuesForm extends Form
                 'default_currency',
                 'select',
                 [
-                    'choices' => ['AED' => 'UAE Dirham', 'AFN' => 'Afghani']
+                    'choices' => $this->addCodeList('Currency', 'Organization')
                 ]
             )
             ->add(
                 'default_language',
                 'select',
                 [
-                    'choices' => ['es' => 'Espanish', 'fr' => 'French']
+                    'choices' => $this->addCodeList('Language', 'Organization')
                 ]
             )
             ->add('default_hierarchy', 'text')
@@ -26,35 +27,35 @@ class DefaultFieldValuesForm extends Form
                 'default_collaboration_type',
                 'select',
                 [
-                    'choices' => ['1' => 'bilateral', '2' => 'multilateral']
+                    'choices' => $this->addCodeList('CollaborationType', 'Organization')
                 ]
             )
             ->add(
                 'default_flow_type',
                 'select',
                 [
-                    'choices' => ['10' => 'ODA', '20' => 'OOF']
+                    'choices' => $this->addCodeList('FlowType', 'Organization')
                 ]
             )
             ->add(
                 'default_finance_type',
                 'select',
                 [
-                    'choices' => ['310' => 'Deposit basis', '311' => 'Encashment basis']
+                    'choices' => $this->addCodeList('FinanceType', 'Organization')
                 ]
             )
             ->add(
                 'default_aid_type',
                 'select',
                 [
-                    'choices' => ['A01' => 'General Budget Support', 'A02' => 'Sector Budget Support']
+                    'choices' => $this->addCodeList('AidType', 'Organization')
                 ]
             )
             ->add(
                 'Default_tied_status',
                 'select',
                 [
-                    'choices' => ['3' => 'Partially Tied', '4' => 'Tied']
+                    'choices' => $this->addCodeList('TiedStatus', 'Organization')
                 ]
             );
     }

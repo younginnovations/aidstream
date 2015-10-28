@@ -34,6 +34,7 @@ class RecipientCountry extends ActivityBaseRequest
     public function addRulesForRecipientCountry($formFields)
     {
         $rules = [];
+
         foreach ($formFields as $recipientCountryIndex => $recipientCountry) {
             $recipientCountryForm                           = 'recipient_country.' . $recipientCountryIndex;
             $rules[$recipientCountryForm . '.country_code'] = 'required';
@@ -58,6 +59,7 @@ class RecipientCountry extends ActivityBaseRequest
     public function addMessagesForRecipientCountry($formFields)
     {
         $messages = [];
+
         foreach ($formFields as $recipientCountryIndex => $recipientCountry) {
             $recipientCountryForm                                       = 'recipient_country.' . $recipientCountryIndex;
             $messages[$recipientCountryForm . '.country_code.required'] = 'Country code field is required';

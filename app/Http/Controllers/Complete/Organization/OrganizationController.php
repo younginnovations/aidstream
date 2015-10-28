@@ -60,30 +60,12 @@ class OrganizationController extends Controller
         }
         $organization                  = $this->organizationManager->getOrganization($id);
         $organizationData              = $this->nameManager->getOrganizationData($id);
-        $reporting_org                 = $organization->reporting_org[0];
-        $org_name                      = $organizationData->name;
-        $total_budget                  = $organizationData->total_budget;
-        $recipient_organization_budget = $organizationData->recipient_organization_budget;
-        $recipient_country_budget      = $organizationData->recipient_country_budget;
-        $document_link                 = $organizationData->document_link;
-        if (!isset($reporting_org)) {
-            $reporting_org = [];
-        }
-        if (!isset($org_name)) {
-            $org_name = [];
-        }
-        if (!isset($total_budget)) {
-            $total_budget = [];
-        }
-        if (!isset($recipient_organization_budget)) {
-            $recipient_organization_budget = [];
-        }
-        if (!isset($recipient_country_budget)) {
-            $recipient_country_budget = [];
-        }
-        if (!isset($document_link)) {
-            $document_link = [];
-        }
+        $reporting_org                 = (array) $organization->reporting_org[0];
+        $org_name                      = (array) $organizationData->name;
+        $total_budget                  = (array) $organizationData->total_budget;
+        $recipient_organization_budget = (array) $organizationData->recipient_organization_budget;
+        $recipient_country_budget      = (array) $organizationData->recipient_country_budget;
+        $document_link                 = (array) $organizationData->document_link;
 
         $status = $organizationData->status;
 
