@@ -70,7 +70,7 @@ class AdminController extends Controller
         $this->user->org_id          = $this->session->get('org_id');
         $this->user->role_id         = 2;
         $this->user->password        = bcrypt($input['password']);
-        $this->user->user_permission = $input['user_permission'];
+        $this->user->user_permission = isset($input['user_permission']) ? $input['user_permission'] : [];
         $this->user->save();
 
         $this->session->flash('flash_message', 'User has been created');
@@ -160,7 +160,7 @@ class AdminController extends Controller
     {
         $input                 = Input::all();
         $user                  = $this->user->findOrFail($userId);
-        $user->user_permission = $input['user_permission'];
+        $user->user_permission = isset($input['user_permission']) ? $input['user_permission'] : [];
         $user->save();
 
         return redirect('admin/list-users');

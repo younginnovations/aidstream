@@ -12,7 +12,7 @@ class RecipientCountryForm extends BaseForm
                 'select',
                 [
                     'choices' => $this->addCodeList('Country', 'Organization'),
-                    'label' => 'Code'
+                    'label'   => 'Code'
                 ]
             )
             ->addNarrative('recipient_country_narrative')

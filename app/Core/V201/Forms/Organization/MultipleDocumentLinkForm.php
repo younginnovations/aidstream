@@ -7,7 +7,7 @@ class MultipleDocumentLinkForm extends BaseForm
     public function buildForm()
     {
         $this
-            ->addCollection('documentLink', 'Organization\DocumentLinkForm', 'document_link')
+            ->addCollection('document_link', 'Organization\DocumentLinkForm', 'document_link')
             ->addAddMoreButton('add_document_link', 'document_link');
     }
 }

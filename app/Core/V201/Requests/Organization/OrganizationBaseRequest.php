@@ -1,12 +1,23 @@
 <?php namespace App\Core\V201\Requests\Organization;
 
+use App\Http\Requests\Request;
+
 /**
- * Class Validation
+ * Class OrganizationBaseRequest
  * common validation rules and messages
  * @package App\Core\V201\Requests\Organization
  */
-class Validation
+class OrganizationBaseRequest extends Request
 {
+    /**
+     * Determine if the user is authorized to make this request.
+     * @return bool
+     */
+    public function authorize()
+    {
+        return true;
+    }
+
     /**
      * returns rules for narrative form
      * @param $formFields
@@ -86,8 +97,8 @@ class Validation
     {
         $rules = [];
         foreach ($formFields as $budgetLineKey => $budgetLineVal) {
-            $budgetLineForm = $formBase . '.budgetLine.' . $budgetLineKey;
-            $rules = array_merge(
+            $budgetLineForm = $formBase . '.budget_line.' . $budgetLineKey;
+            $rules          = array_merge(
                 $rules,
                 $this->addRulesForValue($budgetLineVal['value'], $budgetLineForm, $rules),
                 $this->addRulesForNarrative($budgetLineVal['narrative'], $budgetLineForm, $rules)
@@ -107,8 +118,8 @@ class Validation
     {
         $messages = [];
         foreach ($formFields as $budgetLineKey => $budgetLineVal) {
-            $budgetLineForm = $formBase . '.budgetLine.' . $budgetLineKey;
-            $messages = array_merge(
+            $budgetLineForm = $formBase . '.budget_line.' . $budgetLineKey;
+            $messages       = array_merge(
                 $messages,
                 $this->addMessagesForValue($budgetLineVal['value'], $budgetLineForm, $messages),
                 $this->addMessagesForNarrative($budgetLineVal['narrative'], $budgetLineForm, $messages)
@@ -128,7 +139,7 @@ class Validation
     {
         $rules = [];
         foreach ($formFields as $periodStartKey => $periodStartVal) {
-            $rules[$formBase . '.periodStart.' . $periodStartKey . '.date'] = 'required';
+            $rules[$formBase . '.period_start.' . $periodStartKey . '.date'] = 'required';
         }
 
         return $rules;
@@ -144,7 +155,7 @@ class Validation
     {
         $messages = [];
         foreach ($formFields as $periodStartKey => $periodStartVal) {
-            $messages[$formBase . '.periodStart.' . $periodStartKey . '.date.required'] = 'Period Start is required';
+            $messages[$formBase . '.period_start.' . $periodStartKey . '.date.required'] = 'Period Start is required';
         }
 
         return $messages;
@@ -160,7 +171,7 @@ class Validation
     {
         $rules = [];
         foreach ($formFields as $periodEndKey => $periodEndVal) {
-            $rules[$formBase . '.periodEnd.' . $periodEndKey . '.date'] = 'required';
+            $rules[$formBase . '.period_end.' . $periodEndKey . '.date'] = 'required';
         }
 
         return $rules;
@@ -176,7 +187,7 @@ class Validation
     {
         $messages = [];
         foreach ($formFields as $periodEndKey => $periodEndVal) {
-            $messages[$formBase . '.periodEnd.' . $periodEndKey . '.date.required'] = 'Period End is required';
+            $messages[$formBase . '.period_end.' . $periodEndKey . '.date.required'] = 'Period End is required';
         }
 
         return $messages;

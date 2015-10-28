@@ -140,7 +140,7 @@ class OrganizationController extends Controller
     public function showIdentifier($id)
     {
         $organization = $this->organizationManager->getOrganization($id);
-        $data         = $organization->reporting_org[0];
+        $data         = $organization->reporting_org;
         $form         = $this->orgReportingOrgFormCreator->editForm($data, $organization);
 
         return view('Organization.identifier.edit', compact('form', 'organization'));
@@ -165,4 +165,3 @@ class OrganizationController extends Controller
         return view('published-files', compact('list'));
     }
 }
-

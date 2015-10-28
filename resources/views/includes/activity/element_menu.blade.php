@@ -45,7 +45,7 @@
     <div class="panel-body">
         <ul class="nav">
             <li><a href="{{ route('activity.sector.index', $id) }}">Sector</a></li>
-            <li><a href="#">Country Budget Item</a></li>
+            <li><a href="{{ route('activity.country-budget-items.index', $id) }}">Country Budget Item</a></li>
             <li><a href="#">Policy Maker</a></li>
             <li><a href="#">Collaboration Type</a></li>
             <li><a href="#">Default Flow Type</a></li>

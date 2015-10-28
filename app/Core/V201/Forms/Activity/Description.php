@@ -19,10 +19,11 @@ class Description extends BaseForm
                 'select',
                 [
                     'choices' => $this->addCodeList('DescriptionType', 'Activity'),
-                    'label' => 'Description Type'
+                    'label'   => 'Description Type'
                 ]
             )
             ->addNarrative('narrative')
-            ->addAddMoreButton('add_narrative', 'narrative');
+            ->addAddMoreButton('add_narrative', 'narrative')
+            ->addRemoveThisButton('remove_description');
     }
 }

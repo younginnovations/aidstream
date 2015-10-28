@@ -7,7 +7,11 @@ class MultipleRecipientCountryBudgetForm extends BaseForm
     public function buildForm()
     {
         $this
-            ->addCollection('recipientCountryBudget', 'Organization\RecipientCountryBudgetForm', 'recipient_country_budget')
+            ->addCollection(
+                'recipient_country_budget',
+                'Organization\RecipientCountryBudgetForm',
+                'recipient_country_budget'
+            )
             ->addAddMoreButton('add_recipient_country_budget', 'recipient_country_budget');
     }
 }

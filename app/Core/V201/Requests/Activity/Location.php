@@ -1,35 +1,11 @@
 <?php namespace App\Core\V201\Requests\Activity;
 
-use App\Core\V201\Requests\Activity\Validation;
-use App\Http\Requests\Request;
-
 /**
  * Class Location
  * @package App\Core\V201\Requests\Activity
  */
-class Location extends Request
+class Location extends ActivityBaseRequest
 {
-
-    /**
-     * @var Validation
-     */
-    private $validation;
-
-    function __construct(Validation $validation)
-    {
-        $this->validation = $validation;
-    }
-
-
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
-    public function authorize()
-    {
-        return true;
-    }
 
     /**
      * Get the validation rules that apply to the request.
@@ -163,7 +139,7 @@ class Location extends Request
             $narrativeForm = sprintf('%s.name.%s', $formBase, $nameIndex);
             $rules         = array_merge(
                 $rules,
-                $this->validation->addRulesForNarrative($name['narrative'], $narrativeForm)
+                $this->addRulesForNarrative($name['narrative'], $narrativeForm)
             );
         }
 
@@ -183,7 +159,7 @@ class Location extends Request
             $narrativeForm = sprintf('%s.name.%s', $formBase, $nameIndex);
             $messages      = array_merge(
                 $messages,
-                $this->validation->addMessagesForNarrative($name['narrative'], $narrativeForm)
+                $this->addMessagesForNarrative($name['narrative'], $narrativeForm)
             );
         }
 
@@ -203,7 +179,7 @@ class Location extends Request
             $narrativeForm = sprintf('%s.location_description.%s', $formBase, $descriptionIndex);
             $rules         = array_merge(
                 $rules,
-                $this->validation->addRulesForNarrative(
+                $this->addRulesForNarrative(
                     $description['narrative'],
                     $narrativeForm
                 )
@@ -226,7 +202,7 @@ class Location extends Request
             $narrativeForm = sprintf('%s.location_description.%s', $formBase, $descriptionIndex);
             $messages      = array_merge(
                 $messages,
-                $this->validation->addMessagesForNarrative(
+                $this->addMessagesForNarrative(
                     $description['narrative'],
                     $narrativeForm
                 )
@@ -249,7 +225,7 @@ class Location extends Request
             $narrativeForm = sprintf('%s.activity_description.%s', $formBase, $descriptionIndex);
             $rules         = array_merge(
                 $rules,
-                $this->validation->addRulesForNarrative(
+                $this->addRulesForNarrative(
                     $description['narrative'],
                     $narrativeForm
                 )
@@ -272,7 +248,7 @@ class Location extends Request
             $narrativeForm = sprintf('%s.activity_description.%s', $formBase, $descriptionIndex);
             $messages      = array_merge(
                 $messages,
-                $this->validation->addMessagesForNarrative(
+                $this->addMessagesForNarrative(
                     $description['narrative'],
                     $narrativeForm
                 )

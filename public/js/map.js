@@ -15,6 +15,7 @@ function initMap(elem, latlng) {
                 "<a href='http://www.mapquest.com/' target='_blank' title='Nominatim Search Courtesy of Mapquest'>MapQuest</a>"
             }
         ));
+
     if (latlng) {
         L.marker(latlng).addTo(map);
     }

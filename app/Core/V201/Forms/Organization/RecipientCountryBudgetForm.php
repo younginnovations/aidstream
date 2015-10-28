@@ -7,7 +7,7 @@ class RecipientCountryBudgetForm extends BaseForm
     public function buildForm()
     {
         $this
-            ->addCollection('recipientCountry', 'Organization\RecipientCountryForm', 'recipient_country')
+            ->addCollection('recipient_country', 'Organization\RecipientCountryForm', 'recipient_country')
             ->addPeriodStart('Organization')
             ->addPeriodEnd('Organization')
             ->addValue('Organization')

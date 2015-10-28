@@ -1,41 +1,12 @@
 <?php namespace App\Core\V201\Requests\Activity;
 
-use App\Http\Requests\Request;
-
 /**
  * Class Sector
  * @package App\Core\V201\Requests\Activity
  */
-class Sector extends Request
+class Sector extends ActivityBaseRequest
 {
-    /**
-     * @var
-     */
-    protected $validation;
 
-    /**
-     * @param Validation $validation
-     */
-    function __construct(Validation $validation)
-    {
-        $this->validation = $validation;
-    }
-
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
-    public function authorize()
-    {
-        return true;
-    }
-
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array
-     */
     public function rules()
     {
         return $this->addSectorsRules($this->request->get('sector'));
@@ -66,10 +37,12 @@ class Sector extends Request
                 $rules[sprintf('%s.sector_text', $sectorForm)] = 'required';
             }
             $rules[sprintf('%s.percentage', $sectorForm)] = 'numeric|max:100';
-            $rules                                        = $this->validation->addRulesForNarrative(
-                $sector['narrative'],
-                $sectorForm,
-                $rules
+            $rules                                        = array_merge(
+                $rules,
+                $this->addRulesForNarrative(
+                    $sector['narrative'],
+                    $sectorForm
+                )
             );
         }
 
@@ -97,10 +70,12 @@ class Sector extends Request
                 $sectorForm,
                 'max:100'
             )]                                                             = 'Percentage should be less than or equal to required';
-            $messages                                                      = $this->validation->addMessagesForNarrative(
-                $sector['narrative'],
-                $sectorForm,
-                $messages
+            $messages                                                      = array_merge(
+                $messages,
+                $this->addMessagesForNarrative(
+                    $sector['narrative'],
+                    $sectorForm
+                )
             );
         }
 
