@@ -34,6 +34,7 @@ class RecipientRegion extends ActivityBaseRequest
     public function addRulesForRecipientRegion($formFields)
     {
         $rules = [];
+
         foreach ($formFields as $recipientRegionIndex => $recipientRegion) {
             $recipientRegionForm                          = 'recipient_region.' . $recipientRegionIndex;
             $rules[$recipientRegionForm . '.region_code'] = 'required';
@@ -57,7 +58,8 @@ class RecipientRegion extends ActivityBaseRequest
      */
     public function addMessagesForRecipientRegion($formFields)
     {
-        $messages = [];
+        $messages = []
+
         foreach ($formFields as $recipientRegionIndex => $recipientRegion) {
             $recipientRegionForm                                      = 'recipient_region.' . $recipientRegionIndex;
             $messages[$recipientRegionForm . '.region_code.required'] = 'Recipient region code is required';

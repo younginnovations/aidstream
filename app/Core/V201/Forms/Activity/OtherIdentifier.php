@@ -21,7 +21,7 @@ class OtherIdentifier extends BaseForm
                     'label'   => 'Type'
                 ]
             )
-            ->addCollection('ownerOrg', 'Activity\OwnerOrg', 'owner_organization')
+            ->addCollection('owner_org', 'Activity\OwnerOrg', 'owner_organization')
             ->addRemoveThisButton('remove_other_identifier');
     }
 }

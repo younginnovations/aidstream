@@ -1,0 +1,42 @@
+{
+  "date-last-modified": "2015-10-16T10:42:20.402864+00:00",
+  "version": "",
+  "name": "CollaborationType",
+  "xml:lang": "en",
+  "CollaborationType": [
+    {
+      "code": "1",
+      "name": "Bilateral",
+      "language": "en",
+      "description": "Bilateral transactions are those undertaken by a donor, excluding core contributions to other organisations (codes 2 and 3 below). It includes transactions channelled through other organisations."
+    },
+    {
+      "code": "2",
+      "name": "Multilateral",
+      "language": "en",
+      "description": "Multilateral contributions are those made to a recipient institution which: \n    i. conducts all or part of its activities in favour of development; \n    ii. is an international agency, institution or organisation whose members are governments, or a fund managed autonomously by such an agency; and \n    iii. pools contributions so that they lose their identity and become an integral part of its financial assets."
+    },
+    {
+      "code": "3",
+      "name": "Bilateral, core contributions to NGOs and other private bodies / PPPs",
+      "language": "en",
+      "description": "Bilateral funds paid over to national and international non-governmental organisations (NGOs), Public Private Partnerships (PPPs), or other private bodies for use at their discretion."
+    },
+    {
+      "code": "4",
+      "name": "Multilateral outflows",
+      "language": "en",
+      "description": "Aid activities financed from the multilateral institutions' regular budgets."
+    },
+    {
+      "code": "6",
+      "name": "Private sector outflow",
+      "language": "en"
+    },
+    {
+      "code": "7",
+      "name": "Bilateral, ex-post reporting on NGOs' activities funded through core contributions",
+      "language": "en"
+    }
+  ]
+}

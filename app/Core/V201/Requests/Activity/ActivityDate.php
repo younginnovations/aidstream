@@ -1,58 +1,65 @@
 <?php namespace App\Core\V201\Requests\Activity;
 
-use App\Http\Requests\Request;
-
 /**
  * Class ActivityDate
  * @package App\Core\V201\Requests\Activity
  */
-class ActivityDate extends Request
+class ActivityDate extends ActivityBaseRequest
 {
 
-    protected $redirect;
-
     /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
-    public function authorize()
-    {
-        return true;
-    }
-
-    /**
-     * Get the validation rules that apply to the request.
-     *
      * @return array
      */
     public function rules()
     {
+        return $this->addRulesForActivityDate($this->request->get('activity_date'));
+    }
+
+    /**
+     * @return array
+     */
+    public function messages()
+    {
+        return $this->addMessagesForActivityDate($this->request->get('activity_date'));
+    }
+
+    /**
+     * @param array $formFields
+     * @return array
+     */
+    public function addRulesForActivityDate(array $formFields)
+    {
         $rules = [];
-        foreach ($this->request->get('activity_date') as $activityDateIndex => $activityDate) {
-            $rules['activity_date.' . $activityDateIndex . '.date'] = 'required';
-            $rules['activity_date.' . $activityDateIndex . '.type'] = 'required';
-            foreach ($activityDate['narrative'] as $narrativeIndex => $narrative) {
-                $rules['activity_date.' . $activityDateIndex . '.narrative.' . $narrativeIndex . '.narrative'] = 'required';
-            }
+
+        foreach ($formFields as $activityDateIndex => $activityDate) {
+            $activityDateForm                             = sprintf('activity_date.%s', $activityDateIndex);
+            $rules[sprintf('%s.date', $activityDateForm)] = 'required';
+            $rules[sprintf('%s.type', $activityDateForm)] = 'required';
+            $rules                                        = array_merge(
+                $rules,
+                $this->addRulesForNarrative($activityDate['narrative'], $activityDateForm)
+            );
         }
 
         return $rules;
     }
 
     /**
-     * prepare the error message
+     * @param array $formFields
      * @return array
      */
-    public function messages()
+    public function addMessagesForActivityDate(array $formFields)
     {
         $messages = [];
-        foreach ($this->request->get('activity_date') as $activityDateIndex => $activityDate) {
-            $messages['activity_date.' . $activityDateIndex . '.date' . '.required'] = 'Date is required';
-            $messages['activity_date.' . $activityDateIndex . '.type' . '.required'] = 'Activity date type is required';
-            foreach ($activityDate['narrative'] as $narrativeIndex => $narrative) {
-                $messages['activity_date.' . $activityDateIndex . '.narrative.' . $narrativeIndex . '.narrative.' . 'required'] = "Activity date narrative is required";
-            }
+
+        foreach ($formFields as $activityDateIndex => $activityDate) {
+            $activityDateForm                                         = sprintf('activity_date.%s', $activityDateIndex);
+            $messages[sprintf('%s.date.required', $activityDateForm)] = 'Date is required';
+            $messages[sprintf('%s.type.required', $activityDateForm)] = 'Type is required';
+            $messages                                                 = array_merge(
+                $messages,
+                $this->addMessagesForNarrative($activityDate['narrative'], $activityDateForm)
+            );
         }
 
         return $messages;
