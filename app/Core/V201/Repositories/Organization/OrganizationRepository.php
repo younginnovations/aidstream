@@ -78,7 +78,7 @@ class OrganizationRepository implements OrganizationRepositoryInterface
      */
     public function getOrganizationData($id)
     {
-        return $this->orgData->findorFail($id);
+        return $this->orgData->where('organization_id', $id)->first();
     }
 
     /**
@@ -134,5 +134,4 @@ class OrganizationRepository implements OrganizationRepositoryInterface
 
         return $result;
     }
-
 }

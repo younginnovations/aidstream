@@ -32,11 +32,13 @@ class OrgReportingOrgForm
 
     public function editForm($data, $organization)
     {
+        $model['reporting_org'] = $data;
+
         return $this->formBuilder->create(
             $this->formPath,
             [
                 'method' => 'PUT',
-                'model'  => $data,
+                'model'  => $model,
                 'url'    => URL::route('organization.reportingOrg.update', [$organization->id, '0'])
             ]
         )->add('Update', 'submit');

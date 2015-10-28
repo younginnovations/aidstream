@@ -1,35 +1,11 @@
 <?php namespace App\Core\V201\Requests\Activity;
 
-use App\Http\Requests\Request;
-
 /**
  * Class ParticipatingOrganization
  * @package App\Core\V201\Requests\Activity
  */
-class ParticipatingOrganization extends Request
+class ParticipatingOrganization extends ActivityBaseRequest
 {
-    /**
-     * @var
-     */
-    protected $validation;
-
-    /**
-     * @param Validation $validation
-     */
-    function __construct(Validation $validation)
-    {
-        $this->validation = $validation;
-    }
-
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
-    public function authorize()
-    {
-        return true;
-    }
 
     /**
      * Get the validation rules that apply to the request.
@@ -61,10 +37,12 @@ class ParticipatingOrganization extends Request
         foreach ($formFields as $participatingOrgIndex => $participatingOrg) {
             $participatingOrgForm                                = 'participating_organization.' . $participatingOrgIndex;
             $rules[$participatingOrgForm . '.organization_role'] = 'required';
-            $rules                                               = $this->validation->addRulesForNarrative(
-                $participatingOrg['narrative'],
-                $participatingOrgForm,
-                $rules
+            $rules                                               = array_merge(
+                $rules,
+                $this->addRulesForNarrative(
+                    $participatingOrg['narrative'],
+                    $participatingOrgForm
+                )
             );
         }
 
@@ -82,10 +60,12 @@ class ParticipatingOrganization extends Request
         foreach ($formFields as $participatingOrgIndex => $participatingOrg) {
             $participatingOrgForm                                            = 'participating_organization.' . $participatingOrgIndex;
             $messages[$participatingOrgForm . '.organization_role.required'] = 'Organization role is required';
-            $messages                                                        = $this->validation->addMessagesForNarrative(
-                $participatingOrg['narrative'],
-                $participatingOrgForm,
-                $messages
+            $messages                                                        = array_merge(
+                $messages,
+                $this->addMessagesForNarrative(
+                    $participatingOrg['narrative'],
+                    $participatingOrgForm
+                )
             );
         }
 

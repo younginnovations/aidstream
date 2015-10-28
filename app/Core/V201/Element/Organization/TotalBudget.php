@@ -29,12 +29,12 @@ class TotalBudget extends BaseElement
             $orgTotalBudgetData[] = [
                 'period-start' => [
                     '@attributes' => [
-                        'iso-date' => $orgTotalBudget['periodStart'][0]['date']
+                        'iso-date' => $orgTotalBudget['period_start'][0]['date']
                     ]
                 ],
                 'period-end' => [
                     '@attributes' => [
-                        'iso-date' => $orgTotalBudget['periodEnd'][0]['date']
+                        'iso-date' => $orgTotalBudget['period_end'][0]['date']
                     ]
                 ],
                 'value' => [

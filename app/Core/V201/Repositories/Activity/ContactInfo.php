@@ -42,5 +42,4 @@ class ContactInfo
     {
         return $this->activity->findorFail($activityId)->contact_info;
     }
-
 }

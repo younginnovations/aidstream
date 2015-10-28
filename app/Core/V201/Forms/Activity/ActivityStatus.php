@@ -21,7 +21,7 @@ class ActivityStatus extends BaseForm
                 'select',
                 [
                     'choices' => $this->addCodeList('ActivityStatus', 'Activity'),
-                    'label' => 'Activity status'
+                    'label'   => 'Activity status'
                 ]
             );
     }

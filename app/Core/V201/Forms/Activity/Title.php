@@ -20,8 +20,8 @@ class Title extends BaseForm
                 'static',
                 [
                     'default_value' => 'Title',
-                    'label' => false,
-                    'wrapper' => false
+                    'label'         => false,
+                    'wrapper'       => false
                 ]
             )
             ->addNarrative('title')

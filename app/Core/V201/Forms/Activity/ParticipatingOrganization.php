@@ -19,7 +19,7 @@ class ParticipatingOrganization extends BaseForm
                 'select',
                 [
                     'choices' => $this->addCodeList('OrganisationRole', 'Activity'),
-                    'label' => 'Organization Role'
+                    'label'   => 'Organization Role'
                 ]
             )
             ->add('identifier', 'text')
@@ -28,7 +28,7 @@ class ParticipatingOrganization extends BaseForm
                 'select',
                 [
                     'choices' => $this->addCodeList('OrganisationType', 'Activity'),
-                    'label' => 'Organization Type'
+                    'label'   => 'Organization Type'
                 ]
             )
             ->addNarrative('narrative', 'Organization Name')

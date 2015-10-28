@@ -26,7 +26,7 @@ class OrgReportingOrg extends BaseElement
      */
     public function getForm()
     {
-        return "App\Core\V201\Forms\Organization\ReportingOrganizationInfoForm";
+        return "App\Core\V201\Forms\Organization\ReportingOrganizationInfoForms";
     }
 
 
@@ -42,7 +42,7 @@ class OrgReportingOrg extends BaseElement
             $organizationData[] = [
                 '@attributes' => [
                     'type' => $OrgReportingOrg['reporting_organization_type'],
-                    'ref' => $OrgReportingOrg['reporting_organization_identifier']
+                    'ref'  => $OrgReportingOrg['reporting_organization_identifier']
                 ],
                 'narrative'   => $this->buildNarrative($OrgReportingOrg['narrative']),
             ];

@@ -26,7 +26,7 @@ class RecipientCountryBudgetForm
      */
     public function editForm($data, $organizationId)
     {
-        $modal['recipientCountryBudget'] = $data;
+        $modal['recipient_country_budget'] = $data;
 
         return $this->formBuilder->create(
             $this->formPath,

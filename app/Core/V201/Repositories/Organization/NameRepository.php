@@ -49,5 +49,4 @@ class NameRepository
     {
         return $this->orgData->where('organization_id', $organization_id)->first()->name;
     }
-
 }

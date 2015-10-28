@@ -32,18 +32,18 @@ class RecipientOrgBudget extends BaseElement
             $organizationData[] = [
                 'recipient-org' => [
                     '@attributes' => [
-                        'ref' => $RecipientOrgBudget['recipientOrganization'][0]['Ref']
+                        'ref' => $RecipientOrgBudget['recipient_organization'][0]['Ref']
                     ],
                     'narrative' => $this->buildNarrative($RecipientOrgBudget['narrative'])
                 ],
                 'period-start' => [
                     '@attributes' => [
-                        'iso-date' => $RecipientOrgBudget['periodStart'][0]['date']
+                        'iso-date' => $RecipientOrgBudget['period_start'][0]['date']
                     ]
                 ],
                 'period-end' => [
                     '@attributes' => [
-                        'iso-date' => $RecipientOrgBudget['periodEnd'][0]['date']
+                        'iso-date' => $RecipientOrgBudget['period_end'][0]['date']
                     ]
                 ],
                 'value' => [

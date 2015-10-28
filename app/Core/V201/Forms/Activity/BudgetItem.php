@@ -18,25 +18,11 @@ class BudgetItem extends BaseForm
                 'code',
                 'select',
                 [
-                    'choices' => $this->getCodeList('BudgetIdentifier', 'Activity'),
+                    'choices' => $this->addCodeList('BudgetIdentifier', 'Activity'),
                 ]
             )
-            ->getPercentage()
-            ->add(
-                'description',
-                'collection',
-                [
-                    'type'      => 'form',
-                    'prototype' => true,
-                    'options'   => [
-                        'class' => 'App\Core\V201\Forms\Activity\BudgetItemDescription',
-                        'label' => false,
-                    ],
-                    'wrapper'   => [
-                        'class' => 'collection_form description'
-                    ]
-                ]
-            )
+            ->addPercentage()
+            ->addCollection('description', 'Activity\BudgetItemDescription', 'description')
             ->addAddMoreButton('add_budget_item_description', 'description')
             ->addRemoveThisButton('remove_budget_item');
     }

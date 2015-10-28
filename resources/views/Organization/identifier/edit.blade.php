@@ -8,7 +8,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">Organization Identifier</div>
                     <div class="panel-body">
-                        {!! form_row($form->reporting_organization_identifier) !!}
+                        {!! form_row($form->reporting_org->getChildren()[0]->reporting_organization_identifier) !!}
                     </div>
                 </div>
             </div>

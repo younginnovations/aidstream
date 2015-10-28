@@ -20,7 +20,7 @@ class ActivityDate extends BaseForm
                 'select',
                 [
                     'choices' => $this->addCodeList('ActivityDateType', 'Activity'),
-                    'label' => 'Activity Date Type'
+                    'label'   => 'Activity Date Type'
                 ]
             )
             ->addNarrative('narrative')

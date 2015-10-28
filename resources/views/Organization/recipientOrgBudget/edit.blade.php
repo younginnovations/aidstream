@@ -11,7 +11,7 @@
                         {!! form($form) !!}
 
                         <div class="collection-container hidden"
-                             data-prototype="{{ form_row($form->recipientOrganizationBudget->prototype()) }}">
+                             data-prototype="{{ form_row($form->recipient_organization_budget->prototype()) }}">
                         </div>
                     </div>
                 </div>

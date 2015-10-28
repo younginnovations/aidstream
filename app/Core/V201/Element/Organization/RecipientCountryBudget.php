@@ -41,18 +41,18 @@ class RecipientCountryBudget extends BaseElement
             $orgRecipientCountryData[] = [
                 'recipient-country' => [
                     '@attributes' => [
-                        'code' => $orgRecipientCountry['recipientCountry'][0]['code']
+                        'code' => $orgRecipientCountry['recipient_country'][0]['code']
                     ],
-                    'narrative' => $this->buildNarrative($orgRecipientCountry['recipientCountry'][0]['narrative'])
+                    'narrative' => $this->buildNarrative($orgRecipientCountry['recipient_country'][0]['narrative'])
                 ],
                 'period-start' => [
                     '@attributes' => [
-                        'iso-date' => $orgRecipientCountry['periodStart'][0]['date']
+                        'iso-date' => $orgRecipientCountry['period_start'][0]['date']
                     ]
                 ],
                 'period-end' => [
                     '@attributes' => [
-                        'iso-date' => $orgRecipientCountry['periodEnd'][0]['date']
+                        'iso-date' => $orgRecipientCountry['period_end'][0]['date']
                     ]
                 ],
                 'value' => [

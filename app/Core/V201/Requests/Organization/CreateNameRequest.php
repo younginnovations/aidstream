@@ -2,7 +2,8 @@
 
 use App\Http\Requests\Request;
 
-class CreateNameRequest extends Request {
+class CreateNameRequest extends Request
+{
 
     /**
      * Determine if the user is authorized to make this request.
@@ -22,9 +23,10 @@ class CreateNameRequest extends Request {
     public function rules()
     {
         $rules = [];
-        foreach ($this->request->get('name') as $key => $val) {
-            $rules['name.' . $key . '.narrative'] = 'required|max:255';
+        foreach ($this->request->get('name') as $nameIndex => $name) {
+            $rules['name.' . $nameIndex . '.narrative'] = 'required|max:255';
         }
+
         return $rules;
     }
 
@@ -34,11 +36,14 @@ class CreateNameRequest extends Request {
     public function messages()
     {
         $messages = [];
-        foreach ($this->request->get('name') as $key => $val) {
-            $messages['name.' . $key . '.narrative' . '.required'] = sprintf("Narrative is Required.", $key);
-            $messages['name.' . $key . '.narrative' . '.max'] = sprintf("Max(255) Narrative .", $key);
+        foreach ($this->request->get('name') as $nameIndex => $name) {
+            $messages['name.' . $nameIndex . '.narrative' . '.required'] = sprintf(
+                "Narrative is Required.",
+                $nameIndex
+            );
+            $messages['name.' . $nameIndex . '.narrative' . '.max']      = sprintf("Max(255) Narrative .", $nameIndex);
         }
+
         return $messages;
     }
-
 }

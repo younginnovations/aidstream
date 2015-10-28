@@ -11,7 +11,7 @@
                         {!! form($form) !!}
 
                         <div class="collection-container hidden"
-                             data-prototype="{{ form_row($form->documentLink->prototype()) }}">
+                             data-prototype="{{ form_row($form->document_link->prototype()) }}">
                         </div>
                     </div>
                 </div>

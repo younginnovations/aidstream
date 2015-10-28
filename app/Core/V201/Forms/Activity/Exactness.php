@@ -20,7 +20,7 @@ class Exactness extends BaseForm
                 'code',
                 'select',
                 [
-                    'choices' => $this->getCodeList('GeographicExactness', 'Activity'),
+                    'choices' => $this->addCodeList('GeographicExactness', 'Activity'),
                 ]
             );
     }

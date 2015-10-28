@@ -22,7 +22,7 @@ class DocumentLinkRepositoryTest extends AidStreamTestCase
 //        $organizationModel = m::mock('App\Models\Organization\Organization');
         $this->organizationData->shouldReceive('setAttribute')->once()->with('document_link', 'a');
         $this->organizationData->shouldReceive('save')->once()->andReturn(true);
-        $this->assertTrue($this->documentLinkRepository->update(['documentLink' => 'a'], $this->organizationData));
+        $this->assertTrue($this->documentLinkRepository->update(['document_link' => 'a'], $this->organizationData));
     }
 
     public function testItShouldGetOrganizationDataWithSpecificId()

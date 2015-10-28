@@ -14,7 +14,7 @@ class LanguageCodeForm extends BaseForm
                 'select',
                 [
                     'choices' => $this->addCodeList('Language', 'Organization'),
-                    'label' => 'Language'
+                    'label'   => 'Language'
                 ]
             )
             ->addRemoveThisButton('remove_language_code');
