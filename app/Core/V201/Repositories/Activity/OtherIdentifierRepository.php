@@ -51,5 +51,4 @@ class OtherIdentifierRepository
     {
         return Activity::findorFail($activityId)->other_identifier;
     }
-
 }

@@ -21,7 +21,7 @@ class ActivityScope extends BaseForm
                 'select',
                 [
                     'choices' => $this->addCodeList('ActivityScope', 'Activity'),
-                    'label' => 'Activity scope'
+                    'label'   => 'Activity scope'
                 ]
             );
     }

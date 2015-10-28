@@ -1,54 +1,70 @@
-<?php namespace App\Core\V201\Request\Organization;
+<?php namespace App\Core\V201\Requests\Organization;
 
-use App\Http\Requests\Request;
 use App\Models\Organization;
-use Illuminate\Foundation\Http\FormRequest;
 
-class CreateOrgReportingOrgRequest extends Request {
+class CreateOrgReportingOrgRequest extends OrganizationBaseRequest
+{
 
-	protected $redirect;
-	/**
-	 * Determine if the user is authorized to make this request.
-	 *
-	 * @return bool
-	 */
-	public function authorize()
-	{
-		return true;
-	}
+    protected $redirect;
 
-	/**
-	 * Get the validation rules that apply to the request.
-	 *
-	 * @return array
-	 */
-	public function rules()
-	{
-		$rules = [];
-		foreach ($this->request->get('reportingOrg') as $key => $val) {
-			foreach ($val['narrative'] as $narrativeKey => $narrativeVal) {
-				$rules['reportingOrg.' . $key . '.narrative.' . $narrativeKey . '.narrative'] = 'required';
-				$rules['reportingOrg.' . $key . '.narrative.' . $narrativeKey . '.language'] = 'required';
-			}
-		}
-		return $rules;
-	}
+    /**
+     * Determine if the user is authorized to make this request.
+     *
+     * @return bool
+     */
+    public function authorize()
+    {
+        return true;
+    }
 
-	/**
-	 * Get the Validation Error message
-	 * @return array
-	 */
-	public function messages()
-	{
-		$messages = [];
-		foreach ($this->request->get('reportingOrg') as $key => $val) {
-			foreach ($val['narrative'] as $narrativeKey => $narrativeVal) {
-				$messages['reportingOrg.' . $key . '.narrative.' . $narrativeKey . '.narrative.required'] = sprintf('Narrative Title %d is required',
-					$key);
-				$messages['reportingOrg.' . $key . '.narrative.' . $narrativeKey . '.language.required'] = sprintf('Narrative Language %d is required',
-					$key);
-			}
-		}
-		return $messages;
-	}
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array
+     */
+    public function rules()
+    {
+        return $this->addRulesForReportingOrganization($this->request->get('reporting_org'));
+    }
+
+    /**
+     * @param array $formFields
+     * @return array
+     */
+    public function addRulesForReportingOrganization(array $formFields)
+    {
+        $rules = [];
+        foreach ($formFields as $reportingOrganizationIndex => $reportingOrganization) {
+            $reportingOrganizationForm = sprintf('reporting_org.%s', $reportingOrganizationIndex);
+            $rules                     = array_merge(
+                $rules,
+                $this->addRulesForNarrative($reportingOrganization['narrative'], $reportingOrganizationForm)
+            );
+        }
+
+        return $rules;
+    }
+
+    /**
+     * Get the Validation Error message
+     * @return array
+     */
+    public function messages()
+    {
+        return $this->addMessagesForReportingOrganization($this->request->get('reporting_org'));
+    }
+
+    public function addMessagesForReportingOrganization(array $formFields)
+    {
+        $messages = [];
+        foreach ($formFields as $reportingOrganizationIndex => $reportingOrganization) {
+            $reportingOrganizationForm = sprintf('reporting_org.%s', $reportingOrganizationIndex);
+            $messages                  = array_merge(
+                $messages,
+                $this->addMessagesForNarrative($reportingOrganization['narrative'], $reportingOrganizationForm)
+            );
+        }
+
+        return $messages;
+    }
 }

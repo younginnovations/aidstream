@@ -2,9 +2,9 @@
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\CreateOrgReportingOrgRequestManager;
 use App\Services\Organization\OrganizationManager;
 use App\Services\Organization\OrgReportingOrgManager;
+use App\Services\RequestManager\Organization\CreateOrgReportingOrgRequestManager;
 use Session;
 use URL;
 use Illuminate\Http\Request;
@@ -48,7 +48,7 @@ class OrgReportingOrgController extends Controller
     public function index($organizationId)
     {
         $organization = $this->organizationManager->getOrganization($organizationId);
-        $data         = $organization->reporting_org[0];
+        $data         = $organization->reporting_org;
         $form         = $this->orgReportingOrgFormCreator->editForm($data, $organization);
 
         return view('Organization.reportingOrg.edit', compact('form', 'organization'));
@@ -57,17 +57,21 @@ class OrgReportingOrgController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  int $organizationId
+     * @param  int                                $organizationId
+     * @param CreateOrgReportingOrgRequestManager $createOrgReportingOrgRequestManager
+     * @param Request                             $request
      * @return Response
      */
-    public function update($organizationId)
-    {
-        $input['reportingOrg'][0] = Input::all();
-        $organization             = $this->organizationManager->getOrganization($organizationId);
+    public function update(
+        $organizationId,
+        CreateOrgReportingOrgRequestManager $createOrgReportingOrgRequestManager,
+        Request $request
+    ) {
+        $input        = $request->all();
+        $organization = $this->organizationManager->getOrganization($organizationId);
         $this->orgReportingOrgManager->update($input, $organization);
         $this->organizationManager->resetStatus($organizationId);
 
         return redirect()->route("organization.show", $organizationId)->withMessage('Reporting Organization Updated !');
     }
 }
-

@@ -134,5 +134,4 @@ class OrganizationRepository implements OrganizationRepositoryInterface
 
         return $result;
     }
-
 }

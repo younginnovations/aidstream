@@ -13,7 +13,7 @@ class ValueForm extends BaseForm
                 'select',
                 [
                     'choices' => $this->addCodeList('Currency', 'Organization'),
-                    'label' => 'Currency'
+                    'label'   => 'Currency'
                 ]
             )
             ->add('value_date', 'date');

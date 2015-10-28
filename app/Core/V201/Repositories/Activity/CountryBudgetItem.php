@@ -42,5 +42,4 @@ class CountryBudgetItem
     {
         return $this->activity->findOrFail($activityId)->country_budget_items;
     }
-
 }

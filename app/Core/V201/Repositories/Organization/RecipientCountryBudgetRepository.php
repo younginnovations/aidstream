@@ -25,7 +25,7 @@ class RecipientCountryBudgetRepository
      */
     public function update(array $input, OrganizationData $organization)
     {
-        $organization->recipient_country_budget = $input['recipientCountryBudget'];
+        $organization->recipient_country_budget = $input['recipient_country_budget'];
 
         return $organization->save();
     }
@@ -49,5 +49,4 @@ class RecipientCountryBudgetRepository
     {
         return $this->org->where('organization_id', $organization_id)->first()->recipient_country_budget;
     }
-
 }

@@ -14,7 +14,11 @@ class MultipleParticipatingOrganization extends BaseForm
     public function buildForm()
     {
         $this
-            ->addCollection('participating_organization', 'Activity\ParticipatingOrganization', 'participating_organization')
+            ->addCollection(
+                'participating_organization',
+                'Activity\ParticipatingOrganization',
+                'participating_organization'
+            )
             ->addAddMoreButton('add', 'participating_organization');
     }
 }

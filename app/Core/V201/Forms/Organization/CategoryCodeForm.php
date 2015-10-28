@@ -10,7 +10,7 @@ class CategoryCodeForm extends BaseForm
     {
         $this
             ->add(
-                'Code',
+                'code',
                 'select',
                 [
                     'choices' => $this->addCodeList('DocumentCategory', 'Organization')

@@ -42,5 +42,4 @@ class Description
     {
         return $this->activity->findorFail($activityId)->description;
     }
-
 }

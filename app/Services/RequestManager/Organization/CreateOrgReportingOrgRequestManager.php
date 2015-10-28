@@ -9,8 +9,6 @@ class CreateOrgReportingOrgRequestManager
 
     function __construct(Version $version)
     {
-        $this->req = $version->getOrganizationElement()->getCreateOrgReportingOrgRequest();
-
-        return $this->req;
+        return $version->getOrganizationElement()->getCreateOrgReportingOrgRequest();
     }
 }

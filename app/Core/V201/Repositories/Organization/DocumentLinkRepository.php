@@ -26,7 +26,7 @@ class DocumentLinkRepository
      */
     public function update(array $input, OrganizationData $organization)
     {
-        $organization->document_link = $input['documentLink'];
+        $organization->document_link = $input['document_link'];
 
         return $organization->save();
     }
@@ -51,4 +51,3 @@ class DocumentLinkRepository
         return $this->org->where('organization_id', $organization_id)->first()->document_link;
     }
 }
-

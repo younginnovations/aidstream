@@ -42,5 +42,4 @@ class Sector
     {
         return $this->activity->findOrFail($activityId)->sector;
     }
-
 }

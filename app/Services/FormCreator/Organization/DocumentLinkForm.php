@@ -26,7 +26,7 @@ class DocumentLinkForm
      */
     public function editForm($data, $organizationId)
     {
-        $modal['documentLink'] = $data;
+        $modal['document_link'] = $data;
 
         return $this->formBuilder->create(
             $this->formPath,
