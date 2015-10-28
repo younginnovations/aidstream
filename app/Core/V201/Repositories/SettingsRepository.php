@@ -83,7 +83,7 @@ class SettingsRepository implements SettingsRepositoryInterface
             $settings->publishing_type      = $input['publishing_type'][0]['publishing'];
             $settings->registry_info        = $input['registry_info'];
             $settings->default_field_values = $input['default_field_values'];
-            $settings->default_field_groups = $input['default_field_groups'];
+            $settings->default_field_groups = isset($input['default_field_groups']) ? $input['default_field_groups'] : [];
             $settings->version              = $version;
             $settings->organization_id      = $organization->id;
             $settings->save();
