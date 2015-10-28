@@ -26,7 +26,7 @@ class TotalBudgetForm
      */
     public function editForm($data, $organizationId)
     {
-        $modal['totalBudget'] = $data;
+        $modal['total_budget'] = $data;
 
         return $this->formBuilder->create(
             $this->formPath,

@@ -1,37 +1,11 @@
 <?php namespace App\Core\V201\Requests\Activity;
 
-use App\Http\Requests\Request;
-
 /**
  * Class RecipientCountry
  * @package App\Core\V201\Requests\Activity
  */
-class RecipientCountry extends Request
+class RecipientCountry extends ActivityBaseRequest
 {
-
-    /**
-     * @var Validation
-     */
-    protected $validation;
-
-    /**
-     * @param Validation $validation
-     */
-    function __construct(Validation $validation)
-    {
-        $this->validation = $validation;
-    }
-
-
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
-    public function authorize()
-    {
-        return true;
-    }
 
     /**
      * Get the validation rules that apply to the request.
@@ -64,10 +38,12 @@ class RecipientCountry extends Request
             $recipientCountryForm                           = 'recipient_country.' . $recipientCountryIndex;
             $rules[$recipientCountryForm . '.country_code'] = 'required';
             $rules[$recipientCountryForm . '.percentage']   = 'numeric|max:100';
-            $rules                                          = $this->validation->addRulesForNarrative(
-                $recipientCountry['narrative'],
-                $recipientCountryForm,
-                $rules
+            $rules                                          = array_merge(
+                $rules,
+                $this->addRulesForNarrative(
+                    $recipientCountry['narrative'],
+                    $recipientCountryForm
+                )
             );
         }
 
@@ -87,10 +63,12 @@ class RecipientCountry extends Request
             $messages[$recipientCountryForm . '.country_code.required'] = 'Country code field is required';
             $messages[$recipientCountryForm . '.percentage.numeric']    = 'Percentage must be a number';
             $messages[$recipientCountryForm . '.percentage.max']        = 'Percentage may not be greater than 100';
-            $messages                                                   = $this->validation->addMessagesForNarrative(
-                $recipientCountry['narrative'],
-                $recipientCountryForm,
-                $messages
+            $messages                                                   = array_merge(
+                $messages,
+                $this->addMessagesForNarrative(
+                    $recipientCountry['narrative'],
+                    $recipientCountryForm
+                )
             );
         }
 

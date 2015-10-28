@@ -18,12 +18,16 @@ class Position extends BaseForm
         $this
             ->add('latitude', 'text')
             ->add('longitude', 'text')
-            ->add('map', 'static', [
-                'label' => false,
-                'attr' => [
-                    'class' => 'map_container',
-                    'style' => 'height: 400px;'
+            ->add(
+                'map',
+                'static',
+                [
+                    'label' => false,
+                    'attr'  => [
+                        'class' => 'map_container',
+                        'style' => 'height: 400px;'
+                    ]
                 ]
-            ]);
+            );
     }
 }

@@ -20,7 +20,7 @@ class LocationId extends BaseForm
                 'vocabulary',
                 'select',
                 [
-                    'choices' => $this->getCodeList('GeographicVocabulary', 'Activity'),
+                    'choices' => $this->addCodeList('GeographicVocabulary', 'Activity'),
                 ]
             )
             ->add('code', 'text')

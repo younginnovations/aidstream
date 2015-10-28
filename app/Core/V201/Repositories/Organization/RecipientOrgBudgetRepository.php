@@ -27,7 +27,7 @@ class RecipientOrgBudgetRepository
      */
     public function update(array $input, OrganizationData $organization)
     {
-        $organization->recipient_organization_budget = $input['recipientOrganizationBudget'];
+        $organization->recipient_organization_budget = $input['recipient_organization_budget'];
 
         return $organization->save();
     }

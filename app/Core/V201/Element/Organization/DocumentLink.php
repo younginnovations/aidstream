@@ -44,10 +44,10 @@ class DocumentLink extends BaseElement
                     'url' => $orgDocumentLink['url']
                 ],
                 'title' => [
-                    'narrative' => $this->buildNarrative($orgDocumentLink['title'])
+                    'narrative' => $this->buildNarrative($orgDocumentLink['narrative'])
                 ],
                 'category' => [
-                    '@attributes' => ['code' => $orgDocumentLink['category'][0]['category']],
+                    '@attributes' => ['code' => $orgDocumentLink['category'][0]['code']],
                 ],
                 'language' => [
                     '@attributes' => ['code' => $orgDocumentLink['language'][0]['language']],

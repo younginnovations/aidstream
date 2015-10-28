@@ -42,5 +42,4 @@ class ParticipatingOrganization
     {
         return $this->activity->findOrFail($activityId)->participating_organization;
     }
-
 }

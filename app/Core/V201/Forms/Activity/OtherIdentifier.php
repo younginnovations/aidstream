@@ -18,7 +18,7 @@ class OtherIdentifier extends BaseForm
                 'select',
                 [
                     'choices' => $this->addCodeList('OtherIdentifierType', 'Activity'),
-                    'label' => 'Type'
+                    'label'   => 'Type'
                 ]
             )
             ->addCollection('ownerOrg', 'Activity\OwnerOrg', 'owner_organization')

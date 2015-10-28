@@ -15,8 +15,14 @@ function initMap(elem, latlng) {
                 "<a href='http://www.mapquest.com/' target='_blank' title='Nominatim Search Courtesy of Mapquest'>MapQuest</a>"
             }
         ));
+
+    var icon = L.icon({
+        iconUrl: 'images/marker-icon.png',
+        shadowUrl: 'images/marker-shadow.png'
+    });
+
     if (latlng) {
-        L.marker(latlng).addTo(map);
+        L.marker(latlng, {icon: icon}).addTo(map);
     }
 
     map.on('click', function (e) {

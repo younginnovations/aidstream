@@ -18,24 +18,10 @@ class CountryBudgetItem extends BaseForm
                 'vocabulary',
                 'select',
                 [
-                    'choices' => $this->getCodeList('BudgetIdentifierVocabulary', 'Activity'),
+                    'choices' => $this->addCodeList('BudgetIdentifierVocabulary', 'Activity'),
                 ]
             )
-            ->add(
-                'budget_item',
-                'collection',
-                [
-                    'type'      => 'form',
-                    'prototype' => true,
-                    'options'   => [
-                        'class' => 'App\Core\V201\Forms\Activity\BudgetItem',
-                        'label' => false,
-                    ],
-                    'wrapper'   => [
-                        'class' => 'collection_form budget_item'
-                    ]
-                ]
-            )
+            ->addCollection('budget_item', 'Activity\BudgetItem', 'budget_item')
             ->addAddMoreButton('add_budget_item', 'budget_item');
     }
 }

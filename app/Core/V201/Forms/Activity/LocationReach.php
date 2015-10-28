@@ -20,7 +20,7 @@ class LocationReach extends BaseForm
                 'code',
                 'select',
                 [
-                    'choices' => $this->getCodeList('GeographicLocationReach', 'Activity'),
+                    'choices' => $this->addCodeList('GeographicLocationReach', 'Activity'),
                 ]
             );
     }

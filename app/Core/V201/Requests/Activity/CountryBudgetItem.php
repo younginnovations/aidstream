@@ -72,7 +72,11 @@ class CountryBudgetItem extends ActivityBaseRequest
     {
         $rules = [];
         foreach ($formFields as $budgetItemIndex => $budgetItem) {
-            $budgetItemForm                                   = sprintf('%s.budget_item.%s', $formBase, $budgetItemIndex);
+            $budgetItemForm                                   = sprintf(
+                '%s.budget_item.%s',
+                $formBase,
+                $budgetItemIndex
+            );
             $rules[sprintf('%s.code', $budgetItemForm)]       = 'required';
             $rules[sprintf('%s.percentage', $budgetItemForm)] = 'required|numeric|max:100';
             $rules                                            = array_merge(
