@@ -28,7 +28,7 @@ class ActivityBaseRequest extends Request
     {
         $rules = [];
         foreach ($formFields as $narrativeIndex => $narrative) {
-            $rules[$formBase . '.narrative.' . $narrativeIndex . '.narrative'] = 'required';
+            $rules[sprintf('%s.narrative.%s.narrative', $formBase, $narrativeIndex)] = 'required';
         }
 
         return $rules;
@@ -44,7 +44,11 @@ class ActivityBaseRequest extends Request
     {
         $messages = [];
         foreach ($formFields as $narrativeIndex => $narrative) {
-            $messages[$formBase . '.narrative.' . $narrativeIndex . '.narrative.required'] = 'Narrative text is required';
+            $messages[sprintf(
+                '%s.narrative.%s.narrative.required',
+                $formBase,
+                $narrativeIndex
+            )] = 'Narrative text is required';
         }
 
         return $messages;

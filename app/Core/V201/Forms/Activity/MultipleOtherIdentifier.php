@@ -14,7 +14,7 @@ class MultipleOtherIdentifier extends BaseForm
     public function buildForm()
     {
         $this
-            ->addCollection('otherIdentifier', 'Activity\OtherIdentifier', 'other_identifier')
+            ->addCollection('other_identifier', 'Activity\OtherIdentifier', 'other_identifier')
             ->addAddMoreButton('add_other_identifier', 'other_identifier');
     }
 }

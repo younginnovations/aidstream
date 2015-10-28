@@ -1,21 +1,12 @@
 <?php namespace App\Core\V201\Requests\Activity;
 
-use App\Http\Requests\Request;
 
-class Title extends Request
+/**
+ * Class Title
+ * @package App\Core\V201\Requests\Activity
+ */
+class Title extends ActivityBaseRequest
 {
-
-    protected $redirect;
-
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
-    public function authorize()
-    {
-        return true;
-    }
 
     /**
      * Get the validation rules that apply to the request.
@@ -25,8 +16,9 @@ class Title extends Request
     public function rules()
     {
         $rules = [];
+        
         foreach ($this->request->get('narrative') as $titleIndex => $title) {
-            $rules['narrative.' . $titleIndex . '.narrative'] = 'required';
+            $rules[sprintf('narrative.%s.narrative', $titleIndex)] = 'required';
         }
 
         return $rules;
@@ -39,8 +31,9 @@ class Title extends Request
     public function messages()
     {
         $messages = [];
+
         foreach ($this->request->get('narrative') as $titleIndex => $title) {
-            $messages['narrative.' . $titleIndex . '.narrative' . '.required'] = "Title narrative is required";
+            $messages[sprintf('narrative.%s.narrative.required', $titleIndex)] = "Title narrative is required";
         }
 
         return $messages;
