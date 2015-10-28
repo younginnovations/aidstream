@@ -16,13 +16,8 @@ function initMap(elem, latlng) {
             }
         ));
 
-    var icon = L.icon({
-        iconUrl: 'images/marker-icon.png',
-        shadowUrl: 'images/marker-shadow.png'
-    });
-
     if (latlng) {
-        L.marker(latlng, {icon: icon}).addTo(map);
+        L.marker(latlng).addTo(map);
     }
 
     map.on('click', function (e) {
