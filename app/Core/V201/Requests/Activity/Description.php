@@ -15,7 +15,7 @@ class Description extends ActivityBaseRequest
      */
     public function rules()
     {
-        return $this->addRulesForDescription($this->request->get('description'));
+        return $this->getRulesForDescription($this->request->get('description'));
     }
 
     /**
@@ -23,14 +23,14 @@ class Description extends ActivityBaseRequest
      */
     public function messages()
     {
-        return $this->addMessagesForDescription($this->request->get('description'));
+        return $this->getMessagesForDescription($this->request->get('description'));
     }
 
     /**
      * @param array $formFields
      * @return array
      */
-    public function addRulesForDescription(array $formFields)
+    public function getRulesForDescription(array $formFields)
     {
         $rules = [];
 
@@ -38,7 +38,7 @@ class Description extends ActivityBaseRequest
             $descriptionForm = sprintf('description.%s', $descriptionIndex);
             $rules           = array_merge(
                 $rules,
-                $this->addRulesForNarrative($description['narrative'], $descriptionForm)
+                $this->getRulesForNarrative($description['narrative'], $descriptionForm)
             );
         }
 
@@ -49,7 +49,7 @@ class Description extends ActivityBaseRequest
      * @param array $formFields
      * @return array
      */
-    public function addMessagesForDescription(array $formFields)
+    public function getMessagesForDescription(array $formFields)
     {
         $messages = [];
 
@@ -57,7 +57,7 @@ class Description extends ActivityBaseRequest
             $descriptionForm = sprintf('description.%s', $descriptionIndex);
             $messages        = array_merge(
                 $messages,
-                $this->addMessagesForNarrative($description['narrative'], $descriptionForm)
+                $this->getMessagesForNarrative($description['narrative'], $descriptionForm)
             );
         }
 

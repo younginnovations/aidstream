@@ -1,7 +1,5 @@
 <?php namespace App\Core\V201\Requests\Organization;
 
-use App\Models\OrganizationData;
-use Illuminate\Foundation\Http\FormRequest;
 
 /**
  * Class CreateDocumentLinkRequest
@@ -27,7 +25,7 @@ class CreateDocumentLinkRequest extends OrganizationBaseRequest
      */
     public function rules()
     {
-        return $this->addRulesForDocumentLink($this->request->get('document_link'));
+        return $this->getRulesForDocumentLink($this->request->get('document_link'));
     }
 
     /**
@@ -35,14 +33,14 @@ class CreateDocumentLinkRequest extends OrganizationBaseRequest
      */
     public function messages()
     {
-        return $this->addMessagesForDocumentLink($this->request->get('document_link'));
+        return $this->getMessagesForDocumentLink($this->request->get('document_link'));
     }
 
     /**
      * @param array $formFields
      * @return array
      */
-    public function addRulesForDocumentLink(array $formFields)
+    public function getRulesForDocumentLink(array $formFields)
     {
         $rules = [];
         foreach ($formFields as $documentLinkIndex => $documentLink) {
@@ -54,10 +52,10 @@ class CreateDocumentLinkRequest extends OrganizationBaseRequest
             $rules[sprintf('document_link.%s.format', $documentLinkIndex)] = 'required';
             $rules                                                         = array_merge(
                 $rules,
-                $this->addRulesForNarrative($documentLink['narrative'], $documentLinkForm),
-                $this->addRulesForDocumentCategory($documentLink['category'], $documentLinkForm),
-                $this->addRulesForDocumentLanguage($documentLink['language'], $documentLinkForm),
-                $this->addRulesForRecipientCountry($documentLink['recipient_country'], $documentLinkForm)
+                $this->getRulesForNarrative($documentLink['narrative'], $documentLinkForm),
+                $this->getRulesForDocumentCategory($documentLink['category'], $documentLinkForm),
+                $this->getRulesForDocumentLanguage($documentLink['language'], $documentLinkForm),
+                $this->getRulesForRecipientCountry($documentLink['recipient_country'], $documentLinkForm)
             );
         }
 
@@ -69,7 +67,7 @@ class CreateDocumentLinkRequest extends OrganizationBaseRequest
      * @param array $formFields
      * @return array
      */
-    public function addMessagesForDocumentLink(array $formFields)
+    public function getMessagesForDocumentLink(array $formFields)
     {
         $messages = [];
         foreach ($formFields as $documentLinkIndex => $documentLink) {
@@ -85,10 +83,10 @@ class CreateDocumentLinkRequest extends OrganizationBaseRequest
             $messages[sprintf('document_link.%s.format.required', $documentLinkIndex)] = 'Format is required';
             $messages                                                                  = array_merge(
                 $messages,
-                $this->addMessagesForNarrative($documentLink['narrative'], $documentLinkForm),
-                $this->addMessagesForDocumentCategory($documentLink['category'], $documentLinkForm),
-                $this->addMessagesForDocumentLanguage($documentLink['language'], $documentLinkForm),
-                $this->addMessagesForRecipientCountry($documentLink['recipient_country'], $documentLinkForm)
+                $this->getMessagesForNarrative($documentLink['narrative'], $documentLinkForm),
+                $this->getMessagesForDocumentCategory($documentLink['category'], $documentLinkForm),
+                $this->getMessagesForDocumentLanguage($documentLink['language'], $documentLinkForm),
+                $this->getMessagesForRecipientCountry($documentLink['recipient_country'], $documentLinkForm)
             );
         }
 
@@ -101,7 +99,7 @@ class CreateDocumentLinkRequest extends OrganizationBaseRequest
      * @param $formIndex
      * @return array
      */
-    public function addRulesForDocumentCategory($formFields, $formIndex)
+    public function getRulesForDocumentCategory($formFields, $formIndex)
     {
         $rules = [];
         foreach ($formFields as $documentCategoryIndex => $documentCategory) {
@@ -116,7 +114,7 @@ class CreateDocumentLinkRequest extends OrganizationBaseRequest
      * @param $formIndex
      * @return array
      */
-    public function addMessagesForDocumentCategory($formFields, $formIndex)
+    public function getMessagesForDocumentCategory($formFields, $formIndex)
     {
         $messages = [];
         foreach ($formFields as $documentCategoryIndex => $documentCategory) {
@@ -135,7 +133,7 @@ class CreateDocumentLinkRequest extends OrganizationBaseRequest
      * @param $formIndex
      * @return array
      */
-    public function addRulesForDocumentLanguage($formFields, $formIndex)
+    public function getRulesForDocumentLanguage($formFields, $formIndex)
     {
         $rules = [];
         foreach ($formFields as $languageKey => $languageVal) {
@@ -150,7 +148,7 @@ class CreateDocumentLinkRequest extends OrganizationBaseRequest
      * @param $formIndex
      * @return array
      */
-    public function addMessagesForDocumentLanguage($formFields, $formIndex)
+    public function getMessagesForDocumentLanguage($formFields, $formIndex)
     {
         $messages = [];
         foreach ($formFields as $languageKey => $languageVal) {
@@ -165,7 +163,7 @@ class CreateDocumentLinkRequest extends OrganizationBaseRequest
      * @param $formIndex
      * @return array
      */
-    public function addRulesForRecipientCountry($formFields, $formIndex)
+    public function getRulesForRecipientCountry($formFields, $formIndex)
     {
         $rules = [];
         foreach ($formFields as $recipientCountryIndex => $recipientCountryVal) {
@@ -177,7 +175,7 @@ class CreateDocumentLinkRequest extends OrganizationBaseRequest
             $rules[sprintf('%s.recipient_country.%s.code', $formIndex, $recipientCountryIndex)] = 'required';
             $rules                                                                              = array_merge(
                 $rules,
-                $this->addRulesForNarrative($recipientCountryVal['narrative'], $budgetItemForm)
+                $this->getRulesForNarrative($recipientCountryVal['narrative'], $budgetItemForm)
             );
         }
 
@@ -189,7 +187,7 @@ class CreateDocumentLinkRequest extends OrganizationBaseRequest
      * @param $formIndex
      * @return array
      */
-    public function addMessagesForRecipientCountry($formFields, $formIndex)
+    public function getMessagesForRecipientCountry($formFields, $formIndex)
     {
         $messages = [];
         foreach ($formFields as $recipientCountryIndex => $recipientCountryVal) {
@@ -205,7 +203,7 @@ class CreateDocumentLinkRequest extends OrganizationBaseRequest
             )]              = 'Code is required';
             $messages       = array_merge(
                 $messages,
-                $this->addMessagesForNarrative($recipientCountryVal['narrative'], $budgetItemForm)
+                $this->getMessagesForNarrative($recipientCountryVal['narrative'], $budgetItemForm)
             );
         }
 

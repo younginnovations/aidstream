@@ -12,14 +12,14 @@ class DefaultFieldValuesForm extends BaseForm
                 'default_currency',
                 'select',
                 [
-                    'choices' => $this->addCodeList('Currency', 'Organization')
+                    'choices' => $this->getCodeList('Currency', 'Organization')
                 ]
             )
             ->add(
                 'default_language',
                 'select',
                 [
-                    'choices' => $this->addCodeList('Language', 'Organization')
+                    'choices' => $this->getCodeList('Language', 'Organization')
                 ]
             )
             ->add('default_hierarchy', 'text')
@@ -27,35 +27,35 @@ class DefaultFieldValuesForm extends BaseForm
                 'default_collaboration_type',
                 'select',
                 [
-                    'choices' => $this->addCodeList('CollaborationType', 'Organization')
+                    'choices' => $this->getCodeList('CollaborationType', 'Organization')
                 ]
             )
             ->add(
                 'default_flow_type',
                 'select',
                 [
-                    'choices' => $this->addCodeList('FlowType', 'Organization')
+                    'choices' => $this->getCodeList('FlowType', 'Organization')
                 ]
             )
             ->add(
                 'default_finance_type',
                 'select',
                 [
-                    'choices' => $this->addCodeList('FinanceType', 'Organization')
+                    'choices' => $this->getCodeList('FinanceType', 'Organization')
                 ]
             )
             ->add(
                 'default_aid_type',
                 'select',
                 [
-                    'choices' => $this->addCodeList('AidType', 'Organization')
+                    'choices' => $this->getCodeList('AidType', 'Organization')
                 ]
             )
             ->add(
                 'Default_tied_status',
                 'select',
                 [
-                    'choices' => $this->addCodeList('TiedStatus', 'Organization')
+                    'choices' => $this->getCodeList('TiedStatus', 'Organization')
                 ]
             );
     }

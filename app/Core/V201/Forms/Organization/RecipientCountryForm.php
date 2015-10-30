@@ -11,7 +11,7 @@ class RecipientCountryForm extends BaseForm
                 'code',
                 'select',
                 [
-                    'choices' => $this->addCodeList('Country', 'Organization'),
+                    'choices' => $this->getCodeList('Country', 'Organization'),
                     'label'   => 'Code'
                 ]
             )

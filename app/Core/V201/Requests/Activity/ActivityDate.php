@@ -12,7 +12,7 @@ class ActivityDate extends ActivityBaseRequest
      */
     public function rules()
     {
-        return $this->addRulesForActivityDate($this->request->get('activity_date'));
+        return $this->getRulesForActivityDate($this->request->get('activity_date'));
     }
 
     /**
@@ -20,14 +20,14 @@ class ActivityDate extends ActivityBaseRequest
      */
     public function messages()
     {
-        return $this->addMessagesForActivityDate($this->request->get('activity_date'));
+        return $this->getMessagesForActivityDate($this->request->get('activity_date'));
     }
 
     /**
      * @param array $formFields
      * @return array
      */
-    public function addRulesForActivityDate(array $formFields)
+    public function getRulesForActivityDate(array $formFields)
     {
         $rules = [];
 
@@ -37,7 +37,7 @@ class ActivityDate extends ActivityBaseRequest
             $rules[sprintf('%s.type', $activityDateForm)] = 'required';
             $rules                                        = array_merge(
                 $rules,
-                $this->addRulesForNarrative($activityDate['narrative'], $activityDateForm)
+                $this->getRulesForNarrative($activityDate['narrative'], $activityDateForm)
             );
         }
 
@@ -48,7 +48,7 @@ class ActivityDate extends ActivityBaseRequest
      * @param array $formFields
      * @return array
      */
-    public function addMessagesForActivityDate(array $formFields)
+    public function getMessagesForActivityDate(array $formFields)
     {
         $messages = [];
 
@@ -58,7 +58,7 @@ class ActivityDate extends ActivityBaseRequest
             $messages[sprintf('%s.type.required', $activityDateForm)] = 'Type is required';
             $messages                                                 = array_merge(
                 $messages,
-                $this->addMessagesForNarrative($activityDate['narrative'], $activityDateForm)
+                $this->getMessagesForNarrative($activityDate['narrative'], $activityDateForm)
             );
         }
 

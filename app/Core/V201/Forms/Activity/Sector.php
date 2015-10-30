@@ -18,7 +18,7 @@ class Sector extends BaseForm
                 'vocabulary',
                 'select',
                 [
-                    'choices' => $this->addCodeList('SectorVocabulary', 'Activity'),
+                    'choices' => $this->getCodeList('SectorVocabulary', 'Activity'),
                     'attr'    => ['class' => 'form-control sector_vocabulary']
                 ]
             )
@@ -26,7 +26,7 @@ class Sector extends BaseForm
                 'sector_select',
                 'select',
                 [
-                    'choices' => $this->addCodeList('Sector', 'Activity'),
+                    'choices' => $this->getCodeList('Sector', 'Activity'),
                     'label'   => 'Sector',
                     'wrapper' => ['class' => 'form-group sector_select']
                 ]

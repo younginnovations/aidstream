@@ -34,7 +34,7 @@ class CountryBudgetItem extends ActivityBaseRequest
         $rules = [];
         foreach ($formFields as $countryBudgetItemIndex => $countryBudgetItem) {
             $countryBudgetItemForm = sprintf('country_budget_item.%s', $countryBudgetItemIndex);
-            $rules                 = $this->addBudgetItemRules(
+            $rules                 = $this->getBudgetItemRules(
                 $countryBudgetItem['budget_item'],
                 $countryBudgetItemForm
             );
@@ -53,7 +53,7 @@ class CountryBudgetItem extends ActivityBaseRequest
         $messages = [];
         foreach ($formFields as $countryBudgetItemIndex => $countryBudgetItem) {
             $countryBudgetItemForm = sprintf('country_budget_item.%s', $countryBudgetItemIndex);
-            $messages              = $this->addBudgetItemMessages(
+            $messages              = $this->getBudgetItemMessages(
                 $countryBudgetItem['budget_item'],
                 $countryBudgetItemForm
             );
@@ -68,7 +68,7 @@ class CountryBudgetItem extends ActivityBaseRequest
      * @param $formBase
      * @return array
      */
-    public function addBudgetItemRules(array $formFields, $formBase)
+    public function getBudgetItemRules(array $formFields, $formBase)
     {
         $rules = [];
         foreach ($formFields as $budgetItemIndex => $budgetItem) {
@@ -81,7 +81,7 @@ class CountryBudgetItem extends ActivityBaseRequest
             $rules[sprintf('%s.percentage', $budgetItemForm)] = 'required|numeric|max:100';
             $rules                                            = array_merge(
                 $rules,
-                $this->addBudgetItemDescriptionRules($budgetItem['description'], $budgetItemForm)
+                $this->getBudgetItemDescriptionRules($budgetItem['description'], $budgetItemForm)
             );
         }
 
@@ -94,7 +94,7 @@ class CountryBudgetItem extends ActivityBaseRequest
      * @param $formBase
      * @return array
      */
-    public function addBudgetItemMessages(array $formFields, $formBase)
+    public function getBudgetItemMessages(array $formFields, $formBase)
     {
         $messages = [];
         foreach ($formFields as $budgetItemIndex => $budgetItem) {
@@ -113,7 +113,7 @@ class CountryBudgetItem extends ActivityBaseRequest
             )]                                                                  = 'percentage should less tha or equal to 100';
             $messages                                                           = array_merge(
                 $messages,
-                $this->addBudgetItemDescriptionMessages($budgetItem['description'], $budgetItemForm)
+                $this->getBudgetItemDescriptionMessages($budgetItem['description'], $budgetItemForm)
             );
         }
 
@@ -126,12 +126,12 @@ class CountryBudgetItem extends ActivityBaseRequest
      * @param $formBase
      * @return array
      */
-    public function addBudgetItemDescriptionRules(array $formFields, $formBase)
+    public function getBudgetItemDescriptionRules(array $formFields, $formBase)
     {
         $rules = [];
         foreach ($formFields as $descriptionIndex => $description) {
             $descriptionForm = sprintf('%s.description.%s', $formBase, $descriptionIndex);
-            $rules           = $this->addRulesForNarrative($description['narrative'], $descriptionForm);
+            $rules           = $this->getRulesForNarrative($description['narrative'], $descriptionForm);
         }
 
         return $rules;
@@ -143,12 +143,12 @@ class CountryBudgetItem extends ActivityBaseRequest
      * @param $formBase
      * @return array
      */
-    public function addBudgetItemDescriptionMessages(array $formFields, $formBase)
+    public function getBudgetItemDescriptionMessages(array $formFields, $formBase)
     {
         $messages = [];
         foreach ($formFields as $descriptionIndex => $description) {
             $descriptionForm = sprintf('%s.description.%s', $formBase, $descriptionIndex);
-            $messages        = $this->addMessagesForNarrative($description['narrative'], $descriptionForm);
+            $messages        = $this->getMessagesForNarrative($description['narrative'], $descriptionForm);
         }
 
         return $messages;

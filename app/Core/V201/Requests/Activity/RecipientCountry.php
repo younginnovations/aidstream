@@ -14,7 +14,7 @@ class RecipientCountry extends ActivityBaseRequest
      */
     public function rules()
     {
-        return $this->addRulesForRecipientCountry($this->request->get('recipient_country'));
+        return $this->getRulesForRecipientCountry($this->request->get('recipient_country'));
     }
 
     /**
@@ -23,7 +23,7 @@ class RecipientCountry extends ActivityBaseRequest
      */
     public function messages()
     {
-        return $this->addMessagesForRecipientCountry($this->request->get('recipient_country'));
+        return $this->getMessagesForRecipientCountry($this->request->get('recipient_country'));
     }
 
     /**
@@ -31,7 +31,7 @@ class RecipientCountry extends ActivityBaseRequest
      * @param $formFields
      * @return array
      */
-    public function addRulesForRecipientCountry($formFields)
+    public function getRulesForRecipientCountry($formFields)
     {
         $rules = [];
 
@@ -41,7 +41,7 @@ class RecipientCountry extends ActivityBaseRequest
             $rules[$recipientCountryForm . '.percentage']   = 'numeric|max:100';
             $rules                                          = array_merge(
                 $rules,
-                $this->addRulesForNarrative(
+                $this->getRulesForNarrative(
                     $recipientCountry['narrative'],
                     $recipientCountryForm
                 )
@@ -56,7 +56,7 @@ class RecipientCountry extends ActivityBaseRequest
      * @param $formFields
      * @return array
      */
-    public function addMessagesForRecipientCountry($formFields)
+    public function getMessagesForRecipientCountry($formFields)
     {
         $messages = [];
 
@@ -67,7 +67,7 @@ class RecipientCountry extends ActivityBaseRequest
             $messages[$recipientCountryForm . '.percentage.max']        = 'Percentage may not be greater than 100';
             $messages                                                   = array_merge(
                 $messages,
-                $this->addMessagesForNarrative(
+                $this->getMessagesForNarrative(
                     $recipientCountry['narrative'],
                     $recipientCountryForm
                 )

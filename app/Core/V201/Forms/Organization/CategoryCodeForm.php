@@ -13,7 +13,7 @@ class CategoryCodeForm extends BaseForm
                 'code',
                 'select',
                 [
-                    'choices' => $this->addCodeList('DocumentCategory', 'Organization')
+                    'choices' => $this->getCodeList('DocumentCategory', 'Organization')
                 ]
             )
             ->addRemoveThisButton('remove_category_code');

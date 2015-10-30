@@ -18,17 +18,17 @@ class RecipientRegion extends BaseForm
                 'region_code',
                 'select',
                 [
-                    'choices' => $this->addCodeList('Region', 'Activity'),
+                    'choices' => $this->getCodeList('Region', 'Activity'),
                 ]
             )
             ->add(
                 'region_vocabulary',
                 'select',
                 [
-                    'choices' => $this->addCodeList('RegionVocabulary', 'Activity'),
+                    'choices' => $this->getCodeList('RegionVocabulary', 'Activity'),
                 ]
             )
-            ->add('percentage', 'text')
+            ->addPercentage()
             ->addNarrative('narrative')
             ->addAddMoreButton('add_narrative', 'narrative')
             ->addRemoveThisButton('remove_recipient_region');

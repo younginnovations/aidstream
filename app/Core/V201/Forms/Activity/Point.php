@@ -17,16 +17,6 @@ class Point extends BaseForm
     {
         $this
             ->add('srs_name', 'text')
-            ->add(
-                'position',
-                'collection',
-                [
-                    'type'    => 'form',
-                    'options' => [
-                        'class' => 'App\Core\V201\Forms\Activity\Position',
-                        'label' => false,
-                    ]
-                ]
-            );
+            ->addCollection('position', 'Activity\Position');
     }
 }

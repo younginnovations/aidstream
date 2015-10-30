@@ -12,7 +12,7 @@ class ValueForm extends BaseForm
                 'currency',
                 'select',
                 [
-                    'choices' => $this->addCodeList('Currency', 'Organization'),
+                    'choices' => $this->getCodeList('Currency', 'Organization'),
                     'label'   => 'Currency'
                 ]
             )

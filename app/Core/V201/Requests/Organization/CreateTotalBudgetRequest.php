@@ -9,12 +9,12 @@ class CreateTotalBudgetRequest extends OrganizationBaseRequest
      */
     public function rules()
     {
-        return $this->addRulesForTotalBudget($this->request->get('total_budget'));
+        return $this->getRulesForTotalBudget($this->request->get('total_budget'));
     }
 
     public function messages()
     {
-        return $this->addMessagesForTotalBudget($this->request->get('total_budget'));
+        return $this->getMessagesForTotalBudget($this->request->get('total_budget'));
     }
 
     /**
@@ -22,17 +22,17 @@ class CreateTotalBudgetRequest extends OrganizationBaseRequest
      * @param $formFields
      * @return array
      */
-    public function addRulesForTotalBudget($formFields)
+    public function getRulesForTotalBudget($formFields)
     {
         $rules = [];
         foreach ($formFields as $totalBudgetIndex => $totalBudget) {
             $totalBudgetForm = sprintf('total_budget.%s', $totalBudgetIndex);
             $rules           = array_merge(
                 $rules,
-                $this->addRulesForPeriodStart($totalBudget['period_start'], $totalBudgetForm),
-                $this->addRulesForPeriodEnd($totalBudget['period_end'], $totalBudgetForm),
-                $this->addRulesForValue($totalBudget['value'], $totalBudgetForm),
-                $this->addRulesForBudgetLine($totalBudget['budget_line'], $totalBudgetForm)
+                $this->getRulesForPeriodStart($totalBudget['period_start'], $totalBudgetForm),
+                $this->getRulesForPeriodEnd($totalBudget['period_end'], $totalBudgetForm),
+                $this->getRulesForValue($totalBudget['value'], $totalBudgetForm),
+                $this->getRulesForBudgetLine($totalBudget['budget_line'], $totalBudgetForm)
             );
         }
 
@@ -44,17 +44,17 @@ class CreateTotalBudgetRequest extends OrganizationBaseRequest
      * @param $formFields
      * @return array
      */
-    public function addMessagesForTotalBudget($formFields)
+    public function getMessagesForTotalBudget($formFields)
     {
         $messages = [];
         foreach ($formFields as $totalBudgetIndex => $totalBudget) {
             $totalBudgetForm = sprintf('total_budget.%s', $totalBudgetIndex);
             $messages        = array_merge(
                 $messages,
-                $this->addMessagesForPeriodStart($totalBudget['period_start'], $totalBudgetForm),
-                $this->addMessagesForPeriodEnd($totalBudget['period_end'], $totalBudgetForm),
-                $this->addMessagesForValue($totalBudget['value'], $totalBudgetForm),
-                $this->addMessagesBudgetLine($totalBudget['budget_line'], $totalBudgetForm)
+                $this->getMessagesForPeriodStart($totalBudget['period_start'], $totalBudgetForm),
+                $this->getMessagesForPeriodEnd($totalBudget['period_end'], $totalBudgetForm),
+                $this->getMessagesForValue($totalBudget['value'], $totalBudgetForm),
+                $this->getMessagesBudgetLine($totalBudget['budget_line'], $totalBudgetForm)
             );
         }
 

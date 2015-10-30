@@ -15,7 +15,7 @@ class OtherIdentifierRequest extends ActivityBaseRequest
      */
     public function rules()
     {
-        return $this->addRulesForOtherIdentifier($this->request->get('other_identifier'));
+        return $this->getRulesForOtherIdentifier($this->request->get('other_identifier'));
     }
 
     /**
@@ -23,7 +23,7 @@ class OtherIdentifierRequest extends ActivityBaseRequest
      */
     public function messages()
     {
-        return $this->addMessagesForOtherIdentifier($this->request->get('other_identifier'));
+        return $this->getMessagesForOtherIdentifier($this->request->get('other_identifier'));
     }
 
 
@@ -31,7 +31,7 @@ class OtherIdentifierRequest extends ActivityBaseRequest
      * @param array $formFields
      * @return array
      */
-    public function addRulesForOtherIdentifier(array $formFields)
+    public function getRulesForOtherIdentifier(array $formFields)
     {
         $rules = [];
 
@@ -44,7 +44,7 @@ class OtherIdentifierRequest extends ActivityBaseRequest
             $rules[sprintf('%s.type', $otherIdentifierForm)]      = 'required';
             $rules                                                = array_merge(
                 $rules,
-                $this->addRulesForOwnerOrg($otherIdentifier['owner_org'], $otherIdentifierForm)
+                $this->getRulesForOwnerOrg($otherIdentifier['owner_org'], $otherIdentifierForm)
             );
         }
 
@@ -55,7 +55,7 @@ class OtherIdentifierRequest extends ActivityBaseRequest
      * @param array $formFields
      * @return array
      */
-    public function addMessagesForOtherIdentifier(array $formFields)
+    public function getMessagesForOtherIdentifier(array $formFields)
     {
         $messages = [];
 
@@ -68,7 +68,7 @@ class OtherIdentifierRequest extends ActivityBaseRequest
             $messages[sprintf('%s.type.required', $otherIdentifierForm)]      = 'Type is required';
             $messages                                                         = array_merge(
                 $messages,
-                $this->addMessagesForOwnerOrg($otherIdentifier['owner_org'], $otherIdentifierForm)
+                $this->getMessagesForOwnerOrg($otherIdentifier['owner_org'], $otherIdentifierForm)
             );
 
         }
@@ -81,7 +81,7 @@ class OtherIdentifierRequest extends ActivityBaseRequest
      * @param $formBase
      * @return array
      */
-    public function addRulesForOwnerOrg($formFields, $formBase)
+    public function getRulesForOwnerOrg($formFields, $formBase)
     {
         $rules = [];
 
@@ -90,7 +90,7 @@ class OtherIdentifierRequest extends ActivityBaseRequest
             $rules[sprintf('%s.reference', $ownerOrgForm)] = 'required';
             $rules                                         = array_merge(
                 $rules,
-                $this->addRulesForNarrative($ownerOrg['narrative'], $ownerOrgForm)
+                $this->getRulesForNarrative($ownerOrg['narrative'], $ownerOrgForm)
             );
         }
 
@@ -102,7 +102,7 @@ class OtherIdentifierRequest extends ActivityBaseRequest
      * @param $formBase
      * @return array
      */
-    public function addMessagesForOwnerOrg($formFields, $formBase)
+    public function getMessagesForOwnerOrg($formFields, $formBase)
     {
         $messages = [];
 
@@ -115,7 +115,7 @@ class OtherIdentifierRequest extends ActivityBaseRequest
             $messages[sprintf('%s.reference.required', $ownerOrgForm)] = 'Reference is required';
             $messages                                                  = array_merge(
                 $messages,
-                $this->addMessagesForNarrative($ownerOrg['narrative'], $ownerOrgForm)
+                $this->getMessagesForNarrative($ownerOrg['narrative'], $ownerOrgForm)
             );
         }
 

@@ -14,7 +14,7 @@ class ContactInfo extends ActivityBaseRequest
      */
     public function rules()
     {
-        return $this->addRulesForContactInfo($this->request->get('contact_info'));
+        return $this->getRulesForContactInfo($this->request->get('contact_info'));
     }
 
 
@@ -23,14 +23,14 @@ class ContactInfo extends ActivityBaseRequest
      */
     public function messages()
     {
-        return $this->addMessagesForContactInfo($this->request->get('contact_info'));
+        return $this->getMessagesForContactInfo($this->request->get('contact_info'));
     }
 
     /**
      * @param array $formFields
      * @return array
      */
-    public function addRulesForContactInfo(array $formFields)
+    public function getRulesForContactInfo(array $formFields)
     {
         $rules = [];
 
@@ -38,13 +38,13 @@ class ContactInfo extends ActivityBaseRequest
             $contactInfoForm = sprintf('contact_info.%s', $contactInfoIndex);
             $rules           = array_merge(
                 $rules,
-                $this->addRulesForDepartment($contactInfo['department'], $contactInfoForm),
-                $this->addRulesForOrganization($contactInfo['organization'], $contactInfoForm),
-                $this->addRulesForPersonName($contactInfo['person_name'], $contactInfoForm),
-                $this->addRulesForJobTitle($contactInfo['job_title'], $contactInfoForm),
-                $this->addRulesForMailingAddress($contactInfo['mailing_address'], $contactInfoForm),
-                $this->addRulesForTelephone($contactInfo['telephone'], $contactInfoForm),
-                $this->addRulesForEmail($contactInfo['email'], $contactInfoForm)
+                $this->getRulesForDepartment($contactInfo['department'], $contactInfoForm),
+                $this->getRulesForOrganization($contactInfo['organization'], $contactInfoForm),
+                $this->getRulesForPersonName($contactInfo['person_name'], $contactInfoForm),
+                $this->getRulesForJobTitle($contactInfo['job_title'], $contactInfoForm),
+                $this->getRulesForMailingAddress($contactInfo['mailing_address'], $contactInfoForm),
+                $this->getRulesForTelephone($contactInfo['telephone'], $contactInfoForm),
+                $this->getRulesForEmail($contactInfo['email'], $contactInfoForm)
             );
         }
 
@@ -55,7 +55,7 @@ class ContactInfo extends ActivityBaseRequest
      * @param array $formFields
      * @return array
      */
-    public function addMessagesForContactInfo(array $formFields)
+    public function getMessagesForContactInfo(array $formFields)
     {
         $messages = [];
 
@@ -63,13 +63,13 @@ class ContactInfo extends ActivityBaseRequest
             $contactInfoForm = sprintf('contact_info.%s', $contactInfoIndex);
             $messages        = array_merge(
                 $messages,
-                $this->addMessagesForDepartment($contactInfo['department'], $contactInfoForm),
-                $this->addMessagesForOrganization($contactInfo['organization'], $contactInfoForm),
-                $this->addMessagesForPersonName($contactInfo['person_name'], $contactInfoForm),
-                $this->addMessagesForJobTitle($contactInfo['job_title'], $contactInfoForm),
-                $this->addMessagesForMailingAddress($contactInfo['mailing_address'], $contactInfoForm),
-                $this->addMessagesForTelephone($contactInfo['telephone'], $contactInfoForm),
-                $this->addMessagesForEmail($contactInfo['email'], $contactInfoForm)
+                $this->getMessagesForDepartment($contactInfo['department'], $contactInfoForm),
+                $this->getMessagesForOrganization($contactInfo['organization'], $contactInfoForm),
+                $this->getMessagesForPersonName($contactInfo['person_name'], $contactInfoForm),
+                $this->getMessagesForJobTitle($contactInfo['job_title'], $contactInfoForm),
+                $this->getMessagesForMailingAddress($contactInfo['mailing_address'], $contactInfoForm),
+                $this->getMessagesForTelephone($contactInfo['telephone'], $contactInfoForm),
+                $this->getMessagesForEmail($contactInfo['email'], $contactInfoForm)
             );
         }
 
@@ -81,7 +81,7 @@ class ContactInfo extends ActivityBaseRequest
      * @param $formBase
      * @return array
      */
-    public function addRulesForOrganization($formFields, $formBase)
+    public function getRulesForOrganization($formFields, $formBase)
     {
         $rules = [];
 
@@ -89,7 +89,7 @@ class ContactInfo extends ActivityBaseRequest
             $organizationForm = sprintf('%s.organization.%s', $formBase, $organizationIndex);
             $rules            = array_merge(
                 $rules,
-                $this->addRulesForNarrative($organization['narrative'], $organizationForm)
+                $this->getRulesForNarrative($organization['narrative'], $organizationForm)
             );
         }
 
@@ -101,7 +101,7 @@ class ContactInfo extends ActivityBaseRequest
      * @param $formBase
      * @return array
      */
-    public function addMessagesForOrganization($formFields, $formBase)
+    public function getMessagesForOrganization($formFields, $formBase)
     {
         $messages = [];
 
@@ -109,7 +109,7 @@ class ContactInfo extends ActivityBaseRequest
             $organizationForm = sprintf('%s.organization.%s', $formBase, $organizationIndex);
             $messages         = array_merge(
                 $messages,
-                $this->addMessagesForNarrative($organization['narrative'], $organizationForm)
+                $this->getMessagesForNarrative($organization['narrative'], $organizationForm)
             );
         }
 
@@ -121,7 +121,7 @@ class ContactInfo extends ActivityBaseRequest
      * @param $formBase
      * @return array
      */
-    public function addRulesForDepartment($formFields, $formBase)
+    public function getRulesForDepartment($formFields, $formBase)
     {
         $rules = [];
 
@@ -129,7 +129,7 @@ class ContactInfo extends ActivityBaseRequest
             $departmentForm = sprintf('%s.department.%s', $formBase, $departmentIndex);
             $rules          = array_merge(
                 $rules,
-                $this->addRulesForNarrative($department['narrative'], $departmentForm)
+                $this->getRulesForNarrative($department['narrative'], $departmentForm)
             );
         }
 
@@ -141,7 +141,7 @@ class ContactInfo extends ActivityBaseRequest
      * @param $formBase
      * @return array
      */
-    public function addMessagesForDepartment($formFields, $formBase)
+    public function getMessagesForDepartment($formFields, $formBase)
     {
         $messages = [];
 
@@ -149,7 +149,7 @@ class ContactInfo extends ActivityBaseRequest
             $departmentForm = sprintf('%s.department.%s', $formBase, $departmentIndex);
             $messages       = array_merge(
                 $messages,
-                $this->addMessagesForNarrative($department['narrative'], $departmentForm)
+                $this->getMessagesForNarrative($department['narrative'], $departmentForm)
             );
         }
 
@@ -161,7 +161,7 @@ class ContactInfo extends ActivityBaseRequest
      * @param $formBase
      * @return array
      */
-    public function addRulesForPersonName($formFields, $formBase)
+    public function getRulesForPersonName($formFields, $formBase)
     {
         $rules = [];
 
@@ -169,7 +169,7 @@ class ContactInfo extends ActivityBaseRequest
             $personNameForm = sprintf('%s.person_name.%s', $formBase, $personNameIndex);
             $rules          = array_merge(
                 $rules,
-                $this->addRulesForNarrative($personName['narrative'], $personNameForm)
+                $this->getRulesForNarrative($personName['narrative'], $personNameForm)
             );
         }
 
@@ -181,7 +181,7 @@ class ContactInfo extends ActivityBaseRequest
      * @param $formBase
      * @return array
      */
-    public function addMessagesForPersonName($formFields, $formBase)
+    public function getMessagesForPersonName($formFields, $formBase)
     {
         $messages = [];
 
@@ -189,7 +189,7 @@ class ContactInfo extends ActivityBaseRequest
             $personNameForm = sprintf('%s.person_name.%s', $formBase, $personNameIndex);
             $messages       = array_merge(
                 $messages,
-                $this->addMessagesForNarrative($personName['narrative'], $personNameForm)
+                $this->getMessagesForNarrative($personName['narrative'], $personNameForm)
             );
         }
 
@@ -201,7 +201,7 @@ class ContactInfo extends ActivityBaseRequest
      * @param $formBase
      * @return array
      */
-    public function addRulesForJobTitle($formFields, $formBase)
+    public function getRulesForJobTitle($formFields, $formBase)
     {
         $rules = [];
 
@@ -209,7 +209,7 @@ class ContactInfo extends ActivityBaseRequest
             $jobTitleForm = sprintf('%s.job_title.%s', $formBase, $jobTitleIndex);
             $rules        = array_merge(
                 $rules,
-                $this->addRulesForNarrative($jobTitle['narrative'], $jobTitleForm)
+                $this->getRulesForNarrative($jobTitle['narrative'], $jobTitleForm)
             );
         }
 
@@ -221,7 +221,7 @@ class ContactInfo extends ActivityBaseRequest
      * @param $formBase
      * @return array
      */
-    public function addMessagesForJobTitle($formFields, $formBase)
+    public function getMessagesForJobTitle($formFields, $formBase)
     {
         $messages = [];
 
@@ -229,7 +229,7 @@ class ContactInfo extends ActivityBaseRequest
             $jobTitleForm = sprintf('%s.job_title.%s', $formBase, $jobTitleIndex);
             $messages     = array_merge(
                 $messages,
-                $this->addMessagesForNarrative($jobTitle['narrative'], $jobTitleForm)
+                $this->getMessagesForNarrative($jobTitle['narrative'], $jobTitleForm)
             );
         }
 
@@ -241,7 +241,7 @@ class ContactInfo extends ActivityBaseRequest
      * @param $formBase
      * @return array
      */
-    public function addRulesForMailingAddress($formFields, $formBase)
+    public function getRulesForMailingAddress($formFields, $formBase)
     {
         $rules = [];
 
@@ -249,7 +249,7 @@ class ContactInfo extends ActivityBaseRequest
             $mailingAddressForm = sprintf('%s.mailing_address.%s', $formBase, $mailingAddressIndex);
             $rules              = array_merge(
                 $rules,
-                $this->addRulesForNarrative($mailingAddress['narrative'], $mailingAddressForm)
+                $this->getRulesForNarrative($mailingAddress['narrative'], $mailingAddressForm)
             );
         }
 
@@ -261,7 +261,7 @@ class ContactInfo extends ActivityBaseRequest
      * @param $formBase
      * @return array
      */
-    public function addMessagesForMailingAddress($formFields, $formBase)
+    public function getMessagesForMailingAddress($formFields, $formBase)
     {
         $messages = [];
 
@@ -269,7 +269,7 @@ class ContactInfo extends ActivityBaseRequest
             $mailingAddressForm = sprintf('%s.mailing_address.%s', $formBase, $mailingAddressIndex);
             $messages           = array_merge(
                 $messages,
-                $this->addMessagesForNarrative($mailingAddress['narrative'], $mailingAddressForm)
+                $this->getMessagesForNarrative($mailingAddress['narrative'], $mailingAddressForm)
             );
         }
 
@@ -281,7 +281,7 @@ class ContactInfo extends ActivityBaseRequest
      * @param $formBase
      * @return array
      */
-    public function addRulesForTelephone($formFields, $formBase)
+    public function getRulesForTelephone($formFields, $formBase)
     {
         $rules = [];
 
@@ -297,7 +297,7 @@ class ContactInfo extends ActivityBaseRequest
      * @param $formBase
      * @return array
      */
-    public function addMessagesForTelephone($formFields, $formBase)
+    public function getMessagesForTelephone($formFields, $formBase)
     {
         $messages = [];
 
@@ -317,7 +317,7 @@ class ContactInfo extends ActivityBaseRequest
      * @param $formBase
      * @return array
      */
-    public function addRulesForEmail($formFields, $formBase)
+    public function getRulesForEmail($formFields, $formBase)
     {
         $rules = [];
 
@@ -333,7 +333,7 @@ class ContactInfo extends ActivityBaseRequest
      * @param $formBase
      * @return array
      */
-    public function addMessagesForEmail($formFields, $formBase)
+    public function getMessagesForEmail($formFields, $formBase)
     {
         $messages = [];
 

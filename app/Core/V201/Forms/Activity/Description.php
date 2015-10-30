@@ -18,7 +18,7 @@ class Description extends BaseForm
                 'type',
                 'select',
                 [
-                    'choices' => $this->addCodeList('DescriptionType', 'Activity'),
+                    'choices' => $this->getCodeList('DescriptionType', 'Activity'),
                     'label'   => 'Description Type'
                 ]
             )

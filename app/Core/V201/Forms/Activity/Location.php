@@ -17,133 +17,18 @@ class Location extends BaseForm
     {
         $this
             ->add('reference', 'text')
-            ->add(
-                'location_reach',
-                'collection',
-                [
-                    'type'    => 'form',
-                    'options' => [
-                        'class' => 'App\Core\V201\Forms\Activity\LocationReach',
-                        'label' => false,
-                    ]
-                ]
-            )
-            ->add(
-                'location_id',
-                'collection',
-                [
-                    'type'    => 'form',
-                    'options' => [
-                        'class' => 'App\Core\V201\Forms\Activity\LocationId',
-                        'label' => false,
-                    ],
-                    'wrapper' => [
-                        'class' => 'collection_form location_id'
-                    ]
-                ]
-            )
+            ->addCollection('location_reach', 'Activity\LocationReach')
+            ->addCollection('location_id', 'Activity\LocationId', 'location_id')
             ->addAddMoreButton('add', 'location_id')
-            ->add(
-                'name',
-                'collection',
-                [
-                    'type'    => 'form',
-                    'options' => [
-                        'class' => 'App\Core\V201\Forms\Activity\Name',
-                        'label' => false,
-                    ],
-                    'wrapper' => [
-                        'class' => 'collection_form'
-                    ]
-                ]
-            )
-            ->add(
-                'location_description',
-                'collection',
-                [
-                    'type'    => 'form',
-                    'options' => [
-                        'class' => 'App\Core\V201\Forms\Activity\LocationDescription',
-                        'label' => false,
-                    ],
-                    'wrapper' => [
-                        'class' => 'collection_form'
-                    ]
-                ]
-            )
-            ->add(
-                'activity_description',
-                'collection',
-                [
-                    'type'    => 'form',
-                    'options' => [
-                        'class' => 'App\Core\V201\Forms\Activity\ActivityDescription',
-                        'label' => false,
-                    ],
-                    'wrapper' => [
-                        'class' => 'collection_form'
-                    ]
-                ]
-            )
-            ->add(
-                'administrative',
-                'collection',
-                [
-                    'type'    => 'form',
-                    'options' => [
-                        'class' => 'App\Core\V201\Forms\Activity\Administrative',
-                        'label' => false,
-                    ],
-                    'wrapper' => [
-                        'class' => 'collection_form administrative'
-                    ]
-                ]
-            )
+            ->addCollection('name', 'Activity\Name')
+            ->addCollection('location_description', 'Activity\LocationDescription')
+            ->addCollection('activity_description', 'Activity\ActivityDescription')
+            ->addCollection('administrative', 'Activity\Administrative', 'administrative')
             ->addAddMoreButton('add_administrative', 'administrative')
-            ->add(
-                'point',
-                'collection',
-                [
-                    'type'    => 'form',
-                    'options' => [
-                        'class' => 'App\Core\V201\Forms\Activity\Point',
-                        'label' => false,
-                    ]
-                ]
-            )
-            ->add(
-                'exactness',
-                'collection',
-                [
-                    'type'    => 'form',
-                    'options' => [
-                        'class' => 'App\Core\V201\Forms\Activity\Exactness',
-                        'label' => false,
-                    ]
-                ]
-            )
-            ->add(
-                'location_class',
-                'collection',
-                [
-                    'type'    => 'form',
-                    'options' => [
-                        'class' => 'App\Core\V201\Forms\Activity\LocationClass',
-                        'label' => false,
-                    ]
-                ]
-            )
-            ->add(
-                'feature_designation',
-                'collection',
-                [
-                    'type'    => 'form',
-                    'options' => [
-                        'class' => 'App\Core\V201\Forms\Activity\FeatureDesignation',
-                        'label' => false,
-                    ]
-                ]
-            )
+            ->addCollection('point', 'Activity\Point')
+            ->addCollection('exactness', 'Activity\Exactness')
+            ->addCollection('location_class', 'Activity\LocationClass')
+            ->addCollection('feature_designation', 'Activity\FeatureDesignation')
             ->addRemoveThisButton('remove');
     }
 }

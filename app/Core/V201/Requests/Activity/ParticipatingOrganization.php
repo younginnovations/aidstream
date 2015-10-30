@@ -14,7 +14,7 @@ class ParticipatingOrganization extends ActivityBaseRequest
      */
     public function rules()
     {
-        return $this->addRulesForParticipatingOrg($this->request->get('participating_organization'));
+        return $this->getRulesForParticipatingOrg($this->request->get('participating_organization'));
     }
 
     /**
@@ -23,7 +23,7 @@ class ParticipatingOrganization extends ActivityBaseRequest
      */
     public function messages()
     {
-        return $this->addMessagesForParticipatingOrg($this->request->get('participating_organization'));
+        return $this->getMessagesForParticipatingOrg($this->request->get('participating_organization'));
     }
 
     /**
@@ -31,7 +31,7 @@ class ParticipatingOrganization extends ActivityBaseRequest
      * @param $formFields
      * @return array|mixed
      */
-    public function addRulesForParticipatingOrg($formFields)
+    public function getRulesForParticipatingOrg($formFields)
     {
         $rules = [];
 
@@ -40,7 +40,7 @@ class ParticipatingOrganization extends ActivityBaseRequest
             $rules[$participatingOrgForm . '.organization_role'] = 'required';
             $rules                                               = array_merge(
                 $rules,
-                $this->addRulesForNarrative(
+                $this->getRulesForNarrative(
                     $participatingOrg['narrative'],
                     $participatingOrgForm
                 )
@@ -55,7 +55,7 @@ class ParticipatingOrganization extends ActivityBaseRequest
      * @param $formFields
      * @return array|mixed
      */
-    public function addMessagesForParticipatingOrg($formFields)
+    public function getMessagesForParticipatingOrg($formFields)
     {
         $messages = [];
 
@@ -64,7 +64,7 @@ class ParticipatingOrganization extends ActivityBaseRequest
             $messages[$participatingOrgForm . '.organization_role.required'] = 'Organization role is required';
             $messages                                                        = array_merge(
                 $messages,
-                $this->addMessagesForNarrative(
+                $this->getMessagesForNarrative(
                     $participatingOrg['narrative'],
                     $participatingOrgForm
                 )

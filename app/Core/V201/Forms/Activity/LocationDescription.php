@@ -16,21 +16,7 @@ class LocationDescription extends BaseForm
     public function buildForm()
     {
         $this
-            ->add(
-                'narrative',
-                'collection',
-                [
-                    'type'      => 'form',
-                    'prototype' => true,
-                    'options'   => [
-                        'class' => 'App\Core\V201\Forms\Activity\Narrative',
-                        'label' => false,
-                    ],
-                    'wrapper'   => [
-                        'class' => 'collection_form location_description_narrative'
-                    ]
-                ]
-            )
+            ->addNarrative('location_description_narrative')
             ->addAddMoreButton('add', 'location_description_narrative');
     }
 }
