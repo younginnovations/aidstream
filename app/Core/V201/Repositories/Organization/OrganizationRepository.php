@@ -1,5 +1,4 @@
-<?php
-namespace app\Core\V201\Repositories\Organization;
+<?php namespace App\Core\V201\Repositories\Organization;
 
 use App\Core\Repositories\OrganizationRepositoryInterface;
 use App\Models\Organization\Organization;

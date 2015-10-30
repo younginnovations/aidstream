@@ -1,6 +1,4 @@
-<?php
-
-namespace app\Core\V201\Element\Organization;
+<?php namespace App\Core\V201\Element\Organization;
 
 use App\Core\Elements\BaseElement;
 use App;
@@ -36,20 +34,20 @@ class DocumentLink extends BaseElement
     public function getXmlData(OrganizationData $organizationData)
     {
         $orgDocumentLinkData = [];
-        $documentLink = (array) $organizationData->document_link;
+        $documentLink        = (array) $organizationData->document_link;
         foreach ($documentLink as $orgDocumentLink) {
             $orgDocumentLinkData[] = [
                 '@attributes' => [
                     'format' => $orgDocumentLink['format'],
-                    'url' => $orgDocumentLink['url']
+                    'url'    => $orgDocumentLink['url']
                 ],
-                'title' => [
+                'title'       => [
                     'narrative' => $this->buildNarrative($orgDocumentLink['narrative'])
                 ],
-                'category' => [
+                'category'    => [
                     '@attributes' => ['code' => $orgDocumentLink['category'][0]['code']],
                 ],
-                'language' => [
+                'language'    => [
                     '@attributes' => ['code' => $orgDocumentLink['language'][0]['language']],
                 ]
             ];

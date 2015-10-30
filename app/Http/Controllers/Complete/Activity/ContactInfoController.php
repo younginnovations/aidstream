@@ -1,4 +1,4 @@
-<?php namespace app\Http\Controllers\Complete\Activity;
+<?php namespace App\Http\Controllers\Complete\Activity;
 
 use App\Http\Controllers\Controller;
 use App\Services\Activity\ContactInfoManager;
@@ -49,9 +49,9 @@ class ContactInfoController extends Controller
      */
     public function index($id)
     {
-        $ContactInfo = $this->contactInfoManager->getContactInfoData($id);
-        $activityData        = $this->activityManager->getActivityData($id);
-        $form                = $this->contactInfoForm->editForm($ContactInfo, $id);
+        $ContactInfo  = $this->contactInfoManager->getContactInfoData($id);
+        $activityData = $this->activityManager->getActivityData($id);
+        $form         = $this->contactInfoForm->editForm($ContactInfo, $id);
 
         return view(
             'Activity.contactInfo.edit',

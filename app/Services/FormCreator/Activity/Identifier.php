@@ -1,5 +1,4 @@
-<?php
-namespace app\Services\FormCreator\Activity;
+<?php namespace App\Services\FormCreator\Activity;
 
 use App\Core\Version;
 use Kris\LaravelFormBuilder\FormBuilder;
@@ -35,6 +34,7 @@ class Identifier
             ]
         )->add('Save', 'submit');
     }
+
     /**
      * @param $data
      * @param $activityId

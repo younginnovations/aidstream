@@ -1,4 +1,4 @@
-<?php namespace app\Http\Controllers\Complete\Activity;
+<?php namespace App\Http\Controllers\Complete\Activity;
 
 use App\Http\Controllers\Controller;
 use App\Services\Organization\OrganizationManager;
@@ -15,6 +15,7 @@ class ReportingOrganization extends Controller
     public function index($id, OrganizationManager $organizationManager)
     {
         $reportingOrganization = $organizationManager->getOrganization(Session::get('org_id'))->reporting_org;
+
         return view('Activity.ReportingOrganization.edit', compact('reportingOrganization', 'id'));
     }
 }

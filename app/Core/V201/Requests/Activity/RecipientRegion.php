@@ -58,7 +58,7 @@ class RecipientRegion extends ActivityBaseRequest
      */
     public function addMessagesForRecipientRegion($formFields)
     {
-        $messages = []
+        $messages = [];
 
         foreach ($formFields as $recipientRegionIndex => $recipientRegion) {
             $recipientRegionForm                                      = 'recipient_region.' . $recipientRegionIndex;

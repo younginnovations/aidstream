@@ -1,4 +1,4 @@
-<?php namespace app\Http\Controllers\Complete\Organization;
+<?php namespace App\Http\Controllers\Complete\Organization;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -98,17 +98,13 @@ class OrganizationController extends Controller
         $settings         = $this->settingsManager->getSettings($id);
         $status           = $input['status'];
 
-        if ($status == 1) {
-            if (!isset($organization->reporting_org) || !isset($organizationData->name)) {
-                return redirect()->back()->withMessage('Organization data is not Complete.');
-            }
-        } else {
-            if ($status == 3) {
-                $orgElem     = $this->organizationManager->getOrganizationElement();
-                $generateXml = $orgElem->getGenerateXml();
-                $generateXml->generate($organization, $organizationData, $settings, $orgElem);
-            }
-        }
+        $orgElem    = $this->organizationManager->getOrganizationElement();
+        $xmlService = $orgElem->getOrgXmlService();
+
+        ($status === 1)
+            ? $xmlService->validateOrgSchema($organization, $organizationData, $settings, $orgElem)
+            : $xmlService->generateOrgXml($organization, $organizationData, $settings, $orgElem);
+
         $this->organizationManager->updateStatus($input, $organizationData);
 
         return redirect()->back();

@@ -1,5 +1,4 @@
-<?php
-namespace app\Core\Repositories;
+<?php namespace App\Core\Repositories;
 
 interface OrganizationRepositoryInterface
 {

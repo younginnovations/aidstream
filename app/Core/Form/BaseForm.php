@@ -51,23 +51,23 @@ class BaseForm extends Form
 
     /**
      * return codeList array from json codeList
-     * @param $codeListName
+     * @param $listName
+     * @param $listType
      * @return array
      */
-    public function addCodeList($codeListName, $codeListType)
+    public function addCodeList($listName, $listType)
     {
-        $codeListContent = file_get_contents(
+        $codeListFromFile = file_get_contents(
             app_path(
-                "Core/" . session()->get('version') . "/Codelist/" . config('app.locale') . "/$codeListType/$codeListName.json"
+                "Core/" . session()->get('version') . "/Codelist/" . config('app.locale') . "/$listType/$listName.json"
             )
         );
-        $codeListData    = json_decode($codeListContent, true);
-        $codeList        = $codeListData[$codeListName];
-        $data            = [];
+        $codeLists        = json_decode($codeListFromFile, true);
+        $codeList         = $codeLists[$listName];
+        $data             = [];
 
         foreach ($codeList as $list) {
-            (!empty($list['name'])) ? $code = $list['code'] . ' - ' . $list['name'] : $code = $list['code'];
-            $data[$list['code']] = $code;
+            $data[$list['code']] = $list['code'] . (array_key_exists('name', $list) ? ' - ' . $list['name'] : '');
         }
 
         return $data;

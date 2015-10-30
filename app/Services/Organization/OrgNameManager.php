@@ -1,5 +1,4 @@
-<?php
-namespace app\Services\Organization;
+<?php namespace App\Services\Organization;
 
 use App\Core\Version;
 use App;
@@ -81,10 +80,11 @@ class OrgNameManager
                 sprintf('Name could not be updated due to %s', $exception->getMessage()),
                 [
                     'OrganizationName' => $input,
-                    'trace' => $exception->getTraceAsString()
+                    'trace'            => $exception->getTraceAsString()
                 ]
             );
         }
+
         return false;
     }
 

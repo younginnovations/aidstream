@@ -1,10 +1,10 @@
-<?php namespace app\Http\Controllers\Complete\Activity;
+<?php namespace App\Http\Controllers\Complete\Activity;
 
 use App\Http\Controllers\Controller;
 use App\Services\Activity\ActivityManager;
 use App\Services\Activity\SectorManager;
 use App\Services\FormCreator\Activity\Sector as SectorForm;
-use App\Services\RequestManager\Activity\Sector  as SectorRequestManager;
+use App\Services\RequestManager\Activity\Sector as SectorRequestManager;
 use Illuminate\Http\Request;
 
 /**
