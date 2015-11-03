@@ -56,7 +56,7 @@ class OtherIdentifierManager
             $this->log->activity(
                 "activity.other_identifier_updated",
                 [
-                    'otherIdentifier' => $input['otherIdentifier'],
+                    'otherIdentifier' => $input['other_identifier'],
                     'organization'    => $this->auth->user()->organization->name,
                     'organization_id' => $this->auth->user()->organization->id
                 ]

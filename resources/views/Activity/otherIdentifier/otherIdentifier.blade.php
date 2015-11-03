@@ -11,7 +11,7 @@
                         {!! form($form) !!}
 
                         <div class="collection-container hidden"
-                             data-prototype="{{ form_row($form->otherIdentifier->prototype()) }}">
+                             data-prototype="{{ form_row($form->other_identifier->prototype()) }}">
                         </div>
                     </div>
                 </div>

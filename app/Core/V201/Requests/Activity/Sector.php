@@ -29,6 +29,7 @@ class Sector extends ActivityBaseRequest
     public function addSectorsRules($formFields)
     {
         $rules = [];
+
         foreach ($formFields as $sectorIndex => $sector) {
             $sectorForm = sprintf('sector.%s', $sectorIndex);
             if ($sector['vocabulary'] == 1) {
@@ -57,6 +58,7 @@ class Sector extends ActivityBaseRequest
     public function addSectorsMessages($formFields)
     {
         $messages = [];
+
         foreach ($formFields as $sectorIndex => $sector) {
             $sectorForm = sprintf('sector.%s', $sectorIndex);
             if ($sector['vocabulary'] == 1) {

@@ -29,7 +29,7 @@ class OtherIdentifierRepository
      */
     public function update(array $activityDetails, Activity $activity)
     {
-        $activity->other_identifier = $activityDetails['otherIdentifier'];
+        $activity->other_identifier = $activityDetails['other_identifier'];
 
         return $activity->save();
     }

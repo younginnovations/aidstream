@@ -34,7 +34,7 @@ class OtherIdentifierForm
      */
     public function editForm($data, $activityId)
     {
-        $modal['otherIdentifier'] = $data;
+        $modal['other_identifier'] = $data;
 
         return $this->formBuilder->create(
             $this->formPath,

@@ -10,7 +10,7 @@
                         <h3>{{ $activityData->IdentifierTitle }}</h3>
                         {!! form($form) !!}
                         <div class="collection-container hidden"
-                             data-prototype="{{ form_row($form->country_budget_item->prototype()->budget_item->prototype()) }}">
+                             data-prototype="{{ form_row($form->country_budget_item->prototype()) }}">
                         </div>
                     </div>
                 </div>
