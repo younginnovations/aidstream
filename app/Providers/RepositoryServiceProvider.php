@@ -23,5 +23,10 @@ class RepositoryServiceProvider extends ServiceProvider
             'App\SuperAdmin\Repositories\SuperAdminInterfaces\SuperAdmin',
             'App\SuperAdmin\Repositories\SuperAdmin'
         );
+
+        $this->app->bind(
+            'App\SuperAdmin\Repositories\SuperAdminInterfaces\OrganizationGroup',
+            'App\SuperAdmin\Repositories\OrganizationGroup'
+        );
     }
 }

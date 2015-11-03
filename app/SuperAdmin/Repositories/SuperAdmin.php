@@ -4,8 +4,8 @@ use App\Models\Organization\Organization;
 use App\Models\Settings;
 use App\SuperAdmin\Repositories\SuperAdminInterfaces\SuperAdmin as SuperAdminInterface;
 use App\User;
-use Illuminate\Contracts\Logging\Log as Logger;
-use Psr\Log\LoggerInterface;
+use Illuminate\Contracts\Logging\Log as DbLogger;
+use Psr\Log\LoggerInterface as Logger;
 use Illuminate\Database\DatabaseManager;
 
 /**
@@ -35,9 +35,9 @@ class SuperAdmin implements SuperAdminInterface
      */
     protected $user;
     /**
-     * @var LoggerInterface
+     * @var DbLogger
      */
-    protected $loggerInterface;
+    protected $dbLogger;
 
     /**
      * @param User            $user
@@ -45,7 +45,7 @@ class SuperAdmin implements SuperAdminInterface
      * @param Organization    $organization
      * @param DatabaseManager $database
      * @param Logger          $logger
-     * @param LoggerInterface $loggerInterface
+     * @param DbLogger        $dbLogger
      */
     public function __construct(
         User $user,
@@ -53,14 +53,14 @@ class SuperAdmin implements SuperAdminInterface
         Organization $organization,
         DatabaseManager $database,
         Logger $logger,
-        LoggerInterface $loggerInterface
+        DbLogger $dbLogger
     ) {
-        $this->organization    = $organization;
-        $this->database        = $database;
-        $this->logger          = $logger;
-        $this->settings        = $settings;
-        $this->user            = $user;
-        $this->loggerInterface = $loggerInterface;
+        $this->organization = $organization;
+        $this->database     = $database;
+        $this->logger       = $logger;
+        $this->settings     = $settings;
+        $this->user         = $user;
+        $this->dbLogger     = $dbLogger;
     }
 
     /**
@@ -103,38 +103,22 @@ class SuperAdmin implements SuperAdminInterface
         try {
             $this->database->beginTransaction();
 
-            $orgData      = [
-                'name'            => $orgDetails['organization_information'][0]['name'],
-                'address'         => $orgDetails['organization_information'][0]['address'],
-                'user_identifier' => $orgDetails['organization_information'][0]['user_identifier'],
-            ];
+            $orgData      = $this->makeOrganizationData($orgDetails);
             $organization = $this->organization->firstOrNew(['id' => $orgId]);
             $organization->fill($orgData)->save();
 
-            $adminData = [
-                'first_name' => $orgDetails['admin_information'][0]['first_name'],
-                'last_name'  => $orgDetails['admin_information'][0]['last_name'],
-                'username'   => $orgDetails['admin_information'][0]['username'],
-                'email'      => $orgDetails['admin_information'][0]['email'],
-                'password'   => bcrypt($orgDetails['admin_information'][0]['password']),
-                'role_id'    => 1,
-                'org_id'     => $organization->id
-            ];
+            $adminData = $this->makeAdminData($orgDetails, $organization->id);
             $user      = $this->user->firstOrNew(['org_id' => $organization->id]);
             $user->fill($adminData)->save();
 
-            $settingsData = [
-                'default_field_values' => $orgDetails['default_field_values'],
-                'default_field_groups' => $orgDetails['default_field_groups'],
-                'organization_id'      => $organization->id
-            ];
+            $settingsData = $this->makeSettingsData($orgDetails, $organization->id);
             $settings     = $this->settings->firstOrNew(['organization_id' => $organization->id]);
             $settings->fill($settingsData)->save();
 
             $this->database->commit();
 
-            $this->loggerInterface->info(($orgId) ? 'Organization information Updated' : 'Organization added');
-            $this->logger->activity(
+            $this->logger->info(($orgId) ? 'Organization information Updated' : 'Organization added');
+            $this->dbLogger->activity(
                 ($orgId) ? "organization_updated" : "organization_added",
                 [
                     'user_id'         => $user->id,
@@ -144,7 +128,7 @@ class SuperAdmin implements SuperAdminInterface
         } catch (Exception $exception) {
             $this->database->rollback();
 
-            $this->loggerInterface->error(
+            $this->logger->error(
                 sprintf(
                     'organization information could no be %s due to %s',
                     ($orgId) ? 'updated' : 'added',
@@ -156,5 +140,42 @@ class SuperAdmin implements SuperAdminInterface
                 ]
             );
         }
+    }
+
+    protected function makeOrganizationData(array $orgDetails)
+    {
+        $orgData = [
+            'name'            => $orgDetails['organization_information'][0]['name'],
+            'address'         => $orgDetails['organization_information'][0]['address'],
+            'user_identifier' => $orgDetails['organization_information'][0]['user_identifier'],
+        ];
+
+        return $orgData;
+    }
+
+    protected function makeAdminData(array $orgDetails, $orgId)
+    {
+        $adminData = [
+            'first_name' => $orgDetails['admin_information'][0]['first_name'],
+            'last_name'  => $orgDetails['admin_information'][0]['last_name'],
+            'username'   => $orgDetails['admin_information'][0]['username'],
+            'email'      => $orgDetails['admin_information'][0]['email'],
+            'password'   => bcrypt($orgDetails['admin_information'][0]['password']),
+            'role_id'    => 1,
+            'org_id'     => $orgId
+        ];
+
+        return $adminData;
+    }
+
+    protected function makeSettingsData(array $orgDetails, $orgId)
+    {
+        $settingsData = [
+            'default_field_values' => $orgDetails['default_field_values'],
+            'default_field_groups' => $orgDetails['default_field_groups'],
+            'organization_id'      => $orgId
+        ];
+
+        return $settingsData;
     }
 }

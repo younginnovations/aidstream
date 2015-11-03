@@ -110,7 +110,7 @@ class AuthController extends Controller
         $login = $request->input('login');
         $field = filter_var($login, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
 
-        $request->merge([$field => $login]);
+        $request->merge(array($field => $login));
 
         $credentials = $request->only($field, 'password');
 

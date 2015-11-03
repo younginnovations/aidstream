@@ -3,10 +3,10 @@
 use App\Core\Form\BaseForm;
 
 /**
- * Class AdminInformation
+ * Class GroupAdmin
  * @package App\SuperAdmin\Forms
  */
-class AdminInformation extends BaseForm
+class GroupAdmin extends BaseForm
 {
     protected $showFieldErrors = true;
 
@@ -24,10 +24,10 @@ class AdminInformation extends BaseForm
                 [
                     'attr'       => [
                         'readonly' => 'readonly',
-                        'id'       => 'admin_username'
+                        'id'       => 'group_admin_username'
                     ],
                     'help_block' => [
-                        'text' => "AidStream will create a default username with your Organisation User Identifier as prefix. You will not be able to change '_admin' part of the username. This user will have administrative privilege and can create multiple AidStream users with different set of permissions.",
+                        'text' => "User Name is a combination of Group Identifier and '_group'. You may only change Group Identifier portion of the username.",
                         'tag'  => 'p',
                         'attr' => ['class' => 'help-block']
                     ]

@@ -26,7 +26,7 @@
                                     <td>{{ $key + 1 }}</td>
                                     <td>{{ $organization->name}}
                                         <div>@foreach($organization->users as $user)
-                                                @if($user['role_id'] == 1)
+                                                @if($user->isAdmin())
                                                     {{$user['email']}}
                                                 @endif
                                             @endforeach
@@ -34,13 +34,15 @@
                                     </td>
                                     <td>{{ count($organization->users) }}</td>
                                     <td>{{ count($organization->activities) }}</td>
-                                    <td>{{ $organization->orgStatus}}</td>
+                                    <td>{{ $organization->orgStatus }}</td>
                                     <td>
                                         <div class="organization_actions">
-                                            <a href="{{ route('admin.edit-organization', $organization->id) }}">Edit</a> |
-                                            <a href="{{ route('admin.masquerade-organization', [$organization->id, $organization->users[0]['id']]) }}">Masquerade</a> |
-                                            <a href="{{ route('admin.change-organization-status', [$organization->id, ($organization->status == 1) ? 0 : 1]) }}">{{$organization->orgStatus}}</a> |
-                                            <a href="{{ route('admin.delete-organization', $organization->id) }}">Delete</a>
+                                            @if(Auth::user()->isSuperAdmin())
+                                                <a href="{{ route('admin.edit-organization', $organization->id) }}">Edit</a> |
+                                                <a href="{{ route('admin.change-organization-status', [$organization->id, ($organization->status == 1) ? 0 : 1]) }}">{{$organization->orgStatus}}</a> |
+                                                <a href="{{ route('admin.delete-organization', $organization->id) }}">Delete</a> |
+                                            @endif
+                                                <a href="{{ route('admin.masquerade-organization', [$organization->id, $organization->users[0]['id']]) }}">Masquerade</a>
                                         </div>
                                     </td>
                                 </tr>
