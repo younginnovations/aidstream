@@ -1,7 +1,5 @@
 <?php namespace App\Core\V201\Requests\Organization;
 
-use App\Models\Organization;
-
 class CreateOrgReportingOrgRequest extends OrganizationBaseRequest
 {
 
@@ -24,21 +22,21 @@ class CreateOrgReportingOrgRequest extends OrganizationBaseRequest
      */
     public function rules()
     {
-        return $this->addRulesForReportingOrganization($this->request->get('reporting_org'));
+        return $this->getRulesForReportingOrganization($this->request->get('reporting_org'));
     }
 
     /**
      * @param array $formFields
      * @return array
      */
-    public function addRulesForReportingOrganization(array $formFields)
+    public function getRulesForReportingOrganization(array $formFields)
     {
         $rules = [];
         foreach ($formFields as $reportingOrganizationIndex => $reportingOrganization) {
             $reportingOrganizationForm = sprintf('reporting_org.%s', $reportingOrganizationIndex);
             $rules                     = array_merge(
                 $rules,
-                $this->addRulesForNarrative($reportingOrganization['narrative'], $reportingOrganizationForm)
+                $this->getRulesForNarrative($reportingOrganization['narrative'], $reportingOrganizationForm)
             );
         }
 
@@ -51,17 +49,17 @@ class CreateOrgReportingOrgRequest extends OrganizationBaseRequest
      */
     public function messages()
     {
-        return $this->addMessagesForReportingOrganization($this->request->get('reporting_org'));
+        return $this->getMessagesForReportingOrganization($this->request->get('reporting_org'));
     }
 
-    public function addMessagesForReportingOrganization(array $formFields)
+    public function getMessagesForReportingOrganization(array $formFields)
     {
         $messages = [];
         foreach ($formFields as $reportingOrganizationIndex => $reportingOrganization) {
             $reportingOrganizationForm = sprintf('reporting_org.%s', $reportingOrganizationIndex);
             $messages                  = array_merge(
                 $messages,
-                $this->addMessagesForNarrative($reportingOrganization['narrative'], $reportingOrganizationForm)
+                $this->getMessagesForNarrative($reportingOrganization['narrative'], $reportingOrganizationForm)
             );
         }
 

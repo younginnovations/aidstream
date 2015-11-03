@@ -14,7 +14,7 @@ class RecipientRegion extends ActivityBaseRequest
      */
     public function rules()
     {
-        return $this->addRulesForRecipientRegion($this->request->get('recipient_region'));
+        return $this->getRulesForRecipientRegion($this->request->get('recipient_region'));
     }
 
     /**
@@ -23,7 +23,7 @@ class RecipientRegion extends ActivityBaseRequest
      */
     public function messages()
     {
-        return $this->addMessagesForRecipientRegion($this->request->get('recipient_region'));
+        return $this->getMessagesForRecipientRegion($this->request->get('recipient_region'));
     }
 
     /**
@@ -31,7 +31,7 @@ class RecipientRegion extends ActivityBaseRequest
      * @param $formFields
      * @return array|mixed
      */
-    public function addRulesForRecipientRegion($formFields)
+    public function getRulesForRecipientRegion($formFields)
     {
         $rules = [];
 
@@ -41,7 +41,7 @@ class RecipientRegion extends ActivityBaseRequest
             $rules[$recipientRegionForm . '.percentage']  = 'numeric|max:100';
             $rules                                        = array_merge(
                 $rules,
-                $this->addRulesForNarrative(
+                $this->getRulesForNarrative(
                     $recipientRegion['narrative'],
                     $recipientRegionForm
                 )
@@ -56,9 +56,9 @@ class RecipientRegion extends ActivityBaseRequest
      * @param $formFields
      * @return array|mixed
      */
-    public function addMessagesForRecipientRegion($formFields)
+    public function getMessagesForRecipientRegion($formFields)
     {
-        $messages = []
+        $messages = [];
 
         foreach ($formFields as $recipientRegionIndex => $recipientRegion) {
             $recipientRegionForm                                      = 'recipient_region.' . $recipientRegionIndex;
@@ -67,7 +67,7 @@ class RecipientRegion extends ActivityBaseRequest
             $messages[$recipientRegionForm . '.percentage.max']       = 'Percentage should be less than or equal to 100';
             $messages                                                 = array_merge(
                 $messages,
-                $this->addMessagesForNarrative(
+                $this->getMessagesForNarrative(
                     $recipientRegion['narrative'],
                     $recipientRegionForm
                 )

@@ -9,7 +9,7 @@ class Sector extends ActivityBaseRequest
 
     public function rules()
     {
-        return $this->addSectorsRules($this->request->get('sector'));
+        return $this->getSectorsRules($this->request->get('sector'));
     }
 
     /**
@@ -18,7 +18,7 @@ class Sector extends ActivityBaseRequest
      */
     public function messages()
     {
-        return $this->addSectorsMessages($this->request->get('sector'));
+        return $this->getSectorsMessages($this->request->get('sector'));
     }
 
     /**
@@ -26,7 +26,7 @@ class Sector extends ActivityBaseRequest
      * @param $formFields
      * @return array|mixed
      */
-    public function addSectorsRules($formFields)
+    public function getSectorsRules($formFields)
     {
         $rules = [];
 
@@ -40,7 +40,7 @@ class Sector extends ActivityBaseRequest
             $rules[sprintf('%s.percentage', $sectorForm)] = 'numeric|max:100';
             $rules                                        = array_merge(
                 $rules,
-                $this->addRulesForNarrative(
+                $this->getRulesForNarrative(
                     $sector['narrative'],
                     $sectorForm
                 )
@@ -55,7 +55,7 @@ class Sector extends ActivityBaseRequest
      * @param $formFields
      * @return array|mixed
      */
-    public function addSectorsMessages($formFields)
+    public function getSectorsMessages($formFields)
     {
         $messages = [];
 
@@ -74,7 +74,7 @@ class Sector extends ActivityBaseRequest
             )]                                                             = 'Percentage should be less than or equal to required';
             $messages                                                      = array_merge(
                 $messages,
-                $this->addMessagesForNarrative(
+                $this->getMessagesForNarrative(
                     $sector['narrative'],
                     $sectorForm
                 )

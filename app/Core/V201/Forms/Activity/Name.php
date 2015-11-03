@@ -16,21 +16,7 @@ class Name extends BaseForm
     public function buildForm()
     {
         $this
-            ->add(
-                'narrative',
-                'collection',
-                [
-                    'type'      => 'form',
-                    'prototype' => true,
-                    'options'   => [
-                        'class' => 'App\Core\V201\Forms\Activity\Narrative',
-                        'label' => false,
-                    ],
-                    'wrapper'   => [
-                        'class' => 'collection_form name_narrative'
-                    ]
-                ]
-            )
+            ->addNarrative('name_narrative')
             ->addAddMoreButton('add', 'name_narrative');
     }
 }

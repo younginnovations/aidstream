@@ -20,16 +20,16 @@ class CreateOrgRecipientOrgBudgetRequest extends OrganizationBaseRequest
             );
             $rules                           = array_merge(
                 $rules,
-                $this->addRulesForPeriodStart(
+                $this->getRulesForPeriodStart(
                     $recipientOrganizationBudget['period_start'],
                     $recipientOrganizationBudgetForm
                 ),
-                $this->addRulesForPeriodEnd(
+                $this->getRulesForPeriodEnd(
                     $recipientOrganizationBudget['period_end'],
                     $recipientOrganizationBudgetForm
                 ),
-                $this->addRulesForValue($recipientOrganizationBudget['value'], $recipientOrganizationBudgetForm),
-                $this->addRulesForNarrative($recipientOrganizationBudget['narrative'], $recipientOrganizationBudgetForm)
+                $this->getRulesForValue($recipientOrganizationBudget['value'], $recipientOrganizationBudgetForm),
+                $this->getRulesForNarrative($recipientOrganizationBudget['narrative'], $recipientOrganizationBudgetForm)
             );
         }
 
@@ -53,16 +53,16 @@ class CreateOrgRecipientOrgBudgetRequest extends OrganizationBaseRequest
             );
             $messages                        = array_merge(
                 $messages,
-                $this->addMessagesForPeriodStart(
+                $this->getMessagesForPeriodStart(
                     $recipientOrganizationBudget['period_start'],
                     $recipientOrganizationBudgetForm
                 ),
-                $this->addMessagesForPeriodEnd(
+                $this->getMessagesForPeriodEnd(
                     $recipientOrganizationBudget['period_end'],
                     $recipientOrganizationBudgetForm
                 ),
-                $this->addMessagesForValue($recipientOrganizationBudget['value'], $recipientOrganizationBudgetForm),
-                $this->addMessagesForNarrative(
+                $this->getMessagesForValue($recipientOrganizationBudget['value'], $recipientOrganizationBudgetForm),
+                $this->getMessagesForNarrative(
                     $recipientOrganizationBudget['narrative'],
                     $recipientOrganizationBudgetForm
                 )

@@ -20,7 +20,7 @@ class FeatureDesignation extends BaseForm
                 'code',
                 'select',
                 [
-                    'choices' => $this->addCodeList('LocationType', 'Activity'),
+                    'choices' => $this->getCodeList('LocationType', 'Activity'),
                 ]
             );
     }

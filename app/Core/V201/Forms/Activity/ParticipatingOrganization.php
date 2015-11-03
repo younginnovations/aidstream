@@ -18,7 +18,7 @@ class ParticipatingOrganization extends BaseForm
                 'organization_role',
                 'select',
                 [
-                    'choices' => $this->addCodeList('OrganisationRole', 'Activity'),
+                    'choices' => $this->getCodeList('OrganisationRole', 'Activity'),
                     'label'   => 'Organization Role'
                 ]
             )
@@ -27,7 +27,7 @@ class ParticipatingOrganization extends BaseForm
                 'organization_type',
                 'select',
                 [
-                    'choices' => $this->addCodeList('OrganisationType', 'Activity'),
+                    'choices' => $this->getCodeList('OrganisationType', 'Activity'),
                     'label'   => 'Organization Type'
                 ]
             )

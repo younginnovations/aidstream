@@ -20,7 +20,7 @@ class Administrative extends BaseForm
                 'vocabulary',
                 'select',
                 [
-                    'choices' => $this->addCodeList('GeographicVocabulary', 'Activity'),
+                    'choices' => $this->getCodeList('GeographicVocabulary', 'Activity'),
                 ]
             )
             ->add('code', 'text')

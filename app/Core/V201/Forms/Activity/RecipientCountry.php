@@ -20,10 +20,10 @@ class RecipientCountry extends BaseForm
                 'country_code',
                 'select',
                 [
-                    'choices' => $this->addCodeList('Country', 'Organization'),
+                    'choices' => $this->getCodeList('Country', 'Organization'),
                 ]
             )
-            ->add('percentage', 'text')
+            ->addPercentage()
             ->addNarrative('narrative')
             ->addAddMoreButton('add_narrative', 'narrative')
             ->addRemoveThisButton('remove_recipient_country');

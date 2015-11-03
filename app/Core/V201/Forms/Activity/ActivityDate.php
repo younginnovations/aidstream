@@ -19,7 +19,7 @@ class ActivityDate extends BaseForm
                 'type',
                 'select',
                 [
-                    'choices' => $this->addCodeList('ActivityDateType', 'Activity'),
+                    'choices' => $this->getCodeList('ActivityDateType', 'Activity'),
                     'label'   => 'Activity Date Type'
                 ]
             )

@@ -24,7 +24,7 @@ class ActivityBaseRequest extends Request
      * @param $formBase
      * @return array
      */
-    public function addRulesForNarrative($formFields, $formBase)
+    public function getRulesForNarrative($formFields, $formBase)
     {
         $rules = [];
         foreach ($formFields as $narrativeIndex => $narrative) {
@@ -40,7 +40,7 @@ class ActivityBaseRequest extends Request
      * @param $formBase
      * @return array
      */
-    public function addMessagesForNarrative($formFields, $formBase)
+    public function getMessagesForNarrative($formFields, $formBase)
     {
         $messages = [];
         foreach ($formFields as $narrativeIndex => $narrative) {

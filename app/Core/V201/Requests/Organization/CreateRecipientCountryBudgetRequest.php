@@ -1,8 +1,5 @@
 <?php namespace App\Core\V201\Requests\Organization;
 
-use App\Models\OrganizationData;
-use Illuminate\Foundation\Http\FormRequest;
-
 class CreateRecipientCountryBudgetRequest extends OrganizationBaseRequest
 {
 
@@ -26,10 +23,10 @@ class CreateRecipientCountryBudgetRequest extends OrganizationBaseRequest
                     $recipientCountryBudget['recipient_country'],
                     $recipientCountryBudgetForm
                 ),
-                $this->addRulesForPeriodStart($recipientCountryBudget['period_start'], $recipientCountryBudgetForm),
-                $this->addRulesForPeriodEnd($recipientCountryBudget['period_end'], $recipientCountryBudgetForm),
-                $this->addRulesForValue($recipientCountryBudget['value'], $recipientCountryBudgetForm),
-                $this->addRulesForBudgetLine($recipientCountryBudget['budget_line'], $recipientCountryBudgetForm)
+                $this->getRulesForPeriodStart($recipientCountryBudget['period_start'], $recipientCountryBudgetForm),
+                $this->getRulesForPeriodEnd($recipientCountryBudget['period_end'], $recipientCountryBudgetForm),
+                $this->getRulesForValue($recipientCountryBudget['value'], $recipientCountryBudgetForm),
+                $this->getRulesForBudgetLine($recipientCountryBudget['budget_line'], $recipientCountryBudgetForm)
             );
         }
 
@@ -46,7 +43,7 @@ class CreateRecipientCountryBudgetRequest extends OrganizationBaseRequest
                 $recipientCountryIndex
             );
             $rules[sprintf('%srecipient_country.%s.code', $formbase, $recipientCountryIndex)] = 'required';
-            $rules                                                                            = $this->addRulesForNarrative(
+            $rules                                                                            = $this->getRulesForNarrative(
                 $recipientCountry['narrative'],
                 $recipientCountryForm
             );
@@ -68,10 +65,10 @@ class CreateRecipientCountryBudgetRequest extends OrganizationBaseRequest
                     $recipientCountryBudget['recipient_country'],
                     $recipientCountryBudgetForm
                 ),
-                $this->addMessagesForPeriodStart($recipientCountryBudget['period_start'], $recipientCountryBudgetForm),
-                $this->addMessagesForPeriodEnd($recipientCountryBudget['period_end'], $recipientCountryBudgetForm),
-                $this->addMessagesForValue($recipientCountryBudget['value'], $recipientCountryBudgetForm),
-                $this->addMessagesBudgetLine($recipientCountryBudget['budget_line'], $recipientCountryBudgetForm)
+                $this->getMessagesForPeriodStart($recipientCountryBudget['period_start'], $recipientCountryBudgetForm),
+                $this->getMessagesForPeriodEnd($recipientCountryBudget['period_end'], $recipientCountryBudgetForm),
+                $this->getMessagesForValue($recipientCountryBudget['value'], $recipientCountryBudgetForm),
+                $this->getMessagesBudgetLine($recipientCountryBudget['budget_line'], $recipientCountryBudgetForm)
             );
         }
 
@@ -92,7 +89,7 @@ class CreateRecipientCountryBudgetRequest extends OrganizationBaseRequest
                 $formbase,
                 $recipientCountryIndex
             )]                    = 'code is required';
-            $messages             = $this->addMessagesForNarrative(
+            $messages             = $this->getMessagesForNarrative(
                 $recipientCountry['narrative'],
                 $recipientCountryForm
             );

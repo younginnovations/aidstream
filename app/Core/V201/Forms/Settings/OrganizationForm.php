@@ -1,9 +1,9 @@
 <?php namespace App\Core\V201\Forms\Settings;
 
-use Kris\LaravelFormBuilder\Form;
+use App\Core\Form\BaseForm;
 use App\Core\Version;
 
-class OrganizationForm extends Form
+class OrganizationForm extends BaseForm
 {
     protected $showFieldErrors = true;
     protected $formPath;
@@ -18,16 +18,6 @@ class OrganizationForm extends Form
     {
         $this
             ->add('identifier', 'text')
-            ->add(
-                'name',
-                'collection',
-                [
-                    'type'      => 'form',
-                    'options'   => [
-                        'class' => $this->formPath,
-                        'label' => false,
-                    ]
-                ]
-            );
+            ->addCollection('name', 'Organization\NameForm');
     }
 }

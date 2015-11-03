@@ -20,7 +20,7 @@ class LocationClass extends BaseForm
                 'code',
                 'select',
                 [
-                    'choices' => $this->addCodeList('GeographicLocationClass', 'Activity'),
+                    'choices' => $this->getCodeList('GeographicLocationClass', 'Activity'),
                 ]
             );
     }

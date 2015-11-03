@@ -8,7 +8,7 @@ class BudgetLineForm extends BaseForm
     {
         $this
             ->add('reference', 'text')
-            ->addValue('Organization')
+            ->addCollection('value', 'Organization\ValueForm')
             ->addNarrative('budget_line_narrative')
             ->addAddMoreButton('add', 'budget_line_narrative')
             ->addRemoveThisButton('remove_budget_line');

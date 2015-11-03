@@ -13,7 +13,7 @@ class LanguageCodeForm extends BaseForm
                 'language',
                 'select',
                 [
-                    'choices' => $this->addCodeList('Language', 'Organization'),
+                    'choices' => $this->getCodeList('Language', 'Organization'),
                     'label'   => 'Language'
                 ]
             )

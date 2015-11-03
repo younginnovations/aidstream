@@ -24,7 +24,7 @@ class OrganizationBaseRequest extends Request
      * @param $formBase
      * @return array
      */
-    public function addRulesForNarrative($formFields, $formBase)
+    public function getRulesForNarrative($formFields, $formBase)
     {
         $rules = [];
         foreach ($formFields as $narrativeIndex => $narrative) {
@@ -40,7 +40,7 @@ class OrganizationBaseRequest extends Request
      * @param $formBase
      * @return array
      */
-    public function addMessagesForNarrative($formFields, $formBase)
+    public function getMessagesForNarrative($formFields, $formBase)
     {
         $messages = [];
         foreach ($formFields as $narrativeIndex => $narrative) {
@@ -56,7 +56,7 @@ class OrganizationBaseRequest extends Request
      * @param $formBase
      * @return array
      */
-    public function addRulesForValue($formFields, $formBase)
+    public function getRulesForValue($formFields, $formBase)
     {
         $rules = [];
         foreach ($formFields as $valueKey => $valueVal) {
@@ -74,7 +74,7 @@ class OrganizationBaseRequest extends Request
      * @param $formBase
      * @return array
      */
-    public function addMessagesForValue($formFields, $formBase)
+    public function getMessagesForValue($formFields, $formBase)
     {
         $messages = [];
         foreach ($formFields as $valueKey => $valueVal) {
@@ -93,15 +93,15 @@ class OrganizationBaseRequest extends Request
      * @param $formBase
      * @return array
      */
-    public function addRulesForBudgetLine($formFields, $formBase)
+    public function getRulesForBudgetLine($formFields, $formBase)
     {
         $rules = [];
         foreach ($formFields as $budgetLineKey => $budgetLineVal) {
             $budgetLineForm = $formBase . '.budget_line.' . $budgetLineKey;
             $rules          = array_merge(
                 $rules,
-                $this->addRulesForValue($budgetLineVal['value'], $budgetLineForm, $rules),
-                $this->addRulesForNarrative($budgetLineVal['narrative'], $budgetLineForm, $rules)
+                $this->getRulesForValue($budgetLineVal['value'], $budgetLineForm, $rules),
+                $this->getRulesForNarrative($budgetLineVal['narrative'], $budgetLineForm, $rules)
             );
         }
 
@@ -114,15 +114,15 @@ class OrganizationBaseRequest extends Request
      * @param $formBase
      * @return array
      */
-    public function addMessagesBudgetLine($formFields, $formBase)
+    public function getMessagesBudgetLine($formFields, $formBase)
     {
         $messages = [];
         foreach ($formFields as $budgetLineKey => $budgetLineVal) {
             $budgetLineForm = $formBase . '.budget_line.' . $budgetLineKey;
             $messages       = array_merge(
                 $messages,
-                $this->addMessagesForValue($budgetLineVal['value'], $budgetLineForm, $messages),
-                $this->addMessagesForNarrative($budgetLineVal['narrative'], $budgetLineForm, $messages)
+                $this->getMessagesForValue($budgetLineVal['value'], $budgetLineForm, $messages),
+                $this->getMessagesForNarrative($budgetLineVal['narrative'], $budgetLineForm, $messages)
             );
         }
 
@@ -135,7 +135,7 @@ class OrganizationBaseRequest extends Request
      * @param $formBase
      * @return array
      */
-    public function addRulesForPeriodStart($formFields, $formBase)
+    public function getRulesForPeriodStart($formFields, $formBase)
     {
         $rules = [];
         foreach ($formFields as $periodStartKey => $periodStartVal) {
@@ -151,7 +151,7 @@ class OrganizationBaseRequest extends Request
      * @param $formBase
      * @return array
      */
-    public function addMessagesForPeriodStart($formFields, $formBase)
+    public function getMessagesForPeriodStart($formFields, $formBase)
     {
         $messages = [];
         foreach ($formFields as $periodStartKey => $periodStartVal) {
@@ -167,7 +167,7 @@ class OrganizationBaseRequest extends Request
      * @param $formBase
      * @return array
      */
-    public function addRulesForPeriodEnd($formFields, $formBase)
+    public function getRulesForPeriodEnd($formFields, $formBase)
     {
         $rules = [];
         foreach ($formFields as $periodEndKey => $periodEndVal) {
@@ -183,7 +183,7 @@ class OrganizationBaseRequest extends Request
      * @param $formBase
      * @return array
      */
-    public function addMessagesForPeriodEnd($formFields, $formBase)
+    public function getMessagesForPeriodEnd($formFields, $formBase)
     {
         $messages = [];
         foreach ($formFields as $periodEndKey => $periodEndVal) {

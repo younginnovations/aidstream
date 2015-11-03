@@ -12,7 +12,7 @@ class DocumentLinkForm extends BaseForm
                 'format',
                 'select',
                 [
-                    'choices' => $this->addCodeList('FileFormat', 'Organization'),
+                    'choices' => $this->getCodeList('FileFormat', 'Organization'),
                     'label'   => 'Format'
                 ]
             )
