@@ -1,4 +1,4 @@
-<?php namespace app\Core\V201\Repositories\Activity;
+<?php namespace App\Core\V201\Repositories\Activity;
 
 use App\Models\Activity\Activity;
 

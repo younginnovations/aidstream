@@ -1,5 +1,4 @@
-<?php
-namespace app\Services\Organization;
+<?php namespace App\Services\Organization;
 
 use App\Core\Version;
 use App;
@@ -16,17 +15,18 @@ class OrganizationManager
      */
     public function __construct(Version $version, OrganizationData $orgData, OrganizationPublished $orgPublished)
     {
-        $this->version = $version;
-        $this->repo = $version->getOrganizationElement()->getRepository();
-        $this->orgElement = $version->getOrganizationElement();
-        $this->orgData = $orgData;
+        $this->version      = $version;
+        $this->repo         = $version->getOrganizationElement()->getRepository();
+        $this->orgElement   = $version->getOrganizationElement();
+        $this->orgData      = $orgData;
         $this->orgPublished = $orgPublished;
     }
 
     /**
      * @return mixed
      */
-    public function getOrganizationElement() {
+    public function getOrganizationElement()
+    {
         return $this->orgElement;
     }
 
@@ -56,7 +56,7 @@ class OrganizationManager
     }
 
     /**
-     * @param array $input
+     * @param array        $input
      * @param Organization $organization
      */
     public function updateOrganization(array $input, Organization $organization)
@@ -83,7 +83,7 @@ class OrganizationManager
     }
 
     /**
-     * @param array $input
+     * @param array            $input
      * @param OrganizationData $organizationData
      */
     public function updateStatus(array $input, OrganizationData $organizationData)

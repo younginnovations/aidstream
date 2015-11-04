@@ -1,6 +1,4 @@
-<?php
-
-namespace app\Core\V201\Element\Activity;
+<?php namespace App\Core\V201\Element\Activity;
 
 class Identifier
 {

@@ -1,4 +1,4 @@
-<?php namespace app\Http\Controllers\Wizard\Activity;
+<?php namespace App\Http\Controllers\Wizard\Activity;
 
 use App\Http\Controllers\Controller;
 use App\Services\Wizard\Activity\ActivityManager;

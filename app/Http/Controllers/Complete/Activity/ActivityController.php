@@ -1,4 +1,4 @@
-<?php namespace app\Http\Controllers\Complete\Activity;
+<?php namespace App\Http\Controllers\Complete\Activity;
 
 use App\Core\V201\Requests\Activity\IatiIdentifierRequest;
 use App\Http\Controllers\Controller;
@@ -114,4 +114,3 @@ class ActivityController extends Controller
         return new HttpException(403, 'This action is unauthorized.');
     }
 }
-

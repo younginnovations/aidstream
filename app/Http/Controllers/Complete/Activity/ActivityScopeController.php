@@ -1,4 +1,4 @@
-<?php namespace app\Http\Controllers\Complete\Activity;
+<?php namespace App\Http\Controllers\Complete\Activity;
 
 use App\Http\Controllers\Controller;
 use App\Services\Activity\ActivityScopeManager;
@@ -50,8 +50,8 @@ class ActivityScopeController extends Controller
     public function index($id)
     {
         $activityScope = $this->activityScopeManager->getActivityScopeData($id);
-        $activityData   = $this->activityManager->getActivityData($id);
-        $form           = $this->activityScopeForm->editForm($activityScope, $id);
+        $activityData  = $this->activityManager->getActivityData($id);
+        $form          = $this->activityScopeForm->editForm($activityScope, $id);
 
         return view(
             'Activity.activityScope.edit',
