@@ -19,5 +19,6 @@ $router->group(
         $router->resource('activity.sector', 'SectorController');
         $router->resource('activity.country-budget-items', 'CountryBudgetItemController');
         $router->resource('activity.location', 'LocationController');
+        $router->resource('activity.policy-maker', 'PolicyMakerController');
     }
 );
