@@ -154,4 +154,14 @@ class IatiActivity extends WizardIatiActivity
     {
         return app('App\Core\V201\Requests\Activity\CountryBudgetItem');
     }
+
+    public function getDefaultFlowType()
+    {
+        return app('App\Core\V201\Element\Activity\DefaultFlowType');
+    }
+
+    public function getDefaultFlowTypeRequest()
+    {
+        return app('App\Core\V201\Requests\Activity\DefaultFlowType');
+    }
 }
