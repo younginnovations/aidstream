@@ -50,7 +50,7 @@
             <li><a href="#">Collaboration Type</a></li>
             <li><a href="#">Default Flow Type</a></li>
             <li><a href="#">Default Finance Type</a></li>
-            <li><a href="#">Default Aid Type</a></li>
+            <li><a href="{{ route('activity.default-aid-type.index', $id) }}">Default Aid Type</a></li>
             <li><a href="#">Default Tied Status</a></li>
         </ul>
     </div>
