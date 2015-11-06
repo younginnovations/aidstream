@@ -59,8 +59,8 @@
     <div class="panel-heading">Financial</div>
     <div class="panel-body">
         <ul class="nav">
-            <li><a href="#">Budget</a></li>
-            <li><a href="#">Planned Disbursement</a></li>
+            <li><a href="{{ route('activity.budget.index', $id) }}">Budget</a></li>
+            <li><a href="{{ route('activity.planned-disbursement.index', $id) }}">Planned Disbursement</a></li>
             <li><a href="{{ route('activity.capital-spend.index', $id) }}">Capital Spend</a></li>
             <li><a href="#">Transaction</a></li>
         </ul>
@@ -70,7 +70,7 @@
     <div class="panel-heading">Related Documents</div>
     <div class="panel-body">
         <ul class="nav">
-            <li><a href="#">Document Link</a></li>
+            <li><a href="{{ route('activity.document-link.index', $id) }}">Document Link</a></li>
         </ul>
     </div>
 </div>
@@ -78,7 +78,7 @@
     <div class="panel-heading">Relations</div>
     <div class="panel-body">
         <ul class="nav">
-            <li><a href="#">Related Activity</a></li>
+            <li><a href="{{ route('activity.related-activity.index', $id) }}">Related Activity</a></li>
         </ul>
     </div>
 </div>

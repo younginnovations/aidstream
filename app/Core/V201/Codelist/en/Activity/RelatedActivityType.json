@@ -1,0 +1,38 @@
+{
+  "date-last-modified": "2015-10-16T10:42:20.386529+00:00",
+  "version": "",
+  "name": "RelatedActivityType",
+  "xml:lang": "en",
+  "RelatedActivityType": [
+    {
+      "code": "1",
+      "name": "Parent",
+      "language": "en",
+      "description": "An activity that contains sub-activities (sub-components) which are reported separately to IATI"
+    },
+    {
+      "code": "2",
+      "name": "Child",
+      "language": "en",
+      "description": "A sub-activity (or sub-component) that sits within a larger activity (parent) which is also reported to IATI"
+    },
+    {
+      "code": "3",
+      "name": "Sibling",
+      "language": "en",
+      "description": "A sub-activity (or sub-component) that is related to another sub-activity with the same parent "
+    },
+    {
+      "code": "4",
+      "name": "Co-funded",
+      "language": "en",
+      "description": "An activity that receives funding from more than one organisation"
+    },
+    {
+      "code": "5",
+      "name": "Third Party",
+      "language": "en",
+      "description": "A report by another organisation on the same activity you are reporting (excluding activities reported as part of a financial transaction - e.g. provider-activity-id or a co-funded activity, using code 4)"
+    }
+  ]
+}

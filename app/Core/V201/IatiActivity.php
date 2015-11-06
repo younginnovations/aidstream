@@ -155,6 +155,16 @@ class IatiActivity extends WizardIatiActivity
         return app('App\Core\V201\Requests\Activity\CountryBudgetItem');
     }
 
+    public function getBudget()
+    {
+        return app('App\Core\V201\Element\Activity\Budget');
+    }
+
+    public function getBudgetRequest()
+    {
+        return app('App\Core\V201\Requests\Activity\Budget');
+    }
+
     public function getPolicyMaker()
     {
         return app('App\Core\V201\Element\Activity\PolicyMaker');
@@ -223,5 +233,35 @@ class IatiActivity extends WizardIatiActivity
     public function getCapitalSpendRequest()
     {
         return app('App\Core\V201\Requests\Activity\CapitalSpend');
+    }
+
+    public function getPlannedDisbursement()
+    {
+        return app('App\Core\V201\Element\Activity\PlannedDisbursement');
+    }
+
+    public function getPlannedDisbursementRequest()
+    {
+        return app('App\Core\V201\Requests\Activity\PlannedDisbursement');
+    }
+
+    public function getDocumentLink()
+    {
+        return app('App\Core\V201\Element\Activity\DocumentLink');
+    }
+
+    public function getDocumentLinkRequest()
+    {
+        return app('App\Core\V201\Requests\Activity\DocumentLink');
+    }
+
+    public function getRelatedActivity()
+    {
+        return app('App\Core\V201\Element\Activity\RelatedActivity');
+    }
+
+    public function getRelatedActivityRequest()
+    {
+        return app('App\Core\V201\Requests\Activity\RelatedActivity');
     }
 }
