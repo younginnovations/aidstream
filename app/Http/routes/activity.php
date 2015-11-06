@@ -19,6 +19,7 @@ $router->group(
         $router->resource('activity.sector', 'SectorController');
         $router->resource('activity.country-budget-items', 'CountryBudgetItemController');
         $router->resource('activity.location', 'LocationController');
+        $router->resource('activity.budget', 'BudgetController');
         $router->resource('activity.policy-maker', 'PolicyMakerController');
         $router->resource('activity.collaboration-type', 'CollaborationTypeController');
         $router->resource('activity.default-flow-type', 'DefaultFlowTypeController');
@@ -26,5 +27,8 @@ $router->group(
         $router->resource('activity.default-aid-type', 'DefaultAidTypeController');
         $router->resource('activity.default-tied-status', 'DefaultTiedStatusController');
         $router->resource('activity.capital-spend', 'CapitalSpendController');
+        $router->resource('activity.planned-disbursement', 'PlannedDisbursementController');
+        $router->resource('activity.document-link', 'DocumentLinkController');
+        $router->resource('activity.related-activity', 'RelatedActivityController');
     }
 );

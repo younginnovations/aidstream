@@ -1,0 +1,20 @@
+{
+  "date-last-modified": "2015-10-16T10:42:19.799274+00:00",
+  "version": "",
+  "name": "BudgetType",
+  "xml:lang": "en",
+  "BudgetType": [
+    {
+      "code": "1",
+      "name": "Original",
+      "language": "en",
+      "description": "The original budget allocated to the activity"
+    },
+    {
+      "code": "2",
+      "name": "Revised",
+      "language": "en",
+      "description": "The updated budget for an activity"
+    }
+  ]
+}
