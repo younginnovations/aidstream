@@ -154,4 +154,14 @@ class IatiActivity extends WizardIatiActivity
     {
         return app('App\Core\V201\Requests\Activity\CountryBudgetItem');
     }
+
+    public function getDefaultTiedStatus()
+    {
+        return app('App\Core\V201\Element\Activity\DefaultTiedStatus');
+    }
+
+    public function getDefaultTiedStatusRequest()
+    {
+        return app('App\Core\V201\Requests\Activity\DefaultTiedStatus');
+    }
 }

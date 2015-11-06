@@ -51,7 +51,7 @@
             <li><a href="#">Default Flow Type</a></li>
             <li><a href="#">Default Finance Type</a></li>
             <li><a href="#">Default Aid Type</a></li>
-            <li><a href="#">Default Tied Status</a></li>
+            <li><a href="{{ route('activity.default-tied-status.index', $id) }}">Default Tied Status</a></li>
         </ul>
     </div>
 </div>
