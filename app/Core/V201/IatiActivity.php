@@ -265,6 +265,26 @@ class IatiActivity extends WizardIatiActivity
         return app('App\Core\V201\Requests\Activity\RelatedActivity');
     }
 
+    public function getTransaction()
+    {
+        return app('App\Core\V201\Element\Activity\Transaction');
+    }
+
+    public function getTransactionRequest()
+    {
+        return app('App\Core\V201\Requests\Activity\Transaction');
+    }
+
+    public function getUploadTransaction()
+    {
+        return app('App\Core\V201\Element\Activity\UploadTransaction');
+    }
+
+    public function getUploadTransactionRequest()
+    {
+        return app('App\Core\V201\Requests\Activity\UploadTransaction');
+    }
+
     public function getLegacyData()
     {
         return app('App\Core\V201\Element\Activity\LegacyData');

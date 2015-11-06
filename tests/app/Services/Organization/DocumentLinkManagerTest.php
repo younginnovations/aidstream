@@ -36,16 +36,7 @@ class DocumentLinkManagerTest extends AidStreamTestCase
         $this->logger->shouldReceive('info')->once()->with("Document Link Updated", ['for' => 'documentLink']);
         $this->logger->shouldReceive('activity')->once()->with('organization.document_link_updated', ['name'=>'organizationName']);
         $this->assertTrue($this->docLinkManager->update([], $organizationDataModel));
-//        $this->assertInstanceOf('App\Models\Organization\OrganizationData', $this->docLinkManager->update([], $organizationDataModel));
     }
-
-//    public function testItShouldReturnErrorLogIfAnyErrorOccursWhileUpdatingOrganizationDocumentLink()
-//    {
-//        $this->documentLinkRepository->shouldReceive('update')->once()->with([], ['document_link' => 'documentLink'])->and;
-//        $this->logger->shouldReceive('info')->once();
-////        $this->logger->shouldReceive('info')->once()->with('Document Link could not be updated due to', ['OrganizationDocumentLink' => []]);
-//        $this->assertTrue($this->docLinkManager->update([],['document_link' => 'documentLink']));
-//    }
 
     public function testItShouldGetAllOrganizationDataWithCertainId()
     {

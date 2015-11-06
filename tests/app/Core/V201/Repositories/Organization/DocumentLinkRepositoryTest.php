@@ -19,7 +19,6 @@ class DocumentLinkRepositoryTest extends AidStreamTestCase
 
     public function testItShouldUpdateOrganizationDocumentLinkData()
     {
-//        $organizationModel = m::mock('App\Models\Organization\Organization');
         $this->organizationData->shouldReceive('setAttribute')->once()->with('document_link', 'a');
         $this->organizationData->shouldReceive('save')->once()->andReturn(true);
         $this->assertTrue($this->documentLinkRepository->update(['document_link' => 'a'], $this->organizationData));
@@ -43,5 +42,4 @@ class DocumentLinkRepositoryTest extends AidStreamTestCase
         parent::tearDown();
         m::close();
     }
-
 }

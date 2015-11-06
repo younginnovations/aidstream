@@ -50,7 +50,7 @@ class Version
     {
         $this->version = Session::get('version');
         if (!isset($this->version)) {
-            $version = config('app.default_version');
+            $version       = config('app.default_version');
             $this->version = 'V' . str_replace('.', '', $version);
             Session::put('version', $this->version);
         }
@@ -108,5 +108,10 @@ class Version
     public function getSettingsElement()
     {
         return $this->settingsElement;
+    }
+
+    public function getExcel()
+    {
+        return app('excel');
     }
 }

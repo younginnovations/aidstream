@@ -72,8 +72,11 @@ class ActivityController extends Controller
     public function create()
     {
         $this->authorize('add_activity');
-        $form                  = $this->identifierForm->create();
-        $settings              = $this->settingsManager->getSettings($this->organization_id);
+        $form     = $this->identifierForm->create();
+        $settings = $this->settingsManager->getSettings($this->organization_id);
+        if (!isset($settings)) {
+            return redirect('/settings');
+        }
         $defaultFieldValues    = $settings->default_field_values;
         $organization          = $this->organizationManager->getOrganization($this->organization_id);
         $reportingOrganization = $organization->reporting_org;
@@ -81,6 +84,11 @@ class ActivityController extends Controller
         return view('Activity.create', compact('form', 'organization', 'reportingOrganization', 'defaultFieldValues'));
     }
 
+    /**
+     * store the activity identifier
+     * @param IatiIdentifierRequest $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function store(IatiIdentifierRequest $request)
     {
         $input  = $request->all();
@@ -93,7 +101,7 @@ class ActivityController extends Controller
     }
 
     /**
-     * write brief description
+     * show the activity details
      * @param $id
      * @return \Illuminate\View\View
      */
