@@ -1,5 +1,6 @@
 <?php namespace App\Http\Controllers\Complete\Activity;
 
+use App\Core\V201\CsvImportValidator;
 use App\Http\Controllers\Controller;
 use App\Services\Activity\ActivityManager;
 use App\Services\Activity\UploadTransactionManager;
@@ -51,13 +52,21 @@ class TransactionUploadController extends Controller
 
     /**
      * store the uploaded transaction
-     * @param Request $request
-     * @param         $id
+     * @param Request                  $request
+     * @param                          $id
+     * @param UploadTransactionRequest $uploadTransactionRequest
+     * @param CsvImportValidator       $csvImportValidator
+     * @return $this
      */
-    public function store(Request $request, $id, UploadTransactionRequest $uploadTransactionRequest)
+    public function store(Request $request, $id, UploadTransactionRequest $uploadTransactionRequest, CsvImportValidator $csvImportValidator)
     {
-        $activity = $this->activityManager->getActivityData($id);
-        $name     = $request->file('transaction');
+        $this->authorize('add_activity');
+        $activity  = $this->activityManager->getActivityData($id);
+        $name      = $request->file('transaction');
+        $validator = $csvImportValidator->isValidCsv($name);
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator);
+        }
         $this->uploadTransactionManager->save($name, $activity);
 
         return redirect()->to(sprintf('/activity/%s/transaction', $id))->withmessage('Transactions updated!');
