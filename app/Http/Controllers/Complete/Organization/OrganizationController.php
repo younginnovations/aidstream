@@ -55,10 +55,11 @@ class OrganizationController extends Controller
     public function show($id)
     {
         $settings = $this->settingsManager->getSettings($id);
-        if (!isset($settings)) {
+        $organization                  = $this->organizationManager->getOrganization($id);
+
+        if (!isset($organization->reporting_org[0])) {
             return redirect('/settings');
         }
-        $organization                  = $this->organizationManager->getOrganization($id);
         $organizationData              = $this->nameManager->getOrganizationData($id);
         $reporting_org                 = (array) $organization->reporting_org[0];
         $org_name                      = (array) $organizationData->name;

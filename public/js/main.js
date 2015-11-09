@@ -92,15 +92,15 @@ $(document).ready(function () {
         if ($('#popDialog').length === 0) {
             $('body').append('' +
             '<div class="modal" id="popDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="z-index: 9999">' +
-                '<div class="modal-dialog">' +
-                    '<div class="modal-content">' +
-                        '<div class="modal-header">' +
-                            '<h4 class="modal-title" id="myModalLabel"></h4>' +
-                        '</div>' +
-                        '<div class="modal-body"></div>' +
-                        '<div class="modal-footer"></div>' +
-                    '</div>' +
-                '</div>' +
+            '<div class="modal-dialog">' +
+            '<div class="modal-content">' +
+            '<div class="modal-header">' +
+            '<h4 class="modal-title" id="myModalLabel"></h4>' +
+            '</div>' +
+            '<div class="modal-body"></div>' +
+            '<div class="modal-footer"></div>' +
+            '</div>' +
+            '</div>' +
             '</div>');
         }
 
@@ -142,4 +142,8 @@ $(document).ready(function () {
     });
     $('.sector_vocabulary').trigger('change');
 
+    /* generate admin username using organization user identifier while adding new organization by superadmin*/
+    $('#organization_user_identifier').keyup(function () {
+        $('#admin_username').val($(this).val() + '_admin');
+    });
 });
