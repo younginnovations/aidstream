@@ -214,4 +214,14 @@ class IatiActivity extends WizardIatiActivity
     {
         return app('App\Core\V201\Requests\Activity\DefaultTiedStatus');
     }
+
+    public function getCapitalSpend()
+    {
+        return app('App\Core\V201\Element\Activity\CapitalSpend');
+    }
+
+    public function getCapitalSpendRequest()
+    {
+        return app('App\Core\V201\Requests\Activity\CapitalSpend');
+    }
 }

@@ -61,7 +61,7 @@
         <ul class="nav">
             <li><a href="#">Budget</a></li>
             <li><a href="#">Planned Disbursement</a></li>
-            <li><a href="#">Capital Send</a></li>
+            <li><a href="{{ route('activity.capital-spend.index', $id) }}">Capital Spend</a></li>
             <li><a href="#">Transaction</a></li>
         </ul>
     </div>

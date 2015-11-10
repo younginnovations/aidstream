@@ -25,5 +25,6 @@ $router->group(
         $router->resource('activity.default-finance-type', 'DefaultFinanceTypeController');
         $router->resource('activity.default-aid-type', 'DefaultAidTypeController');
         $router->resource('activity.default-tied-status', 'DefaultTiedStatusController');
+        $router->resource('activity.capital-spend', 'CapitalSpendController');
     }
 );
