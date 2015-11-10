@@ -50,7 +50,7 @@
             <li><a href="{{ route('activity.collaboration-type.index', $id) }}">Collaboration Type</a></li>
             <li><a href="{{ route('activity.default-flow-type.index', $id) }}">Default Flow Type</a></li>
             <li><a href="{{ route('activity.default-finance-type.index', $id) }}">Default Finance Type</a></li>
-            <li><a href="#">Default Aid Type</a></li>
+            <li><a href="{{ route('activity.default-aid-type.index', $id) }}">Default Aid Type</a></li>
             <li><a href="#">Default Tied Status</a></li>
         </ul>
     </div>

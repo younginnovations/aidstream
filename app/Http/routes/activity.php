@@ -23,5 +23,6 @@ $router->group(
         $router->resource('activity.collaboration-type', 'CollaborationTypeController');
         $router->resource('activity.default-flow-type', 'DefaultFlowTypeController');
         $router->resource('activity.default-finance-type', 'DefaultFinanceTypeController');
+        $router->resource('activity.default-aid-type', 'DefaultAidTypeController');
     }
 );

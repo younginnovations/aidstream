@@ -23,4 +23,5 @@ return [
     'collaboration_type'                 => 'Activity Collaboration Type ":collaboration_type" updated for ":organization - :organization_id"',
     'default_flow_type'                  => 'Activity Default Flow Type ":default_flow_type" updated for ":organization - :organization_id"',
     'default_finance_type'               => 'Activity Default Finance Type ":default_finance_type" updated for ":organization - :organization_id"',
+    'default_aid_type'                   => 'Activity Default Aid Type ":default_aid_type" updated for ":organization - :organization_id"',
 ];
