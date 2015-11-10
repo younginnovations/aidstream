@@ -48,7 +48,7 @@
             <li><a href="{{ route('activity.country-budget-items.index', $id) }}">Country Budget Item</a></li>
             <li><a href="{{ route('activity.policy-maker.index', $id) }}">Policy Maker</a></li>
             <li><a href="{{ route('activity.collaboration-type.index', $id) }}">Collaboration Type</a></li>
-            <li><a href="#">Default Flow Type</a></li>
+            <li><a href="{{ route('activity.default-flow-type.index', $id) }}">Default Flow Type</a></li>
             <li><a href="#">Default Finance Type</a></li>
             <li><a href="#">Default Aid Type</a></li>
             <li><a href="#">Default Tied Status</a></li>

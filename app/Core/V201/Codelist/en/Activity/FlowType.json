@@ -1,0 +1,44 @@
+{
+  "date-last-modified": "2015-10-16T10:42:20.521073+00:00",
+  "version": "",
+  "name": "FlowType",
+  "xml:lang": "en",
+  "FlowType": [
+    {
+      "code": "10",
+      "name": "ODA",
+      "language": "en",
+      "description": "Official Development Assistance"
+    },
+    {
+      "code": "20",
+      "name": "OOF",
+      "language": "en",
+      "description": "Other Official Flows"
+    },
+    {
+      "code": "30",
+      "name": "Private NGO and other private sources",
+      "language": "en",
+      "description": "Grants made by NGOs and other civil society organisations (e.e. philantropic foundations) based in the reporting DAC country"
+    },
+    {
+      "code": "35",
+      "name": "Private Market",
+      "language": "en",
+      "description": "Private market"
+    },
+    {
+      "code": "40",
+      "name": "Non flow",
+      "language": "en",
+      "description": "e.g. GNI"
+    },
+    {
+      "code": "50",
+      "name": "Other flows",
+      "language": "en",
+      "description": "e.g. non-ODA component of peacebuilding operations"
+    }
+  ]
+}

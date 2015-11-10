@@ -21,5 +21,6 @@ $router->group(
         $router->resource('activity.location', 'LocationController');
         $router->resource('activity.policy-maker', 'PolicyMakerController');
         $router->resource('activity.collaboration-type', 'CollaborationTypeController');
+        $router->resource('activity.default-flow-type', 'DefaultFlowTypeController');
     }
 );
