@@ -164,4 +164,14 @@ class IatiActivity extends WizardIatiActivity
     {
         return app('App\Core\V201\Requests\Activity\PolicyMaker');
     }
+
+    public function getCollaborationType()
+    {
+        return app('App\Core\V201\Element\Activity\CollaborationType');
+    }
+
+    public function getCollaborationTypeRequest()
+    {
+        return app('App\Core\V201\Requests\Activity\CollaborationType');
+    }
 }

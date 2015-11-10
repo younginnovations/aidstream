@@ -20,4 +20,5 @@ return [
     'location_updated'                   => 'Activity Location ":location" updated for ":organization - :organization_id"',
     'organization_added'                 => 'New organization added with organization id ":organization_id" and user id ":user_id"',
     'organization_updated'               => 'Organization updated with organization id ":organization_id" and user id ":user_id"',
+    'collaboration_type'                 => 'Activity Collaboration Type ":collaboration_type" updated for ":organization - :organization_id"',
 ];

@@ -19,7 +19,7 @@ class StepThree extends BaseForm
                 'choice',
                 [
                     'label'          => "What is your activity status currently is :",
-                    'choices'        => $this->addCodeList('ActivityStatus', 'Activity'),
+                    'choices'        => $this->getCodeList('ActivityStatus', 'Activity'),
                     'expanded'       => true,
                     'choice_options' => [
                         'wrapper' => ['class' => 'choice-wrapper']
