@@ -1,0 +1,37 @@
+{
+  "date-last-modified": "2015-10-16T10:42:20.644913+00:00",
+  "version": "",
+  "name": "PolicySignificance",
+  "xml:lang": "en",
+  "PolicySignificance": [
+    {
+      "code": "0",
+      "name": "not targeted",
+      "language": "en",
+      "description": "The score \"not targeted\" means that the activity was examined but found not to target the policy objective."
+    },
+    {
+      "code": "1",
+      "name": "significant objective",
+      "language": "en",
+      "description": "Significant (secondary) policy objectives are those which, although important, were not the prime motivation for undertaking the activity."
+    },
+    {
+      "code": "2",
+      "name": "principal objective",
+      "language": "en",
+      "description": "Principal (primary) policy objectives are those which can be identified as being fundamental in the design and impact of the activity and which are an explicit objective of the activity. They may be selected by answering the question \"Would the activity have been undertaken without this objective?\""
+    },
+    {
+      "code": "3",
+      "name": "principal objective AND in support of an action programme",
+      "language": "en",
+      "description": "For desertification-related aid only"
+    },
+    {
+      "code": "4",
+      "name": "Explicit primary objective",
+      "language": "en"
+    }
+  ]
+}

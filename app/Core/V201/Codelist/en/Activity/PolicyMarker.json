@@ -1,0 +1,53 @@
+{
+  "date-last-modified": "2015-10-16T10:42:19.785804+00:00",
+  "version": "",
+  "name": "PolicyMarker",
+  "xml:lang": "en",
+  "PolicyMarker": [
+    {
+      "code": "1",
+      "name": "Gender Equality",
+      "language": "en"
+    },
+    {
+      "code": "2",
+      "name": "Aid to Environment",
+      "language": "en"
+    },
+    {
+      "code": "3",
+      "name": "Participatory Development/Good Governance",
+      "language": "en"
+    },
+    {
+      "code": "4",
+      "name": "Trade Development",
+      "language": "en"
+    },
+    {
+      "code": "5",
+      "name": "Aid Targeting the Objectives of the Convention on Biological Diversity",
+      "language": "en"
+    },
+    {
+      "code": "6",
+      "name": "Aid Targeting the Objectives of the Framework Convention on Climate Change - Mitigation",
+      "language": "en"
+    },
+    {
+      "code": "7",
+      "name": "Aid Targeting the Objectives of the Framework Convention on Climate Change - Adaptation",
+      "language": "en"
+    },
+    {
+      "code": "8",
+      "name": "Aid Targeting the Objectives of the Convention to Combat Desertification",
+      "language": "en"
+    },
+    {
+      "code": "9",
+      "name": "Reproductive, Maternal, Newborn and Child Health (RMNCH)",
+      "language": "en"
+    }
+  ]
+}

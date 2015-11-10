@@ -154,4 +154,14 @@ class IatiActivity extends WizardIatiActivity
     {
         return app('App\Core\V201\Requests\Activity\CountryBudgetItem');
     }
+
+    public function getPolicyMaker()
+    {
+        return app('App\Core\V201\Element\Activity\PolicyMaker');
+    }
+
+    public function getPolicyMakerRequest()
+    {
+        return app('App\Core\V201\Requests\Activity\PolicyMaker');
+    }
 }
