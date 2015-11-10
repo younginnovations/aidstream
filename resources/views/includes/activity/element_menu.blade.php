@@ -51,7 +51,7 @@
             <li><a href="{{ route('activity.default-flow-type.index', $id) }}">Default Flow Type</a></li>
             <li><a href="{{ route('activity.default-finance-type.index', $id) }}">Default Finance Type</a></li>
             <li><a href="{{ route('activity.default-aid-type.index', $id) }}">Default Aid Type</a></li>
-            <li><a href="#">Default Tied Status</a></li>
+            <li><a href="{{ route('activity.default-tied-status.index', $id) }}">Default Tied Status</a></li>
         </ul>
     </div>
 </div>
