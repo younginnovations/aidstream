@@ -93,7 +93,7 @@ class User extends Model implements AuthorizableContract, AuthenticatableContrac
      */
     public function isSuperAdmin()
     {
-        return  null === $this->role_id;
+        return  3 === $this->role_id;
     }
 
     /**
@@ -113,6 +113,33 @@ class User extends Model implements AuthorizableContract, AuthenticatableContrac
     public function hasPermission($permission)
     {
         return in_array($permission, $this->user_permission);
+    }
+
+    /**
+     * get the user_group associated with user
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function group()
+    {
+        return $this->hasOne('App\Models\SuperAdmin\UserGroup');
+    }
+
+    /**
+     * check if user is groupadmin or not
+     * @return bool
+     */
+    public function isGroupAdmin()
+    {
+        return  4 == $this->role_id;
+    }
+
+    /**
+     * get the role id
+     * @param $role
+     * @return mixed
+     */
+    public function getRoleId($role){
+        return DB::select('select id from role where role = :role', ['role' => $role]);
     }
 }
 

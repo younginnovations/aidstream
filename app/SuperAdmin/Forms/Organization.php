@@ -46,7 +46,7 @@ class Organization extends BaseForm
                 [
                     'type'    => 'form',
                     'options' => [
-                        'class' => 'App\SuperAdmin\Forms\AdminInformation',
+                        'class' => 'App\SuperAdmin\Forms\Admin',
                         'label' => false,
                     ]
                 ]
@@ -75,12 +75,6 @@ class Organization extends BaseForm
                     'label'   => false
                 ]
             )
-            ->add(
-                'Save',
-                'submit',
-                [
-                    'attr' => ['class' => 'btn btn-primary']
-                ]
-            );
+            ->addSaveButton();
     }
 }

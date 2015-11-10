@@ -146,4 +146,9 @@ $(document).ready(function () {
     $('#organization_user_identifier').keyup(function () {
         $('#admin_username').val($(this).val() + '_admin');
     });
+
+    /* generate group admin username using organization identifier while grouping organizations by superadmin*/
+    $('#group_identifier').keyup(function () {
+        $('#group_admin_username').val($(this).val() + '_group');
+    });
 });

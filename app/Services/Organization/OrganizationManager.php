@@ -74,8 +74,8 @@ class OrganizationManager
     }
 
     /**
-     * @param $input
-     * @param $organizationData
+     * @param $organization_id
+     * @return
      */
     public function getStatus($organization_id)
     {

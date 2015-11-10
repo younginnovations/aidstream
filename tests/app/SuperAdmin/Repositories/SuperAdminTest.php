@@ -37,8 +37,8 @@ class SuperAdminTest extends AidStreamTestCase
             $this->settings,
             $this->organization,
             $this->database,
-            $this->logger,
-            $this->loggerInterface
+            $this->loggerInterface,
+            $this->logger
         );
     }
 

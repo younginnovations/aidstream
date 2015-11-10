@@ -139,4 +139,15 @@ class BaseForm extends Form
             'text'
         );
     }
+
+    public function addSaveButton()
+    {
+        return $this->add(
+            'Save',
+            'submit',
+            [
+                'attr' => ['class' => 'btn btn-primary']
+            ]
+        );
+    }
 }

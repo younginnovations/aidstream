@@ -3,6 +3,7 @@
 use App\Http\Controllers\Controller;
 use App\Services\SettingsManager;
 use App\SuperAdmin\Requests\Organization;
+use App\SuperAdmin\Services\OrganizationGroupManager;
 use App\SuperAdmin\Services\SuperAdminManager;
 use Auth;
 use Illuminate\Support\Facades\Session;
@@ -23,15 +24,21 @@ class OrganizationController extends Controller
      * @var SettingsManager
      */
     protected $settingsManager;
+    /**
+     * @var OrganizationGroupManager
+     */
+    protected $groupManager;
 
     /**
-     * @param SuperAdminManager $adminManager
-     * @param SettingsManager   $settingsManager
+     * @param SuperAdminManager        $adminManager
+     * @param SettingsManager          $settingsManager
+     * @param OrganizationGroupManager $groupManager
      */
-    function __construct(SuperAdminManager $adminManager, SettingsManager $settingsManager)
+    function __construct(SuperAdminManager $adminManager, SettingsManager $settingsManager, OrganizationGroupManager $groupManager)
     {
         $this->adminManager    = $adminManager;
         $this->settingsManager = $settingsManager;
+        $this->groupManager    = $groupManager;
     }
 
     /**
@@ -40,7 +47,7 @@ class OrganizationController extends Controller
      */
     public function listOrganizations()
     {
-        $organizations = $this->adminManager->getOrganizations();
+        $organizations = (Auth::user()->role_id == 3) ? $this->adminManager->getOrganizations() : $this->groupManager->getGroupsByUserId(Auth::user()->id);
 
         return view('superAdmin.listOrganization', compact('organizations'));
     }
@@ -56,22 +63,21 @@ class OrganizationController extends Controller
         $data  = '{"default_field_groups":[{"title":"Title","description":"Description","activity_status":"Activity Status","activity_date":"Activity Date","participating_org":"Participating Org","recipient_county":"Recipient Country","location":"Location","sector":"Sector","budget":"Budget","transaction":"Transaction","document_ink":"Document Link"}]}';
         $model = json_decode($data, true);
         if ($orgId) {
-            $organizationInfo                     = $this->adminManager->getOrganizationUserBYId($orgId);
-            $settings                             = $this->settingsManager->getSettings($orgId);
-            if($settings) {
+            $organizationInfo = $this->adminManager->getOrganizationUserBYId($orgId);
+            $settings         = $this->settingsManager->getSettings($orgId);
+            if ($settings) {
                 $model['default_field_groups'] = $settings->default_field_groups;
                 $model['default_field_values'] = $settings->default_field_values;
             }
             $model['organization_information'][0] = $organizationInfo;
             $model['admin_information'][0]        = $organizationInfo['users'][0];
         }
-        $url    = isset($organizationInfo) ? route('admin.edit-organization', [$orgId]) : route('admin.add-organization');
-        $method = isset($organizationInfo) ? 'PUT' : 'POST';
-        $form   = $formBuilder->create(
+
+        $form = $formBuilder->create(
             'App\SuperAdmin\Forms\Organization',
             [
-                'method' => $method,
-                'url'    => $url,
+                'method' => isset($organizationInfo) ? 'PUT' : 'POST',
+                'url'    => isset($organizationInfo) ? route('admin.edit-organization', [$orgId]) : route('admin.add-organization'),
                 'model'  => $model
             ]
         );
@@ -118,7 +124,7 @@ class OrganizationController extends Controller
         $organization = $this->adminManager->getOrganizationById($id);
         $organization->delete($organization);
 
-        return redirect()->back();
+        return redirect()->back()->withMessage('organization is deleted');
     }
 
     /**
