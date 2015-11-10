@@ -22,4 +22,5 @@ return [
     'organization_updated'               => 'Organization updated with organization id ":organization_id" and user id ":user_id"',
     'collaboration_type'                 => 'Activity Collaboration Type ":collaboration_type" updated for ":organization - :organization_id"',
     'default_flow_type'                  => 'Activity Default Flow Type ":default_flow_type" updated for ":organization - :organization_id"',
+    'default_finance_type'               => 'Activity Default Finance Type ":default_finance_type" updated for ":organization - :organization_id"',
 ];

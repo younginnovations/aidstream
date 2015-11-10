@@ -22,5 +22,6 @@ $router->group(
         $router->resource('activity.policy-maker', 'PolicyMakerController');
         $router->resource('activity.collaboration-type', 'CollaborationTypeController');
         $router->resource('activity.default-flow-type', 'DefaultFlowTypeController');
+        $router->resource('activity.default-finance-type', 'DefaultFinanceTypeController');
     }
 );
