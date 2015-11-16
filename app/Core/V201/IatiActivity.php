@@ -264,4 +264,14 @@ class IatiActivity extends WizardIatiActivity
     {
         return app('App\Core\V201\Requests\Activity\RelatedActivity');
     }
+
+    public function getLegacyData()
+    {
+        return app('App\Core\V201\Element\Activity\LegacyData');
+    }
+
+    public function getLegacyDataRequest()
+    {
+        return app('App\Core\V201\Requests\Activity\LegacyData');
+    }
 }

@@ -86,7 +86,7 @@
     <div class="panel-heading">Performance</div>
     <div class="panel-body">
         <ul class="nav">
-            <li><a href="#">Legacy Data</a></li>
+            <li><a href="{{ route('activity.legacy-data.index', $id) }}">Legacy Data</a></li>
             <li><a href="#">Conditions</a></li>
             <li><a href="#">Result</a></li>
         </ul>
