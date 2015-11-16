@@ -87,7 +87,7 @@
     <div class="panel-body">
         <ul class="nav">
             <li><a href="{{ route('activity.legacy-data.index', $id) }}">Legacy Data</a></li>
-            <li><a href="#">Conditions</a></li>
+            <li><a href="{{ route('activity.condition.index', $id) }}">Conditions</a></li>
             <li><a href="#">Result</a></li>
         </ul>
     </div>

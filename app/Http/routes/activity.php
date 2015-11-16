@@ -27,6 +27,7 @@ $router->group(
         $router->resource('activity.default-aid-type', 'DefaultAidTypeController');
         $router->resource('activity.default-tied-status', 'DefaultTiedStatusController');
         $router->resource('activity.capital-spend', 'CapitalSpendController');
+        $router->resource('activity.condition', 'ConditionController');
         $router->resource('activity.planned-disbursement', 'PlannedDisbursementController');
         $router->resource('activity.document-link', 'DocumentLinkController');
         $router->resource('activity.related-activity', 'RelatedActivityController');

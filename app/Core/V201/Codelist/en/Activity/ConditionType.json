@@ -1,0 +1,26 @@
+{
+  "date-last-modified": "2015-10-16T10:42:20.874896+00:00",
+  "version": "",
+  "name": "ConditionType",
+  "xml:lang": "en",
+  "ConditionType": [
+    {
+      "code": "1",
+      "name": "Policy",
+      "language": "en",
+      "description": "The condition attached requires a particular policy to be implemented by the recipient"
+    },
+    {
+      "code": "2",
+      "name": "Performance",
+      "language": "en",
+      "description": "The condition attached requires certain outputs or outcomes to be achieved by the recipient"
+    },
+    {
+      "code": "3",
+      "name": "Fiduciary",
+      "language": "en",
+      "description": "The condition attached requires use of certain public financial management or public accountability measures by the recipient"
+    }
+  ]
+}

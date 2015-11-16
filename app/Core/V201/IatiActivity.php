@@ -274,4 +274,14 @@ class IatiActivity extends WizardIatiActivity
     {
         return app('App\Core\V201\Requests\Activity\LegacyData');
     }
+
+    public function getCondition()
+    {
+        return app('App\Core\V201\Element\Activity\Condition');
+    }
+
+    public function getConditionRequest()
+    {
+        return app('App\Core\V201\Requests\Activity\Condition');
+    }
 }
