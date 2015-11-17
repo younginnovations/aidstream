@@ -1,0 +1,32 @@
+{
+  "date-last-modified": "2015-10-16T10:42:20.384471+00:00",
+  "version": "",
+  "name": "ResultType",
+  "xml:lang": "en",
+  "ResultType": [
+    {
+      "code": "1",
+      "name": "Output",
+      "language": "en",
+      "description": "Results of the activity that came about as a direct effect of your work and specific, what is done, and what communities are reached. For example, X number of individuals "
+    },
+    {
+      "code": "2",
+      "name": "Outcome",
+      "language": "en",
+      "description": "Results of the activity that produce an effect on the overall communities or issues you serve. For example lower rate of infection after a vaccination procgramme"
+    },
+    {
+      "code": "3",
+      "name": "Impact",
+      "language": "en",
+      "description": "The long term effects of the outcomes, that lead to larger, over arching results, such as improved life-expectancy."
+    },
+    {
+      "code": "9",
+      "name": "Other",
+      "language": "en",
+      "description": "Another type of result, not specified above."
+    }
+  ]
+}

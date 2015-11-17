@@ -1,0 +1,20 @@
+{
+  "date-last-modified": "2015-10-16T10:42:19.797745+00:00",
+  "version": "",
+  "name": "IndicatorMeasure",
+  "xml:lang": "en",
+  "IndicatorMeasure": [
+    {
+      "code": "1",
+      "name": "Unit",
+      "language": "en",
+      "description": "The indicator is measured in units."
+    },
+    {
+      "code": "2",
+      "name": "Percentage",
+      "language": "en",
+      "description": "The indicator is measured in percentages"
+    }
+  ]
+}

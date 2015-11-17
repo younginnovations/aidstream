@@ -214,4 +214,7 @@ picture {
 body {
   font: 14px Open-Sans-Regular;
   color: #484848; }
+.modal-dialog {
+  z-index: 9999;
+}
 /*# sourceMappingURL=maps/app.css.map */

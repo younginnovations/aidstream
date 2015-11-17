@@ -36,6 +36,7 @@ class OrganizationController extends Controller
      */
     function __construct(SuperAdminManager $adminManager, SettingsManager $settingsManager, OrganizationGroupManager $groupManager)
     {
+        $this->middleware('auth');
         $this->adminManager    = $adminManager;
         $this->settingsManager = $settingsManager;
         $this->groupManager    = $groupManager;

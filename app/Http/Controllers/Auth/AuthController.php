@@ -110,7 +110,7 @@ class AuthController extends Controller
         $login = $request->input('login');
         $field = filter_var($login, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
 
-        $request->merge(array($field => $login));
+        $request->merge([$field => $login]);
 
         $credentials = $request->only($field, 'password');
 
@@ -123,8 +123,10 @@ class AuthController extends Controller
             $version        = ($settings_check) ? $settings->version : config('app.default_version');
             $version        = 'V' . str_replace('.', '', $version);
             Session::put('version', $version);
+            !(Session::get('url.intended') == url()) ?: Session::forget('url');
+            $redirectPath = ($user->role_id == 1 || $user->role_id == 2) ? '/activity' : '/admin/dashboard';
 
-            return Session::get('role_id') == 1 ? redirect()->intended($this->redirectPath()) : redirect('admin/dashboard');
+            return redirect()->intended($redirectPath);
         }
 
         return redirect($this->loginPath())
@@ -134,6 +136,28 @@ class AuthController extends Controller
                     $field => $this->getFailedLoginMessage(),
                 ]
             );
+    }
+
+    /**
+     * Handle a registration request for the application.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function postRegister(Request $request)
+    {
+        $validator = $this->validator($request->all());
+
+        if ($validator->fails()) {
+            $this->throwValidationException(
+                $request,
+                $validator
+            );
+        }
+
+        $this->create($request->all());
+
+        return redirect($this->redirectPath());
     }
 
     /**
