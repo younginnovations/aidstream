@@ -1,10 +1,13 @@
 <?php namespace App\Core\V201\Element\Activity;
 
+use App\Core\Elements\BaseElement;
+use App\Models\Activity\Activity;
+
 /**
  * Class PolicyMaker
  * @package App\Core\V201\Element\Activity
  */
-class PolicyMaker
+class PolicyMaker extends BaseElement
 {
 
     /**
@@ -21,5 +24,26 @@ class PolicyMaker
     public function getRepository()
     {
         return App('App\Core\V201\Repositories\Activity\PolicyMaker');
+    }
+
+    /**
+     * @param $activity
+     * @return array
+     */
+    public function getXmlData(Activity $activity)
+    {
+        $activityData = [];
+        $policyMakers = (array) $activity->policy_maker;
+        foreach ($policyMakers as $policyMaker) {
+            $activityData[] = [
+                '@attributes' => [
+                    'code'         => $policyMaker['policy_marker'],
+                    'significance' => $policyMaker['significance']
+                ],
+                'narrative'   => $this->buildNarrative($policyMaker['narrative'])
+            ];
+        }
+
+        return $activityData;
     }
 }

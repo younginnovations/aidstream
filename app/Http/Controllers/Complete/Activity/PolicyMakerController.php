@@ -48,9 +48,12 @@ class PolicyMakerController extends Controller
      */
     public function update($id, Request $request, PolicyMakerRequestManager $policyMakerRequestManager)
     {
+        $this->authorize(['edit_activity', 'add_activity']);
         $policyMaker  = $request->all();
         $activityData = $this->activityManager->getActivityData($id);
         if ($this->policyMakerManager->update($policyMaker, $activityData)) {
+            $this->activityManager->resetActivityWorkflow($id);
+
             return redirect()->to(sprintf('/activity/%s', $id))->withMessage('Policy Maker Updated !');
         }
 

@@ -40,7 +40,7 @@ class PlannedDisbursementManager
         $this->auth                 = $auth;
         $this->dbLogger             = $dbLogger;
         $this->logger               = $logger;
-        $this->iatiActivityDateRepo = $version->getActivityElement()->getPlannedDisbursement()->getRepository();
+        $this->iatiPlannedDisbursementRepo = $version->getActivityElement()->getPlannedDisbursement()->getRepository();
     }
 
     /**
@@ -52,7 +52,7 @@ class PlannedDisbursementManager
     public function update(array $activityDetails, Activity $activity)
     {
         try {
-            $this->iatiActivityDateRepo->update($activityDetails, $activity);
+            $this->iatiPlannedDisbursementRepo->update($activityDetails, $activity);
             $this->logger->info(
                 'Planned Disbursement Updated!',
                 ['for' => $activity->planned_disbursement]
@@ -86,6 +86,6 @@ class PlannedDisbursementManager
      */
     public function getPlannedDisbursementData($id)
     {
-        return $this->iatiActivityDateRepo->getPlannedDisbursementData($id);
+        return $this->iatiPlannedDisbursementRepo->getPlannedDisbursementData($id);
     }
 }

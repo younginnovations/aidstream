@@ -1,6 +1,7 @@
 <?php namespace App\Services\Activity;
 
 use App\Core\Version;
+use App\Models\Activity\Activity;
 use Illuminate\Auth\Guard;
 use Illuminate\Contracts\Logging\Log as Logger;
 
@@ -31,10 +32,13 @@ class ActivityManager
      */
     public function __construct(Version $version, Guard $auth, Logger $logger)
     {
-        $this->activityRepo = $version->getActivityElement()->getRepository();
-        $this->auth         = $auth;
-        $this->logger       = $logger;
-        $this->version      = $version;
+        $this->auth            = $auth;
+        $this->logger          = $logger;
+        $this->version         = $version;
+        $this->activityElement = $version->getActivityElement();
+        $this->activityRepo    = $this->activityElement->getRepository();
+        $this->transactionRepo = $this->activityElement->getTransactionRepository();
+        $this->resultRepo      = $this->activityElement->getResultRepository();
     }
 
     /**
@@ -90,5 +94,49 @@ class ActivityManager
     public function getActivityData($activityId)
     {
         return $this->activityRepo->getActivityData($activityId);
+    }
+
+    /**
+     * @param array    $input
+     * @param Activity $activityData
+     */
+    public function updateStatus(array $input, Activity $activityData)
+    {
+        return $this->activityRepo->updateStatus($input, $activityData);
+    }
+
+    /**
+     * @param $activity_id
+     * @return mixed
+     */
+    public function resetActivityWorkflow($activity_id)
+    {
+        return $this->activityRepo->resetActivityWorkflow($activity_id);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getActivityElement()
+    {
+        return $this->activityElement;
+    }
+
+    /**
+     * @param $activityId
+     * @return mixed
+     */
+    public function getTransactionData($activityId)
+    {
+        return $this->transactionRepo->getTransactionData($activityId);
+    }
+
+    /**
+     * @param $activityId
+     * @return mixed
+     */
+    public function getResultData($activityId)
+    {
+        return $this->resultRepo->getResults($activityId);
     }
 }

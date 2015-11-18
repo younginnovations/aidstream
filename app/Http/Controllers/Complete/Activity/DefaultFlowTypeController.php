@@ -62,9 +62,12 @@ class DefaultFlowTypeController extends Controller
      */
     public function update($id, Request $request, DefaultFlowTypeRequestManager $defaultFlowTypeRequestManager)
     {
+        $this->authorize(['edit_activity', 'add_activity']);
         $defaultFlowType = $request->all();
         $activityData    = $this->activityManager->getActivityData($id);
         if ($this->defaultFlowTypeManager->update($defaultFlowType, $activityData)) {
+            $this->activityManager->resetActivityWorkflow($id);
+
             return redirect()->to(sprintf('/activity/%s', $id))->withMessage('Activity Default Flow Type updated!');
         }
 

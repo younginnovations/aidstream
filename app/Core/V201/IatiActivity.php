@@ -305,6 +305,21 @@ class IatiActivity extends WizardIatiActivity
         return app('App\Core\V201\Requests\Activity\Condition');
     }
 
+    public function getActivityXmlService()
+    {
+        return app('App\Core\V201\Element\Activity\XmlService');
+    }
+
+    public function getTransactionRepository()
+    {
+        return app('App\Core\V201\Repositories\Activity\Transaction');
+    }
+
+    public function getResultRepository()
+    {
+        return app('App\Core\V201\Repositories\Activity\Result');
+    }
+
     public function getResult()
     {
         return app('App\Core\V201\Element\Activity\Result');

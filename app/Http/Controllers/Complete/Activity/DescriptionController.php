@@ -69,12 +69,13 @@ class DescriptionController extends Controller
      */
     public function update($id, Request $request, DescriptionRequestManager $descriptionRequestManager)
     {
+        $this->authorize(['edit_activity', 'add_activity']);
         $activityDescription = $request->all();
         $activityData        = $this->activityManager->getActivityData($id);
         if ($this->descriptionManager->update($activityDescription, $activityData)) {
-            return redirect()->to(sprintf('/activity/%s', $id))->withMessage(
-                'Activity Description Updated !'
-            );
+            $this->activityManager->resetActivityWorkflow($id);
+
+            return redirect()->to(sprintf('/activity/%s', $id))->withMessage('Activity Description Updated !');
         }
 
         return redirect()->back();

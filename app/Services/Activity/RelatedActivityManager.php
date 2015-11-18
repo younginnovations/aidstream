@@ -41,7 +41,7 @@ class RelatedActivityManager
         $this->auth                 = $auth;
         $this->dbLogger             = $dbLogger;
         $this->logger               = $logger;
-        $this->iatiActivityDateRepo = $version->getActivityElement()->getRelatedActivity()->getRepository();
+        $this->iatiRelatedActivityRepo = $version->getActivityElement()->getRelatedActivity()->getRepository();
     }
 
     /**
@@ -53,7 +53,7 @@ class RelatedActivityManager
     public function update(array $activityDetails, Activity $activity)
     {
         try {
-            $this->iatiActivityDateRepo->update($activityDetails, $activity);
+            $this->iatiRelatedActivityRepo->update($activityDetails, $activity);
             $this->logger->info(
                 'Related Activity Updated!',
                 ['for' => $activity->related_activity]
@@ -87,6 +87,6 @@ class RelatedActivityManager
      */
     public function getRelatedActivityData($id)
     {
-        return $this->iatiActivityDateRepo->getRelatedActivityData($id);
+        return $this->iatiRelatedActivityRepo->getRelatedActivityData($id);
     }
 }

@@ -65,12 +65,13 @@ class SectorController extends Controller
      */
     public function update($id, Request $request, SectorRequestManager $sectorRequestManager)
     {
+        $this->authorize(['edit_activity', 'add_activity']);
         $sector       = $request->all();
         $activityData = $this->activityManager->getActivityData($id);
         if ($this->sectorManager->update($sector, $activityData)) {
-            return redirect()->to(sprintf('/activity/%s', $id))->withMessage(
-                'Activity Sector Updated !'
-            );
+            $this->activityManager->resetActivityWorkflow($id);
+
+            return redirect()->to(sprintf('/activity/%s', $id))->withMessage('Activity Sector Updated !');
         }
 
         return redirect()->back();

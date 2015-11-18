@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Controller;
 use App\Models\Activity\Activity;
+use App\Services\Activity\ActivityManager;
 use App\Services\Activity\IatiIdentifierManager;
 use App\Services\FormCreator\Activity\Identifier;
 use App\Services\Organization\OrganizationManager;
@@ -33,18 +34,25 @@ class IatiIdentifierController extends Controller
     protected $sessionManager;
 
     /**
+     * @var ActivityManager
+     */
+    protected $activityManager;
+
+    /**
      * @param Activity              $activity
      * @param IatiIdentifierManager $iatiIdentifierManager
      * @param Identifier            $identifier
      * @param OrganizationManager   $organizationManager
      * @param SessionManager        $sessionManager
+     * @param ActivityManager       $activityManager
      */
     function __construct(
         Activity $activity,
         IatiIdentifierManager $iatiIdentifierManager,
         Identifier $identifier,
         OrganizationManager $organizationManager,
-        SessionManager $sessionManager
+        SessionManager $sessionManager,
+        ActivityManager $activityManager
     ) {
         $this->middleware('auth');
 
@@ -54,6 +62,7 @@ class IatiIdentifierController extends Controller
         $this->organizationManager   = $organizationManager;
         $this->sessionManager        = $sessionManager;
         $this->organization_id       = $this->sessionManager->get('org_id');
+        $this->activityManager       = $activityManager;
     }
 
     /**
@@ -78,15 +87,14 @@ class IatiIdentifierController extends Controller
      */
     public function update($activityId, IatiIdentifierRequestManager $iatiIdentifierRequestManager, Request $request)
     {
-        $this->authorize('edit_activity');
+        $this->authorize(['edit_activity', 'add_activity']);
         $input              = $request->all();
         $iatiIdentifierData = $this->iatiIdentifierManager->getActivityData($activityId);
 
         if ($this->iatiIdentifierManager->update($input, $iatiIdentifierData)) {
+            $this->activityManager->resetActivityWorkflow($activityId);
 
-            return redirect()->to(sprintf('/activity/%s', $activityId))->withMessage(
-                'Activity Iati Identifier Updated !'
-            );
+            return redirect()->to(sprintf('/activity/%s', $activityId))->withMessage('Activity Iati Identifier Updated !');
         }
 
         return redirect()->route('activity.iati-identifier.index', $activityId);

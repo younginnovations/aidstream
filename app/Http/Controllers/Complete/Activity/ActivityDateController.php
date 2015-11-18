@@ -65,12 +65,13 @@ class ActivityDateController extends Controller
      */
     public function update($id, Request $request, ActivityDateRequestManager $activityDateRequestManager)
     {
+        $this->authorize(['edit_activity', 'add_activity']);
         $activityDate = $request->all();
         $activityData = $this->activityManager->getActivityData($id);
         if ($this->activityDateManager->update($activityDate, $activityData)) {
-            return redirect()->to(sprintf('/activity/%s', $id))->withMessage(
-                'Activity Date Updated !'
-            );
+            $this->activityManager->resetActivityWorkflow($id);
+
+            return redirect()->to(sprintf('/activity/%s', $id))->withMessage('Activity Date Updated !');
         }
 
         return redirect()->back();

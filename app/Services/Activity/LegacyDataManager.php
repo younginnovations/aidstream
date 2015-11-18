@@ -41,7 +41,7 @@ class LegacyDataManager
         $this->auth                 = $auth;
         $this->dbLogger             = $dbLogger;
         $this->logger               = $logger;
-        $this->iatiActivityDateRepo = $version->getActivityElement()->getLegacyData()->getRepository();
+        $this->iatiLegacyRepo = $version->getActivityElement()->getLegacyData()->getRepository();
     }
 
     /**
@@ -53,7 +53,7 @@ class LegacyDataManager
     public function update(array $activityDetails, Activity $activity)
     {
         try {
-            $this->iatiActivityDateRepo->update($activityDetails, $activity);
+            $this->iatiLegacyRepo->update($activityDetails, $activity);
             $this->logger->info(
                 'Legacy Data Updated!',
                 ['for' => $activity->legacy_data]
@@ -87,6 +87,6 @@ class LegacyDataManager
      */
     public function getLegacyData($id)
     {
-        return $this->iatiActivityDateRepo->getLegacyData($id);
+        return $this->iatiLegacyRepo->getLegacyData($id);
     }
 }

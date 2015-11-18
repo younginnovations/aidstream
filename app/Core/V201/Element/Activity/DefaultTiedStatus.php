@@ -1,5 +1,7 @@
 <?php namespace App\Core\V201\Element\Activity;
 
+use App\Models\Activity\Activity;
+
 /**
  * Class DefaultTiedStatus
  * @package app\Core\V201\Element\Activity
@@ -20,5 +22,20 @@ class DefaultTiedStatus
     public function getRepository()
     {
         return App('App\Core\V201\Repositories\Activity\DefaultTiedStatus');
+    }
+
+    /**
+     * @param $activity
+     * @return array
+     */
+    public function getXmlData(Activity $activity)
+    {
+        $activityData = [
+            '@attributes' => [
+                'code' => $activity['default_tied_status']
+            ]
+        ];
+
+        return $activityData;
     }
 }

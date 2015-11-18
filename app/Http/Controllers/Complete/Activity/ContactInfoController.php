@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\Controller;
 use App\Services\Activity\ContactInfoManager;
-use App\Services\ActivityLog\ActivityManager;
+use App\Services\Activity\ActivityManager;
 use App\Services\FormCreator\Activity\ContactInfo as ContactInfoForm;
 use App\Services\RequestManager\Activity\ContactInfo as ContactInfoRequestManager;
 use Illuminate\Http\Request;
@@ -67,12 +67,13 @@ class ContactInfoController extends Controller
      */
     public function update($id, Request $request, ContactInfoRequestManager $contactInfoRequestManager)
     {
+        $this->authorize(['edit_activity', 'add_activity']);
         $contactInfo  = $request->all();
         $activityData = $this->activityManager->getActivityData($id);
         if ($this->contactInfoManager->update($contactInfo, $activityData)) {
-            return redirect()->to(sprintf('/activity/%s', $id))->withMessage(
-                'Activity Contact Info Updated !'
-            );
+            $this->activityManager->resetActivityWorkflow($id);
+
+            return redirect()->to(sprintf('/activity/%s', $id))->withMessage('Activity Contact Info Updated !');
         }
 
         return redirect()->back();

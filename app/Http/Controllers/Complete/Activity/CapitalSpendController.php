@@ -62,9 +62,12 @@ class CapitalSpendController extends Controller
      */
     public function update($id, Request $request, CapitalSpendRequestManager $capitalSpendRequestManager)
     {
+        $this->authorize(['edit_activity', 'add_activity']);
         $capitalSpend = $request->all();
         $activityData = $this->activityManager->getActivityData($id);
         if ($this->capitalSpendManager->update($capitalSpend, $activityData)) {
+            $this->activityManager->resetActivityWorkflow($id);
+
             return redirect()->to(sprintf('/activity/%s', $id))->withMessage('Activity Capital Spend updated!');
         }
 

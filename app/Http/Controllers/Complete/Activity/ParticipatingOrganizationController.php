@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\Controller;
 use App\Services\Activity\ParticipatingOrganizationManager;
-use App\Services\ActivityLog\ActivityManager;
+use App\Services\Activity\ActivityManager;
 use App\Services\FormCreator\Activity\ParticipatingOrganization as ParticipatingOrganizationForm;
 use App\Services\RequestManager\Activity\ParticipatingOrganization as ParticipatingOrganizationRequestManager;
 use Illuminate\Http\Request;
@@ -66,17 +66,15 @@ class ParticipatingOrganizationController extends Controller
      * @param ParticipatingOrganizationRequestManager $participatingOrganizationRequestManager
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(
-        $id,
-        Request $request,
-        ParticipatingOrganizationRequestManager $participatingOrganizationRequestManager
-    ) {
+    public function update($id, Request $request, ParticipatingOrganizationRequestManager $participatingOrganizationRequestManager)
+    {
+        $this->authorize(['edit_activity', 'add_activity']);
         $participatingOrganization = $request->all();
         $activityData              = $this->activityManager->getActivityData($id);
         if ($this->participatingOrganizationManager->update($participatingOrganization, $activityData)) {
-            return redirect()->to(sprintf('/activity/%s', $id))->withMessage(
-                'Activity Participating Organization Updated !'
-            );
+            $this->activityManager->resetActivityWorkflow($id);
+
+            return redirect()->to(sprintf('/activity/%s', $id))->withMessage('Activity Participating Organization Updated !');
         }
 
         return redirect()->back();
