@@ -15,15 +15,6 @@ class Title extends BaseForm
     public function buildForm()
     {
         $this
-            ->add(
-                'title',
-                'static',
-                [
-                    'default_value' => 'Title',
-                    'label'         => false,
-                    'wrapper'       => false
-                ]
-            )
             ->addNarrative('title')
             ->addAddMoreButton('add_title', 'title');
     }
