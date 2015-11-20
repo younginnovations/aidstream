@@ -49,21 +49,12 @@ set :current_time, DateTime.now
 namespace :environment do
 
     desc "Set environment variables"
-    task :create_variables do
+    task :set_variables do
         on roles(:app) do
-              puts ("--> Create enviroment configuration file")
-              execute "cat /dev/null > #{shared_path}/.env"
-              execute "echo APP_ENV=#{fetch(:app_env)} >> #{shared_path}/.env"
-              execute "echo APP_DEBUG=false >> #{shared_path}/.env"
-              execute "echo APP_KEY=#{fetch(:app_key)} >> #{shared_path}/.env"
-              execute "echo DB_HOST=%db_host% >> #{shared_path}/.env"
-              execute "echo DB_DATABASE=%db_name% >> #{shared_path}/.env"
-              execute "echo DB_USERNAME=%db_username% >> #{shared_path}/.env"
-              execute "echo DB_PASSWORD=%db_password% >> #{shared_path}/.env"
-              execute "echo LOGENTRIES_TOKEN=%logentries_token% >> #{shared_path}/.env"
-              execute "echo CACHE_DRIVER=#{fetch(:cache_driver)} >> #{shared_path}/.env"
-              execute "echo SESSION_DRIVER=#{fetch(:session_driver)} >> #{shared_path}/.env"
-              execute "sed --in-place -f #{fetch(:overlay_path)}/parameters.sed #{shared_path}/.env"
+              puts ("--> Copying environment configuration file")
+              execute "cp #{release_path}/.env.server #{release_path}/.env"
+              puts ("--> Setting environment variables")
+              execute "sed --in-place -f #{fetch(:overlay_path)}/parameters.sed #{release_path}/.env"
         end
     end
 end
@@ -147,14 +138,16 @@ namespace :aidstream do
         end
     end
 
+    desc 'Create ver.txt'
     task :create_ver_txt do
         on roles(:all) do
-            puts ("--> Creating ver.txt at base URL")
-            execute "echo Date: #{fetch(:current_time)} >> #{release_path}/public/ver.txt"
-            execute "echo Branch: #{fetch(:branch)} >> #{release_path}/public/ver.txt"
-            execute "echo Revision: #{fetch(:current_revision)} >> #{release_path}/public/ver.txt"
-            execute "echo Deployed by: #{fetch(:user)} >> #{release_path}/public/ver.txt"
-            execute "find #{release_path} -type f -name 'ver.txt' -exec chmod 664 {} \\;"
+            puts ("--> Copying ver.txt file")
+            execute "cp #{release_path}/config/deploy/ver.txt.example #{release_path}/public/ver.txt"
+            execute "sed --in-place 's/%date%/#{fetch(:current_time)}/g
+                        s/%branch%/#{fetch(:branch)}/g
+                        s/%revision%/#{fetch(:current_revision)}/g
+                        s/%deployed_by%/#{fetch(:user)}/g' #{release_path}/public/ver.txt"
+            execute "find #{release_path}/public -type f -name 'ver.txt' -exec chmod 664 {} \\;"
         end
     end
 
@@ -164,6 +157,16 @@ namespace :aidstream do
             invoke "aidstream:create_storage_folder"
             invoke "aidstream:create_uploads_folder"
             invoke "environment:create_variables"
+        end
+    end
+end
+
+namespace :vendor do
+    desc 'Copy vendor directory from last release'
+    task :copy do
+        on roles(:web) do
+            puts ("--> Copy vendor folder from previous release")
+            execute "vendorDir=#{current_path}/vendor; if [ -d $vendorDir ] || [ -h $vendorDir ]; then cp -a $vendorDir #{release_path}/vendor; fi;"
         end
     end
 end
@@ -207,8 +210,9 @@ end
 
 namespace :deploy do
     after :starting, "hipchat:start"
+    after :updated, "vendor:copy"
     after :updated, "composer:install"
-    after :updated, "environment:create_variables"
+    after :updated, "environment:set_variables"
     after :published, "aidstream:create_symlink"
     after :finished, "hipchat:deployed"
     after :finished, "aidstream:create_ver_txt"
