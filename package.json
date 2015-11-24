@@ -1,7 +1,26 @@
 {
-  "private": true,
-  "devDependencies": {
-    "gulp": "^3.8.8",
-    "laravel-elixir": "*"
-  }
+  "name": "aidstream",
+  "version": "0.0.0",
+  "description": "## Install",
+  "main": "gulpfile.js",
+  "directories": {
+    "test": "tests"
+  },
+  "dependencies": {
+    "autoprefixer": "~6.0.3",
+    "gulp": "~3.9.0",
+    "gulp-concat": "~2.6.0",
+    "gulp-postcss": "~6.0.1",
+    "gulp-sass": "~2.0.4",
+    "gulp-sourcemaps": "~1.6.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@gitlab.yipl.com.np:web-apps/aidstream-new.git"
+  },
+  "author": "",
+  "license": "BSD-2-Clause"
 }
