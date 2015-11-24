@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Aidstream</title>
 
+    <link href="{{ asset('/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('/css/app.css') }}" rel="stylesheet">
 
     <!-- Fonts -->
