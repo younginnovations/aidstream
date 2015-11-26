@@ -30,5 +30,6 @@ $router->group(
         $router->resource('activity.planned-disbursement', 'PlannedDisbursementController');
         $router->resource('activity.document-link', 'DocumentLinkController');
         $router->resource('activity.related-activity', 'RelatedActivityController');
+        $router->resource('activity.legacy-data', 'LegacyDataController');
     }
 );
