@@ -62,7 +62,7 @@
             <li><a href="{{ route('activity.budget.index', $id) }}">Budget</a></li>
             <li><a href="{{ route('activity.planned-disbursement.index', $id) }}">Planned Disbursement</a></li>
             <li><a href="{{ route('activity.capital-spend.index', $id) }}">Capital Spend</a></li>
-            <li><a href="#">Transaction</a></li>
+            <li><a href="{{ route('activity.transaction.index', $id) }}">Transaction</a></li>
         </ul>
     </div>
 </div>

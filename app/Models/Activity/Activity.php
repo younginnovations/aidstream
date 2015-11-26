@@ -92,4 +92,28 @@ class Activity extends Model
         return $this->belongsTo('App\Models\Organization\Organization', 'organization_id');
     }
 
+
+    /**
+     * Activity has many transaction
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function transactions()
+    {
+        return $this->hasMany('App\Models\Activity\Transaction', 'activity_id');
+    }
+
+    /**
+     * get the transactions related to activity
+     * @return array
+     */
+    public function getTransactions()
+    {
+        $transactions = [];
+        foreach ($this->transactions as $transactionIndex => $transaction) {
+            $transactions[$transactionIndex]       = $transaction->transaction;
+            $transactions[$transactionIndex]['id'] = $transaction->id;
+        }
+
+        return $transactions;
+    }
 }

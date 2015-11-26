@@ -1,0 +1,143 @@
+<?php namespace App\Http\Controllers\Complete\Activity;
+
+use App\Http\Controllers\Controller;
+use App\Services\Activity\ActivityManager;
+use App\Services\Activity\TransactionManager;
+use App\Services\FormCreator\Activity\Transaction;
+use App\Services\RequestManager\Activity\Transaction as TransactionRequest;
+use Illuminate\Http\Request;
+
+/**
+ * Class TransactionController
+ * @package App\Http\Controllers\Complete\Activity
+ */
+class TransactionController extends Controller
+{
+    /**
+     * @var ActivityManager
+     */
+    protected $activityManager;
+    /**
+     * @var Transaction
+     */
+    protected $transactionForm;
+    /**
+     * @var TransactionManager
+     */
+    protected $transactionManager;
+
+    /**
+     * @param ActivityManager    $activityManager
+     * @param Transaction        $transactionForm
+     * @param TransactionManager $transactionManager
+     */
+    function __construct(ActivityManager $activityManager, Transaction $transactionForm, TransactionManager $transactionManager)
+    {
+        $this->middleware('auth');
+        $this->activityManager    = $activityManager;
+        $this->transactionForm    = $transactionForm;
+        $this->transactionManager = $transactionManager;
+    }
+
+    /**
+     * show transaction list
+     * @param $id
+     * @return \Illuminate\View\View
+     */
+    public function index($id)
+    {
+        $activity = $this->activityManager->getActivityData($id);
+
+        return view('Activity.transaction.list', compact('activity', 'id'));
+    }
+
+    /**
+     * creates transaction form to insert new transaction
+     * @param $id
+     * @return \Illuminate\View\View
+     */
+    public function create($id)
+    {
+        $activity = $this->activityManager->getActivityData($id);
+        $form     = $this->transactionForm->createForm($id);
+
+        return view('Activity.transaction.create', compact('form', 'activity', 'id'));
+    }
+
+    /**
+     * stores transaction in database
+     * @param Request            $request
+     * @param                    $activityId
+     * @param TransactionRequest $transactionRequest
+     * @return mixed
+     */
+    public function store(Request $request, $activityId, TransactionRequest $transactionRequest)
+    {
+        $activity = $this->activityManager->getActivityData($activityId);
+        $data     = $request->all();
+        $this->transactionManager->save($data, $activity);
+
+        return redirect()->to(sprintf('/activity/%s/transaction', $activityId))->withMessage('Transactions created!');
+    }
+
+    /**
+     * show transaction detail
+     * @param $activityId
+     * @param $transactionId
+     * @return \Illuminate\View\View
+     */
+    public function show($activityId, $transactionId)
+    {
+        $activity          = $this->activityManager->getActivityData($activityId);
+        $transaction       = $this->transactionManager->getTransaction($transactionId);
+        $transactionDetail = $transaction->getTransaction();
+
+        return view('Activity.transaction.show', compact('transactionDetail', 'activity'));
+    }
+
+    /**
+     * edit transaction form
+     * @param $id
+     * @param $transactionId
+     * @return \Illuminate\View\View
+     */
+    public function edit($id, $transactionId)
+    {
+        $activity    = $this->activityManager->getActivityData($id);
+        $transaction = $this->transactionManager->getTransaction($transactionId);
+        $form        = $this->transactionForm->editForm($activity, $transactionId, $transaction->getTransaction());
+
+        return view('Activity.transaction.edit', compact('form', 'activity', 'id'));
+    }
+
+    /**
+     * updates transaction
+     * @param Request            $request
+     * @param                    $id
+     * @param                    $transactionId
+     * @param TransactionRequest $transactionRequest
+     * @return mixed
+     */
+    public function update(Request $request, $id, $transactionId, TransactionRequest $transactionRequest)
+    {
+        $activity           = $this->activityManager->getActivityData($id);
+        $transactionDetails = $request->except(['_token', '_method']);
+        $this->transactionManager->save($transactionDetails, $activity, $transactionId);
+
+        return redirect()->to(sprintf('/activity/%s/transaction', $id))->withmessage('Transactions updated!');
+    }
+
+    /**
+     * delete transaction
+     * @param $id
+     * @param $transactionId
+     * @return mixed
+     */
+    public function destroy($id, $transactionId)
+    {
+        $transaction = $this->transactionManager->getTransaction($transactionId);
+        $transaction->delete($transaction);
+
+        return redirect()->back()->withMessage('transaction deleted');
+    }
+}
