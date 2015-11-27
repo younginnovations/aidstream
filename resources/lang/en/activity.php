@@ -27,6 +27,7 @@ return [
     'default_aid_type'                   => 'Activity Default Aid Type ":default_aid_type" updated for ":organization - :organization_id"',
     'default_tied_status'                => 'Activity Default Tied Status ":default_tied_status" updated for ":organization - :organization_id"',
     'capital_spend'                      => 'Activity Capital Spend ":capital_spend" updated for ":organization - :organization_id"',
+    'activity_result'                    => 'Activity Result ":result" updated for Activity id ":activity_id"',
     'transaction_updated'                => 'Activity Transaction ":transaction" updated for ":activity - :activity_id"',
     'transaction_added'                  => 'Activity Transaction ":transaction" added for ":activity - :activity_id"',
     'Transaction_uploaded'               => 'Activity Transaction ":transaction" uploaded for ":activity - :activity_id"',

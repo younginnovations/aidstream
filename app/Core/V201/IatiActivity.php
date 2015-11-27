@@ -304,4 +304,14 @@ class IatiActivity extends WizardIatiActivity
     {
         return app('App\Core\V201\Requests\Activity\Condition');
     }
+
+    public function getResult()
+    {
+        return app('App\Core\V201\Element\Activity\Result');
+    }
+
+    public function getResultRequest()
+    {
+        return app('App\Core\V201\Requests\Activity\Result');
+    }
 }

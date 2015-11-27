@@ -151,4 +151,34 @@ $(document).ready(function () {
     $('#group_identifier').keyup(function () {
         $('#group_admin_username').val($(this).val() + '_group');
     });
+
+    /* return panel for result modal */
+    function getPanel($title) {
+        var elemRow = $('#view_result .modal-panel-template').clone();
+        $('.panel-heading', elemRow).html($title);
+        return elemRow;
+    }
+
+    /* return row for result modal panel */
+    function getRow(label, value) {
+        var elemRow = $('#view_result .modal-row-template').clone();
+        $('.view_label', elemRow).html(label);
+        $('.view_value', elemRow).html(value);
+        return elemRow.html();
+    }
+
+    /* display result modal with data */
+    $('#view_result').on('show.bs.modal', function (event) {
+        var result = JSON.parse($(event.relatedTarget).attr('data-result'));
+        var modalContent = '';
+        modalContent += getRow('Type:', result.type);
+        modalContent += getRow('Aggregation Status:', result.aggregation_status);
+        var title = getPanel('Title');
+        $('.panel-body', title).append(getRow('Text:', result.title[0].narrative[0].narrative));
+        modalContent += title.html();
+        var description = getPanel('Description');
+        $('.panel-body', description).append(getRow('Text:', result.description[0].narrative[0].narrative));
+        modalContent += description.html();
+        $('.modal-body', this).html(modalContent);
+    });
 });

@@ -15,7 +15,7 @@ class BaseForm extends Form
      * @param $formClass
      * @return $this
      */
-    public function addAddMoreButton($buttonId, $formClass)
+    protected function addAddMoreButton($buttonId, $formClass)
     {
         return $this->add(
             $buttonId,
@@ -35,7 +35,7 @@ class BaseForm extends Form
      * @param $buttonId
      * @return $this
      */
-    public function addRemoveThisButton($buttonId)
+    protected function addRemoveThisButton($buttonId)
     {
         return $this->add(
             $buttonId,
@@ -55,7 +55,7 @@ class BaseForm extends Form
      * @param $listType
      * @return array
      */
-    public function getCodeList($listName, $listType)
+    protected function getCodeList($listName, $listType)
     {
         $codeListFromFile = file_get_contents(
             app_path(
@@ -78,7 +78,7 @@ class BaseForm extends Form
      * @param string $label
      * @return BaseForm
      */
-    public function addNarrative($className, $label = 'Text')
+    protected function addNarrative($className, $label = 'Text')
     {
         return $this->addCollection('narrative', 'Activity\Narrative', $className, ['label' => $label]);
     }
@@ -91,7 +91,7 @@ class BaseForm extends Form
      * @param bool   $label
      * @return $this
      */
-    public function addCollection($name, $file, $class = "", $data = [], $label = null)
+    protected function addCollection($name, $file, $class = "", $data = [], $label = null)
     {
         return $this->add(
             $name,
@@ -116,7 +116,7 @@ class BaseForm extends Form
      * @param $value
      * @return $this
      */
-    public function addCheckBox($name, $value)
+    protected function addCheckBox($name, $value)
     {
         return $this->add(
             $name,
@@ -129,10 +129,24 @@ class BaseForm extends Form
     }
 
     /**
+     * @param $name
+     * @param $choices
+     * @return $this
+     */
+    protected function addSelect($name, $choices)
+    {
+        return $this->add(
+            $name,
+            'select',
+            ['choices' => $choices]
+        );
+    }
+
+    /**
      * @param string $value
      * @return $this
      */
-    public function addPercentage($value = 'percentage')
+    protected function addPercentage($value = 'percentage')
     {
         return $this->add(
             $value,
@@ -140,7 +154,19 @@ class BaseForm extends Form
         );
     }
 
-    public function addSaveButton()
+    /**
+     * @param string $name
+     * @return $this
+     */
+    protected function addTitleCollection($name = 'title')
+    {
+        return $this->addCollection($name, 'Activity\Title');
+    }
+
+    /**
+     * @return $this
+     */
+    protected function addSaveButton()
     {
         return $this->add(
             'Save',

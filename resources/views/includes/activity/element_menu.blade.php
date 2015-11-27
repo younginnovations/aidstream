@@ -88,7 +88,7 @@
         <ul class="nav">
             <li><a href="{{ route('activity.legacy-data.index', $id) }}">Legacy Data</a></li>
             <li><a href="{{ route('activity.condition.index', $id) }}">Conditions</a></li>
-            <li><a href="#">Result</a></li>
+            <li><a href="{{ route('activity.result.index', $id) }}">Result</a></li>
         </ul>
     </div>
 </div>
