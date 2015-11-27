@@ -33,6 +33,14 @@ $router->group(
         $router->resource('activity.related-activity', 'RelatedActivityController');
         $router->resource('activity.transaction', 'TransactionController');
         $router->resource('activity.transaction-upload', 'TransactionUploadController');
+        Route::get(
+            '/download-detailed-transaction',
+            function () {
+                $pathToFile = app_path("Core/" . session()->get('version') . "/Files/Csv/iati_transaction_template_detailed.csv");
+
+                return Response::download($pathToFile);
+            }
+        );
         $router->resource('activity.legacy-data', 'LegacyDataController');
     }
 );

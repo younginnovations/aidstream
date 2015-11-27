@@ -58,6 +58,7 @@ class TransactionController extends Controller
      */
     public function create($id)
     {
+        $this->authorize('add_activity');
         $activity = $this->activityManager->getActivityData($id);
         $form     = $this->transactionForm->createForm($id);
 
@@ -73,6 +74,7 @@ class TransactionController extends Controller
      */
     public function store(Request $request, $activityId, TransactionRequest $transactionRequest)
     {
+        $this->authorize('add_activity');
         $activity = $this->activityManager->getActivityData($activityId);
         $data     = $request->all();
         $this->transactionManager->save($data, $activity);
@@ -103,6 +105,7 @@ class TransactionController extends Controller
      */
     public function edit($id, $transactionId)
     {
+        $this->authorize('edit_activity');
         $activity    = $this->activityManager->getActivityData($id);
         $transaction = $this->transactionManager->getTransaction($transactionId);
         $form        = $this->transactionForm->editForm($activity, $transactionId, $transaction->getTransaction());
@@ -120,6 +123,7 @@ class TransactionController extends Controller
      */
     public function update(Request $request, $id, $transactionId, TransactionRequest $transactionRequest)
     {
+        $this->authorize('edit_activity');
         $activity           = $this->activityManager->getActivityData($id);
         $transactionDetails = $request->except(['_token', '_method']);
         $this->transactionManager->save($transactionDetails, $activity, $transactionId);
@@ -135,6 +139,7 @@ class TransactionController extends Controller
      */
     public function destroy($id, $transactionId)
     {
+        $this->authorize('delete_activity');
         $transaction = $this->transactionManager->getTransaction($transactionId);
         $transaction->delete($transaction);
 

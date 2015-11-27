@@ -1,5 +1,6 @@
 <?php namespace App\Core\V201\Requests\Activity;
 
+use App\Core\V201\CsvImportValidator;
 use Illuminate\Support\Facades\Validator;
 
 /**
