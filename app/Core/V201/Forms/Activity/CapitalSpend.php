@@ -13,6 +13,6 @@ class CapitalSpend extends Form
      */
     public function buildForm()
     {
-        $this->add('capital_spend', 'text');
+        $this->add('capital_spend', 'text', ['label' => 'Percentage']);
     }
 }
