@@ -37,9 +37,6 @@ set :keep_releases,       3
 #####################################################################################
 set :hipchat_token,         "ZpXA6zeepyBgIm4R3EbImcmm7xCcXMl49NbbEpRg"
 set :hipchat_room_name,     "1080583"
-set :hipchat_announce,      false       # notify users?
-set :hipchat_color,         'green'     # finished deployment message color
-set :hipchat_failed_color,  'red'       # cancelled deployment message color
 
 # Create ver.txt #
 #######################################################################################
@@ -172,28 +169,39 @@ end
 
 namespace :hipchat do
 
+    desc 'Notify Hipchat'
+    task :notify do
+        on roles(:all) do
+            execute "curl -s -H 'Content-Type: application/json' -X POST -d '{\"color\": \"#{fetch(:notify_color)}\", \"message_format\": \"text\", \"message\": \"#{fetch(:notify_message)}\", \"notify\": \"true\" }' https://api.hipchat.com/v2/room/#{fetch(:hipchat_room_name)}/notification?auth_token=#{fetch(:hipchat_token)}"
+            Rake::Task["hipchat:notify"].reenable
+        end
+    end
+
     desc 'Hipchat notification on deployment'
     task :start do
         on roles(:all) do
             message  = "#{fetch(:user)} is deploying #{fetch(:application)}/#{fetch(:branch)} to #{fetch(:env)}. diff at: #{fetch(:repo_base_url)}#{fetch(:repo_diff_path)}#{fetch(:branch)}"
-            client = HipChat::Client.new(fetch(:hipchat_token), :api_version => 'v2')
-            client[fetch(:hipchat_room_name)].send(fetch(:user), message)
+            set :notify_message, message
+            set :notify_color, 'gray'
+            invoke "hipchat:notify"
         end
     end
 
     task :deployed do
         on roles(:all) do
             message  = "#{fetch(:user)} finished deploying #{fetch(:application)}/#{fetch(:branch)} (revision #{fetch(:current_revision)}) to #{fetch(:env)}."
-            client = HipChat::Client.new(fetch(:hipchat_token), :api_version => 'v2')
-            client[fetch(:hipchat_room_name)].send(fetch(:user), message, :color => 'green', :notify =>true)
+            set :notify_message, message
+            set :notify_color, 'green'
+            invoke "hipchat:notify"
         end
     end
 
-    task :notify_deploy_reverted do
+    task :notify_deploy_failed do
         on roles(:all) do
             message  = "Error deploying #{fetch(:application)}/#{fetch(:branch)} (revision #{fetch(:current_revision)}) to #{fetch(:env)}, user: #{fetch(:user)} ."
-            client = HipChat::Client.new(fetch(:hipchat_token), :api_version => 'v2')
-            client[fetch(:hipchat_room_name)].send(fetch(:user), message, :color => 'red')
+            set :notify_message, message
+            set :notify_color, 'red'
+            invoke "hipchat:notify"
         end
     end
 end
@@ -215,6 +223,7 @@ namespace :deploy do
     after :published, "aidstream:create_symlink"
     after :finished, "hipchat:deployed"
     after :finished, "aidstream:create_ver_txt"
+    after :failed, "hipchat:notify_deploy_failed"
 end
 
 after "deploy",   "nginx:reload"
