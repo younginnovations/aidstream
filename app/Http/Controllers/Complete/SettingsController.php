@@ -2,6 +2,8 @@
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Services\Activity\ActivityManager;
+use App\Services\Activity\OtherIdentifierManager;
 use App\Services\RequestManager\Organization\SettingsRequestManager;
 use App;
 use App\Services\SettingsManager;
@@ -18,20 +20,34 @@ class SettingsController extends Controller
     protected $settingsManager;
     protected $settings;
     protected $organization;
+    /**
+     * @var ActivityManager
+     */
+    protected $activityManager;
+    /**
+     * @var OtherIdentifierManager
+     */
+    protected $otherIdentifierManager;
 
     /**
-     * @param SettingsManager     $settingsManager
-     * @param OrganizationManager $organizationManager
+     * @param SettingsManager        $settingsManager
+     * @param OrganizationManager    $organizationManager
+     * @param ActivityManager        $activityManager
+     * @param OtherIdentifierManager $otherIdentifierManager
      */
     function __construct(
         SettingsManager $settingsManager,
-        OrganizationManager $organizationManager
+        OrganizationManager $organizationManager,
+        ActivityManager $activityManager,
+        OtherIdentifierManager $otherIdentifierManager
     ) {
         $this->middleware('auth');
-        $this->settingsManager     = $settingsManager;
-        $org_id                    = Session::get('org_id');
-        $this->settings            = $settingsManager->getSettings($org_id);
-        $this->organization        = $organizationManager->getOrganization($org_id);
+        $this->settingsManager        = $settingsManager;
+        $org_id                       = Session::get('org_id');
+        $this->settings               = $settingsManager->getSettings($org_id);
+        $this->organization           = $organizationManager->getOrganization($org_id);
+        $this->activityManager        = $activityManager;
+        $this->otherIdentifierManager = $otherIdentifierManager;
     }
 
     /**
@@ -94,11 +110,20 @@ class SettingsController extends Controller
      */
     public function update($id, SettingsRequestManager $request)
     {
-        $input = Input::all();
+        $input         = Input::all();
+        $oldIdentifier = $this->organization->reporting_org[0]['reporting_organization_identifier'];
         $this->settingsManager->updateSettings($input, $this->organization, $this->settings);
-        Session::flash('message', 'Successfully Edit');
+        $activities             = $this->activityManager->getActivities($this->organization->id);
+        $reportingOrgIdentifier = $input['reporting_organization_info'][0]['reporting_organization_identifier'];
+        foreach ($activities as $activity) {
+            $status          = $activity['published_to_registry'];
+            $otherIdentifier = (array) $activity->other_identifier;
+            if ($status == 1 && !in_array(["reference" => $oldIdentifier, "type" => "B1", 'owner_org' => []], $otherIdentifier) && ($oldIdentifier !== $reportingOrgIdentifier)) {
+                $otherIdentifier[] = ['reference' => $oldIdentifier, 'type' => 'B1', 'owner_org' => []];
+                $this->otherIdentifierManager->update(['other_identifier' => $otherIdentifier], $activity);
+            }
+        }
 
-        return Redirect::to('/');
+        return Redirect::to('/')->withMessage('Successfully Edit');
     }
 }
-
