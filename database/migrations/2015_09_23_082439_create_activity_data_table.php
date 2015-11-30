@@ -43,7 +43,6 @@ class CreateActivityDataTable extends Migration
                 $table->json('related_activity')->nullable();
                 $table->json('legacy_data')->nullable();
                 $table->json('conditions')->nullable();
-                $table->json('result')->nullable();
                 $table->integer('activity_workflow')->default(0);
                 $table->integer('organization_id');
                 $table->timestamps();

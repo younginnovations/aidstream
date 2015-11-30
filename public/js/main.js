@@ -70,6 +70,10 @@ $(document).ready(function () {
         $('input[name="iati_identifier_text"]').val($('#reporting_organization_identifier').text() + '-' + $(this).val());
     });
 
+    if ($('input[name="activity_identifier"]').val() !== '') {
+        $('input[name="activity_identifier"]').trigger('keyup');
+    }
+
     $('.checkAll').click(function () {
         $('.field1').prop('checked', this.checked);
     });

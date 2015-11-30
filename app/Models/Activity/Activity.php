@@ -37,8 +37,7 @@ class Activity extends Model
         'document_link',
         'related_activity',
         'legacy_data',
-        'conditions',
-        'result'
+        'conditions'
     ];
 
     protected $casts = [
@@ -69,7 +68,6 @@ class Activity extends Model
         'related_activity'           => 'json',
         'legacy_data'                => 'json',
         'conditions'                 => 'json',
-        'result'                     => 'json'
     ];
 
     /**
@@ -115,5 +113,14 @@ class Activity extends Model
         }
 
         return $transactions;
+    }
+
+    /**
+     * get activity identifier
+     * @return mixed
+     */
+    public function getActivityIdentifierAttribute()
+    {
+        return $this->identifier['activity_identifier'];
     }
 }
