@@ -15,7 +15,8 @@ class IatiIdentifierRequest extends ActivityBaseRequest
      */
     public function rules(IatiIdentifierRepository $iatiIdentifierRepository)
     {
-        $identifiers = $iatiIdentifierRepository->getActivityIdentifiers();
+        $identifiers         = $iatiIdentifierRepository->getActivityIdentifiers();
+        $activityIdentifiers = [];
 
         foreach ($identifiers as $identifier) {
             $activityIdentifiers[] = $identifier->activity_identifier;

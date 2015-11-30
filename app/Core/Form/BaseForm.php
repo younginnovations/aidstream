@@ -91,7 +91,7 @@ class BaseForm extends Form
      * @param bool   $label
      * @return $this
      */
-    protected function addCollection($name, $file, $class = "", $data = [], $label = null)
+    protected function addCollection($name, $file, $class = "", array $data = [], $label = null)
     {
         return $this->add(
             $name,
@@ -112,20 +112,15 @@ class BaseForm extends Form
     }
 
     /**
-     * @param $name
-     * @param $value
+     * @param      $name
+     * @param      $value
+     * @param null $checked
+     * @param null $readonly
      * @return $this
      */
-    protected function addCheckBox($name, $value)
+    protected function addCheckBox($name, $value, $checked = null, $readonly = null)
     {
-        return $this->add(
-            $name,
-            'checkbox',
-            [
-                'value' => $value,
-                'attr'  => ['class' => 'field1']
-            ]
-        );
+        return $this->add($name, 'checkbox', ['value' => $value, 'checked' => $checked, 'attr' => ['class' => 'field1', 'readonly' => $readonly]]);
     }
 
     /**
@@ -133,13 +128,9 @@ class BaseForm extends Form
      * @param $choices
      * @return $this
      */
-    protected function addSelect($name, $choices)
+    protected function addSelect($name, array $choices)
     {
-        return $this->add(
-            $name,
-            'select',
-            ['choices' => $choices]
-        );
+        return $this->add($name, 'select', ['choices' => $choices]);
     }
 
     /**
@@ -148,10 +139,7 @@ class BaseForm extends Form
      */
     protected function addPercentage($value = 'percentage')
     {
-        return $this->add(
-            $value,
-            'text'
-        );
+        return $this->add($value, 'text');
     }
 
     /**
@@ -168,12 +156,6 @@ class BaseForm extends Form
      */
     protected function addSaveButton()
     {
-        return $this->add(
-            'Save',
-            'submit',
-            [
-                'attr' => ['class' => 'btn btn-primary']
-            ]
-        );
+        return $this->add('Save', 'submit', ['attr' => ['class' => 'btn btn-primary']]);
     }
 }
