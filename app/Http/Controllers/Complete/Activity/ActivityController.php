@@ -2,6 +2,8 @@
 
 use App\Core\V201\Requests\Activity\IatiIdentifierRequest;
 use App\Http\Controllers\Controller;
+use App\Services\Activity\ResultManager;
+use App\Services\Activity\TransactionManager;
 use App\Services\Organization\OrganizationManager;
 use App\Services\SettingsManager;
 use Illuminate\Http\Request;
@@ -31,6 +33,14 @@ class ActivityController extends Controller
      * @var OrganizationManager
      */
     protected $organizationManager;
+    /**
+     * @var ResultManager
+     */
+    protected $resultManager;
+    /**
+     * @var TransactionManager
+     */
+    private $transactionManager;
 
     /**
      * @param SettingsManager     $settingsManager
@@ -38,13 +48,17 @@ class ActivityController extends Controller
      * @param OrganizationManager $organizationManager
      * @param Identifier          $identifierForm
      * @param ActivityManager     $activityManager
+     * @param ResultManager       $resultManager
+     * @param TransactionManager  $transactionManager
      */
     function __construct(
         SettingsManager $settingsManager,
         SessionManager $sessionManager,
         OrganizationManager $organizationManager,
         Identifier $identifierForm,
-        ActivityManager $activityManager
+        ActivityManager $activityManager,
+        ResultManager $resultManager,
+        TransactionManager $transactionManager
     ) {
         $this->middleware('auth');
         $this->settingsManager     = $settingsManager;
@@ -53,6 +67,8 @@ class ActivityController extends Controller
         $this->identifierForm      = $identifierForm;
         $this->activityManager     = $activityManager;
         $this->organization_id     = $this->sessionManager->get('org_id');
+        $this->resultManager       = $resultManager;
+        $this->transactionManager  = $transactionManager;
     }
 
     /**
@@ -106,8 +122,12 @@ class ActivityController extends Controller
      */
     public function show($id)
     {
-        $activityData     = $this->activityManager->getActivityData($id);
-        $activityDataList = $activityData->activity_data_list;
+        $activityData                    = $this->activityManager->getActivityData($id);
+        $activityDataList                = $activityData->activity_data_list;
+        $activityResult                  = $this->resultManager->getResults($id)->toArray();
+        $activityTransaction             = $this->transactionManager->getTransactions($id)->toArray();
+        $activityDataList['results']     = $activityResult;
+        $activityDataList['transaction'] = $activityTransaction;
 
         return view('Activity.show', compact('activityDataList', 'id'));
     }
@@ -137,13 +157,20 @@ class ActivityController extends Controller
         $activityWorkflow = $input['activity_workflow'];
         $transactionData  = $this->activityManager->getTransactionData($id);
         $resultData       = $this->activityManager->getResultData($id);
+        $organization     = $this->organizationManager->getOrganization($activityData->organization_id);
 
+        $orgElem         = $this->organizationManager->getOrganizationElement();
         $activityElement = $this->activityManager->getActivityElement();
         $xmlService      = $activityElement->getActivityXmlService();
 
-        ($activityWorkflow == 3)
-            ? $xmlService->generateActivityXml($activityData, $transactionData, $resultData, $settings, $activityElement)
-            : '';
+        if ($activityWorkflow == 1) {
+            $message = $xmlService->validateActivitySchema($activityData, $transactionData, $resultData, $settings, $activityElement, $orgElem, $organization);
+            if ($message !== '') {
+                return redirect()->back()->withMessage($message);
+            }
+        } elseif ($activityWorkflow == 3) {
+            $xmlService->generateActivityXml($activityData, $transactionData, $resultData, $settings, $activityElement, $orgElem, $organization);
+        }
 
         $this->activityManager->updateStatus($input, $activityData);
 

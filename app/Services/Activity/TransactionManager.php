@@ -88,4 +88,13 @@ class TransactionManager
     {
         return $this->transactionRepo->getTransaction($transactionId);
     }
+
+    /**
+     * @param $activityId
+     * @return mixed
+     */
+    public function getTransactions($activityId)
+    {
+        return $this->transactionRepo->getTransactionData($activityId);
+    }
 }
