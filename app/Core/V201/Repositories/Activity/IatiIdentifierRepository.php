@@ -39,4 +39,13 @@ class IatiIdentifierRepository
         return Activity::findorFail($activityId);
 
     }
+
+    /**
+     * get all activity identifiers
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     */
+    public function getActivityIdentifiers()
+    {
+        return Activity::all('identifier');
+    }
 }

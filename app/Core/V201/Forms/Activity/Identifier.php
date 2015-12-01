@@ -15,7 +15,8 @@ class Identifier extends Form
                 'text',
                 [
                     'label' => 'IATI Identifier',
-                    'rules' => 'required'
+                    'rules' => 'required',
+                    'attr'  => ['readonly' => 'readonly']
                 ]
             );
     }

@@ -4,6 +4,7 @@ $router->group(
     ['namespace' => 'Complete\Activity'],
     function ($router) {
         $router->resource('activity', 'ActivityController');
+        $router->resource('activity.delete', 'ActivityController@destroy');
         $router->resource('activity.reporting-organization', 'ReportingOrganization');
         $router->resource('activity.iati-identifier', 'IatiIdentifierController');
         $router->resource('activity.other-identifier', 'OtherIdentifierController');

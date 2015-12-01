@@ -25,4 +25,4 @@
     <?php if ($options['wrapper'] !== false): ?>
     </div>
     <?php endif; ?>
-<?php endif; ?>
+<?php endif;

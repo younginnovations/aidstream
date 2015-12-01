@@ -121,4 +121,12 @@ class ActivityController extends Controller
     {
         return new HttpException(403, 'This action is unauthorized.');
     }
+
+    public function destroy($id)
+    {
+        $activity = $this->activityManager->getActivityData($id);
+        $activity->delete($activity);
+
+        return redirect()->back()->withMessage('Activity deleted');
+    }
 }
