@@ -30,7 +30,7 @@ class ContactInfo extends ActivityBaseRequest
      * @param array $formFields
      * @return array
      */
-    public function getRulesForContactInfo(array $formFields)
+    protected function getRulesForContactInfo(array $formFields)
     {
         $rules = [];
 
@@ -44,7 +44,8 @@ class ContactInfo extends ActivityBaseRequest
                 $this->getRulesForJobTitle($contactInfo['job_title'], $contactInfoForm),
                 $this->getRulesForMailingAddress($contactInfo['mailing_address'], $contactInfoForm),
                 $this->getRulesForTelephone($contactInfo['telephone'], $contactInfoForm),
-                $this->getRulesForEmail($contactInfo['email'], $contactInfoForm)
+                $this->getRulesForEmail($contactInfo['email'], $contactInfoForm),
+                $this->getRulesForWebsite($contactInfo['website'], $contactInfoForm)
             );
         }
 
@@ -55,7 +56,7 @@ class ContactInfo extends ActivityBaseRequest
      * @param array $formFields
      * @return array
      */
-    public function getMessagesForContactInfo(array $formFields)
+    protected function getMessagesForContactInfo(array $formFields)
     {
         $messages = [];
 
@@ -69,7 +70,8 @@ class ContactInfo extends ActivityBaseRequest
                 $this->getMessagesForJobTitle($contactInfo['job_title'], $contactInfoForm),
                 $this->getMessagesForMailingAddress($contactInfo['mailing_address'], $contactInfoForm),
                 $this->getMessagesForTelephone($contactInfo['telephone'], $contactInfoForm),
-                $this->getMessagesForEmail($contactInfo['email'], $contactInfoForm)
+                $this->getMessagesForEmail($contactInfo['email'], $contactInfoForm),
+                $this->getMessagesForWebsite($contactInfo['website'], $contactInfoForm)
             );
         }
 
@@ -81,16 +83,13 @@ class ContactInfo extends ActivityBaseRequest
      * @param $formBase
      * @return array
      */
-    public function getRulesForOrganization($formFields, $formBase)
+    protected function getRulesForOrganization($formFields, $formBase)
     {
         $rules = [];
 
         foreach ($formFields as $organizationIndex => $organization) {
             $organizationForm = sprintf('%s.organization.%s', $formBase, $organizationIndex);
-            $rules            = array_merge(
-                $rules,
-                $this->getRulesForNarrative($organization['narrative'], $organizationForm)
-            );
+            $rules            = array_merge($rules, $this->getRulesForNarrative($organization['narrative'], $organizationForm));
         }
 
         return $rules;
@@ -101,16 +100,13 @@ class ContactInfo extends ActivityBaseRequest
      * @param $formBase
      * @return array
      */
-    public function getMessagesForOrganization($formFields, $formBase)
+    protected function getMessagesForOrganization($formFields, $formBase)
     {
         $messages = [];
 
         foreach ($formFields as $organizationIndex => $organization) {
             $organizationForm = sprintf('%s.organization.%s', $formBase, $organizationIndex);
-            $messages         = array_merge(
-                $messages,
-                $this->getMessagesForNarrative($organization['narrative'], $organizationForm)
-            );
+            $messages         = array_merge($messages, $this->getMessagesForNarrative($organization['narrative'], $organizationForm));
         }
 
         return $messages;
@@ -121,16 +117,13 @@ class ContactInfo extends ActivityBaseRequest
      * @param $formBase
      * @return array
      */
-    public function getRulesForDepartment($formFields, $formBase)
+    protected function getRulesForDepartment($formFields, $formBase)
     {
         $rules = [];
 
         foreach ($formFields as $departmentIndex => $department) {
             $departmentForm = sprintf('%s.department.%s', $formBase, $departmentIndex);
-            $rules          = array_merge(
-                $rules,
-                $this->getRulesForNarrative($department['narrative'], $departmentForm)
-            );
+            $rules          = array_merge($rules, $this->getRulesForNarrative($department['narrative'], $departmentForm));
         }
 
         return $rules;
@@ -141,16 +134,13 @@ class ContactInfo extends ActivityBaseRequest
      * @param $formBase
      * @return array
      */
-    public function getMessagesForDepartment($formFields, $formBase)
+    protected function getMessagesForDepartment($formFields, $formBase)
     {
         $messages = [];
 
         foreach ($formFields as $departmentIndex => $department) {
             $departmentForm = sprintf('%s.department.%s', $formBase, $departmentIndex);
-            $messages       = array_merge(
-                $messages,
-                $this->getMessagesForNarrative($department['narrative'], $departmentForm)
-            );
+            $messages       = array_merge($messages, $this->getMessagesForNarrative($department['narrative'], $departmentForm));
         }
 
         return $messages;
@@ -161,16 +151,13 @@ class ContactInfo extends ActivityBaseRequest
      * @param $formBase
      * @return array
      */
-    public function getRulesForPersonName($formFields, $formBase)
+    protected function getRulesForPersonName($formFields, $formBase)
     {
         $rules = [];
 
         foreach ($formFields as $personNameIndex => $personName) {
             $personNameForm = sprintf('%s.person_name.%s', $formBase, $personNameIndex);
-            $rules          = array_merge(
-                $rules,
-                $this->getRulesForNarrative($personName['narrative'], $personNameForm)
-            );
+            $rules          = array_merge($rules, $this->getRulesForNarrative($personName['narrative'], $personNameForm));
         }
 
         return $rules;
@@ -181,16 +168,13 @@ class ContactInfo extends ActivityBaseRequest
      * @param $formBase
      * @return array
      */
-    public function getMessagesForPersonName($formFields, $formBase)
+    protected function getMessagesForPersonName($formFields, $formBase)
     {
         $messages = [];
 
         foreach ($formFields as $personNameIndex => $personName) {
             $personNameForm = sprintf('%s.person_name.%s', $formBase, $personNameIndex);
-            $messages       = array_merge(
-                $messages,
-                $this->getMessagesForNarrative($personName['narrative'], $personNameForm)
-            );
+            $messages       = array_merge($messages, $this->getMessagesForNarrative($personName['narrative'], $personNameForm));
         }
 
         return $messages;
@@ -201,16 +185,13 @@ class ContactInfo extends ActivityBaseRequest
      * @param $formBase
      * @return array
      */
-    public function getRulesForJobTitle($formFields, $formBase)
+    protected function getRulesForJobTitle($formFields, $formBase)
     {
         $rules = [];
 
         foreach ($formFields as $jobTitleIndex => $jobTitle) {
             $jobTitleForm = sprintf('%s.job_title.%s', $formBase, $jobTitleIndex);
-            $rules        = array_merge(
-                $rules,
-                $this->getRulesForNarrative($jobTitle['narrative'], $jobTitleForm)
-            );
+            $rules        = array_merge($rules, $this->getRulesForNarrative($jobTitle['narrative'], $jobTitleForm));
         }
 
         return $rules;
@@ -221,16 +202,13 @@ class ContactInfo extends ActivityBaseRequest
      * @param $formBase
      * @return array
      */
-    public function getMessagesForJobTitle($formFields, $formBase)
+    protected function getMessagesForJobTitle($formFields, $formBase)
     {
         $messages = [];
 
         foreach ($formFields as $jobTitleIndex => $jobTitle) {
             $jobTitleForm = sprintf('%s.job_title.%s', $formBase, $jobTitleIndex);
-            $messages     = array_merge(
-                $messages,
-                $this->getMessagesForNarrative($jobTitle['narrative'], $jobTitleForm)
-            );
+            $messages     = array_merge($messages, $this->getMessagesForNarrative($jobTitle['narrative'], $jobTitleForm));
         }
 
         return $messages;
@@ -241,16 +219,13 @@ class ContactInfo extends ActivityBaseRequest
      * @param $formBase
      * @return array
      */
-    public function getRulesForMailingAddress($formFields, $formBase)
+    protected function getRulesForMailingAddress($formFields, $formBase)
     {
         $rules = [];
 
         foreach ($formFields as $mailingAddressIndex => $mailingAddress) {
             $mailingAddressForm = sprintf('%s.mailing_address.%s', $formBase, $mailingAddressIndex);
-            $rules              = array_merge(
-                $rules,
-                $this->getRulesForNarrative($mailingAddress['narrative'], $mailingAddressForm)
-            );
+            $rules              = array_merge($rules, $this->getRulesForNarrative($mailingAddress['narrative'], $mailingAddressForm));
         }
 
         return $rules;
@@ -261,16 +236,13 @@ class ContactInfo extends ActivityBaseRequest
      * @param $formBase
      * @return array
      */
-    public function getMessagesForMailingAddress($formFields, $formBase)
+    protected function getMessagesForMailingAddress($formFields, $formBase)
     {
         $messages = [];
 
         foreach ($formFields as $mailingAddressIndex => $mailingAddress) {
             $mailingAddressForm = sprintf('%s.mailing_address.%s', $formBase, $mailingAddressIndex);
-            $messages           = array_merge(
-                $messages,
-                $this->getMessagesForNarrative($mailingAddress['narrative'], $mailingAddressForm)
-            );
+            $messages           = array_merge($messages, $this->getMessagesForNarrative($mailingAddress['narrative'], $mailingAddressForm));
         }
 
         return $messages;
@@ -281,7 +253,7 @@ class ContactInfo extends ActivityBaseRequest
      * @param $formBase
      * @return array
      */
-    public function getRulesForTelephone($formFields, $formBase)
+    protected function getRulesForTelephone($formFields, $formBase)
     {
         $rules = [];
 
@@ -297,16 +269,12 @@ class ContactInfo extends ActivityBaseRequest
      * @param $formBase
      * @return array
      */
-    public function getMessagesForTelephone($formFields, $formBase)
+    protected function getMessagesForTelephone($formFields, $formBase)
     {
         $messages = [];
 
         foreach ($formFields as $telephoneIndex => $telephone) {
-            $messages[sprintf(
-                '%s.telephone.%s.telephone.numeric',
-                $formBase,
-                $telephoneIndex
-            )] = 'Telephone must be a number';
+            $messages[sprintf('%s.telephone.%s.telephone.numeric', $formBase, $telephoneIndex)] = 'Telephone must be a number';
         }
 
         return $messages;
@@ -317,7 +285,7 @@ class ContactInfo extends ActivityBaseRequest
      * @param $formBase
      * @return array
      */
-    public function getRulesForEmail($formFields, $formBase)
+    protected function getRulesForEmail($formFields, $formBase)
     {
         $rules = [];
 
@@ -333,16 +301,45 @@ class ContactInfo extends ActivityBaseRequest
      * @param $formBase
      * @return array
      */
-    public function getMessagesForEmail($formFields, $formBase)
+    protected function getMessagesForEmail($formFields, $formBase)
     {
         $messages = [];
 
         foreach ($formFields as $emailIndex => $email) {
-            $messages[sprintf(
-                '%s.email.%s.email.email',
-                $formBase,
-                $emailIndex
-            )] = 'Email must be a valid email address.';
+            $messages[sprintf('%s.email.%s.email.email', $formBase, $emailIndex)] = 'Email must be a valid email address.';
+        }
+
+        return $messages;
+    }
+
+    /**
+     * rule for website
+     * @param $formFields
+     * @param $formBase
+     * @return array
+     */
+    protected function getRulesForWebsite($formFields, $formBase)
+    {
+        $rules = [];
+
+        foreach ($formFields as $websiteIndex => $website) {
+            $rules[sprintf('%s.website.%s.website', $formBase, $websiteIndex)] = 'url';
+        }
+
+        return $rules;
+    }
+
+    /**
+     * @param $formFields
+     * @param $formBase
+     * @return array
+     */
+    protected function getMessagesForWebsite($formFields, $formBase)
+    {
+        $messages = [];
+
+        foreach ($formFields as $websiteIndex => $website) {
+            $messages[sprintf('%s.website.%s.website.url', $formBase, $websiteIndex)] = 'Enter valid URL. eg. http://example.com';
         }
 
         return $messages;
