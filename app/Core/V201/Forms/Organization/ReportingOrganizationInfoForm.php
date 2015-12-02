@@ -9,12 +9,13 @@ class ReportingOrganizationInfoForm extends Baseform
     public function buildForm()
     {
         $this
-            ->add('reporting_organization_identifier', 'text')
+            ->add('reporting_organization_identifier', 'text', ['attr' => ['readonly' => 'readonly']])
             ->add(
                 'reporting_organization_type',
                 'select',
                 [
-                    'choices' => $this->getCodeList('OrganizationType', 'Organization')
+                    'choices' => $this->getCodeList('OrganizationType', 'Organization'),
+                    'attr'    => ['readonly' => 'readonly']
                 ]
             )
             ->addNarrative('narrative')
