@@ -91,6 +91,7 @@ class BaseForm extends Form
      * @param bool   $label
      * @return $this
      */
+
     protected function addCollection($name, $file, $class = "", array $data = [], $label = null)
     {
         return $this->add(

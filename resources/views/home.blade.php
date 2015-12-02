@@ -1,9 +1,10 @@
 @extends('app')
 
 @section('content')
-    <div class="container">
+    <div class="container activity-container">
         <div class="row">
-            <div class="col-xs-8">
+            @include('includes.side_bar_menu')
+            <div class="col-xs-9 col-lg-9 content-wrapper">
                 <div class="panel panel-default">
                     <div class="panel-heading">@lang('trans.home')</div>
                     <div class="panel-body">
@@ -11,7 +12,6 @@
                     </div>
                 </div>
             </div>
-            @include('includes.side_bar_menu')
         </div>
     </div>
 @endsection

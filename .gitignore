@@ -2,6 +2,7 @@
 /node_modules
 .env
 .idea/
+/public/css/maps
 _ide_helper.php
 /public/uploads
 /bootstrap/cache

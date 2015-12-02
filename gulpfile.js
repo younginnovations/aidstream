@@ -2,8 +2,7 @@ var gulp = require('gulp'),
     sass = require('gulp-sass'),
     postcss = require('gulp-postcss'),
     autoprefixer = require('autoprefixer'),
-    sourcemaps = require('gulp-sourcemaps'),
-    concat = require('gulp-concat');
+    sourcemaps = require('gulp-sourcemaps');
 
 /**
  * Compile files from _scss

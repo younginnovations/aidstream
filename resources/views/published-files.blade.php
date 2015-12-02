@@ -4,17 +4,18 @@
 
     {{Session::get('message')}}
 
-    <div class="container">
+    <div class="container activity-container">
         <div class="row">
-            <div class="col-xs-8">
+            @include('includes.side_bar_menu')
+            <div class="col-xs-9 col-lg-9 content-wrapper">
+                @include('includes.breadcrumb')
                 <div class="panel panel-default">
-                    <div class="panel-heading">List Published Files</div>
-
+                    <div class="panel-content-heading">List Published Files</div>
                     <div class="panel-body">
                         <table class="table table-striped">
                             <thead>
                             <tr>
-                                <th></th>
+                                <th width="30px"></th>
                                 <th>Filename</th>
                                 <th>Published Date</th>
                                 <th>Registered in IATI Registry</th>
@@ -33,12 +34,12 @@
                                     <td>
                                         <a href="{{ 'http://tools.aidinfolabs.org/csv/direct_from_registry/?xml=' . url('/uploads/files/organization/' . $file->filename) }}"
                                            target="_blank">CSV</a></td>
-                                    <td><a href="{{ route('list-published-files', ['delete', $file->id]) }}">Delete</a>
+                                    <td><a href="{{ route('list-published-files', ['delete', $file->id]) }}" class="delete">Delete</a>
                                     </td>
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="6" class="text-center">No published files found.</td>
+                                    <td colspan="6" class="text-center no-data">No published files found.</td>
                                 </tr>
                             @endforelse
                             </tbody>
@@ -46,9 +47,6 @@
                     </div>
                 </div>
             </div>
-
-            @include('includes.side_bar_menu')
-
         </div>
     </div>
 @endsection
