@@ -9,14 +9,15 @@ class Identifier extends Form
     public function buildForm()
     {
         $this
-            ->add('activity_identifier', 'text')
+            ->add('activity_identifier', 'text', ['wrapper' => ['class' => 'col-xs-6']])
             ->add(
                 'iati_identifier_text',
                 'text',
                 [
                     'label' => 'IATI Identifier',
                     'rules' => 'required',
-                    'attr'  => ['readonly' => 'readonly']
+                    'attr'  => ['readonly' => 'readonly'],
+                    'wrapper' => ['class' => 'col-xs-6']
                 ]
             );
     }

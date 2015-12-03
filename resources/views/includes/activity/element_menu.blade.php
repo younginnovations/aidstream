@@ -16,6 +16,7 @@ $filledStatus = $defaultFieldGroups->getFilledStatus($id);
                             <span class="glyphicon {{ $filledStatus[$fieldGroupIndex][$fieldIndex] ? 'glyphicon-ok-circle' : 'glyphicon-remove-circle' }}"></span>
                             {{$field}}
                         </a>
+                        <span class="help-text">help text</span>
                     </li>
                 @endforeach
             </ul>

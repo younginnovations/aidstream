@@ -37,8 +37,8 @@
                href="#">{{Auth::user() ? "Aidstream(" . Session::get('version') . ")" : "Aidstream"}}</a>
         </div>
 
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav">
+        <div class="collapse navbar-collapse navbar-right" id="bs-example-navbar-collapse-1">
+<!--             <ul class="nav navbar-nav">
                 <li>
                     @if(Auth::user())
                         <a href="{{ Auth::user()->role_id == 3 ? url('admin/dashboard') : url('/')  }}">@lang('trans.home')</a>
@@ -55,8 +55,11 @@
                     </form>
                 </li>
             </ul>
-
-            <ul class="nav navbar-nav navbar-right">
+ -->
+            <div class="pull-left add-new-activity">
+                <a href="{{route('activity.create') }}">Add a New Activity</a>
+            </div>
+            <ul class="nav navbar-nav navbar-right navbar-admin-dropdown">
                 @if (Auth::guest())
                     <li><a href="{{ url('/auth/login') }}">@lang('trans.login')</a></li>
                     <li><a href="{{ url('/auth/register') }}">@lang('trans.register')</a></li>
@@ -68,16 +71,12 @@
                     </li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                           aria-expanded="false">{{ Auth::user()->first_name . ' ' . Auth::user()->last_name }} <span
+                           aria-expanded="false"><img src="" alt=""><span
                                     class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
+                            <li><a href="#">My Profile</a></li>
+                            <li><a href="#">Edit Profile</a></li>
                             <li><a href="{{ url('/auth/logout') }}">@lang('trans.logout')</a></li>
-                            @if(Auth::user()->role_id == 1)
-                                <li><a href="{{ url('/settings') }}">Settings</a></li>
-                            @endif
-                            @if(Auth::user()->role_id == 3)
-                                <li><a href="{{ route('admin.activity-log') }}">Activity Logs</a></li>
-                            @endif
                         </ul>
                     </li>
                 @endif

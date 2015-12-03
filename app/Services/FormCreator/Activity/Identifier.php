@@ -32,7 +32,7 @@ class Identifier
                 'method' => 'POST',
                 'url'    => route('activity.store')
             ]
-        )->add('Save', 'submit');
+        )->add('Create Activity', 'submit', ['attr' => ['class' => 'btn btn-primary btn-create']]);
     }
 
     /**
