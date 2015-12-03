@@ -80,7 +80,7 @@ $(document).ready(function () {
         $('.field1').not('[readonly="readonly"]').prop('checked', this.checked);
     });
 
-    $('input[readonly="readonly"]').click(function(e){
+    $('input[readonly="readonly"]').click(function (e) {
         e.preventDefault();
     });
     $('select[readonly=readonly] option:not(:selected)').prop('disabled', true);
@@ -143,13 +143,11 @@ $(document).ready(function () {
     /* change the sector field according to the  sector vocabulary selected */
     $("form").delegate('.sector_vocabulary', 'change', function () {
         var parent = $(this).parent('.form-group');
-        if ($(this).val() !== "1") {
-            parent.siblings('.sector_text').removeClass('hidden');
-            parent.siblings('.sector_select').addClass('hidden');
-        } else {
-            parent.siblings('.sector_select').removeClass('hidden');
-            parent.siblings('.sector_text').addClass('hidden');
-        }
+        var vocabulary = $(this).val();
+        var sectorClass = ['.sector_text', '.sector_select', '.sector_category_select'];
+        var selectedSector = sectorClass[vocabulary] ? sectorClass[vocabulary] : sectorClass[0];
+        parent.siblings('.sector_types').addClass('hidden');
+        parent.siblings(selectedSector).removeClass('hidden');
     });
     $('.sector_vocabulary').trigger('change');
 
