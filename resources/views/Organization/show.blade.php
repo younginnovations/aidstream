@@ -97,7 +97,7 @@
 									<div class="panel-heading">Total Budget
 										<a href="#" class="edit-element">edit</a>
 									</div>
-									<div class="panel-body panel-element-body row">
+									<div class="panel-body row panel-level-1">
 										@foreach($total_budget as $totalBudget)
 											<div class="panel panel-default">
 												<div class="panel-heading">Value</div>
@@ -134,47 +134,49 @@
 													</div>
 												</div>
 											</div>
-											<div class="panel panel-default">
-												<div class="panel-heading">Budget Line</div>
-												<div class="panel-body panel-element-body row">
-													@foreach($totalBudget['budget_line'] as $budgetLine)
-														<div class="panel panel-default">
-															<div class="panel-body panel-element-body row">
-																<div class="col-md-12">
-																	<div class="col-xs-4">Reference:</div>
-																	<div class="col-xs-8">{{ $budgetLine['reference']}}</div>
+											<div class="col-md-12 col-lg-12 panel-level-2">
+	                                            <div class="panel panel-default">
+													<div class="panel-heading">Budget Line</div>
+													<div class="panel-body row">
+														@foreach($totalBudget['budget_line'] as $budgetLine)
+															<div class="panel panel-default">
+																<div class="panel-body panel-element-body row">
+																	<div class="col-md-12">
+																		<div class="col-xs-4">Reference:</div>
+																		<div class="col-xs-8">{{ $budgetLine['reference']}}</div>
+																	</div>
 																</div>
 															</div>
-														</div>
-														<div class="panel panel-default">
-															<div class="panel-heading">Value</div>
-															<div class="panel-body panel-element-body row">
-																<div class="col-md-12">
-																	<div class="col-xs-4">Text:</div>
-																	<div class="col-xs-8">{{ $budgetLine['value'][0]['amount']}}</div>
-																</div>
-																<div class="col-md-12">
-																	<div class="col-xs-4">Value Date:</div>
-																	<div class="col-xs-8">{{ $budgetLine['value'][0]['value_date']}}</div>
-																</div>
-																<div class="col-md-12">
-																	<div class="col-xs-4">Currency:</div>
-																	<div class="col-xs-8">{{ $budgetLine['value'][0]['currency']}}</div>
-																</div>
-															</div>
-														</div>
-														<div class="panel panel-default">
-															@foreach($budgetLine['narrative'] as $budgetLineNarrative)
-																<div class="panel-heading">Narrative</div>
+															<div class="panel panel-default">
+																<div class="panel-heading">Value</div>
 																<div class="panel-body panel-element-body row">
 																	<div class="col-md-12">
 																		<div class="col-xs-4">Text:</div>
-																		<div class="col-xs-8">{{ $budgetLineNarrative['narrative'] . ' [' . $budgetLineNarrative['language'] . ']' }}</div>
+																		<div class="col-xs-8">{{ $budgetLine['value'][0]['amount']}}</div>
+																	</div>
+																	<div class="col-md-12">
+																		<div class="col-xs-4">Value Date:</div>
+																		<div class="col-xs-8">{{ $budgetLine['value'][0]['value_date']}}</div>
+																	</div>
+																	<div class="col-md-12">
+																		<div class="col-xs-4">Currency:</div>
+																		<div class="col-xs-8">{{ $budgetLine['value'][0]['currency']}}</div>
 																	</div>
 																</div>
-															@endforeach
-														</div>
-													@endforeach
+															</div>
+															<div class="panel panel-default">
+																@foreach($budgetLine['narrative'] as $budgetLineNarrative)
+																	<div class="panel-heading">Narrative</div>
+																	<div class="panel-body panel-element-body row">
+																		<div class="col-md-12">
+																			<div class="col-xs-4">Text:</div>
+																			<div class="col-xs-8">{{ $budgetLineNarrative['narrative'] . ' [' . $budgetLineNarrative['language'] . ']' }}</div>
+																		</div>
+																	</div>
+																@endforeach
+															</div>
+														@endforeach
+													</div>
 												</div>
 											</div>
 										@endforeach
@@ -187,7 +189,7 @@
 								<div class="panel-heading">Recipient Country
 									<a href="#" class="edit-element">edit</a>
 								</div>
-								<div class="panel-body panel-element-body row">
+								<div class="panel-body panel-level-1 row">
 									@foreach($recipient_organization_budget as $recipientOrgBudget)
 										<div class="panel panel-default">
 											<div class="panel-body panel-element-body row">
@@ -244,8 +246,9 @@
 											</div>
 										</div>
 										<div class="panel panel-default">
+											<div class="col-md-12 col-lg-12 panel-level-2">
 											<div class="panel-heading">Budget Line</div>
-											<div class="panel-body panel-element-body row">
+											<div class="panel-body row">
 												@foreach($recipientOrgBudget['budget_line'] as $recipientOrgBudgetLine)
 													<div class="panel panel-default">
 														<div class="panel-body panel-element-body row">
@@ -284,6 +287,7 @@
 														@endforeach
 													</div>
 												@endforeach
+											</div>
 											</div>
 										</div>
 									@endforeach

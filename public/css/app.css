@@ -679,6 +679,9 @@ label {
 .panel-level-1 .panel {
   margin-bottom: 0; }
 
+.panel-level-1 .panel + .panel {
+  margin-top: 20px; }
+
 .panel-level-2 {
   padding-right: 0;
   margin-top: 20px; }
