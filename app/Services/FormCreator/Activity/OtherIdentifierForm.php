@@ -43,6 +43,6 @@ class OtherIdentifierForm
                 'model'  => $modal,
                 'url'    => route('activity.other-identifier.update', [$activityId, 0])
             ]
-        )->add('Save', 'submit');
+        )->add('Save', 'submit', ['attr' => ['class' => 'btn btn-submit btn-form']]);
     }
 }

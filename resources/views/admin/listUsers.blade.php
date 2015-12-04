@@ -1,8 +1,10 @@
 @extends('app')
 @section('content')
-    <div class="container">
+    <div class="container main-container">
         <div class="row">
-            <div class="col-md-10 col-md-offset-1">
+            @include('includes.side_bar_menu')
+            <div class="col-xs-9 col-lg-9 content-wrapper">
+                @include('includes.breadcrumb')
                 <table class="table table-striped table-bordered">
                     <thead>
                     <tr>

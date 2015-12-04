@@ -30,7 +30,7 @@
 						<div class="panel panel-default">
 							<div class="panel-heading">
 								<img src="{{url('images/logo.png')}}" alt="">
-								<div class="title">Reset password</div>
+								<div class="panel-title">Reset password</div>
 							</div>
 							<div class="panel-body">
 								@if (session('status'))

@@ -49,6 +49,6 @@ class Identifier
                 'model'  => $data,
                 'url'    => route('activity.iati-identifier.update', [$activityId, 0])
             ]
-        )->add('Save', 'submit');
+        )->add('Save', 'submit', ['attr' => ['class' => 'btn btn-submit btn-form']]);
     }
 }

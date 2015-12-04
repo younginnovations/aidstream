@@ -56,9 +56,17 @@
                 </li>
             </ul>
  -->
-            <div class="pull-left add-new-activity">
-                <a href="{{route('activity.create') }}">Add a New Activity</a>
-            </div>
+            <ul class="nav navbar-nav pull-left add-new-activity">
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                           aria-expanded="false">Add a New Activity<span
+                                    class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="{{route('activity.create') }}">Add Activity Manually</a></li>
+                        <li><a href="{{route('wizard.activity.create') }}">Add Activity using Wizard</a></li>
+                    </ul>
+                </li>
+            </ul>
             <ul class="nav navbar-nav navbar-right navbar-admin-dropdown">
                 @if (Auth::guest())
                     <li><a href="{{ url('/auth/login') }}">@lang('trans.login')</a></li>
