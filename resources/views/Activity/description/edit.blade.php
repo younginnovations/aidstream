@@ -4,25 +4,27 @@
 
     {{Session::get('message')}}
 
-    <div class="container">
+    <div class="container main-container">
         <div class="row">
-            <div class="col-xs-8">
+        @include('includes.side_bar_menu')
+            <div class="col-xs-9 col-md-9 col-lg-9 content-wrapper">
+                @include('includes.breadcrumb')
+                <div class="panel-content-heading">Activity Identifier</div>
+                <div class="col-xs-8 col-md-8 col-lg-8 element-content-wrapper">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Activity Description</div>
-
                     <div class="panel-body">
                         <h3>{{ $activityData->IdentifierTitle }}</h3>
-                        {!! form($form) !!}
+                        <div class="create-form">
+                            {!! form($form) !!}
+                         </div>
                         <div class="collection-container hidden"
                              data-prototype="{{ form_row($form->description->prototype()) }}">
                         </div>
                     </div>
                 </div>
             </div>
-
-            <div class="col-xs-4">
-                @include('includes.activity.element_menu')
-            </div>
+            @include('includes.activity.element_menu')
         </div>
     </div>
+</div>
 @endsection

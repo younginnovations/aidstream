@@ -67,18 +67,18 @@
                                             <div class="col-xs-8">{{ $identifier['iati_identifier_text'] }}</div>
                                         </div>
                                     </div>
-                                </div>
+                            </div>
                         @endif
 
                         @if(!empty($otherIdentifiers))
                             <div class="panel panel-default">
                                 <div class="panel-heading">Other Identifier</div>
-                                <div class="panel-body">
+                                <div class="panel-body panel-level-1">
                                     @foreach($otherIdentifiers as $other_identifier)
                                         <div class="panel panel-default">
                                             <div class="panel-heading">{{$other_identifier['reference']}}</div>
-                                            <div class="panel-body panel-element-body row">
-                                                <div class="form-group clearfix">
+                                            <div class="panel-body row">
+                                                <div class="panel-element-body">
                                                     <div class="col-md-12">
                                                         <div class="col-xs-4">Reference</div>
                                                         <div class="col-xs-8">{{$other_identifier['reference']}}</div>
@@ -88,8 +88,7 @@
                                                         <div class="col-xs-8">{{$other_identifier['type']}}</div>
                                                     </div>
                                                 </div>
-
-                                                <div class="col-lg-12">
+                                                <div class="col-md-12 col-lg-12 panel-level-2">
                                                     <div class="panel panel-default">
                                                     <div class="panel-heading">Owner Org</div>
                                                     <div class="panel-body panel-element-body row">
@@ -207,8 +206,7 @@
                         @if(!empty($contactInfo))
                             <div class="panel panel-default">
                                 <div class="panel-heading">Contact Info</div>
-                                <div class="panel-body">
-                                    <div class="panel-body">
+                                <div class="panel-body panel-element-body">
                                         @foreach($contactInfo as $info)
                                         <div class="col-md-12">
                                             <div class="col-xs-4">Type</div>
@@ -273,7 +271,6 @@
                                                 @endforeach
                                             @endforeach
                                         @endforeach
-                                    </div>
                                 </div>
                             </div>
                         @endif
@@ -281,7 +278,7 @@
                         @if(!empty($activityScope))
                             <div class="panel panel-default">
                                 <div class="panel-heading">Activity Scope</div>
-                                    <div class="panel-body">
+                                    <div class="panel-body panel-element-body">
                                             <div class="col-md-12 clearfix">
                                                 <div class="col-xs-4">Code</div>
                                                 <div class="col-xs-8">{{ $activityScope }}</div>
@@ -293,7 +290,7 @@
                         @if(!empty($participatingOrganizations))
                             <div class="panel panel-default">
                                 <div class="panel-heading">Participating Organization</div>
-                                <div class="panel-body">
+                                <div class="panel-body panel-level-1">
                                     @foreach($participatingOrganizations as $participatingOrganization)
                                         <div class="panel panel-default">
                                             <div class="panel-heading">{{$participatingOrganization['organization_role']}}</div>
@@ -326,8 +323,7 @@
                         @if(!empty($recipientCountries))
                             <div class="panel panel-default">
                                 <div class="panel-heading">Recipient Country</div>
-                                <div class="panel-body">
-                                    <div class="panel-body">
+                                <div class="panel-body panel-level-1">
                                         @foreach($recipientCountries as $recipientCountry)
                                             <div class="panel panel-default">
                                                 <div class="panel-heading">{{$recipientCountry['country_code'] . ';' . $recipientCountry['percentage']}}</div>
@@ -349,7 +345,6 @@
                                                 </div>
                                             </div>
                                         @endforeach
-                                    </div>
                                 </div>
                             </div>
                         @endif

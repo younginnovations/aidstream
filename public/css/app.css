@@ -672,10 +672,23 @@ label {
   .element-panel-heading form {
     margin-top: 4px; }
 
+.panel-level-1 .panel-default .panel-heading {
+  font-size: 14px;
+  color: rgba(72, 72, 72, 0.7); }
+
+.panel-level-1 .panel {
+  margin-bottom: 0; }
+
+.panel-level-2 {
+  padding-right: 0;
+  margin-top: 20px; }
+
 .element-content-wrapper {
   padding: 0; }
   .element-content-wrapper .panel-heading {
     background: transparent; }
+  .element-content-wrapper h3 {
+    padding: 0 40px; }
 
 .activity-status {
   background: #fff5f5;
@@ -755,18 +768,21 @@ label {
 
 .panel-element-detail {
   padding: 0 36px; }
-  .panel-element-detail .panel-default {
+  .panel-element-detail > .panel-default {
     margin-bottom: 42px; }
   .panel-element-detail .panel-heading {
     font-size: 22px;
     padding: 0 0 10px;
     border: 0;
     background: transparent; }
+  .panel-element-detail > .panel-body > .panel {
+    margin-bottom: 40px; }
 
 .panel-element-body {
   -webkit-border-radius: 4px;
           border-radius: 4px;
-  background: #f9f9f9; }
+  background: #f9f9f9;
+  overflow: hidden; }
   .panel-element-body > .col-md-12 {
     border-bottom: 1px solid #f1f1f1;
     font-size: 12px;
@@ -871,9 +887,11 @@ label {
   .collection_form > .form-group {
     position: relative;
     margin-bottom: 0;
-    padding: 25px 110px 0 20px; }
+    padding: 25px 20px 0 20px; }
+    .collection_form > .form-group > .form-group > * {
+      width: 60%; }
   .collection_form > label {
-    padding: 20px 110px 0 20px; }
+    padding: 20px 20px 0 20px; }
 
 .collection_form > .form-group + .form-group {
   background: #F7FBFD;
@@ -904,5 +922,8 @@ label {
 
 .btn-form {
   width: 50%; }
+
+.modal-dialog {
+  z-index: 10000; }
 
 /*# sourceMappingURL=maps/app.css.map */
