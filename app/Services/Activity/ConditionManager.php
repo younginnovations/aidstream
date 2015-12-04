@@ -41,7 +41,7 @@ class ConditionManager
         $this->auth                 = $auth;
         $this->dbLogger             = $dbLogger;
         $this->logger               = $logger;
-        $this->iatiActivityDateRepo = $version->getActivityElement()->getCondition()->getRepository();
+        $this->iatiConditionRepo = $version->getActivityElement()->getCondition()->getRepository();
     }
 
     /**
@@ -53,7 +53,7 @@ class ConditionManager
     public function update(array $activityDetails, Activity $activity)
     {
         try {
-            $this->iatiActivityDateRepo->update($activityDetails, $activity);
+            $this->iatiConditionRepo->update($activityDetails, $activity);
             $this->logger->info(
                 'Condition Updated!',
                 ['for' => $activity->condition]
@@ -87,6 +87,6 @@ class ConditionManager
      */
     public function getConditionData($id)
     {
-        return $this->iatiActivityDateRepo->getConditionData($id);
+        return $this->iatiConditionRepo->getConditionData($id);
     }
 }

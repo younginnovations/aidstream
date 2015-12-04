@@ -13,9 +13,8 @@ class ActivityRepository
     /**
      * @param Activity $activity
      */
-    public function __construct(
-        Activity $activity
-    ) {
+    public function __construct(Activity $activity)
+    {
         $this->activity = $activity;
     }
 
@@ -53,5 +52,24 @@ class ActivityRepository
     public function getActivityData($activityId)
     {
         return $this->activity->findorFail($activityId);
+    }
+
+    /**
+     * @param array    $input
+     * @param Activity $activityData
+     * @return bool
+     */
+    public function updateStatus(array $input, Activity $activityData)
+    {
+        $activityData->activity_workflow = $input['activity_workflow'];
+        return $activityData->save();
+    }
+
+    /**
+     * @param $activity_id
+     */
+    public function resetActivityWorkflow($activity_id)
+    {
+        $this->activity->whereId($activity_id)->update(['activity_workflow' => 0]);
     }
 }

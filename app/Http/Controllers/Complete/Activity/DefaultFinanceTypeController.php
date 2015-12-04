@@ -62,9 +62,12 @@ class DefaultFinanceTypeController extends Controller
      */
     public function update($id, Request $request, DefaultFinanceTypeRequestManager $defaultFinanceTypeRequestManager)
     {
+        $this->authorize(['edit_activity', 'add_activity']);
         $defaultFinanceType = $request->all();
         $activityData       = $this->activityManager->getActivityData($id);
         if ($this->defaultFinanceTypeManager->update($defaultFinanceType, $activityData)) {
+            $this->activityManager->resetActivityWorkflow($id);
+
             return redirect()->to(sprintf('/activity/%s', $id))->withMessage('Activity Default Finance Type updated!');
         }
 

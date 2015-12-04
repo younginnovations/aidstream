@@ -53,4 +53,13 @@ class Transaction
     {
         return $this->transaction->findOrFail($transactionId);
     }
+
+    /**
+     * @param $activityId
+     * @return mixed
+     */
+    public function getTransactionData($activityId)
+    {
+        return $this->transaction->where('activity_id', $activityId)->get();
+    }
 }

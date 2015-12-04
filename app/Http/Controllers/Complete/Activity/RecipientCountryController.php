@@ -63,12 +63,13 @@ class RecipientCountryController extends Controller
      */
     public function update($id, Request $request, RecipientCountryRequestManager $recipientCountryRequestManager)
     {
+        $this->authorize(['edit_activity', 'add_activity']);
         $recipientCountry = $request->all();
         $activityData     = $this->activityManager->getActivityData($id);
         if ($this->recipientCountryManager->update($recipientCountry, $activityData)) {
-            return redirect()->to(sprintf('/activity/%s', $id))->withMessage(
-                'Recipient Country Updated!'
-            );
+            $this->activityManager->resetActivityWorkflow($id);
+
+            return redirect()->to(sprintf('/activity/%s', $id))->withMessage('Recipient Country Updated!');
         }
 
         return redirect()->back();

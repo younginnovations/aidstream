@@ -1,6 +1,7 @@
 <?php namespace App\Http\Controllers\Complete\Activity;
 
 use App\Http\Controllers\Controller;
+use App\Services\Activity\ActivityManager;
 use App\Services\Activity\TitleManager;
 use App\Services\FormCreator\Activity\Title;
 use App\Services\RequestManager\Activity\TitleRequestManager;
@@ -24,14 +25,16 @@ class TitleController extends Controller
 
 
     /**
-     * @param TitleManager $titleManager
-     * @param Title        $title
+     * @param TitleManager    $titleManager
+     * @param Title           $title
+     * @param ActivityManager $activityManager
      */
-    function __construct(TitleManager $titleManager, Title $title)
+    function __construct(TitleManager $titleManager, Title $title, ActivityManager $activityManager)
     {
         $this->middleware('auth');
-        $this->title        = $title;
-        $this->titleManager = $titleManager;
+        $this->title           = $title;
+        $this->titleManager    = $titleManager;
+        $this->activityManager = $activityManager;
     }
 
     /**
@@ -59,12 +62,13 @@ class TitleController extends Controller
      */
     public function update($id, Request $request, TitleRequestManager $titleRequestManager)
     {
+        $this->authorize(['edit_activity', 'add_activity']);
         $activityTitle = $request->all();
         $activityData  = $this->titleManager->getActivityData($id);
         if ($this->titleManager->update($activityTitle, $activityData)) {
-            return redirect()->to(sprintf('/activity/%s', $id))->withMessage(
-                'Activity Title Updated !'
-            );
+            $this->activityManager->resetActivityWorkflow($id);
+
+            return redirect()->to(sprintf('/activity/%s', $id))->withMessage('Activity Title Updated !');
         }
 
         return redirect()->back();

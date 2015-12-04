@@ -5,6 +5,7 @@ class BaseElement
 {
     public function buildNarrative($narratives)
     {
+        $narrativeData = [];
         foreach($narratives as $narrative)
         {
             $narrativeData[] = [

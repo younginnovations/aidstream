@@ -68,12 +68,13 @@ class ActivityScopeController extends Controller
      */
     public function update($id, Request $request, ActivityScopeRequestManager $activityScopeRequestManager)
     {
+        $this->authorize(['edit_activity', 'add_activity']);
         $activityStatus = $request->all();
         $activityData   = $this->activityManager->getActivityData($id);
         if ($this->activityScopeManager->update($activityStatus, $activityData)) {
-            return redirect()->to(sprintf('/activity/%s', $id))->withMessage(
-                'Activity Scope Updated!'
-            );
+            $this->activityManager->resetActivityWorkflow($id);
+
+            return redirect()->to(sprintf('/activity/%s', $id))->withMessage('Activity Scope Updated!');
         }
 
         return redirect()->back();

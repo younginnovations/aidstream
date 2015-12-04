@@ -90,6 +90,19 @@ class Activity extends Model
         return $this->belongsTo('App\Models\Organization\Organization', 'organization_id');
     }
 
+    /**
+     * @return array
+     */
+    public function getActivityDataListAttribute()
+    {
+        $activities = $this->toArray();
+        foreach ($activities as $activityIndex => $activity) {
+            !(null === $activities[$activityIndex]) ?: $activities[$activityIndex] = [];
+        }
+
+        return $activities;
+
+    }
 
     /**
      * Activity has many transaction

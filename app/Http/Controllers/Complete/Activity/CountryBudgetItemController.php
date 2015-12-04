@@ -53,9 +53,12 @@ class CountryBudgetItemController extends Controller
 
     public function update($id, Request $request, CountryBudgetItemRequestManager $countryBudgetItemRequestManager)
     {
+        $this->authorize(['edit_activity', 'add_activity']);
         $countryBudgetItem = $request->all();
         $activityData      = $this->activityManager->getActivityData($id);
         if ($this->countryBudgetItemManager->update($countryBudgetItem, $activityData)) {
+            $this->activityManager->resetActivityWorkflow($id);
+
             return redirect()->to(sprintf('/activity/%s', $id))->withMessage('Activity Country Budget Item Updated!');
         }
 

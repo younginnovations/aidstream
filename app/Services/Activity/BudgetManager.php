@@ -38,10 +38,10 @@ class BudgetManager
      */
     public function __construct(Version $version, Log $dbLogger, Guard $auth, LoggerInterface $logger)
     {
-        $this->auth                 = $auth;
-        $this->dbLogger             = $dbLogger;
-        $this->logger               = $logger;
-        $this->iatiActivityDateRepo = $version->getActivityElement()->getBudget()->getRepository();
+        $this->auth           = $auth;
+        $this->dbLogger       = $dbLogger;
+        $this->logger         = $logger;
+        $this->iatiBudgetRepo = $version->getActivityElement()->getBudget()->getRepository();
     }
 
     /**
@@ -53,7 +53,7 @@ class BudgetManager
     public function update(array $activityDetails, Activity $activity)
     {
         try {
-            $this->iatiActivityDateRepo->update($activityDetails, $activity);
+            $this->iatiBudgetRepo->update($activityDetails, $activity);
             $this->logger->info(
                 'Budget Updated!',
                 ['for' => $activity->budget]
@@ -87,6 +87,6 @@ class BudgetManager
      */
     public function getBudgetData($id)
     {
-        return $this->iatiActivityDateRepo->getBudgetData($id);
+        return $this->iatiBudgetRepo->getBudgetData($id);
     }
 }

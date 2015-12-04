@@ -4,6 +4,7 @@ use App\Core\V201\Requests\Activity\IatiIdentifierRequest;
 use App\Http\Controllers\Controller;
 use App\Services\Organization\OrganizationManager;
 use App\Services\SettingsManager;
+use Illuminate\Http\Request;
 use Illuminate\Session\SessionManager;
 use App\Services\Activity\ActivityManager;
 use App\Services\FormCreator\Activity\Identifier;
@@ -54,9 +55,7 @@ class ActivityController extends Controller
         $this->organization_id     = $this->sessionManager->get('org_id');
     }
 
-
     /**
-     * write brief description
      * @return \Illuminate\View\View
      */
     public function index()
@@ -107,7 +106,10 @@ class ActivityController extends Controller
      */
     public function show($id)
     {
-        return view('Activity.show', compact('id'));
+        $activityData     = $this->activityManager->getActivityData($id);
+        $activityDataList = $activityData->activity_data_list;
+
+        return view('Activity.show', compact('activityDataList', 'id'));
     }
 
     /**
@@ -120,6 +122,32 @@ class ActivityController extends Controller
     protected function createGateUnauthorizedException($ability, $arguments)
     {
         return new HttpException(403, 'This action is unauthorized.');
+    }
+
+    /**
+     * @param         $id
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function updateStatus($id, Request $request)
+    {
+        $input            = $request->all();
+        $activityData     = $this->activityManager->getActivityData($id);
+        $settings         = $this->settingsManager->getSettings($activityData['organization_id']);
+        $activityWorkflow = $input['activity_workflow'];
+        $transactionData  = $this->activityManager->getTransactionData($id);
+        $resultData       = $this->activityManager->getResultData($id);
+
+        $activityElement = $this->activityManager->getActivityElement();
+        $xmlService      = $activityElement->getActivityXmlService();
+
+        ($activityWorkflow == 3)
+            ? $xmlService->generateActivityXml($activityData, $transactionData, $resultData, $settings, $activityElement)
+            : '';
+
+        $this->activityManager->updateStatus($input, $activityData);
+
+        return redirect()->back();
     }
 
     public function destroy($id)
