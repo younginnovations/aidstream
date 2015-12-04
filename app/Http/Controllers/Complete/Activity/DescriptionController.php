@@ -32,11 +32,8 @@ class DescriptionController extends Controller
      * @param DescriptionManager $descriptionManager
      * @param ActivityManager    $activityManager
      */
-    function __construct(
-        DescriptionForm $description,
-        DescriptionManager $descriptionManager,
-        ActivityManager $activityManager
-    ) {
+    function __construct(DescriptionForm $description, DescriptionManager $descriptionManager, ActivityManager $activityManager)
+    {
         $this->middleware('auth');
         $this->description        = $description;
         $this->descriptionManager = $descriptionManager;
@@ -71,13 +68,31 @@ class DescriptionController extends Controller
     {
         $this->authorize(['edit_activity', 'add_activity']);
         $activityDescription = $request->all();
-        $activityData        = $this->activityManager->getActivityData($id);
+        if (!$this->validateDescription($request->get('description'))) {
+            return redirect()->back()->withInput()->withMessage('Description of same type is not allowed to be added.');
+        }
+        $activityData = $this->activityManager->getActivityData($id);
         if ($this->descriptionManager->update($activityDescription, $activityData)) {
             $this->activityManager->resetActivityWorkflow($id);
 
             return redirect()->to(sprintf('/activity/%s', $id))->withMessage('Activity Description Updated !');
         }
 
-        return redirect()->back();
+        return redirect()->back()->withInput();
+    }
+
+    /**
+     * validate description data based on description type
+     * @param $descriptions
+     * @return bool
+     */
+    private function validateDescription($descriptions)
+    {
+        $descriptionTypeList = [];
+        foreach ($descriptions as $description) {
+            $descriptionTypeList[] = $description['type'];
+        }
+
+        return count($descriptionTypeList) === count(array_unique($descriptionTypeList));
     }
 }

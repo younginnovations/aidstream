@@ -54,8 +54,8 @@ class OrganizationController extends Controller
      */
     public function show($id)
     {
-        $settings = $this->settingsManager->getSettings($id);
-        $organization                  = $this->organizationManager->getOrganization($id);
+        $settings     = $this->settingsManager->getSettings($id);
+        $organization = $this->organizationManager->getOrganization($id);
 
         if (!isset($organization->reporting_org[0])) {
             return redirect('/settings');
@@ -101,9 +101,16 @@ class OrganizationController extends Controller
         $orgElem    = $this->organizationManager->getOrganizationElement();
         $xmlService = $orgElem->getOrgXmlService();
 
-        ($status === 1)
-            ? $xmlService->validateOrgSchema($organization, $organizationData, $settings, $orgElem)
-            : $xmlService->generateOrgXml($organization, $organizationData, $settings, $orgElem);
+        if ($status === "1") {
+            $message = $xmlService->validateOrgSchema($organization, $organizationData, $settings, $orgElem);
+            if ($message !== '') {
+                return redirect()->back()->withMessage($message);
+            }
+        } else {
+            if ($status === "3") {
+                $xmlService->generateOrgXml($organization, $organizationData, $settings, $orgElem);
+            }
+        }
 
         $this->organizationManager->updateStatus($input, $organizationData);
 
