@@ -59,6 +59,7 @@ class DefaultFinanceTypeManagerTest extends AidStreamTestCase
         $user->shouldReceive('getAttribute')->twice()->with('organization')->andReturn($orgModel);
         $this->auth->shouldReceive('user')->twice()->andReturn($user);
         $activityModel = $this->activity;
+        $activityModel->shouldReceive('getAttribute')->with('id')->andreturn(1);
         $activityModel->shouldReceive('getAttribute')->once()->with('default_finance_type')->andReturn(
             'testDefaultFinanceType'
         );
@@ -75,9 +76,9 @@ class DefaultFinanceTypeManagerTest extends AidStreamTestCase
         $this->dbLogger->shouldReceive('activity')->once()->with(
             'activity.default_finance_type',
             [
-                'default_finance_type' => 'testDefaultFinanceType',
-                'organization'         => 'orgName',
-                'organization_id'      => 1
+                'activity_id'     => 1,
+                'organization'    => 'orgName',
+                'organization_id' => 1
             ]
         );
         $this->assertTrue(

@@ -38,10 +38,10 @@ class StepTwoManager
      */
     public function __construct(Version $version, Guard $auth, DatabaseManager $database, Logger $logger)
     {
-        $this->stepTwoRepo  = $version->getActivityElement()->getStepTwo()->getRepository();
-        $this->auth         = $auth;
-        $this->logger       = $logger;
-        $this->database     = $database;
+        $this->stepTwoRepo = $version->getActivityElement()->getStepTwo()->getRepository();
+        $this->auth        = $auth;
+        $this->logger      = $logger;
+        $this->database    = $database;
     }
 
     /**
@@ -63,8 +63,7 @@ class StepTwoManager
             $this->logger->activity(
                 "activity.step_two_completed",
                 [
-                    'title'           => $activityDetails['title'],
-                    'description'     => $activityDetails['description'],
+                    'activity_id'     => $activity->id,
                     'organization'    => $this->auth->user()->organization->name,
                     'organization_id' => $this->auth->user()->organization->id
                 ]

@@ -62,7 +62,7 @@ class ActivityManagerTest extends AidStreamTestCase
             ['for' => 'testActivityIdentifier']
         );
         $this->logger->shouldReceive('activity')->once()->with(
-            'activity.added',
+            'activity.activity_added',
             [
                 'identifier'      => 'testActivityIdentifier',
                 'organization'    => 'orgName',

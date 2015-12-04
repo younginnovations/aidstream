@@ -61,7 +61,7 @@ class LegacyDataManager
             $this->dbLogger->activity(
                 "activity.legacy_data_updated",
                 [
-                    'legacy_data'     => $activityDetails['legacy_data'],
+                    'activity_id'     => $activity->id,
                     'organization'    => $this->auth->user()->organization->name,
                     'organization_id' => $this->auth->user()->organization->id
                 ]

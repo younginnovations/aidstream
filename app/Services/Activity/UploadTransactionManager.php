@@ -73,13 +73,7 @@ class UploadTransactionManager
                 );
             }
             $this->logger->info("Transactions Uploaded for activity with id :" . $activity->id);
-            $this->dbLogger->activity(
-                "Transaction_uploaded",
-                [
-                    'activity_id' => $activity->id,
-                    'references'  => $references
-                ]
-            );
+            $this->dbLogger->activity("activity.transaction_uploaded", ['activity_id' => $activity->id]);
 
             return true;
         } catch (Exception $exception) {

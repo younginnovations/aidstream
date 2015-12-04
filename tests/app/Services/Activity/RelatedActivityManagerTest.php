@@ -55,6 +55,7 @@ class RelatedActivityManagerTest extends AidStreamTestCase
         $user->shouldReceive('getAttribute')->twice()->with('organization')->andReturn($organizationModel);
         $this->auth->shouldReceive('user')->twice()->andReturn($user);
         $activityModel = $this->activity;
+        $activityModel->shouldReceive('getAttribute')->with('id')->andreturn(1);
         $activityModel->shouldReceive('getAttribute')->once()->with('related_activity')->andReturn('relatedActivity');
         $this->relatedActivityRepository->shouldReceive('update')
                                         ->once()
@@ -70,9 +71,9 @@ class RelatedActivityManagerTest extends AidStreamTestCase
         $this->dbLogger->shouldReceive('activity')->once()->with(
             'activity.related_activity_updated',
             [
-                'related_activity' => 'relatedActivity',
-                'organization'     => 'organizationName',
-                'organization_id'  => 1
+                'activity_id'     => 1,
+                'organization'    => 'organizationName',
+                'organization_id' => 1
             ]
         );
         $this->assertTrue(

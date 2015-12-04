@@ -58,7 +58,7 @@ class UploadTransactionManagerTest extends AidStreamTestCase
         $this->uploadTransactionRepo->shouldReceive('upload')->with(['reference' => 'r'], $activity);
 
         $this->logger->shouldReceive('info')->once()->with('Transactions Uploaded for activity with id :1');
-        $this->dbLogger->shouldReceive('activity')->once()->with('Transaction_uploaded', ['activity_id' => 1, 'references' => []]);
+        $this->dbLogger->shouldReceive('activity')->once()->with('activity.transaction_uploaded', ['activity_id' => 1]);
         $this->assertTrue($this->uploadTransactionManager->save($transactionCsv, $activity));
     }
 
@@ -81,7 +81,7 @@ class UploadTransactionManagerTest extends AidStreamTestCase
         $this->uploadTransactionRepo->shouldReceive('update')->with(['reference' => 'r'], '');
 
         $this->logger->shouldReceive('info')->once()->with('Transactions Uploaded for activity with id :1');
-        $this->dbLogger->shouldReceive('activity')->once()->with('Transaction_uploaded', ['activity_id' => 1, 'references' => ['r' => '']]);
+        $this->dbLogger->shouldReceive('activity')->once()->with('activity.transaction_uploaded', ['activity_id' => 1]);
         $this->assertTrue($this->uploadTransactionManager->save($transactionCsv, $activity));
     }
 

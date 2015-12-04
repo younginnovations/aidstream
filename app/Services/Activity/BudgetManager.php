@@ -61,7 +61,7 @@ class BudgetManager
             $this->dbLogger->activity(
                 "activity.budget_updated",
                 [
-                    'budget'          => $activityDetails['budget'],
+                    'activity_id'     => $activity->id,
                     'organization'    => $this->auth->user()->organization->name,
                     'organization_id' => $this->auth->user()->organization->id
                 ]

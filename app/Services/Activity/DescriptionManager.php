@@ -54,7 +54,7 @@ class DescriptionManager
             $this->log->activity(
                 "activity.description_updated",
                 [
-                    'description'     => $activityDetails['description'],
+                    'activity_id'     => $activity->id,
                     'organization'    => $this->auth->user()->organization->name,
                     'organization_id' => $this->auth->user()->organization->id
                 ]

@@ -45,11 +45,12 @@ class RecipientCountryManagerTest extends AidStreamTestCase
     {
         $organizationModel = m::mock(Organization::class);
         $organizationModel->shouldReceive('getAttribute')->once()->with('name')->andReturn('organizationName');
-         $organizationModel->shouldReceive('getAttribute')->once()->with('id')->andReturn(1);
+        $organizationModel->shouldReceive('getAttribute')->once()->with('id')->andReturn(1);
         $user = m::mock('App\User');
         $user->shouldReceive('getAttribute')->twice()->with('organization')->andReturn($organizationModel);
         $this->auth->shouldReceive('user')->twice()->andReturn($user);
         $activityModel = $this->activity;
+        $activityModel->shouldReceive('getAttribute')->with('id')->andReturn(1);
         $activityModel->shouldReceive('getAttribute')->once()->with('recipient_country')->andReturn(
             'recipientCountry'
         );
@@ -67,9 +68,9 @@ class RecipientCountryManagerTest extends AidStreamTestCase
         $this->logger->shouldReceive('activity')->once()->with(
             'activity.recipient_country_updated',
             [
-                'recipientCountry' => 'recipientCountry',
-                'organization'     => 'organizationName',
-                'organization_id'  => 1
+                'activity_id'     => 1,
+                'organization'    => 'organizationName',
+                'organization_id' => 1
             ]
         );
         $this->assertTrue(

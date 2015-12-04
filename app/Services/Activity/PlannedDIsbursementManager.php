@@ -60,9 +60,9 @@ class PlannedDisbursementManager
             $this->dbLogger->activity(
                 "activity.planned_disbursement_updated",
                 [
-                    'planned_disbursement' => $activityDetails['planned_disbursement'],
-                    'organization'         => $this->auth->user()->organization->name,
-                    'organization_id'      => $this->auth->user()->organization->id
+                    'activity_id'     => $activity->id,
+                    'organization'    => $this->auth->user()->organization->name,
+                    'organization_id' => $this->auth->user()->organization->id
                 ]
             );
 

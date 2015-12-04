@@ -48,10 +48,11 @@ class LegacyDataManagerTest extends AidStreamTestCase
         $user->shouldReceive('getAttribute')->twice()->with('organization')->andReturn($organizationModel);
         $this->auth->shouldReceive('user')->twice()->andReturn($user);
         $activityModel = $this->activity;
+        $activityModel->shouldReceive('getAttribute')->with('id')->andreturn(1);
         $activityModel->shouldReceive('getAttribute')->once()->with('legacy_data')->andReturn('legacyData');
         $this->legacyDataRepository->shouldReceive('update')->once()->with(['legacy_data' => 'legacyData'], $activityModel)->andReturn(true);
         $this->logger->shouldReceive('info')->once()->with('Legacy Data Updated!', ['for' => 'legacyData']);
-        $this->dbLogger->shouldReceive('activity')->once()->with('activity.legacy_data_updated', ['legacy_data' => 'legacyData', 'organization' => 'organizationName', 'organization_id' => 1]);
+        $this->dbLogger->shouldReceive('activity')->once()->with('activity.legacy_data_updated', ['activity_id' => 1, 'organization' => 'organizationName', 'organization_id' => 1]);
         $this->assertTrue($this->legacyDataManager->update(['legacy_data' => 'legacyData'], $activityModel));
     }
 

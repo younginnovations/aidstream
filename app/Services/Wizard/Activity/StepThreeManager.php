@@ -63,8 +63,7 @@ class StepThreeManager
             $this->logger->activity(
                 "activity.step_three_completed",
                 [
-                    'activityStatus'  => $activityDetails['activity_status'],
-                    'activityDate'    => $activityDetails['activity_date'],
+                    'activity_id'     => $activity->id,
                     'organization'    => $this->auth->user()->organization->name,
                     'organization_id' => $this->auth->user()->organization->id
                 ]

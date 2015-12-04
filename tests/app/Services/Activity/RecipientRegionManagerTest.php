@@ -47,6 +47,7 @@ class RecipientRegionManagerTest extends AidStreamTestCase
         $user->shouldReceive('getAttribute')->twice()->with('organization')->andReturn($organizationModel);
         $this->auth->shouldReceive('user')->twice()->andReturn($user);
         $activityModel = $this->activity;
+        $activityModel->shouldReceive('getAttribute')->with('id')->andReturn(1);
         $activityModel->shouldReceive('getAttribute')->once()->with('recipient_region')->andReturn(
             'recipientRegion'
         );
@@ -64,7 +65,7 @@ class RecipientRegionManagerTest extends AidStreamTestCase
         $this->logger->shouldReceive('activity')->once()->with(
             'activity.recipient_region_updated',
             [
-                'recipientRegion' => 'recipientRegion',
+                'activity_id'     => 1,
                 'organization'    => 'organizationName',
                 'organization_id' => 1
             ]

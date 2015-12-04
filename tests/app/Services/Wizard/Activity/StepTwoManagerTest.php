@@ -51,6 +51,7 @@ class StepTwoManagerTest extends AidStreamTestCase
         $this->auth->shouldReceive('user')->twice()->andReturn($user);
         $activityModel = $this->activity;
         $activityModel->shouldReceive('getAttribute')->once()->with('title')->andReturn('testTitle');
+        $activityModel->shouldReceive('getAttribute')->with('id')->andReturn(1);
         $activityModel->shouldReceive('getAttribute')->once()->with('description')->andReturn('testDescription');
         $this->stepTwoRepo->shouldReceive('update')
                           ->once()
@@ -63,8 +64,7 @@ class StepTwoManagerTest extends AidStreamTestCase
         $this->logger->shouldReceive('activity')->once()->with(
             'activity.step_two_completed',
             [
-                'title'           => 'testTitle',
-                'description'     => 'testDescription',
+                'activity_id'     => 1,
                 'organization'    => 'orgName',
                 'organization_id' => 1
             ]

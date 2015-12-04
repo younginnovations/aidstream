@@ -61,9 +61,9 @@ class RelatedActivityManager
             $this->dbLogger->activity(
                 "activity.related_activity_updated",
                 [
-                    'related_activity' => $activityDetails['related_activity'],
-                    'organization'     => $this->auth->user()->organization->name,
-                    'organization_id'  => $this->auth->user()->organization->id
+                    'activity_id'     => $activity->id,
+                    'organization'    => $this->auth->user()->organization->name,
+                    'organization_id' => $this->auth->user()->organization->id
                 ]
             );
 

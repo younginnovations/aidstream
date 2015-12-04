@@ -54,7 +54,7 @@ class LocationManager
             $this->log->activity(
                 "activity.location_updated",
                 [
-                    'location'        => $input['location'],
+                    'activity_id'     => $activity->id,
                     'organization'    => $this->auth->user()->organization->name,
                     'organization_id' => $this->auth->user()->organization->id
                 ]

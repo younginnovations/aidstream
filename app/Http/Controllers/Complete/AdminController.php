@@ -40,7 +40,7 @@ class AdminController extends Controller
      */
     public function index()
     {
-        $activity = UserActivity::all();
+        $activity = UserActivity::with('user')->get();
 
         return view('admin.activityLog', compact('activity'));
     }

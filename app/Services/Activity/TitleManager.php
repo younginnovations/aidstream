@@ -55,7 +55,7 @@ class TitleManager
             $this->log->activity(
                 "activity.title_updated",
                 [
-                    'title'           => $activityDetails['narrative'],
+                    'activity_id' => $activity->id,
                     'organization'    => $this->auth->user()->organization->name,
                     'organization_id' => $this->auth->user()->organization->id
                 ]

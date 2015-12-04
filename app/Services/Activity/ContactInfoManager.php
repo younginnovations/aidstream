@@ -54,7 +54,7 @@ class ContactInfoManager
             $this->log->activity(
                 "activity.contact_info_updated",
                 [
-                    'contactInfo'     => $activityDetails['contact_info'],
+                    'activity_id'     => $activity->id,
                     'organization'    => $this->auth->user()->organization->name,
                     'organization_id' => $this->auth->user()->organization->id
                 ]

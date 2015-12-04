@@ -47,6 +47,7 @@ class SectorManagerTest extends AidStreamTestCase
         $user->shouldReceive('getAttribute')->twice()->with('organization')->andReturn($orgModel);
         $this->auth->shouldReceive('user')->twice()->andReturn($user);
         $activityModel = $this->activity;
+        $activityModel->shouldReceive('getAttribute')->with('id')->andReturn(1);
         $activityModel->shouldReceive('getAttribute')->once()->with('sector')->andReturn(
             'testSector'
         );
@@ -61,7 +62,7 @@ class SectorManagerTest extends AidStreamTestCase
         $this->logger->shouldReceive('activity')->once()->with(
             'activity.sector_updated',
             [
-                'sector'          => 'testSector',
+                'activity_id'     => 1,
                 'organization'    => 'orgName',
                 'organization_id' => 1
             ]

@@ -54,9 +54,9 @@ class RecipientCountryManager
             $this->log->activity(
                 "activity.recipient_country_updated",
                 [
-                    'recipientCountry' => $input['recipient_country'],
-                    'organization'     => $this->auth->user()->organization->name,
-                    'organization_id'  => $this->auth->user()->organization->id
+                    'activity_id'     => $activity->id,
+                    'organization'    => $this->auth->user()->organization->name,
+                    'organization_id' => $this->auth->user()->organization->id
                 ]
             );
 

@@ -13,7 +13,7 @@
                     <tbody>
                     @forelse($activity as $key => $value)
                         <tr>
-                            <td>{{ Auth::user()->name }}</td>
+                            <td>{{$value->user->username}}</td>
                             <td>{{trans($value->action,$value->param)}}</td>
                         </tr>
                     @empty

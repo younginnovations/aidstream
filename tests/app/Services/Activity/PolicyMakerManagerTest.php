@@ -55,6 +55,7 @@ class PolicyMakerManagerTest extends AidStreamTestCase
         $user->shouldReceive('getAttribute')->twice()->with('organization')->andReturn($organizationModel);
         $this->auth->shouldReceive('user')->twice()->andReturn($user);
         $activityModel = $this->activity;
+        $activityModel->shouldReceive('getAttribute')->with('id')->andreturn(1);
         $activityModel->shouldReceive('getAttribute')->once()->with('policy_maker')->andReturn('policyMaker');
         $this->policyMakerRepository->shouldReceive('update')
                                     ->once()
@@ -70,7 +71,7 @@ class PolicyMakerManagerTest extends AidStreamTestCase
         $this->dbLogger->shouldReceive('activity')->once()->with(
             'activity.policy_maker_updated',
             [
-                'policyMaker'     => 'policyMaker',
+                'activity_id'     => 1,
                 'organization'    => 'organizationName',
                 'organization_id' => 1
             ]
