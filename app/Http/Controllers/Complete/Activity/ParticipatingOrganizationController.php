@@ -70,13 +70,35 @@ class ParticipatingOrganizationController extends Controller
     {
         $this->authorize(['edit_activity', 'add_activity']);
         $participatingOrganization = $request->all();
-        $activityData              = $this->activityManager->getActivityData($id);
+        if (!$this->validateData($request->get('participating_organization'))) {
+            return redirect()->back()->withInput()->withMessage('At least one participating organization should be with role "Funding" or "Implementing"');
+        }
+        $activityData = $this->activityManager->getActivityData($id);
         if ($this->participatingOrganizationManager->update($participatingOrganization, $activityData)) {
             $this->activityManager->resetActivityWorkflow($id);
 
             return redirect()->to(sprintf('/activity/%s', $id))->withMessage('Activity Participating Organization Updated !');
         }
 
-        return redirect()->back();
+        return redirect()->back()->withInput()->withMessage('Activity Participating Organization couldn\'t be Updated !');
+    }
+
+    /**
+     * validated participating organization data based on roles
+     * @param array $data
+     * @return bool
+     */
+    private function validateData(array $data)
+    {
+        $check = false;
+        foreach ($data as $participatingOrg) {
+            $orgRole = $participatingOrg['organization_role'];
+            if ($orgRole === "1" || $orgRole == "4") {
+                $check = true;
+                break;
+            }
+        }
+
+        return $check;
     }
 }

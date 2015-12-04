@@ -1,0 +1,226 @@
+{
+  "date-last-modified": "2015-11-20T13:00:37.147470+00:00",
+  "version": "",
+  "name": "SectorCategory",
+  "xml:lang": "en",
+  "SectorCategory": [
+    {
+      "code": "111",
+      "name": "Education, level unspecified",
+      "language": "en",
+      "description": "Education sector policy, planning and programmes; aid to education ministries, administration and management systems; institution capacity building and advice; school management and governance; curriculum and materials development; unspecified education activities."
+    },
+    {
+      "code": "112",
+      "name": "Basic education",
+      "language": "en",
+      "description": "Formal and non-formal primary education for children; all elementary and first cycle systematic instruction; provision of learning materials."
+    },
+    {
+      "code": "113",
+      "name": "Secondary education",
+      "language": "en",
+      "description": "Second cycle systematic instruction at both junior and senior levels."
+    },
+    {
+      "code": "114",
+      "name": "Post-secondary education",
+      "language": "en",
+      "description": "Degree and diploma programmes at universities, colleges and polytechnics; scholarships."
+    },
+    {
+      "code": "121",
+      "name": "Health, general",
+      "language": "en",
+      "description": "Health sector policy, planning and programmes; aid to health ministries, public health administration; institution capacity building and advice; medical insurance programmes; unspecified health activities."
+    },
+    {
+      "code": "122",
+      "name": "Basic health",
+      "language": "en",
+      "description": "Basic and primary health care programmes; paramedical and nursing care programmes; supply of drugs, medicines and vaccines related to basic health care."
+    },
+    {
+      "code": "130",
+      "name": "POPULATION POLICIES/PROGRAMMES AND REPRODUCTIVE HEALTH",
+      "language": "en",
+      "description": "Population/development policies; census work, vital registration; migration data; demographic research/analysis; reproductive health research; unspecified population activities."
+    },
+    {
+      "code": "140",
+      "name": "WATER AND SANITATION",
+      "language": "en",
+      "description": "Water sector policy, planning and programmes; water legislation and management; institution capacity building and advice; water supply assessments and studies; groundwater, water quality and watershed studies; hydrogeology; excluding agricultural water resources (31140)."
+    },
+    {
+      "code": "151",
+      "name": "Government and civil society, general",
+      "language": "en",
+      "description": "Macro-economic, fiscal and monetary policy and planning; social planning; economic and social analysis and forecasting; development planning and preparation of structural reforms; organisational development; support to ministries involved in aid co-ordination; other ministries and government departments when sector cannot be specified. (Use code 51010 for budget support to macroeconomic reforms.)"
+    },
+    {
+      "code": "152",
+      "name": "Conflict prevention and resolution, peace and security",
+      "language": "en",
+      "description": "Technical co-operation provided to parliament, government ministries, law enforcement agencies and the judiciary to assist review and reform of the security system to improve democratic governance and civilian control; technical co-operation provided to government to improve civilian oversight and democratic control of budgeting, management, accountability and auditing of security expenditure, including military budgets, as part of a public expenditure management programme; assistance to civil society to enhance its competence and capacity to scrutinise the security system so that it is managed in accordance with democratic norms and principles of accountability, transparency and good governance."
+    },
+    {
+      "code": "160",
+      "name": "OTHER SOCIAL INFRASTRUCTURE AND SERVICES",
+      "language": "en",
+      "description": "Social legislation and administration; institution capacity building and advice; social security and other social schemes; special programmes for the elderly, orphans, the disabled, street children; social dimensions of structural adjustment; unspecified social infrastructure and services, including consumer protection."
+    },
+    {
+      "code": "210",
+      "name": "TRANSPORT AND STORAGE",
+      "language": "en",
+      "description": "Transport sector policy, planning and programmes; aid to transport ministries; institution capacity building and advice; unspecified transport; activities that combine road, rail, water and/or air transport."
+    },
+    {
+      "code": "220",
+      "name": "COMMUNICATION",
+      "language": "en",
+      "description": "Communications sector policy, planning and programmes; institution capacity building and advice; including postal services development; unspecified communications activities."
+    },
+    {
+      "code": "230",
+      "name": "ENERGY GENERATION AND SUPPLY",
+      "language": "en",
+      "description": "Energy sector policy, planning and programmes; aid to energy ministries; institution capacity building and advice; unspecified energy activities including energy conservation."
+    },
+    {
+      "code": "240",
+      "name": "BANKING AND FINANCIAL SERVICES",
+      "language": "en",
+      "description": "Finance sector policy, planning and programmes; institution capacity building and advice; financial markets and systems."
+    },
+    {
+      "code": "250",
+      "name": "BUSINESS AND OTHER SERVICES",
+      "language": "en",
+      "description": "Support to trade and business associations, chambers of commerce; legal and regulatory reform aimed at improving business and investment climate; private sector institution capacity building and advice; trade information; public-private sector networking including trade fairs; e?commerce. Where sector cannot be specified: general support to private sector enterprises (in particular, use code 32130 for enterprises in the industrial sector)."
+    },
+    {
+      "code": "311",
+      "name": "AGRICULTURE",
+      "language": "en",
+      "description": "Agricultural sector policy, planning and programmes; aid to agricultural ministries; institution capacity building and advice; unspecified agriculture."
+    },
+    {
+      "code": "312",
+      "name": "FORESTRY",
+      "language": "en",
+      "description": "Forestry sector policy, planning and programmes; institution capacity building and advice; forest surveys; unspecified forestry and agro-forestry activities."
+    },
+    {
+      "code": "313",
+      "name": "FISHING",
+      "language": "en",
+      "description": "Fishing sector policy, planning and programmes; institution capacity building and advice; ocean and coastal fishing; marine and freshwater fish surveys and prospecting; fishing boats/equipment; unspecified fishing activities."
+    },
+    {
+      "code": "321",
+      "name": "INDUSTRY",
+      "language": "en",
+      "description": "Industrial sector policy, planning and programmes; institution capacity building and advice; unspecified industrial activities; manufacturing of goods not specified below."
+    },
+    {
+      "code": "322",
+      "name": "MINERAL RESOURCES AND MINING",
+      "language": "en",
+      "description": "Mineral and mining sector policy, planning and programmes; mining legislation, mining cadastre, mineral resources inventory, information systems, institution capacity building and advice; unspecified mineral resources exploitation."
+    },
+    {
+      "code": "323",
+      "name": "CONSTRUCTION",
+      "language": "en",
+      "description": "Construction sector policy and planning; excluding construction activities within specific sectors (e.g., hospital or school construction)."
+    },
+    {
+      "code": "331",
+      "name": "TRADE POLICY AND REGULATIONS AND TRADE-RELATED ADJUSTMENT",
+      "language": "en",
+      "description": "Trade policy and planning; support to ministries and departments responsible for trade policy; trade-related legislation and regulatory reforms; policy analysis and implementation of multilateral trade agreements e.g. technical barriers to trade and sanitary and phytosanitary measures (TBT/SPS) except at regional level (see 33130); mainstreaming trade in national development strategies (e.g. poverty reduction strategy papers); wholesale/retail trade; unspecified trade and trade promotion activities."
+    },
+    {
+      "code": "332",
+      "name": "TOURISM",
+      "language": "en"
+    },
+    {
+      "code": "410",
+      "name": "General environmental protection",
+      "language": "en",
+      "description": "Environmental policy, laws, regulations and economic instruments; administrational institutions and practices; environmental and land use planning and decision-making procedures; seminars, meetings; miscellaneous conservation and protection measures not specified below."
+    },
+    {
+      "code": "430",
+      "name": "Other multisector",
+      "language": "en"
+    },
+    {
+      "code": "510",
+      "name": "General budget support",
+      "language": "en",
+      "description": "Unearmarked contributions to the government budget; support for the implementation of macroeconomic reforms (structural adjustment programmes, poverty reduction strategies); general programme assistance (when not allocable by sector)."
+    },
+    {
+      "code": "520",
+      "name": "Developmental food aid/Food security assistance",
+      "language": "en",
+      "description": "Supply of edible human food under national or international programmes including transport costs; cash payments made for food supplies; project food aid and food aid for market sales when benefiting sector not specified; excluding emergency food aid."
+    },
+    {
+      "code": "530",
+      "name": "Other commodity assistance",
+      "language": "en",
+      "description": "Capital goods and services; lines of credit."
+    },
+    {
+      "code": "600",
+      "name": "ACTION RELATING TO DEBT",
+      "language": "en",
+      "description": "Actions falling outside the code headings below; training in debt management."
+    },
+    {
+      "code": "720",
+      "name": "Emergency Response",
+      "language": "en",
+      "description": "Shelter, water, sanitation and health services, supply of medicines and other non-food relief items; assistance to refugees and internally displaced people in developing countries other than for food (72040) or protection (72050)."
+    },
+    {
+      "code": "730",
+      "name": "Reconstruction relief and rehabilitation",
+      "language": "en",
+      "description": "Short-term reconstruction work after emergency or conflict limited to restoring pre-existing infrastructure (e.g. repair or construction of roads, bridges and ports, restoration of essential facilities, such as water and sanitation, shelter, health care services); social and economic rehabilitation in the aftermath of emergencies to facilitate transition and enable populations to return to their previous livelihood or develop a new livelihood in the wake of an emergency situation (e.g. trauma counselling and treatment, employment programmes)."
+    },
+    {
+      "code": "740",
+      "name": "Disaster prevention and preparedness",
+      "language": "en",
+      "description": "Disaster risk reduction activities (e.g. developing knowledge, natural risks cartography, legal norms for construction); early warning systems; emergency contingency stocks and contingency planning including preparations for forced displacement."
+    },
+    {
+      "code": "910",
+      "name": "ADMINISTRATIVE COSTS OF DONORS",
+      "language": "en"
+    },
+    {
+      "code": "920",
+      "name": "SUPPORT TO NON- GOVERNMENTAL ORGANISATIONS (NGOs)",
+      "language": "en",
+      "description": "In the donor country."
+    },
+    {
+      "code": "930",
+      "name": "REFUGEES IN DONOR COUNTRIES",
+      "language": "en"
+    },
+    {
+      "code": "998",
+      "name": "UNALLOCATED/ UNSPECIFIED",
+      "language": "en",
+      "description": "Contributions to general development of the recipient should be included under programme assistance (51010)."
+    }
+  ]
+}

@@ -22,11 +22,12 @@ class DefaultFieldGroups
         $settings           = Settings::where('organization_id', Session::get('org_id'))->first();
         $defaultFieldGroups = $settings->default_field_groups[0];
 
-        $identification                       = array_merge(
+        $identification                      = isset($defaultFieldGroups['Identification']) ? $defaultFieldGroups['Identification'] : [];
+        $defaultFieldGroup['Identification'] = array_merge(
             ['reporting_organization' => 'Reporting Organization', 'iati_identifier' => 'Activity Identifier'],
-            $defaultFieldGroups['Identification']
+            $identification
         );
-        $defaultFieldGroups['Identification'] = $identification;
+        $defaultFieldGroups                  = $defaultFieldGroup + $defaultFieldGroups;
 
         return $defaultFieldGroups;
     }

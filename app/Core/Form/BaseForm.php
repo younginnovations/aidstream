@@ -129,9 +129,9 @@ class BaseForm extends Form
      * @param $choices
      * @return $this
      */
-    protected function addSelect($name, array $choices)
+    protected function addSelect($name, array $choices, $label = null)
     {
-        return $this->add($name, 'select', ['choices' => $choices]);
+        return $this->add($name, 'select', ['choices' => $choices, 'label' => $label]);
     }
 
     /**
