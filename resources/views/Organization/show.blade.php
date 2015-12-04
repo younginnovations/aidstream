@@ -1,9 +1,7 @@
 @extends('app')
-
 @section('content')
-
+	@inject('code', 'App\Helpers\GetCodeName')
     {{Session::get('message')}}
-
     <div class="container activity-container">
         <div class="row">
         	@include('includes.side_bar_menu')
@@ -29,7 +27,7 @@
                         </form>
                     @endif
                 </div>
-                <div class="col-xs-8 col-md-8 col-lg-8 element-content-wrapper">				
+                <div class="col-xs-8 col-md-8 col-lg-8 element-content-wrapper">
         	        <div class="activity-status activity-status-{{ $status_label[$status] }}">
 						<ol>
 							@foreach($status_label as $key => $val)
@@ -43,6 +41,7 @@
 					</div>
 	                <div class="panel panel-default panel-element-detail">
 	                    <div class="panel-body">
+
 						@if(!empty($reporting_org))
 						<div class="panel panel-default">
 							<div class="panel-heading">Reporting Organization
@@ -93,8 +92,385 @@
 							</div>
 						</div>
 						@endif
+
+						@if(!empty($total_budget))
+							<div class="panel panel-default">
+								<div class="panel-heading">Total Budget
+									<a href="#" class="edit-element">edit</a>
+								</div>
+								<div class="panel-body panel-element-body row">
+									@foreach($total_budget as $totalBudget)
+										<div class="panel panel-default">
+											<div class="panel-heading">Value</div>
+											<div class="panel-body row">
+												<div class="col-md-12">
+													<div class="col-xs-4">Text:</div>
+													<div class="col-xs-8">{{ $totalBudget['value'][0]['amount']}}</div>
+												</div>
+												<div class="col-md-12">
+													<div class="col-xs-4">Value Date:</div>
+													<div class="col-xs-8">{{ $totalBudget['value'][0]['value_date']}}</div>
+												</div>
+												<div class="col-md-12">
+													<div class="col-xs-4">Currency:</div>
+													<div class="col-xs-8">{{ $totalBudget['value'][0]['currency']}}</div>
+												</div>
+											</div>
+										</div>
+										<div class="panel panel-default">
+											<div class="panel-heading">Period Start</div>
+											<div class="panel-body row">
+												<div class="col-md-12">
+													<div class="col-xs-4">Iso Date:</div>
+													<div class="col-xs-8">{{ $totalBudget['period_start'][0]['date']}}</div>
+												</div>
+											</div>
+										</div>
+										<div class="panel panel-default">
+											<div class="panel-heading">Period End</div>
+											<div class="panel-body row">
+												<div class="col-md-12">
+													<div class="col-xs-4">Iso Date:</div>
+													<div class="col-xs-8">{{ $totalBudget['period_end'][0]['date']}}</div>
+												</div>
+											</div>
+										</div>
+										<div class="panel panel-default">
+											<div class="panel-heading">Budget Line</div>
+											<div class="panel-body row">
+												@foreach($totalBudget['budget_line'] as $budgetLine)
+													<div class="panel panel-default">
+														<div class="panel-body row">
+															<div class="col-md-12">
+																<div class="col-xs-4">Reference:</div>
+																<div class="col-xs-8">{{ $budgetLine['reference']}}</div>
+															</div>
+														</div>
+													</div>
+													<div class="panel panel-default">
+														<div class="panel-heading">Value</div>
+														<div class="panel-body row">
+															<div class="col-md-12">
+																<div class="col-xs-4">Text:</div>
+																<div class="col-xs-8">{{ $budgetLine['value'][0]['amount']}}</div>
+															<div class="col-md-12">
+																<div class="col-xs-4">Value Date:</div>
+																<div class="col-xs-8">{{ $budgetLine['value'][0]['value_date']}}</div>
+															</div>
+															<div class="col-md-12">
+																<div class="col-xs-4">Currency:</div>
+																<div class="col-xs-8">{{ $budgetLine['value'][0]['currency']}}</div>
+															</div>
+														</div>
+													</div>
+													<div class="panel panel-default">
+														@foreach($budgetLine['narrative'] as $budgetLineNarrative)
+															<div class="panel-heading">Narrative</div>
+															<div class="panel-body row">
+																<div class="col-md-12">
+																	<div class="col-xs-4">Text:</div>
+																	<div class="col-xs-8">{{ $budgetLineNarrative['narrative'] . ' [' . $budgetLineNarrative['language'] . ']' }}</div>
+																</div>
+															</div>
+														@endforeach
+													</div>
+												@endforeach
+											</div>
+										</div>
+									@endforeach
+								</div>
+							</div>
+						@endif
+
+						@if(!empty($recipient_organization_budget))
+							<div class="panel panel-default">
+								<div class="panel-heading">Recipient Country
+									<a href="#" class="edit-element">edit</a>
+								</div>
+								<div class="panel-body panel-element-body row">
+									@foreach($recipient_organization_budget as $recipientOrgBudget)
+										<div class="panel panel-default">
+											<div class="panel-body row">
+												<div class="col-md-12">
+													<div class="col-xs-4">ref:</div>
+													<div class="col-xs-8">{{ $recipientOrgBudget['recipient_organization'][0]['Ref'] }}</div>
+												</div>
+											</div>
+										</div>
+										<div class="panel panel-default">
+											@foreach($recipientOrgBudget['narrative'] as $recipientOrgBudgetNarrative)
+												<div class="panel-heading">Narrative</div>
+												<div class="panel-body row">
+													<div class="col-md-12">
+														<div class="col-xs-4">Text:</div>
+														<div class="col-xs-8">{{ $recipientOrgBudgetNarrative['narrative'] . ' [' . $recipientOrgBudgetNarrative['language'] . ']' }}</div>
+													</div>
+												</div>
+											@endforeach
+										</div>
+										<div class="panel panel-default">
+											<div class="panel-heading">Value</div>
+											<div class="panel-body row">
+												<div class="col-md-12">
+													<div class="col-xs-4">Text:</div>
+													<div class="col-xs-8">{{ $recipientOrgBudget['value'][0]['amount']}}</div>
+												</div>
+												<div class="col-md-12">
+													<div class="col-xs-4">Value Date:</div>
+													<div class="col-xs-8">{{ $recipientOrgBudget['value'][0]['value_date']}}</div>
+												</div>
+												<div class="col-md-12">
+													<div class="col-xs-4">Currency:</div>
+													<div class="col-xs-8">{{ $recipientOrgBudget['value'][0]['currency']}}</div>
+												</div>
+											</div>
+										</div>
+										<div class="panel panel-default">
+											<div class="panel-heading">Period Start</div>
+											<div class="panel-body row">
+												<div class="col-md-12">
+													<div class="col-xs-4">Iso Date:</div>
+													<div class="col-xs-8">{{ $recipientOrgBudget['period_start'][0]['date']}}</div>
+												</div>
+											</div>
+										</div>
+										<div class="panel panel-default">
+											<div class="panel-heading">Period End</div>
+											<div class="panel-body row">
+												<div class="col-md-12">
+													<div class="col-xs-4">Iso Date:</div>
+													<div class="col-xs-8">{{ $recipientOrgBudget['period_end'][0]['date']}}</div>
+												</div>
+											</div>
+										</div>
+										<div class="panel panel-default">
+											<div class="panel-heading">Budget Line</div>
+											<div class="panel-body row">
+												@foreach($recipientOrgBudget['budget_line'] as $recipientOrgBudgetLine)
+													<div class="panel panel-default">
+														<div class="panel-body row">
+															<div class="col-md-12">
+																<div class="col-xs-4">Reference:</div>
+																<div class="col-xs-8">{{ $recipientOrgBudgetLine['reference']}}</div>
+															</div>
+														</div>
+													</div>
+													<div class="panel panel-default">
+														<div class="panel-heading">Value</div>
+														<div class="panel-body row">
+															<div class="col-md-12">
+																<div class="col-xs-4">Text:</div>
+																<div class="col-xs-8">{{ $recipientOrgBudgetLine['value'][0]['amount']}}</div>
+															</div>
+															<div class="col-md-12">
+																<div class="col-xs-4">Value Date:</div>
+																<div class="col-xs-8">{{ $recipientOrgBudgetLine['value'][0]['value_date']}}</div>
+															</div>
+															<div class="col-md-12">
+																<div class="col-xs-4">Currency:</div>
+																<div class="col-xs-8">{{ $recipientOrgBudgetLine['value'][0]['currency']}}</div>
+														</div>
+													</div>
+													<div class="panel panel-default">
+														@foreach($recipientOrgBudgetLine['narrative'] as $recipientOrgBudgetLineNarrative)
+															<div class="panel-heading">Narrative</div>
+															<div class="panel-body row">
+																<div class="col-md-12">
+																	<div class="col-xs-4">Text:</div>
+																	<div class="col-xs-8">{{ $recipientOrgBudgetLineNarrative['narrative'] . ' [' . $recipientOrgBudgetLineNarrative['language'] . ']' }}</div>
+																</div>
+															</div>
+														@endforeach
+													</div>
+												@endforeach
+											</div>
+										</div>
+									@endforeach
+								</div>
+							</div>
+						@endif
+
+						@if(!empty($recipient_country_budget))
+							<div class="panel panel-default">
+								<div class="panel-heading">Recipient Country
+									<a href="#" class="edit-element">edit</a>
+								</div>
+								<div class="panel-body panel-element-body row">
+									@foreach($recipient_country_budget as $recipientCountryBudget)
+										<div class="panel panel-default">
+											<div class="panel-body row">
+												<div class="col-md-12">
+													<div class="col-xs-4">Code:</div>
+													<div class="col-xs-8">{{ $code->getOrganizationCodeName('Country', $recipientCountryBudget['recipient_country'][0]['code'])}}</div>
+												</div>
+												@foreach($recipientCountryBudget['recipient_country'][0]['narrative'] as $recipientCountryNarrative)
+													<div class="col-md-12">
+														<div class="col-xs-4">Text:</div>
+														<div class="col-xs-8">{{ $recipientCountryNarrative['narrative'] . ' [' . $recipientCountryNarrative['language'] . ']' }}</div>
+													</div>
+												@endforeach
+											</div>
+										</div>
+										<div class="panel panel-default">
+											<div class="panel-heading">Value</div>
+											<div class="panel-body row">
+												<div class="col-md-12">
+													<div class="col-xs-4">Text:</div>
+													<div class="col-xs-8">{{ $recipientCountryBudget['value'][0]['amount']}}</div>
+												</div>
+												<div class="col-md-12">
+													<div class="col-xs-4">Value Date:</div>
+													<div class="col-xs-8">{{ $recipientCountryBudget['value'][0]['value_date']}}</div>
+												</div>
+												<div class="col-md-12">
+													<div class="col-xs-4">Currency:</div>
+													<div class="col-xs-8">{{ $recipientCountryBudget['value'][0]['currency']}}</div>
+												</div>
+											</div>
+										</div>
+										<div class="panel panel-default">
+											<div class="panel-heading">Period Start</div>
+											<div class="panel-body row">
+												<div class="col-md-12">
+													<div class="col-xs-4">Iso Date:</div>
+													<div class="col-xs-8">{{ $recipientCountryBudget['period_start'][0]['date']}}</div>
+												</div>
+											</div>
+										</div>
+										<div class="panel panel-default">
+											<div class="panel-heading">Period End</div>
+											<div class="panel-body row">
+												<div class="col-md-12">
+													<div class="col-xs-4">Iso Date:</div>
+													<div class="col-xs-8">{{ $recipientCountryBudget['period_end'][0]['date']}}</div>
+												</div>
+											</div>
+										</div>
+										<div class="panel panel-default">
+											<div class="panel-heading">Budget Line</div>
+											<div class="panel-body row">
+												@foreach($recipientCountryBudget['budget_line'] as $recipientCountryBudgetLine)
+													<div class="panel panel-default">
+														<div class="panel-body row">
+															<div class="col-md-12">
+																<div class="col-xs-4">Reference:</div>
+																<div class="col-xs-8">{{ $recipientCountryBudgetLine['reference']}}</div>
+															</div>
+														</div>
+													</div>
+													<div class="panel panel-default">
+														<div class="panel-heading">Value</div>
+														<div class="panel-body row">
+															<div class="col-md-12">
+																<div class="col-xs-4">Text:</div>
+																<div class="col-xs-8">{{ $recipientCountryBudgetLine['value'][0]['amount']}}</div>
+															</div>
+															<div class="col-md-12">
+																<div class="col-xs-4">Value Date:</div>
+																<div class="col-xs-8">{{ $recipientCountryBudgetLine['value'][0]['value_date']}}</div>
+															</div>
+															<div class="col-md-12">
+																<div class="col-xs-4">Currency:</div>
+																<div class="col-xs-8">{{ $recipientCountryBudgetLine['value'][0]['currency']}}</div>
+															</div>
+														</div>
+													</div>
+													<div class="panel panel-default">
+														@foreach($recipientCountryBudgetLine['narrative'] as $recipientCountryBudgetLineNarrative)
+															<div class="panel-heading">Narrative</div>
+															<div class="panel-body row">
+																<div class="col-md-12">
+																	<div class="col-xs-4">Text:</div>
+																	<div class="col-xs-8">{{ $recipientCountryBudgetLineNarrative['narrative'] . ' [' . $recipientCountryBudgetLineNarrative['language'] . ']' }}</div>
+																</div>
+															</div>
+														@endforeach
+													</div>
+												@endforeach
+											</div>
+										</div>
+									@endforeach
+								</div>
+							</div>
+						@endif
+
+						@if(!empty($document_link))
+							<div class="panel panel-default">
+								<div class="panel-heading">Document Link
+									<a href="#" class="edit-element">edit</a>
+								</div>
+								<div class="panel-body panel-element-body row">
+									@foreach($document_link as $documentLink)
+										<div class="panel panel-default">
+											<div class="panel-body row">
+												<div class="col-md-12">
+													<div class="col-xs-4">Url:</div>
+													<div class="col-xs-8">{{ $documentLink['url']}}</div>
+												</div>
+												<div class="col-md-12">
+													<div class="col-xs-4">Format:</div>
+													<div class="col-xs-8">{{ $documentLink['format']}}</div>
+												</div>
+												@foreach($documentLink['narrative'] as $documentLinkNarrative)
+													<div class="col-md-12">
+														<div class="col-xs-4">Narrative Text:</div>
+														<div class="col-xs-8">{{ $documentLinkNarrative['narrative'] . ' [' . $documentLinkNarrative['language'] . ']' }}</div>
+													</div>
+												@endforeach
+											</div>
+										</div>
+										<div class="panel panel-default">
+											<div class="panel-heading">Category</div>
+											@foreach($documentLink['category'] as $documentLinkCategory)
+												<div class="panel-body row">
+													<div class="col-md-12">
+														<div class="col-xs-4">Code:</div>
+														<div class="col-xs-8">{{ $code->getOrganizationCodeName('DocumentCategory', $documentLinkCategory['code'])}}</div>
+													</div>
+												</div>
+											@endforeach
+										</div>
+										<div class="panel panel-default">
+											<div class="panel-heading">Language</div>
+											@foreach($documentLink['language'] as $documentLinkLanguage)
+												<div class="panel-body row">
+													<div class="col-md-12">
+														<div class="col-xs-4">Code:</div>
+														<div class="col-xs-8">{{ $code->getOrganizationCodeName('Language', $documentLinkLanguage['language'])}}</div>
+													</div>
+												</div>
+											@endforeach
+										</div>
+										<div class="panel panel-default">
+											<div class="panel-heading">Recipient Country</div>
+											@foreach($documentLink['recipient_country'] as $documentLinkRecipientCountry)
+												<div class="panel-body row">
+													<div class="col-md-12">
+														<div class="col-xs-4">Code:</div>
+														<div class="col-xs-8">{{ $code->getOrganizationCodeName('Country', $documentLinkRecipientCountry['code'])}}</div>
+													</div>
+												</div>
+												<div class="panel panel-default">
+													@foreach($documentLinkRecipientCountry['narrative'] as $documentLinkNarrative)
+														<div class="panel-heading">Narrative</div>
+														<div class="panel-body row">
+															<div class="col-md-12">
+																<div class="col-xs-4">Text:</div>
+																<div class="col-xs-8">{{ $documentLinkNarrative['narrative'] . ' [' . $documentLinkNarrative['language'] . ']' }}</div>
+															</div>
+														</div>
+													@endforeach
+												</div>
+											@endforeach
+										</div>
+									@endforeach
+								</div>
+							</div>
+						@endif
 					</div>
 				</div>
+			</div>
+			</div>
 			</div>
             <div class="col-xs-4 col-md-4 col-lg-4 element-sidebar-wrapper">
                 @include('includes.menu_org')

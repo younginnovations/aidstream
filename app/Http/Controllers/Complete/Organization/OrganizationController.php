@@ -83,7 +83,6 @@ class OrganizationController extends Controller
                 'status'
             )
         );
-
     }
 
     /**
