@@ -17,19 +17,16 @@ class XmlService extends XmlGenerator
      */
     public function validateOrgSchema($organization, $organizationData, $settings, $orgElem)
     {
+        $message = '';
         try {
             $xml = $this->getXml($organization, $organizationData, $settings, $orgElem);
             $xml->schemaValidate(app_path('/Core/V201/XmlSchema/iati-organisations-schema.xsd'));
         } catch (\Exception $e) {
             $message = $e->getMessage();
             $message = str_replace('DOMDocument::schemaValidate(): ', '', $message);
-
-            return redirect()->back()->withMessage($message);
         }
 
-        if (!isset($organization->reporting_org) || !isset($organizationData->name)) {
-            return redirect()->back()->withMessage('Organization data is not Complete.');
-        }
+        return $message;
     }
 
     /**

@@ -80,10 +80,12 @@ $(document).ready(function () {
         $('.field1').not('[readonly="readonly"]').prop('checked', this.checked);
     });
 
-    $('input[readonly="readonly"]').click(function (e) {
+    $('input[type="checkbox"][readonly="readonly"]').change(function () {
+        $(this).prop('checked', !this.checked);
+    });
+    $('form').delegate('select[readonly=readonly]', 'mousedown', function (e) {
         e.preventDefault();
     });
-    $('select[readonly=readonly] option:not(:selected)').prop('disabled', true);
 
     /*
      * Confirmation for form submission
