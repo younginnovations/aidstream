@@ -22,8 +22,9 @@ class TiedStatus extends BaseForm
                 'tied_status_code',
                 'select',
                 [
-                    'choices' => $this->getTiedStatusCodeList(),
-                    'attr'    => ['class' => 'form-control tied_status_code']
+                    'choices'     => $this->getTiedStatusCodeList(),
+                    'empty_value' => 'Select one of the following option :',
+                    'attr'        => ['class' => 'form-control tied_status_code']
                 ]
             );
     }

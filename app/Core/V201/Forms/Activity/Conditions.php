@@ -15,8 +15,9 @@ class Conditions extends BaseForm
                 'condition_attached',
                 'select',
                 [
-                    'choices' => ['0' => 'No', '1' => 'Yes'],
-                    'label'   => 'Condition Attached'
+                    'choices'     => ['0' => 'No', '1' => 'Yes'],
+                    'empty_value' => 'Select one of the following option :',
+                    'label'       => 'Condition Attached'
                 ]
             )
             ->addCollection('condition', 'Activity\Condition', 'condition')

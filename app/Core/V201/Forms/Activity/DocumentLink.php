@@ -12,7 +12,8 @@ class DocumentLink extends BaseForm
                 'format',
                 'select',
                 [
-                    'choices' => $this->getCodeList('FileFormat', 'Activity')
+                    'choices'     => $this->getCodeList('FileFormat', 'Activity'),
+                    'empty_value' => 'Select one of the following option :'
                 ]
             )
             ->addCollection('title', 'Activity\Title')

@@ -22,8 +22,9 @@ class FlowType extends BaseForm
                 'flow_type',
                 'select',
                 [
-                    'choices' => $this->getFlowTypeCodeList(),
-                    'attr'    => ['class' => 'form-control flow_type']
+                    'choices'     => $this->getFlowTypeCodeList(),
+                    'empty_value' => 'Select one of the following option :',
+                    'attr'        => ['class' => 'form-control flow_type']
                 ]
             );
     }

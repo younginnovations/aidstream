@@ -20,7 +20,8 @@ class RecipientCountry extends BaseForm
                 'country_code',
                 'select',
                 [
-                    'choices' => $this->getCodeList('Country', 'Organization'),
+                    'choices'     => $this->getCodeList('Country', 'Organization'),
+                    'empty_value' => 'Select one of the following option :'
                 ]
             )
             ->addPercentage()

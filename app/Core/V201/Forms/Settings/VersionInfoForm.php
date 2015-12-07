@@ -13,8 +13,9 @@ class VersionInfoForm extends Form
                 'version',
                 'select',
                 [
-                    'label'   => 'Select Version',
-                    'choices' => $this->getData('versions')
+                    'label'       => 'Select Version',
+                    'choices'     => $this->getData('versions'),
+                    'empty_value' => 'Select one of the following option :',
                 ]
             );
     }

@@ -12,14 +12,16 @@ class DefaultFieldValuesForm extends BaseForm
                 'default_currency',
                 'select',
                 [
-                    'choices' => $this->getCodeList('Currency', 'Organization')
+                    'choices'     => $this->getCodeList('Currency', 'Organization'),
+                    'empty_value' => 'Select one of the following option :'
                 ]
             )
             ->add(
                 'default_language',
                 'select',
                 [
-                    'choices' => $this->getCodeList('Language', 'Organization')
+                    'choices'     => $this->getCodeList('Language', 'Organization'),
+                    'empty_value' => 'Select one of the following option :'
                 ]
             )
             ->add('default_hierarchy', 'text')
@@ -27,35 +29,40 @@ class DefaultFieldValuesForm extends BaseForm
                 'default_collaboration_type',
                 'select',
                 [
-                    'choices' => $this->getCodeList('CollaborationType', 'Organization')
+                    'choices'     => $this->getCodeList('CollaborationType', 'Organization'),
+                    'empty_value' => 'Select one of the following option :',
                 ]
             )
             ->add(
                 'default_flow_type',
                 'select',
                 [
-                    'choices' => $this->getCodeList('FlowType', 'Organization')
+                    'choices'     => $this->getCodeList('FlowType', 'Organization'),
+                    'empty_value' => 'Select one of the following option :',
                 ]
             )
             ->add(
                 'default_finance_type',
                 'select',
                 [
-                    'choices' => $this->getCodeList('FinanceType', 'Organization')
+                    'choices'     => $this->getCodeList('FinanceType', 'Organization'),
+                    'empty_value' => 'Select one of the following option :',
                 ]
             )
             ->add(
                 'default_aid_type',
                 'select',
                 [
-                    'choices' => $this->getCodeList('AidType', 'Organization')
+                    'choices'     => $this->getCodeList('AidType', 'Organization'),
+                    'empty_value' => 'Select one of the following option :',
                 ]
             )
             ->add(
                 'Default_tied_status',
                 'select',
                 [
-                    'choices' => $this->getCodeList('TiedStatus', 'Organization')
+                    'choices'     => $this->getCodeList('TiedStatus', 'Organization'),
+                    'empty_value' => 'Select one of the following option :',
                 ]
             );
     }

@@ -18,7 +18,8 @@ class BudgetItem extends BaseForm
                 'code',
                 'select',
                 [
-                    'choices' => $this->getCodeList('BudgetIdentifier', 'Activity'),
+                    'choices'     => $this->getCodeList('BudgetIdentifier', 'Activity'),
+                    'empty_value' => 'Select one of the following option :',
                 ]
             )
             ->addPercentage()

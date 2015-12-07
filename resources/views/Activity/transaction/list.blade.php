@@ -5,6 +5,7 @@
             <div class="col-md-8">
                 <h3>{{ $activity->IdentifierTitle }}</h3>
                 <strong>Transactions</strong>
+                @if(count($activity->getTransactions()) > 0)
                 <table class="table table-striped table-bordered">
                     <thead>
                     <tr>
@@ -16,7 +17,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @forelse($activity->getTransactions() as  $transaction)
+                    @foreach($activity->getTransactions() as  $transaction)
                         <tr>
                             <td>{{ $transaction['reference'] }}</td>
                             <td>{{ $transaction['transaction_type'][0]['transaction_type_code'] }}</td>
@@ -31,16 +32,12 @@
                                 {!! Form::close() !!}
                             </td>
                         </tr>
-                    @empty
-                        <tr>
-                            <td align="center" colspan="5">
-                                No Transactions::
-                            </td>
-                        </tr>
-
-                    @endforelse
+                    @endforeach
                     </tbody>
                 </table>
+                @else
+                    <div class="text-center no-data">No Transactions Created Yet::</div>
+                @endif
                 <a href="{{ route('activity.transaction.create', $id) }}" class="btn btn-primary">Add New Transaction</a>
                 <a href="{{ route('activity.transaction-upload.index', $id) }}" class="btn btn-primary">Upload Transaction</a>
             </div>

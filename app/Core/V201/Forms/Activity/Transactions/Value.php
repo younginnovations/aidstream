@@ -20,6 +20,6 @@ class Value extends BaseForm
         $this
             ->add('amount', 'text')
             ->add('date', 'date', ['label' => 'Value Date'])
-            ->add('currency', 'select', ['choices' => $this->getCurrencyCodeList(), 'attr' => ['class' => 'form-control currency']]);
+            ->add('currency', 'select', ['choices' => $this->getCurrencyCodeList(), 'empty_value' => 'Select one of the following option :', 'attr' => ['class' => 'form-control currency']]);
     }
 }

@@ -12,8 +12,9 @@ class DocumentLinkForm extends BaseForm
                 'format',
                 'select',
                 [
-                    'choices' => $this->getCodeList('FileFormat', 'Organization'),
-                    'label'   => 'Format'
+                    'choices'     => $this->getCodeList('FileFormat', 'Organization'),
+                    'empty_value' => 'Select one of the following option :',
+                    'label'       => 'Format'
                 ]
             )
             ->addNarrative('narrative')

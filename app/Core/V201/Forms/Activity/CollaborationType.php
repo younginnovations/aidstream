@@ -18,7 +18,8 @@ class CollaborationType extends BaseForm
                 'collaboration_type',
                 'select',
                 [
-                    'choices' => $this->getCodeList('CollaborationType', 'Activity'),
+                    'choices'     => $this->getCodeList('CollaborationType', 'Activity'),
+                    'empty_value' => 'Select one of the following option :'
                 ]
             );
     }

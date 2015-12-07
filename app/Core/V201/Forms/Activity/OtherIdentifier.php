@@ -17,8 +17,9 @@ class OtherIdentifier extends BaseForm
                 'type',
                 'select',
                 [
-                    'choices' => $this->getCodeList('OtherIdentifierType', 'Activity'),
-                    'label'   => 'Type'
+                    'choices'     => $this->getCodeList('OtherIdentifierType', 'Activity'),
+                    'empty_value' => 'Select one of the following option :',
+                    'label'       => 'Type'
                 ]
             )
             ->addCollection('owner_org', 'Activity\OwnerOrg', 'owner_organization')

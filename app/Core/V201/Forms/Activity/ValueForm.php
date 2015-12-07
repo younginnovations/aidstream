@@ -16,8 +16,9 @@ class ValueForm extends BaseForm
                 'currency',
                 'select',
                 [
-                    'choices' => $this->getCodeList('Currency', 'Activity'),
-                    'label'   => 'Currency'
+                    'choices'     => $this->getCodeList('Currency', 'Activity'),
+                    'empty_value' => 'Select one of the following option :',
+                    'label'       => 'Currency'
                 ]
             )
             ->add('value_date', 'date');

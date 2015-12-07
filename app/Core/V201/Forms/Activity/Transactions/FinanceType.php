@@ -22,8 +22,9 @@ class FinanceType extends BaseForm
                 'finance_type',
                 'select',
                 [
-                    'choices' => $this->getFinanceTypeCodeList(),
-                    'attr'    => ['class' => 'form-control finance_type']
+                    'choices'     => $this->getFinanceTypeCodeList(),
+                    'empty_value' => 'Select one of the following option :',
+                    'attr'        => ['class' => 'form-control finance_type']
                 ]
             );
     }

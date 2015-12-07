@@ -18,8 +18,9 @@ class PlannedDisbursement extends BaseForm
                 'planned_disbursement_type',
                 'select',
                 [
-                    'choices' => $this->getCodeList('BudgetType', 'Activity'),
-                    'label'   => 'Type'
+                    'choices'     => $this->getCodeList('BudgetType', 'Activity'),
+                    'empty_value' => 'Select one of the following option :',
+                    'label'       => 'Type'
                 ]
             )
             ->addCollection('period_start', 'Activity\PeriodStart')

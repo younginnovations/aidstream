@@ -22,7 +22,8 @@ class RecipientCountry extends BaseForm
                 'country_code',
                 'select',
                 [
-                    'choices' => $this->getCountryCodeList(),
+                    'choices'     => $this->getCountryCodeList(),
+                    'empty_value' => 'Select one of the following option :',
                 ]
             )
             ->addNarrative('narrative')

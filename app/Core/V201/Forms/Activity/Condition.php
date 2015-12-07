@@ -18,8 +18,9 @@ class Condition extends BaseForm
                 'condition_type',
                 'select',
                 [
-                    'choices' => $this->getCodeList('ConditionType', 'Activity'),
-                    'label'   => 'Condition Type'
+                    'choices'     => $this->getCodeList('ConditionType', 'Activity'),
+                    'empty_value' => 'Select one of the following option :',
+                    'label'       => 'Condition Type'
                 ]
             )
             ->addNarrative('narrative')

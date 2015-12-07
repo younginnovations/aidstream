@@ -5,6 +5,7 @@
             @include('includes.side_bar_menu')
             <div class="col-xs-9 col-lg-9 content-wrapper">
                 @include('includes.breadcrumb')
+                @if(count($users) > 0)
                 <table class="table table-striped table-bordered">
                     <thead>
                     <tr>
@@ -15,7 +16,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @forelse($users as $key => $value)
+                    @foreach($users as $key => $value)
                         <tr>
                             <td>{{ $key+1 }}</td>
                             <td>{{ $value->first_name}} {{$value->last_name}}</td>
@@ -27,14 +28,12 @@
                                 {!! Form::close() !!}
                             </td>
                         </tr>
-                    @empty
-                        <tr>
-                            <td align="center" colspan="4">No users yet</td>
-                        </tr>
-
-                    @endforelse
+                    @endforeach
                     </tbody>
                 </table>
+                @else
+                    <div class="text-center no-data">No users yet :: </div>
+                @endif
                 <a href="{{ route('admin.register-user') }}" class="btn btn-primary">Add User</a>
             </div>
         </div>

@@ -6,9 +6,8 @@
             <div class="col-xs-8">
                 <div class="panel panel-default">
                     <div class="panel-heading">Group Organisations</div>
-
                     <div class="panel-body">
-
+                        @if(count($organizations) > 0)
                         <table class="table table-striped">
                             <thead>
                             <tr>
@@ -19,7 +18,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @forelse($organizations as $key=>$organization)
+                            @foreach($organizations as $key=>$organization)
                                 <tr>
                                     <td>{{ $key + 1 }}</td>
                                     <td>{{ $organization->group_name}}</td>
@@ -31,13 +30,12 @@
                                         </div>
                                     </td>
                                 </tr>
-                            @empty
-                                <tr>
-                                    <td colspan="6" class="text-center">No Organization has been grouped Yet.</td>
-                                </tr>
-                            @endforelse
+                            @endforeach
                             </tbody>
                         </table>
+                        @else
+                            <div class="text-center no-data">No Organization has been grouped Yet ::</div>
+                        @endif
                         <a href="{{ route('admin.create-organization-group') }}" class="btn btn-primary">Create Organization Group</a>
                     </div>
                 </div>

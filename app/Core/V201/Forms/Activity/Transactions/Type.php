@@ -22,8 +22,9 @@ class Type extends BaseForm
                 'transaction_type_code',
                 'select',
                 [
-                    'choices' => $this->getTransactionTypeCodeList(),
-                    'attr'    => ['class' => 'form-control transaction_type']
+                    'choices'     => $this->getTransactionTypeCodeList(),
+                    'empty_value' => 'Select one of the following option :',
+                    'attr'        => ['class' => 'form-control transaction_type']
                 ]
             );
     }
