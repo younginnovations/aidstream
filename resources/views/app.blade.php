@@ -33,21 +33,20 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand"
-               href="#">{{Auth::user() ? "Aidstream(" . Session::get('version') . ")" : "Aidstream"}}</a>
+            <a class="navbar-brand" href="{{ Auth::user()->role_id == 3 ? url('admin/dashboard') : url('/')  }}" style="text-indent: 145px; line-height: 35px;" alt="Aidstream">{{Auth::user() ? "(" . Session::get('version') . ")" : "Aidstream"}}</a>
         </div>
 
         <div class="collapse navbar-collapse navbar-right" id="bs-example-navbar-collapse-1">
-<!--             <ul class="nav navbar-nav">
-                <li>
+             <ul class="nav navbar-nav">
+{{--                <li>
                     @if(Auth::user())
                         <a href="{{ Auth::user()->role_id == 3 ? url('admin/dashboard') : url('/')  }}">@lang('trans.home')</a>
                     @endif
-                </li>
+                </li>--}}
                 <li>
                     <form id="form_def_lang" method="post">
                         <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
-                        <select id="def_lang" name="def_lang" class="form-control" style="margin-top: 8px;">
+                        <select id="def_lang" name="def_lang" class="form-control" style="margin: 8px 0px 0px;">
                             @foreach(config('app.locales') as $key => $val)
                                 <option value="{{ $key }}">{{ $val }}</option>
                             @endforeach
@@ -55,7 +54,6 @@
                     </form>
                 </li>
             </ul>
- -->
             <ul class="nav navbar-nav pull-left add-new-activity">
                 <li class="dropdown">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"

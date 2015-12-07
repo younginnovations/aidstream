@@ -21,9 +21,7 @@
                 <a href="/download-detailed-transaction" class="btn btn-primary">Download Detailed Transaction Template</a>
                 <div>Contains all information about transaction. Ideal if you download your existing transaction from Download My Data page and want to update the transactions in bulk. Manual filling can be difficult as you have to ensure you use proper code values while filling certain fields. The first three fields (Activity_Identifier, Activity_Title, Default_currency) are ignored during uploading. This is done to make it consistent with transaction download via Download My Data.</div>
             </div>
-            <div class="col-xs-4">
-                @include('includes.activity.element_menu')
-            </div>
+            @include('includes.activity.element_menu')
         </div>
     </div>
 @stop

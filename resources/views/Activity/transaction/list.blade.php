@@ -44,9 +44,7 @@
                 <a href="{{ route('activity.transaction.create', $id) }}" class="btn btn-primary">Add New Transaction</a>
                 <a href="{{ route('activity.transaction-upload.index', $id) }}" class="btn btn-primary">Upload Transaction</a>
             </div>
-            <div class="col-xs-4">
-                @include('includes.activity.element_menu')
-            </div>
+            @include('includes.activity.element_menu')
         </div>
     </div>
 @stop
