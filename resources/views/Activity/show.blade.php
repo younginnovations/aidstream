@@ -1236,8 +1236,6 @@
                                 </div>
                             @endif
 
-
-                    </div>
                     </div>
                 </div>
                 @include('includes.activity.element_menu')
