@@ -23,11 +23,11 @@ class LocationManagerTest extends AidStreamTestCase
     public function setUp()
     {
         parent::setUp();
-        $this->version                    = m::mock('App\Core\Version');
+        $this->version            = m::mock('App\Core\Version');
         $this->locationRepository = m::mock(Location::class);
         $this->version->shouldReceive('getActivityElement->getLocation->getRepository')->andReturn($this->locationRepository);
-        $this->logger                  = m::mock(Log::class);
-        $this->auth                    = m::mock('Illuminate\Auth\Guard');
+        $this->logger          = m::mock(Log::class);
+        $this->auth            = m::mock('Illuminate\Auth\Guard');
         $this->locationManager = new LocationManager(
             $this->version,
             $this->logger,
@@ -44,16 +44,17 @@ class LocationManagerTest extends AidStreamTestCase
         $user->shouldReceive('getAttribute')->twice()->with('organization')->andReturn($organizationModel);
         $this->auth->shouldReceive('user')->twice()->andReturn($user);
         $activityModel = m::mock(Activity::class);
+        $activityModel->shouldReceive('getAttribute')->with('id')->andReturn(1);
         $activityModel->shouldReceive('getAttribute')->once()->with('location')->andReturn(
             'testLocations'
         );
         $this->locationRepository->shouldReceive('update')
-                                         ->once()
-                                         ->with(
-                                             ['location' => 'testLocation'],
-                                             $activityModel
-                                         )
-                                         ->andReturn(true);
+                                 ->once()
+                                 ->with(
+                                     ['location' => 'testLocation'],
+                                     $activityModel
+                                 )
+                                 ->andReturn(true);
         $this->logger->shouldReceive('info')->once()->with(
             "Activity Location Updated!",
             ['for' => 'testLocations']
@@ -61,9 +62,9 @@ class LocationManagerTest extends AidStreamTestCase
         $this->logger->shouldReceive('activity')->once()->with(
             'activity.location_updated',
             [
-                'location' => 'testLocation',
-                'organization'              => 'organizationName',
-                'organization_id'           => 1
+                'activity_id'     => 1,
+                'organization'    => 'organizationName',
+                'organization_id' => 1
             ]
         );
         $this->assertTrue(
@@ -77,8 +78,8 @@ class LocationManagerTest extends AidStreamTestCase
     public function testItShouldGetActivityLocationDataWithCertainId()
     {
         $this->locationRepository->shouldReceive('getLocation')
-                                         ->with(1)
-                                         ->andReturn(m::mock(Activity::class));
+                                 ->with(1)
+                                 ->andReturn(m::mock(Activity::class));
         $this->assertInstanceOf(
             'App\Models\Activity\Activity',
             $this->locationManager->getLocation(1)

@@ -69,7 +69,7 @@ class DocumentLinkManager
             $this->dbLogger->activity(
                 "activity.document_link",
                 [
-                    'document_link'   => $activityDetails['document_link'],
+                    'activity_id'     => $activity->id,
                     'organization'    => $this->auth->user()->organization->name,
                     'organization_id' => $this->auth->user()->organization->id
                 ]

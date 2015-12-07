@@ -69,9 +69,9 @@ class DefaultFinanceTypeManager
             $this->dbLogger->activity(
                 "activity.default_finance_type",
                 [
-                    'default_finance_type' => $activityDetails['default_finance_type'],
-                    'organization'         => $this->auth->user()->organization->name,
-                    'organization_id'      => $this->auth->user()->organization->id
+                    'activity_id'     => $activity->id,
+                    'organization'    => $this->auth->user()->organization->name,
+                    'organization_id' => $this->auth->user()->organization->id
                 ]
             );
 

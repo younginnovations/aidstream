@@ -59,6 +59,7 @@ class CollaborationTypeManagerTest extends AidStreamTestCase
         $user->shouldReceive('getAttribute')->twice()->with('organization')->andReturn($orgModel);
         $this->auth->shouldReceive('user')->twice()->andReturn($user);
         $activityModel = $this->activity;
+        $activityModel->shouldReceive('getAttribute')->with('id')->andreturn(1);
         $activityModel->shouldReceive('getAttribute')->once()->with('collaboration_type')->andReturn(
             'testCollaborationType'
         );
@@ -75,9 +76,9 @@ class CollaborationTypeManagerTest extends AidStreamTestCase
         $this->dbLogger->shouldReceive('activity')->once()->with(
             'activity.collaboration_type',
             [
-                'collaboration_type' => 'testCollaborationType',
-                'organization'       => 'orgName',
-                'organization_id'    => 1
+                'activity_id'     => 1,
+                'organization'    => 'orgName',
+                'organization_id' => 1
             ]
         );
         $this->assertTrue(

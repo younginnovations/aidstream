@@ -61,7 +61,7 @@ class ConditionManager
             $this->dbLogger->activity(
                 "activity.condition_updated",
                 [
-                    'condition'       => $activityDetails['condition'],
+                    'activity_id'     => $activity->id,
                     'organization'    => $this->auth->user()->organization->name,
                     'organization_id' => $this->auth->user()->organization->id
                 ]

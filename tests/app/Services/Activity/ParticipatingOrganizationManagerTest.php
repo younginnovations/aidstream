@@ -43,6 +43,7 @@ class ParticipatingOrganizationManagerTest extends AidStreamTestCase
         $user->shouldReceive('getAttribute')->twice()->with('organization')->andReturn($organizationModel);
         $this->auth->shouldReceive('user')->twice()->andReturn($user);
         $activityModel = m::mock(Activity::class);
+        $activityModel->shouldReceive('getAttribute')->with('id')->andReturn(1);
         $activityModel->shouldReceive('getAttribute')->once()->with('participating_organization')->andReturn(
             'participatingOrgName'
         );
@@ -60,9 +61,9 @@ class ParticipatingOrganizationManagerTest extends AidStreamTestCase
         $this->logger->shouldReceive('activity')->once()->with(
             'activity.participating_organization',
             [
-                'participatingOrganization' => 'participatingOrganizationName',
-                'organization'              => 'organizationName',
-                'organization_id'           => 1
+                'activity_id'     => 1,
+                'organization'    => 'organizationName',
+                'organization_id' => 1
             ]
         );
         $this->assertTrue(

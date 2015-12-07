@@ -59,6 +59,7 @@ class DefaultTiedStatusManagerTest extends AidStreamTestCase
         $user->shouldReceive('getAttribute')->twice()->with('organization')->andReturn($orgModel);
         $this->auth->shouldReceive('user')->twice()->andReturn($user);
         $activityModel = $this->activity;
+        $activityModel->shouldReceive('getAttribute')->with('id')->andreturn(1);
         $activityModel->shouldReceive('getAttribute')->once()->with('default_tied_status')->andReturn(
             'testDefaultTiedStatus'
         );
@@ -75,9 +76,9 @@ class DefaultTiedStatusManagerTest extends AidStreamTestCase
         $this->dbLogger->shouldReceive('activity')->once()->with(
             'activity.default_tied_status',
             [
-                'default_tied_status' => 'testDefaultTiedStatus',
-                'organization'        => 'orgName',
-                'organization_id'     => 1
+                'activity_id'     => 1,
+                'organization'    => 'orgName',
+                'organization_id' => 1
             ]
         );
         $this->assertTrue(

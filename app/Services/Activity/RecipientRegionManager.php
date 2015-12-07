@@ -53,7 +53,7 @@ class RecipientRegionManager
             $this->log->activity(
                 "activity.recipient_region_updated",
                 [
-                    'recipientRegion' => $activityDetails['recipient_region'],
+                    'activity_id'     => $activity->id,
                     'organization'    => $this->auth->user()->organization->name,
                     'organization_id' => $this->auth->user()->organization->id
                 ]

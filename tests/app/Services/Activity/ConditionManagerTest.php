@@ -71,10 +71,11 @@ class ConditionManagerTest extends AidStreamTestCase
         $user->shouldReceive('getAttribute')->twice()->with('organization')->andReturn($organizationModel);
         $this->auth->shouldReceive('user')->twice()->andReturn($user);
         $activityModel = $this->activity;
+        $activityModel->shouldReceive('getAttribute')->with('id')->andreturn(1);
         $activityModel->shouldReceive('getAttribute')->once()->with('condition')->andReturn('condition');
         $this->conditionRepository->shouldReceive('update')->once()->with(['condition' => 'condition'], $activityModel)->andReturn(true);
         $this->logger->shouldReceive('info')->once()->with('Condition Updated!', ['for' => 'condition']);
-        $this->dbLogger->shouldReceive('activity')->once()->with('activity.condition_updated', ['condition' => 'condition', 'organization' => 'organizationName', 'organization_id' => 1]);
+        $this->dbLogger->shouldReceive('activity')->once()->with('activity.condition_updated', ['activity_id' => 1, 'organization' => 'organizationName', 'organization_id' => 1]);
         $this->assertTrue($this->conditionManager->update(['condition' => 'condition'], $activityModel));
     }
 

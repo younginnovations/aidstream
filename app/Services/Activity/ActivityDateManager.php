@@ -53,7 +53,7 @@ class ActivityDateManager
             $this->log->activity(
                 "activity.activity_date_updated",
                 [
-                    'activityDate'    => $activityDetails['activity_date'],
+                    'activity_id'    => $activity->id,
                     'organization'    => $this->auth->user()->organization->name,
                     'organization_id' => $this->auth->user()->organization->id
                 ]

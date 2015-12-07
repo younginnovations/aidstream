@@ -62,9 +62,9 @@ class CountryBudgetItemManager
             $this->logger->activity(
                 "activity.country_budget_items",
                 [
-                    'countryBudgetItems' => $activityDetails['country_budget_item'],
-                    'organization'       => $this->auth->user()->organization->name,
-                    'organization_id'    => $this->auth->user()->organization->id
+                    'activity_id'     => $activity->id,
+                    'organization'    => $this->auth->user()->organization->name,
+                    'organization_id' => $this->auth->user()->organization->id
                 ]
             );
 

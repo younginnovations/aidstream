@@ -64,10 +64,11 @@ class ResultManager
             $this->database->commit();
             $this->logger->info('Activity Result updated!', ['for' => $activityResult->result]);
             $this->dbLogger->activity(
-                "activity_result.result",
+                "activity.result_updated",
                 [
-                    'result'      => $resultData['result'],
-                    'activity_id' => $activityResult->activity_id
+                    'activity_id'     => $activityResult->activity_id,
+                    'organization'    => $this->auth->user()->organization->name,
+                    'organization_id' => $this->auth->user()->organization->id
                 ]
             );
 

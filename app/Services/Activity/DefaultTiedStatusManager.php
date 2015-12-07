@@ -69,9 +69,9 @@ class DefaultTiedStatusManager
             $this->dbLogger->activity(
                 "activity.default_tied_status",
                 [
-                    'default_tied_status' => $activityDetails['default_tied_status'],
-                    'organization'        => $this->auth->user()->organization->name,
-                    'organization_id'     => $this->auth->user()->organization->id
+                    'activity_id'     => $activity->id,
+                    'organization'    => $this->auth->user()->organization->name,
+                    'organization_id' => $this->auth->user()->organization->id
                 ]
             );
 

@@ -69,7 +69,7 @@ class CapitalSpendManager
             $this->dbLogger->activity(
                 "activity.capital_spend",
                 [
-                    'capital_spend'   => $activityDetails['capital_spend'],
+                    'activity_id'     => $activity->id,
                     'organization'    => $this->auth->user()->organization->name,
                     'organization_id' => $this->auth->user()->organization->id
                 ]

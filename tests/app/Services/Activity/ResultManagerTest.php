@@ -3,6 +3,7 @@
 use App\Core\V201\Repositories\Activity\Result;
 use App\Core\Version;
 use App\Models\Activity\ActivityResult;
+use App\Models\Organization\Organization;
 use App\Services\Activity\ResultManager;
 use App\User;
 use Illuminate\Auth\Guard;
@@ -51,12 +52,25 @@ class ResultManagerTest extends AidStreamTestCase
     public function testItShouldUpdateActivityResult()
     {
         $this->database->shouldReceive('beginTransaction');
+        $orgModel = m::mock(Organization::class);
+        $orgModel->shouldReceive('getAttribute')->once()->with('name')->andReturn('orgName');
+        $orgModel->shouldReceive('getAttribute')->once()->with('id')->andReturn(1);
+        $user = m::mock(User::class);
+        $user->shouldReceive('getAttribute')->twice()->with('organization')->andReturn($orgModel);
+        $this->auth->shouldReceive('user')->twice()->andReturn($user);
         $this->resultRepo->shouldReceive('update')->with(['result' => 'testResult'], $this->activityResult);
         $this->activityResult->shouldReceive('getAttribute')->with('result')->andReturn('testResult');
         $this->activityResult->shouldReceive('getAttribute')->with('activity_id')->andReturn(1);
         $this->database->shouldReceive('commit');
         $this->logger->shouldReceive('info')->with('Activity Result updated!', ['for' => 'testResult']);
-        $this->dbLogger->shouldReceive('activity')->with('activity_result.result', ['result' => 'testResult', 'activity_id' => 1]);
+        $this->dbLogger->shouldReceive('activity')->with(
+            'activity.result_updated',
+            [
+                'activity_id'     => 1,
+                'organization'    => 'orgName',
+                'organization_id' => 1
+            ]
+        );
         $this->assertTrue($this->resultManager->update(['result' => 'testResult'], $this->activityResult));
     }
 

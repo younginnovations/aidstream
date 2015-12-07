@@ -52,7 +52,7 @@ class PolicyMakerManager
             $this->dbLogger->activity(
                 "activity.policy_maker_updated",
                 [
-                    'policyMaker'     => $activityDetails['policy_maker'],
+                    'activity_id'     => $activity->id,
                     'organization'    => $this->auth->user()->organization->name,
                     'organization_id' => $this->auth->user()->organization->id
                 ]

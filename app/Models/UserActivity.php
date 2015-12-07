@@ -41,4 +41,12 @@ class UserActivity extends Model
         $this->attributes['param'] = json_encode($param);
     }
 
+    /**
+     * Activity log belongs to user
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user()
+    {
+        return $this->belongsTo('App\User', 'user_id');
+    }
 }

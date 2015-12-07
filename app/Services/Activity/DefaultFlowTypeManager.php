@@ -70,9 +70,9 @@ class DefaultFlowTypeManager
             $this->dbLogger->activity(
                 "activity.default_flow_type",
                 [
-                    'default_flow_type' => $activityDetails['default_flow_type'],
-                    'organization'      => $this->auth->user()->organization->name,
-                    'organization_id'   => $this->auth->user()->organization->id
+                    'activity_id'     => $activity->id,
+                    'organization'    => $this->auth->user()->organization->name,
+                    'organization_id' => $this->auth->user()->organization->id
                 ]
             );
 

@@ -54,7 +54,7 @@ class ActivityManager
                 ['for' => $input['activity_identifier']]
             );
             $this->logger->activity(
-                "activity.added",
+                "activity.activity_added",
                 [
                     'identifier'      => $input['activity_identifier'],
                     'organization'    => $this->auth->user()->organization->name,

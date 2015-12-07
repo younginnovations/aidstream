@@ -51,7 +51,7 @@ class ActivityStatus
             $this->log->activity(
                 "activity.activity_status_updated",
                 [
-                    'activityStatus'  => $input['activity_status'],
+                    'activity_id'     => $activity->id,
                     'organization'    => $this->auth->user()->organization->name,
                     'organization_id' => $this->auth->user()->organization->id
                 ]

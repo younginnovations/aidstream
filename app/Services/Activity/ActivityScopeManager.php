@@ -54,7 +54,7 @@ class ActivityScopeManager
             $this->log->activity(
                 "activity.activity_scope_updated",
                 [
-                    'activityScope'   => $input['activity_scope'],
+                    'activity_id'     => $activity->id,
                     'organization'    => $this->auth->user()->organization->name,
                     'organization_id' => $this->auth->user()->organization->id
                 ]

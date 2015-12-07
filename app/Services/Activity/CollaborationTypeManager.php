@@ -69,9 +69,9 @@ class CollaborationTypeManager
             $this->dbLogger->activity(
                 "activity.collaboration_type",
                 [
-                    'collaboration_type' => $activityDetails['collaboration_type'],
-                    'organization'       => $this->auth->user()->organization->name,
-                    'organization_id'    => $this->auth->user()->organization->id
+                    'activity_id'     => $activity->id,
+                    'organization'    => $this->auth->user()->organization->name,
+                    'organization_id' => $this->auth->user()->organization->id
                 ]
             );
 

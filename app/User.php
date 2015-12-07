@@ -93,7 +93,7 @@ class User extends Model implements AuthorizableContract, AuthenticatableContrac
      */
     public function isSuperAdmin()
     {
-        return  3 === $this->role_id;
+        return 3 === $this->role_id;
     }
 
     /**
@@ -130,7 +130,7 @@ class User extends Model implements AuthorizableContract, AuthenticatableContrac
      */
     public function isGroupAdmin()
     {
-        return  4 == $this->role_id;
+        return 4 == $this->role_id;
     }
 
     /**
@@ -138,8 +138,18 @@ class User extends Model implements AuthorizableContract, AuthenticatableContrac
      * @param $role
      * @return mixed
      */
-    public function getRoleId($role){
+    public function getRoleId($role)
+    {
         return DB::select('select id from role where role = :role', ['role' => $role]);
+    }
+
+    /**
+     * user has many activity log
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function activityLog()
+    {
+        return $this->hasMany('App\Models\UserActivity', 'user_id');
     }
 }
 

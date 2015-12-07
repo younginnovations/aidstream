@@ -52,6 +52,7 @@ class BudgetManagerTest extends AidStreamTestCase
         $user->shouldReceive('getAttribute')->twice()->with('organization')->andReturn($organizationModel);
         $this->auth->shouldReceive('user')->twice()->andReturn($user);
         $activityModel = $this->activity;
+        $activityModel->shouldReceive('getAttribute')->with('id')->andReturn(1);
         $activityModel->shouldReceive('getAttribute')->once()->with('budget')->andReturn('budget');
         $this->budgetRepository->shouldReceive('update')
                                ->once()
@@ -67,7 +68,7 @@ class BudgetManagerTest extends AidStreamTestCase
         $this->dbLogger->shouldReceive('activity')->once()->with(
             'activity.budget_updated',
             [
-                'budget'          => 'budget',
+                'activity_id'     => 1,
                 'organization'    => 'organizationName',
                 'organization_id' => 1
             ]

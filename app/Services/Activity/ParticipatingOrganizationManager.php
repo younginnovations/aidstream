@@ -55,9 +55,9 @@ class ParticipatingOrganizationManager
             $this->log->activity(
                 "activity.participating_organization",
                 [
-                    'participatingOrganization' => $activityDetails['participating_organization'],
-                    'organization'              => $this->auth->user()->organization->name,
-                    'organization_id'           => $this->auth->user()->organization->id
+                    'activity_id'     => $activity->id,
+                    'organization'    => $this->auth->user()->organization->name,
+                    'organization_id' => $this->auth->user()->organization->id
                 ]
             );
 

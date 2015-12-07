@@ -69,7 +69,7 @@ class DefaultAidTypeManager
             $this->dbLogger->activity(
                 "activity.default_aid_type",
                 [
-                    'default_aid_type' => $activityDetails['default_aid_type'],
+                    'activity_id' => $activity->id,
                     'organization'     => $this->auth->user()->organization->name,
                     'organization_id'  => $this->auth->user()->organization->id
                 ]

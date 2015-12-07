@@ -55,6 +55,7 @@ class CountryBudgetItemManagerTest extends AidStreamTestCase
         $user->shouldReceive('getAttribute')->twice()->with('organization')->andReturn($orgModel);
         $this->auth->shouldReceive('user')->twice()->andReturn($user);
         $activityModel = $this->activity;
+        $activityModel->shouldReceive('getAttribute')->with('id')->andreturn(1);
         $activityModel->shouldReceive('getAttribute')->once()->with('country_budget_items')->andReturn(
             'testCountryBudgetItems'
         );
@@ -69,9 +70,9 @@ class CountryBudgetItemManagerTest extends AidStreamTestCase
         $this->logger->shouldReceive('activity')->once()->with(
             'activity.country_budget_items',
             [
-                'countryBudgetItems' => 'testCountryBudgetItem',
-                'organization'       => 'orgName',
-                'organization_id'    => 1
+                'activity_id'     => 1,
+                'organization'    => 'orgName',
+                'organization_id' => 1
             ]
         );
         $this->database->shouldReceive('beginTransaction')->once()->andReturnSelf();
