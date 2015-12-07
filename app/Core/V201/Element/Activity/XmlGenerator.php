@@ -42,6 +42,7 @@ class XmlGenerator
     protected $conditionElem;
     protected $transactionElem;
     protected $resultElem;
+    protected $reportingOrgElem;
 
     /**
      * @param ArrayToXml        $arrayToXml
@@ -55,8 +56,9 @@ class XmlGenerator
 
     /**
      * @param $activityElement
+     * @param $orgElem
      */
-    public function setElements($activityElement)
+    public function setElements($activityElement, $orgElem)
     {
         $this->titleElem               = $activityElement->getTitle();
         $this->descriptionElem         = $activityElement->getDescription();
@@ -85,6 +87,7 @@ class XmlGenerator
         $this->conditionElem           = $activityElement->getCondition();
         $this->transactionElem         = $activityElement->getTransaction();
         $this->resultElem              = $activityElement->getResult();
+        $this->reportingOrgElem        = $orgElem->getOrgReportingOrg();
     }
 
     /**
@@ -93,10 +96,12 @@ class XmlGenerator
      * @param Collection $result
      * @param Settings   $settings
      * @param            $activityElement
+     * @param            $orgElem
+     * @param            $organization
      */
-    public function generateXml(Activity $activity, Collection $transaction, Collection $result, Settings $settings, $activityElement)
+    public function generateXml(Activity $activity, Collection $transaction, Collection $result, Settings $settings, $activityElement, $orgElem, $organization)
     {
-        $xml               = $this->getXml($activity, $transaction, $result, $settings, $activityElement);
+        $xml               = $this->getXml($activity, $transaction, $result, $settings, $activityElement, $orgElem, $organization);
         $publishedActivity = $activity->identifier['iati_identifier_text'] . '.xml';
         $file              = substr($publishedActivity, 0, strpos($publishedActivity, "-"));
         $result            = $xml->save(public_path('uploads/files/activity/' . $publishedActivity));
@@ -117,17 +122,19 @@ class XmlGenerator
      * @param Collection $result
      * @param Settings   $settings
      * @param            $activityElement
-     * @return DomDocument
+     * @param            $orgElem
+     * @param            $organization
+     * @return DOMDocument
      */
-    public function getXml(Activity $activity, Collection $transaction, Collection $result, Settings $settings, $activityElement)
+    public function getXml(Activity $activity, Collection $transaction, Collection $result, Settings $settings, $activityElement, $orgElem, $organization)
     {
-        $this->setElements($activityElement);
+        $this->setElements($activityElement, $orgElem);
         $xmlData                                 = [];
         $xmlData['@attributes']                  = [
             'version'            => $settings->version,
             'generated-datetime' => gmdate('c')
         ];
-        $xmlData['iati-activity']                = $this->getXmlData($activity, $transaction, $result);
+        $xmlData['iati-activity']                = $this->getXmlData($activity, $transaction, $result, $organization);
         $xmlData['iati-activity']['@attributes'] = [
             'last-updated-datetime' => gmdate('c', time($settings->updated_at)),
             'xml:lang'              => $settings->default_field_values[0]['default_language'],
@@ -141,39 +148,41 @@ class XmlGenerator
      * @param Activity   $activity
      * @param Collection $transaction
      * @param Collection $result
+     * @param            $organization
      * @return array
      */
-    public function getXmlData(Activity $activity, Collection $transaction, Collection $result)
+    public function getXmlData(Activity $activity, Collection $transaction, Collection $result, $organization)
     {
-        $xmlActivity                               = [];
-        $xmlActivity['activity-identifier']        = $activity->identifier['iati_identifier_text'];
-        $xmlActivity['title']                      = $this->titleElem->getXmlData($activity);
-        $xmlActivity['description']                = $this->descriptionElem->getXmlData($activity);
-        $xmlActivity['activity-status']            = $this->activityStatusElem->getXmlData($activity);
-        $xmlActivity['activity-date']              = $this->activityDateElem->getXmlData($activity);
-        $xmlActivity['contact-info']               = $this->contactElem->getXmlData($activity);
-        $xmlActivity['activity-scope']             = $this->activityScopeElem->getXmlData($activity);
-        $xmlActivity['participating-organization'] = $this->participatingOrgElem->getXmlData($activity);
-        $xmlActivity['recipient-country']          = $this->recipientCountryElem->getXmlData($activity);
-        $xmlActivity['recipient-region']           = $this->recipientRegionElem->getXmlData($activity);
-        $xmlActivity['location']                   = $this->locationElem->getXmlData($activity);
-        $xmlActivity['sector']                     = $this->sectorElem->getXmlData($activity);
-        $xmlActivity['country-budget-item']        = $this->countryBudgetItemElem->getXmlData($activity);
-        $xmlActivity['policy-maker']               = $this->policyMakerElem->getXmlData($activity);
-        $xmlActivity['collaboration-type']         = $this->collaborationTypeElem->getXmlData($activity);
-        $xmlActivity['default-flow-type']          = $this->defaultFlowTypeElem->getXmlData($activity);
-        $xmlActivity['default-finance-type']       = $this->defaultFinanceTypeElem->getXmlData($activity);
-        $xmlActivity['default-aid-type']           = $this->defaultAidTypeElem->getXmlData($activity);
-        $xmlActivity['default-tied-status']        = $this->defaultTiedStatusElem->getXmlData($activity);
-        $xmlActivity['budget']                     = $this->budgetElem->getXmlData($activity);
-        $xmlActivity['planned-disbursement']       = $this->plannedDisbursementElem->getXmlData($activity);
-        $xmlActivity['capital-spend']              = $this->capitalSpendElem->getXmlData($activity);
-        $xmlActivity['document-link']              = $this->documentLinkElem->getXmlData($activity);
-        $xmlActivity['related-activity']           = $this->relatedActivityElem->getXmlData($activity);
-        $xmlActivity['legacy-data']                = $this->legacyDataElem->getXmlData($activity);
-        $xmlActivity['condition']                  = $this->conditionElem->getXmlData($activity);
-        $xmlActivity['transaction']                = $this->transactionElem->getXmlData($transaction);
-        $xmlActivity['result']                     = $this->resultElem->getXmlData($result);
+        $xmlActivity                         = [];
+        $xmlActivity['iati-identifier']      = $activity->identifier['iati_identifier_text'];
+        $xmlActivity['reporting-org']        = $this->reportingOrgElem->getXmlData($organization);
+        $xmlActivity['title']                = $this->titleElem->getXmlData($activity);
+        $xmlActivity['description']          = $this->descriptionElem->getXmlData($activity);
+        $xmlActivity['participating-org']    = $this->participatingOrgElem->getXmlData($activity);
+        $xmlActivity['activity-status']      = $this->activityStatusElem->getXmlData($activity);
+        $xmlActivity['activity-date']        = $this->activityDateElem->getXmlData($activity);
+        $xmlActivity['contact-info']         = $this->contactElem->getXmlData($activity);
+        $xmlActivity['activity-scope']       = $this->activityScopeElem->getXmlData($activity);
+        $xmlActivity['recipient-country']    = $this->recipientCountryElem->getXmlData($activity);
+        $xmlActivity['recipient-region']     = $this->recipientRegionElem->getXmlData($activity);
+        $xmlActivity['location']             = $this->locationElem->getXmlData($activity);
+        $xmlActivity['sector']               = $this->sectorElem->getXmlData($activity);
+        $xmlActivity['country-budget-items'] = $this->countryBudgetItemElem->getXmlData($activity);
+        $xmlActivity['policy-marker']        = $this->policyMakerElem->getXmlData($activity);
+        $xmlActivity['collaboration-type']   = $this->collaborationTypeElem->getXmlData($activity);
+        $xmlActivity['default-flow-type']    = $this->defaultFlowTypeElem->getXmlData($activity);
+        $xmlActivity['default-finance-type'] = $this->defaultFinanceTypeElem->getXmlData($activity);
+        $xmlActivity['default-aid-type']     = $this->defaultAidTypeElem->getXmlData($activity);
+        $xmlActivity['default-tied-status']  = $this->defaultTiedStatusElem->getXmlData($activity);
+        $xmlActivity['budget']               = $this->budgetElem->getXmlData($activity);
+        $xmlActivity['planned-disbursement'] = $this->plannedDisbursementElem->getXmlData($activity);
+        $xmlActivity['capital-spend']        = $this->capitalSpendElem->getXmlData($activity);
+        $xmlActivity['transaction']          = $this->transactionElem->getXmlData($transaction);
+        $xmlActivity['document-link']        = $this->documentLinkElem->getXmlData($activity);
+        $xmlActivity['related-activity']     = $this->relatedActivityElem->getXmlData($activity);
+        $xmlActivity['legacy-data']          = $this->legacyDataElem->getXmlData($activity);
+        $xmlActivity['conditions']           = $this->conditionElem->getXmlData($activity);
+        $xmlActivity['result']               = $this->resultElem->getXmlData($result);
 
         return array_filter(
             $xmlActivity,

@@ -38,7 +38,7 @@ class ContactInfo extends BaseElement
                 '@attributes'     => [
                     'type' => $contact['type']
                 ],
-                'organization'    => [
+                'organisation'    => [
                     'narrative' => $this->buildNarrative($contact['organization'][0]['narrative'])
                 ],
                 'department'      => [
@@ -59,7 +59,7 @@ class ContactInfo extends BaseElement
                 'website'         => [
                     '@value' => $contact['website'][0]['website']
                 ],
-                'mailing_address' => [
+                'mailing-address' => [
                     'narrative' => $this->buildNarrative($contact['mailing_address'][0]['narrative'])
                 ]
             ];

@@ -36,7 +36,7 @@ class Location extends BaseElement
         foreach ($locations as $location) {
             $activityData[] = [
                 '@attributes'          => [
-                        'ref' => $location['reference']
+                    'ref' => $location['reference']
                 ],
                 'location-reach'       => [
                     '@attributes' => [
@@ -69,10 +69,8 @@ class Location extends BaseElement
                     '@attributes' => [
                         'srsName' => $location['point'][0]['srs_name']
                     ],
-                    'position'    => [
-                        'latitude'  => $location['point'][0]['position'][0]['latitude'],
-                        'longitude' => $location['point'][0]['position'][0]['longitude']
-                    ]
+                    'pos'         => $location['point'][0]['position'][0]['latitude'] . ' ' . $location['point'][0]['position'][0]['longitude']
+
                 ],
                 'exactness'            => [
                     '@attributes' => [
