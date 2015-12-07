@@ -38,13 +38,7 @@ class Sector extends ActivityBaseRequest
                 $rules[sprintf('%s.sector_text', $sectorForm)] = 'required';
             }
             $rules[sprintf('%s.percentage', $sectorForm)] = 'numeric|max:100';
-            $rules                                        = array_merge(
-                $rules,
-                $this->getRulesForNarrative(
-                    $sector['narrative'],
-                    $sectorForm
-                )
-            );
+            $rules                                        = array_merge($rules, $this->getRulesForNarrative($sector['narrative'], $sectorForm));
         }
 
         return $rules;
@@ -67,18 +61,8 @@ class Sector extends ActivityBaseRequest
                 $messages[sprintf('%s.sector_text.%s', $sectorForm, 'required')] = 'Sector is required.';
             }
             $messages[sprintf('%s.percentage.%s', $sectorForm, 'numeric')] = 'Percentage should be numeric';
-            $messages[sprintf(
-                '%s.percentage.%s',
-                $sectorForm,
-                'max:100'
-            )]                                                             = 'Percentage should be less than or equal to required';
-            $messages                                                      = array_merge(
-                $messages,
-                $this->getMessagesForNarrative(
-                    $sector['narrative'],
-                    $sectorForm
-                )
-            );
+            $messages[sprintf('%s.percentage.%s', $sectorForm, 'max')]     = 'Percentage should be less than or equal to required';
+            $messages                                                      = array_merge($messages, $this->getMessagesForNarrative($sector['narrative'], $sectorForm));
         }
 
         return $messages;
