@@ -17,6 +17,7 @@ class IatiIdentifierRepository
     {
         unset($input['_token']);
         unset($input['_method']);
+        unset($input['id']);
         $activity->identifier = $input;
         $activity->save();
     }
@@ -47,5 +48,15 @@ class IatiIdentifierRepository
     public function getActivityIdentifiers()
     {
         return Activity::all('identifier');
+    }
+
+    /**
+     * get activity identifier except activity ids
+     * @param $activityId
+     * @return mixed
+     */
+    public function getActivityIdentifiersExceptId($activityId)
+    {
+        return Activity::where('id', '<>', $activityId)->get(['identifier']);
     }
 }
