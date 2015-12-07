@@ -16,10 +16,7 @@
                     </div>
                 </div>
             </div>
-
-            <div class="col-xs-4">
-                @include('includes.menu_org')
-            </div>
+            @include('includes.menu_org')
         </div>
     </div>
 @endsection

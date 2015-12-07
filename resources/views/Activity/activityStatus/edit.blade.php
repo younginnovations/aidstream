@@ -13,9 +13,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xs-4">
-                @include('includes.activity.element_menu')
-            </div>
+            @include('includes.activity.element_menu')
         </div>
     </div>
 @endsection
