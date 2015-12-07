@@ -2,6 +2,7 @@
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Services\Activity\ActivityManager;
 use App\Services\SettingsManager;
 use App\Services\Organization\OrganizationManager;
 use App\Services\FormCreator\Organization\OrgReportingOrgForm;
@@ -30,19 +31,23 @@ class OrganizationController extends Controller
      * @param OrganizationManager $organizationManager
      * @param OrgReportingOrgForm $orgReportingOrgFormCreator
      * @param OrgNameManager      $nameManager
+     * @param Request             $request
+     * @param ActivityManager     $activityManager
      */
     public function __construct(
         SettingsManager $settingsManager,
         OrganizationManager $organizationManager,
         OrgReportingOrgForm $orgReportingOrgFormCreator,
         OrgNameManager $nameManager,
-        Request $request
+        Request $request,
+        ActivityManager $activityManager
     ) {
         $this->settingsManager            = $settingsManager;
         $this->organizationManager        = $organizationManager;
         $this->orgReportingOrgFormCreator = $orgReportingOrgFormCreator;
         $this->nameManager                = $nameManager;
         $this->request                    = $request;
+        $this->activityManager            = $activityManager;
         $this->middleware('auth');
     }
 
@@ -144,9 +149,10 @@ class OrganizationController extends Controller
 
             return redirect()->back()->withMessage($message);
         }
-        $org_id = $this->request->session()->get('org_id');
-        $list   = $this->organizationManager->getPublishedFiles($org_id);
+        $org_id        = $this->request->session()->get('org_id');
+        $list          = $this->organizationManager->getPublishedFiles($org_id);
+        $activity_list = $this->activityManager->getActivityPublishedFiles($org_id);
 
-        return view('published-files', compact('list'));
+        return view('published-files', compact('list', 'activity_list'));
     }
 }

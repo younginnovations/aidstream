@@ -139,4 +139,22 @@ class ActivityManager
     {
         return $this->resultRepo->getResults($activityId);
     }
+
+    /**
+     * @param $org_id
+     * @return mixed
+     */
+    public function getActivityPublishedFiles($org_id)
+    {
+        return $this->activityRepo->getActivityPublishedFiles($org_id);
+    }
+
+    /**
+     * @param $id
+     * @return mixed
+     */
+    public function deletePublishedFile($id)
+    {
+        return $this->activityRepo->deletePublishedFile($id);
+    }
 }

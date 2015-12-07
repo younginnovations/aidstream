@@ -177,11 +177,27 @@ class ActivityController extends Controller
         return redirect()->back();
     }
 
+    /**
+     * @param $id
+     * @return mixed
+     */
     public function destroy($id)
     {
         $activity = $this->activityManager->getActivityData($id);
         $activity->delete($activity);
 
         return redirect()->back()->withMessage('Activity deleted');
+    }
+
+    /**
+     * @param $id
+     * @return mixed
+     */
+    public function deletePublishedFile($id)
+    {
+        $result  = $this->activityManager->deletePublishedFile($id);
+        $message = $result ? 'File deleted successfully' : 'File couldn\'t be deleted.';
+
+        return redirect()->back()->withMessage($message);
     }
 }

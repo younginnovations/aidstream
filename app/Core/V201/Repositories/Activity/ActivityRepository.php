@@ -1,6 +1,7 @@
 <?php namespace App\Core\V201\Repositories\Activity;
 
 use App\Models\Activity\Activity;
+use App\Models\ActivityPublished;
 
 /**
  * Class ActivityRepository
@@ -11,11 +12,13 @@ class ActivityRepository
     protected $activity;
 
     /**
-     * @param Activity $activity
+     * @param Activity          $activity
+     * @param ActivityPublished $activityPublished
      */
-    public function __construct(Activity $activity)
+    public function __construct(Activity $activity, ActivityPublished $activityPublished)
     {
-        $this->activity = $activity;
+        $this->activity          = $activity;
+        $this->activityPublished = $activityPublished;
     }
 
     /**
@@ -62,6 +65,7 @@ class ActivityRepository
     public function updateStatus(array $input, Activity $activityData)
     {
         $activityData->activity_workflow = $input['activity_workflow'];
+
         return $activityData->save();
     }
 
@@ -71,5 +75,32 @@ class ActivityRepository
     public function resetActivityWorkflow($activity_id)
     {
         $this->activity->whereId($activity_id)->update(['activity_workflow' => 0]);
+    }
+
+    /**
+     * @param $org_id
+     * @return mixed
+     */
+    public function getActivityPublishedFiles($org_id)
+    {
+        return $this->activityPublished->whereOrganizationId($org_id)->get();
+    }
+
+    /**
+     * @param $id
+     * @return mixed
+     */
+    public function deletePublishedFile($id)
+    {
+        $result = $this->activityPublished->find($id);
+        if ($result) {
+            $file   = public_path('uploads/files/activity/' . $result->filename);
+            $result = $result->delete();
+            if ($result && file_exists($file)) {
+                unlink($file);
+            }
+        }
+
+        return $result;
     }
 }
