@@ -3,7 +3,6 @@
         <div class="panel-body">
             <ul class="nav">
                 <li class="activities"><a href="{{route('activity.index') }}">Activities</a></li>
-                <li class="add-new-activity-using-wizard"><a href="{{route('wizard.activity.create') }}">Add New Activity using Wizard</a></li>
                 <li class="organization"><a href="{{ url('/organization/' . Session::get('org_id')) }}">Organization</a></li>
                 <li class="published-files"><a href="{{ route('list-published-files') }}">Published Files</a></li>
                 <li class="users"><a href="{{route('admin.list-users')}}">Users</a></li>

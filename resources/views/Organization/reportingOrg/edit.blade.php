@@ -2,22 +2,22 @@
 
 @section('content')
 
-    <div class="container">
+    <div class="container main-container">
         <div class="row">
-            <div class="col-xs-8">
-                <div class="panel panel-default">
-                    <div class="panel-heading">Reporting Organization</div>
-                    <div class="panel-body">
-                        {!! form($form) !!}
-
-                        <div class="collection-container hidden"
-                             data-prototype="{{ form_row($form->reporting_org->prototype()) }}">
+            @include('includes.side_bar_menu')
+            <div class="col-xs-9 col-lg-9 content-wrapper">
+                @include('includes.breadcrumb')
+                 <div class="col-xs-8 col-md-8 col-lg-8 element-content-wrapper">
+                    <div class="panel panel-default panel-element-detail">
+                        <div class="panel-heading">Reporting Organization</div>
+                        <div class="panel-body">
+                            {!! form($form) !!}
+                            <div class="collection-container hidden"
+                                 data-prototype="{{ form_row($form->reporting_org->prototype()) }}">
+                            </div>
+                        </div>
                         </div>
                     </div>
-                </div>
-            </div>
-
-            <div class="col-xs-4">
                 @include('includes.menu_org')
             </div>
         </div>

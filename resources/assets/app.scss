@@ -12,6 +12,7 @@ $color_dodger_blue_approx: #00A8FF;
 $color_lochmara_approx: #038ED6;
 $color_gallery_approx: #ededed;
 $color_white_lilac_approx: #f6f8fa;
+$color_white_lilac: #F7FBFD;
 $color_concrete: #f2f2f2;
 $color_black_haze_approx: #f6f6f6;
 $color_alabaster_approx: #f9f9f9;
@@ -30,6 +31,9 @@ $color_alice_blue_approx: #eef9ff;
 $color_link_water_approx: #d5e8f3;
 $color_bismark_approx: #4f7286;
 $color_cerulean_approx: #0598e5;
+$color_chicago_approx: #5a5a5a;
+$color_romance_approx: #fdfdfd;
+$color_gallery: #efefef;
 
 
 //fonts
@@ -67,13 +71,17 @@ input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {
 }
 
 #{$all-text-inputs},
-select[multiple=multiple],button {
+select,button {
 	font: 16px $font_0;
 	color: $color_gravel_approx;
+	&:focus {
+		outline: none;
+	}
 }
 
-#{$all-text-inputs} {
+#{$all-text-inputs},select.form-control {
 	height: 45px;
+	border: 1px solid $color_blue;
 }
 
 // table
@@ -125,6 +133,7 @@ label {
 .login-wrapper {
 	background: $url_1 no-repeat bottom/cover;
 	padding: 84px 0 80px;
+	min-height: 100%;
 }
 
 .login-container {
@@ -180,6 +189,7 @@ label {
 	&:hover,&:focus,&:active {
 		background: $color_dodger_blue_approx;
 		border: 2px solid $color_dodger_blue_approx;
+		color: $color_white;
 	}
 }
 
@@ -210,7 +220,7 @@ label {
 
 // register
 
-.title {
+.panel-title {
 	font: 32px $font_2;
 	padding-top: 30px;
 }
@@ -269,19 +279,27 @@ label {
 	margin: 13px 16px;
 }
 
-.add-new-activity {
-	border-left: 1px solid $color_gallery_approx;
-	border-right: 1px solid $color_gallery_approx;
-	a {
-		background: $url_3 no-repeat -140px 20px;
-		font-size: 13px;
-		color: $color_gravel_approx;
-		padding: 22px 16px 22px 34px;
-		display: block;
+.navbar-default .navbar-nav {
+	>.open > a {
+		background: $color_gravel_approx;
+		color: $color_white;
+		&:focus,&:hover {
+			background: $color_gravel_approx;
+			color: $color_white;
+		}
 	}
 }
 
-.navbar-admin-dropdown {
+.navbar-default .navbar-nav.add-new-activity {
+	>.open > a {
+		background: $color_gravel_approx $url_3 -140px -47px;
+		&:focus,&:hover {
+			background: $color_gravel_approx $url_3 -140px -47px;
+		}
+	}
+}
+
+.navbar-admin-dropdown,.add-new-activity {
 	background: $color_white_lilac_approx;
 	img {
 		width: 45px;
@@ -311,6 +329,23 @@ label {
 					background: $color_gravel_approx;
 					color: $color_white;
 				}
+			}
+		}
+	}
+}
+
+.add-new-activity {
+	border-left: 1px solid $color_gallery_approx;
+	border-right: 1px solid $color_gallery_approx;
+	li.dropdown {
+		> a {
+			background: $url_3 no-repeat -140px 20px;
+			font-size: 13px;
+			color: $color_gravel_approx;
+			padding: 21px 16px 21px 34px;
+			display: block;
+			.caret {
+				margin-left: 5px;
 			}
 		}
 	}
@@ -361,16 +396,6 @@ label {
 		top: 30%;
 	}
 
-	.add-new-activity-using-wizard a {
-		&:before {
-			background-position: -140px 6px;
-		}
-		&:hover {
-			&:before {
-				background-position: -140px -59px;
-			}
-		}
-	}
 	.organization a {
 		&:before {
 			background-position: 0 -59px;
@@ -463,7 +488,7 @@ label {
 
 // activity
 
-.activity-container {
+.main-container {
 	@include outer-container(100%);
 	height: 100%;
 	width: 100%;
@@ -495,6 +520,7 @@ label {
 	color: $color_gravel_approx;
 	border-bottom: 0;
 	padding: 10px 37px 11px;
+	margin-bottom: 18px;
 }
 
 .activity_title {
@@ -609,11 +635,33 @@ label {
 	}
 }
 
+.panel-level-1 {
+	.panel-default .panel-heading {
+		font-size: 14px;
+		color: rgba($color_gravel_approx,0.7);
+	}
+	.panel {
+		margin-bottom: 0;
+	}
+}
+
+.panel-level-1 .panel+.panel {
+	margin-top: 20px;
+}
+
+.panel-level-2 {
+	padding-right: 0;
+	margin-top: 20px;
+}
+
 // element-content-wrapper
 .element-content-wrapper {
 	padding: 0;
 	.panel-heading {
 		background: transparent;
+	}
+	h3 {
+		padding: 0 40px;
 	}
 }
 
@@ -722,20 +770,24 @@ label {
 
 .panel-element-detail {
 	padding: 0 36px;
-	.panel-default {
+	> .panel-default {
 		margin-bottom: 42px;
-		>.panel-heading {
-			font-size: 22px;
-			padding: 0 0 10px;
-			border: 0;
-			background: transparent;
-		}
+	}
+	.panel-heading {
+		font-size: 22px;
+		padding: 0 0 10px;
+		border: 0;
+		background: transparent;
+	}
+	> .panel-body > .panel {
+		margin-bottom: 40px;
 	}
 }
 
 .panel-element-body {
 	border-radius: 4px;
 	background: $color_alabaster_approx;
+	overflow: hidden;
 	> .col-md-12 {
 		border-bottom: 1px solid $color_seashell;
 		font-size: 12px;
@@ -751,9 +803,9 @@ label {
 	text-indent: -9999px;
 	width: 32px;
 	height: 32px;
-	background: $url_3 no-repeat -153px -261px;
+	background: $url_3 no-repeat -154px -261px;
 	&:hover {
-		background-position: -220px -261px;
+		background-position: -221px -261px;
 	}
 }
 
@@ -795,11 +847,11 @@ label {
 	text-indent: -9999px;
 	width: 18px;
 	height: 18px;
-	background: $url_3 no-repeat -151px -200px;
+	background: $url_3 no-repeat -152px -200px;
 	cursor: pointer;
 	@include position(absolute,16px 20px auto auto);
 	&:hover {
-		background-position: -221px -200px;
+		background-position: -222px -200px;
 	}
 }
 
@@ -832,8 +884,8 @@ label {
 	border-color: $color_dodger_blue_approx;
 	width: 206px;
 	line-height: 28px;
-	margin-top: 30px;
-	&:hover {
+	margin-top: 20px;
+	&:hover,&:focus {
 		background-color: $color_cerulean_approx;
 		border-color: $color_cerulean_approx;
 	}
@@ -847,4 +899,77 @@ label {
 			padding-bottom: 20px;
 		}
 	}
+}
+
+.panel-title-heading {
+	font-size: 22px;
+	color: $color_chicago_approx;
+	padding: 17px 37px;
+	span {
+		font-style: italic;
+		color: rgba($color_chicago_approx,0.7);
+	}
+}
+
+
+// form
+
+.collection_form {
+	background: $color_romance_approx;
+	border: 1px solid #efefef;
+	border-radius: 4px;
+	margin-bottom: 30px;
+	padding-bottom: 68px;
+	> .form-group {
+		position: relative;
+		margin-bottom: 0;
+		padding: 25px 20px 0 20px;
+		> .form-group > * {
+			width: 60%;
+		}
+	}
+	> label {
+		padding: 20px 20px 0 20px;
+	}
+}
+
+.collection_form > .form-group + .form-group{
+	background: $color_white_lilac;
+	padding-bottom: 25px;
+}
+
+.add_to_collection,.add_to_collection:focus{
+	background: transparent $url_3 no-repeat 19px -443px;
+	border: none;
+	font-size: 15px;
+	margin-top: -87px;
+	padding-left: 62px;
+	margin-bottom: 40px;
+	display: block;
+	color: $color_gravel_approx;
+	&:hover{
+		background: transparent $url_3 no-repeat 19px -503px;
+		color: $color_dodger_blue_approx;
+	}
+}
+
+
+.remove_from_collection,.remove_from_collection:focus {
+	background: transparent $url_3 no-repeat -381px 0;
+	border: none;
+	text-indent: -9999px;
+	position: absolute;
+	right: 20px;
+	top: 26px;
+	&:hover {
+		background: transparent $url_3 no-repeat -381px -197px;
+	}
+}
+
+.btn-form {
+	width: 50%;
+}
+
+.modal-dialog {
+	z-index: 10000;
 }

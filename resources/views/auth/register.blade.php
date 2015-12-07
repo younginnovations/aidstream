@@ -30,7 +30,7 @@
 						<div class="panel panel-default">
 							<div class="panel-heading">
 								<img src="{{url('images/logo.png')}}" alt="">
-								<div class="title">Register</div>
+								<div class="panel-title">Register</div>
 							</div>
 						<div class="panel-body">
 							@if (count($errors) > 0)

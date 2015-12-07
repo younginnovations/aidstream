@@ -1,9 +1,10 @@
 @extends('app')
 
 @section('content')
-    <div class="container">
+    <div class="container main-container">
         <div class="row">
-            <div class="col-xs-8">
+        @include('includes.side_bar_menu')
+            <div class="col-xs-9 col-md-9 col-lg-9 content-wrapper">
                 <div class="panel panel-default">
                     <div class="panel-heading">Activity Data</div>
 
@@ -14,9 +15,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xs-4">
-                @include('wizard.activity.includes.menu_activity_element')
-            </div>
+            @include('wizard.activity.includes.menu_activity_element')
         </div>
     </div>
 @endsection
