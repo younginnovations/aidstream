@@ -16,7 +16,10 @@ $filledStatus = $defaultFieldGroups->getFilledStatus($id);
                                 <span class="glyphicon {{ $filledStatus[$fieldGroupIndex][$fieldIndex] ? 'glyphicon-ok-circle' : 'glyphicon-remove-circle' }}"></span>
                                 {{$field}}
                             </a>
-                            <span class="help-text">help text</span>
+                            <span class="help-text"
+                                  data-toggle="tooltip" data-placement="top"
+                                  data-trigger="click"
+                                  title="@lang(session()->get('version') . '/help.Activity_' . $fieldIndex)">help text</span>
                         </li>
                     @endforeach
                 </ul>
