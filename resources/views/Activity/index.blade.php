@@ -9,6 +9,7 @@
                 <div class="panel panel-default">
                     <div class="panel-content-heading">Activities</div>
                     <div class="panel-body">
+                        @if(count($activities) > 0)
                         <table class="table table-striped">
                             <thead>
                             <tr>
@@ -25,7 +26,7 @@
                             <?php
                             $status_label = ['draft', 'completed', 'verified', 'published'];
                             ?>
-                            @forelse($activities as $key=>$activity)
+                            @foreach($activities as $key=>$activity)
                                 <tr>
                                     <td><input type="checkbox"/></td>
                                     <td>{{ $key + 1 }}</td>
@@ -37,14 +38,12 @@
                                     <td><span class="{{ $status_label[$activity->activity_workflow] }}">{{ $status_label[$activity->activity_workflow] }}</span></td>
                                     <td><a href="{{ route('activity.show', [$activity->id]) }}" class="view">View</a><a href="{{ route('activity.destroy', [$activity->id]) }}" class="delete">Delete</a></td>
                                 </tr>
-                            @empty
-                                <tr>
-                                    <td colspan="7" class="text-center no-data">You haven’t added an activity yet. </td>
-                                </tr>
-                            @endforelse
+                            @endforeach
                             </tbody>
                         </table>
-
+                        @else
+                            <div class="text-center no-data">You haven’t added an activity yet. </div>
+                        @endif
                     </div>
                 </div>
             </div>

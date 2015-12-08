@@ -18,7 +18,8 @@ class DefaultFlowType extends BaseForm
                 'default_flow_type',
                 'select',
                 [
-                    'choices' => $this->getCodeList('FlowType', 'Activity'),
+                    'choices'     => $this->getCodeList('FlowType', 'Activity'),
+                    'empty_value' => 'Select one of the following option :'
                 ]
             );
     }

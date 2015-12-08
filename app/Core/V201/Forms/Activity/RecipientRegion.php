@@ -18,14 +18,16 @@ class RecipientRegion extends BaseForm
                 'region_code',
                 'select',
                 [
-                    'choices' => $this->getCodeList('Region', 'Activity'),
+                    'choices'     => $this->getCodeList('Region', 'Activity'),
+                    'empty_value' => 'Select one of the following option :'
                 ]
             )
             ->add(
                 'region_vocabulary',
                 'select',
                 [
-                    'choices' => $this->getCodeList('RegionVocabulary', 'Activity'),
+                    'choices'     => $this->getCodeList('RegionVocabulary', 'Activity'),
+                    'empty_value' => 'Select one of the following option :'
                 ]
             )
             ->addPercentage()

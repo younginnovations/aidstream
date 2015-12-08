@@ -3,6 +3,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-10 col-md-offset-1">
+                @if(count($activity) > 0)
                 <table class="table table-striped table-bordered">
                     <thead>
                     <tr>
@@ -11,19 +12,17 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @forelse($activity as $key => $value)
+                    @foreach($activity as $key => $value)
                         <tr>
                             <td>{{$value->user->username}}</td>
                             <td>{{trans($value->action,$value->param)}}</td>
                         </tr>
-                    @empty
-                        <tr>
-                            <td align="center" colspan="3">No Activity Yet::</td>
-                        </tr>
-
-                    @endforelse
+                    @endforeach
                     </tbody>
                 </table>
+                @else
+                <div class="text-center no-data">No Activity Log Yet::</div>
+                @endif
             </div>
         </div>
     </div>

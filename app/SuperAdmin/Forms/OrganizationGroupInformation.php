@@ -32,6 +32,7 @@ class OrganizationGroupInformation extends BaseForm
                 'choice',
                 [
                     'choices'  => $this->getOrganizationName(),
+                    'attr'     => ['style' => 'height:100px'],
                     'multiple' => true
                 ]
             )

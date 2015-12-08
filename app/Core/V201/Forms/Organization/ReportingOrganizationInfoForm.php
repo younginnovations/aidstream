@@ -14,8 +14,9 @@ class ReportingOrganizationInfoForm extends Baseform
                 'reporting_organization_type',
                 'select',
                 [
-                    'choices' => $this->getCodeList('OrganizationType', 'Organization'),
-                    'attr'    => ['readonly' => 'readonly']
+                    'choices'     => $this->getCodeList('OrganizationType', 'Organization'),
+                    'empty_value' => 'Select one of the following option :',
+                    'attr'        => ['readonly' => 'readonly']
                 ]
             )
             ->addNarrative('narrative')

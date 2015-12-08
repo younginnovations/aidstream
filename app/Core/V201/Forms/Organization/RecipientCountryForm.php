@@ -11,8 +11,9 @@ class RecipientCountryForm extends BaseForm
                 'code',
                 'select',
                 [
-                    'choices' => $this->getCodeList('Country', 'Organization'),
-                    'label'   => 'Code'
+                    'choices'     => $this->getCodeList('Country', 'Organization'),
+                    'empty_value' => 'Select one of the following option :',
+                    'label'       => 'Code'
                 ]
             )
             ->addNarrative('recipient_country_narrative')

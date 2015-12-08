@@ -16,16 +16,18 @@ class PolicyMaker extends BaseForm
                 'significance',
                 'select',
                 [
-                    'choices' => $this->getCodeList('PolicySignificance', 'Activity'),
-                    'label'   => 'Significance'
+                    'choices'     => $this->getCodeList('PolicySignificance', 'Activity'),
+                    'empty_value' => 'Select one of the following option :',
+                    'label'       => 'Significance'
                 ]
             )
             ->add(
                 'policy_marker',
                 'select',
                 [
-                    'choices' => $this->getCodeList('PolicyMarker', 'Activity'),
-                    'label'   => 'Policy Marker'
+                    'choices'     => $this->getCodeList('PolicyMarker', 'Activity'),
+                    'empty_value' => 'Select one of the following option :',
+                    'label'       => 'Policy Marker'
                 ]
             )
             ->addNarrative('narrative')

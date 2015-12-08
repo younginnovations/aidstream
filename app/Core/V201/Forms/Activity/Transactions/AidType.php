@@ -22,8 +22,9 @@ class AidType extends BaseForm
                 'aid_type',
                 'select',
                 [
-                    'choices' => $this->getAidTypeCodeList(),
-                    'attr'    => ['class' => 'form-control aid_type']
+                    'choices'     => $this->getAidTypeCodeList(),
+                    'empty_value' => 'Select one of the following option :',
+                    'attr'        => ['class' => 'form-control aid_type']
                 ]
             );
     }

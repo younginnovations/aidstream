@@ -21,16 +21,18 @@ class Sector extends BaseForm
                 'sector_code',
                 'select',
                 [
-                    'choices' => $this->getSectorCodeList(),
-                    'attr'    => ['class' => 'form-control sector_code']
+                    'choices'     => $this->getSectorCodeList(),
+                    'empty_value' => 'Select one of the following option :',
+                    'attr'        => ['class' => 'form-control sector_code']
                 ]
             )
             ->add(
                 'sector_vocabulary',
                 'select',
                 [
-                    'choices' => $this->getSectorVocabularyCodeList(),
-                    'attr'    => ['class' => 'form-control sector_vocabulary']
+                    'choices'     => $this->getSectorVocabularyCodeList(),
+                    'empty_value' => 'Select one of the following option :',
+                    'attr'        => ['class' => 'form-control sector_vocabulary']
                 ]
             )
             ->addNarrative('sector_narrative')

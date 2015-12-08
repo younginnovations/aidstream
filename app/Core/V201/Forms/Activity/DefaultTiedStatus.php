@@ -18,7 +18,8 @@ class DefaultTiedStatus extends BaseForm
                 'default_tied_status',
                 'select',
                 [
-                    'choices' => $this->getCodeList('TiedStatus', 'Activity'),
+                    'choices'     => $this->getCodeList('TiedStatus', 'Activity'),
+                    'empty_value' => 'Select one of the following option :'
                 ]
             );
     }

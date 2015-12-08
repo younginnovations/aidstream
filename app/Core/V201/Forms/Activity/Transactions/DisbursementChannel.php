@@ -22,8 +22,9 @@ class DisbursementChannel extends BaseForm
                 'disbursement_channel_code',
                 'select',
                 [
-                    'choices' => $this->getDisbursementChannelCodeList(),
-                    'attr'    => ['class' => 'form-control disbursement_channel'],
+                    'choices'     => $this->getDisbursementChannelCodeList(),
+                    'empty_value' => 'Select one of the following option :',
+                    'attr'        => ['class' => 'form-control disbursement_channel'],
                 ]
             );
     }

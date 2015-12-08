@@ -19,8 +19,9 @@ class Budget extends BaseForm
                 'budget_type',
                 'select',
                 [
-                    'choices' => $this->getCodeList('BudgetType', 'Activity'),
-                    'label'   => 'Budget Type'
+                    'choices'     => $this->getCodeList('BudgetType', 'Activity'),
+                    'empty_value' => 'Select one of the following option :',
+                    'label'       => 'Budget Type'
                 ]
             )
             ->addCollection('period_start', 'Activity\PeriodStart')

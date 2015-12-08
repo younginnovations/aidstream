@@ -13,8 +13,9 @@ class LanguageCode extends BaseForm
                 'language',
                 'select',
                 [
-                    'choices' => $this->getCodeList('Language', 'Activity'),
-                    'label'   => 'Language'
+                    'choices'     => $this->getCodeList('Language', 'Activity'),
+                    'empty_value' => 'Select one of the following option :',
+                    'label'       => 'Language'
                 ]
             )
             ->addRemoveThisButton('remove_language_code');

@@ -38,7 +38,7 @@
                     <div class="panel-heading">Activity Results</div>
 
                     <div class="panel-body">
-
+                        @if(count($results) > 0)
                         <table class="table table-striped">
                             <thead>
                             <tr>
@@ -49,7 +49,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @forelse($results as $resultIndex=>$result)
+                            @foreach($results as $resultIndex=>$result)
                                 <tr>
                                     <td>{{ $resultIndex + 1 }}</td>
                                     <td class="activity_title">
@@ -66,14 +66,12 @@
                                         </div>
                                     </td>
                                 </tr>
-                            @empty
-                                <tr>
-                                    <td colspan="5" class="text-center">No results found.</td>
-                                </tr>
-                            @endforelse
+                            @endforeach
                             </tbody>
                         </table>
-
+                        @else
+                            <div class="text-center no-data">No results Created Yet ::</div>
+                        @endif
                         <a href="{{ route('activity.result.create', $id) }}">Add Another Result</a>
 
                     </div>

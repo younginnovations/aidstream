@@ -18,8 +18,9 @@ class Description extends BaseForm
                 'type',
                 'select',
                 [
-                    'choices' => $this->getCodeList('DescriptionType', 'Activity'),
-                    'label'   => 'Description Type'
+                    'choices'     => $this->getCodeList('DescriptionType', 'Activity'),
+                    'empty_value' => 'Select one of the following option :',
+                    'label'       => 'Description Type'
                 ]
             )
             ->addNarrative('narrative')

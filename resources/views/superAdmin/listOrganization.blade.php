@@ -6,9 +6,8 @@
             <div class="col-xs-8">
                 <div class="panel panel-default">
                     <div class="panel-heading">Activities</div>
-
                     <div class="panel-body">
-
+                        @if(count($organizations) > 0)
                         <table class="table table-striped">
                             <thead>
                             <tr>
@@ -21,7 +20,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @forelse($organizations as $key=>$organization)
+                            @foreach($organizations as $key=>$organization)
                                 <tr>
                                     <td>{{ $key + 1 }}</td>
                                     <td>{{ $organization->name}}
@@ -46,14 +45,12 @@
                                         </div>
                                     </td>
                                 </tr>
-                            @empty
-                                <tr>
-                                    <td colspan="6" class="text-center">No Organization Registered Yet.</td>
-                                </tr>
-                            @endforelse
+                            @endforeach
                             </tbody>
                         </table>
-
+                        @else
+                        <div class="text-center no-data">No Organization Registered Yet ::</div>
+                        @endif
                     </div>
                 </div>
             </div>

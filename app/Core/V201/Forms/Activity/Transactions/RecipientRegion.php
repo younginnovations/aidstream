@@ -9,7 +9,8 @@ use App\Core\V201\Traits\Forms\Transaction\RecipientRegion as RecipientRegionCod
  */
 class RecipientRegion extends BaseForm
 {
-   use RecipientRegionCodeList;
+    use RecipientRegionCodeList;
+
     /**
      * builds activity Recipient Region form
      */
@@ -20,14 +21,16 @@ class RecipientRegion extends BaseForm
                 'region_code',
                 'select',
                 [
-                    'choices' => $this->getRegionCodeList(),
+                    'choices'     => $this->getRegionCodeList(),
+                    'empty_value' => 'Select one of the following option :',
                 ]
             )
             ->add(
                 'vocabulary',
                 'select',
                 [
-                    'choices' => $this->getRegionVocabularyCodeList(),
+                    'choices'     => $this->getRegionVocabularyCodeList(),
+                    'empty_value' => 'Select one of the following option :',
                 ]
             )
             ->addNarrative('narrative')

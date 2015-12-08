@@ -18,7 +18,8 @@ class DefaultAidType extends BaseForm
                 'default_aid_type',
                 'select',
                 [
-                    'choices' => $this->getCodeList('AidType', 'Activity'),
+                    'choices'     => $this->getCodeList('AidType', 'Activity'),
+                    'empty_value' => 'Select one of the following option :'
                 ]
             );
     }
