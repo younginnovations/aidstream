@@ -96,7 +96,7 @@ class SettingsController extends Controller
     {
         $input = Input::all();
         $this->settingsManager->storeSettings($input, $this->organization);
-        Session::flash('message', 'Successfully Edit');
+        Session::flash('message', 'Successfully Updated');
 
         return Redirect::to('/');
     }
@@ -124,6 +124,6 @@ class SettingsController extends Controller
             }
         }
 
-        return Redirect::to('/')->withMessage('Successfully Edit');
+        return Redirect::to('/')->withMessage('Successfully Updated');
     }
 }

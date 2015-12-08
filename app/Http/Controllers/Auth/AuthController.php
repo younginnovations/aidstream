@@ -52,7 +52,7 @@ class AuthController extends Controller
             [
                 'organization_name'            => 'required|max:255',
                 'organization_address'         => 'required|max:255',
-                'organization_user_identifier' => 'required|max:255',
+                'organization_user_identifier' => 'required|max:255|unique:organizations,user_identifier',
                 'first_name'                   => 'required|max:255',
                 'last_name'                    => 'required|max:255',
                 'email'                        => 'required|email|max:255|unique:users',
@@ -157,7 +157,7 @@ class AuthController extends Controller
 
         $this->create($request->all());
 
-        return redirect($this->redirectPath());
+        return redirect('/auth/login')->withMessage('Your account has been successfully created. Please log in to continue.');
     }
 
     /**

@@ -73,7 +73,7 @@ class AdminController extends Controller
         $this->user->user_permission = isset($input['user_permission']) ? $input['user_permission'] : [];
         $this->user->save();
 
-        $this->session->flash('flash_message', 'User has been created');
+        $this->session->flash('message', 'User has been created');
 
         return redirect('admin/list-users');
     }
@@ -137,7 +137,7 @@ class AdminController extends Controller
         $user->password = bcrypt($input['password']);
         $user->save();
 
-        return redirect('admin/list-users');
+        return redirect('admin/list-users')->withMessage('Successfully Updated Password');
     }
 
     /**
@@ -163,9 +163,8 @@ class AdminController extends Controller
         $user->user_permission = isset($input['user_permission']) ? $input['user_permission'] : [];
         $user->save();
 
-        return redirect('admin/list-users');
+        return redirect('admin/list-users')->withMessage('Successfully Updated');
 
     }
 
 }
-
