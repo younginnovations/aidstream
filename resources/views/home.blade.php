@@ -1,6 +1,12 @@
 @extends('app')
 
 @section('content')
+    @if(Session::get('message'))
+        <div class="alert alert-success">
+            {{ Session::get('message') }}
+        </div>
+    @endif
+
     <div class="container main-container">
         <div class="row">
             @include('includes.side_bar_menu')

@@ -112,7 +112,7 @@ class ActivityController extends Controller
             return redirect()->back();
         }
 
-        return redirect()->route('activity.show', [$result->id]);
+        return redirect()->route('activity.show', [$result->id])->withMessage('Successfully Created Activity');
     }
 
     /**
