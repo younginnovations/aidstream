@@ -1,6 +1,9 @@
 @extends('app')
 
 @section('content')
+
+    {{Session::get('message')}}
+
     <div class="container main-container">
         <div class="row">
             @include('includes.side_bar_menu')
@@ -36,7 +39,10 @@
                                     <td>{{ $activity->identifier['activity_identifier'] }}</td>
                                     <td class="updated-date">{{ $activity->updated_at }}</td>
                                     <td><span class="{{ $status_label[$activity->activity_workflow] }}">{{ $status_label[$activity->activity_workflow] }}</span></td>
-                                    <td><a href="{{ route('activity.show', [$activity->id]) }}" class="view">View</a><a href="{{ route('activity.destroy', [$activity->id]) }}" class="delete">Delete</a></td>
+                                    <td>
+                                        <a href="{{ route('activity.show', [$activity->id]) }}" class="view">View</a>
+                                        <a href="{{ url(sprintf('activity/%s/delete', $activity->id)) }}" class="delete">Delete</a>
+                                    </td>
                                 </tr>
                             @endforeach
                             </tbody>

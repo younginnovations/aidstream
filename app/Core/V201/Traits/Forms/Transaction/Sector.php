@@ -16,6 +16,15 @@ trait Sector
     }
 
     /**
+     * get SectorVocabulary CodeList
+     * @return mixed
+     */
+    public function getSectorVocabularyCodeList()
+    {
+        return $this->getCodeList('SectorVocabulary', 'Activity');
+    }
+
+    /**
      * get Sector CodeList
      * @return mixed
      */
@@ -25,11 +34,11 @@ trait Sector
     }
 
     /**
-     * get SectorVocabulary CodeList
+     * get Sector Category CodeList
      * @return mixed
      */
-    public function getSectorVocabularyCodeList()
+    public function getSectorCategoryCodeList()
     {
-        return $this->getCodeList('SectorVocabulary', 'Activity');
+        return $this->getCodeList('SectorCategory', 'Activity');
     }
 }

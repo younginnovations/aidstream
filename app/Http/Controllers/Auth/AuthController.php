@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\Controller;
 use App\Models\Settings;
-use App\Organization;
+use App\Models\Organization\Organization;
 use App\User;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use Illuminate\Http\Request;

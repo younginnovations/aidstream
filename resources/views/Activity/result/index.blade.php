@@ -60,9 +60,9 @@
                                     </td>
                                     <td>
                                         <div class="activity_actions">
-                                            <a href="{{ route('activity.result.show', [$id, $result->id]) }}" data-result="{{ json_encode($result->result) }}" data-toggle="modal" data-target="#view_result">View</a>
-                                            <a href="{{ route('activity.result.edit', [$id, $result->id]) }}">Edit</a>
-                                            <a href="{{ url(sprintf('activity/%s/result/%s/delete', $id, $result->id)) }}">Delete</a>
+                                            <a href="{{ route('activity.result.show', [$id, $result->id]) }}" data-result="{{ json_encode($result->result) }}" data-toggle="modal" data-target="#view_result" class="view">View</a>
+                                            <a href="{{ route('activity.result.edit', [$id, $result->id]) }}" class="edit">Edit</a>
+                                            <a href="{{ url(sprintf('activity/%s/result/%s/delete', $id, $result->id)) }}" class="delete">Delete</a>
                                         </div>
                                     </td>
                                 </tr>
