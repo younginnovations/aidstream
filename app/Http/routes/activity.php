@@ -46,5 +46,12 @@ $router->group(
         );
         $router->resource('activity.legacy-data', 'LegacyDataController');
         $router->post('activity/{id}/update-status', 'ActivityController@updateStatus');
+        $router->get(
+            'delete-published-file/{id}',
+            [
+                'as'   => 'delete-published-file',
+                'uses' => 'ActivityController@deletePublishedFile'
+            ]
+        );
     }
 );
