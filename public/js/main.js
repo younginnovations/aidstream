@@ -192,4 +192,6 @@ $(document).ready(function () {
         modalContent += description.html();
         $('.modal-body', this).html(modalContent);
     });
+
+    $('[data-toggle="tooltip"]').tooltip();
 });

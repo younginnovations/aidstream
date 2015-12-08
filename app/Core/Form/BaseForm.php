@@ -167,4 +167,25 @@ class BaseForm extends Form
     {
         return $this->add('Save', 'submit', ['attr' => ['class' => 'btn btn-primary']]);
     }
+
+    /**
+     * add help text in the form fields
+     * @param $helpText
+     * @return array
+     */
+    protected function addHelpText($helpText)
+    {
+        return
+            [
+                'text' => 'text',
+                'tag'  => 'span',
+                'attr' => [
+                    'data-toggle'    => 'tooltip',
+                    'data-placement' => 'top',
+                    'data-trigger'   => 'click',
+                    'class'          => 'help-text',
+                    'title'          => trans(session()->get('version') . "/help.$helpText")
+                ]
+            ];
+    }
 }
