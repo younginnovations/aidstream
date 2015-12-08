@@ -22,7 +22,8 @@
                 </div>
                 <div class="panel panel-default panel-element-detail panel-activity-default">
                     <div class="panel-body">
-                    <div class="panel-default">
+                        <div class="alert alert-info">You can change Default Values after you create an activity.</div>
+                        <div class="panel-default">
                         <div class="panel-heading">@lang('trans.activity_default')</div>
                         <div class="panel-body panel-element-body">
                         <div class="col-md-6">
@@ -74,8 +75,8 @@
                             <div class="col-md-6">Default Tied Status:</div>
                             <div class="col-md-6">{{ $defaultFieldValues[0]['Default_tied_status']  }}</div>
                         </div>
-
                         </div>
+
                     </div>
                     </div>
                 </div>
