@@ -42,6 +42,6 @@ class ActivityDate
                 'model'  => $model,
                 'url'    => route('activity.activity-date.update', [$activityId, 0])
             ]
-        )->add('Save', 'submit');
+        )->add('Save', 'submit', ['attr' => ['class' => 'btn btn-submit btn-form']]);
     }
 }

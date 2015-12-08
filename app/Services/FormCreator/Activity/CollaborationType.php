@@ -49,6 +49,6 @@ class CollaborationType
                 'model'  => $model,
                 'url'    => route('activity.collaboration-type.update', [$activityId, 0])
             ]
-        )->add('Save', 'submit');
+        )->add('Save', 'submit', ['attr' => ['class' => 'btn btn-submit btn-form']]);
     }
 }

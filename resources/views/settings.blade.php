@@ -1,15 +1,15 @@
 @extends('app')
 
 @section('content')
-<div class="container">
-	<div class="row">
-		<div class="col-md-10 col-md-offset-1">
+    <div class="container main-container">
+        <div class="row">
+            @include('includes.side_bar_menu')
+            <div class="col-xs-9 col-lg-9 content-wrapper">
 			<div class="panel panel-default">
-				<div class="panel-heading">Settings</div>
+				<div class="panel-content-heading">Settings</div>
 				<div class="panel-body">
-
-					{!! form_start($form) !!}
-
+					<div class="create-form">
+						{!! form_start($form) !!}
 						<div class="panel panel-default">
 							<div class="panel-heading">Version</div>
 							<div class="panel-body">
@@ -92,10 +92,11 @@
 
 							</div>
 						</div>
+						</div>
 
 						<div class="form-group">
 							<div class="col-md-12">
-								<button type="submit" class="btn btn-primary">Save</button>
+								<button type="submit" class="btn btn-primary btn-submit btn-form">Save</button>
 							</div>
 						</div>
 					</form>--}}

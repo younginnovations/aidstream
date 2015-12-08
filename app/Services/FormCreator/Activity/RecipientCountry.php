@@ -48,6 +48,6 @@ class RecipientCountry
                 'model'  => $modal,
                 'url'    => route('activity.recipient-country.update', [$activityId, 0])
             ]
-        )->add('Save', 'submit');
+        )->add('Save', 'submit', ['attr' => ['class' => 'btn btn-submit btn-form']]);
     }
 }

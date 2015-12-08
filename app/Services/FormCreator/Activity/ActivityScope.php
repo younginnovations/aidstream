@@ -40,6 +40,6 @@ class ActivityScope
                 'model'  => $data,
                 'url'    => route('activity.activity-scope.update', [$activityId, 0])
             ]
-        )->add('Save', 'submit');
+        )->add('Save', 'submit', ['attr' => ['class' => 'btn btn-submit btn-form']]);
     }
 }

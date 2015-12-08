@@ -42,6 +42,6 @@ class RecipientRegion
                 'model'  => $model,
                 'url'    => route('activity.recipient-region.update', [$activityId, 0])
             ]
-        )->add('Save', 'submit');
+        )->add('Save', 'submit', ['attr' => ['class' => 'btn btn-submit btn-form']]);
     }
 }

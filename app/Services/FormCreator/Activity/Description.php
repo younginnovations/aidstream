@@ -43,6 +43,6 @@ class Description
                 'model'  => $model,
                 'url'    => route('activity.description.update', [$activityId, 0])
             ]
-        )->add('Save', 'submit');
+        )->add('Save', 'submit', ['attr' => ['class' => 'btn btn-submit btn-form']]);
     }
 }

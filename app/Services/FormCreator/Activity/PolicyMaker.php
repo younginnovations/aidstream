@@ -37,6 +37,6 @@ class PolicyMaker
                 'model'  => $model,
                 'url'    => route('activity.policy-maker.update', [$activityId, 0])
             ]
-        )->add('Save', 'submit');
+        )->add('Save', 'submit', ['attr' => ['class' => 'btn btn-submit btn-form']]);
     }
 }

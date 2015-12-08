@@ -7,6 +7,7 @@
     <title>Aidstream</title>
 
     <link href="{{ asset('/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('/css/flag-icon.css') }}" rel="stylesheet">
     <link href="{{ asset('/css/app.css') }}" rel="stylesheet">
 
     <!-- Fonts -->
@@ -37,7 +38,7 @@
         </div>
 
         <div class="collapse navbar-collapse navbar-right" id="bs-example-navbar-collapse-1">
-             <ul class="nav navbar-nav">
+<!--              <ul class="nav navbar-nav">
 {{--                <li>
                     @if(Auth::user())
                         <a href="{{ Auth::user()->role_id == 3 ? url('admin/dashboard') : url('/')  }}">@lang('trans.home')</a>
@@ -53,7 +54,7 @@
                         </select>
                     </form>
                 </li>
-            </ul>
+            </ul> -->
             <ul class="nav navbar-nav pull-left add-new-activity">
                 <li class="dropdown">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
@@ -77,12 +78,20 @@
                     </li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                           aria-expanded="false"><img src="" alt="{{Auth::user()->name}}"><span
-                                    class="caret"></span></a>
+                           aria-expanded="false"><span class="avatar-img"><img src="{{url('images/avatar.png')}}" width="16" height="26" alt="{{Auth::user()->name}}"></span>
+                           <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
                             <li><a href="#">My Profile</a></li>
-                            <li><a href="#">Edit Profile</a></li>
                             <li><a href="{{ url('/auth/logout') }}">@lang('trans.logout')</a></li>
+                            <li class="language-select-wrap">
+                            <label for="">Language</label>
+                                <div class="flag-wrapper">
+                                    <a href="#" class="img-thumbnail flag flag-icon-background flag-icon-gb active"></a>
+                                </div>
+                                <div class="flag-wrapper">
+                                    <a href="#" class="img-thumbnail flag flag-icon-background flag-icon-fr"></a>
+                                </div>
+                            </li>
                         </ul>
                     </li>
                 @endif
