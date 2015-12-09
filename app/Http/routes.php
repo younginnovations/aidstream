@@ -104,4 +104,3 @@ $router->post
         'uses' => 'Complete\AdminController@updateUserPermission'
     ]
 );
-
