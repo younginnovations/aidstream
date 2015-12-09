@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Session\SessionManager;
 use App\Services\Activity\ActivityManager;
 use App\Services\FormCreator\Activity\Identifier;
+use Illuminate\Support\Facades\Session;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
 /**
@@ -87,9 +88,10 @@ class ActivityController extends Controller
     public function create()
     {
         $this->authorize('add_activity');
-        $form     = $this->identifierForm->create();
-        $settings = $this->settingsManager->getSettings($this->organization_id);
-        if (!isset($settings)) {
+        $organization = $this->organizationManager->getOrganization(Session::get('org_id'));
+        $form         = $this->identifierForm->create();
+        $settings     = $this->settingsManager->getSettings($this->organization_id);
+        if (!isset($organization->reporting_org[0])) {
             return redirect('/settings');
         }
         $defaultFieldValues    = $settings->default_field_values;
