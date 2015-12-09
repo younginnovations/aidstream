@@ -133,18 +133,6 @@ class ActivityController extends Controller
     }
 
     /**
-     * Throw an unauthorized exception based on gate results.
-     *
-     * @param  string $ability
-     * @param  array  $arguments
-     * @return \Symfony\Component\HttpKernel\Exception\HttpException
-     */
-    protected function createGateUnauthorizedException($ability, $arguments)
-    {
-        return new HttpException(403, 'This action is unauthorized.');
-    }
-
-    /**
      * @param         $id
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
