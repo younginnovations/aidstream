@@ -3,8 +3,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-8">
-                <h3>{{ $activity->IdentifierTitle }}</h3>
-                <strong>Transactions</strong>
+                <div class="panel-content-heading panel-title-heading">Transactions of <span>{{$activity->IdentifierTitle}}</span></div>
                 @if(count($activity->getTransactions()) > 0)
                 <table class="table table-striped table-bordered">
                     <thead>

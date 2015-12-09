@@ -34,7 +34,15 @@ class Transaction extends BaseElement
         $transactionData = [];
 
         foreach ($transactions as $totalTransaction) {
-            $transaction       = $totalTransaction->transaction;
+            $transaction = $totalTransaction->transaction;
+            $vocabulary  = $transaction['sector'][0]['sector_vocabulary'];
+            if ($vocabulary == 1) {
+                $sectorValue = $transaction['sector'][0]['sector_code'];
+            } elseif ($vocabulary == 2) {
+                $sectorValue = $transaction['sector'][0]['sector_category_code'];
+            } else {
+                $sectorValue = $transaction['sector'][0]['sector_text'];
+            }
             $transactionData[] = [
                 '@attributes'          => [
                     'ref' => $transaction['reference']
@@ -80,8 +88,8 @@ class Transaction extends BaseElement
                 ],
                 'sector'               => [
                     '@attributes' => [
-                        'vocabulary' => $transaction['sector'][0]['sector_vocabulary'],
-                        'code'       => $transaction['sector'][0]['sector_code']
+                        'vocabulary' => $vocabulary,
+                        'code'       => $sectorValue
                     ],
                     'narrative'   => $this->buildNarrative($transaction['sector'][0]['narrative'])
                 ],

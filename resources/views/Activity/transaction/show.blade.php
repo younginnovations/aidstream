@@ -5,7 +5,7 @@
         <div class="row">
             <div class="col-md-10 col-md-offset-1">
                 <div class="panel panel-default">
-                    <div class="panel-heading">{{$activity->IdentifierTitle}}</div>
+                    <div class="panel-content-heading panel-title-heading">Transaction of <span>{{$activity->IdentifierTitle}}</span></div>
                     <strong><h3>Element Detail</h3></strong>
                     <div class="panel-body">
                         <div>Reference: {{$transactionDetail['reference']}}</div>
