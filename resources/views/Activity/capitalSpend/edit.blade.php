@@ -5,9 +5,8 @@
         <div class="row">
             <div class="col-xs-8">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Activity Capital Spend</div>
+                    <div class="panel-content-heading panel-title-heading">Capital Spend of <span>{{$activityData->IdentifierTitle}}</span></div>
                     <div class="panel-body">
-                        <h3>{{ $activityData->IdentifierTitle }}</h3>
                         <h2><strong>Capital Spend</strong></h2>
                         {!! form($form) !!}
                     </div>

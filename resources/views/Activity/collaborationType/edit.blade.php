@@ -5,9 +5,8 @@
         <div class="row">
             <div class="col-xs-8">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Activity Collaboration Type</div>
+                    <div class="panel-content-heading panel-title-heading">Collaboration Type of <span>{{$activityData->IdentifierTitle}}</span></div>
                     <div class="panel-body">
-                        <h3>{{ $activityData->IdentifierTitle }}</h3>
                         {!! form($form) !!}
                     </div>
                 </div>
