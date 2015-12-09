@@ -24,12 +24,9 @@
                             <td>{{ $transaction['value'][0]['amount'] }}</td>
                             <td>{{ $transaction['value'][0]['date'] }}</td>
                             <td>
-                                <a class="btn btn-small btn-primary" href="{{ route('activity.transaction.show', [$activity->id, $transaction['id']]) }}">Detail</a>
-                                <a class="btn btn-small btn-success" href="{{ route('activity.transaction.edit', [$activity->id, $transaction['id']]) }}">Edit</a>
-                                {!! Form::open(array('class' => 'pull-right','route' => array('activity.transaction.destroy',$activity->id, $transaction['id']))) !!}
-                                {!! Form::hidden('_method', 'DELETE') !!}
-                                {!! Form::submit('Delete', array('class' => 'btn btn-warning')) !!}
-                                {!! Form::close() !!}
+                                <a class="view" href="{{ route('activity.transaction.show', [$activity->id, $transaction['id']]) }}">View</a>
+                                <a class="edit" href="{{ route('activity.transaction.edit', [$activity->id, $transaction['id']]) }}">Edit</a>
+                                <a class="delete" href="{{ url(sprintf('activity/%s/transaction/%s/delete', $activity->id, $transaction['id'])) }}">Delete</a>
                             </td>
                         </tr>
                     @endforeach

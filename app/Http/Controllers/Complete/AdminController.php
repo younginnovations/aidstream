@@ -111,7 +111,7 @@ class AdminController extends Controller
         $user = $this->user->findOrFail($userId);
         $user->delete($user);
 
-        return redirect('admin/list-users');
+        return redirect()->back()->withMessage('User has been deleted Successfully.');
     }
 
     /**

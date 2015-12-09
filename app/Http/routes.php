@@ -67,13 +67,7 @@ $router->get(
     ]
 );
 
-$router->delete(
-    'admin/{id}',
-    [
-        'as'   => 'admin.delete-user',
-        'uses' => 'Complete\AdminController@deleteUser'
-    ]
-);
+$router->resource('user.delete', 'Complete\AdminController@deleteUser');
 
 $router->get(
     'admin/reset-user-password/{id}',

@@ -1,6 +1,9 @@
 @extends('app')
 
 @section('content')
+
+    {{Session::get('message')}}
+
     <div class="container">
         <div class="row">
             <div class="col-xs-8">
@@ -37,9 +40,9 @@
                                     <td>
                                         <div class="organization_actions">
                                             @if(Auth::user()->isSuperAdmin())
-                                                <a href="{{ route('admin.edit-organization', $organization->id) }}">Edit</a> |
+                                                <a href="{{ route('admin.edit-organization', $organization->id)}}" class="edit">Edit</a> |
                                                 <a href="{{ route('admin.change-organization-status', [$organization->id, ($organization->status == 1) ? 0 : 1]) }}">{{$organization->orgStatus}}</a> |
-                                                <a href="{{ route('admin.delete-organization', $organization->id) }}">Delete</a> |
+                                                <a href="{{ route('admin.delete-organization', $organization->id) }}" class="delete">Delete</a> |
                                             @endif
                                                 <a href="{{ route('admin.masquerade-organization', [$organization->id, $organization->users[0]['id']]) }}">Masquerade</a>
                                         </div>

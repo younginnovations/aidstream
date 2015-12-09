@@ -1,6 +1,7 @@
 <?php namespace App\Core\V201\Forms\Activity;
 
 use App\Core\Form\BaseForm;
+use App\Core\V201\Traits\Forms\Transaction\Sector as SectorCodeList;
 
 /**
  * Class Sector
@@ -8,6 +9,8 @@ use App\Core\Form\BaseForm;
  */
 class Sector extends BaseForm
 {
+    use SectorCodeList;
+
     /**
      * builds the activity sector form
      */
@@ -15,29 +18,29 @@ class Sector extends BaseForm
     {
         $this
             ->add(
-                'vocabulary',
+                'sector_vocabulary',
                 'select',
                 [
-                    'choices'     => $this->getCodeList('SectorVocabulary', 'Activity'),
+                    'choices'     => $this->getSectorVocabularyCodeList(),
                     'empty_value' => 'Select one of the following option :',
-                    'attr'        => ['class' => 'form-control sector_types sector_vocabulary']
+                    'attr'        => ['class' => 'form-control sector_vocabulary']
                 ]
             )
             ->add(
-                'sector_select',
+                'sector_code',
                 'select',
                 [
-                    'choices'     => $this->getCodeList('Sector', 'Activity'),
+                    'choices'     => $this->getSectorCodeList(),
                     'empty_value' => 'Select one of the following option :',
                     'label'       => 'Sector',
                     'wrapper'     => ['class' => 'form-group hidden sector_types sector_select']
                 ]
             )
             ->add(
-                'sector_category_select',
+                'sector_category_code',
                 'select',
                 [
-                    'choices'     => $this->getCodeList('SectorCategory', 'Activity'),
+                    'choices'     => $this->getSectorCategoryCodeList(),
                     'empty_value' => 'Select one of the following option :',
                     'label'       => 'Sector',
                     'wrapper'     => ['class' => 'form-group hidden sector_types sector_category_select']
@@ -48,7 +51,7 @@ class Sector extends BaseForm
                 'text',
                 [
                     'label'   => 'Sector',
-                    'wrapper' => ['class' => 'form-group hidden sector_text']
+                    'wrapper' => ['class' => 'form-group hidden sector_types sector_text']
                 ]
             )
             ->addPercentage()

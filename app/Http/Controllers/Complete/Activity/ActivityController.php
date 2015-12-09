@@ -186,7 +186,7 @@ class ActivityController extends Controller
         $activity = $this->activityManager->getActivityData($id);
         $activity->delete($activity);
 
-        return redirect()->back()->withMessage('Activity deleted');
+        return redirect()->back()->withMessage('User has been deleted Successfully.');
     }
 
     /**

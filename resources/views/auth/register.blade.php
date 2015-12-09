@@ -19,6 +19,11 @@
 	    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 	    <![endif]-->
 
+		<!-- Scripts -->
+		<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+		<script type="text/javascript" src="{{url('/js/jquery.cookie.js')}}"></script>
+		<script type="text/javascript" src="{{url('/js/main.js')}}"></script>
+
 	    @yield('head')
 
 	</head>

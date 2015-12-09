@@ -90,6 +90,6 @@ class OrganizationGroupController extends Controller
         $user = $this->userGroup->findOrFail($id);
         $user->delete($user);
 
-        return redirect()->back()->withMessage('group has been deleted');
+        return redirect()->back()->withMessage('Organization group has been deleted.');
     }
 }

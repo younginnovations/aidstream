@@ -125,7 +125,7 @@ class OrganizationController extends Controller
         $organization = $this->adminManager->getOrganizationById($id);
         $organization->delete($organization);
 
-        return redirect()->back()->withMessage('organization is deleted');
+        return redirect()->back()->withMessage('Organization has been deleted.');
     }
 
     /**

@@ -52,9 +52,41 @@ $(document).ready(function () {
 
     /* Removes form on click to Remove This button */
     $('form').delegate('.remove_from_collection', 'click', function () {
-        var collectionForm = $(this).parents('.collection_form').eq(0);
-        $(this).parent('.form-group').remove();
-        if ($('> .form-group', collectionForm).length === 0) collectionForm.next('.add_to_collection').trigger('click');
+        var _this = $(this);
+
+        if ($('#removeDialog').length === 0) {
+            $('body').append('' +
+            '<div class="modal" id="removeDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="z-index: 9999">' +
+            '<div class="modal-dialog">' +
+            '<div class="modal-content">' +
+            '<div class="modal-header">' +
+            '<h4 class="modal-title" id="myModalLabel"></h4>' +
+            '</div>' +
+            '<div class="modal-body"></div>' +
+            '<div class="modal-footer"></div>' +
+            '</div>' +
+            '</div>' +
+            '</div>');
+        }
+
+        var removeDialog = $('#removeDialog');
+
+        var buttons = '' +
+            '<button class="btn btn-primary btn_remove" type="button">Yes</button>' +
+            '<button class="btn btn-default" type="button"  data-dismiss="modal">No</button>';
+
+        $('.modal-header .modal-title', removeDialog).html('Remove Confirmation');
+        $('.modal-body', removeDialog).html('Are you sure you want to remove this block?');
+        $('.modal-footer', removeDialog).html(buttons);
+
+        $('body').undelegate('.btn_remove', 'click').delegate('.btn_remove', 'click', function () {
+            var collectionForm = _this.parents('.collection_form').eq(0);
+            _this.parent('.form-group').remove();
+            if ($('> .form-group', collectionForm).length === 0) collectionForm.next('.add_to_collection').trigger('click');
+            removeDialog.modal('hide');
+        });
+
+        removeDialog.modal('show');
     });
 
     var language = $.cookie('language');
@@ -191,6 +223,43 @@ $(document).ready(function () {
         $('.panel-body', description).append(getRow('Text:', result.description[0].narrative[0].narrative));
         modalContent += description.html();
         $('.modal-body', this).html(modalContent);
+    });
+
+    $('.delete').click(function(e) {
+        e.preventDefault();
+        var location = this.href;
+
+        if ($('#delDialog').length === 0) {
+            $('body').append('' +
+            '<div class="modal" id="delDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="z-index: 9999">' +
+            '<div class="modal-dialog">' +
+            '<div class="modal-content">' +
+            '<div class="modal-header">' +
+            '<h4 class="modal-title" id="myModalLabel"></h4>' +
+            '</div>' +
+            '<div class="modal-body"></div>' +
+            '<div class="modal-footer"></div>' +
+            '</div>' +
+            '</div>' +
+            '</div>');
+        }
+
+        var delDialog = $('#delDialog');
+
+        var buttons = '' +
+            '<button class="btn btn-primary btn_del" type="button">Yes</button>' +
+            '<button class="btn btn-default" type="button"  data-dismiss="modal">No</button>';
+
+        $('.modal-header .modal-title', delDialog).html('Delete Confirmation');
+        $('.modal-body', delDialog).html('Are you sure you want to delete?');
+        $('.modal-footer', delDialog).html(buttons);
+
+        $('body').undelegate('.btn_del', 'click').delegate('.btn_del', 'click', function () {
+            window.location = location;
+        });
+
+        delDialog.modal('show');
+
     });
 
     $('[data-toggle="tooltip"]').tooltip();

@@ -35,6 +35,7 @@ $router->group(
         $router->resource('activity.document-link', 'DocumentLinkController');
         $router->resource('activity.related-activity', 'RelatedActivityController');
         $router->resource('activity.transaction', 'TransactionController');
+        $router->resource('activity.transaction.delete', 'TransactionController@destroy');
         $router->resource('activity.transaction-upload', 'TransactionUploadController');
         Route::get(
             '/download-detailed-transaction',

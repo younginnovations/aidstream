@@ -1,6 +1,8 @@
 @extends('app')
 @section('content')
+
     {{Session::get('message')}}
+
     <div class="container main-container">
         <div class="row">
             @include('includes.side_bar_menu')
@@ -22,11 +24,9 @@
                             <td>{{ $key+1 }}</td>
                             <td>{{ $value->first_name}} {{$value->last_name}}</td>
                             <td>{{$value->username}}</td>
-                            <td><a class="btn btn-small btn-primary" href="{{ route('admin.view-profile', $value->id) }}">view</a>
-                                {!! Form::open(array('url' => 'admin/'. $value->id, 'class' => 'pull-right')) !!}
-                                {!! Form::hidden('_method', 'DELETE') !!}
-                                {!! Form::submit('Delete', array('class' => 'btn btn-warning')) !!}
-                                {!! Form::close() !!}
+                            <td>
+                                <a href="{{ route('admin.view-profile', $value->id) }}" class="view">View</a>
+                                <a href="{{ url(sprintf('user/%s/delete', $value->id)) }}" class="delete">Delete</a>
                             </td>
                         </tr>
                     @endforeach

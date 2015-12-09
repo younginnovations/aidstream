@@ -18,21 +18,40 @@ class Sector extends BaseForm
     {
         $this
             ->add(
-                'sector_code',
-                'select',
-                [
-                    'choices'     => $this->getSectorCodeList(),
-                    'empty_value' => 'Select one of the following option :',
-                    'attr'        => ['class' => 'form-control sector_code']
-                ]
-            )
-            ->add(
                 'sector_vocabulary',
                 'select',
                 [
                     'choices'     => $this->getSectorVocabularyCodeList(),
                     'empty_value' => 'Select one of the following option :',
                     'attr'        => ['class' => 'form-control sector_vocabulary']
+                ]
+            )
+            ->add(
+                'sector_code',
+                'select',
+                [
+                    'choices'     => $this->getSectorCodeList(),
+                    'empty_value' => 'Select one of the following option :',
+                    'label'       => 'Sector',
+                    'wrapper'     => ['class' => 'form-group hidden sector_types sector_select']
+                ]
+            )
+            ->add(
+                'sector_category_code',
+                'select',
+                [
+                    'choices'     => $this->getSectorCategoryCodeList(),
+                    'empty_value' => 'Select one of the following option :',
+                    'label'       => 'Sector',
+                    'wrapper'     => ['class' => 'form-group hidden sector_types sector_category_select']
+                ]
+            )
+            ->add(
+                'sector_text',
+                'text',
+                [
+                    'label'   => 'Sector',
+                    'wrapper' => ['class' => 'form-group hidden sector_types sector_text']
                 ]
             )
             ->addNarrative('sector_narrative')

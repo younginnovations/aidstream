@@ -107,7 +107,7 @@ class ResultController extends Controller
         $resultData     = $request->all();
         $activityResult = $this->resultManager->getResult($resultId, $id);
         if ($this->resultManager->update($resultData, $activityResult)) {
-            return redirect()->to(sprintf('/activity/%s/result', $id))->withMessage(sprintf('Activity Result %s!', $resultId ? 'updated' : 'created'));
+            return redirect()->to(sprintf('/activity/%s/result', $id))->withMessage(sprintf('Activity Result has been %s!', $resultId ? 'updated' : 'created'));
         }
 
         return redirect()->back();
@@ -123,7 +123,7 @@ class ResultController extends Controller
     {
         $this->authorize('delete_activity');
         $activityResult = $this->resultManager->getResult($resultId, $id);
-        $message        = ($this->resultManager->deleteResult($activityResult)) ? 'Activity result deleted!' : 'Activity result couldn\'t be deleted!';
+        $message        = ($this->resultManager->deleteResult($activityResult)) ? 'Activity result has been deleted!' : 'Activity result couldn\'t be deleted!';
 
         return redirect()->back()->withMessage($message);
     }
