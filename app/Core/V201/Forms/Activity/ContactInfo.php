@@ -27,14 +27,14 @@ class ContactInfo extends BaseForm
             ->addCollection('department', 'Activity\Department')
             ->addCollection('person_name', 'Activity\PersonName')
             ->addCollection('job_title', 'Activity\JobTitle')
-            ->addCollection('telephone', 'Activity\Telephone', 'telephoneNarrative')
-            ->addAddMoreButton('add_telephoneNarrative', 'telephoneNarrative')
-            ->addCollection('email', 'Activity\Email', 'emailNarrative')
-            ->addAddMoreButton('add_emailNarrative', 'emailNarrative')
-            ->addCollection('website', 'Activity\Website', 'websiteNarrative')
-            ->addAddMoreButton('add_websiteNarrative', 'websiteNarrative')
-            ->addCollection('mailing_address', 'Activity\MailingAddress', 'mailingAddressNarrative')
-            ->addAddMoreButton('add_mailingAddressNarrative', 'mailingAddressNarrative')
+            ->addCollection('telephone', 'Activity\Telephone', 'telephone')
+            ->addAddMoreButton('add_telephone', 'telephone')
+            ->addCollection('email', 'Activity\Email', 'email')
+            ->addAddMoreButton('add_email', 'email')
+            ->addCollection('website', 'Activity\Website', 'website')
+            ->addAddMoreButton('add_website', 'website')
+            ->addCollection('mailing_address', 'Activity\MailingAddress', 'mailingAddress')
+            ->addAddMoreButton('add_mailingAddressNarrative', 'mailingAddress')
             ->addRemoveThisButton('remove_contact_info');
     }
 }

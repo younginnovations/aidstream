@@ -48,10 +48,11 @@ class LocationController extends Controller
      */
     public function index($id)
     {
+        $activityData = $this->activityManager->getActivityData($id);
         $location = $this->locationManager->getLocation($id);
         $form     = $this->locationForm->editForm($location, $id);
 
-        return view('Activity.location.edit', compact('form', 'id'));
+        return view('Activity.location.edit', compact('form', 'activityData', 'id'));
     }
 
     /**

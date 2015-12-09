@@ -48,10 +48,11 @@ class RecipientCountryController extends Controller
      */
     public function index($id)
     {
+        $activityData    = $this->activityManager->getActivityData($id);
         $recipientCountry = $this->recipientCountryManager->getRecipientCountryData($id);
         $form             = $this->recipientCountryForm->editForm($recipientCountry, $id);
 
-        return view('Activity.recipientCountry.edit', compact('form', 'id'));
+        return view('Activity.recipientCountry.edit', compact('form', 'id', 'activityData'));
     }
 
     /**

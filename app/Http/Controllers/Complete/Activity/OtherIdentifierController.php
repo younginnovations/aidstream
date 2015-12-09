@@ -47,12 +47,13 @@ class OtherIdentifierController extends Controller
      */
     public function index($id)
     {
+        $activityData    = $this->activityManager->getActivityData($id);
         $otherIdentifier = $this->otherIdentifierManager->getOtherIdentifierData($id);
         $form            = $this->otherIdentifierForm->editForm($otherIdentifier, $id);
 
         return view(
             'Activity.otherIdentifier.otherIdentifier',
-            compact('form', 'otherIdentifier', 'id')
+            compact('form', 'otherIdentifier', 'id', 'activityData')
         );
     }
 

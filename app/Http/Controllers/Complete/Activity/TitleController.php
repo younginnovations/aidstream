@@ -44,12 +44,13 @@ class TitleController extends Controller
      */
     public function index($id)
     {
+        $activityData  = $this->activityManager->getActivityData($id);
         $activityTitle = $this->titleManager->getTitleData($id);
         $form          = $this->title->editForm($activityTitle, $id);
 
         return view(
             'Activity.title.title',
-            compact('form', 'id')
+            compact('form', 'id', 'activityData')
         );
     }
 
