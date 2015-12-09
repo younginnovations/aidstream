@@ -45,6 +45,6 @@ class PlannedDisbursement
                 'model'  => $model,
                 'url'    => route('activity.planned-disbursement.update', [$activityId, 0])
             ]
-        )->add('Save', 'submit');
+        )->add('Save', 'submit', ['attr' => ['class' => 'btn btn-submit btn-form']]);
     }
 }

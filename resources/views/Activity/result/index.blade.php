@@ -31,13 +31,14 @@
         </div>
     </div>
 
-    <div class="container">
+    <div class="container main-container">
         <div class="row">
-            <div class="col-xs-8">
-                <div class="panel panel-default">
-                    <div class="panel-heading">Activity Results</div>
-
-                    <div class="panel-body">
+        @include('includes.side_bar_menu')
+            <div class="col-xs-9 col-md-9 col-lg-9 content-wrapper">
+                <div class="panel-content-heading">Activity Results</div>
+                <div class="col-xs-8 col-md-8 col-lg-8 element-content-wrapper">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
                         @if(count($results) > 0)
                         <table class="table table-striped">
                             <thead>
@@ -70,14 +71,15 @@
                             </tbody>
                         </table>
                         @else
-                            <div class="text-center no-data">No results Created Yet ::</div>
+                            <div class="text-center no-data">No results Created Yet.</div>
                         @endif
-                        <a href="{{ route('activity.result.create', $id) }}">Add Another Result</a>
+                        <a href="{{ route('activity.result.create', $id) }}" class="add">Add Another Result</a>
 
                     </div>
                 </div>
             </div>
             @include('includes.activity.element_menu')
+            </div>
         </div>
     </div>
 @endsection

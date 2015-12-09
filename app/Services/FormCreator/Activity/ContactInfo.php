@@ -42,6 +42,6 @@ class ContactInfo
                 'model'  => $model,
                 'url'    => route('activity.contact-info.update', [$activityId, 0])
             ]
-        )->add('Save', 'submit');
+        )->add('Save', 'submit', ['attr' => ['class' => 'btn btn-submit btn-form']]);
     }
 }

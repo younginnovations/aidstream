@@ -41,6 +41,6 @@ class Transaction
                 'model'  => $model,
                 'url'    => $url
             ]
-        )->add((null !== $data) ? 'Update' : 'Create', 'submit');
+        )->add((null !== $data) ? 'Update' : 'Create', 'submit', ['attr' => ['class' => 'btn btn-submit btn-form']]);
     }
 }

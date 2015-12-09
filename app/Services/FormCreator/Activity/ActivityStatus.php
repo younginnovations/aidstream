@@ -40,6 +40,6 @@ class ActivityStatus
                 'model'  => $data,
                 'url'    => route('activity.activity-status.update', [$activityId, 0])
             ]
-        )->add('Save', 'submit');
+        )->add('Save', 'submit', ['attr' => ['class' => 'btn btn-submit btn-form']]);
     }
 }

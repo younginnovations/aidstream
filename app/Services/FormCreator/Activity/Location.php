@@ -48,6 +48,6 @@ class Location
                 'model'  => $modal,
                 'url'    => route('activity.location.update', [$activityId, 0])
             ]
-        )->add('Save', 'submit');
+        )->add('Save', 'submit', ['attr' => ['class' => 'btn btn-submit btn-form']]);
     }
 }

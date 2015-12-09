@@ -7,11 +7,12 @@
             <div class="col-xs-9 col-md-9 col-lg-9 content-wrapper">
                 @include('includes.breadcrumb')
                 <div class="panel-content-heading panel-title-heading">Adding Title of <span>FR-PDR-W691075333-9810</span></div>
-                <div class="col-xs-8 col-md-8 col-lg-8 panel-element-detail">
+                <div class="col-xs-8 col-md-8 col-lg-8 element-content-wrapper">
                     <div class="panel panel-default">
                         <div class="panel-body">
+                        <div class="create-form">
                             {!! form($form) !!}
-
+                        </div>
                             <div class="collection-container hidden"
                                  data-prototype="{{ form_row($form->narrative->prototype()) }}">
                             </div>

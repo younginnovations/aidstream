@@ -46,6 +46,6 @@ class Budget
                 'model'  => $model,
                 'url'    => route('activity.budget.update', [$activityId, 0])
             ]
-        )->add('Save', 'submit');
+        )->add('Save', 'submit', ['attr' => ['class' => 'btn btn-submit btn-form']]);
     }
 }

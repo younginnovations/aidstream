@@ -49,6 +49,6 @@ class DefaultFinanceType
                 'model'  => $model,
                 'url'    => route('activity.default-finance-type.update', [$activityId, 0])
             ]
-        )->add('Save', 'submit');
+        )->add('Save', 'submit', ['attr' => ['class' => 'btn btn-submit btn-form']]);
     }
 }
