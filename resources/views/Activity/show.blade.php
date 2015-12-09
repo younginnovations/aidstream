@@ -523,14 +523,25 @@
                                     <div class="panel-heading">Sectors</div>
                                     <div class="panel-body">
                                         @foreach($sectors as $sector)
+                                            {{--*/
+                                                $vocabulary = $sector['sector_vocabulary'];
+                                                $vocabularyValue = $getCode->getActivityCodeName('SectorVocabulary', $vocabulary);
+                                                if ($vocabulary == 1) {
+                                                    $sectorValue = $getCode->getActivityCodeName('Sector', $sector['sector_code']);
+                                                } elseif ($vocabulary == 2) {
+                                                    $sectorValue = $getCode->getActivityCodeName('SectorCategory', $sector['sector_category_code']);
+                                                } else {
+                                                    $sectorValue = $sector['sector_text'];
+                                                }
+                                            /*--}}
                                             <div class="panel panel-default">
-                                                <div class="panel-heading">{{$getCode->getActivityCodeName('SectorVocabulary', $sector['vocabulary']) . ' ; ' . $getCode->getActivityCodeName('Sector', $sector['sector_select'])}}</div>
+                                                <div class="panel-heading">{{ $vocabularyValue . ' ; ' . $sectorValue }}</div>
                                                 <div class="panel-body row">
                                                     <div class="form-group clearfix">
                                                         <div class="col-xs-4">Vocabulary</div>
-                                                        <div class="col-xs-8">{{$getCode->getActivityCodeName('SectorVocabulary', $sector['vocabulary'])}}</div>
+                                                        <div class="col-xs-8">{{ $vocabularyValue }}</div>
                                                         <div class="col-xs-4">Code</div>
-                                                        <div class="col-xs-8">{{$getCode->getActivityCodeName('Sector', $sector['sector_select'])}}</div>
+                                                        <div class="col-xs-8">{{ $sectorValue }}</div>
                                                         <div class="col-xs-4">Percentage</div>
                                                         <div class="col-xs-8">{{$sector['percentage']}}</div>
                                                         @foreach($sector['narrative'] as $narrative)
@@ -1213,10 +1224,21 @@
                                                     <div class="panel-heading">Sector</div>
                                                     <div class="panel-body row">
                                                         <div class="form-group clearfix">
-                                                            <div class="col-xs-4">Code</div>
-                                                            <div class="col-xs-8">{{$getCode->getActivityCodeName('Sector', $transaction['transaction']['sector'][0]['sector_code'])}}</div>
+                                                            {{--*/
+                                                                $vocabulary = $sector['sector_vocabulary'];
+                                                                $vocabularyValue = $getCode->getActivityCodeName('SectorVocabulary', $vocabulary);
+                                                                if ($vocabulary == 1) {
+                                                                    $sectorValue = $getCode->getActivityCodeName('Sector', $sector['sector_code']);
+                                                                } elseif ($vocabulary == 2) {
+                                                                    $sectorValue = $getCode->getActivityCodeName('SectorCategory', $sector['sector_category_code']);
+                                                                } else {
+                                                                    $sectorValue = $sector['sector_text'];
+                                                                }
+                                                            /*--}}
                                                             <div class="col-xs-4">Vocabulary</div>
-                                                            <div class="col-xs-8">{{$getCode->getActivityCodeName('SectorVocabulary', $transaction['transaction']['sector'][0]['sector_vocabulary'])}}</div>
+                                                            <div class="col-xs-8">{{ $vocabularyValue }}</div>
+                                                            <div class="col-xs-4">Code</div>
+                                                            <div class="col-xs-8">{{ $sectorValue }}</div>
                                                             @foreach($transaction['transaction']['sector'] as $narrative)
                                                                 @foreach($narrative['narrative'] as $narrative)
                                                                     <div class="panel-body row">

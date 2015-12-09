@@ -14,8 +14,8 @@ class MailingAddress extends BaseForm
     public function buildForm()
     {
         $this
-            ->addNarrative('mailingAddressNarrative')
-            ->addAddMoreButton('add_mailingAddressNarrative', 'mailingAddressNarrative')
+            ->addNarrative('mailing_address_narrative')
+            ->addAddMoreButton('add_mailing_address_narrative', 'mailing_address_narrative')
             ->addRemoveThisButton('remove_mailing_address');
     }
 }

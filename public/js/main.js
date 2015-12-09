@@ -37,6 +37,7 @@ $(document).ready(function () {
             newIndex = parentIndexes[level] + 1;
         }
         var protoHtml = level === 0 ? $('.collection-container') : $('.' + collection, '.collection-container');
+        protoHtml = protoHtml.clone();
         protoHtml.children('label').remove();
         var proto = protoHtml.html();
         for (var i = 0; i < level; i++) {
