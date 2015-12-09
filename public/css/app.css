@@ -247,7 +247,7 @@ input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {
 
 input[type="color"], input[type="date"], input[type="datetime"], input[type="datetime-local"], input[type="email"], input[type="month"], input[type="number"], input[type="password"], input[type="search"], input[type="tel"], input[type="text"], input[type="time"], input[type="url"], input[type="week"], input:not([type]), textarea,
 select, button {
-  font: 16px Open-Sans-Regular;
+  font: normal 16px Open-Sans-Regular;
   color: #484848; }
   input[type="color"]:focus, input[type="date"]:focus, input[type="datetime"]:focus, input[type="datetime-local"]:focus, input[type="email"]:focus, input[type="month"]:focus, input[type="number"]:focus, input[type="password"]:focus, input[type="search"]:focus, input[type="tel"]:focus, input[type="text"]:focus, input[type="time"]:focus, input[type="url"]:focus, input[type="week"]:focus, input:not([type]):focus, textarea:focus,
   select:focus, button:focus {
@@ -256,6 +256,33 @@ select, button {
 input[type="color"], input[type="date"], input[type="datetime"], input[type="datetime-local"], input[type="email"], input[type="month"], input[type="number"], input[type="password"], input[type="search"], input[type="tel"], input[type="text"], input[type="time"], input[type="url"], input[type="week"], input:not([type]), textarea, select.form-control {
   height: 45px;
   border: 1px solid #BFDFEC; }
+
+input {
+  font-weight: normal !important; }
+  input:focus {
+    outline: none; }
+
+.alert {
+  margin-bottom: 0; }
+
+.tooltip {
+  background: #52cc88;
+  width: 240px;
+  -webkit-border-radius: 4px;
+          border-radius: 4px;
+  margin: -14px 0 0 -6px !important;
+  opacity: 1 !important; }
+  .tooltip .tooltip-inner {
+    background: transparent;
+    font: normal 12px/18px Open-Sans-Regular;
+    padding: 16px 20px;
+    max-width: 100%;
+    text-align: left; }
+
+.tooltip.top .tooltip-arrow {
+  border-top-color: #52cc88;
+  bottom: -9px;
+  border-width: 14px 11px 0; }
 
 .table > thead > tr > th {
   text-transform: uppercase;
@@ -711,6 +738,7 @@ label {
   padding: 30px 30px 18px;
   text-align: center;
   overflow: hidden;
+  margin-top: -20px;
   margin-bottom: 48px; }
   .activity-status ol {
     width: 440px;
@@ -858,13 +886,13 @@ label {
 .element-sidebar-wrapper {
   padding-right: 0; }
 
-.create-form {
+.create-form, .create-activity-form {
   padding: 14px 40px 30px;
   border-bottom: 2px solid #f2f2f2;
   margin-bottom: 28px; }
-  .create-form .panel-body > div:first-child {
+  .create-form .panel-body > div:first-child, .create-activity-form .panel-body > div:first-child {
     padding-left: 0; }
-  .create-form .panel-body > div:last-child {
+  .create-form .panel-body > div:last-child, .create-activity-form .panel-body > div:last-child {
     padding-right: 0; }
 
 .btn-create {
@@ -898,35 +926,42 @@ label {
 .collection_form {
   clear: both;
   overflow: hidden; }
+  .collection_form + .collection_form {
+    padding-top: 24px; }
 
-.create-form > form > .collection_form {
-  background: #fdfdfd;
-  border: 1px solid #efefef;
-  -webkit-border-radius: 4px;
-          border-radius: 4px;
-  margin-bottom: 30px;
-  padding-bottom: 25px;
-  clear: both;
-  padding-bottom: 50px; }
-  .create-form > form > .collection_form > .form-group {
-    position: relative;
-    margin-bottom: 0;
-    padding: 25px 0 0 20px; }
-  .create-form > form > .collection_form > label {
-    padding: 20px 20px 0 20px;
-    display: none; }
+.create-form {
+  position: relative;
+  padding-bottom: 80px; }
+  .create-form > form {
+    background: #fdfdfd;
+    border: 1px solid #efefef;
+    -webkit-border-radius: 4px;
+            border-radius: 4px;
+    margin-bottom: 30px;
+    padding-bottom: 25px;
+    clear: both; }
+
+.create-form > form > .collection_form > .form-group {
+  position: relative;
+  margin-bottom: 0;
+  padding: 25px 0 0 20px;
+  overflow: hidden; }
+
+.create-form > form > .collection_form > label {
+  padding: 20px 20px 0 20px;
+  display: none; }
 
 .collection_form > .form-group + .form-group {
   background: #F7FBFD;
   padding-bottom: 25px; }
 
-.create-form > form > .form-group:only-of-type {
+.create-form > form > .form-group:only-of-type, .create-activity-form > form > .form-group:only-of-type {
   width: 50%; }
 
 .create-form > form > .collection_form > .form-group > .form-group {
   width: 40%;
   margin-right: 52px;
-  float: left;
+  display: inline-block;
   margin-bottom: 0; }
 
 .create-form > form > .collection_form > .form-group > .collection_form {
@@ -934,11 +969,11 @@ label {
   -webkit-border-radius: 0;
           border-radius: 0;
   border-left: 4px solid #00A8FF;
-  margin-bottom: 0;
+  padding-top: 20px;
   clear: both;
   overflow: hidden; }
   .create-form > form > .collection_form > .form-group > .collection_form:last-of-type {
-    padding-bottom: 50px; }
+    padding-bottom: 24px; }
   .create-form > form > .collection_form > .form-group > .collection_form > label {
     font-size: 16px;
     color: #484848;
@@ -949,8 +984,11 @@ label {
     margin-left: 26px;
     overflow: hidden;
     padding-top: 20px;
-    margin-bottom: 24px;
-    position: relative; }
+    margin-bottom: 0;
+    position: relative;
+    padding-bottom: 20px; }
+    .create-form > form > .collection_form > .form-group > .collection_form .form-group .form-group {
+      padding-bottom: 0; }
     .create-form > form > .collection_form > .form-group > .collection_form .form-group > .form-group {
       border: 0;
       float: left;
@@ -962,17 +1000,24 @@ label {
     font-size: 14px;
     text-transform: uppercase; }
 
-.add_to_collection, .add_to_collection:focus {
+.add_to_collection, .add_to_collection:focus, .add {
   background: transparent url(../../images/ic-sprite.png) no-repeat 19px -443px;
   border: none;
   font-size: 15px;
   padding-left: 62px;
-  margin: -20px 0 20px -10px;
+  margin: 0 0 0 -10px;
   display: block;
   color: #484848; }
-  .add_to_collection:hover, .add_to_collection:focus:hover {
+  .add_to_collection:hover, .add_to_collection:focus:hover, .add:hover {
     background: transparent url(../../images/ic-sprite.png) no-repeat 19px -503px;
     color: #00A8FF; }
+
+.add {
+  line-height: 40px;
+  margin: 0;
+  color: #484848;
+  text-decoration: none;
+  display: inline-block; }
 
 .remove_from_collection, .remove_from_collection:focus {
   background: transparent url(../../images/ic-sprite.png) no-repeat -381px 0;
@@ -986,6 +1031,10 @@ label {
 
 .btn-form {
   width: 40%; }
+
+.create-form .btn-form {
+  position: absolute;
+  bottom: 30px; }
 
 .modal-dialog {
   z-index: 10000; }

@@ -9,7 +9,7 @@
                     <div class="panel panel-default">
                         <div class="panel-body">
                         <h3>{{$activityData->IdentifierTitle}}</h3>
-                        <div class="create-form">
+                        <div class="create-activity-form">
                             {!! form($form) !!}
                         </div>
                     </div>

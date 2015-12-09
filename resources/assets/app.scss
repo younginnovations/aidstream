@@ -73,7 +73,7 @@ input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {
 
 #{$all-text-inputs},
 select,button {
-	font: 16px $font_0;
+	font: normal 16px $font_0;
 	color: $color_gravel_approx;
 	&:focus {
 		outline: none;
@@ -83,6 +83,41 @@ select,button {
 #{$all-text-inputs},select.form-control {
 	height: 45px;
 	border: 1px solid $color_blue;
+}
+
+input {
+	font-weight: normal!important;
+	&:focus {
+		outline: none;
+	}
+}
+
+//status message
+
+.alert {
+	margin-bottom: 0;
+}
+
+// tooltip
+.tooltip {
+	background: $color_emerald_approx;
+	width: 240px;
+	border-radius: 4px;
+	margin: -14px 0 0 -6px!important;
+	opacity: 1!important;
+	.tooltip-inner {
+		background: transparent;
+		font: normal 12px/18px $font_0;
+		padding: 16px 20px;
+		max-width: 100%;
+		text-align: left;
+	}
+}
+
+.tooltip.top .tooltip-arrow {
+	border-top-color: $color_emerald_approx;
+	bottom: -9px;
+	border-width: 14px 11px 0;
 }
 
 // table
@@ -279,26 +314,6 @@ label {
 	padding: 0;
 	margin: 13px 16px;
 }
-
-// .navbar-default .navbar-nav {
-// 	>.open > a {
-// 		background: $color_gravel_approx;
-// 		color: $color_white;
-// 		&:focus,&:hover {
-// 			background: $color_gravel_approx;
-// 			color: $color_white;
-// 		}
-// 	}
-// }
-
-// .navbar-default .navbar-nav.add-new-activity {
-// 	>.open > a {
-// 		background: $color_gravel_approx $url_3 -140px -47px;
-// 		&:focus,&:hover {
-// 			background: $color_gravel_approx $url_3 -140px -47px;
-// 		}
-// 	}
-// }
 
 .navbar-admin-dropdown,.add-new-activity {
 	background: $color_white_lilac_approx;
@@ -704,6 +719,7 @@ label {
 	padding: 30px 30px 18px;
 	text-align: center;
 	overflow: hidden;
+	margin-top: -20px;
 	margin-bottom: 48px;
 	ol {
 		width: 440px;
@@ -895,7 +911,7 @@ label {
 }
 
 //add activity
-.create-form {
+.create-form,.create-activity-form {
 	padding: 14px 40px 30px;
 	border-bottom: 2px solid $color_concrete;
 	margin-bottom: 28px;
@@ -953,20 +969,30 @@ label {
 .collection_form {
 	clear: both;
 	overflow: hidden;
+	& + & {
+		padding-top: 24px;
+	}
+}
+
+.create-form {
+	position: relative;
+	padding-bottom: 80px;
+	> form {
+		background: $color_romance_approx;
+		border: 1px solid #efefef;
+		border-radius: 4px;
+		margin-bottom: 30px;
+		padding-bottom: 25px;
+		clear: both;
+	}
 }
 
 .create-form > form > .collection_form {
-	background: $color_romance_approx;
-	border: 1px solid #efefef;
-	border-radius: 4px;
-	margin-bottom: 30px;
-	padding-bottom: 25px;
-	clear: both;
-	padding-bottom: 50px;
 	> .form-group {
 		position: relative;
 		margin-bottom: 0;
 		padding: 25px 0 0 20px;
+		overflow: hidden;
 	}
 	> label {
 		padding: 20px 20px 0 20px;
@@ -980,7 +1006,7 @@ label {
 	padding-bottom: 25px;
 }
 
-.create-form > form > .form-group:only-of-type {
+.create-form > form > .form-group:only-of-type,.create-activity-form > form > .form-group:only-of-type {
 	width: 50%;
 }
 
@@ -988,18 +1014,18 @@ label {
 	>.form-group {
 		width: 40%;
 		margin-right: 52px;
-		float: left;
+		display: inline-block;
 		margin-bottom: 0;
 	}
 	> .collection_form {
 		border: 0;
 		border-radius: 0;
 		border-left: 4px solid $color_dodger_blue_approx;
-		margin-bottom: 0;
+		padding-top: 20px;
 		clear: both;
 		overflow: hidden;
 		&:last-of-type {
-			padding-bottom: 50px;
+			padding-bottom: 24px;
 		}
 		>label {
 			font-size: 16px;
@@ -1012,8 +1038,12 @@ label {
 			margin-left: 26px;
 			overflow: hidden;
 			padding-top: 20px;
-			margin-bottom: 24px;
+			margin-bottom: 0;
 			position: relative;
+			padding-bottom: 20px;
+			.form-group {
+				padding-bottom: 0;
+			}
 			> .form-group {
 				border: 0;
 				float: left;
@@ -1030,15 +1060,12 @@ label {
 	}
 }
 
-
-
-.add_to_collection,.add_to_collection:focus{
+.add_to_collection,.add_to_collection:focus,.add{
 	background: transparent $url_3 no-repeat 19px -443px;
 	border: none;
 	font-size: 15px;
-	// margin-top: -87px;
 	padding-left: 62px;
-	margin: -20px 0 20px -10px;
+	margin: 0 0 0 -10px;
 	display: block;
 	color: $color_gravel_approx;
 	&:hover{
@@ -1047,6 +1074,13 @@ label {
 	}
 }
 
+.add {
+	line-height: 40px;
+	margin: 0;
+	color: $color_gravel_approx;
+	text-decoration: none;
+	display: inline-block;
+}
 
 .remove_from_collection,.remove_from_collection:focus {
 	background: transparent $url_3 no-repeat -381px 0;
@@ -1062,6 +1096,11 @@ label {
 
 .btn-form {
 	width: 40%;
+}
+
+.create-form .btn-form {
+    position: absolute;
+    bottom: 30px;
 }
 
 .modal-dialog {

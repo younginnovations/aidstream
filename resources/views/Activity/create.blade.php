@@ -9,7 +9,7 @@
                 <div class="panel panel-default panel-create">
                     <div class="panel-content-heading">Add Activity</div>
                     <div class="panel-body">
-                    <div class="create-form">
+                    <div class="create-activity-form">
                         {!! form_start($form) !!}
                         <div class="panel panel-default">
                             <div class="panel-body">

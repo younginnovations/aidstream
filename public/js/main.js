@@ -263,4 +263,7 @@ $(document).ready(function () {
     });
 
     $('[data-toggle="tooltip"]').tooltip();
+
+    var documentHeight = $(document).height();
+    $('.element-sidebar-wrapper').css('height',documentHeight);
 });

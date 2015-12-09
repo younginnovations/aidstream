@@ -71,9 +71,9 @@
                             </tbody>
                         </table>
                         @else
-                            <div class="text-center no-data">No results Created Yet ::</div>
+                            <div class="text-center no-data">No results Created Yet.</div>
                         @endif
-                        <a href="{{ route('activity.result.create', $id) }}">Add Another Result</a>
+                        <a href="{{ route('activity.result.create', $id) }}" class="add">Add Another Result</a>
 
                     </div>
                 </div>
