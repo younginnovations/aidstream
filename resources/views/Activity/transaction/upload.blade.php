@@ -12,9 +12,8 @@
                     @endforeach
                 @endif
                 <div class="panel panel-default">
-                    <div class="panel-heading">Activity Transaction</div>
+                    <div class="panel-content-heading panel-title-heading">Upload Transaction for <span>{{$activity->IdentifierTitle}}</span></div>
                     <div class="panel-body">
-                        <h3>{{ $activity->IdentifierTitle }}</h3>
                         {!! form($form) !!}
                     </div>
                 </div>

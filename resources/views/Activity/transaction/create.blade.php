@@ -4,9 +4,8 @@
         <div class="row">
             <div class="col-xs-8">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Activity Transaction</div>
+                    <div class="panel-content-heading panel-title-heading">Adding Transaction of <span>{{$activity->IdentifierTitle}}</span></div>
                     <div class="panel-body">
-                        <h3>{{ $activity->IdentifierTitle }}</h3>
                         {!! form($form) !!}
                         <div class="collection-container hidden" data-prototype="{{ form_row($form->transaction->prototype()) }}"></div>
                     </div>
