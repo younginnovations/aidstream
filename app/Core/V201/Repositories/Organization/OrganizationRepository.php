@@ -53,7 +53,7 @@ class OrganizationRepository implements OrganizationRepositoryInterface
      */
     public function getOrganization($id)
     {
-        return $this->org->findorFail($id);
+        return $this->org->find($id);
     }
 
     /**

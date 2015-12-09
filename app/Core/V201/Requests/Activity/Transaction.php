@@ -38,8 +38,7 @@ class Transaction extends ActivityBaseRequest
                 $this->getTransactionTypeRules($transaction['transaction_type'], $transactionForm),
                 $this->getTransactionDateRules($transaction['transaction_date'], $transactionForm),
                 $this->getValueRules($transaction['value'], $transactionForm),
-                $this->getDescriptionRules($transaction['description'], $transactionForm),
-                $this->getSectorsRules($transaction['sector'], $transactionForm)
+                $this->getDescriptionRules($transaction['description'], $transactionForm)
             );
         }
 
@@ -63,8 +62,7 @@ class Transaction extends ActivityBaseRequest
                 $this->getTransactionTypeMessages($transaction['transaction_type'], $transactionForm),
                 $this->getTransactionDateMessages($transaction['transaction_date'], $transactionForm),
                 $this->getValueMessages($transaction['value'], $transactionForm),
-                $this->getDescriptionMessages($transaction['description'], $transactionForm),
-                $this->getSectorsMessages($transaction['sector'], $transactionForm)
+                $this->getDescriptionMessages($transaction['description'], $transactionForm)
             );
         }
 
@@ -211,54 +209,6 @@ class Transaction extends ActivityBaseRequest
                 $messages,
                 $this->getMessagesForNarrative($description['narrative'], $narrativeForm)
             );
-        }
-
-        return $messages;
-    }
-
-    /**
-     * returns rules for sector
-     * @param $formFields
-     * @param $formBase
-     * @return array|mixed
-     */
-    public function getSectorsRules($formFields, $formBase)
-    {
-        $rules = [];
-
-        foreach ($formFields as $sectorIndex => $sector) {
-            $sectorForm = sprintf('%s.sector.%s', $formBase, $sectorIndex);
-            if ($sector['sector_vocabulary'] == 1) {
-                $rules[sprintf('%s.sector_code', $sectorForm)] = 'required';
-            } elseif ($sector['sector_vocabulary'] == 2) {
-                $rules[sprintf('%s.sector_category_code', $sectorForm)] = 'required';
-            } else {
-                $rules[sprintf('%s.sector_text', $sectorForm)] = 'required';
-            }
-        }
-
-        return $rules;
-    }
-
-    /**
-     * returns messages for sector
-     * @param $formFields
-     * @param $formBase
-     * @return array|mixed
-     */
-    public function getSectorsMessages($formFields, $formBase)
-    {
-        $messages = [];
-
-        foreach ($formFields as $sectorIndex => $sector) {
-            $sectorForm = sprintf('%s.sector.%s', $formBase, $sectorIndex);
-            if ($sector['sector_vocabulary'] == 1) {
-                $messages[sprintf('%s.sector_code.%s', $sectorForm, 'required')] = 'Sector is required.';
-            } elseif ($sector['sector_vocabulary'] == 2) {
-                $messages[sprintf('%s.sector_category_code.%s', $sectorForm, 'required')] = 'Sector is required.';
-            } else {
-                $messages[sprintf('%s.sector_text.%s', $sectorForm, 'required')] = 'Sector is required.';
-            }
         }
 
         return $messages;

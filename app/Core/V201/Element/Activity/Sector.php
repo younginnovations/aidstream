@@ -15,7 +15,7 @@ class Sector extends BaseElement
      */
     public function getForm()
     {
-        return "App\Core\V201\Forms\Activity\Sectors";
+        return 'App\Core\V201\Forms\Activity\Sectors';
     }
 
     /**
@@ -35,11 +35,19 @@ class Sector extends BaseElement
         $activityData = [];
         $sectors      = (array) $activity->sector;
         foreach ($sectors as $sector) {
+            $vocabulary = $sector['sector_vocabulary'];
+            if ($vocabulary == 1) {
+                $sectorValue = $sector['sector_code'];
+            } elseif ($vocabulary == 2) {
+                $sectorValue = $sector['sector_category_code'];
+            } else {
+                $sectorValue = $sector['sector_text'];
+            }
             $activityData[] = [
                 '@attributes' => [
-                    'code'       => $sector['sector_select'],
+                    'code'       => $sectorValue,
                     'percentage' => $sector['percentage'],
-                    'vocabulary' => $sector['vocabulary']
+                    'vocabulary' => $vocabulary
                 ],
                 'narrative'   => $this->buildNarrative($sector['narrative'])
             ];
