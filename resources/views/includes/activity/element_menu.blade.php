@@ -16,10 +16,7 @@ $filledStatus = $defaultFieldGroups->getFilledStatus($id);
                                 <span class="action-icon {{ $filledStatus[$fieldGroupIndex][$fieldIndex] ? 'edit' : 'add' }}">icon</span>
                                 {{$field}}
                             </a>
-                            <span class="help-text"
-                                  data-toggle="tooltip" data-placement="top"
-                                  data-trigger="click"
-                                  title="@lang(session()->get('version') . '/help.Activity_' . $fieldIndex)">help text</span>
+                            <span class="help-text" data-toggle="tooltip" data-placement="top" title="@lang(session()->get('version') . '/help.Activity_' . $fieldIndex)">help text</span>
                         </li>
                     @endforeach
                 </ul>
