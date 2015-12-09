@@ -266,4 +266,11 @@ $(document).ready(function () {
 
     var documentHeight = $(document).height();
     $('.element-sidebar-wrapper').css('height',documentHeight);
+
+    $('.remove_from_collection').hover(function(){
+        $(this).parent('.form-group').addClass('fill-border');
+    },
+    function() {
+        $(this).parent('.form-group').removeClass('fill-border');
+    });
 });

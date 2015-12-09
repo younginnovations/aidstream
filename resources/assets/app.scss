@@ -1076,7 +1076,7 @@ label {
 
 .add {
 	line-height: 40px;
-	margin: 0;
+	margin: 20px 0 0;
 	color: $color_gravel_approx;
 	text-decoration: none;
 	display: inline-block;
@@ -1092,6 +1092,10 @@ label {
 	&:hover {
 		background: transparent $url_3 no-repeat -381px -197px;
 	}
+}
+
+.fill-border {
+	border: 1px dashed $color_dodger_blue_approx;
 }
 
 .btn-form {

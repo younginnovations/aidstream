@@ -35,6 +35,6 @@ class TotalBudgetForm
                 'model'  => $modal,
                 'url'    => route('organization.total-budget.update', [$organizationId, 0])
             ]
-        )->add('Save', 'submit');
+        )->add('Save', 'submit', ['attr' => ['class' => 'btn btn-submit btn-form']]);
     }
 }

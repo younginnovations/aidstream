@@ -1014,7 +1014,7 @@ label {
 
 .add {
   line-height: 40px;
-  margin: 0;
+  margin: 20px 0 0;
   color: #484848;
   text-decoration: none;
   display: inline-block; }
@@ -1028,6 +1028,9 @@ label {
   top: 26px; }
   .remove_from_collection:hover, .remove_from_collection:focus:hover {
     background: transparent url(../../images/ic-sprite.png) no-repeat -381px -197px; }
+
+.fill-border {
+  border: 1px dashed #00A8FF; }
 
 .btn-form {
   width: 40%; }

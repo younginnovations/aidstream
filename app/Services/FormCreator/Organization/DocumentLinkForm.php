@@ -35,6 +35,6 @@ class DocumentLinkForm
                 'model'  => $modal,
                 'url'    => route('organization.document-link.update', [$organizationId, 0])
             ]
-        )->add('Save', 'submit');
+        )->add('Save', 'submit', ['attr' => ['class' => 'btn btn-submit btn-form']]);
     }
 }
