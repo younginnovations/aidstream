@@ -1,4 +1,5 @@
 @extends('app')
+
 @section('content')
 	@inject('code', 'App\Helpers\GetCodeName')
     {{Session::get('message')}}
@@ -86,6 +87,10 @@
 									<div class="col-md-12">
 										<div class="col-xs-4">Text:</div>
 										<div class="col-xs-8">{{ $name['narrative'] . ' [' . $name['language'] . ']' }}</div>
+										@if(isset($name['new_field']))
+										<div class="col-xs-4">New Field Value:</div>
+										<div class="col-xs-8">{{ $name['new_field'] }}</div>
+										@endif
 									</div>
 									@endforeach
 								</div>
