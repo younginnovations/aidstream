@@ -382,6 +382,12 @@ label {
 	opacity: 1;
 } 
 
+.flag-icon-en {
+  background-image: url(../flags/4x3/gb.svg);
+}
+.flag-icon-en.flag-icon-squared {
+  background-image: url(../flags/1x1/gb.svg);
+}
 
 .add-new-activity {
 	border-left: 1px solid $color_gallery_approx;
@@ -669,6 +675,7 @@ label {
 	color: rgba($color_gravel_approx,0.7);
 	padding: 44px 0 50px!important;
 	background: rgba($color_gravel_approx,0.06);
+	margin-bottom: 20px;
 }
 
 .element-panel-heading {
@@ -848,7 +855,7 @@ label {
 	}
 }
 
-.edit-element {
+.edit-element,.edit {
 	float: right;
 	text-indent: -9999px;
 	width: 32px;
@@ -857,6 +864,10 @@ label {
 	&:hover {
 		background-position: -221px -261px;
 	}
+}
+
+.edit {
+	float: none;
 }
 
 
@@ -877,18 +888,40 @@ label {
 	}
 	.panel-body li {
 		border-bottom: 1px solid $color_gallery_approx;
-		display: inline-block;
 		width: 100%;
 		position: relative;
 		a {
-			color: $color_gravel_approx;
+			color: rgba($color_gravel_approx,0.5);
 			font-size: 12px;
-			padding: 15px 22px;
+			padding: 17px 25px;
+			position: relative;
 			&:hover {
 				background: transparent;
 				color: $color_dodger_blue_approx;
 			}
 		}
+		.active {
+			color: $color_gravel_approx;
+		}
+	}
+}
+
+.action-icon {
+    width: 37px;
+    height: 32px;
+	background-color: $color_white;
+    text-indent: -9999px;
+    float: left;
+    @include position(absolute,11px auto auto -14px);
+    padding-left: 0!important;
+    display: none;
+}
+
+.action-icon.add {
+	background: transparent $url_3 no-repeat 1px -448px;
+	display: none;
+	&:hover {
+		background-position: 1px -508px;
 	}
 }
 
@@ -996,6 +1029,7 @@ label {
 		position: relative;
 		margin-bottom: 0;
 		padding: 25px 0 0 20px;
+		border: 1px solid transparent;
 	}
 	> label {
 		padding: 20px 20px 0 20px;
@@ -1011,6 +1045,12 @@ label {
 
 .create-form > form > .form-group:only-of-type,.create-activity-form > form > .form-group:only-of-type {
 	width: 50%;
+}
+
+.create-form > form > .form-group {
+	width: 42%;
+	padding: 20px 0 0 20px;
+	margin-bottom: -20px;
 }
 
 .create-form > form > .collection_form > .form-group {
@@ -1038,6 +1078,7 @@ label {
 		}
 		.form-group {
 			background: $color_white_lilac;
+			border: 1px solid transparent;
 			border-left: 4px solid $color_mabel_approx;
 			margin-left: 26px;
 			overflow: hidden;
@@ -1081,6 +1122,10 @@ label {
 	margin-left: -11px;
 }
 
+form > .add_to_collection[data-collection="legacy_data"] {
+	margin-left: 0!important;
+}
+
 .has_add_more {
 	padding-bottom: 50px!important;
 	> .form-group > .has_add_more:last-of-type+.add_to_collection {
@@ -1100,7 +1145,6 @@ label {
 
 .add {
 	line-height: 40px;
-	margin: 20px 0 0;
 	color: $color_gravel_approx;
 	text-decoration: none;
 	display: inline-block;
@@ -1119,7 +1163,12 @@ label {
 }
 
 .fill-border {
-	border: 1px dashed $color_dodger_blue_approx;
+	border: 1px dashed $color_dodger_blue_approx!important;
+	border-left: 4px solid $color_mabel_approx!important;
+}
+
+.create-form > form > .collection_form > .form-group.fill-border {
+	border: 1px dashed $color_dodger_blue_approx!important;
 }
 
 .btn-form {

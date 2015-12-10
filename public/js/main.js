@@ -48,6 +48,14 @@ $(document).ready(function () {
         proto = proto.replace(new RegExp('__NAME' + level + '__', 'g'), newIndex);
         proto = proto.replace(/__NAME[\d]+__/g, 0);
         container.append(proto);
+
+        $('.remove_from_collection').on('mouseenter',function(){
+            $(this).parent('.form-group').addClass('fill-border');
+        });
+
+        $('.remove_from_collection').on('mouseout',function(){
+            $(this).parent('.form-group').removeClass('fill-border');
+        });
     });
 
     /* Removes form on click to Remove This button */
@@ -267,10 +275,18 @@ $(document).ready(function () {
     var documentHeight = $(document).height();
     $('.element-sidebar-wrapper').css('height',documentHeight);
 
-    $('.remove_from_collection').hover(function(){
+    $('.remove_from_collection').on('mouseenter',function(){
         $(this).parent('.form-group').addClass('fill-border');
-    },
-    function() {
+    });
+
+    $('.remove_from_collection').on('mouseout',function(){
         $(this).parent('.form-group').removeClass('fill-border');
+    });
+
+    $('.element-sidebar-wrapper .panel-body li a').hover(function(){
+        $(this).children('.action-icon').css('display','block');
+    },
+    function(){
+        $(this).children('.action-icon').css('display','none');
     });
 });

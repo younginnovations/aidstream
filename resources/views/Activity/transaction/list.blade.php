@@ -1,10 +1,12 @@
 @extends('app')
 @section('content')
-    <div class="container">
+    <div class="container main-container">
         <div class="row">
-            <div class="col-md-8">
+        @include('includes.side_bar_menu')
+            <div class="col-xs-9 col-md-9 col-lg-9 content-wrapper">
+                <div class="panel-content-heading">Transactions</div>
+                <div class="col-xs-8 col-md-8 col-lg-8 element-content-wrapper">
                 <h3>{{ $activity->IdentifierTitle }}</h3>
-                <strong>Transactions</strong>
                 @if(count($activity->getTransactions()) > 0)
                 <table class="table table-striped table-bordered">
                     <thead>
@@ -35,10 +37,12 @@
                 @else
                     <div class="text-center no-data">No Transactions Created Yet::</div>
                 @endif
-                <a href="{{ route('activity.transaction.create', $id) }}" class="btn btn-primary">Add New Transaction</a>
-                <a href="{{ route('activity.transaction-upload.index', $id) }}" class="btn btn-primary">Upload Transaction</a>
+                <a href="{{ route('activity.transaction.create', $id) }}" class="add">Add New Transaction</a>
+                <a href="{{ route('activity.transaction-upload.index', $id) }}" class="upload">Upload Transaction</a>
             </div>
             @include('includes.activity.element_menu')
+            </div>
         </div>
     </div>
 @stop
+
