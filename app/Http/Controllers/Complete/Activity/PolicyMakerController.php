@@ -53,10 +53,12 @@ class PolicyMakerController extends Controller
         $activityData = $this->activityManager->getActivityData($id);
         if ($this->policyMakerManager->update($policyMaker, $activityData)) {
             $this->activityManager->resetActivityWorkflow($id);
+            $response = ['type' => 'success', 'code' => ['updated', ['name' => 'Policy Maker']]];
 
-            return redirect()->to(sprintf('/activity/%s', $id))->withMessage('Policy Maker Updated !');
+            return redirect()->to(sprintf('/activity/%s', $id))->withResponse($response);
         }
+        $response = ['type' => 'danger', 'code' => ['update_failed', ['name' => 'Policy Maker']]];
 
-        return redirect()->back();
+        return redirect()->back()->withInput()->withResponse($response);
     }
 }

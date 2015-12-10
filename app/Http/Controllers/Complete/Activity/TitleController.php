@@ -68,10 +68,12 @@ class TitleController extends Controller
         $activityData  = $this->titleManager->getActivityData($id);
         if ($this->titleManager->update($activityTitle, $activityData)) {
             $this->activityManager->resetActivityWorkflow($id);
+            $response = ['type' => 'success', 'code' => ['updated', ['name' => 'Activity Title']]];
 
-            return redirect()->to(sprintf('/activity/%s', $id))->withMessage('Activity Title Updated !');
+            return redirect()->to(sprintf('/activity/%s', $id))->withResponse($response);
         }
+        $response = ['type' => 'danger', 'code' => ['update_failed', ['name' => 'Activity Title']]];
 
-        return redirect()->back();
+        return redirect()->back()->withInput()->withResponse($response);
     }
 }

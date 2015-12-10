@@ -71,10 +71,12 @@ class OtherIdentifierController extends Controller
         $activityData = $this->otherIdentifierManager->getActivityData($id);
         if ($this->otherIdentifierManager->update($input, $activityData)) {
             $this->activityManager->resetActivityWorkflow($id);
+            $response = ['type' => 'success', 'code' => ['updated', ['name' => 'Other Activity Identifier']]];
 
-            return redirect()->to(sprintf('/activity/%s', $id))->withMessage('Other Activity Identifier Updated !');
+            return redirect()->to(sprintf('/activity/%s', $id))->withResponse($response);
         }
+        $response = ['type' => 'danger', 'code' => ['update_failed', ['name' => 'Other Activity Identifier']]];
 
-        return redirect()->back();
+        return redirect()->back()->withInput()->withResponse($response);
     }
 }

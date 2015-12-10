@@ -33,12 +33,17 @@ class LegacyDataController extends Controller
 
     public function update($id, Request $request, LegacyDataRequestManager $legacyDataRequestManager)
     {
+        $this->authorize(['edit_activity', 'add_activity']);
         $legacyData   = $request->all();
         $activityData = $this->activityManager->getActivityData($id);
         if ($this->legacyDataManager->update($legacyData, $activityData)) {
-            return redirect()->to(sprintf('/activity/%s', $id))->withMessage('Legacy Data Updated !');
-        }
+            $this->activityManager->resetActivityWorkflow($id);
+            $response = ['type' => 'success', 'code' => ['updated', ['name' => 'Legacy Data']]];
 
-        return redirect()->back();
+            return redirect()->to(sprintf('/activity/%s', $id))->withResponse($response);
+        }
+        $response = ['type' => 'danger', 'code' => ['update_failed', ['name' => 'Legacy Data']]];
+
+        return redirect()->back()->withInput()->withResponse($response);
     }
 }

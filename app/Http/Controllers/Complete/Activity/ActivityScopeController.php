@@ -73,10 +73,12 @@ class ActivityScopeController extends Controller
         $activityData   = $this->activityManager->getActivityData($id);
         if ($this->activityScopeManager->update($activityStatus, $activityData)) {
             $this->activityManager->resetActivityWorkflow($id);
+            $response = ['type' => 'success', 'code' => ['updated', ['name' => 'Activity Scope']]];
 
-            return redirect()->to(sprintf('/activity/%s', $id))->withMessage('Activity Scope Updated!');
+            return redirect()->to(sprintf('/activity/%s', $id))->withResponse($response);
         }
+        $response = ['type' => 'danger', 'code' => ['update_failed', ['name' => 'Activity Scope']]];
 
-        return redirect()->back();
+        return redirect()->back()->withInput()->withResponse($response);
     }
 }

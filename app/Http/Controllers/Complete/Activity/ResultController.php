@@ -61,6 +61,7 @@ class ResultController extends Controller
     public function  create($id)
     {
         $this->authorize('add_activity');
+
         return $this->loadForm($id);
     }
 
@@ -107,10 +108,14 @@ class ResultController extends Controller
         $resultData     = $request->all();
         $activityResult = $this->resultManager->getResult($resultId, $id);
         if ($this->resultManager->update($resultData, $activityResult)) {
-            return redirect()->to(sprintf('/activity/%s/result', $id))->withMessage(sprintf('Activity Result has been %s!', $resultId ? 'updated' : 'created'));
-        }
+            $this->activityManager->resetActivityWorkflow($id);
+            $response = ['type' => 'success', 'code' => [($resultId) ? 'updated' : 'created', ['name' => 'Activity Result']]];
 
-        return redirect()->back();
+            return redirect()->to(sprintf('/activity/%s/result', $id))->withResponse($response);
+        }
+        $response = ['type' => 'danger', 'code' => ['update_failed', ['name' => 'Related Activity']]];
+
+        return redirect()->back()->withInput()->withResponse($response);
     }
 
     /**
@@ -123,8 +128,12 @@ class ResultController extends Controller
     {
         $this->authorize('delete_activity');
         $activityResult = $this->resultManager->getResult($resultId, $id);
-        $message        = ($this->resultManager->deleteResult($activityResult)) ? 'Activity result has been deleted!' : 'Activity result couldn\'t be deleted!';
 
-        return redirect()->back()->withMessage($message);
+        $response = ($this->resultManager->deleteResult($activityResult)) ? ['type' => 'success', 'code' => ['deleted', ['name' => 'Result']]] : [
+            'type' => 'danger',
+            'code' => ['delete_failed', ['name' => 'result']]
+        ];
+
+        return redirect()->back()->withResponse($response);
     }
 }

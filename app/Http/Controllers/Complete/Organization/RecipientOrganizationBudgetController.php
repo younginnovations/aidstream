@@ -29,7 +29,7 @@ class RecipientOrganizationBudgetController extends Controller
         $this->middleware('auth');
         $this->recipientOrgBudgetFormCreator = $recipientOrgBudgetFormCreator;
         $this->recipientOrgBudgetManager     = $recipientOrgBudgetManager;
-        $this->organizationManager = $organizationManager;
+        $this->organizationManager           = $organizationManager;
     }
 
     /**
@@ -51,26 +51,24 @@ class RecipientOrganizationBudgetController extends Controller
 
     /**
      * write brief description
-     * @param                                           $orgId
-     * @param CreateOrgRecipientOrgBudgetRequestManager $request
-     * @param Request                                   $request
+     * @param                                                   $orgId
+     * @param CreateOrgRecipientOrgBudgetRequestManager         $request
+     * @param CreateOrgRecipientOrgBudgetRequestManager|Request $request
      * @return mixed
      */
-    public function update(
-        $orgId,
-        CreateOrgRecipientOrgBudgetRequestManager $request,
-        Request $request
-    ) {
-        $input = $request->all();
+    public function update($orgId, CreateOrgRecipientOrgBudgetRequestManager $request, Request $request)
+    {
+        $input            = $request->all();
         $organizationData = $this->recipientOrgBudgetManager->getOrganizationData($orgId);
 
         if ($this->recipientOrgBudgetManager->update($input, $organizationData)) {
             $this->organizationManager->resetStatus($orgId);
-            return redirect()->to(sprintf('/organization/%s', $orgId))->withMessage(
-                'Organization Recipient organization Budget Updated !'
-            );
-        }
+            $response = ['type' => 'success', 'code' => ['updated', ['name' => 'Organization Recipient Organization Budget']]];
 
-        return redirect()->back();
+            return redirect()->to(sprintf('/organization/%s', $orgId))->withResponse($response);
+        }
+        $response = ['type' => 'danger', 'code' => ['update_failed', ['name' => 'Organization Recipient Organization Budget']]];
+
+        return redirect()->back()->withInput()->withResponse($response);
     }
 }

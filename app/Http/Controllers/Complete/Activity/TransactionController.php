@@ -78,8 +78,9 @@ class TransactionController extends Controller
         $activity = $this->activityManager->getActivityData($activityId);
         $data     = $request->all();
         $this->transactionManager->save($data, $activity);
+        $response = ['type' => 'success', 'code' => ['created', ['name' => 'Transaction']]];
 
-        return redirect()->to(sprintf('/activity/%s/transaction', $activityId))->withMessage('Transactions created!');
+        return redirect()->to(sprintf('/activity/%s/transaction', $activityId))->withResponse($response);
     }
 
     /**
@@ -127,8 +128,9 @@ class TransactionController extends Controller
         $activity           = $this->activityManager->getActivityData($id);
         $transactionDetails = $request->except(['_token', '_method']);
         $this->transactionManager->save($transactionDetails, $activity, $transactionId);
+        $response = ['type' => 'success', 'code' => ['updated', ['name' => 'Transactions']]];
 
-        return redirect()->to(sprintf('/activity/%s/transaction', $id))->withmessage('Transactions updated!');
+        return redirect()->to(sprintf('/activity/%s/transaction', $id))->withResponse($response);
     }
 
     /**
@@ -141,8 +143,11 @@ class TransactionController extends Controller
     {
         $this->authorize('delete_activity');
         $transaction = $this->transactionManager->getTransaction($transactionId);
-        $transaction->delete($transaction);
+        $response    = ($transaction->delete($transaction)) ? ['type' => 'success', 'code' => ['deleted', ['name' => 'Transaction']]] : [
+            'type' => 'danger',
+            'code' => ['delete_failed', ['name' => 'transaction']]
+        ];
 
-        return redirect()->back()->withMessage('transaction deleted');
+        return redirect()->back()->withResponse($response);
     }
 }

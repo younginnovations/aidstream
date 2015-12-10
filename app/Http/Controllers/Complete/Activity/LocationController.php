@@ -49,8 +49,8 @@ class LocationController extends Controller
     public function index($id)
     {
         $activityData = $this->activityManager->getActivityData($id);
-        $location = $this->locationManager->getLocation($id);
-        $form     = $this->locationForm->editForm($location, $id);
+        $location     = $this->locationManager->getLocation($id);
+        $form         = $this->locationForm->editForm($location, $id);
 
         return view('Activity.location.edit', compact('form', 'activityData', 'id'));
     }
@@ -68,10 +68,12 @@ class LocationController extends Controller
         $activityData = $this->activityManager->getActivityData($id);
         if ($this->locationManager->update($location, $activityData)) {
             $this->activityManager->resetActivityWorkflow($id);
+            $response = ['type' => 'success', 'code' => ['updated', ['name' => 'Location']]];
 
-            return redirect()->to(sprintf('/activity/%s', $id))->withMessage('Location Updated!');
+            return redirect()->to(sprintf('/activity/%s', $id))->withResponse($response);
         }
+        $response = ['type' => 'danger', 'code' => ['update_failed', ['name' => 'Location']]];
 
-        return redirect()->back();
+        return redirect()->back()->withInput()->withResponse($response);
     }
 }

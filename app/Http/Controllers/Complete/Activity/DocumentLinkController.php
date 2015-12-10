@@ -62,12 +62,17 @@ class DocumentLinkController extends Controller
      */
     public function update($id, Request $request, DocumentLinkRequestManager $documentLinkRequestManager)
     {
+        $this->authorize(['edit_activity', 'add_activity']);
         $documentLink = $request->all();
         $activityData = $this->activityManager->getActivityData($id);
         if ($this->documentLinkManager->update($documentLink, $activityData)) {
-            return redirect()->to(sprintf('/activity/%s', $id))->withMessage('Activity Document Link Updated!');
-        }
+            $this->activityManager->resetActivityWorkflow($id);
+            $response = ['type' => 'success', 'code' => ['updated', ['name' => 'Document Link']]];
 
-        return redirect()->back();
+            return redirect()->to(sprintf('/activity/%s', $id))->withResponse($response);
+        }
+        $response = ['type' => 'danger', 'code' => ['update_failed', ['name' => 'Document Link']]];
+
+        return redirect()->back()->withInput()->withResponse($response);
     }
 }

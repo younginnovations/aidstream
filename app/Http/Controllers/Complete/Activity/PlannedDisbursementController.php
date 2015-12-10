@@ -49,14 +49,16 @@ class PlannedDisbursementController extends Controller
      */
     public function update($id, Request $request, PlannedDisbursementRequestManager $plannedDisbursementRequestManager)
     {
+        $this->authorize(['edit_activity', 'add_activity']);
         $plannedDisbursement = $request->all();
         $activityData        = $this->activityManager->getActivityData($id);
         if ($this->plannedDisbursementManager->update($plannedDisbursement, $activityData)) {
-            return redirect()->to(sprintf('/activity/%s', $id))->withMessage(
-                'Planned Disbursement Updated !'
-            );
-        }
+            $response = ['type' => 'success', 'code' => ['updated', ['name' => 'Planned Disbursement']]];
 
-        return redirect()->back();
+            return redirect()->to(sprintf('/activity/%s', $id))->withResponse($response);
+        }
+        $response = ['type' => 'danger', 'code' => ['update_failed', ['name' => 'Planned Disbursement']]];
+
+        return redirect()->back()->withInput()->withResponse($response);
     }
 }

@@ -38,14 +38,16 @@ class BudgetController extends Controller
 
     public function update($id, Request $request, BudgetRequestManager $budgetRequestManager)
     {
+        $this->authorize(['edit_activity', 'add_activity']);
         $budget       = $request->all();
         $activityData = $this->activityManager->getActivityData($id);
         if ($this->budgetManager->update($budget, $activityData)) {
-            return redirect()->to(sprintf('/activity/%s', $id))->withMessage(
-                'Budget Updated !'
-            );
-        }
+            $response = ['type' => 'success', 'code' => ['updated', ['name' => 'Budget']]];
 
-        return redirect()->back();
+            return redirect()->to(sprintf('/activity/%s', $id))->withResponse($response);
+        }
+        $response = ['type' => 'danger', 'code' => ['update_failed', ['name' => 'Budget']]];
+
+        return redirect()->back()->withInput()->withResponse($response);
     }
 }

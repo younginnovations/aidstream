@@ -71,16 +71,21 @@ class ParticipatingOrganizationController extends Controller
         $this->authorize(['edit_activity', 'add_activity']);
         $participatingOrganization = $request->all();
         if (!$this->validateData($request->get('participating_organization'))) {
-            return redirect()->back()->withInput()->withMessage('At least one participating organization should be with role "Funding" or "Implementing"');
+            $response = ['type' => 'warning', 'code' => ['participating_org', ['name' => 'participating organization']]];
+
+            return redirect()->back()->withInput()->withResponse($response);
         }
         $activityData = $this->activityManager->getActivityData($id);
         if ($this->participatingOrganizationManager->update($participatingOrganization, $activityData)) {
             $this->activityManager->resetActivityWorkflow($id);
 
-            return redirect()->to(sprintf('/activity/%s', $id))->withMessage('Activity Participating Organization Updated !');
-        }
+            $response = ['type' => 'success', 'code' => ['updated', ['name' => 'Activity Participating Organization']]];
 
-        return redirect()->back()->withInput()->withMessage('Activity Participating Organization couldn\'t be Updated !');
+            return redirect()->to(sprintf('/activity/%s', $id))->withResponse($response);
+        }
+        $response = ['type' => 'danger', 'code' => ['update_failed', ['name' => 'Activity Participating Organization']]];
+
+        return redirect()->back()->withInput()->withResponse($response);
     }
 
     /**

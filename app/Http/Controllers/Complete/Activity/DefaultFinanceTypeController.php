@@ -67,10 +67,12 @@ class DefaultFinanceTypeController extends Controller
         $activityData       = $this->activityManager->getActivityData($id);
         if ($this->defaultFinanceTypeManager->update($defaultFinanceType, $activityData)) {
             $this->activityManager->resetActivityWorkflow($id);
+            $response = ['type' => 'success', 'code' => ['updated', ['name' => 'Default Finance Type']]];
 
-            return redirect()->to(sprintf('/activity/%s', $id))->withMessage('Activity Default Finance Type updated!');
+            return redirect()->to(sprintf('/activity/%s', $id))->withResponse($response);
         }
+        $response = ['type' => 'danger', 'code' => ['update_failed', ['name' => 'Default Finance Type']]];
 
-        return redirect()->back();
+        return redirect()->back()->withInput()->withResponse($response);
     }
 }

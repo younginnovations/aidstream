@@ -93,10 +93,12 @@ class IatiIdentifierController extends Controller
 
         if ($this->iatiIdentifierManager->update($input, $iatiIdentifierData)) {
             $this->activityManager->resetActivityWorkflow($activityId);
+            $response = ['type' => 'success', 'code' => ['updated', ['name' => 'Activity Iati Identifier']]];
 
-            return redirect()->to(sprintf('/activity/%s', $activityId))->withMessage('Activity Iati Identifier Updated !');
+            return redirect()->to(sprintf('/activity/%s', $activityId))->withResponse($response);
         }
+        $response = ['type' => 'danger', 'code' => ['update_failed', ['name' => 'Activity Iati Identifier']]];
 
-        return redirect()->route('activity.iati-identifier.index', $activityId);
+        return redirect()->route('activity.iati-identifier.index', $activityId)->withInput()->withResponse($response);
     }
 }
