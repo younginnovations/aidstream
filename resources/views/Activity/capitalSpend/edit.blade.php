@@ -10,8 +10,7 @@
                     <div class="panel panel-default">
                         <div class="panel-body">
                         <h3>{{ $activityData->IdentifierTitle }}</h3>
-                        <h2><strong>Capital Spend</strong></h2>
-                        <div class="create-form">
+                        <div class="create-activity-form">
                             {!! form($form) !!}
                         </div>
                     </div>

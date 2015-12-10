@@ -883,6 +883,10 @@ label {
   .help-text:hover {
     background-position: -222px -200px; }
 
+.form-group .help-text {
+  right: -30px;
+  top: 41px; }
+
 .element-sidebar-wrapper {
   padding-right: 0; }
 
@@ -924,8 +928,7 @@ label {
     color: rgba(90, 90, 90, 0.7); }
 
 .collection_form {
-  clear: both;
-  overflow: hidden; }
+  clear: both; }
   .collection_form + .collection_form {
     padding-top: 24px; }
 
@@ -944,8 +947,7 @@ label {
 .create-form > form > .collection_form > .form-group {
   position: relative;
   margin-bottom: 0;
-  padding: 25px 0 0 20px;
-  overflow: hidden; }
+  padding: 25px 0 0 20px; }
 
 .create-form > form > .collection_form > label {
   padding: 20px 20px 0 20px;
@@ -962,7 +964,8 @@ label {
   width: 40%;
   margin-right: 52px;
   display: inline-block;
-  margin-bottom: 0; }
+  margin-bottom: 0;
+  position: relative; }
 
 .create-form > form > .collection_form > .form-group > .collection_form {
   border: 0;
@@ -985,8 +988,7 @@ label {
     overflow: hidden;
     padding-top: 20px;
     margin-bottom: 0;
-    position: relative;
-    padding-bottom: 20px; }
+    position: relative; }
     .create-form > form > .collection_form > .form-group > .collection_form .form-group .form-group {
       padding-bottom: 0; }
     .create-form > form > .collection_form > .form-group > .collection_form .form-group > .form-group {
@@ -1005,12 +1007,28 @@ label {
   border: none;
   font-size: 15px;
   padding-left: 62px;
-  margin: 0 0 0 -10px;
+  margin: 0 0 0 -7px;
   display: block;
   color: #484848; }
   .add_to_collection:hover, .add_to_collection:focus:hover, .add:hover {
     background: transparent url(../../images/ic-sprite.png) no-repeat 19px -503px;
     color: #00A8FF; }
+
+.add_to_collection:last-of-type {
+  margin-left: -11px; }
+
+.has_add_more {
+  padding-bottom: 50px !important; }
+  .has_add_more > .form-group > .has_add_more:last-of-type + .add_to_collection {
+    margin-bottom: 0; }
+
+.has_add_more + .add_to_collection {
+  margin-top: -46px !important;
+  margin-bottom: 20px; }
+
+.create-form > form > .collection_form.has_add_more + .add_to_collection {
+  margin-left: -17px;
+  margin-bottom: 0; }
 
 .add {
   line-height: 40px;
@@ -1041,5 +1059,8 @@ label {
 
 .modal-dialog {
   z-index: 10000; }
+
+.full-width-wrap {
+  width: 87% !important; }
 
 /*# sourceMappingURL=maps/app.css.map */

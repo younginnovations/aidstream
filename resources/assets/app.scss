@@ -905,6 +905,11 @@ label {
 	}
 }
 
+.form-group .help-text {
+	right: -30px;
+	top: 41px;
+}
+
 // element-sidebar-wrapper
 .element-sidebar-wrapper {
 	padding-right: 0;
@@ -968,7 +973,6 @@ label {
 
 .collection_form {
 	clear: both;
-	overflow: hidden;
 	& + & {
 		padding-top: 24px;
 	}
@@ -992,7 +996,6 @@ label {
 		position: relative;
 		margin-bottom: 0;
 		padding: 25px 0 0 20px;
-		overflow: hidden;
 	}
 	> label {
 		padding: 20px 20px 0 20px;
@@ -1016,6 +1019,7 @@ label {
 		margin-right: 52px;
 		display: inline-block;
 		margin-bottom: 0;
+		position: relative;
 	}
 	> .collection_form {
 		border: 0;
@@ -1040,7 +1044,6 @@ label {
 			padding-top: 20px;
 			margin-bottom: 0;
 			position: relative;
-			padding-bottom: 20px;
 			.form-group {
 				padding-bottom: 0;
 			}
@@ -1065,13 +1068,34 @@ label {
 	border: none;
 	font-size: 15px;
 	padding-left: 62px;
-	margin: 0 0 0 -10px;
+	margin: 0 0 0 -7px;
 	display: block;
 	color: $color_gravel_approx;
 	&:hover{
 		background: transparent $url_3 no-repeat 19px -503px;
 		color: $color_dodger_blue_approx;
 	}
+}
+
+.add_to_collection:last-of-type {
+	margin-left: -11px;
+}
+
+.has_add_more {
+	padding-bottom: 50px!important;
+	> .form-group > .has_add_more:last-of-type+.add_to_collection {
+		margin-bottom: 0;
+	}
+}
+
+.has_add_more + .add_to_collection {
+	margin-top: -46px!important;
+	margin-bottom: 20px;
+} 
+
+.create-form > form > .collection_form.has_add_more + .add_to_collection {
+	margin-left: -17px;
+	margin-bottom: 0;
 }
 
 .add {
@@ -1109,4 +1133,8 @@ label {
 
 .modal-dialog {
 	z-index: 10000;
+}
+
+.full-width-wrap {
+	width: 87%!important;
 }
