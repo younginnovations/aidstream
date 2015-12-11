@@ -99,9 +99,10 @@ $(document).ready(function () {
     });
 
     var language = $.cookie('language');
-    $('#def_lang').val(language === undefined ? 'en' : language);
-    $('#def_lang').change(function () {
-        $.cookie('language', $(this).val(), {path: '/'});
+    $('.language-select-wrap .flag-icon-' + language).addClass('active');
+    $('.language-select-wrap .flag').click(function (e) {
+        e.preventDefault();
+        $.cookie('language', $(this).attr('data-lang'), {path: '/'});
         window.location.reload();
     });
 
@@ -234,7 +235,7 @@ $(document).ready(function () {
         $('.modal-body', this).html(modalContent);
     });
 
-    $('.delete').click(function(e) {
+    $('.delete').click(function (e) {
         e.preventDefault();
         var location = this.href;
 
