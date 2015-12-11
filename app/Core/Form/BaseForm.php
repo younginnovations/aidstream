@@ -94,6 +94,7 @@ class BaseForm extends Form
 
     protected function addCollection($name, $file, $class = "", array $data = [], $label = null)
     {
+        $class .= ($class ? ' has_add_more' : '');
         return $this->add(
             $name,
             'collection',
