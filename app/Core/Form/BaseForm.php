@@ -57,11 +57,16 @@ class BaseForm extends Form
      */
     protected function getCodeList($listName, $listType)
     {
-        $codeListFromFile = file_get_contents(
-            app_path(
-                "Core/" . session()->get('version') . "/Codelist/" . config('app.locale') . "/$listType/$listName.json"
-            )
-        );
+        $defaultVersion = config('app.default_version_name');
+        $defaultLocale  = config('app.fallback_locale');
+        $version        = session()->get('version');
+        $locale         = config('app.locale');
+        $rawFilePath    = app_path("Core/%s/Codelist/%s/$listType/$listName.json");
+        $filePath       = sprintf($rawFilePath, $version, $locale);
+        file_exists($filePath) ?: $filePath = sprintf($rawFilePath, $version, $defaultLocale);
+        file_exists($filePath) ?: $filePath = sprintf($rawFilePath, $defaultVersion, $locale);
+        file_exists($filePath) ?: $filePath = sprintf($rawFilePath, $defaultVersion, $defaultLocale);
+        $codeListFromFile = file_get_contents($filePath);
         $codeLists        = json_decode($codeListFromFile, true);
         $codeList         = $codeLists[$listName];
         $data             = [];
@@ -95,13 +100,17 @@ class BaseForm extends Form
     protected function addCollection($name, $file, $class = "", array $data = [], $label = null)
     {
         $class .= ($class ? ' has_add_more' : '');
+        $defaultVersion = config('app.default_version_name');
+        $filePath       = sprintf('App\Core\%s\Forms\%s', session()->get('version'), $file);
+        $FormClass      = !class_exists($filePath) ? sprintf('App\Core\%s\Forms\%s', $defaultVersion, $file) : $filePath;
+
         return $this->add(
             $name,
             'collection',
             [
                 'type'    => 'form',
                 'options' => [
-                    'class' => sprintf('App\Core\%s\Forms\%s', session()->get('version'), $file),
+                    'class' => $FormClass,
                     'data'  => $data,
                     'label' => false,
                 ],
@@ -176,6 +185,9 @@ class BaseForm extends Form
      */
     protected function addHelpText($helpText)
     {
+        $help = trans(session()->get('version') . "/help");
+        is_array($help) ?: $help = trans(config('app.default_version_name') . '/help');
+
         return
             [
                 'text' => 'text',
@@ -183,9 +195,8 @@ class BaseForm extends Form
                 'attr' => [
                     'data-toggle'    => 'tooltip',
                     'data-placement' => 'top',
-                    'data-trigger'   => 'click',
                     'class'          => 'help-text',
-                    'title'          => trans(session()->get('version') . "/help.$helpText")
+                    'title'          => $help[$helpText]
                 ]
             ];
     }

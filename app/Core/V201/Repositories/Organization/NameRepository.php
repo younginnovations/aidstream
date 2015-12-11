@@ -25,6 +25,8 @@ class NameRepository
      */
     public function update(array $input, OrganizationData $organizationData)
     {
+        unset($input['_token']);
+        unset($input['_method']);
         $organizationData->name = $input['name'];
 
         return $organizationData->save();
