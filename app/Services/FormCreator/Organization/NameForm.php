@@ -30,7 +30,7 @@ class NameForm
                 'model'  => $modal,
                 'url'    => route('organization.name.update', [$organizationId, 0])
             ]
-        )->add('Save', 'submit');
+        )->add('Save', 'submit', ['attr' => ['class' => 'btn btn-submit btn-form']]);
 
     }
 }

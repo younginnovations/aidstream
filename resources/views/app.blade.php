@@ -34,32 +34,16 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="{{ Auth::user()->role_id == 3 ? url('admin/dashboard') : url('/')  }}" style="text-indent: 145px; line-height: 35px;" alt="Aidstream">{{Auth::user() ? "(" . Session::get('version') . ")" : "Aidstream"}}</a>
+            <a class="navbar-brand" href="{{ Auth::user()->role_id == 3 ? url('admin/dashboard') : url('/')  }}" style="text-indent: 145px; line-height: 35px;"
+               alt="Aidstream">{{Auth::user() ? "(" . Session::get('version') . ")" : "Aidstream"}}</a>
         </div>
 
         <div class="collapse navbar-collapse navbar-right" id="bs-example-navbar-collapse-1">
-<!--              <ul class="nav navbar-nav">
-{{--                <li>
-                    @if(Auth::user())
-                        <a href="{{ Auth::user()->role_id == 3 ? url('admin/dashboard') : url('/')  }}">@lang('trans.home')</a>
-                    @endif
-                </li>--}}
-                <li>
-                    <form id="form_def_lang" method="post">
-                        <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
-                        <select id="def_lang" name="def_lang" class="form-control" style="margin: 8px 0px 0px;">
-                            @foreach(config('app.locales') as $key => $val)
-                                <option value="{{ $key }}">{{ $val }}</option>
-                            @endforeach
-                        </select>
-                    </form>
-                </li>
-            </ul> -->
             <ul class="nav navbar-nav pull-left add-new-activity">
                 <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                           aria-expanded="false">Add a New Activity<span
-                                    class="caret"></span></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                       aria-expanded="false">Add a New Activity<span
+                                class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
                         <li><a href="{{route('activity.create') }}">Add Activity Manually</a></li>
                         <li><a href="{{route('wizard.activity.create') }}">Add Activity using Wizard</a></li>
@@ -79,18 +63,17 @@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
                            aria-expanded="false"><span class="avatar-img"><img src="{{url('images/avatar.png')}}" width="16" height="26" alt="{{Auth::user()->name}}"></span>
-                           <span class="caret"></span></a>
+                            <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
                             <li><a href="#">My Profile</a></li>
                             <li><a href="{{ url('/auth/logout') }}">@lang('trans.logout')</a></li>
                             <li class="language-select-wrap">
-                            <label for="">Language</label>
-                                <div class="flag-wrapper">
-                                    <a href="#" class="img-thumbnail flag flag-icon-background flag-icon-gb active"></a>
-                                </div>
-                                <div class="flag-wrapper">
-                                    <a href="#" class="img-thumbnail flag flag-icon-background flag-icon-fr"></a>
-                                </div>
+                                <label for="">Language</label>
+                                @foreach(config('app.locales') as $key => $val)
+                                    <div class="flag-wrapper">
+                                        <a href="#{{ $key }}" class="img-thumbnail flag flag-icon-background flag-icon-{{ $key }}" data-lang="{{ $key }}"></a>
+                                    </div>
+                                @endforeach
                             </li>
                         </ul>
                     </li>

@@ -30,7 +30,7 @@ class RecipientOrgBudgetForm
                 'model'  => $modal,
                 'url'    => URL::route('organization.recipient-organization-budget.update', [$organizationId, '0'])
             ]
-        )->add('Update', 'submit');
+        )->add('Update', 'submit', ['attr' => ['class' => 'btn btn-submit btn-form']]);
 
     }
 }

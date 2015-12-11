@@ -49,6 +49,14 @@ $(document).ready(function () {
         proto = proto.replace(new RegExp('__NAME' + level + '__', 'g'), newIndex);
         proto = proto.replace(/__NAME[\d]+__/g, 0);
         container.append(proto);
+
+        $('.remove_from_collection').on('mouseenter',function(){
+            $(this).parent('.form-group').addClass('fill-border');
+        });
+
+        $('.remove_from_collection').on('mouseout',function(){
+            $(this).parent('.form-group').removeClass('fill-border');
+        });
     });
 
     /* Removes form on click to Remove This button */
@@ -91,9 +99,10 @@ $(document).ready(function () {
     });
 
     var language = $.cookie('language');
-    $('#def_lang').val(language === undefined ? 'en' : language);
-    $('#def_lang').change(function () {
-        $.cookie('language', $(this).val(), {path: '/'});
+    $('.language-select-wrap .flag-icon-' + language).addClass('active');
+    $('.language-select-wrap .flag').click(function (e) {
+        e.preventDefault();
+        $.cookie('language', $(this).attr('data-lang'), {path: '/'});
         window.location.reload();
     });
 
@@ -226,7 +235,7 @@ $(document).ready(function () {
         $('.modal-body', this).html(modalContent);
     });
 
-    $('.delete').click(function(e) {
+    $('.delete').click(function (e) {
         e.preventDefault();
         var location = this.href;
 
@@ -267,4 +276,19 @@ $(document).ready(function () {
 
     var documentHeight = $(document).height();
     $('.element-sidebar-wrapper').css('height',documentHeight);
+
+    $('.remove_from_collection').on('mouseenter',function(){
+        $(this).parent('.form-group').addClass('fill-border');
+    });
+
+    $('.remove_from_collection').on('mouseout',function(){
+        $(this).parent('.form-group').removeClass('fill-border');
+    });
+
+    $('.element-sidebar-wrapper .panel-body li a').hover(function(){
+        $(this).children('.action-icon').css('display','block');
+    },
+    function(){
+        $(this).children('.action-icon').css('display','none');
+    });
 });

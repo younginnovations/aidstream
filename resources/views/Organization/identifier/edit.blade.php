@@ -1,18 +1,22 @@
 @extends('app')
 
 @section('content')
-
-    <div class="container">
+    <div class="container main-container">
         <div class="row">
-            <div class="col-xs-8">
-                <div class="panel panel-default">
-                    <div class="panel-heading">Organization Identifier</div>
-                    <div class="panel-body">
-                        {!! form_row($form->reporting_org->getChildren()[0]->reporting_organization_identifier) !!}
+        @include('includes.side_bar_menu')
+            <div class="col-xs-9 col-md-9 col-lg-9 content-wrapper">
+                <div class="panel-content-heading">Organization Identifier</div>
+                <div class="col-xs-8 col-md-8 col-lg-8 element-content-wrapper">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                        <div class="create-form"> 
+                            {!! form_row($form->reporting_org->getChildren()[0]->reporting_organization_identifier) !!}
+                        </div>
                     </div>
                 </div>
             </div>
             @include('includes.menu_org')
+            </div>
         </div>
     </div>
 @endsection
