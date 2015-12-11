@@ -91,9 +91,9 @@ $(document).ready(function () {
     });
 
     var language = $.cookie('language');
-    $('.language-select-wrap .flag-icon-' + language).addClass('active');
-    $('.language-select-wrap .flag').click(function (e) {
-        e.preventDefault();
+    language = language ? language : 'en';
+    $('.language-select-wrap .flag-icon-' + language).parent().addClass('active');
+    $('.language-select-wrap .flag-wrapper').click(function () {
         $.cookie('language', $(this).attr('data-lang'), {path: '/'});
         window.location.reload();
     });
@@ -277,5 +277,16 @@ $(document).ready(function () {
     },
     function(){
         $(this).children('.action-icon').css('display','none');
+    });
+
+    $('.sidebar-wrapper .nav').hover(function(){
+        $('.sidebar-wrapper').addClass('full-sidebar-wrapper');
+    },
+    function(){
+        $('.sidebar-wrapper').removeClass('full-sidebar-wrapper');
+    });
+
+    $('.language-selector').click(function(){
+          $(this).siblings('.language-flag-wrap').toggle();
     });
 });

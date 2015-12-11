@@ -94,9 +94,6 @@ input {
 
 //status message
 
-.alert {
-	margin-bottom: 0;
-}
 
 // tooltip
 .tooltip {
@@ -168,12 +165,61 @@ label {
 
 .login-wrapper {
 	background: $url_1 no-repeat bottom/cover;
-	padding: 84px 0 80px;
+	padding-bottom: 80px;
 	min-height: 100%;
+	.language-select-wrapper {
+		float: right;
+		padding: 10px 20px 5px;
+		label {
+		    color: $color_white;
+		    margin-right: 6px;
+		    padding-top: 7px;
+		}
+		.language-selector {
+			background: $color_black_haze_approx;
+			padding: 1px 4px 1px 5px;
+			border-radius: 2px;
+			line-height: 0px;
+			.caret {
+				margin-top: 12px;
+				color: $color_gravel_approx;
+			}
+		}
+		ul.language-flag-wrap {
+			@include position(absolute,45px 20px auto auto);
+			border-radius: 2px;
+			display: none;
+		    padding: 4px 10px;
+		    width: auto;
+		    background: $color_black_haze_approx;
+		    .flag-wrapper {
+		    	cursor: pointer;
+		    	.flag-icon-background {
+		    		opacity: 1;
+		    	}
+		    }
+			.flag-wrapper.active {
+				display: none;
+			}
+			.language {
+				text-transform: capitalize;
+			    float: right;
+			    padding-top: 5px;
+			    padding-left: 2px;
+			}
+		}
+	}
+}
+
+.language-selector .flag-icon-background {
+	margin-right: 2px;
+	opacity: 1;
 }
 
 .login-container {
 	@include outer-container(392px);
+	padding-top: 84px;
+	clear: both;
 }
 
 .form-body {
@@ -263,6 +309,8 @@ label {
 
 .register-container {
 	@include outer-container(814px);
+	padding-top: 84px;
+	clear: both;
 }
 
 .input-wrapper {
@@ -373,6 +421,7 @@ label {
     height: 30px;
     margin-right: 4px;
     opacity: 0.5;
+    background-color: transparent!important;
     &:hover {
     	background-color: transparent!important;
     }
@@ -416,6 +465,9 @@ label {
 	margin-right: 0;
 	padding: 0;
 	width: 60px;
+	float: left;
+	overflow: hidden;
+	transition: width 0.3s ease;
 	.panel {
 		border: 0;
 		box-shadow: none;
@@ -516,6 +568,14 @@ label {
 	}
 }
 
+$full-sidebar-wrapper-width: 250px;
+.full-sidebar-wrapper {
+	width: $full-sidebar-wrapper-width;
+	&+.content-wrapper {
+		width: calc(100% - #{$full-sidebar-wrapper-width});
+	}
+}
+
 // breadcrumb
 .breadcrumb-wrapper {
 	padding: 26px 37px 20px; 
@@ -559,6 +619,9 @@ label {
 	padding: 0;
 	border-left: 1px solid $color_gallery_approx;
 	min-height: 100%;
+	width: calc(100% - 60px);
+	float: left;
+	transition: width 0.3s ease;
 	.panel {
 		border: 0;
 	}
@@ -698,6 +761,7 @@ label {
 	}
 	.panel {
 		margin-bottom: 0;
+		clear: both;
 	}
 }
 
@@ -710,10 +774,91 @@ label {
 	margin-top: 20px;
 }
 
+// element-sidebar-wrapper
+
+$element-sidebar-wrapper-width: 267px;
+// element-sidebar-wrapper
+.element-sidebar-wrapper {
+	padding: 0;
+	border-left: 1px solid $color_gallery_approx;
+	float: right;
+	width: $element-sidebar-wrapper-width;
+	padding-right: 0;
+	.panel-heading {
+		background: transparent;
+		font: 12px 'Open-Sans-Bold';
+		text-transform: uppercase;
+		color: $color_gravel_approx;
+		border-color: $color_gallery_approx;
+		padding: 10px 22px;
+	}
+	.panel-default {
+		margin-bottom: 30px;
+	}
+	.panel-body li {
+		border-bottom: 1px solid $color_gallery_approx;
+		width: 100%;
+		position: relative;
+		a {
+			color: rgba($color_gravel_approx,0.5);
+			font-size: 12px;
+			padding: 17px 25px;
+			position: relative;
+			&:hover {
+				background: transparent;
+				color: $color_dodger_blue_approx;
+			}
+		}
+		.active {
+			color: $color_gravel_approx;
+		}
+	}
+}
+
+.action-icon {
+    width: 37px;
+    height: 32px;
+	background-color: $color_white;
+    text-indent: -9999px;
+    float: left;
+    @include position(absolute,11px auto auto -14px);
+    padding-left: 0!important;
+    display: none;
+}
+
+.action-icon.add {
+	background: transparent $url_3 no-repeat 1px -448px;
+	display: none;
+	&:hover {
+		background-position: 1px -508px;
+	}
+}
+
+.help-text {
+	float: right;
+	text-indent: -9999px;
+	width: 18px;
+	height: 18px;
+	background: $url_3 no-repeat -152px -200px;
+	cursor: pointer;
+	@include position(absolute,16px 20px auto auto);
+	&:hover {
+		background-position: -222px -200px;
+	}
+}
+
+.form-group .help-text {
+	right: -30px;
+	top: 41px;
+}
+
+
 // element-content-wrapper
+
 .element-content-wrapper {
 	padding: 0;
 	margin-top: 20px;
+	width: calc(100% - #{$element-sidebar-wrapper-width});
 	.panel-heading {
 		background: transparent;
 	}
@@ -856,6 +1001,10 @@ label {
 	}
 }
 
+.panel-element-body+.panel-heading {
+	margin-top: 20px;
+}
+
 .edit-element,.edit {
 	float: right;
 	text-indent: -9999px;
@@ -871,83 +1020,6 @@ label {
 	float: none;
 }
 
-
-// element-sidebar-wrapper
-.element-sidebar-wrapper {
-	padding: 0;
-	border-left: 1px solid $color_gallery_approx;
-	.panel-heading {
-		background: transparent;
-		font: 12px 'Open-Sans-Bold';
-		text-transform: uppercase;
-		color: $color_gravel_approx;
-		border-color: $color_gallery_approx;
-		padding: 10px 22px;
-	}
-	.panel-default {
-		margin-bottom: 30px;
-	}
-	.panel-body li {
-		border-bottom: 1px solid $color_gallery_approx;
-		width: 100%;
-		position: relative;
-		a {
-			color: rgba($color_gravel_approx,0.5);
-			font-size: 12px;
-			padding: 17px 25px;
-			position: relative;
-			&:hover {
-				background: transparent;
-				color: $color_dodger_blue_approx;
-			}
-		}
-		.active {
-			color: $color_gravel_approx;
-		}
-	}
-}
-
-.action-icon {
-    width: 37px;
-    height: 32px;
-	background-color: $color_white;
-    text-indent: -9999px;
-    float: left;
-    @include position(absolute,11px auto auto -14px);
-    padding-left: 0!important;
-    display: none;
-}
-
-.action-icon.add {
-	background: transparent $url_3 no-repeat 1px -448px;
-	display: none;
-	&:hover {
-		background-position: 1px -508px;
-	}
-}
-
-.help-text {
-	float: right;
-	text-indent: -9999px;
-	width: 18px;
-	height: 18px;
-	background: $url_3 no-repeat -152px -200px;
-	cursor: pointer;
-	@include position(absolute,16px 20px auto auto);
-	&:hover {
-		background-position: -222px -200px;
-	}
-}
-
-.form-group .help-text {
-	right: -30px;
-	top: 41px;
-}
-
-// element-sidebar-wrapper
-.element-sidebar-wrapper {
-	padding-right: 0;
-}
 
 //add activity
 .create-form,.create-activity-form {
@@ -1091,7 +1163,7 @@ label {
 			}
 			> .form-group {
 				border: 0;
-				float: left;
+				display: inline-block;
 				width: 40%;
 				padding: 0;
 				margin: 0 30px 0 14px;
@@ -1173,7 +1245,7 @@ form > .add_to_collection[data-collection="legacy_data"] {
 }
 
 .btn-form {
-	width: 40%;
+	width: 320px;
 }
 
 .create-form .btn-form {

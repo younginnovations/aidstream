@@ -262,9 +262,6 @@ input {
   input:focus {
     outline: none; }
 
-.alert {
-  margin-bottom: 0; }
-
 .tooltip {
   background: #52cc88;
   width: 240px;
@@ -313,13 +310,58 @@ label {
 
 .login-wrapper {
   background: url(../../images/login-bg.jpg) no-repeat bottom/cover;
-  padding: 84px 0 80px;
+  padding-bottom: 80px;
   min-height: 100%; }
+  .login-wrapper .language-select-wrapper {
+    float: right;
+    padding: 10px 20px 5px; }
+    .login-wrapper .language-select-wrapper label {
+      color: #fff;
+      margin-right: 6px;
+      padding-top: 7px; }
+    .login-wrapper .language-select-wrapper .language-selector {
+      background: #f6f6f6;
+      padding: 1px 4px 1px 5px;
+      -webkit-border-radius: 2px;
+              border-radius: 2px;
+      line-height: 0px; }
+      .login-wrapper .language-select-wrapper .language-selector .caret {
+        margin-top: 12px;
+        color: #484848; }
+    .login-wrapper .language-select-wrapper ul.language-flag-wrap {
+      position: absolute;
+      top: 45px;
+      right: 20px;
+      bottom: auto;
+      left: auto;
+      -webkit-border-radius: 2px;
+              border-radius: 2px;
+      display: none;
+      padding: 4px 10px;
+      width: auto;
+      background: #f6f6f6; }
+      .login-wrapper .language-select-wrapper ul.language-flag-wrap .flag-wrapper {
+        cursor: pointer; }
+        .login-wrapper .language-select-wrapper ul.language-flag-wrap .flag-wrapper .flag-icon-background {
+          opacity: 1; }
+      .login-wrapper .language-select-wrapper ul.language-flag-wrap .flag-wrapper.active {
+        display: none; }
+      .login-wrapper .language-select-wrapper ul.language-flag-wrap .language {
+        text-transform: capitalize;
+        float: right;
+        padding-top: 5px;
+        padding-left: 2px; }
+
+.language-selector .flag-icon-background {
+  margin-right: 2px;
+  opacity: 1; }
 
 .login-container {
   max-width: 392px;
   margin-left: auto;
-  margin-right: auto; }
+  margin-right: auto;
+  padding-top: 84px;
+  clear: both; }
   .login-container::after {
     clear: both;
     content: "";
@@ -400,7 +442,9 @@ label {
 .register-container {
   max-width: 814px;
   margin-left: auto;
-  margin-right: auto; }
+  margin-right: auto;
+  padding-top: 84px;
+  clear: both; }
   .register-container::after {
     clear: both;
     content: "";
@@ -489,7 +533,8 @@ label {
   padding: 0;
   height: 30px;
   margin-right: 4px;
-  opacity: 0.5; }
+  opacity: 0.5;
+  background-color: transparent !important; }
   .flag-icon-background:hover {
     background-color: transparent !important; }
 
@@ -519,7 +564,14 @@ label {
 
 .sidebar-wrapper {
   margin-right: 0;
-  padding: 0; }
+  padding: 0;
+  width: 60px;
+  float: left;
+  overflow: hidden;
+  -webkit-transition: width 0.3s ease;
+     -moz-transition: width 0.3s ease;
+       -o-transition: width 0.3s ease;
+          transition: width 0.3s ease; }
   .sidebar-wrapper .panel {
     border: 0;
     -webkit-box-shadow: none;
@@ -531,10 +583,10 @@ label {
     .sidebar-wrapper ul li a {
       font-size: 13px;
       color: #484848;
-      line-height: 63px;
+      height: 63px;
       display: block;
       position: relative;
-      padding: 0 0 0 62px; }
+      padding: 22px 0 22px 62px; }
       .sidebar-wrapper ul li a:before {
         content: "";
         background: url(../../images/ic-sprite.png) no-repeat 0 0;
@@ -579,6 +631,13 @@ label {
   .sidebar-wrapper .settings a:hover:before {
     background-position: -73px -380px; }
 
+.full-sidebar-wrapper {
+  width: 250px; }
+  .full-sidebar-wrapper + .content-wrapper {
+    width: -webkit-calc(100% - 250px);
+    width: -moz-calc(100% - 250px);
+    width: calc(100% - 250px); }
+
 .breadcrumb-wrapper {
   padding: 26px 37px 20px;
   overflow: hidden; }
@@ -616,7 +675,15 @@ label {
 .content-wrapper {
   padding: 0;
   border-left: 1px solid #ededed;
-  min-height: 100%; }
+  min-height: 100%;
+  width: -webkit-calc(100% - 60px);
+  width: -moz-calc(100% - 60px);
+  width: calc(100% - 60px);
+  float: left;
+  -webkit-transition: width 0.3s ease;
+     -moz-transition: width 0.3s ease;
+       -o-transition: width 0.3s ease;
+          transition: width 0.3s ease; }
   .content-wrapper .panel {
     border: 0; }
   .content-wrapper .panel-body {
@@ -723,7 +790,8 @@ label {
   color: rgba(72, 72, 72, 0.7); }
 
 .panel-level-1 .panel {
-  margin-bottom: 0; }
+  margin-bottom: 0;
+  clear: both; }
 
 .panel-level-1 .panel + .panel {
   margin-top: 20px; }
@@ -732,9 +800,81 @@ label {
   padding-right: 0;
   margin-top: 20px; }
 
+.element-sidebar-wrapper {
+  padding: 0;
+  border-left: 1px solid #ededed;
+  float: right;
+  width: 267px;
+  padding-right: 0; }
+  .element-sidebar-wrapper .panel-heading {
+    background: transparent;
+    font: 12px 'Open-Sans-Bold';
+    text-transform: uppercase;
+    color: #484848;
+    border-color: #ededed;
+    padding: 10px 22px; }
+  .element-sidebar-wrapper .panel-default {
+    margin-bottom: 30px; }
+  .element-sidebar-wrapper .panel-body li {
+    border-bottom: 1px solid #ededed;
+    width: 100%;
+    position: relative; }
+    .element-sidebar-wrapper .panel-body li a {
+      color: rgba(72, 72, 72, 0.5);
+      font-size: 12px;
+      padding: 17px 25px;
+      position: relative; }
+      .element-sidebar-wrapper .panel-body li a:hover {
+        background: transparent;
+        color: #00A8FF; }
+    .element-sidebar-wrapper .panel-body li .active {
+      color: #484848; }
+
+.action-icon {
+  width: 37px;
+  height: 32px;
+  background-color: #fff;
+  text-indent: -9999px;
+  float: left;
+  position: absolute;
+  top: 11px;
+  right: auto;
+  bottom: auto;
+  left: -14px;
+  padding-left: 0 !important;
+  display: none; }
+
+.action-icon.add {
+  background: transparent url(../../images/ic-sprite.png) no-repeat 1px -448px;
+  display: none; }
+  .action-icon.add:hover {
+    background-position: 1px -508px; }
+
+.help-text {
+  float: right;
+  text-indent: -9999px;
+  width: 18px;
+  height: 18px;
+  background: url(../../images/ic-sprite.png) no-repeat -152px -200px;
+  cursor: pointer;
+  position: absolute;
+  top: 16px;
+  right: 20px;
+  bottom: auto;
+  left: auto; }
+  .help-text:hover {
+    background-position: -222px -200px; }
+
+.form-group .help-text {
+  right: -30px;
+  top: 41px; }
+
 .element-content-wrapper {
   padding: 0;
-  margin-top: 20px; }
+  margin-top: 20px;
+  width: -webkit-calc(100% - 267px);
+  width: -moz-calc(100% - 267px);
+  width: calc(100% - 267px); }
   .element-content-wrapper .panel-heading {
     background: transparent; }
   .element-content-wrapper h3 {
@@ -841,6 +981,9 @@ label {
     .panel-element-body > .col-md-12:last-child {
       border-bottom: 0; }
 
+.panel-element-body + .panel-heading {
+  margin-top: 20px; }
+
 .edit-element, .edit {
   float: right;
   text-indent: -9999px;
@@ -852,75 +995,6 @@ label {
 
 .edit {
   float: none; }
-
-.element-sidebar-wrapper {
-  padding: 0;
-  border-left: 1px solid #ededed; }
-  .element-sidebar-wrapper .panel-heading {
-    background: transparent;
-    font: 12px 'Open-Sans-Bold';
-    text-transform: uppercase;
-    color: #484848;
-    border-color: #ededed;
-    padding: 10px 22px; }
-  .element-sidebar-wrapper .panel-default {
-    margin-bottom: 30px; }
-  .element-sidebar-wrapper .panel-body li {
-    border-bottom: 1px solid #ededed;
-    width: 100%;
-    position: relative; }
-    .element-sidebar-wrapper .panel-body li a {
-      color: rgba(72, 72, 72, 0.5);
-      font-size: 12px;
-      padding: 17px 25px;
-      position: relative; }
-      .element-sidebar-wrapper .panel-body li a:hover {
-        background: transparent;
-        color: #00A8FF; }
-    .element-sidebar-wrapper .panel-body li .active {
-      color: #484848; }
-
-.action-icon {
-  width: 37px;
-  height: 32px;
-  background-color: #fff;
-  text-indent: -9999px;
-  float: left;
-  position: absolute;
-  top: 11px;
-  right: auto;
-  bottom: auto;
-  left: -14px;
-  padding-left: 0 !important;
-  display: none; }
-
-.action-icon.add {
-  background: transparent url(../../images/ic-sprite.png) no-repeat 1px -448px;
-  display: none; }
-  .action-icon.add:hover {
-    background-position: 1px -508px; }
-
-.help-text {
-  float: right;
-  text-indent: -9999px;
-  width: 18px;
-  height: 18px;
-  background: url(../../images/ic-sprite.png) no-repeat -152px -200px;
-  cursor: pointer;
-  position: absolute;
-  top: 16px;
-  right: 20px;
-  bottom: auto;
-  left: auto; }
-  .help-text:hover {
-    background-position: -222px -200px; }
-
-.form-group .help-text {
-  right: -30px;
-  top: 41px; }
-
-.element-sidebar-wrapper {
-  padding-right: 0; }
 
 .create-form, .create-activity-form {
   padding: 14px 40px 30px;
@@ -1032,7 +1106,7 @@ label {
       padding-bottom: 0; }
     .create-form > form > .collection_form > .form-group > .collection_form .form-group > .form-group {
       border: 0;
-      float: left;
+      display: inline-block;
       width: 40%;
       padding: 0;
       margin: 0 30px 0 14px; }
@@ -1096,7 +1170,7 @@ form > .add_to_collection[data-collection="legacy_data"] {
   border: 1px dashed #00A8FF !important; }
 
 .btn-form {
-  width: 40%; }
+  width: 320px; }
 
 .create-form .btn-form {
   position: absolute;
