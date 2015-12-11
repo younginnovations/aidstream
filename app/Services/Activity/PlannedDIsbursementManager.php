@@ -37,9 +37,9 @@ class PlannedDisbursementManager
      */
     public function __construct(Version $version, Log $dbLogger, Guard $auth, LoggerInterface $logger)
     {
-        $this->auth                 = $auth;
-        $this->dbLogger             = $dbLogger;
-        $this->logger               = $logger;
+        $this->auth                        = $auth;
+        $this->dbLogger                    = $dbLogger;
+        $this->logger                      = $logger;
         $this->iatiPlannedDisbursementRepo = $version->getActivityElement()->getPlannedDisbursement()->getRepository();
     }
 

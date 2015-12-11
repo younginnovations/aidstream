@@ -38,10 +38,19 @@ class GetCodeName
      */
     protected function  getCodeName($listType, $listName, $code)
     {
-        $codeListFromFile = file_get_contents(app_path("Core/" . session()->get('version') . "/Codelist/" . config('app.locale') . "/$listType/$listName.json"));
+        $defaultVersion = config('app.default_version_name');
+        $defaultLocale  = config('app.fallback_locale');
+        $version        = session()->get('version');
+        $locale         = config('app.locale');
+        $rawFilePath    = app_path("Core/%s/Codelist/%s/$listType/$listName.json");
+        $filePath       = sprintf($rawFilePath, $version, $locale);
+        file_exists($filePath) ?: $filePath = sprintf($rawFilePath, $version, $defaultLocale);
+        file_exists($filePath) ?: $filePath = sprintf($rawFilePath, $defaultVersion, $locale);
+        file_exists($filePath) ?: $filePath = sprintf($rawFilePath, $defaultVersion, $defaultLocale);
+        $codeListFromFile = file_get_contents($filePath);
         $codeLists        = json_decode($codeListFromFile, true);
-        $codeList = $codeLists[$listName];
-        
+        $codeList         = $codeLists[$listName];
+
         foreach ($codeList as $list) {
             if ($list['code'] == $code) {
                 return sprintf('%s [%s]', $list['name'], $list['code']);

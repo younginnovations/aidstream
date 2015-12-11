@@ -1,27 +1,15 @@
 <?php namespace App\Core\V202\Forms\Organization;
 
-use Kris\LaravelFormBuilder\Form;
+use App\Core\Form\BaseForm;
 
-class NameForm extends Form
+class NameForm extends BaseForm
 {
     protected $showFieldErrors = true;
 
     public function buildForm()
     {
         $this
-            ->add(
-                'name',
-                'collection',
-                [
-                    'type'      => 'form',
-                    'prototype' => true,
-                    'options'   => [
-                        'class' => 'App\Core\V201\Forms\Organization\NarrativeForm',
-                        'label' => false,
-                    ],
-                    'wrapper'   => false
-                ]
-            )
-            ->add('new_field', 'text',['label' => 'New field in 202']);
+            ->addCollection('name', 'Organization\Narrative', 'narrative')
+            ->addAddMoreButton('add_name', 'narrative');
     }
 }
