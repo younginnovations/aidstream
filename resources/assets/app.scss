@@ -415,6 +415,7 @@ label {
 .sidebar-wrapper {
 	margin-right: 0;
 	padding: 0;
+	width: 60px;
 	.panel {
 		border: 0;
 		box-shadow: none;
@@ -427,10 +428,10 @@ label {
 		a {
 			font-size: 13px;
 			color: $color_gravel_approx;
-			line-height: 63px;
+			height: 63px;
 			display: block;
 			position: relative;
-			padding: 0 0 0 62px;
+			padding: 22px 0 22px 62px;
 			&:before {
 				content: "";
 				background: $url_3 no-repeat 0 0;
