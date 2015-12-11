@@ -26,7 +26,8 @@ class Position extends BaseForm
                     'attr'  => [
                         'class' => 'map_container',
                         'style' => 'height: 400px;'
-                    ]
+                    ],
+                    'wrapper' => ['class' => 'form-group full-width-wrap']
                 ]
             );
     }

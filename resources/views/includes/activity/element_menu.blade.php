@@ -12,14 +12,11 @@ $filledStatus = $defaultFieldGroups->getFilledStatus($id);
                 <ul class="nav">
                     @foreach($fieldGroup as $fieldIndex => $field)
                         <li>
-                            <a href="{{ route(sprintf('activity.%s.index', str_replace('_', '-', $fieldIndex)), [$id]) }}">
-                                <span class="glyphicon {{ $filledStatus[$fieldGroupIndex][$fieldIndex] ? 'glyphicon-ok-circle' : 'glyphicon-remove-circle' }}"></span>
+                            <a href="{{ route(sprintf('activity.%s.index', str_replace('_', '-', $fieldIndex)), [$id]) }}" class="{{ $filledStatus[$fieldGroupIndex][$fieldIndex] ? 'active' : '' }}">
+                                <span class="action-icon {{ $filledStatus[$fieldGroupIndex][$fieldIndex] ? 'edit' : 'add' }}">icon</span>
                                 {{$field}}
                             </a>
-                            <span class="help-text"
-                                  data-toggle="tooltip" data-placement="top"
-                                  data-trigger="click"
-                                  title="@lang(session()->get('version') . '/help.Activity_' . $fieldIndex)">help text</span>
+                            <span class="help-text" data-toggle="tooltip" data-placement="top" title="@lang(session()->get('version') . '/help.Activity_' . $fieldIndex)">help text</span>
                         </li>
                     @endforeach
                 </ul>

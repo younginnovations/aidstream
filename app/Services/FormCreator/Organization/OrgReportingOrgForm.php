@@ -41,7 +41,7 @@ class OrgReportingOrgForm
                 'model'  => $model,
                 'url'    => URL::route('organization.reportingOrg.update', [$organization->id, '0'])
             ]
-        )->add('Update', 'submit');
+        )->add('Update', 'submit', ['attr' => ['class' => 'btn btn-submit btn-form']]);
 
     }
 }

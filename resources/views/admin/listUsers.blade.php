@@ -35,7 +35,7 @@
                 @else
                     <div class="text-center no-data">No users yet :: </div>
                 @endif
-                <a href="{{ route('admin.register-user') }}" class="btn btn-primary">Add User</a>
+                <a href="{{ route('admin.register-user') }}" class="add">Add User</a>
             </div>
         </div>
     </div>

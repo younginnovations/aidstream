@@ -35,6 +35,6 @@ class RecipientCountryBudgetForm
                 'model'  => $modal,
                 'url'    => route('organization.recipient-country-budget.update', [$organizationId, 0])
             ]
-        )->add('Save', 'submit');
+        )->add('Save', 'submit', ['attr' => ['class' => 'btn btn-submit btn-form']]);
     }
 }
