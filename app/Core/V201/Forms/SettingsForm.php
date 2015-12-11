@@ -31,17 +31,17 @@ class SettingsForm extends BaseForm
     public function buildForm()
     {
         $this
-            ->addCollection('version_form', 'Settings\VersionInfoForm', '', ['versions' => $this->versions], false)
-            ->addCollection('reporting_organization_info', 'Settings\ReportingOrganizationInfoForm', '', [], false)
-            ->addCollection('publishing_type', 'Settings\PublishingTypeForm', '', [], false)
-            ->addCollection('registry_info', 'Settings\RegistryInfoForm', '', [], false)
-            ->addCollection('default_field_values', 'Settings\DefaultFieldValuesForm', '', [], false)
-            ->addCollection('default_field_groups', 'Settings\DefaultFieldGroupsForm', '', [], false)
+            ->addCollection('version_form', 'Settings\VersionInfoForm', '', ['versions' => $this->versions])
+            ->addCollection('reporting_organization_info', 'Settings\ReportingOrganizationInfoForm')
+            ->addCollection('publishing_type', 'Settings\PublishingTypeForm')
+            ->addCollection('registry_info', 'Settings\RegistryInfoForm')
+            ->addCollection('default_field_values', 'Settings\DefaultFieldValuesForm')
+            ->addCollection('default_field_groups', 'Settings\DefaultFieldGroupsForm')
             ->add(
                 'Save',
                 'submit',
                 [
-                    'attr' => ['class' => 'btn btn-primary']
+                    'attr' => ['class' => 'btn btn-submit btn-form']
                 ]
             );
     }
