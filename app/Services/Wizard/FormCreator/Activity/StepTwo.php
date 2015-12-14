@@ -38,6 +38,6 @@ class StepTwo
                 'model'  => $data,
                 'url'    => route('wizard.activity.title-description.update', [$activityId, 0])
             ]
-        )->add('Step 3 >>', 'submit');
+        )->add('Step 3 >>', 'submit', ['attr' => ['class' => 'btn btn-submit btn-form']]);
     }
 }

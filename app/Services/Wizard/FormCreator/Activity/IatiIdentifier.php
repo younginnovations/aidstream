@@ -36,7 +36,7 @@ class IatiIdentifier
                 'method' => 'POST',
                 'url'    => route('wizard.activity.store')
             ]
-        )->add('Step 2 >>', 'submit');
+        )->add('Step 2 >>', 'submit', ['attr' => ['class' => 'btn btn-submit btn-form']]);
     }
 
     /**
@@ -53,6 +53,6 @@ class IatiIdentifier
                 'model'  => $data,
                 'url'    => route('wizard.activity.iati-identifier.update', [$activityId, 0])
             ]
-        )->add('Save', 'submit');
+        )->add('Save', 'submit', ['attr' => ['class' => 'btn btn-submit btn-form']]);
     }
 }
