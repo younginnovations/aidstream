@@ -1,9 +1,6 @@
 @extends('app')
 
 @section('content')
-
-    {{Session::get('message')}}
-
     <!-- Modal -->
     <div class="modal fade" id="view_result" tabindex="-1" role="dialog" aria-labelledby="view_result_label">
         <div class="modal-dialog" role="document">

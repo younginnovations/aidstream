@@ -59,11 +59,12 @@ class DocumentLinkController extends Controller
 
         if ($this->documentLinkManager->update($input, $organizationData)) {
             $this->organizationManager->resetStatus($orgId);
-            return redirect()->to(sprintf('/organization/%s', $orgId))->withMessage(
-                'Organization Document Link Updated !'
-            );
-        }
+            $response = ['type' => 'success', 'code' => ['updated', ['name' => 'Organization Document Link']]];
 
-        return redirect()->back();
+            return redirect()->to(sprintf('/organization/%s', $orgId))->withResponse($response);
+        }
+        $response = ['type' => 'danger', 'code' => ['update_failed', ['name' => 'Organization Document Link']]];
+
+        return redirect()->back()->withInput()->withResponse($response);
     }
 }

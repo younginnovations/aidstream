@@ -32,12 +32,17 @@ class ConditionController extends Controller
 
     public function update($id, Request $request, ConditionRequestManager $conditionRequestManager)
     {
+        $this->authorize(['edit_activity', 'add_activity']);
         $condition    = $request->except(['_token', '_method']);
         $activityData = $this->activityManager->getActivityData($id);
         if ($this->conditionManager->update($condition, $activityData)) {
-            return redirect()->to(sprintf('/activity/%s', $id))->withMessage('Condition Updated !');
-        }
+            $this->activityManager->resetActivityWorkflow($id);
+            $response = ['type' => 'success', 'code' => ['updated', ['name' => 'Conditions']]];
 
-        return redirect()->back();
+            return redirect()->to(sprintf('/activity/%s', $id))->withResponse($response);
+        }
+        $response = ['type' => 'danger', 'code' => ['update_failed', ['name' => 'Related Activity']]];
+
+        return redirect()->back()->withInput()->withResponse($response);
     }
 }

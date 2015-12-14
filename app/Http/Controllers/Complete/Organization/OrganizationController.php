@@ -62,7 +62,9 @@ class OrganizationController extends Controller
         $organization = $this->organizationManager->getOrganization($id);
 
         if (!isset($organization->reporting_org[0])) {
-            return redirect('/settings');
+            $response = ['type' => 'warning', 'code' => ['settings', ['name' => 'organization']]];
+
+            return redirect('/settings')->withResponse($response);
         }
         $organizationData              = $this->nameManager->getOrganizationData($id);
         $reporting_org                 = (array) $organization->reporting_org[0];
@@ -108,7 +110,9 @@ class OrganizationController extends Controller
         if ($status === "1") {
             $message = $xmlService->validateOrgSchema($organization, $organizationData, $settings, $orgElem);
             if ($message !== '') {
-                return redirect()->back()->withMessage($message);
+                $response = ['type' => 'danger', 'code' => ['transfer_message', ['name' => $message]]];
+
+                return redirect()->back()->withResponse($response);
             }
         } else {
             if ($status === "3") {
@@ -116,9 +120,12 @@ class OrganizationController extends Controller
             }
         }
 
-        $this->organizationManager->updateStatus($input, $organizationData);
+        $statusLabel = ['Completed', 'Verified', 'Published'];
+        $response    = ($this->organizationManager->updateStatus($input, $organizationData)) ?
+            ['type' => 'success', 'code' => ['org_statuses', ['name' => $statusLabel[$status - 1]]]] :
+            ['type' => 'danger', 'code' => ['org_statuses_failed', ['name' => $statusLabel[$status - 1]]]];
 
-        return redirect()->back();
+        return redirect()->back()->withResponse($response);
     }
 
     /**
@@ -143,10 +150,12 @@ class OrganizationController extends Controller
     public function listPublishedFiles($action = '', $id = '')
     {
         if ($action == 'delete') {
-            $result  = $this->organizationManager->deletePublishedFile($id);
-            $message = $result ? 'File deleted successfully' : 'File couldn\'t be deleted.';
+            $result   = $this->organizationManager->deletePublishedFile($id);
+            $message  = $result ? 'File deleted successfully' : 'File couldn\'t be deleted.';
+            $type     = $result ? 'success' : 'danger';
+            $response = ['type' => $type, 'code' => ['transfer_message', ['name' => $message]]];
 
-            return redirect()->back()->withMessage($message);
+            return redirect()->back()->withResponse($response);
         }
         $org_id        = $this->request->session()->get('org_id');
         $list          = $this->organizationManager->getPublishedFiles($org_id);

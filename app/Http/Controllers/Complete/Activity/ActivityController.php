@@ -92,7 +92,9 @@ class ActivityController extends Controller
         $form         = $this->identifierForm->create();
         $settings     = $this->settingsManager->getSettings($this->organization_id);
         if (!isset($organization->reporting_org[0])) {
-            return redirect('/settings');
+            $response = ['type' => 'warning', 'code' => ['settings', ['name' => 'activity']]];
+
+            return redirect('/settings')->withResponse($response);
         }
         $defaultFieldValues    = $settings->default_field_values;
         $organization          = $this->organizationManager->getOrganization($this->organization_id);
@@ -111,10 +113,13 @@ class ActivityController extends Controller
         $input  = $request->all();
         $result = $this->activityManager->store($input, $this->organization_id);
         if (!$result) {
-            return redirect()->back();
-        }
+            $response = ['type' => 'danger', 'code' => ['save_failed', ['name' => 'activity']]];
 
-        return redirect()->route('activity.show', [$result->id])->withMessage('Successfully Created Activity');
+            return redirect()->back()->withResponse($response);
+        }
+        $response = ['type' => 'success', 'code' => ['created', ['name' => 'Activity']]];
+
+        return redirect()->route('activity.show', [$result->id])->withResponse($response);
     }
 
     /**
@@ -156,15 +161,19 @@ class ActivityController extends Controller
         if ($activityWorkflow == 1) {
             $message = $xmlService->validateActivitySchema($activityData, $transactionData, $resultData, $settings, $activityElement, $orgElem, $organization);
             if ($message !== '') {
-                return redirect()->back()->withMessage($message);
+                $response = ['type' => 'danger', 'code' => ['transfer_message', ['name' => $message]]];
+
+                return redirect()->back()->withResponse($response);
             }
         } elseif ($activityWorkflow == 3) {
             $xmlService->generateActivityXml($activityData, $transactionData, $resultData, $settings, $activityElement, $orgElem, $organization);
         }
+        $statusLabel = ['Completed', 'Verified', 'Published'];
+        $response    = ($this->activityManager->updateStatus($input, $activityData)) ?
+            ['type' => 'success', 'code' => ['activity_statuses', ['name' => $statusLabel[$activityWorkflow - 1]]]] :
+            ['type' => 'danger', 'code' => ['activity_statuses_failed', ['name' => $statusLabel[$activityWorkflow - 1]]]];
 
-        $this->activityManager->updateStatus($input, $activityData);
-
-        return redirect()->back();
+        return redirect()->back()->withResponse($response);
     }
 
     /**
@@ -174,9 +183,12 @@ class ActivityController extends Controller
     public function destroy($id)
     {
         $activity = $this->activityManager->getActivityData($id);
-        $activity->delete($activity);
+        $response = ($activity->delete($activity)) ? ['type' => 'success', 'code' => ['deleted', ['name' => 'Activity']]] : [
+            'type' => 'danger',
+            'code' => ['delete_failed', ['name' => 'activity']]
+        ];
 
-        return redirect()->back()->withMessage('User has been deleted Successfully.');
+        return redirect()->back()->withResponse($response);
     }
 
     /**
@@ -185,9 +197,11 @@ class ActivityController extends Controller
      */
     public function deletePublishedFile($id)
     {
-        $result  = $this->activityManager->deletePublishedFile($id);
-        $message = $result ? 'File deleted successfully' : 'File couldn\'t be deleted.';
+        $result   = $this->activityManager->deletePublishedFile($id);
+        $message  = $result ? 'File deleted successfully' : 'File couldn\'t be deleted.';
+        $type     = $result ? 'success' : 'danger';
+        $response = ['type' => $type, 'code' => ['transfer_message', ['name' => $message]]];
 
-        return redirect()->back()->withMessage($message);
+        return redirect()->back()->withResponse($response);
     }
 }

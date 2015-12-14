@@ -69,10 +69,12 @@ class RecipientRegionController extends Controller
         $activityData    = $this->activityManager->getActivityData($id);
         if ($this->recipientRegionManager->update($recipientRegion, $activityData)) {
             $this->activityManager->resetActivityWorkflow($id);
+            $response = ['type' => 'success', 'code' => ['updated', ['name' => 'Recipient Region']]];
 
-            return redirect()->to(sprintf('/activity/%s', $id))->withMessage('Activity Recipient Region Updated !');
+            return redirect()->to(sprintf('/activity/%s', $id))->withResponse($response);
         }
+        $response = ['type' => 'danger', 'code' => ['update_failed', ['name' => 'Recipient Region']]];
 
-        return redirect()->back();
+        return redirect()->back()->withInput()->withResponse($response);
     }
 }

@@ -58,10 +58,12 @@ class CountryBudgetItemController extends Controller
         $activityData      = $this->activityManager->getActivityData($id);
         if ($this->countryBudgetItemManager->update($countryBudgetItem, $activityData)) {
             $this->activityManager->resetActivityWorkflow($id);
+            $response = ['type' => 'success', 'code' => ['updated', ['name' => 'Country Budget Item']]];
 
-            return redirect()->to(sprintf('/activity/%s', $id))->withMessage('Activity Country Budget Item Updated!');
+            return redirect()->to(sprintf('/activity/%s', $id))->withResponse($response);
         }
+        $response = ['type' => 'danger', 'code' => ['update_failed', ['name' => 'Country Budget Item']]];
 
-        return redirect()->back();
+        return redirect()->back()->withInput()->withResponse($response);
     }
 }

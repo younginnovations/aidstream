@@ -73,10 +73,12 @@ class ActivityStatusController extends Controller
         $activityData   = $this->activityManager->getActivityData($id);
         if ($this->activityStatusManager->update($activityStatus, $activityData)) {
             $this->activityManager->resetActivityWorkflow($id);
+            $response = ['type' => 'success', 'code' => ['updated', ['name' => 'Activity Status']]];
 
-            return redirect()->to(sprintf('/activity/%s', $id))->withMessage('Activity Status Updated!');
+            return redirect()->to(sprintf('/activity/%s', $id))->withResponse($response);
         }
+        $response = ['type' => 'danger', 'code' => ['update_failed', ['name' => 'Activity Status']]];
 
-        return redirect()->back();
+        return redirect()->back()->withInput()->withResponse($response);
     }
 }

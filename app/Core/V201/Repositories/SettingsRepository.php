@@ -87,6 +87,8 @@ class SettingsRepository implements SettingsRepositoryInterface
             );
             $this->databaseManager->commit();
             $this->loggerInterface->info('Organization Settings Inserted');
+
+            return true;
         } catch (Exception $exception) {
             $this->databaseManager->rollback();
 
@@ -97,6 +99,8 @@ class SettingsRepository implements SettingsRepositoryInterface
                     'trace'    => $exception->getTraceAsString()
                 ]
             );
+
+            return false;
         }
 
     }
@@ -138,5 +142,4 @@ class SettingsRepository implements SettingsRepositoryInterface
             );
         }
     }
-
 }

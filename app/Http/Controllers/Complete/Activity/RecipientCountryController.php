@@ -48,7 +48,7 @@ class RecipientCountryController extends Controller
      */
     public function index($id)
     {
-        $activityData    = $this->activityManager->getActivityData($id);
+        $activityData     = $this->activityManager->getActivityData($id);
         $recipientCountry = $this->recipientCountryManager->getRecipientCountryData($id);
         $form             = $this->recipientCountryForm->editForm($recipientCountry, $id);
 
@@ -69,10 +69,12 @@ class RecipientCountryController extends Controller
         $activityData     = $this->activityManager->getActivityData($id);
         if ($this->recipientCountryManager->update($recipientCountry, $activityData)) {
             $this->activityManager->resetActivityWorkflow($id);
+            $response = ['type' => 'success', 'code' => ['updated', ['name' => 'Recipient Country']]];
 
-            return redirect()->to(sprintf('/activity/%s', $id))->withMessage('Recipient Country Updated!');
+            return redirect()->to(sprintf('/activity/%s', $id))->withResponse($response);
         }
+        $response = ['type' => 'danger', 'code' => ['update_failed', ['name' => 'Recipient Country']]];
 
-        return redirect()->back();
+        return redirect()->back()->withInput()->withResponse($response);
     }
 }

@@ -92,11 +92,13 @@ class OrganizationRepository implements OrganizationRepositoryInterface
     /**
      * @param array            $input
      * @param OrganizationData $organizationData
+     * @return bool
      */
     public function updateStatus(array $input, OrganizationData $organizationData)
     {
         $organizationData->status = $input['status'];
-        $organizationData->save();
+
+        return $organizationData->save();
     }
 
     /**

@@ -72,10 +72,12 @@ class ContactInfoController extends Controller
         $activityData = $this->activityManager->getActivityData($id);
         if ($this->contactInfoManager->update($contactInfo, $activityData)) {
             $this->activityManager->resetActivityWorkflow($id);
+            $response = ['type' => 'success', 'code' => ['updated', ['name' => 'Activity Contact Info']]];
 
-            return redirect()->to(sprintf('/activity/%s', $id))->withMessage('Activity Contact Info Updated !');
+            return redirect()->to(sprintf('/activity/%s', $id))->withResponse($response);
         }
+        $response = ['type' => 'danger', 'code' => ['update_failed', ['name' => 'Activity Contact Info']]];
 
-        return redirect()->back();
+        return redirect()->back()->withInput()->withResponse($response);
     }
 }

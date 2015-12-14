@@ -82,7 +82,14 @@
         </div>
     </div>
 </nav>
-
+{{--*/
+        $response = session('response');
+    /*--}}
+@if($response)
+    <div class="alert alert-{{$response['type']}}">
+        {{ message($response) }}
+    </div>
+@endif
 @yield('content')
 
 <!-- Scripts -->

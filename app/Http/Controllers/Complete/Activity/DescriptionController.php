@@ -69,16 +69,21 @@ class DescriptionController extends Controller
         $this->authorize(['edit_activity', 'add_activity']);
         $activityDescription = $request->all();
         if (!$this->validateDescription($request->get('description'))) {
-            return redirect()->back()->withInput()->withMessage('Description of same type is not allowed to be added.');
+            $response = ['type' => 'warning', 'code' => ['activity_description', ['name' => 'Description']]];
+
+            return redirect()->back()->withInput()->withResponse($response);
         }
         $activityData = $this->activityManager->getActivityData($id);
         if ($this->descriptionManager->update($activityDescription, $activityData)) {
             $this->activityManager->resetActivityWorkflow($id);
 
-            return redirect()->to(sprintf('/activity/%s', $id))->withMessage('Activity Description Updated !');
-        }
+            $response = ['type' => 'success', 'code' => ['updated', ['name' => 'Activity Description']]];
 
-        return redirect()->back()->withInput();
+            return redirect()->to(sprintf('/activity/%s', $id))->withResponse($response);
+        }
+        $response = ['type' => 'danger', 'code' => ['update_failed', ['name' => 'Activity Description']]];
+
+        return redirect()->back()->withInput()->withResponse($response);
     }
 
     /**

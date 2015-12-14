@@ -67,10 +67,12 @@ class DefaultFlowTypeController extends Controller
         $activityData    = $this->activityManager->getActivityData($id);
         if ($this->defaultFlowTypeManager->update($defaultFlowType, $activityData)) {
             $this->activityManager->resetActivityWorkflow($id);
+            $response = ['type' => 'success', 'code' => ['updated', ['name' => 'Default Flow Type']]];
 
-            return redirect()->to(sprintf('/activity/%s', $id))->withMessage('Activity Default Flow Type updated!');
+            return redirect()->to(sprintf('/activity/%s', $id))->withResponse($response);
         }
+        $response = ['type' => 'danger', 'code' => ['update_failed', ['name' => 'Default Flow Type']]];
 
-        return redirect()->back();
+        return redirect()->back()->withInput()->withResponse($response);
     }
 }

@@ -37,8 +37,8 @@ class OrgTotalBudgetController extends Controller
         OrganizationManager $organizationManager
     ) {
         $this->middleware('auth');
-        $this->totalBudgetForm    = $formBuilder;
-        $this->totalBudgetManager = $totalBudgetManager;
+        $this->totalBudgetForm     = $formBuilder;
+        $this->totalBudgetManager  = $totalBudgetManager;
         $this->organizationManager = $organizationManager;
     }
 
@@ -68,11 +68,12 @@ class OrgTotalBudgetController extends Controller
 
         if ($this->totalBudgetManager->update($input, $organizationData)) {
             $this->organizationManager->resetStatus($orgId);
-            return redirect()->to(sprintf('/organization/%s', $orgId))->withMessage(
-                'Organization Total Budget Updated !'
-            );
-        }
+            $response = ['type' => 'success', 'code' => ['updated', ['name' => 'Organization Total Budget']]];
 
-        return redirect()->back();
+            return redirect()->to(sprintf('/organization/%s', $orgId))->withResponse($response);
+        }
+        $response = ['type' => 'danger', 'code' => ['update_failed', ['name' => 'Organization Total Budget']]];
+
+        return redirect()->back()->withInput()->withResponse($response);
     }
 }

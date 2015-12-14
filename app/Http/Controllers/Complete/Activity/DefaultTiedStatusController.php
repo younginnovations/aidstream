@@ -67,10 +67,12 @@ class DefaultTiedStatusController extends Controller
         $activityData      = $this->activityManager->getActivityData($id);
         if ($this->defaultTiedStatusManager->update($defaultTiedStatus, $activityData)) {
             $this->activityManager->resetActivityWorkflow($id);
+            $response = ['type' => 'success', 'code' => ['updated', ['name' => 'Default Tied Status']]];
 
-            return redirect()->to(sprintf('/activity/%s', $id))->withMessage('Activity Default Tied Status updated!');
+            return redirect()->to(sprintf('/activity/%s', $id))->withResponse($response);
         }
+        $response = ['type' => 'danger', 'code' => ['update_failed', ['name' => 'Default Tied Status']]];
 
-        return redirect()->back();
+        return redirect()->back()->withInput()->withResponse($response);
     }
 }

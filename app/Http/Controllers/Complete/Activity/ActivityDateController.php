@@ -70,10 +70,12 @@ class ActivityDateController extends Controller
         $activityData = $this->activityManager->getActivityData($id);
         if ($this->activityDateManager->update($activityDate, $activityData)) {
             $this->activityManager->resetActivityWorkflow($id);
+            $response = ['type' => 'success', 'code' => ['updated', ['name' => 'Activity Date']]];
 
-            return redirect()->to(sprintf('/activity/%s', $id))->withMessage('Activity Date Updated !');
+            return redirect()->to(sprintf('/activity/%s', $id))->withResponse($response);
         }
+        $response = ['type' => 'danger', 'code' => ['update_failed', ['name' => 'Activity Date']]];
 
-        return redirect()->back();
+        return redirect()->back()->withInput()->withResponse($response);
     }
 }

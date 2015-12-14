@@ -67,10 +67,12 @@ class CapitalSpendController extends Controller
         $activityData = $this->activityManager->getActivityData($id);
         if ($this->capitalSpendManager->update($capitalSpend, $activityData)) {
             $this->activityManager->resetActivityWorkflow($id);
+            $response = ['type' => 'success', 'code' => ['updated', ['name' => 'Capital Spend']]];
 
-            return redirect()->to(sprintf('/activity/%s', $id))->withMessage('Activity Capital Spend updated!');
+            return redirect()->to(sprintf('/activity/%s', $id))->withResponse($response);
         }
+        $response = ['type' => 'danger', 'code' => ['update_failed', ['name' => 'Capital Spend']]];
 
-        return redirect()->back();
+        return redirect()->back()->withInput()->withResponse($response);
     }
 }

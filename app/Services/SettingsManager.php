@@ -22,13 +22,11 @@ class SettingsManager
 
     public function storeSettings($input, $organization)
     {
-        $this->repo->storeSettings($input, $organization);
+        return $this->repo->storeSettings($input, $organization);
     }
 
     public function updateSettings($input, $organization, $settings)
     {
         $this->repo->updateSettings($input, $organization, $settings);
     }
-
-
 }

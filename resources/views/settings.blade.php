@@ -9,7 +9,14 @@
 					<div class="panel-content-heading">Settings</div>
 					<div class="panel-body">
 						<div class="create-form">
-							{!! form($form) !!}
+							{!! form_start($form) !!}
+							{!! form_until($form, 'default_field_values') !!}
+							<div class="form-group">
+							<label><input type="checkbox" class="hidden checkAll"/><span class="btn btn-primary">Check All</span></label>
+							</div>
+							{!! form_widget($form->default_field_groups) !!}
+							{!! form_end($form) !!}
+							{{--{!! form($form) !!}--}}
 						</div>
 					</div>
 				</div>

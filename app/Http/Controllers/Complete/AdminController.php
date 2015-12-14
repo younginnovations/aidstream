@@ -71,11 +71,10 @@ class AdminController extends Controller
         $this->user->role_id         = 2;
         $this->user->password        = bcrypt($input['password']);
         $this->user->user_permission = isset($input['user_permission']) ? $input['user_permission'] : [];
-        $this->user->save();
 
-        $this->session->flash('message', 'User has been created');
+        $response = ($this->user->save()) ? ['type' => 'success', 'code' => ['created', ['name' => 'User']]] : ['type' => 'danger', 'code' => ['save_failed', ['name' => 'User']]];
 
-        return redirect('admin/list-users');
+        return redirect('admin/list-users')->withResponse($response);
     }
 
     /**
@@ -108,10 +107,10 @@ class AdminController extends Controller
      */
     public function deleteUser($userId)
     {
-        $user = $this->user->findOrFail($userId);
-        $user->delete($user);
+        $user     = $this->user->findOrFail($userId);
+        $response = ($user->delete($user)) ? ['type' => 'success', 'code' => ['deleted', ['name' => 'User']]] : ['type' => 'danger', 'code' => ['delete_failed', ['name' => 'user']]];
 
-        return redirect()->back()->withMessage('User has been deleted Successfully.');
+        return redirect()->back()->withResponse($response);
     }
 
     /**
@@ -135,9 +134,9 @@ class AdminController extends Controller
         $input          = Input::all();
         $user           = $this->user->findOrFail($userId);
         $user->password = bcrypt($input['password']);
-        $user->save();
+        $response       = ($user->save()) ? ['type' => 'success', 'code' => ['updated', ['name' => 'Password']]] : ['type' => 'danger', 'code' => ['update_failed', ['name' => 'Password']]];
 
-        return redirect('admin/list-users')->withMessage('Successfully Updated Password');
+        return redirect('admin/list-users')->withResponse($response);
     }
 
     /**
@@ -161,9 +160,12 @@ class AdminController extends Controller
         $input                 = Input::all();
         $user                  = $this->user->findOrFail($userId);
         $user->user_permission = isset($input['user_permission']) ? $input['user_permission'] : [];
-        $user->save();
+        $response              = ($user->save()) ? ['type' => 'success', 'code' => ['updated', ['name' => 'User Permission']]] : [
+            'type' => 'danger',
+            'code' => ['update_failed', ['name' => 'User Permission']]
+        ];
 
-        return redirect('admin/list-users')->withMessage('Successfully Updated');
+        return redirect('admin/list-users')->withResponse($response);
 
     }
 

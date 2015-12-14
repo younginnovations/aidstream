@@ -38,14 +38,17 @@ class RelatedActivityController extends Controller
 
     public function update($id, Request $request, RelatedActivityRequestManager $relatedActivityRequestManager)
     {
+        $this->authorize(['edit_activity', 'add_activity']);
         $relatedActivity = $request->all();
         $activityData    = $this->activityManager->getActivityData($id);
         if ($this->relatedActivityManager->update($relatedActivity, $activityData)) {
-            return redirect()->to(sprintf('/activity/%s', $id))->withMessage(
-                'Related Activity Updated !'
-            );
-        }
+            $this->activityManager->resetActivityWorkflow($id);
+            $response = ['type' => 'success', 'code' => ['updated', ['name' => 'Related Activity']]];
 
-        return redirect()->back();
+            return redirect()->to(sprintf('/activity/%s', $id))->withResponse($response);
+        }
+        $response = ['type' => 'danger', 'code' => ['update_failed', ['name' => 'Related Activity']]];
+
+        return redirect()->back()->withInput()->withResponse($response);
     }
 }

@@ -88,7 +88,7 @@ class OrganizationManager
      */
     public function updateStatus(array $input, OrganizationData $organizationData)
     {
-        $this->repo->updateStatus($input, $organizationData);
+        return $this->repo->updateStatus($input, $organizationData);
     }
 
     /**

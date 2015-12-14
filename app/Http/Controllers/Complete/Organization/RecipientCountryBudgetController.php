@@ -61,22 +61,19 @@ class RecipientCountryBudgetController extends Controller
      * @param Request                              $request
      * @return mixed
      */
-    public function update(
-        $orgId,
-        RecipientCountryBudgetRequestManager $recipientCountryBudgetRequestManager,
-        Request $request
-    ) {
+    public function update($orgId, RecipientCountryBudgetRequestManager $recipientCountryBudgetRequestManager, Request $request)
+    {
         $input            = $request->all();
         $organizationData = $this->recipientCountryBudgetManager->getOrganizationData($orgId);
 
         if ($this->recipientCountryBudgetManager->update($input, $organizationData)) {
             $this->organizationManager->resetStatus($orgId);
+            $response = ['type' => 'success', 'code' => ['updated', ['name' => 'Organization Recipient Country Budget']]];
 
-            return redirect()->to(sprintf('/organization/%s', $orgId))->withMessage(
-                'Organization Recipient Country Budget Updated !'
-            );
+            return redirect()->to(sprintf('/organization/%s', $orgId))->withResponse($response);
         }
+        $response = ['type' => 'danger', 'code' => ['update_failed', ['name' => 'Organization Recipient Country Budget']]];
 
-        return redirect()->back();
+        return redirect()->back()->withInput()->withResponse($response);
     }
 }

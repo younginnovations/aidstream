@@ -65,10 +65,13 @@ class TransactionUploadController extends Controller
         $name      = $request->file('transaction');
         $validator = $csvImportValidator->isValidCsv($name);
         if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator);
+            $response = ['type' => 'danger', 'code' => ['update_failed', ['name' => 'Transactions']]];
+
+            return redirect()->back()->withInput()->withErrors($validator)->withResponse($response);
         }
         $this->uploadTransactionManager->save($name, $activity);
+        $response = ['type' => 'success', 'code' => ['updated', ['name' => 'Transactions']]];
 
-        return redirect()->to(sprintf('/activity/%s/transaction', $id))->withmessage('Transactions updated!');
+        return redirect()->to(sprintf('/activity/%s/transaction', $id))->withResponse($response);
     }
 }

@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use Kris\LaravelFormBuilder\FormBuilder;
+use Psr\Log\LoggerInterface;
 
 class SettingsController extends Controller
 {
@@ -34,12 +35,14 @@ class SettingsController extends Controller
      * @param OrganizationManager    $organizationManager
      * @param ActivityManager        $activityManager
      * @param OtherIdentifierManager $otherIdentifierManager
+     * @param LoggerInterface        $loggerInterface
      */
     function __construct(
         SettingsManager $settingsManager,
         OrganizationManager $organizationManager,
         ActivityManager $activityManager,
-        OtherIdentifierManager $otherIdentifierManager
+        OtherIdentifierManager $otherIdentifierManager,
+        LoggerInterface $loggerInterface
     ) {
         $this->middleware('auth');
         $this->settingsManager        = $settingsManager;
@@ -48,6 +51,7 @@ class SettingsController extends Controller
         $this->organization           = $organizationManager->getOrganization($org_id);
         $this->activityManager        = $activityManager;
         $this->otherIdentifierManager = $otherIdentifierManager;
+        $this->loggerInterface        = $loggerInterface;
     }
 
     /**
@@ -94,11 +98,16 @@ class SettingsController extends Controller
      */
     public function store(SettingsRequestManager $request)
     {
-        $input = Input::all();
-        $this->settingsManager->storeSettings($input, $this->organization);
-        Session::flash('message', 'Successfully Updated');
+        $input    = Input::all();
+        $response = ($this->settingsManager->storeSettings($input, $this->organization)) ? ['type' => 'success', 'code' => ['created', ['name' => 'Settings']]] : [
+            'type' => 'danger',
+            'code' => [
+                'save_failed',
+                ['name' => 'Settings']
+            ]
+        ];
 
-        return Redirect::to('/');
+        return Redirect::to('/')->withResponse($response);
     }
 
     /**
@@ -110,20 +119,34 @@ class SettingsController extends Controller
      */
     public function update($id, SettingsRequestManager $request)
     {
-        $input         = Input::all();
-        $oldIdentifier = $this->organization->reporting_org[0]['reporting_organization_identifier'];
-        $this->settingsManager->updateSettings($input, $this->organization, $this->settings);
-        $activities             = $this->activityManager->getActivities($this->organization->id);
-        $reportingOrgIdentifier = $input['reporting_organization_info'][0]['reporting_organization_identifier'];
-        foreach ($activities as $activity) {
-            $status          = $activity['published_to_registry'];
-            $otherIdentifier = (array) $activity->other_identifier;
-            if ($status == 1 && !in_array(["reference" => $oldIdentifier, "type" => "B1", 'owner_org' => []], $otherIdentifier) && ($oldIdentifier !== $reportingOrgIdentifier)) {
-                $otherIdentifier[] = ['reference' => $oldIdentifier, 'type' => 'B1', 'owner_org' => []];
-                $this->otherIdentifierManager->update(['other_identifier' => $otherIdentifier], $activity);
+        $input = Input::all();
+        try {
+            $oldIdentifier = $this->organization->reporting_org[0]['reporting_organization_identifier'];
+            $this->settingsManager->updateSettings($input, $this->organization, $this->settings);
+            $activities             = $this->activityManager->getActivities($this->organization->id);
+            $reportingOrgIdentifier = $input['reporting_organization_info'][0]['reporting_organization_identifier'];
+            foreach ($activities as $activity) {
+                $status          = $activity['published_to_registry'];
+                $otherIdentifier = (array) $activity->other_identifier;
+                if ($status == 1 && !in_array(["reference" => $oldIdentifier, "type" => "B1", 'owner_org' => []], $otherIdentifier) && ($oldIdentifier !== $reportingOrgIdentifier)) {
+                    $otherIdentifier[] = ['reference' => $oldIdentifier, 'type' => 'B1', 'owner_org' => []];
+                    $this->otherIdentifierManager->update(['other_identifier' => $otherIdentifier], $activity);
+                }
             }
-        }
+        } catch (Exception $e) {
+            $this->loggerInterface->error(
+                sprintf('Settings could no be updated due to %s', $e->getMessage()),
+                [
+                    'settings' => $input,
+                    'trace'    => $e->getTraceAsString()
+                ]
+            );
+            $response = ['type' => 'danger', 'code' => ['update_failed', ['name' => 'Settings']]];
 
-        return Redirect::to('/')->withMessage('Successfully Updated');
+            return redirect()->back()->withResponse($response);
+        }
+        $response = ['type' => 'success', 'code' => ['updated', ['name' => 'Settings']]];
+
+        return redirect()->to('/')->withResponse($response);
     }
 }
