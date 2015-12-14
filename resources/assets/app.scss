@@ -268,6 +268,7 @@ label {
 	width: 100%;
 	color: $color_dodger_blue_approx;
 	margin-top: 24px;
+	height: 53px;
 	&:hover,&:focus,&:active {
 		background: $color_dodger_blue_approx;
 		border: 2px solid $color_dodger_blue_approx;
@@ -1167,6 +1168,7 @@ $element-sidebar-wrapper-width: 267px;
 				width: 40%;
 				padding: 0;
 				margin: 0 30px 0 14px;
+				vertical-align: top;
 			}
 		}
 		.collection_form > label {
@@ -1185,6 +1187,7 @@ $element-sidebar-wrapper-width: 267px;
 	margin: 0 0 0 -7px;
 	display: block;
 	color: $color_gravel_approx;
+	overflow: hidden;
 	&:hover{
 		background: transparent $url_3 no-repeat 19px -503px;
 		color: $color_dodger_blue_approx;
@@ -1260,3 +1263,101 @@ form > .add_to_collection[data-collection="legacy_data"] {
 .full-width-wrap {
 	width: 87%!important;
 }
+
+// wizard form
+.create-wizard-form {
+	 > form .form-group {
+		width: 40%;
+		display: inline-block;
+		margin-right: 52px;
+		margin-bottom: 0;
+	}
+	.btn-submit {
+		left: 40px;
+	}
+}
+
+.panel-add-wizard {
+	padding: 0;
+	.panel-heading,h4 {
+		padding: 0 40px;
+	}
+	h4 {
+		margin-top: 6px;
+		color: rgba($color_gravel_approx,0.7);
+	}
+}
+
+.form-choice-wrapper {
+	width: 100%!important;
+	.choice-wrapper {
+		float: left;
+		margin-right: 20px;
+		label {
+			color: $color_gravel_approx;
+		}
+	}
+	input+label {
+		color: $color_gravel_approx;
+		margin-right: 20px;
+	}
+}
+
+.settings-choice-wrapper .form-group {
+	padding-top: 0;
+}
+
+.settings-checkall-wrapper {
+	padding: 10px 20px;
+	> .collection_form  {
+		> label {
+			display: none;
+		}
+	    .form-group > .form-group {
+			display: inline-block;
+			width: 24%;
+			vertical-align: top;
+			margin-top: 35px;
+			> label {
+				font-size: 15px;
+				color: $color_gravel_approx;
+			}
+			> .form-group {
+				margin: 0;
+				width: auto;
+				display: block;
+				> label {
+					color: rgba($color_gravel_approx,0.7);
+				}
+			}
+		}
+		>.form-group > .form-group:nth-child(-n+4) {
+			margin-top: 0;
+		}
+	}
+}
+
+.settings-wrapper {
+	.collection_form+.collection_form {
+		padding-top: 0;	
+	}
+	.create-form > form > .collection_form > label {
+		display: block;
+		color: $color_gravel_approx;
+		font-size: 18px;
+	}
+	.create-form > form > .collection_form > label+.form-group {
+		margin-top: -20px;
+	}
+}
+
+.registry-info-wrapper {
+	margin-top: 10px;
+	.choice-wrapper {
+		display: inline-block;
+		margin-right: 20px;
+	}
+}
+
+
+

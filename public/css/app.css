@@ -407,7 +407,8 @@ label {
   line-height: 37px;
   width: 100%;
   color: #00A8FF;
-  margin-top: 24px; }
+  margin-top: 24px;
+  height: 53px; }
   .btn-submit:hover, .btn-submit:focus, .btn-submit:active {
     background: #00A8FF;
     border: 2px solid #00A8FF;
@@ -1109,7 +1110,8 @@ label {
       display: inline-block;
       width: 40%;
       padding: 0;
-      margin: 0 30px 0 14px; }
+      margin: 0 30px 0 14px;
+      vertical-align: top; }
   .create-form > form > .collection_form > .form-group > .collection_form .collection_form > label {
     padding-left: 26px;
     font-size: 14px;
@@ -1122,7 +1124,8 @@ label {
   padding-left: 62px;
   margin: 0 0 0 -7px;
   display: block;
-  color: #484848; }
+  color: #484848;
+  overflow: hidden; }
   .add_to_collection:hover, .add_to_collection:focus:hover, .add:hover {
     background: transparent url(../../images/ic-sprite.png) no-repeat 19px -503px;
     color: #00A8FF; }
@@ -1181,5 +1184,74 @@ form > .add_to_collection[data-collection="legacy_data"] {
 
 .full-width-wrap {
   width: 87% !important; }
+
+.create-wizard-form > form .form-group {
+  width: 40%;
+  display: inline-block;
+  margin-right: 52px;
+  margin-bottom: 0; }
+
+.create-wizard-form .btn-submit {
+  left: 40px; }
+
+.panel-add-wizard {
+  padding: 0; }
+  .panel-add-wizard .panel-heading, .panel-add-wizard h4 {
+    padding: 0 40px; }
+  .panel-add-wizard h4 {
+    margin-top: 6px;
+    color: rgba(72, 72, 72, 0.7); }
+
+.form-choice-wrapper {
+  width: 100% !important; }
+  .form-choice-wrapper .choice-wrapper {
+    float: left;
+    margin-right: 20px; }
+    .form-choice-wrapper .choice-wrapper label {
+      color: #484848; }
+  .form-choice-wrapper input + label {
+    color: #484848;
+    margin-right: 20px; }
+
+.settings-choice-wrapper .form-group {
+  padding-top: 0; }
+
+.settings-checkall-wrapper {
+  padding: 10px 20px; }
+  .settings-checkall-wrapper > .collection_form > label {
+    display: none; }
+  .settings-checkall-wrapper > .collection_form .form-group > .form-group {
+    display: inline-block;
+    width: 24%;
+    vertical-align: top;
+    margin-top: 35px; }
+    .settings-checkall-wrapper > .collection_form .form-group > .form-group > label {
+      font-size: 15px;
+      color: #484848; }
+    .settings-checkall-wrapper > .collection_form .form-group > .form-group > .form-group {
+      margin: 0;
+      width: auto;
+      display: block; }
+      .settings-checkall-wrapper > .collection_form .form-group > .form-group > .form-group > label {
+        color: rgba(72, 72, 72, 0.7); }
+  .settings-checkall-wrapper > .collection_form > .form-group > .form-group:nth-child(-n+4) {
+    margin-top: 0; }
+
+.settings-wrapper .collection_form + .collection_form {
+  padding-top: 0; }
+
+.settings-wrapper .create-form > form > .collection_form > label {
+  display: block;
+  color: #484848;
+  font-size: 18px; }
+
+.settings-wrapper .create-form > form > .collection_form > label + .form-group {
+  margin-top: -20px; }
+
+.registry-info-wrapper {
+  margin-top: 10px; }
+  .registry-info-wrapper .choice-wrapper {
+    display: inline-block;
+    margin-right: 20px; }
 
 /*# sourceMappingURL=maps/app.css.map */

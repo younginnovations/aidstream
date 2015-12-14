@@ -23,7 +23,8 @@ class StepThree extends BaseForm
                     'expanded'       => true,
                     'choice_options' => [
                         'wrapper' => ['class' => 'choice-wrapper']
-                    ]
+                    ],
+                    'wrapper' => ['class' => 'form-group form-choice-wrapper']
                 ]
             )
             ->add('start_date', 'date')
@@ -34,7 +35,8 @@ class StepThree extends BaseForm
                 [
                     'label'    => "What is your activity state currently is :",
                     'choices'  => ['1' => 'planned', '2' => 'actual'],
-                    'expanded' => true
+                    'expanded' => true,
+                    'wrapper' => ['class' => 'form-group form-choice-wrapper']
                 ]
             );
     }
