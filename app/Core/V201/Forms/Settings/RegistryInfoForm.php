@@ -20,7 +20,8 @@ class RegistryInfoForm extends Form
                     'expanded'       => true,
                     'choice_options' => [
                         'wrapper' => ['class' => 'choice-wrapper']
-                    ]
+                    ],
+                    'wrapper' => ['class' => 'form-group registry-info-wrapper']
                 ]
             );
     }

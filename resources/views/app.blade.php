@@ -70,9 +70,9 @@
                             <li class="language-select-wrap">
                                 <label for="">Language</label>
                                 @foreach(config('app.locales') as $key => $val)
-                                    <div class="flag-wrapper">
-                                        <a href="#{{ $key }}" class="img-thumbnail flag flag-icon-background flag-icon-{{ $key }}" data-lang="{{ $key }}"></a>
-                                    </div>
+                                    <span class="flag-wrapper" data-lang="{{ $key }}">
+                                        <span class="img-thumbnail flag flag-icon-background flag-icon-{{ $key }}{{ $key == config('app.locale') ? ' active' : '' }}"></span>
+                                    </span>
                                 @endforeach
                             </li>
                         </ul>

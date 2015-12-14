@@ -18,8 +18,11 @@ class PublishingTypeForm extends Form
                     'expanded'       => true,
                     'choice_options' => [
                         'wrapper' => ['class' => 'choice-wrapper']
-                    ]
+                    ],
+                    'wrapper' => ['class' => 'form-group form-choice-wrapper settings-choice-wrapper']
                 ]
             );
     }
 }
+
+
