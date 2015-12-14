@@ -4,7 +4,7 @@
 $fieldGroups = $defaultFieldGroups->get();
 $filledStatus = $defaultFieldGroups->getFilledStatus($id);
 /*--}}
-<div class="col-xs-4 col-md-4 col-lg-4 element-sidebar-wrapper">
+<div class="element-sidebar-wrapper">
     @foreach($fieldGroups as $fieldGroupIndex => $fieldGroup)
         <div class="panel panel-default">
             <div class="panel-heading">{{$fieldGroupIndex}}</div>
