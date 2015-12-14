@@ -21,8 +21,8 @@ class PagesTest extends AidStreamSmokeTestCase
             [$this->baseUrl, 200],
             ['auth/login', 200],
             ['auth/register', 200], //fix this bug guys @todo
-//            ['not-existing', 404],
-//            ['.git', 404],
+            // ['not-existing', 404],
+            // ['.git', 404],
         ];
     }
 

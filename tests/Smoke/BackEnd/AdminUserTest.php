@@ -70,7 +70,7 @@ class AdminUserTest extends AidStreamUserSmokeTestCase
             ['admin/view-profile/5', 200],
             ['admin/reset-user-password/5', 200],
             ['admin/edit-user-permission/5', 200],
-//            ['not-existing', 404],
+            // ['not-existing', 404],
         ];
 
         return $adminPaths;
