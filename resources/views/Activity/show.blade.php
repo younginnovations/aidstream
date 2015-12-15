@@ -108,16 +108,16 @@
                                                     <div class="panel-heading">Owner Org</div>
                                                     <div class="panel-body panel-element-body row">
                                                         @foreach($other_identifier['owner_org'] as $owner_org)
-                                                        <div class="col-md-12">
-                                                            <div class="col-xs-4">Owner Org</div>
-                                                            <div class="col-xs-8">{{$owner_org['reference']}}</div>
-                                                        </div>
-                                                        @foreach($owner_org['narrative'] as $narrative)
-                                                        <div class="col-md-12">
-                                                            <div class="col-xs-4">Text</div>
-                                                            <div class="col-xs-8">{{$narrative['narrative'] . '-'. $getCode->getOrganizationCodeName('Language', $narrative['language'])}}</div>
-                                                        </div>
-                                                        @endforeach
+                                                            <div class="col-md-12">
+                                                                <div class="col-xs-4">Owner Org</div>
+                                                                <div class="col-xs-8">{{$owner_org['reference']}}</div>
+                                                            </div>
+                                                            @foreach($owner_org['narrative'] as $narrative)
+                                                                <div class="col-md-12">
+                                                                    <div class="col-xs-4">Text</div>
+                                                                    <div class="col-xs-8">{{$narrative['narrative'] . '-'. $getCode->getOrganizationCodeName('Language', $narrative['language'])}}</div>
+                                                                </div>
+                                                            @endforeach
                                                         @endforeach
                                                     </div>
                                                 </div>
@@ -380,10 +380,10 @@
                                                     <div class="col-xs-4">Vocabulary</div>
                                                     <div class="col-xs-8">{{$getCode->getActivityCodeName('RegionVocabulary', $recipientRegion['region_vocabulary'])}}</div>
                                                 </div>
-                                                 @foreach($recipientRegion['narrative'] as $narrative)
-                                                 <div class="col-md-12">
-                                                        <div class="col-xs-4">Text</div>
-                                                        <div class="col-xs-8">{{$narrative['narrative'] . ' ['. $getCode->getOrganizationCodeName('Language', $narrative['language']) . ']'}}</div>
+                                                @foreach($recipientRegion['narrative'] as $narrative)
+                                                <div class="col-md-12">
+                                                   <div class="col-xs-4">Text</div>
+                                                   <div class="col-xs-8">{{$narrative['narrative'] . ' ['. $getCode->getOrganizationCodeName('Language', $narrative['language']) . ']'}}</div>
                                                 </div>
                                                 @endforeach
                                             </div>
@@ -575,23 +575,23 @@
                                 <div class="panel-body panel-level-1">
                                     @foreach($countryBudgetItems as $countryBudgetItem)
                                         <div class="panel panel-default">
-                                        <div class="panel-element-body">
-                                            <div class="col-md-12">
-                                                <div class="col-xs-4">Vocabulary</div>
-                                                <div class="col-xs-8">{{$getCode->getActivityCodeName('BudgetIdentifierVocabulary', $countryBudgetItem['vocabulary'])}}</div>
+                                            <div class="panel-element-body">
+                                                <div class="col-md-12">
+                                                    <div class="col-xs-4">Vocabulary</div>
+                                                    <div class="col-xs-8">{{$getCode->getActivityCodeName('BudgetIdentifierVocabulary', $countryBudgetItem['vocabulary'])}}</div>
+                                                </div>
                                             </div>
-                                        </div>
                                             <div class="panel-heading">Budget Item</div>
                                             <div class="panel-element-body">
-                                            @foreach($countryBudgetItem['budget_item'] as $budgetItem)
-                                                <div class="col-md-12">
-                                                    <div class="col-xs-4">Code</div>
-                                                    <div class="col-xs-8">{{$getCode->getActivityCodeName('BudgetIdentifier', $budgetItem['code'])}}</div>
-                                                </div>
-                                                <div class="col-md-12">
-                                                    <div class="col-xs-4">Percentage</div>
-                                                    <div class="col-xs-8">{{$budgetItem['percentage']}}</div>
-                                                </div>
+                                                @foreach($countryBudgetItem['budget_item'] as $budgetItem)
+                                                    <div class="col-md-12">
+                                                        <div class="col-xs-4">Code</div>
+                                                        <div class="col-xs-8">{{$getCode->getActivityCodeName('BudgetIdentifier', $budgetItem['code'])}}</div>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <div class="col-xs-4">Percentage</div>
+                                                        <div class="col-xs-8">{{$budgetItem['percentage']}}</div>
+                                                    </div>
                                                     @foreach($budgetItem['description'] as $budgetNarrative)
                                                         @foreach($budgetNarrative['narrative'] as $narrative)
                                                         <div class="col-md-12">
@@ -600,9 +600,9 @@
                                                         </div>
                                                         @endforeach
                                                     @endforeach
-                                            @endforeach
+                                                @endforeach
+                                            </div>
                                         </div>
-                                    </div>
                                     @endforeach
                                 </div>
                             </div>
@@ -624,12 +624,12 @@
                                                     <div class="col-xs-4">Policy Maker</div>
                                                     <div class="col-xs-8">{{$getCode->getActivityCodeName('PolicyMarker', $policyMaker['policy_marker'])}}</div>
                                                 </div>
-                                                    @foreach($policyMaker['narrative'] as $narrative)
-                                                    <div class="col-md-12">
-                                                        <div class="col-xs-4">Text</div>
-                                                        <div class="col-xs-8">{{$narrative['narrative'] . ' ['. $getCode->getOrganizationCodeName('Language', $narrative['language']) . ']'}}</div>
-                                                    </div>
-                                                    @endforeach
+                                                @foreach($policyMaker['narrative'] as $narrative)
+                                                <div class="col-md-12">
+                                                    <div class="col-xs-4">Text</div>
+                                                    <div class="col-xs-8">{{$narrative['narrative'] . ' ['. $getCode->getOrganizationCodeName('Language', $narrative['language']) . ']'}}</div>
+                                                </div>
+                                                @endforeach
                                             </div>
                                         </div>
                                     @endforeach
@@ -935,26 +935,25 @@
                                         <div class="panel-heading">Attached : {{($conditions['condition_attached'] == "1") ? 'Yes' : 'No' }}</div>
                                     </div>
 
-                                        <div class="panel panel-default">
-                                            <div class="panel-heading">Description</div>
-                                            <div class="panel-element--body row">
-                                                    @foreach($conditions['condition'] as $data)
-                                                    <div class="col-md-12">
-                                                        <div class="col-xs-4">Type</div>
-                                                        <div class="col-xs-8">{{$getCode->getActivityCodeName('ConditionType', $data['condition_type'])}}</div>
-                                                    </div>
-                                                        @foreach($data['narrative'] as $narrative)
-                                                            <div class="panel-element-body row">
-                                                                <div class="col-md-12">
-                                                                    <div class="col-xs-4">Text</div>
-                                                                    <div class="col-xs-8">{{$narrative['narrative'] . ' ['. $getCode->getOrganizationCodeName('Language', $narrative['language']) . ']'}}</div>
-                                                                </div>
-                                                            </div>
-                                                        @endforeach
-                                                    @endforeach
-                                                </div>
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">Description</div>
+                                        <div class="panel-element--body row">
+                                            @foreach($conditions['condition'] as $data)
+                                            <div class="col-md-12">
+                                                <div class="col-xs-4">Type</div>
+                                                <div class="col-xs-8">{{$getCode->getActivityCodeName('ConditionType', $data['condition_type'])}}</div>
                                             </div>
+                                                @foreach($data['narrative'] as $narrative)
+                                                    <div class="panel-element-body row">
+                                                        <div class="col-md-12">
+                                                            <div class="col-xs-4">Text</div>
+                                                            <div class="col-xs-8">{{$narrative['narrative'] . ' ['. $getCode->getOrganizationCodeName('Language', $narrative['language']) . ']'}}</div>
+                                                        </div>
+                                                    </div>
+                                                @endforeach
+                                            @endforeach
                                         </div>
+                                    </div>
                                 </div>
                             </div>
                         @endif

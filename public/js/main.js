@@ -41,9 +41,10 @@ $(document).ready(function () {
         protoHtml.children('label').remove();
         var proto = protoHtml.html();
         for (var i = 0; i < level; i++) {
+            var parentIndex = parentIndexes[i];
             proto = proto.replace(
                 new RegExp('__NAME' + i + '__', 'g'),
-                parentIndexes[i]
+                parentIndex ? parentIndex : 0
             );
         }
         proto = proto.replace(new RegExp('__NAME' + level + '__', 'g'), newIndex);
@@ -266,27 +267,27 @@ $(document).ready(function () {
     $('[data-toggle="tooltip"]').tooltip();
 
     var documentHeight = $(document).height();
-    $('.element-sidebar-wrapper').css('height',documentHeight);
+    $('.element-sidebar-wrapper').css('height', documentHeight);
 
-    $('form').delegate('.remove_from_collection','mouseenter mouseleave', function(event) {
+    $('form').delegate('.remove_from_collection', 'mouseenter mouseleave', function (event) {
         $(this).parent('.form-group').toggleClass('fill-border');
     });
 
-    $('.element-sidebar-wrapper .panel-body li a').hover(function(){
-        $(this).children('.action-icon').css('display','block');
-    },
-    function(){
-        $(this).children('.action-icon').css('display','none');
-    });
+    $('.element-sidebar-wrapper .panel-body li a').hover(function () {
+            $(this).children('.action-icon').css('display', 'block');
+        },
+        function () {
+            $(this).children('.action-icon').css('display', 'none');
+        });
 
-    $('.sidebar-wrapper .nav').hover(function(){
-        $('.sidebar-wrapper').addClass('full-sidebar-wrapper');
-    },
-    function(){
-        $('.sidebar-wrapper').removeClass('full-sidebar-wrapper');
-    });
+    $('.sidebar-wrapper .nav').hover(function () {
+            $('.sidebar-wrapper').addClass('full-sidebar-wrapper');
+        },
+        function () {
+            $('.sidebar-wrapper').removeClass('full-sidebar-wrapper');
+        });
 
-    $('.language-selector').click(function(){
-          $(this).siblings('.language-flag-wrap').toggle();
+    $('.language-selector').click(function () {
+        $(this).siblings('.language-flag-wrap').toggle();
     });
 });

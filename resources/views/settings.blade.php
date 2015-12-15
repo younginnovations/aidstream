@@ -20,6 +20,7 @@
 							{!! form_end($form) !!}
 							{{--{!! form($form) !!}--}}
 						</div>
+						<div class="collection-container hidden" data-prototype="{{ form_row($form->reporting_organization_info->prototype()) }}"></div>
 					</div>
 				</div>
 			</div>
