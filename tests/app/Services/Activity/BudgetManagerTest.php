@@ -43,7 +43,7 @@ class BudgetManagerTest extends AidStreamTestCase
         );
     }
 
-    public function testItShouldUpdatePolicyMaker()
+    public function testItShouldUpdateBudget()
     {
         $organizationModel = m::mock(Organization::class);
         $organizationModel->shouldReceive('getAttribute')->once()->with('name')->andReturn('organizationName');
@@ -81,7 +81,7 @@ class BudgetManagerTest extends AidStreamTestCase
         );
     }
 
-    public function testItShouldGetPolicyMakerDataWithCertainId()
+    public function testItShouldGetBudgetDataWithCertainId()
     {
         $this->budgetRepository->shouldReceive('getBudgetData')
                                ->with(1)

@@ -59,6 +59,7 @@ class SettingsRepository implements SettingsRepositoryInterface
     /**
      * @param $input
      * @param $organization
+     * @return bool
      */
     public function storeSettings($input, $organization)
     {

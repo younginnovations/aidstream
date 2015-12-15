@@ -17,7 +17,6 @@ class SettingsManager
     public function getSettings($id)
     {
         return $this->repo->getSettings($id);
-
     }
 
     public function storeSettings($input, $organization)
