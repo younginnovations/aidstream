@@ -1,10 +1,10 @@
 <?php namespace App\Http\Controllers\Complete\Activity;
 
-use App\Core\V201\CsvImportValidator;
 use App\Http\Controllers\Controller;
 use App\Services\Activity\ActivityManager;
 use App\Services\Activity\UploadTransactionManager;
 use App\Services\FormCreator\Activity\UploadTransaction;
+use App\Services\RequestManager\Activity\CsvImportValidator;
 use App\Services\RequestManager\Activity\UploadTransaction as UploadTransactionRequest;
 use Illuminate\Http\Request;
 
@@ -63,7 +63,7 @@ class TransactionUploadController extends Controller
         $this->authorize('add_activity');
         $activity  = $this->activityManager->getActivityData($id);
         $name      = $request->file('transaction');
-        $validator = $csvImportValidator->isValidCsv($name);
+        $validator = $csvImportValidator->validator->isValidCsv($name);
         if ($validator->fails()) {
             $response = ['type' => 'danger', 'code' => ['update_failed', ['name' => 'Transactions']]];
 

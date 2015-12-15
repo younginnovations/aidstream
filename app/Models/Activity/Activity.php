@@ -45,7 +45,6 @@ class Activity extends Model
         'other_identifier'           => 'json',
         'title'                      => 'json',
         'description'                => 'json',
-        'activity_status'            => 'json',
         'activity_date'              => 'json',
         'contact_info'               => 'json',
         'activity_scope'             => 'json',
