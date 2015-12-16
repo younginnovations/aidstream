@@ -262,6 +262,13 @@ input {
   input:focus {
     outline: none; }
 
+.navbar + .alert {
+  margin-bottom: 0; }
+
+.alert {
+  -webkit-border-radius: 0;
+          border-radius: 0; }
+
 .tooltip {
   background: #52cc88;
   width: 240px;
@@ -535,9 +542,11 @@ label {
   height: 30px;
   margin-right: 4px;
   opacity: 0.5;
+  cursor: pointer;
   background-color: transparent !important; }
   .flag-icon-background:hover {
-    background-color: transparent !important; }
+    background-color: transparent !important;
+    opacity: 1; }
 
 .flag-icon-background.active {
   opacity: 1; }
@@ -750,7 +759,7 @@ label {
   .published:before {
     background: #52cc88; }
 
-.view, .delete {
+.view, .delete, .edit {
   float: left;
   text-indent: -9999px;
   width: 18px;
@@ -765,9 +774,17 @@ label {
 .delete {
   height: 23px;
   background-position: -227px -332px;
-  margin-left: 10px; }
+  margin-left: 7px; }
   .delete:hover {
     background-position: -228px -390px; }
+
+.edit {
+  height: 23px;
+  width: 24px;
+  margin-left: 10px;
+  background-position: -301px -334px; }
+  .edit:hover {
+    background-position: -301px -391px; }
 
 .no-data {
   font-size: 17px;
@@ -797,8 +814,10 @@ label {
 .panel-level-1 .panel + .panel {
   margin-top: 20px; }
 
-.panel-level-2 {
-  padding-right: 0;
+.content-wrapper .panel-level-2, .content-wrapper .panel-level-3 {
+  padding: 0 0 0 15px; }
+
+.content-wrapper .panel-level-2 {
   margin-top: 20px; }
 
 .element-sidebar-wrapper {
@@ -985,16 +1004,16 @@ label {
 .panel-element-body + .panel-heading {
   margin-top: 20px; }
 
-.edit-element, .edit {
+.edit-element, .edit-value {
   float: right;
   text-indent: -9999px;
   width: 32px;
   height: 32px;
   background: url(../../images/ic-sprite.png) no-repeat -154px -261px; }
-  .edit-element:hover, .edit:hover {
+  .edit-element:hover, .edit-value:hover {
     background-position: -221px -261px; }
 
-.edit {
+.edit-value {
   float: none; }
 
 .create-form, .create-activity-form {
@@ -1005,6 +1024,9 @@ label {
     padding-left: 0; }
   .create-form .panel-body > div:last-child, .create-activity-form .panel-body > div:last-child {
     padding-right: 0; }
+
+.create-form .form-group:only-child {
+  width: 40%; }
 
 .btn-create {
   background: #00A8FF url(../../images/ic-sprite.png) no-repeat -204px -122px;
@@ -1050,6 +1072,8 @@ label {
     margin-bottom: 30px;
     padding-bottom: 25px;
     clear: both; }
+  .create-form .form-group > input, .create-form .form-group select {
+    margin-bottom: 3pxf; }
 
 .create-form > form > .collection_form > .form-group {
   position: relative;
@@ -1077,8 +1101,8 @@ label {
   width: 40%;
   margin-right: 52px;
   display: inline-block;
-  margin-bottom: 0;
-  position: relative; }
+  position: relative;
+  vertical-align: top; }
 
 .create-form > form > .collection_form > .form-group > .collection_form {
   border: 0;
@@ -1110,7 +1134,7 @@ label {
       display: inline-block;
       width: 40%;
       padding: 0;
-      margin: 0 30px 0 14px;
+      margin: 0 30px 15px 14px;
       vertical-align: top; }
   .create-form > form > .collection_form > .form-group > .collection_form .collection_form > label {
     padding-left: 26px;
@@ -1128,7 +1152,8 @@ label {
   overflow: hidden; }
   .add_to_collection:hover, .add_to_collection:focus:hover, .add:hover {
     background: transparent url(../../images/ic-sprite.png) no-repeat 19px -503px;
-    color: #00A8FF; }
+    color: #00A8FF;
+    text-decoration: none; }
 
 .add_to_collection:last-of-type {
   margin-left: -11px; }
@@ -1142,12 +1167,13 @@ form > .add_to_collection[data-collection="legacy_data"] {
     margin-bottom: 0; }
 
 .has_add_more + .add_to_collection {
-  margin-top: -46px !important;
-  margin-bottom: 20px; }
+  margin-top: -46px !important; }
 
 .create-form > form > .collection_form.has_add_more + .add_to_collection {
   margin-left: -17px;
   margin-bottom: 0; }
+  .create-form > form > .collection_form.has_add_more + .add_to_collection:first-of-type {
+    margin-left: 0; }
 
 .add {
   line-height: 40px;
@@ -1210,7 +1236,7 @@ form > .add_to_collection[data-collection="legacy_data"] {
     .form-choice-wrapper .choice-wrapper label {
       color: #484848; }
   .form-choice-wrapper input + label {
-    color: #484848;
+    color: #484848 !important;
     margin-right: 20px; }
 
 .settings-choice-wrapper .form-group {
@@ -1253,5 +1279,38 @@ form > .add_to_collection[data-collection="legacy_data"] {
   .registry-info-wrapper .choice-wrapper {
     display: inline-block;
     margin-right: 20px; }
+
+.create-user-form .form-group {
+  width: 40%;
+  display: inline-block;
+  padding: 25px 0 0 20px;
+  margin: 0 52px 0 0; }
+
+.create-user-form .panel {
+  margin: 0;
+  background: transparent; }
+
+.panel-user {
+  padding-left: 5px; }
+  .panel-user .panel-heading {
+    font-size: 18px;
+    border: 0; }
+  .panel-user .panel-body {
+    padding: 0 15px 15px !important; }
+  .panel-user .checkbox {
+    float: left;
+    margin-right: 20px; }
+  .panel-user .form-group {
+    padding-top: 0; }
+  .panel-user > label {
+    margin-left: 15px; }
+
+.user-wrapper .panel-content-heading {
+  margin-bottom: 20px; }
+
+.user-wrapper .btn-form {
+  margin-left: 20px; }
+  .user-wrapper .btn-form:first-of-type {
+    margin-left: 40px; }
 
 /*# sourceMappingURL=maps/app.css.map */

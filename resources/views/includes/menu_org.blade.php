@@ -11,7 +11,7 @@ $orgData = $organizationData->get();
                 <li>
                     {{--*/ $filled = $orgData['reporting_org']; /*--}}
                     <a href="{{ url('/organization/' . Session::get('org_id') . '/reportingOrg') }}" class="{{ $filled ? 'active' : '' }}">
-                        <span class="action-icon {{ $filled ? 'edit' : 'add' }}">icon</span>
+                        <span class="action-icon {{ $filled ? 'edit-value' : 'add' }}">icon</span>
                         Reporting Organization
                     </a>
                     <span class="help-text" data-toggle="tooltip" data-placement="top" title="@lang(session()->get('version') . '/help.Organisation_ReportingOrg')">help text</span>
@@ -19,7 +19,7 @@ $orgData = $organizationData->get();
                 <li>
                     {{--*/ $filled = $orgData['reporting_org']; /*--}}
                     <a href="{{ url('/organization/' . Session::get('org_id') . '/identifier')  }}" class="{{ $filled ? 'active' : '' }}">
-                        <span class="action-icon {{ $filled ? 'edit' : 'add' }}">icon</span>
+                        <span class="action-icon {{ $filled ? 'edit-value' : 'add' }}">icon</span>
                         Organization Identifier
                     </a>
                     <span class="help-text" data-toggle="tooltip" data-placement="top" title="@lang(session()->get('version') . '/help.Organisation_Identifier')">help text</span>
@@ -27,7 +27,7 @@ $orgData = $organizationData->get();
                 <li>
                     {{--*/ $filled = $orgData['name']; /*--}}
                     <a href="{{ url('/organization/' . Session::get('org_id') . '/name') }}" class="{{ $filled ? 'active' : '' }}">
-                        <span class="action-icon {{ $filled ? 'edit' : 'add' }}">icon</span>
+                        <span class="action-icon {{ $filled ? 'edit-value' : 'add' }}">icon</span>
                         Name
                     </a>
                     <span class="help-text" data-toggle="tooltip" data-placement="top" title="@lang(session()->get('version') . '/help.Organisation_Name')">help text</span>
@@ -42,7 +42,7 @@ $orgData = $organizationData->get();
                 <li>
                     {{--*/ $filled = $orgData['total_budget']; /*--}}
                     <a href="{{ route('organization.total-budget.index', Auth::user()->org_id) }}" class="{{ $filled ? 'active' : '' }}">
-                        <span class="action-icon {{ $filled ? 'edit' : 'add' }}">icon</span>
+                        <span class="action-icon {{ $filled ? 'edit-value' : 'add' }}">icon</span>
                         Total Budget
                     </a>
                     <span class="help-text" data-toggle="tooltip" data-placement="top" title="@lang(session()->get('version') . '/help.Organisation_TotalBudget')">help text</span>
@@ -50,7 +50,7 @@ $orgData = $organizationData->get();
                 <li>
                     {{--*/ $filled = $orgData['recipient_organization_budget']; /*--}}
                     <a href="{{ route('organization.recipient-organization-budget.index', Auth::user()->org_id)}}" class="{{ $filled ? 'active' : '' }}">
-                        <span class="action-icon {{ $filled ? 'edit' : 'add' }}">icon</span>
+                        <span class="action-icon {{ $filled ? 'edit-value' : 'add' }}">icon</span>
                         Recipient Organization Budget
                     </a>
                     <span class="help-text" data-toggle="tooltip" data-placement="top" title="@lang(session()->get('version') . '/help.Organisation_RecipientOrgBudget')">help text</span>
@@ -58,7 +58,7 @@ $orgData = $organizationData->get();
                 <li>
                     {{--*/ $filled = $orgData['recipient_country_budget']; /*--}}
                     <a href="{{ url('/organization/' . Session::get('org_id') . '/recipient-country-budget') }}" class="{{ $filled ? 'active' : '' }}">
-                        <span class="action-icon {{ $filled ? 'edit' : 'add' }}">icon</span>
+                        <span class="action-icon {{ $filled ? 'edit-value' : 'add' }}">icon</span>
                         Recipient Country Budget
                     </a>
                     <span class="help-text" data-toggle="tooltip" data-placement="top" title="@lang(session()->get('version') . '/help.Organisation_RecipientCountryBudget')">help text</span>
@@ -73,7 +73,7 @@ $orgData = $organizationData->get();
                 <li>
                     {{--*/ $filled = $orgData['document_link']; /*--}}
                     <a href="{{ url('/organization/' . Session::get('org_id') . '/document-link') }}" class="{{ $filled ? 'active' : '' }}">
-                        <span class="action-icon {{ $filled ? 'edit' : 'add' }}">icon</span>
+                        <span class="action-icon {{ $filled ? 'edit-value' : 'add' }}">icon</span>
                         Document Link
                     </a>
                     <span class="help-text" data-toggle="tooltip" data-placement="top" title="@lang(session()->get('version') . '/help.Organisation_DocumentLink')">help text</span>
