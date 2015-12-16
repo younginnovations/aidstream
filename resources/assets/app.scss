@@ -946,9 +946,6 @@ $element-sidebar-wrapper-width: 267px;
 			background: $color_mandy_approx;
 		}
 	}
-	&+form {
-		
-	}
 }
 
 .activity-status-completed {
@@ -1453,10 +1450,6 @@ form > .add_to_collection[data-collection="legacy_data"] {
 	}
 }
 
-.back-to-transaction {
-	margin: 0 40px 20px 0;
-}
-
 .panel-upload {
 	.create-form {
 		border: 0;
@@ -1471,7 +1464,7 @@ form > .add_to_collection[data-collection="legacy_data"] {
 	}
 	button {
 		margin: 43px 0 0px 20px;
-    	color: #fff;
+    	color: $color_white!important;
 	}
 }
 
@@ -1479,16 +1472,37 @@ form > .add_to_collection[data-collection="legacy_data"] {
 	padding: 0 40px;
 	.btn {
 		margin-bottom: 20px;
-		float: left;
+		display: inline-block;
+        vertical-align: middle;
 	}
 	>div {
 		width: calc(100% - 370px);
 	    font-size: 12px;
 	    color: #aaa;
 	    font-weight: normal;
-	    float: left;
-	    margin-left: 50px;
-	    margin-top: 20px;
+	    display: inline-block;
+        vertical-align: middle;
+	    margin-left: 44px;
 	    line-height: 18px;
 	}
+}
+
+.change-activity-form {
+	border: 0;
+	> form > .form-group {
+		display: inline-block;
+		margin-right: 52px;
+		position: relative;
+		margin-bottom: 0;
+		.help-text {
+			top: 56px;
+		}
+	}
+	.btn-form {
+		left: 40px;
+	}
+}
+
+.panel-change-activity-heading {
+	margin-bottom: 20px;
 }

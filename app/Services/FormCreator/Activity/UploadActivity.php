@@ -36,6 +36,6 @@ class UploadActivity
                 'method' => 'POST',
                 'url'    => route('activity-upload.store')
             ]
-        )->add('Upload', 'submit', ['attr' => ['class' => 'btn btn-submit btn-form']]);
+        )->add('Upload', 'submit', ['attr' => ['class' => 'btn pull-left']]);
     }
 }
