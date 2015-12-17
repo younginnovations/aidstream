@@ -7,7 +7,7 @@
             <div class="col-xs-9 col-md-9 col-lg-9 content-wrapper">
                 <div class="panel-content-heading">User Information</div>
                     <div class="col-xs-8 col-md-8 col-lg-8 element-content-wrapper">
-                        <div class="create-form">
+                        <div class="create-form create-user-form">
                             <form class="form-horizontal" role="form" method="POST"
                               action="{{ route('admin.signup-user')}}">
                                 <div class="panel panel-default">
@@ -26,61 +26,42 @@
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
                                         <div class="form-group">
-                                            <label class="col-md-4 control-label">First Name</label>
-
-                                            <div class="col-md-6">
+                                            <label class="control-label">First Name</label>
                                                 <input type="text" class="form-control" name="first_name"
                                                        value="{{ old('first_name') }}">
-                                            </div>
                                         </div>
 
                                         <div class="form-group">
-                                            <label class="col-md-4 control-label">Last Name</label>
-
-                                            <div class="col-md-6">
+                                            <label class="control-label">Last Name</label>
                                                 <input type="text" class="form-control" name="last_name"
                                                        value="{{ old('last_name') }}">
-                                            </div>
                                         </div>
 
                                         <div class="form-group">
-                                            <label class="col-md-4 control-label">E-Mail Address</label>
-
-                                            <div class="col-md-6">
+                                            <label class="control-label">E-Mail Address</label>
                                                 <input type="email" class="form-control" name="email" value="{{ old('email') }}">
-                                            </div>
                                         </div>
 
                                         <div class="form-group">
-                                            <label class="col-md-4 control-label">Username</label>
-
-                                            <div class="col-md-6">
+                                            <label class="control-label">Username</label>
                                                 <input type="text" class="form-control" name="username"
                                                        value="{{ old('username') }}">
-                                            </div>
                                         </div>
 
                                         <div class="form-group">
-                                            <label class="col-md-4 control-label">Password</label>
-
-                                            <div class="col-md-6">
+                                            <label class="control-label">Password</label>
                                                 <input type="password" class="form-control" name="password">
-                                            </div>
                                         </div>
 
                                         <div class="form-group">
-                                            <label class="col-md-4 control-label">Confirm Password</label>
-
-                                            <div class="col-md-6">
+                                            <label class="control-label">Confirm Password</label>
                                                 <input type="password" class="form-control" name="password_confirmation">
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="panel panel-default">
+                                <div class="panel panel-default panel-user">
                                     <div class="panel-heading">User permission</div>
                                     <div class="panel-body">
-                                        <label><input type="checkbox" class="hidden checkAll"/><span class="btn btn-primary">Check All</span></label>
                                         <div class="form-group col-md-12">
                                             <div class="checkbox">
                                                 <label><input type="checkbox" value="add_activity" name=user_permission[add] class="field1" @if(isset($data['user_permission']['add'])) checked="checked" @endif >Add</label>
@@ -96,14 +77,13 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <label><input type="checkbox" class="hidden checkAll"/><span class="btn btn-primary">Check All</span></label>
                                 </div>
-                                <div class="form-group">
-                                    <div class="col-md-6 col-md-offset-4">
-                                        <button type="submit" class="btn btn-primary">
-                                            Sign Up
-                                        </button>
-                                    </div>
-                                </div>
+                                
+                                <button type="submit" class="btn btn-primary btn-form btn-submit">
+                                    Sign Up
+                                </button>
+                                 
                             </form>
                         </div>
                     </div>

@@ -932,27 +932,33 @@
                                 <div class="panel-heading">Conditions</div>
                                 <div class="panel-body panel-level-1">
                                     <div class="panel panel-default">
-                                        <div class="panel-heading">Attached : {{($conditions['condition_attached'] == "1") ? 'Yes' : 'No' }}</div>
-                                    </div>
-
-                                    <div class="panel panel-default">
-                                        <div class="panel-heading">Description</div>
-                                        <div class="panel-element--body row">
-                                            @foreach($conditions['condition'] as $data)
-                                            <div class="col-md-12">
-                                                <div class="col-xs-4">Type</div>
-                                                <div class="col-xs-8">{{$getCode->getActivityCodeName('ConditionType', $data['condition_type'])}}</div>
-                                            </div>
-                                                @foreach($data['narrative'] as $narrative)
-                                                    <div class="panel-element-body row">
-                                                        <div class="col-md-12">
-                                                            <div class="col-xs-4">Text</div>
-                                                            <div class="col-xs-8">{{$narrative['narrative'] . ' ['. $getCode->getOrganizationCodeName('Language', $narrative['language']) . ']'}}</div>
-                                                        </div>
-                                                    </div>
-                                                @endforeach
-                                            @endforeach
+                                        <div class="panel-element-body">
+                                          <div class="col-md-12">
+                                            <div class="col-xs-4">Attached</div>
+                                            <div class="col-xs-8"> {{($conditions['condition_attached'] == "1") ? 'Yes' : 'No' }}</div>
+                                          </div>
                                         </div>
+                                    </div>
+                                    <div class="col-md-12 col-lg-12 panel-level-2">
+                                      <div class="panel panel-default">
+                                          <div class="panel-heading">Description</div>
+                                          <div class="panel-element-body row">
+                                              @foreach($conditions['condition'] as $data)
+                                              <div class="col-md-12">
+                                                  <div class="col-xs-4">Type</div>
+                                                  <div class="col-xs-8">{{$getCode->getActivityCodeName('ConditionType', $data['condition_type'])}}</div>
+                                              </div>
+                                                  @foreach($data['narrative'] as $narrative)
+                                                     
+                                                          <div class="col-md-12">
+                                                              <div class="col-xs-4">Text</div>
+                                                              <div class="col-xs-8">{{$narrative['narrative'] . ' ['. $getCode->getOrganizationCodeName('Language', $narrative['language']) . ']'}}</div>
+                                                          </div>
+                                                     
+                                                  @endforeach
+                                              @endforeach
+                                          </div>
+                                      </div>
                                     </div>
                                 </div>
                             </div>
@@ -965,190 +971,202 @@
                                     @foreach($results as $result)
                                         <div class="panel panel-default">
                                             <div class="panel-heading">{{$getCode->getActivityCodeName('ResultType', $result['result']['type'])}}</div>
-                                            <div class="panel-element-body row">
-                                                <div class="col-md-12">
-                                                    <div class="col-xs-4">Type</div>
-                                                    <div class="col-xs-8">{{$getCode->getActivityCodeName('ResultType', $result['result']['type'])}}</div>
-                                                </div>
-                                                <div class="col-md-12">
-                                                    <div class="col-xs-4">Aggregation Status</div>
-                                                    <div class="col-xs-8">{{($result['result']['aggregation_status'] == "1") ? 'True' : 'False' }}</div>
-                                                </div>
-                                            </div>
                                             <div class="panel panel-default">
-                                                <div class="panel-heading">Title</div>
-                                                <div class="panel-body row">
-                                                    @foreach($result['result']['title'] as $title)
-                                                        @foreach($title['narrative'] as $narrative)
-                                                            <div class="panel-element-body row">
-                                                                <div class="col-md-12">
-                                                                    <div class="col-xs-4">Text</div>
-                                                                    <div class="col-xs-8">{{$narrative['narrative'] . ' ['. $getCode->getOrganizationCodeName('Language', $narrative['language']) . ']'}}</div>
-                                                                </div>
-                                                            </div>
-                                                        @endforeach
-                                                    @endforeach
-                                                </div>
+                                              <div class="panel-element-body row">
+                                                  <div class="col-md-12">
+                                                      <div class="col-xs-4">Type</div>
+                                                      <div class="col-xs-8">{{$getCode->getActivityCodeName('ResultType', $result['result']['type'])}}</div>
+                                                  </div>
+                                                  <div class="col-md-12">
+                                                      <div class="col-xs-4">Aggregation Status</div>
+                                                      <div class="col-xs-8">{{($result['result']['aggregation_status'] == "1") ? 'True' : 'False' }}</div>
+                                                  </div>
+                                              </div>
                                             </div>
-                                            <div class="panel panel-default">
-                                                <div class="panel-heading">Description</div>
-                                                <div class="panel-body row">
-                                                    @foreach($result['result']['description'] as $description)
-                                                        @foreach($description['narrative'] as $narrative)
-                                                            <div class="panel-body row">
-                                                                <div class="form-group clearfix">
-                                                                    <div class="col-xs-4">Text</div>
-                                                                    <div class="col-xs-8">{{$narrative['narrative'] . ' ['. $getCode->getOrganizationCodeName('Language', $narrative['language']) . ']'}}</div>
-                                                                </div>
-                                                            </div>
-                                                        @endforeach
-                                                    @endforeach
-                                                </div>
-                                            </div>
-                                            <div class="panel panel-default">
-                                                <div class="panel-heading">Indicator</div>
-                                                <div class="panel-body row">
-                                                    @foreach($result['result']['indicator'] as $indicator)
-                                                        <div class="panel-body row">
-                                                            <div class="form-group clearfix">
+                                            <div class="col-md-12 col-lg-12 panel-level-2">
+                                              <div class="panel panel-default">
+                                                  <div class="panel-heading">Title</div>
+                                                  <div class="panel-body row">
+                                                      @foreach($result['result']['title'] as $title)
+                                                          @foreach($title['narrative'] as $narrative)
+                                                              <div class="panel-element-body row">
+                                                                  <div class="col-md-12">
+                                                                      <div class="col-xs-4">Text</div>
+                                                                      <div class="col-xs-8">{{$narrative['narrative'] . ' ['. $getCode->getOrganizationCodeName('Language', $narrative['language']) . ']'}}</div>
+                                                                  </div>
+                                                              </div>
+                                                          @endforeach
+                                                      @endforeach
+                                                  </div>
+                                              </div>
+                                              <div class="panel panel-default">
+                                                  <div class="panel-heading">Description</div>
+                                                  <div class="panel-body row">
+                                                      @foreach($result['result']['description'] as $description)
+                                                          @foreach($description['narrative'] as $narrative)
+                                                              <div class="panel-element-body row">
+                                                                  <div class="col-md-12">
+                                                                      <div class="col-xs-4">Text</div>
+                                                                      <div class="col-xs-8">{{$narrative['narrative'] . ' ['. $getCode->getOrganizationCodeName('Language', $narrative['language']) . ']'}}</div>
+                                                                  </div>
+                                                              </div>
+                                                          @endforeach
+                                                      @endforeach
+                                                  </div>
+                                              </div>
+                                              <div class="panel panel-default">
+                                                  <div class="panel-heading">Indicator</div>
+                                                  <div class="panel-body row">
+                                                      @foreach($result['result']['indicator'] as $indicator)
+                                                      <div class="panel panel-default">
+                                                          <div class="panel-element-body row">
+                                                              <div class="col-md-12">
                                                                 <div class="col-xs-4">Measure</div>
                                                                 <div class="col-xs-8">{{$getCode->getActivityCodeName('IndicatorMeasure', $indicator['measure'])}}</div>
+                                                              </div>
+                                                              <div class="col-md-12">
                                                                 <div class="col-xs-4">Ascending</div>
                                                                 <div class="col-xs-8">{{($indicator['ascending'] == "1") ? 'True' : 'False' }}</div>
-                                                            </div>
+                                                              </div>
+                                                          </div>
                                                         </div>
-                                                        <div class="panel panel-default">
-                                                            <div class="panel-heading">Title</div>
-                                                            <div class="panel-body row">
-                                                                @foreach($indicator['title'] as $title)
-                                                                    @foreach($title['narrative'] as $narrative)
-                                                                        <div class="panel-body row">
-                                                                            <div class="form-group clearfix">
-                                                                                <div class="col-xs-4">Text</div>
-                                                                                <div class="col-xs-8">{{$narrative['narrative'] . ' ['. $getCode->getOrganizationCodeName('Language', $narrative['language']) . ']'}}</div>
-                                                                            </div>
-                                                                        </div>
-                                                                    @endforeach
-                                                                @endforeach
-                                                            </div>
-                                                        </div>
-                                                        <div class="panel panel-default">
-                                                            <div class="panel-heading">Description</div>
-                                                            <div class="panel-body row">
-                                                                @foreach($indicator['description'] as $description)
-                                                                    @foreach($description['narrative'] as $narrative)
-                                                                        <div class="panel-body row">
-                                                                            <div class="form-group clearfix">
-                                                                                <div class="col-xs-4">Text</div>
-                                                                                <div class="col-xs-8">{{$narrative['narrative'] . ' ['. $getCode->getOrganizationCodeName('Language', $narrative['language']) . ']'}}</div>
-                                                                            </div>
-                                                                        </div>
-                                                                    @endforeach
-                                                                @endforeach
-                                                            </div>
-                                                        </div>
-                                                        <div class="panel panel-default">
-                                                            <div class="panel-heading">Baseline</div>
-                                                            <div class="panel-body row">
-                                                                @foreach($indicator['baseline'] as $baseline)
-                                                                    <div class="panel-body row">
-                                                                        <div class="form-group clearfix">
+                                                          <div class="panel panel-default">
+                                                              <div class="panel-heading">Title</div>
+                                                              <div class="panel-body row">
+                                                                  @foreach($indicator['title'] as $title)
+                                                                      @foreach($title['narrative'] as $narrative)
+                                                                          <div class="panel-element-body row">
+                                                                              <div class="col-md-12">
+                                                                                  <div class="col-xs-4">Text</div>
+                                                                                  <div class="col-xs-8">{{$narrative['narrative'] . ' ['. $getCode->getOrganizationCodeName('Language', $narrative['language']) . ']'}}</div>
+                                                                              </div>
+                                                                          </div>
+                                                                      @endforeach
+                                                                  @endforeach
+                                                              </div>
+                                                          </div>
+                                                          <div class="panel panel-default">
+                                                              <div class="panel-heading">Description</div>
+                                                              <div class="panel-body row">
+                                                                  @foreach($indicator['description'] as $description)
+                                                                      @foreach($description['narrative'] as $narrative)
+                                                                          <div class="panel-element-body row">
+                                                                              <div class="col-md-12">
+                                                                                  <div class="col-xs-4">Text</div>
+                                                                                  <div class="col-xs-8">{{$narrative['narrative'] . ' ['. $getCode->getOrganizationCodeName('Language', $narrative['language']) . ']'}}</div>
+                                                                              </div>
+                                                                          </div>
+                                                                      @endforeach
+                                                                  @endforeach
+                                                              </div>
+                                                          </div>
+                                                          <div class="panel panel-default">
+                                                              <div class="panel-heading">Baseline</div>
+                                                              <div class="panel-body row">
+                                                                  @foreach($indicator['baseline'] as $baseline)
+                                                                  <div class="panel panel-default">
+                                                                      <div class="panel-element-body row">
+                                                                          <div class="col-md-12">
                                                                             <div class="col-xs-4">Year</div>
                                                                             <div class="col-xs-8">{{$baseline['year']}}</div>
+                                                                          </div>
+                                                                          <div class="col-md-12">
                                                                             <div class="col-xs-4">Value</div>
                                                                             <div class="col-xs-8">{{$baseline['value']}}</div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="panel panel-default">
-                                                                        <div class="panel-heading">Comment</div>
-                                                                        <div class="panel-body row">
-                                                                        @foreach($baseline['comment'] as $comment)
-                                                                            @foreach($comment['narrative'] as $narrative)
-                                                                                <div class="panel-body row">
-                                                                                    <div class="form-group clearfix">
+                                                                          </div>
+                                                                      </div>
+                                                                      </div>
+                                                                      <div class="panel panel-default">
+                                                                          <div class="panel-heading">Comment</div>
+                                                                          <div class="panel-body row">
+                                                                          @foreach($baseline['comment'] as $comment)
+                                                                              @foreach($comment['narrative'] as $narrative)
+                                                                                  <div class="panel-element-body row">
+                                                                                      <div class="col-md-12">
                                                                                         <div class="col-xs-4">Text</div>
                                                                                         <div class="col-xs-8">{{$narrative['narrative'] . ' ['. $getCode->getOrganizationCodeName('Language', $narrative['language']) . ']'}}</div>
-                                                                                    </div>
-                                                                                </div>
-                                                                            @endforeach
-                                                                        @endforeach
-                                                                        </div>
-                                                                    </div>
-                                                                @endforeach
-                                                            </div>
-                                                        </div>
-                                                        <div class="panel panel-default">
-                                                            <div class="panel-heading">Period</div>
-                                                            <div class="panel-body row">
-                                                                @foreach($indicator['period'] as $period)
-                                                                    <div class="panel panel-default">
-                                                                        <div class="panel-heading">Period Start</div>
-                                                                        <div class="panel-body row">
-                                                                            <div class="form-group clearfix">
-                                                                                <div class="col-xs-4">Iso_date</div>
-                                                                                <div class="col-xs-8">{{$period['period_start'][0]['date']}}</div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="panel panel-default">
-                                                                        <div class="panel-heading">Period End</div>
-                                                                        <div class="panel-body row">
-                                                                            <div class="form-group clearfix">
-                                                                                <div class="col-xs-4">Iso_date</div>
-                                                                                <div class="col-xs-8">{{$period['period_end'][0]['date']}}</div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="panel panel-default">
-                                                                        <div class="panel-heading">Target</div>
-                                                                        <div class="panel-body row">
-                                                                            <div class="form-group clearfix">
-                                                                                <div class="col-xs-4">Iso_date</div>
-                                                                                <div class="col-xs-8">{{$period['target'][0]['value']}}</div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="panel-heading">Comment</div>
-                                                                        <div class="panel-body row">
-                                                                            @foreach($period['target'][0]['comment'] as $comment)
-                                                                                @foreach($comment['narrative'] as $narrative)
-                                                                                    <div class="panel-body row">
-                                                                                        <div class="form-group clearfix">
-                                                                                            <div class="col-xs-4">Text</div>
-                                                                                            <div class="col-xs-8">{{$narrative['narrative'] . ' ['. $getCode->getOrganizationCodeName('Language', $narrative['language']) . ']'}}</div>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                @endforeach
-                                                                            @endforeach
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="panel panel-default">
-                                                                        <div class="panel-heading">Actual</div>
-                                                                        <div class="panel-body row">
-                                                                            <div class="form-group clearfix">
-                                                                                <div class="col-xs-4">Iso_date</div>
-                                                                                <div class="col-xs-8">{{$period['actual'][0]['value']}}</div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="panel-heading">Comment</div>
-                                                                        <div class="panel-body row">
-                                                                            @foreach($period['actual'][0]['comment'] as $comment)
-                                                                                @foreach($comment['narrative'] as $narrative)
-                                                                                    <div class="panel-body row">
-                                                                                        <div class="form-group clearfix">
-                                                                                            <div class="col-xs-4">Text</div>
-                                                                                            <div class="col-xs-8">{{$narrative['narrative'] . ' ['. $getCode->getOrganizationCodeName('Language', $narrative['language']) . ']'}}</div>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                @endforeach
-                                                                            @endforeach
-                                                                        </div>
-                                                                    </div>
+                                                                                      </div>
+                                                                                  </div>
+                                                                              @endforeach
+                                                                          @endforeach
+                                                                          </div>
+                                                                      </div>
+                                                                  @endforeach
+                                                              </div>
+                                                          </div>
+                                                          <div class="panel panel-default">
+                                                              <div class="panel-heading">Period</div>
+                                                              <div class="panel-body row panel-level-3">
+                                                                  @foreach($indicator['period'] as $period)
+                                                                      <div class="panel panel-default">
+                                                                          <div class="panel-heading">Period Start</div>
+                                                                          <div class="panel-element-body row">
+                                                                              <div class="col-md-12">
+                                                                                  <div class="col-xs-4">Iso_date</div>
+                                                                                  <div class="col-xs-8">{{$period['period_start'][0]['date']}}</div>
+                                                                              </div>
+                                                                          </div>
+                                                                      </div>
+                                                                      <div class="panel panel-default">
+                                                                          <div class="panel-heading">Period End</div>
+                                                                          <div class="panel-element-body row">
+                                                                              <div class="col-md-12">
+                                                                                  <div class="col-xs-4">Iso_date</div>
+                                                                                  <div class="col-xs-8">{{$period['period_end'][0]['date']}}</div>
+                                                                              </div>
+                                                                          </div>
+                                                                      </div>
+                                                                      <div class="panel panel-default">
+                                                                          <div class="panel-heading">Target</div>
+                                                                          <div class="panel-element-body row">
+                                                                              <div class="col-md-12">
+                                                                                  <div class="col-xs-4">Iso_date</div>
+                                                                                  <div class="col-xs-8">{{$period['target'][0]['value']}}</div>
+                                                                              </div>
+                                                                          </div>
+                                                                          <div class="panel-heading">Comment</div>
+                                                                          <div class="panel-body row">
+                                                                              @foreach($period['target'][0]['comment'] as $comment)
+                                                                                  @foreach($comment['narrative'] as $narrative)
+                                                                                      <div class="panel-element-body row">
+                                                                                          <div class="col-md-12">
+                                                                                              <div class="col-xs-4">Text</div>
+                                                                                              <div class="col-xs-8">{{$narrative['narrative'] . ' ['. $getCode->getOrganizationCodeName('Language', $narrative['language']) . ']'}}</div>
+                                                                                          </div>
+                                                                                      </div>
+                                                                                  @endforeach
+                                                                              @endforeach
+                                                                          </div>
+                                                                      </div>
+                                                                      <div class="panel panel-default">
+                                                                          <div class="panel-heading">Actual</div>
+                                                                          <div class="panel-element-body row">
+                                                                              <div class="col-md-12">
+                                                                                  <div class="col-xs-4">Iso_date</div>
+                                                                                  <div class="col-xs-8">{{$period['actual'][0]['value']}}</div>
+                                                                              </div>
+                                                                          </div>
+                                                                          <div class="panel-heading">Comment</div>
+                                                                          <div class="panel-body row">
+                                                                              @foreach($period['actual'][0]['comment'] as $comment)
+                                                                                  @foreach($comment['narrative'] as $narrative)
+                                                                                      <div class="panel-element-body row">
+                                                                                          <div class="col-md-12">
+                                                                                              <div class="col-xs-4">Text</div>
+                                                                                              <div class="col-xs-8">{{$narrative['narrative'] . ' ['. $getCode->getOrganizationCodeName('Language', $narrative['language']) . ']'}}</div>
+                                                                                          </div>
+                                                                                      </div>
+                                                                                  @endforeach
+                                                                              @endforeach
+                                                                          </div>
+                                                                      </div>
 
-                                                                @endforeach
-                                                            </div>
-                                                        </div>
-                                                    @endforeach
-                                                </div>
+                                                                  @endforeach
+                                                              </div>
+                                                          </div>
+                                                      @endforeach
+                                                  </div>
+                                              </div>
                                             </div>
                                         </div>
                                     @endforeach
@@ -1165,12 +1183,14 @@
                                             <div class="panel-heading">
                                                 {{$getCode->getActivityCodeName('TransactionType', $transaction['transaction']['transaction_type'][0]['transaction_type_code']) .' ; '. $transaction['transaction']['value'][0]['amount'] . ' ; ' . $transaction['transaction']['value'][0]['date']}}
                                             </div>
+                                          <div class="panel panel-default">
                                             <div class="panel-element-body row">
                                                 <div class="col-md-12">
                                                     <div class="col-xs-4">Ref</div>
                                                     <div class="col-xs-8">{{$transaction['transaction']['reference']}}</div>
                                                 </div>
                                             </div>
+                                          </div>
                                             <div class="panel panel-default">
                                                 <div class="panel-heading">Transaction Type</div>
                                                 <div class="panel-element-body row">
@@ -1208,10 +1228,10 @@
                                             </div>
                                             <div class="panel panel-default">
                                                 <div class="panel-heading">Description</div>
-                                                <div class="panel-element-body row">
+                                                <div class="panel-body row">
                                                     @foreach($transaction['transaction']['description'] as $description)
                                                         @foreach($description['narrative'] as $narrative)
-                                                            <div class="panel-body row">
+                                                            <div class="panel-element-body row">
                                                                 <div class="col-md-12">
                                                                     <div class="col-xs-4">Text</div>
                                                                     <div class="col-xs-8">{{$narrative['narrative'] . ' ['. $getCode->getOrganizationCodeName('Language', $narrative['language']) . ']'}}</div>

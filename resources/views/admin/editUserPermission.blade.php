@@ -1,18 +1,18 @@
 @extends('app')
 
 @section('content')
-    <div class="container">
+    <div class="container main-container">
         <div class="row">
-            <div class="col-md-8">
+        @include('includes.side_bar_menu')
+            <div class="col-xs-9 col-md-9 col-lg-9 content-wrapper">
+            <div class="panel-content-heading">User permissions</div>
+            <div class="panel panel-default panel-element-detail">
                 <form class="form-horizontal" role="form" method="POST"
                       action="{{ route('admin.update-user-permission', $user->id)}}">
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
-                    <div class="panel panel-default">
-                        <div class="panel-heading">User permissions</div>
+                    <div class="panel panel-default panel-user">
                         <div class="panel-body">
-                            <label><input type="checkbox" class="hidden checkAll"/><span class="btn btn-primary">Check All</span></label>
-
                             <div class="form-group col-md-12">
                                 <div class="checkbox">
                                     <label><input type="checkbox" value="add_activity" name="user_permission[add]"
@@ -38,16 +38,12 @@
                                 </div>
                             </div>
                         </div>
+                        <label><input type="checkbox" class="hidden checkAll"/><span class="btn btn-primary">Check All</span></label>
                     </div>
-
-                    <div class="form-group">
-                        <div class="col-md-6 col-md-offset-4">
-                            <button type="submit" class="btn btn-primary">
-                                Submit
-                            </button>
-                        </div>
-                    </div>
+                    <button type="submit" class="btn btn-primary btn-submit btn-form">Submit</button>
+                     
                 </form>
+                </div>
             </div>
 
             @include('includes.side_bar_menu')
