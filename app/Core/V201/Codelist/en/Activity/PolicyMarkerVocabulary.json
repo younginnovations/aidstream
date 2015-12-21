@@ -1,0 +1,20 @@
+{
+  "date-last-modified": "2015-12-09T16:59:55.121935+00:00",
+  "version": "",
+  "name": "PolicyMarkerVocabulary",
+  "xml:lang": "en",
+  "PolicyMarkerVocabulary": [
+    {
+      "code": "1",
+      "name": "OECD DAC CRS",
+      "language": "en",
+      "description": "The policy marker is an OECD DAC CRS policy marker, Reported in columns 20-23, 28-31 and 54 of CRS++ reporting format."
+    },
+    {
+      "code": "99",
+      "name": "Reporting Organisation",
+      "language": "en",
+      "description": "The policy marker is one that is defined and tracked by the reporting organisation"
+    }
+  ]
+}

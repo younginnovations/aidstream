@@ -1,5 +1,7 @@
 <?php namespace App\Core\V201\Element\Activity;
 
+use Illuminate\Support\Facades\Session;
+
 /**
  * Class XmlService
  * @package App\Core\V201\Element\Activity
@@ -21,7 +23,7 @@ class XmlService extends XmlGenerator
         $message = '';
         try {
             $xml = $this->getXml($activityData, $transactionData, $resultData, $settings, $activityElement, $orgElem, $organization);
-            $xml->schemaValidate(app_path('/Core/V201/XmlSchema/iati-activities-schema.xsd'));
+            $xml->schemaValidate(app_path(sprintf('/Core/%s/XmlSchema/iati-activities-schema.xsd', Session::get('version'))));
         } catch (\Exception $e) {
             $message = $e->getMessage();
             $message = str_replace('DOMDocument::schemaValidate(): ', '', $message);

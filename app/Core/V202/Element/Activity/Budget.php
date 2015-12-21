@@ -1,29 +1,14 @@
-<?php namespace App\Core\V201\Element\Activity;
+<?php namespace App\Core\V202\Element\Activity;
 
+use App\Core\V201\Element\Activity\Budget as V201Budget;
 use App\Models\Activity\Activity;
 
 /**
  * Class Budget
- * @package App\Core\V201\Element\Activity
+ * @package App\Core\V202\Element\Activity
  */
-class Budget
+class Budget extends V201Budget
 {
-    /**
-     * return activity budget path
-     */
-    public function getForm()
-    {
-        return 'App\Core\V201\Forms\Activity\Budgets';
-    }
-
-    /**
-     * return activity budget repository
-     */
-    public function getRepository()
-    {
-        return App('App\Core\V201\Repositories\Activity\Budget');
-    }
-
     /**
      * @param $activity
      * @return array
@@ -35,7 +20,8 @@ class Budget
         foreach ($budgets as $budget) {
             $activityData[] = [
                 '@attributes'  => [
-                    'type' => $budget['budget_type']
+                    'type'   => $budget['budget_type'],
+                    'status' => $budget['status']
                 ],
                 'period-start' => [
                     '@attributes' => [

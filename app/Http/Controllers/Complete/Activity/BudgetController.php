@@ -42,6 +42,7 @@ class BudgetController extends Controller
         $budget       = $request->all();
         $activityData = $this->activityManager->getActivityData($id);
         if ($this->budgetManager->update($budget, $activityData)) {
+            $this->activityManager->resetActivityWorkflow($id);
             $response = ['type' => 'success', 'code' => ['updated', ['name' => 'Budget']]];
 
             return redirect()->to(sprintf('/activity/%s', $id))->withResponse($response);

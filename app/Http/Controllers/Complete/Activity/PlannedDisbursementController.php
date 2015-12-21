@@ -53,6 +53,7 @@ class PlannedDisbursementController extends Controller
         $plannedDisbursement = $request->all();
         $activityData        = $this->activityManager->getActivityData($id);
         if ($this->plannedDisbursementManager->update($plannedDisbursement, $activityData)) {
+            $this->activityManager->resetActivityWorkflow($id);
             $response = ['type' => 'success', 'code' => ['updated', ['name' => 'Planned Disbursement']]];
 
             return redirect()->to(sprintf('/activity/%s', $id))->withResponse($response);

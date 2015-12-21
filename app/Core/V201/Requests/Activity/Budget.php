@@ -56,8 +56,8 @@ class Budget extends ActivityBaseRequest
         foreach ($formFields as $budgetIndex => $budget) {
             $budgetForm = sprintf('budget.%s', $budgetIndex);
 
-            $messages[sprintf('%s.budget_type', $budgetForm)] = 'required';
-            $messages                                         = array_merge(
+            $messages[sprintf('%s.budget_type.required', $budgetForm)] = 'Budget type is required.';
+            $messages                                                  = array_merge(
                 $messages,
                 $this->getMessagesForPeriodStart($budget['period_start'], $budgetForm),
                 $this->getMessagesForPeriodEnd($budget['period_end'], $budgetForm),

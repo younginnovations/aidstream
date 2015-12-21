@@ -1,10 +1,10 @@
-<?php namespace App\Core\V201\Forms\Activity;
+<?php namespace App\Core\V202\Forms\Activity;
 
 use App\Core\Form\BaseForm;
 
 /**
  * Class PolicyMaker
- * @package App\Core\V201\Forms\Activity
+ * @package App\Core\V202\Forms\Activity
  */
 class PolicyMaker extends BaseForm
 {
@@ -13,6 +13,7 @@ class PolicyMaker extends BaseForm
     {
         $this
             ->addSelect('vocabulary', $this->getCodeList('PolicyMarkerVocabulary', 'Activity'))
+            ->add('vocabulary_uri', 'text', ['label' => 'Vocabulary URI'])
             ->addSelect('significance', $this->getCodeList('PolicySignificance', 'Activity'))
             ->addSelect('policy_marker', $this->getCodeList('PolicyMarker', 'Activity'))
             ->addNarrative('narrative')
