@@ -7,14 +7,14 @@
                 <div class="panel-content-heading panel-title-heading">Transactions of <span>{{$activity->IdentifierTitle}}</span></div>
                 <div class="col-xs-8 col-md-8 col-lg-8 element-content-wrapper">
                 @if(count($activity->getTransactions()) > 0)
-                <table class="table table-striped table-bordered">
+                <table class="table table-striped">
                     <thead>
                     <tr>
-                        <td>Internal Ref</td>
-                        <td>Transaction Type</td>
-                        <td>Transaction Value</td>
-                        <td>Transaction Date</td>
-                        <td>Actions</td>
+                        <th>Internal Ref</th>
+                        <th>Transaction Type</th>
+                        <th>Transaction Value</th>
+                        <th>Transaction Date</th>
+                        <th>Actions</th>
                     </tr>
                     </thead>
                     <tbody>

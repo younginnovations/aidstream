@@ -62,6 +62,7 @@ body {
 a,.btn-link {
 	color: $color_dodger_blue_approx;
 	transition: none;
+	cursor: pointer;
 	&:hover,&:focus {
 		color: $color_lochmara_approx;
 	}
@@ -1115,6 +1116,7 @@ $element-sidebar-wrapper-width: 267px;
 .create-form {
 	position: relative;
 	padding-bottom: 80px;
+	clear: both;
 	> form {
 		background: $color_romance_approx;
 		border: 1px solid #efefef;
@@ -1125,7 +1127,7 @@ $element-sidebar-wrapper-width: 267px;
 	}
 	.form-group {
 		>input,select {
-			margin-bottom: 3pxf;
+			margin-bottom: 3px;
 		}
 	}
 }
@@ -1211,7 +1213,7 @@ $element-sidebar-wrapper-width: 267px;
 	}
 }
 
-.add_to_collection,.add_to_collection:focus,.add{
+.add_to_collection,.add_to_collection:focus,.add,.upload{
 	background: transparent $url_3 no-repeat 19px -443px;
 	border: none;
 	font-size: 15px;
@@ -1224,6 +1226,22 @@ $element-sidebar-wrapper-width: 267px;
 		background: transparent $url_3 no-repeat 19px -503px;
 		color: $color_dodger_blue_approx;
 		text-decoration: none;
+	}
+}
+
+.add,.upload {
+	line-height: 40px;
+	color: $color_gravel_approx;
+	text-decoration: none;
+	display: inline-block;
+}
+
+
+.upload {
+	display: inline-block;
+	background-position: -261px -494px;
+	&:hover {
+		background-position: -261px -574px;
 	}
 }
 
@@ -1253,13 +1271,6 @@ form > .add_to_collection[data-collection="legacy_data"] {
 	&:first-of-type {
 		margin-left: 0;
 	}
-}
-
-.add {
-	line-height: 40px;
-	color: $color_gravel_approx;
-	text-decoration: none;
-	display: inline-block;
 }
 
 .remove_from_collection,.remove_from_collection:focus {
@@ -1326,6 +1337,7 @@ form > .add_to_collection[data-collection="legacy_data"] {
 
 .form-choice-wrapper {
 	width: 100%!important;
+	margin-right: 0!important;
 	.choice-wrapper {
 		float: left;
 		margin-right: 20px;
@@ -1438,5 +1450,45 @@ form > .add_to_collection[data-collection="legacy_data"] {
 		&:first-of-type {
 			margin-left: 40px;
 		}
+	}
+}
+
+.back-to-transaction {
+	margin: 0 40px 20px 0;
+}
+
+.panel-upload {
+	.create-form {
+		border: 0;
+		padding-bottom: 0;
+	}
+	form {
+		overflow: hidden;
+	}
+	.form-group {
+		float: left;
+		width: 30%!important;
+	}
+	button {
+		margin: 43px 0 0px 20px;
+    	color: #fff;
+	}
+}
+
+.download-transaction-wrap {
+	padding: 0 40px;
+	.btn {
+		margin-bottom: 20px;
+		float: left;
+	}
+	>div {
+		width: calc(100% - 370px);
+	    font-size: 12px;
+	    color: #aaa;
+	    font-weight: normal;
+	    float: left;
+	    margin-left: 50px;
+	    margin-top: 20px;
+	    line-height: 18px;
 	}
 }
