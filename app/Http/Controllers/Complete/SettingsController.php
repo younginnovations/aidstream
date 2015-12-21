@@ -121,9 +121,15 @@ class SettingsController extends Controller
     {
         $input = Input::all();
         try {
-            $oldIdentifier = $this->organization->reporting_org[0]['reporting_organization_identifier'];
+            $newPublishingType = $input['publishing_type'][0]['publishing'];
+            $oldIdentifier     = $this->organization->reporting_org[0]['reporting_organization_identifier'];
+            $settings          = $this->settingsManager->getSettings($this->organization->id);
+            $publishingType    = $settings->publishing_type;
             $this->settingsManager->updateSettings($input, $this->organization, $this->settings);
-            $activities             = $this->activityManager->getActivities($this->organization->id);
+            $activities = $this->activityManager->getActivities($this->organization->id);
+            if ($publishingType != $newPublishingType) {
+                $this->generateNewFiles($newPublishingType, $activities);
+            }
             $reportingOrgIdentifier = $input['reporting_organization_info'][0]['reporting_organization_identifier'];
             foreach ($activities as $activity) {
                 $status          = $activity['published_to_registry'];
@@ -148,5 +154,38 @@ class SettingsController extends Controller
         $response = ['type' => 'success', 'code' => ['updated', ['name' => 'Settings']]];
 
         return redirect()->to('/')->withResponse($response);
+    }
+
+    public function generateNewFiles($newPublishingType, $activities)
+    {
+        $activityElement = $this->activityManager->getActivityElement();
+        $xmlService      = $activityElement->getActivityXmlService();
+        $orgIdentifier   = $this->organization->reporting_org[0]['reporting_organization_identifier'];
+        if ($newPublishingType == "unsegmented") {
+            $filename       = $orgIdentifier . '-activities.xml';
+            $publishedFiles = $this->activityManager->getActivityPublishedFiles(Session::get('org_id'));
+            $xmlFiles       = [];
+            foreach ($publishedFiles as $publishedFile) {
+                $xmlFiles = array_merge($xmlFiles, $publishedFile->published_activities);
+                $this->activityManager->deletePublishedFile($publishedFile->id);
+            }
+            $xmlService->savePublishedFiles($filename, Session::get('org_id'), $xmlFiles);
+            $xmlService->getMergeXml($xmlFiles, $filename);
+        } elseif ($newPublishingType == "segmented") {
+            $publishedFile = $this->activityManager->getActivityPublishedFiles($this->organization->id)->first();
+            $this->activityManager->deletePublishedFile($publishedFile->id);
+            $activitiesXml = [];
+            foreach ($activities as $activity) {
+                if ($activity->activity_workflow == 3) {
+                    $filename                   = sprintf('%s-%s.xml', $orgIdentifier, $xmlService->segmentedXmlFile($activity));
+                    $publishedActivity          = sprintf('%s-%s.xml', $orgIdentifier, $activity->activity_identifier);
+                    $activitiesXml[$filename][] = $publishedActivity;
+                }
+            }
+            foreach ($activitiesXml as $filename => $xmlFiles) {
+                $xmlService->savePublishedFiles($filename, Session::get('org_id'), $xmlFiles);
+                $xmlService->getMergeXml($xmlFiles, $filename);
+            }
+        }
     }
 }

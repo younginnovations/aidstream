@@ -101,18 +101,14 @@ class XmlGenerator
      */
     public function generateXml(Activity $activity, Collection $transaction, Collection $result, Settings $settings, $activityElement, $orgElem, $organization)
     {
+        $orgIdentifier     = $organization->reporting_org[0]['reporting_organization_identifier'];
+        $filename          = sprintf('%s-%s.xml', $orgIdentifier, ($settings->publishing_type == "segmented") ? $this->segmentedXmlFile($activity) : 'activities');
+        $publishedActivity = sprintf('%s-%s.xml', $orgIdentifier, $activity->activity_identifier);
         $xml               = $this->getXml($activity, $transaction, $result, $settings, $activityElement, $orgElem, $organization);
-        $publishedActivity = $activity->identifier['iati_identifier_text'] . '.xml';
-        $file              = substr($publishedActivity, 0, strpos($publishedActivity, "-"));
         $result            = $xml->save(public_path('uploads/files/activity/' . $publishedActivity));
         if ($result) {
-            $published = $this->activityPublished->firstOrNew(['filename' => $file . '.xml', 'organization_id' => $activity->organization_id]);
-            $published->touch();
-            $publishedActivities = (array) $published->published_activities;
-            (in_array($publishedActivity, $publishedActivities)) ?: array_push($publishedActivities, $publishedActivity);
-            $published->published_activities = $publishedActivities;
-            $published->save();
-            $xmlMerge = $this->getMergeXml($published->published_activities, $file);
+            $publishedFiles = $this->savePublishedFiles($filename, $activity->organization_id, $publishedActivity);
+            $this->getMergeXml($publishedFiles, $filename);
         }
     }
 
@@ -194,9 +190,9 @@ class XmlGenerator
 
     /**
      * @param $published
-     * @param $file
+     * @param $filename
      */
-    public function getMergeXml($published, $file)
+    public function getMergeXml($published, $filename)
     {
         $dom = new DOMDocument();
         $dom->appendChild($dom->createElement('iati-activities'));
@@ -213,6 +209,50 @@ class XmlGenerator
         }
 
         $dom->saveXml();
-        $dom->save(public_path('uploads/files/activity/' . $file . '.xml'));
+        $dom->save(public_path('uploads/files/activity/' . $filename));
+    }
+
+    /**
+     * @param Activity $activity
+     * @return string
+     */
+    public function segmentedXmlFile(Activity $activity)
+    {
+        $recipientCountry = (array) $activity['recipient_country'];
+        $recipientRegion  = (array) $activity['recipient_region'];
+        if (count($recipientRegion) == 1) {
+            return $recipientRegion[0]['region_code'];
+        } elseif (count($recipientCountry) == 1) {
+            return $recipientCountry[0]['country_code'];
+        } elseif (count($recipientCountry) > 1) {
+            $maxPercentage = 0;
+            $code          = $recipientCountry[0]['country_code'];
+            foreach ($recipientCountry as $country) {
+                $percentage = $country['percentage'];
+                if ($percentage > $maxPercentage) {
+                    $maxPercentage = $percentage;
+                    $code          = $country['country_code'];
+                }
+            }
+
+            return $code;
+        } else {
+            return '998';
+        }
+    }
+
+    public function savePublishedFiles($filename, $organizationId, $publishedActivity)
+    {
+        $published = $this->activityPublished->firstOrNew(['filename' => $filename, 'organization_id' => $organizationId]);
+        $published->touch();
+        $publishedActivities = $publishedActivity;
+        if (!is_array($publishedActivity)) {
+            $publishedActivities = (array) $published->published_activities;
+            (in_array($publishedActivity, $publishedActivities)) ?: array_push($publishedActivities, $publishedActivity);
+        }
+        $published->published_activities = $publishedActivities;
+        $published->save();
+
+        return $published->published_activities;
     }
 }
