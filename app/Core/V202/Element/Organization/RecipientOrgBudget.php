@@ -1,39 +1,14 @@
-<?php namespace App\Core\V201\Element\Organization;
+<?php namespace App\Core\V202\Element\Organization;
 
-use App\Core\Elements\BaseElement;
 use App;
+use App\Core\V201\Element\Organization\RecipientOrgBudget as V201RecipientOrgBudget;
 
 /**
  * Class RecipientOrgBudget
- * @package App\Core\V201\Element\Organization
+ * @package App\Core\V202\Element\Organization
  */
-class RecipientOrgBudget extends BaseElement
+class RecipientOrgBudget extends V201RecipientOrgBudget
 {
-    /**
-     * @var array
-     */
-    protected $narratives = [];
-
-    /**
-     * @param $narrative
-     * @return $this
-     */
-    public function setNarrative($narrative)
-    {
-        $this->narratives[] = $narrative;
-
-        return $this;
-    }
-
-    /**
-     * return recipient organization budget form
-     * @return string
-     */
-    public function getForm()
-    {
-        return 'App\Core\V201\Forms\Organization\MultipleRecipientOrgBudgetForm';
-    }
-
     /**
      * @param $organization
      * @return mixed
@@ -44,6 +19,9 @@ class RecipientOrgBudget extends BaseElement
         $recipientOrgBudget = (array) $organization->recipient_organization_budget;
         foreach ($recipientOrgBudget as $RecipientOrgBudget) {
             $organizationData[] = [
+                '@attributes'   => [
+                    'status' => $RecipientOrgBudget['status']
+                ],
                 'recipient-org' => [
                     '@attributes' => [
                         'ref' => $RecipientOrgBudget['recipient_organization'][0]['Ref']
@@ -71,14 +49,5 @@ class RecipientOrgBudget extends BaseElement
         }
 
         return $organizationData;
-    }
-
-    /**
-     * return recipient organization budget repository
-     * @return mixed
-     */
-    public function getRepository()
-    {
-        return App::make('App\Core\V201\Repositories\Organization\RecipientOrgBudgetRepository');
     }
 }

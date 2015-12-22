@@ -1,5 +1,7 @@
 <?php namespace App\Core\V201\Element\Organization;
 
+use Illuminate\Support\Facades\Session;
+
 /**
  * Class XmlService
  * @package App\Core\V201\Element\Organization
@@ -20,7 +22,7 @@ class XmlService extends XmlGenerator
         $message = '';
         try {
             $xml = $this->getXml($organization, $organizationData, $settings, $orgElem);
-            $xml->schemaValidate(app_path('/Core/V201/XmlSchema/iati-organisations-schema.xsd'));
+            $xml->schemaValidate(app_path(sprintf('/Core/%s/XmlSchema/iati-organisations-schema.xsd', Session::get('version'))));
         } catch (\Exception $e) {
             $message = $e->getMessage();
             $message = str_replace('DOMDocument::schemaValidate(): ', '', $message);
