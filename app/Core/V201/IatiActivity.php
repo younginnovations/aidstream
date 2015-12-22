@@ -329,4 +329,19 @@ class IatiActivity extends WizardIatiActivity
     {
         return app('App\Core\V201\Requests\Activity\Result');
     }
+
+    public function getUploadActivity()
+    {
+        return app('App\Core\V201\Element\Activity\UploadActivity');
+    }
+
+    public function getUploadActivityRequest()
+    {
+        return app('App\Core\V201\Requests\Activity\UploadActivity');
+    }
+
+    public function getCsvImportValidator()
+    {
+        return app('App\Core\V201\Requests\Activity\CsvImportValidator');
+    }
 }

@@ -37,10 +37,19 @@ $router->group(
         $router->resource('activity.transaction', 'TransactionController');
         $router->resource('activity.transaction.delete', 'TransactionController@destroy');
         $router->resource('activity.transaction-upload', 'TransactionUploadController');
+        $router->resource('activity-upload', 'ActivityUploadController');
         Route::get(
             '/download-detailed-transaction',
             function () {
                 $pathToFile = app_path("Core/" . session()->get('version') . "/Files/Csv/iati_transaction_template_detailed.csv");
+
+                return Response::download($pathToFile);
+            }
+        );
+        Route::get(
+            '/download-activity-template',
+            function () {
+                $pathToFile = app_path("Core/" . session()->get('version') . "/Files/Csv/iati_activity_template.csv");
 
                 return Response::download($pathToFile);
             }

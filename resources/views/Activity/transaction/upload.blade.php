@@ -1,21 +1,23 @@
 @extends('app')
 @section('content')
+    @if(count($errors)>0)
+        <div class="alert alert-warning">
+            @foreach($errors->all() as $error)
+                <ul>
+                    <li>{{$error}}</li>
+                </ul>
+            @endforeach
+        </div>
+    @endif
     <div class="container main-container">
         <div class="row">
         @include('includes.side_bar_menu')
             <div class="col-xs-9 col-md-9 col-lg-9 content-wrapper">
                 <div class="panel-content-heading panel-title-heading">Upload Transaction for <span>{{$activity->IdentifierTitle}}</span></div>
                 <div class="col-xs-8 col-md-8 col-lg-8 element-content-wrapper">
-                <div class="panel panel-default panel-upload">
-                <a href="{{ route('activity.transaction.index', $id) }}" class="btn btn-primary pull-right back-to-transaction">Back to Transaction List</a>
-                @if(count($errors)>0)
-                    @foreach($errors->all() as $error)
-                        <ul>
-                        <li style="color:red;">{{$error}}</li>
-                        </ul>
-                    @endforeach
-                @endif
-                    
+                <a href="{{ route('activity.transaction.index', $id) }}" class="btn btn-primary">Back to Transaction List</a>
+                <div class="panel panel-default">
+                    <div class="panel-content-heading panel-title-heading">Upload Transaction for <span>{{$activity->IdentifierTitle}}</span></div>
                     <div class="panel-body">
                         <div class="create-form">
                             {!! form($form) !!}
