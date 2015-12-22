@@ -14,5 +14,7 @@ return [
     'activity_statuses'        => 'Activity has been :name',
     'activity_statuses_failed' => 'Activity cannot be :name',
     'org_statuses'             => 'Organization has been :name',
-    'org_statuses_failed'      => 'Organization cannot be :name'
+    'org_statuses_failed'      => 'Organization cannot be :name',
+    'settings_registry_info'   => 'Please fill up Publisher Id & Api Id to publish',
+    'publish_registry'         => 'Could not publish registry. Try Again'
 ];
