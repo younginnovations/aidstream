@@ -25,18 +25,19 @@ class SettingsRequest extends Request
      */
     public function rules()
     {
-        $req = $this->request;
+        $req                               = $this->request;
         $this->reporting_organization_info = $req->get('reporting_organization_info')[0];
-        $this->default_field_values = $req->get('default_field_values')[0];
+        $this->default_field_values        = $req->get('default_field_values')[0];
 
         $rules = [];
 
-        foreach($this->reporting_organization_info as $key=>$val) {
+        foreach ($this->reporting_organization_info as $key => $val) {
             $rules["reporting_organization_info.0.$key"] = 'required';
         }
-        foreach($this->default_field_values as $key=>$val) {
+        foreach ($this->default_field_values as $key => $val) {
             $rules["default_field_values.0.$key"] = 'required';
         }
+        $rules["default_field_values.0.linked_data_uri"] = 'url';
 
         return $rules;
     }
@@ -49,12 +50,13 @@ class SettingsRequest extends Request
     {
         $messages = [];
 
-        foreach($this->reporting_organization_info as $key=>$val) {
+        foreach ($this->reporting_organization_info as $key => $val) {
             $messages["reporting_organization_info.0.$key.required"] = sprintf("The %s is required.", str_replace('_', ' ', $key));
         }
-        foreach($this->default_field_values as $key=>$val) {
+        foreach ($this->default_field_values as $key => $val) {
             $messages["default_field_values.0.$key.required"] = sprintf("The %s is required.", str_replace('_', ' ', $key));
         }
+        $messages["default_field_values.0.linked_data_uri.url"] = "Linked data uri is invalid.";
 
         return $messages;
     }

@@ -25,6 +25,7 @@ class DefaultFieldValuesForm extends BaseForm
                 ]
             )
             ->add('default_hierarchy', 'text')
+            ->add('linked_data_uri', 'text', ['label' => 'Linked Data Default'])
             ->add(
                 'default_collaboration_type',
                 'select',
