@@ -344,4 +344,14 @@ class IatiActivity extends WizardIatiActivity
     {
         return app('App\Core\V201\Requests\Activity\CsvImportValidator');
     }
+
+    public function getChangeActivityDefault()
+    {
+        return app('App\Core\V201\Element\Activity\ChangeActivityDefault');
+    }
+
+    public function getChangeActivityDefaultRequest()
+    {
+        return app('App\Core\V201\Requests\Activity\ChangeActivityDefault');
+    }
 }

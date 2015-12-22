@@ -2,9 +2,12 @@
 
 use App\Core\V201\Requests\Activity\IatiIdentifierRequest;
 use App\Http\Controllers\Controller;
+use App\Services\Activity\ChangeActivityDefaultManager;
 use App\Services\Activity\ResultManager;
 use App\Services\Activity\TransactionManager;
+use App\Services\FormCreator\Activity\ChangeActivityDefault;
 use App\Services\Organization\OrganizationManager;
+use App\Services\RequestManager\Activity\ChangeActivityDefault as ChangeActivityDefaultRequest;
 use App\Services\SettingsManager;
 use Illuminate\Http\Request;
 use Illuminate\Session\SessionManager;
@@ -41,16 +44,26 @@ class ActivityController extends Controller
     /**
      * @var TransactionManager
      */
-    private $transactionManager;
+    protected $transactionManager;
+    /**
+     * @var ChangeActivityDefault
+     */
+    private $changeActivityDefaultForm;
+    /**
+     * @var ChangeActivityDefaultManager
+     */
+    protected $changeActivityDefaultManager;
 
     /**
-     * @param SettingsManager     $settingsManager
-     * @param SessionManager      $sessionManager
-     * @param OrganizationManager $organizationManager
-     * @param Identifier          $identifierForm
-     * @param ActivityManager     $activityManager
-     * @param ResultManager       $resultManager
-     * @param TransactionManager  $transactionManager
+     * @param SettingsManager              $settingsManager
+     * @param SessionManager               $sessionManager
+     * @param OrganizationManager          $organizationManager
+     * @param Identifier                   $identifierForm
+     * @param ActivityManager              $activityManager
+     * @param ResultManager                $resultManager
+     * @param TransactionManager           $transactionManager
+     * @param ChangeActivityDefault        $changeActivityDefaultForm
+     * @param ChangeActivityDefaultManager $changeActivityDefaultManager
      */
     function __construct(
         SettingsManager $settingsManager,
@@ -59,17 +72,21 @@ class ActivityController extends Controller
         Identifier $identifierForm,
         ActivityManager $activityManager,
         ResultManager $resultManager,
-        TransactionManager $transactionManager
+        TransactionManager $transactionManager,
+        ChangeActivityDefault $changeActivityDefaultForm,
+        ChangeActivityDefaultManager $changeActivityDefaultManager
     ) {
         $this->middleware('auth');
-        $this->settingsManager     = $settingsManager;
-        $this->sessionManager      = $sessionManager;
-        $this->organizationManager = $organizationManager;
-        $this->identifierForm      = $identifierForm;
-        $this->activityManager     = $activityManager;
-        $this->organization_id     = $this->sessionManager->get('org_id');
-        $this->resultManager       = $resultManager;
-        $this->transactionManager  = $transactionManager;
+        $this->settingsManager              = $settingsManager;
+        $this->sessionManager               = $sessionManager;
+        $this->organizationManager          = $organizationManager;
+        $this->identifierForm               = $identifierForm;
+        $this->activityManager              = $activityManager;
+        $this->organization_id              = $this->sessionManager->get('org_id');
+        $this->resultManager                = $resultManager;
+        $this->transactionManager           = $transactionManager;
+        $this->changeActivityDefaultForm    = $changeActivityDefaultForm;
+        $this->changeActivityDefaultManager = $changeActivityDefaultManager;
     }
 
     /**
@@ -203,5 +220,42 @@ class ActivityController extends Controller
         $response = ['type' => $type, 'code' => ['transfer_message', ['name' => $message]]];
 
         return redirect()->back()->withResponse($response);
+    }
+
+    /**
+     * show form to update activity default values
+     * @param $orgId
+     * @return \Illuminate\View\View
+     */
+    public function changeActivityDefault($orgId)
+    {
+        $settings           = $this->settingsManager->getSettings($orgId);
+        $defaultFieldValues = $settings->default_field_values;
+        $form               = $this->changeActivityDefaultForm->edit($defaultFieldValues, $orgId);
+
+        return view('Activity.changeActivityDefault', compact('form', 'defaultFieldValues'));
+    }
+
+    /**
+     * Update Activity default values
+     * @param                              $orgId
+     * @param Request                      $request
+     * @param ChangeActivityDefaultRequest $changeActivityDefaultRequest
+     * @return mixed
+     */
+    public function updateActivityDefault($orgId, Request $request, ChangeActivityDefaultRequest $changeActivityDefaultRequest)
+    {
+        $settings           = $this->settingsManager->getSettings($orgId);
+        $defaultFieldValues = $settings->default_field_values[0];
+        $defaultFieldValues = [array_merge($defaultFieldValues, $request->except(['_method', '_token']))];
+        $result             = $this->changeActivityDefaultManager->update($defaultFieldValues, $settings);
+        if (!$result) {
+            $response = ['type' => 'danger', 'code' => ['save_failed', ['name' => 'Activity Defaults']]];
+
+            return redirect()->back()->withResponse($response);
+        }
+        $response = ['type' => 'success', 'code' => ['updated', ['name' => 'Activity Defaults']]];
+
+        return redirect()->route('activity.create')->withResponse($response);
     }
 }

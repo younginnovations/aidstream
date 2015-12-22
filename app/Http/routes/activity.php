@@ -63,5 +63,19 @@ $router->group(
                 'uses' => 'ActivityController@deletePublishedFile'
             ]
         );
+        $router->get(
+            'change-activity-default/{id}',
+            [
+                'as'   => 'change-activity-default',
+                'uses' => 'ActivityController@changeActivityDefault'
+            ]
+        );
+        $router->put(
+            'update-activity-default/{id}',
+            [
+                'as'   => 'update-activity-default',
+                'uses' => 'ActivityController@updateActivityDefault'
+            ]
+        );
     }
 );
