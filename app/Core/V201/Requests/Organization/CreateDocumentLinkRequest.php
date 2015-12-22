@@ -60,7 +60,6 @@ class CreateDocumentLinkRequest extends OrganizationBaseRequest
         }
 
         return $rules;
-
     }
 
     /**
@@ -91,7 +90,6 @@ class CreateDocumentLinkRequest extends OrganizationBaseRequest
         }
 
         return $messages;
-
     }
 
     /**

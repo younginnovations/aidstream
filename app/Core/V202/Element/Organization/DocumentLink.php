@@ -1,39 +1,15 @@
-<?php namespace App\Core\V201\Element\Organization;
+<?php namespace App\Core\V202\Element\Organization;
 
-use App\Core\Elements\BaseElement;
 use App;
+use App\Core\V201\Element\Organization\DocumentLink as V201DocumentLink;
 use App\Models\Organization\OrganizationData;
 
 /**
  * Class DocumentLink
- * @package App\Core\V201\Element\Organization
+ * @package App\Core\V202\Element\Organization
  */
-class DocumentLink extends BaseElement
+class DocumentLink extends V201DocumentLink
 {
-    /**
-     * @var array
-     */
-    protected $narratives = [];
-
-    /**
-     * @param $narrative
-     * @return $this
-     */
-    public function setNarrative($narrative)
-    {
-        $this->narratives[] = $narrative;
-
-        return $this;
-    }
-
-    /**
-     * return document link form path
-     */
-    public function getForm()
-    {
-        return 'App\Core\V201\Forms\Organization\MultipleDocumentLinkForm';
-    }
-
     /**
      * @param OrganizationData $organizationData
      * @return array
@@ -57,6 +33,9 @@ class DocumentLink extends BaseElement
                 'language'          => [
                     '@attributes' => ['code' => $orgDocumentLink['language'][0]['language']],
                 ],
+                'document-date'     => [
+                    '@attributes' => ['iso-date' => $orgDocumentLink['document_date'][0]['date']],
+                ],
                 'recipient-country' => [
                     '@attributes' => ['code' => $orgDocumentLink['recipient_country'][0]['code']],
                     'narrative'   => $this->buildNarrative($orgDocumentLink['recipient_country'][0]['narrative'])
@@ -65,13 +44,5 @@ class DocumentLink extends BaseElement
         }
 
         return $orgDocumentLinkData;
-    }
-
-    /**
-     * return organization document link repository
-     */
-    public function getRepository()
-    {
-        return App::make('App\Core\V201\Repositories\Organization\DocumentLinkRepository');
     }
 }

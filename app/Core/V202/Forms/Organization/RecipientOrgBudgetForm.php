@@ -1,10 +1,10 @@
-<?php namespace App\Core\V201\Forms\Organization;
+<?php namespace App\Core\V202\Forms\Organization;
 
 use App\Core\Form\BaseForm;
 
 /**
  * Class RecipientOrgBudgetForm
- * @package App\Core\V201\Forms\Organization
+ * @package App\Core\V202\Forms\Organization
  */
 class RecipientOrgBudgetForm extends BaseForm
 {
@@ -14,6 +14,7 @@ class RecipientOrgBudgetForm extends BaseForm
     public function buildForm()
     {
         $this
+            ->addSelect('status', $this->getCodeList('BudgetStatus', 'Activity'))
             ->addCollection('recipient_organization', 'Organization\RecipientOrgForm')
             ->addNarrative('narrative')
             ->addAddMoreButton('add_narrative', 'narrative')

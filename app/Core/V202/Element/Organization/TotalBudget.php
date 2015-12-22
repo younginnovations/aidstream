@@ -1,39 +1,14 @@
-<?php namespace App\Core\V201\Element\Organization;
+<?php namespace App\Core\V202\Element\Organization;
 
-use App\Core\Elements\BaseElement;
 use App;
+use App\Core\V201\Element\Organization\TotalBudget as V201TotalBudget;
 
 /**
  * Class TotalBudget
- * @package App\Core\V201\Element\Organization
+ * @package App\Core\V202\Element\Organization
  */
-class TotalBudget extends BaseElement
+class TotalBudget extends V201TotalBudget
 {
-    /**
-     * @var array
-     */
-    protected $narratives = [];
-
-    /**
-     * @param $narrative
-     * @return $this
-     */
-    public function setNarrative($narrative)
-    {
-        $this->narratives[] = $narrative;
-
-        return $this;
-    }
-
-    /**
-     * return total budgets form path
-     * @return string
-     */
-    public function getForm()
-    {
-        return 'App\Core\V201\Forms\Organization\MultipleTotalBudgetForm';
-    }
-
     /**
      * @param $orgData
      * @return array
@@ -44,6 +19,9 @@ class TotalBudget extends BaseElement
         $totalBudget        = (array) $orgData->total_budget;
         foreach ($totalBudget as $orgTotalBudget) {
             $orgTotalBudgetData[] = [
+                '@attributes'  => [
+                    'status' => $orgTotalBudget['status']
+                ],
                 'period-start' => [
                     '@attributes' => [
                         'iso-date' => $orgTotalBudget['period_start'][0]['date']
@@ -65,14 +43,5 @@ class TotalBudget extends BaseElement
         }
 
         return $orgTotalBudgetData;
-    }
-
-    /**
-     * return total budget repository
-     * @return mixed
-     */
-    public function getRepository()
-    {
-        return App::make('App\Core\V201\Repositories\Organization\TotalBudgetRepository');
     }
 }
