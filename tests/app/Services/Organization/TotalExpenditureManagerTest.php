@@ -49,7 +49,9 @@ class TotalExpenditureManagerTest extends AidStreamTestCase
         $user->shouldReceive('getAttribute')->once()->with('organization')->andReturn($organizationModel);
         $this->auth->shouldReceive('user')->once()->andReturn($user);
         $this->orgDataModel->shouldReceive('getAttribute')->once()->with('total_expenditure')->andReturn([]);
+        $this->database->shouldReceive('beginTransaction');
         $this->totalExpenditureRepo->shouldReceive('update')->once()->with([], $this->orgDataModel)->andReturn(true);
+        $this->database->shouldReceive('commit');
         $this->logger->shouldReceive('info')->once()->with("Organization Total Expenditure Updated", ['for' => []]);
         $this->dbLogger->shouldReceive('activity')->once()->with('organization.total_expenditure_updated', ['name' => 'organizationName']);
         $this->assertTrue($this->totalExpenditureManager->update([], $this->orgDataModel));

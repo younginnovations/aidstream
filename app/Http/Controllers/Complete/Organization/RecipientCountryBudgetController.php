@@ -1,11 +1,4 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: kriti
- * Date: 9/9/15
- * Time: 2:33 PM
- */
-namespace App\Http\Controllers\Complete\Organization;
+<?php namespace App\Http\Controllers\Complete\Organization;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -29,11 +22,8 @@ class RecipientCountryBudgetController extends Controller
     protected $recipientCountryBudgetForm;
     protected $organizationManager;
 
-    public function __construct(
-        FormBuilder $formBuilder,
-        RecipientCountryBudgetManager $recipientCountryBudgetManager,
-        OrganizationManager $organizationManager
-    ) {
+    public function __construct(FormBuilder $formBuilder, RecipientCountryBudgetManager $recipientCountryBudgetManager, OrganizationManager $organizationManager)
+    {
         $this->middleware('auth');
         $this->recipientCountryBudgetForm    = $formBuilder;
         $this->recipientCountryBudgetManager = $recipientCountryBudgetManager;

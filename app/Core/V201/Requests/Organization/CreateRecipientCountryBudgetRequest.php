@@ -1,10 +1,11 @@
 <?php namespace App\Core\V201\Requests\Organization;
 
+/**
+ * Class CreateRecipientCountryBudgetRequest
+ * @package App\Core\V201\Requests\Organization
+ */
 class CreateRecipientCountryBudgetRequest extends OrganizationBaseRequest
 {
-
-    protected $redirect;
-
     /**
      * Get the validation rules that apply to the request.
      *
@@ -33,25 +34,11 @@ class CreateRecipientCountryBudgetRequest extends OrganizationBaseRequest
         return $rules;
     }
 
-    public function getRecipientCountryBudgetRules(array $formfields, $formbase)
-    {
-        $rules = [];
-        foreach ($formfields as $recipientCountryIndex => $recipientCountry) {
-            $recipientCountryForm                                                             = sprintf(
-                '%s.recipient_country.%s',
-                $formbase,
-                $recipientCountryIndex
-            );
-            $rules[sprintf('%srecipient_country.%s.code', $formbase, $recipientCountryIndex)] = 'required';
-            $rules                                                                            = $this->getRulesForNarrative(
-                $recipientCountry['narrative'],
-                $recipientCountryForm
-            );
-        }
-
-        return $rules;
-    }
-
+    /**
+     * return validation messages to the rules
+     *
+     * @return array
+     */
     public function messages()
     {
         $messages = [];
@@ -75,23 +62,40 @@ class CreateRecipientCountryBudgetRequest extends OrganizationBaseRequest
         return $messages;
     }
 
-    public function getRecipientCountryBudgetMessages(array $formfields, $formbase)
+    /**
+     * @param array $formFields
+     * @param       $formBase
+     * @return array
+     */
+    public function getRecipientCountryBudgetRules(array $formFields, $formBase)
+    {
+        $rules = [];
+        foreach ($formFields as $recipientCountryIndex => $recipientCountry) {
+            $recipientCountryForm                             = sprintf('%s.recipient_country.%s', $formBase, $recipientCountryIndex);
+            $rules[sprintf('%s.code', $recipientCountryForm)] = 'required';
+            $rules                                            = array_merge(
+                $rules,
+                $this->getRulesForNarrative($recipientCountry['narrative'], $recipientCountryForm)
+            );
+        }
+
+        return $rules;
+    }
+
+    /**
+     * @param array $formFields
+     * @param       $formBase
+     * @return array
+     */
+    public function getRecipientCountryBudgetMessages(array $formFields, $formBase)
     {
         $messages = [];
-        foreach ($formfields as $recipientCountryIndex => $recipientCountry) {
-            $recipientCountryForm = sprintf(
-                '%s.recipient_country.%s',
-                $formbase,
-                $recipientCountryIndex
-            );
-            $messages[sprintf(
-                '%s.recipient_country.%s.code.required',
-                $formbase,
-                $recipientCountryIndex
-            )]                    = 'code is required';
-            $messages             = $this->getMessagesForNarrative(
-                $recipientCountry['narrative'],
-                $recipientCountryForm
+        foreach ($formFields as $recipientCountryIndex => $recipientCountry) {
+            $recipientCountryForm                                         = sprintf('%s.recipient_country.%s', $formBase, $recipientCountryIndex);
+            $messages[sprintf('%s.code.required', $recipientCountryForm)] = 'Code is required';
+            $messages                                                     = array_merge(
+                $messages,
+                $this->getMessagesForNarrative($recipientCountry['narrative'], $recipientCountryForm)
             );
         }
 

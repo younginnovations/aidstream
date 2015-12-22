@@ -41,7 +41,7 @@ class TotalExpenditureManager
      * @param DbLogger        $dbLogger
      * @param Logger          $logger
      */
-    function __construct(Version $version, Guard $auth, DatabaseManager $database, DbLogger $dbLogger, LOgger $logger)
+    function __construct(Version $version, Guard $auth, DatabaseManager $database, DbLogger $dbLogger, Logger $logger)
     {
         $this->auth                 = $auth;
         $this->database             = $database;
@@ -79,7 +79,9 @@ class TotalExpenditureManager
     public function update(array $totalExpenditure, OrganizationData $organizationData)
     {
         try {
+            $this->database->beginTransaction();
             $this->totalExpenditureRepo->update($totalExpenditure, $organizationData);
+            $this->database->commit();
             $this->logger->info(
                 'Organization Total Expenditure Updated',
                 ['for' => $organizationData->total_expenditure]
@@ -91,8 +93,8 @@ class TotalExpenditureManager
 
             return true;
         } catch (Exception $exception) {
-
-            $this->log->error(
+            $this->database->rollback();
+            $this->logger->error(
                 sprintf('Total Expenditure could not be updated due to %s', $exception->getMessage()),
                 [
                     'OrganizationTotalBudget' => $totalExpenditure,
