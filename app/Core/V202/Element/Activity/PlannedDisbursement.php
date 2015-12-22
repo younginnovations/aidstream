@@ -1,30 +1,14 @@
-<?php namespace App\Core\V201\Element\Activity;
+<?php namespace App\Core\V202\Element\Activity;
 
-use App\Core\Elements\BaseElement;
+use App\Core\V201\Element\Activity\PlannedDisbursement as V201PlannedDisbursement;
 use App\Models\Activity\Activity;
 
 /**
  * Class PlannedDisbursement
- * @package App\Core\V201\Element\Activity
+ * @package App\Core\V202\Element\Activity
  */
-class PlannedDisbursement extends BaseElement
+class PlannedDisbursement extends V201PlannedDisbursement
 {
-    /**
-     * return planned disbursement form
-     */
-    public function getForm()
-    {
-        return 'App\Core\V201\Forms\Activity\PlannedDisbursements';
-    }
-
-    /**
-     * return planned disbursement repository
-     */
-    public function getRepository()
-    {
-        return App('App\Core\V201\Repositories\Activity\PlannedDisbursement');
-    }
-
     /**
      * @param $activity
      * @return array
@@ -54,6 +38,22 @@ class PlannedDisbursement extends BaseElement
                         'value-date' => $plannedDisbursement['value'][0]['value_date']
                     ],
                     '@value'      => $plannedDisbursement['value'][0]['amount']
+                ],
+                'provider-org' => [
+                    '@attributes' => [
+                        'ref'                  => $plannedDisbursement['provider_org'][0]['ref'],
+                        'provider-activity-id' => $plannedDisbursement['provider_org'][0]['activity_id'],
+                        'type'                 => $plannedDisbursement['provider_org'][0]['type']
+                    ],
+                    'narrative'   => $this->buildNarrative($plannedDisbursement['provider_org'][0]['narrative'])
+                ],
+                'receiver-org' => [
+                    '@attributes' => [
+                        'ref'                  => $plannedDisbursement['receiver_org'][0]['ref'],
+                        'receiver-activity-id' => $plannedDisbursement['receiver_org'][0]['activity_id'],
+                        'type'                 => $plannedDisbursement['receiver_org'][0]['type']
+                    ],
+                    'narrative'   => $this->buildNarrative($plannedDisbursement['receiver_org'][0]['narrative'])
                 ]
             ];
         }

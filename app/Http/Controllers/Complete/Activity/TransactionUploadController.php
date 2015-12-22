@@ -70,6 +70,7 @@ class TransactionUploadController extends Controller
             return redirect()->back()->withInput()->withErrors($validator)->withResponse($response);
         }
         $this->uploadTransactionManager->save($name, $activity);
+        $this->activityManager->resetActivityWorkflow($id);
         $response = ['type' => 'success', 'code' => ['updated', ['name' => 'Transactions']]];
 
         return redirect()->to(sprintf('/activity/%s/transaction', $id))->withResponse($response);

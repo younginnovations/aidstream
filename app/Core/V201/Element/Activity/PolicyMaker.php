@@ -37,6 +37,7 @@ class PolicyMaker extends BaseElement
         foreach ($policyMakers as $policyMaker) {
             $activityData[] = [
                 '@attributes' => [
+                    'vocabulary'   => $policyMaker['vocabulary'],
                     'code'         => $policyMaker['policy_marker'],
                     'significance' => $policyMaker['significance']
                 ],

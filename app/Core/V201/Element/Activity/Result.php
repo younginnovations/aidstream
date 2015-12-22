@@ -57,7 +57,7 @@ class Result extends BaseElement
      * @param $indicator
      * @return array
      */
-    private function buildIndicator($indicator)
+    protected function buildIndicator($indicator)
     {
 
         $indicator = [
@@ -90,7 +90,7 @@ class Result extends BaseElement
      * @param $period
      * @return array
      */
-    private function buildPeriod($period)
+    protected function buildPeriod($period)
     {
         $period = [
             'period-start' => [
@@ -114,7 +114,7 @@ class Result extends BaseElement
      * @param $data
      * @return array
      */
-    private function buildFunction($data)
+    protected function buildFunction($data)
     {
         $period = [
             '@attributes' => [

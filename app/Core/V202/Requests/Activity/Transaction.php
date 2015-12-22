@@ -1,26 +1,13 @@
-<?php namespace App\Core\V201\Requests\Activity;
+<?php namespace App\Core\V202\Requests\Activity;
+
+use App\Core\V201\Requests\Activity\Transaction as V201Transaction;
 
 /**
  * Class Transaction
- * @package App\Core\V201\Requests\Activity
+ * @package App\Core\V202\Requests\Activity
  */
-class Transaction extends ActivityBaseRequest
+class Transaction extends V201Transaction
 {
-
-    public function rules()
-    {
-        return $this->getTransactionRules($this->request->get('transaction'));
-    }
-
-    /**
-     * prepare the error message
-     * @return array
-     */
-    public function messages()
-    {
-        return $this->getTransactionMessages($this->request->get('transaction'));
-    }
-
     /**
      * returns rules for transaction
      * @param $formFields
@@ -40,7 +27,9 @@ class Transaction extends ActivityBaseRequest
                 $this->getValueRules($transaction['value'], $transactionForm),
                 $this->getDescriptionRules($transaction['description'], $transactionForm),
                 $this->getSectorsRules($transaction['sector'], $transactionForm),
-                $this->getRecipientRegionRules($transaction['recipient_region'], $transactionForm)
+                $this->getRecipientRegionRules($transaction['recipient_region'], $transactionForm),
+                $this->getRulesForProviderOrg($transaction['provider_organization'], $transactionForm),
+                $this->getRulesForReceiverOrg($transaction['receiver_organization'], $transactionForm)
             );
         }
 
@@ -66,7 +55,9 @@ class Transaction extends ActivityBaseRequest
                 $this->getValueMessages($transaction['value'], $transactionForm),
                 $this->getDescriptionMessages($transaction['description'], $transactionForm),
                 $this->getSectorsMessages($transaction['sector'], $transactionForm),
-                $this->getRecipientRegionMessages($transaction['recipient_region'], $transactionForm)
+                $this->getRecipientRegionMessages($transaction['recipient_region'], $transactionForm),
+                $this->getMessagesForProviderOrg($transaction['provider_organization'], $transactionForm),
+                $this->getMessagesForReceiverOrg($transaction['receiver_organization'], $transactionForm)
             );
         }
 
@@ -74,124 +65,19 @@ class Transaction extends ActivityBaseRequest
     }
 
     /**
-     * get transaction type rules
-     * @param $formFields
-     * @param $formBase
+     * @param array $formFields
+     * @param       $formBase
      * @return array
      */
-    protected function getTransactionTypeRules($formFields, $formBase)
+    protected function getRulesForProviderOrg(array $formFields, $formBase)
     {
         $rules = [];
-        foreach ($formFields as $typeIndex => $type) {
-            $typeForm                                              = sprintf('%s.transaction_type.%s', $formBase, $typeIndex);
-            $rules[sprintf('%s.transaction_type_code', $typeForm)] = 'required';
-        }
 
-        return $rules;
-    }
-
-    /**
-     * get transaction type error message
-     * @param $formFields
-     * @param $formBase
-     * @return array
-     */
-    protected function getTransactionTypeMessages($formFields, $formBase)
-    {
-        $messages = [];
-        foreach ($formFields as $typeIndex => $type) {
-            $typeForm                                                          = sprintf('%s.transaction_type.%s', $formBase, $typeIndex);
-            $messages[sprintf('%s.transaction_type_code.required', $typeForm)] = 'Transaction type is required';
-        }
-
-        return $messages;
-    }
-
-    /**
-     * get transaction date rules
-     * @param $formFields
-     * @param $formBase
-     * @return array
-     */
-    protected function getTransactionDateRules($formFields, $formBase)
-    {
-        $rules = [];
-        foreach ($formFields as $dateIndex => $date) {
-            $dateForm                             = sprintf('%s.transaction_date.%s', $formBase, $dateIndex);
-            $rules[sprintf('%s.date', $dateForm)] = 'required';
-        }
-
-        return $rules;
-    }
-
-    /**
-     * get transaction date error message
-     * @param $formFields
-     * @param $formBase
-     * @return array
-     */
-    protected function getTransactionDateMessages($formFields, $formBase)
-    {
-        $messages = [];
-        foreach ($formFields as $dateIndex => $date) {
-            $dateForm                                         = sprintf('%s.transaction_date.%s', $formBase, $dateIndex);
-            $messages[sprintf('%s.date.required', $dateForm)] = 'Date is required';
-        }
-
-        return $messages;
-    }
-
-    /**
-     * get values rules
-     * @param $formFields
-     * @param $formBase
-     * @return array
-     */
-    protected function getValueRules($formFields, $formBase)
-    {
-        $rules = [];
-        foreach ($formFields as $valueIndex => $value) {
-            $valueForm                               = sprintf('%s.value.%s', $formBase, $valueIndex);
-            $rules[sprintf('%s.amount', $valueForm)] = 'required|numeric';
-            $rules[sprintf('%s.date', $valueForm)]   = 'required';
-        }
-
-        return $rules;
-    }
-
-    /**
-     * get value error message
-     * @param $formFields
-     * @param $formBase
-     * @return array
-     */
-    protected function getValueMessages($formFields, $formBase)
-    {
-        $messages = [];
-        foreach ($formFields as $valueIndex => $value) {
-            $valueForm                                           = sprintf('%s.value.%s', $formBase, $valueIndex);
-            $messages[sprintf('%s.amount.required', $valueForm)] = 'Amount is required';
-            $messages[sprintf('%s.amount.numeric', $valueForm)]  = 'Amount must be numeric';
-            $messages[sprintf('%s.date.required', $valueForm)]   = 'Date is required';
-        }
-
-        return $messages;
-    }
-
-    /**
-     * get description rules
-     * @param $formFields
-     * @param $formBase
-     * @return array
-     */
-    protected function getDescriptionRules($formFields, $formBase)
-    {
-        $rules = [];
-        foreach ($formFields as $descriptionIndex => $description) {
-            $narrativeForm = sprintf('%s.description.%s', $formBase, $descriptionIndex);
-            $rules         = array_merge(
+        foreach ($formFields as $providerOrgIndex => $providerOrg) {
+            $providerOrgForm = sprintf('%s.provider_organization.%s', $formBase, $providerOrgIndex);
+            $rules           = array_merge(
                 $rules,
-                $this->getRulesForNarrative($description['narrative'], $narrativeForm)
+                $this->getRulesForNarrative($providerOrg['narrative'], $providerOrgForm)
             );
         }
 
@@ -199,23 +85,63 @@ class Transaction extends ActivityBaseRequest
     }
 
     /**
-     * get description error message
-     * @param $formFields
-     * @param $formBase
+     * @param array $formFields
+     * @param       $formBase
      * @return array
      */
-    protected function getDescriptionMessages($formFields, $formBase)
+    protected function getMessagesForProviderOrg(array $formFields, $formBase)
     {
-        $messages = [];
-        foreach ($formFields as $descriptionIndex => $description) {
-            $narrativeForm = sprintf('%s.description.%s', $formBase, $descriptionIndex);
-            $messages      = array_merge(
-                $messages,
-                $this->getMessagesForNarrative($description['narrative'], $narrativeForm)
+        $message = [];
+
+        foreach ($formFields as $providerOrgIndex => $providerOrg) {
+            $providerOrgForm = sprintf('%s.provider_organization.%s', $formBase, $providerOrgIndex);
+            $message         = array_merge(
+                $message,
+                $this->getMessagesForNarrative($providerOrg['narrative'], $providerOrgForm)
             );
         }
 
-        return $messages;
+        return $message;
+    }
+
+    /**
+     * @param array $formFields
+     * @param       $formBase
+     * @return array
+     */
+    protected function getRulesForReceiverOrg(array $formFields, $formBase)
+    {
+        $rules = [];
+
+        foreach ($formFields as $receiverOrgIndex => $receiverOrg) {
+            $receiverOrgForm = sprintf('%s.receiver_organization.%s', $formBase, $receiverOrgIndex);
+            $rules           = array_merge(
+                $rules,
+                $this->getRulesForNarrative($receiverOrg['narrative'], $receiverOrgForm)
+            );
+        }
+
+        return $rules;
+    }
+
+    /**
+     * @param array $formFields
+     * @param       $formBase
+     * @return array
+     */
+    protected function getMessagesForReceiverOrg(array $formFields, $formBase)
+    {
+        $message = [];
+
+        foreach ($formFields as $receiverOrgIndex => $receiverOrg) {
+            $receiverOrgForm = sprintf('%s.receiver_organization.%s', $formBase, $receiverOrgIndex);
+            $message         = array_merge(
+                $message,
+                $this->getMessagesForNarrative($receiverOrg['narrative'], $receiverOrgForm)
+            );
+        }
+
+        return $message;
     }
 
     /**
@@ -231,6 +157,7 @@ class Transaction extends ActivityBaseRequest
         foreach ($formFields as $sectorIndex => $sector) {
             $sectorForm                                          = sprintf('%s.sector.%s', $formBase, $sectorIndex);
             $rules[sprintf('%s.sector_vocabulary', $sectorForm)] = 'required';
+            $rules[sprintf('%s.vocabulary_uri', $sectorForm)]    = 'url';
             if ($sector['sector_vocabulary'] == 1) {
                 $rules[sprintf('%s.sector_code', $sectorForm)] = 'required';
             } elseif ($sector['sector_vocabulary'] == 2) {
@@ -255,8 +182,9 @@ class Transaction extends ActivityBaseRequest
         $messages = [];
 
         foreach ($formFields as $sectorIndex => $sector) {
-            $sectorForm                                                            = sprintf('%s.sector.%s', $formBase, $sectorIndex);
-            $messages[sprintf('%s.sector_vocabulary.%s', $sectorForm, 'required')] = 'Sector Vocabulary is required.';
+            $sectorForm                                                      = sprintf('%s.sector.%s', $formBase, $sectorIndex);
+            $messages[sprintf('%s.sector_vocabulary.required', $sectorForm)] = 'Sector Vocabulary is required.';
+            $messages[sprintf('%s.vocabulary_uri.url', $sectorForm)]         = 'Enter valid URL. eg. http://example.com';
             if ($sector['sector_vocabulary'] == 1) {
                 $messages[sprintf('%s.sector_code.%s', $sectorForm, 'required')] = 'Sector is required.';
             } elseif ($sector['sector_vocabulary'] == 2) {
@@ -281,9 +209,10 @@ class Transaction extends ActivityBaseRequest
         $rules = [];
 
         foreach ($formFields as $recipientRegionIndex => $recipientRegion) {
-            $recipientRegionForm                          = sprintf('%s.recipient_region.%s', $formBase, $recipientRegionIndex);
-            $rules[$recipientRegionForm . '.region_code'] = 'required';
-            $rules                                        = array_merge($rules, $this->getRulesForNarrative($recipientRegion['narrative'], $recipientRegionForm));
+            $recipientRegionForm                             = sprintf('%s.recipient_region.%s', $formBase, $recipientRegionIndex);
+            $rules[$recipientRegionForm . '.region_code']    = 'required';
+            $rules[$recipientRegionForm . '.vocabulary_uri'] = 'url';
+            $rules                                           = array_merge($rules, $this->getRulesForNarrative($recipientRegion['narrative'], $recipientRegionForm));
         }
 
         return $rules;
@@ -302,6 +231,7 @@ class Transaction extends ActivityBaseRequest
         foreach ($formFields as $recipientRegionIndex => $recipientRegion) {
             $recipientRegionForm                                      = sprintf('%s.recipient_region.%s', $formBase, $recipientRegionIndex);
             $messages[$recipientRegionForm . '.region_code.required'] = 'Recipient region code is required';
+            $messages[$recipientRegionForm . '.vocabulary_uri.url']   = 'Enter valid URL. eg. http://example.com';
             $messages                                                 = array_merge($messages, $this->getMessagesForNarrative($recipientRegion['narrative'], $recipientRegionForm));
         }
 

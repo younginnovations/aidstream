@@ -78,6 +78,7 @@ class TransactionController extends Controller
         $activity = $this->activityManager->getActivityData($activityId);
         $data     = $request->all();
         $this->transactionManager->save($data, $activity);
+        $this->activityManager->resetActivityWorkflow($id);
         $response = ['type' => 'success', 'code' => ['created', ['name' => 'Transaction']]];
 
         return redirect()->to(sprintf('/activity/%s/transaction', $activityId))->withResponse($response);
@@ -128,6 +129,7 @@ class TransactionController extends Controller
         $activity           = $this->activityManager->getActivityData($id);
         $transactionDetails = $request->except(['_token', '_method']);
         $this->transactionManager->save($transactionDetails, $activity, $transactionId);
+        $this->activityManager->resetActivityWorkflow($id);
         $response = ['type' => 'success', 'code' => ['updated', ['name' => 'Transactions']]];
 
         return redirect()->to(sprintf('/activity/%s/transaction', $id))->withResponse($response);
