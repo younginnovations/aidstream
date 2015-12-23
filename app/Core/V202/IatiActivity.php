@@ -1,10 +1,17 @@
 <?php namespace App\Core\V202;
 
 use App\Core\V201\IatiActivity as V201;
-use Illuminate\Support\Str;
+use App\Core\IatiFilePathTrait;
 
 class IatiActivity extends V201
 {
+    use IatiFilePathTrait;
+
+    function __construct()
+    {
+        $this->setType('Activity');
+    }
+
     public function getParticipatingOrganization()
     {
         return app('App\Core\V202\Element\Activity\ParticipatingOrganization');
@@ -88,54 +95,5 @@ class IatiActivity extends V201
     public function getResultRequest()
     {
         return app('App\Core\V202\Requests\Activity\Result');
-    }
-
-    /**
-     * return versioned activity class
-     * @param $name
-     * @param $versionedDir
-     * @return \Illuminate\Foundation\Application|mixed
-     */
-    protected function getFile($name, $versionedDir)
-    {
-        return app(sprintf('App\Core\V202\%s\Activity\%s', $versionedDir, $name));
-    }
-
-    /**
-     * return versioned activity file path info
-     * @param $method
-     * @return array
-     */
-    protected function getPathInfo($method)
-    {
-        $versionedDirs = [
-            'Element'    => 'Element',
-            'Request'    => 'Requests',
-            'Repository' => 'Repositories'
-        ];
-
-        preg_match_all('/[A-Z][a-z]+/', $method, $matches);
-        $fileType     = end($matches[0]);
-        $versionedDir = $versionedDirs[$fileType];
-
-        return [$fileType, $versionedDir];
-    }
-
-    /**
-     * handel method calls dynamically starting with get
-     * @param $method
-     * @param $parameters
-     * @return \Illuminate\Foundation\Application|mixed
-     * @throws BadMethodCallException
-     */
-    public function __call($method, $parameters)
-    {
-        if (Str::startsWith($method, 'get')) {
-            $pathInfo = $this->getPathInfo($method);
-            $name     = str_replace(['get', $pathInfo[0]], '', $method);
-
-            return $this->getFile($name, $pathInfo[1]);
-        }
-        throw new BadMethodCallException();
     }
 }

@@ -1,4 +1,4 @@
-<?php namespace Test\app\Core\V201\Repositories\Organization;
+<?php namespace Test\app\Services\Organization;
 
 use App\Services\Organization\DocumentLinkManager;
 use Mockery as m;

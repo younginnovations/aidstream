@@ -9,24 +9,17 @@ $router->group(
         $router->resource('organization.reportingOrg', 'OrgReportingOrgController');
         $router->resource('organization.name', 'NameController');
         $router->resource('organization.total-budget', 'OrgTotalBudgetController');
-        $router->resource(
-            'organization.recipient-country-budget',
-            'RecipientCountryBudgetController'
-        );
-        $router->resource(
-            'organization.recipient-organization-budget',
-            'RecipientOrganizationBudgetController'
-        );
+        $router->resource('organization.total-expenditure', 'TotalExpenditureController');
+        $router->resource('organization.recipient-country-budget', 'RecipientCountryBudgetController');
+        $router->resource('organization.recipient-organization-budget', 'RecipientOrganizationBudgetController');
         $router->resource('organization.document-link', 'DocumentLinkController');
-
 
         $router->get(
             'list-published-files/{action?}/{id?}',
             [
-                'as' => 'list-published-files',
+                'as'   => 'list-published-files',
                 'uses' => 'OrganizationController@listPublishedFiles'
             ]
         );
-
     }
 );
