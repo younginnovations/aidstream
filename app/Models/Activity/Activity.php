@@ -37,7 +37,8 @@ class Activity extends Model
         'document_link',
         'related_activity',
         'legacy_data',
-        'conditions'
+        'conditions',
+        'default_field_values'
     ];
 
     protected $casts = [
@@ -67,6 +68,7 @@ class Activity extends Model
         'related_activity'           => 'json',
         'legacy_data'                => 'json',
         'conditions'                 => 'json',
+        'default_field_values'       => 'json'
     ];
 
     /**

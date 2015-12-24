@@ -39,7 +39,7 @@
                        @endforeach
                    </ol>
                </div>
-
+               <a href="{{route('change-activity-default', $id)}}" class="pull-right"><span class="glyphicon glyphicon-triangle-left"></span>Override Activity Default</a>
                <div class="panel panel-default panel-element-detail">
                    <div class="panel-body">
                        {{--*/

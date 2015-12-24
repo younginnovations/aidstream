@@ -1,15 +1,15 @@
-<?php namespace App\Core\V201\Forms\Settings;
+<?php namespace App\Core\V202\Forms\Settings;
 
 use App\Core\Form\BaseForm;
 
 /**
  * Class DefaultFieldValuesForm
- * @package App\Core\V201\Forms\Settings
+ * @package App\Core\V202\Forms\Settings
  */
 class DefaultFieldValuesForm extends BaseForm
 {
     /**
-     * build Default field values form
+     * build default value form
      */
     public function buildForm()
     {
@@ -22,6 +22,7 @@ class DefaultFieldValuesForm extends BaseForm
             ->addSelect('default_flow_type', $this->getCodeList('FlowType', 'Organization'))
             ->addSelect('default_finance_type', $this->getCodeList('FinanceType', 'Organization'))
             ->addSelect('default_aid_type', $this->getCodeList('AidType', 'Organization'))
-            ->addSelect('default_tied_status', $this->getCodeList('TiedStatus', 'Organization'));
+            ->addSelect('default_tied_status', $this->getCodeList('TiedStatus', 'Organization'))
+            ->addSelect('humanitarian', ['1' => 'Yes', '0' => 'No']);
     }
 }

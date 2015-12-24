@@ -22,7 +22,7 @@
                 </div>
                 <div class="panel panel-default panel-element-detail panel-activity-default">
                     <div class="panel-body">
-                        <a href="{{route('change-activity-default', Session::get('org_id'))}}" class="pull-right"><span class="glyphicon glyphicon-triangle-left"></span>Override Activity Default</a>
+                        <div class="alert alert-info">You can change the Activity Default Field Values once after you create an activity.</div>
                         <div class="panel-default">
                         <div class="panel-heading">@lang('trans.activity_default')</div>
                         <div class="panel-body panel-element-body">
@@ -73,7 +73,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="col-md-6">Default Tied Status:</div>
-                            <div class="col-md-6">{{ $defaultFieldValues[0]['Default_tied_status']  }}</div>
+                            <div class="col-md-6">{{ $defaultFieldValues[0]['default_tied_status']  }}</div>
                         </div>
                         <div class="col-md-6">
                         <div class="col-md-6">Linked Data uri:</div>

@@ -127,8 +127,10 @@ class ActivityController extends Controller
      */
     public function store(IatiIdentifierRequest $request)
     {
-        $input  = $request->all();
-        $result = $this->activityManager->store($input, $this->organization_id);
+        $settings           = $this->settingsManager->getSettings($this->organization_id);
+        $defaultFieldValues = $settings->default_field_values;
+        $input              = $request->all();
+        $result             = $this->activityManager->store($input, $this->organization_id, $defaultFieldValues);
         if (!$result) {
             $response = ['type' => 'danger', 'code' => ['save_failed', ['name' => 'activity']]];
 
@@ -224,31 +226,31 @@ class ActivityController extends Controller
 
     /**
      * show form to update activity default values
-     * @param $orgId
+     * @param $activityId
      * @return \Illuminate\View\View
      */
-    public function changeActivityDefault($orgId)
+    public function changeActivityDefault($activityId)
     {
-        $settings           = $this->settingsManager->getSettings($orgId);
-        $defaultFieldValues = $settings->default_field_values;
-        $form               = $this->changeActivityDefaultForm->edit($defaultFieldValues, $orgId);
+        $activityData       = $this->activityManager->getActivityData($activityId);
+        $defaultFieldValues = $activityData->default_field_values;
+        $form               = $this->changeActivityDefaultForm->edit($defaultFieldValues, $activityId);
 
-        return view('Activity.changeActivityDefault', compact('form', 'defaultFieldValues'));
+        return view('Activity.changeActivityDefault', compact('form', 'defaultFieldValues', 'activityId'));
     }
 
     /**
      * Update Activity default values
-     * @param                              $orgId
+     * @param                              $activityId
      * @param Request                      $request
      * @param ChangeActivityDefaultRequest $changeActivityDefaultRequest
      * @return mixed
      */
-    public function updateActivityDefault($orgId, Request $request, ChangeActivityDefaultRequest $changeActivityDefaultRequest)
+    public function updateActivityDefault($activityId, Request $request, ChangeActivityDefaultRequest $changeActivityDefaultRequest)
     {
-        $settings           = $this->settingsManager->getSettings($orgId);
-        $defaultFieldValues = $settings->default_field_values[0];
+        $activityData       = $this->activityManager->getActivityData($activityId);
+        $defaultFieldValues = $activityData->default_field_values[0];
         $defaultFieldValues = [array_merge($defaultFieldValues, $request->except(['_method', '_token']))];
-        $result             = $this->changeActivityDefaultManager->update($defaultFieldValues, $settings);
+        $result             = $this->changeActivityDefaultManager->update($defaultFieldValues, $activityData);
         if (!$result) {
             $response = ['type' => 'danger', 'code' => ['save_failed', ['name' => 'Activity Defaults']]];
 
@@ -256,6 +258,6 @@ class ActivityController extends Controller
         }
         $response = ['type' => 'success', 'code' => ['updated', ['name' => 'Activity Defaults']]];
 
-        return redirect()->route('activity.create')->withResponse($response);
+        return redirect()->route('activity.show', [$activityId])->withResponse($response);
     }
 }

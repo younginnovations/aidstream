@@ -25,16 +25,18 @@ class ActivityRepository
      * insert activity data to database
      * @param array $input
      * @param       $organizationId
+     * @param array $defaultFieldValues
      * @return modal
      */
-    public function store(array $input, $organizationId)
+    public function store(array $input, $organizationId, array $defaultFieldValues)
     {
         unset($input['_token']);
 
         return $this->activity->create(
             [
-                'identifier'      => $input,
-                'organization_id' => $organizationId
+                'identifier'           => $input,
+                'organization_id'      => $organizationId,
+                'default_field_values' => $defaultFieldValues
             ]
         );
     }
