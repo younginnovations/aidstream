@@ -1,7 +1,7 @@
 <?php namespace App\Services\Activity;
 
 use App\Core\Version;
-use App\Models\Settings;
+use App\Models\Activity\Activity;
 use Illuminate\Auth\Guard;
 use Illuminate\Contracts\Logging\Log as DbLogger;
 use Psr\Log\LoggerInterface as Logger;
@@ -54,14 +54,14 @@ class ChangeActivityDefaultManager
     /**
      * updates Activity Default values
      * @param array    $activityDefaults
-     * @param Settings $settings
+     * @param Activity $activity
      * @return bool
      */
-    public function update(array $activityDefaults, Settings $settings)
+    public function update(array $activityDefaults, Activity $activity)
     {
         try {
             $this->database->beginTransaction();
-            $this->changeActivityDefaultRepo->update($activityDefaults, $settings);
+            $this->changeActivityDefaultRepo->update($activityDefaults, $activity);
             $this->database->commit();
             $this->logger->info(
                 'Activity Default Values updated!',
@@ -70,7 +70,8 @@ class ChangeActivityDefaultManager
             $this->dbLogger->activity(
                 "activity.activity_default_values",
                 [
-                    'organization_id' => $this->auth->user()->organization->id
+                    'organization_id' => $this->auth->user()->organization->id,
+                    'activity_id'     => $activity->id
                 ]
             );
 

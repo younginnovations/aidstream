@@ -45,12 +45,13 @@ class ActivityManager
      * insert activity identifier
      * @param array $input
      * @param       $organizationId
+     * @param array $defaultFieldValues
      * @return bool
      */
-    public function store(array $input, $organizationId)
+    public function store(array $input, $organizationId, array $defaultFieldValues)
     {
         try {
-            $result = $this->activityRepo->store($input, $organizationId);
+            $result = $this->activityRepo->store($input, $organizationId, $defaultFieldValues);
             $this->logger->info(
                 'Activity identifier added',
                 ['for ' => $input['activity_identifier']]

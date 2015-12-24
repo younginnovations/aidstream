@@ -138,4 +138,9 @@ class IatiActivity extends V201
         }
         throw new BadMethodCallException();
     }
+
+    public function getChangeActivityDefault()
+    {
+        return app('App\Core\V202\Element\Activity\ChangeActivityDefault');
+    }
 }

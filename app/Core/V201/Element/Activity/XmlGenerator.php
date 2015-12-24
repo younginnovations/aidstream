@@ -132,9 +132,9 @@ class XmlGenerator
         ];
         $xmlData['iati-activity']                = $this->getXmlData($activity, $transaction, $result, $organization);
         $xmlData['iati-activity']['@attributes'] = [
-            'last-updated-datetime' => gmdate('c', time($settings->updated_at)),
-            'xml:lang'              => $settings->default_field_values[0]['default_language'],
-            'default-currency'      => $settings->default_field_values[0]['default_currency']
+            'last-updated-datetime' => gmdate('c', time($activity->updated_at)),
+            'xml:lang'              => $activity->default_field_values[0]['default_language'],
+            'default-currency'      => $activity->default_field_values[0]['default_currency']
         ];
 
         return $this->arrayToXml->createXML('iati-activities', $xmlData);

@@ -37,4 +37,5 @@ return [
     'transaction_updated'          => 'Activity Transaction ":transaction_id" updated for "activity - :activity_id"',
     'transaction_uploaded'         => 'Activity Transactions are uploaded for "activity - :activity_id"',
     'activity_uploaded'            => 'Activities are uploaded for "organization - :organization_id"',
+    'activity_default_values'      => 'Activity default values are updated for  "organization - :organization_id" and "activity - : activity_id"',
 ];

@@ -1,40 +1,41 @@
 <?php namespace App\Core\V201\Repositories\Activity;
 
-use App\Models\Settings;
+use App\Models\Activity\Activity;
 
 class ChangeActivityDefault
 {
     /**
      * @var Settings
      */
-    protected $settings;
+    protected $activity;
 
     /**
-     * @param Settings $settings
+     * @param Activity $activity
      */
-    function __construct(Settings $settings)
+    function __construct(Activity $activity)
     {
-        $this->settings = $settings;
+        $this->activity = $activity;
     }
 
     /**
      * update Activity Default
-     * @param array $activityDefaults
+     * @param array    $activityDefaults
+     * @param Activity $activity
      * @return bool
      */
-    public function update(array $activityDefaults, Settings $settings)
+    public function update(array $activityDefaults, Activity $activity)
     {
-        $settings->default_field_values = $activityDefaults;
+        $activity->default_field_values = $activityDefaults;
 
-        return $settings->save();
+        return $activity->save();
     }
 
     /**
-     * @param $orgId
+     * @param $activityId
      * @return array
      */
-    public function getActivityDefaultValues($orgId)
+    public function getActivityDefaultValues($activityId)
     {
-        return $this->settings->where('organization_id', $orgId)->get()->default_field_values;
+        return $this->activity->find($activityId)->default_field_values;
     }
 }
