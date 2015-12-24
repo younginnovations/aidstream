@@ -1,10 +1,17 @@
 <?php namespace App\Core\V202;
 
 use App\Core\V201\IatiOrganization as V201;
-use App;
+use App\Core\IatiFilePathTrait;
 
 class IatiOrganization extends V201
 {
+    use IatiFilePathTrait;
+
+    function __construct()
+    {
+        $this->setType('Organization');
+    }
+
     public function getTotalBudget()
     {
         return app('App\Core\V202\Element\Organization\TotalBudget');

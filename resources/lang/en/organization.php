@@ -5,4 +5,5 @@ return [
     'total_budget_updated'           => ':name organization Total Budget updated',
     'recipient_country_updated'      => ':name organization Recipient Country Budget updated',
     'recipient_organization_updated' => ':name organization Recipient Organization Budget updated',
+    'total_expenditure_updated'      => ':name organization Total Expenditure updated',
 ];

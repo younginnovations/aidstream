@@ -12,14 +12,16 @@ class OrganizationData extends Model
         'recipient_country_budget',
         'document_link',
         'organization_id',
-        'status'
+        'status',
+        'total_expenditure'
     ];
     protected $casts = [
         'name'                          => 'json',
         'total_budget'                  => 'json',
         'recipient_organization_budget' => 'json',
         'recipient_country_budget'      => 'json',
-        'document_link'                 => 'json'
+        'document_link'                 => 'json',
+        'total_expenditure'             => 'json'
     ];
 
     public function getName()

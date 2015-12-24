@@ -7,6 +7,10 @@ use App\Models\Organization\OrganizationData;
 use Illuminate\Auth\Guard;
 use Illuminate\Contracts\Logging\Log;
 
+/**
+ * Class OrgTotalBudgetManager
+ * @package App\Services\Organization
+ */
 class OrgTotalBudgetManager
 {
 
@@ -14,15 +18,15 @@ class OrgTotalBudgetManager
     /**
      * @var Guard
      */
-    private $auth;
+    protected $auth;
     /**
      * @var Log
      */
-    private $log;
+    protected $log;
     /**
      * @var Version
      */
-    private $version;
+    protected $version;
 
     /**
      * @param Version $version
@@ -46,14 +50,8 @@ class OrgTotalBudgetManager
     {
         try {
             $this->repo->update($input, $organization);
-            $this->log->info(
-                'Organization Total Budget Updated',
-                ['for ' => $organization['total_budget']]
-            );
-            $this->log->activity(
-                "organization.total_budget_updated",
-                ['name' => $this->auth->user()->organization->name]
-            );
+            $this->log->info('Organization Total Budget Updated', ['for ' => $organization['total_budget']]);
+            $this->log->activity("organization.total_budget_updated", ['name' => $this->auth->user()->organization->name]);
 
             return true;
         } catch (Exception $exception) {
@@ -71,26 +69,20 @@ class OrgTotalBudgetManager
     }
 
     /**
-     * write brief description
      * @param $id
      * @return model
      */
     public function getOrganizationData($id)
     {
         return $this->repo->getOrganizationData($id);
-
     }
 
     /**
-     * write brief description
      * @param $id
      * @return model
      */
     public function getOrganizationTotalBudgetData($id)
     {
         return $this->repo->getOrganizationTotalBudgetData($id);
-
     }
-
-
 }

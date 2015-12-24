@@ -1,6 +1,6 @@
 <?php
 $help        = trans('V201/help');
-$help['nk1'] = 'nm1';
+$help['org_total_expenditure'] = 'The total-expenditure element allows for the reporting of the organisation’s international development expenditure. ';
 $help['nk2'] = 'nm2';
 
 return $help;
