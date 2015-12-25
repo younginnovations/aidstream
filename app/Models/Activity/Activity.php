@@ -38,7 +38,8 @@ class Activity extends Model
         'related_activity',
         'legacy_data',
         'conditions',
-        'default_field_values'
+        'default_field_values',
+        'humanitarian_scope'
     ];
 
     protected $casts = [
@@ -68,7 +69,8 @@ class Activity extends Model
         'related_activity'           => 'json',
         'legacy_data'                => 'json',
         'conditions'                 => 'json',
-        'default_field_values'       => 'json'
+        'default_field_values'       => 'json',
+        'humanitarian_scope'         => 'json'
     ];
 
     /**

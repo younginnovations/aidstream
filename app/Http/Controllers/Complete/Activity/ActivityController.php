@@ -247,10 +247,12 @@ class ActivityController extends Controller
      */
     public function updateActivityDefault($activityId, Request $request, ChangeActivityDefaultRequest $changeActivityDefaultRequest)
     {
-        $activityData       = $this->activityManager->getActivityData($activityId);
-        $defaultFieldValues = $activityData->default_field_values[0];
-        $defaultFieldValues = [array_merge($defaultFieldValues, $request->except(['_method', '_token']))];
-        $result             = $this->changeActivityDefaultManager->update($defaultFieldValues, $activityData);
+        $activityData               = $this->activityManager->getActivityData($activityId);
+        $settings                   = $this->settingsManager->getSettings($this->organization_id);
+        $SettingsDefaultFieldValues = $settings->default_field_values;
+        $defaultFieldValues         = ($activityData->default_field_values[0]) ? $activityData->default_field_values[0] : $SettingsDefaultFieldValues;
+        $defaultFieldValues         = [array_merge($defaultFieldValues, $request->except(['_method', '_token']))];
+        $result                     = $this->changeActivityDefaultManager->update($defaultFieldValues, $activityData);
         if (!$result) {
             $response = ['type' => 'danger', 'code' => ['save_failed', ['name' => 'Activity Defaults']]];
 

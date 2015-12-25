@@ -77,5 +77,6 @@ $router->group(
                 'uses' => 'ActivityController@updateActivityDefault'
             ]
         );
+        $router->resource('activity.humanitarian-scope', 'HumanitarianScopeController');
     }
 );

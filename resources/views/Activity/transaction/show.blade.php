@@ -9,6 +9,7 @@
                     <strong><h3>Element Detail</h3></strong>
                     <div class="panel-body">
                         <div>Reference: {{$transactionDetail['reference']}}</div>
+                        <div>Humanitarian: {{($transactionDetail['humanitarian']) == 0 ? 'False' : 'True'}}</div>
                         <strong>Transaction Type</strong>
                         <div>Code: {{$code->getActivityCodeName('TransactionType', $transactionDetail['transaction_type'][0]['transaction_type_code'])}}</div>
                         <strong>Provider Organization</strong>

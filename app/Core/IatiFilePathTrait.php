@@ -21,17 +21,6 @@ trait IatiFilePathTrait
     }
 
     /**
-     * return versioned file class
-     * @param $name
-     * @param $versionedDir
-     * @return \Illuminate\Foundation\Application|mixed
-     */
-    protected function getClass($name, $versionedDir)
-    {
-        return app(sprintf('App\Core\V202\%s\%s\%s', $versionedDir, $this->type, $name));
-    }
-
-    /**
      * return versioned file path
      * @param $name
      * @param $versionedDir
@@ -43,14 +32,26 @@ trait IatiFilePathTrait
     }
 
     /**
-     * return versioned xml
+     * return versioned file class
      * @param $name
      * @param $versionedDir
      * @return \Illuminate\Foundation\Application|mixed
      */
-    protected function getXml($name, $versionedDir)
+    protected function getClass($name, $versionedDir)
     {
-        return $this->getClass($name, $versionedDir)->getXmlData();
+        return app($this->getPath($name, $versionedDir));
+    }
+
+    /**
+     * return versioned xml
+     * @param $name
+     * @param $versionedDir
+     * @param $parameters
+     * @return \Illuminate\Foundation\Application|mixed
+     */
+    protected function getXml($name, $versionedDir, $parameters)
+    {
+        return $this->getClass($name, $versionedDir)->getXmlData($parameters[0]);
     }
 
     /**
@@ -76,7 +77,7 @@ trait IatiFilePathTrait
     }
 
     /**
-     * handel method calls dynamically starting with get
+     * handle method calls dynamically starting with get
      * @param $method
      * @param $parameters
      * @return \Illuminate\Foundation\Application|mixed
@@ -85,11 +86,15 @@ trait IatiFilePathTrait
     public function __call($method, $parameters)
     {
         if (Str::startsWith($method, 'get')) {
-            $pathInfo   = $this->getFileInfo($method);
-            $name       = str_replace(['get', $pathInfo[0]], '', $method);
-            $methodCall = 'get' . $pathInfo[1][1];
+            $pathInfo      = $this->getFileInfo($method);
+            $fileType      = $pathInfo[0];
+            $versionedDir  = $pathInfo[1][0];
+            $methodType    = $pathInfo[1][1];
+            $methodPattern = sprintf('/get([a-z]+)%s/i', $fileType);
+            $name          = preg_replace($methodPattern, '$1', $method);
+            $methodCall    = 'get' . $methodType;
 
-            return $this->$methodCall($name, $pathInfo[1][0]);
+            return $this->$methodCall($name, $versionedDir, $parameters);
         }
         throw new BadMethodCallException();
     }

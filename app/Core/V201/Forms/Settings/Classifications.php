@@ -21,6 +21,7 @@ class Classifications extends BaseForm
             ->addCheckBox('default_finance_type', 'Default Finance Type')
             ->addCheckBox('default_aid_type', 'Default Aid Type')
             ->addCheckBox('default_tied_status', 'Default Tied Status')
-            ->addCheckBox('country_budget_items', 'Country Budget Items');
+            ->addCheckBox('country_budget_items', 'Country Budget Items')
+            ->addCheckBox('humanitarian_scope', 'Humanitarian Scope');
     }
 }
