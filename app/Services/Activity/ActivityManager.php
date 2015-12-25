@@ -158,4 +158,13 @@ class ActivityManager
     {
         return $this->activityRepo->deletePublishedFile($id);
     }
+
+    /**
+     * @param $publishedId
+     * @return mixed
+     */
+    public function updatePublishToRegister($publishedId)
+    {
+        return $this->activityRepo->updatePublishToRegister($publishedId);
+    }
 }

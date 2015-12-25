@@ -105,4 +105,16 @@ class ActivityRepository
 
         return $result;
     }
+
+    /**
+     * @param $publishedId
+     * @return mixed
+     */
+    public function updatePublishToRegister($publishedId)
+    {
+        $activityPublished                        = $this->activityPublished->find($publishedId);
+        $activityPublished->published_to_register = 1;
+
+        return $activityPublished->save();
+    }
 }

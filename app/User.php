@@ -151,5 +151,17 @@ class User extends Model implements AuthorizableContract, AuthenticatableContrac
     {
         return $this->hasMany('App\Models\UserActivity', 'user_id');
     }
+
+    /**
+     * @return mixed
+     */
+    public function getUserByOrgId()
+    {
+        $users = DB::table($this->table)
+                   ->where('org_id', '=', Session::get('org_id'))
+                   ->get();
+
+        return $users;
+    }
 }
 

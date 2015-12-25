@@ -15,6 +15,9 @@ use App\Services\Activity\ActivityManager;
 use App\Services\FormCreator\Activity\Identifier;
 use Illuminate\Support\Facades\Session;
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use App\Http\API\CKAN\CkanClient;
+use App\User;
+use Psr\Log\LoggerInterface;
 
 /**
  * Class ActivityController
@@ -64,6 +67,8 @@ class ActivityController extends Controller
      * @param TransactionManager           $transactionManager
      * @param ChangeActivityDefault        $changeActivityDefaultForm
      * @param ChangeActivityDefaultManager $changeActivityDefaultManager
+     * @param User                         $user
+     * @param LoggerInterface              $loggerInterface
      */
     function __construct(
         SettingsManager $settingsManager,
@@ -74,7 +79,9 @@ class ActivityController extends Controller
         ResultManager $resultManager,
         TransactionManager $transactionManager,
         ChangeActivityDefault $changeActivityDefaultForm,
-        ChangeActivityDefaultManager $changeActivityDefaultManager
+        ChangeActivityDefaultManager $changeActivityDefaultManager,
+        User $user,
+        LoggerInterface $loggerInterface
     ) {
         $this->middleware('auth');
         $this->settingsManager              = $settingsManager;
@@ -87,6 +94,8 @@ class ActivityController extends Controller
         $this->transactionManager           = $transactionManager;
         $this->changeActivityDefaultForm    = $changeActivityDefaultForm;
         $this->changeActivityDefaultManager = $changeActivityDefaultManager;
+        $this->user                         = $user;
+        $this->loggerInterface              = $loggerInterface;
     }
 
     /**
@@ -185,7 +194,18 @@ class ActivityController extends Controller
                 return redirect()->back()->withResponse($response);
             }
         } elseif ($activityWorkflow == 3) {
+            if (empty($settings['registry_info'][0]['publisher_id']) && empty($settings['registry_info'][0]['api_id'])) {
+                $response = ['type' => 'warning', 'code' => ['settings_registry_info', ['name' => '']]];
+
+                return redirect()->to('/settings')->withResponse($response);
+            }
             $xmlService->generateActivityXml($activityData, $transactionData, $resultData, $settings, $activityElement, $orgElem, $organization);
+            $publishedStatus = $this->publishToRegistry();
+            if (!$publishedStatus) {
+                $response = ['type' => 'danger', 'code' => ['publish_registry', ['name' => '']]];
+
+                return redirect()->back()->withResponse($response);
+            }
         }
         $statusLabel = ['Completed', 'Verified', 'Published'];
         $response    = ($this->activityManager->updateStatus($input, $activityData)) ?
@@ -259,5 +279,89 @@ class ActivityController extends Controller
         $response = ['type' => 'success', 'code' => ['updated', ['name' => 'Activity Defaults']]];
 
         return redirect()->route('activity.show', [$activityId])->withResponse($response);
+    }
+
+    /**
+     * @return bool
+     */
+    public function publishToRegistry()
+    {
+        $activityPublishedFiles = $this->activityManager->getActivityPublishedFiles($this->organization_id);
+        $settings               = $this->settingsManager->getSettings($this->organization_id);
+        $api_url                = 'http://iati2.staging.ckanhosted.com/api/';
+        $apiCall                = new CkanClient($api_url, $settings['registry_info'][0]['api_id']);
+        try {
+            foreach ($activityPublishedFiles as $publishedFile) {
+                $data = $this->generateJson($publishedFile);
+                if ($settings->publishing_type == "segmented") {
+                    $filename = explode('-', $publishedFile->filename);
+                    $code     = str_replace('.xml', '', end($filename));
+                }
+                if ($publishedFile['published_to_register'] == 0) {
+                    $apiCall->post_package_register($data);
+                    $this->activityManager->updatePublishToRegister($publishedFile->id);
+                } elseif ($publishedFile['published_to_register'] == 1) {
+                    $package = ($settings->publishing_type == "segmented") ? $settings['registry_info'][0]['publisher_id'] . '-' . $code : $settings['registry_info'][0]['publisher_id'] . '-activities';
+                    $apiCall->put_package_entity($package, $data);
+                }
+            }
+
+            return true;
+        } catch (\Exception $e) {
+            $this->loggerInterface->error(sprintf('Registry Info could not be registered due to %s', $e->getMessage()));
+
+            return false;
+        }
+    }
+
+    /**
+     * @param $publishedFile
+     * @return string
+     */
+    public function generateJson($publishedFile)
+    {
+        $settings     = $this->settingsManager->getSettings($this->organization_id);
+        $organization = $this->organizationManager->getOrganization($this->organization_id);
+        $email        = $this->user->getUserByOrgId();
+        $author_email = $email[0]->email;
+        $code         = "";
+        if ($settings->publishing_type == "segmented") {
+            $filename = explode('-', $publishedFile->filename);
+            $code     = str_replace('.xml', '', end($filename));
+        }
+
+        if ($code == "998") {
+            $key = "Others";
+        } elseif (is_numeric($code)) {
+            $key = "region";
+        } else {
+            $key = "country";
+        }
+
+        $title = ($settings->publishing_type == "segmented") ? $organization->name . 'Activity File-' . $code : $organization->name . 'Activity File';
+        $name  = ($settings->publishing_type == "segmented") ? $settings['registry_info'][0]['publisher_id'] . '-' . $code : $settings['registry_info'][0]['publisher_id'] . '-activities';
+
+        $data = '{
+        "title": "' . $title . '",
+        "name": "' . $name . '",
+        "author_email": "' . $author_email . '",
+        "owner_org" : "' . $settings['registry_info'][0]['publisher_id'] . '",
+        "resources": [
+        {
+            "format":"IATI-XML",
+            "mimetype":"application/xml",
+            "url":"' . url('uploads/files/activity/' . $publishedFile->filename) . '"
+        }
+        ],
+        "extras":
+        [
+        {"key":"filetype","value":"activity"},
+        {"key":"' . $key . '","value":"' . $code . '"},
+        {"key":"data_updated","value":"' . $publishedFile->updated_at . '"},
+        {"key":"activity_count", "value":"' . count($publishedFile->published_activities) . '"},
+        {"key":"language","value":"' . config('app.locale') . '"},
+        {"key":"verified","value":"no"}]}';
+
+        return $data;
     }
 }
