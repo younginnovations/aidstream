@@ -13,6 +13,7 @@ use App\Models\OrganizationPublished;
 class XmlGenerator
 {
     protected $arrayToXml;
+    protected $orgElem;
     protected $nameElem;
     protected $reportingOrgElem;
     protected $totalBudgetElem;
@@ -36,6 +37,7 @@ class XmlGenerator
      */
     public function setElements($orgElem)
     {
+        $this->orgElem                    = $orgElem;
         $this->nameElem                   = $orgElem->getName();
         $this->reportingOrgElem           = $orgElem->getOrgReportingOrg();
         $this->totalBudgetElem            = $orgElem->getTotalBudget();

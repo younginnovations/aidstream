@@ -31,4 +31,9 @@ class IatiOrganization extends V201
     {
         return app('App\Core\V202\Requests\Organization\CreateDocumentLinkRequest');
     }
+
+    public function getOrgXmlService()
+    {
+        return app('App\Core\V202\Xml\Organization\XmlService');
+    }
 }

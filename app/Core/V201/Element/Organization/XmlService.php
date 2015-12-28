@@ -6,8 +6,20 @@ use Illuminate\Support\Facades\Session;
  * Class XmlService
  * @package App\Core\V201\Element\Organization
  */
-class XmlService extends XmlGenerator
+class XmlService
 {
+    /**
+     * @var XmlGenerator
+     */
+    protected $xmlGenerator;
+
+    /**
+     * @param XmlGenerator $xmlGenerator
+     */
+    function __construct(XmlGenerator $xmlGenerator)
+    {
+        $this->xmlGenerator = $xmlGenerator;
+    }
 
     /**
      * validates organization data with xml schema
@@ -21,7 +33,7 @@ class XmlService extends XmlGenerator
     {
         $message = '';
         try {
-            $xml = $this->getXml($organization, $organizationData, $settings, $orgElem);
+            $xml = $this->xmlGenerator->getXml($organization, $organizationData, $settings, $orgElem);
             $xml->schemaValidate(app_path(sprintf('/Core/%s/XmlSchema/iati-organisations-schema.xsd', Session::get('version'))));
         } catch (\Exception $e) {
             $message = $e->getMessage();
@@ -40,7 +52,7 @@ class XmlService extends XmlGenerator
      */
     public function generateOrgXml($organization, $organizationData, $settings, $orgElem)
     {
-        $this->generateXml($organization, $organizationData, $settings, $orgElem);
+        $this->xmlGenerator->generateXml($organization, $organizationData, $settings, $orgElem);
     }
 
 }

@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddTotalExpenditureToOrganizationDataTable extends Migration
+class AddRecipientRegionBudgetToOrganizationDataTable extends Migration
 {
     /**
      * Run the migrations.
@@ -15,7 +15,7 @@ class AddTotalExpenditureToOrganizationDataTable extends Migration
         Schema::table(
             'organization_data',
             function (Blueprint $table) {
-                $table->json('total_expenditure')->nullable();
+                $table->json('recipient_region_budget')->nullable();
             }
         );
     }
@@ -30,7 +30,7 @@ class AddTotalExpenditureToOrganizationDataTable extends Migration
         Schema::table(
             'organization_data',
             function (Blueprint $table) {
-                $table->dropColumn('total_expenditure');
+                $table->dropColumn('recipient_region_budget');
             }
         );
     }

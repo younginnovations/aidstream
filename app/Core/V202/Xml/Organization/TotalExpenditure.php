@@ -30,7 +30,7 @@ class TotalExpenditure extends BaseElement
                     ]
                 ],
                 'value'        => $this->buildValue($totalExpenditure['value']),
-                'expense-line' => $this->buildExpenseLine($totalExpenditure['expense-line'])
+                'expense-line' => $this->buildExpenseLine($totalExpenditure['expense_line'])
             ];
         }
 
@@ -59,7 +59,7 @@ class TotalExpenditure extends BaseElement
     }
 
     /**
-     * build xml for expense line sub emelent
+     * build xml for expense line sub element
      * @param $expenseLines
      * @return array
      */

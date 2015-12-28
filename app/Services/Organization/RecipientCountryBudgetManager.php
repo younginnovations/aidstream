@@ -14,15 +14,15 @@ class RecipientCountryBudgetManager
     /**
      * @var Guard
      */
-    private $auth;
+    protected $auth;
     /**
      * @var Log
      */
-    private $log;
+    protected $log;
     /**
      * @var Version
      */
-    private $version;
+    protected $version;
 
     /**
      * @param Version $version
@@ -38,7 +38,7 @@ class RecipientCountryBudgetManager
     }
 
     /**
-     * write brief description
+     * update recipient country budget
      * @param array            $input
      * @param OrganizationData $organization
      * @return bool
@@ -72,7 +72,7 @@ class RecipientCountryBudgetManager
     }
 
     /**
-     * write brief description
+     * return organization data
      * @param $id
      * @return model
      */
@@ -83,7 +83,7 @@ class RecipientCountryBudgetManager
     }
 
     /**
-     * write brief description
+     * return recipient country budget
      * @param $id
      * @return model
      */

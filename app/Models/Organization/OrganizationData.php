@@ -9,6 +9,7 @@ class OrganizationData extends Model
         'name',
         'total_budget',
         'recipient_organization_budget',
+        'recipient_region_budget',
         'recipient_country_budget',
         'document_link',
         'organization_id',
@@ -19,6 +20,7 @@ class OrganizationData extends Model
         'name'                          => 'json',
         'total_budget'                  => 'json',
         'recipient_organization_budget' => 'json',
+        'recipient_region_budget'       => 'json',
         'recipient_country_budget'      => 'json',
         'document_link'                 => 'json',
         'total_expenditure'             => 'json'
