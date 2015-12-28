@@ -11,6 +11,7 @@
                     <thead>
                     <tr>
                         <th>Internal Ref</th>
+                        <th>Humanitarian</th>
                         <th>Transaction Type</th>
                         <th>Transaction Value</th>
                         <th>Transaction Date</th>
@@ -21,6 +22,7 @@
                     @foreach($activity->getTransactions() as  $transaction)
                         <tr>
                             <td>{{ $transaction['reference'] }}</td>
+                            <td>{{ $transaction['humanitarian'] == 0 ? 'False' : 'True' }}</td>
                             <td>{{ $transaction['transaction_type'][0]['transaction_type_code'] }}</td>
                             <td>{{ $transaction['value'][0]['amount'] }}</td>
                             <td>{{ $transaction['value'][0]['date'] }}</td>

@@ -73,6 +73,4 @@ class OrganizationData extends Model
     {
         return json_decode($this->document_link, true);
     }
-
-
 }

@@ -78,7 +78,7 @@ class TransactionController extends Controller
         $activity = $this->activityManager->getActivityData($activityId);
         $data     = $request->all();
         $this->transactionManager->save($data, $activity);
-        $this->activityManager->resetActivityWorkflow($id);
+        $this->activityManager->resetActivityWorkflow($activityId);
         $response = ['type' => 'success', 'code' => ['created', ['name' => 'Transaction']]];
 
         return redirect()->to(sprintf('/activity/%s/transaction', $activityId))->withResponse($response);

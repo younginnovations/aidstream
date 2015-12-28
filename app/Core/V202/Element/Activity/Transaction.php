@@ -29,7 +29,8 @@ class Transaction extends V201Transaction
             }
             $transactionData[] = [
                 '@attributes'          => [
-                    'ref' => $transaction['reference']
+                    'ref'          => $transaction['reference'],
+                    'humanitarian' => $transaction['humanitarian']
                 ],
                 'transaction-type'     => [
                     '@attributes' => [

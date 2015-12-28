@@ -16,7 +16,7 @@ class ExpenseLine extends BaseForm
         $this
             ->add('reference', 'text')
             ->addCollection('value', 'Organization\ValueForm')
-            ->addCollection('narrative', 'Organization\NarrativeForm', 'expense_line_narrative')
+            ->addNarrative('expense_line_narrative')
             ->addAddMoreButton('add', 'expense_line_narrative')
             ->addRemoveThisButton('remove');
     }
