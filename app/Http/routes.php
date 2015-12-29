@@ -104,3 +104,5 @@ $router->post
         'uses' => 'Complete\AdminController@updateUserPermission'
     ]
 );
+
+$router->resource('upgrade-version.organization', 'Complete\UpgradeController');

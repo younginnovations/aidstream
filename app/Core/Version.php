@@ -50,8 +50,7 @@ class Version
     {
         $this->version = Session::get('version');
         if (!isset($this->version)) {
-            $version       = config('app.default_version');
-            $this->version = 'V' . str_replace('.', '', $version);
+            $this->version = config('app.default_version_name');
             Session::put('version', $this->version);
         }
         $this->activityElement     = App::make("App\Core\\$this->version\IatiActivity");

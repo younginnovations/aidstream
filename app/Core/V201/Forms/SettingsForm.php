@@ -9,10 +9,7 @@ use Illuminate\Database\DatabaseManager;
  */
 class SettingsForm extends BaseForm
 {
-    /**
-     * @var DatabaseManager
-     */
-    private $databaseManager;
+    protected $versions;
 
     /**
      * @param DatabaseManager $databaseManager
@@ -24,8 +21,7 @@ class SettingsForm extends BaseForm
         foreach ($db_versions as $ver) {
             $versions[$ver->version] = $ver->version;
         }
-        $this->versions        = $versions;
-        $this->databaseManager = $databaseManager;
+        $this->versions = $versions;
     }
 
     public function buildForm()

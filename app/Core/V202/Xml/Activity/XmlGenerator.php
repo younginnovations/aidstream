@@ -2,6 +2,8 @@
 
 use App\Core\V201\Element\Activity\XmlGenerator as XmlGenerator201;
 use App\Models\Activity\Activity;
+use App\Models\Settings;
+use DOMDocument;
 use Illuminate\Support\Collection;
 
 /**
@@ -10,6 +12,37 @@ use Illuminate\Support\Collection;
  */
 class XmlGenerator extends XmlGenerator201
 {
+    /**
+     * @param Activity   $activity
+     * @param Collection $transaction
+     * @param Collection $result
+     * @param Settings   $settings
+     * @param            $activityElement
+     * @param            $orgElem
+     * @param            $organization
+     * @return DOMDocument
+     */
+    public function getXml(Activity $activity, Collection $transaction, Collection $result, Settings $settings, $activityElement, $orgElem, $organization)
+    {
+        $this->setElements($activityElement, $orgElem);
+        $xmlData                                 = [];
+        $xmlData['@attributes']                  = [
+            'version'            => $settings->version,
+            'generated-datetime' => gmdate('c')
+        ];
+        $xmlData['iati-activity']                = $this->getXmlData($activity, $transaction, $result, $organization);
+        $xmlData['iati-activity']['@attributes'] = [
+            'last-updated-datetime' => gmdate('c', time($activity->updated_at)),
+            'xml:lang'              => $activity->default_field_values[0]['default_language'],
+            'default-currency'      => $activity->default_field_values[0]['default_currency'],
+            'humanitarian'          => (int) $activity->default_field_values[0]['humanitarian'],
+            'hierarchy'             => $activity->default_field_values[0]['default_hierarchy'],
+            'linked-data-uri'       => $activity->default_field_values[0]['linked_data_uri']
+        ];
+
+        return $this->arrayToXml->createXML('iati-activities', $xmlData);
+    }
+
     /**
      * @param Activity   $activity
      * @param Collection $transaction

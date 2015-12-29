@@ -22,7 +22,7 @@
                     @foreach($activity->getTransactions() as  $transaction)
                         <tr>
                             <td>{{ $transaction['reference'] }}</td>
-                            <td>{{ $transaction['humanitarian'] == 0 ? 'False' : 'True' }}</td>
+                            <td>{{ isset($transaction['humanitarian']) && $transaction['humanitarian'] == 1 ? 'True' : 'False' }}</td>
                             <td>{{ $transaction['transaction_type'][0]['transaction_type_code'] }}</td>
                             <td>{{ $transaction['value'][0]['amount'] }}</td>
                             <td>{{ $transaction['value'][0]['date'] }}</td>
