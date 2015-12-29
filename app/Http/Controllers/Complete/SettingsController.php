@@ -9,6 +9,7 @@ use App;
 use App\Services\SettingsManager;
 use App\Services\Organization\OrganizationManager;
 
+use Illuminate\Database\DatabaseManager;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
@@ -57,14 +58,23 @@ class SettingsController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @param FormBuilder $formBuilder
+     * @param FormBuilder     $formBuilder
+     * @param DatabaseManager $databaseManager
      * @return Response
      */
-    public function index(FormBuilder $formBuilder)
+    public function index(FormBuilder $formBuilder, DatabaseManager $databaseManager)
     {
-        $model = [];
+        $db_versions = $databaseManager->table('versions')->get();
+        $versions    = [];
+
+        foreach ($db_versions as $ver) {
+            $versions[] = $ver->version;
+        }
+
+        $version = $this->settings->version;
+        $model   = [];
         if (isset($this->settings)) {
-            $model['version_form']         = [['version' => $this->settings->version]];
+            $model['version_form']         = [['version' => $version]];
             $model['publishing_type']      = [['publishing' => $this->settings->publishing_type]];
             $model['registry_info']        = $this->settings->registry_info;
             $model['default_field_values'] = $this->settings->default_field_values;
@@ -87,7 +97,7 @@ class SettingsController extends Controller
         }
         $form = $formBuilder->create('App\Core\V201\Forms\SettingsForm', $formOptions);
 
-        return view('settings', compact('form'));
+        return view('settings', compact('form', 'version', 'versions'));
     }
 
     /**

@@ -32,6 +32,10 @@ class DefaultFieldGroupsForm extends BaseForm
      */
     private function addFieldGroup($name)
     {
-        return $this->add($name, 'form', ['class' => sprintf('App\Core\V201\Forms\Settings\%s', str_replace(' ', '', $name))]);
+        $rawPath        = sprintf('App\Core\%s\Forms\Settings\%s', '%s', str_replace(' ', '', $name));
+        $currentVersion = session('version');
+        $version        = class_exists(sprintf($rawPath, $currentVersion)) ? $currentVersion : config('app.default_version_name');
+
+        return $this->add($name, 'form', ['class' => sprintf($rawPath, $version)]);
     }
 }

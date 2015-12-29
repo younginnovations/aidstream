@@ -40,7 +40,7 @@ class DefaultFieldGroups
     {
         $activityData = $this->getActivityData($id);
 
-        return [
+        $filledStatus = [
             "Identification"              => [
                 "reporting_organization" => $activityData['reporting_organization'],
                 "iati_identifier"        => $activityData['identifier'],
@@ -70,8 +70,7 @@ class DefaultFieldGroups
                 "default_finance_type" => $activityData['default_finance_type'],
                 "default_aid_type"     => $activityData['default_aid_type'],
                 "default_tied_status"  => $activityData['default_tied_status'],
-                "country_budget_items" => $activityData['country_budget_items'],
-                "humanitarian_scope"   => $activityData['humanitarian_scope']
+                "country_budget_items" => $activityData['country_budget_items']
             ],
             "Financial"                   => [
                 "budget"               => $activityData['budget'],
@@ -91,6 +90,12 @@ class DefaultFieldGroups
                 "legacy_data" => $activityData['legacy_data']
             ]
         ];
+
+        if (session('version') === "V202") {
+            $filledStatus["Classifications"]["humanitarian_scope"] = $activityData['humanitarian_scope'];
+        }
+
+        return $filledStatus;
     }
 
     /**

@@ -6,7 +6,16 @@
             @include('includes.side_bar_menu')
             <div class="col-xs-9 col-lg-9 content-wrapper settings-wrapper">
 				<div class="panel panel-default">
-					<div class="panel-content-heading">Settings</div>
+					<div class="panel-content-heading panel-title-heading">
+						Settings
+						@if(end($versions) !== $version)
+							{{--*/
+                            $versionKey = array_search($version, $versions);
+                            $newVersion = $versions[$versionKey + 1];
+                            /*--}}
+							<a href="upgrade-version/{{ $newVersion }}/organization/{{ session('org_id') }}" class="upgrade small pull-right">Upgrade to Version {{ $newVersion}}</a>
+						@endif
+					</div>
 					<div class="panel-body">
 						<div class="create-form">
 							{!! form_start($form) !!}
@@ -18,7 +27,6 @@
 								</div>
 							</div>
 							{!! form_end($form) !!}
-							{{--{!! form($form) !!}--}}
 						</div>
 						<div class="collection-container hidden" data-prototype="{{ form_row($form->reporting_organization_info->prototype()) }}"></div>
 					</div>
