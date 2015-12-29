@@ -2,7 +2,7 @@
 
 use App\Core\Version;
 use App\Models\UserActivity;
-use Illuminate\Auth\Guard;
+use Illuminate\Contracts\Auth\Guard;
 
 /**
  * Class ActivityManager

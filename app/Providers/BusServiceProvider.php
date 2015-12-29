@@ -1,6 +1,6 @@
 <?php namespace App\Providers;
 
-use Illuminate\Bus\Dispatcher;
+use Collective\Bus\Dispatcher;
 use Illuminate\Support\ServiceProvider;
 
 class BusServiceProvider extends ServiceProvider {

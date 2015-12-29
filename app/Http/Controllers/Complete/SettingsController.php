@@ -86,11 +86,11 @@ class SettingsController extends Controller
         if (isset($this->organization)) {
             $model['reporting_organization_info'] = $this->organization->reporting_org;
         };
-        $url         = 'settings.' . (isset($this->settings) ? 'update' : 'store');
+        $url         = (isset($this->settings) ? route('settings.update', [0]) : route('settings.store'));
         $method      = isset($this->settings) ? 'PUT' : 'POST';
         $formOptions = [
             'method' => $method,
-            'url'    => route($url)
+            'url'    => $url
         ];
         if (!empty($model)) {
             $formOptions['model'] = $model;

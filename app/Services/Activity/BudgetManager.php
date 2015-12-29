@@ -2,7 +2,7 @@
 
 use App\Core\Version;
 use App\Models\Activity\Activity;
-use Illuminate\Auth\Guard;
+use Illuminate\Contracts\Auth\Guard;
 use Psr\Log\LoggerInterface;
 use Illuminate\Contracts\Logging\Log;
 

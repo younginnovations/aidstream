@@ -92,6 +92,8 @@ return [
     */
 
     'log'                  => 'custom',
+    /*env configuration*/
+    'env'                  => env('APP_ENV', 'production'),
     /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers
@@ -108,12 +110,13 @@ return [
         /*
          * Laravel Framework Service Providers...
          */
-        'Illuminate\Foundation\Providers\ArtisanServiceProvider',
+        //        'Illuminate\Foundation\Providers\ArtisanServiceProvider',
         'Illuminate\Auth\AuthServiceProvider',
-        'Illuminate\Bus\BusServiceProvider',
+        //        'Illuminate\Bus\BusServiceProvider',
+        'Collective\Bus\BusServiceProvider',
         'Illuminate\Cache\CacheServiceProvider',
         'Illuminate\Foundation\Providers\ConsoleSupportServiceProvider',
-        'Illuminate\Routing\ControllerServiceProvider',
+        //        'Illuminate\Routing\ControllerServiceProvider',
         'Illuminate\Cookie\CookieServiceProvider',
         'Illuminate\Database\DatabaseServiceProvider',
         'Illuminate\Encryption\EncryptionServiceProvider',
@@ -131,6 +134,7 @@ return [
         'Illuminate\Validation\ValidationServiceProvider',
         'Illuminate\View\ViewServiceProvider',
         'Illuminate\Broadcasting\BroadcastServiceProvider',
+        'Collective\Html\HtmlServiceProvider',
         /*
          * Application Service Providers...
          */
@@ -190,7 +194,8 @@ return [
         'URL'         => 'Illuminate\Support\Facades\URL',
         'Validator'   => 'Illuminate\Support\Facades\Validator',
         'View'        => 'Illuminate\Support\Facades\View',
-        'Form'        => 'Illuminate\Html\FormFacade',
+        'Form'        => 'Collective\Html\FormFacade',
+        'Html'        => Collective\Html\HtmlFacade::class,
         'FormBuilder' => 'Kris\LaravelFormBuilder\Facades\FormBuilder',
         'Gate'        => Illuminate\Support\Facades\Gate::class,
         'Excel'       => 'Maatwebsite\Excel\Facades\Excel',

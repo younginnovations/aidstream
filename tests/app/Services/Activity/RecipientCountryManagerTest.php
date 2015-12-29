@@ -5,7 +5,7 @@ use App\Core\Version;
 use App\Models\Activity\Activity;
 use App\Models\Organization\Organization;
 use App\Services\Activity\RecipientCountryManager;
-use Illuminate\Auth\Guard;
+use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Logging\Log;
 use Mockery as m;
 use Test\AidStreamTestCase;

@@ -26,7 +26,7 @@ class ParticipatingOrganizationManagerTest extends AidStreamTestCase
         $this->participatingOrgRepository = m::mock(ParticipatingOrganization::class);
         $this->version->shouldReceive('getActivityElement->getParticipatingOrganization->getRepository')->andReturn($this->participatingOrgRepository);
         $this->logger                  = m::mock('Illuminate\Contracts\Logging\Log');
-        $this->auth                    = m::mock('Illuminate\Auth\Guard');
+        $this->auth                    = m::mock('Illuminate\Contracts\Auth\Guard');
         $this->participatingOrgManager = new ParticipatingOrganizationManager(
             $this->version,
             $this->logger,

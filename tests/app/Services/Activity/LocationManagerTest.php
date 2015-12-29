@@ -27,7 +27,7 @@ class LocationManagerTest extends AidStreamTestCase
         $this->locationRepository = m::mock(Location::class);
         $this->version->shouldReceive('getActivityElement->getLocation->getRepository')->andReturn($this->locationRepository);
         $this->logger          = m::mock(Log::class);
-        $this->auth            = m::mock('Illuminate\Auth\Guard');
+        $this->auth            = m::mock('Illuminate\Contracts\Auth\Guard');
         $this->locationManager = new LocationManager(
             $this->version,
             $this->logger,

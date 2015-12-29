@@ -5,7 +5,7 @@ use App\Core\V201\Repositories\Activity\UploadTransaction;
 use App\Core\Version;
 use App\Models\Activity\Activity;
 use App\Services\Activity\UploadTransactionManager;
-use Illuminate\Auth\Guard;
+use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Logging\Log as DbLogger;
 use Maatwebsite\Excel\Collections\CellCollection;
 use Maatwebsite\Excel\Collections\RowCollection;
