@@ -5,7 +5,7 @@ use App\Core\Version;
 use App\Models\Activity\Activity;
 use App\Services\Activity\TransactionManager;
 use Exception;
-use Illuminate\Auth\Guard;
+use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Logging\Log as DbLogger;
 use Psr\Log\LoggerInterface as Logger;
 use Test\AidStreamTestCase;

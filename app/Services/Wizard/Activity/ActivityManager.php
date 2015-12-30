@@ -1,7 +1,7 @@
 <?php namespace App\Services\Wizard\Activity;
 
 use App\Core\Version;
-use Illuminate\Auth\Guard;
+use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Logging\Log as Logger;
 use Illuminate\Database\DatabaseManager;
 

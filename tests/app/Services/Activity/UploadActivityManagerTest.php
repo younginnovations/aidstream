@@ -4,7 +4,7 @@ use App\Core\V201\Repositories\Activity\UploadActivity;
 use App\Core\Version;
 use App\Models\Organization\Organization;
 use App\Services\Activity\UploadActivityManager;
-use Illuminate\Auth\Guard;
+use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Logging\Log as DbLogger;
 use Illuminate\Database\DatabaseManager;
 use Maatwebsite\Excel\Collections\CellCollection;

@@ -8,7 +8,7 @@ use App\Services\Organization\RecipientRegionBudgetManager;
 use Illuminate\Contracts\Logging\Log as dbLogger;
 use Illuminate\Database\DatabaseManager;
 use Psr\Log\LoggerInterface as Logger;
-use Illuminate\Auth\Guard;
+use Illuminate\Contracts\Auth\Guard;
 use Mockery as m;
 use Test\AidStreamTestCase;
 

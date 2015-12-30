@@ -4,7 +4,7 @@ use App\Core\Version;
 use App;
 use App\Models\Activity\Activity;
 use Exception;
-use Illuminate\Auth\Guard;
+use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Logging\Log as DbLogger;
 use Psr\Log\LoggerInterface as Logger;
 

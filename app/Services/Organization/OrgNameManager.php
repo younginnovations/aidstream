@@ -3,7 +3,7 @@
 use App\Core\Version;
 use App;
 use App\Models\Organization\OrganizationData;
-use Illuminate\Auth\Guard;
+use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Logging\Log;
 
 class OrgNameManager

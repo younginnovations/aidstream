@@ -5,7 +5,7 @@ use App\Core\Version;
 use App\Models\Activity\Activity;
 use App\Models\Organization\Organization;
 use App\Services\Activity\RelatedActivityManager;
-use Illuminate\Auth\Guard;
+use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Logging\Log;
 use Psr\Log\LoggerInterface;
 use Test\AidStreamTestCase;

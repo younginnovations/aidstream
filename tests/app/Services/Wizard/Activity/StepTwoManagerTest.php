@@ -6,7 +6,7 @@ use App\Models\Activity\Activity;
 use App\Models\Organization\Organization;
 use App\Services\Wizard\Activity\StepTwoManager;
 use App\User;
-use Illuminate\Auth\Guard;
+use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Logging\Log;
 use Illuminate\Database\DatabaseManager;
 use Mockery as m;

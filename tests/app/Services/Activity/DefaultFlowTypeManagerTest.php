@@ -6,7 +6,7 @@ use App\Models\Activity\Activity;
 use App\Models\Organization\Organization;
 use App\Services\Activity\DefaultFlowTypeManager;
 use App\User;
-use Illuminate\Auth\Guard;
+use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Logging\Log as DbLogger;
 use Psr\Log\LoggerInterface as Logger;
 use Illuminate\Database\DatabaseManager;

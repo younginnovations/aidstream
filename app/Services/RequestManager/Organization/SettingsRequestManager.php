@@ -5,12 +5,9 @@ Use App;
 
 class SettingsRequestManager
 {
-    protected $req;
 
     function __construct(Version $version)
     {
-        $this->req = $version->getSettingsElement()->getSettingsRequest();
-
-        return $this->req;
+        return $version->getSettingsElement()->getSettingsRequest();
     }
 }

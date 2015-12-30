@@ -19,7 +19,7 @@ class DocumentLinkManagerTest extends AidStreamTestCase
         $this->documentLinkRepository = m::mock('App\Core\V201\Repositories\Organization\DocumentLinkRepository');
         $this->version->shouldReceive('getOrganizationElement->getDocumentLink->getRepository')->andReturn($this->documentLinkRepository);
         $this->logger = m::mock('Illuminate\Contracts\Logging\Log');
-        $this->auth = m::mock('Illuminate\Auth\Guard');
+        $this->auth = m::mock('Illuminate\Contracts\Auth\Guard');
         $this->docLinkManager = new DocumentLinkManager($this->version, $this->logger, $this->auth);
     }
 

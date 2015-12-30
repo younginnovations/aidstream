@@ -6,7 +6,7 @@ use App\Models\Activity\ActivityResult;
 use App\Models\Organization\Organization;
 use App\Services\Activity\ResultManager;
 use App\User;
-use Illuminate\Auth\Guard;
+use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Logging\Log as DbLogger;
 use Illuminate\Database\Eloquent\Collection;
 use Psr\Log\LoggerInterface as Logger;
