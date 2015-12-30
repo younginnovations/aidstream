@@ -5,7 +5,7 @@ use App\Services\Activity\ActivityScopeManager;
 use App\Services\Activity\ActivityManager;
 use App\Services\FormCreator\Activity\ActivityScope as ActivityScopeForm;
 use App\Services\RequestManager\Activity\ActivityScope as ActivityScopeRequestManager;
-use Illuminate\Http\Request;
+use App\Http\Requests\Request;
 
 /**
  * Class ActivityScopeController

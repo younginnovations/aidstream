@@ -14,7 +14,7 @@ class Location extends ActivityBaseRequest
      */
     public function rules()
     {
-        return $this->getRulesForLocation($this->request->get('location'));
+        return $this->getRulesForLocation($this->get('location'));
     }
 
     /**
@@ -23,7 +23,7 @@ class Location extends ActivityBaseRequest
      */
     public function messages()
     {
-        return $this->getMessagesForLocation($this->request->get('location'));
+        return $this->getMessagesForLocation($this->get('location'));
     }
 
     /**

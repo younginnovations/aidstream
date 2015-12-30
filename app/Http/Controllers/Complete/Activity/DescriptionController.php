@@ -5,7 +5,7 @@ use App\Services\Activity\ActivityManager;
 use App\Services\Activity\DescriptionManager;
 use App\Services\FormCreator\Activity\Description as DescriptionForm;
 use App\Services\RequestManager\Activity\Description as DescriptionRequestManager;
-use Illuminate\Http\Request;
+use App\Http\Requests\Request;
 
 /**
  * Class DescriptionController

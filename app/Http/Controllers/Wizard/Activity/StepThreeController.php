@@ -5,7 +5,7 @@ use App\Services\Wizard\Activity\ActivityManager;
 use App\Services\Wizard\Activity\StepThreeManager;
 use App\Services\Wizard\FormCreator\Activity\StepThree as StepThreeForm;
 use App\Services\Wizard\RequestManager\Activity\StepThree as StepThreeRequestManager;
-use Illuminate\Http\Request;
+use App\Http\Requests\Request;
 
 /**
  * Class StepThreeController

@@ -14,7 +14,7 @@ class RecipientCountry extends ActivityBaseRequest
      */
     public function rules()
     {
-        return $this->getRulesForRecipientCountry($this->request->get('recipient_country'));
+        return $this->getRulesForRecipientCountry($this->get('recipient_country'));
     }
 
     /**
@@ -23,7 +23,7 @@ class RecipientCountry extends ActivityBaseRequest
      */
     public function messages()
     {
-        return $this->getMessagesForRecipientCountry($this->request->get('recipient_country'));
+        return $this->getMessagesForRecipientCountry($this->get('recipient_country'));
     }
 
     /**

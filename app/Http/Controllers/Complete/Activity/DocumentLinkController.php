@@ -5,7 +5,7 @@ use App\Services\Activity\ActivityManager;
 use App\Services\Activity\DocumentLinkManager;
 use App\Services\FormCreator\Activity\DocumentLink as DocumentLinkForm;
 use App\Services\RequestManager\Activity\DocumentLink as DocumentLinkRequestManager;
-use Illuminate\Http\Request;
+use App\Http\Requests\Request;
 
 /**
  * Class DocumentLinkController

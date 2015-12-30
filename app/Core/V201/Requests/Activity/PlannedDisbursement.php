@@ -11,7 +11,7 @@ class PlannedDisbursement extends ActivityBaseRequest
      */
     public function rules()
     {
-        return $this->getRulesForPlannedDisbursement($this->request->get('planned_disbursement'));
+        return $this->getRulesForPlannedDisbursement($this->get('planned_disbursement'));
     }
 
     /**
@@ -19,7 +19,7 @@ class PlannedDisbursement extends ActivityBaseRequest
      */
     public function messages()
     {
-        return $this->getMessagesForPlannedDisbursement($this->request->get('planned_disbursement'));
+        return $this->getMessagesForPlannedDisbursement($this->get('planned_disbursement'));
     }
 
     /**

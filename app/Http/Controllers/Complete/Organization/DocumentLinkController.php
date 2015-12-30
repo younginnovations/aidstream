@@ -4,7 +4,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use App\Services\Organization\OrganizationManager;
-use Illuminate\Http\Request;
+use App\Http\Requests\Request;
 use App\Services\Organization\DocumentLinkManager;
 use Session;
 use URL;

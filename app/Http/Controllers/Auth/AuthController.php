@@ -5,7 +5,7 @@ use App\Models\Settings;
 use App\Models\Organization\Organization;
 use App\User;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
-use Illuminate\Http\Request;
+use App\Http\Requests\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;

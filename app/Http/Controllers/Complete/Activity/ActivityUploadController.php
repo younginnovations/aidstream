@@ -7,7 +7,7 @@ use App\Services\FormCreator\Activity\UploadActivity;
 use App\Services\Organization\OrganizationManager;
 use App\Services\RequestManager\Activity\CsvImportValidator;
 use App\Services\RequestManager\Activity\UploadActivity as UploadActivityRequest;
-use Illuminate\Http\Request;
+use App\Http\Requests\Request;
 use Illuminate\Session\SessionManager;
 
 class ActivityUploadController extends Controller

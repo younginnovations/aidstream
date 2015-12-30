@@ -4,7 +4,7 @@ use App\Http\Controllers\Controller;
 use App\Services\Activity\PlannedDisbursementManager;
 use App\Services\FormCreator\Activity\PlannedDisbursement as PlannedDisbursementForm;
 use App\Services\Activity\ActivityManager;
-use Illuminate\Http\Request;
+use App\Http\Requests\Request;
 use App\Services\RequestManager\Activity\PlannedDisbursement as PlannedDisbursementRequestManager;
 
 

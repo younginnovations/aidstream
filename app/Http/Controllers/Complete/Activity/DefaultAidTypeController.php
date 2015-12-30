@@ -5,7 +5,7 @@ use App\Services\Activity\ActivityManager;
 use App\Services\Activity\DefaultAidTypeManager;
 use App\Services\FormCreator\Activity\DefaultAidType as DefaultAidTypeForm;
 use App\Services\RequestManager\Activity\DefaultAidType as DefaultAidTypeRequestManager;
-use Illuminate\Http\Request;
+use App\Http\Requests\Request;
 
 /**
  * Class DefaultAidTypeController

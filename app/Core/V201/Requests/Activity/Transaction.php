@@ -9,7 +9,7 @@ class Transaction extends ActivityBaseRequest
 
     public function rules()
     {
-        return $this->getTransactionRules($this->request->get('transaction'));
+        return $this->getTransactionRules($this->get('transaction'));
     }
 
     /**
@@ -18,7 +18,7 @@ class Transaction extends ActivityBaseRequest
      */
     public function messages()
     {
-        return $this->getTransactionMessages($this->request->get('transaction'));
+        return $this->getTransactionMessages($this->get('transaction'));
     }
 
     /**

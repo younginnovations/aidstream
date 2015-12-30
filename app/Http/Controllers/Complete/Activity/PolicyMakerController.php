@@ -5,7 +5,7 @@ use App\Services\Activity\ActivityManager;
 use App\Services\Activity\PolicyMakerManager;
 use App\Services\FormCreator\Activity\PolicyMaker as PolicyMakerForm;
 use App\Services\RequestManager\Activity\PolicyMaker as PolicyMakerRequestManager;
-use Illuminate\Http\Request;
+use App\Http\Requests\Request;
 
 /**
  * Class PolicyMakerController

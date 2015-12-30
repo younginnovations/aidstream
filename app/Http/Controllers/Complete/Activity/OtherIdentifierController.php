@@ -5,7 +5,7 @@ use App\Services\Activity\ActivityManager;
 use App\Services\Activity\OtherIdentifierManager;
 use App\Services\FormCreator\Activity\OtherIdentifierForm;
 use App\Services\RequestManager\Activity\OtherIdentifierRequestManager;
-use Illuminate\Http\Request;
+use App\Http\Requests\Request;
 
 /**
  * Class OtherIdentifierController

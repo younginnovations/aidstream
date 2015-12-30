@@ -7,7 +7,7 @@ use App\Services\Organization\TotalExpenditureManager;
 use App\Services\RequestManager\Organization\TotalExpenditureRequestManager;
 use Session;
 use URL;
-use Illuminate\Http\Request;
+use App\Http\Requests\Request;
 use App\Services\FormCreator\Organization\TotalExpenditure as FormBuilder;
 
 /**

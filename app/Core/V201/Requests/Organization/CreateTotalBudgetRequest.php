@@ -9,12 +9,12 @@ class CreateTotalBudgetRequest extends OrganizationBaseRequest
      */
     public function rules()
     {
-        return $this->getRulesForTotalBudget($this->request->get('total_budget'));
+        return $this->getRulesForTotalBudget($this->get('total_budget'));
     }
 
     public function messages()
     {
-        return $this->getMessagesForTotalBudget($this->request->get('total_budget'));
+        return $this->getMessagesForTotalBudget($this->get('total_budget'));
     }
 
     /**

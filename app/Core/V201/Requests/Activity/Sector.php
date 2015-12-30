@@ -9,7 +9,7 @@ class Sector extends ActivityBaseRequest
 
     public function rules()
     {
-        return $this->getSectorsRules($this->request->get('sector'));
+        return $this->getSectorsRules($this->get('sector'));
     }
 
     /**
@@ -18,7 +18,7 @@ class Sector extends ActivityBaseRequest
      */
     public function messages()
     {
-        return $this->getSectorsMessages($this->request->get('sector'));
+        return $this->getSectorsMessages($this->get('sector'));
     }
 
     /**

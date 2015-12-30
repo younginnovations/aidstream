@@ -4,7 +4,7 @@ use App\Http\Controllers\Controller;
 use App\Services\Activity\BudgetManager;
 use App\Services\FormCreator\Activity\Budget as BudgetForm;
 use App\Services\Activity\ActivityManager;
-use Illuminate\Http\Request;
+use App\Http\Requests\Request;
 use App\Services\RequestManager\Activity\Budget as BudgetRequestManager;
 
 /**

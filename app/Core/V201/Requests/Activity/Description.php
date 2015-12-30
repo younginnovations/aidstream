@@ -15,7 +15,7 @@ class Description extends ActivityBaseRequest
      */
     public function rules()
     {
-        return $this->getRulesForDescription($this->request->get('description'));
+        return $this->getRulesForDescription($this->get('description'));
     }
 
     /**
@@ -23,7 +23,7 @@ class Description extends ActivityBaseRequest
      */
     public function messages()
     {
-        return $this->getMessagesForDescription($this->request->get('description'));
+        return $this->getMessagesForDescription($this->get('description'));
     }
 
     /**

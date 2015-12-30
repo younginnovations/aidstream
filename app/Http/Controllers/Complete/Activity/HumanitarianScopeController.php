@@ -5,7 +5,7 @@ use App\Services\Activity\ActivityManager;
 use App\Services\Activity\HumanitarianScopeManager;
 use App\Services\FormCreator\Activity\HumanitarianScope;
 use App\Services\RequestManager\Activity\HumanitarianScope as HumanitarianScopeRequest;
-use Illuminate\Http\Request;
+use App\Http\Requests\Request;
 
 /**
  * Class HumanitarianScopeController

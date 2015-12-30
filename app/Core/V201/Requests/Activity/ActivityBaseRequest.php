@@ -10,15 +10,6 @@ use App\Http\Requests\Request;
 class ActivityBaseRequest extends Request
 {
     /**
-     * Determine if the user is authorized to make this request.
-     * @return bool
-     */
-    public function authorize()
-    {
-        return true;
-    }
-
-    /**
      * returns rules for narrative
      * @param $formFields
      * @param $formBase

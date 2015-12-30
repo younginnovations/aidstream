@@ -10,12 +10,12 @@ class HumanitarianScope extends ActivityBaseRequest
 {
     public function rules()
     {
-        return $this->getRulesForHumanitarianScope($this->request->get('humanitarian_scope'));
+        return $this->getRulesForHumanitarianScope($this->get('humanitarian_scope'));
     }
 
     public function messages()
     {
-        return $this->getMessagesForHumanitarianScope($this->request->get('humanitarian_scope'));
+        return $this->getMessagesForHumanitarianScope($this->get('humanitarian_scope'));
     }
 
     /**

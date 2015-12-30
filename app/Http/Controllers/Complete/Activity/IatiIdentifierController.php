@@ -7,7 +7,7 @@ use App\Services\Activity\IatiIdentifierManager;
 use App\Services\FormCreator\Activity\Identifier;
 use App\Services\Organization\OrganizationManager;
 use App\Services\RequestManager\Activity\IatiIdentifierRequestManager;
-use Illuminate\Http\Request;
+use App\Http\Requests\Request;
 use Illuminate\Session\SessionManager;
 
 class IatiIdentifierController extends Controller

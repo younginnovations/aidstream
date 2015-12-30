@@ -5,7 +5,7 @@ use App\Services\Activity\ActivityStatus as ActivityStatusManager;
 use App\Services\Activity\ActivityManager;
 use App\Services\FormCreator\Activity\ActivityStatus as ActivityStatusForm;
 use App\Services\RequestManager\Activity\ActivityStatus as ActivityStatusRequestManager;
-use Illuminate\Http\Request;
+use App\Http\Requests\Request;
 
 /**
  * Class ActivityStatusController

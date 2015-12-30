@@ -15,7 +15,7 @@ class RecipientRegionBudget extends OrganizationBaseRequest
     public function rules()
     {
         $rules = [];
-        foreach ($this->request->get('recipient_region_budget') as $recipientRegionBudgetIndex => $recipientRegionBudget) {
+        foreach ($this->get('recipient_region_budget') as $recipientRegionBudgetIndex => $recipientRegionBudget) {
             $recipientRegionBudgetForm = sprintf('recipient_region_budget.%s', $recipientRegionBudgetIndex);
             $rules                     = array_merge(
                 $rules,
@@ -37,7 +37,7 @@ class RecipientRegionBudget extends OrganizationBaseRequest
     public function messages()
     {
         $messages = [];
-        foreach ($this->request->get(
+        foreach ($this->get(
             'recipient_region_budget'
         ) as $recipientRegionBudgetIndex => $recipientRegionBudget) {
             $recipientRegionBudgetForm = sprintf('recipient_region_budget.%s', $recipientRegionBudgetIndex);

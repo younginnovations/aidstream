@@ -7,7 +7,7 @@ use App\Services\Organization\OrgReportingOrgManager;
 use App\Services\RequestManager\Organization\CreateOrgReportingOrgRequestManager;
 use Session;
 use URL;
-use Illuminate\Http\Request;
+use App\Http\Requests\Request;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
 use App\Services\FormCreator\Organization\OrgReportingOrgForm;

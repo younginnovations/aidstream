@@ -5,7 +5,7 @@ use App\Services\Activity\ActivityManager;
 use App\Services\Activity\TitleManager;
 use App\Services\FormCreator\Activity\Title;
 use App\Services\RequestManager\Activity\TitleRequestManager;
-use Illuminate\Http\Request;
+use App\Http\Requests\Request;
 
 /**
  * Class TitleController

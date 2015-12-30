@@ -5,7 +5,7 @@ use App\Services\Activity\ActivityManager;
 use App\Services\Activity\CountryBudgetItemManager;
 use App\Services\FormCreator\Activity\CountryBudgetItem as CountryBudgetItemForm;
 use App\Services\RequestManager\Activity\CountryBudgetItem as CountryBudgetItemRequestManager;
-use Illuminate\Http\Request;
+use App\Http\Requests\Request;
 
 /**
  * Class CountryBudgetItemController

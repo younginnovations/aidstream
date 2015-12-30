@@ -5,7 +5,7 @@ use App\Services\Activity\ParticipatingOrganizationManager;
 use App\Services\Activity\ActivityManager;
 use App\Services\FormCreator\Activity\ParticipatingOrganization as ParticipatingOrganizationForm;
 use App\Services\RequestManager\Activity\ParticipatingOrganization as ParticipatingOrganizationRequestManager;
-use Illuminate\Http\Request;
+use App\Http\Requests\Request;
 
 /**
  * Class ParticipatingOrganizationController

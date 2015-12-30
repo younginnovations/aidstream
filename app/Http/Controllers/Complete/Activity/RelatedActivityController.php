@@ -4,7 +4,7 @@ use App\Http\Controllers\Controller;
 use App\Services\Activity\RelatedActivityManager;
 use App\Services\FormCreator\Activity\RelatedActivity as RelatedActivityForm;
 use App\Services\Activity\ActivityManager;
-use Illuminate\Http\Request;
+use App\Http\Requests\Request;
 use App\Services\RequestManager\Activity\RelatedActivity as RelatedActivityRequestManager;
 
 /**

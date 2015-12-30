@@ -3,7 +3,7 @@
 use App\Http\Controllers\Controller;
 use App\Services\Organization\OrganizationManager;
 use App\Services\Organization\RecipientRegionBudgetManager;
-use Illuminate\Http\Request;
+use App\Http\Requests\Request;
 use App\Services\RequestManager\Organization\RecipientRegionBudget as RecipientRegionBudgetRequest;
 use App\Services\FormCreator\Organization\RecipientRegionBudget;
 

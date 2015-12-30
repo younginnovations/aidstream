@@ -14,7 +14,7 @@ class ContactInfo extends ActivityBaseRequest
      */
     public function rules()
     {
-        return $this->getRulesForContactInfo($this->request->get('contact_info'));
+        return $this->getRulesForContactInfo($this->get('contact_info'));
     }
 
 
@@ -23,7 +23,7 @@ class ContactInfo extends ActivityBaseRequest
      */
     public function messages()
     {
-        return $this->getMessagesForContactInfo($this->request->get('contact_info'));
+        return $this->getMessagesForContactInfo($this->get('contact_info'));
     }
 
     /**

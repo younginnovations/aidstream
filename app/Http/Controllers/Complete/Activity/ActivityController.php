@@ -9,7 +9,7 @@ use App\Services\FormCreator\Activity\ChangeActivityDefault;
 use App\Services\Organization\OrganizationManager;
 use App\Services\RequestManager\Activity\ChangeActivityDefault as ChangeActivityDefaultRequest;
 use App\Services\SettingsManager;
-use Illuminate\Http\Request;
+use App\Http\Requests\Request;
 use Illuminate\Session\SessionManager;
 use App\Services\Activity\ActivityManager;
 use App\Services\FormCreator\Activity\Identifier;

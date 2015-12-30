@@ -14,7 +14,7 @@ class RecipientRegion extends ActivityBaseRequest
      */
     public function rules()
     {
-        return $this->getRulesForRecipientRegion($this->request->get('recipient_region'));
+        return $this->getRulesForRecipientRegion($this->get('recipient_region'));
     }
 
     /**
@@ -23,7 +23,7 @@ class RecipientRegion extends ActivityBaseRequest
      */
     public function messages()
     {
-        return $this->getMessagesForRecipientRegion($this->request->get('recipient_region'));
+        return $this->getMessagesForRecipientRegion($this->get('recipient_region'));
     }
 
     /**

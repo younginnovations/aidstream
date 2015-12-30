@@ -5,7 +5,7 @@ use App\Services\Activity\ActivityManager;
 use App\Services\Activity\CollaborationTypeManager;
 use App\Services\FormCreator\Activity\CollaborationType as CollaborationTypeForm;
 use App\Services\RequestManager\Activity\CollaborationType as CollaborationTypeRequestManager;
-use Illuminate\Http\Request;
+use App\Http\Requests\Request;
 
 /**
  * Class CollaborationTypeController

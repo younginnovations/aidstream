@@ -6,7 +6,7 @@ use App\Services\Activity\ActivityManager;
 use App\Services\SettingsManager;
 use App\Services\Organization\OrganizationManager;
 use App\Services\FormCreator\Organization\OrgReportingOrgForm;
-use Illuminate\Http\Request;
+use App\Http\Requests\Request;
 use App\Services\Organization\OrgNameManager;
 
 /**

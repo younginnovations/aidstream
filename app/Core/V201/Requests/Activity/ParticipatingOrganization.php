@@ -14,7 +14,7 @@ class ParticipatingOrganization extends ActivityBaseRequest
      */
     public function rules()
     {
-        return $this->getRulesForParticipatingOrg($this->request->get('participating_organization'));
+        return $this->getRulesForParticipatingOrg($this->get('participating_organization'));
     }
 
     /**
@@ -23,7 +23,7 @@ class ParticipatingOrganization extends ActivityBaseRequest
      */
     public function messages()
     {
-        return $this->getMessagesForParticipatingOrg($this->request->get('participating_organization'));
+        return $this->getMessagesForParticipatingOrg($this->get('participating_organization'));
     }
 
     /**
