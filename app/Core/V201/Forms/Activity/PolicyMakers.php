@@ -11,7 +11,7 @@ class PolicyMakers extends BaseForm
     public function buildForm()
     {
         $this
-            ->addCollection('policy_maker', 'Activity\PolicyMaker', 'policy_maker')
-            ->addAddMoreButton('add_policy_maker', 'policy_maker');
+            ->addCollection('policy_marker', 'Activity\PolicyMaker', 'policy_marker')
+            ->addAddMoreButton('add_policy_marker', 'policy_marker');
     }
 }
