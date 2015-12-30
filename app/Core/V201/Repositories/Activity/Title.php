@@ -30,7 +30,7 @@ class Title
      */
     public function update(array $activityDetails, Activity $activity)
     {
-        $activity->title = $activityDetails['narrative'];
+        $activity->title = $activityDetails['title'];
 
         return $activity->save();
     }
