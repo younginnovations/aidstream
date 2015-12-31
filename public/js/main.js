@@ -290,4 +290,20 @@ $(document).ready(function () {
     $('.language-selector').click(function () {
         $(this).siblings('.language-flag-wrap').toggle();
     });
+
+    //js for form input check and leave page alert
+    var preventNavigation = false;
+    $('form').delegate('textarea, select, input:not(".ignore_change")', 'change keyup', function (e) {
+        preventNavigation = true;
+    });
+
+    $('[type="submit"]').click(function () {
+        preventNavigation = false;
+    });
+
+    window.onbeforeunload = function () {
+        if (preventNavigation) {
+            return 'You have unsaved changes.';
+        }
+    };
 });

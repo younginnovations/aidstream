@@ -69,7 +69,7 @@
                                 <label class="control-label">@lang('trans.login_name')</label>
 
                                 <div class="col-md-12">
-                                    <input type="text" class="form-control" name="login" value="{{ old('login') }}">
+                                    <input type="text" class="form-control ignore_change" name="login" value="{{ old('login') }}">
                                 </div>
                             </div>
 
@@ -77,7 +77,7 @@
                                 <label class="control-label">@lang('trans.password')</label>
 
                                 <div class="col-md-12">
-                                    <input type="password" class="form-control" name="password">
+                                    <input type="password" class="form-control ignore_change" name="password">
                                 </div>
                             </div>
 
@@ -85,7 +85,7 @@
                                 <div class="col-md-6 pull-left">
                                     <div class="checkbox">
                                         <label>
-                                            <input type="checkbox" name="remember"> @lang('trans.remember_me')
+                                            <input type="checkbox" name="remember" class="ignore_change"> @lang('trans.remember_me')
                                         </label>
                                     </div>
                                 </div>
