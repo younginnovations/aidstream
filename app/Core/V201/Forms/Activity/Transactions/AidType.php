@@ -17,15 +17,6 @@ class AidType extends BaseForm
      */
     public function buildForm()
     {
-        $this
-            ->add(
-                'aid_type',
-                'select',
-                [
-                    'choices'     => $this->getAidTypeCodeList(),
-                    'empty_value' => 'Select one of the following option :',
-                    'attr'        => ['class' => 'form-control aid_type']
-                ]
-            );
+        $this->addSelect('aid_type', $this->getAidTypeCodeList(), 'Aid Type', $this->addHelpText('Activity_Transaction_AidType-code'));
     }
 }

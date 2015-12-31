@@ -21,7 +21,7 @@ trait Result
      */
     public function addTypeList()
     {
-        return $this->addSelect('type', $this->getCodeList('ResultType', 'Activity'));
+        return $this->addSelect('type', $this->getCodeList('ResultType', 'Activity'), null, $this->addHelpText('Activity_Result-type'));
     }
 
     /**
@@ -30,6 +30,6 @@ trait Result
      */
     public function addAggregationStatusList()
     {
-        return $this->addSelect('aggregation_status', [0 => 'False', 1 => 'True']);
+        return $this->addSelect('aggregation_status', [0 => 'False', 1 => 'True'], 'Aggregation Status', $this->addHelpText('Activity_Result-aggregation_status'));
     }
 }

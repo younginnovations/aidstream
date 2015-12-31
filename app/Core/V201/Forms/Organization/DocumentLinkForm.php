@@ -14,8 +14,8 @@ class DocumentLinkForm extends BaseForm
     public function buildForm()
     {
         $this
-            ->add('url', 'text')
-            ->addSelect('format', $this->getCodeList('FileFormat', 'Organization'))
+            ->add('url', 'text', ['help_block' => $this->addHelpText('Organisation_DocumentLink-url')])
+            ->addSelect('format', $this->getCodeList('FileFormat', 'Organization'), 'Format', $this->addHelpText('Organisation_DocumentLink-format'))
             ->addNarrative('narrative')
             ->addAddMoreButton('add_narrative', 'narrative')
             ->addCollection('category', 'Organization\CategoryCodeForm', 'category')

@@ -18,14 +18,7 @@ class RecipientCountry extends BaseForm
     public function buildForm()
     {
         $this
-            ->add(
-                'country_code',
-                'select',
-                [
-                    'choices'     => $this->getCountryCodeList(),
-                    'empty_value' => 'Select one of the following option :',
-                ]
-            )
+            ->addSelect('country_code', $this->getCountryCodeList(), 'Country Code', $this->addHelpText('Activity_Transaction_RecipientCountry-code'))
             ->addNarrative('narrative')
             ->addAddMoreButton('add_narrative', 'narrative');
     }

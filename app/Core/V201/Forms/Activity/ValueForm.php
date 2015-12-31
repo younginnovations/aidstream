@@ -11,16 +11,8 @@ class ValueForm extends BaseForm
     public function buildForm()
     {
         $this
-            ->add('amount', 'text')
-            ->add(
-                'currency',
-                'select',
-                [
-                    'choices'     => $this->getCodeList('Currency', 'Activity'),
-                    'empty_value' => 'Select one of the following option :',
-                    'label'       => 'Currency'
-                ]
-            )
-            ->add('value_date', 'date');
+            ->add('amount', 'text', ['help_block' => $this->addHelpText('Activity_Budget_Value-text')])
+            ->addSelect('currency', $this->getCodeList('Currency', 'Activity'), 'Currency', $this->addHelpText('Activity_Budget_Value-currency'))
+            ->add('value_date', 'date', ['help_block' => $this->addHelpText('Activity_Budget_Value-value_date')]);
     }
 }

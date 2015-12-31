@@ -15,14 +15,6 @@ class LocationReach extends BaseForm
      */
     public function buildForm()
     {
-        $this
-            ->add(
-                'code',
-                'select',
-                [
-                    'choices'     => $this->getCodeList('GeographicLocationReach', 'Activity'),
-                    'empty_value' => 'Select one of the following option :'
-                ]
-            );
+        $this->addSelect('code', $this->getCodeList('GeographicLocationReach', 'Activity'), 'Code', $this->addHelpText('Activity_Location_LocationReach-code'));
     }
 }

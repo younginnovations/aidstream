@@ -13,14 +13,6 @@ class CollaborationType extends BaseForm
      */
     public function buildForm()
     {
-        $this
-            ->add(
-                'collaboration_type',
-                'select',
-                [
-                    'choices'     => $this->getCodeList('CollaborationType', 'Activity'),
-                    'empty_value' => 'Select one of the following option :'
-                ]
-            );
+        $this->addSelect('collaboration_type', $this->getCodeList('CollaborationType', 'Activity'), 'Collaboration Type', $this->addHelpText('Activity_CollaborationType-code'));
     }
 }

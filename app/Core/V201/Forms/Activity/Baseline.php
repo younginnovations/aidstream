@@ -18,8 +18,8 @@ class Baseline extends BaseForm
     public function buildForm()
     {
         $this
-            ->add('year', 'text')
-            ->add('value', 'text')
+            ->add('year', 'text', ['help_block' => $this->addHelpText('Activity_Result_Indicator_Baseline-year')])
+            ->add('value', 'text', ['help_block' => $this->addHelpText('Activity_Result_Indicator_Baseline-value')])
             ->addComments();
     }
 }

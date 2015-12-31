@@ -17,15 +17,6 @@ class FinanceType extends BaseForm
      */
     public function buildForm()
     {
-        $this
-            ->add(
-                'finance_type',
-                'select',
-                [
-                    'choices'     => $this->getFinanceTypeCodeList(),
-                    'empty_value' => 'Select one of the following option :',
-                    'attr'        => ['class' => 'form-control finance_type']
-                ]
-            );
+        $this->addSelect('finance_type', $this->getFinanceTypeCodeList(), 'Finance Type', $this->addHelpText('Activity_Transaction_FinanceType-code'));
     }
 }

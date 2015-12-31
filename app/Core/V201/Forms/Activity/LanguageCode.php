@@ -9,15 +9,7 @@ class LanguageCode extends BaseForm
     public function buildForm()
     {
         $this
-            ->add(
-                'language',
-                'select',
-                [
-                    'choices'     => $this->getCodeList('Language', 'Activity'),
-                    'empty_value' => 'Select one of the following option :',
-                    'label'       => 'Language'
-                ]
-            )
+            ->addSelect('language', $this->getCodeList('Language', 'Activity'), 'Language', $this->addHelpText('Activity_DocumentLink_Language-code'))
             ->addRemoveThisButton('remove_language_code');
     }
 }

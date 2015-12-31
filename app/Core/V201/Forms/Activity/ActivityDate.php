@@ -14,18 +14,10 @@ class ActivityDate extends BaseForm
     public function buildForm()
     {
         $this
-            ->add('date', 'date')
-            ->add(
-                'type',
-                'select',
-                [
-                    'choices'     => $this->getCodeList('ActivityDateType', 'Activity'),
-                    'empty_value' => 'Select one of the following option :',
-                    'label'       => 'Activity Date Type'
-                ]
-            )
+            ->add('date', 'date', ['help_block' => $this->addHelpText('Activity_ActivityDate-iso_date')])
+            ->addSelect('type', $this->getCodeList('ActivityDateType', 'Activity'), 'Activity Date Type', $this->addHelpText('Activity_ActivityDate-type'))
             ->addNarrative('narrative')
             ->addAddMoreButton('add_narrative', 'narrative')
-            ->addRemoveThisButton('remove_activty_date');
+            ->addRemoveThisButton('remove_activity_date');
     }
 }

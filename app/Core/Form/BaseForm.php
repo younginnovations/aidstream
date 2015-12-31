@@ -155,12 +155,12 @@ class BaseForm extends Form
     }
 
     /**
-     * @param string $value
+     * @param null $helpText
      * @return $this
      */
-    protected function addPercentage($value = 'percentage')
+    protected function addPercentage($helpText = null)
     {
-        return $this->add($value, 'text');
+        return $this->add('percentage', 'text', ['help_block' => $helpText]);
     }
 
     /**
@@ -189,6 +189,7 @@ class BaseForm extends Form
     {
         $help = trans(session()->get('version') . "/help");
         is_array($help) ?: $help = trans(config('app.default_version_name') . '/help');
+        isset($help[$helpText]) ?: $helpText = 'no_help_text';
 
         return
             [

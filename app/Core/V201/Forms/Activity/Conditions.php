@@ -11,15 +11,7 @@ class Conditions extends BaseForm
     public function buildForm()
     {
         $this
-            ->add(
-                'condition_attached',
-                'select',
-                [
-                    'choices'     => ['0' => 'No', '1' => 'Yes'],
-                    'empty_value' => 'Select one of the following option :',
-                    'label'       => 'Condition Attached'
-                ]
-            )
+            ->addSelect('condition_attached', ['0' => 'No', '1' => 'Yes'], 'Condition Attached', $this->addHelpText('Activity_Conditions-attached'))
             ->addCollection('condition', 'Activity\Condition', 'condition')
             ->addAddMoreButton('add_condition', 'condition');
     }

@@ -1,12 +1,11 @@
 <?php namespace App\Core\V201\Forms\Organization;
 
-use Kris\LaravelFormBuilder\Form;
+use App\Core\Form\BaseForm;
 
-class PeriodEnd extends Form
+class PeriodEnd extends BaseForm
 {
     public function buildForm()
     {
-        $this
-            ->add('date', 'date');
+        $this->add('date', 'date', ['help_block' => $this->addHelpText('Organisation_TotalBudget_PeriodEnd-iso_date')]);
     }
 }

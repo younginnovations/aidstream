@@ -23,7 +23,8 @@ class Sector extends BaseForm
                 [
                     'choices'     => $this->getSectorVocabularyCodeList(),
                     'empty_value' => 'Select one of the following option :',
-                    'attr'        => ['class' => 'form-control sector_vocabulary']
+                    'attr'        => ['class' => 'form-control sector_vocabulary'],
+                    'help_block'  => $this->addHelpText('Activity_Transaction_Sector-vocabulary')
                 ]
             )
             ->add(
@@ -33,7 +34,8 @@ class Sector extends BaseForm
                     'choices'     => $this->getSectorCodeList(),
                     'empty_value' => 'Select one of the following option :',
                     'label'       => 'Sector',
-                    'wrapper'     => ['class' => 'form-group hidden sector_types sector_select']
+                    'wrapper'     => ['class' => 'form-group hidden sector_types sector_select'],
+                    'help_block'  => $this->addHelpText('Activity_Sector-code')
                 ]
             )
             ->add(
@@ -43,15 +45,17 @@ class Sector extends BaseForm
                     'choices'     => $this->getSectorCategoryCodeList(),
                     'empty_value' => 'Select one of the following option :',
                     'label'       => 'Sector',
-                    'wrapper'     => ['class' => 'form-group hidden sector_types sector_category_select']
+                    'wrapper'     => ['class' => 'form-group hidden sector_types sector_category_select'],
+                    'help_block'  => $this->addHelpText('Activity_Sector-dac_three_code')
                 ]
             )
             ->add(
                 'sector_text',
                 'text',
                 [
-                    'label'   => 'Sector',
-                    'wrapper' => ['class' => 'form-group hidden sector_types sector_text']
+                    'label'      => 'Sector',
+                    'wrapper'    => ['class' => 'form-group hidden sector_types sector_text'],
+                    'help_block' => $this->addHelpText('Activity_Sector-non_dac_code')
                 ]
             )
             ->addNarrative('sector_narrative')

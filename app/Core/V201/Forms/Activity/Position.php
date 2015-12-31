@@ -16,14 +16,14 @@ class Position extends BaseForm
     public function buildForm()
     {
         $this
-            ->add('latitude', 'text')
-            ->add('longitude', 'text')
+            ->add('latitude', 'text', ['help_block' => $this->addHelpText('Activity_Location_Point_Pos-latitude')])
+            ->add('longitude', 'text', ['help_block' => $this->addHelpText('Activity_Location_Point_Pos-longitude')])
             ->add(
                 'map',
                 'static',
                 [
-                    'label' => false,
-                    'attr'  => [
+                    'label'   => false,
+                    'attr'    => [
                         'class' => 'map_container',
                         'style' => 'height: 400px;'
                     ],

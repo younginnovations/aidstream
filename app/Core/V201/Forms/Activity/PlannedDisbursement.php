@@ -14,7 +14,7 @@ class PlannedDisbursement extends BaseForm
     public function buildForm()
     {
         $this
-            ->addSelect('planned_disbursement_type', $this->getCodeList('BudgetType', 'Activity'), 'Type')
+            ->addSelect('planned_disbursement_type', $this->getCodeList('BudgetType', 'Activity'), 'Type', $this->addHelpText('Activity_PlannedDisbursement-type'))
             ->addCollection('period_start', 'Activity\PeriodStart')
             ->addCollection('period_end', 'Activity\PeriodEnd')
             ->addCollection('value', 'Activity\ValueForm')

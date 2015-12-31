@@ -1,5 +1,6 @@
 <?php
 return [
+    'no_help_text'                                                   => 'No help is provided for this item',
     'activity_defaults-default_language'                             => 'The language in which you normally report. Select from dropdown.',
     'activity_defaults-default_currency'                             => 'The currency in which you normally report your financial transactions. Select from dropdown.',
     'activity_defaults-hierarchy'                                    => 'IATI allows for activities to be reported hierarchically (eg. parent - child ; programme - project - sub-project, etc). If you are reporting your activities in a flat, non-hierarchical structure enter a "1". If most of your activities are at a lower level you may enter that level here (Those activities with a different level can be edited as you are entering them.)',

@@ -14,14 +14,19 @@ class DefaultFieldValuesForm extends BaseForm
     public function buildForm()
     {
         $this
-            ->addSelect('default_currency', $this->getCodeList('Currency', 'Organization'))
-            ->addSelect('default_language', $this->getCodeList('Language', 'Organization'))
-            ->add('default_hierarchy', 'text')
+            ->addSelect('default_currency', $this->getCodeList('Currency', 'Organization'), 'Default Currency', $this->addHelpText('activity_defaults-default_currency'))
+            ->addSelect('default_language', $this->getCodeList('Language', 'Organization'), 'Default Language', $this->addHelpText('activity_defaults-default_language'))
+            ->add('default_hierarchy', 'text', ['help_block' => $this->addHelpText('activity_defaults-hierarchy')])
             ->add('linked_data_uri', 'text', ['label' => 'Linked Data Default'])
-            ->addSelect('default_collaboration_type', $this->getCodeList('CollaborationType', 'Organization'))
-            ->addSelect('default_flow_type', $this->getCodeList('FlowType', 'Organization'))
-            ->addSelect('default_finance_type', $this->getCodeList('FinanceType', 'Organization'))
-            ->addSelect('default_aid_type', $this->getCodeList('AidType', 'Organization'))
-            ->addSelect('default_tied_status', $this->getCodeList('TiedStatus', 'Organization'));
+            ->addSelect(
+                'default_collaboration_type',
+                $this->getCodeList('CollaborationType', 'Organization'),
+                'Default Collaboration Type',
+                $this->addHelpText('activity_defaults-default_collaboration_type')
+            )
+            ->addSelect('default_flow_type', $this->getCodeList('FlowType', 'Organization'), 'Default Flow Type', $this->addHelpText('activity_defaults-default_flow_type'))
+            ->addSelect('default_finance_type', $this->getCodeList('FinanceType', 'Organization'), 'Default Finance Type', $this->addHelpText('activity_defaults-default_finance_type'))
+            ->addSelect('default_aid_type', $this->getCodeList('AidType', 'Organization'), 'Default Aid Type', $this->addHelpText('activity_defaults-default_aid_type'))
+            ->addSelect('default_tied_status', $this->getCodeList('TiedStatus', 'Organization'), 'Default Tied Status', $this->addHelpText('activity_defaults-default_tied_status'));
     }
 }

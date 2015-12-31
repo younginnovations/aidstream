@@ -1,16 +1,16 @@
 <?php namespace App\Core\V201\Forms\Settings;
 
-use Kris\LaravelFormBuilder\Form;
+use App\Core\Form\BaseForm;
 
-class RegistryInfoForm extends Form
+class RegistryInfoForm extends BaseForm
 {
     protected $showFieldErrors = true;
 
     public function buildForm()
     {
         $this
-            ->add('publisher_id', 'text')
-            ->add('api_id', 'text')
+            ->add('publisher_id', 'text', ['help_block' => $this->addHelpText('activity_defaults-publisher_id')])
+            ->add('api_id', 'text', ['help_block' => $this->addHelpText('activity_defaults-api_key')])
             ->add(
                 'publish_files: ',
                 'choice',
@@ -21,7 +21,8 @@ class RegistryInfoForm extends Form
                     'choice_options' => [
                         'wrapper' => ['class' => 'choice-wrapper']
                     ],
-                    'wrapper' => ['class' => 'form-group registry-info-wrapper']
+                    'wrapper'        => ['class' => 'form-group registry-info-wrapper'],
+                    'help_block'     => $this->addHelpText('activity_defaults-update_registry')
                 ]
             );
     }

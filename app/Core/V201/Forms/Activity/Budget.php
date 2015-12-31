@@ -14,7 +14,7 @@ class Budget extends BaseForm
     public function buildForm()
     {
         $this
-            ->addSelect('budget_type', $this->getCodeList('BudgetType', 'Activity'))
+            ->addSelect('budget_type', $this->getCodeList('BudgetType', 'Activity'), 'Budget Type', $this->addHelpText('Activity_Budget-type'))
             ->addCollection('period_start', 'Activity\PeriodStart')
             ->addCollection('period_end', 'Activity\PeriodEnd')
             ->addCollection('value', 'Activity\ValueForm')

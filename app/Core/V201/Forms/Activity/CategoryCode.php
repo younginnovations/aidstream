@@ -9,14 +9,7 @@ class CategoryCode extends BaseForm
     public function buildForm()
     {
         $this
-            ->add(
-                'code',
-                'select',
-                [
-                    'choices'     => $this->getCodeList('DocumentCategory', 'Activity'),
-                    'empty_value' => 'Select one of the following option :'
-                ]
-            )
+            ->addSelect('code', $this->getCodeList('DocumentCategory', 'Activity'), 'Code', $this->addHelpText('Activity_DocumentLink_Category-code'))
             ->addRemoveThisButton('remove_category_code');
     }
 }

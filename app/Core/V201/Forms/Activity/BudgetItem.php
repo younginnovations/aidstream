@@ -14,15 +14,8 @@ class BudgetItem extends BaseForm
     public function buildForm()
     {
         $this
-            ->add(
-                'code',
-                'select',
-                [
-                    'choices'     => $this->getCodeList('BudgetIdentifier', 'Activity'),
-                    'empty_value' => 'Select one of the following option :',
-                ]
-            )
-            ->addPercentage()
+            ->addSelect('code', $this->getCodeList('BudgetIdentifier', 'Activity'), 'Code', $this->addHelpText('Activity_CountryBudgetItems_BudgetItem-non_iati'))
+            ->addPercentage($this->addHelpText('Activity_CountryBudgetItems_BudgetItem-percentage'))
             ->addCollection('description', 'Activity\BudgetItemDescription', 'description')
             ->addAddMoreButton('add_budget_item_description', 'description')
             ->addRemoveThisButton('remove_budget_item');

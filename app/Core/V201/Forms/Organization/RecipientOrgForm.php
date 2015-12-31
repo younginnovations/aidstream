@@ -1,12 +1,11 @@
 <?php namespace App\Core\V201\Forms\Organization;
 
-use Kris\LaravelFormBuilder\Form;
+use App\Core\Form\BaseForm;
 
-class RecipientOrgForm extends Form
+class RecipientOrgForm extends BaseForm
 {
     public function buildForm()
     {
-        $this
-            ->add('Ref', 'text');
+        $this->add('Ref', 'text', ['help_block' => $this->addHelpText('Organisation_RecipientOrgBudget_RecipientOrg-ref')]);
     }
 }

@@ -1,22 +1,13 @@
 <?php namespace App\Core\V201\Forms\Settings;
 
-use Kris\LaravelFormBuilder\Form;
+use App\Core\Form\BaseForm;
 
-class VersionInfoForm extends Form
+class VersionInfoForm extends BaseForm
 {
     protected $showFieldErrors = true;
 
     public function buildForm()
     {
-        $this
-            ->add(
-                'version',
-                'select',
-                [
-                    'label'       => 'Select Version',
-                    'choices'     => $this->getData('versions'),
-                    'empty_value' => 'Select one of the following option :',
-                ]
-            );
+        $this->addSelect('version', $this->getData('versions'), 'Select Version');
     }
 }

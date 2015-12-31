@@ -18,14 +18,12 @@ class Type extends BaseForm
     public function buildForm()
     {
         $this
-            ->add(
+            ->addSelect(
                 'transaction_type_code',
-                'select',
-                [
-                    'choices'     => $this->getTransactionTypeCodeList(),
-                    'empty_value' => 'Select one of the following option :',
-                    'attr'        => ['class' => 'form-control transaction_type']
-                ]
+                $this->getTransactionTypeCodeList(),
+                'Transaction Type Code',
+                $this->addHelpText('Activity_Transaction_TransactionType-code'),
+                ['attr' => ['class' => 'form-control transaction_type']]
             );
     }
 }

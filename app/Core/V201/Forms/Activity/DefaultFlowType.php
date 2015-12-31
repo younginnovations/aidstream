@@ -13,14 +13,6 @@ class DefaultFlowType extends BaseForm
      */
     public function buildForm()
     {
-        $this
-            ->add(
-                'default_flow_type',
-                'select',
-                [
-                    'choices'     => $this->getCodeList('FlowType', 'Activity'),
-                    'empty_value' => 'Select one of the following option :'
-                ]
-            );
+        $this->addSelect('default_flow_type', $this->getCodeList('FlowType', 'Activity'), 'Default Flow Type', $this->addHelpText('Activity_DefaultFlowType-code'));
     }
 }
