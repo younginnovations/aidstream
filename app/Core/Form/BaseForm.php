@@ -96,7 +96,6 @@ class BaseForm extends Form
      * @param bool   $label
      * @return $this
      */
-
     protected function addCollection($name, $file, $class = "", array $data = [], $label = null)
     {
         $class .= ($class ? ' has_add_more' : '');
@@ -149,7 +148,7 @@ class BaseForm extends Form
             [
                 'choices'     => $choices,
                 'label'       => $label,
-                'empty_value' => 'Select one of the following option :',
+                'empty_value' => 'Select one of the following options',
                 'help_block'  => $helpText
             ]
         );

@@ -16,16 +16,8 @@ class Narrative extends BaseForm
     public function buildForm()
     {
         $this
-            ->add('narrative', 'text', ['label' => $this->getData('label'), 'rules' => 'required'])
-            ->add(
-                'language',
-                'select',
-                [
-                    'choices'     => $this->getCodeList('Language', 'Activity'),
-                    'empty_value' => 'Select one of the following option :',
-                    'label'       => 'Language'
-                ]
-            )
+            ->add('narrative', 'text', ['label' => $this->getData('label')])
+            ->addSelect('language',$this->getCodeList('Language', 'Activity'))
             ->addRemoveThisButton('remove_from_collection');
     }
 }
