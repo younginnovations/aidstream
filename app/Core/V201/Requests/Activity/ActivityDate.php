@@ -12,7 +12,7 @@ class ActivityDate extends ActivityBaseRequest
      */
     public function rules()
     {
-        return $this->getRulesForActivityDate($this->request->get('activity_date'));
+        return $this->getRulesForActivityDate($this->get('activity_date'));
     }
 
     /**
@@ -20,7 +20,7 @@ class ActivityDate extends ActivityBaseRequest
      */
     public function messages()
     {
-        return $this->getMessagesForActivityDate($this->request->get('activity_date'));
+        return $this->getMessagesForActivityDate($this->get('activity_date'));
     }
 
     /**

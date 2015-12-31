@@ -5,7 +5,7 @@ use App\Services\Activity\ActivityManager;
 use App\Services\Activity\SectorManager;
 use App\Services\FormCreator\Activity\Sector as SectorForm;
 use App\Services\RequestManager\Activity\Sector as SectorRequestManager;
-use Illuminate\Http\Request;
+use App\Http\Requests\Request;
 
 /**
  * Class SectorController

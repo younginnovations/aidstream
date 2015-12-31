@@ -11,7 +11,7 @@ class Condition extends ActivityBaseRequest
      */
     public function rules()
     {
-        return $this->getRulesForCondition($this->request->get('condition'));
+        return $this->getRulesForCondition($this->get('condition'));
     }
 
     /**
@@ -19,7 +19,7 @@ class Condition extends ActivityBaseRequest
      */
     public function messages()
     {
-        return $this->getMessagesForCondition($this->request->get('condition'));
+        return $this->getMessagesForCondition($this->get('condition'));
     }
 
     /**

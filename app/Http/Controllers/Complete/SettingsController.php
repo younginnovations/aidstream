@@ -138,7 +138,10 @@ class SettingsController extends Controller
             $this->settingsManager->updateSettings($input, $this->organization, $this->settings);
             $activities = $this->activityManager->getActivities($this->organization->id);
             if ($publishingType != $newPublishingType) {
-                $this->generateNewFiles($newPublishingType, $activities);
+                $publishedFiles = $this->activityManager->getActivityPublishedFiles(Session::get('org_id'));
+                if(count($publishedFiles)) {
+                    $this->generateNewFiles($newPublishingType, $activities);
+                }
             }
             $reportingOrgIdentifier = $input['reporting_organization_info'][0]['reporting_organization_identifier'];
             foreach ($activities as $activity) {

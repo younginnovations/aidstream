@@ -6,7 +6,7 @@ use App\Services\Organization\OrganizationManager;
 use App\Services\Organization\RecipientCountryBudgetManager;
 use Session;
 use URL;
-use Illuminate\Http\Request;
+use App\Http\Requests\Request;
 use App\Services\RequestManager\Organization\RecipientCountryBudgetRequestManager;
 use App\Services\FormCreator\Organization\RecipientCountryBudgetForm as FormBuilder;
 

@@ -13,7 +13,7 @@ class DocumentLink extends ActivityBaseRequest
      */
     public function rules()
     {
-        return $this->getRulesForDocumentLink($this->request->get('document_link'));
+        return $this->getRulesForDocumentLink($this->get('document_link'));
     }
 
     /**
@@ -21,7 +21,7 @@ class DocumentLink extends ActivityBaseRequest
      */
     public function messages()
     {
-        return $this->getMessagesForDocumentLink($this->request->get('document_link'));
+        return $this->getMessagesForDocumentLink($this->get('document_link'));
     }
 
     /**

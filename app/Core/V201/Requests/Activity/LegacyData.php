@@ -11,7 +11,7 @@ class LegacyData extends ActivityBaseRequest
      */
     public function rules()
     {
-        return $this->getRulesForLegacyData($this->request->get('legacy_data'));
+        return $this->getRulesForLegacyData($this->get('legacy_data'));
     }
 
     /**
@@ -19,7 +19,7 @@ class LegacyData extends ActivityBaseRequest
      */
     public function messages()
     {
-        return $this->getMessagesForLegacyData($this->request->get('legacy_data'));
+        return $this->getMessagesForLegacyData($this->get('legacy_data'));
     }
 
     /**

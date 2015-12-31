@@ -15,7 +15,7 @@ class CreateNameRequest extends OrganizationBaseRequest
     public function rules()
     {
         $rules = [];
-        foreach ($this->request->get('name') as $nameIndex => $name) {
+        foreach ($this->get('name') as $nameIndex => $name) {
             $rules['name.' . $nameIndex . '.narrative'] = 'required|max:255';
         }
 
@@ -28,7 +28,7 @@ class CreateNameRequest extends OrganizationBaseRequest
     public function messages()
     {
         $messages = [];
-        foreach ($this->request->get('name') as $nameIndex => $name) {
+        foreach ($this->get('name') as $nameIndex => $name) {
             $messages['name.' . $nameIndex . '.narrative' . '.required'] = sprintf(
                 "Narrative is Required.",
                 $nameIndex

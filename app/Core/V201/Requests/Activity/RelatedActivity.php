@@ -11,7 +11,7 @@ class RelatedActivity extends ActivityBaseRequest
      */
     public function rules()
     {
-        return $this->getRulesForRelatedActivity($this->request->get('related_activity'));
+        return $this->getRulesForRelatedActivity($this->get('related_activity'));
     }
 
     /**
@@ -19,7 +19,7 @@ class RelatedActivity extends ActivityBaseRequest
      */
     public function messages()
     {
-        return $this->getMessagesForRelatedActivity($this->request->get('related_activity'));
+        return $this->getMessagesForRelatedActivity($this->get('related_activity'));
     }
 
     /**

@@ -5,7 +5,7 @@ use App\Services\Activity\ActivityManager;
 use App\Services\Activity\ResultManager;
 use App\Services\FormCreator\Activity\Result as ResultForm;
 use App\Services\RequestManager\Activity\Result as ResultRequestManager;
-use Illuminate\Http\Request;
+use App\Http\Requests\Request;
 
 /**
  * Class ResultController

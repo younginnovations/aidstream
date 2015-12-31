@@ -1,7 +1,7 @@
 <?php namespace App\Http\Controllers\Complete\Activity;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Http\Requests\Request;
 use App\Services\Activity\ActivityManager;
 use App\Services\FormCreator\Activity\Location as LocationForm;
 use App\Services\Activity\LocationManager;

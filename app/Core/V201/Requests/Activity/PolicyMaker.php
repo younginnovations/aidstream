@@ -11,7 +11,7 @@ class PolicyMaker extends ActivityBaseRequest
      */
     public function rules()
     {
-        return $this->getRulesForPolicyMaker($this->request->get('policy_maker'));
+        return $this->getRulesForPolicyMaker($this->get('policy_maker'));
     }
 
     /**
@@ -19,7 +19,7 @@ class PolicyMaker extends ActivityBaseRequest
      */
     public function messages()
     {
-        return $this->getMessagesForPolicyMaker($this->request->get('policy_maker'));
+        return $this->getMessagesForPolicyMaker($this->get('policy_maker'));
     }
 
     /**

@@ -6,7 +6,7 @@ use App\Services\Activity\UploadTransactionManager;
 use App\Services\FormCreator\Activity\UploadTransaction;
 use App\Services\RequestManager\Activity\CsvImportValidator;
 use App\Services\RequestManager\Activity\UploadTransaction as UploadTransactionRequest;
-use Illuminate\Http\Request;
+use App\Http\Requests\Request;
 
 class TransactionUploadController extends Controller
 {

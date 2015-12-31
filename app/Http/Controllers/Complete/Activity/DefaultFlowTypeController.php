@@ -5,7 +5,7 @@ use App\Services\Activity\ActivityManager;
 use App\Services\Activity\DefaultFlowTypeManager;
 use App\Services\FormCreator\Activity\DefaultFlowType as DefaultFlowTypeForm;
 use App\Services\RequestManager\Activity\DefaultFlowType as DefaultFlowTypeRequestManager;
-use Illuminate\Http\Request;
+use App\Http\Requests\Request;
 
 /**
  * Class DefaultFlowTypeController

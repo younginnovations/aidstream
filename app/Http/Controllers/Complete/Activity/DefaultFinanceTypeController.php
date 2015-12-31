@@ -5,7 +5,7 @@ use App\Services\Activity\ActivityManager;
 use App\Services\Activity\DefaultFinanceTypeManager;
 use App\Services\FormCreator\Activity\DefaultFinanceType as DefaultFinanceTypeForm;
 use App\Services\RequestManager\Activity\DefaultFinanceType as DefaultFinanceTypeRequestManager;
-use Illuminate\Http\Request;
+use App\Http\Requests\Request;
 
 /**
  * Class DefaultFinanceTypeController

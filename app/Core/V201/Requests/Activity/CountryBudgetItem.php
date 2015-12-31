@@ -12,7 +12,7 @@ class CountryBudgetItem extends ActivityBaseRequest
      */
     public function rules()
     {
-        return $this->getCountryBudgetItemRules($this->request->get('country_budget_item'));
+        return $this->getCountryBudgetItemRules($this->get('country_budget_item'));
     }
 
     /**
@@ -21,7 +21,7 @@ class CountryBudgetItem extends ActivityBaseRequest
      */
     public function messages()
     {
-        return $this->getCountryBudgetItemMessages($this->request->get('country_budget_item'));
+        return $this->getCountryBudgetItemMessages($this->get('country_budget_item'));
     }
 
     /**

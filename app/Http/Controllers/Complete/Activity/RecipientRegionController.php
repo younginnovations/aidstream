@@ -5,7 +5,7 @@ use App\Services\Activity\ActivityManager;
 use App\Services\Activity\RecipientRegionManager;
 use App\Services\FormCreator\Activity\RecipientRegion as RecipientRegionForm;
 use App\Services\RequestManager\Activity\RecipientRegion as RecipientRegionRequestManager;
-use Illuminate\Http\Request;
+use App\Http\Requests\Request;
 
 class RecipientRegionController extends Controller
 {

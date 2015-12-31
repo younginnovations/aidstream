@@ -14,7 +14,7 @@ class CreateRecipientCountryBudgetRequest extends OrganizationBaseRequest
     public function rules()
     {
         $rules = [];
-        foreach ($this->request->get(
+        foreach ($this->get(
             'recipient_country_budget'
         ) as $recipientCountryBudgetIndex => $recipientCountryBudget) {
             $recipientCountryBudgetForm = sprintf('recipient_country_budget.%s', $recipientCountryBudgetIndex);
@@ -42,7 +42,7 @@ class CreateRecipientCountryBudgetRequest extends OrganizationBaseRequest
     public function messages()
     {
         $messages = [];
-        foreach ($this->request->get(
+        foreach ($this->get(
             'recipient_country_budget'
         ) as $recipientCountryBudgetIndex => $recipientCountryBudget) {
             $recipientCountryBudgetForm = sprintf('recipient_country_budget.%s', $recipientCountryBudgetIndex);

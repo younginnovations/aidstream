@@ -1,21 +1,10 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: kriti
- * Date: 9/8/15
- * Time: 1:46 PM
- */
-namespace App\Http\Controllers\Complete\Organization;
+<?php namespace App\Http\Controllers\Complete\Organization;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Services\Organization\OrganizationManager;
 use App\Services\Organization\OrgTotalBudgetManager;
-use Session;
-use URL;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Input;
-use Illuminate\Support\Facades\Redirect;
+use App\Http\Requests\Request;
 use App\Services\RequestManager\Organization\TotalBudgetRequestManager;
 use App\Services\FormCreator\Organization\TotalBudgetForm as FormBuilder;
 

@@ -5,7 +5,7 @@ use App\Services\Activity\ActivityManager;
 use App\Services\Activity\TransactionManager;
 use App\Services\FormCreator\Activity\Transaction;
 use App\Services\RequestManager\Activity\Transaction as TransactionRequest;
-use Illuminate\Http\Request;
+use App\Http\Requests\Request;
 
 /**
  * Class TransactionController

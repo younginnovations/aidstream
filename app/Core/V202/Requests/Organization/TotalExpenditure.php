@@ -14,7 +14,7 @@ class TotalExpenditure extends OrganizationBaseRequest
      */
     public function rules()
     {
-        return $this->getRulesForTotalExpenditure($this->request->get('total_expenditure'));
+        return $this->getRulesForTotalExpenditure($this->get('total_expenditure'));
     }
 
     /**
@@ -23,7 +23,7 @@ class TotalExpenditure extends OrganizationBaseRequest
      */
     public function messages()
     {
-        return $this->getMessagesForTotalExpenditure($this->request->get('total_expenditure'));
+        return $this->getMessagesForTotalExpenditure($this->get('total_expenditure'));
     }
 
     /**

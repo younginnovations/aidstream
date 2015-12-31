@@ -25,7 +25,7 @@ class SettingsRequest extends Request
      */
     public function rules()
     {
-        $req                               = $this->request;
+        $req                               = $this;
         $this->reporting_organization_info = $req->get('reporting_organization_info')[0];
         $this->default_field_values        = $req->get('default_field_values')[0];
 

@@ -17,7 +17,7 @@ class Title extends ActivityBaseRequest
     {
         $rules = [];
         
-        foreach ($this->request->get('narrative') as $titleIndex => $title) {
+        foreach ($this->get('narrative') as $titleIndex => $title) {
             $rules[sprintf('narrative.%s.narrative', $titleIndex)] = 'required';
         }
 
@@ -32,7 +32,7 @@ class Title extends ActivityBaseRequest
     {
         $messages = [];
 
-        foreach ($this->request->get('narrative') as $titleIndex => $title) {
+        foreach ($this->get('narrative') as $titleIndex => $title) {
             $messages[sprintf('narrative.%s.narrative.required', $titleIndex)] = "Title narrative is required";
         }
 

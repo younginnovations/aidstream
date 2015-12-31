@@ -11,7 +11,7 @@ class CreateOrgRecipientOrgBudgetRequest extends OrganizationBaseRequest
     public function rules()
     {
         $rules = [];
-        foreach ($this->request->get(
+        foreach ($this->get(
             'recipient_organization_budget'
         ) as $recipientOrganizationBudgetIndex => $recipientOrganizationBudget) {
             $recipientOrganizationBudgetForm = sprintf(
@@ -44,7 +44,7 @@ class CreateOrgRecipientOrgBudgetRequest extends OrganizationBaseRequest
     public function messages()
     {
         $messages = [];
-        foreach ($this->request->get(
+        foreach ($this->get(
             'recipient_organization_budget'
         ) as $recipientOrganizationBudgetIndex => $recipientOrganizationBudget) {
             $recipientOrganizationBudgetForm = sprintf(

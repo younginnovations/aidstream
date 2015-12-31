@@ -524,9 +524,8 @@
                                 </div>
                             </div>
                         @endif
-
                         @if(!empty($sectors))
-                            <div class="panel panel-default">
+                           <div class="panel panel-default">
                                 <div class="panel-heading">Sectors</div>
                                 <div class="panel-body panel-level-1">
                                     @foreach($sectors as $sector)

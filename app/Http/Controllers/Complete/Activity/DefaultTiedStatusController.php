@@ -5,7 +5,7 @@ use App\Services\Activity\ActivityManager;
 use App\Services\Activity\DefaultTiedStatusManager;
 use App\Services\FormCreator\Activity\DefaultTiedStatus as DefaultTiedStatusForm;
 use App\Services\RequestManager\Activity\DefaultTiedStatus as DefaultTiedStatusRequestManager;
-use Illuminate\Http\Request;
+use App\Http\Requests\Request;
 
 /**
  * Class DefaultTiedStatusController

@@ -11,7 +11,7 @@ class Budget extends ActivityBaseRequest
      */
     public function rules()
     {
-        return $this->getRulesForBudget($this->request->get('budget'));
+        return $this->getRulesForBudget($this->get('budget'));
     }
 
     /**
@@ -19,7 +19,7 @@ class Budget extends ActivityBaseRequest
      */
     public function messages()
     {
-        return $this->getMessagesForBudget($this->request->get('budget'));
+        return $this->getMessagesForBudget($this->get('budget'));
     }
 
     /**

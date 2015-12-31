@@ -14,7 +14,7 @@ class Result extends ActivityBaseRequest
      */
     public function rules()
     {
-        return $this->getRulesForResult($this->request->get('result'));
+        return $this->getRulesForResult($this->get('result'));
     }
 
     /**
@@ -23,7 +23,7 @@ class Result extends ActivityBaseRequest
      */
     public function messages()
     {
-        return $this->getMessagesForResult($this->request->get('result'));
+        return $this->getMessagesForResult($this->get('result'));
     }
 
     /**

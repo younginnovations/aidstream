@@ -5,7 +5,7 @@ use App\Services\Activity\ContactInfoManager;
 use App\Services\Activity\ActivityManager;
 use App\Services\FormCreator\Activity\ContactInfo as ContactInfoForm;
 use App\Services\RequestManager\Activity\ContactInfo as ContactInfoRequestManager;
-use Illuminate\Http\Request;
+use App\Http\Requests\Request;
 
 /**
  * Class ContactInfoController

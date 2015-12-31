@@ -5,7 +5,7 @@ use App\Services\Activity\ActivityDateManager;
 use App\Services\Activity\ActivityManager;
 use App\Services\FormCreator\Activity\ActivityDate as ActivityDateForm;
 use App\Services\RequestManager\Activity\ActivityDate as ActivityDateRequestManager;
-use Illuminate\Http\Request;
+use App\Http\Requests\Request;
 
 /**
  * Class ActivityDateController

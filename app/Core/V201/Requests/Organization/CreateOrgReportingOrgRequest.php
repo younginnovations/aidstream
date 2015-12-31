@@ -22,7 +22,7 @@ class CreateOrgReportingOrgRequest extends OrganizationBaseRequest
      */
     public function rules()
     {
-        return $this->getRulesForReportingOrganization($this->request->get('reporting_org'));
+        return $this->getRulesForReportingOrganization($this->get('reporting_org'));
     }
 
     /**
@@ -49,7 +49,7 @@ class CreateOrgReportingOrgRequest extends OrganizationBaseRequest
      */
     public function messages()
     {
-        return $this->getMessagesForReportingOrganization($this->request->get('reporting_org'));
+        return $this->getMessagesForReportingOrganization($this->get('reporting_org'));
     }
 
     public function getMessagesForReportingOrganization(array $formFields)

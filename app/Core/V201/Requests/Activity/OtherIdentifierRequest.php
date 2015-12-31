@@ -15,7 +15,7 @@ class OtherIdentifierRequest extends ActivityBaseRequest
      */
     public function rules()
     {
-        return $this->getRulesForOtherIdentifier($this->request->get('other_identifier'));
+        return $this->getRulesForOtherIdentifier($this->get('other_identifier'));
     }
 
     /**
@@ -23,7 +23,7 @@ class OtherIdentifierRequest extends ActivityBaseRequest
      */
     public function messages()
     {
-        return $this->getMessagesForOtherIdentifier($this->request->get('other_identifier'));
+        return $this->getMessagesForOtherIdentifier($this->get('other_identifier'));
     }
 
 

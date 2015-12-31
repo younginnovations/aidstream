@@ -5,7 +5,7 @@ use App\Services\Wizard\Activity\ActivityManager;
 use App\Services\Wizard\Activity\StepTwoManager;
 use App\Services\Wizard\FormCreator\Activity\StepTwo as StepTwoForm;
 use App\Services\Wizard\RequestManager\Activity\StepTwo as StepTwoRequestManager;
-use Illuminate\Http\Request;
+use App\Http\Requests\Request;
 
 /**
  * Class StepTwoController

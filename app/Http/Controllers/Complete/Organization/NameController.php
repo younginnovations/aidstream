@@ -6,7 +6,7 @@ use App\Services\Organization\OrganizationManager;
 use App\Services\Organization\OrgNameManager;
 use Session;
 use URL;
-use Illuminate\Http\Request;
+use App\Http\Requests\Request;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
 use App\Services\RequestManager\Organization\NameRequestManager;

@@ -4,7 +4,7 @@ use App\Http\Controllers\Controller;
 use App\Services\Activity\ConditionManager;
 use App\Services\FormCreator\Activity\Condition as ConditionForm;
 use App\Services\Activity\ActivityManager;
-use Illuminate\Http\Request;
+use App\Http\Requests\Request;
 use App\Services\RequestManager\Activity\Condition as ConditionRequestManager;
 
 /**

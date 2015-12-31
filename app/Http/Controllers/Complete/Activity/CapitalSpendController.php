@@ -5,7 +5,7 @@ use App\Services\Activity\ActivityManager;
 use App\Services\Activity\CapitalSpendManager;
 use App\Services\FormCreator\Activity\CapitalSpend as CapitalSpendForm;
 use App\Services\RequestManager\Activity\CapitalSpend as CapitalSpendRequestManager;
-use Illuminate\Http\Request;
+use App\Http\Requests\Request;
 
 /**
  * Class CapitalSpendController

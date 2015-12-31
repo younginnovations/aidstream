@@ -4,7 +4,7 @@ use App\Http\Controllers\Controller;
 use App\Services\Activity\LegacyDataManager;
 use App\Services\FormCreator\Activity\LegacyData as LegacyDataForm;
 use App\Services\Activity\ActivityManager;
-use Illuminate\Http\Request;
+use App\Http\Requests\Request;
 use App\Services\RequestManager\Activity\LegacyData as LegacyDataRequestManager;
 
 /**
