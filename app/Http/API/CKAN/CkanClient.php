@@ -166,9 +166,6 @@ class CkanClient
         // Check HTTP response code
         if ($info['http_code'] !== 200 && $info['http_code'] !== 201) {
             switch ($info['http_code']) {
-                case 0:
-                    print_r($info);
-                    break;
                 case 404:
                     throw new NotFoundHttpException($data);
                     break;

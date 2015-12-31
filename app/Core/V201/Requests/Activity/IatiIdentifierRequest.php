@@ -10,14 +10,14 @@ class IatiIdentifierRequest extends ActivityBaseRequest
 {
     /**
      * Get the validation rules that apply to the request.
-     * @param IatiIdentifierRepository $iatiIdentifierRepository
      * @return array
      */
-    public function rules(IatiIdentifierRepository $iatiIdentifierRepository)
+    public function rules()
     {
-        $activityIdentifiers = [];
-        $activityId          = $this->get('id');
-        $identifiers         = ($activityId) ? $iatiIdentifierRepository->getActivityIdentifiersExceptId($activityId) : $iatiIdentifierRepository->getActivityIdentifiers();
+        $iatiIdentifierRepository = new IatiIdentifierRepository();
+        $activityIdentifiers      = [];
+        $activityId               = $this->get('id');
+        $identifiers              = ($activityId) ? $iatiIdentifierRepository->getActivityIdentifiersExceptId($activityId) : $iatiIdentifierRepository->getActivityIdentifiers();
 
         foreach ($identifiers as $identifier) {
             $activityIdentifiers[] = $identifier->activity_identifier;

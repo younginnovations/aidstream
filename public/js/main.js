@@ -84,7 +84,9 @@ $(document).ready(function () {
         $('body').undelegate('.btn_remove', 'click').delegate('.btn_remove', 'click', function () {
             var collectionForm = _this.parents('.collection_form').eq(0);
             _this.parent('.form-group').remove();
-            if ($('> .form-group', collectionForm).length === 0) collectionForm.next('.add_to_collection').trigger('click');
+            if ($('> .form-group', collectionForm).length === 0) {
+                collectionForm.next('.add_to_collection').trigger('click');
+            }
             removeDialog.modal('hide');
         });
 
@@ -269,7 +271,7 @@ $(document).ready(function () {
     var documentHeight = $(document).height();
     $('.element-sidebar-wrapper').css('height', documentHeight);
 
-    $('form').delegate('.remove_from_collection', 'mouseenter mouseleave', function (event) {
+    $('form').delegate('.remove_from_collection', 'mouseenter mouseleave', function () {
         $(this).parent('.form-group').toggleClass('fill-border');
     });
 
