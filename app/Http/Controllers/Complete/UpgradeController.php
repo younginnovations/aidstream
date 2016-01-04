@@ -1,74 +1,92 @@
 <?php namespace App\Http\Controllers\Complete;
 
-use App\Http\Requests\Request;
-use App\Http\Requests;
+use App\Services\SettingsManager;
+use App\Services\UpgradeManager;
+use Illuminate\Database\DatabaseManager;
 use App\Http\Controllers\Controller;
 
+/**
+ * Class UpgradeController
+ * @package App\Http\Controllers\Complete
+ */
 class UpgradeController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @var mixed
+     */
+    protected $orgId;
+    /**
+     * @var null
+     */
+    protected $version;
+    /**
+     * @var array
+     */
+    protected $versions;
+    /**
+     * @var UpgradeManager
+     */
+    protected $upgradeManager;
+
+    /**
+     * @param DatabaseManager $databaseManager
+     * @param SettingsManager $settingsManager
+     * @param UpgradeManager  $upgradeManager
+     */
+    function __construct(DatabaseManager $databaseManager, SettingsManager $settingsManager, UpgradeManager $upgradeManager)
+    {
+        $this->orgId = session('org_id');
+        $settings    = $settingsManager->getSettings($this->orgId);
+        $version     = $settings->version;
+        $db_versions = $databaseManager->table('versions')->get();
+        $versions    = [];
+        foreach ($db_versions as $ver) {
+            $versions[] = $ver->version;
+        }
+        $this->versions       = $versions;
+        $versionKey           = array_search($version, $versions);
+        $this->version        = (end($versions) === $version) ? null : $versions[$versionKey + 1];
+        $this->upgradeManager = $upgradeManager;
+    }
+
+    /**
+     * display version upgrade page
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
      */
     public function index()
     {
-        echo "";
+        if (!$this->version) {
+            return redirect()->back();
+        }
+
+        return view('Upgrade.index', ['version' => $this->version, 'orgId' => $this->orgId]);
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        echo "";
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        echo "";
-    }
-
-    /**
-     * Display upgrade view.
-     *
+     * continue version upgrade
      * @param $version
-     * @param $orgId
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function show($version, $orgId)
+    public function show($version)
     {
-        return view('Upgrade.show', compact('version', 'orgId'));
+        if (!$this->version) {
+            return redirect()->back();
+        }
+        $result   = $this->upgrade();
+        $response = $result ? ['type' => 'success', 'code' => ['upgraded', ['version' => $version]]] : ['type' => 'danger', 'code' => ['upgrade_failed']];
+
+        return redirect('/settings')->withResponse($response);
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
+     * upgrade version
+     * @return bool
      */
-    public function edit($id)
+    protected function upgrade()
     {
-        echo "";
-    }
+        $version = $this->version;
+        $orgId   = $this->orgId;
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @param  int                      $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        echo "";
+        return $this->upgradeManager->upgrade($orgId, $version);
     }
 }

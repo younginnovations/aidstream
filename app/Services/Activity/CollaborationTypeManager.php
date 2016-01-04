@@ -1,4 +1,4 @@
-<?php namespace App\Services\Activity;
+<?php namespace app\Services\Activity;
 
 use App\Core\Version;
 use App\Models\Activity\Activity;

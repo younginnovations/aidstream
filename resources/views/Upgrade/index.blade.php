@@ -11,7 +11,10 @@
 					</div>
 					<div class="panel-body">
 						<div class="create-form">
-							This will upgrade all data to version {{ $version }} compatible data for organization {{ $orgId }}.
+							<p>This will upgrade all data to version {{ $version }} compatible data for organization {{ $orgId }}.</p>
+							<p>
+								<a href="{{ route('upgrade-version.update', $version) }}" class="btn btn-primary">Continue</a> <a href="{{ URL::previous() }}" class="btn btn-default">Cancel</a>
+							</p>
 						</div>
 					</div>
 				</div>

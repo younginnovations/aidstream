@@ -39,4 +39,5 @@ return [
     'activity_uploaded'            => 'Activities are uploaded for "organization - :organization_id"',
     'activity_default_values'      => 'Activity default values are updated for  "organization - :organization_id" and "activity - : activity_id"',
     'humanitarian_scope_updated'   => 'Activity humanitarian scope updated for activity id ":activity_id"  and organization ":organization - :organization_id"',
+    'version_upgraded'             => 'Version upgraded to ":version" for organization ":organization - :organization_id"',
 ];

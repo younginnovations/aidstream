@@ -105,4 +105,4 @@ $router->post
     ]
 );
 
-$router->resource('upgrade-version.organization', 'Complete\UpgradeController');
+$router->resource('upgrade-version', 'Complete\UpgradeController');

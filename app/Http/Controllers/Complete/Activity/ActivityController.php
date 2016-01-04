@@ -270,7 +270,7 @@ class ActivityController extends Controller
         $activityData               = $this->activityManager->getActivityData($activityId);
         $settings                   = $this->settingsManager->getSettings($this->organization_id);
         $SettingsDefaultFieldValues = $settings->default_field_values;
-        $defaultFieldValues         = ($activityData->default_field_values[0]) ? $activityData->default_field_values[0] : $SettingsDefaultFieldValues;
+        $defaultFieldValues         = ($activityData->default_field_values[0]) ? $activityData->default_field_values[0] : $SettingsDefaultFieldValues[0];
         $defaultFieldValues         = [array_merge($defaultFieldValues, $request->except(['_method', '_token']))];
         $result                     = $this->changeActivityDefaultManager->update($defaultFieldValues, $activityData);
         if (!$result) {
@@ -278,6 +278,7 @@ class ActivityController extends Controller
 
             return redirect()->back()->withResponse($response);
         }
+        $this->activityManager->resetActivityWorkflow($activityId);
         $response = ['type' => 'success', 'code' => ['updated', ['name' => 'Activity Defaults']]];
 
         return redirect()->route('activity.show', [$activityId])->withResponse($response);

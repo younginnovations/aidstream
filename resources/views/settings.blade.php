@@ -13,7 +13,7 @@
                             $versionKey = array_search($version, $versions);
                             $newVersion = $versions[$versionKey + 1];
                             /*--}}
-							<a href="upgrade-version/{{ $newVersion }}/organization/{{ session('org_id') }}" class="upgrade small pull-right">Upgrade to Version {{ $newVersion}}</a>
+							<a href="upgrade-version" class="upgrade small pull-right">Upgrade to Version {{ $newVersion}}</a>
 						@endif
 					</div>
 					<div class="panel-body">
