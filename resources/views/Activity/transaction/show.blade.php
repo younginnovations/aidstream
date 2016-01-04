@@ -1,62 +1,215 @@
 @extends('app')
 @section('content')
     @inject('code', 'App\Helpers\GetCodeName')
-    <div class="container">
+    <div class="container main-container">
         <div class="row">
-            <div class="col-md-10 col-md-offset-1">
-                <div class="panel panel-default">
-                    <div class="panel-content-heading panel-title-heading">Transaction of <span>{{$activity->IdentifierTitle}}</span></div>
-                    <strong><h3>Element Detail</h3></strong>
+            @include('includes.side_bar_menu')
+            <div class="col-xs-9 col-md-9 col-lg-9 content-wrapper">
+            <div class="panel-content-heading panel-title-heading">Transaction of <span>{{$activity->IdentifierTitle}}</span></div>
+            <div class="col-xs-12 col-md-8 col-lg-8 element-content-wrapper">
+                <div class="panel panel-default panel-element-detail">
                     <div class="panel-body">
-                        <div>Reference: {{$transactionDetail['reference']}}</div>
-                        <div>Humanitarian: {{ isset($transaction['humanitarian']) && $transaction['humanitarian'] == 1 ? 'True' : 'False' }}</div>
-                        <strong>Transaction Type</strong>
-                        <div>Code: {{$code->getActivityCodeName('TransactionType', $transactionDetail['transaction_type'][0]['transaction_type_code'])}}</div>
-                        <strong>Provider Organization</strong>
-                        {{--*/ $providerOrg = $transactionDetail['provider_organization'][0] /*--}}
-                        <div>Ref: {{$providerOrg['organization_identifier_code']}}</div>
-                        <div>Provider_activity_id: {{$providerOrg['provider_activity_id']}}</div>
-                        <div>Narrative text: {{$providerOrg['narrative'][0]['narrative']}}</div>
-                        <strong>Value</strong>
-                        {{--*/ $value = $transactionDetail['value'][0] /*--}}
-                        <div>Amount: {{$value['amount'] }}</div>
-                        <div>Value date: {{$value['date'] }}</div>
-                        <div>Currency: {{$code->getActivityCodeName('Currency', $value['currency'])}}</div>
-                        <strong>Description</strong>
-                        <div>Narrative text: {{$transactionDetail['description'][0]['narrative'][0]['narrative']}}</div>
-                        <strong>Transaction Date</strong>
-                        <div>Date: {{$transactionDetail['transaction_date'][0]['date']}}</div>
-                        <strong>Receiver Organization</strong>
-                        {{--*/ $receiverOrg = $transactionDetail['receiver_organization'][0] /*--}}
-                        <div>Ref: {{$receiverOrg['organization_identifier_code']}}</div>
-                        <div>Provider_activity_id: {{$receiverOrg['receiver_activity_id']}}</div>
-                        <div>Narrative text: {{$receiverOrg['narrative'][0]['narrative']}}</div>
-                        <strong>Disbursement Channel</strong>
-                        <div>Disbursement Channel Code: {{$code->getActivityCodeName('DisbursementChannel', $transactionDetail['disbursement_channel'][0]['disbursement_channel_code'])}}</div>
-                        <strong>Sector</strong>
-                        {{--*/ $sector = $transactionDetail['sector'][0] /*--}}
-                        <div>Sector Code: {{$code->getActivityCodeName('Sector', $sector['sector_code'])}}</div>
-                        <div>Sector Vocabulary: {{$code->getActivityCodeName('SectorVocabulary', $sector['sector_vocabulary'])}}</div>
-                        <div>Narrative text: {{$sector['narrative'][0]['narrative']}}</div>
-                        <strong>Recipient Country</strong>
-                        {{--*/ $recipientCountry = $transactionDetail['recipient_country'][0] /*--}}
-                        <div>Recipient Country Code: {{$code->getOrganizationCodeName('Country', $recipientCountry['country_code'])}}</div>
-                        <div>Narrative text: {{$recipientCountry['narrative'][0]['narrative']}}</div>
-                        <strong>Recipient Region</strong>
-                        {{--*/ $recipientRegion = $transactionDetail['recipient_region'][0] /*--}}
-                        <div>Recipient Region Code: {{$code->getActivityCodeName('Region', $recipientRegion['region_code'])}}</div>
-                        <div>Recipient Region Vocabulary: {{$code->getActivityCodeName('RegionVocabulary', $recipientRegion['vocabulary'])}}</div>
-                        <div>Narrative text: {{$recipientRegion['narrative'][0]['narrative']}}</div>
-                        <strong>Flow Type</strong>
-                        <div>Flow Type: {{$code->getActivityCodeName('FlowType', $transactionDetail['flow_type'][0]['flow_type'])}}</div>
-                        <strong>Finance Type</strong>
-                        <div>Finance Type: {{$code->getActivityCodeName('FinanceType', $transactionDetail['finance_type'][0]['finance_type'])}}</div>
-                        <strong>Aid Type</strong>
-                        <div>Aid Type: {{$code->getActivityCodeName('AidType', $transactionDetail['aid_type'][0]['aid_type'])}}</div>
-                        <strong>Tied Status</strong>
-                        <div>Tied Status: {{$code->getActivityCodeName('TiedStatus', $transactionDetail['tied_status'][0]['tied_status_code'])}}</div>
+                        <div class="panel panel-default">  
+                            <div class="panel-heading">Element Detail</div>     
+                            <div class="panel-body panel-element-body">
+                                <div class="col-xs-12 col-md-12">
+                                    <div class="col-xs-12 col-sm-4">Reference:</div>
+                                    <div class="col-xs-12 col-sm-8">{{$transactionDetail['reference']}}</div>
+                                </div>
+                                <div class="col-xs-12 col-md-12">
+                                    <div class="col-xs-12 col-sm-4">Humanitarian:</div>
+                                    <div class="col-xs-12 col-sm-8">{{ isset($transaction['humanitarian']) && $transaction['humanitarian'] == 1 ? 'True' : 'False' }}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-default">  
+                            <div class="panel-heading">Transaction Type</div>     
+                            <div class="panel-body panel-element-body">
+                                <div class="col-xs-12 col-md-12">
+                                    <div class="col-xs-12 col-sm-4">Code:</div>
+                                    <div class="col-xs-12 col-sm-8">{{$code->getActivityCodeName('TransactionType', $transactionDetail['transaction_type'][0]['transaction_type_code'])}}</div>
+                                </div>
+                                <div class="col-xs-12 col-md-12">
+                                    <div class="col-xs-12 col-sm-4">Humanitarian:</div>
+                                    <div class="col-xs-12 col-sm-8">{{ isset($transaction['humanitarian']) && $transaction['humanitarian'] == 1 ? 'True' : 'False' }}</div>
+                                </div>
+                            </div>
+                        </div>
+                         <div class="panel panel-default">  
+                            <div class="panel-heading">Provider Organization</div>     
+                            {{--*/ $providerOrg = $transactionDetail['provider_organization'][0] /*--}}
+                            <div class="panel-body panel-element-body">
+                                <div class="col-xs-12 col-md-12">
+                                    <div class="col-xs-12 col-sm-4">Ref:</div>
+                                    <div class="col-xs-12 col-sm-8">{{$providerOrg['organization_identifier_code']}}</div>
+                                </div>
+                                <div class="col-xs-12 col-md-12">
+                                    <div class="col-xs-12 col-sm-4">Provider_activity_id:</div>
+                                    <div class="col-xs-12 col-sm-8">{{$providerOrg['provider_activity_id']}}</div>
+                                </div>
+                                <div class="col-xs-12 col-md-12">
+                                    <div class="col-xs-12 col-sm-4">Narrative text:</div>
+                                    <div class="col-xs-12 col-sm-8">{{$providerOrg['narrative'][0]['narrative']}}</div>
+                                </div>
+                            </div>
+                        </div>
+                         <div class="panel panel-default">  
+                            <div class="panel-heading">Value</div>     
+                            {{--*/ $value = $transactionDetail['value'][0] /*--}}
+                            <div class="panel-body panel-element-body">
+                                <div class="col-xs-12 col-md-12">
+                                    <div class="col-xs-12 col-sm-4">Amount:</div>
+                                    <div class="col-xs-12 col-sm-8">{{$value['amount'] }}</div>
+                                </div>
+                                <div class="col-xs-12 col-md-12">
+                                    <div class="col-xs-12 col-sm-4">Value date:</div>
+                                    <div class="col-xs-12 col-sm-8">{{$value['date'] }}</div>
+                                </div>
+                                <div class="col-xs-12 col-md-12">
+                                    <div class="col-xs-12 col-sm-4">Currency:</div>
+                                    <div class="col-xs-12 col-sm-8">{{$code->getActivityCodeName('Currency', $value['currency'])}}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-default">  
+                            <div class="panel-heading">Description</div>     
+                            <div class="panel-body panel-element-body">
+                                <div class="col-xs-12 col-md-12">
+                                    <div class="col-xs-12 col-sm-4">Narrative text:</div>
+                                    <div class="col-xs-12 col-sm-8">{{$transactionDetail['description'][0]['narrative'][0]['narrative']}}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-default">  
+                            <div class="panel-heading">Transaction Date</div>     
+                            <div class="panel-body panel-element-body">
+                                <div class="col-xs-12 col-md-12">
+                                    <div class="col-xs-12 col-sm-4">Date:</div>
+                                    <div class="col-xs-12 col-sm-8">{{$transactionDetail['transaction_date'][0]['date']}}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-default">  
+                            <div class="panel-heading">Receiver Organization</div>     
+                            {{--*/ $receiverOrg = $transactionDetail['receiver_organization'][0] /*--}}
+                            <div class="panel-body panel-element-body">
+                                <div class="col-xs-12 col-md-12">
+                                    <div class="col-xs-12 col-sm-4">Ref:</div>
+                                    <div class="col-xs-12 col-sm-8">{{$receiverOrg['organization_identifier_code']}}</div>
+                                </div>
+                                <div class="col-xs-12 col-md-12">
+                                    <div class="col-xs-12 col-sm-4">Provider_activity_id:</div>
+                                    <div class="col-xs-12 col-sm-8">{{$receiverOrg['receiver_activity_id']}}</div>
+                                </div>
+                                <div class="col-xs-12 col-md-12">
+                                    <div class="col-xs-12 col-sm-4">Narrative text:</div>
+                                    <div class="col-xs-12 col-sm-8">{{$receiverOrg['narrative'][0]['narrative']}}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-default">  
+                            <div class="panel-heading">Disbursement Channel</div>     
+                            <div class="panel-body panel-element-body">
+                                <div class="col-xs-12 col-md-12">
+                                    <div class="col-xs-12 col-sm-4">Disbursement Channel Code:</div>
+                                    <div class="col-xs-12 col-sm-8">{{$code->getActivityCodeName('DisbursementChannel', $transactionDetail['disbursement_channel'][0]['disbursement_channel_code'])}}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-default">  
+                            <div class="panel-heading">Sector</div>     
+                            {{--*/ $sector = $transactionDetail['sector'][0] /*--}}
+                            <div class="panel-body panel-element-body">
+                                <div class="col-xs-12 col-md-12">
+                                    <div class="col-xs-12 col-sm-4">Sector Code:</div>
+                                    <div class="col-xs-12 col-sm-8">{{$code->getActivityCodeName('Sector', $sector['sector_code'])}}</div>
+                                </div>
+                                <div class="col-xs-12 col-md-12">
+                                    <div class="col-xs-12 col-sm-4">Sector Vocabulary:</div>
+                                    <div class="col-xs-12 col-sm-8">{{$code->getActivityCodeName('SectorVocabulary', $sector['sector_vocabulary'])}}</div>
+                                </div>
+                                <div class="col-xs-12 col-md-12">
+                                    <div class="col-xs-12 col-sm-4">Narrative text:</div>
+                                    <div class="col-xs-12 col-sm-8">{{$sector['narrative'][0]['narrative']}}</div>
+                                </div>
+                            </div>
+                        </div>
+                         <div class="panel panel-default">  
+                            <div class="panel-heading">Recipient Country</div>     
+                            {{--*/ $recipientCountry = $transactionDetail['recipient_country'][0] /*--}}
+                            <div class="panel-body panel-element-body">
+                                <div class="col-xs-12 col-md-12">
+                                    <div class="col-xs-12 col-sm-4">Recipient Country Code:</div>
+                                    <div class="col-xs-12 col-sm-8">{{$code->getOrganizationCodeName('Country', $recipientCountry['country_code'])}}</div>
+                                </div>
+                                <div class="col-xs-12 col-md-12">
+                                    <div class="col-xs-12 col-sm-4">Sector Vocabulary:</div>
+                                    <div class="col-xs-12 col-sm-8">{{$code->getActivityCodeName('SectorVocabulary', $sector['sector_vocabulary'])}}</div>
+                                </div>
+                                <div class="col-xs-12 col-md-12">
+                                    <div class="col-xs-12 col-sm-4">Narrative text:</div>
+                                    <div class="col-xs-12 col-sm-8">{{$sector['narrative'][0]['narrative']}}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-default">  
+                            <div class="panel-heading">Recipient Region</div>     
+                            {{--*/ $recipientRegion = $transactionDetail['recipient_region'][0] /*--}}
+                            <div class="panel-body panel-element-body">
+                                <div class="col-xs-12 col-md-12">
+                                    <div class="col-xs-12 col-sm-4">Recipient Region Code:</div>
+                                    <div class="col-xs-12 col-sm-8">{{$code->getActivityCodeName('Region', $recipientRegion['region_code'])}}</div>
+                                </div>
+                                <div class="col-xs-12 col-md-12">
+                                    <div class="col-xs-12 col-sm-4">Recipient Region Vocabulary:</div>
+                                    <div class="col-xs-12 col-sm-8">{{$code->getActivityCodeName('RegionVocabulary', $recipientRegion['vocabulary'])}}</div>
+                                </div>
+                                <div class="col-xs-12 col-md-12">
+                                    <div class="col-xs-12 col-sm-4">Narrative text:</div>
+                                    <div class="col-xs-12 col-sm-8">{{$recipientRegion['narrative'][0]['narrative']}}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-default">  
+                            <div class="panel-heading">Flow Type</div>     
+                            <div class="panel-body panel-element-body">
+                                <div class="col-xs-12 col-md-12">
+                                    <div class="col-xs-12 col-sm-4">Flow Type:</div>
+                                    <div class="col-xs-12 col-sm-8">{{$code->getActivityCodeName('FlowType', $transactionDetail['flow_type'][0]['flow_type'])}}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-default">  
+                            <div class="panel-heading">Finance Type</div>     
+                            <div class="panel-body panel-element-body">
+                                <div class="col-xs-12 col-md-12">
+                                    <div class="col-xs-12 col-sm-4">Finance Type:</div>
+                                    <div class="col-xs-12 col-sm-8">{{$code->getActivityCodeName('FinanceType', $transactionDetail['finance_type'][0]['finance_type'])}}</div>
+                                </div>
+                            </div>
+                        </div>
+                         <div class="panel panel-default">  
+                            <div class="panel-heading">Aid Type</div>     
+                            <div class="panel-body panel-element-body">
+                                <div class="col-xs-12 col-md-12">
+                                    <div class="col-xs-12 col-sm-4">Aid Type:</div>
+                                    <div class="col-xs-12 col-sm-8">{{$code->getActivityCodeName('AidType', $transactionDetail['aid_type'][0]['aid_type'])}}</div>
+                                </div>
+                            </div>
+                        </div>
+                         <div class="panel panel-default">  
+                            <div class="panel-heading">Tied Type</div>     
+                            <div class="panel-body panel-element-body">
+                                <div class="col-xs-12 col-md-12">
+                                    <div class="col-xs-12 col-sm-4">Finance Type:</div>
+                                    <div class="col-xs-12 col-sm-8">{{$code->getActivityCodeName('TiedStatus', $transactionDetail['tied_status'][0]['tied_status_code'])}}</div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
+            </div>
+            @include('includes.activity.element_menu')
             </div>
         </div>
     </div>

@@ -86,17 +86,17 @@ class TransactionController extends Controller
 
     /**
      * show transaction detail
-     * @param $activityId
+     * @param $id
      * @param $transactionId
      * @return \Illuminate\View\View
      */
-    public function show($activityId, $transactionId)
+    public function show($id, $transactionId)
     {
-        $activity          = $this->activityManager->getActivityData($activityId);
+        $activity          = $this->activityManager->getActivityData($id);
         $transaction       = $this->transactionManager->getTransaction($transactionId);
         $transactionDetail = $transaction->getTransaction();
 
-        return view('Activity.transaction.show', compact('transactionDetail', 'activity'));
+        return view('Activity.transaction.show', compact('transactionDetail', 'activity', 'id'));
     }
 
     /**

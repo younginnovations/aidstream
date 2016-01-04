@@ -17,7 +17,7 @@
                             Upload Activities
                             <a href="{{ route('activity.index') }}" class="btn btn-primary pull-right">Back to Activity List</a>
                         </div>
-                     <div class="col-xs-8 col-md-8 col-lg-8 element-content-wrapper">
+                     <div class="col-xs-12 col-md-8 col-lg-8 element-content-wrapper element-upload-wrapper">
                         <div class="panel panel-default panel-upload">                   
                             <div class="panel-body">
                                 <div class="create-form">
@@ -28,8 +28,7 @@
                                     <div>Contains Simplified information about Activity.</div>
                                 </div>
                          </div>
-                    </div>
-                     
+                    </div>                     
               </div>
         </div>
     </div>
