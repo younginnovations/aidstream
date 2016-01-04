@@ -14,25 +14,9 @@ class ParticipatingOrganization extends BaseForm
     public function buildForm()
     {
         $this
-            ->add(
-                'organization_role',
-                'select',
-                [
-                    'choices'     => $this->getCodeList('OrganisationRole', 'Activity'),
-                    'empty_value' => 'Select one of the following option :',
-                    'label'       => 'Organization Role'
-                ]
-            )
-            ->add('identifier', 'text')
-            ->add(
-                'organization_type',
-                'select',
-                [
-                    'choices'     => $this->getCodeList('OrganisationType', 'Activity'),
-                    'empty_value' => 'Select one of the following option :',
-                    'label'       => 'Organization Type'
-                ]
-            )
+            ->addSelect('organization_role', $this->getCodeList('OrganisationRole', 'Activity'), 'Organization Role', $this->addHelpText('Activity_ParticipatingOrg-role'))
+            ->add('identifier', 'text', ['help_block' => $this->addHelpText('Activity_ParticipatingOrg-ref')])
+            ->addSelect('organization_type',$this->getCodeList('OrganisationType', 'Activity'), 'Organization Type', $this->addHelpText('Activity_ParticipatingOrg-type'))
             ->addNarrative('narrative', 'Organization Name')
             ->addAddMoreButton('add', 'narrative')
             ->addRemoveThisButton('remove_narrative');

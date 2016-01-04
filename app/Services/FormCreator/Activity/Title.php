@@ -35,7 +35,7 @@ class Title
      */
     public function editForm($data, $activityId)
     {
-        $model['narrative'] = $data;
+        $model['title'] = $data;
 
         return $this->formBuilder->create(
             $this->formPath,

@@ -1,6 +1,7 @@
 <?php namespace App\Core\V201\Requests\Activity;
 
 use App\Http\Requests\Request;
+use Illuminate\Support\Facades\Validator;
 
 /**
  * Class ActivityBaseRequest
