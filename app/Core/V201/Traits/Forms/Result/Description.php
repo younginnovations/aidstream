@@ -7,11 +7,15 @@
 trait Description
 {
     /**
-     * Return description form
+     * @param array $data
      * @return mixed
      */
-    public function addDescriptions()
+    public function addDescriptions($data = [])
     {
-        return $this->addCollection('description', 'Activity\Title');
+        $data ?: ['class' => 'narrative'];
+
+        return $this
+            ->addData($data)
+            ->addCollection('description', 'Activity\Title', 'description');
     }
 }

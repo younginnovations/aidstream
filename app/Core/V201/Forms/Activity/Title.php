@@ -14,8 +14,9 @@ class Title extends BaseForm
      */
     public function buildForm()
     {
+        $class = $this->getData('class') ? $this->getData('class') : 'narrative';
         $this
-            ->addCollection('title', 'Activity\Narrative', 'narrative')
-            ->addAddMoreButton('add_title', 'narrative');
+            ->addCollection('title', 'Activity\Narrative', $class)
+            ->addAddMoreButton('add_title', $class);
     }
 }
