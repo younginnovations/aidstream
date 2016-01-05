@@ -14,15 +14,7 @@ class Description extends BaseForm
     public function buildForm()
     {
         $this
-            ->add(
-                'type',
-                'select',
-                [
-                    'choices'     => $this->getCodeList('DescriptionType', 'Activity'),
-                    'empty_value' => 'Select one of the following option :',
-                    'label'       => 'Description Type'
-                ]
-            )
+            ->addSelect('type', $this->getCodeList('DescriptionType', 'Activity'), 'Description Type')
             ->addNarrative('narrative')
             ->addAddMoreButton('add_narrative', 'narrative')
             ->addRemoveThisButton('remove_description');
