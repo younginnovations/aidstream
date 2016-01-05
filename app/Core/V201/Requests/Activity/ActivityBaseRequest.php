@@ -16,13 +16,17 @@ class ActivityBaseRequest extends Request
             'unique_lang',
             function ($attribute, $value, $parameters, $validator) {
                 $languages = [];
-                foreach ($value as $narrative) {
-                    $language = $narrative['language'];
+                $messages  = [];
+                $check     = true;
+                foreach ($value as $narrativeIndex => $narrative) {
+                    $language                                                         = $narrative['language'];
+                    $messages[sprintf('%s.%s.language', $attribute, $narrativeIndex)] = 'Languages should be unique.';
                     if (in_array($language, $languages)) {
-                        return false;
+                        $check = false;
                     }
                     $languages[] = $language;
                 }
+                $check ?: $validator->messages()->merge($messages);
 
                 return true;
             }
@@ -54,14 +58,9 @@ class ActivityBaseRequest extends Request
      */
     public function getMessagesForNarrative($formFields, $formBase)
     {
-        $messages                                                 = [];
-        $messages[sprintf('%s.narrative.unique_lang', $formBase)] = 'Languages should be unique.';
+        $messages = [];
         foreach ($formFields as $narrativeIndex => $narrative) {
-            $messages[sprintf(
-                '%s.narrative.%s.narrative.required',
-                $formBase,
-                $narrativeIndex
-            )] = 'Narrative text is required';
+            $messages[sprintf('%s.narrative.%s.narrative.required', $formBase, $narrativeIndex)] = 'Narrative text is required';
         }
 
         return $messages;

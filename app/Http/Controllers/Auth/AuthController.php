@@ -39,6 +39,11 @@ class AuthController extends Controller
         $this->middleware('guest', ['except' => 'getLogout']);
     }
 
+    public function loginPath()
+    {
+        return '/auth/login';
+    }
+
     /**
      * createGet a validator for an incoming registration request.
      *
@@ -94,7 +99,7 @@ class AuthController extends Controller
     /**
      * Handle a login request to the application.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param Request|\Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function postLogin(Request $request)
@@ -123,10 +128,10 @@ class AuthController extends Controller
             $version        = ($settings_check) ? $settings->version : config('app.default_version');
             $version        = 'V' . str_replace('.', '', $version);
             Session::put('version', $version);
-            !(Session::get('url.intended') == url()) ?: Session::forget('url');
             $redirectPath = ($user->role_id == 1 || $user->role_id == 2) ? '/activity' : '/admin/dashboard';
+            !(Session::get('url.intended') == url('/')) ?: Session::set('url.intended', $redirectPath);
 
-            return redirect()->intended($redirectPath);
+            return redirect()->intended($this->redirectPath());
         }
 
         return redirect($this->loginPath())
@@ -141,8 +146,9 @@ class AuthController extends Controller
     /**
      * Handle a registration request for the application.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param Request|\Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
+     * @throws \Illuminate\Foundation\Validation\ValidationException
      */
     public function postRegister(Request $request)
     {
@@ -157,7 +163,7 @@ class AuthController extends Controller
 
         $this->create($request->all());
 
-        return redirect('/auth/login')->withMessage('Your account has been successfully created. Please log in to continue.');
+        return redirect($this->loginPath())->withMessage('Your account has been successfully created. Please log in to continue.');
     }
 
     /**
