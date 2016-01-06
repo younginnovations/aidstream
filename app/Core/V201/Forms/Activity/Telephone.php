@@ -14,7 +14,7 @@ class Telephone extends BaseForm
     public function buildForm()
     {
         $this
-            ->add('telephone', 'text')
+            ->add('telephone', 'text', ['help_block' => $this->addHelpText('Activity_ContactInfo_Telephone-text')])
             ->addRemoveThisButton('remove_telephone');
     }
 }

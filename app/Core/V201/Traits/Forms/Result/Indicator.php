@@ -21,7 +21,7 @@ trait Indicator
      */
     public function addMeasureList()
     {
-        return $this->addSelect('measure', $this->getCodeList('IndicatorMeasure', 'Activity'));
+        return $this->addSelect('measure', $this->getCodeList('IndicatorMeasure', 'Activity'), 'Measure', $this->addHelpText('Activity_Result_Indicator-measure'));
     }
 
     /**
@@ -30,6 +30,6 @@ trait Indicator
      */
     public function addAscendingList()
     {
-        return $this->addSelect('ascending', [0 => 'False', 1 => 'True']);
+        return $this->addSelect('ascending', [0 => 'False', 1 => 'True'], 'Ascending', $this->addHelpText('Activity_Result_Indicator-ascending'));
     }
 }

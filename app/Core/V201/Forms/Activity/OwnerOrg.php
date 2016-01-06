@@ -12,7 +12,7 @@ class OwnerOrg extends BaseForm
     public function buildForm()
     {
         $this
-            ->add('reference', 'text')
+            ->add('reference', 'text', ['help_block' => $this->addHelpText('Activity_OtherActivityIdentifier_OwnerOrg-ref')])
             ->addNarrative('owner_organization_narrative')
             ->addAddMoreButton('add_owner_organization_narrative', 'owner_organization_narrative');
     }

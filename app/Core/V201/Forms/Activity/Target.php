@@ -18,7 +18,7 @@ class Target extends BaseForm
     public function buildForm()
     {
         $this
-            ->add('value', 'text')
+            ->add('value', 'text', ['help_block' => $this->addHelpText('Activity_Result_Indicator_Period_Target-value')])
             ->addComments();
     }
 }

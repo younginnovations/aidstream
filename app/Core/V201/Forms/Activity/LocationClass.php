@@ -15,14 +15,7 @@ class LocationClass extends BaseForm
      */
     public function buildForm()
     {
-        $this
-            ->add(
-                'code',
-                'select',
-                [
-                    'choices'     => $this->getCodeList('GeographicLocationClass', 'Activity'),
-                    'empty_value' => 'Select one of the following option :'
-                ]
-            );
+        $this->addSelect('code', $this->getCodeList('GeographicLocationClass', 'Activity'), 'Code', $this->addHelpText('Activity_Location_LocationClass-code'));
+
     }
 }

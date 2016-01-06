@@ -13,14 +13,6 @@ class DefaultFinanceType extends BaseForm
      */
     public function buildForm()
     {
-        $this
-            ->add(
-                'default_finance_type',
-                'select',
-                [
-                    'choices'     => $this->getCodeList('FinanceType', 'Activity'),
-                    'empty_value' => 'Select one of the following option :'
-                ]
-            );
+        $this->addSelect('default_finance_type', $this->getCodeList('FinanceType', 'Activity'), 'Default Finance Type', $this->addHelpText('Activity_DefaultFinanceType-code'));
     }
 }

@@ -14,15 +14,7 @@ class ContactInfo extends BaseForm
     public function buildForm()
     {
         $this
-            ->add(
-                'type',
-                'select',
-                [
-                    'choices'     => $this->getCodeList('ContactType', 'Activity'),
-                    'empty_value' => 'Select one of the following option :',
-                    'label'       => 'Contact Type'
-                ]
-            )
+            ->addSelect('type', $this->getCodeList('ContactType', 'Activity'), 'Contact Type', $this->addHelpText('Activity_ContactInfo-type'))
             ->addCollection('organization', 'Activity\ContactInfoOrganization')
             ->addCollection('department', 'Activity\Department')
             ->addCollection('person_name', 'Activity\PersonName')

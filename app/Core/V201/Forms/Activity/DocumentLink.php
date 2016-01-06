@@ -7,15 +7,8 @@ class DocumentLink extends BaseForm
     public function buildForm()
     {
         $this
-            ->add('url', 'text')
-            ->add(
-                'format',
-                'select',
-                [
-                    'choices'     => $this->getCodeList('FileFormat', 'Activity'),
-                    'empty_value' => 'Select one of the following option :'
-                ]
-            )
+            ->add('url', 'text', ['help_block' => $this->addHelpText('Activity_DocumentLink-url')])
+            ->addSelect('format', $this->getCodeList('FileFormat', 'Activity'), 'Format', $this->addHelpText('Activity_DocumentLink-format'))
             ->addCollection('title', 'Activity\Title')
             ->addCollection('category', 'Activity\CategoryCode', 'category')
             ->addAddMoreButton('add_category', 'category')

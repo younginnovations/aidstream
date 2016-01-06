@@ -16,7 +16,7 @@ class Location extends BaseForm
     public function buildForm()
     {
         $this
-            ->add('reference', 'text')
+            ->add('reference', 'text', ['help_block' => $this->addHelpText('Activity_Location-ref')])
             ->addCollection('location_reach', 'Activity\LocationReach')
             ->addCollection('location_id', 'Activity\LocationId', 'location_id')
             ->addAddMoreButton('add', 'location_id')

@@ -16,7 +16,7 @@ class Point extends BaseForm
     public function buildForm()
     {
         $this
-            ->add('srs_name', 'text')
+            ->add('srs_name', 'text', ['help_block' => $this->addHelpText('Activity_Location_Point-srsName')])
             ->addCollection('position', 'Activity\Position');
     }
 }

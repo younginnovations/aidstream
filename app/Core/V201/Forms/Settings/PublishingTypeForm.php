@@ -1,8 +1,8 @@
 <?php namespace App\Core\V201\Forms\Settings;
 
-use Kris\LaravelFormBuilder\Form;
+use App\Core\Form\BaseForm;
 
-class PublishingTypeForm extends Form
+class PublishingTypeForm extends BaseForm
 {
     protected $showFieldErrors = true;
 
@@ -19,10 +19,9 @@ class PublishingTypeForm extends Form
                     'choice_options' => [
                         'wrapper' => ['class' => 'choice-wrapper']
                     ],
-                    'wrapper' => ['class' => 'form-group form-choice-wrapper settings-choice-wrapper']
+                    'wrapper'        => ['class' => 'form-group form-choice-wrapper settings-choice-wrapper'],
+                    'help_block'     => $this->addHelpText('activity_defaults-publishing_type')
                 ]
             );
     }
 }
-
-

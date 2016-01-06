@@ -17,22 +17,8 @@ class RecipientRegion extends BaseForm
     public function buildForm()
     {
         $this
-            ->add(
-                'region_code',
-                'select',
-                [
-                    'choices'     => $this->getRegionCodeList(),
-                    'empty_value' => 'Select one of the following option :',
-                ]
-            )
-            ->add(
-                'vocabulary',
-                'select',
-                [
-                    'choices'     => $this->getRegionVocabularyCodeList(),
-                    'empty_value' => 'Select one of the following option :',
-                ]
-            )
+            ->addSelect('region_code', $this->getRegionCodeList(), 'Region Code', $this->addHelpText('Activity_Transaction_RecipientRegion-code'))
+            ->addSelect('vocabulary', $this->getRegionVocabularyCodeList(), 'Vocabulary', $this->addHelpText('Activity_Transaction_RecipientRegion-vocabulary'))
             ->addNarrative('narrative')
             ->addAddMoreButton('add_narrative', 'narrative');
     }
