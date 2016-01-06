@@ -87,9 +87,19 @@
         $response = session('response');
     /*--}}
 @if($response)
-    <div class="alert alert-{{$response['type']}}">
-        {{ message($response) }}
-    </div>
+    @if(isset($response['messages']) && (array) $response['messages'])
+        <div class="alert alert-{{$response['type']}}">
+            <ul>
+                @foreach($response['messages'] as $message)
+                    <li>- {{ $message }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @else
+        <div class="alert alert-{{$response['type']}}">
+            {{ message($response) }}
+        </div>
+    @endif
 @endif
 @yield('content')
 

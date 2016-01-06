@@ -1,6 +1,6 @@
 <?php namespace App\Core\V201\Element\Organization;
 
-use Illuminate\Support\Facades\Session;
+use App\Core\V201\Traits\XmlServiceTrait;
 
 /**
  * Class XmlService
@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Session;
  */
 class XmlService
 {
+    use XmlServiceTrait;
+
     /**
      * @var XmlGenerator
      */
@@ -31,13 +33,14 @@ class XmlService
      */
     public function validateOrgSchema($organization, $organizationData, $settings, $orgElem)
     {
-        $message = '';
-        try {
-            $xml = $this->xmlGenerator->getXml($organization, $organizationData, $settings, $orgElem);
-            $xml->schemaValidate(app_path(sprintf('/Core/%s/XmlSchema/iati-organisations-schema.xsd', Session::get('version'))));
-        } catch (\Exception $e) {
-            $message = $e->getMessage();
-            $message = str_replace('DOMDocument::schemaValidate(): ', '', $message);
+        // Enable user error handling
+        libxml_use_internal_errors(true);
+
+        $xml        = $this->xmlGenerator->getXml($organization, $organizationData, $settings, $orgElem);
+        $schemaPath = app_path(sprintf('/Core/%s/XmlSchema/iati-organisations-schema.xsd', session('version')));
+        $message    = '';
+        if (!$xml->schemaValidate($schemaPath)) {
+            $message = $this->libxml_display_errors();
         }
 
         return $message;
