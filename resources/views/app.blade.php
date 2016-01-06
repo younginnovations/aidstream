@@ -27,30 +27,32 @@
 <nav class="navbar navbar-default">
     <div class="container-fluid">
         <div class="navbar-header">
-<!--             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                    data-target="#bs-example-navbar-collapse-1">
-                <span class="sr-only">Toggle Navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button> -->
+            <!--             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                                data-target="#bs-example-navbar-collapse-1">
+                            <span class="sr-only">Toggle Navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button> -->
             <a class="navbar-brand" href="{{ Auth::user()->role_id == 3 ? url('admin/dashboard') : url('/')  }}" style="text-indent: 145px; line-height: 35px;"
                alt="Aidstream">{{Auth::user() ? "(" . Session::get('version') . ")" : "Aidstream"}}</a>
         </div>
 
         <div class="collapse navbar-collapse navbar-right" id="bs-example-navbar-collapse-1">
+            @if(Auth::user()->role_id != 3 && Auth::user()->role_id !=4)
             <ul class="nav navbar-nav pull-left add-new-activity">
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                       aria-expanded="false">Add a New Activity<span
-                                class="caret"></span></a>
-                    <ul class="dropdown-menu" role="menu">
-                        <li><a href="{{route('activity.create') }}">Add Activity Manually</a></li>
-                        <li><a href="{{route('wizard.activity.create') }}">Add Activity using Wizard</a></li>
-                        <li><a href="{{ route('activity-upload.index') }}">Upload Activities</a></li>
-                    </ul>
-                </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                           aria-expanded="false">Add a New Activity<span
+                                    class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="{{route('activity.create') }}">Add Activity Manually</a></li>
+                            <li><a href="{{route('wizard.activity.create') }}">Add Activity using Wizard</a></li>
+                            <li><a href="{{ route('activity-upload.index') }}">Upload Activities</a></li>
+                        </ul>
+                    </li>
             </ul>
+            @endif
             <ul class="nav navbar-nav navbar-right navbar-admin-dropdown">
                 @if (Auth::guest())
                     <li><a href="{{ url('/auth/login') }}">@lang('trans.login')</a></li>

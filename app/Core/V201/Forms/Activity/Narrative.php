@@ -17,7 +17,7 @@ class Narrative extends BaseForm
     {
         $this
             ->add('narrative', 'text', ['label' => $this->getData('label')])
-            ->addSelect('language', $this->getCodeList('Language', 'Activity'), null, null, config('app.locale'))
+            ->addSelect('language', $this->getCodeList('Language', 'Activity'))
             ->addRemoveThisButton('remove_from_collection');
     }
 }

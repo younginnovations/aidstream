@@ -14,7 +14,7 @@ class Description extends BaseForm
     public function buildForm()
     {
         $this
-            ->addNarrative('narrative')
-            ->addAddMoreButton('add_narrative', 'narrative');
+            ->addNarrative('description_narrative')
+            ->addAddMoreButton('add_narrative', 'description_narrative');
     }
 }
