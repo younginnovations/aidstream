@@ -187,9 +187,9 @@ class ActivityController extends Controller
         $xmlService      = $activityElement->getActivityXmlService();
 
         if ($activityWorkflow == 1) {
-            $message = $xmlService->validateActivitySchema($activityData, $transactionData, $resultData, $settings, $activityElement, $orgElem, $organization);
-            if ($message !== '') {
-                $response = ['type' => 'danger', 'code' => ['transfer_message', ['name' => $message]]];
+            $messages = $xmlService->validateActivitySchema($activityData, $transactionData, $resultData, $settings, $activityElement, $orgElem, $organization);
+            if ($messages) {
+                $response = ['type' => 'danger', 'messages' => $messages];
 
                 return redirect()->back()->withResponse($response);
             }

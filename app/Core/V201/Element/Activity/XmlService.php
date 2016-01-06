@@ -1,6 +1,6 @@
 <?php namespace App\Core\V201\Element\Activity;
 
-use Illuminate\Support\Facades\Session;
+use App\Core\V201\Traits\XmlServiceTrait;
 
 /**
  * Class XmlService
@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Session;
  */
 class XmlService
 {
+    use XmlServiceTrait;
+
     /**
      * @var XmlGenerator
      */
@@ -33,16 +35,17 @@ class XmlService
      */
     public function validateActivitySchema($activityData, $transactionData, $resultData, $settings, $activityElement, $orgElem, $organization)
     {
-        $message = '';
-        try {
-            $xml = $this->xmlGenerator->getXml($activityData, $transactionData, $resultData, $settings, $activityElement, $orgElem, $organization);
-            $xml->schemaValidate(app_path(sprintf('/Core/%s/XmlSchema/iati-activities-schema.xsd', Session::get('version'))));
-        } catch (\Exception $e) {
-            $message = $e->getMessage();
-            $message = str_replace('DOMDocument::schemaValidate(): ', '', $message);
+        // Enable user error handling
+        libxml_use_internal_errors(true);
+
+        $xml        = $this->xmlGenerator->getXml($activityData, $transactionData, $resultData, $settings, $activityElement, $orgElem, $organization);
+        $schemaPath = app_path(sprintf('/Core/%s/XmlSchema/iati-activities-schema.xsd', session('version')));
+        $messages   = '';
+        if (!$xml->schemaValidate($schemaPath)) {
+            $messages = $this->libxml_display_errors();
         }
 
-        return $message;
+        return $messages;
     }
 
     /**

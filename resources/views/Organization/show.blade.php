@@ -2,7 +2,6 @@
 
 @section('content')
 	@inject('code', 'App\Helpers\GetCodeName')
-    {{Session::get('message')}}
     <div class="container main-container">
         <div class="row">
         	@include('includes.side_bar_menu')

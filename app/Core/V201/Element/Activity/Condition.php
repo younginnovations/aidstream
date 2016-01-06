@@ -31,14 +31,16 @@ class Condition extends BaseElement
      */
     public function getXmlData(Activity $activity)
     {
-        $activityData   = [];
-        $conditions     = (array) $activity->conditions;
-        $activityData[] = [
-            '@attributes' => [
-                'attached' => ($conditions) ? $conditions['condition_attached'] : ''
-            ],
-            'condition'   => $this->buildCondition($conditions['condition'])
-        ];
+        $activityData = [];
+        $conditions   = (array) $activity->conditions;
+        if ($conditions) {
+            $activityData[] = [
+                '@attributes' => [
+                    'attached' => ($conditions) ? $conditions['condition_attached'] : ''
+                ],
+                'condition'   => $this->buildCondition($conditions['condition'])
+            ];
+        }
 
         return $activityData;
     }

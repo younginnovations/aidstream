@@ -10,7 +10,6 @@ return [
     'deleted'                  => ':name has been deleted successfully.',
     'delete_failed'            => 'Failed to delete :name.',
     'settings'                 => 'Please fill up Reporting Organization Identifier to add :name.',
-    'transfer_message'         => ':name.',
     'activity_statuses'        => 'Activity has been :name.',
     'activity_statuses_failed' => 'Activity cannot be :name.',
     'org_statuses'             => 'Organization has been :name.',

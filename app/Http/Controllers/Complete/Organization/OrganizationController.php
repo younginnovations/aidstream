@@ -108,9 +108,9 @@ class OrganizationController extends Controller
         $xmlService = $orgElem->getOrgXmlService();
 
         if ($status === "1") {
-            $message = $xmlService->validateOrgSchema($organization, $organizationData, $settings, $orgElem);
-            if ($message !== '') {
-                $response = ['type' => 'danger', 'code' => ['transfer_message', ['name' => $message]]];
+            $messages = $xmlService->validateOrgSchema($organization, $organizationData, $settings, $orgElem);
+            if ($messages !== '') {
+                $response = ['type' => 'danger', 'messages' => $messages];
 
                 return redirect()->back()->withResponse($response);
             }
