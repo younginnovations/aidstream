@@ -24,9 +24,9 @@ class Indicator extends BaseForm
         $this
             ->addMeasureList()
             ->addAscendingList()
-            ->addTitles()
-            ->addDescriptions()
-            ->addBaselines()
+            ->addTitles(['class' => 'indicator_title_title_narrative'])
+            ->addDescriptions(['class' => 'indicator_description_title_narrative'])
+            ->addBaselines(['class' => 'indicator_baseline_comment_title_narrative'])
             ->addPeriods()
             ->addRemoveThisButton('remove_indicator');
     }

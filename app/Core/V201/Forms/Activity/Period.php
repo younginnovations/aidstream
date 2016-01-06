@@ -21,7 +21,7 @@ class Period extends BaseForm
         $this
             ->addPeriodStart()
             ->addPeriodEnd()
-            ->addTargets()
-            ->addActualTargets();
+            ->addTargets(['class' => 'indicator_period_target_comment_title_narrative'])
+            ->addActualTargets(['class' => 'indicator_period_actual_comment_title_narrative']);
     }
 }

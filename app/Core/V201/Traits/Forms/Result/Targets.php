@@ -8,19 +8,29 @@ trait Targets
 {
     /**
      * Return target form
+     * @param array $data
      * @return mixed
      */
-    public function addTargets()
+    public function addTargets($data = [])
     {
-        return $this->addCollection('target', 'Activity\Target');
+        $data ?: ['class' => 'narrative'];
+
+        return $this
+            ->addData($data)
+            ->addCollection('target', 'Activity\Target');
     }
 
     /**
      * Return actual target form
+     * @param array $data
      * @return mixed
      */
-    public function addActualTargets()
+    public function addActualTargets($data = [])
     {
-        return $this->addCollection('actual', 'Activity\Target');
+        $data ?: ['class' => 'narrative'];
+
+        return $this
+            ->addData($data)
+            ->addCollection('actual', 'Activity\Target');
     }
 }

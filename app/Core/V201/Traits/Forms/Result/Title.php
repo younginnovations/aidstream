@@ -8,10 +8,15 @@ trait Title
 {
     /**
      * Return title form
+     * @param array $data
      * @return mixed
      */
-    public function addTitles()
+    public function addTitles($data = [])
     {
-        return $this->addCollection('title', 'Activity\Title');
+        $data ?: ['class' => 'narrative'];
+
+        return $this
+            ->addData($data)
+            ->addCollection('title', 'Activity\Title');
     }
 }

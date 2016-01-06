@@ -8,10 +8,15 @@ trait Baseline
 {
     /**
      * Return baseline form
+     * @param array $data
      * @return mixed
      */
-    public function addBaselines()
+    public function addBaselines($data = [])
     {
-        return $this->addCollection('baseline', 'Activity\Baseline');
+        $data ?: ['class' => 'narrative'];
+
+        return $this
+            ->addData($data)
+            ->addCollection('baseline', 'Activity\Baseline');
     }
 }

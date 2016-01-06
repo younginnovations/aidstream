@@ -23,7 +23,7 @@ class Result extends BaseForm
             ->addTypeList()
             ->addAggregationStatusList()
             ->addTitles()
-            ->addDescriptions()
+            ->addDescriptions(['class' => 'description_narrative'])
             ->addIndicators()
             ->addAddMoreButton('add_indicator', 'indicator');
     }
