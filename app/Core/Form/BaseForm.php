@@ -8,6 +8,18 @@ use Kris\LaravelFormBuilder\Form;
  */
 class BaseForm extends Form
 {
+    /**
+     * Set model to form object
+     *
+     * @param mixed $model
+     * @return $this
+     */
+    public function setModel($model)
+    {
+        parent::setModel($model);
+        $oldData     = old();
+        $this->model = $oldData ? $oldData : $model;
+    }
 
     /**
      * adds add more button to form
