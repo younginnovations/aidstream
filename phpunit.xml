@@ -16,6 +16,8 @@
     </testsuites>
     <php>
         <env name="APP_ENV" value="testing"/>
+        <env name="LOGIN_USER" value="lo_admin"/>
+        <env name="LOGIN_PASSWORD" value="lunek123"/>
         <env name="CACHE_DRIVER" value="array"/>
         <env name="SESSION_DRIVER" value="array"/>
         <env name="QUEUE_DRIVER" value="sync"/>

@@ -23,7 +23,8 @@
     "symfony/css-selector": "~3.0",
     "rap2hpoutre/laravel-log-viewer": "0.5.0",
     "barryvdh/laravel-ide-helper": "2.1.2",
-    "barryvdh/laravel-debugbar": "2.1.1"
+    "barryvdh/laravel-debugbar": "2.1.1",
+    "yipl/hookah": "0.5.1"
   },
   "autoload": {
     "files": [
