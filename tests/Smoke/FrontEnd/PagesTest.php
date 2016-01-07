@@ -20,7 +20,8 @@ class PagesTest extends AidStreamSmokeTestCase
         return [
             [$this->baseUrl, 302],
             ['auth/login', 200],
-            ['auth/register', 200]
+            ['auth/register', 200],
+            ['password/email', 200]
         ];
     }
 
