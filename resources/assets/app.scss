@@ -65,6 +65,7 @@ a,.btn-link {
 	cursor: pointer;
 	&:hover,&:focus {
 		color: $color_lochmara_approx;
+		outline: 0;
 	}
 }
 
@@ -156,7 +157,7 @@ input {
 				background: $color_white_lilac_approx!important;
 			}
 		}
-	}			
+	}
 }
 
 label {
@@ -327,13 +328,16 @@ label {
 	padding-bottom: 20px;
 	margin-bottom: 20px;
 	>.col-md-12 {
-		.col-md-6 {
+		.form-group {
 			&:last-child {
 				padding-right: 0;
 			}
 			&:first-child {
 				padding: 0 15px 0 0;
 			}
+		}
+		.col-xs-12 {
+			padding: 0!important;
 		}
 	}
 }
@@ -359,6 +363,20 @@ label {
 
 .navbar-collapse {
 	padding-right: 0;
+	float: right;
+}
+
+.navbar-right {
+	float: right;
+}
+
+.navbar-collapse {
+	display: block;
+	border: 0;
+}
+
+.navbar-header {
+	float: left;
 }
 
 .navbar-brand {
@@ -371,8 +389,20 @@ label {
 	margin: 13px 16px;
 }
 
+.navbar-nav {
+	.dropdown-menu {
+		position: absolute!important;
+		background: $color_white!important;
+    	box-shadow: 0 6px 12px rgba(0,0,0,.175)!important;
+    	border-radius: 4px;
+    	right: 0;
+	    left: auto;
+	}
+}
+
+
 .navbar-admin-dropdown,.add-new-activity {
-	background: $color_white_lilac_approx;
+	background: $color_white_lilac_approx!important;
 	.avatar-img {
 		width: 45px;
 		line-height: 43px;
@@ -388,19 +418,20 @@ label {
 	.dropdown-menu {
 		border: 0;
 		border-radius: 0;
-		width: 254px;
+		width: 254px!important;
 		padding: 0;
+    	box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175)!important;
 		li {
 			border-bottom: 1px solid $color_black_haze_approx;
 			&:last-child {
 				border-bottom: 0;
 			}
 			a {
-				line-height: 42px;
+				line-height: 42px!important;
 				display: block;
 				&:hover {
-					background-color: $color_gravel_approx;
-					color: $color_white;
+					background-color: $color_gravel_approx!important;
+					color: $color_white!important;
 				}
 			}
 		}
@@ -439,7 +470,7 @@ label {
 
 .flag-icon-background.active {
 	opacity: 1;
-} 
+}
 
 .flag-icon-en {
   background-image: url(../flags/4x3/gb.svg);
@@ -459,7 +490,8 @@ label {
 			padding: 21px 16px 21px 34px;
 			display: block;
 			.caret {
-				margin-left: 5px;
+				float: right;
+				margin: 9px 0 0 9px;
 			}
 		}
 	}
@@ -588,7 +620,7 @@ $full-sidebar-wrapper-width: 250px;
 
 // breadcrumb
 .breadcrumb-wrapper {
-	padding: 26px 37px 20px; 
+	padding: 26px 37px 20px;
 	overflow: hidden;
 	li {
 		float: left;
@@ -640,6 +672,7 @@ $full-sidebar-wrapper-width: 250px;
 	}
 	.panel-default {
 		box-shadow: none;
+		margin: 0;
 	}
 }
 
@@ -649,6 +682,7 @@ $full-sidebar-wrapper-width: 250px;
 	color: $color_gravel_approx;
 	border-bottom: 0;
 	padding: 10px 37px 11px;
+	overflow: hidden;
 }
 
 .activity_title {
@@ -731,7 +765,7 @@ $full-sidebar-wrapper-width: 250px;
 	&:hover {
 		background-position: -159px -401px;
 	}
-} 
+}
 
 .delete {
 	@extend %extend_3;
@@ -809,6 +843,7 @@ $element-sidebar-wrapper-width: 267px;
 	float: right;
 	width: $element-sidebar-wrapper-width;
 	padding-right: 0;
+	background: $color_white;
 	.panel-heading {
 		background: transparent;
 		font: 12px 'Open-Sans-Bold';
@@ -903,7 +938,7 @@ $element-sidebar-wrapper-width: 267px;
 		width: 440px;
 		margin: 0 auto;
 		li {
-			float: left;			
+			float: left;
 			font-size: 12px;
 			color: rgba($color_gravel_approx,0.7);
 			position: relative;
@@ -932,7 +967,7 @@ $element-sidebar-wrapper-width: 267px;
 				left: 8px;
 			}
 			&:last-child {
-				width: auto;				
+				width: auto;
 				&:before {
 					right: -1px;
 					left: auto;
@@ -945,6 +980,9 @@ $element-sidebar-wrapper-width: 267px;
 		.active:before {
 			background: $color_mandy_approx;
 		}
+	}
+	&+a {
+		margin-right: 40px;
 	}
 }
 
@@ -1028,7 +1066,6 @@ $element-sidebar-wrapper-width: 267px;
 }
 
 .edit-element,.edit-value {
-	float: right;
 	text-indent: -9999px;
 	width: 32px;
 	height: 32px;
@@ -1038,8 +1075,8 @@ $element-sidebar-wrapper-width: 267px;
 	}
 }
 
-.edit-value {
-	float: none;
+.edit-element {
+	display: inline-block;
 }
 
 
@@ -1053,7 +1090,7 @@ $element-sidebar-wrapper-width: 267px;
 			&:first-child {
 				padding-left: 0;
 			}
-			&:last-child {
+			&:last-of-type {
 				padding-right: 0;
 			}
 		}
@@ -1121,6 +1158,7 @@ $element-sidebar-wrapper-width: 267px;
 		margin-bottom: 30px;
 		padding-bottom: 25px;
 		clear: both;
+		overflow: hidden;
 	}
 	.form-group {
 		>input,select {
@@ -1148,10 +1186,6 @@ $element-sidebar-wrapper-width: 267px;
 	padding-bottom: 25px;
 }
 
-.create-form > form > .form-group:only-of-type,.create-activity-form > form > .form-group:only-of-type {
-	width: 50%;
-}
-
 .create-form > form > .form-group {
 	width: 42%;
 	padding: 20px 0 0 20px;
@@ -1160,11 +1194,10 @@ $element-sidebar-wrapper-width: 267px;
 
 .create-form > form > .collection_form > .form-group {
 	>.form-group {
-		width: 40%;
-		margin-right: 52px;
 		display: inline-block;
 		position: relative;
 		vertical-align: top;
+		width: 93%;
 	}
 	> .collection_form {
 		border: 0;
@@ -1196,10 +1229,10 @@ $element-sidebar-wrapper-width: 267px;
 			> .form-group {
 				border: 0;
 				display: inline-block;
-				width: 40%;
-				padding: 0;
+				padding: 5px 0 0;
 				margin: 0 30px 15px 14px;
 				vertical-align: top;
+				width: 84%;
 			}
 		}
 		.collection_form > label {
@@ -1260,7 +1293,7 @@ form > .add_to_collection[data-collection="legacy_data"] {
 
 .has_add_more + .add_to_collection {
 	margin-top: -46px!important;
-} 
+}
 
 .create-form > form > .collection_form.has_add_more + .add_to_collection {
 	margin-left: -17px;
@@ -1276,7 +1309,7 @@ form > .add_to_collection[data-collection="legacy_data"] {
 	text-indent: -9999px;
 	position: absolute;
 	right: 20px;
-	top: 26px;
+	top: 8px;
 	&:hover {
 		background: transparent $url_3 no-repeat -381px -197px;
 	}
@@ -1335,9 +1368,11 @@ form > .add_to_collection[data-collection="legacy_data"] {
 .form-choice-wrapper {
 	width: 100%!important;
 	margin-right: 0!important;
+	padding-right: 10px!important;
 	.choice-wrapper {
 		float: left;
 		margin-right: 20px;
+		min-width: 204px;
 		label {
 			color: $color_gravel_approx;
 		}
@@ -1384,7 +1419,7 @@ form > .add_to_collection[data-collection="legacy_data"] {
 
 .settings-wrapper {
 	.collection_form+.collection_form {
-		padding-top: 0;	
+		padding-top: 0;
 	}
 	.create-form > form > .collection_form > label {
 		display: block;
@@ -1460,7 +1495,6 @@ form > .add_to_collection[data-collection="legacy_data"] {
 	}
 	.form-group {
 		float: left;
-		width: 30%!important;
 	}
 	button {
 		margin: 43px 0 0px 20px;
@@ -1505,4 +1539,236 @@ form > .add_to_collection[data-collection="legacy_data"] {
 
 .panel-change-activity-heading {
 	margin-bottom: 20px;
+}
+
+.element-sidebar-dropdown {
+	display: none;
+}
+
+@media all and (max-width: 1000px) {
+	.element-upload-wrapper {
+		width: 100%;
+	}
+
+	.element-menu-wrapper {
+		position: absolute;
+		right: 0;
+	}
+
+	.element-content-wrapper {
+	    width: 100%;
+	}
+
+	.element-sidebar-wrapper {
+	    display: none;
+	}
+
+	.element-sidebar-dropdown {
+	    float: right;
+	    display: block;
+	    margin-top: -48px;
+	    margin-right: 20px;
+	    .edit-element {
+	    	width: 42px;
+	    	cursor: pointer;
+	    	.caret {
+	            float: right;
+	            color: $color_gravel_approx;
+	            margin: 14px 0 0 30px;
+	    	}
+	    	&:hover .caret {
+	    		color: $color_dodger_blue_approx;
+	    	}
+	    }
+	}
+
+    .element-panel-heading form {
+    	margin-right: 40px;
+    }
+}
+
+@media all and (max-width:768px) {
+    table, thead, tbody, th, td, tr {
+        display: block;
+    }
+
+    /* Hide table headers (but not display: none;, for accessibility) */
+    thead tr {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
+
+    tr { border: 1px solid #eee; }
+
+    .table > tbody > tr > td {
+        /* Behave  like a "row" */
+        border: none;
+        border-bottom: 1px solid #eee;
+        position: relative;
+        padding-left: 50%!important;
+        overflow: hidden;
+        &:before {
+            /* Now like a table header */
+            position: absolute;
+            /* Top/left values mimic padding */
+            top: 15px;
+            left: 6px;
+            width: 45%;
+            padding-right: 10px;
+            white-space: nowrap;
+        }
+    }
+
+    /*
+    Label the data
+    */
+    td:nth-of-type(1) { content: ""; display: none;}
+    td:nth-of-type(2):before { content: "S.N."; }
+    td:nth-of-type(3):before { content: "Activity Title"; font-family: $font_0; }
+    td:nth-of-type(4):before { content: "Activity Identifier"; }
+    td:nth-of-type(5):before { content: "Last Updated"; }
+    td:nth-of-type(6):before { content: "Status"; }
+    td:nth-of-type(7):before { content: "Actions"; }
+
+    td input[type="checkbox"] {
+    	display: none;
+    }
+
+    .panel-element-detail {
+        padding: 0;
+    }
+
+    .panel-element-body > .col-md-12 {
+    	.col-sm-4 {
+    		margin-bottom: 8px;
+    	}
+    }
+
+    .navbar-nav {
+			margin: 0;
+		}
+
+		.content-wrapper > .panel-default > .panel-body,.panel-element-detail > .panel-body {
+			padding: 0 14px;
+		}
+
+		.activity-status+a {
+			margin-right: 14px;
+		}
+
+		.panel-create > .panel-body {
+			padding: 0!important;
+		}
+
+		.change-activity-form > form > .form-group {
+			width: 100%;
+		}
+
+		.create-form > form > .form-group,.change-activity-form > form > .form-group {
+    	width: 88%;
+    }
+
+    .create-activity-form .panel-body {
+    	> div {
+    		padding: 4px 0;
+    	}
+    	>.col-sm-6:last-of-type {
+			padding-right: 0;
+    	}
+    }
+
+    .panel-add-wizard > .panel-body {
+    	padding: 0;
+    }
+
+    .download-transaction-wrap > div {
+    	display: block;
+    	width: 100%;
+    	margin: 0;
+    }
+
+		.panel-content-heading,.element-panel-heading,.create-form {
+			padding-left: 14px;
+			padding-right: 14px;
+		}
+
+		.panel-content-heading {
+			padding-right: 48px;
+		}
+
+		.change-activity-form .btn-form {
+			left: 14px;
+		}
+}
+
+@media all and (max-width:600px) {
+	.add-new-activity li.dropdown > a {
+		text-indent: -9999px;
+		padding: 21px 0 21px 10px;
+		.caret {
+			margin-right: 10px;
+		}
+	}
+
+	.element-panel-heading > form,.panel-content-heading > a {
+		float: none!important;
+		display: block;
+		padding-top: 6px;
+		clear: both;
+	}
+
+	.panel-content-heading > a {
+		margin-top: 8px;
+		max-width: 160px;
+	}
+}
+
+@media all and (max-width:480px) {
+    .login-container,.register-container {
+        max-width: 100%;
+        .panel,.form-body {
+            border-radius: 0;
+        }
+    }
+
+    .create-form > form > .form-group,.change-activity-form > form > .form-group {
+    	width: 83%;
+    }
+
+    .create-form .btn-form {
+    	width: 92%;
+    }
+
+    .download-transaction-wrap > a,.create-activity-form button {
+    	width: 97%;
+    }
+
+    .panel-upload button {
+    	margin-top: 33px;
+    }
+}
+
+@media all and (min-width:768px) {
+	.create-form > form > .collection_form > .form-group > .collection_form .form-group > .form-group {
+		width: 40%;
+		margin: 0 30px 15px 14px;
+	}
+
+	.create-form > form > .collection_form > .form-group > .form-group {
+		width: 40%;
+		margin-right: 52px;
+	}
+}
+
+@media all and (min-width:1001px) {
+	.element-sidebar-wrapper {
+		display: block!important;
+	}
+}
+
+@media all and (min-width:767px) and (max-width:1150px) {
+	.create-wizard-form > form .form-group {
+		width: 80%;
+	}
 }

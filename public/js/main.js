@@ -308,4 +308,8 @@ $(document).ready(function () {
             return 'You have unsaved changes.';
         }
     };
+
+    $('.element-menu-wrapper').click(function(){
+        $(this).children('.element-sidebar-wrapper').toggle();
+    });
 });

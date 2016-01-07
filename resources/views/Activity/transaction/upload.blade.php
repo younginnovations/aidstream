@@ -16,7 +16,7 @@
                 <div class="panel-content-heading panel-title-heading">Upload Transaction for <span>{{$activity->IdentifierTitle}}</span>
                   <a href="{{ route('activity.transaction.index', $id) }}" class="btn btn-primary pull-right back-to-transaction">Back to Transaction List</a>
                  </div>
-                <div class="col-xs-8 col-md-8 col-lg-8 element-content-wrapper">
+                <div class="col-xs-12 col-md-8 col-lg-8 element-content-wrapper">
                 <div class="panel panel-default panel-upload">
                 @if(count($errors)>0)
                     @foreach($errors->all() as $error)

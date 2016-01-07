@@ -27,13 +27,13 @@
 <nav class="navbar navbar-default">
     <div class="container-fluid">
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+<!--             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
                     data-target="#bs-example-navbar-collapse-1">
                 <span class="sr-only">Toggle Navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
-            </button>
+            </button> -->
             <a class="navbar-brand" href="{{ Auth::user()->role_id == 3 ? url('admin/dashboard') : url('/')  }}" style="text-indent: 145px; line-height: 35px;"
                alt="Aidstream">{{Auth::user() ? "(" . Session::get('version') . ")" : "Aidstream"}}</a>
         </div>
