@@ -10,6 +10,25 @@ use Illuminate\Support\Facades\Validator;
  */
 class ActivityBaseRequest extends Request
 {
+    function __construct()
+    {
+        Validator::extendImplicit(
+            'unique_lang',
+            function ($attribute, $value, $parameters, $validator) {
+                $languages = [];
+                foreach ($value as $narrative) {
+                    $language = $narrative['language'];
+                    if (in_array($language, $languages)) {
+                        return false;
+                    }
+                    $languages[] = $language;
+                }
+
+                return true;
+            }
+        );
+    }
+
     /**
      * returns rules for narrative
      * @param $formFields
@@ -18,7 +37,8 @@ class ActivityBaseRequest extends Request
      */
     public function getRulesForNarrative($formFields, $formBase)
     {
-        $rules = [];
+        $rules                                     = [];
+        $rules[sprintf('%s.narrative', $formBase)] = 'unique_lang';
         foreach ($formFields as $narrativeIndex => $narrative) {
             $rules[sprintf('%s.narrative.%s.narrative', $formBase, $narrativeIndex)] = 'required';
         }
@@ -34,7 +54,8 @@ class ActivityBaseRequest extends Request
      */
     public function getMessagesForNarrative($formFields, $formBase)
     {
-        $messages = [];
+        $messages                                                 = [];
+        $messages[sprintf('%s.narrative.unique_lang', $formBase)] = 'Languages should be unique.';
         foreach ($formFields as $narrativeIndex => $narrative) {
             $messages[sprintf(
                 '%s.narrative.%s.narrative.required',
