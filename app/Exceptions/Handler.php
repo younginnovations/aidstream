@@ -45,12 +45,12 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $e)
     {
-        if (is_a($e, HttpResponseException::class) || app()->environment() === 'local') {
+        if (is_a($e, HttpResponseException::class) || env('APP_DEBUG')) {
             return parent::render($request, $e);
         }
         $this->log->error('Error:' . $e->getMessage());
-        $message = 'Whoops, look like something went wrong';
+        $message = 'Whoops, look like something went wrong.';
 
-        return response()->view('errors.errors', compact('message'));
+        return response()->view(sprintf('errors.%s', auth()->check() ? 'errors' : 'noAuthErrors'), compact('message'));
     }
 }

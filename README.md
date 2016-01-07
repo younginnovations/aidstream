@@ -31,7 +31,7 @@ The app can be run with the command below:
 ## Framework
 
 The application is written in PHP based on the [Laravel](http://laravel.com) framework, current version of Laravel 
-used for this project is 5.1.17.
+used for this project is 5.2.5.
  
 
 ## Tools and packages
@@ -42,6 +42,7 @@ be seen in the [composer.json](http://gitlab.yipl.com.np/web-apps/aidstream-new/
 Some major PHP packages used are listed below:
 
 * [kris/laravel-form-builder](https://github.com/kristijanhusak/laravel-form-builder) - for generating html forms
+* [maatwebsite/excel](https://github.com/Maatwebsite/Laravel-Excel) - for importing and exporting Excel and CSV files
 
 ## Structure
 

@@ -30,7 +30,7 @@ class OrganizationGroup extends Request
         $rules[sprintf('%s.group_identifier', $orgGroup)] = 'required|unique:user_group,group_identifier';
         $rules[sprintf('%s.first_name', $adminGroup)]     = 'required';
         $rules[sprintf('%s.last_name', $adminGroup)]      = 'required';
-        $rules[sprintf('%s.email', $adminGroup)]          = 'required|email';
+        $rules[sprintf('%s.email', $adminGroup)]          = 'required|email|unique:users,email';
         $rules[sprintf('%s.password', $adminGroup)]       = 'required|confirmed|min:6';
         if ($this->method() === 'PUT') {
             $rules[sprintf('%s.group_identifier', $orgGroup)] = 'required';
@@ -56,6 +56,7 @@ class OrganizationGroup extends Request
         $messages[sprintf('%s.last_name.required', $adminGroup)]      = 'Last name is required';
         $messages[sprintf('%s.email.required', $adminGroup)]          = 'Email is required';
         $messages[sprintf('%s.email.email', $adminGroup)]             = 'Email should be valid';
+        $messages[sprintf('%s.email.unique', $adminGroup)]            = 'Email should be unique';
         $messages[sprintf('%s.password.required', $adminGroup)]       = 'Password is required';
         $messages[sprintf('%s.password.min', $adminGroup)]            = 'Password minimum 6 character long';
         $messages[sprintf('%s.password.confirmed', $adminGroup)]      = 'Password do not match';
