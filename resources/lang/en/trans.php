@@ -9,5 +9,6 @@ return [
     "login_name"       => "Username or Email",
     "password"         => "Password",
     "logout"           => "Logout",
+    "my_profile"       => "My Profile",
     "activity_default" => "Activity Default",
 ];

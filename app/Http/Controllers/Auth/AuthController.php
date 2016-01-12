@@ -60,6 +60,7 @@ class AuthController extends Controller
                 'organization_user_identifier' => 'required|max:255|unique:organizations,user_identifier',
                 'first_name'                   => 'required|max:255',
                 'last_name'                    => 'required|max:255',
+                'country'                      => 'required',
                 'email'                        => 'required|email|max:255|unique:users',
                 'username'                     => 'required|max:255|unique:users',
                 'password'                     => 'required|confirmed|min:6',
@@ -79,6 +80,7 @@ class AuthController extends Controller
             [
                 'name'            => $data['organization_name'],
                 'address'         => $data['organization_address'],
+                'country'         => $data['country'],
                 'user_identifier' => $data['organization_user_identifier'],
             ]
         );

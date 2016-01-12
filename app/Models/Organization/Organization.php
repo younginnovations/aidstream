@@ -1,6 +1,8 @@
 <?php namespace App\Models\Organization;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 
 /**
  * Class Organization
@@ -9,7 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 class Organization extends Model
 {
     protected $table = "organizations";
-    protected $fillable = ['name', 'address', 'user_identifier', 'reporting_org', 'status'];
+    protected $fillable = ['name', 'address', 'user_identifier', 'reporting_org', 'status', 'country', 'twitter', 'organization_url', 'logo', 'logo_url', 'disqus_comments'];
     protected $casts = ['reporting_org' => 'json'];
 
     /**
@@ -30,8 +32,25 @@ class Organization extends Model
         return $this->hasMany('App\Models\Activity\Activity', 'organization_id');
     }
 
+    /**
+     * get organization status
+     * @return string
+     */
     public function getOrgStatusAttribute()
     {
         return ($this->status == 1) ? 'Enabled' : 'Disabled';
+    }
+
+    /**
+     * get organization details
+     * @return mixed
+     */
+    public function getOrganization()
+    {
+        $organization = DB::table($this->table)
+                          ->where('id', '=', Session::get('org_id'))
+                          ->get();
+
+        return $organization;
     }
 }

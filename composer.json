@@ -12,7 +12,8 @@
     "maatwebsite/excel": "~2.0",
     "laravelcollective/html": "5.2",
     "kris/laravel-form-builder": "1.6.31",
-    "laravelcollective/bus": "5.2"
+    "laravelcollective/bus": "5.2",
+    "intervention/image": "2.3.5"
   },
   "require-dev": {
     "phpunit/phpunit": "~4.0",

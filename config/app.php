@@ -110,13 +110,10 @@ return [
         /*
          * Laravel Framework Service Providers...
          */
-        //        'Illuminate\Foundation\Providers\ArtisanServiceProvider',
         'Illuminate\Auth\AuthServiceProvider',
-        //        'Illuminate\Bus\BusServiceProvider',
         'Collective\Bus\BusServiceProvider',
         'Illuminate\Cache\CacheServiceProvider',
         'Illuminate\Foundation\Providers\ConsoleSupportServiceProvider',
-        //        'Illuminate\Routing\ControllerServiceProvider',
         'Illuminate\Cookie\CookieServiceProvider',
         'Illuminate\Database\DatabaseServiceProvider',
         'Illuminate\Encryption\EncryptionServiceProvider',
@@ -148,6 +145,7 @@ return [
         'Kris\LaravelFormBuilder\FormBuilderServiceProvider',
         'App\Providers\DevelopmentServiceProvider',
         'Maatwebsite\Excel\ExcelServiceProvider',
+        'Intervention\Image\ImageServiceProvider',
     ],
     /*
     |--------------------------------------------------------------------------
@@ -199,7 +197,7 @@ return [
         'FormBuilder' => 'Kris\LaravelFormBuilder\Facades\FormBuilder',
         'Gate'        => Illuminate\Support\Facades\Gate::class,
         'Excel'       => 'Maatwebsite\Excel\Facades\Excel',
-
+        'Image'       => 'Intervention\Image\Facades\Image',
     ],
 
 ];
