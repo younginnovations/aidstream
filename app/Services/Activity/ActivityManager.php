@@ -52,6 +52,7 @@ class ActivityManager
     {
         try {
             $result = $this->activityRepo->store($input, $organizationId, $defaultFieldValues);
+            $this->activityRepo->saveDefaultValues($result->id, $defaultFieldValues);
             $this->logger->info(
                 'Activity identifier added',
                 ['for ' => $input['activity_identifier']]
