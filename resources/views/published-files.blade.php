@@ -71,7 +71,10 @@
                                     <td>
                                         <a href="{{ 'http://tools.aidinfolabs.org/csv/direct_from_registry/?xml=' . url('/uploads/files/organization/' . $file->filename) }}"
                                            target="_blank">CSV</a></td>
-                                    <td><a href="{{ route('delete-published-file', [$file->id]) }}" class="delete">Delete</a>
+                                    <td>
+                                        @if($file->published_to_register == 0)
+                                            <a href="{{ route('delete-published-file', [$file->id])}}" class="delete"> Delete </a>
+                                        @endif
                                     </td>
                                 </tr>
                             @empty

@@ -15,7 +15,8 @@ return [
     'org_statuses'             => 'Organization has been :name.',
     'org_statuses_failed'      => 'Organization cannot be :name.',
     'settings_registry_info'   => 'Please fill up Publisher Id & Api Id to publish.',
-    'publish_registry'         => 'Could not publish registry. Try Again.',
+    'publish_registry'         => 'Could not publish registry to IATI',
     'upgraded'                 => 'Version upgraded to :version.',
-    'upgrade_failed'           => 'Failed to upgrade. Try Again.'
+    'upgrade_failed'           => 'Failed to upgrade. Try Again.',
+    'transfer_message'         => 'Deleted Successfully'
 ];

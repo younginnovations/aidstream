@@ -61,4 +61,31 @@ class XmlService
     {
         $this->xmlGenerator->generateXml($activity, $transaction, $result, $settings, $activityElement, $orgElem, $organization);
     }
+
+    /**
+     * @param $filename
+     * @param $organizationId
+     * @param $publishedActivity
+     */
+    public function savePublishedFiles($filename, $organizationId, $publishedActivity)
+    {
+        $this->xmlGenerator->savePublishedFiles($filename, $organizationId, $publishedActivity);
+    }
+
+    /**
+     * @param $xmlFiles
+     * @param $filename
+     */
+    public function getMergeXml($xmlFiles, $filename)
+    {
+        $this->xmlGenerator->getMergeXml($xmlFiles, $filename);
+    }
+
+    /**
+     * @param $activity
+     */
+    public function segmentedXmlFile($activity)
+    {
+        $this->xmlGenerator->segmentedXmlFile($activity);
+    }
 }
