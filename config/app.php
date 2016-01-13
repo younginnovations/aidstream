@@ -37,7 +37,7 @@ return [
     |
     */
 
-    'timezone'             => 'UTC',
+    'timezone'             => 'GMT',
     /*
     |--------------------------------------------------------------------------
     | Application Locale Configuration

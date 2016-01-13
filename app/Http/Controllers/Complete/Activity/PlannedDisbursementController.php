@@ -34,9 +34,9 @@ class PlannedDisbursementController extends Controller
      */
     public function index($id)
     {
-        $budget       = $this->plannedDisbursementManager->getPlannedDisbursementData($id);
-        $activityData = $this->activityManager->getActivityData($id);
-        $form         = $this->plannedDisbursementForm->editForm($budget, $id);
+        $plannedDisbursement = $this->plannedDisbursementManager->getPlannedDisbursementData($id);
+        $activityData        = $this->activityManager->getActivityData($id);
+        $form                = $this->plannedDisbursementForm->editForm($plannedDisbursement, $id);
 
         return view('Activity.plannedDisbursement.edit', compact('form', 'activityData', 'id'));
     }

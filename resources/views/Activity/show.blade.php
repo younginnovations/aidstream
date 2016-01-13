@@ -191,7 +191,7 @@
                                 <div class="panel-body panel-level-1">
                                     @foreach($activityDates as $activity_date)
                                         <div class="panel panel-default">
-                                            <div class="panel-heading">{{$getCode->getActivityCodeName('ActivityDateType', $activity_date['type']) . ';' . $activity_date['date']}}</div>
+                                            <div class="panel-heading">{{$getCode->getActivityCodeName('ActivityDateType', $activity_date['type']) . ' ; ' . $activity_date['date']}}</div>
                                             <div class="panel-body panel-element-body row">
                                                 <div class="col-xs-12 col-md-12">
                                                     <div class="col-xs-12 col-sm-4">Type</div>
@@ -714,7 +714,7 @@
                                                     <div class="panel-element-body row">
                                                         <div class="col-xs-12 col-md-12">
                                                             <div class="col-xs-12 col-sm-4">Iso_date</div>
-                                                            <div class="col-xs-12 col-sm-8">{{$budget['period_start'][0]['date']}}</div>
+                                                            <div class="col-xs-12 col-sm-8">{{ $budget['period_start'][0]['date']}}</div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -723,7 +723,7 @@
                                                     <div class="panel-element-body row">
                                                         <div class="col-xs-12 col-md-12">
                                                             <div class="col-xs-12 col-sm-4">Iso_date</div>
-                                                            <div class="col-xs-12 col-sm-8">{{$budget['period_end'][0]['date']}}</div>
+                                                            <div class="col-xs-12 col-sm-8">{{ $budget['period_end'][0]['date']}}</div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -740,7 +740,7 @@
                                                         </div>
                                                         <div class="col-xs-12 col-md-12">
                                                             <div class="col-xs-12 col-sm-4">Date</div>
-                                                            <div class="col-xs-12 col-sm-8">{{$budget['value'][0]['value_date']}}</div>
+                                                            <div class="col-xs-12 col-sm-8">{{ $budget['value'][0]['value_date']}}</div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -769,7 +769,7 @@
                                                     <div class="panel-element-body row">
                                                         <div class="col-xs-12 col-md-12">
                                                             <div class="col-xs-12 col-sm-4">Iso_date</div>
-                                                            <div class="col-xs-12 col-sm-8">{{$plannedDisbursement['period_start'][0]['date']}}</div>
+                                                            <div class="col-xs-12 col-sm-8">{{ $plannedDisbursement['period_start'][0]['date']}}</div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -778,7 +778,7 @@
                                                     <div class="panel-element-body row">
                                                         <div class="col-xs-12 col-md-12">
                                                             <div class="col-xs-12 col-sm-4">Iso_date</div>
-                                                            <div class="col-xs-12 col-sm-8">{{$plannedDisbursement['period_end'][0]['date']}}</div>
+                                                            <div class="col-xs-12 col-sm-8">{{ $plannedDisbursement['period_end'][0]['date']}}</div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -795,7 +795,7 @@
                                                         </div>
                                                         <div class="col-xs-12 col-md-12">
                                                             <div class="col-xs-12 col-sm-4">Date</div>
-                                                            <div class="col-xs-12 col-sm-8">{{$plannedDisbursement['value'][0]['value_date']}}</div>
+                                                            <div class="col-xs-12 col-sm-8">{{ $plannedDisbursement['value'][0]['value_date']}}</div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1102,7 +1102,7 @@
                                                                           <div class="panel-element-body row">
                                                                               <div class="col-xs-12 col-md-12">
                                                                                   <div class="col-xs-12 col-sm-4">Iso_date</div>
-                                                                                  <div class="col-xs-12 col-sm-8">{{$period['period_start'][0]['date']}}</div>
+                                                                                  <div class="col-xs-12 col-sm-8">{{ $period['period_start'][0]['date'] }}</div>
                                                                               </div>
                                                                           </div>
                                                                       </div>
@@ -1111,7 +1111,7 @@
                                                                           <div class="panel-element-body row">
                                                                               <div class="col-xs-12 col-md-12">
                                                                                   <div class="col-xs-12 col-sm-4">Iso_date</div>
-                                                                                  <div class="col-xs-12 col-sm-8">{{$period['period_end'][0]['date']}}</div>
+                                                                                  <div class="col-xs-12 col-sm-8">{{ $period['period_end'][0]['date'] }}</div>
                                                                               </div>
                                                                           </div>
                                                                       </div>
@@ -1120,7 +1120,7 @@
                                                                           <div class="panel-element-body row">
                                                                               <div class="col-xs-12 col-md-12">
                                                                                   <div class="col-xs-12 col-sm-4">Iso_date</div>
-                                                                                  <div class="col-xs-12 col-sm-8">{{$period['target'][0]['value']}}</div>
+                                                                                  <div class="col-xs-12 col-sm-8">{{ $period['target'][0]['value'] }}</div>
                                                                               </div>
                                                                           </div>
                                                                           <div class="panel-heading">Comment</div>
@@ -1204,7 +1204,7 @@
                                                 <div class="panel-element-body row">
                                                     <div class="col-xs-12 col-md-12">
                                                         <div class="col-xs-12 col-sm-4">Date</div>
-                                                        <div class="col-xs-12 col-sm-8">{{$transaction['transaction']['transaction_date'][0]['date']}}</div>
+                                                        <div class="col-xs-12 col-sm-8">{{ $transaction['transaction']['transaction_date'][0]['date'] }}</div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1217,7 +1217,7 @@
                                                     </div>
                                                     <div class="col-xs-12 col-md-12">
                                                         <div class="col-xs-12 col-sm-4">Date</div>
-                                                        <div class="col-xs-12 col-sm-8">{{$transaction['transaction']['value'][0]['date']}}</div>
+                                                        <div class="col-xs-12 col-sm-8">{{ $transaction['transaction']['value'][0]['date'] }}</div>
                                                     </div>
                                                     <div class="col-xs-12 col-md-12">
                                                         <div class="col-xs-12 col-sm-4">Currency</div>

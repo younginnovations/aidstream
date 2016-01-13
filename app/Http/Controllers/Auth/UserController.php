@@ -1,5 +1,6 @@
 <?php namespace App\Http\Controllers\Auth;
 
+use App\Core\Form\BaseForm;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProfileRequest;
 use App\Http\Requests\UsernameRequest;
@@ -140,8 +141,10 @@ class UserController extends Controller
     {
         $user         = $this->user->findOrFail($userId);
         $organization = $this->organization->findOrFail($this->orgId);
+        $baseForm     = new BaseForm();
+        $timeZone     = $baseForm->getCodeList('TimeZone', 'Activity');
 
-        return view('User.editProfile', compact('user', 'organization'));
+        return view('User.editProfile', compact('user', 'organization', 'timeZone'));
     }
 
     /**
@@ -171,10 +174,13 @@ class UserController extends Controller
      */
     protected function updateUserProfile($input, $userId)
     {
-        $user             = $this->user->findOrFail($userId);
-        $user->first_name = $input['first_name'];
-        $user->last_name  = $input['last_name'];
-        $user->email      = $input['email'];
+        $user               = $this->user->findOrFail($userId);
+        $user->first_name   = $input['first_name'];
+        $user->last_name    = $input['last_name'];
+        $user->email        = $input['email'];
+        $timeZone           = explode(' : ', $input['time_zone']);
+        $user->time_zone_id = $timeZone[0];
+        $user->time_zone    = $timeZone[1];
 
         return $user->save();
     }
@@ -204,7 +210,7 @@ class UserController extends Controller
         $organization->organization_url = $input['organization_url'];
         $organization->telephone        = $input['organization_telephone'];
         $organization->twitter          = $input['organization_twitter'];
-        $organization->disqus_comments  = $input['disqus_comments'];
+        $organization->disqus_comments  = array_key_exists('disqus_comments', $input) ? $input['disqus_comments'] : null;
 
         return $organization->save();
     }

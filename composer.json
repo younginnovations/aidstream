@@ -29,7 +29,8 @@
   },
   "autoload": {
     "files": [
-      "app/Helpers/HelperLanguage.php"
+      "app/Helpers/HelperLanguage.php",
+      "app/Helpers/TimeZone.php"
     ],
     "classmap": [
       "database"

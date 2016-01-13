@@ -43,6 +43,14 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-xs-12 col-md-12">
+                        <div class="form-group col-xs-12 col-sm-6 col-md-6">
+                            <div class="col-xs-12 col-md-12">
+                                <label class="control-label">Time Zone</label>
+                                {{ Form::select('time_zone', ['' => 'Select Time Zone'] + $timeZone, $user->time_zone_id . ' : '. $user->time_zone) }}
+                            </div>
+                        </div>
+                    </div>
 
                     <div class="col-xs-12 col-md-12">
                         <div class="form-group col-xs-12 col-sm-6 col-md-6">
