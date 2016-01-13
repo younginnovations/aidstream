@@ -46,4 +46,9 @@ class IatiSettings
     {
         return app('App\Core\V201\Repositories\Upgrade');
     }
+
+    public function getDocumentRepository()
+    {
+        return app('App\Core\V201\Repositories\Document');
+    }
 }

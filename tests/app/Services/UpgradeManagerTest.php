@@ -51,7 +51,7 @@ class UpgradeManagerTest extends AidStreamTestCase
     {
         $orgModel = m::mock(Organization::class);
         $orgModel->shouldReceive('getAttribute')->twice()->with('name')->andReturn('orgName');
-        $orgModel->shouldREceive('getAttribute')->once()->with('id')->andReturn(1);
+        $orgModel->shouldReceive('getAttribute')->once()->with('id')->andReturn(1);
         $user = m::mock(User::class);
         $user->shouldReceive('getAttribute')->times(3)->with('organization')->andReturn($orgModel);
         $this->auth->shouldReceive('user')->times(3)->andReturn($user);

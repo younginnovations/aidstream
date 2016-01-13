@@ -33,6 +33,15 @@ class Organization extends Model
     }
 
     /**
+     * organization has many documents
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function documents()
+    {
+        return $this->hasMany('App\Models\Document', 'org_id');
+    }
+
+    /**
      * get organization status
      * @return string
      */
