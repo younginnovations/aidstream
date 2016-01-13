@@ -82,7 +82,7 @@ class ActivityManager
 
     /**
      * @param $organizationId
-     * @return modal
+     * @return Activity Model
      */
     public function getActivities($organizationId)
     {
@@ -91,7 +91,7 @@ class ActivityManager
 
     /**
      * @param $activityId
-     * @return modal
+     * @return Activity Model
      */
     public function getActivityData($activityId)
     {

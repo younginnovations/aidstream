@@ -41,7 +41,7 @@ class HumanitarianScopeManager
      * @param DbLogger        $dbLogger
      * @param Logger          $logger
      */
-    function __construct(Version $version, Guard $auth, DatabaseManager $database, DbLogger $dbLogger, LOgger $logger)
+    function __construct(Version $version, Guard $auth, DatabaseManager $database, DbLogger $dbLogger, Logger $logger)
     {
         $this->auth                  = $auth;
         $this->database              = $database;

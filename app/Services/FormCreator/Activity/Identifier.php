@@ -51,4 +51,20 @@ class Identifier
             ]
         )->add('id', 'hidden', ['value' => $activityId])->add('Save', 'submit', ['attr' => ['class' => 'btn btn-submit btn-form']]);
     }
+
+    /**
+     * @param $activityId
+     * @return $this
+     */
+    public function duplicate($activityId)
+    {
+        return $this->formBuilder->create(
+            $this->formPath,
+            [
+                'method' => 'POST',
+                'url'    => route('activity.duplicate', [$activityId])
+            ]
+        )->add('Create Activity', 'submit', ['attr' => ['class' => 'btn btn-primary btn-create']]);
+    }
+
 }

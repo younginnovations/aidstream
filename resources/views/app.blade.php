@@ -40,7 +40,7 @@
 
         <div class="collapse navbar-collapse navbar-right" id="bs-example-navbar-collapse-1">
             @if(Auth::user()->role_id != 3 && Auth::user()->role_id !=4)
-            <ul class="nav navbar-nav pull-left add-new-activity">
+                <ul class="nav navbar-nav pull-left add-new-activity">
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
                            aria-expanded="false">Add a New Activity<span
@@ -51,7 +51,7 @@
                             <li><a href="{{ route('activity-upload.index') }}">Upload Activities</a></li>
                         </ul>
                     </li>
-            </ul>
+                </ul>
             @endif
             <ul class="nav navbar-nav navbar-right navbar-admin-dropdown">
                 @if (Auth::guest())
@@ -93,13 +93,13 @@
         <div class="alert alert-{{$response['type']}}">
             <ul>
                 @foreach($response['messages'] as $message)
-                    <li>- {{ $message }}</li>
+                    <li>- {!! $message !!}</li>
                 @endforeach
             </ul>
         </div>
     @else
         <div class="alert alert-{{$response['type']}}">
-            {{ message($response) }}
+            {!! message($response) !!}
         </div>
     @endif
 @endif
