@@ -67,7 +67,7 @@ class BaseForm extends Form
      * @param $listType
      * @return array
      */
-    protected function getCodeList($listName, $listType)
+    public function getCodeList($listName, $listType)
     {
         $defaultVersion = config('app.default_version_name');
         $defaultLocale  = config('app.fallback_locale');

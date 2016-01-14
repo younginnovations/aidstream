@@ -68,7 +68,7 @@
                            aria-expanded="false"><span class="avatar-img"><img src="{{url('images/avatar.png')}}" width="16" height="26" alt="{{Auth::user()->name}}"></span>
                             <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
-                            <li><a href="#">My Profile</a></li>
+                            <li><a href="{{url('user/profile')}}">@lang('trans.my_profile')</a></li>
                             <li><a href="{{ url('/auth/logout') }}">@lang('trans.logout')</a></li>
                             <li class="language-select-wrap">
                                 <label for="">Language</label>

@@ -8,6 +8,7 @@ use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Illuminate\Foundation\Auth\Access\Authorizable;
+use Illuminate\Support\Facades\Auth;
 use Session;
 
 /**
@@ -37,6 +38,7 @@ class User extends Model implements AuthorizableContract, AuthenticatableContrac
         'email',
         'username',
         'password',
+        'country',
         'org_id',
         'role_id',
         'user_permission'
@@ -164,4 +166,3 @@ class User extends Model implements AuthorizableContract, AuthenticatableContrac
         return $users;
     }
 }
-
