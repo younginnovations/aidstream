@@ -18,6 +18,7 @@ return [
     'publish_registry'         => 'Could not publish registry. Try Again.',
     'upgraded'                 => 'Version upgraded to :version.',
     'upgrade_failed'           => 'Failed to upgrade. Try Again.',
+    'transfer_message'         => 'Deleted Successfully',
+    'duplicated'               => 'Activity has been duplicated successfully.View duplicated <a href=":url">Activity</a>',
     'password_mismatch'        => 'Current Password don\'t match with you entered :name.',
-    'transfer_message'         => 'Deleted Successfully'
 ];

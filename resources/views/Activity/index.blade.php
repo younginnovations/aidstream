@@ -42,6 +42,7 @@
                                     <td>
                                         <a href="{{ route('activity.show', [$activity->id]) }}" class="view">View</a>
                                         <a href="{{ url(sprintf('activity/%s/delete', $activity->id)) }}" class="delete">Delete</a>
+                                        <a href="{{ route('activity.duplicate', [$activity->id]) }}" class="duplicate">Duplicate</a>
                                     </td>
                                 </tr>
                             @endforeach

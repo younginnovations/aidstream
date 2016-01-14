@@ -14,7 +14,6 @@ use Illuminate\Session\SessionManager;
 use App\Services\Activity\ActivityManager;
 use App\Services\FormCreator\Activity\Identifier;
 use Illuminate\Support\Facades\Session;
-use Symfony\Component\HttpKernel\Exception\HttpException;
 use App\Http\API\CKAN\CkanClient;
 use App\User;
 use Psr\Log\LoggerInterface;
@@ -109,24 +108,27 @@ class ActivityController extends Controller
     }
 
     /**
+     * @param bool $duplicate
+     * @param int  $activityId
      * @return \Illuminate\View\View
      */
-    public function create()
+    public function create($duplicate = false, $activityId = 0)
     {
         $this->authorize('add_activity');
-        $organization = $this->organizationManager->getOrganization(Session::get('org_id'));
-        $form         = $this->identifierForm->create();
+        $organization = $this->organizationManager->getOrganization($this->organization_id);
+        $form         = $duplicate ? $this->identifierForm->duplicate($activityId) : $this->identifierForm->create();
         $settings     = $this->settingsManager->getSettings($this->organization_id);
+
         if (!isset($organization->reporting_org[0])) {
             $response = ['type' => 'warning', 'code' => ['settings', ['name' => 'activity']]];
 
             return redirect('/settings')->withResponse($response);
         }
+
         $defaultFieldValues    = $settings->default_field_values;
-        $organization          = $this->organizationManager->getOrganization($this->organization_id);
         $reportingOrganization = $organization->reporting_org;
 
-        return view('Activity.create', compact('form', 'organization', 'reportingOrganization', 'defaultFieldValues'));
+        return view('Activity.create', compact('form', 'organization', 'reportingOrganization', 'defaultFieldValues', 'duplicate'));
     }
 
     /**
@@ -140,11 +142,13 @@ class ActivityController extends Controller
         $defaultFieldValues = $settings->default_field_values;
         $input              = $request->all();
         $result             = $this->activityManager->store($input, $this->organization_id, $defaultFieldValues);
+
         if (!$result) {
             $response = ['type' => 'danger', 'code' => ['save_failed', ['name' => 'activity']]];
 
             return redirect()->back()->withResponse($response);
         }
+
         $response = ['type' => 'success', 'code' => ['created', ['name' => 'Activity']]];
 
         return redirect()->route('activity.show', [$result->id])->withResponse($response);
@@ -181,10 +185,9 @@ class ActivityController extends Controller
         $transactionData  = $this->activityManager->getTransactionData($id);
         $resultData       = $this->activityManager->getResultData($id);
         $organization     = $this->organizationManager->getOrganization($activityData->organization_id);
-
-        $orgElem         = $this->organizationManager->getOrganizationElement();
-        $activityElement = $this->activityManager->getActivityElement();
-        $xmlService      = $activityElement->getActivityXmlService();
+        $orgElem          = $this->organizationManager->getOrganizationElement();
+        $activityElement  = $this->activityManager->getActivityElement();
+        $xmlService       = $activityElement->getActivityXmlService();
 
         if ($activityWorkflow == 1) {
             $messages = $xmlService->validateActivitySchema($activityData, $transactionData, $resultData, $settings, $activityElement, $orgElem, $organization);
@@ -199,8 +202,10 @@ class ActivityController extends Controller
 
                 return redirect()->to('/settings')->withResponse($response);
             }
+
             $xmlService->generateActivityXml($activityData, $transactionData, $resultData, $settings, $activityElement, $orgElem, $organization);
             $publishedStatus = $this->publishToRegistry();
+
             if (!$publishedStatus) {
                 $this->activityManager->updateStatus($input, $activityData);
                 $response = ['type' => 'warning', 'code' => ['publish_registry', ['name' => '']]];
@@ -208,6 +213,7 @@ class ActivityController extends Controller
                 return redirect()->back()->withResponse($response);
             }
         }
+
         $statusLabel = ['Completed', 'Verified', 'Published'];
         $response    = ($this->activityManager->updateStatus($input, $activityData)) ?
             ['type' => 'success', 'code' => ['activity_statuses', ['name' => $statusLabel[$activityWorkflow - 1]]]] :
@@ -294,6 +300,7 @@ class ActivityController extends Controller
         $settings               = $this->settingsManager->getSettings($this->organization_id);
         $api_url                = 'http://iati2.staging.ckanhosted.com/api/';
         $apiCall                = new CkanClient($api_url, $settings['registry_info'][0]['api_id']);
+
         try {
             foreach ($activityPublishedFiles as $publishedFile) {
                 $data = $this->generateJson($publishedFile);
@@ -329,6 +336,7 @@ class ActivityController extends Controller
         $email        = $this->user->getUserByOrgId();
         $author_email = $email[0]->email;
         $code         = "";
+
         if ($settings->publishing_type == "segmented") {
             $filename = explode('-', $publishedFile->filename);
             $code     = str_replace('.xml', '', end($filename));
@@ -367,5 +375,35 @@ class ActivityController extends Controller
         {"key":"verified","value":"no"}]}';
 
         return $data;
+    }
+
+    /**
+     * show identifier form to duplicate activity
+     * @param $activityId
+     * @return \Illuminate\View\View
+     */
+    public function duplicateActivity($activityId)
+    {
+        return $this->create(true, $activityId);
+    }
+
+    /**
+     * duplicate activity
+     * @param                       $activityId
+     * @param IatiIdentifierRequest $request
+     * @return mixed
+     */
+    public function duplicateActivityAction($activityId, IatiIdentifierRequest $request)
+    {
+        $activityData                   = $this->activityManager->getActivityData($activityId);
+        $newItem                        = $activityData->replicate();
+        $input                          = $request->all();
+        $newItem->identifier            = ["activity_identifier" => $input['activity_identifier'], "iati_identifier_text" => $input['iati_identifier_text']];
+        $newItem->activity_workflow     = 0;
+        $newItem->published_to_registry = 0;
+        $newItem->save();
+        $response = ['type' => 'success', 'code' => ['duplicated', ['url' => route('activity.show', [$newItem->id])]]];
+
+        return redirect('/activity')->withResponse($response);
     }
 }

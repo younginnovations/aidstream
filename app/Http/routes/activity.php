@@ -84,5 +84,19 @@ $router->group(
             ]
         );
         $router->resource('activity.humanitarian-scope', 'HumanitarianScopeController');
+        $router->get(
+            'activity/duplicate/{id}',
+            [
+                'as'   => 'activity.duplicate',
+                'uses' => 'ActivityController@duplicateActivity'
+            ]
+        );
+        $router->post(
+            'activity/duplicate/{id}',
+            [
+                'as'   => 'activity.duplicate',
+                'uses' => 'ActivityController@duplicateActivityAction'
+            ]
+        );
     }
 );

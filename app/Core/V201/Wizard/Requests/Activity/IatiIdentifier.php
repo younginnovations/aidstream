@@ -21,6 +21,7 @@ class IatiIdentifier extends Request
     {
         $iatiIdentifierRepository = new IatiIdentifierRepository();
         $rules                    = [];
+        $activityIdentifiers      = [];
         $identifiers              = $iatiIdentifierRepository->getActivityIdentifiers();
 
         foreach ($identifiers as $identifier) {
