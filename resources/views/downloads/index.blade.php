@@ -17,7 +17,7 @@
                        </div>
                        <hr>
                        <div>
-                           <a href="" class="btn btn-primary">Complete</a>
+                           <a href="{{ route('download.complete') }}" class="btn btn-primary">Complete</a>
                            <div>Contains a row for each aid activity. Each activity contains total figures for each type of transaction. Useful for quick verification of the data.</div>
                        </div>
                        <hr>

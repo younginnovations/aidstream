@@ -70,7 +70,7 @@ class DocumentLinkController extends Controller
         $documentLinks = $request->all();
         $activityData  = $this->activityManager->getActivityData($id);
 
-        $dbDocumentLinks = $this->documentLinkManager->getDocumentLinkData($id);
+        $dbDocumentLinks = (array) $this->documentLinkManager->getDocumentLinkData($id);
 
         foreach ($dbDocumentLinks as $documentLink) {
             $url        = $documentLink['url'];

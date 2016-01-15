@@ -67,19 +67,21 @@ class DownloadCsv
 
     /**
      * Get data for the Simple CSV to be generated.
+     * @param $organizationId
      * @return Collection|static[]
      */
-    public function simpleCsvData()
+    public function simpleCsvData($organizationId)
     {
-        return $this->activity->with(['transactions'])->get();
+        return $this->activity->with(['transactions'])->where('organization_id', '=', $organizationId)->get();
     }
 
     /**
      * Get data for the Complete CSV to be generated.
+     * @param $organizationId
      * @return Collection|static[]
      */
-    public function completeCsvData()
+    public function completeCsvData($organizationId)
     {
-        return $this->activity->with(['organization', 'results', 'transactions'])->get();
+        return $this->activity->with(['organization', 'results', 'transactions'])->where('organization_id', '=', $organizationId)->get();
     }
 }
