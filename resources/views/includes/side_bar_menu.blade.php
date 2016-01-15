@@ -7,7 +7,7 @@
                 <li class="published-files"><a href="{{ route('list-published-files') }}">Published Files</a></li>
                 <li class="users"><a href="{{route('admin.list-users')}}">Users</a></li>
                 <li class="documents"><a href="#">Documents</a></li>
-                <li class="downloads"><a href="#">Downloads</a></li>
+                <li class="downloads"><a href="{{route('download.index')}}">Downloads</a></li>
                 @if(Auth::user()->role_id == 1)
                     <li class="settings"><a href="{{ url('/settings') }}">Settings</a></li>
                 @endif

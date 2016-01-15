@@ -1290,14 +1290,14 @@
                                                 <div class="panel-heading">Sector</div>
                                                 <div class="panel-element-body row">
                                                         {{--*/
-                                                            $vocabulary = $sector['sector_vocabulary'];
+                                                            $vocabulary = $transaction['transaction']['sector'][0]['sector_vocabulary'];
                                                             $vocabularyValue = $getCode->getActivityCodeName('SectorVocabulary', $vocabulary);
                                                             if ($vocabulary == 1) {
-                                                                $sectorValue = $getCode->getActivityCodeName('Sector', $sector['sector_code']);
+                                                                $sectorValue = $getCode->getActivityCodeName('Sector', $transaction['transaction']['sector'][0]['sector_code']);
                                                             } elseif ($vocabulary == 2) {
-                                                                $sectorValue = $getCode->getActivityCodeName('SectorCategory', $sector['sector_category_code']);
+                                                                $sectorValue = $getCode->getActivityCodeName('SectorCategory', $transaction['transaction']['sector'][0]['sector_category_code']);
                                                             } else {
-                                                                $sectorValue = $sector['sector_text'];
+                                                                $sectorValue = $transaction['transaction']['sector'][0]['sector_text'];
                                                             }
                                                         /*--}}
                                                         <div class="col-xs-12 col-md-12">
