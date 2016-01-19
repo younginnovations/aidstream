@@ -1,5 +1,6 @@
 <?php namespace App\Http\Controllers\Auth;
 
+use App\Core\Form\BaseForm;
 use App\Http\Controllers\Controller;
 use App\Models\Settings;
 use App\Models\Organization\Organization;
@@ -143,6 +144,19 @@ class AuthController extends Controller
                     $field => $this->getFailedLoginMessage(),
                 ]
             );
+    }
+
+    /**
+     * Show the application registration form.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function showRegistrationForm()
+    {
+        $baseForm  = new BaseForm();
+        $countries = $baseForm->getCodeList('Country', 'Organization');
+
+        return view('auth.register', compact('countries'));
     }
 
     /**
