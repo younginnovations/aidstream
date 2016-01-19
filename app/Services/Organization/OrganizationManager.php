@@ -5,6 +5,7 @@ use App;
 use App\Models\Organization\Organization;
 use App\Models\Organization\OrganizationData;
 use App\Models\OrganizationPublished;
+use App\Models\Settings;
 
 class OrganizationManager
 {
@@ -115,5 +116,24 @@ class OrganizationManager
     public function deletePublishedFile($id)
     {
         return $this->repo->deletePublishedFile($id);
+    }
+
+    /**
+     * @param $id
+     * @return mixed
+     */
+    public function updatePublishToRegister($id)
+    {
+        return $this->repo->updatePublishToRegister($id);
+    }
+
+    /**
+     * @param Organization $organization
+     * @param Settings     $settings
+     * @return mixed
+     */
+    public function publishToRegistry(Organization $organization, Settings $settings)
+    {
+        return $this->repo->publishToRegistry($organization, $settings);
     }
 }

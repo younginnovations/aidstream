@@ -5,6 +5,7 @@ use App\Models\Organization\Organization;
 use App\Models\Organization\OrganizationData;
 use App\Models\Settings;
 use App\Models\OrganizationPublished;
+use App\Services\Organization\OrganizationManager;
 
 /**
  * Class XmlGenerator
@@ -20,15 +21,19 @@ class XmlGenerator
     protected $recipientOrgBudgetElem;
     protected $recipientCountrybudgetElem;
     protected $documentLinkElem;
+    protected $organizationManager;
+    protected $organizationPublished;
 
     /**
      * @param ArrayToXml            $arrayToXml
      * @param OrganizationPublished $organizationPublished
+     * @param OrganizationManager   $organizationManager
      */
-    public function __construct(ArrayToXml $arrayToXml, OrganizationPublished $organizationPublished)
+    public function __construct(ArrayToXml $arrayToXml, OrganizationPublished $organizationPublished, OrganizationManager $organizationManager)
     {
         $this->arrayToXml            = $arrayToXml;
         $this->organizationPublished = $organizationPublished;
+        $this->organizationManager   = $organizationManager;
     }
 
     /**
@@ -47,15 +52,16 @@ class XmlGenerator
     }
 
     /**
-     * generates xml file
      * @param Organization     $organization
      * @param OrganizationData $organizationData
      * @param Settings         $settings
+     * @param                  $orgElem
+     * @return mixed
      */
     public function generateXml(Organization $organization, OrganizationData $organizationData, Settings $settings, $orgElem)
     {
         $xml      = $this->getXml($organization, $organizationData, $settings, $orgElem);
-        $filename = $organization->reporting_org[0]['reporting_organization_identifier'] . '.xml';
+        $filename = $settings['registry_info'][0]['publisher_id'] . '-org.xml';
         $result   = $xml->save(public_path('uploads/files/organization/' . $filename));
         if ($result) {
             $published = $this->organizationPublished->firstOrNew(['filename' => $filename, 'organization_id' => $organization->id]);
@@ -64,6 +70,8 @@ class XmlGenerator
             $published->organization_id = $organization->id;
             $published->save();
         }
+
+        return $this->organizationManager->publishToRegistry($organization, $settings);
     }
 
     /**
