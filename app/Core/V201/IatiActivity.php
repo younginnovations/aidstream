@@ -354,4 +354,9 @@ class IatiActivity extends WizardIatiActivity
     {
         return app('App\Core\V201\Requests\Activity\ChangeActivityDefault');
     }
+
+    public function getDownloadCsv()
+    {
+        return app('App\Core\V201\Element\DownloadCsv');
+    }
 }

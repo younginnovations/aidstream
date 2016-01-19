@@ -8,8 +8,8 @@
   "license": "MIT",
   "type": "project",
   "require": {
-    "laravel/framework": "5.2.5",
-    "maatwebsite/excel": "~2.0",
+    "laravel/framework": "5.2.0",
+    "maatwebsite/excel": "2.1.1",
     "laravelcollective/html": "5.2",
     "kris/laravel-form-builder": "1.6.31",
     "laravelcollective/bus": "5.2",

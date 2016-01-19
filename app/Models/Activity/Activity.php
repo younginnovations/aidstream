@@ -88,7 +88,7 @@ class Activity extends Model
     /**
      * activity belongs to organization
      */
-    protected function organization()
+    public function organization()
     {
         return $this->belongsTo('App\Models\Organization\Organization', 'organization_id');
     }
@@ -138,5 +138,14 @@ class Activity extends Model
     public function getActivityIdentifierAttribute()
     {
         return $this->identifier['activity_identifier'];
+    }
+
+    /**
+     * An Activity has many ActivityResults.
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function results()
+    {
+        return $this->hasMany(ActivityResult::class);
     }
 }
