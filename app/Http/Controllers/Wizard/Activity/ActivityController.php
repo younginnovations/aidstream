@@ -40,7 +40,7 @@ class ActivityController extends Controller
         $this->middleware('auth');
         $this->organizationManager = $organizationManager;
         $this->activityManager     = $activityManager;
-        $this->organization_id     = $sessionManager->get('org_id');
+        $this->organization_id     = session('org_id');
         $this->iatiIdentifierForm  = $iatiIdentifierForm;
     }
 
@@ -49,6 +49,13 @@ class ActivityController extends Controller
      */
     public function create()
     {
+        $organization = $this->organizationManager->getOrganization($this->organization_id);
+        if (!isset($organization->reporting_org[0])) {
+            $response = ['type' => 'warning', 'code' => ['settings', ['name' => 'activity']]];
+
+            return redirect('/settings')->withResponse($response);
+        }
+
         $this->authorize('add_activity');
         $form = $this->iatiIdentifierForm->create();
 

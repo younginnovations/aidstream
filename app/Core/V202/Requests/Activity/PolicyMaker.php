@@ -17,7 +17,7 @@ class PolicyMaker extends V201PolicyMaker
         $rules = [];
 
         foreach ($formFields as $policyMakerIndex => $policyMaker) {
-            $policyMakerForm                                       = sprintf('policy_maker.%s', $policyMakerIndex);
+            $policyMakerForm                                       = sprintf('policy_marker.%s', $policyMakerIndex);
             $rules[sprintf('%s.vocabulary_uri', $policyMakerForm)] = 'url';
             $rules[sprintf('%s.policy_marker', $policyMakerForm)]  = 'required';
             $rules                                                 = array_merge(
@@ -38,7 +38,7 @@ class PolicyMaker extends V201PolicyMaker
         $messages = [];
 
         foreach ($formFields as $policyMakerIndex => $policyMaker) {
-            $policyMakerForm                                                  = sprintf('policy_maker.%s', $policyMakerIndex);
+            $policyMakerForm                                                  = sprintf('policy_marker.%s', $policyMakerIndex);
             $messages[sprintf('%s.vocabulary_uri.url', $policyMakerForm)]     = 'Enter valid URL. eg. http://example.com';
             $messages[sprintf('%s.policy_marker.required', $policyMakerForm)] = 'Policy Marker is required';
             $messages                                                         = array_merge(
