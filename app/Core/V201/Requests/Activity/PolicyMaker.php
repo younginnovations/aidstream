@@ -11,7 +11,7 @@ class PolicyMaker extends ActivityBaseRequest
      */
     public function rules()
     {
-        return $this->getRulesForPolicyMaker($this->get('policy_maker'));
+        return $this->getRulesForPolicyMaker($this->get('policy_marker'));
     }
 
     /**
@@ -19,7 +19,7 @@ class PolicyMaker extends ActivityBaseRequest
      */
     public function messages()
     {
-        return $this->getMessagesForPolicyMaker($this->get('policy_maker'));
+        return $this->getMessagesForPolicyMaker($this->get('policy_marker'));
     }
 
     /**
@@ -31,7 +31,7 @@ class PolicyMaker extends ActivityBaseRequest
         $rules = [];
 
         foreach ($formFields as $policyMakerIndex => $policyMaker) {
-            $policyMakerForm                                      = sprintf('policy_maker.%s', $policyMakerIndex);
+            $policyMakerForm                                      = sprintf('policy_marker.%s', $policyMakerIndex);
             $rules[sprintf('%s.significance', $policyMakerForm)]  = 'required';
             $rules[sprintf('%s.policy_marker', $policyMakerForm)] = 'required';
             $rules                                                = array_merge(
@@ -39,6 +39,7 @@ class PolicyMaker extends ActivityBaseRequest
                 $this->getRulesForNarrative($policyMaker['narrative'], $policyMakerForm)
             );
         }
+
 
         return $rules;
     }
@@ -52,10 +53,7 @@ class PolicyMaker extends ActivityBaseRequest
         $messages = [];
 
         foreach ($formFields as $policyMakerIndex => $policyMaker) {
-            $policyMakerForm                                                  = sprintf(
-                'policy_maker.%s',
-                $policyMakerIndex
-            );
+            $policyMakerForm                                                  = sprintf('policy_marker.%s', $policyMakerIndex);
             $messages[sprintf('%s.significance.required', $policyMakerForm)]  = 'Significance is required';
             $messages[sprintf('%s.policy_marker.required', $policyMakerForm)] = 'Policy Marker is required';
             $messages                                                         = array_merge(

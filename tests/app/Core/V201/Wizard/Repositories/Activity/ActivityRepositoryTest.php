@@ -23,11 +23,10 @@ class ActivityRepositoryTest extends AidStreamTestCase
 
     public function testItShouldStoreActivityDataToDatabase()
     {
-        $this->activityModel->shouldReceive('getAttribute')->with('identifier')->andReturn('testIdentifier');
         $this->activityModel->shouldReceive('create')->once()->with(
-            ['identifier' => ['identifier' => 'testIdentifier'], 'organization_id' => 1]
+            ['identifier' => ['identifier' => 'testIdentifier'], 'default_field_values' => ['defaultFieldValues'], 'organization_id' => 1]
         )->andReturn(true);
-        $this->assertTrue($this->activityRepo->store(['identifier' => 'testIdentifier'], 1));
+        $this->assertTrue($this->activityRepo->store(['identifier' => 'testIdentifier'], ['defaultFieldValues'], 1));
     }
 
     public function testItShouldReturnActivityWithSpecificActivityId()

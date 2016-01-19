@@ -100,6 +100,7 @@ class Upgrade
     {
         $totalBudgets        = (array) $organizationData->total_budget;
         $recipientOrgBudgets = (array) $organizationData->recipient_organization_budget;
+        $documentLinks       = (array) $organizationData->document_link;
 
         foreach ($totalBudgets as $totalBudgetIndex => $totalBudget) {
             $totalBudgets[$totalBudgetIndex]['status'] = "1";
@@ -109,8 +110,13 @@ class Upgrade
             $recipientOrgBudgets[$recipientOrgBudgetIndex]['status'] = "1";
         }
 
+        foreach ($documentLinks as $documentLinkIndex => $documentLink) {
+            $documentLinks[$documentLinkIndex]['document_date'][0]['date'] = "";
+        }
+
         (!$totalBudgets) ?: $organizationData->total_budget = $totalBudgets;
         (!$recipientOrgBudgets) ?: $organizationData->recipient_organization_budget = $recipientOrgBudgets;
+        (!$documentLinks) ?: $organizationData->document_link = $documentLinks;
         $organizationData->save();
     }
 
@@ -120,13 +126,19 @@ class Upgrade
     protected function upgradeActivities(Collection $activities)
     {
         foreach ($activities as $activity) {
-            $budgets = (array) $activity->budget;
+            $budgets            = (array) $activity->budget;
+            $defaultFieldValues = (array) $activity->default_field_values;
 
             foreach ($budgets as $budgetIndex => $budget) {
                 $budgets[$budgetIndex]['status'] = "1";
             }
 
+            foreach ($defaultFieldValues as $defaultFieldValueIndex => $defaultFieldValue) {
+                $defaultFieldValues[$defaultFieldValueIndex]['humanitarian'] = "0";
+            }
+
             (!$budgets) ?: $activity->budget = $budgets;
+            (!$defaultFieldValues) ?: $activity->default_field_values = $defaultFieldValues;
             $activity->save();
         }
     }
