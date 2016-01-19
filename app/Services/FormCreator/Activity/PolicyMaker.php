@@ -28,7 +28,7 @@ class PolicyMaker
      */
     public function editForm($data, $activityId)
     {
-        $model['policy_maker'] = $data;
+        $model['policy_marker'] = $data;
 
         return $this->formBuilder->create(
             $this->formPath,
