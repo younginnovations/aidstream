@@ -1,0 +1,460 @@
+{
+  "date-last-modified": "2015-10-16T10:42:20.401002+00:00",
+  "version": "",
+  "name": "TimeZone",
+  "xml:lang": "en",
+  "TimeZone": [
+    {
+      "code": "1 : GMT",
+      "name": "GMT"
+    },
+    {
+      "code": "2 : Pacific/Midway",
+      "name": "(GMT-11:00) Midway Island"
+    },
+    {
+      "code": "3 : US/Samoa",
+      "name": "(GMT-11:00) Samoa"
+    },
+    {
+      "code": "4 : US/Hawaii",
+      "name": "(GMT-10:00) Hawaii"
+    },
+    {
+      "code": "5 : US/Alaska",
+      "name": "(GMT-09:00) Alaska"
+    },
+    {
+      "code": "6 : US/Pacific",
+      "name": "(GMT-08:00) Pacific Time (US & Canada)"
+    },
+    {
+      "code": "7 : America/Tijuana",
+      "name": "(GMT-08:00) Tijuana"
+    },
+    {
+      "code": "8 : US/Arizona",
+      "name": "(GMT-07:00) Arizona"
+    },
+    {
+      "code": "9 : US/Mountain",
+      "name": "(GMT-07:00) Mountain Time (US & Canada)"
+    },
+    {
+      "code": "10 : America/Chihuahua",
+      "name": "(GMT-07:00) Chihuahua"
+    },
+    {
+      "code": "11 : America/Mazatlan",
+      "name": "(GMT-07:00) Mazatlan"
+    },
+    {
+      "code": "12 : America/Mexico_City",
+      "name": "(GMT-06:00) Mexico City"
+    },
+    {
+      "code": "13 : America/Monterrey",
+      "name": "(GMT-06:00) Monterrey"
+    },
+    {
+      "code": "14 : Canada/Saskatchewan",
+      "name": "(GMT-06:00) Saskatchewan"
+    },
+    {
+      "code": "15 : US/Central",
+      "name": "(GMT-06:00) Central Time (US & Canada)"
+    },
+    {
+      "code": "16 : US/Eastern",
+      "name": "(GMT-05:00) Eastern Time (US & Canada)"
+    },
+    {
+      "code": "17 : US/East-Indiana",
+      "name": "(GMT-05:00) Indiana (East)"
+    },
+    {
+      "code": "18 : America/Bogota",
+      "name": "(GMT-05:00) Bogota"
+    },
+    {
+      "code": "19 : America/Lima",
+      "name": "(GMT-05:00) Lima"
+    },
+    {
+      "code": "20 : America/Caracas",
+      "name": "(GMT-04:30) Caracas"
+    },
+    {
+      "code": "21 : Canada/Atlantic",
+      "name": "(GMT-04:00) Atlantic Time (Canada)"
+    },
+    {
+      "code": "22 : America/La_Paz",
+      "name": "(GMT-04:00) La Paz"
+    },
+    {
+      "code": "23 : America/Santiago",
+      "name": "(GMT-04:00) Santiago"
+    },
+    {
+      "code": "24 : Canada/Newfoundland",
+      "name": "(GMT-03:30) Newfoundland"
+    },
+    {
+      "code": "25 : America/Buenos_Aires",
+      "name": "(GMT-03:00) Buenos Aires"
+    },
+    {
+      "code": "26 : Greenland",
+      "name": "(GMT-03:00) Greenland"
+    },
+    {
+      "code": "27 : Atlantic/Stanley",
+      "name": "(GMT-02:00) Stanley"
+    },
+    {
+      "code": "28 : Atlantic/Azores",
+      "name": "(GMT-01:00) Azores"
+    },
+    {
+      "code": "29 : Atlantic/Cape_Verde",
+      "name": "(GMT-01:00) Cape Verde Is."
+    },
+    {
+      "code": "30 : Africa/Casablanca",
+      "name": "(GMT) Casablanca"
+    },
+    {
+      "code": "31 : Europe/Dublin",
+      "name": "(GMT) Dublin"
+    },
+    {
+      "code": "32 : Europe/Lisbon",
+      "name": "(GMT) Lisbon"
+    },
+    {
+      "code": "33 : Europe/London",
+      "name": "(GMT) London"
+    },
+    {
+      "code": "34 : Africa/Monrovia",
+      "name": "(GMT) Monrovia"
+    },
+    {
+      "code": "35 : Europe/Amsterdam",
+      "name": "(GMT+01:00) Amsterdam"
+    },
+    {
+      "code": "36 : Europe/Belgrade",
+      "name": "(GMT+01:00) Belgrade"
+    },
+    {
+      "code": "37 : Europe/Berlin",
+      "name": "(GMT+01:00) Berlin"
+    },
+    {
+      "code": "38 : Europe/Bratislava",
+      "name": "(GMT+01:00) Bratislava"
+    },
+    {
+      "code": "39 : Europe/Brussels",
+      "name": "(GMT+01:00) Brussels"
+    },
+    {
+      "code": "40 : Europe/Budapest",
+      "name": "(GMT+01:00) Budapest"
+    },
+    {
+      "code": "41 : Europe/Copenhagen",
+      "name": "(GMT+01:00) Copenhagen"
+    },
+    {
+      "code": "42 : Europe/Ljubljana",
+      "name": "(GMT+01:00) Ljubljana"
+    },
+    {
+      "code": "43 : Europe/Madrid",
+      "name": "(GMT+01:00) Madrid"
+    },
+    {
+      "code": "44 : Europe/Paris",
+      "name": "(GMT+01:00) Paris"
+    },
+    {
+      "code": "45 : Europe/Prague",
+      "name": "(GMT+01:00) Prague"
+    },
+    {
+      "code": "46 : Europe/Rome",
+      "name": "(GMT+01:00) Rome"
+    },
+    {
+      "code": "47 : Europe/Sarajevo",
+      "name": "(GMT+01:00) Sarajevo"
+    },
+    {
+      "code": "48 : Europe/Skopje",
+      "name": "(GMT+01:00) Skopje"
+    },
+    {
+      "code": "49 : Europe/Stockholm",
+      "name": "(GMT+01:00) Stockholm"
+    },
+    {
+      "code": "50 : Europe/Vienna",
+      "name": "(GMT+01:00) Vienna"
+    },
+    {
+      "code": "51 : Europe/Warsaw",
+      "name": "(GMT+01:00) Warsaw"
+    },
+    {
+      "code": "52 : Europe/Zagreb",
+      "name": "(GMT+01:00) Zagreb"
+    },
+    {
+      "code": "53 : Europe/Athens",
+      "name": "(GMT+02:00) Athens"
+    },
+    {
+      "code": "54 : Europe/Bucharest",
+      "name": "(GMT+02:00) Bucharest"
+    },
+    {
+      "code": "55 : Africa/Cairo",
+      "name": "(GMT+02:00) Cairo"
+    },
+    {
+      "code": "56 : Africa/Harare",
+      "name": "(GMT+02:00) Harare"
+    },
+    {
+      "code": "57 : Europe/Helsinki",
+      "name": "(GMT+02:00) Helsinki"
+    },
+    {
+      "code": "58 : Europe/Istanbul",
+      "name": "(GMT+02:00) Istanbul"
+    },
+    {
+      "code": "59 : Asia/Jerusalem",
+      "name": "(GMT+02:00) Jerusalem"
+    },
+    {
+      "code": "60 : Europe/Kiev",
+      "name": "(GMT+02:00) Kyiv"
+    },
+    {
+      "code": "61 : Europe/Minsk",
+      "name": "(GMT+02:00) Minsk"
+    },
+    {
+      "code": "62 : Europe/Riga",
+      "name": "(GMT+02:00) Riga"
+    },
+    {
+      "code": "63 : Europe/Sofia",
+      "name": "(GMT+02:00) Sofia"
+    },
+    {
+      "code": "64 : Europe/Tallinn",
+      "name": "(GMT+02:00) Tallinn"
+    },
+    {
+      "code": "65 : Europe/Vilnius",
+      "name": "(GMT+02:00) Vilnius"
+    },
+    {
+      "code": "66 : Asia/Baghdad",
+      "name": "(GMT+03:00) Baghdad"
+    },
+    {
+      "code": "67 : Asia/Kuwait",
+      "name": "(GMT+03:00) Kuwait"
+    },
+    {
+      "code": "68 : Africa/Nairobi",
+      "name": "(GMT+03:00) Nairobi"
+    },
+    {
+      "code": "69 : Asia/Riyadh",
+      "name": "(GMT+03:00) Riyadh"
+    },
+    {
+      "code": "70 : Europe/Moscow",
+      "name": "(GMT+03:00) Moscow"
+    },
+    {
+      "code": "71 : Asia/Tehran",
+      "name": "(GMT+03:30) Tehran"
+    },
+    {
+      "code": "72 : Asia/Baku",
+      "name": "(GMT+04:00) Baku"
+    },
+    {
+      "code": "73 : Europe/Volgograd",
+      "name": "(GMT+04:00) Volgograd"
+    },
+    {
+      "code": "74 : Asia/Muscat",
+      "name": "(GMT+04:00) Muscat"
+    },
+    {
+      "code": "75 : Asia/Tbilisi",
+      "name": "(GMT+04:00) Tbilisi"
+    },
+    {
+      "code": "76 : Asia/Yerevan",
+      "name": "(GMT+04:00) Yerevan"
+    },
+    {
+      "code": "77 : Asia/Kabul",
+      "name": "(GMT+04:30) Kabul"
+    },
+    {
+      "code": "78 : Asia/Karachi",
+      "name": "(GMT+05:00) Karachi"
+    },
+    {
+      "code": "79 : Asia/Tashkent",
+      "name": "(GMT+05:00) Tashkent"
+    },
+    {
+      "code": "80 : Asia/Kolkata",
+      "name": "(GMT+05:30) Kolkata"
+    },
+    {
+      "code": "81 : Asia/Kathmandu",
+      "name": "(GMT+05:45) Kathmandu"
+    },
+    {
+      "code": "82 : Asia/Yekaterinburg",
+      "name": "(GMT+06:00) Ekaterinburg"
+    },
+    {
+      "code": "83 : Asia/Almaty",
+      "name": "(GMT+06:00) Almaty"
+    },
+    {
+      "code": "84 : Asia/Dhaka",
+      "name": "(GMT+06:00) Dhaka"
+    },
+    {
+      "code": "85 : Asia/Novosibirsk",
+      "name": "(GMT+07:00) Novosibirsk"
+    },
+    {
+      "code": "86 : Asia/Bangkok",
+      "name": "(GMT+07:00) Bangkok"
+    },
+    {
+      "code": "87 : Asia/Jakarta",
+      "name": "(GMT+07:00) Jakarta"
+    },
+    {
+      "code": "88 : Asia/Krasnoyarsk",
+      "name": "(GMT+08:00) Krasnoyarsk"
+    },
+    {
+      "code": "89 : Asia/Chongqing",
+      "name": "(GMT+08:00) Chongqing"
+    },
+    {
+      "code": "90 : Asia/Hong_Kong",
+      "name": "(GMT+08:00) Hong Kong"
+    },
+    {
+      "code": "91 : Asia/Kuala_Lumpur",
+      "name": "(GMT+08:00) Kuala Lumpur"
+    },
+    {
+      "code": "92 : Australia/Perth",
+      "name": "(GMT+08:00) Perth"
+    },
+    {
+      "code": "93 : Asia/Singapore",
+      "name": "(GMT+08:00) Singapore"
+    },
+    {
+      "code": "94 : Asia/Taipei",
+      "name": "(GMT+08:00) Taipei"
+    },
+    {
+      "code": "95 : Asia/Ulaanbaatar",
+      "name": "(GMT+08:00) Ulaan Bataar"
+    },
+    {
+      "code": "96 : Asia/Urumqi",
+      "name": "(GMT+08:00) Urumqi"
+    },
+    {
+      "code": "97 : Asia/Irkutsk",
+      "name": "(GMT+09:00) Irkutsk"
+    },
+    {
+      "code": "98 : Asia/Seoul",
+      "name": "(GMT+09:00) Seoul"
+    },
+    {
+      "code": "99 : Asia/Tokyo",
+      "name": "(GMT+09:00) Tokyo"
+    },
+    {
+      "code": "100 : Australia/Adelaide",
+      "name": "(GMT+09:30) Adelaide"
+    },
+    {
+      "code": "101 : Australia/Darwin",
+      "name": "(GMT+09:30) Darwin"
+    },
+    {
+      "code": "102 : Asia/Yakutsk",
+      "name": "(GMT+10:00) Yakutsk"
+    },
+    {
+      "code": "103 : Australia/Brisbane",
+      "name": "(GMT+10:00) Brisbane"
+    },
+    {
+      "code": "104 : Australia/Canberra",
+      "name": "(GMT+10:00) Canberra"
+    },
+    {
+      "code": "105 : Pacific/Guam",
+      "name": "(GMT+10:00) Guam"
+    },
+    {
+      "code": "106 : Australia/Hobart",
+      "name": "(GMT+10:00) Hobart"
+    },
+    {
+      "code": "107 : Australia/Melbourne",
+      "name": "(GMT+10:00) Melbourne"
+    },
+    {
+      "code": "108 : Pacific/Port_Moresby",
+      "name": "(GMT+10:00) Port Moresby"
+    },
+    {
+      "code": "109 : Australia/Sydney",
+      "name": "(GMT+10:00) Sydney"
+    },
+    {
+      "code": "110 : Asia/Vladivostok",
+      "name": "(GMT+11:00) Vladivostok"
+    },
+    {
+      "code": "111 : Asia/Magadan",
+      "name": "(GMT+12:00) Magadan"
+    },
+    {
+      "code": "112 : Pacific/Auckland",
+      "name": "(GMT+12:00) Auckland"
+    },
+    {
+      "code": "113 : Pacific/Fiji",
+      "name": "(GMT+12:00) Fiji"
+    }
+  ]
+}

@@ -1,4 +1,3 @@
-@inject('getCodeList', 'App\Core\Form\BaseForm')
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -128,13 +127,7 @@
                                         <label class="control-label">Country</label>
 
                                         <div class="col-xs-12 col-md-12">
-                                            <?php $countries = $getCodeList->getCodeList('Country', 'Organization'); ?>
-                                            <select name="country">
-                                                <option value="">Select any option:</option>
-                                                @foreach($countries as $countryIndex=>$country)
-                                                    <option value={{$countryIndex}}> {{$country}} </option>
-                                                @endforeach
-                                            </select>
+                                            {{Form::select('country', ['' => 'Select Country'] + $countries)}}
                                         </div>
                                     </div>
                                 </div>

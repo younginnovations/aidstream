@@ -19,12 +19,14 @@ class UserTableSeeder extends Seeder
     {
         User::create(
             [
-                'first_name' => 'Yipl',
-                'last_name'  => 'Admin',
-                'username'   => 'yipl_admin',
-                'email'      => 'admin@aidstream.com.np',
-                'password'   => bcrypt('admin123'),
-                'role_id'    => 3
+                'first_name'   => 'Yipl',
+                'last_name'    => 'Admin',
+                'username'     => 'yipl_admin',
+                'email'        => 'admin@aidstream.com.np',
+                'password'     => bcrypt('admin123'),
+                'role_id'      => 3,
+                'time_zone_id' => 1,
+                'time_zone'    => 'GMT'
             ]
         );
 

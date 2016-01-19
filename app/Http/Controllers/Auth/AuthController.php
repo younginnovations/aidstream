@@ -63,7 +63,7 @@ class AuthController extends Controller
                 'country'                      => 'required',
                 'email'                        => 'required|email|max:255|unique:users',
                 'username'                     => 'required|max:255|unique:users',
-                'password'                     => 'required|confirmed|min:6',
+                'password'                     => 'required|confirmed|min:6'
             ]
         );
     }
@@ -93,7 +93,7 @@ class AuthController extends Controller
                 'username'   => $data['username'],
                 'password'   => bcrypt($data['password']),
                 'org_id'     => $organization->id,
-                'role_id'    => 1,
+                'role_id'    => 1
             ]
         );
     }

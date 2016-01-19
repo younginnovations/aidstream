@@ -168,5 +168,4 @@ class AdminController extends Controller
         return redirect('admin/list-users')->withResponse($response);
 
     }
-
 }

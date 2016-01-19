@@ -41,7 +41,9 @@ class User extends Model implements AuthorizableContract, AuthenticatableContrac
         'country',
         'org_id',
         'role_id',
-        'user_permission'
+        'user_permission',
+        'time_zone_id',
+        'time_zone'
     ];
     /**
      * @var array

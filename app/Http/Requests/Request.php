@@ -1,6 +1,7 @@
 <?php namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class Request extends FormRequest
 {
@@ -17,9 +18,13 @@ class Request extends FormRequest
      */
     public function all()
     {
-        $input      = $this->input();
-        $whitespace = create_function('&$value, &$key', '$key; $value = trim(preg_replace("/\s+/", " " ,$value));');
-        array_walk_recursive($input, $whitespace);
+        $input = $this->input();
+        array_walk_recursive(
+            $input,
+            function (&$value) {
+                $value = trim(preg_replace('/\s+/', " ", $value));
+            }
+        );
         $this->replace($input);
 
         return array_replace_recursive($this->input(), $this->files->all());
