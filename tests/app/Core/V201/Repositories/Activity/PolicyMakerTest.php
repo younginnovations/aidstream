@@ -27,7 +27,7 @@ class PolicyMakerTest extends AidStreamTestCase
         $this->activity->shouldReceive('setAttribute')->once()->with('policy_maker', 'testPolicy');
         $this->activity->shouldReceive('save')->once()->andReturn(true);
         $this->assertTrue(
-            $this->policyMaker->update(['policy_maker' => 'testPolicy'], $this->activity)
+            $this->policyMaker->update(['policy_marker' => 'testPolicy'], $this->activity)
         );
     }
 

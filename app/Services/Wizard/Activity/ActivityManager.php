@@ -43,32 +43,39 @@ class ActivityManager
         $this->database     = $database;
     }
 
-    public function store(array $input, $organizationId)
+    /**
+     * save new activity from wizard
+     * @param array $identifier
+     * @param       $defaultFieldValues
+     * @return bool
+     */
+    public function store(array $identifier, $defaultFieldValues)
     {
         try {
             $this->database->beginTransaction();
-            $result = $this->activityRepo->store($input, $organizationId);
+            $result = $this->activityRepo->store($identifier, $defaultFieldValues, $this->auth->user()->organization->id);
+            $this->activityRepo->saveDefaultValues($result->id, $defaultFieldValues);
             $this->database->commit();
             $this->logger->info(
                 'Activity identifier added!',
-                ['for' => $input['activity_identifier']]
+                ['for' => $identifier['activity_identifier']]
             );
             $this->logger->activity(
                 "activity.activity_added",
                 [
-                    'identifier'      => $input['activity_identifier'],
+                    'identifier'      => $identifier['activity_identifier'],
                     'organization'    => $this->auth->user()->organization->name,
                     'organization_id' => $this->auth->user()->organization->id,
                 ]
             );
 
-            return $result;
+            return true;
         } catch (Exception $exception) {
             $this->database->rollback();
             $this->logger->error(
                 sprintf('Activity identifier couldn\'t be added due to %s', $exception->getMessage()),
                 [
-                    'ActivityIdentifier' => $input,
+                    'ActivityIdentifier' => $identifier,
                     'trace'              => $exception->getTraceAsString()
                 ]
             );

@@ -1,6 +1,7 @@
 <?php namespace App\Http\Controllers\Wizard\Activity;
 
 use App\Http\Controllers\Controller;
+use App\Services\Organization\OrganizationManager;
 use App\Services\Wizard\Activity\ActivityManager;
 use App\Services\Wizard\Activity\StepTwoManager;
 use App\Services\Wizard\FormCreator\Activity\StepTwo as StepTwoForm;
@@ -25,18 +26,25 @@ class StepTwoController extends Controller
      * @var ActivityManager
      */
     protected $activityManager;
+    /**
+     * @var OrganizationManager
+     */
+    protected $organizationManager;
 
     /**
-     * @param StepTwoManager  $stepTwoManager
-     * @param StepTwoForm     $stepTwoForm
-     * @param ActivityManager $activityManager
+     * @param StepTwoManager      $stepTwoManager
+     * @param StepTwoForm         $stepTwoForm
+     * @param OrganizationManager $organizationManager
+     * @param ActivityManager     $activityManager
      */
-    function __construct(StepTwoManager $stepTwoManager, StepTwoForm $stepTwoForm, ActivityManager $activityManager)
+    function __construct(StepTwoManager $stepTwoManager, StepTwoForm $stepTwoForm, OrganizationManager $organizationManager, ActivityManager $activityManager)
     {
         $this->middleware('auth');
-        $this->stepTwoForm     = $stepTwoForm;
-        $this->stepTwoManager  = $stepTwoManager;
-        $this->activityManager = $activityManager;
+        $this->stepTwoForm         = $stepTwoForm;
+        $this->stepTwoManager      = $stepTwoManager;
+        $this->activityManager     = $activityManager;
+        $this->organization_id     = session('org_id');
+        $this->organizationManager = $organizationManager;
     }
 
     /**
@@ -46,6 +54,13 @@ class StepTwoController extends Controller
      */
     public function index($id)
     {
+        $organization = $this->organizationManager->getOrganization($this->organization_id);
+        if (!isset($organization->reporting_org[0])) {
+            $response = ['type' => 'warning', 'code' => ['settings', ['name' => 'activity']]];
+
+            return redirect('/settings')->withResponse($response);
+        }
+
         $this->authorize('edit_activity');
         $activityData      = $this->activityManager->getActivityData($id);
         $iatiIdentifier    = $activityData->identifier;

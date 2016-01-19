@@ -45,17 +45,20 @@ class ActivityManagerTest extends AidStreamTestCase
     {
         $orgModel = m::mock(Organization::class);
         $orgModel->shouldReceive('getAttribute')->once()->with('name')->andReturn('orgName');
-        $orgModel->shouldREceive('getAttribute')->once()->with('id')->andReturn(1);
+        $orgModel->shouldReceive('getAttribute')->twice()->with('id')->andReturn(1);
         $user = m::mock(User::class);
-        $user->shouldReceive('getAttribute')->twice()->with('organization')->andReturn($orgModel);
-        $this->auth->shouldReceive('user')->twice()->andReturn($user);
-        $activityModel = $this->activity;
-        $activityModel->shouldReceive('getAttribute')->with('activity_identifier')->andReturn(
-            'testActivityIdentifier'
-        );
+        $user->shouldReceive('getAttribute')->times(3)->with('organization')->andReturn($orgModel);
+        $this->auth->shouldReceive('user')->times(3)->andReturn($user);
+        $this->activity->shouldReceive('getAttribute')->with('activity_identifier')->andReturn('testActivityIdentifier');
+        $result = $this->activity;
         $this->activityRepo->shouldReceive('store')
                            ->once()
-                           ->with(['activity_identifier' => 'testActivityIdentifier'], 1)
+                           ->with(['activity_identifier' => 'testActivityIdentifier'], ['defaultFieldValues'], 1)
+                           ->andReturn($this->activity);
+        $result->shouldReceive('getAttribute')->with('id')->andReturn(1);
+        $this->activityRepo->shouldReceive('saveDefaultValues')
+                           ->once()
+                           ->with(1, ['defaultFieldValues'])
                            ->andReturn(true);
         $this->logger->shouldReceive('info')->once()->with(
             'Activity identifier added!',
@@ -71,7 +74,7 @@ class ActivityManagerTest extends AidStreamTestCase
         );
         $this->database->shouldReceive('beginTransaction')->once()->andReturnSelf();
         $this->database->shouldReceive('commit')->once()->andReturnSelf();
-        $this->assertTrue($this->activityManager->store(['activity_identifier' => 'testActivityIdentifier'], 1));
+        $this->assertTrue($this->activityManager->store(['activity_identifier' => 'testActivityIdentifier'], ['defaultFieldValues']));
     }
 
     public function testItShouldGetActivityDataWithSpecificActivityId()

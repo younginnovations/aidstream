@@ -19,17 +19,19 @@ class ActivityRepository
     }
 
     /**
-     * saves activity identifier in database
-     * @param array $input
+     * save new activity from wizard
+     * @param array $identifier
+     * @param array $defaultFieldValues
      * @param       $organizationId
      * @return static
      */
-    public function store(array $input, $organizationId)
+    public function store(array $identifier, array $defaultFieldValues, $organizationId)
     {
         return $this->activity->create(
             [
-                'identifier'      => $input,
-                'organization_id' => $organizationId
+                'identifier'           => $identifier,
+                'default_field_values' => $defaultFieldValues,
+                'organization_id'      => $organizationId
             ]
         );
     }
@@ -41,5 +43,22 @@ class ActivityRepository
     public function getActivityData($activityId)
     {
         return $this->activity->findOrFail($activityId);
+    }
+
+    /**
+     * @param       $activityId
+     * @param array $defaultFieldValues
+     * @return mixed
+     */
+    public function saveDefaultValues($activityId, array $defaultFieldValues)
+    {
+        $activity                       = $this->activity->find($activityId);
+        $activity->collaboration_type   = $defaultFieldValues[0]['default_collaboration_type'];
+        $activity->default_flow_type    = $defaultFieldValues[0]['default_flow_type'];
+        $activity->default_finance_type = $defaultFieldValues[0]['default_finance_type'];
+        $activity->default_aid_type     = $defaultFieldValues[0]['default_aid_type'];
+        $activity->default_tied_status  = $defaultFieldValues[0]['default_tied_status'];
+
+        return $activity->save();
     }
 }
