@@ -23,3 +23,83 @@
         </div>
     </div>
 @endsection
+
+@section('foot')
+    <div class="modal fade" id="upload_document">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Add Document Link</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="upload_form hidden">
+                        <div class="alert alert-info">You can upload your document here. Once your document is uploaded, a link will be provided. You can then select the link to use it.</div>
+                        <div id="upload_message"></div>
+                        <form class="form-horizontal" role="form" id="upload_file" method="POST" enctype="multipart/form-data" action="{{ route('document.upload') }}">
+                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <label class="control-label">Please choose your document: </label>
+                                    <input type="file" class="form-control" name="file" id="file" value="{{ old('file') }}">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <button type="submit" class="btn btn-primary btn-submit">
+                                        Upload
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div id="document_list">
+                        <table class="table table-striped">
+                            <thead style="background-color: #CCCCCC;">
+                            <tr>
+                                <th>URL</th>
+                                <th width="70px">Action</th>
+                            </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="{{url('js/upload-document.js')}}"></script>
+    <style type="text/css">
+        .loader {
+            position: fixed;
+            left: 0px;
+            right: 0px;
+            top: 0px;
+            bottom: 0px;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 9999;
+            color: #FFFFFF;
+            text-align: center;
+            font-size: 60px;
+            letter-spacing: -16px;
+            -webkit-animation: mymove 1s infinite; /* Chrome, Safari, Opera */
+            -webkit-animation-direction: alternate;
+            animation: loading 1s infinite;
+            animation-direction: alternate;
+        }
+
+        /* Chrome, Safari, Opera */
+        @-webkit-keyframes loading {
+            from {letter-spacing: -16px;}
+            to {letter-spacing: 16px;}
+        }
+
+        @keyframes loading {
+            from {letter-spacing: -16px;}
+            to {letter-spacing: 16px;}
+        }
+    </style>
+@endsection

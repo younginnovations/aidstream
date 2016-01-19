@@ -106,3 +106,24 @@ $router->post
 );
 
 $router->resource('upgrade-version', 'Complete\UpgradeController');
+$router->get(
+    'documents',
+    [
+        'as'   => 'documents',
+        'uses' => 'Complete\DocumentController@index'
+    ]
+);
+$router->post(
+    'document/upload',
+    [
+        'as'   => 'document.upload',
+        'uses' => 'Complete\DocumentController@store'
+    ]
+);
+$router->get(
+    'document/list',
+    [
+        'as'   => 'document.list',
+        'uses' => 'Complete\DocumentController@getDocuments'
+    ]
+);
