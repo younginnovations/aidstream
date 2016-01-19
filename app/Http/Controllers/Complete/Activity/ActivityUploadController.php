@@ -60,6 +60,12 @@ class ActivityUploadController extends Controller
      */
     public function index()
     {
+        $organization = $this->organizationManager->getOrganization($this->organizationId);
+        if (!isset($organization->reporting_org[0])) {
+            $response = ['type' => 'warning', 'code' => ['settings', ['name' => 'activity']]];
+
+            return redirect('/settings')->withResponse($response);
+        }
         $form = $this->uploadActivity->createForm();
 
         return view('Activity.upload', compact('form'));

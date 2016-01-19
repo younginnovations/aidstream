@@ -23,7 +23,7 @@ class PolicyMaker
      */
     public function update(array $activityDetails, Activity $activity)
     {
-        $activity->policy_maker = $activityDetails['policy_maker'];
+        $activity->policy_maker = $activityDetails['policy_marker'];
 
         return $activity->save();
     }

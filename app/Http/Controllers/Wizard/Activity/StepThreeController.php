@@ -1,6 +1,7 @@
 <?php namespace App\Http\Controllers\Wizard\Activity;
 
 use App\Http\Controllers\Controller;
+use App\Services\Organization\OrganizationManager;
 use App\Services\Wizard\Activity\ActivityManager;
 use App\Services\Wizard\Activity\StepThreeManager;
 use App\Services\Wizard\FormCreator\Activity\StepThree as StepThreeForm;
@@ -25,25 +26,40 @@ class StepThreeController extends Controller
      * @var StepThreeManager
      */
     protected $stepThreeManager;
+    /**
+     * @var OrganizationManager
+     */
+    protected $organizationManager;
 
     /**
-     * @param StepThreeManager $stepThreeManager
-     * @param StepThreeForm    $stepThreeForm
-     * @param ActivityManager  $activityManager
+     * @param OrganizationManager $organizationManager
+     * @param StepThreeManager    $stepThreeManager
+     * @param StepThreeForm       $stepThreeForm
+     * @param ActivityManager     $activityManager
      */
     function __construct(
+        OrganizationManager $organizationManager,
         StepThreeManager $stepThreeManager,
         StepThreeForm $stepThreeForm,
         ActivityManager $activityManager
     ) {
         $this->middleware('auth');
-        $this->activityManager  = $activityManager;
-        $this->stepThreeForm    = $stepThreeForm;
-        $this->stepThreeManager = $stepThreeManager;
+        $this->activityManager     = $activityManager;
+        $this->stepThreeForm       = $stepThreeForm;
+        $this->stepThreeManager    = $stepThreeManager;
+        $this->organizationManager = $organizationManager;
+        $this->organization_id     = session('org_id');
     }
 
     public function index($id)
     {
+        $organization = $this->organizationManager->getOrganization($this->organization_id);
+        if (!isset($organization->reporting_org[0])) {
+            $response = ['type' => 'warning', 'code' => ['settings', ['name' => 'activity']]];
+
+            return redirect('/settings')->withResponse($response);
+        }
+
         $this->authorize('edit_activity');
         $activityData            = $this->activityManager->getActivityData($id);
         $iatiIdentifier          = $activityData->identifier;

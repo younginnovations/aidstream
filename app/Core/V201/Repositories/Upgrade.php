@@ -100,6 +100,7 @@ class Upgrade
     {
         $totalBudgets        = (array) $organizationData->total_budget;
         $recipientOrgBudgets = (array) $organizationData->recipient_organization_budget;
+        $documentLinks       = (array) $organizationData->document_link;
 
         foreach ($totalBudgets as $totalBudgetIndex => $totalBudget) {
             $totalBudgets[$totalBudgetIndex]['status'] = "1";
@@ -109,8 +110,13 @@ class Upgrade
             $recipientOrgBudgets[$recipientOrgBudgetIndex]['status'] = "1";
         }
 
+        foreach ($documentLinks as $documentLinkIndex => $documentLink) {
+            $documentLinks[$documentLinkIndex]['document_date'][0]['date'] = "";
+        }
+
         (!$totalBudgets) ?: $organizationData->total_budget = $totalBudgets;
         (!$recipientOrgBudgets) ?: $organizationData->recipient_organization_budget = $recipientOrgBudgets;
+        (!$documentLinks) ?: $organizationData->document_link = $documentLinks;
         $organizationData->save();
     }
 
