@@ -45,17 +45,17 @@ class ActivityManagerTest extends AidStreamTestCase
     {
         $orgModel = m::mock(Organization::class);
         $orgModel->shouldReceive('getAttribute')->once()->with('name')->andReturn('orgName');
-        $orgModel->shouldREceive('getAttribute')->once()->with('id')->andReturn(1);
+        $orgModel->shouldREceive('getAttribute')->twice()->with('id')->andReturn(1);
         $user = m::mock(User::class);
-        $user->shouldReceive('getAttribute')->twice()->with('organization')->andReturn($orgModel);
-        $this->auth->shouldReceive('user')->twice()->andReturn($user);
+        $user->shouldReceive('getAttribute')->times(3)->with('organization')->andReturn($orgModel);
+        $this->auth->shouldReceive('user')->times(3)->andReturn($user);
         $activityModel = $this->activity;
         $activityModel->shouldReceive('getAttribute')->with('activity_identifier')->andReturn(
             'testActivityIdentifier'
         );
         $this->activityRepo->shouldReceive('store')
                            ->once()
-                           ->with(['activity_identifier' => 'testActivityIdentifier'], 1)
+                           ->with(['activity_identifier' => 'testActivityIdentifier'], ['defaultFieldValues'], 1)
                            ->andReturn(true);
         $this->logger->shouldReceive('info')->once()->with(
             'Activity identifier added!',
@@ -71,7 +71,7 @@ class ActivityManagerTest extends AidStreamTestCase
         );
         $this->database->shouldReceive('beginTransaction')->once()->andReturnSelf();
         $this->database->shouldReceive('commit')->once()->andReturnSelf();
-        $this->assertTrue($this->activityManager->store(['activity_identifier' => 'testActivityIdentifier'], 1));
+        $this->assertTrue($this->activityManager->store(['activity_identifier' => 'testActivityIdentifier'], ['defaultFieldValues']));
     }
 
     public function testItShouldGetActivityDataWithSpecificActivityId()

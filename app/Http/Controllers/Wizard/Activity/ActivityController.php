@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Controller;
 use App\Services\Organization\OrganizationManager;
+use App\Services\SettingsManager;
 use App\Services\Wizard\Activity\ActivityManager;
 use App\Services\Wizard\FormCreator\Activity\IatiIdentifier as IatiIdentifierForm;
 use App\Services\Wizard\RequestManager\Activity\IatiIdentifier as IatiIdentifierRequestManager;
@@ -27,6 +28,7 @@ class ActivityController extends Controller
     /**
      * @param SessionManager      $sessionManager
      * @param OrganizationManager $organizationManager
+     * @param SettingsManager     $settingsManager
      * @param IatiIdentifierForm  $iatiIdentifierForm
      * @param ActivityManager     $activityManager
      * @internal param IatiIdentifier $identifierForm
@@ -34,6 +36,7 @@ class ActivityController extends Controller
     function __construct(
         SessionManager $sessionManager,
         OrganizationManager $organizationManager,
+        SettingsManager $settingsManager,
         IatiIdentifierForm $iatiIdentifierForm,
         ActivityManager $activityManager
     ) {
@@ -42,6 +45,7 @@ class ActivityController extends Controller
         $this->activityManager     = $activityManager;
         $this->organization_id     = session('org_id');
         $this->iatiIdentifierForm  = $iatiIdentifierForm;
+        $this->settingsManager     = $settingsManager;
     }
 
     /**
@@ -73,15 +77,17 @@ class ActivityController extends Controller
      */
     public function store(Request $request, IatiIdentifierRequestManager $iatiIdentifierRequestManager)
     {
+        $settings                        = $this->settingsManager->getSettings($this->organization_id);
+        $defaultFieldValues              = $settings->default_field_values;
         $organization                    = $this->organizationManager->getOrganization($this->organization_id);
         $reportingOrganization           = $organization->reporting_org;
         $reportingOrganizationIdentifier = $reportingOrganization[0]['reporting_organization_identifier'];
         $activityIdentifier              = $request->activity_identifier;
-        $input                           = [
+        $identifier                      = [
             'activity_identifier'  => $activityIdentifier,
             'iati_identifier_text' => sprintf("%s-%s", $reportingOrganizationIdentifier, $activityIdentifier)
         ];
-        $result                          = $this->activityManager->store($input, $this->organization_id);
+        $result                          = $this->activityManager->store($identifier, $defaultFieldValues);
         if (!$result) {
             return redirect()->back();
         }
