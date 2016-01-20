@@ -126,13 +126,19 @@ class Upgrade
     protected function upgradeActivities(Collection $activities)
     {
         foreach ($activities as $activity) {
-            $budgets = (array) $activity->budget;
+            $budgets            = (array) $activity->budget;
+            $defaultFieldValues = (array) $activity->default_field_values;
 
             foreach ($budgets as $budgetIndex => $budget) {
                 $budgets[$budgetIndex]['status'] = "1";
             }
 
+            foreach ($defaultFieldValues as $defaultFieldValueIndex => $defaultFieldValue) {
+                $defaultFieldValues[$defaultFieldValueIndex]['humanitarian'] = "0";
+            }
+
             (!$budgets) ?: $activity->budget = $budgets;
+            (!$defaultFieldValues) ?: $activity->default_field_values = $defaultFieldValues;
             $activity->save();
         }
     }
