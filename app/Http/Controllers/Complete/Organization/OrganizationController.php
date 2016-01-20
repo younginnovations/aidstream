@@ -116,6 +116,11 @@ class OrganizationController extends Controller
             }
         } else {
             if ($status === "3") {
+                if (empty($settings['registry_info'][0]['publisher_id']) && empty($settings['registry_info'][0]['api_id'])) {
+                    $response = ['type' => 'warning', 'code' => ['settings_registry_info', ['name' => '']]];
+
+                    return redirect()->to('/settings')->withResponse($response);
+                }
                 $result = $xmlService->generateOrgXml($organization, $organizationData, $settings, $orgElem);
                 if (!$result) {
                     $this->organizationManager->updateStatus($input, $organizationData);
