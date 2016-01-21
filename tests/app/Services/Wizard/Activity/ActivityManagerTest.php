@@ -45,17 +45,20 @@ class ActivityManagerTest extends AidStreamTestCase
     {
         $orgModel = m::mock(Organization::class);
         $orgModel->shouldReceive('getAttribute')->once()->with('name')->andReturn('orgName');
-        $orgModel->shouldREceive('getAttribute')->twice()->with('id')->andReturn(1);
+        $orgModel->shouldReceive('getAttribute')->twice()->with('id')->andReturn(1);
         $user = m::mock(User::class);
         $user->shouldReceive('getAttribute')->times(3)->with('organization')->andReturn($orgModel);
         $this->auth->shouldReceive('user')->times(3)->andReturn($user);
-        $activityModel = $this->activity;
-        $activityModel->shouldReceive('getAttribute')->with('activity_identifier')->andReturn(
-            'testActivityIdentifier'
-        );
+        $this->activity->shouldReceive('getAttribute')->with('activity_identifier')->andReturn('testActivityIdentifier');
+        $result = $this->activity;
         $this->activityRepo->shouldReceive('store')
                            ->once()
                            ->with(['activity_identifier' => 'testActivityIdentifier'], ['defaultFieldValues'], 1)
+                           ->andReturn($this->activity);
+        $result->shouldReceive('getAttribute')->with('id')->andReturn(1);
+        $this->activityRepo->shouldReceive('saveDefaultValues')
+                           ->once()
+                           ->with(1, ['defaultFieldValues'])
                            ->andReturn(true);
         $this->logger->shouldReceive('info')->once()->with(
             'Activity identifier added!',

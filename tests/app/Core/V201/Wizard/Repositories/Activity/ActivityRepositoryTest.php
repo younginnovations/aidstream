@@ -35,6 +35,27 @@ class ActivityRepositoryTest extends AidStreamTestCase
         $this->assertInstanceOf('App\Models\Activity\Activity', $this->activityRepo->getActivityData(1));
     }
 
+    public function testItShouldSaveDefaultValuesWithSpecificActivityId()
+    {
+        $activity = $this->activityModel->shouldReceive('find')->once()->with(1)->andReturn($this->activityModel);
+        $activity->shouldReceive('setAttribute')->once()->with('collaboration_type', 'collaborationType');
+        $activity->shouldReceive('setAttribute')->once()->with('default_flow_type', 'defaultFlowType');
+        $activity->shouldReceive('setAttribute')->once()->with('default_finance_type', 'defaultFinanceType');
+        $activity->shouldReceive('setAttribute')->once()->with('default_aid_type', 'defaultAidType');
+        $activity->shouldReceive('setAttribute')->once()->with('default_tied_status', 'defaultTiedStatus');
+        $activity->shouldReceive('save')->once()->andReturn(true);
+        $defaultFieldValues = [
+            [
+                'default_collaboration_type' => 'collaborationType',
+                'default_flow_type'          => 'defaultFlowType',
+                'default_finance_type'       => 'defaultFinanceType',
+                'default_aid_type'           => 'defaultAidType',
+                'default_tied_status'        => 'defaultTiedStatus'
+            ]
+        ];
+        $this->assertTrue($this->activityRepo->saveDefaultValues(1, $defaultFieldValues));
+    }
+
     public function tearDown()
     {
         parent::tearDown();

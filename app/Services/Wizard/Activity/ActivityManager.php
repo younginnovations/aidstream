@@ -69,7 +69,7 @@ class ActivityManager
                 ]
             );
 
-            return $result;
+            return true;
         } catch (Exception $exception) {
             $this->database->rollback();
             $this->logger->error(
