@@ -2,14 +2,14 @@ $(document).ready(function () {
     function listDocuments(data) {
         var documentData = data;
         var documentList = '';
-        for (var i in documentData) {
+        for (var i = 0; i < documentData; i++) {
             var url = documentData[i].url;
             documentList += '<tr>';
             documentList += '<td>' + url + '</td>';
             documentList += '<td><a href="' + url + '" class="use_this">Use this</a></td>';
             documentList += '<tr>';
         }
-        documentList = documentList != '' ? documentList : '<td colspan="2">No documents found.</td>';
+        documentList = documentList !== '' ? documentList : '<td colspan="2">No documents found.</td>';
         $('#document_list tbody').html(documentList);
     }
 
@@ -49,7 +49,7 @@ $(document).ready(function () {
             contentType: false,
             success: function (data) {
                 $('#upload_message').removeAttr('class').addClass('alert alert-' + data.status).html(data.message);
-                if (data.status == 'danger') {
+                if (data.status === 'danger') {
                     return false;
                 }
                 listDocuments(data.data);
