@@ -2,7 +2,7 @@ $(document).ready(function () {
     function listDocuments(data) {
         var documentData = data;
         var documentList = '';
-        for (var i = 0; i < documentData; i++) {
+        for (var i = 0; i < documentData.length; i++) {
             var url = documentData[i].url;
             documentList += '<tr>';
             documentList += '<td>' + url + '</td>';
