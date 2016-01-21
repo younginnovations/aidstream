@@ -47,15 +47,15 @@ class XmlService
     }
 
     /**
-     * generates xml from organization data
      * @param $organization
      * @param $organizationData
      * @param $settings
      * @param $orgElem
+     * @return mixed
      */
     public function generateOrgXml($organization, $organizationData, $settings, $orgElem)
     {
-        $this->xmlGenerator->generateXml($organization, $organizationData, $settings, $orgElem);
+        return $this->xmlGenerator->generateXml($organization, $organizationData, $settings, $orgElem);
     }
 
 }

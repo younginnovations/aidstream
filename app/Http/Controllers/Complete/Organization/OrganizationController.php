@@ -116,7 +116,13 @@ class OrganizationController extends Controller
             }
         } else {
             if ($status === "3") {
-                $xmlService->generateOrgXml($organization, $organizationData, $settings, $orgElem);
+                $result = $xmlService->generateOrgXml($organization, $organizationData, $settings, $orgElem);
+                if (!$result) {
+                    $this->organizationManager->updateStatus($input, $organizationData);
+                    $response = ['type' => 'warning', 'code' => ['publish_registry', ['name' => '']]];
+
+                    return redirect()->back()->withResponse($response);
+                }
             }
         }
 

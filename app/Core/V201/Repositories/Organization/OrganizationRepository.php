@@ -1,12 +1,18 @@
 <?php namespace App\Core\V201\Repositories\Organization;
 
 use App\Core\Repositories\OrganizationRepositoryInterface;
+use App\Http\API\CKAN\CkanClient;
 use App\Models\Organization\Organization;
 use App\Models\Organization\OrganizationData;
 use App\Models\OrganizationPublished;
+use App\Models\Settings;
+use App\User;
+use Psr\Log\LoggerInterface;
 
 class OrganizationRepository implements OrganizationRepositoryInterface
 {
+    protected $loggerInterface;
+    protected $user;
     /**
      * @var Organization
      */
@@ -16,12 +22,16 @@ class OrganizationRepository implements OrganizationRepositoryInterface
      * @param Organization          $org
      * @param OrganizationData      $orgData
      * @param OrganizationPublished $orgPublished
+     * @param LoggerInterface       $loggerInterface
+     * @param User                  $user
      */
-    function __construct(Organization $org, OrganizationData $orgData, OrganizationPublished $orgPublished)
+    function __construct(Organization $org, OrganizationData $orgData, OrganizationPublished $orgPublished, LoggerInterface $loggerInterface, User $user)
     {
-        $this->org          = $org;
-        $this->orgData      = $orgData;
-        $this->orgPublished = $orgPublished;
+        $this->org             = $org;
+        $this->orgData         = $orgData;
+        $this->orgPublished    = $orgPublished;
+        $this->loggerInterface = $loggerInterface;
+        $this->user            = $user;
     }
 
     /**
@@ -134,5 +144,88 @@ class OrganizationRepository implements OrganizationRepositoryInterface
         }
 
         return $result;
+    }
+
+    /**
+     * @param $id
+     * @return mixed
+     */
+    public function updatePublishToRegister($id)
+    {
+        $publishedFile                        = $this->orgPublished->find($id);
+        $publishedFile->published_to_register = 1;
+
+        return $publishedFile->save();
+
+    }
+
+    /**
+     * @param Organization $organization
+     * @param Settings     $settings
+     * @return bool
+     */
+    public function publishToRegistry(Organization $organization, Settings $settings)
+    {
+        $orgPublishedFiles = $this->getPublishedFiles($organization->id);
+        $api_url           = 'http://iati2.staging.ckanhosted.com/api/';
+        $apiCall           = new CkanClient($api_url, $settings['registry_info'][0]['api_id']);
+
+        try {
+            foreach ($orgPublishedFiles as $publishedFile) {
+                $data = $this->generateJson($publishedFile, $settings, $organization);
+
+                if ($publishedFile['published_to_register'] == 0) {
+                    $apiCall->post_package_register($data);
+                    $this->updatePublishToRegister($publishedFile->id);
+                } elseif ($publishedFile['published_to_register'] == 1) {
+                    $package = $settings['registry_info'][0]['publisher_id'] . '-org';
+                    $apiCall->put_package_entity($package, $data);
+                }
+            }
+
+            return true;
+        } catch (\Exception $e) {
+            $this->loggerInterface->error(sprintf('Registry Info could not be registered due to %s', $e->getMessage()));
+
+            return false;
+        }
+    }
+
+    /**
+     * @param              $publishedFile
+     * @param Settings     $settings
+     * @param Organization $organization
+     * @return string
+     */
+    protected function generateJson($publishedFile, Settings $settings, Organization $organization)
+    {
+        $organization = $this->getOrganization($organization->id);
+        $email        = $this->user->getUserByOrgId();
+        $author_email = $email[0]->email;
+
+        $title = $organization->name . 'Organization File';
+        $name  = $settings['registry_info'][0]['publisher_id'] . '-org';
+
+        $data = '{
+        "title": "' . $title . '",
+        "name": "' . $name . '",
+        "author_email": "' . $author_email . '",
+        "owner_org" : "' . $settings['registry_info'][0]['publisher_id'] . '",
+        "resources": [
+        {
+            "format":"IATI-XML",
+            "mimetype":"application/xml",
+            "url":"' . url('uploads/files/organization/' . $publishedFile->filename) . '"
+        }
+        ],
+        "extras":
+        [
+        {"key":"filetype","value":"organization"},
+        {"key":"data_updated","value":"' . $publishedFile->updated_at . '"},
+        {"key":"language","value":"' . config('app.locale') . '"},
+        {"key":"verified","value":"no"}]}';
+
+        return $data;
+
     }
 }
