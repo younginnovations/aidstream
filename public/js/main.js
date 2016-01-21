@@ -295,7 +295,7 @@ $(document).ready(function () {
 
     //js for form input check and leave page alert
     var preventNavigation = false;
-    $('form').delegate('textarea, select, input:not(".ignore_change")', 'change keyup', function (e) {
+    $('form').delegate('textarea, select, input:not(".ignore_change")', 'change keyup', function () {
         preventNavigation = true;
     });
 
@@ -309,7 +309,7 @@ $(document).ready(function () {
         }
     };
 
-    $('.element-menu-wrapper').click(function(){
+    $('.element-menu-wrapper').click(function () {
         $(this).children('.element-sidebar-wrapper').toggle();
     });
 });
