@@ -1,4 +1,7 @@
 @extends('app')
+
+@section('title', 'Profile - ' . Auth::user()->first_name)
+
 @inject('getCode', 'App\Helpers\GetCodeName')
 @section('content')
     <div class="container main-container">

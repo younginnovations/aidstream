@@ -1,5 +1,7 @@
 @extends('app')
 
+@section('title', 'Activity Date and Status')
+
 @section('content')
     <div class="container main-container">
         <div class="row">

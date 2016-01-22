@@ -1,5 +1,7 @@
 @extends('app')
 
+@section('title', 'Related Activity - ' . $activityData->IdentifierTitle)
+
 @section('content')
     <div class="container main-container">
         <div class="row">

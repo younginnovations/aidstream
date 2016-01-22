@@ -1,5 +1,7 @@
 @extends('app')
 
+@section('title', 'Add Organization')
+
 @section('content')
     <div class="container">
         <div class="row">

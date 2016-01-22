@@ -1,4 +1,7 @@
 @extends('app')
+
+@section('title', 'Activity Log')
+
 @section('content')
     <div class="container">
         <div class="row">

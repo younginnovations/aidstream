@@ -1,5 +1,7 @@
 @extends('app')
 
+@section('title', 'Activity Results - ' . $activityData->IdentifierTitle)
+
 @section('content')
     <!-- Modal -->
     <div class="modal fade" id="view_result" tabindex="-1" role="dialog" aria-labelledby="view_result_label">

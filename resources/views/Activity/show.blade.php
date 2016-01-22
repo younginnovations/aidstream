@@ -1,4 +1,7 @@
 @extends('app')
+
+@section('title', 'Activity Data')
+
 @inject('getCode', 'App\Helpers\GetCodeName')
 @section('content')
 <div class="container main-container">

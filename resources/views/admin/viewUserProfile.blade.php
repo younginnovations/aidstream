@@ -1,5 +1,7 @@
 @extends('app')
 
+@section('title', 'User Profile - ' . $userProfile->name)
+
 @section('content')
     <div class="container main-container">
         <div class="row">

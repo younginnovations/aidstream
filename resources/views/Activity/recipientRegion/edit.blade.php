@@ -1,5 +1,7 @@
 @extends('app')
 
+@section('title', 'Activity Recipient Region - ' . $activityData->IdentifierTitle)
+
 @section('content')
     <div class="container main-container">
         <div class="row">

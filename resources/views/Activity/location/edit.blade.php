@@ -1,5 +1,7 @@
 @extends('app')
 
+@section('title', 'Activity Location - ' . $activityData->IdentifierTitle)
+
 @section('head')
     <link rel="stylesheet" href="{{url('/css/leaflet.css')}}"/>
 @endsection

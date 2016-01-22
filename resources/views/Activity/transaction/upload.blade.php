@@ -1,4 +1,7 @@
 @extends('app')
+
+@section('title', 'Upload Activity Transaction - ' . $activity->IdentifierTitle)
+
 @section('content')
     @if(count($errors)>0)
         <div class="alert alert-warning">
