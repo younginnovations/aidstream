@@ -266,7 +266,9 @@ $(document).ready(function () {
 
     });
 
-    $('[data-toggle="tooltip"]').tooltip();
+    $('[data-toggle="tooltip"]').tooltip({
+        position: {my: "center bottom-15", at: "center top"}
+    });
 
     var documentHeight = $(document).height();
     $('.element-sidebar-wrapper').css('height', documentHeight);
