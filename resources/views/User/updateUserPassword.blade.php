@@ -1,5 +1,7 @@
 @extends('app')
 
+@section('title', 'Change Password - ' . $user->first_name)
+
 @section('content')
     <div class="container main-container">
         <div class="row">

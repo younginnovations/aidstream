@@ -1,4 +1,7 @@
 @extends('app')
+
+@section('title', 'Users')
+
 @section('content')
 
     {{Session::get('message')}}

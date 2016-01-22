@@ -1,4 +1,7 @@
 @extends('app')
+
+@section('title', 'Edit Activity Transaction - ' . $activity->IdentifierTitle)
+
 @section('content')
     <div class="container main-container">
         <div class="row">

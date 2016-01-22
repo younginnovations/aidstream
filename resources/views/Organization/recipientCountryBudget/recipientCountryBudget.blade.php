@@ -1,5 +1,7 @@
 @extends('app')
 
+@section('title', 'Recipient Country Budget')
+
 @section('content')
     <div class="container main-container">
         <div class="row">

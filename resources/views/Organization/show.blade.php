@@ -1,5 +1,7 @@
 @extends('app')
 
+@section('title', 'Oragnization - ' . $reporting_org['reporting_organization_identifier'])
+
 @section('content')
 	@inject('code', 'App\Helpers\GetCodeName')
     <div class="container main-container">

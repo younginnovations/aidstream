@@ -1,5 +1,7 @@
 @extends('app')
 
+@section('title', 'Non Accessible Content')
+
 @section('content')
     <div class="container main-container">
         <div class="row">

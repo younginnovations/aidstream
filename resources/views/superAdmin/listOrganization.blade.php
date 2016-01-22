@@ -1,14 +1,13 @@
 @extends('app')
 
+@section('title', 'Organizations')
+
 @section('content')
-
-    {{Session::get('message')}}
-
     <div class="container">
         <div class="row">
             <div class="col-xs-8">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Activities</div>
+                    <div class="panel-heading">Organizations</div>
                     <div class="panel-body">
                         @if(count($organizations) > 0)
                         <table class="table table-striped">

@@ -1,4 +1,7 @@
 @extends('app')
+
+@section('title', 'Activity Transaction - ' . $activity->IdentifierTitle)
+
 @section('content')
     @inject('code', 'App\Helpers\GetCodeName')
     <div class="container main-container">

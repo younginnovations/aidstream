@@ -1,5 +1,7 @@
 @extends('app')
 
+@section('title', 'Activity Country Budget Item - ' . $activityData->IdentifierTitle)
+
 @section('content')
     <div class="container main-container">
         <div class="row">

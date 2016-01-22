@@ -1,4 +1,7 @@
 @extends('app')
+
+@section('title', 'Upload Activities')
+
 @section('content')
     @if(count($errors)>0)
         <div class="alert alert-warning">

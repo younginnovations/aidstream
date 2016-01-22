@@ -74,7 +74,7 @@ class ActivityManagerTest extends AidStreamTestCase
         );
         $this->database->shouldReceive('beginTransaction')->once()->andReturnSelf();
         $this->database->shouldReceive('commit')->once()->andReturnSelf();
-        $this->assertTrue($this->activityManager->store(['activity_identifier' => 'testActivityIdentifier'], ['defaultFieldValues']));
+        $this->assertInstanceOf('App\Models\Activity\Activity', $this->activityManager->store(['activity_identifier' => 'testActivityIdentifier'], ['defaultFieldValues']));
     }
 
     public function testItShouldGetActivityDataWithSpecificActivityId()

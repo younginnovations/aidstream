@@ -1,5 +1,7 @@
 @extends('app')
 
+@section('title', 'Edit Profile - ' . $user->first_name)
+
 @section('content')
     @inject('getCodeList', 'App\Core\Form\BaseForm')
     <div class="container main-container">

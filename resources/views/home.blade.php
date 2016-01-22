@@ -1,5 +1,7 @@
 @extends('app')
 
+@section('title', 'Dashboard')
+
 @section('content')
     @if(Session::get('message'))
         <div class="alert alert-success">

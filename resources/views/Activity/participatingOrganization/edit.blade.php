@@ -1,5 +1,7 @@
 @extends('app')
 
+@section('title', 'Activity Participating Organization - ' . $activityData->IdentifierTitle)
+
 @section('content')
 
     {{Session::get('message')}}

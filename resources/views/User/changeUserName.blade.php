@@ -1,5 +1,7 @@
 @extends('app')
 
+@section('title', 'Change Username - ' . Auth::user()->first_name)
+
 @section('content')
     <div class="container main-container">
         <div class="row">
