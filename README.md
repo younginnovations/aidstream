@@ -21,7 +21,7 @@ The app can be run with the command below:
 * copy .env.example to .env and update your the database configurations
 * give read/write permission to the storage folder using `chmod -R 777 storage`
 * Create a directory uploads inside public folder and, files and temp directory inside the uploads directory.
-* Create Organization and Activity folder inside files
+* Create organization and activity folder inside files
 * Give read/write permission to uploads directory using: `chmod 777 -R uploads/`.
 * run migration using ` php artisan migrate `
 * seed dummy data using ` php artisan db:seed `

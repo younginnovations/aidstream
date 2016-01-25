@@ -1,5 +1,6 @@
 <?php namespace App\Http\Controllers\Auth;
 
+use App\Core\EmailQueue;
 use App\Core\Form\BaseForm;
 use App\Http\Controllers\Controller;
 use App\Models\Settings;
@@ -163,12 +164,14 @@ class AuthController extends Controller
      * Handle a registration request for the application.
      *
      * @param Request|\Illuminate\Http\Request $request
+     * @param EmailQueue                       $emailQueue
      * @return \Illuminate\Http\Response
      * @throws \Illuminate\Foundation\Validation\ValidationException
      */
-    public function postRegister(Request $request)
+    public function postRegister(Request $request, EmailQueue $emailQueue)
     {
-        $validator = $this->validator($request->all());
+        $input     = $request->all();
+        $validator = $this->validator($input);
 
         if ($validator->fails()) {
             $this->throwValidationException(
@@ -177,9 +180,13 @@ class AuthController extends Controller
             );
         }
 
-        $this->create($request->all());
+        $registered = $this->create($input);
 
-        return redirect($this->loginPath())->withMessage('Your account has been successfully created. Please log in to continue.');
+        if ($registered) {
+            $emailQueue->sendRegistrationMail($input);
+        }
+
+        return redirect($this->loginPath())->withMessage('Thank you for registering. You will receive an email shortly.');
     }
 
     /**

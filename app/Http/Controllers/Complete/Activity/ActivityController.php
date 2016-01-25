@@ -202,12 +202,12 @@ class ActivityController extends Controller
 
                 return redirect()->to('/settings')->withResponse($response);
             }
-
             $xmlService->generateActivityXml($activityData, $transactionData, $resultData, $settings, $activityElement, $orgElem, $organization);
             $publishedStatus = $this->publishToRegistry();
 
             if (!$publishedStatus) {
                 $this->activityManager->updateStatus($input, $activityData);
+                $this->activityManager->makePublished($activityData);
                 $response = ['type' => 'warning', 'code' => ['publish_registry', ['name' => '']]];
 
                 return redirect()->back()->withResponse($response);

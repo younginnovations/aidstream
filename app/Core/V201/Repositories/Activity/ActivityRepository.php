@@ -134,4 +134,15 @@ class ActivityRepository
 
         return $activity->save();
     }
+
+    /**
+     * @param Activity $activityData
+     * @return bool
+     */
+    public function makePublished(Activity $activityData)
+    {
+        $activityData->published_to_registry = 1;
+
+        return $activityData->save();
+    }
 }

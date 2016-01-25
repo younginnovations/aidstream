@@ -41,4 +41,5 @@ return [
     'humanitarian_scope_updated'   => 'Activity humanitarian scope updated for activity id ":activity_id"  and organization ":organization - :organization_id"',
     'version_upgraded'             => 'Version upgraded to ":version" for organization ":organization - :organization_id"',
     'document_saved'               => 'Document saved for organization ":organization - :organization_id"',
+    'password_reset_link'          => 'Password reset link has been sent successfully to ":email"',
 ];

@@ -16,6 +16,10 @@ use Illuminate\Support\Facades\Session;
 use Kris\LaravelFormBuilder\FormBuilder;
 use Psr\Log\LoggerInterface;
 
+/**
+ * Class SettingsController
+ * @package App\Http\Controllers\Complete
+ */
 class SettingsController extends Controller
 {
 
@@ -56,11 +60,11 @@ class SettingsController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
+     * Display settings
      *
      * @param FormBuilder     $formBuilder
      * @param DatabaseManager $databaseManager
-     * @return Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index(FormBuilder $formBuilder, DatabaseManager $databaseManager)
     {
@@ -102,10 +106,8 @@ class SettingsController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
+     * Store settings
      * @param SettingsRequestManager $request
-     * @return Response
      */
     public function store(SettingsRequestManager $request)
     {
@@ -122,11 +124,10 @@ class SettingsController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update settings
      *
      * @param  int                   $id
      * @param SettingsRequestManager $request
-     * @return Response
      */
     public function update($id, SettingsRequestManager $request)
     {
@@ -170,33 +171,56 @@ class SettingsController extends Controller
         return redirect()->to('/')->withResponse($response);
     }
 
-    public function generateNewFiles($newPublishingType, $activities)
+
+    /**
+     * generate new xml files with published activities
+     * @param $newPublishingType
+     * @param $activities
+     */
+    protected function generateNewFiles($newPublishingType, $activities)
     {
         $activityElement = $this->activityManager->getActivityElement();
         $xmlService      = $activityElement->getActivityXmlService();
         $orgIdentifier   = $this->organization->reporting_org[0]['reporting_organization_identifier'];
         if ($newPublishingType == "unsegmented") {
-            $filename       = $orgIdentifier . '-activities.xml';
-            $publishedFiles = $this->activityManager->getActivityPublishedFiles(Session::get('org_id'));
-            $xmlFiles       = [];
-            foreach ($publishedFiles as $publishedFile) {
-                $xmlFiles = array_merge($xmlFiles, $publishedFile->published_activities);
+            $filename      = $orgIdentifier . '-activities.xml';
+            $activitiesXml = [];
+            foreach ($activities as $activity) {
+                if ($activity->activity_workflow == 3) {
+                    $publishedActivity = sprintf('%s-%s.xml', $orgIdentifier, $activity->activity_identifier);
+                    $this->generateXmlIfDoesNotExist($publishedActivity, $activity);
+                    $activitiesXml[] = $publishedActivity;
+                }
             }
-            $xmlService->savePublishedFiles($filename, Session::get('org_id'), $xmlFiles);
-            $xmlService->getMergeXml($xmlFiles, $filename);
+            $xmlService->getMergeXml($activitiesXml, $filename);
+            $xmlService->savePublishedFiles($filename, Session::get('org_id'), $activitiesXml);
         } elseif ($newPublishingType == "segmented") {
             $activitiesXml = [];
             foreach ($activities as $activity) {
                 if ($activity->activity_workflow == 3) {
-                    $filename                   = sprintf('%s-%s.xml', $orgIdentifier, $xmlService->segmentedXmlFile($activity));
-                    $publishedActivity          = sprintf('%s-%s.xml', $orgIdentifier, $activity->activity_identifier);
+                    $filename          = sprintf('%s-%s.xml', $orgIdentifier, $xmlService->segmentedXmlFile($activity));
+                    $publishedActivity = sprintf('%s-%s.xml', $orgIdentifier, $activity->activity_identifier);
+                    $this->generateXmlIfDoesNotExist($publishedActivity, $activity);
                     $activitiesXml[$filename][] = $publishedActivity;
                 }
             }
             foreach ($activitiesXml as $filename => $xmlFiles) {
-                $xmlService->savePublishedFiles($filename, Session::get('org_id'), $xmlFiles);
                 $xmlService->getMergeXml($xmlFiles, $filename);
+                $xmlService->savePublishedFiles($filename, Session::get('org_id'), $xmlFiles);
             }
+        }
+    }
+
+    /**
+     * generate xml file for particular activity if xml file does not exist
+     * @param $publishedActivity
+     * @param $activity
+     */
+    protected function generateXmlIfDoesNotExist($publishedActivity, $activity)
+    {
+        $filePath = public_path('uploads/files/activity/' . $publishedActivity);
+        if (!file_exists($filePath)) {
+            $this->settingsManager->generateXml($activity);
         }
     }
 }

@@ -168,4 +168,13 @@ class ActivityManager
     {
         return $this->activityRepo->updatePublishToRegister($publishedId);
     }
+
+    /**
+     * @param Activity $activityData
+     * @return mixed
+     */
+    public function makePublished(Activity $activityData)
+    {
+        return $this->activityRepo->makePublished($activityData);
+    }
 }
