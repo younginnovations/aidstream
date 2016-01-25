@@ -9,11 +9,21 @@ use Illuminate\Database\Eloquent\Collection;
  */
 class SimpleCsvDataFormatter
 {
+    /**
+     * This array holds the headers for Simple Csv.
+     * @var array
+     */
     protected $headers;
+
     /**
      * @var GetCodeName
      */
     protected $codeNameHelper;
+
+    /**
+     * This array holds the Simple Csv data.
+     * @var array
+     */
     protected $csvData = [];
 
     /**
