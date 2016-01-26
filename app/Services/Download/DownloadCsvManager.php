@@ -4,6 +4,7 @@ use App\Core\V201\Formatter\CompleteCsvDataFormatter;
 use App\Core\V201\Formatter\SimpleCsvDataFormatter;
 use App\Core\V201\Repositories\DownloadCsv;
 use App\Core\Version;
+use Illuminate\Database\Eloquent\Collection;
 
 /**
  * Class DownloadCsvManager
@@ -33,6 +34,7 @@ class DownloadCsvManager
 
     /**
      * @var CompleteCsvDataFormatter instance
+     * @var
      */
     protected $completeCsvDataFormatter;
 
@@ -68,20 +70,25 @@ class DownloadCsvManager
 
     /**
      * get all simple csv data
+     * @param $organizationId
      * @return mixed
      */
-    public function simpleCsvData()
+    public function simpleCsvData($organizationId)
     {
-        $activities = $this->downloadCsvRepo->simpleCsvData();
+        $activities = $this->downloadCsvRepo->simpleCsvData($organizationId);
 
         return $this->simpleCsvDataFormatter->format($activities);
     }
 
     /**
      * Get data for the Complete CSV to be generated.
+     * @param $organizationId
+     * @return Collection
      */
-    public function completeCsvData()
+    public function completeCsvData($organizationId)
     {
-        $this->completeCsvDataFormatter->format($this->downloadCsvRepo->completeCsvData());
+        $csvData = $this->completeCsvDataFormatter->format($this->downloadCsvRepo->completeCsvData($organizationId));
+
+        return $csvData;
     }
 }

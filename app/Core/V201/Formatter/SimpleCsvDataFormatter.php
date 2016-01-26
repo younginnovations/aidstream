@@ -63,6 +63,10 @@ class SimpleCsvDataFormatter
      */
     public function format(Collection $activities)
     {
+        if ($activities->isEmpty()) {
+            return false;
+        }
+
         $this->csvData = ['headers' => $this->headers];
 
         foreach ($activities as $activity) {
@@ -73,7 +77,7 @@ class SimpleCsvDataFormatter
                 'description_objective'         => !($activity->description) ? '' : $this->formatDescription($activity->description, '2'),
                 'description_target'            => !($activity->description) ? '' : $this->formatDescription($activity->description, '3'),
                 'description_others'            => !($activity->description) ? '' : $this->formatDescription($activity->description, '4'),
-                'activity-status'               => $activity->activity_status,
+                'activity-status'               => (int) $activity->activity_status,
                 'start-planned'                 => !($activity->activity_date) ? '' : $this->formatActivityDate($activity->activity_date, '1'),
                 'start-actual'                  => !($activity->activity_date) ? '' : $this->formatActivityDate($activity->activity_date, '2'),
                 'end-planned'                   => !($activity->activity_date) ? '' : $this->formatActivityDate($activity->activity_date, '3'),

@@ -3,6 +3,7 @@
 use App\Http\Controllers\Controller;
 use App\Services\Download\DownloadCsvManager;
 use App\Services\Export\CsvGenerator;
+use Illuminate\Support\Facades\Session;
 
 /**
  * Class DownloadController
@@ -14,7 +15,8 @@ class DownloadController extends Controller
      * @var DownloadCsvManager
      */
     protected $downloadCsvManager;
-    /*
+
+    /**
      * @var CsvGenerator
      */
     protected $generator;
@@ -42,18 +44,32 @@ class DownloadController extends Controller
      */
     public function exportSimpleCsv()
     {
-        $csvData = $this->downloadCsvManager->simpleCsvData();
+        $csvData = $this->downloadCsvManager->simpleCsvData(Session::get('org_id'));
+
+        if (false === $csvData) {
+            return redirect()->back()->withResponse(['messages' => ["It seems you do not have any Activities."], 'type' => 'warning']);
+        }
+
         $headers = $csvData['headers'];
         unset($csvData['headers']);
         $this->generator->generateWithHeaders('simple', $csvData, $headers);
     }
 
-
     /**
-     * export the complete activity csv
+     * Export Complete Csv (Generated as 'complete.csv')
      */
     public function exportCompleteCsv()
     {
-        $this->downloadCsvManager->completeCsvData();
+        $csvData = $this->downloadCsvManager->completeCsvData(Session::get('org_id'));
+
+        if (is_null($csvData)) {
+            return redirect()->back()->withResponse(['messages' => ["Something doesn't seem to be right."], 'type' => 'danger']);
+        }
+
+        if (false === $csvData) {
+            return redirect()->back()->withResponse(['messages' => ["It seems you do not have any Activities."], 'type' => 'warning']);
+        }
+
+        $this->generator->generate('complete', $csvData);
     }
 }

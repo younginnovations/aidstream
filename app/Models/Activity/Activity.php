@@ -8,7 +8,16 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Activity extends Model
 {
+    /**
+     * Table name.
+     * @var string
+     */
     protected $table = "activity_data";
+
+    /**
+     * Fillable property for mass assignment.
+     * @var array
+     */
     protected $fillable = [
         'identifier',
         'organization_id',
@@ -42,6 +51,9 @@ class Activity extends Model
         'humanitarian_scope'
     ];
 
+    /**
+     * @var array
+     */
     protected $casts = [
         'identifier'                 => 'json',
         'other_identifier'           => 'json',
@@ -147,5 +159,15 @@ class Activity extends Model
     public function results()
     {
         return $this->hasMany(ActivityResult::class);
+    }
+
+    /**
+     * Accessor for the updated_at attribute. Gets the updated_at attribute in the used format.
+     * @param $date
+     * @return bool|string
+     */
+    public function getUpdatedAtAttribute($date)
+    {
+        return date('Y-m-d H:i:s', strtotime($date));
     }
 }
