@@ -24,5 +24,12 @@ $router->group(
                 'uses' => 'DownloadController@exportCompleteCsv'
             ]
         );
+        $router->get(
+            'download-my-data/transaction',
+            [
+                'as'   => 'download.transaction',
+                'uses' => 'DownloadController@exportTransactionCsv'
+            ]
+        );
     }
 );

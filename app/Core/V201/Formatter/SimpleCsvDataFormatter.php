@@ -111,7 +111,7 @@ class SimpleCsvDataFormatter
      * @param $titles
      * @return string
      */
-    protected function formatTitle($titles)
+    public function formatTitle($titles)
     {
         $titleNarratives = [];
         foreach ($titles as $title) {
