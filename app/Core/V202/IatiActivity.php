@@ -106,4 +106,9 @@ class IatiActivity extends V201
     {
         return app('App\Core\V202\Xml\Activity\XmlService');
     }
+
+    public function getDownloadCsv()
+    {
+        return app('App\Core\V202\Element\DownloadCsv');
+    }
 }

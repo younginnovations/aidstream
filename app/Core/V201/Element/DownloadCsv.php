@@ -6,7 +6,7 @@ use App\Core\V201\Formatter\TransactionCsvDataFormatter;
 
 /**
  * Class DownloadCsv
- * @package app\Core\V201\Element\Activity
+ * @package app\Core\V201\Element
  */
 class DownloadCsv
 {

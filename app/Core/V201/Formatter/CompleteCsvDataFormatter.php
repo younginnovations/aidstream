@@ -161,11 +161,18 @@ class CompleteCsvDataFormatter extends CompleteCsvFactoryGenerator
 
     /**
      * Generate Headers for Complete Csv.
+     * @param null $version
      */
-    protected function getHeaders()
+    protected function getHeaders($version = null)
     {
+        if (is_null($version)) {
+            $templatePath = self::TEMPLATE_PATH;
+        } else {
+            $templatePath = sprintf('Core/%s/Template/Csv/complete.csv', $version);
+        }
+
         Excel::load(
-            sprintf('%s/%s', app_path(), self::TEMPLATE_PATH),
+            sprintf('%s/%s', app_path(), $templatePath),
             function ($reader) {
                 foreach ($reader->first() as $key => $value) {
                     $this->headers[ucfirst($key)]         = '';
