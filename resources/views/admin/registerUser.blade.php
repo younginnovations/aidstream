@@ -8,7 +8,7 @@
         @include('includes.side_bar_menu')
             <div class="col-xs-9 col-md-9 col-lg-9 content-wrapper">
                 <div class="panel-content-heading">User Information</div>
-                    <div class="col-xs-12 col-md-8 col-lg-8 element-content-wrapper">
+                    <div class="col-xs-12 col-md-8 col-lg-8 element-content-wrapper user-content-wrapper">
                         <div class="create-form create-user-form">
                             <form class="form-horizontal" role="form" method="POST"
                               action="{{ route('admin.signup-user')}}">
@@ -27,35 +27,35 @@
 
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
-                                        <div class="form-group">
+                                        <div class="col-xs-12 col-sm-6">
                                             <label class="control-label">First Name</label>
                                                 <input type="text" class="form-control" name="first_name"
                                                        value="{{ old('first_name') }}">
                                         </div>
 
-                                        <div class="form-group">
+                                        <div class="col-xs-12 col-sm-6">
                                             <label class="control-label">Last Name</label>
                                                 <input type="text" class="form-control" name="last_name"
                                                        value="{{ old('last_name') }}">
                                         </div>
 
-                                        <div class="form-group">
+                                        <div class="col-xs-12 col-sm-6">
                                             <label class="control-label">E-Mail Address</label>
                                                 <input type="email" class="form-control" name="email" value="{{ old('email') }}">
                                         </div>
 
-                                        <div class="form-group">
+                                        <div class="col-xs-12 col-sm-6">
                                             <label class="control-label">Username</label>
                                                 <input type="text" class="form-control" name="username"
                                                        value="{{ old('username') }}">
                                         </div>
 
-                                        <div class="form-group">
+                                        <div class="col-xs-12 col-sm-6">
                                             <label class="control-label">Password</label>
                                                 <input type="password" class="form-control" name="password">
                                         </div>
 
-                                        <div class="form-group">
+                                        <div class="col-xs-12 col-sm-6">
                                             <label class="control-label">Confirm Password</label>
                                                 <input type="password" class="form-control" name="password_confirmation">
                                         </div>
@@ -64,7 +64,7 @@
                                 <div class="panel panel-default panel-user">
                                     <div class="panel-heading">User permission</div>
                                     <div class="panel-body">
-                                        <div class="form-group col-md-12">
+                                        <div class="col-md-12">
                                             <div class="checkbox">
                                                 <label><input type="checkbox" value="add_activity" name=user_permission[add] class="field1" @if(isset($data['user_permission']['add'])) checked="checked" @endif >Add</label>
                                             </div>
@@ -81,11 +81,11 @@
                                     </div>
                                     <label><input type="checkbox" class="hidden checkAll"/><span class="btn btn-primary">Check All</span></label>
                                 </div>
-                                
+
                                 <button type="submit" class="btn btn-primary btn-form btn-submit">
                                     Sign Up
                                 </button>
-                                 
+
                             </form>
                         </div>
                     </div>

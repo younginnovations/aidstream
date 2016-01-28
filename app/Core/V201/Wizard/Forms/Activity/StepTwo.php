@@ -18,28 +18,32 @@ class StepTwo extends BaseForm
                 'title',
                 'text',
                 [
-                    'label' => 'What is your activity title?'
+                    'label' => 'What is your activity title?',
+                    'wrapper' => ['class' => 'form-group col-xs-12 col-sm-6 col-lg-6']
                 ]
             )
             ->add(
                 'general',
                 'text',
                 [
-                    'label' => 'General description of activity'
+                    'label' => 'General description of activity',
+                    'wrapper' => ['class' => 'form-group col-xs-12 col-sm-6 col-lg-6']
                 ]
             )
             ->add(
                 'objective',
                 'text',
                 [
-                    'label' => 'Objective description of activity'
+                    'label' => 'Objective description of activity',
+                    'wrapper' => ['class' => 'form-group col-xs-12 col-sm-6 col-lg-6']
                 ]
             )
             ->add(
                 'target',
                 'text',
                 [
-                    'label' => 'Target description of activity'
+                    'label' => 'Target description of activity',
+                    'wrapper' => ['class' => 'form-group col-xs-12 col-sm-6 col-lg-6']
                 ]
             );
     }

@@ -19,7 +19,7 @@ class IatiIdentifier extends BaseForm
                 'text',
                 [
                     'label' => 'What is your activity identifier?',
-                    'wrapper' => ['class' => 'form-group col-xs-12 col-sm-6']
+                    'wrapper' => ['class' => 'form-group col-xs-12 col-sm-8 col-md-8 col-lg-6']
                 ]
             );
     }

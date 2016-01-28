@@ -28,4 +28,3 @@ gulp.task('watch', function () {
  * Default task, running just `gulp` will compile the sass,
  */
 gulp.task('default', ['sass', 'watch']);
-

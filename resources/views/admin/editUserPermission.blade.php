@@ -8,7 +8,7 @@
         @include('includes.side_bar_menu')
             <div class="col-xs-9 col-md-9 col-lg-9 content-wrapper">
             <div class="panel-content-heading">User permissions</div>
-            <div class="panel panel-default panel-element-detail">
+            <div class="panel panel-default panel-element-detail panel-user-permission-edit">
                 <form class="form-horizontal" role="form" method="POST"
                       action="{{ route('admin.update-user-permission', $user->id)}}">
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -43,7 +43,7 @@
                         <label><input type="checkbox" class="hidden checkAll"/><span class="btn btn-primary">Check All</span></label>
                     </div>
                     <button type="submit" class="btn btn-primary btn-submit btn-form">Submit</button>
-                     
+
                 </form>
                 </div>
             </div>

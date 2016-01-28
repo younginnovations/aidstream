@@ -22,5 +22,8 @@
     "url": "git@gitlab.yipl.com.np:web-apps/aidstream-new.git"
   },
   "author": "",
-  "license": "BSD-2-Clause"
+  "license": "BSD-2-Clause",
+  "devDependencies": {
+    "gulp-uncss": "^1.0.4"
+  }
 }
