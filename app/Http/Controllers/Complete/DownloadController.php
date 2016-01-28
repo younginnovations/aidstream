@@ -72,4 +72,20 @@ class DownloadController extends Controller
 
         $this->generator->generate('complete', $csvData);
     }
+
+    /**
+     * Export Transaction  Csv (Generated as 'Transaction.csv')
+     */
+    public function exportTransactionCsv()
+    {
+        $csvData = $this->downloadCsvManager->transactionCsvData(Session::get('org_id'));
+
+        if (false === $csvData) {
+            return redirect()->back()->withResponse(['messages' => ["It seems you do not have any Activities."], 'type' => 'warning']);
+        }
+
+        $headers = $csvData['headers'];
+        unset($csvData['headers']);
+        $this->generator->generateWithHeaders('transaction', $csvData, $headers);
+    }
 }

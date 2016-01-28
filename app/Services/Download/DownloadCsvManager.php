@@ -43,10 +43,11 @@ class DownloadCsvManager
      */
     function __construct(Version $version)
     {
-        $this->activityElement          = $version->getActivityElement();
-        $this->downloadCsvRepo          = $this->activityElement->getDownloadCsv()->getRepository();
-        $this->simpleCsvDataFormatter   = $this->activityElement->getDownloadCsv()->getSimpleCsvDataFormatter();
-        $this->completeCsvDataFormatter = $this->activityElement->getDownloadCsv()->getCompleteCsvDataFormatter();
+        $this->activityElement             = $version->getActivityElement();
+        $this->downloadCsvRepo             = $this->activityElement->getDownloadCsv()->getRepository();
+        $this->simpleCsvDataFormatter      = $this->activityElement->getDownloadCsv()->getSimpleCsvDataFormatter();
+        $this->completeCsvDataFormatter    = $this->activityElement->getDownloadCsv()->getCompleteCsvDataFormatter();
+        $this->transactionCsvDataFormatter = $this->activityElement->getDownloadCsv()->getTransactionCsvDataFormatter();
     }
 
     /**
@@ -88,6 +89,14 @@ class DownloadCsvManager
     public function completeCsvData($organizationId)
     {
         $csvData = $this->completeCsvDataFormatter->format($this->downloadCsvRepo->completeCsvData($organizationId));
+
+        return $csvData;
+    }
+
+    public function transactionCsvData($organizationId)
+    {
+        $activities = $this->downloadCsvRepo->simpleCsvData($organizationId);
+        $csvData    = $this->transactionCsvDataFormatter->format($activities);
 
         return $csvData;
     }

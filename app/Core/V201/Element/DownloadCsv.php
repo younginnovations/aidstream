@@ -2,6 +2,7 @@
 
 use App\Core\V201\Formatter\CompleteCsvDataFormatter;
 use App\Core\V201\Formatter\SimpleCsvDataFormatter;
+use App\Core\V201\Formatter\TransactionCsvDataFormatter;
 
 /**
  * Class DownloadCsv
@@ -32,5 +33,14 @@ class DownloadCsv
     public function getSimpleCsvDataFormatter()
     {
         return App('App\Core\V201\Formatter\SimpleCsvDataFormatter');
+    }
+
+    /**
+     * Get TransactionCSvDataFormatter instance
+     * @return \Illuminate\Foundation\Application|mixed
+     */
+    public function getTransactionCsvDataFormatter()
+    {
+        return app(TransactionCsvDataFormatter::class);
     }
 }
