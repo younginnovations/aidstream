@@ -13,7 +13,7 @@
                 @include('includes.breadcrumb')
                 <div class="panel panel-default">
                     <div class="panel-content-heading">List Published Files</div>
-                    <div class="panel-heading">Organizations Published Files</div>
+                    <div class="panel-sub-heading">Organizations Published Files</div>
                     <div class="panel-body">
                         <table class="table table-striped">
                             <thead>
@@ -49,7 +49,7 @@
                         </table>
                     </div>
 
-                    <div class="panel-heading">Activities Published Files</div>
+                    <div class="panel-sub-heading">Activities Published Files</div>
                     <div class="panel-body">
                         <table class="table table-striped">
                             <thead>

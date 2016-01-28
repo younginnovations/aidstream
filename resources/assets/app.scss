@@ -70,7 +70,7 @@ a,.btn-link {
 }
 
 input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {
-	background: $color_black_squeeze_approx!important;
+	box-shadow: 0 0 0 1000px $color_black_squeeze_approx inset;
 }
 
 #{$all-text-inputs},
@@ -82,15 +82,28 @@ select,button {
 	}
 }
 
-#{$all-text-inputs},select.form-control {
-	height: 45px;
-	border: 1px solid $color_blue;
+#{$all-text-inputs},
+select,.form-control[readonly] {
+	&:focus {
+		box-shadow: 0 0 0 1000px $color_black_squeeze_approx inset;
+		border: 1px solid #AFD8E8;
+	}
 }
 
-input {
+#{$all-text-inputs},select,,select.form-control {
+	height: 45px;
+	border: 1px solid $color_blue;
+	margin-bottom: 0.75em;
+}
+
+.form-control:focus {
+	box-shadow: none!important;
+}
+
+input,button {
 	font-weight: normal!important;
-	&:focus {
-		outline: none;
+	&:focus,&:active {
+		outline: none!important;
 	}
 }
 
@@ -104,25 +117,61 @@ input {
 }
 
 // tooltip
-.tooltip {
+.ui-tooltip {
 	background: $color_emerald_approx;
 	width: 240px;
 	border-radius: 4px;
-	margin: -14px 0 0 -6px!important;
-	opacity: 1!important;
-	.tooltip-inner {
-		background: transparent;
-		font: normal 12px/18px $font_0;
-		padding: 16px 20px;
-		max-width: 100%;
-		text-align: left;
-	}
+	font: normal 12px/18px $font_0;
+	padding: 16px 20px;
+	box-shadow: none!important;
+	text-align: left;
+	color: $color_white;
+	margin-right: 6px;
 }
 
-.tooltip.top .tooltip-arrow {
-	border-top-color: $color_emerald_approx;
-	bottom: -9px;
-	border-width: 14px 11px 0;
+.arrow:after {
+	background: $color_emerald_approx;
+}
+
+.arrow {
+	width: 55px;
+	height: 16px;
+	overflow: hidden;
+	position: absolute;
+	left: 50%;
+	margin-left: -35px;
+	bottom: -16px;
+}
+.arrow.top {
+	top: -16px;
+	bottom: auto;
+}
+.arrow.left {
+	right: 0;
+	left: auto;
+}
+
+.arrow.right {
+	left: 20%;
+}
+.arrow:after {
+	content: "";
+	position: absolute;
+	left: 20px;
+	top: -20px;
+	width: 25px;
+	height: 25px;
+	-webkit-transform: rotate(45deg);
+	-ms-transform: rotate(45deg);
+	transform: rotate(45deg);
+}
+.arrow.top:after {
+	bottom: -20px;
+	top: auto;
+}
+.arrow.right:after {
+	right: -20px;
+	top: auto;
 }
 
 // table
@@ -226,8 +275,12 @@ label {
 
 .login-container {
 	@include outer-container(392px);
-	padding-top: 84px;
+	padding-top: 50px;
 	clear: both;
+	.form-group .btn-link {
+		float: right;
+		padding-right: 0;
+	}
 }
 
 .form-body {
@@ -247,7 +300,7 @@ label {
 		background: none;
 		border: 0;
 		text-align: center;
-		margin: 75px 0 54px;
+		margin: 60px 0 40px;
 		padding: 0;
 	}
 	.panel-body {
@@ -286,7 +339,7 @@ label {
 
 .create-account-wrapper {
 	font-size: 15px;
-	margin-bottom: 100px;
+	margin-bottom: 60px;
 	color: $color_white;
 	padding: 0 10px;
 	text-align: center;
@@ -313,12 +366,12 @@ label {
 
 .panel-title {
 	font: 32px $font_2;
-	padding-top: 30px;
+	padding-top: 20px;
 }
 
 .register-container {
 	@include outer-container(814px);
-	padding-top: 84px;
+	padding-top: 50px;
 	clear: both;
 }
 
@@ -335,9 +388,6 @@ label {
 			&:first-child {
 				padding: 0 15px 0 0;
 			}
-		}
-		.col-xs-12 {
-			padding: 0!important;
 		}
 	}
 }
@@ -704,7 +754,6 @@ $full-sidebar-wrapper-width: 250px;
 	margin-left: -12px;
 }
 
-
 %extend_2 {
 	content: "";
 	width: 6px;
@@ -722,7 +771,6 @@ $full-sidebar-wrapper-width: 250px;
 		background: $color_mandy_approx;
 	}
 }
-
 
 .completed {
 	@extend %extend_1;
@@ -780,11 +828,22 @@ $full-sidebar-wrapper-width: 250px;
 .edit {
 	@extend %extend_3;
 	height: 23px;
-    width: 24px;
-    margin-left: 10px;
+  width: 24px;
+  margin-left: 10px;
 	background-position: -301px -334px;
 	&:hover {
 		background-position: -301px -391px;
+	}
+}
+
+.duplicate {
+	@extend %extend_3;
+	height: 23px;
+	width: 18px;
+	margin-left: 11px;
+	background-position: -390px -334px;
+	&:hover {
+		background-position: -390px -394px;
 	}
 }
 
@@ -901,15 +960,15 @@ $element-sidebar-wrapper-width: 267px;
 	height: 18px;
 	background: $url_3 no-repeat -152px -200px;
 	cursor: pointer;
-	@include position(absolute,16px 20px auto auto);
+	@include position(absolute,37px 4px auto auto);
 	&:hover {
 		background-position: -222px -200px;
 	}
 }
 
-.form-group .help-text {
-	right: -30px;
-	top: 41px;
+.nav .help-text {
+	top: 18px;
+	right: 18px;
 }
 
 
@@ -1055,6 +1114,7 @@ $element-sidebar-wrapper-width: 267px;
 		border-bottom: 1px solid $color_seashell;
 		font-size: 12px;
 		padding: 12px 4px;
+		@include display(flex);
 		&:last-child {
 			border-bottom: 0;
 		}
@@ -1082,7 +1142,7 @@ $element-sidebar-wrapper-width: 267px;
 
 //add activity
 .create-form,.create-activity-form {
-	padding: 14px 40px 30px;
+	padding: 14px 36px 30px;
 	border-bottom: 2px solid $color_concrete;
 	margin-bottom: 28px;
 	.panel-body {
@@ -1090,16 +1150,24 @@ $element-sidebar-wrapper-width: 267px;
 			&:first-child {
 				padding-left: 0;
 			}
-			&:last-of-type {
-				padding-right: 0;
-			}
 		}
 	}
 }
 
-.create-form .form-group:only-child {
-	width: 40%;
+.create-activity-form {
+	.panel-body > .col-sm-6 {
+		padding-right: 30px;
+	}
+	.form-group:only-of-type {
+		width: 100%;
+		padding-right: 30px;
+		position: relative;
+	}
 }
+
+// .create-form .form-group:only-child {
+// 	width: 40%;
+// }
 
 .btn-create {
 	background: $color_dodger_blue_approx $url_3 no-repeat -204px -122px;
@@ -1118,6 +1186,7 @@ $element-sidebar-wrapper-width: 267px;
 }
 
 .panel-activity-default .panel-element-body {
+	margin-bottom: 50px;
 	> .col-md-6 {
 		padding: 18px 0 0;
 		font-size: 13px;
@@ -1130,7 +1199,7 @@ $element-sidebar-wrapper-width: 267px;
 .panel-title-heading {
 	font-size: 22px;
 	color: $color_chicago_approx;
-	padding: 17px 37px;
+	padding: 17px 80px 17px 37px;
 	span {
 		font-style: italic;
 		color: rgba($color_chicago_approx,0.7);
@@ -1171,7 +1240,7 @@ $element-sidebar-wrapper-width: 267px;
 	> .form-group {
 		position: relative;
 		margin-bottom: 0;
-		padding: 25px 0 0 20px;
+		padding: 25px 20px 0 20px;
 		border: 1px solid transparent;
 	}
 	> label {
@@ -1187,8 +1256,7 @@ $element-sidebar-wrapper-width: 267px;
 }
 
 .create-form > form > .form-group {
-	width: 42%;
-	padding: 20px 0 0 20px;
+	padding: 20px 0 0 30px;
 	margin-bottom: -20px;
 }
 
@@ -1197,7 +1265,8 @@ $element-sidebar-wrapper-width: 267px;
 		display: inline-block;
 		position: relative;
 		vertical-align: top;
-		width: 93%;
+		width: 100%;
+		padding-right: 30px;
 	}
 	> .collection_form {
 		border: 0;
@@ -1229,10 +1298,10 @@ $element-sidebar-wrapper-width: 267px;
 			> .form-group {
 				border: 0;
 				display: inline-block;
-				padding: 5px 0 0;
+				padding: 5px 30px 0 0;
 				margin: 0 30px 15px 14px;
 				vertical-align: top;
-				width: 84%;
+				width: 95%;
 			}
 		}
 		.collection_form > label {
@@ -1248,7 +1317,7 @@ $element-sidebar-wrapper-width: 267px;
 	border: none;
 	font-size: 15px;
 	padding-left: 62px;
-	margin: 0 0 0 -7px;
+	margin: 0 0 0 -9px;
 	display: block;
 	color: $color_gravel_approx;
 	overflow: hidden;
@@ -1339,14 +1408,15 @@ form > .add_to_collection[data-collection="legacy_data"] {
 
 .full-width-wrap {
 	width: 87%!important;
+	padding-right: 0!important;
 }
 
 // wizard form
 .create-wizard-form {
 	 > form .form-group {
-		width: 40%;
+		// width: 40%;
 		display: inline-block;
-		margin-right: 52px;
+		padding-right: 30px;
 		margin-bottom: 0;
 	}
 	.btn-submit {
@@ -1357,7 +1427,7 @@ form > .add_to_collection[data-collection="legacy_data"] {
 .panel-add-wizard {
 	padding: 0;
 	.panel-heading,h4 {
-		padding: 0 40px;
+		padding: 0 36px;
 	}
 	h4 {
 		margin-top: 6px;
@@ -1387,6 +1457,10 @@ form > .add_to_collection[data-collection="legacy_data"] {
 	padding-top: 0;
 }
 
+.settings-choice-wrapper .help-text {
+	top: 28px;
+}
+
 .settings-checkall-wrapper {
 	padding: 10px 20px;
 	> .collection_form  {
@@ -1394,10 +1468,6 @@ form > .add_to_collection[data-collection="legacy_data"] {
 			display: none;
 		}
 	    .form-group > .form-group {
-			display: inline-block;
-			width: 24%;
-			vertical-align: top;
-			margin-top: 35px;
 			> label {
 				font-size: 15px;
 				color: $color_gravel_approx;
@@ -1440,26 +1510,27 @@ form > .add_to_collection[data-collection="legacy_data"] {
 }
 
 .create-user-form {
-	.form-group {
-		width: 40%;
-		display: inline-block;
-		padding: 25px 0 0 20px;
-		margin: 0 52px 0 0;
+	.col-sm-6 {
+		padding: 16px 30px 0;
+		> input {
+			margin-bottom: 0;
+		}
 	}
 	.panel {
 		margin: 0;
 		background: transparent;
 	}
+	.panel-user {
+		 padding: 20px 30px 10px;
+	}
 }
 
 .panel-user {
-	padding-left: 5px;
+	padding: 20px 0 10px;
 	.panel-heading {
 		font-size: 18px;
 		border: 0;
-	}
-	.panel-body {
-		padding: 0 15px 15px!important;
+		padding-left: 0;
 	}
 	.checkbox {
 		float: left;
@@ -1468,9 +1539,6 @@ form > .add_to_collection[data-collection="legacy_data"] {
 	.form-group {
 		padding-top: 0;
 	}
-	> label {
-		margin-left: 15px;
-	}
 }
 
 .user-wrapper {
@@ -1478,9 +1546,9 @@ form > .add_to_collection[data-collection="legacy_data"] {
 		margin-bottom: 20px;
 	}
 	.btn-form {
-		margin-left: 20px;
-		&:first-of-type {
-			margin-left: 40px;
+		margin-right: 20px;
+		&:last-child {
+			margin-right: 0;
 		}
 	}
 }
@@ -1497,13 +1565,13 @@ form > .add_to_collection[data-collection="legacy_data"] {
 		float: left;
 	}
 	button {
-		margin: 43px 0 0px 20px;
-    	color: $color_white!important;
+		margin: 45px 0 0px 20px;
+    color: $color_white!important;
 	}
 }
 
 .download-transaction-wrap {
-	padding: 0 40px;
+	padding: 0 36px;
 	.btn {
 		margin-bottom: 20px;
 		display: inline-block;
@@ -1523,17 +1591,18 @@ form > .add_to_collection[data-collection="legacy_data"] {
 
 .change-activity-form {
 	border: 0;
-	> form > .form-group {
-		display: inline-block;
-		margin-right: 52px;
-		position: relative;
-		margin-bottom: 0;
-		.help-text {
-			top: 56px;
+	> form {
+		padding-right: 20px;
+		> .form-group {
+			display: inline-block;
+			padding-right: 30px;
+			margin-right: -2px;
+			position: relative;
+			margin-bottom: 0;
+			.help-text {
+				top: 56px;
+			}
 		}
-	}
-	.btn-form {
-		left: 40px;
 	}
 }
 
@@ -1544,6 +1613,29 @@ form > .add_to_collection[data-collection="legacy_data"] {
 .element-sidebar-dropdown {
 	display: none;
 }
+
+.user-content-wrapper {
+	width: 100%;
+}
+
+.back-to-list {
+	font-size: 14px;
+	margin-top: 5px;
+	span {
+		font-style: normal;
+		color: inherit;
+		top: 2px;
+	}
+	&:hover,&:focus {
+		text-decoration: none;
+	}
+}
+
+.upgrade {
+	font-size: 14px;
+	margin-top: 5px;
+}
+
 
 @media all and (max-width: 1000px) {
 	.element-upload-wrapper {
@@ -1587,7 +1679,13 @@ form > .add_to_collection[data-collection="legacy_data"] {
     }
 }
 
-@media all and (max-width:768px) {
+@media all and (max-width:820px) {
+	.btn-form {
+		width: 47%;
+	}
+}
+
+@media all and (max-width:767px) {
     table, thead, tbody, th, td, tr {
         display: block;
     }
@@ -1623,17 +1721,34 @@ form > .add_to_collection[data-collection="legacy_data"] {
     /*
     Label the data
     */
-    td:nth-of-type(1) { content: ""; display: none;}
-    td:nth-of-type(2):before { content: "S.N."; }
-    td:nth-of-type(3):before { content: "Activity Title"; font-family: $font_0; }
-    td:nth-of-type(4):before { content: "Activity Identifier"; }
-    td:nth-of-type(5):before { content: "Last Updated"; }
-    td:nth-of-type(6):before { content: "Status"; }
-    td:nth-of-type(7):before { content: "Actions"; }
+    .activity-wrapper td:nth-of-type(1) { content: ""; display: none;}
+    .activity-wrapper td:nth-of-type(2):before { content: "S.N."; }
+    .activity-wrapper td:nth-of-type(3):before { content: "Activity Title"; font-family: $font_0; }
+    .activity-wrapper td:nth-of-type(4):before { content: "Activity Identifier"; }
+    .activity-wrapper td:nth-of-type(5):before { content: "Last Updated"; }
+    .activity-wrapper td:nth-of-type(6):before { content: "Status"; }
+    .activity-wrapper td:nth-of-type(7):before { content: "Actions"; }
+
+		.list-user-wrapper td:nth-of-type(1):before { content: "S.N.";}
+    .list-user-wrapper td:nth-of-type(2):before { content: "Name"; }
+    .list-user-wrapper td:nth-of-type(3):before { content: "User Name"; font-family: $font_0; }
+    .list-user-wrapper td:nth-of-type(4):before { content: "Action"; }
+
+		.transaction-wrapper td:nth-of-type(1):before { content: "Internal Ref";}
+		.transaction-wrapper td:nth-of-type(2):before { content: "Humanitarian"; }
+		.transaction-wrapper td:nth-of-type(3):before { content: "Transaction Type"; }
+		.transaction-wrapper td:nth-of-type(4):before { content: "Transaction Value"; }
+		.transaction-wrapper td:nth-of-type(5):before { content: "Transaction Date"; }
+		.transaction-wrapper td:nth-of-type(6):before { content: "Actions"; }
 
     td input[type="checkbox"] {
     	display: none;
     }
+
+		.table > tbody > tr > td.no-data {
+			padding-left: 0!important;
+			margin-bottom: 0;
+		}
 
     .panel-element-detail {
         padding: 0;
@@ -1649,7 +1764,7 @@ form > .add_to_collection[data-collection="legacy_data"] {
 			margin: 0;
 		}
 
-		.content-wrapper > .panel-default > .panel-body,.panel-element-detail > .panel-body {
+		.content-wrapper > .panel-default > .panel-body,.panel-element-detail > .panel-body,.transaction-wrapper > .panel > .panel-body {
 			padding: 0 14px;
 		}
 
@@ -1661,22 +1776,28 @@ form > .add_to_collection[data-collection="legacy_data"] {
 			padding: 0!important;
 		}
 
+		.create-form,.create-activity-form,.panel-user-permission-edit {
+			padding-left: 14px;
+			padding-right: 14px;
+		}
+
 		.change-activity-form > form > .form-group {
 			width: 100%;
 		}
 
-		.create-form > form > .form-group,.change-activity-form > form > .form-group {
-    	width: 88%;
-    }
-
     .create-activity-form .panel-body {
     	> div {
-    		padding: 4px 0;
+    		margin-top: 4px;
+				margin-bottom: 4px;
     	}
-    	>.col-sm-6:last-of-type {
-			padding-right: 0;
-    	}
+			>.col-sm-6 {
+				padding-left: 0;
+			}
     }
+
+		.remove_from_collection, .remove_from_collection:focus {
+			right: 6px;
+		}
 
     .panel-add-wizard > .panel-body {
     	padding: 0;
@@ -1688,18 +1809,49 @@ form > .add_to_collection[data-collection="legacy_data"] {
     	margin: 0;
     }
 
-		.panel-content-heading,.element-panel-heading,.create-form {
+		.panel-content-heading,.element-panel-heading,.create-form,
+		.panel-add-wizard .panel-heading, .panel-add-wizard h4,
+		.download-transaction-wrap {
 			padding-left: 14px;
 			padding-right: 14px;
 		}
 
-		.panel-content-heading {
-			padding-right: 48px;
+		.panel-title-heading {
+			padding-right: 80px;
 		}
 
 		.change-activity-form .btn-form {
 			left: 14px;
 		}
+
+		.register-container .form-body {
+			border-radius: 0;
+			select {
+				width: 100%;
+			}
+		}
+
+		.input-wrapper > .col-md-12 .form-group {
+			padding: 0!important;
+		}
+
+		.create-wizard-form .btn-submit {
+			left: 14px;
+		}
+
+		.element-panel-heading form {
+			margin-right: 60px;
+		}
+
+		.panel-user-view {
+			padding: 0 14px;
+		}
+}
+
+@media all and (max-width:640px) {
+	.create-form > form > .collection_form > .form-group {
+		padding-right: 20px;
+	}
 }
 
 @media all and (max-width:600px) {
@@ -1722,42 +1874,118 @@ form > .add_to_collection[data-collection="legacy_data"] {
 		margin-top: 8px;
 		max-width: 160px;
 	}
+
+	.activity-file-choose {
+		width: 94%;
+		+ button {
+			margin-top: 34px;
+		}
+	}
+
+	.activity-status ol {
+		width: 100%;
+	}
+
+	.activity-status li.active {
+		border: 0;
+		width: 100%!important;
+		margin-top: -16px;
+		&:before {
+			display: none;
+		}
+		span {
+			margin: 0;
+			font-size: 15px;
+			text-align: center;
+		}
+	}
+
+	.activity-status li:not(.active) {
+		display: none;
+	}
+
+	.activity-status-draft ol li > span {
+		color: $color_mandy_approx;
+	}
+
+	.activity-status-completed ol li > span {
+		color: $color_texas_rose_approx;
+	}
+
+	.activity-status-verified ol li > span {
+		color: $color_bismark_approx;
+	}
+
+	.activity-status-published ol li > span {
+		color: $color_emerald_approx;
+	}
+
 }
 
 @media all and (max-width:480px) {
-    .login-container,.register-container {
-        max-width: 100%;
-        .panel,.form-body {
-            border-radius: 0;
-        }
-    }
-
-    .create-form > form > .form-group,.change-activity-form > form > .form-group {
-    	width: 83%;
-    }
 
     .create-form .btn-form {
     	width: 92%;
     }
 
     .download-transaction-wrap > a,.create-activity-form button {
-    	width: 97%;
+    	width: 91%;
     }
 
     .panel-upload button {
     	margin-top: 33px;
     }
+
+		.btn-register {
+			max-width: 100%;
+		}
+
+		.btn-form {
+			width: 100%;
+		}
+}
+
+@media all and (max-width: 392px) {
+	.login-container,.register-container {
+			max-width: 100%;
+			.panel,.form-body {
+					border-radius: 0;
+			}
+	}
+}
+
+@media all and (min-width:601px) {
+	.settings-checkall-wrapper > .collection_form > .form-group > .form-group {
+		display: inline-block;
+		vertical-align: top;
+		width: 50%;
+		margin-right: -2px;
+	}
 }
 
 @media all and (min-width:768px) {
 	.create-form > form > .collection_form > .form-group > .collection_form .form-group > .form-group {
-		width: 40%;
-		margin: 0 30px 15px 14px;
+		width: 50%;
+		padding-right: 30px;
 	}
 
-	.create-form > form > .collection_form > .form-group > .form-group {
-		width: 40%;
-		margin-right: 52px;
+	.create-form > form > .collection_form > .form-group > .form-group,
+	.change-activity-form > form > .form-group {
+		width: 50%;
+		padding-right: 30px;
+		margin-right: -2px;
+	}
+
+	.create-form > form > .collection_form > .form-group > .form-group+.form-group:nth-child(even) {
+		padding-left: 15px;
+	}
+
+	.create-wizard-form .col-sm-6+.col-sm-6:nth-child(even),create-user-form .col-sm-6+.col-sm-6:nth-child(odd),.reset-user-password .col-sm-6+.col-sm-6 {
+			padding-left: 0;
+	}
+
+	.create-activity-form .form-group:only-of-type {
+		width: 50%;
 	}
 }
 
@@ -1765,10 +1993,21 @@ form > .add_to_collection[data-collection="legacy_data"] {
 	.element-sidebar-wrapper {
 		display: block!important;
 	}
+
+	.settings-checkall-wrapper > .collection_form > .form-group > .form-group {
+		width: 33%;
+	}
 }
 
-@media all and (min-width:767px) and (max-width:1150px) {
-	.create-wizard-form > form .form-group {
-		width: 80%;
+@media all and (min-width:1200px) {
+	.settings-checkall-wrapper > .collection_form > .form-group > .form-group {
+		width: 24.8%;
+	}
+}
+
+@media all and (min-width:1340px) {
+	.settings-checkall-wrapper > .collection_form > .form-group > .form-group {
+		width: 20%;
+		margin-right: -3px;
 	}
 }

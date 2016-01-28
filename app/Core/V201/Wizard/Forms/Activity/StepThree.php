@@ -27,8 +27,20 @@ class StepThree extends BaseForm
                     'wrapper' => ['class' => 'form-group form-choice-wrapper']
                 ]
             )
-            ->add('start_date', 'date')
-            ->add('end_date', 'date')
+            ->add(
+              'start_date',
+              'date',
+               [
+                 'wrapper' => ['class' => 'form-group col-xs-12 col-sm-6 col-lg-6']
+               ]
+             )
+             ->add(
+               'end_date',
+               'date',
+                [
+                  'wrapper' => ['class' => 'form-group col-xs-12 col-sm-6 col-lg-6']
+                ]
+              )
             ->add(
                 'date_type',
                 'choice',

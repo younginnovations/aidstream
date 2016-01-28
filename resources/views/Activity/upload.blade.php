@@ -18,10 +18,10 @@
             <div class="col-xs-9 col-md-9 col-lg-9 content-wrapper">
                      <div class="panel-content-heading panel-title-heading">
                             Upload Activities
-                            <a href="{{ route('activity.index') }}" class="btn btn-primary pull-right">Back to Activity List</a>
+                            <a href="{{ route('activity.index') }}" class="pull-right back-to-list"><span class="glyphicon glyphicon-triangle-left"></span>Back to Activity List</a>
                         </div>
                      <div class="col-xs-12 col-md-8 col-lg-8 element-content-wrapper element-upload-wrapper">
-                        <div class="panel panel-default panel-upload">                   
+                        <div class="panel panel-default panel-upload">
                             <div class="panel-body">
                                 <div class="create-form">
                                     {!! form($form) !!}
@@ -31,7 +31,7 @@
                                     <div>Contains Simplified information about Activity.</div>
                                 </div>
                          </div>
-                    </div>                     
+                    </div>
               </div>
         </div>
     </div>

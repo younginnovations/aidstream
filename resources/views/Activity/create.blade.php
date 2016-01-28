@@ -29,58 +29,57 @@
                             <div class="panel-default">
                             <div class="panel-heading">@lang('trans.activity_default')</div>
                             <div class="panel-body panel-element-body">
-                            <div class="col-md-6">
-                                <div class="col-md-6">Default Language:</div>
-                                <div class="col-md-6">{{ $defaultFieldValues[0]['default_language'] }}</div>
+                            <div class="col-xs-12 col-sm-6 col-md-6">
+                              <div class="col-md-6">Default Language:</div>
+                              <div class="col-md-6">{{ $defaultFieldValues[0]['default_language'] }}</div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="col-md-6">Default Currency:</div>
-                                <div class="col-md-6">{{ $defaultFieldValues[0]['default_currency'] }}</div>
+                            <div class="col-xs-12 col-sm-6 col-md-6">
+                              <div class="col-md-6">Default Currency:</div>
+                              <div class="col-md-6">{{ $defaultFieldValues[0]['default_currency'] }}</div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="col-md-6">Hierarchy:</div>
-                                <div class="col-md-6">{{ $defaultFieldValues[0]['default_hierarchy'] }}</div>
+                            <div class="col-xs-12 col-sm-6 col-md-6">
+                              <div class="col-md-6">Hierarchy:</div>
+                              <div class="col-md-6">{{ $defaultFieldValues[0]['default_hierarchy'] }}</div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="col-md-6">Reporting Organisation Identifier:</div>
-                                <div class="col-md-6"
-                                     id="reporting_organization_identifier">{{ $reportingOrganization[0]['reporting_organization_identifier']  }}</div>
+                            <div class="col-xs-12 col-sm-6 col-md-6">
+                              <div class="col-md-6">Reporting Organisation Identifier:</div>
+                              <div class="col-md-6" id="reporting_organization_identifier">{{ $reportingOrganization[0]['reporting_organization_identifier']  }}</div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="col-md-6">Reporting Organisation Type:</div>
-                                <div class="col-md-6">{{ $reportingOrganization[0]['reporting_organization_type']  }}</div>
+                            <div class="col-xs-12 col-sm-6 col-md-6">
+                              <div class="col-md-6">Reporting Organisation Type:</div>
+                              <div class="col-md-6">{{ $reportingOrganization[0]['reporting_organization_type']  }}</div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="col-md-6">Reporting Organisation Name:</div>
-                                <div class="col-md-6">{{ $organization['name']  }}</div>
+                            <div class="col-xs-12 col-sm-6 col-md-6">
+                              <div class="col-md-6">Reporting Organisation Name:</div>
+                              <div class="col-md-6">{{ $organization['name']  }}</div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="col-md-6">Reporting Organisation language:</div>
-                                <div class="col-md-6">{{ $organization['name']  }}</div>
+                            <div class="col-xs-12 col-sm-6 col-md-6">
+                              <div class="col-md-6">Reporting Organisation language:</div>
+                              <div class="col-md-6">{{ $organization['name']  }}</div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="col-md-6">Collaboration Type:</div>
-                                <div class="col-md-6">{{ $defaultFieldValues[0]['default_collaboration_type']  }}</div>
+                            <div class="col-xs-12 col-sm-6 col-md-6">
+                              <div class="col-md-6">Collaboration Type:</div>
+                              <div class="col-md-6">{{ $defaultFieldValues[0]['default_collaboration_type']  }}</div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="col-md-6">Default Flow Type:</div>
-                                <div class="col-md-6">{{ $defaultFieldValues[0]['default_flow_type']  }}</div>
+                            <div class="col-xs-12 col-sm-6 col-md-6">
+                              <div class="col-md-6">Default Flow Type:</div>
+                              <div class="col-md-6">{{ $defaultFieldValues[0]['default_flow_type']  }}</div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="col-md-6">Default Finance Type:</div>
-                                <div class="col-md-6">{{ $defaultFieldValues[0]['default_finance_type']  }}</div>
+                            <div class="col-xs-12 col-sm-6 col-md-6">
+                              <div class="col-md-6">Default Finance Type:</div>
+                              <div class="col-md-6">{{ $defaultFieldValues[0]['default_finance_type']  }}</div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="col-md-6">Default Aid Type:</div>
-                                <div class="col-md-6">{{ $defaultFieldValues[0]['default_aid_type']  }}</div>
+                            <div class="col-xs-12 col-sm-6 col-md-6">
+                              <div class="col-md-6">Default Aid Type:</div>
+                              <div class="col-md-6">{{ $defaultFieldValues[0]['default_aid_type']  }}</div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="col-md-6">Default Tied Status:</div>
-                                <div class="col-md-6">{{ $defaultFieldValues[0]['default_tied_status']  }}</div>
+                            <div class="col-xs-12 col-sm-6 col-md-6">
+                              <div class="col-md-6">Default Tied Status:</div>
+                              <div class="col-md-6">{{ $defaultFieldValues[0]['default_tied_status']  }}</div>
                             </div>
-                            <div class="col-md-6">
-                            <div class="col-md-6">Linked Data uri:</div>
-                            <div class="col-md-6">{{ $defaultFieldValues[0]['linked_data_uri']  }}</div>
+                            <div class="col-xs-12 col-sm-6 col-md-6">
+                              <div class="col-md-6">Linked Data uri:</div>
+                              <div class="col-md-6">{{ $defaultFieldValues[0]['linked_data_uri']  }}</div>
                             </div>
                             </div>
                         </div>
@@ -94,4 +93,3 @@
         </div>
     </div>
 @endsection
-
