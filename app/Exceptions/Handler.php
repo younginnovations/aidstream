@@ -45,7 +45,7 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $e)
     {
-        if (is_a($e, HttpResponseException::class) || env('APP_DEBUG')) {
+        if (is_a($e, HttpResponseException::class) || is_a($e, ValidationException::class) || env('APP_DEBUG')) {
             return parent::render($request, $e);
         }
         $this->log->error('Error:' . $e->getMessage());

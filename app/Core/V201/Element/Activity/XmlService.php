@@ -66,10 +66,11 @@ class XmlService
      * @param $filename
      * @param $organizationId
      * @param $publishedActivity
+     * @return array
      */
     public function savePublishedFiles($filename, $organizationId, $publishedActivity)
     {
-        $this->xmlGenerator->savePublishedFiles($filename, $organizationId, $publishedActivity);
+        return $this->xmlGenerator->savePublishedFiles($filename, $organizationId, $publishedActivity);
     }
 
     /**
@@ -83,9 +84,10 @@ class XmlService
 
     /**
      * @param $activity
+     * @return string
      */
     public function segmentedXmlFile($activity)
     {
-        $this->xmlGenerator->segmentedXmlFile($activity);
+        return $this->xmlGenerator->segmentedXmlFile($activity);
     }
 }

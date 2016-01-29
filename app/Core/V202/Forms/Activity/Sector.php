@@ -52,7 +52,7 @@ class Sector extends BaseForm
                 'text',
                 [
                     'label'   => 'Sector',
-                    'wrapper' => ['class' => 'form-group hidden sector_types sector_text']
+                    'wrapper' => ['class' => 'form-group sector_types sector_text']
                 ]
             )
             ->addPercentage()

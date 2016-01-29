@@ -5,6 +5,9 @@ use App\Core\V201\Repositories\SettingsRepository;
 use App\Models\Settings;
 use Test\AidStreamTestCase;
 use Mockery as m;
+use App\Models\Activity\Activity;
+use App\Services\Activity\ActivityManager;
+use App\Services\Organization\OrganizationManager;
 
 class SettingsManagerTest extends AidStreamTestCase
 {
@@ -13,6 +16,8 @@ class SettingsManagerTest extends AidStreamTestCase
     protected $settingRepo;
     protected $settingManager;
     protected $setting;
+    protected $activityManager;
+    protected $organizationManager;
 
     public function SetUp()
     {
@@ -20,8 +25,10 @@ class SettingsManagerTest extends AidStreamTestCase
         $this->version     = m::mock(Version::class);
         $this->settingRepo = m::mock(SettingsRepository::class);
         $this->version->shouldReceive('getSettingsElement->getRepository')->andReturn($this->settingRepo);
-        $this->settingManager = new SettingsManager($this->version);
-        $this->setting        = m::mock(Settings::class);
+        $this->activityManager     = m::mock(ActivityManager::class);
+        $this->organizationManager = m::mock(OrganizationManager::class);
+        $this->setting             = m::mock(Settings::class);
+        $this->settingManager      = new SettingsManager($this->version, $this->activityManager, $this->organizationManager);
     }
 
     public function testItShouldReturnSettingsDataWithSpecificOrganizationId()
@@ -37,6 +44,12 @@ class SettingsManagerTest extends AidStreamTestCase
     }
 
     public function testItShouldUpdateSetting()
+    {
+        $this->settingRepo->shouldReceive('updateSettings')->once()->with('testSetting', 1, 'settingsData')->andReturn(null);
+        $this->assertNull($this->settingManager->updateSettings('testSetting', 1, 'settingsData'));
+    }
+
+    public function testItShouldGenerateXml()
     {
         $this->settingRepo->shouldReceive('updateSettings')->once()->with('testSetting', 1, 'settingsData')->andReturn(null);
         $this->assertNull($this->settingManager->updateSettings('testSetting', 1, 'settingsData'));
