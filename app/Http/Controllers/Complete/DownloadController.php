@@ -84,6 +84,10 @@ class DownloadController extends Controller
             return redirect()->back()->withResponse(['messages' => ["It seems you do not have any Activities."], 'type' => 'warning']);
         }
 
+        if (null === $csvData && false !== $csvData) {
+            return redirect()->back()->withResponse(['messages' => ["It seems you do not have any Transactions."], 'type' => 'warning']);
+        }
+
         $headers = $csvData['headers'];
         unset($csvData['headers']);
         $this->generator->generateWithHeaders('transaction', $csvData, $headers);

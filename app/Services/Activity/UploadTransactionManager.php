@@ -88,4 +88,65 @@ class UploadTransactionManager
 
         return false;
     }
+
+    /**
+     * check if the uploaded csv is empty or not
+     * @param $transactionCsv
+     * @return bool
+     */
+    public function isEmptyCsv($transactionCsv)
+    {
+        $loadTransactionCsv = $this->getTransactionCsv($transactionCsv);
+        $transactionRows    = $loadTransactionCsv->getTotalRowsOfFile();
+
+        if ($transactionRows == 1 || $transactionRows == 0) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * check of the uploaded csv is detailed or not
+     * @param $transactionCsv
+     * @return bool
+     */
+    public function isDetailedCsv($transactionCsv)
+    {
+        $loadTransactionCsv = $this->getTransactionCsv($transactionCsv);
+        $headerCount        = $loadTransactionCsv->first()->keys()->count();
+
+        if ($headerCount == 25) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * check if the uploaded csv is simple or not
+     * @param $transactionCsv
+     * @return bool
+     */
+    public function isSimpleCsv($transactionCsv)
+    {
+        $loadTransactionCsv = $this->getTransactionCsv($transactionCsv);
+        $headerCount        = $loadTransactionCsv->first()->keys()->count();
+
+        if ($headerCount == 14) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * get transaction csv
+     * @param $transactionCsv
+     * @return \Maatwebsite\Excel\Readers\LaravelExcelReader
+     */
+    protected function getTransactionCsv($transactionCsv)
+    {
+        return $this->version->getExcel()->load($transactionCsv);
+    }
 }

@@ -1,7 +1,15 @@
 {
   "reference": "",
-  "transaction_type": [{"transaction_type_code": ""}],
-  "transaction_date": [{"date": ""}],
+  "transaction_type": [
+    {
+      "transaction_type_code": ""
+    }
+  ],
+  "transaction_date": [
+    {
+      "date": ""
+    }
+  ],
   "value": [
     {
       "amount": "",
@@ -43,11 +51,17 @@
       ]
     }
   ],
-  "disbursement_channel": [{"disbursement_channel_code": ""}],
+  "disbursement_channel": [
+    {
+      "disbursement_channel_code": ""
+    }
+  ],
   "sector": [
     {
       "sector_code": "",
       "sector_vocabulary": "",
+      "sector_text": "",
+      "sector_category_code": "",
       "narrative": [
         {
           "narrative": "",
@@ -79,8 +93,24 @@
       ]
     }
   ],
-  "flow_type": [{"flow_type": ""}],
-  "finance_type": [{"finance_type": ""}],
-  "aid_type": [{"aid_type": ""}],
-  "Tied_status": [{"tied_status_code": ""}]
+  "flow_type": [
+    {
+      "flow_type": ""
+    }
+  ],
+  "finance_type": [
+    {
+      "finance_type": ""
+    }
+  ],
+  "aid_type": [
+    {
+      "aid_type": ""
+    }
+  ],
+  "Tied_status": [
+    {
+      "tied_status_code": ""
+    }
+  ]
 }

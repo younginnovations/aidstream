@@ -20,5 +20,7 @@ return [
     'upgrade_failed'           => 'Failed to upgrade. Try Again.',
     'transfer_message'         => 'Deleted Successfully',
     'duplicated'               => 'Activity has been duplicated successfully.View duplicated <a href=":url">Activity</a>',
-    'password_mismatch'        => 'Current Password don\'t match with you entered :name.',
+    'password_mismatch'        => 'Current Password doesn\'t match with the entered :name.',
+    'empty_template'           => 'You have uploaded empty :name template.Please upload the template with transactions.',
+    'header_mismatch'          => 'The header doesn\'t matched with the provided template. Please Check the headers.'
 ];

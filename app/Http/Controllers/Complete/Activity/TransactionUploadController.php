@@ -7,6 +7,7 @@ use App\Services\FormCreator\Activity\UploadTransaction;
 use App\Services\RequestManager\Activity\CsvImportValidator;
 use App\Services\RequestManager\Activity\UploadTransaction as UploadTransactionRequest;
 use App\Http\Requests\Request;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class TransactionUploadController extends Controller
 {
@@ -18,11 +19,11 @@ class TransactionUploadController extends Controller
      * @var UploadTransaction
      */
     protected $uploadTransaction;
+
     /**
      * @var UploadTransactionManager
      */
     protected $uploadTransactionManager;
-
 
     /**
      * @param ActivityManager          $activityManager
@@ -61,18 +62,54 @@ class TransactionUploadController extends Controller
     public function store(Request $request, $id, UploadTransactionRequest $uploadTransactionRequest, CsvImportValidator $csvImportValidator)
     {
         $this->authorize('add_activity');
-        $activity  = $this->activityManager->getActivityData($id);
-        $name      = $request->file('transaction');
-        $validator = $csvImportValidator->validator->isValidCsv($name);
-        if ($validator->fails()) {
-            $response = ['type' => 'danger', 'code' => ['update_failed', ['name' => 'Transactions']]];
+        $activity = $this->activityManager->getActivityData($id);
+        $file     = $request->file('transaction');
+
+        if ($this->uploadTransactionManager->isEmptyCsv($file)) {
+            return redirect()->back()
+                             ->withResponse(
+                                 [
+                                     'type' => 'danger',
+                                     'code' => ['empty_template', ['name' => 'Transaction']]
+                                 ]
+                             );
+        }
+
+        $validator = $this->validatorForCurrentCsvType($file, $csvImportValidator);
+
+        if (null === $validator) {
+            return redirect()->back()->withResponse(['type' => 'danger', 'code' => ['header_mismatch', ['name' => 'Transaction']]]);
+        }
+
+        if (null !== $validator && $validator->fails()) {
+            $response = ['type' => 'danger', 'code' => ['update_failed', ['name' => 'Transaction']]];
 
             return redirect()->back()->withInput()->withErrors($validator)->withResponse($response);
         }
-        $this->uploadTransactionManager->save($name, $activity);
+
+        $this->uploadTransactionManager->save($file, $activity);
         $this->activityManager->resetActivityWorkflow($id);
         $response = ['type' => 'success', 'code' => ['updated', ['name' => 'Transactions']]];
 
         return redirect()->to(sprintf('/activity/%s/transaction', $id))->withResponse($response);
+    }
+
+    /**
+     * Validate csv according to the file type (detailed or simple csv)
+     * @param UploadedFile       $file
+     * @param CsvImportValidator $csvImportValidator
+     * @return null
+     */
+    protected function validatorForCurrentCsvType(UploadedFile $file, CsvImportValidator $csvImportValidator)
+    {
+        if ($this->uploadTransactionManager->isDetailedCsv($file)) {
+            return $csvImportValidator->validator->getDetailedCsvValidator($file);
+        }
+
+        if ($this->uploadTransactionManager->isSimpleCsv($file)) {
+            return $csvImportValidator->validator->isValidCsv($file);
+        }
+
+        return null;
     }
 }
