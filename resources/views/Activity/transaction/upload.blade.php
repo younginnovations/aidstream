@@ -21,14 +21,6 @@
                  </div>
                 <div class="col-xs-12 col-md-8 col-lg-8 element-content-wrapper">
                 <div class="panel panel-default panel-upload">
-                @if(count($errors)>0)
-                    @foreach($errors->all() as $error)
-                        <ul>
-                        <li style="color:red;">{{$error}}</li>
-                        </ul>
-                    @endforeach
-                @endif
-                    
                     <div class="panel-body">
                         <div class="create-form">
                             {!! form($form) !!}

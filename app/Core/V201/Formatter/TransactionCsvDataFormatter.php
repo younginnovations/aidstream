@@ -72,6 +72,10 @@ class TransactionCsvDataFormatter
             $this->csvData = array_merge($this->csvData, $this->formatTransactions($activity));
         }
 
+        if (count($this->csvData) == 1) {
+            return null;
+        }
+
         return $this->csvData;
     }
 

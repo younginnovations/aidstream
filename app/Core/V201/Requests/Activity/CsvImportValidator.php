@@ -63,11 +63,18 @@ class CsvImportValidator
     /**
      * check if the csv file data is valid or not
      * @param $file
-     * @return mixed
+     * @return Validator
      */
-    public function isValidCsv($file)
+    public function getDetailedCsvValidator($file)
     {
-        $transactions                   = Excel::load($file)->get()->toArray();
+        $transactions      = Excel::load($file)->get()->toArray();
+        $transactionHeader = Excel::load($file)->get()->first()->keys()->toArray();
+        $TemplateHeader    = Excel::load(app_path('Core/V201/Template/Csv/iati_transaction_template_detailed.csv'))->get()->first()->keys()->toArray();
+
+        if (count(array_intersect($transactionHeader, $TemplateHeader)) !== count($TemplateHeader)) {
+            return null;
+        }
+
         $transactionTypeCodes           = implode(',', $this->getCodes('TransactionType', 'Activity'));
         $disbursementChannelCodes       = implode(',', $this->getCodes('DisbursementChannel', 'Activity'));
         $sectorVocabularyCodes          = implode(',', $this->getCodes('SectorVocabulary', 'Activity'));

@@ -4,6 +4,7 @@ namespace App\Core;
 use App;
 use Auth;
 use Illuminate\Support\Facades\Session;
+use Maatwebsite\Excel\Excel;
 
 class Version
 {
@@ -109,6 +110,9 @@ class Version
         return $this->settingsElement;
     }
 
+    /**
+     * @return Excel
+     */
     public function getExcel()
     {
         return app('excel');
