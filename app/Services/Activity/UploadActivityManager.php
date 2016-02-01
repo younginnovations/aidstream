@@ -49,16 +49,18 @@ class UploadActivityManager
      */
     public function save($activityCsv, $organization)
     {
-        $excel          = $this->version->getExcel();
-        $activitiesRows = $excel->load($activityCsv)->get();
-
-        foreach ($activitiesRows as $activityRow) {
-            $activityDetails[] = $this->uploadActivityRepo->formatFromExcelRow($activityRow, $organization->id);
-        }
-        $identifiers = $this->uploadActivityRepo->getIdentifiers($organization->id);
         try {
+            $excel          = $this->version->getExcel();
+            $activitiesRows = $excel->load($activityCsv)->get();
+
+            foreach ($activitiesRows as $activityRow) {
+                $activityDetails[] = $this->uploadActivityRepo->formatFromExcelRow($activityRow, $organization->id);
+            }
+
+            $identifiers = $this->uploadActivityRepo->getIdentifiers($organization->id);
             $this->database->beginTransaction();
             $data = [];
+
             foreach ($activityDetails as $activityDetail) {
                 $activityIdentifier = $activityDetail['identifier']['activity_identifier'];
                 (isset($identifiers[$activityIdentifier]))
@@ -66,9 +68,11 @@ class UploadActivityManager
                     : $this->uploadActivityRepo->upload($activityDetail, $organization);
                 $this->database->commit();
             }
+
             if (count($data) > 0) {
                 return view('Activity.confirmUpdate')->withData($data);
             }
+
             $this->logger->info("Activities Uploaded for organization with id:" . $organization->id);
             $this->dbLogger->activity("activity.activity_uploaded", ['organization_id' => $organization->id]);
 

@@ -27,10 +27,11 @@ class Transaction extends V201Transaction
             } else {
                 $sectorValue = $transaction['sector'][0]['sector_text'];
             }
+
             $transactionData[] = [
                 '@attributes'          => [
                     'ref'          => $transaction['reference'],
-                    'humanitarian' => $transaction['humanitarian']
+                    'humanitarian' => (array_key_exists('humanitarian', $transaction) && !empty($transaction['humanitarian'])) ? $transaction['humanitarian'] : "0"
                 ],
                 'transaction-type'     => [
                     '@attributes' => [
@@ -56,7 +57,10 @@ class Transaction extends V201Transaction
                     '@attributes' => [
                         'ref'                  => $transaction['provider_organization'][0]['organization_identifier_code'],
                         'provider-activity-id' => $transaction['provider_organization'][0]['provider_activity_id'],
-                        'type'                 => $transaction['provider_organization'][0]['type']
+                        'type'                 => (array_key_exists(
+                                'type',
+                                $transaction['provider_organization'][0]
+                            ) && !empty($transaction['provider_organization'][0]['type'])) ? $transaction['provider_organization'][0]['type'] : " "
                     ],
                     'narrative'   => $this->buildNarrative($transaction['provider_organization'][0]['narrative'])
                 ],
@@ -64,7 +68,10 @@ class Transaction extends V201Transaction
                     '@attributes' => [
                         'ref'                  => $transaction['receiver_organization'][0]['organization_identifier_code'],
                         'receiver-activity-id' => $transaction['receiver_organization'][0]['receiver_activity_id'],
-                        'type'                 => $transaction['receiver_organization'][0]['type']
+                        'type'                 => (array_key_exists(
+                                'type',
+                                $transaction['receiver_organization'][0]
+                            ) && !empty($transaction['receiver_organization'][0]['type'])) ? $transaction['receiver_organization'][0]['type'] : " "
                     ],
                     'narrative'   => $this->buildNarrative($transaction['receiver_organization'][0]['narrative'])
                 ],
@@ -76,7 +83,10 @@ class Transaction extends V201Transaction
                 'sector'               => [
                     '@attributes' => [
                         'vocabulary'     => $vocabulary,
-                        'vocabulary-uri' => $transaction['sector'][0]['vocabulary_uri'],
+                        'vocabulary-uri' => (array_key_exists(
+                                'vocabulary_uri',
+                                $transaction['sector'][0]
+                            ) && !empty($transaction['sector'][0]['vocabulary_uri'])) ? $transaction['sector'][0]['vocabulary_uri'] : '',
                         'code'           => $sectorValue
                     ],
                     'narrative'   => $this->buildNarrative($transaction['sector'][0]['narrative'])
@@ -91,7 +101,10 @@ class Transaction extends V201Transaction
                     '@attributes' => [
                         'code'           => $transaction['recipient_region'][0]['region_code'],
                         'vocabulary'     => $transaction['recipient_region'][0]['vocabulary'],
-                        'vocabulary-uri' => $transaction['recipient_region'][0]['vocabulary_uri'],
+                        'vocabulary-uri' => (array_key_exists(
+                                'vocabulary_uri',
+                                $transaction['recipient_region'][0]
+                            ) && !empty($transaction['recipient_region'][0]['vocabulary_uri'])) ? $transaction['recipient_region'][0]['vocabulary_uri'] : '',
                     ],
                     'narrative'   => $this->buildNarrative($transaction['recipient_region'][0]['narrative'])
                 ],

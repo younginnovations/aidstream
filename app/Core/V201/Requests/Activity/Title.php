@@ -15,7 +15,8 @@ class Title extends ActivityBaseRequest
      */
     public function rules()
     {
-        $rules['narrative'] = 'unique_lang';
+        $rules['narrative.*.narrative'] = 'required';
+        $rules['narrative']             = 'unique_lang';
 
         return $rules;
     }
@@ -26,7 +27,8 @@ class Title extends ActivityBaseRequest
      */
     public function messages()
     {
-        $messages['narrative.unique_lang'] = 'Language should be unique.';
+        $messages['narrative.*.narrative.required'] = 'Title is required';
+        $messages['narrative.unique_lang']          = 'Language should be unique.';
 
         return $messages;
     }

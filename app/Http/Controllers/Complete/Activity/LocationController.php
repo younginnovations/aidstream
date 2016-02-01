@@ -36,6 +36,7 @@ class LocationController extends Controller
         LocationManager $locationManager,
         ActivityManager $activityManager
     ) {
+        $this->middleware('auth');
         $this->locationForm    = $locationForm;
         $this->locationManager = $locationManager;
         $this->activityManager = $activityManager;

@@ -9,15 +9,30 @@ use App\Core\V201\Repositories\Activity\IatiIdentifierRepository;
 class IatiIdentifierRequest extends ActivityBaseRequest
 {
     /**
+     * @var IatiIdentifierRepository
+     */
+    protected $iatiIdentifierRepository;
+
+    /**
+     * IatiIdentifierRequest constructor.
+     * @param IatiIdentifierRepository $iatiIdentifierRepository
+     */
+    public function __construct(IatiIdentifierRepository $iatiIdentifierRepository)
+    {
+        $this->iatiIdentifierRepository = $iatiIdentifierRepository;
+    }
+
+    /**
      * Get the validation rules that apply to the request.
      * @return array
      */
     public function rules()
     {
-        $iatiIdentifierRepository = new IatiIdentifierRepository();
-        $activityIdentifiers      = [];
-        $activityId               = $this->get('id');
-        $identifiers              = ($activityId) ? $iatiIdentifierRepository->getActivityIdentifiersExceptId($activityId) : $iatiIdentifierRepository->getActivityIdentifiers();
+        $activityIdentifiers = [];
+        $activityId          = $this->get('id');
+        $identifiers         = ($activityId) ? $this->iatiIdentifierRepository->getActivityIdentifiersForOrganizationExcept(
+            $activityId
+        ) : $this->iatiIdentifierRepository->getIdentifiersForOrganization();
 
         foreach ($identifiers as $identifier) {
             $activityIdentifiers[] = $identifier->activity_identifier;

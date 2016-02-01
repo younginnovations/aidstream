@@ -13,9 +13,11 @@ class CsvReader
      */
     public function getTransactionHeaders($fileName)
     {
-        $fileContents = file_get_contents(app_path("Core/" . session()->get('version') . "/Template/Transaction/$fileName.json"));
+        $rawFilePath = app_path("Core/%s/Template/Transaction/$fileName.json");
+        $filePath    = sprintf($rawFilePath, session()->get('version'));
+        file_exists($filePath) ?: $filePath = sprintf($rawFilePath, config('app.default_version_name'));
 
-        return json_decode($fileContents, true);
+        return json_decode(file_get_contents($filePath), true);
     }
 
     /**
@@ -25,8 +27,10 @@ class CsvReader
      */
     public function getActivityHeaders($fileName)
     {
-        $fileContents = file_get_contents(app_path("Core/" . session()->get('version') . "/Template/Activity/$fileName.json"));
+        $rawFilePath = app_path("Core/%s/Template/Activity/$fileName.json");
+        $filePath    = sprintf($rawFilePath, session()->get('version'));
+        file_exists($filePath) ?: $filePath = sprintf($rawFilePath, config('app.default_version_name'));
 
-        return json_decode($fileContents, true);
+        return json_decode(file_get_contents($filePath), true);
     }
 }

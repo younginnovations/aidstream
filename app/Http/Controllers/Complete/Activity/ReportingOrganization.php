@@ -8,7 +8,14 @@ use Illuminate\Support\Facades\Session;
 class ReportingOrganization extends Controller
 {
     /**
-     * write brief description
+     * ReportingOrganization constructor.
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    /**
      * @param                     $id
      * @param OrganizationManager $organizationManager
      * @return \Illuminate\View\View

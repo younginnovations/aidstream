@@ -1,11 +1,27 @@
 <?php namespace App\Core\V201\Requests\Activity;
 
+use App\Core\V201\Repositories\Activity\UploadTransaction;
+
 /**
  * Class Transaction
  * @package App\Core\V201\Requests\Activity
  */
 class Transaction extends ActivityBaseRequest
 {
+    /**
+     * @var UploadTransaction
+     */
+    protected $transactionRepo;
+
+    /**
+     * Transaction constructor.
+     * @param UploadTransaction $transactionRepo
+     */
+    public function __construct(UploadTransaction $transactionRepo)
+    {
+        parent::__construct();
+        $this->transactionRepo = $transactionRepo;
+    }
 
     public function rules()
     {
@@ -31,9 +47,24 @@ class Transaction extends ActivityBaseRequest
         $rules = [];
 
         foreach ($formFields as $transactionIndex => $transaction) {
-            $transactionForm                                  = sprintf('transaction.%s', $transactionIndex);
-            $rules[sprintf('%s.reference', $transactionForm)] = 'required';
-            $rules                                            = array_merge(
+            $transactionForm = sprintf('transaction.%s', $transactionIndex);
+            $transactionId   = $this->segment(4);
+            $activityId      = $this->segment(2);
+            $references      = ($transactionId) ? $this->transactionRepo->getTransactionReferencesExcept(
+                $activityId,
+                $transactionId
+            ) : $this->transactionRepo->getTransactionReferences($activityId);
+
+            $transactionReferences = [];
+            foreach ($references as $referenceKey => $reference) {
+                $transactionReferences[] = $referenceKey;
+            }
+
+            $transactionReference                             = implode(',', $transactionReferences);
+            $rules                                            = [];
+            $rules[sprintf('%s.reference', $transactionForm)] = 'required|not_in:' . $transactionReference;
+
+            $rules = array_merge(
                 $rules,
                 $this->getTransactionTypeRules($transaction['transaction_type'], $transactionForm),
                 $this->getTransactionDateRules($transaction['transaction_date'], $transactionForm),
@@ -59,7 +90,9 @@ class Transaction extends ActivityBaseRequest
         foreach ($formFields as $transactionIndex => $transaction) {
             $transactionForm                                              = sprintf('transaction.%s', $transactionIndex);
             $messages[sprintf('%s.reference.required', $transactionForm)] = 'Reference is required';
-            $messages                                                     = array_merge(
+            $messages[sprintf('%s.reference.not_in', $transactionForm)]   = 'Reference should be unique';
+
+            $messages = array_merge(
                 $messages,
                 $this->getTransactionTypeMessages($transaction['transaction_type'], $transactionForm),
                 $this->getTransactionDateMessages($transaction['transaction_date'], $transactionForm),

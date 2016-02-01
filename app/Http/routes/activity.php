@@ -38,28 +38,6 @@ $router->group(
         $router->resource('activity.transaction.delete', 'TransactionController@destroy');
         $router->resource('activity.transaction-upload', 'TransactionUploadController');
         $router->resource('activity-upload', 'ActivityUploadController');
-        Route::get(
-            '/download-detailed-transaction',
-            function () {
-                $pathToFile = app_path("Core/" . session()->get('version') . "/Files/Csv/iati_transaction_template_detailed.csv");
-                if (!File::exists($pathToFile)) {
-                    $pathToFile = app_path("Core/V201/Files/Csv/iati_transaction_template_detailed.csv");
-                }
-
-                return Response::download($pathToFile);
-            }
-        );
-        Route::get(
-            '/download-activity-template',
-            function () {
-                $pathToFile = app_path("Core/" . session()->get('version') . "/Files/Csv/iati_activity_template.csv");
-                if (!File::exists($pathToFile)) {
-                    $pathToFile = app_path("Core/V201/Files/Csv/iati_activity_template.csv");
-                }
-
-                return Response::download($pathToFile);
-            }
-        );
         $router->resource('activity.legacy-data', 'LegacyDataController');
         $router->post('activity/{id}/update-status', 'ActivityController@updateStatus');
         $router->get(

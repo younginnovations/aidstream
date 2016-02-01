@@ -10,6 +10,20 @@ use App\Models\Activity\Activity;
 class IatiIdentifierRepository
 {
     /**
+     * @var Activity
+     */
+    protected $activity;
+
+    /**
+     * IatiIdentifierRepository constructor.
+     * @param Activity $activity
+     */
+    public function __construct(Activity $activity)
+    {
+        $this->activity = $activity;
+    }
+
+    /**
      * @param $input
      * @param $activity
      */
@@ -28,7 +42,7 @@ class IatiIdentifierRepository
      */
     public function getIatiIdentifierData($activityId)
     {
-        return Activity::findorFail($activityId)->identifier;
+        return $this->activity->findorFail($activityId)->identifier;
     }
 
     /**
@@ -37,7 +51,7 @@ class IatiIdentifierRepository
      */
     public function getActivityData($activityId)
     {
-        return Activity::findorFail($activityId);
+        return $this->activity->findorFail($activityId);
 
     }
 
@@ -47,7 +61,7 @@ class IatiIdentifierRepository
      */
     public function getActivityIdentifiers()
     {
-        return Activity::all('identifier');
+        return $this->activity->all('identifier');
     }
 
     /**
@@ -55,8 +69,31 @@ class IatiIdentifierRepository
      * @param $activityId
      * @return mixed
      */
-    public function getActivityIdentifiersExceptId($activityId)
+    public function getActivityIdentifiersExcept($activityId)
     {
-        return Activity::where('id', '<>', $activityId)->get(['identifier']);
+        return $this->activity->where('id', '<>', $activityId)->get(['identifier']);
+    }
+
+    /**
+     * get identifier of an organization
+     * @return mixed
+     */
+    public function getIdentifiersForOrganization()
+    {
+        return $this->activity->where('organization_id', '=', session('org_id'))->get(['identifier']);
+    }
+
+    /**
+     * get identifier except activityId of an organization
+     * @param $activityId
+     * @return mixed
+     */
+    public function getActivityIdentifiersForOrganizationExcept($activityId)
+    {
+        return $this->activity->where(
+            function ($query) use ($activityId) {
+                $query->where('id', '<>', $activityId)->where('organization_id', '=', session('org_id'));
+            }
+        )->get(['identifier']);
     }
 }

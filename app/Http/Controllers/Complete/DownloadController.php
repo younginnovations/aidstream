@@ -27,6 +27,7 @@ class DownloadController extends Controller
      */
     function __construct(DownloadCsvManager $downloadCsvManager, CsvGenerator $generator)
     {
+        $this->middleware('auth');
         $this->downloadCsvManager = $downloadCsvManager;
         $this->generator          = $generator;
     }
@@ -91,5 +92,47 @@ class DownloadController extends Controller
         $headers = $csvData['headers'];
         unset($csvData['headers']);
         $this->generator->generateWithHeaders('transaction', $csvData, $headers);
+    }
+
+    /**
+     * download Detailed Transaction Template as 'iati_transaction_template_detailed.csv'
+     * @return mixed
+     */
+    public function downloadDetailedTransactionTemplate()
+    {
+        $pathToFile = app_path("Core/" . session()->get('version') . "/Files/Csv/iati_transaction_template_detailed.csv");
+        if (!File::exists($pathToFile)) {
+            $pathToFile = app_path("Core/" . config('app.default_version_name') . "/Files/Csv/iati_transaction_template_detailed.csv");
+        }
+
+        return Response::download($pathToFile);
+    }
+
+    /**
+     * download simple transaction template as 'iati_transaction_template_simple.csv'
+     * @return mixed
+     */
+    public function downloadSimpleTransactionTemplate()
+    {
+        $pathToFile = app_path("Core/" . session()->get('version') . "/Files/Csv/iati_transaction_template_simple.csv");
+        if (!File::exists($pathToFile)) {
+            $pathToFile = app_path("Core/" . config('app.default_version_name') . "/Files/Csv/iati_transaction_template_simple.csv");
+        }
+
+        return Response::download($pathToFile);
+    }
+
+    /**
+     * download activity template as 'iati_activity_template.csv'
+     * @return mixed
+     */
+    public function downloadActivityTemplate()
+    {
+        $pathToFile = app_path("Core/" . session()->get('version') . "/Files/Csv/iati_activity_template.csv");
+        if (!File::exists($pathToFile)) {
+            $pathToFile = app_path("Core/" . config('app.default_version_name') . "/Files/Csv/iati_activity_template.csv");
+        }
+
+        return Response::download($pathToFile);
     }
 }
