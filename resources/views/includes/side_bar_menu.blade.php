@@ -18,14 +18,3 @@
         </div>
     </div>
 </div>
-
-<?php
-
-function getLinkStatus($url)
-{
-    $currentUrl = url(Request::path());
-
-    return $url === $currentUrl ? 'active' : '';
-}
-
-?>

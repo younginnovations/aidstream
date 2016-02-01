@@ -30,7 +30,8 @@
   "autoload": {
     "files": [
       "app/Helpers/HelperLanguage.php",
-      "app/Helpers/TimeZone.php"
+      "app/Helpers/TimeZone.php",
+      "app/Helpers/linkHelpers.php"
     ],
     "classmap": [
       "database"
