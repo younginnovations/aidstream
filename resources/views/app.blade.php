@@ -37,21 +37,21 @@
                         </button> -->
 
             <div class="navbar-brand">
-              <a href="{{ Auth::user()->role_id == 3 ? url('admin/dashboard') : url('/')  }}"
-                 alt="Aidstream">Aidstream</a>
+                <a href="{{ Auth::user()->role_id == 3 ? url('admin/dashboard') : url('/')  }}"
+                   alt="Aidstream">Aidstream</a>
                <span class="version {{ (Session::get('version') == 'V201') ? 'old' : 'new' }}">
                  IATI version {{Auth::user() ? Session::get('version') : "Aidstream"}}
-                 @if ((Session::get('version') == 'V201'))
-                 <span class="old-version">
+                   @if ((Session::get('version') == 'V201'))
+                       <span class="old-version">
                    Upgrade to IATI version 2.0.2
                  </span>
-                 @else
-                 <span class="new-version">
+                   @else
+                       <span class="new-version">
                    You’re using latest IATI version
                  </span>
-                 @endif
+                   @endif
                </span>
-           </div>
+            </div>
         </div>
 
         <div class="collapse navbar-collapse navbar-right" id="bs-example-navbar-collapse-1">
@@ -101,24 +101,7 @@
         </div>
     </div>
 </nav>
-{{--*/
-        $response = session('response');
-    /*--}}
-@if($response)
-    @if(isset($response['messages']) && (array) $response['messages'])
-        <div class="alert alert-{{$response['type']}}">
-            <ul>
-                @foreach($response['messages'] as $message)
-                    <li>- {!! $message !!}</li>
-                @endforeach
-            </ul>
-        </div>
-    @else
-        <div class="alert alert-{{$response['type']}}">
-            <span>{!! message($response) !!}</span>
-        </div>
-    @endif
-@endif
+
 @yield('content')
 
 <!-- Scripts -->

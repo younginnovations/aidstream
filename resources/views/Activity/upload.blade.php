@@ -16,6 +16,7 @@
         <div class="row">
             @include('includes.side_bar_menu')
             <div class="col-xs-9 col-md-9 col-lg-9 content-wrapper">
+                    @include('includes.response')
                      <div class="panel-content-heading panel-title-heading">
                             Upload Activities
                             <a href="{{ route('activity.index') }}" class="pull-right back-to-list"><span class="glyphicon glyphicon-triangle-left"></span>Back to Activity List</a>
