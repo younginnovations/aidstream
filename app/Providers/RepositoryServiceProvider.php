@@ -1,5 +1,7 @@
 <?php namespace App\Providers;
 
+use App\Migration\Migrator\ActivityMigrator;
+use App\Migration\Migrator\Contract\MigratorContract;
 use Illuminate\Support\ServiceProvider;
 
 /**

@@ -48,7 +48,8 @@ class Activity extends Model
         'legacy_data',
         'conditions',
         'default_field_values',
-        'humanitarian_scope'
+        'humanitarian_scope',
+        'id'
     ];
 
     /**
