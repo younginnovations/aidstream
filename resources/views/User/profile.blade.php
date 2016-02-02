@@ -9,34 +9,40 @@
             @include('includes.side_bar_menu')
             <div class="col-xs-9 col-md-9 col-lg-9 content-wrapper">
                 @include('includes.breadcrumb')
-                <div class="panel-content-heading panel-title-heading">My Profile</div>
-                <div class="col-xs-12 col-md-8 col-lg-8 element-content-wrapper">
-                    <div class="panel panel-default">
+                <div class="panel-content-heading panel-title-heading">{{Auth::user()->name}}</div>
+                <div class="col-xs-12 col-md-12 col-lg-12 element-content-wrapper profile-content-wrapper">
+                    <div class="panel panel-default panel-profile">
                         <div class="panel-body">
-                            <div><span>Name : </span>{{Auth::user()->name}}</div>
-                            <div><span>Email : </span>{{Auth::user()->email}}</div>
-                            <div><span>Username : </span>{{Auth::user()->username}}</div>
+                            <div class="profile-img">
+                              <img src="{{url('images/avatar-full.png')}}" width="200" height="200" alt="{{Auth::user()->name}}">
+                            </div>
+                            <div class="profile-info">
+                              <span class="profile-username">{{Auth::user()->username}}</span>
+                              <span class="profile-user-email"><a href="mailto:{{Auth::user()->email}}">{{Auth::user()->email}}</a></span>
+                              <div class=""><a href="{{route('user.edit-profile', Auth::user()->id)}}" class="edit-profile">Edit Profile</a></div>
+                              <!-- <div class="edit-element edit-profile"><a href="{{route('user.edit-profile', Auth::user()->id)}}">Edit Profile</a> | <a href="{{route('user.change-username', Auth::user()->id)}}">Change Username</a> | <a href="{{route('user.reset-user-password', Auth::user()->id)}}">Change Password</a></div> -->
+                            </div>
                         </div>
-                        <div><a href="{{route('user.edit-profile', Auth::user()->id)}}">Edit Profile</a> | <a href="{{route('user.change-username', Auth::user()->id)}}">Change Username</a> | <a href="{{route('user.reset-user-password', Auth::user()->id)}}">Change Password</a></div>
-                    </div>
-                </div>
-                <div class="col-xs-12 col-md-8 col-lg-8 element-content-wrapper">
-                    <div class="panel panel-default">
-                        <div class="panel-content-heading panel-title-heading">Organization Details</div>
+                  </div>
+                    <div class="panel panel-default panel-associated-organization">
+                        <div class="panel-sub-heading">Associated Organization</div>
                         <div class="panel-body">
-                            <div><img src="{{$organization[0]->logo ? $organization[0]->logo_url : url('images/no-logo.png')}}"></div>
-                            <div><span>Organization Name : </span>{{$organization[0]->name}}</div>
-                            <div><span>Organization Address : </span>{{$organization[0]->address}}</div>
-                            <div><span>Organization Country : </span>{{$getCode->getOrganizationCodeName('Country', $organization[0]->country)}}</div>
-                            <div><span>Organization Telephone : </span>{{$organization[0]->telephone}}</div>
-                            <div><span>Organization Twitter : </span>{{$organization[0]->twitter}}</div>
-                            <div><span>Organization Url : </span>{{$organization[0]->organization_url}}</div>
-                            <div><span>Disqus Comments : </span>{{($organization[0]->disqus_comments == 1) ? 'Enabled' : 'Disabled'}}</div>
+                            <div class="organization-logo"><img src="{{$organization[0]->logo ? $organization[0]->logo_url : url('images/no-logo.png')}}"></div>
+                            <div class="organization-detail">
+                              <div class="organization-name">{{$organization[0]->name}}</div>
+                              <ul>
+                                <li class="telephone col-xs-6 col-md-4 col-lg-4"><label>Telephone</label><span>{{$organization[0]->telephone}}</span></li>
+                                <li class="twitter col-xs-6 col-md-4 col-lg-4"><label>Twitter</label><a href="#">{{$organization[0]->twitter}}</a></li>
+                                <li class="website col-xs-6 col-md-4 col-lg-4"><label>Website</label><a href="#">{{$organization[0]->organization_url}}</a></li>
+                                <li class="address col-xs-6 col-md-4 col-lg-4"><label>Address</label><span>{{$organization[0]->address}}</span></li>
+                                <li class="country col-xs-6 col-md-4 col-lg-4"><label>Country</label><span>{{$getCode->getOrganizationCodeName('Country', $organization[0]->country)}}</span></li>
+                              </ul>
+                              <div class="disqus-wrapper"><span>Disqus Comments : </span>{{($organization[0]->disqus_comments == 1) ? 'Enabled' : 'Disabled'}}</div>
+                            </div>
                         </div>
-                    </div>
-                </div>
+                  </div>
             </div>
         </div>
     </div>
+  </div>
 @endsection
-
