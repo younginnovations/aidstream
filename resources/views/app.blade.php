@@ -35,8 +35,23 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button> -->
-            <a class="navbar-brand" href="{{ Auth::user()->role_id == 3 ? url('admin/dashboard') : url('/')  }}" style="text-indent: 145px; line-height: 35px;"
-               alt="Aidstream">{{Auth::user() ? "(" . Session::get('version') . ")" : "Aidstream"}}</a>
+
+            <div class="navbar-brand">
+              <a href="{{ Auth::user()->role_id == 3 ? url('admin/dashboard') : url('/')  }}"
+                 alt="Aidstream">Aidstream</a>
+               <span class="version {{ (Session::get('version') == 'V201') ? 'old' : 'new' }}">
+                 IATI version {{Auth::user() ? Session::get('version') : "Aidstream"}}
+                 @if ((Session::get('version') == 'V201'))
+                 <span class="old-version">
+                   Upgrade to IATI version 2.0.2
+                 </span>
+                 @else
+                 <span class="new-version">
+                   You’re using latest IATI version
+                 </span>
+                 @endif
+               </span>
+           </div>
         </div>
 
         <div class="collapse navbar-collapse navbar-right" id="bs-example-navbar-collapse-1">
@@ -66,7 +81,7 @@
                     </li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                           aria-expanded="false"><span class="avatar-img"><img src="{{url('images/avatar.png')}}" width="16" height="26" alt="{{Auth::user()->name}}"></span>
+                           aria-expanded="false"><span class="avatar-img"><img src="{{url('images/avatar.png')}}" width="36" height="36" alt="{{Auth::user()->name}}"></span>
                             <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
                             <li><a href="{{url('user/profile')}}">@lang('trans.my_profile')</a></li>
@@ -100,7 +115,7 @@
         </div>
     @else
         <div class="alert alert-{{$response['type']}}">
-            {!! message($response) !!}
+            <span>{!! message($response) !!}</span>
         </div>
     @endif
 @endif
