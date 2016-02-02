@@ -7,6 +7,7 @@
         <div class="row">
             @include('includes.side_bar_menu')
             <div class="col-xs-9 col-md-9 col-lg-9 content-wrapper">
+                @include('includes.response')
                 @include('includes.breadcrumb')
                 <div class="panel panel-default panel-create">
                     <div class="panel-content-heading panel-title-heading">{{$duplicate ? 'Duplicate Activity' : 'Add Activity'}}</div>
