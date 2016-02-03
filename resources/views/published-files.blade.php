@@ -43,7 +43,9 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="6" class="text-center no-data">No published files found.</td>
+                                  <div class="text-center no-data no-document-data">
+                                    No published files found.
+                                  </div>
                                 </tr>
                             @endforelse
                             </tbody>

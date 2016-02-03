@@ -40,10 +40,12 @@
                           </tbody>
                       </table>
                     @else
-                        <div class="text-center no-data">No users yet :: </div>
+                    <div class="text-center no-data no-user-data">
+                      You haven’t added any user yet.
+                      <a href="{{ route('admin.register-user') }}" class="btn btn-primary">Add a user</a>
+                    </div>
                     @endif
                   </div>
-                    <a href="{{ route('admin.register-user') }}" class="add">Add User</a>
                 </div>
             </div>
         </div>
