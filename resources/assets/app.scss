@@ -111,6 +111,13 @@ input,button {
 	}
 }
 
+button, input[type="button"], input[type="reset"], input[type="submit"] {
+	background: $color_dodger_blue_approx;
+	&:hover {
+		background: $color_lochmara_approx;
+	}
+}
+
 //status message
 .navbar+.alert {
 	margin-bottom: 0;
@@ -1088,14 +1095,13 @@ $element-sidebar-wrapper-width: 267px;
 
 .activity-status {
 	background: $color_rose_white_approx;
-	padding: 30px 30px 18px;
+	padding: 16px 40px 18px 50px;
 	text-align: center;
 	overflow: hidden;
 	margin-top: -20px;
 	margin-bottom: 48px;
 	ol {
-		width: 440px;
-		margin: 0 auto;
+		margin-top: 15px;
 		li {
 			float: left;
 			font-size: 12px;
@@ -1142,6 +1148,15 @@ $element-sidebar-wrapper-width: 267px;
 	}
 	&+a {
 		margin-right: 40px;
+	}
+}
+
+.activity-status input[type="submit"],.activity-status input[type="button"]  {
+	font: normal 13px $font_0;
+	padding-left: 38px;
+	background: $color_dodger_blue_approx $url_3 no-repeat -210px -122px;
+	&:hover {
+		background-color: $color_lochmara_approx;
 	}
 }
 
@@ -1696,6 +1711,7 @@ form > .add_to_collection[data-collection="legacy_data"] {
 		padding-right: 20px;
 		> .form-group {
 			display: inline-block;
+			vertical-align: top;
 			padding-right: 30px;
 			margin-right: -2px;
 			position: relative;
@@ -1854,7 +1870,7 @@ $organization-logo-width: 124px;
 	content: "";
 	width: 32px;
 	height: 32px;
-	background: url(../../images/ic-sprite.png) no-repeat;
+	background: $url_3 no-repeat;
 	float: left;
 	margin: 4px 10px 10px 0;
 }
@@ -1905,7 +1921,7 @@ $organization-logo-width: 124px;
 		content: "";
 		width: 32px;
 		height: 32px;
-		background: url(../../images/ic-sprite.png) no-repeat -154px -261px;
+		background: $url_3 no-repeat -154px -261px;
 		float: left;
 		margin: -4px 9px 0 0;
 	}
@@ -2327,7 +2343,8 @@ $organization-logo-width: 124px;
     alert-danger  $color_mandy_approx
   ) {
     &.#{nth($alert-type, 1)} {
-			font-size: 16px;
+			font-size: 15px;
+			line-height: 21px;
       color: $color_white;
       background-color: nth($alert-type, 2);
 			border: 0;
@@ -2367,4 +2384,8 @@ $organization-logo-width: 124px;
 
 .alert-error:before,.alert-danger:before {
 	background-position:  -2px -78px;
+}
+
+.document-wrapper td a {
+	word-wrap: break-word;
 }

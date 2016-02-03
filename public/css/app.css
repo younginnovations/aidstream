@@ -276,6 +276,11 @@ input, button {
   input:focus, input:active, button:focus, button:active {
     outline: none !important; }
 
+button, input[type="button"], input[type="reset"], input[type="submit"] {
+  background: #00A8FF; }
+  button:hover, input[type="button"]:hover, input[type="reset"]:hover, input[type="submit"]:hover {
+    background: #038ED6; }
+
 .navbar + .alert {
   margin-bottom: 0; }
 
@@ -1080,14 +1085,13 @@ label {
 
 .activity-status {
   background: #fff5f5;
-  padding: 30px 30px 18px;
+  padding: 16px 40px 18px 50px;
   text-align: center;
   overflow: hidden;
   margin-top: -20px;
   margin-bottom: 48px; }
   .activity-status ol {
-    width: 440px;
-    margin: 0 auto; }
+    margin-top: 15px; }
     .activity-status ol li {
       float: left;
       font-size: 12px;
@@ -1129,6 +1133,13 @@ label {
       background: #e15454; }
   .activity-status + a {
     margin-right: 40px; }
+
+.activity-status input[type="submit"], .activity-status input[type="button"] {
+  font: normal 13px Open-Sans-Regular;
+  padding-left: 38px;
+  background: #00A8FF url(../../images/ic-sprite.png) no-repeat -210px -122px; }
+  .activity-status input[type="submit"]:hover, .activity-status input[type="button"]:hover {
+    background-color: #038ED6; }
 
 .activity-status-completed {
   background: #fff4e5; }
@@ -1547,6 +1558,7 @@ form > .add_to_collection[data-collection="legacy_data"] {
     padding-right: 20px; }
     .change-activity-form > form > .form-group {
       display: inline-block;
+      vertical-align: top;
       padding-right: 30px;
       margin-right: -2px;
       position: relative;
@@ -2032,31 +2044,36 @@ form > .add_to_collection[data-collection="legacy_data"] {
 .alert {
   margin-bottom: 0; }
   .alert.alert-info {
-    font-size: 16px;
+    font-size: 15px;
+    line-height: 21px;
     color: #fff;
     background-color: #00A8FF;
     border: 0;
     vertical-align: middle; }
   .alert.alert-success {
-    font-size: 16px;
+    font-size: 15px;
+    line-height: 21px;
     color: #fff;
     background-color: #52cc88;
     border: 0;
     vertical-align: middle; }
   .alert.alert-warning {
-    font-size: 16px;
+    font-size: 15px;
+    line-height: 21px;
     color: #fff;
     background-color: #feb752;
     border: 0;
     vertical-align: middle; }
   .alert.alert-error {
-    font-size: 16px;
+    font-size: 15px;
+    line-height: 21px;
     color: #fff;
     background-color: #e15454;
     border: 0;
     vertical-align: middle; }
   .alert.alert-danger {
-    font-size: 16px;
+    font-size: 15px;
+    line-height: 21px;
     color: #fff;
     background-color: #e15454;
     border: 0;
@@ -2088,5 +2105,8 @@ form > .add_to_collection[data-collection="legacy_data"] {
 
 .alert-error:before, .alert-danger:before {
   background-position: -2px -78px; }
+
+.document-wrapper td a {
+  word-wrap: break-word; }
 
 /*# sourceMappingURL=maps/app.css.map */
