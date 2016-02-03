@@ -41,7 +41,10 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="3" class="text-center no-data">No documents found.</td>
+                                  <div class="text-center no-data no-document-data">
+                                    You haven’t added any document yet.
+                                    <a href="#" class="btn btn-primary">Add a document</a>
+                                  </div>
                                 </tr>
                             @endforelse
                             </tbody>

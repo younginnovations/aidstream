@@ -52,7 +52,10 @@
                             </tbody>
                         </table>
                         @else
-                            <div class="text-center no-data">You haven’t added an activity yet. </div>
+                          <div class="text-center no-data no-activity-data">
+                            You haven’t added any activity yet.
+                            <a href="#" class="btn btn-primary">Add an activity</a>
+                          </div>
                         @endif
                     </div>
                 </div>

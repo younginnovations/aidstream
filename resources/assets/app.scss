@@ -49,6 +49,10 @@ $font_2: Open-Sans-Light;
 $url_1: url(../../images/login-bg.jpg);
 $url_2: url(../../images/logo-text.png);
 $url_3: url(../../images/ic-sprite.png);
+$url_4: url(../../images/ic-status-sprite.png);
+$url_5: url(../../images/ic-no-activity.png);
+$url_6: url(../../images/ic-no-document.png);
+$url_7: url(../../images/ic-no-user.png);
 
 html,body {
 	height: 100%;
@@ -916,12 +920,40 @@ $full-sidebar-wrapper-width: 250px;
 }
 
 .no-data {
-	font-size: 17px;
+	font-size: 16px;
 	font-style: italic;
 	color: rgba($color_gravel_approx,0.7);
-	padding: 44px 0 50px!important;
+	padding: 44px 0 50px;
 	background: rgba($color_gravel_approx,0.06);
 	margin-bottom: 20px;
+	.btn {
+		background: $color_dodger_blue_approx $url_3 no-repeat -479px -138px;
+		border: 0;
+    line-height: 67px;
+    padding: 0 34px 0 62px;
+		font-size: 16px;
+    display: table;
+    margin: 25px auto;
+		font-style: normal;
+		&:hover {
+			background-color: $color_cerulean_approx;
+		}
+	}
+}
+
+.no-activity-data {
+	background: rgba($color_gravel_approx,0.06) $url_5 no-repeat center 79px;
+	padding: 204px 0 20px;
+}
+
+.no-document-data {
+	background: rgba($color_gravel_approx,0.06) $url_6 no-repeat center 79px;
+	padding: 204px 0 20px;
+}
+
+.no-user-data {
+	background: rgba($color_gravel_approx,0.06) $url_7 no-repeat center 79px;
+	padding: 204px 0 20px;
 }
 
 .element-panel-heading {
@@ -1463,6 +1495,7 @@ form > .add_to_collection[data-collection="legacy_data"] {
 
 .btn-form {
 	width: 320px;
+	display: block;
 }
 
 .create-form .btn-form {
@@ -2285,6 +2318,7 @@ $organization-logo-width: 124px;
 }
 
 .alert {
+	margin-bottom: 0;
   @each $alert-type in (
     alert-info    $color_dodger_blue_approx,
     alert-success $color_emerald_approx,
@@ -2302,7 +2336,8 @@ $organization-logo-width: 124px;
   }
 	> ul, >span {
 		display: inline-block;
-		vertical-align: middle;;
+		vertical-align: middle;
+		width: 80%;
 	}
 }
 
@@ -2311,7 +2346,7 @@ $organization-logo-width: 124px;
 	height: 34px;
 	content: "";
 	display: inline-block;
-	background: url(../images/ic-status-sprite.png) no-repeat;
+	background: $url_4 no-repeat;
 	margin-right: 10px;
 	vertical-align: middle;
 }

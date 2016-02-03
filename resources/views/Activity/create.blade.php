@@ -26,7 +26,7 @@
                 @if(!$duplicate)
                     <div class="panel panel-default panel-element-detail panel-activity-default">
                         <div class="panel-body">
-                            <div class="alert alert-info">You can change the Activity Default Field Values once after you create an activity.</div>
+                            <div class="alert alert-info"><span>You can change the Activity Default Field Values once after you create an activity.</span></div>
                             <div class="panel-default">
                             <div class="panel-heading">@lang('trans.activity_default')</div>
                             <div class="panel-body panel-element-body">

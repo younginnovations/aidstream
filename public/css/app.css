@@ -941,12 +941,35 @@ label {
     background-position: -390px -394px; }
 
 .no-data {
-  font-size: 17px;
+  font-size: 16px;
   font-style: italic;
   color: rgba(72, 72, 72, 0.7);
-  padding: 44px 0 50px !important;
+  padding: 44px 0 50px;
   background: rgba(72, 72, 72, 0.06);
   margin-bottom: 20px; }
+  .no-data .btn {
+    background: #00A8FF url(../../images/ic-sprite.png) no-repeat -479px -138px;
+    border: 0;
+    line-height: 67px;
+    padding: 0 34px 0 62px;
+    font-size: 16px;
+    display: table;
+    margin: 25px auto;
+    font-style: normal; }
+    .no-data .btn:hover {
+      background-color: #0598e5; }
+
+.no-activity-data {
+  background: rgba(72, 72, 72, 0.06) url(../../images/ic-no-activity.png) no-repeat center 79px;
+  padding: 204px 0 20px; }
+
+.no-document-data {
+  background: rgba(72, 72, 72, 0.06) url(../../images/ic-no-document.png) no-repeat center 79px;
+  padding: 204px 0 20px; }
+
+.no-user-data {
+  background: rgba(72, 72, 72, 0.06) url(../../images/ic-no-user.png) no-repeat center 79px;
+  padding: 204px 0 20px; }
 
 .element-panel-heading {
   background: #f9f9f9;
@@ -1371,7 +1394,8 @@ form > .add_to_collection[data-collection="legacy_data"] {
   border: 1px dashed #00A8FF !important; }
 
 .btn-form {
-  width: 320px; }
+  width: 320px;
+  display: block; }
 
 .create-form .btn-form {
   position: absolute;
@@ -2005,51 +2029,49 @@ form > .add_to_collection[data-collection="legacy_data"] {
     width: 20%;
     margin-right: -3px; } }
 
-.alert.alert-info {
-  font-size: 16px;
-  color: #fff;
-  background-color: #00A8FF;
-  border: 0;
-  vertical-align: middle; }
-
-.alert.alert-success {
-  font-size: 16px;
-  color: #fff;
-  background-color: #52cc88;
-  border: 0;
-  vertical-align: middle; }
-
-.alert.alert-warning {
-  font-size: 16px;
-  color: #fff;
-  background-color: #feb752;
-  border: 0;
-  vertical-align: middle; }
-
-.alert.alert-error {
-  font-size: 16px;
-  color: #fff;
-  background-color: #e15454;
-  border: 0;
-  vertical-align: middle; }
-
-.alert.alert-danger {
-  font-size: 16px;
-  color: #fff;
-  background-color: #e15454;
-  border: 0;
-  vertical-align: middle; }
-
-.alert > ul, .alert > span {
-  display: inline-block;
-  vertical-align: middle; }
+.alert {
+  margin-bottom: 0; }
+  .alert.alert-info {
+    font-size: 16px;
+    color: #fff;
+    background-color: #00A8FF;
+    border: 0;
+    vertical-align: middle; }
+  .alert.alert-success {
+    font-size: 16px;
+    color: #fff;
+    background-color: #52cc88;
+    border: 0;
+    vertical-align: middle; }
+  .alert.alert-warning {
+    font-size: 16px;
+    color: #fff;
+    background-color: #feb752;
+    border: 0;
+    vertical-align: middle; }
+  .alert.alert-error {
+    font-size: 16px;
+    color: #fff;
+    background-color: #e15454;
+    border: 0;
+    vertical-align: middle; }
+  .alert.alert-danger {
+    font-size: 16px;
+    color: #fff;
+    background-color: #e15454;
+    border: 0;
+    vertical-align: middle; }
+  .alert > ul, .alert > span {
+    display: inline-block;
+    vertical-align: middle;
+    width: 80%; }
 
 .alert:before {
   width: 34px;
   height: 34px;
   content: "";
   display: inline-block;
-  background: url(../images/ic-status-sprite.png) no-repeat;
+  background: url(../../images/ic-status-sprite.png) no-repeat;
   margin-right: 10px;
   vertical-align: middle; }
 
