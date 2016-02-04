@@ -638,7 +638,7 @@
                                 </div>
                             </div>
                         @endif
-
+                        
                         @if(!empty($policyMarkers))
                             <div class="panel panel-default">
                                 <div class="panel-heading">Policy Markers
