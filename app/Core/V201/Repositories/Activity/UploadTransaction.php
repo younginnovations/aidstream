@@ -10,6 +10,7 @@ use App\Models\Activity\Transaction as TransactionModel;
  */
 class UploadTransaction
 {
+    const SIMPLE_CSV_COLUMN_COUNT = 14;
     /**
      * @var TransactionModel
      */
@@ -65,6 +66,20 @@ class UploadTransaction
      */
     public function formatFromExcelRow($transactionRow)
     {
+        if (count($transactionRow) == self::SIMPLE_CSV_COLUMN_COUNT) {
+            return $this->formatFromSimpleCsv($transactionRow);
+        }
+
+        return $this->formatFormDetailedCsv($transactionRow);
+    }
+
+    /**
+     * format rows form detailed csv.
+     * @param $transactionRow
+     * @return array
+     */
+    protected function formatFormDetailedCsv($transactionRow)
+    {
         $transaction                                                             = $this->readCsv->getTransactionHeaders('Detailed');
         $transaction['reference']                                                = $transactionRow['transaction_ref'];
         $transaction['transaction_type'][0]['transaction_type_code']             = $transactionRow['transactiontype_code'];
@@ -99,6 +114,66 @@ class UploadTransaction
     public function getTransactionReferences($activityId)
     {
         $transactions = $this->transaction->where('activity_id', $activityId)->get();
+        $references   = [];
+
+        foreach ($transactions as $transactionRow) {
+            $references[$transactionRow->transaction['reference']] = $transactionRow->id;
+        }
+
+        return $references;
+    }
+
+    /**
+     * format rows form simple csv
+     * @param $transactionRow
+     * @return array
+     */
+    protected function formatFromSimpleCsv($transactionRow)
+    {
+        $transaction              = $this->readCsv->getTransactionHeaders('Detailed');
+        $transaction['reference'] = $transactionRow['internal_reference'];
+        if ($transactionRow['incoming_fund']) {
+            $transaction['transaction_type'][0]['transaction_type_code'] = 1;
+            $transaction['value'][0]['amount']                           = $transactionRow['incoming_fund'];
+
+        } elseif ($transactionRow['expenditure']) {
+            $transaction['transaction_type'][0]['transaction_type_code'] = 4;
+            $transaction['value'][0]['amount']                           = $transactionRow['expenditure'];
+
+
+        } elseif ($transactionRow['disbursement']) {
+            $transaction['transaction_type'][0]['transaction_type_code'] = 3;
+            $transaction['value'][0]['amount']                           = $transactionRow['disbursement'];
+
+        } else {
+            $transaction['transaction_type'][0]['transaction_type_code'] = 2;
+            $transaction['value'][0]['amount']                           = $transactionRow['commitment'];
+        }
+        $transaction['value'][0]['date']                                         = $transactionRow['transaction_date'];
+        $transaction['transaction_date'][0]['date']                              = $transactionRow['transaction_date'];
+        $transaction['description'][0]['narrative'][0]['narrative']              = $transactionRow['description'];
+        $transaction['provider_organization'][0]['organization_identifier_code'] = $transactionRow['provider_org_reference'];
+        $transaction['provider_organization'][0]['provider_activity_id']         = $transactionRow['provider_activity_id'];
+        $transaction['provider_organization'][0]['narrative'][0]['narrative']    = $transactionRow['provider_org_name'];
+        $transaction['receiver_organization'][0]['organization_identifier_code'] = $transactionRow['receiver_org_reference'];
+        $transaction['receiver_organization'][0]['receiver_activity_id']         = $transactionRow['receiver_activity_id'];
+        $transaction['receiver_organization'][0]['narrative'][0]['narrative']    = $transactionRow['receiver_org_name'];
+
+        return $transaction;
+    }
+
+    /**
+     * get the references of all transaction except transactionId
+     * @return array
+     */
+    public function getTransactionReferencesExcept($activityId, $transactionId)
+    {
+        $transactions = $this->transaction->where(
+            function ($query) use ($activityId, $transactionId) {
+                $query->where('id', '<>', $transactionId);
+                $query->where('activity_id', '=', $activityId);
+            }
+        )->get();
         $references   = [];
 
         foreach ($transactions as $transactionRow) {

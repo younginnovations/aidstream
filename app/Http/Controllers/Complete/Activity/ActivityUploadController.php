@@ -1,5 +1,6 @@
 <?php namespace App\Http\Controllers\Complete\Activity;
 
+use App\Core\V201\Repositories\Activity\IatiIdentifierRepository;
 use App\Http\Controllers\Controller;
 use App\Services\Activity\ActivityManager;
 use App\Services\Activity\UploadActivityManager;
@@ -73,26 +74,35 @@ class ActivityUploadController extends Controller
 
     /**
      * Stores the activity by uploading csv
-     * @param Request               $request
-     * @param UploadActivityRequest $uploadActivityRequest
-     * @param CsvImportValidator    $csvImportValidator
+     * @param Request                  $request
+     * @param UploadActivityRequest    $uploadActivityRequest
+     * @param CsvImportValidator       $csvImportValidator
+     * @param IatiIdentifierRepository $iatiIdentifierRepository
      * @return $this
      */
-    public function store(Request $request, UploadActivityRequest $uploadActivityRequest, CsvImportValidator $csvImportValidator)
+    public function store(Request $request, UploadActivityRequest $uploadActivityRequest, CsvImportValidator $csvImportValidator, IatiIdentifierRepository $iatiIdentifierRepository)
     {
         $this->authorize('add_activity');
         $organization = $this->organizationManager->getOrganization($this->organizationId);
+
         if (!isset($organization->reporting_org[0])) {
             $response = ['type' => 'warning', 'code' => ['settings', ['name' => 'activity']]];
 
             return redirect('/settings')->withResponse($response);
         }
-        $name      = $request->file('activity');
-        $validator = $csvImportValidator->validator->isValidActivityCsv($name);
+
+        $identifiers         = [];
+        $ActivityIdentifiers = $iatiIdentifierRepository->getIdentifiersForOrganization();
+        foreach ($ActivityIdentifiers as $identifier) {
+            $identifiers[] = $identifier->identifier['activity_identifier'];
+        }
+
+        $file      = $request->file('activity');
+        $validator = $csvImportValidator->validator->isValidActivityCsv($file, $identifiers);
         if ($validator->fails()) {
             return redirect()->back()->withInput()->withErrors($validator);
         }
-        $check = $this->uploadActivityManager->save($name, $organization);
+        $check = $this->uploadActivityManager->save($file, $organization);
         if (is_a($check, 'Illuminate\View\View')) {
             return $check;
         }

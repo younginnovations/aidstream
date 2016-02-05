@@ -35,6 +35,7 @@ class UpgradeController extends Controller
      */
     function __construct(DatabaseManager $databaseManager, SettingsManager $settingsManager, UpgradeManager $upgradeManager)
     {
+        $this->middleware('auth');
         $this->orgId = session('org_id');
         $settings    = $settingsManager->getSettings($this->orgId);
         $version     = $settings->version;

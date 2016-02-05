@@ -27,6 +27,7 @@ class OrganizationGroupController extends Controller
      */
     function __construct(OrganizationGroupManager $orgGroupManager, UserGroup $userGroup)
     {
+        $this->middleware('auth');
         $this->orgGroupManager = $orgGroupManager;
         $this->userGroup       = $userGroup;
     }

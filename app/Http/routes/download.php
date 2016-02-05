@@ -31,5 +31,26 @@ $router->group(
                 'uses' => 'DownloadController@exportTransactionCsv'
             ]
         );
+        $router->get(
+            '/download-detailed-transaction',
+            [
+                'as'   => 'download.detailed-transaction',
+                'uses' => 'DownloadController@downloadDetailedTransactionTemplate'
+            ]
+        );
+        $router->get(
+            '/download-simple-transaction',
+            [
+                'as'   => 'download.detailed-transaction',
+                'uses' => 'DownloadController@downloadSimpleTransactionTemplate'
+            ]
+        );
+        $router->get(
+            '/download-activity-template',
+            [
+                'as'   => 'download.activity-transaction',
+                'uses' => 'DownloadController@downloadActivityTemplate'
+            ]
+        );
     }
 );

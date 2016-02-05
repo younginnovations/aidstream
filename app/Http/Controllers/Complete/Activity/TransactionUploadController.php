@@ -107,7 +107,7 @@ class TransactionUploadController extends Controller
         }
 
         if ($this->uploadTransactionManager->isSimpleCsv($file)) {
-            return $csvImportValidator->validator->isValidCsv($file);
+            return $csvImportValidator->validator->getSimpleCsvValidator($file);
         }
 
         return null;

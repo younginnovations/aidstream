@@ -36,6 +36,7 @@ class RecipientCountryController extends Controller
         RecipientCountryManager $recipientCountryManager,
         ActivityManager $activityManager
     ) {
+        $this->middleware('auth');
         $this->recipientCountryForm    = $recipientCountryForm;
         $this->recipientCountryManager = $recipientCountryManager;
         $this->activityManager         = $activityManager;

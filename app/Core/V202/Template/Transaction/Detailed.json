@@ -1,5 +1,6 @@
 {
   "reference": "",
+  "humanitarian": ""
   "transaction_type": [
     {
       "transaction_type_code": ""
@@ -31,6 +32,7 @@
     {
       "organization_identifier_code": "",
       "provider_activity_id": "",
+      "type": "",
       "narrative": [
         {
           "narrative": "",
@@ -43,6 +45,7 @@
     {
       "organization_identifier_code": "",
       "receiver_activity_id": "",
+      "type": "",
       "narrative": [
         {
           "narrative": "",
@@ -58,10 +61,11 @@
   ],
   "sector": [
     {
-      "sector_code": "",
       "sector_vocabulary": "",
-      "sector_text": "",
+      "vocabulary_uri": "",
+      "sector_code": "",
       "sector_category_code": "",
+      "sector_text": "",
       "narrative": [
         {
           "narrative": "",
@@ -85,6 +89,7 @@
     {
       "region_code": "",
       "vocabulary": "",
+      "vocabulary_uri": ""
       "narrative": [
         {
           "narrative": "",
