@@ -5,8 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>AidStream - @yield('title', 'No Title')</title>
-    <link rel="icon" type="image/png" href="{{ asset('/images/favicon.ico') }}"/>
-    <link rel="icon" type="image/png" href="{{ asset('/images/favicon.png') }}"/>
+    <link rel="shotcut icon" type="image/png" sizes="32*32" href="{{ asset('/images/favicon.png') }}"/>
     <link href="{{ asset('/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('/css/flag-icon.css') }}" rel="stylesheet">
     <link href="{{ asset('/css/app.css') }}" rel="stylesheet">
@@ -41,11 +40,11 @@
                 <a href="{{ Auth::user()->role_id == 3 ? url('admin/dashboard') : url('/')  }}"
                    alt="Aidstream">Aidstream</a>
                <span class="version {{ (Session::get('version') == 'V201') ? 'old' : 'new' }}">
-                 IATI version {{Auth::user() ? Session::get('version') : "Aidstream"}}
+                 <span class="version-text">IATI version {{Auth::user() ? Session::get('version') : "Aidstream"}}</span>
                    @if ((Session::get('version') == 'V201'))
                        <span class="old-version">
-                   Upgrade to IATI version 2.0.2
-                 </span>
+                         <a href="upgrade-version">Upgrade to IATI version 2.0.2</a>
+                      </span>
                    @else
                        <span class="new-version">
                    You’re using latest IATI version
@@ -88,7 +87,7 @@
                             <li><a href="{{url('user/profile')}}">@lang('trans.my_profile')</a></li>
                             <li><a href="{{ url('/auth/logout') }}">@lang('trans.logout')</a></li>
                             <li class="language-select-wrap">
-                                <label for="">Language</label>
+                                <label for="">Choose Language</label>
                                 @foreach(config('app.locales') as $key => $val)
                                     <span class="flag-wrapper" data-lang="{{ $key }}">
                                         <span class="img-thumbnail flag flag-icon-background flag-icon-{{ $key }}{{ $key == config('app.locale') ? ' active' : '' }}"></span>

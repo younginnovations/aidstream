@@ -363,4 +363,34 @@ $(document).ready(function () {
             $(this).addClass('active-page');
         }
     });
+
+  window.onbeforeunload = function () {
+    if (preventNavigation) {
+      return 'You have unsaved changes.';
+    }
+  };
+
+  $('.element-menu-wrapper').click(function(){
+    $(this).children('.element-sidebar-wrapper').toggle();
+  });
+
+  $(document).mouseup(function (e)
+  {
+      var container = $('.language-flag-wrap');
+      if ( !container.is(e.target)
+          && container.has(e.target).length === 0)
+      {
+          container.hide();
+      }
+  });
+
+  $(".clickable-row").click(function() {
+      window.document.location = $(this).data("href");
+  });
+
+  $(".clickable-row > td > :checkbox").click(function(e){
+    e.stopPropagation();
+    $(this).parents('.clickable-row').toggleClass('clickable-row-bg');
+  });
+
 });

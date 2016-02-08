@@ -33,7 +33,7 @@
                                 $status_label = ['draft', 'completed', 'verified', 'published'];
                                 ?>
                                 @foreach($activities as $key=>$activity)
-                                    <tr>
+                                    <tr class="clickable-row" data-href="{{ route('activity.show', [$activity->id]) }}">
                                         <td><input type="checkbox"/></td>
                                         <td>{{ $key + 1 }}</td>
                                         <td class="activity_title">
@@ -43,7 +43,6 @@
                                         <td class="updated-date">{{ date('M d, Y H:i:s', strtotime(changeTimeZone('GMT', Auth::user()->time_zone, $activity->updated_at))) }}</td>
                                         <td><span class="{{ $status_label[$activity->activity_workflow] }}">{{ $status_label[$activity->activity_workflow] }}</span></td>
                                         <td>
-                                            <a href="{{ route('activity.show', [$activity->id]) }}" class="view">View</a>
                                             <a href="{{ url(sprintf('activity/%s/delete', $activity->id)) }}" class="delete">Delete</a>
                                             <a href="{{ route('activity.duplicate', [$activity->id]) }}" class="duplicate">Duplicate</a>
                                         </td>
