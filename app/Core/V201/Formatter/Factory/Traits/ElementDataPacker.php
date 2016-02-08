@@ -200,7 +200,7 @@ trait ElementDataPacker
      * @param null  $policyMarker
      * @return array
      */
-    protected function fillPolicyMakerData($activityId, array $data, $policyMarker = null)
+    protected function fillPolicyMarkerData($activityId, array $data, $policyMarker = null)
     {
         if (!is_null($policyMarker)) {
             $data[$activityId]['Activity_policymarker_vocabulary']         = $this->concatenateIntoString($policyMarker, 'vocabulary');

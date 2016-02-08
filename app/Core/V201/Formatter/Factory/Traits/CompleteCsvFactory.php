@@ -253,8 +253,8 @@ trait CompleteCsvFactory
     {
         foreach ($activities as $activity) {
             $activityId   = $activity->id;
-            $policyMarker = $activity->policy_maker;
-            $data         = $this->fillPolicyMakerData($activityId, $data, $policyMarker);
+            $policyMarker = $activity->policy_marker;
+            $data         = $this->fillPolicyMarkerData($activityId, $data, $policyMarker);
 
         }
 

@@ -68,7 +68,7 @@ class XmlGenerator extends XmlGenerator201
         $xmlActivity['sector']               = $this->sectorElem->getXmlData($activity);
         $xmlActivity['country-budget-items'] = $this->countryBudgetItemElem->getXmlData($activity);
         $xmlActivity['humanitarian-scope']   = $this->activityElement->getHumanitarianScopeXml($activity);
-        $xmlActivity['policy-marker']        = $this->policyMakerElem->getXmlData($activity);
+        $xmlActivity['policy-marker']        = $this->policyMarkerElem->getXmlData($activity);
         $xmlActivity['collaboration-type']   = $this->collaborationTypeElem->getXmlData($activity);
         $xmlActivity['default-flow-type']    = $this->defaultFlowTypeElem->getXmlData($activity);
         $xmlActivity['default-finance-type'] = $this->defaultFinanceTypeElem->getXmlData($activity);

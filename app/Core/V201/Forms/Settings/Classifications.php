@@ -15,7 +15,7 @@ class Classifications extends BaseForm
     {
         $this
             ->addCheckBox('sector', 'Sector', true, 'readonly')
-            ->addCheckBox('policy_maker', 'Policy Maker')
+            ->addCheckBox('policy_marker', 'Policy Marker')
             ->addCheckBox('collaboration_type', 'Collaboration Type')
             ->addCheckBox('default_flow_type', 'Default Flow Type')
             ->addCheckBox('default_finance_type', 'Default Finance Type')

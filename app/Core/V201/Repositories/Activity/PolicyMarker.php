@@ -3,10 +3,10 @@
 use App\Models\Activity\Activity;
 
 /**
- * Class PolicyMaker
+ * Class PolicyMarker
  * @package App\Core\V201\Repositories\Activity
  */
-class PolicyMaker
+class PolicyMarker
 {
     /**
      * @param Activity $activity
@@ -23,7 +23,7 @@ class PolicyMaker
      */
     public function update(array $activityDetails, Activity $activity)
     {
-        $activity->policy_maker = $activityDetails['policy_marker'];
+        $activity->policy_marker = $activityDetails['policy_marker'];
 
         return $activity->save();
     }
@@ -32,8 +32,8 @@ class PolicyMaker
      * @param $activityId
      * @return mixed
      */
-    public function getPolicyMakerData($activityId)
+    public function getPolicyMarkerData($activityId)
     {
-        return $this->activity->find($activityId)->policy_maker;
+        return $this->activity->find($activityId)->policy_marker;
     }
 }

@@ -66,7 +66,7 @@ class DefaultFieldGroups
                 ],
                 "Classifications"             => [
                     "sector"               => $activityData['sector'],
-                    "policy_maker"         => $activityData['policy_maker'],
+                    "policy_marker"        => $activityData['policy_marker'],
                     "collaboration_type"   => $activityData['collaboration_type'],
                     "default_flow_type"    => $activityData['default_flow_type'],
                     "default_finance_type" => $activityData['default_finance_type'],
@@ -110,7 +110,7 @@ class DefaultFieldGroups
         $activityData = Activity::find($id);
 
         if ($activityData) {
-            $activityData = $activityData->toArray();
+            $activityData                           = $activityData->toArray();
             $reportingOrg                           = Organization::find(Session::get('org_id'))->reporting_org;
             $results                                = ActivityResult::where('activity_id', $id)->get()->toArray();
             $transactions                           = Transaction::where('activity_id', $id)->get()->toArray();

@@ -3,15 +3,15 @@
 use App\Core\Form\BaseForm;
 
 /**
- * Class PolicyMakers
+ * Class PolicyMarkers
  * @package App\Core\V201\Forms\Activity
  */
-class PolicyMakers extends BaseForm
+class PolicyMarkers extends BaseForm
 {
     public function buildForm()
     {
         $this
-            ->addCollection('policy_marker', 'Activity\PolicyMaker', 'policy_marker')
+            ->addCollection('policy_marker', 'Activity\PolicyMarker', 'policy_marker')
             ->addAddMoreButton('add_policy_marker', 'policy_marker');
     }
 }

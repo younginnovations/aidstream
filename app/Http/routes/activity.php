@@ -21,7 +21,7 @@ $router->group(
         $router->resource('activity.country-budget-items', 'CountryBudgetItemController');
         $router->resource('activity.location', 'LocationController');
         $router->resource('activity.budget', 'BudgetController');
-        $router->resource('activity.policy-maker', 'PolicyMakerController');
+        $router->resource('activity.policy-marker', 'PolicyMarkerController');
         $router->resource('activity.collaboration-type', 'CollaborationTypeController');
         $router->resource('activity.default-flow-type', 'DefaultFlowTypeController');
         $router->resource('activity.default-finance-type', 'DefaultFinanceTypeController');

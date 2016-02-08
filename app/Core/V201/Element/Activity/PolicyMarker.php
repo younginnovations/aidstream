@@ -4,10 +4,10 @@ use App\Core\Elements\BaseElement;
 use App\Models\Activity\Activity;
 
 /**
- * Class PolicyMaker
+ * Class PolicyMarker
  * @package App\Core\V201\Element\Activity
  */
-class PolicyMaker extends BaseElement
+class PolicyMarker extends BaseElement
 {
 
     /**
@@ -15,7 +15,7 @@ class PolicyMaker extends BaseElement
      */
     public function getForm()
     {
-        return 'App\Core\V201\Forms\Activity\PolicyMakers';
+        return 'App\Core\V201\Forms\Activity\PolicyMarkers';
     }
 
     /**
@@ -23,7 +23,7 @@ class PolicyMaker extends BaseElement
      */
     public function getRepository()
     {
-        return App('App\Core\V201\Repositories\Activity\PolicyMaker');
+        return App('App\Core\V201\Repositories\Activity\PolicyMarker');
     }
 
     /**
@@ -32,16 +32,16 @@ class PolicyMaker extends BaseElement
      */
     public function getXmlData(Activity $activity)
     {
-        $activityData = [];
-        $policyMakers = (array) $activity->policy_maker;
-        foreach ($policyMakers as $policyMaker) {
+        $activityData  = [];
+        $policyMarkers = (array) $activity->policy_marker;
+        foreach ($policyMarkers as $policyMarker) {
             $activityData[] = [
                 '@attributes' => [
-                    'vocabulary'   => $policyMaker['vocabulary'],
-                    'code'         => $policyMaker['policy_marker'],
-                    'significance' => $policyMaker['significance']
+                    'vocabulary'   => $policyMarker['vocabulary'],
+                    'code'         => $policyMarker['policy_marker'],
+                    'significance' => $policyMarker['significance']
                 ],
-                'narrative'   => $this->buildNarrative($policyMaker['narrative'])
+                'narrative'   => $this->buildNarrative($policyMarker['narrative'])
             ];
         }
 

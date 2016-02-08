@@ -53,7 +53,7 @@ class AdminUserTest extends AidStreamUserSmokeTestCase
             ['activity/35/recipient-region', 200],
             ['activity/35/location', 200],
             ['activity/35/sector', 200],
-            ['activity/35/policy-maker', 200],
+            ['activity/35/policy-marker', 200],
             ['activity/35/collaboration-type', 200],
             ['activity/35/default-flow-type', 200],
             ['activity/35/default-finance-type', 200],

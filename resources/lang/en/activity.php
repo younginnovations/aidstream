@@ -16,6 +16,7 @@ return [
     'activity_scope_updated'       => 'Activity activity scope updated for activity id ":activity_id" and organization ":organization - :organization_id"',
     'participating_organization'   => 'Activity participating organization updated for for activity id ":activity_id" and organization":organization - :organization_id"',
     'sector_updated'               => 'Activity sector updated for activity id ":activity_id"  and organization ":organization - :organization_id"',
+    'policy_marker_updated'        => 'Activity policy marker updated for activity id ":activity_id"  and organization ":organization - :organization_id"',
     'recipient_country_updated'    => 'Activity country region updated for activity id ":activity_id"  and organization ":organization - :organization_id"',
     'recipient_region_updated'     => 'Activity recipient region updated for activity id ":activity_id"  and organization ":organization - :organization_id"',
     'activity_added'               => 'New Activity identifier":identifier" updated for ":organization - :organization_id"',

@@ -27,7 +27,7 @@ class XmlGenerator
     protected $locationElem;
     protected $sectorElem;
     protected $countryBudgetItemElem;
-    protected $policyMakerElem;
+    protected $policyMarkerElem;
     protected $collaborationTypeElem;
     protected $defaultFlowTypeElem;
     protected $defaultFinanceTypeElem;
@@ -79,7 +79,7 @@ class XmlGenerator
         $this->locationElem            = $activityElement->getLocation();
         $this->sectorElem              = $activityElement->getSector();
         $this->countryBudgetItemElem   = $activityElement->getCountryBudgetItem();
-        $this->policyMakerElem         = $activityElement->getPolicyMaker();
+        $this->policyMarkerElem        = $activityElement->getPolicyMarker();
         $this->collaborationTypeElem   = $activityElement->getCollaborationType();
         $this->defaultFlowTypeElem     = $activityElement->getDefaultFlowType();
         $this->defaultFinanceTypeElem  = $activityElement->getDefaultFinanceType();
@@ -174,7 +174,7 @@ class XmlGenerator
         $xmlActivity['location']             = $this->locationElem->getXmlData($activity);
         $xmlActivity['sector']               = $this->sectorElem->getXmlData($activity);
         $xmlActivity['country-budget-items'] = $this->countryBudgetItemElem->getXmlData($activity);
-        $xmlActivity['policy-marker']        = $this->policyMakerElem->getXmlData($activity);
+        $xmlActivity['policy-marker']        = $this->policyMarkerElem->getXmlData($activity);
         $xmlActivity['collaboration-type']   = $this->collaborationTypeElem->getXmlData($activity);
         $xmlActivity['default-flow-type']    = $this->defaultFlowTypeElem->getXmlData($activity);
         $xmlActivity['default-finance-type'] = $this->defaultFinanceTypeElem->getXmlData($activity);
