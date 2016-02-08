@@ -1,6 +1,6 @@
 @extends('app')
 
-@section('title', 'Oragnization - ' . $reporting_org['reporting_organization_identifier'])
+@section('title', 'Organization - ' . $reporting_org['reporting_organization_identifier'])
 
 @section('content')
 	@inject('code', 'App\Helpers\GetCodeName')

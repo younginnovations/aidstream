@@ -30,7 +30,7 @@ class CreateActivityDataTable extends Migration
                 $table->json('location')->nullable();
                 $table->json('sector')->nullable();
                 $table->json('country_budget_items')->nullable();
-                $table->json('policy_maker')->nullable();
+                $table->json('policy_marker')->nullable();
                 $table->json('collaboration_type')->nullable();
                 $table->json('default_flow_type')->nullable();
                 $table->json('default_finance_type')->nullable();

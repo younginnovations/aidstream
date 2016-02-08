@@ -3,10 +3,10 @@
 use App\Core\Version;
 
 /**
- * Class PolicyMaker
+ * Class PolicyMarker
  * @package App\Services\RequestManager\Activity
  */
-class PolicyMaker
+class PolicyMarker
 {
 
     /**
@@ -14,6 +14,6 @@ class PolicyMaker
      */
     function __construct(Version $version)
     {
-        return $version->getActivityElement()->getPolicyMakerRequest();
+        return $version->getActivityElement()->getPolicyMarkerRequest();
     }
 }

@@ -60,7 +60,7 @@
                        $locations = $activityDataList['location'];
                        $sectors = $activityDataList['sector'];
                        $countryBudgetItems = $activityDataList['country_budget_items'];
-                       $policyMakers = $activityDataList['policy_maker'];
+                       $policyMarkers = $activityDataList['policy_marker'];
                        $collaborationType = $activityDataList['collaboration_type'];
                        $defaultFlowType = $activityDataList['default_flow_type'];
                        $defaultFinanceType = $activityDataList['default_finance_type'];
@@ -610,23 +610,23 @@
                             </div>
                         @endif
 
-                        @if(!empty($policyMakers))
+                        @if(!empty($policyMarkers))
                             <div class="panel panel-default">
-                                <div class="panel-heading">Policy Makers</div>
+                                <div class="panel-heading">Policy Markers</div>
                                 <div class="panel-body panel-level-1">
-                                    @foreach($policyMakers as $policyMaker)
+                                    @foreach($policyMarkers as $policyMarker)
                                         <div class="panel panel-default">
-                                            <div class="panel-heading">{{$getCode->getActivityCodeName('PolicyMarker', $policyMaker['policy_marker'])}}</div>
+                                            <div class="panel-heading">{{$getCode->getActivityCodeName('PolicyMarker', $policyMarker['policy_marker'])}}</div>
                                             <div class="panel-element-body row">
                                                 <div class="col-xs-12 col-md-12">
                                                     <div class="col-xs-12 col-sm-4">Significance: </div>
-                                                    <div class="col-xs-12 col-sm-8">{{$getCode->getActivityCodeName('PolicySignificance', $policyMaker['significance'])}}</div>
+                                                    <div class="col-xs-12 col-sm-8">{{$getCode->getActivityCodeName('PolicySignificance', $policyMarker['significance'])}}</div>
                                                 </div>
                                                 <div class="col-xs-12 col-md-12">
-                                                    <div class="col-xs-12 col-sm-4">Policy Maker: </div>
-                                                    <div class="col-xs-12 col-sm-8">{{$getCode->getActivityCodeName('PolicyMarker', $policyMaker['policy_marker'])}}</div>
+                                                    <div class="col-xs-12 col-sm-4">Policy Marker: </div>
+                                                    <div class="col-xs-12 col-sm-8">{{$getCode->getActivityCodeName('PolicyMarker', $policyMarker['policy_marker'])}}</div>
                                                 </div>
-                                                @foreach($policyMaker['narrative'] as $narrative)
+                                                @foreach($policyMarker['narrative'] as $narrative)
                                                 <div class="col-xs-12 col-md-12">
                                                     <div class="col-xs-12 col-sm-4">Text: </div>
                                                     <div class="col-xs-12 col-sm-8">{{$narrative['narrative'] . ' ['. $getCode->getOrganizationCodeName('Language', $narrative['language']) . ']'}}</div>

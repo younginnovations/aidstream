@@ -3,10 +3,10 @@
 use App\Core\Form\BaseForm;
 
 /**
- * Class PolicyMaker
+ * Class PolicyMarker
  * @package App\Core\V202\Forms\Activity
  */
-class PolicyMaker extends BaseForm
+class PolicyMarker extends BaseForm
 {
 
     public function buildForm()
@@ -18,6 +18,6 @@ class PolicyMaker extends BaseForm
             ->addSelect('policy_marker', $this->getCodeList('PolicyMarker', 'Activity'))
             ->addNarrative('narrative')
             ->addAddMoreButton('add_narrative', 'narrative')
-            ->addRemoveThisButton('remove_policy_maker');
+            ->addRemoveThisButton('remove_policy_marker');
     }
 }

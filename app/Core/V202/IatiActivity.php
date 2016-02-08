@@ -57,14 +57,14 @@ class IatiActivity extends V201
         return app('App\Core\V202\Requests\Activity\Sector');
     }
 
-    public function getPolicyMaker()
+    public function getPolicyMarker()
     {
-        return app('App\Core\V202\Element\Activity\PolicyMaker');
+        return app('App\Core\V202\Element\Activity\PolicyMarker');
     }
 
-    public function getPolicyMakerRequest()
+    public function getPolicyMarkerRequest()
     {
-        return app('App\Core\V202\Requests\Activity\PolicyMaker');
+        return app('App\Core\V202\Requests\Activity\PolicyMarker');
     }
 
     public function getTransaction()

@@ -4,10 +4,10 @@ use App\Core\Version;
 use Kris\LaravelFormBuilder\FormBuilder;
 
 /**
- * Class PolicyMaker
+ * Class PolicyMarker
  * @package App\Services\FormCreator\Activity
  */
-class PolicyMaker
+class PolicyMarker
 {
 
     /**
@@ -18,7 +18,7 @@ class PolicyMaker
     {
         $this->formBuilder = $formBuilder;
         $this->version     = $version;
-        $this->formPath    = $this->version->getActivityElement()->getPolicyMaker()->getForm();
+        $this->formPath    = $this->version->getActivityElement()->getPolicyMarker()->getForm();
     }
 
     /**
@@ -35,7 +35,7 @@ class PolicyMaker
             [
                 'method' => 'PUT',
                 'model'  => $model,
-                'url'    => route('activity.policy-maker.update', [$activityId, 0])
+                'url'    => route('activity.policy-marker.update', [$activityId, 0])
             ]
         )->add('Save', 'submit', ['attr' => ['class' => 'btn btn-submit btn-form']]);
     }

@@ -8,10 +8,10 @@ use Mockery\CountValidator\Exception;
 use Psr\Log\LoggerInterface as Logger;
 
 /**
- * Class PolicyMakerManager
+ * Class PolicyMarkerManager
  * @package App\Services\Activity
  */
-class PolicyMakerManager
+class PolicyMarkerManager
 {
     /**
      * @var DbLogger
@@ -30,10 +30,10 @@ class PolicyMakerManager
      */
     public function __construct(Version $version, DbLogger $dbLogger, Guard $auth, Logger $logger)
     {
-        $this->auth                = $auth;
-        $this->dbLogger            = $dbLogger;
-        $this->logger              = $logger;
-        $this->iatiPolicyMakerRepo = $version->getActivityElement()->getPolicyMaker()->getRepository();
+        $this->auth                 = $auth;
+        $this->dbLogger             = $dbLogger;
+        $this->logger               = $logger;
+        $this->iatiPolicyMarkerRepo = $version->getActivityElement()->getPolicyMarker()->getRepository();
     }
 
     /**
@@ -44,13 +44,13 @@ class PolicyMakerManager
     public function update(array $activityDetails, Activity $activity)
     {
         try {
-            $this->iatiPolicyMakerRepo->update($activityDetails, $activity);
+            $this->iatiPolicyMarkerRepo->update($activityDetails, $activity);
             $this->logger->info(
-                'Policy Maker Updated!',
-                ['for' => $activity->policy_maker]
+                'Policy Marker Updated!',
+                ['for' => $activity->policy_marker]
             );
             $this->dbLogger->activity(
-                "activity.policy_maker_updated",
+                "activity.policy_marker_updated",
                 [
                     'activity_id'     => $activity->id,
                     'organization'    => $this->auth->user()->organization->name,
@@ -61,10 +61,10 @@ class PolicyMakerManager
             return true;
         } catch (Exception $exception) {
             $this->logger->error(
-                sprintf('Policy Maker could not be updated due to %s', $exception->getMessage()),
+                sprintf('Policy Marker could not be updated due to %s', $exception->getMessage()),
                 [
-                    'policyMaker' => $activityDetails,
-                    'trace'       => $exception->getTraceAsString()
+                    'policyMarker' => $activityDetails,
+                    'trace'        => $exception->getTraceAsString()
                 ]
             );
         }
@@ -76,8 +76,8 @@ class PolicyMakerManager
      * @param $id
      * @return mixed
      */
-    public function getPolicyMakerData($id)
+    public function getPolicyMarkerData($id)
     {
-        return $this->iatiPolicyMakerRepo->getPolicyMakerData($id);
+        return $this->iatiPolicyMarkerRepo->getPolicyMarkerData($id);
     }
 }
