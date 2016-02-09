@@ -37,7 +37,7 @@
                         </button> -->
 
             <div class="navbar-brand">
-                <a href="{{ Auth::user()->role_id == 3 ? url('admin/dashboard') : url('/')  }}"
+                <a href="{{ Auth::user()->role_id == 3 ? url('admin/dashboard') : route('activity.index')  }}"
                    alt="Aidstream">Aidstream</a>
                <span class="version {{ (Session::get('version') == 'V201') ? 'old' : 'new' }}">
                  <span class="version-text">IATI version {{Auth::user() ? Session::get('version') : "Aidstream"}}</span>

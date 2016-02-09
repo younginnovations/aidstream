@@ -112,9 +112,9 @@ input,button {
 }
 
 button, input[type="button"], input[type="reset"], input[type="submit"] {
-	background: $color_dodger_blue_approx;
+	background-color: $color_dodger_blue_approx;
 	&:hover {
-		background: $color_lochmara_approx;
+		background-color: $color_lochmara_approx;
 	}
 }
 
@@ -150,21 +150,20 @@ button, input[type="button"], input[type="reset"], input[type="submit"] {
 	overflow: hidden;
 	position: absolute;
 	left: 50%;
-	margin-left: -35px;
+	margin-left: -24px;
 	bottom: -16px;
 }
+
 .arrow.top {
 	top: -16px;
 	bottom: auto;
 }
+
 .arrow.left {
 	right: 0;
 	left: auto;
 }
 
-.arrow.right {
-	left: 20%;
-}
 .arrow:after {
 	content: "";
 	position: absolute;
@@ -1331,15 +1330,29 @@ $element-sidebar-wrapper-width: 267px;
 	}
 }
 
+.activity-description {
+	background: $color_concrete;
+	padding: 20px;
+	margin-bottom: 20px;
+}
+
 .panel-activity-default .panel-element-body {
 	margin-bottom: 50px;
 	> .col-md-6 {
-		padding: 18px 0 0;
+		padding: 12px 0;
 		font-size: 13px;
 		&:last-child {
 			padding-bottom: 20px;
 		}
 	}
+}
+
+.panel-activity-default .panel-element-body > .col-md-6:not(:last-child) {
+	border-bottom: 1px solid $color_seashell;
+}
+
+.panel-activity-default .panel-element-body > .col-md-6:nth-child(odd) {
+	border-right: 1px solid $color_seashell;
 }
 
 .panel-title-heading {
@@ -2379,7 +2392,6 @@ $organization-logo-width: 124px;
 }
 
 .alert {
-	margin-bottom: 0;
   @each $alert-type in (
     alert-info    $color_dodger_blue_approx,
     alert-success $color_emerald_approx,
@@ -2400,6 +2412,7 @@ $organization-logo-width: 124px;
 		display: inline-block;
 		vertical-align: middle;
 		width: 80%;
+		margin-top: 6px;
 	}
 }
 
@@ -2408,9 +2421,9 @@ $organization-logo-width: 124px;
 	height: 34px;
 	content: "";
 	display: inline-block;
-	background: $url_4 no-repeat;
+	background: $url_4 no-repeat -2px 0;
 	margin-right: 10px;
-	vertical-align: middle;
+	vertical-align: top;
 }
 
 .alert-info:before {
@@ -2429,6 +2442,10 @@ $organization-logo-width: 124px;
 
 .alert-error:before,.alert-danger:before {
 	background-position:  -2px -78px;
+}
+
+.content-wrapper > .alert {
+	margin: 0;
 }
 
 .document-wrapper td a {

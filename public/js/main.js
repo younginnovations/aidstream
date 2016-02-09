@@ -283,9 +283,27 @@ $(document).ready(function () {
             '<button class="btn btn-primary btn_del" type="button">Yes</button>' +
             '<button class="btn btn-default" type="button"  data-dismiss="modal">No</button>';
 
+<<<<<<< HEAD
         $('.modal-header .modal-title', delDialog).html('Delete Confirmation');
         $('.modal-body', delDialog).html('Are you sure you want to delete?');
         $('.modal-footer', delDialog).html(buttons);
+=======
+ $('[data-toggle="tooltip"]').tooltip({
+     position: {
+       my: "center bottom-20",
+       at: "center top",
+       using: function( position, feedback ) {
+         $( this ).css( position );
+         $( "<div>" )
+           .addClass( "arrow" )
+           .addClass( feedback.vertical )
+           .addClass( feedback.horizontal )
+           .css({left: feedback.target.left - position.left})
+           .appendTo( this );
+       }
+     }
+   });
+>>>>>>> fixing UI improvements card
 
         $('body').undelegate('.btn_del', 'click').delegate('.btn_del', 'click', function () {
             window.location = location;
@@ -384,12 +402,13 @@ $(document).ready(function () {
       }
   });
 
-  $(".clickable-row").click(function() {
-      window.document.location = $(this).data("href");
+  $(".clickable-row").click(function(e) {
+      if(!($(e.target).is('input') || $(e.target).is('a'))) {
+        window.document.location = $(this).data("href");
+      }
   });
 
-  $(".clickable-row > td > :checkbox").click(function(e){
-    e.stopPropagation();
+  $(".clickable-row > td > :checkbox").click(function(){
     $(this).parents('.clickable-row').toggleClass('clickable-row-bg');
   });
 
