@@ -1,6 +1,5 @@
 <?php namespace Test\Elements\DataProviders;
 
-use stdClass;
 
 /**
  * Class TitleDataProvider
@@ -8,6 +7,8 @@ use stdClass;
  */
 trait TitleDataProvider
 {
+    use TestObjectCreator;
+
     /**
      * Generate test data without language.
      * @return array
@@ -39,22 +40,6 @@ trait TitleDataProvider
         $testObject = $this->createTestObjectWith(['text' => '', 'xml_lang' => '']);
 
         return ['test' => ['title' => [$testObject], 'lang' => '']];
-    }
-
-    /**
-     * Returns an object with all the requirements as attributes.
-     * @param array $requirements
-     * @return stdClass
-     */
-    protected function createTestObjectWith(array $requirements)
-    {
-        $testObject = new stdClass();
-
-        foreach ($requirements as $key => $value) {
-            $testObject->$key = $value;
-        }
-
-        return $testObject;
     }
 
     /**

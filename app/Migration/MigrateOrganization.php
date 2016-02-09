@@ -16,12 +16,10 @@ class MigrateOrganization
 
     public function __construct(
         OrganizationModel $OrganizationModel,
-        DatabaseManager $databaseManager,
         Organization $organization,
         ReportingOrganization $reportingOrganization,
         MigrateHelper $migrateHelper
     ) {
-        $this->mysqlConn         = $databaseManager->connection('mysql');
         $this->OrganizationModel = $OrganizationModel;
         $this->org               = $organization;
         $this->reportingOrg      = $reportingOrganization;
@@ -30,6 +28,8 @@ class MigrateOrganization
 
     public function orgDataFetch($orgId)
     {
+        $this->initDBConnection('mysql');
+
         $formattedData      = [];
         $simpleValues       = $this->FetchSimpleValues($orgId);
         $reportingOrgValues = $this->FetchReportingOrgValues($orgId);
@@ -42,6 +42,8 @@ class MigrateOrganization
 
     public function FetchSimpleValues($orgId)
     {
+        $this->initDBConnection('mysql');
+
         $userIdentifier = $this->mysqlConn
             ->table('iati_organisation/identifier')
             ->select('text')
@@ -73,6 +75,8 @@ class MigrateOrganization
 
     public function FetchReportingOrgValues($orgId)
     {
+        $this->initDBConnection('mysql');
+
         $reportingOrgRefType   = $this->mysqlConn->table('iati_organisation/reporting_org')
                                                  ->select('@ref as reporting_organization_identifier', '@type as reporting_organization_type')
                                                  ->where('organisation_id', '=', $orgId)
@@ -95,5 +99,10 @@ class MigrateOrganization
         $reportingOrg                                      = [$reportingOrg];
 
         return $reportingOrg;
+    }
+
+    protected function initDBConnection($connection)
+    {
+        $this->mysqlConn = app()->make(DatabaseManager::class)->connection($connection);
     }
 }

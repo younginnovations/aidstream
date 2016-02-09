@@ -12,9 +12,8 @@ class MigrateDocuments
     protected $activityData;
     protected $document;
 
-    function __construct(DocumentModel $DocumentModel, MigrateHelper $migrateHelper, DatabaseManager $databaseManager, ActivityData $activityData, Document $document)
+    function __construct(DocumentModel $DocumentModel, MigrateHelper $migrateHelper, ActivityData $activityData, Document $document)
     {
-        $this->mysqlConn     = $databaseManager->connection('mysql');
         $this->migrateHelper = $migrateHelper;
         $this->DocumentModel = $DocumentModel;
         $this->activityData  = $activityData;
@@ -23,6 +22,8 @@ class MigrateDocuments
 
     public function docDataFetch($orgId)
     {
+        $this->initDBConnection('mysql');
+
         $formattedData = [];
         $document      = [];
         $activities    = $this->activityData->getActivitiesFor($orgId);  // for 1 org
@@ -52,5 +53,10 @@ class MigrateDocuments
         $formattedData[] = $this->document->format($document);
 
         return $formattedData;
+    }
+
+    protected function initDBConnection($connection)
+    {
+        $this->mysqlConn = app()->make(DatabaseManager::class)->connection($connection);
     }
 }

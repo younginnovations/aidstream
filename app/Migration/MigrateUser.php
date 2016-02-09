@@ -8,15 +8,13 @@ use App\User;
 class MigrateUser
 {
     protected $orgId;
-    protected $migrateHelper;
     protected $activityData;
     protected $userPermission;
     protected $user;
+    protected $mysqlConn;
 
-    function __construct(MigrateHelper $migrateHelper, DatabaseManager $databaseManager, ActivityData $activityData, UserPermission $userPermission, User $User)
+    function __construct(ActivityData $activityData, UserPermission $userPermission, User $User)
     {
-        $this->mysqlConn      = $databaseManager->connection('mysql');
-        $this->migrateHelper  = $migrateHelper;
         $this->activityData   = $activityData;
         $this->userPermission = $userPermission;
         $this->user           = $User;
@@ -24,6 +22,7 @@ class MigrateUser
 
     public function userDataFetch($user_id)
     {
+        $this->initDBConnection('mysql');
         $formattedData       = [];
         $user                = [];
         $user_permission     = [];
@@ -83,5 +82,10 @@ class MigrateUser
     public function hasPermission($permission)
     {
         return $this->$permission;
+    }
+
+    protected function initDBConnection($connection)
+    {
+        $this->mysqlConn = app()->make(DatabaseManager::class)->connection($connection);
     }
 }

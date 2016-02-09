@@ -9,14 +9,14 @@ class ActivityData
     protected $activityModel;
     protected $mysqlConn;
 
-    function __construct(ActivityModel $activityModel, DatabaseManager $databaseManager)
+    function __construct(ActivityModel $activityModel)
     {
-        $this->mysqlConn     = $databaseManager->connection('mysql');
         $this->activityModel = $activityModel;
     }
 
     public function getOrgIdAccountId()
     {
+        $this->initDBConnection('mysql');
         $data = $this->mysqlConn->table('iati_organisation')
                                 ->select('*')
                                 ->get();
@@ -26,6 +26,7 @@ class ActivityData
 
     public function fetchActivityData($accountId)
     {
+        $this->initDBConnection('mysql');
         // organisation id is foreign key
         $orgId              = $this->fetchOrgId($accountId);
         $iati_activities_id = $this->mysqlConn->table('iati_activities')
@@ -89,6 +90,8 @@ class ActivityData
 
     public function getActivities(array $data)
     {
+        $this->initDBConnection('mysql');
+
         $activities      = [];
         $IatiActivityIds = [];
         foreach ($data as $datum) {
@@ -112,6 +115,8 @@ class ActivityData
 
     public function getActivitiesFor($orgId)
     {
+        $this->initDBConnection('mysql');
+
         $accountId = $this->mysqlConn->table('iati_organisation')
                                      ->select('account_id')
                                      ->where('id', '=', $orgId)
@@ -132,5 +137,10 @@ class ActivityData
                                                   ->get();
 
         return $IatiActivityCollection;
+    }
+
+    protected function initDBConnection($connection)
+    {
+        $this->mysqlConn = app()->make(DatabaseManager::class)->connection($connection);
     }
 }

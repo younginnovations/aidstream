@@ -13,7 +13,7 @@ build:
               [ -d $COMPOSER_CACHE_DIR/vendor ] && cp -Rf $COMPOSER_CACHE_DIR/vendor vendor || echo 'Cached vendor not found'
     - script:
         name: install dependencies
-        code: composer install --no-interaction --prefer-dist --no-scripts
+        code: composer install --no-interaction --prefer-dist
     - script:
         name: copy vendor to cache
         code: cp -Rf vendor $COMPOSER_CACHE_DIR

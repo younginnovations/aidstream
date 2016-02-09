@@ -7,16 +7,17 @@ use App\Migration\Elements\Settings;
 class MigrateSettings
 {
     protected $orgId;
+    protected $mysqlConn;
 
-    function __construct(MigrateHelper $migrateHelper, DatabaseManager $databaseManager, Settings $settings)
+    function __construct(MigrateHelper $migrateHelper, Settings $settings)
     {
-        $this->mysqlConn     = $databaseManager->connection('mysql');
         $this->migrateHelper = $migrateHelper;
         $this->settings      = $settings;
     }
 
     public function SettingsDataFetch($orgId)
     {
+        $this->initDBConnection('mysql');
         $SettingData          = [];
         $registryInfoData     = [];
         $account_id           = $this->migrateHelper->fetchAccountId($orgId);
@@ -74,5 +75,10 @@ class MigrateSettings
         );
 
         return $newSettingsDataFormat;
+    }
+
+    protected function initDBConnection($connection)
+    {
+        $this->mysqlConn = app()->make(DatabaseManager::class)->connection($connection);
     }
 }
