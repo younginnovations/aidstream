@@ -14,9 +14,9 @@ class Financial extends BaseForm
     public function buildForm()
     {
         $this
-            ->addCheckBox('budget', 'Budget')
+            ->addCheckBox('budget', 'Budget', true, 'readonly')
             ->addCheckBox('planned_disbursement', 'Planned Disbursement')
-            ->addCheckBox('transaction', 'Transaction')
+            ->addCheckBox('transaction', 'Transaction', true, 'readonly')
             ->addCheckBox('capital_spend', 'Capital Spend');
     }
 }
