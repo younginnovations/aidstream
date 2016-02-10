@@ -201,7 +201,7 @@
 											<div class="panel-body panel-element-body row">
 												<div class="col-xs-12 col-md-12">
 													<div class="col-xs-12 col-xs-4">ref:</div>
-													<div class="col-xs-12 col-xs-8">{{ $recipientOrgBudget['recipient_organization'][0]['Ref'] }}</div>
+													<div class="col-xs-12 col-xs-8">{{ $recipientOrgBudget['recipient_organization'][0]['ref'] }}</div>
 												</div>
 											</div>
 										</div>

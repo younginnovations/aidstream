@@ -1,6 +1,8 @@
 <?php namespace App\Core\V201\Requests\Organization;
 
 use App\Http\Requests\Request;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Validator;
 
 /**
  * Class OrganizationBaseRequest
@@ -9,6 +11,34 @@ use App\Http\Requests\Request;
  */
 class OrganizationBaseRequest extends Request
 {
+    function __construct()
+    {
+        Validator::extendImplicit(
+            'unique_lang',
+            function ($attribute, $value, $parameters, $validator) {
+                $languages = [];
+                foreach ($value as $narrative) {
+                    $language = $narrative['language'];
+                    if (in_array($language, $languages)) {
+                        return false;
+                    }
+                    $languages[] = $language;
+                }
+
+                return true;
+            }
+        );
+
+        Validator::extendImplicit(
+            'required_with_language',
+            function ($attribute, $value, $parameters, $validator) {
+                $language = preg_replace('/([^~]+).narrative/', '$1.language', $attribute);
+
+                return !(Input::get($language) && !Input::get($attribute));
+            }
+        );
+    }
+
     /**
      * returns rules for narrative form
      * @param $formFields
@@ -17,9 +47,10 @@ class OrganizationBaseRequest extends Request
      */
     public function getRulesForNarrative($formFields, $formBase)
     {
-        $rules = [];
+        $rules                                     = [];
+        $rules[sprintf('%s.narrative', $formBase)] = 'unique_lang';
         foreach ($formFields as $narrativeIndex => $narrative) {
-            $rules[$formBase . '.narrative.' . $narrativeIndex . '.narrative'] = 'required';
+            $rules[sprintf('%s.narrative.%s.narrative', $formBase, $narrativeIndex)][] = 'required_with_language';
         }
 
         return $rules;
@@ -33,9 +64,10 @@ class OrganizationBaseRequest extends Request
      */
     public function getMessagesForNarrative($formFields, $formBase)
     {
-        $messages = [];
+        $messages                                                 = [];
+        $messages[sprintf('%s.narrative.unique_lang', $formBase)] = 'Languages should be unique.';
         foreach ($formFields as $narrativeIndex => $narrative) {
-            $messages[$formBase . '.narrative.' . $narrativeIndex . '.narrative.required'] = 'Narrative text is required';
+            $messages[sprintf('%s.narrative.%s.narrative.required_with_language', $formBase, $narrativeIndex)] = 'Narrative is required with language.';
         }
 
         return $messages;
@@ -52,7 +84,7 @@ class OrganizationBaseRequest extends Request
         $rules = [];
         foreach ($formFields as $valueKey => $valueVal) {
             $valueForm                         = $formBase . '.value.' . $valueKey;
-            $rules[$valueForm . '.amount']     = 'required|numeric';
+            $rules[$valueForm . '.amount']     = sprintf('required_with:%s.currency|numeric', $valueForm);
             $rules[$valueForm . '.value_date'] = 'required';
         }
 
@@ -69,10 +101,10 @@ class OrganizationBaseRequest extends Request
     {
         $messages = [];
         foreach ($formFields as $valueKey => $valueVal) {
-            $valueForm                                     = $formBase . '.value.' . $valueKey;
-            $messages[$valueForm . '.amount.required']     = 'Amount is Required';
-            $messages[$valueForm . '.amount.numeric']      = 'Amount should be numeric';
-            $messages[$valueForm . '.value_date.required'] = 'Date is Required';
+            $valueForm                                      = $formBase . '.value.' . $valueKey;
+            $messages[$valueForm . '.amount.required_with'] = 'Amount is Required with Currency.';
+            $messages[$valueForm . '.amount.numeric']       = 'Amount should be numeric.';
+            $messages[$valueForm . '.value_date.required']  = 'Date is required.';
         }
 
         return $messages;

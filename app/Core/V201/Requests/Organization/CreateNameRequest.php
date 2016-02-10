@@ -6,17 +6,16 @@
  */
 class CreateNameRequest extends OrganizationBaseRequest
 {
-
     /**
      * Get the validation rules that apply to the request.
-     *
      * @return array
      */
     public function rules()
     {
-        $rules = [];
+        $rules         = [];
+        $rules['name'] = 'unique_lang';
         foreach ($this->get('name') as $nameIndex => $name) {
-            $rules['name.' . $nameIndex . '.narrative'] = 'required|max:255';
+            $rules[sprintf('name.%s.narrative', $nameIndex)] = 'required';
         }
 
         return $rules;
@@ -27,13 +26,10 @@ class CreateNameRequest extends OrganizationBaseRequest
      */
     public function messages()
     {
-        $messages = [];
+        $messages                     = [];
+        $messages['name.unique_lang'] = 'Languages should be unique.';
         foreach ($this->get('name') as $nameIndex => $name) {
-            $messages['name.' . $nameIndex . '.narrative' . '.required'] = sprintf(
-                "Narrative is Required.",
-                $nameIndex
-            );
-            $messages['name.' . $nameIndex . '.narrative' . '.max']      = sprintf("Max(255) Narrative .", $nameIndex);
+            $messages[sprintf('name.%s.narrative.required', $nameIndex)] = 'Text is required.';
         }
 
         return $messages;

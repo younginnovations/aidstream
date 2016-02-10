@@ -44,7 +44,7 @@ class NameController extends Controller
     }
 
     /**
-     * write brief description
+     * update organization name
      * @param                    $orgId
      * @param NameRequestManager $nameRequestManager
      * @param Request            $request
