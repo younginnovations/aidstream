@@ -77,6 +77,7 @@ class TransactionController extends Controller
         $this->authorize('add_activity');
         $activity = $this->activityManager->getActivityData($activityId);
         $data     = $request->all();
+        $this->filterSector($data);
         $this->transactionManager->save($data, $activity);
         $this->activityManager->resetActivityWorkflow($activityId);
         $response = ['type' => 'success', 'code' => ['created', ['name' => 'Transaction']]];
@@ -128,11 +129,35 @@ class TransactionController extends Controller
         $this->authorize('edit_activity');
         $activity           = $this->activityManager->getActivityData($id);
         $transactionDetails = $request->except(['_token', '_method']);
+        $this->filterSector($transactionDetails);
         $this->transactionManager->save($transactionDetails, $activity, $transactionId);
         $this->activityManager->resetActivityWorkflow($id);
         $response = ['type' => 'success', 'code' => ['updated', ['name' => 'Transactions']]];
 
         return redirect()->to(sprintf('/activity/%s/transaction', $id))->withResponse($response);
+    }
+
+
+    /**
+     * filter unnecessary sector codes
+     * @param $transactionDetails
+     */
+    protected function filterSector(&$transactionDetails)
+    {
+        foreach ($transactionDetails['transaction'] as &$transaction) {
+            foreach ($transaction['sector'] as &$sector) {
+                if ($sector['sector_vocabulary'] == 1) {
+                    $sector['sector_category_code'] = '';
+                    $sector['sector_text']          = '';
+                } elseif ($sector['sector_vocabulary'] == 2) {
+                    $sector['sector_code'] = '';
+                    $sector['sector_text'] = '';
+                } else {
+                    $sector['sector_code']          = '';
+                    $sector['sector_category_code'] = '';
+                }
+            }
+        }
     }
 
     /**
