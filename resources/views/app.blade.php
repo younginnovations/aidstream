@@ -40,12 +40,14 @@
                 <a href="{{ Auth::user()->role_id == 3 ? url('admin/dashboard') : route('activity.index')  }}"
                    alt="Aidstream">Aidstream</a>
                <span class="version {{ (Session::get('version') == 'V201') ? 'old' : 'new' }}">
-                 <span class="version-text">IATI version {{Auth::user() ? Session::get('version') : "Aidstream"}}</span>
+
                    @if ((Session::get('version') == 'V201'))
+                       <a class="version-text" href="upgrade-version">IATI version V201</a>
                        <span class="old-version">
                          <a href="upgrade-version">Upgrade to IATI version 2.0.2</a>
                       </span>
                    @else
+                       <span class="version-text">IATI version V202</span>
                        <span class="new-version">
                    You’re using latest IATI version
                  </span>

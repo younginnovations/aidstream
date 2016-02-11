@@ -16,7 +16,7 @@
                             $versionKey = array_search($version, $versions);
                             $newVersion = $versions[$versionKey + 1];
                             /*--}}
-						@endif
+						@endif 
 					</div>
 					<div class="panel-body">
 						<div class="create-form">
@@ -25,7 +25,7 @@
 							<div class="settings-checkall-wrapper">
 								{!! form_row($form->default_field_groups) !!}
 								<div class="form-group">
-								<label><input type="checkbox" class="hidden checkAll"/><span class="btn btn-primary">Check All</span></label>
+								<label><input type="checkbox" class="hidden checkAll"/><span class="btn">Check All</span></label>
 								</div>
 							</div>
 							{!! form_end($form) !!}

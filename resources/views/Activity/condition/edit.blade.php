@@ -12,7 +12,7 @@
                 <div class="col-xs-12 col-md-8 col-lg-8 element-content-wrapper">
                     <div class="panel panel-default">
                         <div class="panel-body">
-                        <div class="create-form">
+                        <div class="create-form create-condition-form">
                             {!! form($form) !!}
                         </div>
                         <div class="collection-container hidden"

@@ -30,6 +30,7 @@ $(document).ready(function () {
                         .addClass("arrow")
                         .addClass(feedback.vertical)
                         .addClass(feedback.horizontal)
+                        .css({left: feedback.target.left - position.left})
                         .appendTo(this);
                 }
             }
@@ -85,17 +86,17 @@ $(document).ready(function () {
 
         if ($('#removeDialog').length === 0) {
             $('body').append('' +
-            '<div class="modal" id="removeDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="z-index: 9999">' +
-            '<div class="modal-dialog">' +
-            '<div class="modal-content">' +
-            '<div class="modal-header">' +
-            '<h4 class="modal-title" id="myModalLabel"></h4>' +
-            '</div>' +
-            '<div class="modal-body"></div>' +
-            '<div class="modal-footer"></div>' +
-            '</div>' +
-            '</div>' +
-            '</div>');
+                '<div class="modal" id="removeDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="z-index: 9999">' +
+                '<div class="modal-dialog">' +
+                '<div class="modal-content">' +
+                '<div class="modal-header">' +
+                '<h4 class="modal-title" id="myModalLabel"></h4>' +
+                '</div>' +
+                '<div class="modal-body"></div>' +
+                '<div class="modal-footer"></div>' +
+                '</div>' +
+                '</div>' +
+                '</div>');
         }
 
         var removeDialog = $('#removeDialog');
@@ -170,17 +171,17 @@ $(document).ready(function () {
 
         if ($('#popDialog').length === 0) {
             $('body').append('' +
-            '<div class="modal" id="popDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="z-index: 9999">' +
-            '<div class="modal-dialog">' +
-            '<div class="modal-content">' +
-            '<div class="modal-header">' +
-            '<h4 class="modal-title" id="myModalLabel"></h4>' +
-            '</div>' +
-            '<div class="modal-body"></div>' +
-            '<div class="modal-footer"></div>' +
-            '</div>' +
-            '</div>' +
-            '</div>');
+                '<div class="modal" id="popDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="z-index: 9999">' +
+                '<div class="modal-dialog">' +
+                '<div class="modal-content">' +
+                '<div class="modal-header">' +
+                '<h4 class="modal-title" id="myModalLabel"></h4>' +
+                '</div>' +
+                '<div class="modal-body"></div>' +
+                '<div class="modal-footer"></div>' +
+                '</div>' +
+                '</div>' +
+                '</div>');
         }
 
         var popElem = $('#popDialog');
@@ -264,46 +265,28 @@ $(document).ready(function () {
 
         if ($('#delDialog').length === 0) {
             $('body').append('' +
-            '<div class="modal" id="delDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="z-index: 9999">' +
-            '<div class="modal-dialog">' +
-            '<div class="modal-content">' +
-            '<div class="modal-header">' +
-            '<h4 class="modal-title" id="myModalLabel"></h4>' +
-            '</div>' +
-            '<div class="modal-body"></div>' +
-            '<div class="modal-footer"></div>' +
-            '</div>' +
-            '</div>' +
-            '</div>');
+                '<div class="modal" id="delDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="z-index: 9999">' +
+                '<div class="modal-dialog">' +
+                '<div class="modal-content">' +
+                '<div class="modal-header">' +
+                '<h4 class="modal-title" id="myModalLabel"></h4>' +
+                '</div>' +
+                '<div class="modal-body"></div>' +
+                '<div class="modal-footer"></div>' +
+                '</div>' +
+                '</div>' +
+                '</div>');
         }
 
         var delDialog = $('#delDialog');
 
         var buttons = '' +
-            '<button class="btn btn-primary btn_del" type="button">Yes</button>' +
+            '<button class="btn btn_del" type="button">Yes</button>' +
             '<button class="btn btn-default" type="button"  data-dismiss="modal">No</button>';
 
-<<<<<<< HEAD
         $('.modal-header .modal-title', delDialog).html('Delete Confirmation');
         $('.modal-body', delDialog).html('Are you sure you want to delete?');
         $('.modal-footer', delDialog).html(buttons);
-=======
- $('[data-toggle="tooltip"]').tooltip({
-     position: {
-       my: "center bottom-20",
-       at: "center top",
-       using: function( position, feedback ) {
-         $( this ).css( position );
-         $( "<div>" )
-           .addClass( "arrow" )
-           .addClass( feedback.vertical )
-           .addClass( feedback.horizontal )
-           .css({left: feedback.target.left - position.left})
-           .appendTo( this );
-       }
-     }
-   });
->>>>>>> fixing UI improvements card
 
         $('body').undelegate('.btn_del', 'click').delegate('.btn_del', 'click', function () {
             window.location = location;
@@ -355,7 +338,6 @@ $(document).ready(function () {
         preventNavigation = false;
     });
 
-
     window.onbeforeunload = function () {
         if (preventNavigation) {
             return 'You have unsaved changes.';
@@ -378,11 +360,12 @@ $(document).ready(function () {
         var aHref = $(this).attr('href');
         var href = location.href;
         if (href.indexOf(aHref) > -1) {
-            $(this).addClass('active-page');
+            $(this).addClass('highlight');
         }
     });
 
-  window.onbeforeunload = function () {
+
+window.onbeforeunload = function () {
     if (preventNavigation) {
       return 'You have unsaved changes.';
     }

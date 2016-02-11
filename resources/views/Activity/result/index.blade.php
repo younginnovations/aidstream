@@ -71,10 +71,11 @@
                             </tbody>
                         </table>
                         @else
-                            <div class="text-center no-data">No results Created Yet.</div>
+                            <div class="text-center no-data no-result-data">
+                                You haven’t added any result yet.
+                                <a href="{{ route('activity.result.create', $id) }}" class="btn btn-primary">Add Another Result</a>
+                            </div>
                         @endif
-                        <a href="{{ route('activity.result.create', $id) }}" class="add">Add Another Result</a>
-
                     </div>
                 </div>
             </div>

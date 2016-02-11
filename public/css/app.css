@@ -262,7 +262,8 @@ select:focus, .form-control[readonly]:focus {
           box-shadow: 0 0 0 1000px #F2F9FC inset;
   border: 1px solid #AFD8E8; }
 
-input[type="color"], input[type="date"], input[type="datetime"], input[type="datetime-local"], input[type="email"], input[type="month"], input[type="number"], input[type="password"], input[type="search"], input[type="tel"], input[type="text"], input[type="time"], input[type="url"], input[type="week"], input:not([type]), textarea, select, select.form-control {
+input[type="color"], input[type="date"], input[type="datetime"], input[type="datetime-local"], input[type="email"], input[type="month"], input[type="number"], input[type="password"], input[type="search"], input[type="tel"], input[type="text"], input[type="time"], input[type="url"], input[type="week"], input:not([type]), textarea, select,
+select.form-control {
   height: 45px;
   border: 1px solid #BFDFEC;
   margin-bottom: 0.75em; }
@@ -276,10 +277,12 @@ input, button {
   input:focus, input:active, button:focus, button:active {
     outline: none !important; }
 
-button, input[type="button"], input[type="reset"], input[type="submit"] {
-  background-color: #00A8FF; }
-  button:hover, input[type="button"]:hover, input[type="reset"]:hover, input[type="submit"]:hover {
-    background-color: #038ED6; }
+button, input[type="button"], input[type="reset"], input[type="submit"], .btn {
+  background-color: #00A8FF;
+  color: #fff; }
+  button:hover, input[type="button"]:hover, input[type="reset"]:hover, input[type="submit"]:hover, .btn:hover {
+    background-color: #038ED6;
+    color: #fff; }
 
 .navbar + .alert {
   margin-bottom: 0; }
@@ -642,6 +645,9 @@ label {
   text-align: center;
   position: relative;
   cursor: pointer; }
+  .version-text:hover {
+    text-decoration: none;
+    color: inherit; }
 
 .old-version, .new-version {
   display: none;
@@ -995,7 +1001,7 @@ label {
   background: rgba(72, 72, 72, 0.06) url(../../images/ic-no-activity.png) no-repeat center 79px;
   padding: 204px 0 20px; }
 
-.no-document-data {
+.no-document-data, .no-result-data {
   background: rgba(72, 72, 72, 0.06) url(../../images/ic-no-document.png) no-repeat center 79px;
   padding: 204px 0 20px; }
 
@@ -1059,6 +1065,11 @@ label {
         color: #00A8FF; }
     .element-sidebar-wrapper .panel-body li .active {
       color: #484848; }
+    .element-sidebar-wrapper .panel-body li .highlight {
+      background: #efefef;
+      color: #484848; }
+      .element-sidebar-wrapper .panel-body li .highlight:hover {
+        background: #efefef; }
 
 .action-icon {
   width: 37px;
@@ -1102,7 +1113,6 @@ label {
 
 .element-content-wrapper {
   padding: 0;
-  margin-top: 20px;
   width: -webkit-calc(100% - 267px);
   width: -moz-calc(100% - 267px);
   width: calc(100% - 267px); }
@@ -1116,7 +1126,6 @@ label {
   padding: 16px 40px 18px 50px;
   text-align: center;
   overflow: hidden;
-  margin-top: -20px;
   margin-bottom: 48px; }
   .activity-status ol {
     margin-top: 15px; }
@@ -1390,6 +1399,9 @@ label {
     font-size: 14px;
     text-transform: uppercase; }
 
+form .form-group + .text-danger {
+  padding: 4px 26px; }
+
 .add_to_collection, .add_to_collection:focus, .add, .upload {
   background: transparent url(../../images/ic-sprite.png) no-repeat 19px -443px;
   border: none;
@@ -1454,8 +1466,7 @@ form > .add_to_collection[data-collection="legacy_data"] {
   border: 1px dashed #00A8FF !important; }
 
 .btn-form {
-  width: 320px;
-  display: block; }
+  width: 320px; }
 
 .create-form .btn-form {
   position: absolute;
@@ -1824,6 +1835,35 @@ form > .add_to_collection[data-collection="legacy_data"] {
 .disqus-wrapper {
   clear: both; }
 
+.upload-wrapper {
+  padding: 20px 36px; }
+  .upload-wrapper p > a.btn-primary {
+    margin-right: 10px;
+    background: #00A8FF;
+    border: 0;
+    color: #fff; }
+    .upload-wrapper p > a.btn-primary:hover {
+      background: #038ED6; }
+
+.no-data-btn > .btn {
+  display: inline-block;
+  margin-left: 10px; }
+
+.no-data-btn .upload {
+  color: #fff;
+  background-position: -483px -292px; }
+
+.create-condition-form > form > .form-group {
+  padding: 0 30px 0 0;
+  position: relative;
+  margin: 20px 20px -10px 20px; }
+
+.modal-title {
+  font-family: Open-Sans-Bold; }
+
+.btn_del, .btn_del:hover, .btn_del:focus {
+  color: #fff; }
+
 @media all and (max-width: 1000px) {
   .element-upload-wrapper {
     width: 100%; }
@@ -1884,8 +1924,8 @@ form > .add_to_collection[data-collection="legacy_data"] {
       padding-right: 10px;
       white-space: nowrap; }
   /*
-    Label the data
-    */
+  Label the data
+  */
   .activity-wrapper td:nth-of-type(1) {
     content: "";
     display: none; }
@@ -1963,6 +2003,9 @@ form > .add_to_collection[data-collection="legacy_data"] {
   .download-transaction-wrap {
     padding-left: 14px;
     padding-right: 14px; }
+  .upload-wrapper {
+    padding-left: 0;
+    padding-right: 0; }
   .panel-title-heading {
     padding-right: 80px; }
   .change-activity-form .btn-form {
@@ -2076,7 +2119,9 @@ form > .add_to_collection[data-collection="legacy_data"] {
   .create-wizard-form .col-sm-6 + .col-sm-6:nth-child(even), create-user-form .col-sm-6 + .col-sm-6:nth-child(odd), .reset-user-password .col-sm-6 + .col-sm-6 {
     padding-left: 0; }
   .create-activity-form .form-group:only-of-type {
-    width: 50%; } }
+    width: 50%; }
+  .create-condition-form > form > .form-group {
+    width: 48%; } }
 
 @media all and (min-width: 1001px) {
   .element-sidebar-wrapper {
