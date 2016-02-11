@@ -92,7 +92,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6 pull-right">
-                                    <a class="btn btn-link" href="{{ url('/password/email') }}">@lang('trans.forgot_password')?</a>
+                                    <a class="btn-link" href="{{ url('/password/email') }}">@lang('trans.forgot_password')?</a>
                                 </div>
                             </div>
                             <div class="col-md-12">
