@@ -41,9 +41,12 @@ class Transaction extends V201Transaction
                 $transactionReferences[] = $referenceKey;
             }
 
-            $transactionReference                             = implode(',', $transactionReferences);
-            $rules                                            = [];
-            $rules[sprintf('%s.reference', $transactionForm)] = 'required|not_in:' . $transactionReference;
+            $transactionReference                                                                        = implode(',', $transactionReferences);
+            $rules                                                                                       = [];
+            $rules[sprintf('%s.reference', $transactionForm)]                                            = 'not_in:' . $transactionReference;
+            $rules[sprintf('%s.disbursement_channel.0.disbursement_channel_code', $transactionForm)]     = 'required';
+            $rules[sprintf('%s.provider_organization.0.organization_identifier_code', $transactionForm)] = 'exclude_operators';
+            $rules[sprintf('%s.receiver_organization.0.organization_identifier_code', $transactionForm)] = 'exclude_operators';
 
             $rules = array_merge(
                 $rules,
@@ -71,9 +74,9 @@ class Transaction extends V201Transaction
         $messages = [];
 
         foreach ($formFields as $transactionIndex => $transaction) {
-            $transactionForm                                              = sprintf('transaction.%s', $transactionIndex);
-            $messages[sprintf('%s.reference.required', $transactionForm)] = 'Reference is required';
-            $messages[sprintf('%s.reference.not_in', $transactionForm)]   = 'Reference should be unique';
+            $transactionForm                                                                                     = sprintf('transaction.%s', $transactionIndex);
+            $messages[sprintf('%s.reference.not_in', $transactionForm)]                                          = 'Reference should be unique';
+            $messages[sprintf('%s.disbursement_channel.0.disbursement_channel_code.required', $transactionForm)] = 'Disbursement Channel Code is required.';
 
             $messages = array_merge(
                 $messages,
@@ -182,9 +185,8 @@ class Transaction extends V201Transaction
         $rules = [];
 
         foreach ($formFields as $sectorIndex => $sector) {
-            $sectorForm                                          = sprintf('%s.sector.%s', $formBase, $sectorIndex);
-            $rules[sprintf('%s.sector_vocabulary', $sectorForm)] = 'required';
-            $rules[sprintf('%s.vocabulary_uri', $sectorForm)]    = 'url';
+            $sectorForm                                       = sprintf('%s.sector.%s', $formBase, $sectorIndex);
+            $rules[sprintf('%s.vocabulary_uri', $sectorForm)] = 'url';
             if ($sector['sector_vocabulary'] == 1) {
                 $rules[sprintf('%s.sector_code', $sectorForm)] = 'required';
             } elseif ($sector['sector_vocabulary'] == 2) {
@@ -209,9 +211,8 @@ class Transaction extends V201Transaction
         $messages = [];
 
         foreach ($formFields as $sectorIndex => $sector) {
-            $sectorForm                                                      = sprintf('%s.sector.%s', $formBase, $sectorIndex);
-            $messages[sprintf('%s.sector_vocabulary.required', $sectorForm)] = 'Sector Vocabulary is required.';
-            $messages[sprintf('%s.vocabulary_uri.url', $sectorForm)]         = 'Enter valid URL. eg. http://example.com';
+            $sectorForm                                              = sprintf('%s.sector.%s', $formBase, $sectorIndex);
+            $messages[sprintf('%s.vocabulary_uri.url', $sectorForm)] = 'Enter valid URL. eg. http://example.com';
             if ($sector['sector_vocabulary'] == 1) {
                 $messages[sprintf('%s.sector_code.%s', $sectorForm, 'required')] = 'Sector is required.';
             } elseif ($sector['sector_vocabulary'] == 2) {

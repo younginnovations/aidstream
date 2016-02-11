@@ -1,13 +1,11 @@
 <?php namespace App\Core\V201\Requests\Activity;
 
-
 /**
  * Class OtherIdentifierRequest
  * @package App\Core\V201\Requests\Activity
  */
 class OtherIdentifierRequest extends ActivityBaseRequest
 {
-
     /**
      * Get the validation rules that apply to the request.
      *
@@ -36,10 +34,7 @@ class OtherIdentifierRequest extends ActivityBaseRequest
         $rules = [];
 
         foreach ($formFields as $otherIdentifierIndex => $otherIdentifier) {
-            $otherIdentifierForm                                  = sprintf(
-                'other_identifier.%s',
-                $otherIdentifierIndex
-            );
+            $otherIdentifierForm                                  = sprintf('other_identifier.%s', $otherIdentifierIndex);
             $rules[sprintf('%s.reference', $otherIdentifierForm)] = 'required';
             $rules[sprintf('%s.type', $otherIdentifierForm)]      = 'required';
             $rules                                                = array_merge(
@@ -60,10 +55,7 @@ class OtherIdentifierRequest extends ActivityBaseRequest
         $messages = [];
 
         foreach ($formFields as $otherIdentifierIndex => $otherIdentifier) {
-            $otherIdentifierForm                                              = sprintf(
-                'other_identifier.%s',
-                $otherIdentifierIndex
-            );
+            $otherIdentifierForm                                              = sprintf('other_identifier.%s', $otherIdentifierIndex);
             $messages[sprintf('%s.reference.required', $otherIdentifierForm)] = 'Reference is required';
             $messages[sprintf('%s.type.required', $otherIdentifierForm)]      = 'Type is required';
             $messages                                                         = array_merge(
@@ -86,9 +78,8 @@ class OtherIdentifierRequest extends ActivityBaseRequest
         $rules = [];
 
         foreach ($formFields as $ownerOrgIndex => $ownerOrg) {
-            $ownerOrgForm                                  = sprintf('%s.owner_org.%s', $formBase, $ownerOrgIndex);
-            $rules[sprintf('%s.reference', $ownerOrgForm)] = 'required';
-            $rules                                         = array_merge(
+            $ownerOrgForm = sprintf('%s.owner_org.%s', $formBase, $ownerOrgIndex);
+            $rules        = array_merge(
                 $rules,
                 $this->getRulesForNarrative($ownerOrg['narrative'], $ownerOrgForm)
             );
@@ -107,13 +98,8 @@ class OtherIdentifierRequest extends ActivityBaseRequest
         $messages = [];
 
         foreach ($formFields as $ownerOrgIndex => $ownerOrg) {
-            $ownerOrgForm                                              = sprintf(
-                '%s.owner_org.%s',
-                $formBase,
-                $ownerOrgIndex
-            );
-            $messages[sprintf('%s.reference.required', $ownerOrgForm)] = 'Reference is required';
-            $messages                                                  = array_merge(
+            $ownerOrgForm = sprintf('%s.owner_org.%s', $formBase, $ownerOrgIndex);
+            $messages     = array_merge(
                 $messages,
                 $this->getMessagesForNarrative($ownerOrg['narrative'], $ownerOrgForm)
             );
@@ -121,5 +107,4 @@ class OtherIdentifierRequest extends ActivityBaseRequest
 
         return $messages;
     }
-
 }

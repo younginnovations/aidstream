@@ -65,9 +65,12 @@ class RecipientRegionController extends Controller
     public function update($id, Request $request, RecipientRegionRequestManager $recipientRegionRequestManager)
     {
         $this->authorize(['edit_activity', 'add_activity']);
-        $recipientRegion = $request->all();
-        $activityData    = $this->activityManager->getActivityData($id);
-        if ($this->recipientRegionManager->update($recipientRegion, $activityData)) {
+        $recipientRegions = $request->all();
+        foreach ($recipientRegions['recipient_region'] as &$recipientRegion) {
+            ($recipientRegion['region_vocabulary'] != '') ?: $recipientRegion['region_vocabulary'] = '1';
+        }
+        $activityData = $this->activityManager->getActivityData($id);
+        if ($this->recipientRegionManager->update($recipientRegions, $activityData)) {
             $this->activityManager->resetActivityWorkflow($id);
             $response = ['type' => 'success', 'code' => ['updated', ['name' => 'Recipient Region']]];
 

@@ -196,25 +196,32 @@ class BaseForm extends Form
 
     /**
      * add help text in the form fields
-     * @param $helpText
+     * @param      $helpText
+     * @param bool $tooltip
      * @return array
      */
-    protected function addHelpText($helpText)
+    protected function addHelpText($helpText, $tooltip = true)
     {
         $help = trans(session()->get('version') . "/help");
         is_array($help) ?: $help = trans(config('app.default_version_name') . '/help');
         isset($help[$helpText]) ?: $helpText = 'no_help_text';
 
-        return
-            [
-                'text' => 'text',
-                'tag'  => 'span',
-                'attr' => [
-                    'data-toggle'    => 'tooltip',
-                    'data-placement' => 'top',
+        $attr = [
+            'class' => 'help-block',
+            'title' => $help[$helpText]
+        ];
+
+        if ($tooltip) {
+            $attr = array_merge(
+                $attr,
+                [
                     'class'          => 'help-text',
-                    'title'          => $help[$helpText]
+                    'data-toggle'    => 'tooltip',
+                    'data-placement' => 'top'
                 ]
-            ];
+            );
+        }
+
+        return ['text' => $help[$helpText], 'tag' => 'span', 'attr' => $attr];
     }
 }

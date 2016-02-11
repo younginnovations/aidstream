@@ -83,9 +83,8 @@ class OrganizationBaseRequest extends Request
     {
         $rules = [];
         foreach ($formFields as $valueKey => $valueVal) {
-            $valueForm                         = $formBase . '.value.' . $valueKey;
-            $rules[$valueForm . '.amount']     = sprintf('required_with:%s.currency|numeric', $valueForm);
-            $rules[$valueForm . '.value_date'] = 'required';
+            $valueForm                     = $formBase . '.value.' . $valueKey;
+            $rules[$valueForm . '.amount'] = sprintf('required_with:%s.currency|numeric', $valueForm);
         }
 
         return $rules;
@@ -104,7 +103,6 @@ class OrganizationBaseRequest extends Request
             $valueForm                                      = $formBase . '.value.' . $valueKey;
             $messages[$valueForm . '.amount.required_with'] = 'Amount is Required with Currency.';
             $messages[$valueForm . '.amount.numeric']       = 'Amount should be numeric.';
-            $messages[$valueForm . '.value_date.required']  = 'Date is required.';
         }
 
         return $messages;
@@ -162,7 +160,7 @@ class OrganizationBaseRequest extends Request
     {
         $rules = [];
         foreach ($formFields as $periodStartKey => $periodStartVal) {
-            $rules[$formBase . '.period_start.' . $periodStartKey . '.date'] = 'required';
+            $rules[$formBase . '.period_start.' . $periodStartKey . '.date'] = 'required|date';
         }
 
         return $rules;
@@ -179,6 +177,7 @@ class OrganizationBaseRequest extends Request
         $messages = [];
         foreach ($formFields as $periodStartKey => $periodStartVal) {
             $messages[$formBase . '.period_start.' . $periodStartKey . '.date.required'] = 'Period Start is required';
+            $messages[$formBase . '.period_end.' . $periodStartKey . '.date.date']       = 'Period Start is not a valid date.';
         }
 
         return $messages;
@@ -194,7 +193,7 @@ class OrganizationBaseRequest extends Request
     {
         $rules = [];
         foreach ($formFields as $periodEndKey => $periodEndVal) {
-            $rules[$formBase . '.period_end.' . $periodEndKey . '.date'] = 'required';
+            $rules[$formBase . '.period_end.' . $periodEndKey . '.date'] = sprintf('required|date|after:%s', $formBase . '.period_start.' . $periodEndKey . '.date');
         }
 
         return $rules;
@@ -210,7 +209,9 @@ class OrganizationBaseRequest extends Request
     {
         $messages = [];
         foreach ($formFields as $periodEndKey => $periodEndVal) {
-            $messages[$formBase . '.period_end.' . $periodEndKey . '.date.required'] = 'Period End is required';
+            $messages[$formBase . '.period_end.' . $periodEndKey . '.date.required'] = 'Period End is required.';
+            $messages[$formBase . '.period_end.' . $periodEndKey . '.date.date']     = 'Period End is not a valid date.';
+            $messages[$formBase . '.period_end.' . $periodEndKey . '.date.after']    = 'Period End must be a date after Period Start';
         }
 
         return $messages;

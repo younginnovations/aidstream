@@ -68,7 +68,7 @@ class Result extends ActivityBaseRequest
             $rules[sprintf('%s.type', $resultForm)] = 'required';
             $rules                                  = array_merge(
                 $rules,
-                $this->getRulesForTitleNarrative($result['title'][0]['narrative'], sprintf('%s.title.0', $resultForm)),
+                $this->getRulesForRequiredNarrative($result['title'][0]['narrative'], sprintf('%s.title.0', $resultForm)),
                 $this->getRulesForNarrative($result['description'][0]['narrative'], sprintf('%s.description.0', $resultForm)),
                 $this->getRulesForIndicator($result['indicator'], $resultForm)
             );
@@ -91,7 +91,7 @@ class Result extends ActivityBaseRequest
             $messages[sprintf('%s.type.required', $resultForm)] = 'Type is required.';
             $messages                                           = array_merge(
                 $messages,
-                $this->getMessagesForTitleNarrative($result['title'][0]['narrative'], sprintf('%s.title.0', $resultForm)),
+                $this->getMessagesForRequiredNarrative($result['title'][0]['narrative'], sprintf('%s.title.0', $resultForm)),
                 $this->getMessagesForNarrative($result['description'][0]['narrative'], sprintf('%s.description.0', $resultForm)),
                 $this->getMessagesForIndicator($result['indicator'], $resultForm)
             );
@@ -211,11 +211,11 @@ class Result extends ActivityBaseRequest
         $rules = [];
 
         foreach ($formFields as $periodIndex => $period) {
-            $periodForm                                            = sprintf('%s.period.%s', $formBase, $periodIndex);
-            $rules[sprintf('%s.period_start.0.date', $periodForm)] = 'required';
-            $rules[sprintf('%s.period_end.0.date', $periodForm)]   = 'required';
-            $rules                                                 = array_merge(
+            $periodForm = sprintf('%s.period.%s', $formBase, $periodIndex);
+            $rules      = array_merge(
                 $rules,
+                $this->getRulesForPeriodStart($period['period_start'], $periodForm),
+                $this->getRulesForPeriodEnd($period['period_end'], $periodForm),
                 $this->getRulesForTarget($period['target'], sprintf('%s.target', $periodForm)),
                 $this->getRulesForTarget($period['actual'], sprintf('%s.actual', $periodForm))
             );
@@ -235,11 +235,11 @@ class Result extends ActivityBaseRequest
         $messages = [];
 
         foreach ($formFields as $periodIndex => $period) {
-            $periodForm                                                        = sprintf('%s.period.%s', $formBase, $periodIndex);
-            $messages[sprintf('%s.period_start.0.date.required', $periodForm)] = 'Period Start is required';
-            $messages[sprintf('%s.period_end.0.date.required', $periodForm)]   = 'Period End is required';
-            $messages                                                          = array_merge(
+            $periodForm = sprintf('%s.period.%s', $formBase, $periodIndex);
+            $messages   = array_merge(
                 $messages,
+                $this->getMessagesForPeriodStart($period['period_start'], $periodForm),
+                $this->getMessagesForPeriodEnd($period['period_end'], $periodForm),
                 $this->getMessagesForTarget($period['target'], sprintf('%s.target', $periodForm)),
                 $this->getMessagesForTarget($period['actual'], sprintf('%s.actual', $periodForm))
             );

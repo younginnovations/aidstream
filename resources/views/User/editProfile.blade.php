@@ -8,9 +8,6 @@
         <div class="row">
             @include('includes.side_bar_menu')
             <div class="col-xs-9 col-md-9 col-lg-9 content-wrapper">
-                @include('includes.response')
-                @include('includes.breadcrumb')
-                <div class="panel-content-heading panel-title-heading">Edit Profile</div>
                 @if (count($errors) > 0)
                     <div class="alert alert-danger">
                         <strong>Whoops!</strong> There were some problems with your input.<br><br>
@@ -20,10 +17,28 @@
                             @endforeach
                         </ul>
                     </div>
+                @else
+                    @include('includes.response')
                 @endif
+                @include('includes.breadcrumb')
+                <div class="panel-content-heading panel-title-heading">Edit Profile</div>
                 <form class="form-horizontal form-edit-profile" role="form" method="POST" action="{{ route('user.update-profile', $user->id)}}" enctype="multipart/form-data">
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
-
+                    {{--*/
+                        if(old()) {
+                            $user->first_name               = old('first_name');
+                            $user->last_name                = old('last_name');
+                            $user->email                    = old('email');
+                            $user->time_zone_id             = old('time_zone');
+                            $organization->name             = old('organization_name');
+                            $organization->address          = old('organization_address');
+                            $organization->country          = old('country');
+                            $organization->organization_url = old('organization_url');
+                            $organization->telephone        = old('organization_telephone');
+                            $organization->twitter          = old('organization_twitter');
+                            $organization->disqus_comments  = old('disqus_comments');
+                        }
+                    /*--}}
                     <div class="col-xs-12 col-md-12">
                         <div class="form-group col-xs-12 col-sm-6 col-md-6">
                             <div class="col-xs-12 col-md-12">

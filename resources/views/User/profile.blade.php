@@ -32,11 +32,21 @@
                             <div class="organization-detail">
                               <div class="organization-name">{{$organization[0]->name}}</div>
                               <ul>
+                              @if($organization[0]->telephone)
                                 <li class="telephone col-xs-6 col-md-4 col-lg-4"><label>Telephone</label><span>{{$organization[0]->telephone}}</span></li>
+                              @endif
+                              @if($organization[0]->twitter)
                                 <li class="twitter col-xs-6 col-md-4 col-lg-4"><label>Twitter</label><a href="#">{{$organization[0]->twitter}}</a></li>
+                              @endif
+                              @if($organization[0]->organization_url)
                                 <li class="website col-xs-6 col-md-4 col-lg-4"><label>Website</label><a href="#">{{$organization[0]->organization_url}}</a></li>
+                              @endif
+                              @if($organization[0]->address)
                                 <li class="address col-xs-6 col-md-4 col-lg-4"><label>Address</label><span>{{$organization[0]->address}}</span></li>
+                              @endif
+                              @if($organization[0]->country)
                                 <li class="country col-xs-6 col-md-4 col-lg-4"><label>Country</label><span>{{$getCode->getOrganizationCodeName('Country', $organization[0]->country)}}</span></li>
+                              @endif
                               </ul>
                               <div class="disqus-wrapper"><span>Disqus Comments : </span>{{($organization[0]->disqus_comments == 1) ? 'Enabled' : 'Disabled'}}</div>
                             </div>

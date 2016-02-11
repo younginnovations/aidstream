@@ -212,6 +212,9 @@ $(document).ready(function () {
     $("form").delegate('.sector_vocabulary', 'change', function () {
         var parent = $(this).parent('.form-group');
         var vocabulary = $(this).val();
+        if (vocabulary == '') {
+            vocabulary = 1;
+        }
         var sectorClass = ['.sector_text', '.sector_select', '.sector_category_select'];
         var selectedSector = sectorClass[vocabulary] ? sectorClass[vocabulary] : sectorClass[0];
         parent.siblings('.sector_types').addClass('hidden');

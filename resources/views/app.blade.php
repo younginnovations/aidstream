@@ -86,7 +86,9 @@
                            aria-expanded="false"><span class="avatar-img"><img src="{{url('images/avatar.png')}}" width="36" height="36" alt="{{Auth::user()->name}}"></span>
                             <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
-                            <li><a href="{{url('user/profile')}}">@lang('trans.my_profile')</a></li>
+                            @if(Auth::user()->role_id != 3 && Auth::user()->role_id !=4)
+                                <li><a href="{{url('user/profile')}}">@lang('trans.my_profile')</a></li>
+                            @endif
                             <li><a href="{{ url('/auth/logout') }}">@lang('trans.logout')</a></li>
                             <li class="language-select-wrap">
                                 <label for="">Choose Language</label>

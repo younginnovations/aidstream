@@ -24,7 +24,7 @@ class RecipientOrgBudget extends V201RecipientOrgBudget
                 ],
                 'recipient-org' => [
                     '@attributes' => [
-                        'ref' => $RecipientOrgBudget['recipient_organization'][0]['Ref']
+                        'ref' => $RecipientOrgBudget['recipient_organization'][0]['ref']
                     ],
                     'narrative'   => $this->buildNarrative($RecipientOrgBudget['narrative'])
                 ],

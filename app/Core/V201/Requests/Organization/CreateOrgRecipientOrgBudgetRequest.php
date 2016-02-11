@@ -17,7 +17,8 @@ class CreateOrgRecipientOrgBudgetRequest extends OrganizationBaseRequest
         $rules = [];
         foreach ($this->get('recipient_organization_budget') as $recipientOrganizationBudgetIndex => $recipientOrganizationBudget) {
             $recipientOrganizationBudgetForm = sprintf('recipient_organization_budget.%s', $recipientOrganizationBudgetIndex);
-            $narrativeField                  = sprintf('%s.narrative.0.narrative', $recipientOrganizationBudgetForm);
+            $narrativeKeys                   = array_keys($recipientOrganizationBudget['narrative']);
+            $narrativeField                  = sprintf('%s.narrative.%s.narrative', $recipientOrganizationBudgetForm, $narrativeKeys[0]);
             $narrativeRuleWithoutRef         = sprintf('required_without:%s.recipient_organization.0.ref', $recipientOrganizationBudgetForm);
             $rules[$narrativeField][]        = $narrativeRuleWithoutRef;
             $rules                           = array_merge_recursive(
@@ -43,7 +44,8 @@ class CreateOrgRecipientOrgBudgetRequest extends OrganizationBaseRequest
         $messages = [];
         foreach ($this->get('recipient_organization_budget') as $recipientOrganizationBudgetIndex => $recipientOrganizationBudget) {
             $recipientOrganizationBudgetForm = sprintf('recipient_organization_budget.%s', $recipientOrganizationBudgetIndex);
-            $narrativeField                  = sprintf('%s.narrative.0.narrative.required_without', $recipientOrganizationBudgetForm);
+            $narrativeKeys                   = array_keys($recipientOrganizationBudget['narrative']);
+            $narrativeField                  = sprintf('%s.narrative.%s.narrative.required_without', $recipientOrganizationBudgetForm, $narrativeKeys[0]);
             $messages[$narrativeField]       = 'Narrative is required when ref is empty';
             $messages                        = array_merge(
                 $messages,

@@ -18,9 +18,8 @@ class Sector extends V201Sector
         $rules = [];
 
         foreach ($formFields as $sectorIndex => $sector) {
-            $sectorForm                                          = sprintf('sector.%s', $sectorIndex);
-            $rules[sprintf('%s.sector_vocabulary', $sectorForm)] = 'required';
-            $rules[sprintf('%s.vocabulary_uri', $sectorForm)]    = 'url';
+            $sectorForm                                       = sprintf('sector.%s', $sectorIndex);
+            $rules[sprintf('%s.vocabulary_uri', $sectorForm)] = 'url';
             if ($sector['sector_vocabulary'] == 1) {
                 $rules[sprintf('%s.sector_code', $sectorForm)] = 'required';
             } elseif ($sector['sector_vocabulary'] == 2) {
@@ -45,9 +44,8 @@ class Sector extends V201Sector
         $messages = [];
 
         foreach ($formFields as $sectorIndex => $sector) {
-            $sectorForm                                                      = sprintf('sector.%s', $sectorIndex);
-            $messages[sprintf('%s.sector_vocabulary.required', $sectorForm)] = 'Sector Vocabulary is required.';
-            $messages[sprintf('%s.vocabulary_uri.url', $sectorForm)]         = 'Enter valid URL. eg. http://example.com';
+            $sectorForm                                              = sprintf('sector.%s', $sectorIndex);
+            $messages[sprintf('%s.vocabulary_uri.url', $sectorForm)] = 'Enter valid URL. eg. http://example.com';
             if ($sector['sector_vocabulary'] == 1) {
                 $messages[sprintf('%s.sector_code.%s', $sectorForm, 'required')] = 'Sector is required.';
             } elseif ($sector['sector_vocabulary'] == 2) {

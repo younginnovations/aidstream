@@ -19,7 +19,7 @@ class IatiIdentifier extends Request
      */
     public function rules()
     {
-        $iatiIdentifierRepository = new IatiIdentifierRepository();
+        $iatiIdentifierRepository = app(IatiIdentifierRepository::class);
         $rules                    = [];
         $activityIdentifiers      = [];
         $identifiers              = $iatiIdentifierRepository->getActivityIdentifiers();
