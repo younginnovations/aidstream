@@ -57,6 +57,23 @@ class ActivityBaseRequest extends Request
     }
 
     /**
+     * returns messages for narrative
+     * @param $formFields
+     * @param $formBase
+     * @return array
+     */
+    public function getMessagesForNarrative($formFields, $formBase)
+    {
+        $messages                                                 = [];
+        $messages[sprintf('%s.narrative.unique_lang', $formBase)] = 'Languages should be unique.';
+        foreach ($formFields as $narrativeIndex => $narrative) {
+            $messages[sprintf('%s.narrative.%s.narrative.required_with_language', $formBase, $narrativeIndex)] = 'Narrative is required with language.';
+        }
+
+        return $messages;
+    }
+
+    /**
      * returns rules for narrative if narrative is required
      * @param      $formFields
      * @param      $formBase
@@ -98,21 +115,5 @@ class ActivityBaseRequest extends Request
         }
 
         return $rules;
-    }
-
-    /**
-     * returns messages for narrative
-     * @param $formFields
-     * @param $formBase
-     * @return array
-     */
-    public function getMessagesForNarrative($formFields, $formBase)
-    {
-        $messages[sprintf('%s.narrative.unique_lang', $formBase)] = 'Languages should be unique.';
-        foreach ($formFields as $narrativeIndex => $narrative) {
-            $messages[sprintf('%s.narrative.%s.narrative.required_with_language', $formBase, $narrativeIndex)] = 'Narrative is required with language.';
-        }
-
-        return $messages;
     }
 }
