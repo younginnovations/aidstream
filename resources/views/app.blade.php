@@ -42,9 +42,9 @@
                <span class="version {{ (Session::get('version') == 'V201') ? 'old' : 'new' }}">
 
                    @if ((Session::get('version') == 'V201'))
-                       <a class="version-text" href="upgrade-version">IATI version V201</a>
+                       <a class="version-text" href="{{route('upgrade-version.index')}}">IATI version V201</a>
                        <span class="old-version">
-                         <a href="upgrade-version">Upgrade to IATI version 2.0.2</a>
+                         <a href="{{route('upgrade-version.index')}}">Upgrade to IATI version 2.0.2</a>
                       </span>
                    @else
                        <span class="version-text">IATI version V202</span>
