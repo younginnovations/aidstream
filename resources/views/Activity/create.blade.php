@@ -7,6 +7,7 @@
         <div class="row">
             @include('includes.side_bar_menu')
             <div class="col-xs-9 col-md-9 col-lg-9 content-wrapper">
+                @include('includes.response')
                 @include('includes.breadcrumb')
                 <div class="panel panel-default panel-create">
                     <div class="panel-content-heading panel-title-heading">{{($duplicate) ? 'Duplicate Activity' : 'Add Activity'}}</div>
@@ -26,7 +27,7 @@
                 @if(!$duplicate)
                     <div class="panel panel-default panel-element-detail panel-activity-default">
                         <div class="panel-body">
-                            <div class="alert alert-info">You can change the Activity Default Field Values once after you create an activity.</div>
+                            <div class="activity-description"><span>You can change the Activity Default Field Values once after you create an activity.</span></div>
                             <div class="panel-default">
                                 <div class="panel-heading">@lang('trans.activity_default')</div>
                                 <div class="panel-body panel-element-body">

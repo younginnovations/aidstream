@@ -7,6 +7,7 @@
         <div class="row">
         @include('includes.side_bar_menu')
             <div class="col-xs-9 col-md-9 col-lg-9 content-wrapper">
+                @include('includes.response')
             <div class="panel-content-heading">Reset User Password</div>
             <div class="col-xs-12 col-md-8 col-lg-8 element-content-wrapper user-content-wrapper">
                 <div class="create-form create-user-form reset-user-password">

@@ -107,10 +107,9 @@ class StepThreeController extends Controller
         }
         $dateStatus   = ['activity_status' => $activityStatus, 'activity_date' => $activityDate];
         $activityData = $this->activityManager->getActivityData($id);
-        if ($this->stepThreeManager->update($dateStatus, $activityData)) {
-            return redirect()->to(sprintf('/activity/%s', $id))->withMessage(
-                'Step Three Completed and Activity Completed!'
-            );
+        if ($this->stepThreeManager->update($dateStatus, $activityData)){
+            $response = ['type' => 'success', 'code' => ['created', ['name' => 'Step Three Completed and Activity ']]];
+            return redirect()->to(sprintf('/activity/%s', $id))->withResponse($response);
         }
 
         return redirect()->back();

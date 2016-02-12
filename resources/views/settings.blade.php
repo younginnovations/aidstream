@@ -7,6 +7,7 @@
         <div class="row">
             @include('includes.side_bar_menu')
             <div class="col-xs-9 col-lg-9 content-wrapper settings-wrapper">
+				@include('includes.response')
 				<div class="panel panel-default">
 					<div class="panel-content-heading panel-title-heading">
 						Settings
@@ -15,17 +16,16 @@
                             $versionKey = array_search($version, $versions);
                             $newVersion = $versions[$versionKey + 1];
                             /*--}}
-							<a href="upgrade-version" class="upgrade small pull-right">Upgrade to Version {{ $newVersion}}</a>
-						@endif
+						@endif 
 					</div>
 					<div class="panel-body">
 						<div class="create-form">
 							{!! form_start($form) !!}
 							{!! form_until($form, 'default_field_values') !!}
-							<div class="settings-checkall-wrapper"> 
+							<div class="settings-checkall-wrapper">
 								{!! form_row($form->default_field_groups) !!}
 								<div class="form-group">
-								<label><input type="checkbox" class="hidden checkAll"/><span class="btn btn-primary">Check All</span></label>
+								<label><input type="checkbox" class="hidden checkAll"/><span class="btn">Check All</span></label>
 								</div>
 							</div>
 							{!! form_end($form) !!}

@@ -47,12 +47,14 @@
                     <div class="panel-body">
                         @if (count($errors) > 0)
                             <div class="alert alert-danger">
-                                <strong>Whoops!</strong> There were some problems with your input.<br><br>
-                                <ul>
-                                    @foreach ($errors->all() as $error)
-                                        <li>{{ $error }}</li>
-                                    @endforeach
-                                </ul>
+                                <span>
+                                  <strong>Whoops!</strong> There were some problems with your input.
+                                  <ul>
+                                      @foreach ($errors->all() as $error)
+                                          <li>{{ $error }}</li>
+                                      @endforeach
+                                  </ul>
+                                </span>
                             </div>
                         @endif
 
@@ -90,7 +92,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6 pull-right">
-                                    <a class="btn btn-link" href="{{ url('/password/email') }}">@lang('trans.forgot_password')?</a>
+                                    <a class="btn-link" href="{{ url('/password/email') }}">@lang('trans.forgot_password')?</a>
                                 </div>
                             </div>
                             <div class="col-md-12">

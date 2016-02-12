@@ -18,7 +18,8 @@ $filledStatus = $defaultFieldGroups->getFilledStatus($id);
                             @if ($filledStatus)
                                 <li>
                                     {{--*/ $filled = $filledStatus[$fieldGroupIndex][$fieldIndex]; /*--}}
-                                    <a href="{{ route(sprintf('activity.%s.index', str_replace('_', '-', $fieldIndex)), [$id]) }}" class="{{ $filled ? 'active' : '' }}">
+                                    <a href="{{ route(sprintf('activity.%s.index', str_replace('_', '-', $fieldIndex)), [$id]) }}" class="{{ $filled ? 'active' : '' }}"
+                                       title="{{ $filled ? 'Edit ' : 'Add '}}{{ $field}}">
                                         <span class="action-icon {{ $filled ? 'edit-value' : 'add' }}">icon</span>
                                         {{$field}}
                                     </a>

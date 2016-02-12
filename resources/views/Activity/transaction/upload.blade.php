@@ -16,6 +16,7 @@
         <div class="row">
             @include('includes.side_bar_menu')
             <div class="col-xs-9 col-md-9 col-lg-9 content-wrapper">
+                @include('includes.response')
                 <div class="panel-content-heading panel-title-heading">Upload Transaction for <span>{{$activity->IdentifierTitle}}</span>
                     <a href="{{ route('activity.transaction.index', $id) }}" class="btn btn-primary pull-right back-to-transaction">Back to Transaction List</a>
                 </div>

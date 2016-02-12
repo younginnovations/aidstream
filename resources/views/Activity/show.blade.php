@@ -8,27 +8,16 @@
    <div class="row">
        @include('includes.side_bar_menu')
        <div class="col-xs-9 col-md-9 col-lg-9 content-wrapper">
+           @include('includes.response')
            @include('includes.breadcrumb')
            <?php
            $activity_workflow = $activityDataList['activity_workflow'];
            $status_label = ['draft', 'completed', 'verified', 'published'];
-           $btn_status_label = ['Complete', 'Verify', 'Publish'];
+           $btn_status_label = ['Completed', 'Verified', 'Published'];
            $btn_text = $activity_workflow > 2 ? "" : $btn_status_label[$activity_workflow];
            ?>
            <div class="element-panel-heading">
-               <span>Activity Data</span>
-                 @if($btn_text != "")
-                       <form method="POST" id="change_status" class="pull-right" action="{{ url('/activity/' . $id . '/update-status') }}">
-                           <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
-                           <input type="hidden" name="activity_workflow" value="{{ $activity_workflow + 1 }}">
-                           @if($activity_workflow == 2)
-                               <input type="button" value="{{ $btn_text }}" class="btn_confirm"
-                                      data-title="Confirmation" data-message="Are you sure you want to Publish?">
-                           @else
-                               <input type="submit" value="{{ $btn_text }}">
-                           @endif
-                       </form>
-                   @endif
+               <span>{{ $activityDataList['title'] ? $activityDataList['title'][0]['narrative'] : 'No Title' }}</span>
            </div>
            <div class="col-xs-12 col-md-8 col-lg-8 element-content-wrapper">
                <div class="activity-status activity-status-{{ $status_label[$activity_workflow] }}">
@@ -41,6 +30,18 @@
                            @endif
                        @endforeach
                    </ol>
+                   @if($btn_text != "")
+                         <form method="POST" id="change_status" class="pull-right" action="{{ url('/activity/' . $id . '/update-status') }}">
+                             <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
+                             <input type="hidden" name="activity_workflow" value="{{ $activity_workflow + 1 }}">
+                             @if($activity_workflow == 2)
+                                 <input type="button" value="Mark as {{ $btn_text }}" class="btn_confirm"
+                                        data-title="Confirmation" data-message="Are you sure you want to Publish?">
+                             @else
+                                 <input type="submit" value="Mark as {{ $btn_text }}">
+                             @endif
+                         </form>
+                     @endif
                </div>
                <a href="{{route('change-activity-default', $id)}}" class="pull-right"><span class="glyphicon glyphicon-triangle-left"></span>Override Activity Default</a>
                <div class="panel panel-default panel-element-detail">
@@ -78,7 +79,9 @@
 
                         @if(!empty($identifier))
                             <div class="panel panel-default">
-                                <div class="panel-heading">Identifier</div>
+                                <div class="panel-heading">Identifier
+                                    <a href="{{route('activity.iati-identifier.index', $id)}}" class="edit-element">edit</a>
+                                </div>
                                 <div class="panel-body panel-element-body row">
                                     <div class="col-xs-12 col-md-12">
                                         <div class="col-xs-12 col-sm-4">IATI Identifier Text: </div>
@@ -90,7 +93,9 @@
 
                         @if(!empty($otherIdentifiers))
                             <div class="panel panel-default">
-                                <div class="panel-heading">Other Identifier</div>
+                                <div class="panel-heading">Other Identifier
+                                    <a href="{{route('activity.other-identifier.index', $id)}}" class="edit-element">edit</a>
+                                </div>
                                 <div class="panel-body panel-level-1">
                                     @foreach($otherIdentifiers as $other_identifier)
                                     <div class="panel panel-default">
@@ -134,7 +139,9 @@
 
                         @if(!empty($titles))
                             <div class="panel panel-default">
-                                <div class="panel-heading">Title</div>
+                                <div class="panel-heading">Title
+                                    <a href="{{route('activity.title.index', $id)}}" class="edit-element">edit</a>
+                                </div>
                                 <div class="panel-body panel-level-1">
                                 @foreach($titles as $title)
                                     <div class="panel panel-default">
@@ -153,7 +160,9 @@
 
                         @if(!empty($descriptions))
                             <div class="panel panel-default">
-                                <div class="panel-heading">Description</div>
+                                <div class="panel-heading">Description
+                                    <a href="{{route('activity.description.index', $id)}}" class="edit-element">edit</a>
+                                </div>
                                 <div class="panel-body panel-level-1">
                                     @foreach($descriptions as $description)
                                         <div class="panel panel-default">
@@ -178,7 +187,9 @@
 
                         @if(!empty($activityStatus))
                             <div class="panel panel-default">
-                                <div class="panel-heading">Activity Status</div>
+                                <div class="panel-heading">Activity Status
+                                    <a href="{{route('activity.activity-status.index', $id)}}" class="edit-element">edit</a>
+                                </div>
                                 <div class="panel-body panel-element-body row">
                                     <div class="col-xs-12 col-md-12">
                                         <div class="col-xs-12 col-sm-4">Code: </div>
@@ -190,11 +201,13 @@
 
                         @if(!empty($activityDates))
                             <div class="panel panel-default">
-                                <div class="panel-heading">Activity Date</div>
+                                <div class="panel-heading">Activity Date
+                                    <a href="{{route('activity.activity-date.index', $id)}}" class="edit-element">edit</a>
+                                </div>
                                 <div class="panel-body panel-level-1">
                                     @foreach($activityDates as $activity_date)
                                         <div class="panel panel-default">
-                                            <div class="panel-heading">{{$getCode->getActivityCodeName('ActivityDateType', $activity_date['type']) . ' ; ' . $activity_date['date']}}</div>
+                                            <div class="panel-heading">{{$getCode->getActivityCodeName('ActivityDateType', $activity_date['type']) . ' ; ' . date('M d, Y', strtotime($activity_date['date'])) }}</div>
                                             <div class="panel-body panel-element-body row">
                                                 <div class="col-xs-12 col-md-12">
                                                     <div class="col-xs-12 col-sm-4">Type: </div>
@@ -202,7 +215,7 @@
                                                 </div>
                                                 <div class="col-xs-12 col-md-12">
                                                     <div class="col-xs-12 col-sm-4">Date: </div>
-                                                    <div class="col-xs-12 col-sm-8">{{$activity_date['date']}}</div>
+                                                    <div class="col-xs-12 col-sm-8">{{ date('M d, Y', strtotime($activity_date['date'])) }}</div>
                                                 </div>
                                                 @foreach($activity_date['narrative'] as $narrative)
                                                 <div class="col-xs-12 col-md-12">
@@ -219,7 +232,9 @@
 
                         @if(!empty($contactInfo))
                             <div class="panel panel-default">
-                                <div class="panel-heading">Contact Info</div>
+                                <div class="panel-heading">Contact Info
+                                    <a href="{{route('activity.contact-info.index', $id)}}" class="edit-element">edit</a>
+                                </div>
                                 <div class="panel-body panel-element-body">
                                     @foreach($contactInfo as $info)
                                     <div class="col-xs-12 col-md-12">
@@ -291,7 +306,9 @@
 
                         @if(!empty($activityScope))
                             <div class="panel panel-default">
-                                <div class="panel-heading">Activity Scope</div>
+                                <div class="panel-heading">Activity Scope
+                                    <a href="{{route('activity.activity-scope.index', $id)}}" class="edit-element">edit</a>
+                                </div>
                                 <div class="panel-body panel-element-body">
                                     <div class="col-xs-12 col-md-12 clearfix">
                                         <div class="col-xs-12 col-sm-4">Code: </div>
@@ -303,7 +320,9 @@
 
                         @if(!empty($participatingOrganizations))
                             <div class="panel panel-default">
-                                <div class="panel-heading">Participating Organization</div>
+                                <div class="panel-heading">Participating Organization
+                                    <a href="{{route('activity.participating-organization.index', $id)}}" class="edit-element">edit</a>
+                                </div>
                                 <div class="panel-body panel-level-1">
                                     @foreach($participatingOrganizations as $participatingOrganization)
                                         <div class="panel panel-default">
@@ -336,7 +355,9 @@
 
                         @if(!empty($recipientCountries))
                             <div class="panel panel-default">
-                                <div class="panel-heading">Recipient Country</div>
+                                <div class="panel-heading">Recipient Country
+                                    <a href="{{route('activity.recipient-country.index', $id)}}" class="edit-element">edit</a>
+                                </div>
                                 <div class="panel-body panel-level-1">
                                     @foreach($recipientCountries as $recipientCountry)
                                         <div class="panel panel-default">
@@ -365,7 +386,9 @@
 
                         @if(!empty($recipientRegions))
                             <div class="panel panel-default">
-                                <div class="panel-heading">Recipient Region</div>
+                                <div class="panel-heading">Recipient Region
+                                    <a href="{{route('activity.recipient-region.index', $id)}}" class="edit-element">edit</a>
+                                </div>
                                 <div class="panel-body panel-level-1">
                                     @foreach($recipientRegions as $recipientRegion)
                                         <div class="panel panel-default">
@@ -398,7 +421,9 @@
 
                         @if(!empty($locations))
                             <div class="panel panel-default">
-                                <div class="panel-heading">Location</div>
+                                <div class="panel-heading">Location
+                                    <a href="{{route('activity.location.index', $id)}}" class="edit-element">edit</a>
+                                </div>
                                 <div class="panel-body panel-level-1">
                                     @foreach($locations as $location)
                                         <div class="panel panel-default">
@@ -529,7 +554,9 @@
                         @endif
                         @if(!empty($sectors))
                            <div class="panel panel-default">
-                                <div class="panel-heading">Sectors</div>
+                                <div class="panel-heading">Sectors
+                                    <a href="{{route('activity.sector.index', $id)}}" class="edit-element">edit</a>
+                                </div>
                                 <div class="panel-body panel-level-1">
                                     @foreach($sectors as $sector)
                                         {{--*/
@@ -573,7 +600,9 @@
 
                         @if(!empty($countryBudgetItems))
                             <div class="panel panel-default">
-                                <div class="panel-heading">Country Budget Items</div>
+                                <div class="panel-heading">Country Budget Items
+                                    <a href="{{route('activity.country-budget-items.index', $id)}}" class="edit-element">edit</a>
+                                </div>
                                 <div class="panel-body panel-level-1">
                                     @foreach($countryBudgetItems as $countryBudgetItem)
                                         <div class="panel panel-default">
@@ -609,10 +638,12 @@
                                 </div>
                             </div>
                         @endif
-
+                        
                         @if(!empty($policyMarkers))
                             <div class="panel panel-default">
-                                <div class="panel-heading">Policy Markers</div>
+                                <div class="panel-heading">Policy Markers
+                                    <a href="{{route('activity.policy-marker.index', $id)}}" class="edit-element">edit</a>
+                                </div>
                                 <div class="panel-body panel-level-1">
                                     @foreach($policyMarkers as $policyMarker)
                                         <div class="panel panel-default">
@@ -641,7 +672,9 @@
 
                         @if(!empty($collaborationType))
                             <div class="panel panel-default">
-                                <div class="panel-heading">Collaboration Type</div>
+                                <div class="panel-heading">Collaboration Type
+                                    <a href="{{route('activity.collaboration-type.index', $id)}}" class="edit-element">edit</a>
+                                </div>
                                 <div class="panel-element-body row">
                                     <div class="col-xs-12 col-md-12">
                                         <div class="col-xs-12 col-sm-4">Code: </div>
@@ -653,7 +686,9 @@
 
                         @if(!empty($defaultFlowType))
                             <div class="panel panel-default">
-                                <div class="panel-heading">Default FLow Type</div>
+                                <div class="panel-heading">Default FLow Type
+                                    <a href="{{route('activity.default-flow-type.index', $id)}}" class="edit-element">edit</a>
+                                </div>
                                 <div class="panel-element-body row">
                                     <div class="col-xs-12 col-md-12">
                                         <div class="col-xs-12 col-sm-4">Code: </div>
@@ -665,7 +700,9 @@
 
                         @if(!empty($defaultFinanceType))
                             <div class="panel panel-default">
-                                <div class="panel-heading">Default Finance Type</div>
+                                <div class="panel-heading">Default Finance Type
+                                    <a href="{{route('activity.default-finance-type.index', $id)}}" class="edit-element">edit</a>
+                                </div>
                                 <div class="panel-element-body row">
                                     <div class="col-xs-12 col-md-12">
                                         <div class="col-xs-12 col-sm-4">Code: </div>
@@ -677,7 +714,9 @@
 
                         @if(!empty($defaultAidType))
                             <div class="panel panel-default">
-                                <div class="panel-heading">Default Aid Type</div>
+                                <div class="panel-heading">Default Aid Type
+                                    <a href="{{route('activity.default-finance-type.index', $id)}}" class="edit-element">edit</a>
+                                </div>
                                 <div class="panel-element-body row">
                                     <div class="col-xs-12 col-md-12">
                                         <div class="col-xs-12 col-sm-4">Code: </div>
@@ -689,7 +728,9 @@
 
                         @if(!empty($defaultTiedStatus))
                             <div class="panel panel-default">
-                                <div class="panel-heading">Default Tied Status</div>
+                                <div class="panel-heading">Default Tied Status
+                                    <a href="{{route('activity.default-tied-status.index', $id)}}" class="edit-element">edit</a>
+                                </div>
                                 <div class="panel-element-body row">
                                     <div class="col-xs-12 col-md-12">
                                         <div class="col-xs-12 col-sm-4">Code: </div>
@@ -701,11 +742,13 @@
 
                         @if(!empty($budgets))
                             <div class="panel panel-default">
-                                <div class="panel-heading">Budgets</div>
+                                <div class="panel-heading">Budgets
+                                    <a href="{{route('activity.budget.index', $id)}}" class="edit-element">edit</a>
+                                </div>
                                 <div class="panel-body panel-level-1">
                                     @foreach($budgets as $budget)
                                         <div class="panel panel-default">
-                                            <div class="panel-heading">{{$getCode->getActivityCodeName('BudgetType', $budget['budget_type']) . ' ; [USD] '. $budget['value'][0]['amount'] . ' ; '. $budget['value'][0]['value_date'] }}</div>
+                                            <div class="panel-heading">{{$getCode->getActivityCodeName('BudgetType', $budget['budget_type']) . ' ; [USD] '. $budget['value'][0]['amount'] . ' ; '. date('M d, Y', strtotime($budget['value'][0]['value_date'])) }}</div>
                                             <div class="panel-element-body row">
                                                 <div class="col-xs-12 col-md-12">
                                                     <div class="col-xs-12 col-sm-4">Type: </div>
@@ -717,7 +760,7 @@
                                                     <div class="panel-element-body row">
                                                         <div class="col-xs-12 col-md-12">
                                                             <div class="col-xs-12 col-sm-4">Iso_date: </div>
-                                                            <div class="col-xs-12 col-sm-8">{{ $budget['period_start'][0]['date']}}</div>
+                                                            <div class="col-xs-12 col-sm-8">{{ date('M d, Y', strtotime($budget['period_start'][0]['date'])) }}</div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -726,7 +769,7 @@
                                                     <div class="panel-element-body row">
                                                         <div class="col-xs-12 col-md-12">
                                                             <div class="col-xs-12 col-sm-4">Iso_date: </div>
-                                                            <div class="col-xs-12 col-sm-8">{{ $budget['period_end'][0]['date']}}</div>
+                                                            <div class="col-xs-12 col-sm-8">{{ date('M d, Y', strtotime($budget['period_end'][0]['date'])) }}</div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -743,7 +786,7 @@
                                                         </div>
                                                         <div class="col-xs-12 col-md-12">
                                                             <div class="col-xs-12 col-sm-4">Date: </div>
-                                                            <div class="col-xs-12 col-sm-8">{{ $budget['value'][0]['value_date']}}</div>
+                                                            <div class="col-xs-12 col-sm-8">{{ date('M d, Y', strtotime($budget['value'][0]['value_date'])) }}</div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -756,11 +799,13 @@
 
                         @if(!empty($plannedDisbursements))
                             <div class="panel panel-default">
-                                <div class="panel-heading">Planned Disbursements</div>
+                                <div class="panel-heading">Planned Disbursements
+                                    <a href="{{route('activity.planned-disbursement.index', $id)}}" class="edit-element">edit</a>
+                                </div>
                                 <div class="panel-body panel-level-1">
                                     @foreach($plannedDisbursements as $plannedDisbursement)
                                         <div class="panel panel-default">
-                                            <div class="panel-heading">{{'[USD]'. $plannedDisbursement['value'][0]['amount'] . ' ; '. $plannedDisbursement['value'][0]['value_date'] }}</div>
+                                            <div class="panel-heading">{{'[USD]'. $plannedDisbursement['value'][0]['amount'] . ' ; '. date('M d, Y', strtotime($plannedDisbursement['value'][0]['value_date'])) }}</div>
                                             <div class="panel-element-body row">
                                                 <div class="col-xs-12 col-md-12">
                                                     <div class="col-xs-12 col-sm-4">Type: </div>
@@ -772,7 +817,7 @@
                                                     <div class="panel-element-body row">
                                                         <div class="col-xs-12 col-md-12">
                                                             <div class="col-xs-12 col-sm-4">Iso_date: </div>
-                                                            <div class="col-xs-12 col-sm-8">{{ $plannedDisbursement['period_start'][0]['date']}}</div>
+                                                            <div class="col-xs-12 col-sm-8">{{ date('M d, Y', strtotime($plannedDisbursement['period_start'][0]['date'])) }}</div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -781,7 +826,7 @@
                                                     <div class="panel-element-body row">
                                                         <div class="col-xs-12 col-md-12">
                                                             <div class="col-xs-12 col-sm-4">Iso_date: </div>
-                                                            <div class="col-xs-12 col-sm-8">{{ $plannedDisbursement['period_end'][0]['date']}}</div>
+                                                            <div class="col-xs-12 col-sm-8">{{ date('M d, Y', strtotime($plannedDisbursement['period_end'][0]['date'])) }}</div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -798,7 +843,7 @@
                                                         </div>
                                                         <div class="col-xs-12 col-md-12">
                                                             <div class="col-xs-12 col-sm-4">Date: </div>
-                                                            <div class="col-xs-12 col-sm-8">{{ $plannedDisbursement['value'][0]['value_date']}}</div>
+                                                            <div class="col-xs-12 col-sm-8">{{ date('M d, Y', strtotime($plannedDisbursement['value'][0]['value_date'])) }}</div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -811,7 +856,9 @@
 
                         @if(!empty($capitalSpend))
                             <div class="panel panel-default">
-                                <div class="panel-heading">Capital Spend</div>
+                                <div class="panel-heading">Capital Spend
+                                    <a href="{{route('activity.capital-spend.index', $id)}}" class="edit-element">edit</a>
+                                </div>
                                 <div class="panel-body row">
                                     <div class="col-xs-12 col-md-12">
                                         <div class="col-xs-12 col-sm-4">Percentage: </div>
@@ -823,7 +870,9 @@
 
                         @if(!empty($documentLinks))
                             <div class="panel panel-default">
-                                <div class="panel-heading">Document Link</div>
+                                <div class="panel-heading">Document Link
+                                    <a href="{{route('activity.document-link.index', $id)}}" class="edit-element">edit</a>
+                                </div>
                                 <div class="panel-body panel-level-1">
                                     @foreach($documentLinks as $documentLink)
                                         <div class="panel panel-default">
@@ -843,7 +892,7 @@
                                                         @foreach($title['narrative'] as $narrative)
                                                             <div class="panel-element-body row">
                                                                 <div class="col-xs-12 col-md-12">
-                                                                    <div class="col-xs-12 col-sm-4">Iso_date: </div>
+                                                                    <div class="col-xs-12 col-sm-4">Text: </div>
                                                                     <div class="col-xs-12 col-sm-8">{{$narrative['narrative'] . ' ['. $getCode->getOrganizationCodeName('Language', $narrative['language']) . ']'}}</div>
                                                                 </div>
                                                             </div>
@@ -881,7 +930,9 @@
 
                         @if(!empty($relatedActivities))
                             <div class="panel panel-default">
-                                <div class="panel-heading">Related Activity</div>
+                                <div class="panel-heading">Related Activity
+                                    <a href="{{route('activity.related-activity.index', $id)}}" class="edit-element">edit</a>
+                                </div>
                                 <div class="panel-body panel-level-1">
                                 @foreach($relatedActivities as $relatedActivity)
                                     <div class="panel panel-default">
@@ -904,11 +955,13 @@
 
                         @if(!empty($legacyDatas))
                             <div class="panel panel-default">
-                                <div class="panel-heading">Legacy Data</div>
+                                <div class="panel-heading">Legacy Data
+                                    <a href="{{route('activity.legacy-data.index', $id)}}" class="edit-element">edit</a>
+                                </div>
                                 <div class="panel-body panel-level-1">
                                     @foreach($legacyDatas as $legacyData)
                                         <div class="panel panel-default">
-                                            <div class="panel-heading">{{$legacyData['name'] . ';' . $legacyData['value']}}</div>
+                                            <div class="panel-heading">{{$legacyData['name'] . '; ' . $legacyData['value']}}</div>
                                             <div class="panel-element-body row">
                                                 <div class="col-xs-12 col-md-12">
                                                     <div class="col-xs-12 col-sm-4">Name: </div>
@@ -931,7 +984,9 @@
 
                         @if(!empty($conditions))
                             <div class="panel panel-default">
-                                <div class="panel-heading">Conditions</div>
+                                <div class="panel-heading">Conditions
+                                    <a href="{{route('activity.condition.index', $id)}}" class="edit-element">edit</a>
+                                </div>
                                 <div class="panel-body panel-level-1">
                                     <div class="panel panel-default">
                                         <div class="panel-element-body">
@@ -968,7 +1023,9 @@
 
                         @if(!empty($results))
                             <div class="panel panel-default">
-                                <div class="panel-heading">Results</div>
+                                <div class="panel-heading">Results
+                                    <a href="{{route('activity.result.index', $id)}}" class="edit-element">edit</a>
+                                </div>
                                 <div class="panel-body panel-level-1">
                                     @foreach($results as $result)
                                         <div class="panel panel-default">
@@ -1178,7 +1235,9 @@
 
                         @if(!empty($transactions))
                             <div class="panel panel-default">
-                                <div class="panel-heading">Transactions</div>
+                                <div class="panel-heading">Transactions
+                                    <a href="{{route('activity.transaction.index', $id)}}" class="edit-element">edit</a>
+                                </div>
                                 <div class="panel-body panel-level-1">
                                     @foreach($transactions as $transaction)
                                         <div class="panel panel-default">

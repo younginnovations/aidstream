@@ -10,6 +10,7 @@
         <div class="row">
             @include('includes.side_bar_menu')
             <div class="col-xs-9 col-lg-9 content-wrapper list-user-wrapper">
+                @include('includes.response')
                 @include('includes.breadcrumb')
                 <div class="panel panel-default">
                     <div class="panel-content-heading">User List</div>
@@ -39,10 +40,12 @@
                           </tbody>
                       </table>
                     @else
-                        <div class="text-center no-data">No users yet :: </div>
+                    <div class="text-center no-data no-user-data">
+                      You haven’t added any user yet.
+                      <a href="{{ route('admin.register-user') }}" class="btn btn-primary">Add a user</a>
+                    </div>
                     @endif
                   </div>
-                    <a href="{{ route('admin.register-user') }}" class="add">Add User</a>
                 </div>
             </div>
         </div>

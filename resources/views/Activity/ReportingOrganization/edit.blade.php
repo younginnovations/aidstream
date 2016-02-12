@@ -7,6 +7,7 @@
         <div class="row">
         @include('includes.side_bar_menu')
             <div class="col-xs-9 col-md-9 col-lg-9 content-wrapper">
+                @include('includes.response')
                 @include('includes.breadcrumb')
                 <div class="panel-content-heading">Reporting Organization</div>
                 <div class="col-xs-12 col-md-8 col-lg-8 element-content-wrapper">
@@ -15,12 +16,12 @@
                             <div class="panel-default">
                                 <div class="panel-body panel-element-body">
                                     <div class="col-md-12 clearfix">
-                                        <div class="col-md-6">Reporting Organisation Identifier:</div>
-                                        <div class="col-md-6">{{ $reportingOrganization[0]['reporting_organization_identifier'] }}</div>
+                                        <div class="col-xs-12 col-sm-4 col-lg-3">Reporting Organisation Identifier:</div>
+                                        <div class="col-xs-12 col-sm-8 col-lg-9">{{ $reportingOrganization[0]['reporting_organization_identifier'] }}</div>
                                     </div>
                                     <div class="col-md-12 clearfix">
-                                        <div class="col-md-6">Reporting Organisation Type:</div>
-                                        <div class="col-md-6">{{ $reportingOrganization[0]['reporting_organization_type'] }}</div>
+                                        <div class="col-xs-12 col-sm-4 col-lg-3">Reporting Organisation Type:</div>
+                                        <div class="col-xs-12 col-sm-8 col-lg-9">{{ $reportingOrganization[0]['reporting_organization_type'] }}</div>
                                     </div>
                                 </div>
                             </div>

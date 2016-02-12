@@ -103,9 +103,8 @@ class StepTwoController extends Controller
         $titleDescription = ['title' => $title, 'description' => $description];
         $activityData     = $this->activityManager->getActivityData($id);
         if ($this->stepTwoManager->update($titleDescription, $activityData)) {
-            return redirect()->to(sprintf('wizard/activity/%s/date-status', $id))->withMessage(
-                'Step Two Completed!'
-            );
+            $response = ['type' => 'success', 'code' => ['message', ['message' => 'Step Two Completed!']]];
+            return redirect()->to(sprintf('wizard/activity/%s/date-status', $id))->withResponse($response);
         }
 
         return redirect()->back();

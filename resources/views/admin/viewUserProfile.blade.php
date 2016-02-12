@@ -7,6 +7,7 @@
         <div class="row">
         @include('includes.side_bar_menu')
             <div class="col-xs-9 col-md-9 col-lg-9 content-wrapper user-wrapper">
+                @include('includes.response')
                 <div class="panel-content-heading">User Profile</div>
                 <div class="panel panel-default panel-element-detail panel-user-view">
                     <div class="panel-element-body">

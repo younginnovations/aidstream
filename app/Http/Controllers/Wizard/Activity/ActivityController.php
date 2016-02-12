@@ -89,10 +89,13 @@ class ActivityController extends Controller
         ];
         $result                          = $this->activityManager->store($identifier, $defaultFieldValues);
         if (!$result) {
-            return redirect()->back();
-        }
+            $response = ['type' => 'danger', 'code' => ['message', ['message' => 'Failed to save.']]];
 
-        return redirect()->route('wizard.activity.title-description.index', ['id' => $result->id]);
+            return redirect()->back()->withResponse($response);
+        }
+        $response = ['type' => 'success', 'code' => ['message', ['message' => 'Step One Completed!']]];
+
+        return redirect()->route('wizard.activity.title-description.index', ['id' => $result->id])->withResponse($response);
     }
 
     /**
