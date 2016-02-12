@@ -1,0 +1,30 @@
+@if(!empty($policyMarkers))
+    <div class="panel panel-default">
+        <div class="panel-heading">Policy Markers
+            <a href="{{route('activity.policy-marker.index', $id)}}" class="edit-element">edit</a>
+        </div>
+        <div class="panel-body panel-level-1">
+            @foreach($policyMarkers as $policyMarker)
+                <div class="panel panel-default">
+                    <div class="panel-heading">{{$getCode->getActivityCodeName('PolicyMarker', $policyMarker['policy_marker'])}}</div>
+                    <div class="panel-element-body row">
+                        <div class="col-xs-12 col-md-12">
+                            <div class="col-xs-12 col-sm-4">Significance: </div>
+                            <div class="col-xs-12 col-sm-8">{{$getCode->getActivityCodeName('PolicySignificance', $policyMarker['significance'])}}</div>
+                        </div>
+                        <div class="col-xs-12 col-md-12">
+                            <div class="col-xs-12 col-sm-4">Policy Marker: </div>
+                            <div class="col-xs-12 col-sm-8">{{$getCode->getActivityCodeName('PolicyMarker', $policyMarker['policy_marker'])}}</div>
+                        </div>
+                        @foreach($policyMarker['narrative'] as $narrative)
+                            <div class="col-xs-12 col-md-12">
+                                <div class="col-xs-12 col-sm-4">Text: </div>
+                                <div class="col-xs-12 col-sm-8">{{$narrative['narrative'] . ' ['. $getCode->getOrganizationCodeName('Language', $narrative['language']) . ']'}}</div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            @endforeach
+        </div>
+    </div>
+@endif
