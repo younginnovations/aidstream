@@ -15,7 +15,7 @@ class OtherIdentifierTest extends AidStreamTestCase
     public function setUp()
     {
         parent::setUp();
-        $this->testInput = $this->getOtherIdentifierData();
+        $this->testInput       = $this->getOtherIdentifierData();
         $this->otherIdentifier = new OtherIdentifier();
     }
 
@@ -30,7 +30,7 @@ class OtherIdentifierTest extends AidStreamTestCase
     /** {@test} */
     public function itShouldFormatOtherIdentifierWithEmptyNarratives()
     {
-        $this->testInput = $this->getOtherIdentifierDataWithEmptyNarratives();
+        $this->testInput      = $this->getOtherIdentifierDataWithEmptyNarratives();
         $this->expectedOutput = $this->formatOtherIdentifier($this->testInput);
 
         $this->assertEquals($this->expectedOutput, $this->otherIdentifier->format($this->testInput));
@@ -38,9 +38,13 @@ class OtherIdentifierTest extends AidStreamTestCase
 
     protected function formatOtherIdentifier($otherIdentifierData)
     {
-        $ownerOrganization = ['reference' => $otherIdentifierData['ownerOrgReference'], 'narrative' => $otherIdentifierData['narratives']];
+        $ownerOrganization = [
+            ['reference' => $otherIdentifierData['ownerOrgReference'], 'narrative' => $otherIdentifierData['narratives']]
+        ];
 
-        return ['reference' => $otherIdentifierData['iatiOtherInfo']->ref, 'type' => $otherIdentifierData['typeCode']->Code, 'owner_org' => $ownerOrganization];
+        return [
+            ['reference' => $otherIdentifierData['iatiOtherInfo']->ref, 'type' => $otherIdentifierData['typeCode']->Code, 'owner_org' => $ownerOrganization]
+        ];
     }
 
     public function tearDown()

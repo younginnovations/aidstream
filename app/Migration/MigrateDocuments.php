@@ -20,7 +20,7 @@ class MigrateDocuments
         $this->document      = $document;
     }
 
-    public function docDataFetch($orgId)
+    public function docDataFetch($orgId, $accountId)
     {
         $this->initDBConnection('mysql');
 
@@ -45,7 +45,7 @@ class MigrateDocuments
                 $document[$url]     = array(
                     'filename'   => $filename,
                     'url'        => $url,
-                    'org_id'     => $orgId,
+                    'org_id'     => $accountId,
                     'activities' => $temp
                 );
             }

@@ -2,6 +2,7 @@
 
 
 use App\Migration\MigrateOrganization;
+use App\Migration\Migrator\Data\OrganizationQuery;
 
 /**
  * Class Organization
@@ -25,18 +26,13 @@ class Organization
 
     /**
      * Gets Organizations data from old database.
+     * @param $accountIds
      * @return array
      */
-    public function getData()
+    public function getData($accountIds)
     {
-        $orgIds = ['2', '100', '9']; // get all organization ids;
+        $organizationQuery = new OrganizationQuery();
 
-        $organizationDetail = [];
-
-        foreach ($orgIds as $id) {
-            $organizationDetail[] = $this->organization->orgDataFetch($id);
-        }
-
-        return $organizationDetail;
-    }
+        return $organizationQuery->executeFor($accountIds);
+   }
 }

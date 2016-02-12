@@ -1,0 +1,50 @@
+[
+  {
+    "Identification": {
+      "other_identifier": ""
+    },
+    "Basic Activity Information": {
+      "title": "",
+      "description": "",
+      "activity_status": "",
+      "activity_date": "",
+      "contact_info": "",
+      "activity_scope": ""
+    },
+    "Participating Organizations": {
+      "participating_organization": ""
+    },
+    "Geopolitical Information": {
+      "recipient_country": "",
+      "recipient_region": "",
+      "location": ""
+    },
+    "Classifications": {
+      "sector": "",
+      "policy_marker": "",
+      "collaboration_type": "",
+      "default_flow_type": "",
+      "default_finance_type": "",
+      "default_aid_type": "",
+      "default_tied_status": "",
+      "country_budget_items": ""
+    },
+    "Financial": {
+      "budget": "",
+      "planned_disbursement": "",
+      "transaction": "",
+      "capital_spend": ""
+    },
+    "Related Documents": {
+      "document_link": ""
+    },
+    "Relations": {
+      "related_activity": ""
+    },
+    "Performance": {
+      "condition": "",
+      "result": "",
+      "legacy_data": ""
+    }
+  }
+]

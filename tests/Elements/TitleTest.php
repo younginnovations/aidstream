@@ -59,15 +59,16 @@ class TitleTest extends AidStreamTestCase
 
     protected function formatInputIntoExpectedOutput($testInput)
     {
-        foreach ($testInput as $key => $data) {
-            $this->expectedOutput['id'] = $key;
+        $template = getHeaders('ActivityData', 'title');
 
+        foreach ($testInput as $key => $data) {
             foreach ($data['title'] as $index => $title) {
-                $this->expectedOutput['title'][] = ['language' => $data['lang'] ? $data['lang'][$index] : '', 'narrative' => $title->text];
+                $object                          = $template[0];
+                $object['language']              = $data['lang'] ? $data['lang'][$index] : '';
+                $object['narrative']             = $title->text;
+                $this->expectedOutput['title'][] = $object;
             }
         }
-
-//        $this->expectedOutput['title'] = array_key_exists('title', $this->expectedOutput) ? json_encode($this->expectedOutput['title']) : [];
 
         return $this->expectedOutput;
     }

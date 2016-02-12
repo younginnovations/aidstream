@@ -34,11 +34,9 @@ class UserMigrator implements MigratorContract
     /**
      * {@inheritdoc}
      */
-    public function migrate()
+    public function migrate(array $accountIds)
     {
-//        $userIds = $this->user->allUserIds();
-
-        $oldUserData = $this->user->getData();
+        $oldUserData = $this->user->getData($accountIds);
 
         foreach ($oldUserData as $userData) {
             $newUser = $this->userModel->newInstance($userData);

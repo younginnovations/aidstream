@@ -18,18 +18,16 @@ class OrganizationDataMigrator implements MigratorContract
 
     public function __construct(OrganizationData $organization, OrganizationDataModel $organizationDataModel)
     {
-
         $this->organization          = $organization;
         $this->organizationDataModel = $organizationDataModel;
     }
 
     /**
-     * Migrate data from old system into the new one.
-     * @return string
+     * {@inheritdoc}
      */
-    public function migrate()
+    public function migrate(array $accountIds)
     {
-        $organizationDataDetails = $this->organization->getData();
+        $organizationDataDetails = $this->organization->getData($accountIds);
 
         foreach ($organizationDataDetails as $organizationDetail) {
             foreach ($organizationDetail as $detail) {

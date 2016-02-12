@@ -63,8 +63,10 @@ class MigrateActivity
     /**
      * Fetch Title data for a particular Organization.
      * @param $orgId
+     * @param $accountId
+     * @return array
      */
-    public function fetchActivityData($orgId)
+    public function fetchActivityData($orgId, $accountId)
     {
         $this->initDBConnection('mysql');
 
@@ -72,7 +74,7 @@ class MigrateActivity
         $activities = $this->activityData->getActivitiesFor($orgId); // for 1 org
         foreach ($activities as $activity) {
             $activityId                                 = $activity->id;
-            $this->data[$activityId]['organization_id'] = $orgId;
+            $this->data[$activityId]['organization_id'] = $accountId;
             $this->data[$activityId]['id']              = $activityId;
 
             $this->titleDataFetch($activityId)
@@ -145,7 +147,7 @@ class MigrateActivity
     {
         $iatiOtherInfo = $this->mysqlConn->table('iati_other_identifier')
                                          ->select('@ref as ref', '@type as type', 'id')
-                                         ->where('activity_id', '=', 17)
+                                         ->where('activity_id', '=', $activityId)
                                          ->first();
 
         if (!is_null($iatiOtherInfo)) {
@@ -406,7 +408,7 @@ class MigrateActivity
         $language                 = "";
         $recipientRegionInstances = $this->mysqlConn->table('iati_recipient_region')
                                                     ->select('*', '@code as code', '@percentage as percentage', '@vocabulary as vocabulary')
-                                                    ->where('activity_id', '=', 948)
+                                                    ->where('activity_id', '=', $activityId)
                                                     ->get();
 
         foreach ($recipientRegionInstances as $recipientRegionInfo) {

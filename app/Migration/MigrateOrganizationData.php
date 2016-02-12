@@ -18,19 +18,19 @@ class MigrateOrganizationData
         $this->name          = $name;
     }
 
-    public function OrganizationDataFetch($orgId)
+    public function OrganizationDataFetch($orgId, $accountId)
     {
         $this->initDBConnection('mysql');
 
         $this->data = [];
 
-        $this->fetchName($orgId)
-             ->fetchStatus($orgId);
+        $this->fetchName($orgId, $accountId)
+             ->fetchStatus($orgId, $accountId);
 
         return $this->data;
     }
 
-    public function fetchName($orgId)
+    public function fetchName($orgId, $accountId)
     {
         $language           = "";
         $dataName           = null;
@@ -58,15 +58,14 @@ class MigrateOrganizationData
                 $this->data[$orgId]['name'] = $narrative;
             }
         }
-        $this->data[$orgId]['organization_id'] = (int) $orgId;
+        $this->data[$orgId]['organization_id'] = (int) $accountId;
 
         return $this;
     }
 
-    public function fetchStatus($orgId)
+    public function fetchStatus($orgId, $accountId)
     {
         $status       = 0;
-        $accountId    = $this->migrateHelper->fetchAccountId($orgId);
         $fetchStateId = $this->migrateHelper->fetchAnyField('state_id', 'iati_organisation', 'account_id', $accountId)->first();
 
         if (!is_null($fetchStateId)) {

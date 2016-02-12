@@ -1,0 +1,70 @@
+[
+  {
+    "type": "",
+    "organization": [
+      {
+        "narrative": [
+          {
+            "narrative": "",
+            "language": ""
+          }
+        ]
+      }
+    ],
+    "department": [
+      {
+        "narrative": [
+          {
+            "narrative": "",
+            "language": ""
+          }
+        ]
+      }
+    ],
+    "person_name": [
+      {
+        "narrative": [
+          {
+            "narrative": "",
+            "language": ""
+          }
+        ]
+      }
+    ],
+    "job_title": [
+      {
+        "narrative": [
+          {
+            "narrative": "s",
+            "language": "ay"
+          }
+        ]
+      }
+    ],
+    "telephone": [
+      {
+        "telephone": ""
+      }
+    ],
+    "email": [
+      {
+        "email": ""
+      }
+    ],
+    "website": [
+      {
+        "website": ""
+      }
+    ],
+    "mailing_address": [
+      {
+        "narrative": [
+          {
+            "narrative": "",
+            "language": ""
+          }
+        ]
+      }
+    ]
+  }
+]

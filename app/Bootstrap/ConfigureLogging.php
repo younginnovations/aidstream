@@ -38,10 +38,10 @@ class ConfigureLogging extends BaseConfigureLogging
      */
     public function configureCustomHandler(Application $app, AsWriter $log)
     {
-        $handler = new LogEntriesHandler(getenv('LOGENTRY_TOKEN'));
-        $log->getMonolog()->pushHandler($handler);
+//         $handler = new LogEntriesHandler(getenv('LOGENTRY_TOKEN'));
+//         $log->getMonolog()->pushHandler($handler);
 
 // Also Log to Daily files too.
-        $log->useDailyFiles($app->storagePath() . '/logs/laravel.log', 5);
+//         $log->useDailyFiles($app->storagePath() . '/logs/laravel.log', 5);
     }
 }

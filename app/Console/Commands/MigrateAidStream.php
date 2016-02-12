@@ -108,13 +108,14 @@ class MigrateAidStream extends Command
     public function fire()
     {
         try {
-            $orgId    = $this->option('orgId') ? [$this->option('orgId')] : null;
             $argument = $this->argument('table');
+            $country  = $this->option('country');
 
             $this->info('Running the migrations');
 
             $this->databaseManager->beginTransaction();
-            $this->beginMigration($argument);
+            $this->beginMigration($argument, $country);
+
             $this->databaseManager->commit();
         } catch (Exception $exception) {
             $this->rollback($exception);
@@ -123,72 +124,80 @@ class MigrateAidStream extends Command
 
     /**
      * Migrate all tables' data into the new database.
+     * @param array $accountIds
+     * @return string
      */
-    protected function migrateAll()
+    protected function migrateAll(array $accountIds)
     {
         $response   = [];
-        $response[] = $this->organizationMigrator->migrate();
-        $response[] = $this->userMigrator->migrate();
-        $response[] = $this->documentMigrator->migrate();
-        $response[] = $this->settingsMigrator->migrate();
-        $response[] = $this->activityMigrator->migrate();
-        $response[] = $this->organizationDataMigrator->migrate();
+        $response[] = $this->organizationMigrator->migrate($accountIds);
+        $response[] = $this->userMigrator->migrate($accountIds);
+        $response[] = $this->documentMigrator->migrate($accountIds);
+        $response[] = $this->settingsMigrator->migrate($accountIds);
+        $response[] = $this->activityMigrator->migrate($accountIds);
+        $response[] = $this->organizationDataMigrator->migrate($accountIds);
 
         return implode("\n", $response);
     }
 
     /**
      * Migrate Users table data into the new database.
+     * @param array $accountIds
      * @return mixed|string
      */
-    protected function migrateUser()
+    protected function migrateUser(array $accountIds)
     {
-        return $this->userMigrator->migrate();
+        return $this->userMigrator->migrate($accountIds);
     }
 
     /**
      * Migrate Organizations table data into the new database.
+     * @param array $accountIds
      * @return mixed|string
      */
-    protected function migrateOrganization()
+    protected function migrateOrganization(array $accountIds)
     {
-        return $this->organizationMigrator->migrate();
+        return $this->organizationMigrator->migrate($accountIds);
     }
 
     /**
      * Migrate Documents table data into the new database.
+     * @param array $accountIds
      * @return string
      */
-    protected function migrateDocument()
+    protected function migrateDocument(array $accountIds)
     {
-        return $this->documentMigrator->migrate();
+        return $this->documentMigrator->migrate($accountIds);
     }
 
     /**
      * Migrate Settings table data into the new database.
+     * @param array $accountIds
      * @return string
      */
-    protected function migrateSettings()
+    protected function migrateSettings(array $accountIds)
     {
-        return $this->settingsMigrator->migrate();
+        return $this->settingsMigrator->migrate($accountIds);
     }
 
     /**
      * Migrate Activities table data into the new database.
+     * @param array $accountIds
      * @return string
      */
-    protected function migrateActivity()
+    protected function migrateActivity(array $accountIds)
     {
-        return $this->activityMigrator->migrate();
+        return $this->activityMigrator->migrate($accountIds);
     }
 
     /**
      * Migrate OrganizationData table data into the new database.
+     * @param array $accountIds
      * @return string
      */
-    protected function migrateOrganizationData()
+    protected function migrateOrganizationData(array $accountIds)
     {
-        return $this->organizationDataMigrator->migrate();
+        return $this->organizationDataMigrator->migrate($accountIds);
     }
 
     /**
@@ -198,7 +207,7 @@ class MigrateAidStream extends Command
     protected function getOptions()
     {
         return [
-            ['orgId', null, InputOption::VALUE_OPTIONAL, 'Run the migration for an Organization with a specific orgId', null]
+            ['country', null, InputOption::VALUE_OPTIONAL, 'Run the migration for an Organization of a specific country.', null]
         ];
     }
 
@@ -216,27 +225,31 @@ class MigrateAidStream extends Command
     /**
      * Start the migrations.
      * @param $argument
+     * @param $country
      */
-    protected function beginMigration($argument)
+    protected function beginMigration($argument, $country)
     {
+        $accountIds = $this->getAccountIdsFor($country);
+
         if ($argument == 'all') {
-            $this->info($this->migrateAll());
+            $this->info($this->migrateAll($accountIds));
         } else {
             $method = sprintf('migrate%s', $argument);
-            $this->triggerSpecific($method);
+            $this->triggerSpecific($method, $accountIds);
         }
     }
 
     /**
      * Run migrations for a specific table.
-     * @param $method
+     * @param       $method
+     * @param array $accountIds
      */
-    protected function triggerSpecific($method)
+    protected function triggerSpecific($method, array $accountIds)
     {
         if (!method_exists($this, $method)) {
             $this->error('The table you specified does not exist');
         } else {
-            $this->info($this->$method());
+            $this->info($this->$method($accountIds));
         }
     }
 
@@ -249,5 +262,34 @@ class MigrateAidStream extends Command
         $this->databaseManager->rollback();
         $this->warn('Rolling the migrations back.');
         $this->error($exception->getMessage());
+    }
+
+    /**
+     * Get accountIds of a specific country from the old database.
+     * @param null $country
+     * @return array
+     */
+    protected function getAccountIdsFor($country = null)
+    {
+        $accountIds = [];
+
+        $builder = $this->databaseManager->connection('mysql')->table('account')->select('id');
+
+        if ($country) {
+            $countryName = implode(' ', explode('-', $country));
+            $builder->where('address', 'like', '%' . $countryName . '%');
+        }
+
+        $accounts = $builder->get();
+
+        array_walk(
+            $accounts,
+            function ($value, $index) use (&$accountIds) {
+                $accountIds[] = $value->id;
+            }
+        );
+
+        return $accountIds;
+
     }
 }

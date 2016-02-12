@@ -15,22 +15,14 @@ class MigrateSettings
         $this->settings      = $settings;
     }
 
-    public function SettingsDataFetch($orgId)
+    public function SettingsDataFetch($orgId, $accountId)
     {
         $this->initDBConnection('mysql');
-        $SettingData          = [];
-        $registryInfoData     = [];
-        $account_id           = $this->migrateHelper->fetchAccountId($orgId);
 
-        $registryInfo         = $this->mysqlConn->table('registry_info')
-                                                ->select('*')
-                                                ->where('org_id', '=', $account_id)
-                                                ->first();
-
-        $default_field_groups = $this->mysqlConn->table('default_field_groups')
-                                                ->select('*')
-                                                ->where('account_id', '=', $account_id)
-                                                ->get();
+        $registryInfo = $this->mysqlConn->table('registry_info')
+                                        ->select('*')
+                                        ->where('org_id', '=', $accountId)
+                                        ->first();
 
         if ($registryInfo->publishing_type == 1) {
             $publishing_type = 'segmented';
@@ -43,7 +35,7 @@ class MigrateSettings
             $publish_files = 'no';
         }
 
-        $registryInfoData     = array(
+        $registryInfoData = array(
             'publisher_id'  => $registryInfo->publisher_id,
             'api_key'       => $registryInfo->api_key,
             'publish_files' => $publish_files,
@@ -51,12 +43,12 @@ class MigrateSettings
 
         $default_field_groups = $this->mysqlConn->table('default_field_groups')
                                                 ->select('*')
-                                                ->where('account_id', '=', $account_id)
+                                                ->where('account_id', '=', $accountId)
                                                 ->first();
 
         $default_field_values = $this->mysqlConn->table('default_field_values')
                                                 ->select('*')
-                                                ->where('account_id', '=', $account_id)
+                                                ->where('account_id', '=', $accountId)
                                                 ->first();
 
         $temp_object_values          = unserialize($default_field_values->object);
@@ -71,7 +63,7 @@ class MigrateSettings
             'registry_info'        => $registryInfoData,
             'default_field_values' => $formatDefaultFieldValues,
             'default_field_groups' => $formattedDefaultFieldGroups,
-            'organization_id'      => $orgId
+            'organization_id'      => $accountId
         );
 
         return $newSettingsDataFormat;

@@ -1,6 +1,7 @@
 <?php namespace App\Migration\Entities;
 
 use App\Migration\MigrateDocuments;
+use App\Migration\Migrator\Data\DocumentQuery;
 
 /**
  * Class Document
@@ -14,26 +15,26 @@ class Document
     protected $document;
 
     /**
+     * @var DocumentQuery
+     */
+    protected $documentQuery;
+
+    /**
      * Document constructor.
      * @param MigrateDocuments $document
      */
-    public function __construct(MigrateDocuments $document)
+    public function __construct(MigrateDocuments $document, DocumentQuery $documentQuery)
     {
-        $this->document = $document;
+        $this->document      = $document;
+        $this->documentQuery = $documentQuery;
     }
 
     /**
+     * @param $accountIds
      * @return array
      */
-    public function getData()
+    public function getData($accountIds)
     {
-        $orgIds  = ['2', '100', '9']; // get organizationIds //
-        $docData = [];
-
-        foreach ($orgIds as $id) {
-            $docData[] = $this->document->docDataFetch($id);
-        }
-
-        return $docData;
+        return $this->documentQuery->executeFor($accountIds);
     }
 }

@@ -35,9 +35,9 @@ class ActivityMigrator implements MigratorContract
     /**
      * {@inheritdoc}
      */
-    public function migrate()
+    public function migrate(array $accountIds)
     {
-        $orgActivityDetails = $this->activity->getData();
+        $orgActivityDetails = $this->activity->getData($accountIds);
 
         foreach ($orgActivityDetails as $activityDetail) {
             foreach ($activityDetail as $detail) {

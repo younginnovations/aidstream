@@ -26,51 +26,61 @@ class MigrateOrganization
         $this->migrateHelper     = $migrateHelper;
     }
 
-    public function orgDataFetch($orgId)
+    public function orgDataFetch($accountId)
     {
         $this->initDBConnection('mysql');
 
-        $formattedData      = [];
-        $simpleValues       = $this->FetchSimpleValues($orgId);
-        $reportingOrgValues = $this->FetchReportingOrgValues($orgId);
+        $orgId        = $this->migrateHelper->fetchOrgId($accountId);
 
-        $formattedData                  = $simpleValues;
-        $formattedData['reporting_org'] = $reportingOrgValues;
+        $simpleValues = $this->FetchSimpleValues($accountId, $orgId);
 
-        return $formattedData;
+        if ($simpleValues) {
+            $reportingOrgValues = $this->FetchReportingOrgValues($orgId);
+
+            $formattedData                  = $simpleValues;
+            $formattedData['reporting_org'] = $reportingOrgValues;
+
+            return $formattedData;
+        }
+
+        return null;
     }
 
-    public function FetchSimpleValues($orgId)
+    public function FetchSimpleValues($accountId, $orgId = null)
     {
         $this->initDBConnection('mysql');
 
-        $userIdentifier = $this->mysqlConn
-            ->table('iati_organisation/identifier')
-            ->select('text')
-            ->where('organisation_id', '=', $orgId)
-            ->first()->text;
+        if ($orgId) {
+            $userIdentifier = $this->mysqlConn
+                ->table('iati_organisation/identifier')
+                ->select('text')
+                ->where('organisation_id', '=', $orgId)
+                ->first()->text;
 
-        $iatiOrgInfo = $this->mysqlConn->table('iati_organisation')
-                                       ->select('account_id', '@last_updated_datetime as last_updated_datetime')
-                                       ->where('id', '=', $orgId)
-                                       ->first();
+            $iatiOrgInfo = $this->mysqlConn->table('iati_organisation')
+                                           ->select('account_id', '@last_updated_datetime as last_updated_datetime')
+                                           ->where('id', '=', $orgId)
+                                           ->first();
 
-        $accountInfo = $this->mysqlConn->table('account')
-                                       ->select('address', 'name', 'telephone', 'status')
-                                       ->where('id', '=', $iatiOrgInfo->account_id)
-                                       ->first();
-        $OrgArray    = [
-            'id'              => $orgId,
-            'user_identifier' => $userIdentifier,
-            'name'            => $accountInfo->name,
-            'address'         => $accountInfo->address,
-            'telephone'       => $accountInfo->telephone,
-            'created_at'      => $iatiOrgInfo->last_updated_datetime,
-            'updated_at'      => $iatiOrgInfo->last_updated_datetime,
-            'status'          => $accountInfo->status
-        ];
+            $accountInfo = $this->mysqlConn->table('account')
+                                           ->select('address', 'name', 'telephone', 'status')
+                                           ->where('id', '=', $iatiOrgInfo->account_id)
+                                           ->first();
+            $OrgArray    = [
+                'id'              => $accountId,
+                'user_identifier' => $userIdentifier,
+                'name'            => $accountInfo->name,
+                'address'         => $accountInfo->address,
+                'telephone'       => $accountInfo->telephone,
+                'created_at'      => $iatiOrgInfo->last_updated_datetime,
+                'updated_at'      => $iatiOrgInfo->last_updated_datetime,
+                'status'          => $accountInfo->status
+            ];
 
-        return $OrgArray;
+            return $OrgArray;
+        }
+
+        return null;
     }
 
     public function FetchReportingOrgValues($orgId)

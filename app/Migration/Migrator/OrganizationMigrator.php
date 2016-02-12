@@ -11,11 +11,6 @@ use App\Models\Organization\Organization as OrganizationModel;
 class OrganizationMigrator implements MigratorContract
 {
     /**
-     * @var
-     */
-    protected $migrateOrganization;
-
-    /**
      * @var OrganizationModel
      */
     protected $organizationModel;
@@ -39,9 +34,9 @@ class OrganizationMigrator implements MigratorContract
     /**
      * {@inheritdoc}
      */
-    public function migrate()
+    public function migrate(array $accountIds)
     {
-        $organizationDetail = $this->organization->getData();
+        $organizationDetail = $this->organization->getData($accountIds);
 
         foreach ($organizationDetail as $detail) {
             $organization = $this->organizationModel->newInstance($detail);

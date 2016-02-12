@@ -32,7 +32,7 @@ class Settings
      * @var array
      */
     protected $mappings = [
-        'Identification'              => ['other_activity_identifier' => 'Other Identifier'],
+        'Identification'              => ['other_identifier' => 'Other Identifier'],
         'Basic Activity Information'  => [
             'activity_date'   => 'Activity Date',
             'title'           => 'Title',
@@ -109,7 +109,7 @@ class Settings
      */
     public function formatDefaultFieldGroups(array $MetaDataDefaultFieldGroups)
     {
-        $this->newDefaultFieldGroupsFormat = [];
+        $this->newDefaultFieldGroupsFormat = [0 => []];
 
         foreach (array_except($MetaDataDefaultFieldGroups, ['__PHP_Incomplete_Class_Name', "\x00*\x00activity_website", "\x00*\x00participating_org"]) as $index => $fieldGroup) {
             if ($fieldGroup == "1") {
@@ -117,12 +117,12 @@ class Settings
                 $category = $map['key'];
 
                 if (!in_array($category, $this->unNestedValues) && array_key_exists($this->key, $map['value'])) {
-                    $this->newDefaultFieldGroupsFormat[$category][array_search($map['value'][$this->key], $map['value'])] = $map['value'][$this->key];
+                    $this->newDefaultFieldGroupsFormat[0][$category][array_search($map['value'][$this->key], $map['value'])] = $map['value'][$this->key];
                 }
             }
         }
 
-        $this->newDefaultFieldGroupsFormat['Participating Organizations'] = ['participating_organization' => 'Participating Organization'];
+        $this->newDefaultFieldGroupsFormat[0]['Participating Organizations'] = ['participating_organization' => 'Participating Organization'];
 
         return $this->newDefaultFieldGroupsFormat;
     }
@@ -157,6 +157,6 @@ class Settings
             }
         }
 
-        return $defaultFieldValues;
+        return [$defaultFieldValues];
     }
 }

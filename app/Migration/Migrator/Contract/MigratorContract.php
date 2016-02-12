@@ -8,7 +8,8 @@ interface MigratorContract
 {
     /**
      * Migrate data from old system into the new one.
+     * @param $accountIds
      * @return string
      */
-    public function migrate();
+    public function migrate(array $accountIds);
 }

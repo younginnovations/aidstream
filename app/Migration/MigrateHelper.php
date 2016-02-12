@@ -13,9 +13,15 @@ class MigrateHelper
         $orgId = $this->mysqlConn->table('iati_organisation')
                                  ->select('id')
                                  ->where('account_id', '=', $accountId)
-                                 ->first()->id;
+                                 ->first();
 
-        return $orgId;
+        if ($orgId) {
+            $orgId = $orgId->id;
+
+            return $orgId;
+        }
+
+        return null;
     }
 
     public function fetchActivity()
@@ -93,19 +99,20 @@ class MigrateHelper
         return '';
     }
 
-    public function fetchCode($anyId, $table,$act)
+    public function fetchCode($anyId, $table, $act)
     {
         $this->initDBConnection('mysql');
 
-        if(!empty($anyId)) {
+        if (!empty($anyId)) {
             $fetchCode = $this->mysqlConn->table($table)
                                          ->select('Code')
                                          ->where('id', '=', $anyId)
                                          ->first();
-            $Code      = $fetchCode->Code;
+            $Code      = $fetchCode ? $fetchCode->Code : '';
         } else {
             $Code = "";
         }
+
         return $Code;
     }
 
@@ -117,6 +124,7 @@ class MigrateHelper
                                            ->select('*', '@xml_lang as xml_lang')
                                            ->where($table_field_id, '=', $anyId)
                                            ->get();
+
         return $fieldNarratives;
     }
 
@@ -136,13 +144,13 @@ class MigrateHelper
         return '';
     }
 
-    function fetchAnyField($field,$table,$tableField,$matchField)
+    function fetchAnyField($field, $table, $tableField, $matchField)
     {
         $this->initDBConnection('mysql');
 
         $fetchField = $this->mysqlConn->table($table)
                                       ->select($field)
-                                      ->where($tableField,'=',$matchField);
+                                      ->where($tableField, '=', $matchField);
 
         return $fetchField;
     }

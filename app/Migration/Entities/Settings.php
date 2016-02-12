@@ -2,6 +2,7 @@
 
 
 use App\Migration\MigrateSettings;
+use App\Migration\Migrator\Data\SettingsQuery;
 
 /**
  * Class Settings
@@ -14,27 +15,32 @@ class Settings
      */
     protected $settings;
 
+    protected $settingsQuery;
+
     /**
      * Settings constructor.
      * @param MigrateSettings $settings
      */
-    public function __construct(MigrateSettings $settings)
+    public function __construct(MigrateSettings $settings, SettingsQuery $settingsQuery)
     {
-        $this->settings = $settings;
+        $this->settings      = $settings;
+        $this->settingsQuery = $settingsQuery;
     }
 
     /**
+     * @param $accountIds
      * @return array
      */
-    public function getData()
+    public function getData($accountIds)
     {
-        $orgIds       = ['2', '100', '9']; // fetch OrgIds.
-        $SettingsData = [];
+        return $this->settingsQuery->executeFor($accountIds);
 
-        foreach ($orgIds as $id) {
-            $SettingsData[] = $this->settings->SettingsDataFetch($id);
-        }
-
-        return $SettingsData;
+//        foreach ($accountIds as $accountId) {
+//            if ($organization = getOrganizationFor($accountId)) {
+//                $SettingsData[] = $this->settings->SettingsDataFetch($organization->id, $accountId);
+//            }
+//        }
+//
+//        return $SettingsData;
     }
 }

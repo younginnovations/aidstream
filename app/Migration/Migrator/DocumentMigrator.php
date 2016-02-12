@@ -34,9 +34,9 @@ class DocumentMigrator implements MigratorContract
     /**
      * {@inheritdoc}
      */
-    public function migrate()
+    public function migrate(array $accountIds)
     {
-        $organizationDocuments = $this->document->getData();
+        $organizationDocuments = $this->document->getData($accountIds);
 
         foreach ($organizationDocuments as $documents) {
             foreach ($documents[0] as $document) {

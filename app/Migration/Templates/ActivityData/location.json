@@ -1,0 +1,79 @@
+[
+  {
+    "reference": "",
+    "location_reach": [
+      {
+        "code": ""
+      }
+    ],
+    "location_id": [
+      {
+        "vocabulary": "",
+        "code": ""
+      }
+    ],
+    "name": [
+      {
+        "narrative": [
+          {
+            "narrative": "",
+            "language": ""
+          }
+        ]
+      }
+    ],
+    "location_description": [
+      {
+        "narrative": [
+          {
+            "narrative": "",
+            "language": ""
+          }
+        ]
+      }
+    ],
+    "activity_description": [
+      {
+        "narrative": [
+          {
+            "narrative": "",
+            "language": ""
+          }
+        ]
+      }
+    ],
+    "administrative": [
+      {
+        "vocabulary": "",
+        "code": "",
+        "level": ""
+      }
+    ],
+    "point": [
+      {
+        "srs_name": "",
+        "position": [
+          {
+            "latitude": "",
+            "longitude": ""
+          }
+        ]
+      }
+    ],
+    "exactness": [
+      {
+        "code": ""
+      }
+    ],
+    "location_class": [
+      {
+        "code": ""
+      }
+    ],
+    "feature_designation": [
+      {
+        "code": ""
+      }
+    ]
+  }
+]

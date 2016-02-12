@@ -34,9 +34,9 @@ class SettingsMigrator implements MigratorContract
     /**
      * {@inheritdoc}
      */
-    public function migrate()
+    public function migrate(array $accountIds)
     {
-        $settingsData = $this->settings->getData();
+        $settingsData = $this->settings->getData($accountIds);
 
         foreach ($settingsData as $setting) {
             $newSettings = $this->settingsModel->newInstance($setting);

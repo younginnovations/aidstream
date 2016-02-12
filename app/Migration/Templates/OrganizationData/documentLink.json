@@ -1,0 +1,33 @@
+[
+  {
+    "url": "",
+    "format": "",
+    "narrative": [
+      {
+        "narrative": "",
+        "language": ""
+      }
+    ],
+    "category": [
+      {
+        "code": ""
+      }
+    ],
+    "language": [
+      {
+        "language": ""
+      }
+    ],
+    "recipient_country": [
+      {
+        "code": "",
+        "narrative": [
+          {
+            "narrative": "",
+            "language": ""
+          }
+        ]
+      }
+    ]
+  }
+]

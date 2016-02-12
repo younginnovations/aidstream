@@ -1,0 +1,39 @@
+[
+  {
+    "period_start": [
+      {
+        "date": ""
+      }
+    ],
+    "period_end": [
+      {
+        "date": ""
+      }
+    ],
+    "value": [
+      {
+        "amount": "",
+        "currency": "",
+        "value_date": ""
+      }
+    ],
+    "budget_line": [
+      {
+        "reference": "",
+        "value": [
+          {
+            "amount": "",
+            "currency": "",
+            "value_date": ""
+          }
+        ],
+        "narrative": [
+          {
+            "narrative": "",
+            "language": ""
+          }
+        ]
+      }
+    ]
+  }
+]

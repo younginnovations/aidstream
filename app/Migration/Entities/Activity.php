@@ -1,6 +1,6 @@
 <?php namespace App\Migration\Entities;
 
-use App\Migration\MigrateActivity;
+use App\Migration\Migrator\Data\ActivityQuery;
 
 /**
  * Class Activity
@@ -9,37 +9,26 @@ use App\Migration\MigrateActivity;
 class Activity
 {
     /**
-     * @var MigrateActivity
+     * @var ActivityQuery
      */
-    protected $activityData;
-
-    /**
-     * @var array
-     */
-    protected $data = [];
+    protected $activityQuery;
 
     /**
      * Activity constructor.
-     * @param MigrateActivity $activityData
+     * @param ActivityQuery $activityQuery
      */
-    public function __construct(MigrateActivity $activityData)
+    public function __construct(ActivityQuery $activityQuery)
     {
-        $this->activityData     = $activityData;
+        $this->activityQuery = $activityQuery;
     }
-
 
     /**
      * Gets Activities data from old database.
+     * @param $accountIds
      * @return array
      */
-    public function getData()
+    public function getData($accountIds)
     {
-        $orgId = ['2', '100', '9']; // get Organization Ids.
-
-        foreach ($orgId as $id) {
-            $this->data[] = $this->activityData->fetchActivityData($id);
-        }
-
-        return $this->data;
+        return $this->activityQuery->executeFor($accountIds);
     }
 }

@@ -2,6 +2,7 @@
 
 
 use App\Migration\MigrateUser;
+use App\Migration\Migrator\Data\UserQuery;
 
 /**
  * Class User
@@ -19,27 +20,35 @@ class User
      */
     protected $data = [];
 
+    protected $userQuery;
+
     /**
      * User constructor.
      * @param MigrateUser $migrateUser
      */
-    public function __construct(MigrateUser $migrateUser)
+    public function __construct(MigrateUser $migrateUser, UserQuery $userQuery)
     {
         $this->migrateUser = $migrateUser;
+        $this->userQuery   = $userQuery;
     }
 
     /**
      * Gets Users data from old database.
+     * @param $accountIds
      * @return array
      */
-    public function getData()
+    public function getData($accountIds)
     {
-        $userId = ['96', '256', '255', '254']; // fetch all User Ids/Users.
+        return $this->userQuery->executeFor($accountIds);
 
-        foreach ($userId as $id) {
-            $this->data[] = $this->migrateUser->userDataFetch($id);
-        }
-
-        return $this->data;
+//        foreach ($accountIds as $accountId) {
+//            $users = $this->migrateUser->getUsersFor($accountId);
+//
+//            foreach ($users as $user) {
+//                $this->data[] = $this->migrateUser->userDataFetch($user);
+//            }
+//        }
+//
+//        return $this->data;
     }
 }

@@ -20,68 +20,62 @@ class MigrateUser
         $this->user           = $User;
     }
 
-    public function userDataFetch($user_id)
+    public function userDataFetch($user)
     {
         $this->initDBConnection('mysql');
-        $formattedData       = [];
-        $user                = [];
-        $user_permission     = [];
-        $orgId               = null;
-        $newPermissionFormat = null;
-        $userData            = $this->mysqlConn->table('user')
-                                               ->select('*')
-                                               ->where('user_id', '=', $user_id)
-                                               ->first();
 
-        $accountData = $this->mysqlConn->table('account')
-                                       ->select('*')
-                                       ->where('id', '=', $userData->account_id)
-                                       ->first();
+        $user_id   = $user->user_id;
+        $accountId = $user->account_id;
+
+        $newPermissionFormat = null;
 
         $profile = $this->mysqlConn->table('profile')
                                    ->select('*')
                                    ->where('user_id', '=', $user_id)
                                    ->first();
 
-        if ($userData->account_id != '0') {
-            //  $orgId = $this->migrateHelper->fetchOrgId($userData->account_id);
-            $orgData = $this->mysqlConn->table('iati_organisation')
-                                       ->select('*')
-                                       ->where('account_id', '=', $userData->account_id)
-                                       ->first();
-            if (!empty($orgData)) {
-                $orgId = $orgData->id;
-            }
-        }
+        $newOrgId           = $accountId;
         $userPermissionData = $this->mysqlConn->table('user_permission')
                                               ->select('object')
                                               ->where('user_id', '=', $user_id)
                                               ->first();
 
         if (!empty($userPermissionData)) {
-            $user_permission     = unserialize($userPermissionData->object);
-            $arrayUserPermission = (array) $user_permission;
+            $arrayUserPermission = (array) unserialize($userPermissionData->object);
             $newPermissionFormat = $this->userPermission->format($arrayUserPermission);
         }
 
-        $user = array(
+        $newUser = array(
             'id'              => $user_id,
             'first_name'      => $profile->first_name,
             'last_name'       => $profile->last_name,
-            'email'           => $userData->email,
-            'username'        => $userData->user_name,
-            'password'        => $userData->password,
-            'role_id'         => $userData->role_id,         //here continue
-            'org_id'          => $orgId,
+            'email'           => $user->email,
+            'username'        => $user->user_name,
+            'password'        => $user->password,
+            'role_id'         => $user->role_id,         //here continue
             'user_permission' => $newPermissionFormat
         );
 
-        return $user;
+        if (getOrganizationFor($accountId)) {
+            $newUser['org_id'] = $newOrgId;
+        } else {
+            $newUser['org_id'] = null;
+        }
+
+
+        return $newUser;
     }
 
     public function hasPermission($permission)
     {
         return $this->$permission;
+    }
+
+    public function getUsersFor($accountId)
+    {
+        $this->initDBConnection('mysql');
+
+        return $this->mysqlConn->table('user')->select('*')->where('account_id', '=', $accountId)->get();
     }
 
     protected function initDBConnection($connection)

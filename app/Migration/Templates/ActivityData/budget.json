@@ -1,0 +1,22 @@
+[
+  {
+    "budget_type": "",
+    "period_start": [
+      {
+        "date": ""
+      }
+    ],
+    "period_end": [
+      {
+        "date": ""
+      }
+    ],
+    "value": [
+      {
+        "amount": "",
+        "currency": "",
+        "value_date": ""
+      }
+    ]
+  }
+]
