@@ -89,7 +89,7 @@ class ParticipatingOrganizationController extends Controller
     }
 
     /**
-     * validated participating organization data based on roles
+     * validate participating organization data based on roles
      * @param array $data
      * @return bool
      */

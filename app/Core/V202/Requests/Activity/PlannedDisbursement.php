@@ -20,8 +20,7 @@ class PlannedDisbursement extends V201PlannedDisbursement
         foreach ($formFields as $plannedDisbursementIndex => $plannedDisbursement) {
             $plannedDisbursementForm = sprintf('planned_disbursement.%s', $plannedDisbursementIndex);
 
-            $rules[sprintf('%s.planned_disbursement_type', $plannedDisbursementForm)] = 'required';
-            $rules                                                                    = array_merge(
+            $rules = array_merge(
                 $rules,
                 $this->getRulesForPeriodStart($plannedDisbursement['period_start'], $plannedDisbursementForm),
                 $this->getRulesForPeriodEnd($plannedDisbursement['period_end'], $plannedDisbursementForm),
@@ -45,8 +44,7 @@ class PlannedDisbursement extends V201PlannedDisbursement
         foreach ($formFields as $plannedDisbursementIndex => $plannedDisbursement) {
             $plannedDisbursementForm = sprintf('planned_disbursement.%s', $plannedDisbursementIndex);
 
-            $messages[sprintf('%s.planned_disbursement_type', $plannedDisbursementForm)] = 'required';
-            $messages                                                                    = array_merge(
+            $messages = array_merge(
                 $messages,
                 $this->getMessagesForPeriodStart($plannedDisbursement['period_start'], $plannedDisbursementForm),
                 $this->getMessagesForPeriodEnd($plannedDisbursement['period_end'], $plannedDisbursementForm),

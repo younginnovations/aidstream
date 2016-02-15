@@ -9,7 +9,14 @@ class Identifier extends BaseForm
     public function buildForm()
     {
         $this
-            ->add('activity_identifier', 'text', ['wrapper' => ['class' => 'col-xs-12 col-sm-6'], 'help_block' => $this->addHelpText('Activity_IatiIdentifier-activity_identifier')])
+            ->add(
+                'activity_identifier',
+                'text',
+                [
+                    'wrapper'    => ['class' => 'col-xs-12 col-sm-6'],
+                    'help_block' => $this->addHelpText('Activity_IatiIdentifier-activity_identifier', false)
+                ]
+            )
             ->add(
                 'iati_identifier_text',
                 'text',

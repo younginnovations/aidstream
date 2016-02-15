@@ -19,6 +19,7 @@ class IatiIdentifierRequest extends ActivityBaseRequest
      */
     public function __construct(IatiIdentifierRepository $iatiIdentifierRepository)
     {
+        parent::__construct();
         $this->iatiIdentifierRepository = $iatiIdentifierRepository;
     }
 
@@ -40,7 +41,7 @@ class IatiIdentifierRequest extends ActivityBaseRequest
 
         $activityIdentifier            = implode(',', $activityIdentifiers);
         $rules                         = [];
-        $rules['activity_identifier']  = 'required|not_in:' . $activityIdentifier;
+        $rules['activity_identifier']  = 'required|exclude_operators|not_in:' . $activityIdentifier;
         $rules['iati_identifier_text'] = 'required';
 
         return $rules;

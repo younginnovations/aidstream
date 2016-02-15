@@ -12,8 +12,6 @@ trait Description
      */
     public function addDescriptions($data = [])
     {
-        $data ?: ['class' => 'narrative'];
-
         return $this
             ->addData($data)
             ->addCollection('description', 'Activity\Title', 'description');

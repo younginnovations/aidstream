@@ -31,8 +31,7 @@ class Sector extends ActivityBaseRequest
         $rules = [];
 
         foreach ($formFields as $sectorIndex => $sector) {
-            $sectorForm                                          = sprintf('sector.%s', $sectorIndex);
-            $rules[sprintf('%s.sector_vocabulary', $sectorForm)] = 'required';
+            $sectorForm = sprintf('sector.%s', $sectorIndex);
             if ($sector['sector_vocabulary'] == 1) {
                 $rules[sprintf('%s.sector_code', $sectorForm)] = 'required';
             } elseif ($sector['sector_vocabulary'] == 2) {
@@ -57,8 +56,7 @@ class Sector extends ActivityBaseRequest
         $messages = [];
 
         foreach ($formFields as $sectorIndex => $sector) {
-            $sectorForm                                                            = sprintf('sector.%s', $sectorIndex);
-            $messages[sprintf('%s.sector_vocabulary.%s', $sectorForm, 'required')] = 'Sector Vocabulary is required.';
+            $sectorForm = sprintf('sector.%s', $sectorIndex);
             if ($sector['sector_vocabulary'] == 1) {
                 $messages[sprintf('%s.sector_code.%s', $sectorForm, 'required')] = 'Sector is required.';
             } elseif ($sector['sector_vocabulary'] == 2) {

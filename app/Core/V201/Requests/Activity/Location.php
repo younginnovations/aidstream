@@ -264,12 +264,14 @@ class Location extends ActivityBaseRequest
      */
     protected function getRulesForPoint($formFields, $formBase)
     {
-        $rules                                         = [];
-        $pointForm                                     = sprintf('%s.point.0', $formBase);
-        $rules[sprintf('%s.srs_name', $pointForm)]     = 'required';
-        $positionForm                                  = sprintf('%s.position.0', $pointForm);
-        $rules[sprintf('%s.latitude', $positionForm)]  = 'required|numeric';
-        $rules[sprintf('%s.longitude', $positionForm)] = 'required|numeric';
+        $rules                                     = [];
+        $pointForm                                 = sprintf('%s.point.0', $formBase);
+        $rules[sprintf('%s.srs_name', $pointForm)] = 'required';
+        $positionForm                              = sprintf('%s.position.0', $pointForm);
+        $latitude                                  = sprintf('%s.latitude', $positionForm);
+        $longitude                                 = sprintf('%s.longitude', $positionForm);
+        $rules[$latitude]                          = sprintf('required_with:%s|numeric', $longitude);
+        $rules[$longitude]                         = sprintf('required_with:%s|numeric', $latitude);
 
         return $rules;
     }
@@ -282,14 +284,14 @@ class Location extends ActivityBaseRequest
      */
     protected function getMessagesForPoint($formFields, $formBase)
     {
-        $messages                                                  = [];
-        $pointForm                                                 = sprintf('%s.point.0', $formBase);
-        $messages[sprintf('%s.srs_name.required', $pointForm)]     = 'SRS name is required.';
-        $positionForm                                              = sprintf('%s.position.0', $pointForm);
-        $messages[sprintf('%s.latitude.required', $positionForm)]  = 'Latitude is required.';
-        $messages[sprintf('%s.latitude.numeric', $positionForm)]   = 'Latitude should be numeric.';
-        $messages[sprintf('%s.longitude.required', $positionForm)] = 'Longitude is required.';
-        $messages[sprintf('%s.longitude.numeric', $positionForm)]  = 'Longitude should be numeric.';
+        $messages                                                       = [];
+        $pointForm                                                      = sprintf('%s.point.0', $formBase);
+        $messages[sprintf('%s.srs_name.required', $pointForm)]          = 'SRS name is required.';
+        $positionForm                                                   = sprintf('%s.position.0', $pointForm);
+        $messages[sprintf('%s.latitude.required_with', $positionForm)]  = 'Latitude is required when Longitude is present.';
+        $messages[sprintf('%s.latitude.numeric', $positionForm)]        = 'Latitude should be numeric.';
+        $messages[sprintf('%s.longitude.required_with', $positionForm)] = 'Longitude is required when Latitude is present.';
+        $messages[sprintf('%s.longitude.numeric', $positionForm)]       = 'Longitude should be numeric.';
 
         return $messages;
     }

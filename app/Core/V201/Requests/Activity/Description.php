@@ -1,13 +1,11 @@
 <?php namespace App\Core\V201\Requests\Activity;
 
-
 /**
  * Class Description
  * @package App\Core\V201\Requests\Activity
  */
 class Description extends ActivityBaseRequest
 {
-
     /**
      * Get the validation rules that apply to the request.
      *
@@ -38,7 +36,7 @@ class Description extends ActivityBaseRequest
             $descriptionForm = sprintf('description.%s', $descriptionIndex);
             $rules           = array_merge(
                 $rules,
-                $this->getRulesForNarrative($description['narrative'], $descriptionForm)
+                $this->getRulesForRequiredNarrative($description['narrative'], $descriptionForm)
             );
         }
 
@@ -57,7 +55,7 @@ class Description extends ActivityBaseRequest
             $descriptionForm = sprintf('description.%s', $descriptionIndex);
             $messages        = array_merge(
                 $messages,
-                $this->getMessagesForNarrative($description['narrative'], $descriptionForm)
+                $this->getMessagesForRequiredNarrative($description['narrative'], $descriptionForm)
             );
         }
 

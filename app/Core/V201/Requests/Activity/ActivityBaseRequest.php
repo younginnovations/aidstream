@@ -37,6 +37,13 @@ class ActivityBaseRequest extends Request
                 return !(Input::get($language) && !Input::get($attribute));
             }
         );
+
+        Validator::extend(
+            'exclude_operators',
+            function ($attribute, $value, $parameters, $validator) {
+                return !preg_match('/[\/\&\|\?|]+/', $value);
+            }
+        );
     }
 
     /**
@@ -50,7 +57,7 @@ class ActivityBaseRequest extends Request
         $rules                                     = [];
         $rules[sprintf('%s.narrative', $formBase)] = 'unique_lang';
         foreach ($formFields as $narrativeIndex => $narrative) {
-            $rules[sprintf('%s.narrative.%s.narrative', $formBase, $narrativeIndex)] = 'required_with_language';
+            $rules[sprintf('%s.narrative.%s.narrative', $formBase, $narrativeIndex)][] = 'required_with_language';
         }
 
         return $rules;
@@ -79,7 +86,7 @@ class ActivityBaseRequest extends Request
      * @param      $formBase
      * @return array
      */
-    public function getRulesForTitleNarrative($formFields, $formBase)
+    public function getRulesForRequiredNarrative($formFields, $formBase)
     {
         $rules                                     = [];
         $rules[sprintf('%s.narrative', $formBase)] = 'unique_lang';
@@ -101,7 +108,7 @@ class ActivityBaseRequest extends Request
      * @param $formBase
      * @return array
      */
-    public function getMessagesForTitleNarrative($formFields, $formBase)
+    public function getMessagesForRequiredNarrative($formFields, $formBase)
     {
         $rules                                                 = [];
         $rules[sprintf('%s.narrative.unique_lang', $formBase)] = 'Languages should be unique';
@@ -115,5 +122,72 @@ class ActivityBaseRequest extends Request
         }
 
         return $rules;
+    }
+
+    /**
+     * returns rules for period start form
+     * @param $formFields
+     * @param $formBase
+     * @return array
+     */
+    public function getRulesForPeriodStart($formFields, $formBase)
+    {
+        $rules = [];
+        foreach ($formFields as $periodStartKey => $periodStartVal) {
+            $rules[$formBase . '.period_start.' . $periodStartKey . '.date'] = 'required|date';
+        }
+
+        return $rules;
+    }
+
+    /**
+     * returns messages for period start form
+     * @param $formFields
+     * @param $formBase
+     * @return array
+     */
+    public function getMessagesForPeriodStart($formFields, $formBase)
+    {
+        $messages = [];
+        foreach ($formFields as $periodStartKey => $periodStartVal) {
+            $messages[$formBase . '.period_start.' . $periodStartKey . '.date.required'] = 'Period Start is required';
+            $messages[$formBase . '.period_end.' . $periodStartKey . '.date.date']       = 'Period Start is not a valid date.';
+        }
+
+        return $messages;
+    }
+
+    /**
+     * returns rules for period end form
+     * @param $formFields
+     * @param $formBase
+     * @return array
+     */
+    public function getRulesForPeriodEnd($formFields, $formBase)
+    {
+        $rules = [];
+        foreach ($formFields as $periodEndKey => $periodEndVal) {
+            $rules[$formBase . '.period_end.' . $periodEndKey . '.date'] = sprintf('required|date|after:%s', $formBase . '.period_start.' . $periodEndKey . '.date');
+        }
+
+        return $rules;
+    }
+
+    /**
+     * returns messages for period end form
+     * @param $formFields
+     * @param $formBase
+     * @return array
+     */
+    public function getMessagesForPeriodEnd($formFields, $formBase)
+    {
+        $messages = [];
+        foreach ($formFields as $periodEndKey => $periodEndVal) {
+            $messages[$formBase . '.period_end.' . $periodEndKey . '.date.required'] = 'Period End is required.';
+            $messages[$formBase . '.period_end.' . $periodEndKey . '.date.date']     = 'Period End is not a valid date.';
+            $messages[$formBase . '.period_end.' . $periodEndKey . '.date.after']    = 'Period End must be a date after Period Start';
+        }
+
+        return $messages;
     }
 }

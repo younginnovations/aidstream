@@ -67,6 +67,12 @@ class ActivityDateController extends Controller
     {
         $this->authorize(['edit_activity', 'add_activity']);
         $activityDate = $request->all();
+        $messages     = $this->validateData($request->get('activity_date'));
+        if ($messages) {
+            $response = ['type' => 'warning', 'messages' => array_unique($messages)];
+
+            return redirect()->back()->withInput()->withResponse($response);
+        }
         $activityData = $this->activityManager->getActivityData($id);
         if ($this->activityDateManager->update($activityDate, $activityData)) {
             $this->activityManager->resetActivityWorkflow($id);
@@ -77,5 +83,45 @@ class ActivityDateController extends Controller
         $response = ['type' => 'danger', 'code' => ['update_failed', ['name' => 'Activity Date']]];
 
         return redirect()->back()->withInput()->withResponse($response);
+    }
+
+    /**
+     * validate activity date data based on Activity Date and Activity Date Type
+     * @param array $data
+     * @return bool
+     */
+    private function validateData(array $data)
+    {
+        $messages = [];
+        $hasStart = false;
+        foreach ($data as $activityDateIndex => $activityDate) {
+            $blockIndex = $activityDateIndex + 1;
+            $date       = $activityDate['date'];
+            $type       = $activityDate['type'];
+            if ($type == 2 || $type == 4) {
+                (strtotime($date) <= strtotime(date('Y-m-d'))) ?: $messages[] = sprintf('Actual Start Date and Actual End Date must be Today or past days. (block %s)', $blockIndex);
+            }
+            if ($type == 1 || $type == 2) {
+                $hasStart = true;
+            } elseif ($type == 3 || $type == 4) {
+                $prevData = isset($data[$activityDateIndex - 1]) ? $data[$activityDateIndex - 1] : null;
+                if ($prevData) {
+                    (strtotime($prevData['date']) < strtotime($date)) ?: $check = false;
+                    if ($type == 3) {
+                        $prevData['type'] == 1 ?: $messages[] = sprintf('Ends should be after respective Starts in Activity Date Type (block %s)', $blockIndex);
+                    } else {
+                        $prevData['type'] == 2 ?: $messages[] = sprintf('Ends should be after respective Starts in Activity Date Type (block %s)', $blockIndex);
+                    }
+                } else {
+                    $messages[] = sprintf('Ends should be after respective Starts in Activity Date Type (block %s)', $blockIndex);
+                }
+            }
+        }
+
+        if (!$hasStart) {
+            array_unshift($messages, 'Planned Start or Actual Start in Activity Date Type is required.');
+        }
+
+        return $messages;
     }
 }

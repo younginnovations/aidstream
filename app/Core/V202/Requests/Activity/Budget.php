@@ -19,9 +19,8 @@ class Budget extends V201BudgetRequest
         foreach ($formFields as $budgetIndex => $budget) {
             $budgetForm = sprintf('budget.%s', $budgetIndex);
 
-            $rules[sprintf('%s.budget_type', $budgetForm)] = 'required';
-            $rules[sprintf('%s.status', $budgetForm)]      = 'required';
-            $rules                                         = array_merge(
+            $rules[sprintf('%s.status', $budgetForm)] = 'required';
+            $rules                                    = array_merge(
                 $rules,
                 $this->getRulesForPeriodStart($budget['period_start'], $budgetForm),
                 $this->getRulesForPeriodEnd($budget['period_end'], $budgetForm),
@@ -43,9 +42,8 @@ class Budget extends V201BudgetRequest
         foreach ($formFields as $budgetIndex => $budget) {
             $budgetForm = sprintf('budget.%s', $budgetIndex);
 
-            $messages[sprintf('%s.budget_type.required', $budgetForm)] = 'Budget type is required.';
-            $messages[sprintf('%s.status.required', $budgetForm)]      = 'Status is required.';
-            $messages                                                  = array_merge(
+            $messages[sprintf('%s.status.required', $budgetForm)] = 'Status is required.';
+            $messages                                             = array_merge(
                 $messages,
                 $this->getMessagesForPeriodStart($budget['period_start'], $budgetForm),
                 $this->getMessagesForPeriodEnd($budget['period_end'], $budgetForm),
