@@ -21,30 +21,41 @@ class NameTest extends AidStreamTestCase
     public function itShouldFormatOrganizationDataName()
     {
         $nameNarratives       = $this->getNameNarratives();
-        $narratives           = $this->getTestNarratives(['testNarrative1', 'testNarrative2'], ['testLanguage']);
+        $this->expectedOutput = $this->formatName($nameNarratives);
 
-        $this->expectedOutput = $this->formatName($narratives, $nameNarratives);
-
-        $this->assertEquals($this->expectedOutput, $this->name->format($narratives, $nameNarratives));
+        $this->assertEquals($this->expectedOutput, $this->name->format($nameNarratives));
     }
 
     /** {@test} */
     public function itShouldFormatOrganizationDataWithOutName()
     {
         $nameNarratives       = null;
-        $narratives           = $this->getTestNarratives(['testNarrative1', 'testNarrative2'], ['testLanguage']);
+        $this->expectedOutput = $this->formatName($nameNarratives);
 
-        $this->expectedOutput = $this->formatName($narratives, $nameNarratives);
-
-        $this->assertEquals($this->expectedOutput, $this->name->format($narratives, $nameNarratives));
+        $this->assertEquals($this->expectedOutput, $this->name->format($nameNarratives));
     }
 
-    protected function formatName($Narrative, $nameNarratives)
+    protected function formatName($nameNarratives)
     {
+        $output = [];
+
+        if (!is_null($nameNarratives)) {
+            foreach ($nameNarratives as $key => $nameNarrative) {
+                $template              = getHeaders('OrganizationData', 'name')[0];
+                $template['narrative'] = $nameNarrative->text;
+
+                if ($nameNarrative->xml_lang != '') {
+                    $template['language'] = getLanguageCodeFor($nameNarrative->xml_lang);
+                }
+
+                $output = $template;
+            }
+        }
+
         if (empty($nameNarratives)) {
-            $narrative = [['narrative' => "", 'language' => ""]];
+            $narrative = ['narrative' => "", 'language' => ""];
         } else {
-            $narrative = $Narrative;
+            $narrative = $output;
         }
 
         return $narrative;

@@ -54,7 +54,7 @@ class OrganizationQuery extends Query
             'telephone'             => $account->telephone,
             'status'                => $account->status,
             'organization_url'      => $account->url,
-            'disqus_comments'       => $account->disqus_comments,
+            'disqus_comments'       => ($comment = $account->disqus_comments) ? $comment : 0,
             'twitter'               => $account->twitter,
             'published_to_registry' => $publishedToRegistry ? $publishedToRegistry->pushed_to_registry : 0
         ];

@@ -66,7 +66,7 @@ class TitleTest extends AidStreamTestCase
                 $object                          = $template[0];
                 $object['language']              = $data['lang'] ? $data['lang'][$index] : '';
                 $object['narrative']             = $title->text;
-                $this->expectedOutput['title'][] = $object;
+                $this->expectedOutput[] = $object;
             }
         }
 

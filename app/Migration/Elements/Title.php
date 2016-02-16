@@ -17,7 +17,7 @@ class Title
         foreach ($titleMetaData as $activityId => $activityTitleData) {
             if ($activityTitleData['title']) {
                 foreach ($activityTitleData['title'] as $index => $title) {
-                  $titleJson['title'][] = ['language' => $activityTitleData['lang'] ? $activityTitleData['lang'][$index] : '', 'narrative' => $title->text];
+                  $titleJson[] = ['language' => $activityTitleData['lang'] ? $activityTitleData['lang'][$index] : '', 'narrative' => $title->text];
                 }
             } else {
                 $titleJson = null;

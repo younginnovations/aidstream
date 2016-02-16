@@ -2,14 +2,25 @@
 
 class Name
 {
-    public function format($Narrative, $nameNarratives)
+    public function format($nameNarratives)
     {
-        if (empty($nameNarratives)) {
-            $narrative = [['narrative' => "", 'language' => ""]];
-        } else {
-            $narrative = $Narrative;
+        $language  = '';
+        $Narrative = [];
+
+        if ($nameNarratives) {
+            foreach ($nameNarratives as $eachNarrative) {
+                $narrative_text = $eachNarrative->text;
+
+                if ($eachNarrative->xml_lang != "") {
+                    $language = getLanguageCodeFor($eachNarrative->xml_lang);
+                }
+
+                $Narrative = ['narrative' => $narrative_text, 'language' => $language];
+            }
+
+            return $Narrative;
         }
 
-        return $narrative;
+        return ['narrative' => "", 'language' => ""];
     }
 }

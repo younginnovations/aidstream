@@ -16,21 +16,16 @@ class OrganizationData
     protected $data = [];
 
     /**
-     * @var MigrateOrganizationData
-     */
-    protected $organizationData;
-    /**
      * @var OrganizationDataQuery
      */
     protected $organizationDataQuery;
 
     /**
      * OrganizationData constructor.
-     * @param MigrateOrganizationData $organizationData
+     * @param OrganizationDataQuery   $organizationDataQuery
      */
-    public function __construct(MigrateOrganizationData $organizationData, OrganizationDataQuery $organizationDataQuery)
+    public function __construct(OrganizationDataQuery $organizationDataQuery)
     {
-        $this->organizationData      = $organizationData;
         $this->organizationDataQuery = $organizationDataQuery;
     }
 
@@ -42,15 +37,5 @@ class OrganizationData
     public function getData($accountIds)
     {
         return $this->organizationDataQuery->executeFor($accountIds);
-
-//        foreach ($accountIds as $accountId) {
-//            $organization = getOrganizationFor($accountId);
-//
-//            if ($organization) {
-//                $this->data[] = $this->organizationData->OrganizationDataFetch($organization->id, $accountId);
-//            }
-//        }
-//
-//        return $this->data;
     }
 }

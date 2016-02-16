@@ -64,7 +64,6 @@ class OrganizationDataQuery extends Query
      */
     protected function fetchName($organizationId, $accountId)
     {
-        $language           = "";
         $dataName           = null;
         $fetchNameInstances = $this->connection->table('iati_organisation/name')
                                                ->select('*')
@@ -74,25 +73,11 @@ class OrganizationDataQuery extends Query
         foreach ($fetchNameInstances as $eachName) {
             $id             = $eachName->id;
             $nameNarratives = fetchNarratives($id, 'iati_organisation/name/narrative', 'name_id');
-            $Narrative      = [];
 
-            foreach ($nameNarratives as $eachNarrative) {
-                $narrative_text = $eachNarrative->text;
-
-                if ($eachNarrative->xml_lang != "") {
-                    $language = getLanguageCodeFor($eachNarrative->xml_lang);
-                }
-
-                $Narrative[] = ['narrative' => $narrative_text, 'language' => $language];
-            }
-
-            $narrative = $this->name->format($Narrative, $nameNarratives);
-
-            if (!is_null($fetchNameInstances)) {
-                $this->data[$organizationId]['name'] = $narrative;
-            }
+            $dataName[] = $this->name->format($nameNarratives);
         }
 
+        $this->data[$organizationId]['name']            = $dataName;
         $this->data[$organizationId]['organization_id'] = (int) $accountId;
 
         return $this;
@@ -109,7 +94,7 @@ class OrganizationDataQuery extends Query
         $fetchStateId = getBuilderFor('state_id', 'iati_organisation', 'account_id', $accountId)->first();
 
         if (!is_null($fetchStateId)) {
-            $status   = $fetchStateId->state_id - 1;
+            $status = $fetchStateId->state_id - 1;
         }
 
         $this->data[$organizationId]['status'] = $status;
