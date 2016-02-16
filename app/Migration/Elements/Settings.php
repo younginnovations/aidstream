@@ -64,8 +64,10 @@ class Settings
             'budget'               => 'Budget'
         ],
         'Related Documents'           => [
-            'related_activity' => 'Related Activity',
-            'document_link'    => 'Document Link'
+            'document_link' => 'Document Link'
+        ],
+        "Relations"                   => [
+            "related_activity" => 'Related Activity'
         ],
         'Performance'                 => [
             'legacy_data' => 'Legacy Data',

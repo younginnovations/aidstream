@@ -150,7 +150,9 @@ class ActivityQuery extends Query
                  ->fetchParticipatingOrganization($activityId)
                  ->fetchRecipientCountry($activityId)
                  ->fetchRecipientRegion($activityId)
-                 ->fetchSector($activityId);
+                 ->fetchSector($activityId)
+                 ->fetchContactInfo($activityId)
+                 ->fetchActivityScope($activityId);
         }
 
         return $this->data;
@@ -351,7 +353,6 @@ class ActivityQuery extends Query
     public function fetchActivityDate($activityId)
     {
         $dataActivityDate        = null;
-        $language                = "";
         $activity_date_instances = $this->connection->table('iati_activity_date')
                                                     ->select('*', '@iso_date as iso_date', '@type as type')
                                                     ->where('activity_id', '=', $activityId)
@@ -365,31 +366,12 @@ class ActivityQuery extends Query
                                                                                    ->select('Code')
                                                                                    ->where('id', '=', $ActivityDateTypeId)
                                                                                    ->first()) ? $FetchActivityDateTypeCode->Code : '';
+            $dateNarratives       = $this->connection->table('iati_activity_date/narrative')
+                                                     ->select('*', '@xml_lang as xml_lang')
+                                                     ->where('activity_date_id', '=', $dateInfo->id)
+                                                     ->get();
 
-            $dateNarratives = $this->connection->table('iati_activity_date/narrative')
-                                               ->select('*', '@xml_lang as xml_lang')
-                                               ->where('activity_date_id', '=', $dateInfo->id)
-                                               ->get();
-            $Narrative      = [];
-
-            foreach ($dateNarratives as $eachNarrative) {
-                $narrative_text = $eachNarrative->text;
-
-                if ($eachNarrative->xml_lang != "") {
-                    $language = getLanguageCodeFor($eachNarrative->xml_lang);
-                }
-
-                $Narrative[] = ['narrative' => $narrative_text, 'language' => $language];
-            }
-
-            // format incase of no narrative
-            if (empty($dateNarratives)) {
-                $narrative = [['narrative' => "", 'language' => ""]];
-            } else {
-                $narrative = $Narrative;
-            }
-
-            $dataActivityDate[] = $this->activityDate->format($isoDate, $ActivityDateTypeCode, $narrative);
+            $dataActivityDate[] = $this->activityDate->format($dateNarratives, $isoDate, $ActivityDateTypeCode);
         }
 
         if (!is_null($activity_date_instances)) {
@@ -611,6 +593,111 @@ class ActivityQuery extends Query
         if (!is_null($sectorInstances)) {
             $this->data[$activityId]['sector'] = $dataSector;
         }
+
+        return $this;
+    }
+
+    public function fetchContactInfo($activityId)
+    {
+        $typeCode             = $contactInfoDepartmentNarrative = $contactOrgNarrative = $contactInfoPersonName = $contactInfoPersonNarrative = $contactInfoJobTitle = null;
+        $contactInfoData      = null;
+        $select               = ['id', '@type as type'];
+        $contactInfoInstances = getBuilderFor($select, 'iati_contact_info', 'activity_id', $activityId)->get();
+        foreach ($contactInfoInstances as $eachcontactInfo) {
+            $typeCode = fetchCode($eachcontactInfo->type, 'ContactType', '');
+            //Organisation
+            $contactInfoOrganisation = getBuilderFor('*', 'iati_contact_info/organisation', 'contact_info_id', $eachcontactInfo->id)->first();
+            if ($contactInfoOrganisation) {
+                $contactInfoOrgNarrativeId = $contactInfoOrganisation->id;
+                $contactInfoOrgNarratives  = fetchNarratives($contactInfoOrgNarrativeId, 'iati_contact_info/organisation/narrative', 'organisation_id');
+                $contactOrgNarrative       = fetchAnyNarratives($contactInfoOrgNarratives);
+            }
+            //Department
+            $contactInfoDepartment = getBuilderFor('*', 'iati_contact_info/department', 'contact_info_id', $eachcontactInfo->id)->first();
+            if ($contactInfoDepartment) {
+                $contactInfoDepartmentNarrativeId = $contactInfoDepartment->id;
+                $contactInfoDepartmentNarratives  = fetchNarratives($contactInfoDepartmentNarrativeId, 'iati_contact_info/department/narrative', 'department_id');
+                $contactInfoDepartmentNarrative   = fetchAnyNarratives($contactInfoDepartmentNarratives);
+            }
+            //Person Name
+            $contactInfoPersonName = getBuilderFor('*', 'iati_contact_info/person_name', 'contact_info_id', $eachcontactInfo->id)->first();
+            if ($contactInfoPersonName) {
+                $personNameNarrativeId                 = $contactInfoPersonName->id;
+                $contactInfoPersonNarrativesCollection = fetchNarratives($personNameNarrativeId, 'iati_contact_info/person_name/narrative', 'person_name_id');
+                $contactInfoPersonNarrative            = fetchAnyNarratives($contactInfoPersonNarrativesCollection);
+            }
+
+            $telephone = $email = $website = $mailingAddress = null;
+            //Job Title
+            $contactInfoJobTitle = getBuilderFor('*', 'iati_contact_info/job_title', 'contact_info_id', $eachcontactInfo->id)->first();
+            if ($contactInfoJobTitle) {
+                $jobTitleNarrativeId                     = $contactInfoJobTitle->id;
+                $contactInfoJobTitleNarrativesCollection = fetchNarratives($jobTitleNarrativeId, 'iati_contact_info/job_title/narrative', 'job_title_id');
+                $contactInfoJobNarrative                 = fetchAnyNarratives($contactInfoJobTitleNarrativesCollection);
+                $telephone                               = $email = $website = null;
+            }
+            //Telephone
+            $contactInfoTelephones = getBuilderFor('text', 'iati_contact_info/telephone', 'contact_info_id', $eachcontactInfo->id)->get();
+            foreach ($contactInfoTelephones as $phone) {
+                if (!is_null($phone)) {
+                    $telephone[] = ['telephone' => $phone->text];
+                }
+            }
+
+            //Email
+            $contactInfoEmails = getBuilderFor('*', 'iati_contact_info/email', 'contact_info_id', $eachcontactInfo->id)->get();
+            foreach ($contactInfoEmails as $email_id) {
+                if (!is_null($email_id)) {
+                    $email[] = ['email' => $email_id->text];
+                }
+            }
+
+            //Website
+            $contactInfoWebsites = getBuilderFor('*', 'iati_contact_info/website', 'contact_info_id', $eachcontactInfo->id)->get();
+            foreach ($contactInfoWebsites as $websites) {
+                if (!is_null($websites)) {
+                    $website[] = ['website' => $websites->text];
+                }
+            }
+
+            //Mailing Address
+            $contactInfoMailNarrativeBlocks = getBuilderFor('*', 'iati_contact_info/mailing_address', 'contact_info_id', $eachcontactInfo->id)->get();
+
+            foreach ($contactInfoMailNarrativeBlocks as $blocks) {
+                $narrativeBlockContent = fetchNarratives($blocks->id, 'iati_contact_info/mailing_address/narrative', 'mailing_address_id');
+                $narratives            = fetchAnyNarratives($narrativeBlockContent);
+                $mailingAddress[]      = ['narrative' => $narratives];
+            }
+            //dd(json_encode($mailingAddress));
+            $contactInfoData[] = [
+                'type'            => $typeCode,
+                'organization'    => [['narrative' => isset($contactOrgNarrative) ? $contactOrgNarrative : []]],
+                'department'      => [['narrative' => isset($contactInfoDepartmentNarrative) ? $contactInfoDepartmentNarrative : []]],
+                'person_name'     => [['narrative' => isset($contactInfoPersonNarrative) ? $contactInfoPersonNarrative : []]],
+                'job_title'       => [['narrative' => isset($contactInfoJobNarrative) ? $contactInfoJobNarrative : []]],
+                'telephone'       => $telephone ? $telephone : [],
+                'email'           => $email ? $email : [],
+                'website'         => $website ? $website : [],
+                'mailing_address' => $mailingAddress ? $mailingAddress : []
+            ];
+        }    // end of ContactInfoInstances
+        if (!is_null($contactInfoInstances)) {
+            $this->data[$activityId]['contact_info'] = $contactInfoData;
+        }
+
+        return $this;
+    }
+
+    public function fetchActivityScope($activityId)
+    {
+        $activityScope     = getBuilderFor('@code as code', 'iati_activity_scope', 'activity_id', $activityId)->first();
+        $activityScopeData = null;
+        if ($activityScope) {
+            $activityScopeId   = $activityScope->code;
+            $activityScopeCode = getBuilderFor('Code', 'ActivityScope', 'id', $activityScopeId)->first();
+            $activityScopeData = $activityScopeCode->Code;
+        }
+        $this->data[$activityId]['activity_scope'] = $activityScopeData;
 
         return $this;
     }

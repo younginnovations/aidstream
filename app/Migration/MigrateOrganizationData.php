@@ -32,6 +32,7 @@ class MigrateOrganizationData
 
     public function fetchName($orgId, $accountId)
     {
+        $narrative = null;
         $language           = "";
         $dataName           = null;
         $fetchNameInstances = $this->mysqlConn->table('iati_organisation/name')
@@ -52,12 +53,12 @@ class MigrateOrganizationData
                 $Narrative[] = ['narrative' => $narrative_text, 'language' => $language];
             }
 
-            $narrative = $this->name->format($Narrative, $nameNarratives);
-
-            if (!is_null($fetchNameInstances)) {
-                $this->data[$orgId]['name'] = $narrative;
-            }
+            $narrative[] = $this->name->format($Narrative, $nameNarratives);
         }
+        if (!is_null($fetchNameInstances)) {
+            $this->data[$orgId]['name'] = $narrative;
+        }
+        
         $this->data[$orgId]['organization_id'] = (int) $accountId;
 
         return $this;

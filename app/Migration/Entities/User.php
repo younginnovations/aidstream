@@ -40,15 +40,5 @@ class User
     public function getData($accountIds)
     {
         return $this->userQuery->executeFor($accountIds);
-
-//        foreach ($accountIds as $accountId) {
-//            $users = $this->migrateUser->getUsersFor($accountId);
-//
-//            foreach ($users as $user) {
-//                $this->data[] = $this->migrateUser->userDataFetch($user);
-//            }
-//        }
-//
-//        return $this->data;
     }
 }

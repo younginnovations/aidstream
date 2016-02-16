@@ -98,3 +98,25 @@ function fetchCode($id, $table, $act)
                          ->where('id', '=', $id)
                          ->first()) ? $code->Code : '';
 }
+
+
+function fetchAnyNarratives($anyNarratives) {
+    $language = "";
+    $Narrative = [];
+    foreach($anyNarratives as $eachNarrative)
+    {
+        $narrativeText = $eachNarrative->text;
+        if ($eachNarrative->xml_lang != "") {
+            $language = getLanguageCodeFor($eachNarrative->xml_lang);
+        }
+        $Narrative[] = ['narrative' => $narrativeText, 'language' => $language];
+    }
+    // format incase of no narrative
+    if (empty($anyNarratives)) {
+        $narrative = [['narrative' => "", 'language' => ""]];
+    } else {
+        $narrative = $Narrative;
+    }
+
+    return $narrative;
+}
