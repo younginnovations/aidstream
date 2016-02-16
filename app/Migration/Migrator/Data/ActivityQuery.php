@@ -152,7 +152,8 @@ class ActivityQuery extends Query
                  ->fetchRecipientRegion($activityId)
                  ->fetchSector($activityId)
                  ->fetchContactInfo($activityId)
-                 ->fetchActivityScope($activityId);
+                 ->fetchActivityScope($activityId)
+                 ->fetchLocation($activityId);
         }
 
         return $this->data;
@@ -699,6 +700,120 @@ class ActivityQuery extends Query
         }
         $this->data[$activityId]['activity_scope'] = $activityScopeData;
 
+        return $this;
+    }
+
+    public function fetchLocation($activityId)
+    {
+        $locationData = null;
+        $select   = ['id', '@ref as ref'];
+        $locationInstance = getBuilderFor($select, 'iati_location', 'activity_id', $activityId)->get();
+
+        foreach($locationInstance as $location) {
+            $ref = $location->ref;
+
+            //location Reach
+            $locationReachId = getBuilderFor('@code as code', 'iati_location/location_reach', 'location_id',$location->id)->first();
+            if(($locationReachId)) {
+                $locationReachInstance = getBuilderFor('Code', 'GeographicLocationReach', 'id', $locationReachId->code)->first();
+                $locationReach         = $locationReachInstance->Code;
+            }
+            //location Id
+            $select = ['@code as code','@vocabulary as vocabulary'];
+            $locationIdInstance = getBuilderFor($select,'iati_location/location_id','location_id',$location->id)->get();
+
+            if($locationIdInstance) {
+                foreach($locationIdInstance as $eachLocationId) {
+                    $locationIdVocab = getBuilderFor('Code', 'GeographicVocabulary', 'id', $eachLocationId->vocabulary)->first();
+
+                    if ($locationIdVocab) {
+                        $locationIdVocabulary = $locationIdVocab->Code;
+                    }
+
+                    $locationIdCode = $eachLocationId->code;
+                    $locationID[] = ['vocabulary'=>$locationIdVocabulary,'code'=>$locationIdCode];
+                }
+
+            }
+            // name
+            $locationNameId = getBuilderFor('id','iati_location/name','location_id',$location->id)->first();
+            if($locationNameId) {
+                $locationNameInstance = fetchNarratives($locationNameId->id ,'iati_location/name/narrative','name_id');
+                $fetchNameNarratives = fetchAnyNarratives($locationNameInstance);
+            }
+
+            //description
+            $locationDescriptionId = getBuilderFor('id','iati_location/description','location_id',$location->id)->first();
+
+            if($locationDescriptionId) {
+                $locationDescriptionInstance = fetchNarratives($locationDescriptionId->id ,'iati_location/description/narrative','description_id');
+                $fetchDescriptionNarratives = fetchAnyNarratives($locationDescriptionInstance);
+            }
+
+            //activity description
+            $activityDescriptionId = getBuilderFor('id','iati_location/activity_description','location_id',$location->id)->first();
+
+            if($activityDescriptionId) {
+                $activityDescriptionInstance = fetchNarratives($activityDescriptionId->id ,'iati_location/activity_description/narrative','activity_description_id');
+                $fetchActivityNarratives = fetchAnyNarratives($activityDescriptionInstance);
+            }
+
+            $select = ['@code as code','@level as level','@vocabulary as vocabulary'];
+            $administrativeInfo = getBuilderFor($select,'iati_location/administrative','location_id',$location->id)->get();
+            if($administrativeInfo) {
+                foreach ($administrativeInfo as $administrative) {
+                    $vocabularyCode       = fetchCode($administrative->vocabulary, 'GeographicVocabulary', '');
+                    $administrativeData[] = ['vocabulary' => $vocabularyCode, 'code' => $administrative->code, 'level' => $administrative->level];
+                }
+            }
+
+            //point
+            $select = ['@srsName as srsName','id','location_id'];
+            $pointInfo = getBuilderFor($select,'iati_location/point','location_id',$location->id)->first();
+
+            if($pointInfo) {
+                $srsName = $pointInfo->srsName;
+                $select = ['@latitude as latitude','@longitude as longitude'];
+                $positionInfo = getBuilderFor($select,'iati_location/point/pos','point_id',$pointInfo->id)->first();
+
+                $positionData = ['latitude'=>$positionInfo->latitude,'longitude'=>$positionInfo->longitude];
+                $pointData = ['srs_name'=> $srsName,'position'=>[$positionData]];
+            }
+            $exactnessInfo = getBuilderFor('@code as code','iati_location/exactness','location_id',$location->id)->first();
+
+            if($exactnessInfo) {
+                $exactnessCode = fetchCode($exactnessInfo->code,'GeographicExactness','');
+            }
+
+            $locationClass = getBuilderFor('@code as code','iati_location/location_class','location_id',$location->id)->first();
+            if($locationClass) {
+                $locationClassCode = fetchCode($locationClass->code,'GeographicLocationClass','');
+            }
+
+            $featureDesignation = getBuilderFor('@code as code','iati_location/feature_designation','location_id',$location->id)->first();
+            if($featureDesignation) {
+                $featureDesignationCode = fetchCode($featureDesignation->code,'LocationType','');
+            }
+
+            $locationData[] = [
+                'reference' => isset($ref) ? $ref : "",
+                'location_reach'=> [["code"=>isset($locationReach) ? $locationReach : []]],
+                'location_id'=> isset($locationID) ? $locationID : [],
+                'name'=> [['narrative'=> isset($fetchNameNarratives) ? $fetchNameNarratives: [] ]],
+                'location_description'=> [['narrative'=>isset($fetchDescriptionNarratives) ? $fetchDescriptionNarratives: []]],
+                'activity_description'=> [['narrative'=>isset($fetchActivityNarratives) ? $fetchActivityNarratives :[]]],
+                'administrative'=> isset($administrativeData) ? $administrativeData :[],
+                'point'=> [['srs_name'=>isset($srsName) ? $srsName: "",'position'=>[isset($positionData) ? $positionData : ""] ]],
+                'exactness'=> [["code"=>isset($exactnessCode) ? $exactnessCode : ""]],
+                'location_class'=> [["code"=>isset($locationClassCode) ? $locationClassCode : ""]],
+                'feature_designation'=> [["code"=>isset($featureDesignationCode) ? $featureDesignationCode :""]],
+            ];
+
+        } // end of locationInstances
+
+        if (!is_null($locationInstance)) {
+            $this->data[$activityId]['location'] = $locationData;
+        }
         return $this;
     }
 }
