@@ -1,7 +1,7 @@
 @if(!empty($org_name))
     <div class="panel panel-default">
         <div class="panel-heading">Name
-            <a href="#" class="edit-element">edit</a>
+            <a href="{{ url('/organization/' . $orgId . '/name') }}" class="edit-element">edit</a>
         </div>
         <div class="panel-body panel-element-body row">
             @foreach($org_name as $name)

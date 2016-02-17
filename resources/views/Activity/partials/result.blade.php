@@ -10,11 +10,11 @@
                     <div class="panel panel-default">
                         <div class="panel-element-body row">
                             <div class="col-xs-12 col-md-12">
-                                <div class="col-xs-12 col-sm-4">Type: </div>
+                                <div class="col-xs-12 col-sm-4">Type:</div>
                                 <div class="col-xs-12 col-sm-8">{{$getCode->getActivityCodeName('ResultType', $result['result']['type'])}}</div>
                             </div>
                             <div class="col-xs-12 col-md-12">
-                                <div class="col-xs-12 col-sm-4">Aggregation Status: </div>
+                                <div class="col-xs-12 col-sm-4">Aggregation Status:</div>
                                 <div class="col-xs-12 col-sm-8">{{($result['result']['aggregation_status'] == "1") ? 'True' : 'False' }}</div>
                             </div>
                         </div>
@@ -27,7 +27,7 @@
                                     @foreach($title['narrative'] as $narrative)
                                         <div class="panel-element-body row">
                                             <div class="col-xs-12 col-md-12">
-                                                <div class="col-xs-12 col-sm-4">Text: </div>
+                                                <div class="col-xs-12 col-sm-4">Text:</div>
                                                 <div class="col-xs-12 col-sm-8">{{$narrative['narrative'] . ' ['. $getCode->getOrganizationCodeName('Language', $narrative['language']) . ']'}}</div>
                                             </div>
                                         </div>
@@ -42,7 +42,7 @@
                                     @foreach($description['narrative'] as $narrative)
                                         <div class="panel-element-body row">
                                             <div class="col-xs-12 col-md-12">
-                                                <div class="col-xs-12 col-sm-4">Text: </div>
+                                                <div class="col-xs-12 col-sm-4">Text:</div>
                                                 <div class="col-xs-12 col-sm-8">{{$narrative['narrative'] . ' ['. $getCode->getOrganizationCodeName('Language', $narrative['language']) . ']'}}</div>
                                             </div>
                                         </div>
@@ -57,11 +57,11 @@
                                     <div class="panel panel-default">
                                         <div class="panel-element-body row">
                                             <div class="col-xs-12 col-md-12">
-                                                <div class="col-xs-12 col-sm-4">Measure: </div>
+                                                <div class="col-xs-12 col-sm-4">Measure:</div>
                                                 <div class="col-xs-12 col-sm-8">{{$getCode->getActivityCodeName('IndicatorMeasure', $indicator['measure'])}}</div>
                                             </div>
                                             <div class="col-xs-12 col-md-12">
-                                                <div class="col-xs-12 col-sm-4">Ascending: </div>
+                                                <div class="col-xs-12 col-sm-4">Ascending:</div>
                                                 <div class="col-xs-12 col-sm-8">{{($indicator['ascending'] == "1") ? 'True' : 'False' }}</div>
                                             </div>
                                         </div>
@@ -73,7 +73,7 @@
                                                 @foreach($title['narrative'] as $narrative)
                                                     <div class="panel-element-body row">
                                                         <div class="col-xs-12 col-md-12">
-                                                            <div class="col-xs-12 col-sm-4">Text: </div>
+                                                            <div class="col-xs-12 col-sm-4">Text:</div>
                                                             <div class="col-xs-12 col-sm-8">{{$narrative['narrative'] . ' ['. $getCode->getOrganizationCodeName('Language', $narrative['language']) . ']'}}</div>
                                                         </div>
                                                     </div>
@@ -88,7 +88,7 @@
                                                 @foreach($description['narrative'] as $narrative)
                                                     <div class="panel-element-body row">
                                                         <div class="col-xs-12 col-md-12">
-                                                            <div class="col-xs-12 col-sm-4">Text: </div>
+                                                            <div class="col-xs-12 col-sm-4">Text:</div>
                                                             <div class="col-xs-12 col-sm-8">{{$narrative['narrative'] . ' ['. $getCode->getOrganizationCodeName('Language', $narrative['language']) . ']'}}</div>
                                                         </div>
                                                     </div>
@@ -103,11 +103,11 @@
                                                 <div class="panel panel-default">
                                                     <div class="panel-element-body row">
                                                         <div class="col-xs-12 col-md-12">
-                                                            <div class="col-xs-12 col-sm-4">Year: </div>
+                                                            <div class="col-xs-12 col-sm-4">Year:</div>
                                                             <div class="col-xs-12 col-sm-8">{{$baseline['year']}}</div>
                                                         </div>
                                                         <div class="col-xs-12 col-md-12">
-                                                            <div class="col-xs-12 col-sm-4">Value: </div>
+                                                            <div class="col-xs-12 col-sm-4">Value:</div>
                                                             <div class="col-xs-12 col-sm-8">{{$baseline['value']}}</div>
                                                         </div>
                                                     </div>
@@ -119,7 +119,7 @@
                                                             @foreach($comment['narrative'] as $narrative)
                                                                 <div class="panel-element-body row">
                                                                     <div class="col-xs-12 col-md-12">
-                                                                        <div class="col-xs-12 col-sm-4">Text: </div>
+                                                                        <div class="col-xs-12 col-sm-4">Text:</div>
                                                                         <div class="col-xs-12 col-sm-8">{{$narrative['narrative'] . ' ['. $getCode->getOrganizationCodeName('Language', $narrative['language']) . ']'}}</div>
                                                                     </div>
                                                                 </div>
@@ -138,8 +138,8 @@
                                                     <div class="panel-heading">Period Start</div>
                                                     <div class="panel-element-body row">
                                                         <div class="col-xs-12 col-md-12">
-                                                            <div class="col-xs-12 col-sm-4">Iso_date: </div>
-                                                            <div class="col-xs-12 col-sm-8">{{ $period['period_start'][0]['date'] }}</div>
+                                                            <div class="col-xs-12 col-sm-4">Iso_date:</div>
+                                                            <div class="col-xs-12 col-sm-8">{{ formatDate($period['period_start'][0]['date']) }}</div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -147,8 +147,8 @@
                                                     <div class="panel-heading">Period End</div>
                                                     <div class="panel-element-body row">
                                                         <div class="col-xs-12 col-md-12">
-                                                            <div class="col-xs-12 col-sm-4">Iso_date: </div>
-                                                            <div class="col-xs-12 col-sm-8">{{ $period['period_end'][0]['date'] }}</div>
+                                                            <div class="col-xs-12 col-sm-4">Iso_date:</div>
+                                                            <div class="col-xs-12 col-sm-8">{{ formatDate($period['period_end'][0]['date']) }}</div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -156,7 +156,7 @@
                                                     <div class="panel-heading">Target</div>
                                                     <div class="panel-element-body row">
                                                         <div class="col-xs-12 col-md-12">
-                                                            <div class="col-xs-12 col-sm-4">Iso_date: </div>
+                                                            <div class="col-xs-12 col-sm-4">Iso_date:</div>
                                                             <div class="col-xs-12 col-sm-8">{{ $period['target'][0]['value'] }}</div>
                                                         </div>
                                                     </div>
@@ -166,7 +166,7 @@
                                                             @foreach($comment['narrative'] as $narrative)
                                                                 <div class="panel-element-body row">
                                                                     <div class="col-xs-12 col-md-12">
-                                                                        <div class="col-xs-12 col-sm-4">Text: </div>
+                                                                        <div class="col-xs-12 col-sm-4">Text:</div>
                                                                         <div class="col-xs-12 col-sm-8">{{$narrative['narrative'] . ' ['. $getCode->getOrganizationCodeName('Language', $narrative['language']) . ']'}}</div>
                                                                     </div>
                                                                 </div>
@@ -178,7 +178,7 @@
                                                     <div class="panel-heading">Actual</div>
                                                     <div class="panel-element-body row">
                                                         <div class="col-xs-12 col-md-12">
-                                                            <div class="col-xs-12 col-sm-4">Iso_date: </div>
+                                                            <div class="col-xs-12 col-sm-4">Iso_date:</div>
                                                             <div class="col-xs-12 col-sm-8">{{$period['actual'][0]['value']}}</div>
                                                         </div>
                                                     </div>
@@ -188,7 +188,7 @@
                                                             @foreach($comment['narrative'] as $narrative)
                                                                 <div class="panel-element-body row">
                                                                     <div class="col-xs-12 col-md-12">
-                                                                        <div class="col-xs-12 col-sm-4">Text: </div>
+                                                                        <div class="col-xs-12 col-sm-4">Text:</div>
                                                                         <div class="col-xs-12 col-sm-8">{{$narrative['narrative'] . ' ['. $getCode->getOrganizationCodeName('Language', $narrative['language']) . ']'}}</div>
                                                                     </div>
                                                                 </div>

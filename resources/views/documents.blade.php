@@ -40,9 +40,9 @@
                                             {!! implode(', ', $identifierList) !!}
                                         </td>
                                     </tr>
+                                @endforeach
                                 </tbody>
                             </table>
-                            @endforeach
                         @else
                             <div class="text-center no-data no-document-data">
                                 You haven’t added any document yet.

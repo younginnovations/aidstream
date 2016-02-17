@@ -8,19 +8,7 @@
         <div class="row">
             @include('includes.side_bar_menu')
             <div class="col-xs-9 col-md-9 col-lg-9 content-wrapper">
-                @if (count($errors) > 0)
-                    <div class="alert alert-danger">
-                        <strong>Whoops!</strong> There were some problems with your input.<br><br>
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @else
-                    @include('includes.response')
-                @endif
-                @include('includes.breadcrumb')
+                @include('includes.errors')
                 <div class="panel-content-heading panel-title-heading">Edit Profile</div>
                 <form class="form-horizontal form-edit-profile" role="form" method="POST" action="{{ route('user.update-profile', $user->id)}}" enctype="multipart/form-data">
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">

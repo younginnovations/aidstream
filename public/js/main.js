@@ -86,17 +86,17 @@ $(document).ready(function () {
 
         if ($('#removeDialog').length === 0) {
             $('body').append('' +
-                '<div class="modal" id="removeDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="z-index: 9999">' +
-                '<div class="modal-dialog">' +
-                '<div class="modal-content">' +
-                '<div class="modal-header">' +
-                '<h4 class="modal-title" id="myModalLabel"></h4>' +
-                '</div>' +
-                '<div class="modal-body"></div>' +
-                '<div class="modal-footer"></div>' +
-                '</div>' +
-                '</div>' +
-                '</div>');
+            '<div class="modal" id="removeDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="z-index: 9999">' +
+            '<div class="modal-dialog">' +
+            '<div class="modal-content">' +
+            '<div class="modal-header">' +
+            '<h4 class="modal-title" id="myModalLabel"></h4>' +
+            '</div>' +
+            '<div class="modal-body"></div>' +
+            '<div class="modal-footer"></div>' +
+            '</div>' +
+            '</div>' +
+            '</div>');
         }
 
         var removeDialog = $('#removeDialog');
@@ -136,7 +136,20 @@ $(document).ready(function () {
     });
 
     $('input[name="activity_identifier"]').keyup(function () {
-        $('input[name="iati_identifier_text"]').val($('#reporting_organization_identifier').text() + '-' + $(this).val());
+        if ($(this).val() == "") {
+            $('.identifier_text').removeClass('hidden');
+            $('.iati_identifier_text').addClass('hidden');
+        } else {
+            $('input[name="iati_identifier_text"]').val($('#reporting_organization_identifier').text() + '-' + $(this).val());
+            $('.identifier_text').addClass('hidden');
+            $('.iati_identifier_text').removeClass('hidden');
+        }
+    });
+
+    $('input[name="iati_identifier_text"]').hover(function () {
+        $(this).next('.help-text').trigger('mouseover');
+    }, function () {
+        $(this).next('.help-text').trigger('mouseout');
     });
 
     if ($('input[name="activity_identifier"]').val() !== '') {
@@ -171,17 +184,17 @@ $(document).ready(function () {
 
         if ($('#popDialog').length === 0) {
             $('body').append('' +
-                '<div class="modal" id="popDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="z-index: 9999">' +
-                '<div class="modal-dialog">' +
-                '<div class="modal-content">' +
-                '<div class="modal-header">' +
-                '<h4 class="modal-title" id="myModalLabel"></h4>' +
-                '</div>' +
-                '<div class="modal-body"></div>' +
-                '<div class="modal-footer"></div>' +
-                '</div>' +
-                '</div>' +
-                '</div>');
+            '<div class="modal" id="popDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="z-index: 9999">' +
+            '<div class="modal-dialog">' +
+            '<div class="modal-content">' +
+            '<div class="modal-header">' +
+            '<h4 class="modal-title" id="myModalLabel"></h4>' +
+            '</div>' +
+            '<div class="modal-body"></div>' +
+            '<div class="modal-footer"></div>' +
+            '</div>' +
+            '</div>' +
+            '</div>');
         }
 
         var popElem = $('#popDialog');
@@ -268,17 +281,17 @@ $(document).ready(function () {
 
         if ($('#delDialog').length === 0) {
             $('body').append('' +
-                '<div class="modal" id="delDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="z-index: 9999">' +
-                '<div class="modal-dialog">' +
-                '<div class="modal-content">' +
-                '<div class="modal-header">' +
-                '<h4 class="modal-title" id="myModalLabel"></h4>' +
-                '</div>' +
-                '<div class="modal-body"></div>' +
-                '<div class="modal-footer"></div>' +
-                '</div>' +
-                '</div>' +
-                '</div>');
+            '<div class="modal" id="delDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="z-index: 9999">' +
+            '<div class="modal-dialog">' +
+            '<div class="modal-content">' +
+            '<div class="modal-header">' +
+            '<h4 class="modal-title" id="myModalLabel"></h4>' +
+            '</div>' +
+            '<div class="modal-body"></div>' +
+            '<div class="modal-footer"></div>' +
+            '</div>' +
+            '</div>' +
+            '</div>');
         }
 
         var delDialog = $('#delDialog');
@@ -367,35 +380,41 @@ $(document).ready(function () {
         }
     });
 
+    $('.sidebar-wrapper a').each(function () {
+        var aHref = $(this).attr('href');
+        var href = location.href;
+        if (href.indexOf(aHref) > -1) {
+            $(this).addClass('active');
+        }
+    });
 
-window.onbeforeunload = function () {
-    if (preventNavigation) {
-      return 'You have unsaved changes.';
-    }
-  };
 
-  $('.element-menu-wrapper').click(function(){
-    $(this).children('.element-sidebar-wrapper').toggle();
-  });
+    window.onbeforeunload = function () {
+        if (preventNavigation) {
+            return 'You have unsaved changes.';
+        }
+    };
 
-  $(document).mouseup(function (e)
-  {
-      var container = $('.language-flag-wrap');
-      if ( !container.is(e.target)
-          && container.has(e.target).length === 0)
-      {
-          container.hide();
-      }
-  });
+    $('.element-menu-wrapper').click(function () {
+        $(this).children('.element-sidebar-wrapper').toggle();
+    });
 
-  $(".clickable-row").click(function(e) {
-      if(!($(e.target).is('input') || $(e.target).is('a'))) {
-        window.document.location = $(this).data("href");
-      }
-  });
+    $(document).mouseup(function (e) {
+        var container = $('.language-flag-wrap');
+        if (!container.is(e.target)
+            && container.has(e.target).length === 0) {
+            container.hide();
+        }
+    });
 
-  $(".clickable-row > td > :checkbox").click(function(){
-    $(this).parents('.clickable-row').toggleClass('clickable-row-bg');
-  });
+    $(".clickable-row").click(function (e) {
+        if (!($(e.target).is('input') || $(e.target).is('a'))) {
+            window.document.location = $(this).data("href");
+        }
+    });
+
+    $(".clickable-row > td > :checkbox").click(function () {
+        $(this).parents('.clickable-row').toggleClass('clickable-row-bg');
+    });
 
 });

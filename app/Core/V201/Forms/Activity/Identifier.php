@@ -18,13 +18,23 @@ class Identifier extends BaseForm
                 ]
             )
             ->add(
+                'identifier_text',
+                'static',
+                [
+                    'tag'           => 'em',
+                    'label'         => 'IATI Identifier',
+                    'wrapper'       => ['class' => 'col-xs-12 col-sm-6 identifier_text'],
+                    'default_value' => 'This will be auto-generated as you fill Activity Identifier.'
+                ]
+            )
+            ->add(
                 'iati_identifier_text',
                 'text',
                 [
                     'label'      => 'IATI Identifier',
                     'rules'      => 'required',
                     'attr'       => ['readonly' => 'readonly'],
-                    'wrapper'    => ['class' => 'col-xs-12 col-sm-6'],
+                    'wrapper'    => ['class' => 'col-xs-12 col-sm-6 iati_identifier_text hidden'],
                     'help_block' => $this->addHelpText('Activity_IatiIdentifier-text')
                 ]
             );

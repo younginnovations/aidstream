@@ -7,8 +7,7 @@
         <div class="row">
             @include('includes.side_bar_menu')
             <div class="col-xs-9 col-md-9 col-lg-9 content-wrapper">
-                @include('includes.response')
-                @include('includes.breadcrumb')
+                @include('includes.errors')
                 <div class="panel-content-heading panel-title-heading">Current Username</div>
                 <div class="panel panel-default">
                     <div class="panel-body">
@@ -17,16 +16,6 @@
                     </div>
                 </div>
                 <div class="panel-content-heading panel-title-heading">Change Username</div>
-                @if (count($errors) > 0)
-                    <div class="alert alert-danger">
-                        <strong>Whoops!</strong> There were some problems with your input.<br><br>
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
                 <div class="col-xs-12 col-md-8 col-lg-8 element-content-wrapper">
                     <form class="form-horizontal" role="form" method="POST" action="{{ route('user.update-username', $user->id)}}">
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">

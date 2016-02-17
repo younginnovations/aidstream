@@ -1,7 +1,7 @@
 @if(!empty($document_link))
     <div class="panel panel-default">
         <div class="panel-heading">Document Link
-            <a href="#" class="edit-element">edit</a>
+            <a href="{{ url('/organization/' . $orgId . '/document-link') }}" class="edit-element">edit</a>
         </div>
         <div class="panel-body panel-element-body row">
             @foreach($document_link as $documentLink)

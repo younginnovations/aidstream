@@ -3,6 +3,10 @@
 @section('title', 'Organization - ' . $reporting_org['reporting_organization_identifier'])
 
 @section('content')
+
+    {{--*/
+    $orgId = session('org_id');
+    /*--}}
     @inject('code', 'App\Helpers\GetCodeName')
     <div class="container main-container">
         <div class="row">

@@ -2,6 +2,7 @@
 
 use App\Core\Form\BaseForm;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ChangePasswordRequest;
 use App\Http\Requests\ProfileRequest;
 use App\Http\Requests\UsernameRequest;
 use App\Models\Organization\Organization;
@@ -111,10 +112,11 @@ class UserController extends Controller
 
     /**
      * reset password
-     * @param $userId
+     * @param                       $userId
+     * @param ChangePasswordRequest $changePasswordRequest
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function updateUserPassword($userId)
+    public function updateUserPassword($userId, ChangePasswordRequest $changePasswordRequest)
     {
         $input = Input::all();
         $user  = $this->user->findOrFail($userId);

@@ -1,7 +1,7 @@
 @if(!empty($reporting_org))
     <div class="panel panel-default">
         <div class="panel-heading">Reporting Organization
-            <a href="#" class="edit-element">edit</a>
+            <a href="{{ url('/organization/' . $orgId . '/reportingOrg') }}" class="edit-element">edit</a>
         </div>
         <div class="panel-body panel-element-body row">
             <div class="col-xs-12 col-md-12">
@@ -22,7 +22,7 @@
     </div>
     <div class="panel panel-default">
         <div class="panel-heading">Organization Identifier
-            <a href="#" class="edit-element">edit</a>
+            <a href="{{ url('/organization/' . $orgId . '/identifier') }}" class="edit-element">edit</a>
         </div>
         <div class="panel-body panel-element-body row">
             <div class="col-xs-12 col-md-12">
