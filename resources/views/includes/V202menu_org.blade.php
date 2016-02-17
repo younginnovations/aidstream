@@ -2,7 +2,7 @@
 
 {{--*/
 $orgData = $organizationData->get();
-$orgId = Session::get('org_id');
+$orgId = session('org_id');
 /*--}}
 <div class="col-xs-4 col-md-4 col-lg-4 element-sidebar-wrapper">
     <div class="panel panel-default">
@@ -42,7 +42,7 @@ $orgId = Session::get('org_id');
             <ul class="nav">
                 <li>
                     {{--*/ $filled = $orgData['total_budget']; /*--}}
-                    <a href="{{ route('organization.total-budget.index', Auth::user()->org_id) }}" class="{{ $filled ? 'active' : '' }}" title="{{ $filled ? 'Edit' : 'Add' }} Total Budget">
+                    <a href="{{ route('organization.total-budget.index', $orgId) }}" class="{{ $filled ? 'active' : '' }}" title="{{ $filled ? 'Edit' : 'Add' }} Total Budget">
                         <span class="action-icon {{ $filled ? 'edit-value' : 'add' }}">icon</span>
                         Total Budget
                     </a>
@@ -50,7 +50,7 @@ $orgId = Session::get('org_id');
                 </li>
                 <li>
                     {{--*/ $filled = $orgData['recipient_organization_budget']; /*--}}
-                    <a href="{{ route('organization.recipient-organization-budget.index', Auth::user()->org_id)}}" class="{{ $filled ? 'active' : '' }}"
+                    <a href="{{ route('organization.recipient-organization-budget.index', $orgId)}}" class="{{ $filled ? 'active' : '' }}"
                        title="{{ $filled ? 'Edit' : 'Add' }} Recipient Organization Budget">
                         <span class="action-icon {{ $filled ? 'edit-value' : 'add' }}">icon</span>
                         Recipient Organization Budget

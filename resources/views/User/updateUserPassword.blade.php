@@ -7,7 +7,10 @@
         <div class="row">
         @include('includes.side_bar_menu')
             <div class="col-xs-9 col-md-9 col-lg-9 content-wrapper">
+            @if (count($errors) == 0)
                 @include('includes.response')
+            @endif
+            @include('includes.errors')
             <div class="panel panel-default">
                 <div class="panel-body">
                     <div><span>Current Username : </span>{{Auth::user()->username}}</div>

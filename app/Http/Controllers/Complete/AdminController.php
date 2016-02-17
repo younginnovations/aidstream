@@ -1,6 +1,7 @@
 <?php namespace App\Http\Controllers\Complete;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UpdatePasswordRequest;
 use App\Http\Requests\UserRequest;
 use App\Models\UserActivity;
 use App\User;
@@ -74,7 +75,7 @@ class AdminController extends Controller
 
         $response = ($this->user->save()) ? ['type' => 'success', 'code' => ['created', ['name' => 'User']]] : ['type' => 'danger', 'code' => ['save_failed', ['name' => 'User']]];
 
-        return redirect('admin/list-users')->withResponse($response);
+        return redirect()->route('admin.list-users')->withResponse($response);
     }
 
     /**
@@ -126,17 +127,18 @@ class AdminController extends Controller
 
     /**
      * reset password
-     * @param $userId
+     * @param                       $userId
+     * @param UpdatePasswordRequest $updatePasswordRequest
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function updateUserPassword($userId)
+    public function updateUserPassword($userId, UpdatePasswordRequest $updatePasswordRequest)
     {
         $input          = Input::all();
         $user           = $this->user->findOrFail($userId);
         $user->password = bcrypt($input['password']);
         $response       = ($user->save()) ? ['type' => 'success', 'code' => ['updated', ['name' => 'Password']]] : ['type' => 'danger', 'code' => ['update_failed', ['name' => 'Password']]];
 
-        return redirect('admin/list-users')->withResponse($response);
+        return redirect()->route('admin.list-users')->withResponse($response);
     }
 
     /**
@@ -165,7 +167,7 @@ class AdminController extends Controller
             'code' => ['update_failed', ['name' => 'User Permission']]
         ];
 
-        return redirect('admin/list-users')->withResponse($response);
+        return redirect()->route('admin.list-users')->withResponse($response);
 
     }
 }

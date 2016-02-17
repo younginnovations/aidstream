@@ -2,6 +2,7 @@
 
 {{--*/
 $orgData = $organizationData->get();
+$orgId = session('org_id');
 /*--}}
 <div class="element-menu-wrapper">
     <div class="element-sidebar-dropdown">
@@ -14,7 +15,7 @@ $orgData = $organizationData->get();
                 <ul class="nav">
                     <li>
                         {{--*/ $filled = $orgData['reporting_org']; /*--}}
-                        <a href="{{ url('/organization/' . Session::get('org_id') . '/reportingOrg') }}" class="{{ $filled ? 'active' : '' }}"
+                        <a href="{{ url('/organization/' . $orgId . '/reportingOrg') }}" class="{{ $filled ? 'active' : '' }}"
                            title="{{ $filled ? 'Edit' : 'Add' }} Reporting Organization">
                             <span class="action-icon {{ $filled ? 'edit-value' : 'add' }}">icon</span>
                             Reporting Organization
@@ -23,7 +24,7 @@ $orgData = $organizationData->get();
                     </li>
                     <li>
                         {{--*/ $filled = $orgData['reporting_org']; /*--}}
-                        <a href="{{ url('/organization/' . Session::get('org_id') . '/identifier')  }}" class="{{ $filled ? 'active' : '' }}"
+                        <a href="{{ url('/organization/' . $orgId . '/identifier')  }}" class="{{ $filled ? 'active' : '' }}"
                            title="{{ $filled ? 'Edit' : 'Add' }} Organization Identifier">
                             <span class="action-icon {{ $filled ? 'edit-value' : 'add' }}">icon</span>
                             Organization Identifier
@@ -32,7 +33,7 @@ $orgData = $organizationData->get();
                     </li>
                     <li>
                         {{--*/ $filled = $orgData['name']; /*--}}
-                        <a href="{{ url('/organization/' . Session::get('org_id') . '/name') }}" class="{{ $filled ? 'active' : '' }}" title="{{ $filled ? 'Edit' : 'Add' }} Name">
+                        <a href="{{ url('/organization/' . $orgId . '/name') }}" class="{{ $filled ? 'active' : '' }}" title="{{ $filled ? 'Edit' : 'Add' }} Name">
                             <span class="action-icon {{ $filled ? 'edit-value' : 'add' }}">icon</span>
                             Name
                         </a>
@@ -47,7 +48,7 @@ $orgData = $organizationData->get();
                 <ul class="nav">
                     <li>
                         {{--*/ $filled = $orgData['total_budget']; /*--}}
-                        <a href="{{ route('organization.total-budget.index', Auth::user()->org_id) }}" class="{{ $filled ? 'active' : '' }}" title="{{ $filled ? 'Edit' : 'Add' }} Total Budget">
+                        <a href="{{ route('organization.total-budget.index', $orgId) }}" class="{{ $filled ? 'active' : '' }}" title="{{ $filled ? 'Edit' : 'Add' }} Total Budget">
                             <span class="action-icon {{ $filled ? 'edit-value' : 'add' }}">icon</span>
                             Total Budget
                         </a>
@@ -55,7 +56,7 @@ $orgData = $organizationData->get();
                     </li>
                     <li>
                         {{--*/ $filled = $orgData['recipient_organization_budget']; /*--}}
-                        <a href="{{ route('organization.recipient-organization-budget.index', Auth::user()->org_id)}}" class="{{ $filled ? 'active' : '' }}"
+                        <a href="{{ route('organization.recipient-organization-budget.index', $orgId)}}" class="{{ $filled ? 'active' : '' }}"
                            title="{{ $filled ? 'Edit' : 'Add' }} Recipient Organization Budget">
                             <span class="action-icon {{ $filled ? 'edit-value' : 'add' }}">icon</span>
                             Recipient Organization Budget
@@ -64,7 +65,7 @@ $orgData = $organizationData->get();
                     </li>
                     <li>
                         {{--*/ $filled = $orgData['recipient_country_budget']; /*--}}
-                        <a href="{{ url('/organization/' . Session::get('org_id') . '/recipient-country-budget') }}" class="{{ $filled ? 'active' : '' }}"
+                        <a href="{{ url('/organization/' . $orgId . '/recipient-country-budget') }}" class="{{ $filled ? 'active' : '' }}"
                            title="{{ $filled ? 'Edit' : 'Add' }} Recipient Country Budget">
                             <span class="action-icon {{ $filled ? 'edit-value' : 'add' }}">icon</span>
                             Recipient Country Budget
@@ -80,7 +81,7 @@ $orgData = $organizationData->get();
                 <ul class="nav">
                     <li>
                         {{--*/ $filled = $orgData['document_link']; /*--}}
-                        <a href="{{ url('/organization/' . Session::get('org_id') . '/document-link') }}" class="{{ $filled ? 'active' : '' }}" title="{{ $filled ? 'Edit' : 'Add' }} Document Link">
+                        <a href="{{ url('/organization/' . $orgId . '/document-link') }}" class="{{ $filled ? 'active' : '' }}" title="{{ $filled ? 'Edit' : 'Add' }} Document Link">
                             <span class="action-icon {{ $filled ? 'edit-value' : 'add' }}">icon</span>
                             Document Link
                         </a>

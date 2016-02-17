@@ -2,17 +2,29 @@
 
 /**
  * Convert date and time according to local timezone selected
- * @param $currentTZ
- * @param $newTZ
- * @param $date
+ * @param        $date
+ * @param string $format
  * @return string
  */
-function changeTimeZone($currentTZ, $newTZ, $date)
+function changeTimeZone($date, $format = 'M d, Y H:i:s')
 {
-    $current = new \DateTimeZone($currentTZ);
-    $new     = new \DateTimeZone($newTZ);
-    $date    = new \DateTime($date, $current);
-    $result  = $date->setTimezone($new);
+    $currentTZ = config('app.timezone');
+    $newTZ     = Auth::user()->time_zone;
+    $current   = new \DateTimeZone($currentTZ);
+    $new       = new \DateTimeZone($newTZ);
+    $date      = new \DateTime($date, $current);
+    $result    = $date->setTimezone($new);
 
-    return $result->format('Y-m-d H:i:s');
+    return $result->format($format);
+}
+
+/**
+ * convert date format
+ * @param        $date
+ * @param string $format
+ * @return bool|string
+ */
+function formatDate($date, $format = 'M d, Y')
+{
+    return date($format, strtotime($date));
 }

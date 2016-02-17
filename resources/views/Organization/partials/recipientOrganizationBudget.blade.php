@@ -1,7 +1,7 @@
 @if(!empty($recipient_organization_budget))
     <div class="panel panel-default">
         <div class="panel-heading">Recipient Organization Budget
-            <a href="#" class="edit-element">edit</a>
+            <a href="{{ route('organization.recipient-organization-budget.index', $orgId)}}" class="edit-element">edit</a>
         </div>
         <div class="panel-body panel-level-1 row">
             @foreach($recipient_organization_budget as $recipientOrgBudget)
@@ -33,7 +33,7 @@
                         </div>
                         <div class="col-xs-12 col-md-12">
                             <div class="col-xs-12 col-xs-4">Value Date:</div>
-                            <div class="col-xs-12 col-xs-8">{{ $recipientOrgBudget['value'][0]['value_date'] }}</div>
+                            <div class="col-xs-12 col-xs-8">{{ formatDate($recipientOrgBudget['value'][0]['value_date']) }}</div>
                         </div>
                         <div class="col-xs-12 col-md-12">
                             <div class="col-xs-12 col-xs-4">Currency:</div>
@@ -46,7 +46,7 @@
                     <div class="panel-body panel-element-body row">
                         <div class="col-xs-12 col-md-12">
                             <div class="col-xs-12 col-xs-4">Iso Date:</div>
-                            <div class="col-xs-12 col-xs-8">{{ $recipientOrgBudget['period_start'][0]['date'] }}</div>
+                            <div class="col-xs-12 col-xs-8">{{ formatDate($recipientOrgBudget['period_start'][0]['date']) }}</div>
                         </div>
                     </div>
                 </div>
@@ -55,7 +55,7 @@
                     <div class="panel-body panel-element-body row">
                         <div class="col-xs-12 col-md-12">
                             <div class="col-xs-12 col-xs-4">Iso Date:</div>
-                            <div class="col-xs-12 col-xs-8">{{ $recipientOrgBudget['period_end'][0]['date'] }}</div>
+                            <div class="col-xs-12 col-xs-8">{{ formatDate($recipientOrgBudget['period_end'][0]['date']) }}</div>
                         </div>
                     </div>
                 </div>
@@ -81,7 +81,7 @@
                                         </div>
                                         <div class="col-xs-12 col-md-12">
                                             <div class="col-xs-12 col-xs-4">Value Date:</div>
-                                            <div class="col-xs-12 col-xs-8">{{ $recipientOrgBudgetLine['value'][0]['value_date'] }}</div>
+                                            <div class="col-xs-12 col-xs-8">{{ formatDate($recipientOrgBudgetLine['value'][0]['value_date']) }}</div>
                                         </div>
                                         <div class="col-xs-12 col-md-12">
                                             <div class="col-xs-12 col-xs-4">Currency:</div>

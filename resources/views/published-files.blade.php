@@ -34,7 +34,7 @@
                                         <td><input type="checkbox"/></td>
                                         <td><a href="{{ url('/uploads/files/organization/' . $file->filename) }}"
                                                target="_blank">{{ $file->filename }}</a></td>
-                                        <td>{{ date('M d, Y H:i:s', strtotime(changeTimeZone("GMT", Auth::user()->time_zone, $file->updated_at )))}}</td>
+                                        <td>{{ changeTimeZone($file->updated_at ) }}</td>
                                         <td>{{ $file->published_to_register ? 'Yes' : 'No' }}</td>
                                         <td>
                                             <a href="{{ 'http://tools.aidinfolabs.org/csv/direct_from_registry/?xml=' . url('/uploads/files/organization/' . $file->filename) }}"
@@ -42,9 +42,9 @@
                                         <td><a href="{{ route('list-published-files', ['delete', $file->id]) }}" class="delete">Delete</a>
                                         </td>
                                     </tr>
+                                @endforeach
                                 </tbody>
                             </table>
-                            @endforeach
                         @else
                             <div class="text-center no-data no-document-data">
                                 You haven't published any organization file yet.
@@ -72,7 +72,7 @@
                                         <td><input type="checkbox"/></td>
                                         <td><a href="{{ url('/uploads/files/activity/' . $file->filename) }}"
                                                target="_blank">{{ $file->filename }}</a></td>
-                                        <td>{{ date('M d, Y H:i:s', strtotime(changeTimeZone("GMT", Auth::user()->time_zone, $file->updated_at))) }}</td>
+                                        <td>{{ changeTimeZone($file->updated_at) }}</td>
                                         <td>{{ $file->published_to_register ? 'Yes' : 'No' }}</td>
                                         <td>
                                             <a href="{{ 'http://tools.aidinfolabs.org/csv/direct_from_registry/?xml=' . url('/uploads/files/organization/' . $file->filename) }}"
@@ -83,9 +83,9 @@
                                             @endif
                                         </td>
                                     </tr>
+                                @endforeach
                                 </tbody>
                             </table>
-                            @endforeach
                         @else
                             <div class="text-center no-data no-document-data">
                                 You haven't published any activity file yet.

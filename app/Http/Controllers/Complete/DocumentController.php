@@ -51,7 +51,7 @@ class DocumentController extends Controller
     {
         try {
             $file     = $request->file('file');
-            $filename = $file->getClientOriginalName();
+            $filename = str_replace(' ', '-', $file->getClientOriginalName());
             $url      = url(sprintf('uploads/files/documents/%s/%s', $this->orgId, $filename));
             $document = $this->documentManager->getDocument($this->orgId, $url, $filename);
             if ($document->exists) {

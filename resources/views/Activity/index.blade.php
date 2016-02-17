@@ -40,7 +40,7 @@
                                             {{ $activity->title ? $activity->title[0]['narrative'] : 'No Title' }}
                                         </td>
                                         <td>{{ $activity->identifier['activity_identifier'] }}</td>
-                                        <td class="updated-date">{{ date('M d, Y H:i:s', strtotime(changeTimeZone('GMT', Auth::user()->time_zone, $activity->updated_at))) }}</td>
+                                        <td class="updated-date">{{ changeTimeZone($activity->updated_at) }}</td>
                                         <td><span class="{{ $status_label[$activity->activity_workflow] }}">{{ $status_label[$activity->activity_workflow] }}</span></td>
                                         <td>
                                             <a href="{{ url(sprintf('activity/%s/delete', $activity->id)) }}" class="delete">Delete</a>

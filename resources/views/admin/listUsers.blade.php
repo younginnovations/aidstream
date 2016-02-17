@@ -33,7 +33,7 @@
                                   <td>{{$value->username}}</td>
                                   <td>
                                       <a href="{{ route('admin.view-profile', $value->id) }}" class="view">View</a>
-                                      <a href="{{ url(sprintf('user/%s/delete', $value->id)) }}" class="delete">Delete</a>
+                                      <a href="{{ route('admin.delete-user', $value->id) }}" class="delete">Delete</a>
                                   </td>
                               </tr>
                           @endforeach

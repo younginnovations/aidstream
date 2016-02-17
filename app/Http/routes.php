@@ -36,7 +36,7 @@ $router->get(
 );
 
 $router->get(
-    'admin/register-user',
+    'organization-user/register',
     [
         'as'   => 'admin.register-user',
         'uses' => 'Complete\AdminController@create'
@@ -44,7 +44,7 @@ $router->get(
 );
 
 $router->get(
-    'admin/list-users',
+    'organization-user',
     [
         'as'   => 'admin.list-users',
         'uses' => 'Complete\AdminController@listUsers'
@@ -52,7 +52,7 @@ $router->get(
 );
 
 $router->post(
-    'admin/list-users',
+    'organization-user',
     [
         'as'   => 'admin.signup-user',
         'uses' => 'Complete\AdminController@store'
@@ -60,17 +60,23 @@ $router->post(
 );
 
 $router->get(
-    'admin/view-profile/{id}',
+    'organization-user/view-profile/{id}',
     [
         'as'   => 'admin.view-profile',
         'uses' => 'Complete\AdminController@viewUserProfile'
     ]
 );
 
-$router->resource('user.delete', 'Complete\AdminController@deleteUser');
+$router->get(
+    'organization-user/{id}/delete',
+    [
+        'as'   => 'admin.delete-user',
+        'uses' => 'Complete\AdminController@deleteUser'
+    ]
+);
 
 $router->get(
-    'admin/reset-user-password/{id}',
+    'organization-user/reset-password/{id}',
     [
         'as'   => 'admin.reset-user-password',
         'uses' => 'Complete\AdminController@resetUserPassword'
@@ -79,7 +85,7 @@ $router->get(
 
 $router->post
 (
-    'admin/update-user-password/{id}',
+    'organization-user/update-password/{id}',
     [
         'as'   => 'admin.update-user-password',
         'uses' => 'Complete\AdminController@updateUserPassword'
@@ -89,7 +95,7 @@ $router->post
 
 $router->get
 (
-    'admin/edit-user-permission/{id}',
+    'organization-user/edit-permission/{id}',
     [
         'as'   => 'admin.edit-user-permission',
         'uses' => 'Complete\AdminController@editUserPermission'
@@ -98,7 +104,7 @@ $router->get
 
 $router->post
 (
-    'admin/update-user-permission/{id}',
+    'organization-user/update-permission/{id}',
     [
         'as'   => 'admin.update-user-permission',
         'uses' => 'Complete\AdminController@updateUserPermission'
