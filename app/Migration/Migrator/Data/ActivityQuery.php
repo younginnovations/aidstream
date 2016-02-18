@@ -153,7 +153,8 @@ class ActivityQuery extends Query
                  ->fetchSector($activityId)
                  ->fetchContactInfo($activityId)
                  ->fetchActivityScope($activityId)
-                 ->fetchLocation($activityId);
+                 ->fetchLocation($activityId)
+                 ->fetchPolicyMarker($activityId);
         }
 
         return $this->data;
@@ -818,6 +819,42 @@ class ActivityQuery extends Query
         return $this;
     }
 
+    /**
+     * @param $activityId
+     * @return $this
+     */
+    public function fetchPolicyMarker($activityId)
+    {
+        $select           = ['*', '@code as code', '@vocabulary as vocabulary', '@significance as significance'];
+        $policyMarkers    = getBuilderFor($select, 'iati_policy_marker', 'activity_id', $activityId)->get();
+        $policyMarkerData = null;
 
+        foreach ($policyMarkers as $policyMarker) {
+            $policyMarkerNarrative    = $this->fetchPolicyMarkerNarrative($policyMarker);
+            $policyMarkerVocabulary   = fetchCode($policyMarker->vocabulary, 'PolicyMarkerVocabulary');
+            $policyMarkerSignificance = fetchCode($policyMarker->significance, 'PolicySignificance');
+            $policyMarkerCode         = fetchCode($policyMarker->code, 'PolicyMarker');
+            $policyMarkerData[]       = [
+                'vocabulary'    => $policyMarkerVocabulary,
+                'significance'  => $policyMarkerSignificance,
+                'policy_marker' => $policyMarkerCode,
+                'narrative'     => $policyMarkerNarrative
+            ];
+        }
 
+        $this->data[$activityId]['policy_marker'] = $policyMarkerData;
+
+        return $this;
+    }
+
+    /**
+     * @param $policyMarker
+     * @return array
+     */
+    protected function fetchPolicyMarkerNarrative($policyMarker)
+    {
+        $policyMarkerNarrative = fetchNarratives($policyMarker->id, 'iati_policy_marker/narrative', 'policy_marker_id');
+
+        return fetchAnyNarratives($policyMarkerNarrative);
+    }
 }
