@@ -89,7 +89,7 @@ function getBuilderFor($field, $table, $column, $value)
  * @param $act
  * @return string
  */
-function fetchCode($id, $table, $act)
+function fetchCode($id, $table, $act = null)
 {
     return ($code = app()->make(DatabaseManager::class)
                          ->connection('mysql')

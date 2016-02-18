@@ -53,6 +53,8 @@ class OrganizationDataQuery extends Query
      */
     protected function getData($organizationId, $accountId)
     {
+        $this->data = [];
+
         return $this->fetchName($organizationId, $accountId)
                     ->fetchStatus($organizationId, $accountId)
                     ->fetchDocumentLink($organizationId);
