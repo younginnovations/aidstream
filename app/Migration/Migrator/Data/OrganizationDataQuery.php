@@ -54,7 +54,8 @@ class OrganizationDataQuery extends Query
     protected function getData($organizationId, $accountId)
     {
         return $this->fetchName($organizationId, $accountId)
-                    ->fetchStatus($organizationId, $accountId);
+                    ->fetchStatus($organizationId, $accountId)
+                    ->fetchDocumentLink($organizationId);
     }
 
     /**
@@ -86,7 +87,7 @@ class OrganizationDataQuery extends Query
     /**
      * @param $organizationId
      * @param $accountId
-     * @return array
+     * @return $this
      */
     protected function fetchStatus($organizationId, $accountId)
     {
@@ -99,6 +100,108 @@ class OrganizationDataQuery extends Query
 
         $this->data[$organizationId]['status'] = $status;
 
+        return $this;
+    }
+
+    /**
+     * @param $organizationId
+     * @return array
+     */
+    protected function fetchDocumentLink($organizationId)
+    {
+        $documentLinks    = $this->connection->table('iati_organisation/document_link')
+                                             ->select('*', '@url as url', '@format as format')
+                                             ->where('organisation_id', '=', $organizationId)
+                                             ->get();
+        $documentLinkData = [];
+
+        foreach ($documentLinks as $documentLink) {
+            $documentLinkId       = $documentLink->id;
+            $url                  = $documentLink->url;
+            $format               = fetchCode($documentLink->format, 'FileFormat', '');
+            $categoryData         = $this->fetchDocumentLinkCategory($documentLinkId);
+            $languageData         = $this->fetchDocumentLinkLanguage($documentLinkId);
+            $recipientCountryData = $this->fetchDocumentLinkRecipientCountry($documentLinkId);
+            $titleNarrativeData   = $this->fetchDocumentLinkTitleNarrative($documentLinkId);
+
+            $documentLinkData[] = [
+                'url'               => $url,
+                'format'            => $format,
+                'narrative'         => $titleNarrativeData,
+                'category'          => $categoryData,
+                'language'          => $languageData,
+                'recipient_country' => $recipientCountryData
+            ];
+        }
+        $this->data[$organizationId]['document_link'] = $documentLinkData;
+
         return $this->data;
+    }
+
+    /**
+     * @param $documentLinkId
+     * @return array
+     */
+    protected function fetchDocumentLinkTitleNarrative($documentLinkId)
+    {
+        $narrativeData   = [['narrative' => "", 'language' => ""]];
+        $titleNarratives = getBuilderFor('id', 'iati_organisation/document_link/title', 'document_link_id', $documentLinkId)->first();
+        if ($titleNarratives) {
+            $narratives    = fetchNarratives($titleNarratives->id, 'iati_organisation/document_link/title/narrative', 'title_id');
+            $narrativeData = fetchAnyNarratives($narratives);
+        }
+
+        return $narrativeData;
+    }
+
+    /**
+     * @param $documentLinkId
+     * @return array
+     */
+    protected function fetchDocumentLinkCategory($documentLinkId)
+    {
+        $categories   = fetchDataWithCodeFrom('iati_organisation/document_link/category', 'document_link_id', $documentLinkId);
+        $categoryData = [];
+
+        foreach ($categories as $category) {
+            $categoryData[] = ['code' => fetchCode($category->code, 'DocumentCategory', '')];
+        }
+
+        return $categoryData;
+    }
+
+    /**
+     * @param $documentLinkId
+     * @return array
+     */
+    protected function fetchDocumentLinkLanguage($documentLinkId)
+    {
+        $languages    = fetchDataWithCodeFrom('iati_organisation/document_link/language', 'document_link_id', $documentLinkId);
+        $languageData = [];
+
+        foreach ($languages as $language) {
+            $languageData[] = ['language' => getLanguageCodeFor($language->code)];
+        }
+
+        return $languageData;
+    }
+
+    /**
+     * @param $documentLinkId
+     * @return array
+     */
+    protected function fetchDocumentLinkRecipientCountry($documentLinkId)
+    {
+        $recipientCountryData = [];
+        $recipientCountries   = fetchDataWithCodeFrom('iati_organisation/document_link/recipient_country', 'document_link_id', $documentLinkId);
+
+        foreach ($recipientCountries as $recipientCountry) {
+            $recipientCountryCode       = fetchCode($recipientCountry->code, 'Country', '');
+            $narratives                 = fetchNarratives($recipientCountry->id, 'iati_organisation/document_link/recipient_country/narrative', 'recipient_country_id');
+            $recipientCountryNarratives = fetchAnyNarratives($narratives);
+            $recipientCountryData[]     = ['code' => $recipientCountryCode, 'narrative' => $recipientCountryNarratives];
+        }
+
+        return $recipientCountryData;
     }
 }

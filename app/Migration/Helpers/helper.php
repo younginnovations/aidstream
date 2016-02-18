@@ -99,12 +99,11 @@ function fetchCode($id, $table, $act)
                          ->first()) ? $code->Code : '';
 }
 
-
-function fetchAnyNarratives($anyNarratives) {
-    $language = "";
+function fetchAnyNarratives($anyNarratives)
+{
+    $language  = "";
     $Narrative = [];
-    foreach($anyNarratives as $eachNarrative)
-    {
+    foreach ($anyNarratives as $eachNarrative) {
         $narrativeText = $eachNarrative->text;
         if ($eachNarrative->xml_lang != "") {
             $language = getLanguageCodeFor($eachNarrative->xml_lang);
@@ -119,4 +118,39 @@ function fetchAnyNarratives($anyNarratives) {
     }
 
     return $narrative;
+}
+
+/**
+ * fetch data from a table
+ * @param $table
+ * @param $toCheckId
+ * @param $id
+ * @return mixed
+ */
+function fetchDataFrom($table, $toCheckId, $id)
+{
+    return app()->make(DatabaseManager::class)
+                ->connection('mysql')
+                ->table($table)
+                ->select('*')
+                ->where($toCheckId, '=', $id)
+                ->get();
+}
+
+/**
+ * fetch data from a table with code
+ * @param $table
+ * @param $toCheckId
+ * @param $id
+ * @return mixed
+ */
+function fetchDataWithCodeFrom($table, $toCheckId, $id)
+{
+    return app()->make(DatabaseManager::class)
+                ->connection('mysql')
+                ->table($table)
+                ->select('*', '@code as code')
+                ->where($toCheckId, '=', $id)
+                ->get();
+
 }
