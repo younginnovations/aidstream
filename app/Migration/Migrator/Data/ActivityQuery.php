@@ -776,7 +776,7 @@ class ActivityQuery extends Query
                 $select = ['@latitude as latitude','@longitude as longitude'];
                 $positionInfo = getBuilderFor($select,'iati_location/point/pos','point_id',$pointInfo->id)->first();
 
-                $positionData = ['latitude'=>$positionInfo->latitude,'longitude'=>$positionInfo->longitude];
+                $positionData = ['latitude'=>($positionInfo) ? $positionInfo->latitude : "",'longitude'=> ($positionInfo) ? $positionInfo->longitude : ""];
                 $pointData = ['srs_name'=> $srsName,'position'=>[$positionData]];
             }
             $exactnessInfo = getBuilderFor('@code as code','iati_location/exactness','location_id',$location->id)->first();
@@ -798,11 +798,12 @@ class ActivityQuery extends Query
             $locationData[] = [
                 'reference' => isset($ref) ? $ref : "",
                 'location_reach'=> [["code"=>isset($locationReach) ? $locationReach : []]],
-                'location_id'=> isset($locationID) ? $locationID : [],
+                'location_id'=> isset($locationID) ? $locationID : [['vocabulary'=>"",'code'=>""]],
+               //'location_id'=>[["vocabulary"=>isset($)]]
                 'name'=> [['narrative'=> isset($fetchNameNarratives) ? $fetchNameNarratives: [] ]],
                 'location_description'=> [['narrative'=>isset($fetchDescriptionNarratives) ? $fetchDescriptionNarratives: []]],
                 'activity_description'=> [['narrative'=>isset($fetchActivityNarratives) ? $fetchActivityNarratives :[]]],
-                'administrative'=> isset($administrativeData) ? $administrativeData :[],
+                'administrative'=> isset($administrativeData) ? $administrativeData : ['vocabulary' => "", 'code' => "", 'level' => ""],
                 'point'=> [['srs_name'=>isset($srsName) ? $srsName: "",'position'=>[isset($positionData) ? $positionData : ""] ]],
                 'exactness'=> [["code"=>isset($exactnessCode) ? $exactnessCode : ""]],
                 'location_class'=> [["code"=>isset($locationClassCode) ? $locationClassCode : ""]],
@@ -816,4 +817,7 @@ class ActivityQuery extends Query
         }
         return $this;
     }
+
+
+
 }
