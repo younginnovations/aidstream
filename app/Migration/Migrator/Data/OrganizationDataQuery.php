@@ -57,6 +57,7 @@ class OrganizationDataQuery extends Query
         $this->fetchName($organizationId, $accountId)
              ->fetchStatus($organizationId, $accountId)
              ->fetchTotalBudget($organizationId)
+             ->fetchRecipientOrgBudget($organizationId)
              ->fetchDocumentLink($organizationId);
 
         return $this->data;
@@ -119,10 +120,11 @@ class OrganizationDataQuery extends Query
 
         foreach ($totalBudgets as $totalBudget) {
             $totalBudgetId = $totalBudget->id;
-            $periodStart   = $this->fetchPeriodStart($totalBudgetId);
-            $periodEnd     = $this->fetchPeriodEnd($totalBudgetId);
-            $value         = $this->fetchValue($table, 'total_budget_id', $totalBudgetId);
-            $budgetLine    = $this->fetchBudgetLine($table, 'total_budget_id', $totalBudgetId);
+            $childColumn   = 'total_budget_id';
+            $periodStart   = $this->fetchPeriodStart($table, $childColumn, $totalBudgetId);
+            $periodEnd     = $this->fetchPeriodEnd($table, $childColumn, $totalBudgetId);
+            $value         = $this->fetchValue($table, $childColumn, $totalBudgetId);
+            $budgetLine    = $this->fetchBudgetLine($table, $childColumn, $totalBudgetId);
 
             $totalBudgetData[] = [
                 'period_start' => $periodStart,
@@ -137,24 +139,30 @@ class OrganizationDataQuery extends Query
     }
 
     /**
-     * @param $totalBudgetId
+     * @param $parentTable
+     * @param $column
+     * @param $parentId
      * @return array
+     * @internal param $totalBudgetId
      */
-    protected function fetchPeriodStart($totalBudgetId)
+    protected function fetchPeriodStart($parentTable, $column, $parentId)
     {
-        $periodStart = getBuilderFor('@iso_date as date', 'iati_organisation/total_budget/period_start', 'total_budget_id', $totalBudgetId)->first();
+        $periodStart = getBuilderFor('@iso_date as date', $parentTable . '/period_start', $column, $parentId)->first();
         $periodStart = [["date" => $periodStart->date]];
 
         return $periodStart;
     }
 
     /**
-     * @param $totalBudgetId
+     * @param $parentTable
+     * @param $column
+     * @param $parentId
      * @return array
+     * @internal param $totalBudgetId
      */
-    protected function fetchPeriodEnd($totalBudgetId)
+    protected function fetchPeriodEnd($parentTable, $column, $parentId)
     {
-        $periodEnd = getBuilderFor('@iso_date as date', 'iati_organisation/total_budget/period_end', 'total_budget_id', $totalBudgetId)->first();
+        $periodEnd = getBuilderFor('@iso_date as date', $parentTable . '/period_end', $column, $parentId)->first();
         $periodEnd = [["date" => $periodEnd->date]];
 
         return $periodEnd;
@@ -202,14 +210,15 @@ class OrganizationDataQuery extends Query
     }
 
     /**
-     * @param $parentTable
-     * @param $column
-     * @param $parentId
+     * @param      $parentTable
+     * @param      $column
+     * @param      $parentId
+     * @param null $customTable
      * @return array
      */
-    protected function fetchNarrative($parentTable, $column, $parentId)
+    protected function fetchNarrative($parentTable, $column, $parentId, $customTable = null)
     {
-        $narratives    = getBuilderFor(['text', '@xml_lang as xml_lang'], $parentTable . '/narrative', $column, $parentId)->get();
+        $narratives    = getBuilderFor(['text', '@xml_lang as xml_lang'], $parentTable . ($customTable ? $customTable : '/narrative'), $column, $parentId)->get();
         $narrativeData = [];
         foreach ($narratives as $narrative) {
             $language        = getLanguageCodeFor($narrative->xml_lang);
@@ -320,5 +329,52 @@ class OrganizationDataQuery extends Query
         }
 
         return $recipientCountryData;
+    }
+
+    /**
+     * @param $organizationId
+     * @return $this
+     */
+    protected function fetchRecipientOrgBudget($organizationId)
+    {
+        $table                  = 'iati_organisation/recipient_org_budget';
+        $recipientOrgBudgets    = getBuilderFor('id', $table, 'organisation_id', $organizationId)->get();
+        $recipientOrgBudgetData = [];
+
+        foreach ($recipientOrgBudgets as $recipientOrgBudget) {
+            $recipientOrgBudgetId = $recipientOrgBudget->id;
+            $childColumn          = 'recipient_org_budget_id';
+            $recipientOrg         = $this->fetchRecipientOrg($recipientOrgBudgetId);
+            $narrative            = $this->fetchNarrative($table, 'recipient_org_id', $recipientOrgBudgetId, '/recipient_org/nar');
+            $periodStart          = $this->fetchPeriodStart($table, $childColumn, $recipientOrgBudgetId);
+            $periodEnd            = $this->fetchPeriodEnd($table, $childColumn, $recipientOrgBudgetId);
+            $value                = $this->fetchValue($table, $childColumn, $recipientOrgBudgetId);
+            $budgetLine           = $this->fetchBudgetLine($table, $childColumn, $recipientOrgBudgetId);
+
+            $recipientOrgBudgetData[] = [
+                'recipient_organization' => $recipientOrg,
+                'narrative'              => $narrative,
+                'period_start'           => $periodStart,
+                'period_end'             => $periodEnd,
+                'value'                  => $value,
+                'budget_line'            => $budgetLine
+            ];
+        }
+
+        $this->data[$organizationId]['recipient_organization_budget'] = $recipientOrgBudgetData;
+
+        return $this;
+    }
+
+    /**
+     * @param $parentId
+     * @return array
+     */
+    protected function fetchRecipientOrg($parentId)
+    {
+        $recipientOrg = getBuilderFor('@ref as ref', 'iati_organisation/recipient_org_budget/recipient_org', 'recipient_org_budget_id', $parentId)->first();
+        $recipientOrg = [["ref" => $recipientOrg->ref]];
+
+        return $recipientOrg;
     }
 }
