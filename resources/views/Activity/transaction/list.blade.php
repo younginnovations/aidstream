@@ -9,7 +9,14 @@
             @include('includes.side_bar_menu')
             <div class="col-xs-9 col-md-9 col-lg-9 content-wrapper">
                 @include('includes.response')
-                <div class="panel-content-heading panel-title-heading">Transactions of <span>{{$activity->IdentifierTitle}}</span></div>
+                <div class="panel-content-heading panel-title-heading">Transactions of <span>{{$activity->IdentifierTitle}}</span>
+                    @if(count($activity->getTransactions()) > 0)
+                        <div class="pull-right panel-action-btn">
+                            <a href="{{ route('activity.transaction.create', $id) }}" class="btn btn-primary">Add New Transaction</a>
+                            <a href="{{ route('activity.transaction-upload.index', $id) }}" class="btn btn-primary">Upload Transaction</a>
+                        </div>
+                    @endif
+                </div>
                 <div class="col-xs-12 col-md-8 col-lg-8 element-content-wrapper transaction-wrapper">
                     <div class="panel panel-default">
                         <div class="panel-body">

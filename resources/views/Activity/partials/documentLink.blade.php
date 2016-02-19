@@ -15,7 +15,8 @@
                             <div class="col-xs-12 col-sm-4">Format: </div>
                             <div class="col-xs-12 col-sm-8">{{$getCode->getActivityCodeName('FileFormat', $documentLink['format'])}}</div>
                         </div>
-
+                    </div>
+                    <div class="col-xs-12 col-md-12 col-lg-12 panel-level-2">
                         <div class="panel panel-default">
                             <div class="panel-heading">Title</div>
                             @foreach($documentLink['title'] as $title)

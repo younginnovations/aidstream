@@ -46,10 +46,12 @@
                     </div>
                     <div class="panel-body">
                         <div class="alert alert-danger">
-                            <p>
-                                {{ $message }}
-                            </p>
-                            <p>Return to <a href="{{ url('/auth/login') }}">@lang('trans.login').</a></p>
+                            <span>
+                                <p>
+                                    {{ $message }}
+                                </p>
+                                <p>Return to <a href="{{ url('/auth/login') }}">@lang('trans.login').</a></p>
+                            </span>
                         </div>
                     </div>
                 </div>

@@ -10,7 +10,8 @@
             <div class="col-xs-9 col-md-9 col-lg-9 content-wrapper">
                 @include('includes.errors')
                 <div class="panel-content-heading panel-title-heading">Edit Profile</div>
-                <form class="form-horizontal form-edit-profile" role="form" method="POST" action="{{ route('user.update-profile', $user->id)}}" enctype="multipart/form-data">
+                <form class="form-horizontal form-edit-profile" role="form" method="POST"
+                      action="{{ route('user.update-profile', $user->id)}}" enctype="multipart/form-data">
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     {{--*/
                         if(old()) {
@@ -62,13 +63,15 @@
                         <div class="form-group col-xs-12 col-sm-6 col-md-6">
                             <div class="col-xs-12 col-md-12">
                                 <label class="control-label">Organization Name</label>
-                                <input type="text" class="form-control" name="organization_name" value="{{$organization->name}}">
+                                <input type="text" class="form-control" name="organization_name"
+                                       value="{{$organization->name}}">
                             </div>
                         </div>
                         <div class="form-group col-xs-12 col-sm-6 col-md-6">
                             <div class="col-xs-12 col-md-12">
                                 <label class="control-label">Organization Address</label>
-                                <input type="text" class="form-control" name="organization_address" value="{{$organization->address}}">
+                                <input type="text" class="form-control" name="organization_address"
+                                       value="{{$organization->address}}">
                             </div>
                         </div>
                     </div>
@@ -88,7 +91,8 @@
                         <div class="form-group col-xs-12 col-sm-6 col-md-6">
                             <div class="col-xs-12 col-md-12">
                                 <label class="control-label">Organization Url</label>
-                                <input type="text" class="form-control" name="organization_url" value="{{ $organization->organization_url }}">
+                                <input type="text" class="form-control" name="organization_url"
+                                       value="{{ $organization->organization_url }}">
                             </div>
                         </div>
                     </div>
@@ -96,14 +100,17 @@
                         <div class="form-group col-xs-12 col-sm-6 col-md-6">
                             <div class="col-xs-12 col-md-12">
                                 <label class="control-label">Organization Telephone</label>
-                                <input type="text" class="form-control" name="organization_telephone" value="{{ $organization->telephone }}">
+                                <input type="text" class="form-control" name="organization_telephone"
+                                       value="{{ $organization->telephone }}">
                             </div>
                         </div>
                         <div class="form-group col-xs-12 col-sm-6 col-md-6">
                             <div class="col-xs-12 col-md-12">
                                 <label class="control-label">Organization Twitter</label>
-                                <input type="text" class="form-control" name="organization_twitter" value="{{$organization->twitter }}">
-                                <div class="description"><span>Please insert a valid twitter username. Example: '@oxfam' or 'oxfam'</span></div>
+                                <input type="text" class="form-control" name="organization_twitter"
+                                       value="{{$organization->twitter }}">
+                                <div class="description"><span>Please insert a valid twitter username. Example: '@oxfam' or 'oxfam'</span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -112,15 +119,17 @@
                             <div class="col-xs-12 col-md-12">
                                 <label class="control-label">Upload Organization Logo</label>
                                 <input type="file" class="form-control" name="organization_logo">
-                                <div class="description"><span>Please use jpg/jpeg/png/gif format and 150x150 dimensions image.</span></div>
+                                <div class="description"><span>Please use jpg/jpeg/png/gif format and 150x150 dimensions image.</span>
+                                </div>
                             </div>
                         </div>
                         <div class="form-group col-xs-12 col-sm-6 col-md-6">
                             <div class="col-xs-12 col-md-12">
                                 <label class="control-label">Disqus Comments</label>
                                 <div>
-                                  <input type="checkbox" name="disqus_comments" {{!$organization->disqus_comments ?: 'checked="checked"'}} value="1">
-                                  <span>Enable/disable comments on your organization page.</span>
+                                    <input type="checkbox" name="disqus_comments"
+                                           {{!$organization->disqus_comments ?: 'checked="checked"'}} value="1">
+                                    <span>Enable/disable comments on your organization page.</span>
                                 </div>
                             </div>
                         </div>

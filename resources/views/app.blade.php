@@ -41,24 +41,10 @@
             <div class="navbar-brand">
                 <a href="{{ Auth::user()->role_id == 3 ? url('admin/dashboard') : route('activity.index')  }}"
                    alt="Aidstream">Aidstream</a>
-                @if(Auth::user()->role_id != 3 && Auth::user()->role_id !=4)
-                   <span class="version {{ (Session::get('version') == 'V201') ? 'old' : 'new' }}">
-
-                       @if ((Session::get('version') == 'V201'))
-                           <a class="version-text" href="{{route('upgrade-version.index')}}">IATI version V201</a>
-                           <span class="old-version">
-                             <a href="{{route('upgrade-version.index')}}">Upgrade to IATI version 2.0.2</a>
-                          </span>
-                       @else
-                           <span class="version-text">IATI version V202</span>
-                           <span class="new-version">
-                       You’re using latest IATI version
-                     </span>
-                       @endif
-                   </span>
-                @endif
             </div>
-        </div>
+
+            </div>
+
 
         <div class="collapse navbar-collapse navbar-right" id="bs-example-navbar-collapse-1">
             @if(Auth::user()->role_id != 3 && Auth::user()->role_id !=4)
@@ -106,6 +92,24 @@
                     </li>
                 @endif
             </ul>
+        </div>
+        <div class="navbar-right version-wrap">
+            @if(Auth::user()->role_id != 3 && Auth::user()->role_id !=4)
+                <div class="version pull-right {{ (Session::get('version') == 'V201') ? 'old' : 'new' }}">
+
+                    @if ((Session::get('version') == 'V201'))
+                        <a class="version-text" href="{{route('upgrade-version.index')}}">Update available</a>
+                        <span class="old-version">
+                         <a href="{{route('upgrade-version.index')}}">Upgrade to IATI version 2.0.2</a>
+                      </span>
+                    @else
+                        <span class="version-text">IATI version V202</span>
+                        <span class="new-version">
+                   You’re using latest IATI version
+                 </span>
+                    @endif
+                </div>
+            @endif
         </div>
     </div>
 </nav>

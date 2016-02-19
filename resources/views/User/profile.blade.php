@@ -20,8 +20,8 @@
                             <div class="profile-info">
                               <span class="profile-username">{{Auth::user()->username}}</span>
                               <span class="profile-user-email"><a href="mailto:{{Auth::user()->email}}">{{Auth::user()->email}}</a></span>
-                              <div class=""><a href="{{route('user.edit-profile', Auth::user()->id)}}" class="edit-profile">Edit Profile</a></div>
-                              <!-- <div class="edit-element edit-profile"><a href="{{route('user.edit-profile', Auth::user()->id)}}">Edit Profile</a> | <a href="{{route('user.change-username', Auth::user()->id)}}">Change Username</a> | <a href="{{route('user.reset-user-password', Auth::user()->id)}}">Change Password</a></div> -->
+                              {{--<div class=""><a href="{{route('user.edit-profile', Auth::user()->id)}}" class="edit-profile">Edit Profile</a></div>--}}
+                               <div><a href="{{route('user.edit-profile', Auth::user()->id)}}" class="edit-profile">Edit Profile</a> | <a href="{{route('user.change-username', Auth::user()->id)}}">Change Username</a> | <a href="{{route('user.reset-user-password', Auth::user()->id)}}">Change Password</a></div>
                             </div>
                         </div>
                   </div>
