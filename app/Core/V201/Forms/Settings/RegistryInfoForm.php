@@ -12,7 +12,7 @@ class RegistryInfoForm extends BaseForm
             ->add('publisher_id', 'text', ['help_block' => $this->addHelpText('activity_defaults-publisher_id')])
             ->add('api_id', 'text', ['help_block' => $this->addHelpText('activity_defaults-api_key')])
             ->add(
-                'publish_files: ',
+                'publish_files',
                 'choice',
                 [
                     'label'          => 'Automatically Update the IATI Registry when publishing files:',

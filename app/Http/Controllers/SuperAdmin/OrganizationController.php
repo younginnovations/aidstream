@@ -136,9 +136,11 @@ class OrganizationController extends Controller
      */
     public function masqueradeOrganization($orgId, $userId)
     {
-        $adminId = Auth::user()->id;
+        $adminId  = Auth::user()->id;
+        $settings = $this->settingsManager->getSettings($orgId);
         Session::put('org_id', $orgId);
         Session::put('admin_id', $adminId);
+        Session::put('version', 'V' . str_replace('.', '', $settings->version));
         Auth::loginUsingId($userId);
 
         return redirect()->to('/');
@@ -150,7 +152,7 @@ class OrganizationController extends Controller
      */
     public function switchBackAsSuperAdmin()
     {
-        Session::forget('org_id');
+        Session::forget(['org_id', 'version']);
         $adminId = Session::get('admin_id');
         Auth::loginUsingId($adminId);
 

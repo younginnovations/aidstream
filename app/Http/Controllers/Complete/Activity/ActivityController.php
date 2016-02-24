@@ -8,6 +8,7 @@ use App\Services\Activity\TransactionManager;
 use App\Services\FormCreator\Activity\ChangeActivityDefault;
 use App\Services\Organization\OrganizationManager;
 use App\Services\RequestManager\Activity\ChangeActivityDefault as ChangeActivityDefaultRequest;
+use App\Services\RequestManager\ActivityElementValidator;
 use App\Services\SettingsManager;
 use App\Http\Requests\Request;
 use Illuminate\Session\SessionManager;
@@ -172,11 +173,12 @@ class ActivityController extends Controller
     }
 
     /**
-     * @param         $id
-     * @param Request $request
+     * @param                          $id
+     * @param Request                  $request
+     * @param ActivityElementValidator $activityElementValidator
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function updateStatus($id, Request $request)
+    public function updateStatus($id, Request $request, ActivityElementValidator $activityElementValidator)
     {
         $input            = $request->all();
         $activityData     = $this->activityManager->getActivityData($id);
@@ -190,6 +192,13 @@ class ActivityController extends Controller
         $xmlService       = $activityElement->getActivityXmlService();
 
         if ($activityWorkflow == 1) {
+            $validationMessage = $activityElementValidator->validateActivity($activityData, $transactionData);
+            if($validationMessage){
+                $response = ['type' => 'warning', 'code' => ['message', ['message' => $validationMessage]]];
+
+                return redirect()->back()->withResponse($response);
+            }
+
             $messages = $xmlService->validateActivitySchema($activityData, $transactionData, $resultData, $settings, $activityElement, $orgElem, $organization);
             if ($messages) {
                 $response = ['type' => 'danger', 'messages' => $messages];

@@ -51,16 +51,16 @@ class ContactInfo extends BaseElement
                     'narrative' => $this->buildNarrative($contact['job_title'][0]['narrative'])
                 ],
                 'telephone'       => [
-                    '@value' => $contact['telephone'][0]['telephone']
+                    '@value' => (isset($contact['telephone'][0]['telephone'])) ? $contact['telephone'][0]['telephone'] : ''
                 ],
                 'email'           => [
-                    '@value' => $contact['email'][0]['email']
+                    '@value' => (isset($contact['email'][0]['email'])) ? $contact['email'][0]['email'] : ''
                 ],
                 'website'         => [
-                    '@value' => $contact['website'][0]['website']
+                    '@value' => (isset($contact['website'][0]['website'])) ? $contact['website'][0]['website'] : ''
                 ],
                 'mailing-address' => [
-                    'narrative' => $this->buildNarrative($contact['mailing_address'][0]['narrative'])
+                    'narrative' => $this->buildNarrative(isset($contact['mailing_address'][0]['narrative']) ? $contact['mailing_address'][0]['narrative'] : [])
                 ]
             ];
         }

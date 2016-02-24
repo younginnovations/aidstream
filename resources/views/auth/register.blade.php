@@ -24,6 +24,7 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="{{url('/js/jquery.cookie.js')}}"></script>
+    <script type="text/javascript" src="{{url('/js/jquery-ui-1.10.4.tooltip.js')}}"></script>
     <script type="text/javascript" src="{{url('/js/main.js')}}"></script>
 
     @yield('head')
@@ -95,6 +96,12 @@
                                         <div class="col-xs-12 col-md-12">
                                             <input type="text" class="form-control" name="organization_user_identifier" value="{{ old('organization_user_identifier') }}">
                                         </div>
+
+                                    <span class="help-text"
+                                          title="Your organisation user identifier will be used as a prefix for all the AidStream users in your organisation. We recommend that you use a short abbreviation that uniquely identifies your organisation. If your organisation is 'Acme Bellus Foundation', your organisation user identifier should be 'abf', depending upon it's availability."
+                                          data-toggle="tooltip" data-placement="top">
+                                        Your organisation user identifier will be used as a prefix for all the AidStream users in your organisation. We recommend that you use a short abbreviation that uniquely identifies your organisation. If your organisation is 'Acme Bellus Foundation', your organisation user identifier should be 'abf', depending upon it's availability.
+                                    </span>
                                     </div>
                                 </div>
                             </div>
@@ -142,6 +149,11 @@
                                         <div class="col-xs-12 col-md-12">
                                             <input type="text" class="form-control" name="username" value="{{ old('username') }}" readonly="readonly">
                                         </div>
+                                        <span class="help-text"
+                                              title="AidStream will create a default username with your Organisation User Identifier as prefix. You will not be able to change '_admin' part of the username. This user will have administrative privilege and can create multiple AidStream users with different set of permissions."
+                                              data-toggle="tooltip" data-placement="top">
+                                           AidStream will create a default username with your Organisation User Identifier as prefix. You will not be able to change '_admin' part of the username. This user will have administrative privilege and can create multiple AidStream users with different set of permissions.
+                                        </span>
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-md-12">

@@ -117,16 +117,17 @@ class SettingsRepository implements SettingsRepositoryInterface
             $this->databaseManager->beginTransaction();
             $organization->reporting_org = $input['reporting_organization_info'];
             $organization->save();
-
-            $version = $input['version_form'][0]['version'];
-            $this->sessionManager->put('version', 'V' . str_replace('.', '', $version));
+            //This might ne useful later
+//            $version = $input['version_form'][0]['version'];
+//            $this->sessionManager->put('version', 'V' . str_replace('.', '', $version));
 
             $settings->publishing_type      = $input['publishing_type'][0]['publishing'];
             $settings->registry_info        = $input['registry_info'];
             $settings->default_field_values = $input['default_field_values'];
             $settings->default_field_groups = isset($input['default_field_groups']) ? $input['default_field_groups'] : [];
-            $settings->version              = $version;
-            $settings->organization_id      = $organization->id;
+            //This might ne useful later
+//            $settings->version              = $version;
+            $settings->organization_id = $organization->id;
             $settings->save();
             $this->organizationData->firstOrCreate(['organization_id' => $organization->id,]);
             $this->databaseManager->commit();
