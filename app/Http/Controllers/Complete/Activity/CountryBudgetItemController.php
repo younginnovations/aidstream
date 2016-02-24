@@ -1,4 +1,4 @@
-<?php namespace App\Http\Controllers\Complete\Activity;
+<?php namespace app\Http\Controllers\Complete\Activity;
 
 use App\Http\Controllers\Controller;
 use App\Services\Activity\ActivityManager;
@@ -31,7 +31,7 @@ class CountryBudgetItemController extends Controller
      * @param CountryBudgetItemForm    $countryBudgetItemForm
      * @param ActivityManager          $activityManager
      */
-    function __construct(
+    public function __construct(
         CountryBudgetItemManager $countryBudgetItemManager,
         CountryBudgetItemForm $countryBudgetItemForm,
         ActivityManager $activityManager
@@ -42,7 +42,12 @@ class CountryBudgetItemController extends Controller
         $this->countryBudgetItemManager = $countryBudgetItemManager;
     }
 
-    public function  index($id)
+    /**
+     * show country budget item form
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function index($id)
     {
         $countryBudgetItem = $this->countryBudgetItemManager->getCountryBudgetItemData($id);
         $activityData      = $this->activityManager->getActivityData($id);
@@ -51,12 +56,23 @@ class CountryBudgetItemController extends Controller
         return view('Activity.countryBudgetItem.edit', compact('form', 'activityData', 'id'));
     }
 
+    /**
+     * update country budget item
+     * @param                                 $id
+     * @param Request                         $request
+     * @param CountryBudgetItemRequestManager $countryBudgetItemRequestManager
+     * @return mixed
+     */
     public function update($id, Request $request, CountryBudgetItemRequestManager $countryBudgetItemRequestManager)
     {
         $this->authorize(['edit_activity', 'add_activity']);
-        $countryBudgetItem = $request->all();
-        $activityData      = $this->activityManager->getActivityData($id);
-        if ($this->countryBudgetItemManager->update($countryBudgetItem, $activityData)) {
+        $countryBudgetItems = $request->all();
+        foreach ($countryBudgetItems['country_budget_item'] as &$countryBudgetItem) {
+            $code                                       = $countryBudgetItem['vocabulary'] == 1 ? 'code_text' : 'code';
+            $countryBudgetItem['budget_item'][0][$code] = '';
+        }
+        $activityData = $this->activityManager->getActivityData($id);
+        if ($this->countryBudgetItemManager->update($countryBudgetItems, $activityData)) {
             $this->activityManager->resetActivityWorkflow($id);
             $response = ['type' => 'success', 'code' => ['updated', ['name' => 'Country Budget Item']]];
 
