@@ -26,3 +26,20 @@
         </div>
     </div>
 @endsection
+
+@section('foot')
+<script type="text/javascript">
+    $(document).ready(function() {
+        /* change budget item code field according to selected vocabulary */
+        $("form").on('change', '.vocabulary', function () {
+            var parent = $(this).parent('.form-group');
+            var vocabulary = $(this).val();
+            var selectedCode = (vocabulary == 1) ? '.code' : '.code_text';
+            var budgetItems = parent.siblings('.budget_item');
+            $('.codes', budgetItems).addClass('hidden');
+            $(selectedCode, budgetItems).removeClass('hidden');
+        });
+        $('.vocabulary').trigger('change');
+    });
+</script>
+@endsection
