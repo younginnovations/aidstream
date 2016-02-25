@@ -72,9 +72,10 @@ class Transaction extends ActivityBaseRequest
                 $this->getTransactionTypeRules($transaction['transaction_type'], $transactionForm),
                 $this->getTransactionDateRules($transaction['transaction_date'], $transactionForm),
                 $this->getValueRules($transaction['value'], $transactionForm),
-                $this->getDescriptionRules($transaction['description'], $transactionForm),
-                $this->getSectorsRules($transaction['sector'], $transactionForm),
-                $this->getRecipientRegionRules($transaction['recipient_region'], $transactionForm)
+                $this->getDescriptionRules($transaction['description'], $transactionForm)
+            //This might ne useful later
+//                $this->getSectorsRules($transaction['sector'], $transactionForm),
+//                $this->getRecipientRegionRules($transaction['recipient_region'], $transactionForm)
             );
         }
 
@@ -100,9 +101,10 @@ class Transaction extends ActivityBaseRequest
                 $this->getTransactionTypeMessages($transaction['transaction_type'], $transactionForm),
                 $this->getTransactionDateMessages($transaction['transaction_date'], $transactionForm),
                 $this->getValueMessages($transaction['value'], $transactionForm),
-                $this->getDescriptionMessages($transaction['description'], $transactionForm),
-                $this->getSectorsMessages($transaction['sector'], $transactionForm),
-                $this->getRecipientRegionMessages($transaction['recipient_region'], $transactionForm)
+                $this->getDescriptionMessages($transaction['description'], $transactionForm)
+            //This might ne useful later
+//                $this->getSectorsMessages($transaction['sector'], $transactionForm),
+//                $this->getRecipientRegionMessages($transaction['recipient_region'], $transactionForm)
             );
         }
 

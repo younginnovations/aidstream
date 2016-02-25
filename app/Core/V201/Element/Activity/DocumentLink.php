@@ -44,12 +44,12 @@ class DocumentLink extends BaseElement
                 ],
                 'category'    => [
                     '@attributes' => [
-                        'code' => $documentLink['category'][0]['code']
+                        'code' => isset($documentLink['category'][0]['code']) ? $documentLink['category'][0]['code'] : ''
                     ]
                 ],
                 'language'    => [
                     '@attributes' => [
-                        'code' => $documentLink['language'][0]['language']
+                        'code' => isset($documentLink['language'][0]['language']) ? $documentLink['language'][0]['language'] : ''
                     ]
                 ]
             ];

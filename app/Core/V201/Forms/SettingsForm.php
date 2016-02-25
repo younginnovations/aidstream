@@ -27,7 +27,8 @@ class SettingsForm extends BaseForm
     public function buildForm()
     {
         $this
-            ->addCollection('version_form', 'Settings\VersionInfoForm', '', ['versions' => $this->versions])
+            //This might ne useful later
+//            ->addCollection('version_form', 'Settings\VersionInfoForm', '', ['versions' => $this->versions])
             ->addCollection('reporting_organization_info', 'Settings\ReportingOrganizationInfoForm')
             ->addCollection('publishing_type', 'Settings\PublishingTypeForm')
             ->addCollection('registry_info', 'Settings\RegistryInfoForm')

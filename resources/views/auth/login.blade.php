@@ -25,18 +25,18 @@
 </head>
 <body>
 <div class="login-wrapper">
-    <div class="language-select-wrapper">
-        <label for="" class="pull-left">Language</label>
-    <div class="language-selector pull-left">
-        <span class="flag-wrapper"><span class="img-thumbnail flag flag-icon-background flag-icon-{{ config('app.locale') }}"></span></span>
-        <span class="caret pull-right"></span>
-    </div>
-            <ul class="language-select-wrap language-flag-wrap">
-                @foreach(config('app.locales') as $key => $val)
-                <li class="flag-wrapper" data-lang="{{ $key }}"><span class="img-thumbnail flag flag-icon-background flag-icon-{{ $key }}"></span><span class="language">{{ $val }}</span></li>
-                @endforeach
-            </ul>
-    </div>
+    {{--<div class="language-select-wrapper">--}}
+        {{--<label for="" class="pull-left">Language</label>--}}
+    {{--<div class="language-selector pull-left">--}}
+        {{--<span class="flag-wrapper"><span class="img-thumbnail flag flag-icon-background flag-icon-{{ config('app.locale') }}"></span></span>--}}
+        {{--<span class="caret pull-right"></span>--}}
+    {{--</div>--}}
+            {{--<ul class="language-select-wrap language-flag-wrap">--}}
+                {{--@foreach(config('app.locales') as $key => $val)--}}
+                {{--<li class="flag-wrapper" data-lang="{{ $key }}"><span class="img-thumbnail flag flag-icon-background flag-icon-{{ $key }}"></span><span class="language">{{ $val }}</span></li>--}}
+                {{--@endforeach--}}
+            {{--</ul>--}}
+    {{--</div>--}}
     <div class="container-fluid login-container">
         <div class="row">
             <div class="col-lg-4 col-md-8 col-md-offset-2 form-body">

@@ -33,11 +33,13 @@ class ActivityScope
      */
     public function editForm($data, $activityId)
     {
+        $model['activity_scope'] = $data;
+
         return $this->formBuilder->create(
             $this->formPath,
             [
                 'method' => 'PUT',
-                'model'  => $data,
+                'model'  => $model,
                 'url'    => route('activity.activity-scope.update', [$activityId, 0])
             ]
         )->add('Save', 'submit', ['attr' => ['class' => 'btn btn-submit btn-form']]);

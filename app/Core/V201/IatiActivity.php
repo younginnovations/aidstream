@@ -359,4 +359,9 @@ class IatiActivity extends WizardIatiActivity
     {
         return app('App\Core\V201\Element\DownloadCsv');
     }
+
+    public function getActivityElementValidator()
+    {
+        return app('App\Core\V201\Requests\ActivityElementValidation');
+    }
 }

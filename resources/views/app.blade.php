@@ -10,6 +10,8 @@
     <link href="{{ asset('/css/flag-icon.css') }}" rel="stylesheet">
     <link href="{{ asset('/css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('/css/jquery-ui-1.10.4.tooltip.css') }}" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2-rc.1/css/select2.min.css" rel="stylesheet"/>
+
 
     <!-- Fonts -->
     <link href='//fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
@@ -39,20 +41,22 @@
             <div class="navbar-brand">
                 <a href="{{ Auth::user()->role_id == 3 ? url('admin/dashboard') : route('activity.index')  }}"
                    alt="Aidstream">Aidstream</a>
-               <span class="version {{ (Session::get('version') == 'V201') ? 'old' : 'new' }}">
+                @if(Auth::user()->role_id != 3 && Auth::user()->role_id !=4)
+                   <span class="version {{ (Session::get('version') == 'V201') ? 'old' : 'new' }}">
 
-                   @if ((Session::get('version') == 'V201'))
-                       <a class="version-text" href="{{route('upgrade-version.index')}}">IATI version V201</a>
-                       <span class="old-version">
-                         <a href="{{route('upgrade-version.index')}}">Upgrade to IATI version 2.0.2</a>
-                      </span>
-                   @else
-                       <span class="version-text">IATI version V202</span>
-                       <span class="new-version">
-                   You’re using latest IATI version
-                 </span>
-                   @endif
-               </span>
+                       @if ((Session::get('version') == 'V201'))
+                           <a class="version-text" href="{{route('upgrade-version.index')}}">IATI version V201</a>
+                           <span class="old-version">
+                             <a href="{{route('upgrade-version.index')}}">Upgrade to IATI version 2.0.2</a>
+                          </span>
+                       @else
+                           <span class="version-text">IATI version V202</span>
+                           <span class="new-version">
+                       You’re using latest IATI version
+                     </span>
+                       @endif
+                   </span>
+                @endif
             </div>
         </div>
 
@@ -65,7 +69,7 @@
                                     class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
                             <li><a href="{{route('activity.create') }}">Add Activity Manually</a></li>
-                            <li><a href="{{route('wizard.activity.create') }}">Add Activity using Wizard</a></li>
+                            {{--                            <li><a href="{{route('wizard.activity.create') }}">Add Activity using Wizard</a></li>--}}
                             <li><a href="{{ route('activity-upload.index') }}">Upload Activities</a></li>
                         </ul>
                     </li>
@@ -90,14 +94,14 @@
                                 <li><a href="{{url('user/profile')}}">@lang('trans.my_profile')</a></li>
                             @endif
                             <li><a href="{{ url('/auth/logout') }}">@lang('trans.logout')</a></li>
-                            <li class="language-select-wrap">
-                                <label for="">Choose Language</label>
-                                @foreach(config('app.locales') as $key => $val)
-                                    <span class="flag-wrapper" data-lang="{{ $key }}">
-                                        <span class="img-thumbnail flag flag-icon-background flag-icon-{{ $key }}{{ $key == config('app.locale') ? ' active' : '' }}"></span>
-                                    </span>
-                                @endforeach
-                            </li>
+                            {{--<li class="language-select-wrap">--}}
+                            {{--<label for="">Choose Language</label>--}}
+                            {{--@foreach(config('app.locales') as $key => $val)--}}
+                            {{--<span class="flag-wrapper" data-lang="{{ $key }}">--}}
+                            {{--<span class="img-thumbnail flag flag-icon-background flag-icon-{{ $key }}{{ $key == config('app.locale') ? ' active' : '' }}"></span>--}}
+                            {{--</span>--}}
+                            {{--@endforeach--}}
+                            {{--</li>--}}
                         </ul>
                     </li>
                 @endif
@@ -108,13 +112,16 @@
 
 @yield('content')
 
-<!-- Scripts -->
+        <!-- Scripts -->
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="{{url('/js/jquery-ui-1.10.4.tooltip.js')}}"></script>
 <script type="text/javascript" src="{{url('/js/jquery.cookie.js')}}"></script>
 <script type="text/javascript" src="{{url('/js/main.js')}}"></script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2-rc.1/js/select2.min.js"></script>
+<script type="text/javascript">
+    $('select').select2();
+</script>
 @yield('foot')
 
 </body>

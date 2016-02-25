@@ -190,12 +190,9 @@ class XmlGenerator
         $xmlActivity['conditions']           = $this->conditionElem->getXmlData($activity);
         $xmlActivity['result']               = $this->resultElem->getXmlData($result);
 
-        return array_filter(
-            $xmlActivity,
-            function ($value) {
-                return $value;
-            }
-        );
+        removeEmptyValues($xmlActivity);
+
+        return $xmlActivity;
     }
 
     /**
@@ -254,6 +251,12 @@ class XmlGenerator
         }
     }
 
+    /**
+     * @param $filename
+     * @param $organizationId
+     * @param $publishedActivity
+     * @return array
+     */
     public function savePublishedFiles($filename, $organizationId, $publishedActivity)
     {
         $published = $this->activityPublished->firstOrNew(['filename' => $filename, 'organization_id' => $organizationId]);

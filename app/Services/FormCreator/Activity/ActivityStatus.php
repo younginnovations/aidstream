@@ -33,11 +33,13 @@ class ActivityStatus
      */
     public function editForm($data, $activityId)
     {
+        $model['activity_status'] = $data;
+
         return $this->formBuilder->create(
             $this->formPath,
             [
                 'method' => 'PUT',
-                'model'  => $data,
+                'model'  => $model,
                 'url'    => route('activity.activity-status.update', [$activityId, 0])
             ]
         )->add('Save', 'submit', ['attr' => ['class' => 'btn btn-submit btn-form']]);
