@@ -204,7 +204,9 @@ class BaseForm extends Form
     {
         $help = trans(session()->get('version') . "/help");
         is_array($help) ?: $help = trans(config('app.default_version_name') . '/help');
-        isset($help[$helpText]) ?: $helpText = 'no_help_text';
+        if (!isset($help[$helpText])) {
+            return null;
+        }
 
         $attr = [
             'class' => 'help-block',

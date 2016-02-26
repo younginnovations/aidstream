@@ -34,7 +34,7 @@ class BudgetItem extends BaseForm
                 ]
             )
             ->addPercentage($this->addHelpText('Activity_CountryBudgetItems_BudgetItem-percentage'))
-            ->addCollection('description', 'Activity\BudgetItemDescription')
+            ->addCollection('description', 'Activity\BudgetItemDescription', 'description')
             ->addRemoveThisButton('remove_budget_item');
     }
 }
