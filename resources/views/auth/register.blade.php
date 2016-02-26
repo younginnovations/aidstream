@@ -32,19 +32,19 @@
 </head>
 <body>
 <div class="login-wrapper">
-    <div class="language-select-wrapper">
-        <label for="" class="pull-left">Language</label>
+    {{--    <div class="language-select-wrapper">
+            <label for="" class="pull-left">Language</label>
 
-        <div class="language-selector pull-left">
-            <span class="flag-wrapper"><span class="img-thumbnail flag flag-icon-background flag-icon-{{ config('app.locale') }}"></span></span>
-            <span class="caret pull-right"></span>
-        </div>
-        <ul class="language-select-wrap language-flag-wrap">
-            @foreach(config('app.locales') as $key => $val)
-                <li class="flag-wrapper" data-lang="{{ $key }}"><span class="img-thumbnail flag flag-icon-background flag-icon-{{ $key }}"></span><span class="language">{{ $val }}</span></li>
-            @endforeach
-        </ul>
-    </div>
+            <div class="language-selector pull-left">
+                <span class="flag-wrapper"><span class="img-thumbnail flag flag-icon-background flag-icon-{{ config('app.locale') }}"></span></span>
+                <span class="caret pull-right"></span>
+            </div>
+            <ul class="language-select-wrap language-flag-wrap">
+                @foreach(config('app.locales') as $key => $val)
+                    <li class="flag-wrapper" data-lang="{{ $key }}"><span class="img-thumbnail flag flag-icon-background flag-icon-{{ $key }}"></span><span class="language">{{ $val }}</span></li>
+                @endforeach
+            </ul>
+        </div>--}}
     <div class="container-fluid register-container">
         <div class="row">
             <div class="col-lg-4 col-md-8 col-md-offset-2 form-body">
@@ -97,9 +97,7 @@
                                             <input type="text" class="form-control" name="organization_user_identifier" value="{{ old('organization_user_identifier') }}">
                                         </div>
 
-                                    <span class="help-text"
-                                          title="Your organisation user identifier will be used as a prefix for all the AidStream users in your organisation. We recommend that you use a short abbreviation that uniquely identifies your organisation. If your organisation is 'Acme Bellus Foundation', your organisation user identifier should be 'abf', depending upon it's availability."
-                                          data-toggle="tooltip" data-placement="top">
+                                    <span class="help-block">
                                         Your organisation user identifier will be used as a prefix for all the AidStream users in your organisation. We recommend that you use a short abbreviation that uniquely identifies your organisation. If your organisation is 'Acme Bellus Foundation', your organisation user identifier should be 'abf', depending upon it's availability.
                                     </span>
                                     </div>
@@ -143,17 +141,25 @@
                             </div>
                             <div class="input-wrapper no-border">
                                 <div class="col-xs-12 col-md-12">
-                                    <div class="form-group col-xs-12 col-sm-6 col-md-6">
+                                    <div class="col-xs-12 col-sm-6 username_text">
+
+                                        <label class="control-label">Username</label>
+
+                                        <em>This will be auto-generated as you fill Organization User Identifier.</em>
+
+
+                                    </div>
+                                    <div class="form-group col-xs-12 col-sm-6 col-md-6 username_value hidden">
                                         <label class="control-label">Username</label>
 
                                         <div class="col-xs-12 col-md-12">
-                                            <input type="text" class="form-control" name="username" value="{{ old('username') }}" readonly="readonly">
-                                        </div>
+                                            <input type="text" class="form-control hover_help_text" name="username" value="{{ old('username') }}" readonly="readonly">
                                         <span class="help-text"
                                               title="AidStream will create a default username with your Organisation User Identifier as prefix. You will not be able to change '_admin' part of the username. This user will have administrative privilege and can create multiple AidStream users with different set of permissions."
                                               data-toggle="tooltip" data-placement="top">
                                            AidStream will create a default username with your Organisation User Identifier as prefix. You will not be able to change '_admin' part of the username. This user will have administrative privilege and can create multiple AidStream users with different set of permissions.
                                         </span>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-md-12">

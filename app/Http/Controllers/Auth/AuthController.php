@@ -132,10 +132,12 @@ class AuthController extends Controller
             $version        = ($settings_check) ? $settings->version : config('app.default_version');
             $version        = 'V' . str_replace('.', '', $version);
             Session::put('version', $version);
-            $redirectPath = ($user->role_id == 1 || $user->role_id == 2) ? '/activity' : '/admin/dashboard';
-            !(Session::get('url.intended') == url('/')) ?: Session::set('url.intended', $redirectPath);
+            $redirectPath = ($user->role_id == 1 || $user->role_id == 2) ? config('app.admin_dashboard') : config('app.super_admin_dashboard');
+            $intendedUrl  = Session::get('url.intended');
+            !(($user->role_id == 3 || $user->role_id == 4) && strpos($intendedUrl, '/admin') === false) ?: $intendedUrl = url('/');
+            !($intendedUrl == url('/')) ?: Session::set('url.intended', $redirectPath);
 
-            return redirect()->intended($this->redirectPath());
+            return redirect()->intended($redirectPath);
         }
 
         return redirect($this->loginPath())

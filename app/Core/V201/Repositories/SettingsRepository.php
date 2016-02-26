@@ -67,9 +67,9 @@ class SettingsRepository implements SettingsRepositoryInterface
             $this->databaseManager->beginTransaction();
             $organization->reporting_org = $input['reporting_organization_info'];
             $organization->save();
-
-            $version = $input['version_form'][0]['version'];
-            $this->sessionManager->put('version', 'V' . str_replace('.', '', $version));
+//This might be useful later
+//            $version = $input['version_form'][0]['version'];
+//            $this->sessionManager->put('version', 'V' . str_replace('.', '', $version));
 
             Settings::create(
                 [
@@ -77,7 +77,7 @@ class SettingsRepository implements SettingsRepositoryInterface
                     'registry_info'        => $input['registry_info'],
                     'default_field_values' => $input['default_field_values'],
                     'default_field_groups' => $input['default_field_groups'],
-                    'version'              => $version,
+//                    'version'              => $version,
                     'organization_id'      => $organization->id,
                 ]
             );

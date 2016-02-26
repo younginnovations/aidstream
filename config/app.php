@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'debug'                => env('APP_DEBUG'),
+    'debug'                 => env('APP_DEBUG'),
     /*
     |--------------------------------------------------------------------------
     | Application URL
@@ -25,7 +25,7 @@ return [
     |
     */
 
-    'url'                  => 'http://localhost',
+    'url'                   => 'http://localhost',
     /*
     |--------------------------------------------------------------------------
     | Application Timezone
@@ -37,7 +37,7 @@ return [
     |
     */
 
-    'timezone'             => 'GMT',
+    'timezone'              => 'GMT',
     /*
     |--------------------------------------------------------------------------
     | Application Locale Configuration
@@ -49,8 +49,8 @@ return [
     |
     */
 
-    'locale'               => 'en',
-    'locales'              => ['en' => 'English', 'fr' => 'French'],
+    'locale'                => 'en',
+    'locales'               => ['en' => 'English', 'fr' => 'French'],
     /*
     |--------------------------------------------------------------------------
     | Application Fallback Locale
@@ -62,7 +62,7 @@ return [
     |
     */
 
-    'fallback_locale'      => 'en',
+    'fallback_locale'       => 'en',
     /*
     |--------------------------------------------------------------------------
     | Encryption Key
@@ -74,10 +74,12 @@ return [
     |
     */
 
-    'key'                  => env('APP_KEY', 'SomeRandomString'),
-    'cipher'               => MCRYPT_RIJNDAEL_128,
-    'default_version'      => '2.01',
-    'default_version_name' => 'V201',
+    'key'                   => env('APP_KEY', 'SomeRandomString'),
+    'cipher'                => MCRYPT_RIJNDAEL_128,
+    'default_version'       => '2.01',
+    'default_version_name'  => 'V201',
+    'super_admin_dashboard' => '/admin/dashboard',
+    'admin_dashboard'       => '/activity',
     /*
     |--------------------------------------------------------------------------
     | Logging Configuration
@@ -91,9 +93,9 @@ return [
     |
     */
 
-    'log'                  => 'custom',
+    'log'                   => 'custom',
     /*env configuration*/
-    'env'                  => env('APP_ENV', 'production'),
+    'env'                   => env('APP_ENV', 'production'),
     /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers
@@ -105,7 +107,7 @@ return [
     |
     */
 
-    'providers'            => [
+    'providers'             => [
 
         /*
          * Laravel Framework Service Providers...
@@ -158,7 +160,7 @@ return [
     |
     */
 
-    'aliases'              => [
+    'aliases'               => [
 
         'App'         => 'Illuminate\Support\Facades\App',
         'Artisan'     => 'Illuminate\Support\Facades\Artisan',

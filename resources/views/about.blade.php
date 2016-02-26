@@ -9,33 +9,12 @@
     <link rel="stylesheet" href="css/bootstrap.min.css">
 </head>
 <body>
-<header>
-    <nav class="navbar navbar-default">
-        <div class="navbar-header">
-            <a href="index.html" class="navbar-brand">Aidstream</a>
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#nav-collapse">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-        </div>
-        <div class="collapse navbar-collapse navbar-right" id="nav-collapse">
-            <ul class="nav navbar-nav">
-                <li><a href="about.html">About</a></li>
-                <li><a href="who-are-using.html">Who're Using</a></li>
-                <!--<li><a href="#">Snapshot</a></li>-->
-            </ul>
-            <div class="action-btn pull-left">
-                <a href="/auth/login" class="btn btn-primary">Login/Register</a>
-            </div>
-        </div>
-    </nav>
-</header>
+@include('includes.header')
 <section class="main-container">
     <div class="introduction-wrapper about-wrapper">
         <div class="col-md-12 text-center">
             <h1>About us</h1>
+
             <p>We made AidStream to help organisations easily publish their data in IATI and make it available in open
                 format. AidStream stands as one such platform, that presents complexity of the IATI in an understandable
                 and a consumable way.</p>
@@ -48,7 +27,7 @@
         <h2>Who are behind AidStream?</h2>
     </div>
     <div class="information-wrapper bottom-line">
-            <div class="information-section about-information-section">
+        <div class="information-section about-information-section">
             <div class="col-md-12 width-900 text-center">
                 <div class="left-wrapper">
                     <img src="images/ic-aidinfo.png" alt="">
@@ -79,36 +58,7 @@
         </div>
     </div>
 </section>
-<footer>
-    <div class="width-900">
-        <div class="social-wrapper bottom-line">
-            <div class="col-md-12 text-center">
-                <ul>
-                    <li><a href="#" class="github" title="Fork us on Github">Fork us on Github</a></li>
-                    <li><a href="#" class="twitter" title="Follow us on Twitter">Follow us on Twitter</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="footer-nav bottom-line">
-            <div class="col-md-12">
-                <ul>
-                    <li><a href="about.html">About</a></li>
-                    <li><a href="who-are-using.html">Who's using</a></li>
-                    <!--<li><a href="#">Snapshot</a></li>-->
-                </ul>
-                <ul>
-                    <li><a href="#">Login</a></li>
-                    <li><a href="#">Register</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="footer-logo">
-            <div class="col-md-12 text-center">
-                <a href="index.html"><img src="images/logo.png" alt=""></a>
-            </div>
-        </div>
-    </div>
-</footer>
+@include('includes.footer')
 <link rel="stylesheet" href="css/style.css">
 <script src="js/jquery.js"></script>
 <script type="text/javascript" src="js/bootstrap.min.js"></script>

@@ -14,7 +14,7 @@
                     </div>
                 </div>
                 <div class="panel panel-default">
-                    @foreach($recipientOrgBudget['narrative'] as $recipientOrgBudgetNarrative)
+                    @foreach($recipientOrgBudget['recipient_organization'][0]['narrative'] as $recipientOrgBudgetNarrative)
                         <div class="panel-heading">Narrative</div>
                         <div class="panel-body panel-element-body row">
                             <div class="col-xs-12 col-md-12">

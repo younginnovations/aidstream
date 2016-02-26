@@ -26,7 +26,7 @@ class RecipientOrgBudget extends V201RecipientOrgBudget
                     '@attributes' => [
                         'ref' => $RecipientOrgBudget['recipient_organization'][0]['ref']
                     ],
-                    'narrative'   => $this->buildNarrative($RecipientOrgBudget['narrative'])
+                    'narrative'   => $this->buildNarrative($RecipientOrgBudget['recipient_organization'][0]['narrative'])
                 ],
                 'period-start'  => [
                     '@attributes' => [
