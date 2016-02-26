@@ -30,12 +30,11 @@ class SettingsRequest extends Request
             $rules["reporting_organization_info.0.$key"] = 'required';
         }
 
-        $narrativeKeys                                                                             = array_keys($this->reporting_organization_info['narrative']);
-        $rules[sprintf('reporting_organization_info.0.narrative.%s.narrative', $narrativeKeys[0])] = 'required';
-        $rules["default_field_values.0.linked_data_uri"]                                           = 'url';
-        $rules["default_field_values.0.default_currency"]                                          = 'required';
-        $rules["default_field_values.0.default_language"]                                          = 'required';
-        $rules["default_field_values.0.default_hierarchy"]                                         = 'numeric';
+        $rules["reporting_organization_info.0.narrative.0.narrative"] = 'required';
+        $rules["default_field_values.0.linked_data_uri"]              = 'url';
+        $rules["default_field_values.0.default_currency"]             = 'required';
+        $rules["default_field_values.0.default_language"]             = 'required';
+        $rules["default_field_values.0.default_hierarchy"]            = 'numeric';
 
         return $rules;
     }
@@ -52,12 +51,11 @@ class SettingsRequest extends Request
             $messages["reporting_organization_info.0.$key.required"] = sprintf("The %s is required.", str_replace('_', ' ', $key));
         }
 
-        $narrativeKeys                                                                                         = array_keys($this->reporting_organization_info['narrative']);
-        $messages[sprintf('reporting_organization_info.0.narrative.%s.narrative.required', $narrativeKeys[0])] = 'At least one Organization Name is required.';
-        $messages["default_field_values.0.linked_data_uri.url"]                                                = "Linked data uri is invalid.";
-        $messages["default_field_values.0.default_currency.required"]                                          = 'Default Currency is required';
-        $messages["default_field_values.0.default_language.required"]                                          = 'Default Language is required';
-        $messages["default_field_values.0.default_hierarchy.numeric"]                                          = 'Hierarchy should be numeric';
+        $messages["reporting_organization_info.0.narrative.0.narrative.required"] = 'At least one Organization Name is required.';
+        $messages["default_field_values.0.linked_data_uri.url"]                   = "Linked data uri is invalid.";
+        $messages["default_field_values.0.default_currency.required"]             = 'Default Currency is required';
+        $messages["default_field_values.0.default_language.required"]             = 'Default Language is required';
+        $messages["default_field_values.0.default_hierarchy.numeric"]             = 'Hierarchy should be numeric';
 
         return $messages;
     }

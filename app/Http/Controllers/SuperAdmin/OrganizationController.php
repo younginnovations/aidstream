@@ -143,7 +143,7 @@ class OrganizationController extends Controller
         Session::put('version', 'V' . str_replace('.', '', $settings->version));
         Auth::loginUsingId($userId);
 
-        return redirect()->to('/');
+        return redirect()->to(config('app.admin_dashboard'));
     }
 
     /**
@@ -156,6 +156,6 @@ class OrganizationController extends Controller
         $adminId = Session::get('admin_id');
         Auth::loginUsingId($adminId);
 
-        return redirect()->to('admin/dashboard');
+        return redirect()->to(config('app.super_admin_dashboard'));
     }
 }

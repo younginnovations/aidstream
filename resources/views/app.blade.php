@@ -43,8 +43,7 @@
                    alt="Aidstream">Aidstream</a>
             </div>
 
-            </div>
-
+        </div>
 
         <div class="collapse navbar-collapse navbar-right" id="bs-example-navbar-collapse-1">
             @if(Auth::user()->role_id != 3 && Auth::user()->role_id !=4)
@@ -116,7 +115,7 @@
 
 @yield('content')
 
-        <!-- Scripts -->
+<!-- Scripts -->
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="{{url('/js/jquery-ui-1.10.4.tooltip.js')}}"></script>
@@ -124,7 +123,9 @@
 <script type="text/javascript" src="{{url('/js/main.js')}}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2-rc.1/js/select2.min.js"></script>
 <script type="text/javascript">
-    $('select').select2();
+    $(document).ready(function () {
+        $('select').select2();
+    });
 </script>
 @yield('foot')
 

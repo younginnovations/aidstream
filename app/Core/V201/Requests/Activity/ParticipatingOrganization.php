@@ -39,8 +39,7 @@ class ParticipatingOrganization extends ActivityBaseRequest
             $participatingOrgForm                                = 'participating_organization.' . $participatingOrgIndex;
             $rules[$participatingOrgForm . '.organization_role'] = 'required';
             $identifier                                          = $participatingOrgForm . '.identifier';
-            $narrativeKeys                                       = array_keys($participatingOrg['narrative']);
-            $narrative                                           = sprintf('%s.narrative.%s.narrative', $participatingOrgForm, $narrativeKeys[0]);
+            $narrative                                           = sprintf('%s.narrative.0.narrative', $participatingOrgForm);
             $rules[$identifier]                                  = 'exclude_operators|required_without:' . $narrative;
             $rules[$narrative][]                                 = 'required_without:' . $identifier;
             $rules                                               = array_merge_recursive(
@@ -65,8 +64,7 @@ class ParticipatingOrganization extends ActivityBaseRequest
             $participatingOrgForm                                            = 'participating_organization.' . $participatingOrgIndex;
             $messages[$participatingOrgForm . '.organization_role.required'] = 'Organization role is required';
             $identifier                                                      = $participatingOrgForm . '.identifier';
-            $narrativeKeys                                                   = array_keys($participatingOrg['narrative']);
-            $narrative                                                       = sprintf('%s.narrative.%s.narrative', $participatingOrgForm, $narrativeKeys[0]);
+            $narrative                                                       = sprintf('%s.narrative.0.narrative', $participatingOrgForm);
             $messages[$identifier . '.required_without']                     = 'Identifier is required when Narrative is not present.';
             $messages[$narrative . '.required_without']                      = 'Narrative is required when Identifier is not present.';
             $messages                                                        = array_merge(

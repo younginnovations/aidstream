@@ -120,7 +120,7 @@ class SettingsController extends Controller
             ]
         ];
 
-        return Redirect::to('/activity')->withResponse($response);
+        return Redirect::to(config('app.admin_dashboard'))->withResponse($response);
     }
 
     /**
@@ -168,7 +168,7 @@ class SettingsController extends Controller
         }
         $response = ['type' => 'success', 'code' => ['updated', ['name' => 'Settings']]];
 
-        return redirect()->to('/activity')->withResponse($response);
+        return redirect()->to(config('app.admin_dashboard'))->withResponse($response);
     }
 
 
