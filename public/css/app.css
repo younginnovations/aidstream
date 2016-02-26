@@ -492,17 +492,13 @@ label {
   margin-left: 0; }
 
 .btn-submit {
-  border: 2px solid #00A8FF;
-  background: #fff;
   font-size: 15px;
   line-height: 37px;
   width: 100%;
-  color: #00A8FF;
+  color: #fff;
   margin-top: 24px;
   height: 53px; }
   .btn-submit:hover, .btn-submit:focus, .btn-submit:active {
-    background: #00A8FF;
-    border: 2px solid #00A8FF;
     color: #fff; }
 
 .create-account-wrapper {
@@ -777,9 +773,7 @@ label {
      -moz-transition: width 0.3s ease;
        -o-transition: width 0.3s ease;
           transition: width 0.3s ease;
-  background: #262626;
-  height: 100vh;
-  overflow-y: scroll; }
+  background: #262626; }
   .sidebar-wrapper .panel {
     border: 0;
     -webkit-box-shadow: none;
@@ -888,7 +882,12 @@ label {
   margin-right: auto;
   height: 100%;
   width: 100%;
-  padding: 0; }
+  padding: 0;
+  position: relative;
+  -webkit-transition: left 0.4s;
+     -moz-transition: left 0.4s;
+       -o-transition: left 0.4s;
+          transition: left 0.4s; }
   .main-container::after {
     clear: both;
     content: "";
@@ -1125,15 +1124,15 @@ label {
         background: #efefef; }
 
 .action-icon {
-  width: 27px;
-  height: 26px;
+  width: 33px;
+  height: 32px;
   text-indent: -9999px;
   float: left;
   position: absolute;
   top: 11px;
   right: auto;
   bottom: auto;
-  left: -14px;
+  left: -17px;
   padding-left: 0 !important;
   -webkit-border-radius: 50%;
           border-radius: 50%;
@@ -1283,8 +1282,8 @@ label {
 
 .edit-element, .edit-value {
   text-indent: -9999px;
-  width: 26px;
-  height: 26px;
+  width: 32px;
+  height: 32px;
   background: #fff url(../../images/ic-sprite.png) no-repeat -154px -261px; }
   .edit-element:hover, .edit-value:hover {
     background-position: -221px -261px; }
@@ -2244,7 +2243,8 @@ form > .add_to_collection[data-collection="legacy_data"] {
     .sidebar-wrapper + .content-wrapper {
       width: -webkit-calc(100% - 250px) !important;
       width: -moz-calc(100% - 250px) !important;
-      width: calc(100% - 250px) !important; } }
+      width: calc(100% - 250px) !important;
+      margin-left: 250px; } }
 
 @media all and (min-width: 1340px) {
   .settings-checkall-wrapper > .collection_form > .form-group > .form-group {

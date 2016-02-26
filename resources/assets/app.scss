@@ -368,17 +368,13 @@ label {
 }
 
 .btn-submit {
-  border: 2px solid $color_dodger_blue_approx;
-  background: $color_white;
   font-size: 15px;
   line-height: 37px;
   width: 100%;
-  color: $color_dodger_blue_approx;
+  color: $color_white;
   margin-top: 24px;
   height: 53px;
   &:hover, &:focus, &:active {
-    background: $color_dodger_blue_approx;
-    border: 2px solid $color_dodger_blue_approx;
     color: $color_white;
   }
 }
@@ -455,6 +451,9 @@ label {
   border-bottom: 1px solid $color_gallery_approx;
   margin-bottom: 0;
   border-top: 0;
+  //position: fixed;
+  //z-index: 1;
+  //width: 100%;
 }
 
 .navbar-collapse {
@@ -699,8 +698,12 @@ label {
   overflow: hidden;
   transition: width 0.3s ease;
   background: $color_black_approx;
-  height: 100vh;
-  overflow-y: scroll;
+  //height: 100vh;
+  //overflow-y: scroll;
+  //position: fixed;
+  //top: 56px;
+  //left: 0;
+  //z-index: 1;
   .panel {
     border: 0;
     box-shadow: none;
@@ -820,6 +823,10 @@ label {
   }
 }
 
+//.sidebar-wrapper + .content-wrapper {
+//  margin-left: 62px;
+//}
+
 $full-sidebar-wrapper-width: 250px;
 .full-sidebar-wrapper {
   width: $full-sidebar-wrapper-width;
@@ -827,6 +834,13 @@ $full-sidebar-wrapper-width: 250px;
     width: calc(100% - #{$full-sidebar-wrapper-width});
   }
 }
+
+//.side-main-container {
+//  left: 250px;
+//  .content-wrapper {
+//    margin-left: 0;
+//  }
+//}
 
 // breadcrumb
 .breadcrumb-wrapper {
@@ -861,6 +875,8 @@ $full-sidebar-wrapper-width: 250px;
   height: 100%;
   width: 100%;
   padding: 0;
+  position: relative;
+  transition: left 0.4s;
   .row {
     margin: 0;
     height: 100%;
@@ -1154,11 +1170,11 @@ $element-sidebar-wrapper-width: 267px;
 }
 
 .action-icon {
-  width: 27px;
-  height: 26px;
+  width: 33px;
+  height: 32px;
   text-indent: -9999px;
   float: left;
-  @include position(absolute, 11px auto auto -14px);
+  @include position(absolute, 11px auto auto -17px);
   padding-left: 0 !important;
   border-radius: 50%;
   display: none;
@@ -1336,8 +1352,8 @@ $element-sidebar-wrapper-width: 267px;
 
 .edit-element, .edit-value {
   text-indent: -9999px;
-  width: 26px;
-  height: 26px;
+  width: 32px;
+  height: 32px;
   background: $color_white $url_3 no-repeat -154px -261px;
   &:hover {
     background-position: -221px -261px;
@@ -2621,6 +2637,7 @@ $organization-logo-width: 124px;
     width: 250px!important;
     & + .content-wrapper {
       width: calc(100% - 250px)!important;
+      margin-left: 250px;
     }
   }
 }

@@ -384,9 +384,11 @@ $(document).ready(function () {
 
     $('.sidebar-wrapper .nav').hover(function () {
             $('.sidebar-wrapper').addClass('full-sidebar-wrapper');
+            //$('.main-container').addClass('side-main-container');
         },
         function () {
             $('.sidebar-wrapper').removeClass('full-sidebar-wrapper');
+            //$('.main-container').removeClass('side-main-container');
         });
 
     //js for form input check and leave page alert
