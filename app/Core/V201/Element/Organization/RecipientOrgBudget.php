@@ -48,7 +48,7 @@ class RecipientOrgBudget extends BaseElement
                     '@attributes' => [
                         'ref' => $RecipientOrgBudget['recipient_organization'][0]['ref']
                     ],
-                    'narrative'   => $this->buildNarrative($RecipientOrgBudget['narrative'])
+                    'narrative'   => $this->buildNarrative($RecipientOrgBudget['recipient_organization'][0]['narrative'])
                 ],
                 'period-start'  => [
                     '@attributes' => [

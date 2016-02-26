@@ -44,7 +44,7 @@
                                                     |
                                                     <a href="{{ route('admin.delete-organization', $organization->id) }}" class="delete">Delete</a> |
                                                 @endif
-                                                <a href="{{ route('admin.masquerade-organization', [$organization->id, $organization->users[0]['id']]) }}">Masquerade</a>
+                                                <a href="{{ route('admin.masquerade-organization', [$organization->id, $organization->users->where('role_id', 1)->first()->id]) }}">Masquerade</a>
                                             </div>
                                         </td>
                                     </tr>

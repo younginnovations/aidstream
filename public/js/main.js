@@ -49,6 +49,7 @@ $(document).ready(function () {
         if (indexString === undefined) {
             indexString = '';
         }
+
         var matchedIndexes = indexString.match(/[\d]+/g);
         var parentIndexes = [];
         var newIndex = 0;
@@ -77,7 +78,9 @@ $(document).ready(function () {
         proto = proto.replace(new RegExp('__NAME' + level + '__', 'g'), newIndex);
         proto = proto.replace(/__NAME[\d]+__/g, 0);
         container.append(proto);
+
         bindTooltip();
+        $('form select').select2();
     });
 
     /* Removes form on click to Remove This button */
@@ -110,7 +113,8 @@ $(document).ready(function () {
         $('.modal-footer', removeDialog).html(buttons);
 
         $('body').undelegate('.btn_remove', 'click').delegate('.btn_remove', 'click', function () {
-            var collectionForm = _this.parents('.collection_form').eq(0);
+            var parents = _this.parents('.collection_form');
+            var collectionForm = parents.eq(0);
             if ($('> .form-group', collectionForm).length === 1) {
                 removedAll = true;
                 collectionForm.next('.add_to_collection').trigger('click');
@@ -118,6 +122,36 @@ $(document).ready(function () {
                 _this.parent('.form-group').remove();
             }
             removeDialog.modal('hide');
+
+            /* reset indexes */
+            var level = parents.length - 1;
+            var indexString = $(' > .form-group:last-child .form-control', collectionForm).eq(0).attr('name');
+
+            var bracketIndexes = [0];
+            while ((bracketIndex = indexString.indexOf('[', bracketIndexes.slice(-1)[0] + 1)) != -1) {
+                bracketIndexes.push(bracketIndex);
+            }
+
+            var currentBracketIndex = bracketIndexes[((level * 2) + 1)];
+            var stringUpToBracket = indexString.substring(0, currentBracketIndex + 1);
+
+            var fieldNames = [];
+            $('[name^="' + stringUpToBracket + '"]').each(function (a, b) {
+                var fieldName = $(b).attr('name');
+                var replaceValue = fieldName.substring(0, fieldName.indexOf(']', currentBracketIndex));
+                fieldNames.push(replaceValue);
+            });
+            fieldNames = $.unique(fieldNames);
+
+            for (var i = 0; i < fieldNames.length; i++) {
+                var fieldName = fieldNames[i];
+                var fields = $('[name^="' + fieldName + '"]');
+                var labels = $('[for^="' + fieldName + '"]');
+                var pattern = new RegExp('(' + stringUpToBracket.replace(/\[/g, '\\[').replace(/\]]/g, '\\]') + ')' + '([\\d]+)' + '([^.]+)', 'g');
+                var replaceWith = fields.attr('name').replace(pattern, '$1' + i + '$3');
+                fields.attr({'name': replaceWith, 'id': replaceWith});
+                labels.attr({'for': replaceWith});
+            }
         });
 
         removeDialog.modal('show');
@@ -132,7 +166,14 @@ $(document).ready(function () {
     });
 
     $('input[name="organization_user_identifier"]').keyup(function () {
-        $('input[name="username"]').val($(this).val() + '_admin');
+        if ($(this).val() == "") {
+            $('.username_text').removeClass('hidden');
+            $('.username_value').addClass('hidden');
+        } else {
+            $('input[name="username"]').val($(this).val() + '_admin');
+            $('.username_text').addClass('hidden');
+            $('.username_value').removeClass('hidden');
+        }
     });
 
     $('input[name="activity_identifier"]').keyup(function () {
@@ -146,7 +187,7 @@ $(document).ready(function () {
         }
     });
 
-    $('input[name="iati_identifier_text"]').hover(function () {
+    $('.hover_help_text').hover(function () {
         $(this).next('.help-text').trigger('mouseover');
     }, function () {
         $(this).next('.help-text').trigger('mouseout');

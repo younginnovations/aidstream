@@ -40,7 +40,7 @@ class CountryBudgetItem extends BaseElement
                 ],
                 'budget-item' => [
                     '@attributes' => [
-                        'code'       => $CountryBudgetItem['budget_item'][0]['code'],
+                        'code'       => $CountryBudgetItem['vocabulary'] ? $CountryBudgetItem['budget_item'][0]['code'] : $CountryBudgetItem['budget_item'][0]['code_text'],
                         'percentage' => $CountryBudgetItem['budget_item'][0]['percentage']
                     ],
                     'description' => [
