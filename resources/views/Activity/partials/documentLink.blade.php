@@ -19,7 +19,7 @@
                         <div class="panel panel-default">
                             <div class="panel-heading">Title</div>
                             @foreach($documentLink['title'] as $title)
-                            @foreach($title as $narrative)
+                            @foreach($title['narrative'] as $narrative)
                                     <div class="panel-element-body row">
                                         <div class="col-xs-12 col-md-12">
                                             <div class="col-xs-12 col-sm-4">Text: </div>
