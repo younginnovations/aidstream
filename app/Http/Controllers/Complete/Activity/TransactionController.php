@@ -127,8 +127,29 @@ class TransactionController extends Controller
     public function update(Request $request, $id, $transactionId, TransactionRequest $transactionRequest)
     {
         $this->authorize('edit_activity');
-        $activity           = $this->activityManager->getActivityData($id);
-        $transactionDetails = $request->except(['_token', '_method']);
+        $transactionDetails = $transactionData = $request->except(['_token', '_method']);
+        removeEmptyValues($transactionData);
+        $activity = $this->activityManager->getActivityData($id);
+
+        $count           = 0;
+        $activityDetails = $activity->toArray();
+        removeEmptyValues($activityDetails);
+        if ((!Empty($activityDetails['recipient_country']) || !Empty($activityDetails['recipient_region'])) && !Empty($transactionData['transaction'][0]['recipient_country'])) {
+            $count ++;
+        }
+
+        if ($count > 0) {
+            $response = [
+                'type' => 'warning',
+                'code' => [
+                    'message',
+                    ['message' => 'You cannot save Recipient Country or Recipient Region in transaction level because you have already saved recipient country or region in activity level.']
+                ]
+            ];
+
+            return redirect()->back()->withInput()->withResponse($response);
+        }
+
         $this->filterSector($transactionDetails);
         $this->transactionManager->save($transactionDetails, $activity, $transactionId);
         $this->activityManager->resetActivityWorkflow($id);

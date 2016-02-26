@@ -1,10 +1,5 @@
 <?php
 
-function returnValue($data)
-{
-    return (isset($data)) ? $data : '';
-}
-
 /**
  * removes empty values
  * @param $data
