@@ -88,7 +88,7 @@
                         </div>
                     </div>
                 @else
-                    <div class="alert alert-info"><span>You are duplicating activity:
+                    <div class="activity-description duplicate-activity-description"><span>You are duplicating activity:
                         Please note that Transactions and Results are not duplicated. You have to manually add Transactions and Results to the duplicated activity.</span></div>
                 @endif
             </div>

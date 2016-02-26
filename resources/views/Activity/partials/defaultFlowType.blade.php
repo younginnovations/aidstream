@@ -1,6 +1,6 @@
 @if(!empty($defaultFlowType))
     <div class="panel panel-default">
-        <div class="panel-heading">Default FLow Type
+        <div class="panel-heading">Default Flow Type
             <a href="{{route('activity.default-flow-type.index', $id)}}" class="edit-element">edit</a>
         </div>
         <div class="panel-element-body row">

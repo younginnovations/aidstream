@@ -20,7 +20,7 @@
                                 <thead>
                                 <tr>
                                     <th width="30px">S.N.</th>
-                                    <th>Document Link</th>
+                                    <th width="70%">Document Link</th>
                                     <th>Activity Identifiers</th>
                                 </tr>
                                 </thead>
@@ -43,7 +43,7 @@
                                 @endforeach
                                 </tbody>
                             </table>
-                        @else
+                            @else
                             <div class="text-center no-data no-document-data">
                                 You haven’t added any document yet.
                             </div>

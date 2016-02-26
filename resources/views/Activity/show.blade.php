@@ -18,6 +18,10 @@
                 ?>
                 <div class="element-panel-heading">
                     <span>{{ $activityDataList['title'] ? $activityDataList['title'][0]['narrative'] : 'No Title' }}</span>
+                    <div class="element-panel-heading-info">
+                        <span>US-EIN-042347643-200708080/PO4048</span>
+                        <span class="last-updated-date">Last Updated on: Oct 4, 2015 3h 24m 42s</span>
+                    </div>
                 </div>
                 <div class="col-xs-12 col-md-8 col-lg-8 element-content-wrapper">
                     <div class="activity-status activity-status-{{ $status_label[$activity_workflow] }}">
