@@ -124,7 +124,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2-rc.1/js/select2.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
-        $('select').select2();
+        $('form select').select2();
     });
 </script>
 @yield('foot')
