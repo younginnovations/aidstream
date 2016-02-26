@@ -3,6 +3,7 @@
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Request;
 use App\Services\Activity\ActivityManager;
+use App\Services\Activity\TransactionManager;
 use App\Services\FormCreator\Activity\RecipientCountry as RecipientCountryForm;
 use App\Services\Activity\RecipientCountryManager;
 use App\Services\RequestManager\Activity\RecipientCountry as RecipientCountryRequestManager;
@@ -17,29 +18,39 @@ class RecipientCountryController extends Controller
      * @var RecipientCountryForm
      */
     protected $recipientCountryForm;
+
     /**
      * @var RecipientCountryManager
      */
     protected $recipientCountryManager;
+
     /**
      * @var ActivityManager
      */
     protected $activityManager;
 
     /**
+     * @var TransactionManager
+     */
+    protected $transactionManager;
+
+    /**
      * @param RecipientCountryForm    $recipientCountryForm
      * @param RecipientCountryManager $recipientCountryManager
      * @param ActivityManager         $activityManager
+     * @param TransactionManager      $transactionManager
      */
     public function __construct(
         RecipientCountryForm $recipientCountryForm,
         RecipientCountryManager $recipientCountryManager,
-        ActivityManager $activityManager
+        ActivityManager $activityManager,
+        TransactionManager $transactionManager
     ) {
         $this->middleware('auth');
         $this->recipientCountryForm    = $recipientCountryForm;
         $this->recipientCountryManager = $recipientCountryManager;
         $this->activityManager         = $activityManager;
+        $this->transactionManager      = $transactionManager;
     }
 
     /**
@@ -66,6 +77,27 @@ class RecipientCountryController extends Controller
     public function update($id, Request $request, RecipientCountryRequestManager $recipientCountryRequestManager)
     {
         $this->authorize(['edit_activity', 'add_activity']);
+        $activityTransactions = $this->transactionManager->getTransactions($id);
+        $count                = 0;
+        if ($activityTransactions) {
+            foreach ($activityTransactions as $transactions) {
+                $transactionDetail = $transactions->transaction;
+                removeEmptyValues($transactionDetail);
+                if (!Empty($transactionDetail['recipient_country']) || !Empty($transactionDetail['recipient_region'])) {
+                    $count ++;
+                }
+            }
+        }
+
+        if ($count > 0) {
+            $response = [
+                'type' => 'warning',
+                'code' => ['message', ['message' => 'You cannot save Recipient Country in activity level because you have already saved recipient country or region in transaction level.']]
+            ];
+
+            return redirect()->back()->withInput()->withResponse($response);
+        }
+
         $recipientCountry = $request->all();
         $activityData     = $this->activityManager->getActivityData($id);
         if ($this->recipientCountryManager->update($recipientCountry, $activityData)) {
