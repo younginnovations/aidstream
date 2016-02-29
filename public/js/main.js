@@ -446,6 +446,7 @@ $(document).ready(function () {
         }
     });
 
+
     window.onbeforeunload = function () {
         if (preventNavigation) {
             return 'You have unsaved changes.';
@@ -461,4 +462,12 @@ $(document).ready(function () {
     $(".clickable-row > td > :checkbox").click(function () {
         $(this).parents('.clickable-row').toggleClass('clickable-row-bg');
     });
+
+    var windowHeight = $(document).height();
+    $('.sidebar-wrapper').css('height',windowHeight);
+
+    $('.activity-element-title').click(function(){
+        $(this).parent('.panel-heading').toggleClass('activity-element-toggle').next().slideToggle();
+    });
+
 });

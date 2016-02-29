@@ -3,7 +3,7 @@
         <div class="panel-heading">Document Link
             <a href="{{ url('/organization/' . $orgId . '/document-link') }}" class="edit-element">edit</a>
         </div>
-        <div class="panel-body panel-element-body row">
+        <div class="panel-body panel-level-1 row">
             @foreach($document_link as $documentLink)
                 <div class="panel panel-default">
                     <div class="panel-body panel-element-body row">
@@ -48,24 +48,26 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">Recipient Country</div>
                     @foreach($documentLink['recipient_country'] as $documentLinkRecipientCountry)
-                        <div class="panel-body panel-element-body row">
+                        <div class="panel-body panel-element-body row panel-level-1">
                             <div class="col-xs-12 col-md-12">
                                 <div class="col-xs-12 col-xs-4">Code:</div>
                                 <div class="col-xs-12 col-xs-8">{{ $code->getOrganizationCodeName('Country', $documentLinkRecipientCountry['code'])}}</div>
                             </div>
                         </div>
-                        <div class="panel panel-default">
-                            @foreach($documentLinkRecipientCountry['narrative'] as $documentLinkNarrative)
-                                <div class="panel-heading">Narrative</div>
-                                <div class="panel-body panel-element-body row">
-                                    <div class="col-xs-12 col-md-12">
-                                        <div class="col-xs-12 col-xs-4">Text:</div>
-                                        <div class="col-xs-12 col-xs-8">{{ $documentLinkNarrative['narrative'] . ' [' . $documentLinkNarrative['language'] . ']' }}</div>
+                        <div class="col-xs-12 col-md-12 col-lg-12 panel-level-2">
+                            <div class="panel panel-default">
+                                @foreach($documentLinkRecipientCountry['narrative'] as $documentLinkNarrative)
+                                    <div class="panel-heading">Narrative</div>
+                                    <div class="panel-body panel-element-body row">
+                                        <div class="col-xs-12 col-md-12">
+                                            <div class="col-xs-12 col-xs-4">Text:</div>
+                                            <div class="col-xs-12 col-xs-8">{{ $documentLinkNarrative['narrative'] . ' [' . $documentLinkNarrative['language'] . ']' }}</div>
+                                        </div>
                                     </div>
-                                </div>
+                                @endforeach
+                            </div>
                             @endforeach
                         </div>
-                    @endforeach
                 </div>
             @endforeach
         </div>

@@ -27,7 +27,7 @@ label {
 }
 
 #{$all-text-inputs},
-select,.form-control[readonly] {
+select,.form-control[readonly],form .select2-container {
   background-color: $color_light_blue!important;
   border: 1px solid $color_blue;
   border-radius: 4px;

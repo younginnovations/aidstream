@@ -68,7 +68,7 @@ label {
     display: none; }
 
 input[type="color"], input[type="date"], input[type="datetime"], input[type="datetime-local"], input[type="email"], input[type="month"], input[type="number"], input[type="password"], input[type="search"], input[type="tel"], input[type="text"], input[type="time"], input[type="url"], input[type="week"], input:not([type]), textarea,
-select, .form-control[readonly] {
+select, .form-control[readonly], form .select2-container {
   background-color: #F2F9FC !important;
   border: 1px solid #BFDFEC;
   -webkit-border-radius: 4px;
@@ -88,16 +88,16 @@ select, .form-control[readonly] {
           transition: border-color 150ms ease;
   width: 100%; }
   input[type="color"]:focus, input[type="date"]:focus, input[type="datetime"]:focus, input[type="datetime-local"]:focus, input[type="email"]:focus, input[type="month"]:focus, input[type="number"]:focus, input[type="password"]:focus, input[type="search"]:focus, input[type="tel"]:focus, input[type="text"]:focus, input[type="time"]:focus, input[type="url"]:focus, input[type="week"]:focus, input:not([type]):focus, textarea:focus,
-  select:focus, .form-control[readonly]:focus {
+  select:focus, .form-control[readonly]:focus, form .select2-container:focus {
     -webkit-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.06), 0 0 5px rgba(55, 112, 192, 0.7);
             box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.06), 0 0 5px rgba(55, 112, 192, 0.7);
     outline: none; }
   input[type="color"]:disabled, input[type="date"]:disabled, input[type="datetime"]:disabled, input[type="datetime-local"]:disabled, input[type="email"]:disabled, input[type="month"]:disabled, input[type="number"]:disabled, input[type="password"]:disabled, input[type="search"]:disabled, input[type="tel"]:disabled, input[type="text"]:disabled, input[type="time"]:disabled, input[type="url"]:disabled, input[type="week"]:disabled, input:not([type]):disabled, textarea:disabled,
-  select:disabled, .form-control[readonly]:disabled {
+  select:disabled, .form-control[readonly]:disabled, form .select2-container:disabled {
     background-color: #e6edef;
     cursor: not-allowed; }
     input[type="color"]:disabled:hover, input[type="date"]:disabled:hover, input[type="datetime"]:disabled:hover, input[type="datetime-local"]:disabled:hover, input[type="email"]:disabled:hover, input[type="month"]:disabled:hover, input[type="number"]:disabled:hover, input[type="password"]:disabled:hover, input[type="search"]:disabled:hover, input[type="tel"]:disabled:hover, input[type="text"]:disabled:hover, input[type="time"]:disabled:hover, input[type="url"]:disabled:hover, input[type="week"]:disabled:hover, input:not([type]):disabled:hover, textarea:disabled:hover,
-    select:disabled:hover, .form-control[readonly]:disabled:hover {
+    select:disabled:hover, .form-control[readonly]:disabled:hover, form .select2-container:disabled:hover {
       border: #F2F9FC; }
 
 textarea {
@@ -492,13 +492,17 @@ label {
   margin-left: 0; }
 
 .btn-submit {
+  border: 2px solid #00A8FF;
+  background: #fff;
   font-size: 15px;
   line-height: 37px;
   width: 100%;
-  color: #fff;
+  color: #00A8FF;
   margin-top: 24px;
   height: 53px; }
   .btn-submit:hover, .btn-submit:focus, .btn-submit:active {
+    background: #00A8FF;
+    border: 2px solid #00A8FF;
     color: #fff; }
 
 .create-account-wrapper {
@@ -773,7 +777,9 @@ label {
      -moz-transition: width 0.3s ease;
        -o-transition: width 0.3s ease;
           transition: width 0.3s ease;
-  background: #262626; }
+  background: #262626;
+  height: 100vh;
+  overflow-y: scroll; }
   .sidebar-wrapper .panel {
     border: 0;
     -webkit-box-shadow: none;
@@ -882,12 +888,7 @@ label {
   margin-right: auto;
   height: 100%;
   width: 100%;
-  padding: 0;
-  position: relative;
-  -webkit-transition: left 0.4s;
-     -moz-transition: left 0.4s;
-       -o-transition: left 0.4s;
-          transition: left 0.4s; }
+  padding: 0; }
   .main-container::after {
     clear: both;
     content: "";
@@ -1124,15 +1125,15 @@ label {
         background: #efefef; }
 
 .action-icon {
-  width: 33px;
-  height: 32px;
+  width: 27px;
+  height: 26px;
   text-indent: -9999px;
   float: left;
   position: absolute;
   top: 11px;
   right: auto;
   bottom: auto;
-  left: -17px;
+  left: -14px;
   padding-left: 0 !important;
   -webkit-border-radius: 50%;
           border-radius: 50%;
@@ -1282,8 +1283,8 @@ label {
 
 .edit-element, .edit-value {
   text-indent: -9999px;
-  width: 32px;
-  height: 32px;
+  width: 26px;
+  height: 26px;
   background: #fff url(../../images/ic-sprite.png) no-repeat -154px -261px; }
   .edit-element:hover, .edit-value:hover {
     background-position: -221px -261px; }
@@ -2243,8 +2244,7 @@ form > .add_to_collection[data-collection="legacy_data"] {
     .sidebar-wrapper + .content-wrapper {
       width: -webkit-calc(100% - 250px) !important;
       width: -moz-calc(100% - 250px) !important;
-      width: calc(100% - 250px) !important;
-      margin-left: 250px; } }
+      width: calc(100% - 250px) !important; } }
 
 @media all and (min-width: 1340px) {
   .settings-checkall-wrapper > .collection_form > .form-group > .form-group {

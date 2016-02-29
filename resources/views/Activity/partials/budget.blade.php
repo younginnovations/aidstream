@@ -1,6 +1,9 @@
 @if(!empty($budgets))
     <div class="panel panel-default">
-        <div class="panel-heading">Budgets
+        <div class="panel-heading">
+            <div class="activity-element-title">
+                Budgets
+            </div>
             <a href="{{route('activity.budget.index', $id)}}" class="edit-element">edit</a>
         </div>
         <div class="panel-body panel-level-1">

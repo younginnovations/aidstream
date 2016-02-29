@@ -20,7 +20,7 @@
                 $btn_text = $status > 2 ? "" : $btn_status_label[$status];
                 ?>
                 <div class="element-panel-heading">
-                    <span class="pull-left">Organization</span>
+                    <div><span class="pull-left">Organization</span></div>
                 </div>
                 <div class="col-xs-12 col-md-8 col-lg-8 element-content-wrapper">
                     <div class="activity-status activity-status-{{ $status_label[$status] }}">

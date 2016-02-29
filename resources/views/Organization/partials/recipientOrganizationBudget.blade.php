@@ -59,7 +59,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="panel panel-default">
+
                     <div class="col-xs-12 col-md-12 col-lg-12 panel-level-2">
                         <div class="panel-heading">Budget Line</div>
                         <div class="panel-body row">
@@ -103,7 +103,6 @@
                             @endforeach
                         </div>
                     </div>
-                </div>
             @endforeach
         </div>
     </div>

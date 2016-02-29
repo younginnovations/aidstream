@@ -24,22 +24,22 @@
         </div>
     </div>
     <div class="col-md-12 text-center heading-title">
-        <h2>Who are behind AidStream?</h2>
+        <h2>Who is behind AidStream?</h2>
     </div>
     <div class="information-wrapper bottom-line">
-        <div class="information-section about-information-section">
-            <div class="col-md-12 width-900 text-center">
-                <div class="left-wrapper">
-                    <img src="images/ic-aidinfo.png" alt="">
-                </div>
-                <div class="right-wrapper">
-                    <p>Aidinfo is based in the UK and works to accelerate poverty reduction by making aid more
-                        transparent, particularly through its support of the International Aid Transparency Initiative.
-                        It acts as the secretariat and provides logistical support for the IATI Technical Advisory
-                        Group.</p>
-                </div>
-            </div>
-        </div>
+        {{--<div class="information-section about-information-section">--}}
+            {{--<div class="col-md-12 width-900 text-center">--}}
+                {{--<div class="left-wrapper">--}}
+                    {{--<img src="images/ic-aidinfo.png" alt="">--}}
+                {{--</div>--}}
+                {{--<div class="right-wrapper">--}}
+                    {{--<p>Aidinfo is based in the UK and works to accelerate poverty reduction by making aid more--}}
+                        {{--transparent, particularly through its support of the International Aid Transparency Initiative.--}}
+                        {{--It acts as the secretariat and provides logistical support for the IATI Technical Advisory--}}
+                        {{--Group.</p>--}}
+                {{--</div>--}}
+            {{--</div>--}}
+        {{--</div>--}}
         <div class="information-section about-information-section">
             <div class="col-md-12 width-900 text-center">
                 <div class="left-wrapper">
@@ -47,7 +47,7 @@
                 </div>
                 <div class="right-wrapper">
                     <p>
-                        YoungInnovations is a Nepal-based company providing cutting-edge software and web solutions to a
+                        <a href="http://younginnovations.com.np/" target="_blank">YoungInnovations</a> is a Nepal-based company providing cutting-edge software and web solutions to a
                         wide range of partners in Nepal and abroad. Currently it is implementing the "Mobile Social
                         Networking Nepal" initiative in partnership with the World Bank's infoDev programme to build a
                         community around mobile technologies. YoungInnovations is also becoming increasingly involved in

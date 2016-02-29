@@ -8,7 +8,7 @@ $color_cerulean_approx: #0094de;
 $color_alabaster_approx: #f9f9f9;
 
 //images
-$url_1: url("../images/logo-text.png");
+$url_1: url("../images/logo-aidstream.png");
 $url_2: url("../images/social-sprite.png");
 
 @font-face {
@@ -83,8 +83,8 @@ h2 {
 
 .navbar-brand {
   background: $url_1 no-repeat left;
-  width: 142px;
-  height: 37px;
+  width: 160px;
+  height: 42px;
   display: block;
   text-indent: -9999px;
 }

@@ -9,11 +9,14 @@
             @include('includes.side_bar_menu')
             <div class="col-xs-9 col-md-9 col-lg-9 content-wrapper">
                 @include('includes.response')
-                <div class="panel-content-heading panel-title-heading">Transactions of <span>{{$activity->IdentifierTitle}}</span>
+                <div class="panel-content-heading panel-title-heading">
+                    <div>Transactions of <span>{{$activity->IdentifierTitle}}</span></div>
                     @if(count($activity->getTransactions()) > 0)
                         <div class="pull-right panel-action-btn">
-                            <a href="{{ route('activity.transaction.create', $id) }}" class="btn btn-primary">Add New Transaction</a>
-                            <a href="{{ route('activity.transaction-upload.index', $id) }}" class="btn btn-primary">Upload Transaction</a>
+                            <a href="{{ route('activity.transaction.create', $id) }}" class="btn btn-primary">Add New
+                                Transaction</a>
+                            <a href="{{ route('activity.transaction-upload.index', $id) }}" class="btn btn-primary">Upload
+                                Transaction</a>
                         </div>
                     @endif
                 </div>
@@ -34,16 +37,17 @@
                                     </thead>
                                     <tbody>
                                     @foreach($activity->getTransactions() as  $transaction)
-                                        <tr>
+                                        <tr data-href="{{ route('activity.transaction.show', [$activity->id, $transaction['id']]) }}" class="clickable-row">
                                             <td>{{ $transaction['reference'] }}</td>
                                             <td>{{ isset($transaction['humanitarian']) && $transaction['humanitarian'] == 1 ? 'True' : 'False' }}</td>
                                             <td>{{ $code->getActivityCodeName('TransactionType', $transaction['transaction_type'][0]['transaction_type_code'])}}</td>
                                             <td>{{ $transaction['value'][0]['amount'] }}</td>
                                             <td>{{ $transaction['transaction_date'][0]['date'] }}</td>
                                             <td>
-                                                <a class="view" href="{{ route('activity.transaction.show', [$activity->id, $transaction['id']]) }}">View</a>
-                                                <a class="edit" href="{{ route('activity.transaction.edit', [$activity->id, $transaction['id']]) }}">Edit</a>
-                                                <a class="delete" href="{{ url(sprintf('activity/%s/transaction/%s/delete', $activity->id, $transaction['id'])) }}">Delete</a>
+                                                <a class="edit"
+                                                   href="{{ route('activity.transaction.edit', [$activity->id, $transaction['id']]) }}">Edit</a>
+                                                <a class="delete"
+                                                   href="{{ url(sprintf('activity/%s/transaction/%s/delete', $activity->id, $transaction['id'])) }}">Delete</a>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -53,8 +57,10 @@
                                 <div class="text-center no-data no-result-data">
                                     You haven’t added any transactions yet.
                                     <div class="no-data-btn">
-                                        <a href="{{ route('activity.transaction.create', $id) }}" class="btn btn-primary">Add New Transaction</a>
-                                        <a href="{{ route('activity.transaction-upload.index', $id) }}" class="btn btn-primary upload">Upload Transaction</a>
+                                        <a href="{{ route('activity.transaction.create', $id) }}"
+                                           class="btn btn-primary">Add New Transaction</a>
+                                        <a href="{{ route('activity.transaction-upload.index', $id) }}"
+                                           class="btn btn-primary upload">Upload Transaction</a>
                                     </div>
                                 </div>
                             @endif

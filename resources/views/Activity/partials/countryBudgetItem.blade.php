@@ -1,6 +1,9 @@
 @if(!empty($countryBudgetItems))
     <div class="panel panel-default">
-        <div class="panel-heading">Country Budget Items
+        <div class="panel-heading">
+            <div class="activity-element-title">
+                Country Budget Items
+            </div>
             <a href="{{route('activity.country-budget-items.index', $id)}}" class="edit-element">edit</a>
         </div>
         <div class="panel-body panel-level-1">

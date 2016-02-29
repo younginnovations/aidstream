@@ -13,7 +13,9 @@
                 @include('includes.response')
                 @include('includes.breadcrumb')
                 <div class="panel panel-default">
-                    <div class="panel-content-heading">Activities</div>
+                    <div class="panel-content-heading">
+                        <div>Activities</div>
+                    </div>
                     <div class="panel-body">
                         @if(count($activities) > 0)
                             <table class="table table-striped">
