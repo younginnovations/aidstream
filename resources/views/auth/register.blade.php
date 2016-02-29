@@ -95,7 +95,7 @@
 
                                         <div class="col-xs-12 col-md-12">
                                             <input type="text" class="form-control" name="organization_user_identifier" value="{{ old('organization_user_identifier') }}">
-                                            <span class="help-text" data-toggle="tooltip" data-placement="top"
+                                            <span class="help-text" id="aaaaaa" data-toggle="tooltip" data-placement="top"
                                                   title="Your organisation user identifier will be used as a prefix for all the AidStream users in your organisation. We recommend that you use a short abbreviation that uniquely identifies your organisation. If your organisation is 'Acme Bellus Foundation', your organisation user identifier should be 'abf', depending upon it's availability.">
                                                 Your organisation user identifier will be used as a prefix for all the AidStream users in your organisation. We recommend that you use a short abbreviation that uniquely identifies your organisation. If your organisation is 'Acme Bellus Foundation', your organisation user identifier should be 'abf', depending upon it's availability.
                                             </span>

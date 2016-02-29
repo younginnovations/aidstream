@@ -33,7 +33,8 @@ $(document).ready(function () {
                         .css({left: feedback.target.left - position.left})
                         .appendTo(this);
                 }
-            }
+            },
+            hide: 'hide'
         });
     }
 
@@ -148,9 +149,17 @@ $(document).ready(function () {
                 var fields = $('[name^="' + fieldName + '"]');
                 var labels = $('[for^="' + fieldName + '"]');
                 var pattern = new RegExp('(' + stringUpToBracket.replace(/\[/g, '\\[').replace(/\]]/g, '\\]') + ')' + '([\\d]+)' + '([^.]+)', 'g');
-                var replaceWith = fields.attr('name').replace(pattern, '$1' + i + '$3');
-                fields.attr({'name': replaceWith, 'id': replaceWith});
-                labels.attr({'for': replaceWith});
+                fields.each(function () {
+                    var field = $(this);
+                    var replaceWith = field.attr('name').replace(pattern, '$1' + i + '$3');
+                    field.attr({'name': replaceWith, 'id': replaceWith});
+                });
+                labels.each(function () {
+                    var label = $(this);
+                    var replaceWith = label.attr('for').replace(pattern, '$1' + i + '$3');
+                    var replaceWith = label.attr('for').replace(pattern, '$1' + i + '$3');
+                    label.attr({'for': replaceWith});
+                });
             }
         });
 
