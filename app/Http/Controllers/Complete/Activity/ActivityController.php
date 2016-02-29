@@ -193,7 +193,7 @@ class ActivityController extends Controller
 
         if ($activityWorkflow == 1) {
             $validationMessage = $activityElementValidator->validateActivity($activityData, $transactionData);
-            if($validationMessage){
+            if ($validationMessage) {
                 $response = ['type' => 'warning', 'code' => ['message', ['message' => $validationMessage]]];
 
                 return redirect()->back()->withResponse($response);
@@ -212,14 +212,17 @@ class ActivityController extends Controller
                 return redirect()->to('/settings')->withResponse($response);
             }
             $xmlService->generateActivityXml($activityData, $transactionData, $resultData, $settings, $activityElement, $orgElem, $organization);
-            $publishedStatus = $this->publishToRegistry();
 
-            if (!$publishedStatus) {
-                $this->activityManager->updateStatus($input, $activityData);
-                $this->activityManager->makePublished($activityData);
-                $response = ['type' => 'warning', 'code' => ['publish_registry', ['name' => '']]];
+            if ($settings['registry_info'][0]['publish_files'] == 'yes') {
+                $publishedStatus = $this->publishToRegistry();
 
-                return redirect()->back()->withResponse($response);
+                if (!$publishedStatus) {
+                    $this->activityManager->updateStatus($input, $activityData);
+                    $this->activityManager->makePublished($activityData);
+                    $response = ['type' => 'warning', 'code' => ['publish_registry', ['name' => '']]];
+
+                    return redirect()->back()->withResponse($response);
+                }
             }
         }
 

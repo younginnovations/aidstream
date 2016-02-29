@@ -29,11 +29,8 @@ class XmlGenerator extends V201XmlGenerator
         $xmlOrganization['total-expenditure']        = $this->orgElem->getTotalExpenditureXml($organizationData);
         $xmlOrganization['document-link']            = $this->documentLinkElem->getXmlData($organizationData);
 
-        return array_filter(
-            $xmlOrganization,
-            function ($value) {
-                return $value;
-            }
-        );
+        removeEmptyValues($xmlOrganization);
+
+        return $xmlOrganization;
     }
 }

@@ -18,7 +18,7 @@
 
             <p>AidStream is an online platform for organisations that wish to publish aid data in the International Aid
                 Transparency Initiative(IATI) format without getting into complexities of IATI. </p>
-            <a href="#" class="btn btn-primary get-started-btn">Get Started</a>
+            <a href="{{ url('/auth/register') }}" class="btn btn-primary get-started-btn">Get Started</a>
 
             <div class="screenshot">
                 <img src="images/screenshot.png" alt="">
@@ -106,7 +106,7 @@
             <h2>Convinced yet?</h2>
 
             <p>Lets just say, with AidStream, making your data open will be a piece of cake and a fun experience</p>
-            <a href="#" class="btn btn-primary get-started-btn">Get Started</a>
+            <a href="{{ url('/auth/register') }}" class="btn btn-primary get-started-btn">Get Started</a>
         </div>
     </div>
 </section>

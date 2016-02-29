@@ -16,15 +16,27 @@
                             <div class="panel-default">
                                 <div class="panel-body panel-element-body">
                                     <div class="col-md-12 clearfix">
-                                        <div class="col-xs-12 col-sm-4 col-lg-3">Reporting Organisation Identifier:</div>
+                                        <div class="col-xs-12 col-sm-4 col-lg-3">Identifier:</div>
                                         <div class="col-xs-12 col-sm-8 col-lg-9">{{ $reportingOrganization[0]['reporting_organization_identifier'] }}</div>
                                     </div>
                                     <div class="col-md-12 clearfix">
-                                        <div class="col-xs-12 col-sm-4 col-lg-3">Reporting Organisation Type:</div>
+                                        <div class="col-xs-12 col-sm-4 col-lg-3">Type:</div>
                                         <div class="col-xs-12 col-sm-8 col-lg-9">{{ $reportingOrganization[0]['reporting_organization_type'] }}</div>
+                                    </div>
+                                    <div class="col-md-12 clearfix">
+                                        <div class="col-xs-12 col-sm-4 col-lg-3">Name:</div>
+                                        <div class="col-xs-12 col-sm-8 col-lg-9">
+                                            {{--*/ $narratives = [] /*--}}
+                                            @foreach($reportingOrganization[0]['narrative'] as $narrative)
+                                                {{--*/ $narratives[] = $narrative['narrative'] . ($narrative['language'] ? '[' . $narrative['language'] . ']' : '') /*--}}
+                                            @endforeach
+                                            {{ implode('<br />', $narratives) }}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+                            <br />
+                            <div class="activity-description"><span>Reporting organization information can be updated in <a href="{{ route('settings.index') }}">Settings</a>.</span></div>
                         </div>
                     </div>
                 </div>

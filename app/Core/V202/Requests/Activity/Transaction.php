@@ -187,7 +187,7 @@ class Transaction extends V201Transaction
         foreach ($formFields as $sectorIndex => $sector) {
             $sectorForm                                       = sprintf('%s.sector.%s', $formBase, $sectorIndex);
             $rules[sprintf('%s.vocabulary_uri', $sectorForm)] = 'url';
-            if ($sector['sector_vocabulary'] == 1) {
+            if ($sector['sector_vocabulary'] == 1 || $sector['sector_vocabulary'] == '') {
                 $rules[sprintf('%s.sector_code', $sectorForm)] = 'required';
             } elseif ($sector['sector_vocabulary'] == 2) {
                 $rules[sprintf('%s.sector_category_code', $sectorForm)] = 'required';
@@ -213,7 +213,7 @@ class Transaction extends V201Transaction
         foreach ($formFields as $sectorIndex => $sector) {
             $sectorForm                                              = sprintf('%s.sector.%s', $formBase, $sectorIndex);
             $messages[sprintf('%s.vocabulary_uri.url', $sectorForm)] = 'Enter valid URL. eg. http://example.com';
-            if ($sector['sector_vocabulary'] == 1) {
+            if ($sector['sector_vocabulary'] == 1 || $sector['sector_vocabulary'] == '') {
                 $messages[sprintf('%s.sector_code.%s', $sectorForm, 'required')] = 'Sector is required.';
             } elseif ($sector['sector_vocabulary'] == 2) {
                 $messages[sprintf('%s.sector_category_code.%s', $sectorForm, 'required')] = 'Sector is required.';

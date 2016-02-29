@@ -47,11 +47,11 @@ class OrgReportingOrgController extends Controller
      */
     public function index($organizationId)
     {
-        $organization = $this->organizationManager->getOrganization($organizationId);
-        $data         = $organization->reporting_org;
-        $form         = $this->orgReportingOrgFormCreator->editForm($data, $organization);
+        $organization          = $this->organizationManager->getOrganization($organizationId);
+        $reportingOrganization = $organization->reporting_org;
+        $form                  = $this->orgReportingOrgFormCreator->editForm($reportingOrganization, $organization);
 
-        return view('Organization.reportingOrg.edit', compact('form', 'organization'));
+        return view('Organization.reportingOrg.edit', compact('form', 'organization', 'reportingOrganization'));
     }
 
     /**

@@ -10,17 +10,35 @@
                 @include('includes.response')
                 <div class="panel-content-heading">Reporting Organization</div>
                 <div class="col-xs-12 col-md-8 col-lg-8 element-content-wrapper">
-                    <div class="panel panel-default">
+                    <div class="panel panel-default panel-element-detail">
                         <div class="panel-body">
-                            <div class="create-form">
-                                {!! form($form) !!}
+                            <div class="panel-default">
+                                <div class="panel-body panel-element-body">
+                                    <div class="col-md-12 clearfix">
+                                        <div class="col-xs-12 col-sm-4 col-lg-3">Identifier:</div>
+                                        <div class="col-xs-12 col-sm-8 col-lg-9">{{ $reportingOrganization[0]['reporting_organization_identifier'] }}</div>
+                                    </div>
+                                    <div class="col-md-12 clearfix">
+                                        <div class="col-xs-12 col-sm-4 col-lg-3">Type:</div>
+                                        <div class="col-xs-12 col-sm-8 col-lg-9">{{ $reportingOrganization[0]['reporting_organization_type'] }}</div>
+                                    </div>
+                                    <div class="col-md-12 clearfix">
+                                        <div class="col-xs-12 col-sm-4 col-lg-3">Name:</div>
+                                        <div class="col-xs-12 col-sm-8 col-lg-9">
+                                            {{--*/ $narratives = [] /*--}}
+                                            @foreach($reportingOrganization[0]['narrative'] as $narrative)
+                                                {{--*/ $narratives[] = $narrative['narrative'] . ($narrative['language'] ? '[' . $narrative['language'] . ']' : '') /*--}}
+                                            @endforeach
+                                            {{ implode('<br />', $narratives) }}
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="collection-container hidden"
-                                 data-prototype="{{ form_row($form->reporting_org->prototype()) }}">
-                            </div>
-                        </div>
+                            <br />
+                            <div class="activity-description"><span>Reporting organization information can be updated in <a href="{{ route('settings.index') }}">Settings</a>.</span></div>
                         </div>
                     </div>
+                </div>
                 @include('includes.menu_org')
             </div>
         </div>

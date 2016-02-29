@@ -71,7 +71,7 @@ class XmlGenerator
             $published->save();
         }
 
-        return $this->organizationManager->publishToRegistry($organization, $settings);
+        return ($settings['registry_info'][0]['publish_files'] == 'yes') ? $this->organizationManager->publishToRegistry($organization, $settings) : true;
     }
 
     /**
@@ -116,11 +116,8 @@ class XmlGenerator
         $xmlOrganization['recipient-country-budget'] = $this->recipientCountrybudgetElem->getXmlData($organizationData);
         $xmlOrganization['document-link']            = $this->documentLinkElem->getXmlData($organizationData);
 
-        return array_filter(
-            $xmlOrganization,
-            function ($value) {
-                return $value;
-            }
-        );
+        removeEmptyValues($xmlOrganization);
+
+        return $xmlOrganization;
     }
 }

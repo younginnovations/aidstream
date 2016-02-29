@@ -23,9 +23,9 @@ build:
     - script:
         name: PHPUnit Unit tests
         code: ./vendor/bin/phpunit tests/app
-    - script:
-        name: PHPUnit Hookah tests
-        code: ./vendor/bin/paratest --colors -m 2 -p 4 --stop-on-failure --path= tests/Smoke
+#    - script:
+#        name: PHPUnit Hookah tests
+#        code: ./vendor/bin/paratest --colors -m 2 -p 4 --stop-on-failure --path= tests/Smoke
   after-steps:
      - script:
         name: Notify Hipchat

@@ -84,11 +84,8 @@ class XmlGenerator extends XmlGenerator201
         $xmlActivity['conditions']           = $this->conditionElem->getXmlData($activity);
         $xmlActivity['result']               = $this->resultElem->getXmlData($result);
 
-        return array_filter(
-            $xmlActivity,
-            function ($value) {
-                return $value;
-            }
-        );
+        removeEmptyValues($xmlActivity);
+
+        return $xmlActivity;
     }
 }
