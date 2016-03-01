@@ -2056,6 +2056,10 @@ form > .add_to_collection[data-collection="legacy_data"] {
 .activity-show > .panel-body .expanded div[class*="panel-level-"] .panel > .panel-body {
   display: none; }
 
+div[class*="panel-level-"] .panel > .panel-body {
+  display: block !important;
+  margin-left: 0; }
+
 .activity-element-title {
   cursor: pointer;
   position: relative;

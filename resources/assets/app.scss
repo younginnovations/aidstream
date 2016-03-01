@@ -2301,6 +2301,11 @@ $organization-logo-width: 124px;
   display: none;
 }
 
+div[class*="panel-level-"] .panel > .panel-body {
+  display: block!important;
+  margin-left: 0;
+}
+
 .activity-element-title {
   cursor: pointer;
   position: relative;
