@@ -1,5 +1,5 @@
 {
-  "date-last-modified": "2015-10-16T10:42:20.521073+00:00",
+  "date-last-modified": "2016-02-29T16:53:17.223024+00:00",
   "version": "",
   "name": "FlowType",
   "xml:lang": "en",
@@ -18,9 +18,9 @@
     },
     {
       "code": "30",
-      "name": "Private NGO and other private sources",
+      "name": "Private grants",
       "language": "en",
-      "description": "Grants made by NGOs and other civil society organisations (e.e. philantropic foundations) based in the reporting DAC country"
+      "description": "made by NGOs and other civil society organisations (e.e. philantropic foundations) based in the reporting DAC country"
     },
     {
       "code": "35",
@@ -38,7 +38,7 @@
       "code": "50",
       "name": "Other flows",
       "language": "en",
-      "description": "e.g. non-ODA component of peacebuilding operations"
+      "description": "e.g. non-ODA component of peacebuilding operations)"
     }
   ]
 }

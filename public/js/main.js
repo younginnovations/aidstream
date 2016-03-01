@@ -184,6 +184,9 @@ $(document).ready(function () {
             $('.username_value').removeClass('hidden');
         }
     });
+    if ($('input[name="organization_user_identifier"]').val() !== '') {
+        $('input[name="organization_user_identifier"]').trigger('keyup');
+    }
 
     $('input[name="activity_identifier"]').keyup(function () {
         if ($(this).val() == "") {
@@ -195,16 +198,15 @@ $(document).ready(function () {
             $('.iati_identifier_text').removeClass('hidden');
         }
     });
+    if ($('input[name="activity_identifier"]').val() !== '') {
+        $('input[name="activity_identifier"]').trigger('keyup');
+    }
 
     $('.hover_help_text').hover(function () {
         $(this).next('.help-text').trigger('mouseover');
     }, function () {
         $(this).next('.help-text').trigger('mouseout');
     });
-
-    if ($('input[name="activity_identifier"]').val() !== '') {
-        $('input[name="activity_identifier"]').trigger('keyup');
-    }
 
     $('.checkAll').click(function () {
         $('.field1').not('[readonly="readonly"]').prop('checked', this.checked);
@@ -457,5 +459,4 @@ $(document).ready(function () {
     $(".clickable-row > td > :checkbox").click(function () {
         $(this).parents('.clickable-row').toggleClass('clickable-row-bg');
     });
-
 });

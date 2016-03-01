@@ -28,12 +28,18 @@
                                 @foreach($documents as $index => $document)
                                     <tr>
                                         <td>{{ $index + 1 }}</td>
-                                        <td><a href="{{ $document['url'] }}">{{ $document['url'] }}</a></td>
                                         <td>
                                             {{--*/
                                             $identifiers = (array) $document['activities'];
                                             $identifierList = [];
                                             /*--}}
+                                            @if (!$identifiers)
+                                                <a href="{{ url('/files/documents') . '/' . rawurlencode($document['filename']) }}">{{ url('/files/documents') . '/' . $document['filename'] }}</a>
+                                            @else
+                                                <a href="{{ $document['url'] }}">{{ $document['url'] }}</a>
+                                            @endif
+                                        </td>
+                                        <td>
                                             @foreach($identifiers as $activityId => $identifier)
                                                 {{--*/ $identifierList[] = sprintf('<a href="%s">%s</a>', route('activity.show', [$activityId]), $identifier); /*--}}
                                             @endforeach

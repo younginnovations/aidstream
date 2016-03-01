@@ -40,6 +40,7 @@ class Kernel extends HttpKernel {
 	 */
 	protected $routeMiddleware = [
 		'auth' => 'App\Http\Middleware\Authenticate',
+		'auth.superAdmin' => 'App\Http\Middleware\AuthenticateSuperAdmin',
 		'auth.basic' => 'Illuminate\Auth\Middleware\AuthenticateWithBasicAuth',
 		'guest' => 'App\Http\Middleware\RedirectIfAuthenticated',
 	];

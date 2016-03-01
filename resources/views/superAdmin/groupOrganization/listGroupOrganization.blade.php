@@ -27,7 +27,7 @@
                                         <td>{{ count($organization->assigned_organizations) }}</td>
                                         <td>
                                             <div class="organization_actions">
-                                                <a href="{{ route('admin.edit-group', $organization->id) }}" class="edit">Edit</a> |
+                                                <a href="{{ route('admin.edit-group', $organization->id) }}" class="edit">Edit</a>
                                                 <a href="{{ route('admin.delete-group', $organization->id) }}" class="delete">Delete</a>
                                             </div>
                                         </td>

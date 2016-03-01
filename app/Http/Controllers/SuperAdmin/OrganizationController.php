@@ -36,10 +36,18 @@ class OrganizationController extends Controller
      */
     function __construct(SuperAdminManager $adminManager, SettingsManager $settingsManager, OrganizationGroupManager $groupManager)
     {
-        $this->middleware('auth');
+        $this->middleware('auth.superAdmin');
         $this->adminManager    = $adminManager;
         $this->settingsManager = $settingsManager;
         $this->groupManager    = $groupManager;
+    }
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function adminDashboard()
+    {
+        return view('adminDashboard');
     }
 
     /**
