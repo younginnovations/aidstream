@@ -9,7 +9,7 @@ $router->get('/', 'HomeController@index');
 $router->get('home', 'HomeController@index');
 $router->get('about', 'AboutController@index');
 $router->get('who-are-using', 'WhoAreUsingController@index');
-$router->get('admin/dashboard', 'HomeController@adminDashboard');
+$router->get('admin/dashboard', 'SuperAdmin\OrganizationController@adminDashboard');
 $router->resource('settings', 'Complete\SettingsController');
 
 $router->get(
@@ -25,9 +25,9 @@ $router->controllers(
     ]
 );
 
-if (getenv('APP_ENV') == "local") {
+//if (getenv('APP_ENV') == "local") {
     $router->get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
-}
+//}
 
 $router->get(
     'admin/activity-log',
