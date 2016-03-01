@@ -69,7 +69,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <label><input type="checkbox" class="hidden checkAll"/><span class="btn btn-primary">Check All</span></label>
+                                    <label><input type="checkbox" class="hidden checkAll"/><span class="btn btn-primary check-all-btn">Check All</span></label>
                                 </div>
 
                                 <button type="submit" class="btn btn-primary btn-form btn-submit">

@@ -9,15 +9,28 @@
             @include('includes.side_bar_menu')
             <div class="col-xs-9 col-md-9 col-lg-9 content-wrapper">
                 @include('includes.response')
-                <div class="panel-content-heading panel-title-heading">
-                    <div>Transactions of <span>{{$activity->IdentifierTitle}}</span></div>
+                <div class="element-panel-heading">
+                    <div>
+                        <span>Transactions</span>
+                        <div class="element-panel-heading-info"><span>{{$activity->IdentifierTitle}}</span></div>
+                    </div>
                     @if(count($activity->getTransactions()) > 0)
-                        <div class="pull-right panel-action-btn">
-                            <a href="{{ route('activity.transaction.create', $id) }}" class="btn btn-primary">Add New
-                                Transaction</a>
-                            <a href="{{ route('activity.transaction-upload.index', $id) }}" class="btn btn-primary">Upload
-                                Transaction</a>
-                        </div>
+                        <ul class="add-dropdown">
+                            <li class="dropdown">
+                                <div><span class="btn btn-primary dropdown-toggle add-new-btn" data-toggle="dropdown">Add New
+                                    Transaction<span class="caret"></span></span></div>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li>
+                                    <a href="{{ route('activity.transaction.create', $id) }}" class="">Add New
+                                        Transaction</a>
+                                    </li>
+                                    <li>
+                                    <a href="{{ route('activity.transaction-upload.index', $id) }}" class="">Upload
+                                        Transaction</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
                     @endif
                 </div>
                 <div class="col-xs-12 col-md-8 col-lg-8 element-content-wrapper transaction-wrapper">
@@ -37,7 +50,8 @@
                                     </thead>
                                     <tbody>
                                     @foreach($activity->getTransactions() as  $transaction)
-                                        <tr data-href="{{ route('activity.transaction.show', [$activity->id, $transaction['id']]) }}" class="clickable-row">
+                                        <tr data-href="{{ route('activity.transaction.show', [$activity->id, $transaction['id']]) }}"
+                                            class="clickable-row">
                                             <td>{{ $transaction['reference'] }}</td>
                                             <td>{{ isset($transaction['humanitarian']) && $transaction['humanitarian'] == 1 ? 'True' : 'False' }}</td>
                                             <td>{{ $code->getActivityCodeName('TransactionType', $transaction['transaction_type'][0]['transaction_type_code'])}}</td>

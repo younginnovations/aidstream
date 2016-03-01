@@ -95,6 +95,10 @@ select, .form-control[readonly] {
   }
 }
 
+textarea {
+  border: 1px solid $color_blue!important;
+}
+
 #{$all-text-inputs}, select,
 select.form-control, form .select2-container {
   height: 45px;
@@ -247,6 +251,10 @@ button, input[type="button"], input[type="reset"], input[type="submit"], .btn {
       }
     }
   }
+}
+
+th.status {
+  padding-left: 24px!important;
 }
 
 table tbody tr td:first-child {
@@ -453,6 +461,7 @@ label {
       text-transform: uppercase;
       padding: 0;
       margin: 0;
+      width: auto;
     }
     .help-text {
       opacity: 0;
@@ -548,7 +557,7 @@ label {
   }
 }
 
-.navbar-admin-dropdown, .add-new-activity {
+.navbar-admin-dropdown, .add-new-activity,.add-dropdown {
   background: $color_white !important;
   .avatar-img {
     padding: 2px;
@@ -582,6 +591,11 @@ label {
       }
     }
   }
+}
+
+.navbar-admin-dropdown li > span {
+  padding: 22px 0 22px 7px;
+  display: block;
 }
 
 .navbar-default .navbar-nav > li.dropdown:hover {
@@ -986,7 +1000,6 @@ $full-sidebar-wrapper-width: 250px;
   padding: 4px 18px 4px 25px;
   position: relative;
   text-transform: capitalize;
-  margin-left: -12px;
 }
 
 %extend_2 {
@@ -1054,7 +1067,7 @@ $full-sidebar-wrapper-width: 250px;
   @extend %extend_3;
   height: 23px;
   background-position: -227px -332px;
-  margin-left: 7px;
+  margin-left: 2px;
   &:hover {
     background-position: -228px -390px;
   }
@@ -1121,7 +1134,8 @@ $full-sidebar-wrapper-width: 250px;
 .element-panel-heading {
   background: $color_concrete;
   padding: 8px 37px;
-  overflow: hidden;
+  display: inline-block;
+  width: 100%;
   min-height: 63px;
   display: table;
   width: 100%;
@@ -1170,11 +1184,15 @@ $full-sidebar-wrapper-width: 250px;
 
 .content-wrapper {
   .panel-level-2, .panel-level-3 {
-    padding: 0 0 0 15px;
+    padding: 0;
   }
   .panel-level-2 {
     margin-top: 20px;
   }
+}
+
+.panel-level-2 .panel + .panel {
+  margin-top: 0;
 }
 
 // element-sidebar-wrapper
@@ -2271,12 +2289,13 @@ $organization-logo-width: 124px;
 
 .activity-show > .panel-body .panel-body {
   display: none;
+  margin-left: 20px;
+}
+
+.activity-show > .panel-body .panel-heading + .panel-body {
   margin-bottom: 20px;
 }
 
-.activity-show > .panel-body div[class*="panel-level-"] .panel-body {
-  display: block;
-}
 
 .activity-show > .panel-body .expanded div[class*="panel-level-"] .panel > .panel-body {
   display: none;
@@ -2286,6 +2305,7 @@ $organization-logo-width: 124px;
   cursor: pointer;
   position: relative;
   padding-left: 20px;
+  color: $color_gravel_approx;
   &:before {
     content: '';
     @include position(absolute, 0 auto auto 0);
@@ -2313,6 +2333,9 @@ $organization-logo-width: 124px;
 .expanded > .panel-heading > .activity-element-title {
   cursor: auto;
   pointer-events: none;
+  &:before {
+    border-left: 7px solid rgba($color_black_approx, 0.4);
+  }
 }
 
 .activity-show .panel-heading + .panel-element-body {
@@ -2345,8 +2368,50 @@ $organization-logo-width: 124px;
   }
 }
 
-.panel-action-btn {
-  margin-top: 4px;
+.add-dropdown {
+  background: none!important;
+  margin-top: 20px;
+  span.btn {
+    .caret {
+      margin-left: 4px;
+      color: rgba($color_white,0.4);
+      width: 10px;
+      height: 5px;
+    }
+  }
+  li.dropdown > div {
+    padding-bottom: 5px;
+  }
+}
+
+.add-new-btn {
+  border-radius: 21px;
+  font-size: 12px;
+  padding: 9px 20px 9px 30px!important;
+  background: $color_dodger_blue_approx $url_3 no-repeat -622px -488px;
+  &:focus {
+    outline: none;
+    border-color: $color_dodger_blue_approx;
+  }
+}
+
+.add-dropdown .dropdown-menu {
+  right: 0px;
+  left: auto;
+  top: 40px;
+  border-radius: 4px;
+  width: 240px!important;
+  a {
+    border-radius: 4px;
+  }
+}
+
+.add-dropdown li:hover .dropdown-menu {
+  display: block;
+}
+
+.check-all-btn {
+  margin-top: 14px;
 }
 
 @media all and (max-width: 1000px) {
@@ -2553,6 +2618,10 @@ $organization-logo-width: 124px;
     .col-sm-4 {
       margin-bottom: 8px;
     }
+  }
+
+  .register-container .input-wrapper .col-md-12 .col-md-12 {
+    padding-right: 0;
   }
 
   .navbar-nav {

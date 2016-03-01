@@ -8,6 +8,12 @@
         </div>
         <div class="panel-body panel-level-1">
             @foreach($documentLinks as $documentLink)
+                <div class="panel-heading">
+                    <div class="activity-element-title">
+                        dummy document link
+                    </div>
+                </div>
+                <div class="panel-body">
                 <div class="panel panel-default">
                     <div class="panel-element-body row">
                         <div class="col-xs-12 col-md-12">
@@ -63,7 +69,8 @@
                         </div>
                     </div>
                 </div>
-            @endforeach
         </div>
+        @endforeach
+    </div>
     </div>
 @endif

@@ -9,7 +9,7 @@
         <div class="panel-body panel-level-1">
             @foreach($recipientCountries as $recipientCountry)
                 <div class="panel panel-default">
-                    <div class="panel-heading">{{$getCode->getOrganizationCodeName('Country', $recipientCountry['country_code']) . ' ; ' . $recipientCountry['percentage']}}</div>
+                    {{--<div class="panel-heading">{{$getCode->getOrganizationCodeName('Country', $recipientCountry['country_code']) . ' ; ' . $recipientCountry['percentage']}}</div>--}}
                     <div class="panel-body panel-element-body row">
                         <div class="col-xs-12 col-md-12">
                             <div class="col-xs-12 col-sm-4">Percentage:</div>

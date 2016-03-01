@@ -20,16 +20,16 @@
 
             <div class="organisations-list width-900">
                 <ul>
-                    <li><img src="images/org/ic-add.png" alt=""></li>
+                    <li><span>Aids Fonds - STOP AIDS NOW! - Soa Aids Nederland</span></li>
                     <li><img src="images/org/ic-adra.png" alt=""></li>
                     <li><img src="images/org/ic-awc.png" alt=""></li>
                     <li><img src="images/org/ic-amref-flying.png" alt=""></li>
                     <li><img src="images/org/ic-add.png" alt=""></li>
                     <li><img src="images/org/ic-add.png" alt=""></li>
+                    <li><span>Agence Française de Développement</span></li>
                     <li><img src="images/org/ic-add.png" alt=""></li>
                     <li><img src="images/org/ic-add.png" alt=""></li>
-                    <li><img src="images/org/ic-add.png" alt=""></li>
-                    <li><img src="images/org/ic-add.png" alt=""></li>
+                    <li><span>Aids Fonds - STOP AIDS NOW! - Soa Aids Nederland</span></li>
                     <li><img src="images/org/ic-add.png" alt=""></li>
                     <li><img src="images/org/ic-add.png" alt=""></li>
                     <li><img src="images/org/ic-add.png" alt=""></li>

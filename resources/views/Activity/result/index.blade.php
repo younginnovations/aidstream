@@ -40,7 +40,7 @@
                 <div>Activity Results</div>
                 @if(count($results) > 0)
                     <div class="pull-right panel-action-btn">
-                        <a href="{{ route('activity.result.create', $id) }}" class="btn btn-primary">Add Another
+                        <a href="{{ route('activity.result.create', $id) }}" class="btn btn-primary add-new-btn">Add Another
                             Result</a>
                     </div>
                 @endif

@@ -21,12 +21,12 @@
                             <table class="table table-striped">
                                 <thead>
                                 <tr>
-                                    <th width="30px"></th>
-                                    <th width="50px">S.N.</th>
-                                    <th>Activity Title</th>
+                                    <th width="20px"></th>
+                                    <th width="40px">S.N.</th>
+                                    <th width="35%">Activity Title</th>
                                     <th>Activity Identifier</th>
                                     <th>Last Updated</th>
-                                    <th>Status</th>
+                                    <th class="status">Status</th>
                                     <th>Actions</th>
                                 </tr>
                                 </thead>

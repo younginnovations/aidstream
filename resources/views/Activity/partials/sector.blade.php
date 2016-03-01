@@ -1,5 +1,5 @@
 @if(!empty($sectors))
-    <div class="panel panel-default">
+    <div class="panel panel-default expanded">
         <div class="panel-heading">
             <div class="activity-element-title">
                 Sectors
@@ -19,8 +19,12 @@
                         $sectorValue = $sector['sector_text'];
                     }
                 /*--}}
-                <div class="panel panel-default">
-                    <div class="panel-heading">{{ $vocabularyValue . ' ; ' . $sectorValue }}</div>
+                <div class="panel-default">
+                    <div class="panel-heading">
+                        <div class="activity-element-title">
+                            {{ $vocabularyValue . ' ; ' . $sectorValue }}
+                        </div>
+                    </div>
                     <div class="panel-element-body row">
                         <div class="col-xs-12 col-md-12">
                             <div class="col-xs-12 col-sm-4">Vocabulary:</div>
