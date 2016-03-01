@@ -1100,7 +1100,7 @@ label {
 
 .element-panel-heading {
   background: #f2f2f2;
-  padding: 8px 37px;
+  padding: 8px 15px 8px 37px;
   display: inline-block;
   width: 100%;
   min-height: 63px;
@@ -2118,7 +2118,7 @@ form > .add_to_collection[data-collection="legacy_data"] {
 
 .add-dropdown {
   background: none !important;
-  margin-top: 20px; }
+  margin-top: 5px; }
   .add-dropdown span.btn .caret {
     margin-left: 4px;
     color: rgba(255, 255, 255, 0.4);
@@ -2153,6 +2153,9 @@ form > .add_to_collection[data-collection="legacy_data"] {
 
 .check-all-btn {
   margin-top: 14px; }
+
+.panel-action-btn {
+  margin-top: 2px; }
 
 @media all and (max-width: 1000px) {
   .element-upload-wrapper {

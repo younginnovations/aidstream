@@ -15,7 +15,7 @@
                         <div class="element-panel-heading-info"><span>{{$activity->IdentifierTitle}}</span></div>
                     </div>
                     @if(count($activity->getTransactions()) > 0)
-                        <ul class="add-dropdown">
+                        <ul class="add-dropdown pull-right">
                             <li class="dropdown">
                                 <div><span class="btn btn-primary dropdown-toggle add-new-btn" data-toggle="dropdown">Add New
                                     Transaction<span class="caret"></span></span></div>

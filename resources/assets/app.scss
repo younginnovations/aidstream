@@ -1133,7 +1133,7 @@ $full-sidebar-wrapper-width: 250px;
 
 .element-panel-heading {
   background: $color_concrete;
-  padding: 8px 37px;
+  padding: 8px 15px 8px 37px;
   display: inline-block;
   width: 100%;
   min-height: 63px;
@@ -2370,7 +2370,7 @@ $organization-logo-width: 124px;
 
 .add-dropdown {
   background: none!important;
-  margin-top: 20px;
+  margin-top: 5px;
   span.btn {
     .caret {
       margin-left: 4px;
@@ -2412,6 +2412,10 @@ $organization-logo-width: 124px;
 
 .check-all-btn {
   margin-top: 14px;
+}
+
+.panel-action-btn {
+  margin-top: 2px;
 }
 
 @media all and (max-width: 1000px) {
