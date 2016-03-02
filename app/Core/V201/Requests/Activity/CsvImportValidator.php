@@ -250,8 +250,8 @@ class CsvImportValidator
                     ),
                     "$activityIndex.activity_status"                    => 'required|in:' . $activityStatus,
                     "$activityIndex.sector_dac_3digit"                  => 'required|multiple_value_in:' . $sectorCategory,
-                    "$activityIndex.recipient_country"                  => 'required|multiple_value_in:' . $recipientCountryCodes,
-                    "$activityIndex.recipient_region"                   => 'required|multiple_value_in:' . $recipientRegionCodes
+                    "$activityIndex.recipient_country"                  => 'required_without:' . $activityIndex . '.recipient_region|multiple_value_in:' . $recipientCountryCodes,
+                    "$activityIndex.recipient_region"                   => 'required_without:' . $activityIndex . '.recipient_country|multiple_value_in:' . $recipientRegionCodes
                 ]
             );
 
@@ -261,9 +261,9 @@ class CsvImportValidator
                     "$activityIndex.sector_dac_3digit.multiple_value_in"             => sprintf('At row %s Sector_DAC_3Digit category code is invalid.', $activityIndex + 1),
                     "$activityIndex.sector_dac_3digit.required"                      => sprintf('At row %s Sector_DAC_3Digit category code is required.', $activityIndex + 1),
                     "$activityIndex.recipient_country.multiple_value_in"             => sprintf('At row %s Recipient_Country is invalid.', $activityIndex + 1),
-                    "$activityIndex.recipient_country.required"                      => sprintf('At row %s Recipient_Country is required.', $activityIndex + 1),
+                    "$activityIndex.recipient_country.required_without"              => sprintf('At row %s either Recipient_Country or Recipient_Region is required.', $activityIndex + 1),
                     "$activityIndex.recipient_region.multiple_value_in"              => sprintf('At row %s Recipient_Region is invalid.', $activityIndex + 1),
-                    "$activityIndex.recipient_region.required"                       => sprintf('At row %s Recipient_Region is required.', $activityIndex + 1),
+                    "$activityIndex.recipient_region.required_without"               => sprintf('At row %s either Recipient_Country or Recipient_Region is require.', $activityIndex + 1),
                     "$activityIndex.activity_status.in"                              => sprintf('At row %s Activity_Status is invalid.', $activityIndex + 1),
                     "$activityIndex.activity_status.required"                        => sprintf('At row %s Activity_Status is required.', $activityIndex + 1),
                     "$activityIndex.activity_identifier.required"                    => sprintf('At row %s Activity_Identifier is required.', $activityIndex + 1),
