@@ -17,10 +17,12 @@
                 $btn_text = $activity_workflow > 2 ? "" : $btn_status_label[$activity_workflow];
                 ?>
                 <div class="element-panel-heading">
-                    <span>{{ $activityDataList['title'] ? $activityDataList['title'][0]['narrative'] : 'No Title' }}</span>
-                    <div class="element-panel-heading-info">
-                        <span>{{$activityDataList['identifier']['iati_identifier_text']}}</span>
-                        <span class="last-updated-date">Last Updated on: {{changeTimeZone($activityDataList['updated_at'], 'M d, Y H:i')}}</span>
+                    <div>
+                        <span>{{ $activityDataList['title'] ? $activityDataList['title'][0]['narrative'] : 'No Title' }}</span>
+                        <div class="element-panel-heading-info">
+                            <span>{{$activityDataList['identifier']['iati_identifier_text']}}</span>
+                            <span class="last-updated-date">Last Updated on: {{changeTimeZone($activityDataList['updated_at'], 'M d, Y H:i')}}</span>
+                        </div>
                     </div>
                 </div>
                 <div class="col-xs-12 col-md-8 col-lg-8 element-content-wrapper">
@@ -35,7 +37,8 @@
                             @endforeach
                         </ol>
                         @if($btn_text != "")
-                            <form method="POST" id="change_status" class="pull-right" action="{{ url('/activity/' . $id . '/update-status') }}">
+                            <form method="POST" id="change_status" class="pull-right"
+                                  action="{{ url('/activity/' . $id . '/update-status') }}">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
                                 <input type="hidden" name="activity_workflow" value="{{ $activity_workflow + 1 }}">
                                 @if($activity_workflow == 2)
@@ -47,8 +50,9 @@
                             </form>
                         @endif
                     </div>
-                    <a href="{{route('change-activity-default', $id)}}" class="pull-right"><span class="glyphicon glyphicon-triangle-left"></span>Override Activity Default</a>
-                    <div class="panel panel-default panel-element-detail">
+                    <a href="{{route('change-activity-default', $id)}}" class="pull-right"><span
+                                class="glyphicon glyphicon-triangle-left"></span>Override Activity Default</a>
+                    <div class="panel panel-default panel-element-detail activity-show">
                         <div class="panel-body">
                             {{--*/
                             $identifier = $activityDataList['identifier'];

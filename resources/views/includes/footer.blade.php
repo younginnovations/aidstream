@@ -28,7 +28,7 @@
         </div>
         <div class="footer-logo">
             <div class="col-md-12 text-center">
-                <a href="index.html"><img src="images/logo.png" alt=""></a>
+                <a href="index.html"><img src="images/logo-text.png" alt=""></a>
             </div>
         </div>
     </div>

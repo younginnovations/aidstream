@@ -33,7 +33,7 @@ class Identifier extends BaseForm
                 [
                     'label'      => 'IATI Identifier',
                     'rules'      => 'required',
-                    'attr'       => ['readonly' => 'readonly'],
+                    'attr'       => ['readonly' => 'readonly', 'class' => 'form-control hover_help_text'],
                     'wrapper'    => ['class' => 'col-xs-12 col-sm-6 iati_identifier_text hidden'],
                     'help_block' => $this->addHelpText('Activity_IatiIdentifier-text')
                 ]

@@ -87,8 +87,6 @@
                                             <input type="text" class="form-control" name="organization_name" value="{{ old('organization_name') }}">
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-xs-12 col-md-12">
                                     <div class="form-group col-xs-12 col-sm-6 col-md-6">
                                         <label class="control-label">Organization Address</label>
 
@@ -96,21 +94,53 @@
                                             <input type="text" class="form-control" name="organization_address" value="{{ old('organization_address') }}">
                                         </div>
                                     </div>
-
+                                </div>
+                                <div class="col-xs-12 col-md-12">
                                     <div class="form-group col-xs-12 col-sm-6 col-md-6">
                                         <label class="control-label">Organization User Identifier</label>
-
                                         <div class="col-xs-12 col-md-12">
                                             <input type="text" class="form-control" name="organization_user_identifier" value="{{ old('organization_user_identifier') }}">
-                                            <span class="help-text" id="aaaaaa" data-toggle="tooltip" data-placement="top"
-                                                  title="Your organisation user identifier will be used as a prefix for all the AidStream users in your organisation. We recommend that you use a short abbreviation that uniquely identifies your organisation. If your organisation is 'Acme Bellus Foundation', your organisation user identifier should be 'abf', depending upon it's availability.">
-                                                Your organisation user identifier will be used as a prefix for all the AidStream users in your organisation. We recommend that you use a short abbreviation that uniquely identifies your organisation. If your organisation is 'Acme Bellus Foundation', your organisation user identifier should be 'abf', depending upon it's availability.
+                                            <span class="help-block">Your organisation user identifier will be used as a prefix for all the AidStream users in your organisation. We recommend that you use a short abbreviation that uniquely identifies your organisation. If your organisation is 'Acme Bellus Foundation', your organisation user identifier should be 'abf', depending upon it's availability.
                                             </span>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6 username_text">
+                                        <label class="control-label">Username</label>
+                                        <em>This will be auto-generated as you fill Organization User Identifier.</em>
+                                    </div>
+                                    <div class="form-group col-xs-12 col-sm-6 col-md-6 username_value hidden">
+                                        <label class="control-label">Username</label>
+                                        <div class="col-xs-12 col-md-12">
+                                            <input type="text" class="form-control hover_help_text" name="username" value="{{ old('username') }}" readonly="readonly">
+                                        <span class="help-text"
+                                              title="AidStream will create a default username with your Organisation User Identifier as prefix. You will not be able to change '_admin' part of the username. This user will have administrative privilege and can create multiple AidStream users with different set of permissions."
+                                              data-toggle="tooltip" data-placement="top">
+                                           AidStream will create a default username with your Organisation User Identifier as prefix. You will not be able to change '_admin' part of the username. This user will have administrative privilege and can create multiple AidStream users with different set of permissions.
+                                        </span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="input-wrapper">
+                                <div class="col-xs-12 col-md-12">
+                                    <div class="form-group col-xs-12 col-sm-6 col-md-6">
+                                        <label class="control-label">Password</label>
+
+                                        <div class="col-xs-12 col-md-12">
+                                            <input type="password" class="form-control" name="password">
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-xs-12 col-sm-6 col-md-6">
+                                        <label class="control-label">Confirm Password</label>
+
+                                        <div class="col-xs-12 col-md-12">
+                                            <input type="password" class="form-control" name="password_confirmation">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                            <div class="input-wrapper no-border">
                                 <div class="col-xs-12 col-md-12">
                                     <div class="form-group col-xs-12 col-sm-6 col-md-6">
                                         <label class="control-label">First Name</label>
@@ -146,47 +176,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="input-wrapper no-border">
-                                <div class="col-xs-12 col-md-12">
-                                    <div class="col-xs-12 col-sm-6 username_text">
 
-                                        <label class="control-label">Username</label>
-
-                                        <em>This will be auto-generated as you fill Organization User Identifier.</em>
-
-
-                                    </div>
-                                    <div class="form-group col-xs-12 col-sm-6 col-md-6 username_value hidden">
-                                        <label class="control-label">Username</label>
-
-                                        <div class="col-xs-12 col-md-12">
-                                            <input type="text" class="form-control hover_help_text" name="username" value="{{ old('username') }}" readonly="readonly">
-                                        <span class="help-text"
-                                              title="AidStream will create a default username with your Organisation User Identifier as prefix. You will not be able to change '_admin' part of the username. This user will have administrative privilege and can create multiple AidStream users with different set of permissions."
-                                              data-toggle="tooltip" data-placement="top">
-                                           AidStream will create a default username with your Organisation User Identifier as prefix. You will not be able to change '_admin' part of the username. This user will have administrative privilege and can create multiple AidStream users with different set of permissions.
-                                        </span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-xs-12 col-md-12">
-                                    <div class="form-group col-xs-12 col-sm-6 col-md-6">
-                                        <label class="control-label">Password</label>
-
-                                        <div class="col-xs-12 col-md-12">
-                                            <input type="password" class="form-control" name="password">
-                                        </div>
-                                    </div>
-                                    <div class="form-group col-xs-12 col-sm-6 col-md-6">
-                                        <label class="control-label">Confirm Password</label>
-
-                                        <div class="col-xs-12 col-md-12">
-                                            <input type="password" class="form-control" name="password_confirmation">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
                                 <div class="col-md-6">
                                     <button type="submit" class="btn btn-primary btn-submit btn-register">
                                         Register

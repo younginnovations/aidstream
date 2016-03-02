@@ -1,6 +1,9 @@
 @if(!empty($sectors))
-    <div class="panel panel-default">
-        <div class="panel-heading">Sectors
+    <div class="panel panel-default expanded">
+        <div class="panel-heading">
+            <div class="activity-element-title">
+                Sectors
+            </div>
             <a href="{{route('activity.sector.index', $id)}}" class="edit-element">edit</a>
         </div>
         <div class="panel-body panel-level-1">
@@ -16,24 +19,28 @@
                         $sectorValue = $sector['sector_text'];
                     }
                 /*--}}
-                <div class="panel panel-default">
-                    <div class="panel-heading">{{ $vocabularyValue . ' ; ' . $sectorValue }}</div>
-                    <div class="panel-element-body row">
+                <div class="panel-default">
+                    <div class="panel-heading">
+                        <div class="activity-element-title">
+                            {{ $vocabularyValue . ' ; ' . $sectorValue }}
+                        </div>
+                    </div>
+                    <div class="panel-body panel-element-body row">
                         <div class="col-xs-12 col-md-12">
-                            <div class="col-xs-12 col-sm-4">Vocabulary: </div>
+                            <div class="col-xs-12 col-sm-4">Vocabulary:</div>
                             <div class="col-xs-12 col-sm-8">{{ $vocabularyValue }}</div>
                         </div>
                         <div class="col-xs-12 col-md-12">
-                            <div class="col-xs-12 col-sm-4">Code: </div>
+                            <div class="col-xs-12 col-sm-4">Code:</div>
                             <div class="col-xs-12 col-sm-8">{{ $sectorValue }}</div>
                         </div>
                         <div class="col-xs-12 col-md-12">
-                            <div class="col-xs-12 col-sm-4">Percentage: </div>
+                            <div class="col-xs-12 col-sm-4">Percentage:</div>
                             <div class="col-xs-12 col-sm-8">{{$sector['percentage']}}</div>
                         </div>
                         @foreach($sector['narrative'] as $narrative)
                             <div class="col-xs-12 col-md-12">
-                                <div class="col-xs-12 col-sm-4">Text: </div>
+                                <div class="col-xs-12 col-sm-4">Text:</div>
                                 <div class="col-xs-12 col-sm-8">{{$narrative['narrative'] . ' ['. $getCode->getOrganizationCodeName('Language', $narrative['language']) . ']'}}</div>
                             </div>
                         @endforeach

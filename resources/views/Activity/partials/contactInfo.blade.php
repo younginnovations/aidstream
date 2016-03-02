@@ -1,6 +1,9 @@
 @if(!empty($contactInfo))
     <div class="panel panel-default">
-        <div class="panel-heading">Contact Info
+        <div class="panel-heading">
+            <div class="activity-element-title">
+                Contact Info
+            </div>
             <a href="{{route('activity.contact-info.index', $id)}}" class="edit-element">edit</a>
         </div>
         <div class="panel-body panel-element-body">

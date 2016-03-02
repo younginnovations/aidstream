@@ -1,12 +1,14 @@
 @if(!empty($activityDates))
     <div class="panel panel-default">
-        <div class="panel-heading">Activity Date
+        <div class="panel-heading">
+            <div class="activity-element-title">
+                Activity Date
+            </div>
             <a href="{{route('activity.activity-date.index', $id)}}" class="edit-element">edit</a>
         </div>
         <div class="panel-body panel-level-1">
             @foreach($activityDates as $activity_date)
                 <div class="panel panel-default">
-                    <div class="panel-heading">{{$getCode->getActivityCodeName('ActivityDateType', $activity_date['type']) . ' ; ' . formatDate($activity_date['date']) }}</div>
                     <div class="panel-body panel-element-body row">
                         <div class="col-xs-12 col-md-12">
                             <div class="col-xs-12 col-sm-4">Type:</div>

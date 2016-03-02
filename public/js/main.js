@@ -384,9 +384,11 @@ $(document).ready(function () {
 
     $('.sidebar-wrapper .nav').hover(function () {
             $('.sidebar-wrapper').addClass('full-sidebar-wrapper');
+            //$('.main-container').addClass('side-main-container');
         },
         function () {
             $('.sidebar-wrapper').removeClass('full-sidebar-wrapper');
+            //$('.main-container').removeClass('side-main-container');
         });
 
     //js for form input check and leave page alert
@@ -444,6 +446,7 @@ $(document).ready(function () {
         }
     });
 
+
     window.onbeforeunload = function () {
         if (preventNavigation) {
             return 'You have unsaved changes.';
@@ -459,4 +462,12 @@ $(document).ready(function () {
     $(".clickable-row > td > :checkbox").click(function () {
         $(this).parents('.clickable-row').toggleClass('clickable-row-bg');
     });
+
+    var windowHeight = $(document).height();
+    $('.sidebar-wrapper').css('height',windowHeight);
+
+    $('.activity-element-title').click(function(){
+        $(this).parent('.panel-heading').toggleClass('activity-element-toggle').next().slideToggle();
+    });
+
 });

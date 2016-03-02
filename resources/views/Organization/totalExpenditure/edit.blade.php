@@ -5,7 +5,9 @@
             @include('includes.side_bar_menu')
             <div class="col-xs-9 col-md-9 col-lg-9 content-wrapper">
                 @include('includes.response')
-                <div class="panel-content-heading panel-title-heading">Total Expenditure</div>
+                <div class="panel-content-heading panel-title-heading">
+                    <div>Total Expenditure</div>
+                </div>
                 <div class="col-xs-8 col-md-8 col-lg-8 element-content-wrapper">
                     <div class="panel panel-default">
                         <div class="panel-body">

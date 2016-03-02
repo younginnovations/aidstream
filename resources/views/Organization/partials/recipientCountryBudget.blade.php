@@ -3,7 +3,7 @@
         <div class="panel-heading">Recipient Country
             <a href="{{ url('/organization/' . $orgId . '/recipient-country-budget') }}" class="edit-element">edit</a>
         </div>
-        <div class="panel-body panel-element-body row">
+        <div class="panel-body row panel-level-1">
             @foreach($recipient_country_budget as $recipientCountryBudget)
                 <div class="panel panel-default">
                     <div class="panel-body panel-element-body row">
@@ -56,7 +56,7 @@
                 </div>
                 <div class="panel panel-default">
                     <div class="panel-heading">Budget Line</div>
-                    <div class="panel-body panel-element-body row">
+                    <div class="panel-body row">
                         @foreach($recipientCountryBudget['budget_line'] as $recipientCountryBudgetLine)
                             <div class="panel panel-default">
                                 <div class="panel-body panel-element-body row">
@@ -66,33 +66,35 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="panel panel-default">
-                                <div class="panel-heading">Value</div>
-                                <div class="panel-body panel-element-body row">
-                                    <div class="col-xs-12 col-md-12">
-                                        <div class="col-xs-12 col-xs-4">Text:</div>
-                                        <div class="col-xs-12 col-xs-8">{{ $recipientCountryBudgetLine['value'][0]['amount']}}</div>
-                                    </div>
-                                    <div class="col-xs-12 col-md-12">
-                                        <div class="col-xs-12 col-xs-4">Value Date:</div>
-                                        <div class="col-xs-12 col-xs-8">{{ formatDate($recipientCountryBudgetLine['value'][0]['value_date']) }}</div>
-                                    </div>
-                                    <div class="col-xs-12 col-md-12">
-                                        <div class="col-xs-12 col-xs-4">Currency:</div>
-                                        <div class="col-xs-12 col-xs-8">{{ $recipientCountryBudgetLine['value'][0]['currency']}}</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="panel panel-default">
-                                @foreach($recipientCountryBudgetLine['narrative'] as $recipientCountryBudgetLineNarrative)
-                                    <div class="panel-heading">Narrative</div>
+                            <div class="col-xs-12 col-md-12 col-lg-12 panel-level-2">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">Value</div>
                                     <div class="panel-body panel-element-body row">
                                         <div class="col-xs-12 col-md-12">
                                             <div class="col-xs-12 col-xs-4">Text:</div>
-                                            <div class="col-xs-12 col-xs-8">{{ $recipientCountryBudgetLineNarrative['narrative'] . ' [' . $recipientCountryBudgetLineNarrative['language'] . ']' }}</div>
+                                            <div class="col-xs-12 col-xs-8">{{ $recipientCountryBudgetLine['value'][0]['amount']}}</div>
+                                        </div>
+                                        <div class="col-xs-12 col-md-12">
+                                            <div class="col-xs-12 col-xs-4">Value Date:</div>
+                                            <div class="col-xs-12 col-xs-8">{{ formatDate($recipientCountryBudgetLine['value'][0]['value_date']) }}</div>
+                                        </div>
+                                        <div class="col-xs-12 col-md-12">
+                                            <div class="col-xs-12 col-xs-4">Currency:</div>
+                                            <div class="col-xs-12 col-xs-8">{{ $recipientCountryBudgetLine['value'][0]['currency']}}</div>
                                         </div>
                                     </div>
-                                @endforeach
+                                </div>
+                                <div class="panel panel-default">
+                                    @foreach($recipientCountryBudgetLine['narrative'] as $recipientCountryBudgetLineNarrative)
+                                        <div class="panel-heading">Narrative</div>
+                                        <div class="panel-body panel-element-body row">
+                                            <div class="col-xs-12 col-md-12">
+                                                <div class="col-xs-12 col-xs-4">Text:</div>
+                                                <div class="col-xs-12 col-xs-8">{{ $recipientCountryBudgetLineNarrative['narrative'] . ' [' . $recipientCountryBudgetLineNarrative['language'] . ']' }}</div>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
                             </div>
                         @endforeach
                     </div>

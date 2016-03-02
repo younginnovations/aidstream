@@ -67,7 +67,7 @@
                 @else
                     <li>
                         @if((Session::get('role_id') == 3  || Session::get('role_id') == 4) && Session::get('org_id'))
-                            <span><a href="{{ route('admin.switch-back') }}" class="pull-left">Switch Back</a> You are masquerading as </span>
+                            <span><a href="{{ route('admin.switch-back') }}" class="pull-left">Switch Back</a></span>
                         @endif
                     </li>
                     <li class="dropdown">

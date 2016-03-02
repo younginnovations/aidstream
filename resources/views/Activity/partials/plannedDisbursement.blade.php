@@ -1,6 +1,9 @@
 @if(!empty($plannedDisbursements))
     <div class="panel panel-default">
-        <div class="panel-heading">Planned Disbursements
+        <div class="panel-heading">
+            <div class="activity-element-title">
+                Planned Disbursements
+            </div>
             <a href="{{route('activity.planned-disbursement.index', $id)}}" class="edit-element">edit</a>
         </div>
         <div class="panel-body panel-level-1">

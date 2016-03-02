@@ -1,6 +1,9 @@
 @if(!empty($activityStatus))
     <div class="panel panel-default">
-        <div class="panel-heading">Activity Status
+        <div class="panel-heading">
+            <div class="activity-element-title">
+                Activity Status
+            </div>
             <a href="{{route('activity.activity-status.index', $id)}}" class="edit-element">edit</a>
         </div>
         <div class="panel-body panel-element-body row">
