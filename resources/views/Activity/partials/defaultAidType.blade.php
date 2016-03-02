@@ -3,9 +3,8 @@
         <div class="panel-heading">
             <div class="activity-element-title">
                 Default Aid Type
+                <a href="{{route('activity.default-aid-type.index', $id)}}" class="edit-element">edit</a>
             </div>
-        <div class="panel-heading">Default Aid Type
-            <a href="{{route('activity.default-aid-type.index', $id)}}" class="edit-element">edit</a>
         </div>
         <div class="panel-body panel-element-body row">
             <div class="col-xs-12 col-md-12">

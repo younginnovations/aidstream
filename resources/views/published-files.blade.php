@@ -32,12 +32,12 @@
                                 @foreach($list as $file)
                                     <tr>
                                         <td><input type="checkbox"/></td>
-                                        <td><a href="{{ url('/uploads/files/organization/' . $file->filename) }}"
+                                        <td><a href="{{ url('/files/xml/' . $file->filename) }}"
                                                target="_blank">{{ $file->filename }}</a></td>
                                         <td>{{ changeTimeZone($file->updated_at ) }}</td>
                                         <td>{{ $file->published_to_register ? 'Yes' : 'No' }}</td>
                                         <td>
-                                            <a href="{{ 'http://tools.aidinfolabs.org/csv/direct_from_registry/?xml=' . url('/uploads/files/organization/' . $file->filename) }}"
+                                            <a href="{{ 'http://tools.aidinfolabs.org/csv/direct_from_registry/?xml=' . url('/files/xml/' . $file->filename) }}"
                                                target="_blank">CSV</a></td>
                                         <td><a href="{{ route('list-published-files', ['delete', $file->id]) }}" class="delete">Delete</a>
                                         </td>
@@ -70,12 +70,12 @@
                                 @foreach($activity_list as $file)
                                     <tr>
                                         <td><input type="checkbox"/></td>
-                                        <td><a href="{{ url('/uploads/files/activity/' . $file->filename) }}"
+                                        <td><a href="{{ url('/files/xml/' . $file->filename) }}"
                                                target="_blank">{{ $file->filename }}</a></td>
                                         <td>{{ changeTimeZone($file->updated_at) }}</td>
                                         <td>{{ $file->published_to_register ? 'Yes' : 'No' }}</td>
                                         <td>
-                                            <a href="{{ 'http://tools.aidinfolabs.org/csv/direct_from_registry/?xml=' . url('/uploads/files/organization/' . $file->filename) }}"
+                                            <a href="{{ 'http://tools.aidinfolabs.org/csv/direct_from_registry/?xml=' . url('/files/xml/' . $file->filename) }}"
                                                target="_blank">CSV</a></td>
                                         <td>
                                             @if($file->published_to_register == 0)
