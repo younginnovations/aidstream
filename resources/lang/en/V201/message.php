@@ -2,7 +2,7 @@
 
 return [
     'updated'                  => ':name has been updated successfully.',
-    'update_failed'            => 'Failed to update :name.',
+    'update_failed'            => 'Failed to update :name.   Please fix the followings.',
     'activity_description'     => ':name of same type is not allowed to be added.',
     'participating_org'        => 'At least one :name should be with role "Funding" or "Implementing".',
     'created'                  => ':name has been created successfully.',
@@ -21,7 +21,7 @@ return [
     'transfer_message'         => 'Deleted Successfully',
     'duplicated'               => 'Activity has been duplicated successfully.View duplicated <a href=":url">Activity</a>',
     'password_mismatch'        => 'Current Password doesn\'t match with the entered :name.',
-    'empty_template'           => 'You have uploaded empty :name template.Please upload the template with transactions.',
+    'empty_template'           => 'You have uploaded empty :name template.Please upload the template with data.',
     'header_mismatch'          => 'The header doesn\'t matched with the provided template. Please Check the headers.',
     'message'                  => ':message'
 ];

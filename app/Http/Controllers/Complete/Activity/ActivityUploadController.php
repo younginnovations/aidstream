@@ -97,7 +97,18 @@ class ActivityUploadController extends Controller
             $identifiers[] = $identifier->identifier['activity_identifier'];
         }
 
-        $file      = $request->file('activity');
+        $file = $request->file('activity');
+
+        if ($this->uploadActivityManager->isEmptyCsv($file)) {
+            return redirect()->back()
+                             ->withResponse(
+                                 [
+                                     'type' => 'danger',
+                                     'code' => ['empty_template', ['name' => 'Activity']]
+                                 ]
+                             );
+        }
+
         $validator = $csvImportValidator->validator->isValidActivityCsv($file, $identifiers);
         if ($validator->fails()) {
             return redirect()->back()->withInput()->withErrors($validator);

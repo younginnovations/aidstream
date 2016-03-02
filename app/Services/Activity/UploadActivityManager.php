@@ -50,8 +50,9 @@ class UploadActivityManager
     public function save($activityCsv, $organization)
     {
         try {
-            $excel          = $this->version->getExcel();
-            $activitiesRows = $excel->load($activityCsv)->get();
+            $excel           = $this->version->getExcel();
+            $activitiesRows  = $excel->load($activityCsv)->get();
+            $activityDetails = [];
 
             foreach ($activitiesRows as $activityRow) {
                 $activityDetails[] = $this->uploadActivityRepo->formatFromExcelRow($activityRow, $organization->id);
@@ -101,5 +102,32 @@ class UploadActivityManager
             $activityDetail = json_decode($activityDetail, true);
             $this->uploadActivityRepo->update($activityDetail, $key);
         }
+    }
+
+    /**
+     * check if the uploaded csv is empty or not
+     * @param $activityCsv
+     * @return bool
+     */
+    public function isEmptyCsv($activityCsv)
+    {
+        $loadActivityCsv = $this->getActivityCsv($activityCsv);
+        $activityRows    = $loadActivityCsv->getTotalRowsOfFile();
+
+        if ($activityRows == 1 || $activityRows == 0) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * get activity csv
+     * @param $activityCsv
+     * @return \Maatwebsite\Excel\Readers\LaravelExcelReader
+     */
+    protected function getActivityCsv($activityCsv)
+    {
+        return $this->version->getExcel()->load($activityCsv);
     }
 }
