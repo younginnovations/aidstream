@@ -482,7 +482,8 @@ label {
   -webkit-box-shadow: 0 2px 40px rgba(0, 0, 0, 0.4);
           box-shadow: 0 2px 40px rgba(0, 0, 0, 0.4);
   padding: 0 0 44px;
-  margin: 0 0 24px; }
+  margin: 0 0 24px;
+  overflow: hidden; }
   .form-body .panel {
     margin: 0;
     border-bottom: 0;
@@ -1126,13 +1127,21 @@ label {
   margin-left: 8px;
   opacity: 0.7; }
 
-.panel-level-1 .panel-default .panel-heading {
-  font-size: 14px;
-  color: rgba(72, 72, 72, 0.7); }
+.panel-level-1 {
+  margin-bottom: 0; }
+  .panel-level-1 .panel-default .panel-heading {
+    font-size: 14px;
+    color: rgba(72, 72, 72, 0.7); }
+  .panel-level-1 .panel {
+    margin-bottom: 0;
+    clear: both; }
 
-.panel-level-1 .panel {
-  margin-bottom: 0;
-  clear: both; }
+.panel-level-2 .panel-default > .panel-element-body {
+  margin-bottom: 20px;
+  margin-left: 20px; }
+
+.panel-level-1 .panel-default > .panel-body {
+  margin: 0; }
 
 .panel-level-1 .panel + .panel {
   margin-top: 20px; }
@@ -1145,6 +1154,34 @@ label {
 
 .panel-level-2 .panel + .panel {
   margin-top: 0; }
+
+.panel-level-3 {
+  margin-left: 20px; }
+  .panel-level-3 .panel-sub-body {
+    margin-left: 20px; }
+    .panel-level-3 .panel-sub-body .panel-element-body {
+      margin-left: 0; }
+
+.panel-level-body {
+  margin-left: 0 !important;
+  margin-bottom: 0 !important;
+  background: none !important; }
+
+.panel-sub-body {
+  display: none;
+  margin-bottom: 20px !important; }
+  .panel-sub-body > .col-md-12 {
+    padding: 16px 4px;
+    background: #f9f9f9; }
+  .panel-sub-body > .panel-heading {
+    background: #fff !important;
+    padding-top: 20px !important;
+    clear: both; }
+  .panel-sub-body .panel-element-body {
+    margin-left: 20px; }
+
+.panel-level-4 {
+  margin-left: 20px; }
 
 .element-sidebar-wrapper {
   padding: 0;
@@ -2051,7 +2088,10 @@ form > .add_to_collection[data-collection="legacy_data"] {
   margin-left: 20px; }
 
 .activity-show > .panel-body .panel-heading + .panel-body {
-  margin-bottom: 20px; }
+  overflow: hidden; }
+
+.activity-element-toggle + .panel-body {
+  margin-bottom: 20px !important; }
 
 .activity-show > .panel-body .expanded div[class*="panel-level-"] .panel > .panel-body {
   display: none; }
@@ -2099,6 +2139,9 @@ div[class*="panel-level-"] .panel > .panel-body {
 
 .activity-show .panel-heading + .panel-element-body {
   display: none; }
+
+.activity-show .panel-heading + .panel-element-body .panel-element-body {
+  display: block; }
 
 #view_result .modal-body > .clearfix {
   float: left;
@@ -2160,6 +2203,9 @@ div[class*="panel-level-"] .panel > .panel-body {
 
 .panel-action-btn {
   margin-top: 2px; }
+
+.panel-body:after {
+  clear: none; }
 
 @media all and (max-width: 1000px) {
   .element-upload-wrapper {

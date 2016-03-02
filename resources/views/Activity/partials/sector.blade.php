@@ -25,7 +25,7 @@
                             {{ $vocabularyValue . ' ; ' . $sectorValue }}
                         </div>
                     </div>
-                    <div class="panel-element-body row">
+                    <div class="panel-body panel-element-body row">
                         <div class="col-xs-12 col-md-12">
                             <div class="col-xs-12 col-sm-4">Vocabulary:</div>
                             <div class="col-xs-12 col-sm-8">{{ $vocabularyValue }}</div>

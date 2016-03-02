@@ -1,5 +1,5 @@
 @if(!empty($participatingOrganizations))
-    <div class="panel panel-default">
+    <div class="panel panel-default expanded">
         <div class="panel-heading">
             <div class="activity-element-title">
                 Participating Organization
@@ -8,6 +8,10 @@
         </div>
         <div class="panel-body panel-level-1">
             @foreach($participatingOrganizations as $participatingOrganization)
+                <div class="panel-heading">
+                    <div class="activity-element-title">dummy participating organization</div>
+                </div>
+            <div class="panel-body">
                 <div class="panel panel-default">
                     <div class="panel-body panel-element-body row">
                         <div class="col-xs-12 col-md-12">
@@ -30,6 +34,7 @@
                         @endforeach
                     </div>
                 </div>
+            </div>
             @endforeach
         </div>
     </div>

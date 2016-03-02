@@ -69,7 +69,7 @@
                                 <div class="panel-heading">
                                     <div class="activity-element-title">Description</div>
                                 </div>
-                                <div class="panel-body row">
+                                <div class="panel-element-body row">
                                     @foreach($transaction['transaction']['description'] as $description)
                                         @foreach($description['narrative'] as $narrative)
                                             <div class="panel-element-body row">

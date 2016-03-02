@@ -8,18 +8,23 @@
         </div>
         <div class="panel-body panel-level-1">
             @foreach($budgets as $budget)
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <div class="activity-element-title">{{$getCode->getActivityCodeName('BudgetType', $budget['budget_type']) . ' ; [USD] '. $budget['value'][0]['amount'] . ' ; '. formatDate($budget['value'][0]['value_date']) }}</div>
-                    </div>
-                    <div class="panel-element-body row">
-                        <div class="col-xs-12 col-md-12">
-                            <div class="col-xs-12 col-sm-4">Type:</div>
-                            <div class="col-xs-12 col-sm-8">{{$getCode->getActivityCodeName('BudgetType', $budget['budget_type'])}}</div>
+                <div class="panel-heading">
+                    <div class="activity-element-title">{{$getCode->getActivityCodeName('BudgetType', $budget['budget_type']) . ' ; [USD] '. $budget['value'][0]['amount'] . ' ; '. formatDate($budget['value'][0]['value_date']) }}</div>
+                </div>
+                <div class="panel-body">
+                    <div class="panel panel-default">
+                        <div class="panel-element-body row">
+                            <div class="col-xs-12 col-md-12">
+                                <div class="col-xs-12 col-sm-4">Type:</div>
+                                <div class="col-xs-12 col-sm-8">{{$getCode->getActivityCodeName('BudgetType', $budget['budget_type'])}}</div>
+                            </div>
                         </div>
-
+                    </div>
+                    <div class="col-xs-12 col-md-12 col-lg-12 panel-level-2">
                         <div class="panel panel-default">
-                            <div class="panel-heading">Period Start</div>
+                            <div class="panel-heading">
+                                <div class="activity-element-title">Period Start</div>
+                            </div>
                             <div class="panel-element-body row">
                                 <div class="col-xs-12 col-md-12">
                                     <div class="col-xs-12 col-sm-4">Iso_date:</div>
@@ -28,7 +33,9 @@
                             </div>
                         </div>
                         <div class="panel panel-default">
-                            <div class="panel-heading">Period End</div>
+                            <div class="panel-heading">
+                                <div class="activity-element-title">Period End</div>
+                            </div>
                             <div class="panel-element-body row">
                                 <div class="col-xs-12 col-md-12">
                                     <div class="col-xs-12 col-sm-4">Iso_date:</div>
@@ -37,7 +44,9 @@
                             </div>
                         </div>
                         <div class="panel panel-default">
-                            <div class="panel-heading">Value</div>
+                            <div class="panel-heading">
+                                <div class="activity-element-title">Value</div>
+                            </div>
                             <div class="panel-element-body row">
                                 <div class="col-xs-12 col-md-12">
                                     <div class="col-xs-12 col-sm-4">Amount:</div>
