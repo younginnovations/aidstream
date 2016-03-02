@@ -4,7 +4,7 @@ return [
     'updated'                  => ':name has been updated successfully.',
     'update_failed'            => 'Failed to update :name.   Please fix the followings.',
     'activity_description'     => ':name of same type is not allowed to be added.',
-    'participating_org'        => 'At least one :name should be with role "Funding" or "Implementing".',
+    'participating_org'        => 'There should be at least one :name with the role "Funding" or "Implementing".',
     'created'                  => ':name has been created successfully.',
     'save_failed'              => 'Failed to save :name.',
     'deleted'                  => ':name has been deleted successfully.',

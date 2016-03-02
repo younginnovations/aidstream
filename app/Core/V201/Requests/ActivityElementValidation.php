@@ -9,27 +9,27 @@ class ActivityElementValidation
         $messages = [];
 
         if (empty($activityData->title)) {
-            $messages[] = 'Title is Required Element.';
+            $messages[] = 'Title is Required.';
         }
 
         if (empty($activityData->description)) {
-            $messages[] = 'Description is required Element.';
+            $messages[] = 'Description is required.';
         }
 
         if (empty($activityData->participating_organization)) {
-            $messages[] = 'Participating Organization is required Element.';
+            $messages[] = 'Participating Organization is required.';
         }
 
         if (empty($activityData->activity_status)) {
-            $messages[] = 'Activity Status is required Element.';
+            $messages[] = 'Activity Status is required.';
         }
 
         if (empty($activityData->activity_date)) {
-            $messages[] = 'Activity Date is required Element.';
+            $messages[] = 'Activity Date is required.';
         }
 
         if (empty($activityData->sector)) {
-            $messages[] = 'Sector is required Element.';
+            $messages[] = 'Sector is required.';
         }
 
         if (empty($activityData->recipient_country) && empty($activityData->recipient_region)) {
@@ -66,9 +66,9 @@ class ActivityElementValidation
             if ($recipientCountryValue == true && $recipientRegionValue == true) {
                 $messages[] = 'The sum of percentage in Recipient Country and Recipient Region must be 100.';
             } elseif ($recipientCountryValue == true) {
-                $messages[] = 'The sum of percentage in Recipient Country must be 100.';
+                $messages[] = 'The sum of percentage in Recipient Countries must be 100.';
             } elseif ($recipientRegionValue == true) {
-                $messages[] = 'The sum of percentage in Recipient Region must be 100.';
+                $messages[] = 'The sum of percentage in Recipient Regions must be 100.';
             }
         }
 
@@ -85,7 +85,7 @@ class ActivityElementValidation
         }
 
         if ($transactionCountryRegion == true && ($activityRecipientCountryValue == true || $activityRecipientRegionValue == true)) {
-            $messages[] = 'You can only mention recipient Country or region either in Activity Level only or in Transaction level only.';
+            $messages[] = 'You can only mention Recipient Country or Region either in Activity Level or in Transaction level. You can\'t have Country/Region in both Activity level and Transaction level.' ;
         }
 
         $messageList = '';
@@ -96,7 +96,7 @@ class ActivityElementValidation
 
         $messageHtml = '';
         if ($messageList) {
-            $messageHtml .= 'Please make sure you have all following criteria full filled before changing to completed state: ';
+            $messageHtml .= 'Please make sure you enter the following fields before changing to completed state.';
             $messageHtml .= sprintf('<ul>%s</ul>', $messageList);
         }
 
