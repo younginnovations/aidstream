@@ -102,6 +102,7 @@ namespace :aidstream do
                 execute "rm -rf #{release_path}/storage"
                 execute "ln -s #{shared_path}/storage/ #{release_path}"
                 execute "ln -s #{shared_path}/uploads #{release_path}/public"
+                execute "ln -s #{shared_path}/files #{release_path}/public/files"
             end
         end
     end

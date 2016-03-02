@@ -58,8 +58,8 @@ class DocumentLink extends BaseElement
                     '@attributes' => ['code' => $orgDocumentLink['language'][0]['language']],
                 ],
                 'recipient-country' => [
-                    '@attributes' => ['code' => $orgDocumentLink['recipient_country'][0]['code']],
-                    'narrative'   => $this->buildNarrative($orgDocumentLink['recipient_country'][0]['narrative'])
+                    '@attributes' => ['code' => ($orgDocumentLink['recipient_country']) ? $orgDocumentLink['recipient_country'][0]['code'] : ''],
+                    'narrative'   => ($orgDocumentLink['recipient_country']) ? $this->buildNarrative($orgDocumentLink['recipient_country'][0]['narrative']) : $this->buildNarrative([])
                 ]
             ];
         }

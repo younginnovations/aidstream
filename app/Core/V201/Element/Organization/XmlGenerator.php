@@ -62,7 +62,7 @@ class XmlGenerator
     {
         $xml      = $this->getXml($organization, $organizationData, $settings, $orgElem);
         $filename = $settings['registry_info'][0]['publisher_id'] . '-org.xml';
-        $result   = $xml->save(public_path('uploads/files/organization/' . $filename));
+        $result   = $xml->save(public_path('files/xml/' . $filename)); //changed filepath
         if ($result) {
             $published = $this->organizationPublished->firstOrNew(['filename' => $filename, 'organization_id' => $organization->id]);
             $published->touch();
