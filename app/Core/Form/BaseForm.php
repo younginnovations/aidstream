@@ -209,8 +209,7 @@ class BaseForm extends Form
         }
 
         $attr = [
-            'class' => 'help-block',
-            'title' => $help[$helpText]
+            'class' => 'help-block'
         ];
 
         if ($tooltip) {
@@ -218,6 +217,7 @@ class BaseForm extends Form
                 $attr,
                 [
                     'class'          => 'help-text',
+                    'title'          => $help[$helpText],
                     'data-toggle'    => 'tooltip',
                     'data-placement' => 'top'
                 ]

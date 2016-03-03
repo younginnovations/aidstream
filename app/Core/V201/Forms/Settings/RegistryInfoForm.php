@@ -9,8 +9,8 @@ class RegistryInfoForm extends BaseForm
     public function buildForm()
     {
         $this
-            ->add('publisher_id', 'text', ['help_block' => $this->addHelpText('activity_defaults-publisher_id')])
-            ->add('api_id', 'text', ['help_block' => $this->addHelpText('activity_defaults-api_key')])
+            ->add('publisher_id', 'text', ['help_block' => $this->addHelpText('activity_defaults-publisher_id', false)])
+            ->add('api_id', 'text', ['help_block' => $this->addHelpText('activity_defaults-api_key', false)])
             ->add(
                 'publish_files',
                 'choice',
@@ -23,7 +23,7 @@ class RegistryInfoForm extends BaseForm
                         'wrapper' => ['class' => 'choice-wrapper']
                     ],
                     'wrapper'        => ['class' => 'form-group registry-info-wrapper'],
-                    'help_block'     => $this->addHelpText('activity_defaults-update_registry')
+                    'help_block'     => $this->addHelpText('activity_defaults-update_registry', false)
                 ]
             );
     }

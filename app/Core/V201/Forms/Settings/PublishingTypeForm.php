@@ -20,7 +20,7 @@ class PublishingTypeForm extends BaseForm
                         'wrapper' => ['class' => 'choice-wrapper']
                     ],
                     'wrapper'        => ['class' => 'form-group form-choice-wrapper settings-choice-wrapper'],
-                    'help_block'     => $this->addHelpText('activity_defaults-publishing_type')
+                    'help_block'     => $this->addHelpText('activity_defaults-publishing_type', false)
                 ]
             );
     }
