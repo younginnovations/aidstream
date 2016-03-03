@@ -83,6 +83,8 @@
                             $conditions = $activityDataList['conditions'];
                             $results = $activityDataList['results'];
                             $transactions = $activityDataList['transaction'];
+                            $capitalSpend = $activityDataList['capital_spend'];
+                            $humanitarianScopes = $activityDataList['humanitarian_scope'];
                             /*--}}
 
                             @include('Activity.partials.identifier')
@@ -114,6 +116,9 @@
                             @include('Activity.partials.condition')
                             @include('Activity.partials.result')
                             @include('Activity.partials.transaction')
+                            @if(!empty($humanitarianScopes))
+                               @include('Activity.partials.humanitarianScope')
+                            @endif
                         </div>
                     </div>
                 </div>

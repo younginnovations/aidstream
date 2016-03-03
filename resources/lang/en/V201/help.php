@@ -322,7 +322,7 @@ return [
     'Activity_ActivityScope-text'                                    => 'Data type for an element that refers to an object that canhave a code as well as human-readable text in different languages (e.g. a country or status).',
     'Activity_ActivityScope-xml_lang'                                => 'ISO 2 letter code specifying the language of text in this element.',
     'Activity_CapitalSpend'                                          => 'The percentage of the total commitment that is for capital spending',
-    'Activity_CapitalSpend-percentage'                               => 'The percentage of the budget allocated to this item. Content must be a positive real number between 0 and 100, with nopercentage sign.',
+    'Activity_CapitalSpend-percentage'                               => 'The percentage of the budget allocated to this item. Content must be a positive real number between 0 and 100, with no percentage sign.',
     'Activity_RecipientRegion-vocabulary'                            => 'The vocabulary from which the region code is drawn. If itis not present 1 – ‘OECD DAC’ is assumed.',
     'Activity_ContactInfo_Website-text'                              => 'The contact web address, if available. May be repeated for multiple sites.',
     'Activity_ContactInfo_JobTitle-text'                             => 'The job title of the contact person at the organisation. You may repeat this element for different languages.',

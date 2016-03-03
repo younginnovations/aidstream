@@ -16,7 +16,7 @@
                     @foreach($organization['narrative'] as $narrative)
                         <div class="col-xs-12 col-md-12">
                             <div class="col-xs-12 col-sm-4">Organization Name:</div>
-                            <div class="col-xs-12 col-sm-8">{{$narrative['narrative'] . ' [' . $getCode->getOrganizationCodeName('Language', $narrative['language']) . ']'}}</div>
+                            <div class="col-xs-12 col-sm-8">{{$narrative['narrative'] . hideEmptyArray('Organization', 'Language', $narrative['language'])}}</div>
                         </div>
                     @endforeach
                 @endforeach
@@ -24,7 +24,7 @@
                     @foreach($department['narrative'] as $narrative)
                         <div class="col-xs-12 col-md-12">
                             <div class="col-xs-12 col-sm-4">Department:</div>
-                            <div class="col-xs-12 col-sm-8">{{$narrative['narrative'] . ' [' . $getCode->getOrganizationCodeName('Language', $narrative['language']) . ']'}}</div>
+                            <div class="col-xs-12 col-sm-8">{{$narrative['narrative'] . hideEmptyArray('Organization', 'Language', $narrative['language'])}}</div>
                         </div>
                     @endforeach
                 @endforeach
@@ -32,7 +32,7 @@
                     @foreach($person_name['narrative'] as $narrative)
                         <div class="col-xs-12 col-md-12">
                             <div class="col-xs-12 col-sm-4">Person Name:</div>
-                            <div class="col-xs-12 col-sm-8">{{$narrative['narrative'] . ' [' . $getCode->getOrganizationCodeName('Language', $narrative['language']) . ']'}}</div>
+                            <div class="col-xs-12 col-sm-8">{{$narrative['narrative'] . hideEmptyArray('Organization', 'Language', $narrative['language'])}}</div>
                         </div>
                     @endforeach
                 @endforeach
@@ -40,7 +40,7 @@
                     @foreach($job_title['narrative'] as $narrative)
                         <div class="col-xs-12 col-md-12">
                             <div class="col-xs-12 col-sm-4">Job Title:</div>
-                            <div class="col-xs-12 col-sm-8">{{$narrative['narrative'] . ' [' . $getCode->getOrganizationCodeName('Language', $narrative['language']) . ']'}}</div>
+                            <div class="col-xs-12 col-sm-8">{{$narrative['narrative'] . hideEmptyArray('Organization', 'Language', $narrative['language'])}}</div>
                         </div>
                     @endforeach
                 @endforeach
@@ -66,7 +66,7 @@
                     @foreach($mailing_address['narrative'] as $narrative)
                         <div class="col-xs-12 col-md-12 clearfix">
                             <div class="col-xs-12 col-sm-4">Mailing Address:</div>
-                            <div class="col-xs-12 col-sm-8">{{$narrative['narrative'] . ' [' . $getCode->getOrganizationCodeName('Language', $getCode->getOrganizationCodeName('Language', $narrative['language'])) . ']'}}</div>
+                            <div class="col-xs-12 col-sm-8">{{$narrative['narrative'] . hideEmptyArray('Organization', 'Language', $narrative['language'])}}</div>
                         </div>
                     @endforeach
                 @endforeach

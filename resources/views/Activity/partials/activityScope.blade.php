@@ -9,7 +9,7 @@
         <div class="panel-body panel-element-body">
             <div class="col-xs-12 col-md-12 clearfix">
                 <div class="col-xs-12 col-sm-4">Code:</div>
-                <div class="col-xs-12 col-sm-8">{{ $getCode->getActivityCodeName('ContactType', $activityScope) }}</div>
+                <div class="col-xs-12 col-sm-8">{{ $getCode->getActivityCodeName('ActivityScope', $activityScope) }}</div>
             </div>
         </div>
     </div>

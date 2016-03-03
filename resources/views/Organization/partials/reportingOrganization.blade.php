@@ -15,7 +15,7 @@
             @foreach($reporting_org['narrative'] as $narrative)
                 <div class="col-xs-12 col-md-12">
                     <div class="col-xs-12 col-xs-4">Narrative Text:</div>
-                    <div class="col-xs-12 col-xs-8">{{ $narrative['narrative'] . ' [' . $narrative['language'] . ']' }}</div>
+                    <div class="col-xs-12 col-xs-8">{{ $narrative['narrative'] . hideEmptyArray('Organization', 'Language', $narrative['language']) }}</div>
                 </div>
             @endforeach
         </div>

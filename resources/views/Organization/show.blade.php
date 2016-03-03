@@ -54,6 +54,8 @@
                             @include('Organization.partials.recipientOrganizationBudget')
                             @include('Organization.partials.recipientCountryBudget')
                             @include('Organization.partials.documentLink')
+                            @include('Organization.partials.recipientRegionBudget')
+                            @include('Organization.partials.totalExpenditure')
                         </div>
                     </div>
                 </div>

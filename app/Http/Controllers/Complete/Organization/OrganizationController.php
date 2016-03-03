@@ -73,6 +73,8 @@ class OrganizationController extends Controller
         $recipient_organization_budget = (array) $organizationData->recipient_organization_budget;
         $recipient_country_budget      = (array) $organizationData->recipient_country_budget;
         $document_link                 = (array) $organizationData->document_link;
+        $recipient_region_budget       = (array) $organizationData->recipient_region_budget;
+        $total_expenditure             = (array) $organizationData->total_expenditure;
 
         $status = $organizationData->status;
 
@@ -86,7 +88,9 @@ class OrganizationController extends Controller
                 'recipient_organization_budget',
                 'recipient_country_budget',
                 'document_link',
-                'status'
+                'status',
+                'recipient_region_budget',
+                'total_expenditure'
             )
         );
     }

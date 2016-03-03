@@ -76,7 +76,7 @@
                                         <div class="panel-body panel-element-body row">
                                             <div class="col-xs-12 col-md-12">
                                                 <div class="col-xs-12 col-xs-4">Text:</div>
-                                                <div class="col-xs-12 col-xs-8">{{ $budgetLineNarrative['narrative'] . ' [' . $budgetLineNarrative['language'] . ']' }}</div>
+                                                <div class="col-xs-12 col-xs-8">{{ $budgetLineNarrative['narrative'] . hideEmptyArray('Organization', 'Language', $budgetLineNarrative['language']) }}</div>
                                             </div>
                                         </div>
                                     @endforeach
