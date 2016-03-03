@@ -9,14 +9,14 @@ class ReportingOrganizationInfoForm extends Baseform
     public function buildForm()
     {
         $this
-            ->add('reporting_organization_identifier', 'text', ['help_block' => $this->addHelpText('activity_defaults-reporting_org_ref')])
+            ->add('reporting_organization_identifier', 'text', ['help_block' => $this->addHelpText('activity_defaults-reporting_org_ref', false)])
             ->addSelect(
                 'reporting_organization_type',
                 $this->getCodeList('OrganizationType', 'Organization'),
                 'Reporting Organization Type',
-                $this->addHelpText('activity_defaults-reporting_org_type')
+                $this->addHelpText('activity_defaults-reporting_org_type', false)
             )
-            ->addNarrative('narrative')
+            ->addCollection('narrative', 'Settings\Narrative')
             ->addAddMoreButton('add_narrative', 'narrative');
     }
 }
