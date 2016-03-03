@@ -41,9 +41,6 @@
                                     <thead>
                                     <tr>
                                         <th>Internal Ref</th>
-                                        @if(config('app.default_version') == '2.02')
-                                            <th>Humanitarian</th>
-                                        @endif
                                         <th>Transaction Type</th>
                                         <th>Transaction Value</th>
                                         <th>Transaction Date</th>
@@ -55,9 +52,6 @@
                                         <tr data-href="{{ route('activity.transaction.show', [$activity->id, $transaction['id']]) }}"
                                             class="clickable-row">
                                             <td>{{ $transaction['reference'] }}</td>
-                                            @if(config('app.default_version') == '2.02')
-                                                <td>{{ isset($transaction['humanitarian']) && $transaction['humanitarian'] == 1 ? 'True' : 'False' }}</td>
-                                            @endif
                                             <td>{{ $code->getActivityCodeName('TransactionType', $transaction['transaction_type'][0]['transaction_type_code'])}}</td>
                                             <td>{{ $transaction['value'][0]['amount'] }}</td>
                                             <td>{{ $transaction['transaction_date'][0]['date'] }}</td>
