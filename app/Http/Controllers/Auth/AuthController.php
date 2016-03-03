@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Settings;
 use App\Models\Organization\Organization;
 use App\User;
+use Illuminate\Database\DatabaseManager;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use App\Http\Requests\Request;
 use Illuminate\Support\Facades\Auth;
@@ -33,12 +34,39 @@ class AuthController extends Controller
     use AuthenticatesAndRegistersUsers;
 
     /**
-     * Create a new authentication controller instance.
-     *
+     * @var DatabaseManager
      */
-    public function __construct()
+    protected $database;
+
+    /**
+     * @var Organization
+     */
+    protected $organization;
+
+    /**
+     * @var User
+     */
+    protected $user;
+
+    /**
+     * @var Settings
+     */
+    protected $settings;
+
+    /**
+     * Create a new authentication controller instance.
+     * @param DatabaseManager $database
+     * @param Organization    $organization
+     * @param User            $user
+     * @param Settings        $settings
+     */
+    public function __construct(DatabaseManager $database, Organization $organization, User $user, Settings $settings)
     {
         $this->middleware('guest', ['except' => 'getLogout']);
+        $this->database     = $database;
+        $this->organization = $organization;
+        $this->user         = $user;
+        $this->settings     = $settings;
     }
 
     public function loginPath()
@@ -78,7 +106,7 @@ class AuthController extends Controller
      */
     public function create(array $data)
     {
-        $organization = Organization::create(
+        $organization = $this->organization->create(
             [
                 'name'            => $data['organization_name'],
                 'address'         => $data['organization_address'],
@@ -87,7 +115,15 @@ class AuthController extends Controller
             ]
         );
 
-        return User::create(
+        $latestVersion = $this->database->table('versions')->select('version')->where('id', '=', $this->database->table('versions')->max('id'))->get();
+        $this->settings->create(
+            [
+                'version'         => $latestVersion[0]->version,
+                'organization_id' => $organization->id
+            ]
+        );
+
+        return $this->user->create(
             [
                 'first_name' => $data['first_name'],
                 'last_name'  => $data['last_name'],

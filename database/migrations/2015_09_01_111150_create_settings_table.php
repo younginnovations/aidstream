@@ -17,8 +17,8 @@ class CreateSettingsTable extends Migration {
 			$table->increments('id');
 			$table->string('publishing_type')->default('segmented');
 			$table->json('registry_info')->nullable();
-			$table->json('default_field_values');
-			$table->json('default_field_groups');
+			$table->json('default_field_values')->nullable();
+			$table->json('default_field_groups')->nullable();
 			$table->string('version', 16)->default('2.01');
 			$table->integer('organization_id');
 			$table->timestamps();
