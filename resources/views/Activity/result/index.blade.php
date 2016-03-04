@@ -23,8 +23,8 @@
             </div>
             <div class="modal-row-template hidden">
                 <div class="clearfix">
-                    <div class="col-sm-4 view_label"></div>
-                    <div class="col-sm-8 view_value"></div>
+                    <div class="col-sm-8 view_label"></div>
+                    <div class="col-sm-4 view_value"></div>
                 </div>
             </div>
         </div>

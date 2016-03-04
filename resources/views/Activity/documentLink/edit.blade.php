@@ -43,8 +43,9 @@
                 </div>
                 <div class="modal-body">
                     <div class="upload_form hidden">
-                        <div class="alert alert-info">You can upload your document here. Once your document is uploaded,
-                            a link will be provided. You can then select the link to use it.
+                        <div class="alert alert-info">
+                            <span>You can upload your document here. Once your document is uploaded,
+                            a link will be provided. You can then select the link to use it.</span>
                         </div>
                         <div id="upload_message"></div>
                         <form class="form-horizontal" role="form" id="upload_file" method="POST"
@@ -52,16 +53,13 @@
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
                             <div class="form-group">
-                                <div class="col-md-12">
+                                <div class="col-md-8">
                                     <label class="control-label">Please choose your document: </label>
                                     <input type="file" class="form-control" name="file" id="file"
                                            value="{{ old('file') }}" required="required">
                                 </div>
-                            </div>
-
-                            <div class="form-group">
-                                <div class="col-md-12">
-                                    <button type="submit" class="btn btn-primary btn-submit">
+                                <div class="col-md-4">
+                                    <button type="submit" class="btn btn-primary">
                                         Upload
                                     </button>
                                 </div>
@@ -70,7 +68,7 @@
                     </div>
                     <div id="document_list">
                         <table class="table table-striped">
-                            <thead style="background-color: #CCCCCC;">
+                            <thead>
                             <tr>
                                 <th>URL</th>
                                 <th width="70px">Action</th>

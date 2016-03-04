@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Aidstream - Register</title>
-
+    <link rel="shotcut icon" type="image/png" sizes="32*32" href="{{ asset('/images/favicon.png') }}"/>
     <link href="{{ asset('/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('/css/flag-icon.css') }}" rel="stylesheet">
     <link href="{{ asset('/css/app.css') }}" rel="stylesheet">
@@ -111,7 +111,8 @@
                                     <div class="form-group col-xs-12 col-sm-6 col-md-6 username_value hidden">
                                         <label class="control-label">Username</label>
                                         <div class="col-xs-12 col-md-12">
-                                            <input type="text" class="form-control hover_help_text" name="username" value="{{ old('username') }}" readonly="readonly">
+                                            <input type="hidden" class="form-control hover_help_text" name="username" value="{{ old('username') }}" readonly="readonly">
+                                            <div class="alternate_input">{{ old('username') }}</div>
                                         <span class="help-text"
                                               title="AidStream will create a default username with your Organisation User Identifier as prefix. You will not be able to change '_admin' part of the username. This user will have administrative privilege and can create multiple AidStream users with different set of permissions."
                                               data-toggle="tooltip" data-placement="top">

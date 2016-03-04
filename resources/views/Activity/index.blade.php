@@ -23,8 +23,7 @@
                                 <tr>
                                     <th width="20px"></th>
                                     <th width="40px">S.N.</th>
-                                    <th width="35%">Activity Title</th>
-                                    <th>Activity Identifier</th>
+                                    <th width="50%">Activity Title</th>
                                     <th>Last Updated</th>
                                     <th class="status">Status</th>
                                     <th>Actions</th>
@@ -40,8 +39,8 @@
                                         <td>{{ $key + 1 }}</td>
                                         <td class="activity_title">
                                             {{ $activity->title ? $activity->title[0]['narrative'] : 'No Title' }}
+                                            <span>{{ $activity->identifier['activity_identifier'] }}</span>
                                         </td>
-                                        <td>{{ $activity->identifier['activity_identifier'] }}</td>
                                         <td class="updated-date">{{ changeTimeZone($activity->updated_at) }}</td>
                                         <td><span class="{{ $status_label[$activity->activity_workflow] }}">{{ $status_label[$activity->activity_workflow] }}</span></td>
                                         <td>

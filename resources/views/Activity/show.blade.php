@@ -52,7 +52,7 @@
                     </div>
                     <a href="{{route('change-activity-default', $id)}}" class="pull-right"><span
                                 class="glyphicon glyphicon-triangle-left"></span>Override Activity Default</a>
-                    <div class="panel panel-default panel-element-detail activity-show">
+                    <div class="panel panel-default panel-element-detail element-show">
                         <div class="panel-body">
                             {{--*/
                             $identifier = $activityDataList['identifier'];
