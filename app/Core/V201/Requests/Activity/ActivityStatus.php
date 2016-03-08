@@ -41,7 +41,7 @@ class ActivityStatus extends Request
     public function messages()
     {
         $messages                                  = [];
-        $messages['activity_status' . '.required'] = 'activity status is required.';
+        $messages['activity_status' . '.required'] = 'Activity status is required.';
 
         return $messages;
     }

@@ -25,7 +25,7 @@ class CapitalSpend extends Request
      */
     public function rules()
     {
-        $rules['capital_spend'] = 'required|numeric|max:100';
+        $rules['capital_spend'] = 'required|numeric|max:100|min:0';
 
         return $rules;
     }
