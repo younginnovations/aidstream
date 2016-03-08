@@ -15,7 +15,9 @@
                             <div class="col-xs-12 col-sm-8">{{$getCode->getActivityCodeName('BudgetIdentifierVocabulary', $countryBudgetItem['vocabulary'])}}</div>
                         </div>
                     </div>
-                    <div class="panel-heading">Budget Item</div>
+                    <div class="panel-heading">
+                        <div class="activity-element-title">Budget Item</div>
+                    </div>
                     <div class="panel-element-body">
                         @foreach($countryBudgetItem['budget_item'] as $budgetItem)
                             <div class="col-xs-12 col-md-12">
@@ -30,7 +32,7 @@
                                 @foreach($budgetNarrative['narrative'] as $narrative)
                                     <div class="col-xs-12 col-md-12">
                                         <div class="col-xs-12 col-sm-4">Text:</div>
-                                        <div class="col-xs-12 col-sm-8">{{$narrative['narrative'] . ' ['. $getCode->getOrganizationCodeName('Language', $narrative['language']) . ']'}}</div>
+                                        <div class="col-xs-12 col-sm-8">{{$narrative['narrative'] . hideEmptyArray('Organization', 'Language', $narrative['language'])}}</div>
                                     </div>
                                 @endforeach
                             @endforeach

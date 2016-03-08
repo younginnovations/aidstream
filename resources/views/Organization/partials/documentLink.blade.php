@@ -18,7 +18,7 @@
                         @foreach($documentLink['narrative'] as $documentLinkNarrative)
                             <div class="col-xs-12 col-md-12">
                                 <div class="col-xs-12 col-xs-4">Narrative Text:</div>
-                                <div class="col-xs-12 col-xs-8">{{ $documentLinkNarrative['narrative'] . ' [' . $documentLinkNarrative['language'] . ']' }}</div>
+                                <div class="col-xs-12 col-xs-8">{{ $documentLinkNarrative['narrative'] . hideEmptyArray('Organization', 'Language', $documentLinkNarrative['language']) }}</div>
                             </div>
                         @endforeach
                     </div>
@@ -61,7 +61,7 @@
                                     <div class="panel-body panel-element-body row">
                                         <div class="col-xs-12 col-md-12">
                                             <div class="col-xs-12 col-xs-4">Text:</div>
-                                            <div class="col-xs-12 col-xs-8">{{ $documentLinkNarrative['narrative'] . ' [' . $documentLinkNarrative['language'] . ']' }}</div>
+                                            <div class="col-xs-12 col-xs-8">{{ $documentLinkNarrative['narrative'] . hideEmptyArray('Organization', 'Language', $documentLinkNarrative['language']) }}</div>
                                         </div>
                                     </div>
                                 @endforeach

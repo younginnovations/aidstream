@@ -14,7 +14,7 @@
                         @foreach($recipientCountryBudget['recipient_country'][0]['narrative'] as $recipientCountryNarrative)
                             <div class="col-xs-12 col-md-12">
                                 <div class="col-xs-12 col-xs-4">Text:</div>
-                                <div class="col-xs-12 col-xs-8">{{ $recipientCountryNarrative['narrative'] . ' [' . $recipientCountryNarrative['language'] . ']' }}</div>
+                                <div class="col-xs-12 col-xs-8">{{ $recipientCountryNarrative['narrative'] . hideEmptyArray('Organization', 'Language', $recipientCountryNarrative['language']) }}</div>
                             </div>
                         @endforeach
                     </div>
@@ -23,7 +23,7 @@
                     <div class="panel-heading">Value</div>
                     <div class="panel-body panel-element-body row">
                         <div class="col-xs-12 col-md-12">
-                            <div class="col-xs-12 col-xs-4">Text:</div>
+                            <div class="col-xs-12 col-xs-4">Amount:</div>
                             <div class="col-xs-12 col-xs-8">{{ $recipientCountryBudget['value'][0]['amount']}}</div>
                         </div>
                         <div class="col-xs-12 col-md-12">
@@ -84,13 +84,13 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="panel-heading">Narrative</div>
                                 <div class="panel panel-default">
                                     @foreach($recipientCountryBudgetLine['narrative'] as $recipientCountryBudgetLineNarrative)
-                                        <div class="panel-heading">Narrative</div>
                                         <div class="panel-body panel-element-body row">
                                             <div class="col-xs-12 col-md-12">
                                                 <div class="col-xs-12 col-xs-4">Text:</div>
-                                                <div class="col-xs-12 col-xs-8">{{ $recipientCountryBudgetLineNarrative['narrative'] . ' [' . $recipientCountryBudgetLineNarrative['language'] . ']' }}</div>
+                                                <div class="col-xs-12 col-xs-8">{{ $recipientCountryBudgetLineNarrative['narrative'] . hideEmptyArray('Organization', 'Language', $recipientCountryBudgetLineNarrative['language']) }}</div>
                                             </div>
                                         </div>
                                     @endforeach

@@ -19,7 +19,7 @@
                         <div class="panel-body panel-element-body row">
                             <div class="col-xs-12 col-md-12">
                                 <div class="col-xs-12 col-xs-4">Text:</div>
-                                <div class="col-xs-12 col-xs-8">{{ $recipientOrgBudgetNarrative['narrative'] . ' [' . $recipientOrgBudgetNarrative['language'] . ']' }}</div>
+                                <div class="col-xs-12 col-xs-8">{{ $recipientOrgBudgetNarrative['narrative'] . hideEmptyArray('Organization', 'Language', $recipientOrgBudgetNarrative['language']) }}</div>
                             </div>
                         </div>
                     @endforeach
@@ -95,7 +95,7 @@
                                         <div class="panel-body panel-element-body row">
                                             <div class="col-xs-12 col-md-12">
                                                 <div class="col-xs-12 col-xs-4">Text:</div>
-                                                <div class="col-xs-12 col-xs-8">{{ $recipientOrgBudgetLineNarrative['narrative'] . ' [' . $recipientOrgBudgetLineNarrative['language'] . ']' }}</div>
+                                                <div class="col-xs-12 col-xs-8">{{ $recipientOrgBudgetLineNarrative['narrative'] . hideEmptyArray('Organization', 'Language', $recipientOrgBudgetLineNarrative['language'])}}</div>
                                             </div>
                                         </div>
                                     @endforeach

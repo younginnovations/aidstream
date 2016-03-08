@@ -217,7 +217,7 @@ class BaseForm extends Form
                 $attr,
                 [
                     'class'          => 'help-text',
-                    'title'          => $help[$helpText],
+                    'title'          => htmlspecialchars($help[$helpText]),
                     'data-toggle'    => 'tooltip',
                     'data-placement' => 'top'
                 ]

@@ -36,7 +36,7 @@ class GetCodeName
      * @param $code
      * @return mixed
      */
-    protected function  getCodeName($listType, $listName, $code)
+    public function  getCodeName($listType, $listName, $code)
     {
         $defaultVersion = config('app.default_version_name');
         $defaultLocale  = config('app.fallback_locale');

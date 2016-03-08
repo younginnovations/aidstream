@@ -9,7 +9,11 @@
         <div class="panel-body panel-level-1">
             @foreach($plannedDisbursements as $plannedDisbursement)
                 <div class="panel panel-default">
-                    <div class="panel-heading">{{'[USD]'. $plannedDisbursement['value'][0]['amount'] . ' ; '. formatDate($plannedDisbursement['value'][0]['value_date']) }}</div>
+                    <div class="panel-heading">
+                        <div class="activity-element-title">
+                            {{'[USD]'. $plannedDisbursement['value'][0]['amount'] . ' ; '. formatDate($plannedDisbursement['value'][0]['value_date']) }}
+                        </div>
+                    </div>
                     <div class="panel-element-body row">
                         <div class="col-xs-12 col-md-12">
                             <div class="col-xs-12 col-sm-4">Type:</div>
