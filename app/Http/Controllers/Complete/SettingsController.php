@@ -9,6 +9,7 @@ use App;
 use App\Services\SettingsManager;
 use App\Services\Organization\OrganizationManager;
 
+use Exception;
 use Illuminate\Database\DatabaseManager;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
@@ -77,7 +78,7 @@ class SettingsController extends Controller
 
         $model = [];
         if (isset($this->settings)) {
-            $version                       = $this->settings->version;
+            $version = $this->settings->version;
 //            $model['version_form']         = [['version' => $version]];
             $model['publishing_type']      = [['publishing' => $this->settings->publishing_type]];
             $model['registry_info']        = $this->settings->registry_info;
@@ -137,8 +138,7 @@ class SettingsController extends Controller
             $oldIdentifier     = $this->organization->reporting_org[0]['reporting_organization_identifier'];
             $settings          = $this->settingsManager->getSettings($this->organization->id);
             $publishingType    = $settings->publishing_type;
-            $this->settingsManager->updateSettings($input, $this->organization, $this->settings);
-            $activities = $this->activityManager->getActivities($this->organization->id);
+            $activities        = $this->activityManager->getActivities($this->organization->id);
             if ($publishingType != $newPublishingType) {
                 $publishedFiles = $this->activityManager->getActivityPublishedFiles(Session::get('org_id'));
                 if (count($publishedFiles)) {
@@ -154,6 +154,7 @@ class SettingsController extends Controller
                     $this->otherIdentifierManager->update(['other_identifier' => $otherIdentifier], $activity);
                 }
             }
+            $this->settingsManager->updateSettings($input, $this->organization, $this->settings);
         } catch (Exception $e) {
             $this->loggerInterface->error(
                 sprintf('Settings could no be updated due to %s', $e->getMessage()),
@@ -182,12 +183,13 @@ class SettingsController extends Controller
         $activityElement = $this->activityManager->getActivityElement();
         $xmlService      = $activityElement->getActivityXmlService();
         $orgIdentifier   = $this->organization->reporting_org[0]['reporting_organization_identifier'];
+        $publisherId     = $this->settings->registry_info[0]['publisher_id'];
         if ($newPublishingType == "unsegmented") {
-            $filename      = $orgIdentifier . '-activities.xml';
+            $filename      = $publisherId . '-activities.xml';
             $activitiesXml = [];
             foreach ($activities as $activity) {
                 if ($activity->activity_workflow == 3) {
-                    $publishedActivity = sprintf('%s-%s.xml', $orgIdentifier, $activity->activity_identifier);
+                    $publishedActivity = sprintf('%s-%s.xml', $publisherId, $activity->id);
                     $this->generateXmlIfDoesNotExist($publishedActivity, $activity);
                     $activitiesXml[] = $publishedActivity;
                 }
@@ -198,8 +200,8 @@ class SettingsController extends Controller
             $activitiesXml = [];
             foreach ($activities as $activity) {
                 if ($activity->activity_workflow == 3) {
-                    $filename          = sprintf('%s-%s.xml', $orgIdentifier, $xmlService->segmentedXmlFile($activity));
-                    $publishedActivity = sprintf('%s-%s.xml', $orgIdentifier, $activity->activity_identifier);
+                    $filename          = sprintf('%s-%s.xml', $publisherId, $xmlService->segmentedXmlFile($activity));
+                    $publishedActivity = sprintf('%s-%s.xml', $publisherId, $activity->id);
                     $this->generateXmlIfDoesNotExist($publishedActivity, $activity);
                     $activitiesXml[$filename][] = $publishedActivity;
                 }
@@ -218,7 +220,7 @@ class SettingsController extends Controller
      */
     protected function generateXmlIfDoesNotExist($publishedActivity, $activity)
     {
-        $filePath = public_path('uploads/files/activity/' . $publishedActivity);
+        $filePath = config('xmlFiles.xml-file') . $publishedActivity;
         if (!file_exists($filePath)) {
             $this->settingsManager->generateXml($activity);
         }
