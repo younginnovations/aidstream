@@ -8,6 +8,7 @@ use App\SuperAdmin\Services\SuperAdminManager;
 use Auth;
 use Illuminate\Support\Facades\Session;
 use Kris\LaravelFormBuilder\FormBuilder;
+use Illuminate\Database\DatabaseManager;
 
 /**
  * Class OrganizationController
@@ -142,12 +143,25 @@ class OrganizationController extends Controller
      * @param $userId
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function masqueradeOrganization($orgId, $userId)
+    public function masqueradeOrganization($orgId, $userId, DatabaseManager $database)
     {
         $adminId  = Auth::user()->id;
         $settings = $this->settingsManager->getSettings($orgId);
         Session::put('org_id', $orgId);
         Session::put('admin_id', $adminId);
+
+        $current_version = (isset($settings)) ? $settings->version : config('app.default_version');
+        Session::put('current_version', $current_version);
+        $versions_db = $database->table('versions')->get();
+        $versions    = [];
+
+        foreach ($versions_db as $ver) {
+            $versions[] = $ver->version;
+        }
+        $versionKey   = array_search($current_version, $versions);
+        $next_version = (end($versions) == $current_version) ? null : $versions[$versionKey + 1];
+
+        Session::put('next_version', $next_version);
         Session::put('version', 'V' . str_replace('.', '', $settings->version));
         Auth::loginUsingId($userId);
 
