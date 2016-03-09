@@ -90,17 +90,17 @@ $(document).ready(function () {
 
         if ($('#removeDialog').length === 0) {
             $('body').append('' +
-            '<div class="modal" id="removeDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="z-index: 9999">' +
-            '<div class="modal-dialog">' +
-            '<div class="modal-content">' +
-            '<div class="modal-header">' +
-            '<h4 class="modal-title" id="myModalLabel"></h4>' +
-            '</div>' +
-            '<div class="modal-body"></div>' +
-            '<div class="modal-footer"></div>' +
-            '</div>' +
-            '</div>' +
-            '</div>');
+                '<div class="modal" id="removeDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="z-index: 9999">' +
+                '<div class="modal-dialog">' +
+                '<div class="modal-content">' +
+                '<div class="modal-header">' +
+                '<h4 class="modal-title" id="myModalLabel"></h4>' +
+                '</div>' +
+                '<div class="modal-body"></div>' +
+                '<div class="modal-footer"></div>' +
+                '</div>' +
+                '</div>' +
+                '</div>');
         }
 
         var removeDialog = $('#removeDialog');
@@ -175,11 +175,13 @@ $(document).ready(function () {
     });
 
     $('input[name="organization_user_identifier"]').keyup(function () {
-        if ($(this).val() == "") {
+        var userIdentifier = $(this).val();
+        if (userIdentifier == "") {
             $('.username_text').removeClass('hidden');
             $('.username_value').addClass('hidden');
         } else {
-            $('input[name="username"]').val($(this).val() + '_admin');
+            $('input[name="username"]').val(userIdentifier+ '_admin');
+            $('.alternate_input').html(userIdentifier + '_admin');
             $('.username_text').addClass('hidden');
             $('.username_value').removeClass('hidden');
         }
@@ -193,7 +195,9 @@ $(document).ready(function () {
             $('.identifier_text').removeClass('hidden');
             $('.iati_identifier_text').addClass('hidden');
         } else {
-            $('input[name="iati_identifier_text"]').val($('#reporting_organization_identifier').text() + '-' + $(this).val());
+            var iatiIdentifier = $('#reporting_organization_identifier').text() + '-' + $(this).val();
+            $('input[name="iati_identifier_text"]').val(iatiIdentifier);
+            $('.alternate_input').html(iatiIdentifier);
             $('.identifier_text').addClass('hidden');
             $('.iati_identifier_text').removeClass('hidden');
         }
@@ -236,17 +240,17 @@ $(document).ready(function () {
 
         if ($('#popDialog').length === 0) {
             $('body').append('' +
-            '<div class="modal" id="popDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="z-index: 9999">' +
-            '<div class="modal-dialog">' +
-            '<div class="modal-content">' +
-            '<div class="modal-header">' +
-            '<h4 class="modal-title" id="myModalLabel"></h4>' +
-            '</div>' +
-            '<div class="modal-body"></div>' +
-            '<div class="modal-footer"></div>' +
-            '</div>' +
-            '</div>' +
-            '</div>');
+                '<div class="modal" id="popDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="z-index: 9999">' +
+                '<div class="modal-dialog">' +
+                '<div class="modal-content">' +
+                '<div class="modal-header">' +
+                '<h4 class="modal-title" id="myModalLabel"></h4>' +
+                '</div>' +
+                '<div class="modal-body"></div>' +
+                '<div class="modal-footer"></div>' +
+                '</div>' +
+                '</div>' +
+                '</div>');
         }
 
         var popElem = $('#popDialog');
@@ -333,17 +337,17 @@ $(document).ready(function () {
 
         if ($('#delDialog').length === 0) {
             $('body').append('' +
-            '<div class="modal" id="delDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="z-index: 9999">' +
-            '<div class="modal-dialog">' +
-            '<div class="modal-content">' +
-            '<div class="modal-header">' +
-            '<h4 class="modal-title" id="myModalLabel"></h4>' +
-            '</div>' +
-            '<div class="modal-body"></div>' +
-            '<div class="modal-footer"></div>' +
-            '</div>' +
-            '</div>' +
-            '</div>');
+                '<div class="modal" id="delDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="z-index: 9999">' +
+                '<div class="modal-dialog">' +
+                '<div class="modal-content">' +
+                '<div class="modal-header">' +
+                '<h4 class="modal-title" id="myModalLabel"></h4>' +
+                '</div>' +
+                '<div class="modal-body"></div>' +
+                '<div class="modal-footer"></div>' +
+                '</div>' +
+                '</div>' +
+                '</div>');
         }
 
         var delDialog = $('#delDialog');
@@ -364,9 +368,6 @@ $(document).ready(function () {
 
     });
 
-    var documentHeight = $(document).height();
-    $('.element-sidebar-wrapper').css('height', documentHeight);
-
     $('form').delegate('.remove_from_collection', 'mouseenter mouseleave', function () {
         $(this).parent('.form-group').toggleClass('fill-border');
     });
@@ -382,13 +383,11 @@ $(document).ready(function () {
             $(this).children('.action-icon').css('display', 'none');
         });
 
-    $('.sidebar-wrapper .nav').hover(function () {
-            $('.sidebar-wrapper').addClass('full-sidebar-wrapper');
-            //$('.main-container').addClass('side-main-container');
+    $('.sidebar-wrapper').hover(function () {
+            $(this).addClass('full-sidebar-wrapper');
         },
         function () {
-            $('.sidebar-wrapper').removeClass('full-sidebar-wrapper');
-            //$('.main-container').removeClass('side-main-container');
+            $(this).removeClass('full-sidebar-wrapper');
         });
 
     //js for form input check and leave page alert
@@ -463,11 +462,36 @@ $(document).ready(function () {
         $(this).parents('.clickable-row').toggleClass('clickable-row-bg');
     });
 
-    var windowHeight = $(document).height();
-    $('.sidebar-wrapper').css('height',windowHeight);
+    $('.result-content-wrapper .activity_actions a').click(function () {
+        $(this).parents('tr').attr('data-target', "#");
+    });
 
-    $('.activity-element-title').click(function(){
+    $('.activity-element-title').click(function () {
         $(this).parent('.panel-heading').toggleClass('activity-element-toggle').next().slideToggle();
     });
+
+    //sidebar scrollable
+
+    var documentHeight = $(window).height() - 63;
+    $('.element-sidebar-wrapper,.sidebar-wrapper').css('height', documentHeight);
+
+    $(window).resize(function () {
+        var documentHeight = $(window).height() - 63;
+        $('.element-sidebar-wrapper,.sidebar-wrapper').css('height', documentHeight);
+    });
+
+    $(window).scroll(function() {
+        var elementSidebar = $('.element-sidebar-wrapper');
+        if($(this).scrollTop() > elementSidebar.position().top){
+            elementSidebar.addClass('element-sidebar-fixed');
+        } else {
+            elementSidebar.removeClass('element-sidebar-fixed');
+        }
+    });
+
+    $(".element-sidebar-wrapper,.sidebar-wrapper").mCustomScrollbar({
+        theme: "minimal"
+    });
+
 
 });

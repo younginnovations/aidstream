@@ -1,6 +1,7 @@
 @if(!empty($org_name))
     <div class="panel panel-default">
-        <div class="panel-heading">Name
+        <div class="panel-heading">
+            <div class="activity-element-title">Name</div>
             <a href="{{ url('/organization/' . $orgId . '/name') }}" class="edit-element">edit</a>
         </div>
         <div class="panel-body panel-element-body row">

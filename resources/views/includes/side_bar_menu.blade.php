@@ -15,6 +15,10 @@
                     <li class="activity-logs"><a href="{{ route('admin.activity-log') }}">Activity Logs</a></li>
                 @endif
             </ul>
+            <div class="support">
+                <span>icon</span>
+                <p>For queries, suggestions, shoot us an email at <a href="mailto:support@aidstream.org">support@aidstream.org</a></p>
+            </div>
         </div>
     </div>
 </div>

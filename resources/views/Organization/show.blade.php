@@ -46,7 +46,7 @@
                             </form>
                         @endif
                     </div>
-                    <div class="panel panel-default panel-element-detail">
+                    <div class="panel panel-default panel-element-detail element-show">
                         <div class="panel-body">
                             @include('Organization.partials.reportingOrganization')
                             @include('Organization.partials.organizationName')

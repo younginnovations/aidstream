@@ -417,6 +417,14 @@ footer ul li {
     text-align: left;
 }
 
+.support-desc {
+    text-align: center;
+    font-size: 14px;
+    float: none;
+    clear: both;
+    margin-top: 20px;
+}
+
 @media all and (min-width: 480px) {
     .organization-wrapper ul li {
         width: 32%;
