@@ -144,7 +144,7 @@ class UserController extends Controller
         $user         = $this->user->findOrFail($userId);
         $organization = $this->organization->findOrFail($this->orgId);
         $baseForm     = new BaseForm();
-        $timeZone     = $baseForm->getCodeList('TimeZone', 'Activity');
+        $timeZone     = $baseForm->getCodeList('TimeZone', 'Activity', false);
 
         return view('User.editProfile', compact('user', 'organization', 'timeZone'));
     }

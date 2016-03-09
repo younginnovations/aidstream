@@ -123,16 +123,16 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group col-xs-12 col-sm-6 col-md-6">
-                            <div class="col-xs-12 col-md-12">
-                                <label class="control-label">Disqus Comments</label>
-                                <div>
-                                    <input type="checkbox" name="disqus_comments"
-                                           {{!$organization->disqus_comments ?: 'checked="checked"'}} value="1">
-                                    <span>Enable/disable comments on your organization page.</span>
-                                </div>
-                            </div>
-                        </div>
+                        {{--<div class="form-group col-xs-12 col-sm-6 col-md-6">--}}
+                            {{--<div class="col-xs-12 col-md-12">--}}
+                                {{--<label class="control-label">Disqus Comments</label>--}}
+                                {{--<div>--}}
+                                    {{--<input type="checkbox" name="disqus_comments"--}}
+                                           {{--{{!$organization->disqus_comments ?: 'checked="checked"'}} value="1">--}}
+                                    {{--<span>Enable/disable comments on your organization page.</span>--}}
+                                {{--</div>--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
                     </div>
                     <div class="col-md-12">
                         <button type="submit" class="btn btn-primary btn-form btn-submit">Submit</button>

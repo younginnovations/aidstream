@@ -17,6 +17,7 @@
                                     <div class="panel-body">
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
+                                        <div class="row">
                                         <div class="col-xs-12 col-sm-6">
                                             <label class="control-label">First Name</label>
                                                 <input type="text" class="form-control" name="first_name"
@@ -28,16 +29,35 @@
                                                 <input type="text" class="form-control" name="last_name"
                                                        value="{{ old('last_name') }}">
                                         </div>
+                                        </div>
 
+                                        <div class="row">
                                         <div class="col-xs-12 col-sm-6">
                                             <label class="control-label">E-Mail Address</label>
                                                 <input type="email" class="form-control" name="email" value="{{ old('email') }}">
                                         </div>
+                                        </div>
 
-                                        <div class="col-xs-12 col-sm-6">
-                                            <label class="control-label">Username</label>
-                                                <input type="text" class="form-control" name="username"
-                                                       value="{{ old('username') }}">
+                                        <div class="row">
+                                            <div class="col-xs-12 col-sm-6">
+                                                <label class="control-label">User Identifier</label>
+                                                <input type="text" class="form-control noSpace" name="userIdentifier" id="userIdentifier"
+                                                       value="{{ old('userIdentifier') }}" data-org-identifier="{{$organizationIdentifier}}">
+                                            </div>
+                                            <div class="col-xs-12 col-sm-6 username_text">
+                                                <label class="control-label">Username</label>
+                                                <em>This will be auto-generated as you fill User Identifier.</em>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-6 username_value hidden">
+                                                <label class="control-label">Username</label>
+                                                    <input type="hidden" class="form-control hover_help_text" name="username" value="{{ old('username') }}" readonly="readonly" id="username">
+                                                    <div class="alternate_input hover_help_text">{{ old('username') }}</div>
+                                                <span class="help-text"
+                                                      title="AidStream will create a default username with your User Identifier as prefix."
+                                                      data-toggle="tooltip" data-placement="top">
+                                                   AidStream will create a default username with your Organisation Identifier as suffix.
+                                                </span>
+                                            </div>
                                         </div>
 
                                         <div class="col-xs-12 col-sm-6">

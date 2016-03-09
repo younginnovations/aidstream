@@ -174,33 +174,35 @@ $(document).ready(function () {
         window.location.reload();
     });
 
-    $('input[name="organization_user_identifier"]').keyup(function () {
-        var userIdentifier = $(this).val();
-        if (userIdentifier == "") {
+    $('input[name="organization_user_identifier"]').on('keyup change', function () {
+        var username = '';
+        if ($(this).val() == "") {
             $('.username_text').removeClass('hidden');
             $('.username_value').addClass('hidden');
         } else {
-            $('input[name="username"]').val(userIdentifier+ '_admin');
-            $('.alternate_input').html(userIdentifier + '_admin');
+            username = $(this).val() + '_admin';
             $('.username_text').addClass('hidden');
             $('.username_value').removeClass('hidden');
         }
+        $('input[name="username"]').val(username);
+        $('.alternate_input').html(username);
     });
     if ($('input[name="organization_user_identifier"]').val() !== '') {
         $('input[name="organization_user_identifier"]').trigger('keyup');
     }
 
-    $('input[name="activity_identifier"]').keyup(function () {
+    $('input[name="activity_identifier"]').on('keyup change', function () {
+        var iatiIdentifier = '';
         if ($(this).val() == "") {
             $('.identifier_text').removeClass('hidden');
             $('.iati_identifier_text').addClass('hidden');
         } else {
-            var iatiIdentifier = $('#reporting_organization_identifier').text() + '-' + $(this).val();
-            $('input[name="iati_identifier_text"]').val(iatiIdentifier);
-            $('.alternate_input').html(iatiIdentifier);
+            iatiIdentifier = $('#reporting_organization_identifier').text() + '-' + $(this).val();
             $('.identifier_text').addClass('hidden');
             $('.iati_identifier_text').removeClass('hidden');
         }
+        $('input[name="iati_identifier_text"]').val(iatiIdentifier);
+        $('.alternate_input').html(iatiIdentifier);
     });
     if ($('input[name="activity_identifier"]').val() !== '') {
         $('input[name="activity_identifier"]').trigger('keyup');
@@ -470,6 +472,7 @@ $(document).ready(function () {
         $(this).parent('.panel-heading').toggleClass('activity-element-toggle').next().slideToggle();
     });
 
+
     //sidebar scrollable
 
     var documentHeight = $(window).height() - 63;
@@ -480,18 +483,42 @@ $(document).ready(function () {
         $('.element-sidebar-wrapper,.sidebar-wrapper').css('height', documentHeight);
     });
 
+    $('input[name="userIdentifier"]').on('keyup change', function () {
+        var username = '';
+        if ($(this).val() == "") {
+            $('.username_text').removeClass('hidden');
+            $('.username_value').addClass('hidden');
+        } else {
+            username = $('#userIdentifier').attr('data-org-identifier') + '_' + $(this).val();
+            $('.username_text').addClass('hidden');
+            $('.username_value').removeClass('hidden');
+        }
+        $('input[name="username"]').val(username).next('.alternate_input').html(username);
+    });
+    if ($('input[name="userIdentifier"]').val() !== '') {
+        $('input[name="userIdentifier"]').trigger('keyup');
+    }
+
+    //disable space for the inputs with class nospace
+    $('.noSpace').on('keypress', function(e) {
+        if (e.which == 32)
+            return false;
+    });
+
     $(window).scroll(function() {
         var elementSidebar = $('.element-sidebar-wrapper');
-        if($(this).scrollTop() > elementSidebar.position().top){
-            elementSidebar.addClass('element-sidebar-fixed');
-        } else {
-            elementSidebar.removeClass('element-sidebar-fixed');
+        if(elementSidebar.length > 0) {
+            if($(this).scrollTop() > elementSidebar.position().top){
+                elementSidebar.addClass('element-sidebar-fixed');
+            } else {
+                elementSidebar.removeClass('element-sidebar-fixed');
+            }
         }
     });
 
-    $(".element-sidebar-wrapper,.sidebar-wrapper").mCustomScrollbar({
-        theme: "minimal"
-    });
-
-
+    if($(".element-sidebar-wrapper, .sidebar-wrapper").length > 0) {
+        $(".element-sidebar-wrapper, .sidebar-wrapper").mCustomScrollbar({
+            theme: "minimal"
+        });
+    }
 });

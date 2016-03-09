@@ -136,7 +136,7 @@ class CsvImportValidator
                     "$transactionIndex.transaction_ref"             => sprintf(
                         'required|unique_validation:%s.transaction_ref,%s,%s,transaction_ref',
                         $transactionIndex,
-                        $transactionRow['transaction_ref'],
+                        trimInput($transactionRow['transaction_ref']),
                         $file
                     ),
                     "$transactionIndex.transactiontype_code"        => 'required|in:' . $transactionTypeCodes,
@@ -199,7 +199,7 @@ class CsvImportValidator
     {
         $activities            = Excel::load($file)->get()->toArray();
         $activityStatus        = implode(',', $this->getCodes('ActivityStatus', 'Activity'));
-        $sectorCategory        = implode(',', $this->getCodes('SectorCategory', 'Activity'));
+        $sectorCategory        = implode(',', $this->getCodes('Sector', 'Activity'));
         $recipientCountryCodes = implode(',', $this->getCodes('Country', 'Organization'));
         $recipientRegionCodes  = implode(',', $this->getCodes('Region', 'Activity'));
 
@@ -213,7 +213,7 @@ class CsvImportValidator
                     "$activityIndex.activity_identifier"                => sprintf(
                         'required|unique_validation:%s.activity_identifier,%s,%s,activity_identifier|not_in:%s',
                         $activityIndex,
-                        $activityRow['activity_identifier'],
+                        trimInput($activityRow['activity_identifier']),
                         $file,
                         $identifiers
                     ),
@@ -221,13 +221,13 @@ class CsvImportValidator
                     "$activityIndex.actual_start_date"                  => sprintf(
                         'date|required_any:%s.actual_start_date,%s,%s.actual_end_date,%s,%s.planned_start_date,%s,%s.planned_end_date,%s',
                         $activityIndex,
-                        $activityRow['actual_start_date'],
+                        trimInput($activityRow['actual_start_date']),
                         $activityIndex,
-                        $activityRow['actual_end_date'],
+                        trimInput($activityRow['actual_end_date']),
                         $activityIndex,
-                        $activityRow['planned_start_date'],
+                        trimInput($activityRow['planned_start_date']),
                         $activityIndex,
-                        $activityRow['planned_end_date']
+                        trimInput($activityRow['planned_end_date'])
                     ),
                     "$activityIndex.actual_end_date"                    => 'date',
                     "$activityIndex.planned_start_date"                 => 'date',
@@ -235,21 +235,21 @@ class CsvImportValidator
                     "$activityIndex.description_general"                => sprintf(
                         'required_any:%s.description_general,%s,%s.description_objectives,%s,%s.description_target_group,%s',
                         $activityIndex,
-                        $activityRow['description_general'],
+                        trimInput($activityRow['description_general']),
                         $activityIndex,
-                        $activityRow['description_objectives'],
+                        trimInput($activityRow['description_objectives']),
                         $activityIndex,
-                        $activityRow['description_target_group']
+                        trimInput($activityRow['description_target_group'])
                     ),
                     "$activityIndex.funding_participating_organization" => sprintf(
                         'required_any:%s.funding_participating_organization,%s,%s.implementing_participating_organization,%s',
                         $activityIndex,
-                        $activityRow['funding_participating_organization'],
+                        trimInput($activityRow['funding_participating_organization']),
                         $activityIndex,
-                        $activityRow['implementing_participating_organization']
+                        trimInput($activityRow['implementing_participating_organization'])
                     ),
                     "$activityIndex.activity_status"                    => 'required|in:' . $activityStatus,
-                    "$activityIndex.sector_dac_3digit"                  => 'required|multiple_value_in:' . $sectorCategory,
+                    "$activityIndex.sector_dac_5digit"                  => 'required|multiple_value_in:' . $sectorCategory,
                     "$activityIndex.recipient_country"                  => 'required_without:' . $activityIndex . '.recipient_region|multiple_value_in:' . $recipientCountryCodes,
                     "$activityIndex.recipient_region"                   => 'required_without:' . $activityIndex . '.recipient_country|multiple_value_in:' . $recipientRegionCodes
                 ]
@@ -258,32 +258,32 @@ class CsvImportValidator
             $messages = array_merge(
                 $messages,
                 [
-                    "$activityIndex.sector_dac_3digit.multiple_value_in"             => sprintf('At row %s Sector_DAC_3Digit category code is invalid.', $activityIndex + 1),
-                    "$activityIndex.sector_dac_3digit.required"                      => sprintf('At row %s Sector_DAC_3Digit category code is required.', $activityIndex + 1),
+                    "$activityIndex.sector_dac_5digit.multiple_value_in"             => sprintf('At row %s Sector_DAC_5Digit category code is invalid.', $activityIndex + 1),
+                    "$activityIndex.sector_dac_5digit.required"                      => sprintf('At row %s Sector_DAC_5Digit category code is required.', $activityIndex + 1),
                     "$activityIndex.recipient_country.multiple_value_in"             => sprintf('At row %s Recipient_Country is invalid.', $activityIndex + 1),
                     "$activityIndex.recipient_country.required_without"              => sprintf('At row %s either Recipient_Country or Recipient_Region is required.', $activityIndex + 1),
                     "$activityIndex.recipient_region.multiple_value_in"              => sprintf('At row %s Recipient_Region is invalid.', $activityIndex + 1),
-                    "$activityIndex.recipient_region.required_without"               => sprintf('At row %s either Recipient_Country or Recipient_Region is require.', $activityIndex + 1),
+                    "$activityIndex.recipient_region.required_without"               => sprintf('At row %s either Recipient_Country or Recipient_Region is required.', $activityIndex + 1),
                     "$activityIndex.activity_status.in"                              => sprintf('At row %s Activity_Status is invalid.', $activityIndex + 1),
                     "$activityIndex.activity_status.required"                        => sprintf('At row %s Activity_Status is required.', $activityIndex + 1),
                     "$activityIndex.activity_identifier.required"                    => sprintf('At row %s Activity_Identifier is required.', $activityIndex + 1),
                     "$activityIndex.activity_identifier.not_in"                      => sprintf('At row %s Activity_Identifier already exists.', $activityIndex + 1),
                     "$activityIndex.activity_identifier.unique_validation"           => sprintf('At row %s Activity_Identifier is invalid and must be unique.', $activityIndex + 1),
                     "$activityIndex.activity_title.required"                         => sprintf('At row %s Activity_Title is required.', $activityIndex + 1),
-                    "$activityIndex.actual_start_date.date"                          => sprintf('At row %s Actual_start_date is required.', $activityIndex + 1),
-                    "$activityIndex.actual_end_date.date"                            => sprintf('At row %s Actual_end_date is required.', $activityIndex + 1),
-                    "$activityIndex.planned_start_date.date"                         => sprintf('At row %s Planned_start_date is required.', $activityIndex + 1),
-                    "$activityIndex.planned_end_date.date"                           => sprintf('At row %s Planned_end_date is required.', $activityIndex + 1),
+                    "$activityIndex.actual_start_date.date"                          => sprintf('At row %s Actual_start_date is invalid.', $activityIndex + 1),
+                    "$activityIndex.actual_end_date.date"                            => sprintf('At row %s Actual_end_date is invalid.', $activityIndex + 1),
+                    "$activityIndex.planned_start_date.date"                         => sprintf('At row %s Planned_start_date is invalid.', $activityIndex + 1),
+                    "$activityIndex.planned_end_date.date"                           => sprintf('At row %s Planned_end_date is invalid.', $activityIndex + 1),
                     "$activityIndex.actual_start_date.required_any"                  => sprintf(
-                        'At row %s date among Actual_start_date/Actual_end_date/Planned_start_date/Planned_end_date is required',
+                        'At row %s date among Actual_start_date/Actual_end_date/Planned_start_date/Planned_end_date is required.',
                         $activityIndex + 1
                     ),
                     "$activityIndex.description_general.required_any"                => sprintf(
-                        'At row %s at least one description among description_general/description_objectives/description_target_group is required',
+                        'At row %s at least one description among description_general/description_objectives/description_target_group is required.',
                         $activityIndex + 1
                     ),
                     "$activityIndex.funding_participating_organization.required_any" => sprintf(
-                        'At row %s at least one participating_organization among funding/implementing is required',
+                        'At row %s at least one participating_organization among funding/implementing is required.',
                         $activityIndex + 1
                     ),
                 ]
@@ -313,13 +313,13 @@ class CsvImportValidator
             $requiredOnlyOneRule = sprintf(
                 'required_only_one:%s.incoming_fund,%s,%s.expenditure,%s,%s.commitment,%s,%s.disbursement,%s',
                 $transactionIndex,
-                $transactionRow['incoming_fund'],
+                trimInput($transactionRow['incoming_fund']),
                 $transactionIndex,
-                $transactionRow['expenditure'],
+                trimInput($transactionRow['expenditure']),
                 $transactionIndex,
-                $transactionRow['commitment'],
+                trimInput($transactionRow['commitment']),
                 $transactionIndex,
-                $transactionRow['disbursement']
+                trimInput($transactionRow['disbursement'])
             );
 
             $rules = array_merge(
@@ -328,13 +328,13 @@ class CsvImportValidator
                     "$transactionIndex.internal_reference"   => sprintf(
                         'unique_validation:%s.internal_reference,%s,%s,internal_reference',
                         $transactionIndex,
-                        $transactionRow['internal_reference'],
+                        trimInput($transactionRow['internal_reference']),
                         $file
                     ),
-                    "$transactionIndex.incoming_fund"        => ($transactionRow['incoming_fund']) ? ($requiredOnlyOneRule . '|numeric') : $requiredOnlyOneRule,
-                    "$transactionIndex.expenditure"          => ($transactionRow['expenditure']) ? 'numeric' : '',
-                    "$transactionIndex.disbursement"         => ($transactionRow['disbursement']) ? 'numeric' : '',
-                    "$transactionIndex.commitment"           => ($transactionRow['commitment']) ? 'numeric' : '',
+                    "$transactionIndex.incoming_fund"        => (trimInput($transactionRow['incoming_fund'])) ? ($requiredOnlyOneRule . '|numeric') : $requiredOnlyOneRule,
+                    "$transactionIndex.expenditure"          => (trimInput($transactionRow['expenditure'])) ? 'numeric' : '',
+                    "$transactionIndex.disbursement"         => (trimInput($transactionRow['disbursement'])) ? 'numeric' : '',
+                    "$transactionIndex.commitment"           => (trimInput($transactionRow['commitment'])) ? 'numeric' : '',
                     "$transactionIndex.transaction_date"     => 'required|date',
                     "$transactionIndex.transaction_currency" => 'in:' . $transactionCurrency,
                     "$transactionIndex.description"          => 'required'

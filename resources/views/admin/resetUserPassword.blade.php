@@ -17,7 +17,7 @@
                             <div class="panel-body">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <div class="col-xs-12 col-sm-6">
-                                    <label class="control-label">Password</label>
+                                    <label class="control-label">New Password</label>
                                     <input type="password" class="form-control" name="password">
                                 </div>
 

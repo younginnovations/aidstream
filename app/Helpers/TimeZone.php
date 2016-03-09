@@ -26,5 +26,9 @@ function changeTimeZone($date, $format = 'M d, Y H:i:s')
  */
 function formatDate($date, $format = 'M d, Y')
 {
-    return date($format, strtotime($date));
+    if ($date != "") {
+        return date($format, strtotime($date));
+    }
+
+    return "";
 }

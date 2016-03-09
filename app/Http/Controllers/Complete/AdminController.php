@@ -4,9 +4,11 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdatePasswordRequest;
 use App\Http\Requests\UserRequest;
 use App\Models\UserActivity;
+use App\Services\Organization\OrganizationManager;
 use App\User;
 use Input;
 use Illuminate\Session\SessionManager as Session;
+use Illuminate\Contracts\Logging\Log as DbLogger;
 
 /**
  * Class AdminController
@@ -19,21 +21,36 @@ class AdminController extends Controller
      * @var Session
      */
     protected $session;
+
     /**
      * @var User
      */
     protected $user;
 
     /**
-     * @param Session $session
-     * @param User    $user
+     * @var OrganizationManager
      */
-    function __construct(Session $session, User $user)
+    protected $organizationManager;
+
+    /**
+     * @var DbLogger
+     */
+    protected $dbLogger;
+
+    /**
+     * @param Session             $session
+     * @param User                $user
+     * @param OrganizationManager $organizationManager
+     * @param DbLogger            $dbLogger
+     */
+    function __construct(Session $session, User $user, OrganizationManager $organizationManager, DbLogger $dbLogger)
     {
         $this->middleware('auth');
-        $this->session = $session;
-        $this->org_id  = $this->session->get('org_id');
-        $this->user    = $user;
+        $this->session             = $session;
+        $this->org_id              = $this->session->get('org_id');
+        $this->user                = $user;
+        $this->organizationManager = $organizationManager;
+        $this->dbLogger            = $dbLogger;
     }
 
     /**
@@ -51,8 +68,10 @@ class AdminController extends Controller
      */
     public function create()
     {
+        $organization           = $this->organizationManager->getOrganization($this->org_id);
+        $organizationIdentifier = $organization->user_identifier;
 
-        return view('admin.registerUser');
+        return view('admin.registerUser', compact('organizationIdentifier'));
     }
 
 
@@ -74,6 +93,7 @@ class AdminController extends Controller
         $this->user->user_permission = isset($input['user_permission']) ? $input['user_permission'] : [];
 
         $response = ($this->user->save()) ? ['type' => 'success', 'code' => ['created', ['name' => 'User']]] : ['type' => 'danger', 'code' => ['save_failed', ['name' => 'User']]];
+        $this->dbLogger->activity("admin.user_created", ['orgId' => $this->org_id, 'userId' => $this->user->id]);
 
         return redirect()->route('admin.list-users')->withResponse($response);
     }
@@ -110,6 +130,7 @@ class AdminController extends Controller
     {
         $user     = $this->user->findOrFail($userId);
         $response = ($user->delete($user)) ? ['type' => 'success', 'code' => ['deleted', ['name' => 'User']]] : ['type' => 'danger', 'code' => ['delete_failed', ['name' => 'user']]];
+        $this->dbLogger->activity("admin.user_deleted", ['orgId' => $this->org_id , 'userId' => $userId]);
 
         return redirect()->back()->withResponse($response);
     }
@@ -166,6 +187,7 @@ class AdminController extends Controller
             'type' => 'danger',
             'code' => ['update_failed', ['name' => 'User Permission']]
         ];
+        $this->dbLogger->activity("admin.permission_updated", ['orgId' => $this->org_id , 'userId' => $userId]);
 
         return redirect()->route('admin.list-users')->withResponse($response);
 

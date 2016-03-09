@@ -1,7 +1,7 @@
 @extends('app')
 
 @section('title', 'Reporting Organization')
-
+@inject('getCode', 'App\Helpers\GetCodeName')
 @section('content')
     <div class="container main-container">
         <div class="row">
@@ -23,7 +23,7 @@
                                     </div>
                                     <div class="col-md-12 clearfix">
                                         <div class="col-xs-12 col-sm-4 col-lg-3">Type:</div>
-                                        <div class="col-xs-12 col-sm-8 col-lg-9">{{ $reportingOrganization[0]['reporting_organization_type'] }}</div>
+                                        <div class="col-xs-12 col-sm-8 col-lg-9">{{ $getCode->getOrganizationCodeName('OrganizationType', $reportingOrganization[0]['reporting_organization_type']) }}</div>
                                     </div>
                                     <div class="col-md-12 clearfix">
                                         <div class="col-xs-12 col-sm-4 col-lg-3">Name:</div>

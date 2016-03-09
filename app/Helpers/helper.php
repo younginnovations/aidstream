@@ -18,3 +18,13 @@ function removeEmptyValues(&$data)
         }
     );
 }
+
+/**
+ * trim an input
+ * @param $input
+ * @return string
+ */
+function trimInput($input)
+{
+    return trim(preg_replace('/\s+/', " ", $input));
+}

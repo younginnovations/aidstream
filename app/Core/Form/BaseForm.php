@@ -63,11 +63,12 @@ class BaseForm extends Form
 
     /**
      * return codeList array from json codeList
-     * @param $listName
-     * @param $listType
+     * @param      $listName
+     * @param      $listType
+     * @param bool $code
      * @return array
      */
-    public function getCodeList($listName, $listType)
+    public function getCodeList($listName, $listType, $code = true)
     {
         $defaultVersion = config('app.default_version_name');
         $defaultLocale  = config('app.fallback_locale');
@@ -84,7 +85,7 @@ class BaseForm extends Form
         $data             = [];
 
         foreach ($codeList as $list) {
-            $data[$list['code']] = $list['code'] . (array_key_exists('name', $list) ? ' - ' . $list['name'] : '');
+            $data[$list['code']] = ($code) ? $list['code'] . (array_key_exists('name', $list) ? ' - ' . $list['name'] : '') : $list['name'];
         }
 
         return $data;
