@@ -46,7 +46,7 @@ class Location extends ActivityBaseRequest
                 $this->getRulesForName($location['name'], $locationForm),
                 $this->getRulesForLocationDescription($location['location_description'], $locationForm),
                 $this->getRulesForActivityDescription($location['activity_description'], $locationForm),
-                $this->getRulesForAdministrative($location['activity_description'], $locationForm),
+                $this->getRulesForAdministrative($location['administrative'], $locationForm),
                 $this->getRulesForPoint($location['point'], $locationForm)
             );
         }
@@ -74,7 +74,7 @@ class Location extends ActivityBaseRequest
                 $this->getMessagesForName($location['name'], $locationForm),
                 $this->getMessagesForLocationDescription($location['location_description'], $locationForm),
                 $this->getMessagesForActivityDescription($location['activity_description'], $locationForm),
-                $this->getMessagesForAdministrative($location['activity_description'], $locationForm),
+                $this->getMessagesForAdministrative($location['administrative'], $locationForm),
                 $this->getMessagesForPoint($location['point'], $locationForm)
             );
         }
@@ -233,6 +233,7 @@ class Location extends ActivityBaseRequest
             $administrativeForm                                   = sprintf('%s.administrative.%s', $formBase, $administrativeIndex);
             $rules[sprintf('%s.vocabulary', $administrativeForm)] = 'required';
             $rules[sprintf('%s.code', $administrativeForm)]       = 'required';
+            $rules[sprintf('%s.level', $administrativeForm)]      = 'min:0|integer';
         }
 
         return $rules;
@@ -251,6 +252,7 @@ class Location extends ActivityBaseRequest
             $administrativeForm                                               = sprintf('%s.administrative.%s', $formBase, $administrativeIndex);
             $messages[sprintf('%s.vocabulary.required', $administrativeForm)] = 'Vocabulary is Required';
             $messages[sprintf('%s.code.required', $administrativeForm)]       = 'Code is Required';
+            $messages[sprintf('%s.level.integer', $administrativeForm)]      = 'Level should be a non-negative integer.';
         }
 
         return $messages;

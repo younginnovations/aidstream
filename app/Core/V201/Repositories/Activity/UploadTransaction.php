@@ -83,8 +83,8 @@ class UploadTransaction
         $transaction                                                             = $this->readCsv->getTransactionHeaders('Detailed');
         $transaction['reference']                                                = $transactionRow['transaction_ref'];
         $transaction['transaction_type'][0]['transaction_type_code']             = $transactionRow['transactiontype_code'];
-        $transaction['transaction_date'][0]['date']                              = $transactionRow['transactiondate_iso_date'];
-        $transaction['value'][0]['date']                                         = $transactionRow['transactionvalue_value_date'];
+        $transaction['transaction_date'][0]['date']                              = date('Y-m-d', strtotime($transactionRow['transactiondate_iso_date']));
+        $transaction['value'][0]['date']                                         = date('Y-m-d', strtotime($transactionRow['transactionvalue_value_date']));
         $transaction['value'][0]['amount']                                       = $transactionRow['transactionvalue_text'];
         $transaction['description'][0]['narrative'][0]['narrative']              = $transactionRow['description_text'];
         $transaction['provider_organization'][0]['organization_identifier_code'] = $transactionRow['providerorg_ref'];
@@ -149,8 +149,8 @@ class UploadTransaction
             $transaction['transaction_type'][0]['transaction_type_code'] = 2;
             $transaction['value'][0]['amount']                           = $transactionRow['commitment'];
         }
-        $transaction['value'][0]['date']                                         = $transactionRow['transaction_date'];
-        $transaction['transaction_date'][0]['date']                              = $transactionRow['transaction_date'];
+        $transaction['value'][0]['date']                                         = date('Y-m-d', strtotime($transactionRow['transaction_date']));
+        $transaction['transaction_date'][0]['date']                              = date('Y-m-d', strtotime($transactionRow['transaction_date']));
         $transaction['description'][0]['narrative'][0]['narrative']              = $transactionRow['description'];
         $transaction['provider_organization'][0]['organization_identifier_code'] = $transactionRow['provider_org_reference'];
         $transaction['provider_organization'][0]['provider_activity_id']         = $transactionRow['provider_activity_id'];

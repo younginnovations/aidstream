@@ -63,7 +63,7 @@ class Transaction extends ActivityBaseRequest
             $transactionReference                                                                        = implode(',', $transactionReferences);
             $rules                                                                                       = [];
             $rules[sprintf('%s.reference', $transactionForm)]                                            = 'not_in:' . $transactionReference;
-            $rules[sprintf('%s.disbursement_channel.0.disbursement_channel_code', $transactionForm)]     = 'required';
+//            $rules[sprintf('%s.disbursement_channel.0.disbursement_channel_code', $transactionForm)]     = 'required';
             $rules[sprintf('%s.provider_organization.0.organization_identifier_code', $transactionForm)] = 'exclude_operators';
             $rules[sprintf('%s.receiver_organization.0.organization_identifier_code', $transactionForm)] = 'exclude_operators';
 

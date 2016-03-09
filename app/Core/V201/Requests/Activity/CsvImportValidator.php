@@ -69,7 +69,7 @@ class CsvImportValidator
                 $counter  = 0;
                 $csvFiled = $parameters[3];
                 foreach ($csvDatas as $csvDataIndex => $csvData) {
-                    if ($csvData[$csvFiled] === $parameters[1]) {
+                    if ($csvData[$csvFiled] == $parameters[1]) {
                         $counter ++;
                     }
                 }
@@ -326,7 +326,7 @@ class CsvImportValidator
                 $rules,
                 [
                     "$transactionIndex.internal_reference"   => sprintf(
-                        'required|unique_validation:%s.internal_reference,%s,%s,internal_reference',
+                        'unique_validation:%s.internal_reference,%s,%s,internal_reference',
                         $transactionIndex,
                         $transactionRow['internal_reference'],
                         $file

@@ -44,7 +44,11 @@ class Transaction extends V201Transaction
             $transactionReference                                                                        = implode(',', $transactionReferences);
             $rules                                                                                       = [];
             $rules[sprintf('%s.reference', $transactionForm)]                                            = 'not_in:' . $transactionReference;
-            $rules[sprintf('%s.disbursement_channel.0.disbursement_channel_code', $transactionForm)]     = 'required';
+
+/*
+ * Commented code from here and above might be useful later. Thus, they are not omitted.
+ */
+//            $rules[sprintf('%s.disbursement_channel.0.disbursement_channel_code', $transactionForm)]     = 'required';
             $rules[sprintf('%s.provider_organization.0.organization_identifier_code', $transactionForm)] = 'exclude_operators';
             $rules[sprintf('%s.receiver_organization.0.organization_identifier_code', $transactionForm)] = 'exclude_operators';
 
@@ -54,8 +58,8 @@ class Transaction extends V201Transaction
                 $this->getTransactionDateRules($transaction['transaction_date'], $transactionForm),
                 $this->getValueRules($transaction['value'], $transactionForm),
                 $this->getDescriptionRules($transaction['description'], $transactionForm),
-                $this->getSectorsRules($transaction['sector'], $transactionForm),
-                $this->getRecipientRegionRules($transaction['recipient_region'], $transactionForm),
+//                $this->getSectorsRules($transaction['sector'], $transactionForm),
+//                $this->getRecipientRegionRules($transaction['recipient_region'], $transactionForm),
                 $this->getRulesForProviderOrg($transaction['provider_organization'], $transactionForm),
                 $this->getRulesForReceiverOrg($transaction['receiver_organization'], $transactionForm)
             );
@@ -76,7 +80,7 @@ class Transaction extends V201Transaction
         foreach ($formFields as $transactionIndex => $transaction) {
             $transactionForm                                                                                     = sprintf('transaction.%s', $transactionIndex);
             $messages[sprintf('%s.reference.not_in', $transactionForm)]                                          = 'Reference should be unique';
-            $messages[sprintf('%s.disbursement_channel.0.disbursement_channel_code.required', $transactionForm)] = 'Disbursement Channel Code is required.';
+//            $messages[sprintf('%s.disbursement_channel.0.disbursement_channel_code.required', $transactionForm)] = 'Disbursement Channel Code is required.';
 
             $messages = array_merge(
                 $messages,
@@ -84,8 +88,8 @@ class Transaction extends V201Transaction
                 $this->getTransactionDateMessages($transaction['transaction_date'], $transactionForm),
                 $this->getValueMessages($transaction['value'], $transactionForm),
                 $this->getDescriptionMessages($transaction['description'], $transactionForm),
-                $this->getSectorsMessages($transaction['sector'], $transactionForm),
-                $this->getRecipientRegionMessages($transaction['recipient_region'], $transactionForm),
+//                $this->getSectorsMessages($transaction['sector'], $transactionForm),
+//                $this->getRecipientRegionMessages($transaction['recipient_region'], $transactionForm),
                 $this->getMessagesForProviderOrg($transaction['provider_organization'], $transactionForm),
                 $this->getMessagesForReceiverOrg($transaction['receiver_organization'], $transactionForm)
             );

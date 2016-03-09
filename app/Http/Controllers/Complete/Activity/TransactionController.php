@@ -1,5 +1,6 @@
 <?php namespace App\Http\Controllers\Complete\Activity;
 
+use App\Http\Controllers\Complete\Activity\Traits\InterElementValidator;
 use App\Http\Controllers\Controller;
 use App\Services\Activity\ActivityManager;
 use App\Services\Activity\TransactionManager;
@@ -13,14 +14,18 @@ use App\Http\Requests\Request;
  */
 class TransactionController extends Controller
 {
+    use InterElementValidator;
+
     /**
      * @var ActivityManager
      */
     protected $activityManager;
+
     /**
      * @var Transaction
      */
     protected $transactionForm;
+
     /**
      * @var TransactionManager
      */
@@ -75,8 +80,22 @@ class TransactionController extends Controller
     public function store(Request $request, $activityId, TransactionRequest $transactionRequest)
     {
         $this->authorize('add_activity');
-        $activity = $this->activityManager->getActivityData($activityId);
-        $data     = $request->all();
+        $activity          = $this->activityManager->getActivityData($activityId);
+        $data              = $request->all();
+        $activityAsAnArray = $activity->toArray();
+
+        if ($this->recipientCountryAndRegionAreInvalid($activityAsAnArray, $data)) {
+            $response = [
+                'type' => 'warning',
+                'code' => [
+                    'message',
+                    ['message' => 'You cannot save Recipient Country or Recipient Region in transaction level because you have already saved recipient country or region in activity level.']
+                ]
+            ];
+
+            return redirect()->back()->withInput()->withResponse($response);
+        }
+
         $this->filterSector($data);
         $this->transactionManager->save($data, $activity);
         $this->activityManager->resetActivityWorkflow($activityId);
@@ -131,14 +150,10 @@ class TransactionController extends Controller
         removeEmptyValues($transactionData);
         $activity = $this->activityManager->getActivityData($id);
 
-        $count           = 0;
         $activityDetails = $activity->toArray();
         removeEmptyValues($activityDetails);
-        if ((!Empty($activityDetails['recipient_country']) || !Empty($activityDetails['recipient_region'])) && !Empty($transactionData['transaction'][0]['recipient_country'])) {
-            $count ++;
-        }
 
-        if ($count > 0) {
+        if ($this->recipientCountryAndRegionAreInvalid($activityDetails, $transactionDetails)) {
             $response = [
                 'type' => 'warning',
                 'code' => [

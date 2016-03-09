@@ -25,33 +25,61 @@ use Psr\Log\LoggerInterface;
  */
 class ActivityController extends Controller
 {
+    /**
+     * @var Identifier
+     */
     protected $identifierForm;
+
+    /**
+     * @var ActivityManager
+     */
     protected $activityManager;
+
+    /**
+     * @var
+     */
     protected $organization_id;
+
     /**
      * @var SettingsManager
      */
     protected $settingsManager;
+
     /**
      * @var SessionManager
      */
     protected $sessionManager;
+
     /**
      * @var OrganizationManager
      */
     protected $organizationManager;
+
     /**
      * @var ResultManager
      */
     protected $resultManager;
+
     /**
      * @var TransactionManager
      */
     protected $transactionManager;
+
+    /**
+     * @var User
+     */
+    protected $user;
+
+    /**
+     * @var LoggerInterface
+     */
+    protected $loggerInterface;
+
     /**
      * @var ChangeActivityDefault
      */
-    private $changeActivityDefaultForm;
+    protected $changeActivityDefaultForm;
+
     /**
      * @var ChangeActivityDefaultManager
      */
