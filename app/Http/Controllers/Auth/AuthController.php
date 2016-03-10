@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 
+
 /**
  * Class AuthController
  * @package App\Http\Controllers\Auth
@@ -166,10 +167,21 @@ class AuthController extends Controller
             $settings       = Settings::where('organization_id', $user->org_id)->first();
             $settings_check = isset($settings);
             $version        = ($settings_check) ? $settings->version : config('app.default_version');
+            Session::put('current_version', $version);
+            $versions_db= $this->database->table('versions')->get();
+            $versions = [];
+            foreach ($versions_db as $ver) {
+               $versions[] = $ver->version;
+            }
+            $versionKey  = array_search($version, $versions);
+            $next_version = (end($versions) == $version) ? null : $versions[$versionKey + 1];
+
+            Session::put('next_version',$next_version);
             $version        = 'V' . str_replace('.', '', $version);
             Session::put('version', $version);
             $redirectPath = ($user->role_id == 1 || $user->role_id == 2) ? config('app.admin_dashboard') : config('app.super_admin_dashboard');
             $intendedUrl  = Session::get('url.intended');
+
             !(($user->role_id == 3 || $user->role_id == 4) && strpos($intendedUrl, '/admin') === false) ?: $intendedUrl = url('/');
             !($intendedUrl == url('/')) ?: Session::set('url.intended', $redirectPath);
 

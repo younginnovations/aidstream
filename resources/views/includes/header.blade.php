@@ -12,7 +12,7 @@
         <div class="collapse navbar-collapse navbar-right" id="nav-collapse">
             <ul class="nav navbar-nav">
                 <li><a href="{{ url('/about') }}">About</a></li>
-                <li><a href="{{ url('/who-are-using') }}">Who're Using</a></li>
+                <li><a href="{{ url('/who-is-using') }}">Who's Using</a></li>
                 <!--<li><a href="#">Snapshot</a></li>-->
             </ul>
             <div class="action-btn pull-left">
