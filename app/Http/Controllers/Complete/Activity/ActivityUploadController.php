@@ -9,6 +9,7 @@ use App\Services\Organization\OrganizationManager;
 use App\Services\RequestManager\Activity\CsvImportValidator;
 use App\Services\RequestManager\Activity\UploadActivity as UploadActivityRequest;
 use App\Http\Requests\Request;
+use App\Services\SettingsManager;
 use Illuminate\Session\SessionManager;
 
 class ActivityUploadController extends Controller
@@ -31,6 +32,10 @@ class ActivityUploadController extends Controller
      * @var OrganizationManager
      */
     protected $organizationManager;
+    /**
+     * @var SettingsManager
+     */
+    protected $settingsManager;
 
     /**
      * @param OrganizationManager   $organizationManager
@@ -38,13 +43,15 @@ class ActivityUploadController extends Controller
      * @param ActivityManager       $activityManager
      * @param UploadActivityManager $uploadActivityManager
      * @param UploadActivity        $uploadActivity
+     * @param SettingsManager       $settingsManager
      */
     function __construct(
         OrganizationManager $organizationManager,
         SessionManager $sessionManager,
         ActivityManager $activityManager,
         UploadActivityManager $uploadActivityManager,
-        UploadActivity $uploadActivity
+        UploadActivity $uploadActivity,
+        SettingsManager $settingsManager
     ) {
         $this->middleware('auth');
         $this->activityManager       = $activityManager;
@@ -53,6 +60,7 @@ class ActivityUploadController extends Controller
         $this->sessionManager        = $sessionManager;
         $this->organizationId        = $this->sessionManager->get('org_id');
         $this->organizationManager   = $organizationManager;
+        $this->settingsManager       = $settingsManager;
     }
 
     /**
@@ -83,7 +91,9 @@ class ActivityUploadController extends Controller
     public function store(Request $request, UploadActivityRequest $uploadActivityRequest, CsvImportValidator $csvImportValidator, IatiIdentifierRepository $iatiIdentifierRepository)
     {
         $this->authorize('add_activity');
-        $organization = $this->organizationManager->getOrganization($this->organizationId);
+        $settings           = $this->settingsManager->getSettings($this->organizationId);
+        $defaultFieldValues = $settings->default_field_values;
+        $organization       = $this->organizationManager->getOrganization($this->organizationId);
 
         if (!isset($organization->reporting_org[0])) {
             $response = ['type' => 'warning', 'code' => ['settings', ['name' => 'activity']]];
@@ -113,7 +123,7 @@ class ActivityUploadController extends Controller
         if ($validator->fails()) {
             return redirect()->back()->withInput()->withErrors($validator);
         }
-        $check = $this->uploadActivityManager->save($file, $organization);
+        $check = $this->uploadActivityManager->save($file, $organization, $defaultFieldValues);
         if (is_a($check, 'Illuminate\View\View')) {
             return $check;
         }

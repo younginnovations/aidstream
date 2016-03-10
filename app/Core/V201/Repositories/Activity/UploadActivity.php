@@ -50,7 +50,7 @@ class UploadActivity
      * @param array $activityDetails
      * @param       $organization
      */
-    public function upload(array $activityDetails, $organization)
+    public function upload(array $activityDetails, $organization, $defaultFieldValues)
     {
         $row      = [
             'identifier'                 => $activityDetails['identifier'],
@@ -62,6 +62,7 @@ class UploadActivity
             'recipient_region'           => $activityDetails['recipient_region'],
             'sector'                     => $activityDetails['sector'],
             'activity_date'              => $activityDetails['activity_date'],
+            'default_field_values'       => $defaultFieldValues
         ];
         $activity = $this->activity->newInstance($row);
         $organization->activities()->save($activity);

@@ -57,11 +57,11 @@ class UploadActivityManagerTest extends AidStreamTestCase
         $this->uploadActivityRepo->shouldReceive('getIdentifiers')->with(1)->andReturn([]);
         $this->database->shouldReceive('beginTransaction');
 
-        $this->uploadActivityRepo->shouldReceive('upload')->with(['identifier' => ['activity_identifier' => 'i']], $organization);
+        $this->uploadActivityRepo->shouldReceive('upload')->with(['identifier' => ['activity_identifier' => 'i']], $organization, []);
         $this->database->shouldReceive('commit');
         $this->logger->shouldReceive('info')->once()->with('Activities Uploaded for organization with id:1');
         $this->dbLogger->shouldReceive('activity')->once()->with('activity.activity_uploaded', ['organization_id' => 1]);
-        $this->assertTrue($this->uploadActivityManager->save($activityCsv, $organization));
+        $this->assertTrue($this->uploadActivityManager->save($activityCsv, $organization, []));
     }
 
     public function testItShouldSaveUpdateActivity()
@@ -89,7 +89,7 @@ class UploadActivityManagerTest extends AidStreamTestCase
         $this->uploadActivityRepo->shouldReceive('update')->andThrow($exception);
         $this->database->shouldReceive('rollback');
         $this->logger->shouldReceive('error');
-        $this->assertFalse($this->uploadActivityManager->save($activityCsv, $organization));
+        $this->assertFalse($this->uploadActivityManager->save($activityCsv, $organization, []));
     }
 
     public function tearDown()
