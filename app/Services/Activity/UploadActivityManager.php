@@ -45,9 +45,10 @@ class UploadActivityManager
      * upload activity form csv
      * @param $activityCsv
      * @param $organization
+     * @param $defaultFieldValues
      * @return bool
      */
-    public function save($activityCsv, $organization)
+    public function save($activityCsv, $organization, $defaultFieldValues)
     {
         try {
             $excel           = $this->version->getExcel();
@@ -66,7 +67,7 @@ class UploadActivityManager
                 $activityIdentifier = $activityDetail['identifier']['activity_identifier'];
                 (isset($identifiers[$activityIdentifier]))
                     ? $data[$identifiers[$activityIdentifier]] = $activityDetail
-                    : $this->uploadActivityRepo->upload($activityDetail, $organization);
+                    : $this->uploadActivityRepo->upload($activityDetail, $organization, $defaultFieldValues);
                 $this->database->commit();
             }
 

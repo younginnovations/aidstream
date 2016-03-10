@@ -47,10 +47,11 @@ class UploadActivityTest extends AidStreamTestCase
             'recipient_region'           => '',
             'sector'                     => '',
             'activity_date'              => '',
+            'default_field_values'      => [],
         ];
         $this->activity->shouldReceive('newInstance')->once()->with($row)->andReturnSelf();
         $this->organization->shouldReceive('activities->save')->once()->with($this->activity)->andReturn(true);
-        $this->uploadActivityRepo->upload($row, $this->organization);
+        $this->uploadActivityRepo->upload($row, $this->organization, []);
     }
 
     public function testItShouldUpdateActivityByUploadingCSV()
@@ -65,6 +66,7 @@ class UploadActivityTest extends AidStreamTestCase
             'recipient_region'           => 'testRegion',
             'sector'                     => 'testSector',
             'activity_date'              => 'testDate',
+            'default_field_values'       => [],
         ];
         $this->activityRepo->shouldReceive('getActivityData')->with(1)->andReturn($this->activity);
         $this->activity->shouldReceive('setAttribute')->with('identifier', 'testIdentifier');
@@ -76,6 +78,7 @@ class UploadActivityTest extends AidStreamTestCase
         $this->activity->shouldReceive('setAttribute')->with('recipient_region', 'testRegion');
         $this->activity->shouldReceive('setAttribute')->with('sector', 'testSector');
         $this->activity->shouldReceive('setAttribute')->with('activity_date', 'testDate');
+        $this->activity->shouldReceive('setAttribute')->with('default_field_values', []);
         $this->activity->shouldReceive('save')->andReturn(true);
         $this->uploadActivityRepo->update($row, 1);
     }
