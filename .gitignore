@@ -5,5 +5,6 @@
 /public/css/maps
 _ide_helper.php
 /public/uploads
+/public/files
 /bootstrap/cache
 /tests/_output
