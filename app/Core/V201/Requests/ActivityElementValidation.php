@@ -9,7 +9,7 @@ class ActivityElementValidation
         $messages = [];
 
         if (empty($activityData->title)) {
-            $messages[] = 'Title is Required.';
+            $messages[] = 'Title is required.';
         }
 
         if (empty($activityData->description)) {
