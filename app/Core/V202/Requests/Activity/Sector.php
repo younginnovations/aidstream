@@ -54,7 +54,7 @@ class Sector extends V201Sector
                 $messages[sprintf('%s.sector_text.required', $sectorForm)] = 'Sector is required.';
             }
             $messages[sprintf('%s.percentage.numeric', $sectorForm)] = 'Percentage should be numeric';
-            $messages[sprintf('%s.percentage.max', $sectorForm)]     = 'Percentage should be less than or equal to required';
+            $messages[sprintf('%s.percentage.max', $sectorForm)]     = 'Percentage should be less than or equal to :max';
             $messages                                                = array_merge($messages, $this->getMessagesForNarrative($sector['narrative'], $sectorForm));
         }
 

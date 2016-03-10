@@ -50,10 +50,12 @@ class DocumentController extends Controller
     public function store(Request $request)
     {
         try {
-            $file     = $request->file('file');
-            $filename = str_replace(' ', '-', $file->getClientOriginalName());
-            $url      = url(sprintf('uploads/files/documents/%s/%s', $this->orgId, $filename));
-            $document = $this->documentManager->getDocument($this->orgId, $url, $filename);
+            $file      = $request->file('file');
+            $filename  = str_replace(' ', '-', preg_replace('/\s+/', ' ', $file->getClientOriginalName()));
+            $extension = substr($filename, stripos($filename, '.'));
+            $filename  = sprintf('%s-%s%s', substr($filename, 0, stripos($filename, '.')), date('Ymdhms'), $extension);
+            $url       = url(sprintf('uploads/files/documents/%s/%s', $this->orgId, $filename));
+            $document  = $this->documentManager->getDocument($this->orgId, $url, $filename);
             if ($document->exists) {
                 return ['status' => 'danger', 'message' => 'Document already exists.'];
             }
@@ -75,5 +77,20 @@ class DocumentController extends Controller
         $documents = $this->documentManager->getDocuments($this->orgId);
 
         return $documents->toArray();
+    }
+
+    /**
+     * @param $id
+     * @return mixed
+     */
+    public function destroy($id)
+    {
+        $document = $this->documentManager->getDocumentById($id);
+        $response = ($document->delete()) ? ['type' => 'success', 'code' => ['deleted', ['name' => 'Document']]] : [
+            'type' => 'danger',
+            'code' => ['delete_failed', ['name' => 'Document']]
+        ];
+
+        return redirect()->back()->withResponse($response);
     }
 }

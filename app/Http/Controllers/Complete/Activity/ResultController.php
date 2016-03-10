@@ -39,18 +39,31 @@ class ResultController extends Controller
         $this->resultForm      = $resultForm;
     }
 
-
     /**
      * Return results list
      * @param $id
      * @return \Illuminate\View\View
      */
-    public function  index($id)
+    public function index($id)
     {
         $results      = $this->resultManager->getResults($id);
         $activityData = $this->activityManager->getActivityData($id);
 
         return view('Activity.result.index', compact('results', 'activityData', 'id'));
+    }
+
+    /**
+     * display result with specific id
+     * @param $activityId
+     * @param $id
+     * @return \Illuminate\View\View
+     */
+    public function show($activityId, $id)
+    {
+        $result       = $this->resultManager->getResult($id, $activityId);
+        $activityData = $this->activityManager->getActivityData($id);
+
+        return view('Activity.result.show', compact('result', 'activityData', 'id'));
     }
 
     /**

@@ -47,6 +47,16 @@ class Document
     }
 
     /**
+     * return document by id
+     * @param $id
+     * @return static
+     */
+    public function getDocumentById($id)
+    {
+        return $this->document->find($id);
+    }
+
+    /**
      * save document
      * @param DocumentModal $document
      * @return bool

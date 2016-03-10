@@ -26,7 +26,7 @@ $router->controllers(
 );
 
 //if (getenv('APP_ENV') == "local") {
-    $router->get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
+$router->get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
 //}
 
 $router->get(
@@ -133,5 +133,12 @@ $router->get(
     [
         'as'   => 'document.list',
         'uses' => 'Complete\DocumentController@getDocuments'
+    ]
+);
+$router->get(
+    'document/{id}/delete',
+    [
+        'as'   => 'document.delete',
+        'uses' => 'Complete\DocumentController@destroy'
     ]
 );

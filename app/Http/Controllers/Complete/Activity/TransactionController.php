@@ -182,7 +182,7 @@ class TransactionController extends Controller
     {
         foreach ($transactionDetails['transaction'] as &$transaction) {
             foreach ($transaction['sector'] as &$sector) {
-                if ($sector['sector_vocabulary'] == 1) {
+                if ($sector['sector_vocabulary'] == 1 || $sector['sector_vocabulary'] == '') {
                     $sector['sector_category_code'] = '';
                     $sector['sector_text']          = '';
                 } elseif ($sector['sector_vocabulary'] == 2) {

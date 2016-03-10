@@ -11,7 +11,7 @@
                 {{--*/
                     $vocabulary = $sector['sector_vocabulary'];
                     $vocabularyValue = $getCode->getActivityCodeName('SectorVocabulary', $vocabulary);
-                    if ($vocabulary == 1) {
+                    if ($vocabulary == 1 || $vocabulary == '') {
                         $sectorValue = $getCode->getActivityCodeName('Sector', $sector['sector_code']);
                     } elseif ($vocabulary == 2) {
                         $sectorValue = $getCode->getActivityCodeName('SectorCategory', $sector['sector_category_code']);
@@ -22,7 +22,7 @@
                 <div class="panel-default">
                     <div class="panel-heading">
                         <div class="activity-element-title">
-                            {{ $vocabularyValue . ' ; ' . $sectorValue }}
+                            {{ ($vocabularyValue ? $vocabularyValue . ' ; ' : '') . $sectorValue }}
                         </div>
                     </div>
                     <div class="panel-body panel-element-body row">
