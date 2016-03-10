@@ -48,7 +48,7 @@ $router->group(
         $router->get(
             '/download-activity-template',
             [
-                'as'   => 'download.activity-transaction',
+                'as'   => 'download.activity-template',
                 'uses' => 'DownloadController@downloadActivityTemplate'
             ]
         );

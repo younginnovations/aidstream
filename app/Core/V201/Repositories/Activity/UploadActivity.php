@@ -254,7 +254,7 @@ class UploadActivity
     protected function formatSector($activityRow)
     {
         $sectorTemplate = $this->readCsv->getActivityHeaders('sector')[0];
-        $sectors        = explode(';', $activityRow['sector_dac_3digit']);
+        $sectors        = explode(';', $activityRow['sector_dac_5digit']);
         $sector         = [];
         foreach ($sectors as $sectorRow) {
             $sectorTemplate['sector_vocabulary']    = 2;
@@ -276,22 +276,22 @@ class UploadActivity
         $activityDate         = [];
         if (!empty($activityRow['actual_start_date'])) {
             $activityDateTemplate['type'] = 2;
-            $activityDateTemplate['date'] = $activityRow['actual_start_date'];
+            $activityDateTemplate['date'] = date('Y-m-d', strtotime($activityRow['actual_start_date']));
             $activityDate[]               = $activityDateTemplate;
         }
         if (!empty($activityRow['actual_end_date'])) {
             $activityDateTemplate['type'] = 4;
-            $activityDateTemplate['date'] = $activityRow['actual_end_date'];
+            $activityDateTemplate['date'] = date('Y-m-d', strtotime($activityRow['actual_end_date']));
             $activityDate[]               = $activityDateTemplate;
         }
         if (!empty($activityRow['planned_start_date'])) {
             $activityDateTemplate['type'] = 1;
-            $activityDateTemplate['date'] = $activityRow['planned_start_date'];
+            $activityDateTemplate['date'] = date('Y-m-d', strtotime($activityRow['planned_start_date']));
             $activityDate[]               = $activityDateTemplate;
         }
         if (!empty($activityRow['planned_end_date'])) {
             $activityDateTemplate['type'] = 3;
-            $activityDateTemplate['date'] = $activityRow['planned_end_date'];
+            $activityDateTemplate['date'] = date('Y-m-d', strtotime($activityRow['planned_end_date']));
             $activityDate[]               = $activityDateTemplate;
         }
 

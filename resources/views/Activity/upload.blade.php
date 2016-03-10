@@ -29,7 +29,7 @@
                                 {!! form($form) !!}
                             </div>
                             <div class="download-transaction-wrap">
-                                <a href="/download-activity-template" class="btn btn-primary btn-form btn-submit">Download Activity Template</a>
+                                <a href="{{route('download.activity-template')}}" class="btn btn-primary btn-form btn-submit">Download Activity Template</a>
                                 <div>Contains Simplified information about Activity.</div>
                             </div>
                         </div>

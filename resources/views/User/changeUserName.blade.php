@@ -22,7 +22,7 @@
                     <div class="form-group col-xs-12 col-sm-6 col-md-6">
                         <div class="col-xs-12 col-md-12">
                             <label class="control-label">Organization User Identifier</label>
-                            <input type="text" class="form-control" name="organization_user_identifier" value="{{ old('organization_user_identifier') }}">
+                            <input type="text" class="form-control noSpace" name="organization_user_identifier" value="{{ old('organization_user_identifier') }}">
                             <div><span>Your organisation user identifier will be used as a prefix for all the AidStream users in your organisation. We recommend that you use a short abbreviation that uniquely identifies your organisation. If your organisation is 'Acme Bellus Foundation', your organisation user identifier should be 'abf', depending upon it's availability.</span></div>
                         </div>
                     </div>

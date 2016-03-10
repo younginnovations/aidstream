@@ -94,11 +94,11 @@ class UploadActivityTest extends AidStreamTestCase
             'implementing_participating_organization' => 'testOrg2',
             'recipient_country'                       => 'testCountry',
             'recipient_region'                        => 'testRegion',
-            'sector_dac_3digit'                       => 'testSector',
-            'actual_start_date'                       => 'testDate1',
-            'actual_end_date'                         => 'testDate2',
-            'planned_start_date'                      => 'testDate3',
-            'planned_end_date'                        => 'testDate4',
+            'sector_dac_5digit'                       => 'testSector',
+            'actual_start_date'                       => '2015-1-1',
+            'actual_end_date'                         => '2015-1-1',
+            'planned_start_date'                      => '2015-1-1',
+            'planned_end_date'                        => '2015-1-1',
         ];
         $this->orgRepo->shouldReceive('getOrganization')->with(1)->andReturn($this->organization);
         $this->organization->shouldReceive('getAttribute')->with('reporting_org')->andReturn(
@@ -124,10 +124,10 @@ class UploadActivityTest extends AidStreamTestCase
         $this->activity->shouldReceive('setAttribute')->with('recipient_country')->andReturn('testCountry');
         $this->activity->shouldReceive('setAttribute')->with('recipient_region')->andReturn('testRegion');
         $this->activity->shouldReceive('setAttribute')->with('sector')->andReturn('testSector');
-        $this->activity->shouldReceive('setAttribute')->with('actual_start_date')->andReturn('testDate1');
-        $this->activity->shouldReceive('setAttribute')->with('actual_end_date')->andReturn('testDate2');
-        $this->activity->shouldReceive('setAttribute')->with('planned_start_date')->andReturn('testDate3');
-        $this->activity->shouldReceive('setAttribute')->with('planned_end_date')->andReturn('testDate4');
+        $this->activity->shouldReceive('setAttribute')->with('actual_start_date')->andReturn('2015-1-1');
+        $this->activity->shouldReceive('setAttribute')->with('actual_end_date')->andReturn('2015-1-1');
+        $this->activity->shouldReceive('setAttribute')->with('planned_start_date')->andReturn('2015-1-1');
+        $this->activity->shouldReceive('setAttribute')->with('planned_end_date')->andReturn('2015-1-1');
         $this->assertTrue(is_array($this->uploadActivityRepo->formatFromExcelRow($activityRow, 1)));
     }
 

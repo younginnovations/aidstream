@@ -48,7 +48,7 @@
                                 <li class="country col-xs-6 col-md-4 col-lg-4"><label>Country</label><span>{{$getCode->getOrganizationCodeName('Country', $organization[0]->country)}}</span></li>
                               @endif
                               </ul>
-                              <div class="disqus-wrapper"><span>Disqus Comments : </span>{{($organization[0]->disqus_comments == 1) ? 'Enabled' : 'Disabled'}}</div>
+                              {{--<div class="disqus-wrapper"><span>Disqus Comments : </span>{{($organization[0]->disqus_comments == 1) ? 'Enabled' : 'Disabled'}}</div>--}}
                             </div>
                         </div>
                   </div>

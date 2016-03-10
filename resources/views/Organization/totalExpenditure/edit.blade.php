@@ -1,4 +1,5 @@
 @extends('app')
+@section('title', 'Total Expenditure')
 @section('content')
     <div class="container main-container">
         <div class="row">
