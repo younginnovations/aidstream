@@ -48,8 +48,8 @@ class UploadTransactionTest extends AidStreamTestCase
         $transactionRow = [
             'transaction_ref'                  => '',
             'transactiontype_code'             => [],
-            'transactiondate_iso_date'         => [],
-            'transactionvalue_value_date'      => [],
+            'transactiondate_iso_date'         => '2016-01-01',
+            'transactionvalue_value_date'      => '2016-01-01',
             'transactionvalue_text'            => [],
             'description_text'                 => [],
             'providerorg_ref'                  => [],
