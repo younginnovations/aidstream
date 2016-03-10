@@ -1,6 +1,16 @@
 <?php
 
 return [
+    /**
+     * Path where all the generated xml files are stored in Aidstream.
+     */
     'xml-file' => public_path('files/xml/'),
-    'document' => public_path('files/document/')
+    /**
+     * Path where all the uploaded documents are stored in Aidstream.
+     */
+    'document' => public_path('files/document/'),
+    /**
+     * Api URL for the IATI Registry.
+     */
+    'iati_registry_api_base_url' => 'http://iatiregistry.org/api/'
 ];

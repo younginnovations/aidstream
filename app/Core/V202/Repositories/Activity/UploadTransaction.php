@@ -55,6 +55,7 @@ class UploadTransaction extends UploadTransactionV201
         $transaction['value'][0]['date']                                         = $transactionRow['transaction_date'];
         $transaction['transaction_date'][0]['date']                              = $transactionRow['transaction_date'];
         $transaction['description'][0]['narrative'][0]['narrative']              = $transactionRow['description'];
+        $transaction['value'][0]['currency']                                     = '';
         $transaction['provider_organization'][0]['organization_identifier_code'] = $transactionRow['provider_org_reference'];
         $transaction['provider_organization'][0]['provider_activity_id']         = $transactionRow['provider_activity_id'];
         $transaction['provider_organization'][0]['narrative'][0]['narrative']    = $transactionRow['provider_org_name'];

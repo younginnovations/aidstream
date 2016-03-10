@@ -338,7 +338,7 @@ class ActivityController extends Controller
     {
         $activityPublishedFiles = $this->activityManager->getActivityPublishedFiles($this->organization_id);
         $settings               = $this->settingsManager->getSettings($this->organization_id);
-        $api_url                = 'http://iati2.staging.ckanhosted.com/api/';
+        $api_url                = config('xmlFiles.iati_registry_api_base_url');
         $apiCall                = new CkanClient($api_url, $settings['registry_info'][0]['api_id']);
 
         try {
@@ -349,11 +349,11 @@ class ActivityController extends Controller
                     $code     = str_replace('.xml', '', end($filename));
                 }
                 if ($publishedFile['published_to_register'] == 0) {
-                    $apiCall->post_package_register($data);
+                    $apiCall->package_create($data);
                     $this->activityManager->updatePublishToRegister($publishedFile->id);
                 } elseif ($publishedFile['published_to_register'] == 1) {
-                    $package = ($settings->publishing_type == "segmented") ? $settings['registry_info'][0]['publisher_id'] . '-' . $code : $settings['registry_info'][0]['publisher_id'] . '-activities';
-                    $apiCall->put_package_entity($package, $data);
+//                    $package = ($settings->publishing_type == "segmented") ? $settings['registry_info'][0]['publisher_id'] . '-' . $code : $settings['registry_info'][0]['publisher_id'] . '-activities';
+                    $apiCall->package_update($this->convertIntoArray(json_decode($data)));
                 }
             }
 
@@ -402,7 +402,7 @@ class ActivityController extends Controller
         {
             "format":"IATI-XML",
             "mimetype":"application/xml",
-            "url":"' . url('uploads/files/activity/' . $publishedFile->filename) . '"
+            "url":"' . url('files/xml/' . $publishedFile->filename) . '"
         }
         ],
         "extras":
@@ -445,5 +445,22 @@ class ActivityController extends Controller
         $response = ['type' => 'success', 'code' => ['duplicated', ['url' => route('activity.show', [$newItem->id])]]];
 
         return redirect('/activity')->withResponse($response);
+    }
+
+    /**
+     * Convert object of StdClass into an array for registry package update.
+     * @param $data
+     * @return array
+     */
+    protected function convertIntoArray($data)
+    {
+        return [
+            'title'        => $data->title,
+            'name'         => $data->name,
+            'author_email' => $data->author_email,
+            'owner_org'    => $data->owner_org,
+            'resources'    => $data->resources,
+            'extras'       => $data->extras
+        ];
     }
 }

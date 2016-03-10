@@ -61,7 +61,7 @@
                                     </div>
                                     <div class="col-xs-12 col-md-12">
                                         <div class="col-xs-12 col-sm-4">Currency:</div>
-                                        <div class="col-xs-12 col-sm-8">{{$getCode->getOrganizationCodeName('Currency', $transaction['transaction']['value'][0]['currency'])}}</div>
+                                        <div class="col-xs-12 col-sm-8">{{array_key_exists('currency', $transaction['transaction']['value'][0]) ? $getCode->getOrganizationCodeName('Currency', $transaction['transaction']['value'][0]['currency']) : ''}}</div>
                                     </div>
                                 </div>
                             </div>
