@@ -14,7 +14,7 @@
 <section class="main-container">
     <div class="introduction-wrapper bottom-line">
         <div class="col-md-12 text-center">
-            <h1>Publish your Aid data in <a href="#">IATI format</a> effortlessly</h1>
+            <h1>Publish your Aid data in <a href="http://iatistandard.org/">IATI format</a> effortlessly</h1>
 
             <p>AidStream is an online platform for organisations that wish to publish aid data in the International Aid
                 Transparency Initiative(IATI) format without getting into complexities of IATI. </p>
@@ -35,7 +35,8 @@
                 <li><img src="images/ic-org-amref-health.png" alt=""></li>
                 <li><img src="images/ic-org-apt.png" alt=""></li>
             </ul>
-            <p>387 organisations have published their aid data. <a href="#">250</a> have done it through AidStream</p>
+            {{--<p>387 organisations have published their aid data. <a href="{{ url('/who-are-using') }}">{{ $organizationCount }}</a> have done it through AidStream</p>--}}
+            <p><a href="{{ url('/who-are-using') }}">{{ $organizationCount }}</a> organisations are using AidStream.</p>
         </div>
     </div>
     <div class="information-wrapper bottom-line">
