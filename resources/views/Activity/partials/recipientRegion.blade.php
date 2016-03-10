@@ -1,5 +1,5 @@
 @if(!empty($recipientRegions))
-    <div class="panel panel-default">
+    <div class="panel panel-default expanded">
         <div class="panel-heading">
             <div class="activity-element-title">
                 Recipient Region
@@ -8,12 +8,12 @@
         </div>
         <div class="panel-body panel-level-1">
             @foreach($recipientRegions as $recipientRegion)
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <div class="activity-element-title">
-                            {{$getCode->getActivityCodeName('Region', $recipientRegion['region_code']) . ' ; ' . $recipientRegion['percentage']}}
-                        </div>
+                <div class="panel-heading">
+                    <div class="activity-element-title">
+                        {{$getCode->getActivityCodeName('Region', $recipientRegion['region_code']) . ' ; ' . $recipientRegion['percentage']}}
                     </div>
+                </div>
+                <div class="panel-body">
                     <div class="panel-element-body row">
                         <div class="col-xs-12 col-md-12">
                             <div class="col-xs-12 col-sm-4">Percentage:</div>

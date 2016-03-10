@@ -1,5 +1,5 @@
 @if(!empty($legacyDatas))
-    <div class="panel panel-default">
+    <div class="panel panel-default expanded">
         <div class="panel-heading">
             <div class="activity-element-title">
                 Legacy Data
@@ -8,12 +8,12 @@
         </div>
         <div class="panel-body panel-level-1">
             @foreach($legacyDatas as $legacyData)
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <div class="activity-element-title">
-                            {{$legacyData['name'] . '; ' . $legacyData['value']}}
-                        </div>
+                <div class="panel-heading">
+                    <div class="activity-element-title">
+                        {{$legacyData['name'] . '; ' . $legacyData['value']}}
                     </div>
+                </div>
+                <div class="panel-body">
                     <div class="panel-element-body row">
                         <div class="col-xs-12 col-md-12">
                             <div class="col-xs-12 col-sm-4">Name:</div>

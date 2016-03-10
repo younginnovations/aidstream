@@ -1001,6 +1001,7 @@ label {
   border-bottom: 0;
   padding: 10px 15px 11px 37px;
   overflow: hidden;
+  height: 63px;
   min-height: 63px;
   display: table;
   width: 100%; }
@@ -1133,6 +1134,7 @@ label {
   padding: 8px 15px 8px 37px;
   display: inline-block;
   width: 100%;
+  height: 63px;
   min-height: 63px;
   display: table;
   width: 100%; }
@@ -1165,6 +1167,9 @@ label {
     margin-bottom: 0;
     clear: both; }
 
+.activity-element-toggle + .panel-body.panel-level-1 {
+  margin-bottom: 0 !important; }
+
 .panel-level-2 .panel-default > .panel-element-body {
   margin-bottom: 20px;
   margin-left: 20px; }
@@ -1185,16 +1190,17 @@ label {
   margin-top: 0; }
 
 .panel-level-3 {
-  margin-left: 20px; }
+  margin-top: 20px; }
   .panel-level-3 .panel-sub-body {
     margin-left: 20px; }
     .panel-level-3 .panel-sub-body .panel-element-body {
       margin-left: 0; }
 
 .panel-level-body {
-  margin-left: 0 !important;
+  margin-left: 20px;
   margin-bottom: 0 !important;
-  background: none !important; }
+  background: none !important;
+  display: none; }
 
 .panel-sub-body {
   display: none;
