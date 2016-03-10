@@ -3,33 +3,6 @@
 @section('title', 'Activity Results - ' . $activityData->IdentifierTitle)
 
 @section('content')
-        <!-- Modal -->
-<div class="modal fade" id="view_result" tabindex="-1" role="dialog" aria-labelledby="view_result_label">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                            aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">Result Detail</h4>
-            </div>
-            <div class="modal-body">
-            </div>
-            <div class="modal-panel-template hidden">
-                <div class="panel panel-default">
-                    <div class="panel-heading"></div>
-                    <div class="panel-body panel-element-body">
-                    </div>
-                </div>
-            </div>
-            <div class="modal-row-template hidden">
-                <div class="clearfix">
-                    <div class="col-sm-8 view_label"></div>
-                    <div class="col-sm-4 view_value"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
 <div class="container main-container">
     <div class="row">
@@ -60,9 +33,7 @@
                                 </thead>
                                 <tbody>
                                 @foreach($results as $resultIndex=>$result)
-                                    <tr data-href="{{ route('activity.result.show', [$id, $result->id]) }}"
-                                        data-result="{{ json_encode($result->result) }}" data-toggle="modal"
-                                        data-target="#view_result" class="link-row">
+                                    <tr>
                                         <td>{{ $resultIndex + 1 }}</td>
                                         <td class="activity_title">
                                             {{ $result->title }}
@@ -72,9 +43,8 @@
                                         </td>
                                         <td>
                                             <div class="activity_actions">
-                                                {{--<a href="{{ route('activity.result.show', [$id, $result->id]) }}"--}}
-                                                {{--data-result="{{ json_encode($result->result) }}" data-toggle="modal"--}}
-                                                {{--data-target="#view_result" class="view">View</a>--}}
+                                                <a href="{{ route('activity.result.show', [$id, $result->id]) }}"
+                                                   class="view">View</a>
                                                 <a href="{{ route('activity.result.edit', [$id, $result->id]) }}"
                                                    class="edit">Edit</a>
                                                 <a href="{{ url(sprintf('activity/%s/result/%s/delete', $id, $result->id)) }}"
@@ -100,4 +70,3 @@
     </div>
 </div>
 @endsection
-

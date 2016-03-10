@@ -77,8 +77,8 @@ class SettingsController extends Controller
         }
 
         $model = [];
-        if (isset($this->settings)) {
-            $version = $this->settings->version;
+        if (isset($this->settings->default_field_groups)) {
+            $version                       = $this->settings->version;
 //            $model['version_form']         = [['version' => $version]];
             $model['publishing_type']      = [['publishing' => $this->settings->publishing_type]];
             $model['registry_info']        = $this->settings->registry_info;
@@ -86,7 +86,7 @@ class SettingsController extends Controller
             $model['default_field_groups'] = $this->settings->default_field_groups;
         } else {
             $version = config('app.default_version');
-            $data    = '{"version_form":[{"version":"2.02"}],"reporting_organization_info":[{"reporting_organization_identifier":"","reporting_organization_type":"10","organization_name":"","reporting_organization_language":"es"}],"publishing_type":[{"publishing":"unsegmented"}],"registry_info":[{"publisher_id":"","api_id":"","publish_files: ":"no"}],"default_field_values":[{"default_hierarchy":"1"}],"default_field_groups":[{"title":"Title","description":"Description","activity_status":"Activity Status","activity_date":"Activity Date","participating_org":"Participating Org","recipient_county":"Recipient Country","sector":"Sector","budget":"Budget","transaction":"Transaction"}]}';
+            $data    = '{"reporting_organization_info":[{"reporting_organization_identifier":"","reporting_organization_type":"10","organization_name":"","reporting_organization_language":"es"}],"publishing_type":[{"publishing":"unsegmented"}],"registry_info":[{"publisher_id":"","api_id":"","publish_files: ":"no"}],"default_field_values":[{"default_hierarchy":"1"}],"default_field_groups":[{"title":"Title","description":"Description","activity_status":"Activity Status","activity_date":"Activity Date","participating_org":"Participating Org","recipient_county":"Recipient Country","sector":"Sector","budget":"Budget","transaction":"Transaction"}]}';
             $model   = json_decode($data, true);
         }
         if (isset($this->organization)) {

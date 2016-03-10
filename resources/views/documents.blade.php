@@ -22,6 +22,7 @@
                                     <th width="30px">S.N.</th>
                                     <th width="70%">Document Link</th>
                                     <th>Activity Identifiers</th>
+                                    <th>Activity</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -44,6 +45,11 @@
                                                 {{--*/ $identifierList[] = sprintf('<a href="%s">%s</a>', route('activity.show', [$activityId]), $identifier); /*--}}
                                             @endforeach
                                             {!! implode(', ', $identifierList) !!}
+                                        </td>
+                                        <td>
+                                            @if (!$identifiers)
+                                                <a href="{{ route('document.delete', $document['id']) }}" class="delete">Delete</a>
+                                            @endif
                                         </td>
                                     </tr>
                                 @endforeach

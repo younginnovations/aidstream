@@ -66,6 +66,16 @@ class DocumentManager
     }
 
     /**
+     * return document by id
+     * @param $id
+     * @return mixed
+     */
+    public function getDocumentById($id)
+    {
+        return $this->repo->getDocumentById($id);
+    }
+
+    /**
      * return particular document
      * @param      $orgId
      * @param      $url

@@ -65,7 +65,7 @@ class Sector extends ActivityBaseRequest
                 $messages[sprintf('%s.sector_text.%s', $sectorForm, 'required')] = 'Sector is required.';
             }
             $messages[sprintf('%s.percentage.%s', $sectorForm, 'numeric')] = 'Percentage should be numeric';
-            $messages[sprintf('%s.percentage.%s', $sectorForm, 'max')]     = 'Percentage should be less than or equal to required';
+            $messages[sprintf('%s.percentage.%s', $sectorForm, 'max')]     = 'Percentage should be less than or equal to :max';
             $messages                                                      = array_merge($messages, $this->getMessagesForNarrative($sector['narrative'], $sectorForm));
         }
 

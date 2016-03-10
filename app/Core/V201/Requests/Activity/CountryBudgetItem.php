@@ -101,7 +101,7 @@ class CountryBudgetItem extends ActivityBaseRequest
         foreach ($formFields as $budgetItemIndex => $budgetItem) {
             $budgetItemForm                                                    = sprintf('%s.budget_item.%s', $formBase, $budgetItemIndex);
             $messages[sprintf('%s.percentage.%s', $budgetItemForm, 'numeric')] = 'Percentage should be numeric';
-            $messages[sprintf('%s.percentage.%s', $budgetItemForm, 'max:100')] = 'Percentage should less tha or equal to 100';
+            $messages[sprintf('%s.percentage.%s', $budgetItemForm, 'max')]     = 'Percentage should less than or equal to :max';
             $messages                                                          = array_merge(
                 $messages,
                 $this->getBudgetItemDescriptionMessages($budgetItem['description'], $budgetItemForm)

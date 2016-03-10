@@ -58,7 +58,7 @@ class AdminController extends Controller
      */
     public function index()
     {
-        $activity = UserActivity::with('user')->get();
+        $activity = UserActivity::with('user')->orderBy('id', 'desc')->get();
 
         return view('admin.activityLog', compact('activity'));
     }

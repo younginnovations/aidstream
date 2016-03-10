@@ -11,37 +11,39 @@ class ConfigureLogging extends BaseConfigureLogging
 {
 
 
-
     /**
      * Register the logger instance in the container.
      *
-     * @param  \Illuminate\Contracts\Foundation\Application  $app
+     * @param  \Illuminate\Contracts\Foundation\Application $app
      * @return \Illuminate\Log\Writer
      */
     protected function registerLogger(Application $app)
     {
-        $app->instance('log', $log = new AsWriter(
-            new Monolog($app->environment()), $app['events'])
+        $app->instance(
+            'log',
+            $log = new AsWriter(
+                new Monolog($app->environment()), $app['events']
+            )
         );
 
         return $log;
     }
 
 
-
     /**
      * Custom Monolog handler .
      *
      * @param \Illuminate\Contracts\Foundation\Application $app
-     * @param \Illuminate\Log\Writer $log
-     * @return void
+     * @param AsWriter|\Illuminate\Log\Writer              $log
      */
     public function configureCustomHandler(Application $app, AsWriter $log)
     {
-        $handler = new LogEntriesHandler(getenv('LOGENTRY_TOKEN'));
-        $log->getMonolog()->pushHandler($handler);
+        if (!env('APP_DEBUG')) {
+            $handler = new LogEntriesHandler(getenv('LOGENTRY_TOKEN'));
+            $log->getMonolog()->pushHandler($handler);
+        }
 
-// Also Log to Daily files too.
+        // Also Log to Daily files too.
         $log->useDailyFiles($app->storagePath() . '/logs/laravel.log', 5);
     }
 }

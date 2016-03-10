@@ -136,10 +136,7 @@
                                     {{--*/
                                         $vocabulary = $transaction['transaction']['sector'][0]['sector_vocabulary'];
                                         $vocabularyValue = $getCode->getActivityCodeName('SectorVocabulary', $vocabulary);
-                                        if($vocabulary == null){
-                                            $vocabularyValue = '';
-                                            $sectorValue = '';
-                                        }elseif ($vocabulary == 1) {
+                                        if ($vocabulary == 1 || $vocabulary == '') {
                                             $sectorValue = $getCode->getActivityCodeName('Sector', $transaction['transaction']['sector'][0]['sector_code']);
                                         } elseif ($vocabulary == 2) {
                                             $sectorValue = $getCode->getActivityCodeName('SectorCategory', $transaction['transaction']['sector'][0]['sector_category_code']);

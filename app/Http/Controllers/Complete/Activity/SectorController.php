@@ -68,7 +68,7 @@ class SectorController extends Controller
         $this->authorize(['edit_activity', 'add_activity']);
         $sectors = $request->all();
         foreach ($sectors['sector'] as &$sector) {
-            if ($sector['sector_vocabulary'] == 1) {
+            if ($sector['sector_vocabulary'] == 1 || $sector['sector_vocabulary'] == '') {
                 $sector['sector_category_code'] = '';
                 $sector['sector_text']          = '';
             } elseif ($sector['sector_vocabulary'] == 2) {

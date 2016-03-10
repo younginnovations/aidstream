@@ -30,6 +30,7 @@ class CreateActivityDataTable extends Migration
                 $table->json('location')->nullable();
                 $table->json('sector')->nullable();
                 $table->json('country_budget_items')->nullable();
+                $table->json('humanitarian_scope')->nullable();
                 $table->json('policy_marker')->nullable();
                 $table->json('collaboration_type')->nullable();
                 $table->json('default_flow_type')->nullable();
@@ -45,6 +46,8 @@ class CreateActivityDataTable extends Migration
                 $table->json('conditions')->nullable();
                 $table->integer('activity_workflow')->default(0);
                 $table->integer('organization_id');
+                $table->json('default_field_values')->nullable();
+                $table->integer('published_to_registry')->default(0);
                 $table->timestamps();
 
                 $table->foreign('organization_id')->references('id')->on('organizations')->onDelete('cascade');

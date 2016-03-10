@@ -68,6 +68,19 @@
                                     @endforeach
                                 </div>
                             </div>
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <div class="activity-element-title">Document Date</div>
+                                </div>
+                                <div class="panel-element-body row">
+                                    @foreach($documentLink['document_date'] as $date)
+                                        <div class="col-xs-12 col-md-12">
+                                            <div class="col-xs-12 col-sm-4">Date:</div>
+                                            <div class="col-xs-12 col-sm-8">{{ formatDate($date['date']) }}</div>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
