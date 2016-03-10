@@ -1,5 +1,7 @@
 <?php namespace App\Http\Controllers;
 
+use App\Models\Organization\Organization;
+
 /**
  * Class HomeController
  * @package App\Http\Controllers
@@ -15,6 +17,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $organizationCount = Organization::count();
+
+        return view('home', compact('organizationCount'));
     }
 }

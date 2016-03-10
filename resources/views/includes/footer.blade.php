@@ -3,8 +3,8 @@
         <div class="social-wrapper bottom-line">
             <div class="col-md-12 text-center">
                 <ul>
-                    <li><a href="#" class="github" title="Fork us on Github">Fork us on Github</a></li>
-                    <li><a href="#" class="twitter" title="Follow us on Twitter">Follow us on Twitter</a></li>
+                    <li><a href="https://github.com/younginnovations/aidstream-new" class="github" title="Fork us on Github">Fork us on Github</a></li>
+                    <li><a href="https://twitter.com/aidstream" class="twitter" title="Follow us on Twitter">Follow us on Twitter</a></li>
                 </ul>
             </div>
         </div>
@@ -28,7 +28,7 @@
         </div>
         <div class="footer-logo">
             <div class="col-md-12 text-center">
-                <a href="index.html"><img src="images/logo-text.png" alt=""></a>
+                <a href="{{ url('/') }}"><img src="images/logo-text.png" alt=""></a>
             </div>
         </div>
     </div>
