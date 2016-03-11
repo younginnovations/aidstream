@@ -11,7 +11,7 @@
                 <div class="panel-default">
                     <div class="panel-heading">
                         <div class="activity-element-title">
-                            {{$getCode->getActivityCodeName('TransactionType', $transaction['transaction']['transaction_type'][0]['transaction_type_code']) .' ; '. $transaction['transaction']['value'][0]['amount'] . ' ; ' . $transaction['transaction']['value'][0]['date']}}
+                            {{$getCode->getActivityCodeName('TransactionType', $transaction['transaction']['transaction_type'][0]['transaction_type_code']) .' ; '. $transaction['transaction']['value'][0]['amount'] . ' ; ' . formatDate($transaction['transaction']['value'][0]['date'])}}
                         </div>
                     </div>
                     <div class="panel-body">
@@ -92,7 +92,7 @@
                                         <div class="col-xs-12 col-sm-8">{{$transaction['transaction']['provider_organization'][0]['organization_identifier_code']}}</div>
                                     </div>
                                     <div class="col-xs-12 col-md-12">
-                                        <div class="col-xs-12 col-sm-4">Provider_activity_id:</div>
+                                        <div class="col-xs-12 col-sm-4">Provider Activity Id:</div>
                                         <div class="col-xs-12 col-sm-8">{{$transaction['transaction']['provider_organization'][0]['provider_activity_id']}}</div>
                                     </div>
                                     @foreach($transaction['transaction']['provider_organization'] as $narrative)
@@ -115,7 +115,7 @@
                                         <div class="col-xs-12 col-sm-8">{{$transaction['transaction']['receiver_organization'][0]['organization_identifier_code']}}</div>
                                     </div>
                                     <div class="col-xs-12 col-md-12">
-                                        <div class="col-xs-12 col-sm-4">Provider_activity_id:</div>
+                                        <div class="col-xs-12 col-sm-4">Reciever Activity Id:</div>
                                         <div class="col-xs-12 col-sm-8">{{$transaction['transaction']['receiver_organization'][0]['receiver_activity_id']}}</div>
                                     </div>
                                     @foreach($transaction['transaction']['receiver_organization'] as $narrative)

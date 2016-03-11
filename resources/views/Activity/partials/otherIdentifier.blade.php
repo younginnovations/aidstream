@@ -28,7 +28,7 @@
                             <div class="panel-body panel-element-body row">
                                 @foreach($other_identifier['owner_org'] as $owner_org)
                                     <div class="col-xs-12 col-md-12">
-                                        <div class="col-xs-12 col-sm-4">Owner Org:</div>
+                                        <div class="col-xs-12 col-sm-4">Reference:</div>
                                         <div class="col-xs-12 col-sm-8">{{$owner_org['reference']}}</div>
                                     </div>
                                     @foreach($owner_org['narrative'] as $narrative)

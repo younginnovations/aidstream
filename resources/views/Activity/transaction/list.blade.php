@@ -54,7 +54,7 @@
                                             <td>{{ $transaction['reference'] }}</td>
                                             <td>{{ $code->getActivityCodeName('TransactionType', $transaction['transaction_type'][0]['transaction_type_code'])}}</td>
                                             <td>{{ $transaction['value'][0]['amount'] }}</td>
-                                            <td>{{ $transaction['transaction_date'][0]['date'] }}</td>
+                                            <td>{{ formatDate($transaction['transaction_date'][0]['date']) }}</td>
                                             <td>
                                                 <a class="edit"
                                                    href="{{ route('activity.transaction.edit', [$activity->id, $transaction['id']]) }}">Edit</a>

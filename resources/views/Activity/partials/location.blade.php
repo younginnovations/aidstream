@@ -41,7 +41,7 @@
                             <div class="panel-element-body row">
                                 <div class="col-xs-12 col-md-12">
                                     <div class="col-xs-12 col-sm-4">Code:</div>
-                                    <div class="col-xs-12 col-sm-8">{{$getCode->getActivityCodeName('GeographicLocationReach', $location['location_reach'][0]['code'])}}</div>
+                                    <div class="col-xs-12 col-sm-8">{{$location['location_id'][0]['code']}}</div>
                                 </div>
                                 <div class="col-xs-12 col-md-12">
                                     <div class="col-xs-12 col-sm-4">Vocabulary:</div>
