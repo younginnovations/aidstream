@@ -2,6 +2,7 @@
 
 use App\Core\V201\Repositories\Upgrade;
 use App\Models\Activity\Activity;
+use App\Models\Activity\Transaction;
 use App\Models\Organization\OrganizationData;
 use App\Models\Settings;
 use Illuminate\Support\Collection;
@@ -18,6 +19,7 @@ class UpgradeTest extends AidStreamTestCase
     protected $settings;
     protected $activity;
     protected $upgrade;
+    protected $transaction;
 
     public function setUp()
     {
@@ -25,7 +27,8 @@ class UpgradeTest extends AidStreamTestCase
         $this->settings = m::mock(Settings::class);
         $this->orgData  = m::mock(OrganizationData::class);
         $this->activity = m::mock(Activity::class);
-        $this->upgrade  = new Upgrade($this->settings, $this->orgData, $this->activity);
+        $this->transaction = m::mock(Transaction::class);
+        $this->upgrade  = new Upgrade($this->settings, $this->orgData, $this->activity, $this->transaction);
     }
 
     public function testItShouldUpgradeDataWithCertainOrganizationAndVersion()

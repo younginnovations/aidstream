@@ -4,6 +4,7 @@ use App\Models\Organization\OrganizationData;
 use App\Models\Activity\Activity;
 use App\Models\Settings;
 use Illuminate\Support\Collection;
+use App\Models\Activity\Transaction;
 
 /**
  * Class Upgrade
@@ -25,15 +26,21 @@ class Upgrade
     protected $activity;
 
     /**
+     * @var Transaction
+     */
+
+    /**
      * @param Settings         $settings
      * @param OrganizationData $orgData
      * @param Activity         $activity
+     * @param Transaction      $transaction
      */
-    function __construct(Settings $settings, OrganizationData $orgData, Activity $activity)
+    function __construct(Settings $settings, OrganizationData $orgData, Activity $activity, Transaction $transaction)
     {
-        $this->settings = $settings;
-        $this->orgData  = $orgData;
-        $this->activity = $activity;
+        $this->settings    = $settings;
+        $this->orgData     = $orgData;
+        $this->activity    = $activity;
+        $this->transaction = $transaction;
     }
 
     /**
@@ -76,6 +83,7 @@ class Upgrade
         $this->upgradeOrganizationData($organizationData);
         $this->upgradeActivities($activities);
         $this->updateVersion($orgId, $version);
+        $this->upgradeActivityTransaction($activities);
     }
 
     /**
@@ -128,6 +136,13 @@ class Upgrade
         foreach ($activities as $activity) {
             $budgets            = (array) $activity->budget;
             $defaultFieldValues = (array) $activity->default_field_values;
+            $recipientRegions   = (array) $activity->recipient_region;
+            $sectors            = (array) $activity->sector;
+            $policyMarkers      = (array) $activity->policy_marker;
+
+            foreach ($recipientRegions as $recipientIndex => $recipientRegion) {
+                $recipientRegions[$recipientIndex]['vocabulary_uri'] = "";
+            }
 
             foreach ($budgets as $budgetIndex => $budget) {
                 $budgets[$budgetIndex]['status'] = "1";
@@ -137,8 +152,19 @@ class Upgrade
                 $defaultFieldValues[$defaultFieldValueIndex]['humanitarian'] = "0";
             }
 
+            foreach ($policyMarkers as $policyMarkerIndex => $policyMarker) {
+                $policyMarkers[$policyMarkerIndex]['vocabulary_uri'] = "";
+            }
+
+            foreach ($sectors as $sectorIndex => $sector) {
+                $sectors[$sectorIndex]['vocabulary_uri'] = "";
+            }
+
             (!$budgets) ?: $activity->budget = $budgets;
             (!$defaultFieldValues) ?: $activity->default_field_values = $defaultFieldValues;
+            (!$recipientRegions) ?: $activity->recipient_region = $recipientRegions;
+            (!$sectors) ?: $activity->sector = $sectors;
+            (!$policyMarkers) ?: $activity->policy_marker = $policyMarkers;
             $activity->save();
         }
     }
@@ -153,5 +179,39 @@ class Upgrade
         $settings->version = $version;
         $settings->save();
         session()->put('version', 'V' . str_replace('.', '', $version));
+    }
+
+    /**
+     * @param $activities
+     */
+    protected function upgradeActivityTransaction(Collection $activities)
+    {
+        foreach ($activities as $activity) {
+            $transactions = $this->getTransactions($activity->id);
+            foreach ($transactions as $eachTransaction) {
+                $transactionField = $eachTransaction->transaction;
+                $sectors          = $transactionField['sector'];
+
+                foreach ($sectors as $sectorIndex => $sector) {
+                    $transactionField['sector'][$sectorIndex]['vocabulary_uri'] = "";
+                }
+
+                $regions = $transactionField['recipient_region'];
+                foreach ($regions as $regionIndex => $region) {
+                    $transactionField['recipient_region'][$regionIndex]['vocabulary_uri'] = "";
+                }
+                $eachTransaction->transaction = $transactionField;
+                $eachTransaction->save();
+            }
+        }
+    }
+
+    /**
+     * @param $activity_id
+     * @return mixed
+     */
+    protected function getTransactions($activity_id)
+    {
+        return $this->transaction->where('activity_id', $activity_id)->get();
     }
 }
