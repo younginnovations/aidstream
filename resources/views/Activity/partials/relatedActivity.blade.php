@@ -16,7 +16,7 @@
                 <div class="panel-body row">
                     <div class="panel-element-body">
                         <div class="col-xs-12 col-md-12">
-                            <div class="col-xs-12 col-sm-4">Ref:</div>
+                            <div class="col-xs-12 col-sm-4">Activity Identifier:</div>
                             <div class="col-xs-12 col-sm-8">{{$relatedActivity['activity_identifier']}}</div>
                         </div>
                         <div class="col-xs-12 col-md-12">

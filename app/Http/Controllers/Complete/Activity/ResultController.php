@@ -61,7 +61,8 @@ class ResultController extends Controller
     public function show($activityId, $id)
     {
         $result       = $this->resultManager->getResult($id, $activityId);
-        $activityData = $this->activityManager->getActivityData($id);
+        $activityData = $this->activityManager->getActivityData($activityId);
+        $id           = $activityId;
 
         return view('Activity.result.show', compact('result', 'activityData', 'id'));
     }

@@ -6,6 +6,7 @@ use App\Models\Organization\OrganizationData;
 use App\Models\Settings;
 use App\Models\OrganizationPublished;
 use App\Services\Organization\OrganizationManager;
+use Illuminate\Support\Facades\File;
 
 /**
  * Class XmlGenerator
@@ -62,7 +63,11 @@ class XmlGenerator
     {
         $xml      = $this->getXml($organization, $organizationData, $settings, $orgElem);
         $filename = $settings['registry_info'][0]['publisher_id'] . '-org.xml';
-        $result   = $xml->save(public_path('files/xml/' . $filename)); //changed filepath
+        if (!File::exists(config('xmlFiles.xml-file'))) {
+            mkdir(config('xmlFiles.xml-file'), 0777, true);
+        }
+        $result = $xml->save(config('xmlFiles.xml-file'). $filename); //changed filepath
+
         if ($result) {
             $published = $this->organizationPublished->firstOrNew(['filename' => $filename, 'organization_id' => $organization->id]);
             $published->touch();
