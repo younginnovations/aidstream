@@ -1,4 +1,4 @@
-<?php namespace App\Http\Controllers\Complete\Activity\Traits;
+<?php namespace App\Http\Controllers\Complete\Traits;
 
 /**
  * Class InterElementValidator

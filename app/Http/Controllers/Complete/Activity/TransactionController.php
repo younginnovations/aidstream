@@ -1,6 +1,6 @@
 <?php namespace App\Http\Controllers\Complete\Activity;
 
-use App\Http\Controllers\Complete\Activity\Traits\InterElementValidator;
+use App\Http\Controllers\Complete\Traits\InterElementValidator;
 use App\Http\Controllers\Controller;
 use App\Services\Activity\ActivityManager;
 use App\Services\Activity\TransactionManager;
