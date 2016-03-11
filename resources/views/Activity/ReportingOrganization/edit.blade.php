@@ -11,6 +11,10 @@
                 @include('includes.breadcrumb')
                 <div class="panel-content-heading">
                     <div>Reporting Organization</div>
+                    <div class="pull-right panel-action-btn">
+                        <a href="{{ route('activity.show', $id) }}" class="btn btn-primary">View Activity
+                        </a>
+                    </div>
                 </div>
                 <div class="col-xs-12 col-md-8 col-lg-8 element-content-wrapper">
                     <div class="panel panel-default panel-element-detail">

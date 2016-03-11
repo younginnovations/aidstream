@@ -40,7 +40,7 @@ class OrgTotalBudgetController extends Controller
         $totalBudget = $this->totalBudgetManager->getOrganizationTotalBudgetData($orgId);
         $form        = $this->totalBudgetForm->editForm($totalBudget, $orgId);
 
-        return view('Organization.totalBudget.totalBudget', compact('form', 'totalBudget'));
+        return view('Organization.totalBudget.totalBudget', compact('form', 'totalBudget','orgId'));
     }
 
     /**

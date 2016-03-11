@@ -41,7 +41,7 @@ class RecipientCountryBudgetController extends Controller
 
         return view(
             'Organization.recipientCountryBudget.recipientCountryBudget',
-            compact('form', 'recipientCountryBudget')
+            compact('form', 'recipientCountryBudget','orgId')
         );
     }
 

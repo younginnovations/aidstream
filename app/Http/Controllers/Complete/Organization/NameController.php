@@ -40,7 +40,7 @@ class NameController extends Controller
         $orgName = $this->nameManager->getOrganizationNameData($orgId);
         $form    = $this->nameForm->editForm($orgName, $orgId);
 
-        return view('Organization.name.edit', compact('form', 'orgName'));
+        return view('Organization.name.edit', compact('form', 'orgName','orgId'));
     }
 
     /**

@@ -48,7 +48,7 @@ class RecipientRegionBudgetController extends Controller
         $recipientRegionBudget = $this->recipientRegionBudgetManager->getRecipientRegionBudgetData($orgId);
         $form                  = $this->recipientRegionBudget->editForm($recipientRegionBudget, $orgId);
 
-        return view('Organization.recipientRegionBudget.edit', compact('form', 'recipientRegionBudget'));
+        return view('Organization.recipientRegionBudget.edit', compact('form', 'recipientRegionBudget','orgId'));
     }
 
     /**
