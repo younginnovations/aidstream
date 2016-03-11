@@ -33,10 +33,13 @@
                             <div class="panel-heading">
                                 <div class="activity-element-title">Indicator</div>
                             </div>
-                            <div class="panel-element-body row panel-level-body">
+                            <div class="panel-level-body">
                                 @foreach($result['result']['indicator'] as $indicator)
-                                    <div class="panel panel-default">
-                                        <div class="panel-element-body row">
+                                    <div class="panel-heading">
+                                        <div class="activity-element-title">{{$getCode->getActivityCodeName('IndicatorMeasure', $indicator['measure'])}}</div>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="panel-element-body">
                                             <div class="col-xs-12 col-md-12">
                                                 <div class="col-xs-12 col-sm-4">Measure:</div>
                                                 <div class="col-xs-12 col-sm-8">{{$getCode->getActivityCodeName('IndicatorMeasure', $indicator['measure'])}}</div>
@@ -57,10 +60,10 @@
                                                 </div>
                                                 <div class="panel-sub-body panel-level-4">
                                                     @foreach($indicator['period'] as $period)
-                                                            @include('Activity.partials.resultPartials.indicatorPeriodStart')
-                                                            @include('Activity.partials.resultPartials.indicatorPeriodEnd')
-                                                            @include('Activity.partials.resultPartials.indicatorTarget')
-                                                            @include('Activity.partials.resultPartials.indicatorActual')
+                                                        @include('Activity.partials.resultPartials.indicatorPeriodStart')
+                                                        @include('Activity.partials.resultPartials.indicatorPeriodEnd')
+                                                        @include('Activity.partials.resultPartials.indicatorTarget')
+                                                        @include('Activity.partials.resultPartials.indicatorActual')
                                                     @endforeach
                                                 </div>
                                             </div>
