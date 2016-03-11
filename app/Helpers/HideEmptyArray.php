@@ -11,10 +11,12 @@ use App\Helpers\GetCodeName;
 function hideEmptyArray($listType, $listName, $code)
 {
     if (!empty($code)) {
-        $getCode = new GetCodeName();
-        $value   = $getCode->getCodeName($listType, $listName, $code);
-
-        return ' [ ' . $value . ' ] ';
+        return sprintf(' [%s]', $code);
+        /*
+         * Unwanted for now.
+         */
+//        $getCode = new GetCodeName();
+//        $value   = $getCode->getCodeName($listType, $listName, $code);
     }
 
     return "";

@@ -18,7 +18,7 @@
                             <div class="panel panel-default">
                                 <div class="panel-body panel-element-body row">
                                     <div class="col-xs-12 col-md-12">
-                                        <div class="col-xs-12 col-xs-4">ref:</div>
+                                        <div class="col-xs-12 col-xs-4">Ref:</div>
                                         <div class="col-xs-12 col-xs-8">{{ $recipientOrgBudget['recipient_organization'][0]['ref'] }}</div>
                                     </div>
                                 </div>
@@ -77,11 +77,15 @@
                                     </div>
                                 </div>
                             </div>
-                                <div class="panel-heading">
-                                    <div class="activity-element-title">Budget Line</div>
-                                </div>
-                                <div class="panel-body">
-                                    @foreach($recipientOrgBudget['budget_line'] as $recipientOrgBudgetLine)
+                            <div class="panel-heading">
+                                <div class="activity-element-title">Budget Line</div>
+                            </div>
+                            <div class="panel-body">
+                                @foreach($recipientOrgBudget['budget_line'] as $recipientOrgBudgetLine)
+                                    <div class="panel-heading">
+                                        <div class="activity-element-title">{{ $recipientOrgBudgetLine['reference']}}</div>
+                                    </div>
+                                    <div class="panel-body">
                                         <div class="panel panel-default">
                                             <div class="panel-body panel-element-body row">
                                                 <div class="col-xs-12 col-md-12">
@@ -91,8 +95,10 @@
                                             </div>
                                         </div>
                                         <div class="panel panel-default">
-                                            <div class="panel-heading">Value</div>
-                                            <div class="panel-body panel-element-body row">
+                                            <div class="panel-heading">
+                                                <div class="activity-element-title">Value</div>
+                                            </div>
+                                            <div class="panel-element-body row">
                                                 <div class="col-xs-12 col-md-12">
                                                     <div class="col-xs-12 col-xs-4">Text:</div>
                                                     <div class="col-xs-12 col-xs-8">{{ $recipientOrgBudgetLine['value'][0]['amount']}}</div>
@@ -109,8 +115,10 @@
                                         </div>
                                         <div class="panel panel-default">
                                             @foreach($recipientOrgBudgetLine['narrative'] as $recipientOrgBudgetLineNarrative)
-                                                <div class="panel-heading">Narrative</div>
-                                                <div class="panel-body panel-element-body row">
+                                                <div class="panel-heading">
+                                                    <div class="activity-element-title">Narrative</div>
+                                                </div>
+                                                <div class="panel-element-body row">
                                                     <div class="col-xs-12 col-md-12">
                                                         <div class="col-xs-12 col-xs-4">Text:</div>
                                                         <div class="col-xs-12 col-xs-8">{{ $recipientOrgBudgetLineNarrative['narrative'] . hideEmptyArray('Organization', 'Language', $recipientOrgBudgetLineNarrative['language'])}}</div>
@@ -118,8 +126,10 @@
                                                 </div>
                                             @endforeach
                                         </div>
-                                    @endforeach
-                                </div>
+                                    </div>
+                                @endforeach
+
+                            </div>
 
                         </div>
                     </div>

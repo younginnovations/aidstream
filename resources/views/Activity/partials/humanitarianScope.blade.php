@@ -1,5 +1,5 @@
 @if(!empty($humanitarianScopes))
-    <div class="panel panel-default">
+    <div class="panel panel-default expanded">
         <div class="panel-heading">
             <div class="activity-element-title">
                 Humanitarian Scope
@@ -8,12 +8,12 @@
         </div>
         <div class="panel-body panel-level-1">
             @foreach($humanitarianScopes as $humanitarianScope)
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <div class="activity-element-title">
-                            {{$getCode->getActivityCodeName('HumanitarianScopeType', $humanitarianScope['type'])}}
-                        </div>
+                <div class="panel-heading">
+                    <div class="activity-element-title">
+                        {{$getCode->getActivityCodeName('HumanitarianScopeType', $humanitarianScope['type'])}}
                     </div>
+                </div>
+                <div class="panel-body row">
                     <div class="panel-element-body row">
                         <div class="col-xs-12 col-md-12">
                             <div class="col-xs-12 col-sm-4">Vocabulary:</div>

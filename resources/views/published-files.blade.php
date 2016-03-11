@@ -13,7 +13,9 @@
                 @include('includes.response')
                 @include('includes.breadcrumb')
                 <div class="panel panel-default">
-                    <div class="panel-content-heading">Published Files</div>
+                    <div class="element-panel-heading">
+                        <div>Published Files</div>
+                    </div>
                     <h2 class="panel-sub-heading">Organizations Published Files</h2>
                     <div class="panel-body">
                         @if(count($list) > 0)
@@ -39,7 +41,8 @@
                                         <td>
                                             <a href="{{ 'http://tools.aidinfolabs.org/csv/direct_from_registry/?xml=' . url('/files/xml/' . $file->filename) }}"
                                                target="_blank">CSV</a></td>
-                                        <td><a href="{{ route('list-published-files', ['delete', $file->id]) }}" class="delete">Delete</a>
+                                        <td><a href="{{ route('list-published-files', ['delete', $file->id]) }}"
+                                               class="delete">Delete</a>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -79,7 +82,8 @@
                                                target="_blank">CSV</a></td>
                                         <td>
                                             @if($file->published_to_register == 0)
-                                                <a href="{{ route('delete-published-file', [$file->id])}}" class="delete"> Delete </a>
+                                                <a href="{{ route('delete-published-file', [$file->id])}}"
+                                                   class="delete"> Delete </a>
                                             @endif
                                         </td>
                                     </tr>

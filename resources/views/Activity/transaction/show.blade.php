@@ -16,10 +16,12 @@
                     </div>
                 </div>
                 <div class="col-xs-12 col-md-8 col-lg-8 element-content-wrapper">
-                    <div class="panel panel-default panel-element-detail">
+                    <div class="panel panel-default panel-element-detail element-show">
                         <div class="panel-body">
                             <div class="panel panel-default">
-                                <div class="panel-heading">Element Detail</div>
+                                <div class="panel-heading">
+                                    <div class="activity-element-title">Element Detail</div>
+                                </div>
                                 <div class="panel panel-body panel-element-body">
                                     <div class="col-xs-12 col-md-12">
                                         <div class="col-xs-12 col-sm-4">Reference:</div>
@@ -31,7 +33,9 @@
                                     </div>
                                 </div>
                                 <div class="panel panel-default">
-                                    <div class="panel-heading">Transaction Type</div>
+                                    <div class="panel-heading">
+                                        <div class="activity-element-title">Transaction Type</div>
+                                    </div>
                                     <div class="panel-body panel-element-body">
                                         <div class="col-xs-12 col-md-12">
                                             <div class="col-xs-12 col-sm-4">Code:</div>
@@ -44,7 +48,9 @@
                                     </div>
                                 </div>
                                 <div class="panel panel-default">
-                                    <div class="panel-heading">Provider Organization</div>
+                                    <div class="panel-heading">
+                                        <div class="activity-element-title">Provider Organization</div>
+                                    </div>
                                     {{--*/ $providerOrg = $transactionDetail['provider_organization'][0] /*--}}
                                     <div class="panel-body panel-element-body">
                                         <div class="col-xs-12 col-md-12">
@@ -62,7 +68,9 @@
                                     </div>
                                 </div>
                                 <div class="panel panel-default">
-                                    <div class="panel-heading">Value</div>
+                                    <div class="panel-heading">
+                                        <div class="activity-element-title">Value</div>
+                                    </div>
                                     {{--*/ $value = $transactionDetail['value'][0] /*--}}
                                     <div class="panel-body panel-element-body">
                                         <div class="col-xs-12 col-md-12">
@@ -80,7 +88,9 @@
                                     </div>
                                 </div>
                                 <div class="panel panel-default">
-                                    <div class="panel-heading">Description</div>
+                                    <div class="panel-heading">
+                                        <div class="activity-element-title">Description</div>
+                                    </div>
                                     <div class="panel-body panel-element-body">
                                         <div class="col-xs-12 col-md-12">
                                             <div class="col-xs-12 col-sm-4">Narrative text:</div>
@@ -89,7 +99,9 @@
                                     </div>
                                 </div>
                                 <div class="panel panel-default">
-                                    <div class="panel-heading">Transaction Date</div>
+                                    <div class="panel-heading">
+                                        <div class="activity-element-title">Transaction Date</div>
+                                    </div>
                                     <div class="panel-body panel-element-body">
                                         <div class="col-xs-12 col-md-12">
                                             <div class="col-xs-12 col-sm-4">Date:</div>
@@ -98,7 +110,9 @@
                                     </div>
                                 </div>
                                 <div class="panel panel-default">
-                                    <div class="panel-heading">Receiver Organization</div>
+                                    <div class="panel-heading">
+                                        <div class="activity-element-title">Receiver Organization</div>
+                                    </div>
                                     {{--*/ $receiverOrg = $transactionDetail['receiver_organization'][0] /*--}}
                                     <div class="panel-body panel-element-body">
                                         <div class="col-xs-12 col-md-12">
@@ -116,7 +130,9 @@
                                     </div>
                                 </div>
                                 <div class="panel panel-default">
-                                    <div class="panel-heading">Disbursement Channel</div>
+                                    <div class="panel-heading">
+                                        <div class="activity-element-title">Disbursement Channel</div>
+                                    </div>
                                     <div class="panel-body panel-element-body">
                                         <div class="col-xs-12 col-md-12">
                                             <div class="col-xs-12 col-sm-4">Disbursement Channel Code:</div>
@@ -125,7 +141,9 @@
                                     </div>
                                 </div>
                                 <div class="panel panel-default">
-                                    <div class="panel-heading">Sector</div>
+                                    <div class="panel-heading">
+                                        <div class="activity-element-title">Sector</div>
+                                    </div>
                                     {{--*/ $sector = $transactionDetail['sector'][0] /*--}}
                                     <div class="panel-body panel-element-body">
                                         <div class="col-xs-12 col-md-12">
@@ -143,7 +161,9 @@
                                     </div>
                                 </div>
                                 <div class="panel panel-default">
-                                    <div class="panel-heading">Recipient Country</div>
+                                    <div class="panel-heading">
+                                        <div class="activity-element-title">Recipient Country</div>
+                                    </div>
                                     {{--*/ $recipientCountry = $transactionDetail['recipient_country'][0] /*--}}
                                     <div class="panel-body panel-element-body">
                                         <div class="col-xs-12 col-md-12">
@@ -161,7 +181,9 @@
                                     </div>
                                 </div>
                                 <div class="panel panel-default">
-                                    <div class="panel-heading">Recipient Region</div>
+                                    <div class="panel-heading">
+                                        <div class="activity-element-title">Recipient Region</div>
+                                    </div>
                                     {{--*/ $recipientRegion = $transactionDetail['recipient_region'][0] /*--}}
                                     <div class="panel-body panel-element-body">
                                         <div class="col-xs-12 col-md-12">
@@ -180,7 +202,9 @@
                                 </div>
                                 @if($transactionDetail['flow_type'][0]['flow_type'])
                                     <div class="panel panel-default">
-                                        <div class="panel-heading">Flow Type</div>
+                                        <div class="panel-heading">
+                                            <div class="activity-element-title">Flow Type</div>
+                                        </div>
                                         <div class="panel-body panel-element-body">
                                             <div class="col-xs-12 col-md-12">
                                                 <div class="col-xs-12 col-sm-4">Code:</div>
@@ -191,7 +215,9 @@
                                 @endif
                                 @if($transactionDetail['finance_type'][0]['finance_type'])
                                     <div class="panel panel-default">
-                                        <div class="panel-heading">Finance Type</div>
+                                        <div class="panel-heading">
+                                            <div class="activity-element-title">Finance Type</div>
+                                        </div>
                                         <div class="panel-body panel-element-body">
                                             <div class="col-xs-12 col-md-12">
                                                 <div class="col-xs-12 col-sm-4">Code:</div>
@@ -202,7 +228,9 @@
                                 @endif
                                 @if($transactionDetail['aid_type'][0]['aid_type'])
                                     <div class="panel panel-default">
-                                        <div class="panel-heading">Aid Type</div>
+                                        <div class="panel-heading">
+                                            <div class="activity-element-title">Aid Type</div>
+                                        </div>
                                         <div class="panel-body panel-element-body">
                                             <div class="col-xs-12 col-md-12">
                                                 <div class="col-xs-12 col-sm-4">Code:</div>
@@ -213,7 +241,9 @@
                                 @endif
                                 @if($transactionDetail['tied_status'][0]['tied_status_code'])
                                     <div class="panel panel-default">
-                                        <div class="panel-heading">Tied Status</div>
+                                        <div class="panel-heading">
+                                            <div class="activity-element-title">Tied Status</div>
+                                        </div>
                                         <div class="panel-body panel-element-body">
                                             <div class="col-xs-12 col-md-12">
                                                 <div class="col-xs-12 col-sm-4">Code:</div>

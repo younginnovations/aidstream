@@ -44,6 +44,7 @@
                                         <td class="updated-date">{{ changeTimeZone($activity->updated_at) }}</td>
                                         <td><span class="{{ $status_label[$activity->activity_workflow] }}">{{ $status_label[$activity->activity_workflow] }}</span></td>
                                         <td>
+                                            <a href="{{ route('activity.show', [$activity->id]) }}" class="view"></a>
                                             <a href="{{ url(sprintf('activity/%s/delete', $activity->id)) }}" class="delete">Delete</a>
                                             <a href="{{ route('activity.duplicate', [$activity->id]) }}" class="duplicate">Duplicate</a>
                                         </td>

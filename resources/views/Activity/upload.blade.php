@@ -18,9 +18,14 @@
                         @endforeach
                     </div>
                 @endif
-                <div class="panel-content-heading panel-title-heading">
-                    Upload Activities
-                    <a href="{{ route('activity.index') }}" class="pull-right back-to-list"><span class="glyphicon glyphicon-triangle-left"></span>Back to Activity List</a>
+                <div class="element-panel-heading">
+                    <div>
+                        Upload Activities
+                    </div>
+                    <div>
+                        <a href="{{ route('activity.index') }}" class="pull-right back-to-list"><span
+                                    class="glyphicon glyphicon-triangle-left"></span>Back to Activity List</a>
+                    </div>
                 </div>
                 <div class="col-xs-12 col-md-8 col-lg-8 element-content-wrapper element-upload-wrapper">
                     <div class="panel panel-default panel-upload">
@@ -29,7 +34,8 @@
                                 {!! form($form) !!}
                             </div>
                             <div class="download-transaction-wrap">
-                                <a href="{{route('download.activity-template')}}" class="btn btn-primary btn-form btn-submit">Download Activity Template</a>
+                                <a href="{{route('download.activity-template')}}"
+                                   class="btn btn-primary btn-form btn-submit">Download Activity Template</a>
                                 <div>Contains Simplified information about Activity.</div>
                             </div>
                         </div>
