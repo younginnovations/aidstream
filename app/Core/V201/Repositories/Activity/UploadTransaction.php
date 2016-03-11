@@ -86,6 +86,7 @@ class UploadTransaction
         $transaction['transaction_date'][0]['date']                              = date('Y-m-d', strtotime($transactionRow['transactiondate_iso_date']));
         $transaction['value'][0]['date']                                         = date('Y-m-d', strtotime($transactionRow['transactionvalue_value_date']));
         $transaction['value'][0]['amount']                                       = $transactionRow['transactionvalue_text'];
+        $transaction['value'][0]['currency']                                     = '';
         $transaction['description'][0]['narrative'][0]['narrative']              = $transactionRow['description_text'];
         $transaction['provider_organization'][0]['organization_identifier_code'] = $transactionRow['providerorg_ref'];
         $transaction['provider_organization'][0]['provider_activity_id']         = $transactionRow['providerorg_provider_activity_id'];
@@ -152,12 +153,14 @@ class UploadTransaction
         $transaction['value'][0]['date']                                         = date('Y-m-d', strtotime($transactionRow['transaction_date']));
         $transaction['transaction_date'][0]['date']                              = date('Y-m-d', strtotime($transactionRow['transaction_date']));
         $transaction['description'][0]['narrative'][0]['narrative']              = $transactionRow['description'];
+        $transaction['value'][0]['currency']                                     = '';
         $transaction['provider_organization'][0]['organization_identifier_code'] = $transactionRow['provider_org_reference'];
         $transaction['provider_organization'][0]['provider_activity_id']         = $transactionRow['provider_activity_id'];
         $transaction['provider_organization'][0]['narrative'][0]['narrative']    = $transactionRow['provider_org_name'];
         $transaction['receiver_organization'][0]['organization_identifier_code'] = $transactionRow['receiver_org_reference'];
         $transaction['receiver_organization'][0]['receiver_activity_id']         = $transactionRow['receiver_activity_id'];
         $transaction['receiver_organization'][0]['narrative'][0]['narrative']    = $transactionRow['receiver_org_name'];
+        $transaction['receiver_organization'][0]['narrative'][0]['language']     = '';
 
         return $transaction;
     }

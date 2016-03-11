@@ -23,7 +23,7 @@ class RecipientRegion extends V201RecipientRegion
                     'code'           => $recipientRegion['region_code'],
                     'percentage'     => $recipientRegion['percentage'],
                     'vocabulary'     => $recipientRegion['region_vocabulary'],
-                    'vocabulary-uri' => $recipientRegion['vocabulary_uri']
+                    'vocabulary-uri' => array_key_exists('vocabulary_uri', $recipientRegion) ? $recipientRegion['vocabulary_uri'] : ''
                 ],
                 'narrative'   => $this->buildNarrative($recipientRegion['narrative'])
             ];

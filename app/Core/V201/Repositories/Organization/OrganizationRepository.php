@@ -167,7 +167,7 @@ class OrganizationRepository implements OrganizationRepositoryInterface
     public function publishToRegistry(Organization $organization, Settings $settings)
     {
         $orgPublishedFiles = $this->getPublishedFiles($organization->id);
-        $api_url           = 'http://iati2.staging.ckanhosted.com/api/';
+        $api_url           = config('xmlFiles.iati_registry_api_base_url');
         $apiCall           = new CkanClient($api_url, $settings['registry_info'][0]['api_id']);
 
         try {
@@ -175,11 +175,11 @@ class OrganizationRepository implements OrganizationRepositoryInterface
                 $data = $this->generateJson($publishedFile, $settings, $organization);
 
                 if ($publishedFile['published_to_register'] == 0) {
-                    $apiCall->post_package_register($data);
+                    $apiCall->package_create($data);
                     $this->updatePublishToRegister($publishedFile->id);
                 } elseif ($publishedFile['published_to_register'] == 1) {
                     $package = $settings['registry_info'][0]['publisher_id'] . '-org';
-                    $apiCall->put_package_entity($package, $data);
+                    $apiCall->package_update($data);
                 }
             }
 

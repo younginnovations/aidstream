@@ -120,6 +120,7 @@ class Result extends ActivityBaseRequest
                 $this->getRulesForBaseline($indicator['baseline'], $indicatorForm),
                 $this->getRulesForPeriod($indicator['period'], $indicatorForm)
             );
+            $rules[sprintf('%s.title.0.narrative.0.narrative', $indicatorForm)][] = 'required';
         }
 
         return $rules;
@@ -145,6 +146,7 @@ class Result extends ActivityBaseRequest
                 $this->getMessagesForBaseline($indicator['baseline'], $indicatorForm),
                 $this->getMessagesForPeriod($indicator['period'], $indicatorForm)
             );
+            $messages[sprintf('%s.title.0.narrative.0.narrative.required', $indicatorForm)] = 'Title is required';
         }
 
         return $messages;

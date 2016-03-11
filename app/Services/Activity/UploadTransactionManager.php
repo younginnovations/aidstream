@@ -56,8 +56,9 @@ class UploadTransactionManager
      */
     public function save($transactionCsv, Activity $activity)
     {
-        $excel           = $this->version->getExcel();
-        $transactionRows = $excel->load($transactionCsv)->get();
+        $excel              = $this->version->getExcel();
+        $transactionRows    = $excel->load($transactionCsv)->get();
+        $transactionDetails = [];
 
         foreach ($transactionRows as $transactionRow) {
             $transactionDetails[] = $this->uploadTransactionRepo->formatFromExcelRow($transactionRow);
