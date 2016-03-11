@@ -701,8 +701,11 @@ label {
           color: #fff !important; }
 
 .navbar-admin-dropdown li > span {
-  padding: 22px 0 22px 7px;
-  display: block; }
+  display: inline-block;
+  padding: 20px 0 20px 15px; }
+
+.nav.navbar-admin-dropdown > li {
+  float: left; }
 
 .navbar-default .navbar-nav > li.dropdown:hover {
   color: #555;
@@ -2403,6 +2406,42 @@ div[class*="panel-level-"] .panel > .panel-body {
 .profile-wrapper {
   width: 100%; }
 
+.error-msg-wrap {
+  text-align: center; }
+  .error-msg-wrap h2 {
+    padding-top: 175px;
+    background: url(../../images/404page.png) no-repeat top center;
+    -o-background-size: 200px;
+       background-size: 200px;
+    font-size: 22px;
+    color: #484848; }
+  .error-msg-wrap p {
+    color: rgba(72, 72, 72, 0.7);
+    margin-bottom: 40px;
+    font-size: 16px; }
+  .error-msg-wrap a {
+    font-size: 16px; }
+  .error-msg-wrap > div {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    bottom: auto;
+    left: 0;
+    position: absolute;
+    -webkit-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+    transform: translateY(-50%);
+    width: 100%;
+    padding: 0 10px; }
+
+@media all and (max-width: 1030px) {
+  .activity-status {
+    padding: 16px 10px 18px 50px; }
+  .activity-status ol li {
+    width: 100px; } }
+
 @media all and (max-width: 1000px) {
   .element-menu-wrapper {
     position: absolute;
@@ -2430,10 +2469,20 @@ div[class*="panel-level-"] .panel > .panel-body {
         margin: 14px 0 0 30px; }
       .element-sidebar-dropdown .edit-element:hover .caret {
         color: #00A8FF; }
+      .element-sidebar-dropdown .edit-element .caret.caret-out {
+        -webkit-transform: rotate(180deg);
+           -moz-transform: rotate(180deg);
+            -ms-transform: rotate(180deg);
+             -o-transform: rotate(180deg);
+                transform: rotate(180deg); }
   .element-panel-heading form {
     margin-right: 40px; }
   .panel-action-btn {
     margin-right: 58px; } }
+
+@media all and (max-width: 992px) {
+  .element-panel-heading {
+    padding-right: 70px; } }
 
 @media all and (max-width: 820px) {
   .btn-form {
@@ -2551,7 +2600,8 @@ div[class*="panel-level-"] .panel > .panel-body {
   .duplicate-activity-description {
     margin: 0 14px; }
   .activity-status + a {
-    margin-right: 14px; }
+    margin-right: 14px;
+    margin-bottom: 20px; }
   .panel-create > .panel-body {
     padding: 0 !important; }
   .create-form, .create-activity-form, .panel-user-permission-edit, .content-wrapper .panel-profile, .panel-associated-organization {
@@ -2604,7 +2654,43 @@ div[class*="panel-level-"] .panel > .panel-body {
   .download-block {
     border-bottom: 1px solid #f2f2f2; }
   .settings-wrapper .create-form > form > .collection_form > .form-group > .form-group, .profile-wrapper .create-form > form > .collection_form > .form-group > .form-group {
-    padding-right: 0; } }
+    padding-right: 0; }
+  .element-panel-heading {
+    padding-top: 20px !important;
+    padding-right: 70px; }
+  .panel-element-detail.panel-activity-default {
+    padding-top: 20px; }
+  .create-form .btn-form {
+    left: 14px; }
+  #change_status {
+    float: none !important;
+    margin-top: 20px;
+    display: inline-block; }
+  .activity-status {
+    padding-left: 10px;
+    margin-bottom: 20px; }
+    .activity-status ol {
+      width: 100%; }
+  .activity-status li.active {
+    border: 0;
+    width: 100% !important;
+    margin-top: -16px; }
+    .activity-status li.active:before {
+      display: none; }
+    .activity-status li.active span {
+      margin: 0;
+      font-size: 15px;
+      text-align: center; }
+  .activity-status li:not(.active) {
+    display: none; }
+  .activity-status-draft ol li > span {
+    color: #e15454; }
+  .activity-status-completed ol li > span {
+    color: #feb752; }
+  .activity-status-verified ol li > span {
+    color: #4f7286; }
+  .activity-status-published ol li > span {
+    color: #52cc88; } }
 
 @media all and (max-width: 640px) {
   .create-form > form > .collection_form > .form-group {
@@ -2634,29 +2720,26 @@ div[class*="panel-level-"] .panel > .panel-body {
   .activity-file-choose {
     width: 94%; }
     .activity-file-choose + button {
-      margin-top: 34px; }
-  .activity-status ol {
-    width: 100%; }
-  .activity-status li.active {
-    border: 0;
-    width: 100% !important;
-    margin-top: -16px; }
-    .activity-status li.active:before {
-      display: none; }
-    .activity-status li.active span {
-      margin: 0;
-      font-size: 15px;
-      text-align: center; }
-  .activity-status li:not(.active) {
+      margin-top: 34px; } }
+
+@media all and (max-width: 500px) {
+  .version.old {
     display: none; }
-  .activity-status-draft ol li > span {
-    color: #e15454; }
-  .activity-status-completed ol li > span {
-    color: #feb752; }
-  .activity-status-verified ol li > span {
-    color: #4f7286; }
-  .activity-status-published ol li > span {
-    color: #52cc88; } }
+  .navbar-default .navbar-nav > li.dropdown:hover > ul {
+    display: none; }
+  .navbar-default .navbar-nav > li.dropdown.open > ul {
+    display: block; }
+  .width-490 .version.old {
+    display: block;
+    float: left !important;
+    margin-left: 20px;
+    padding-bottom: 20px; }
+  .width-490 .old-version {
+    display: none; }
+  .navbar-admin-dropdown li > span.width-490 {
+    padding: 20px 0 20px 25px; }
+  .navbar-admin-dropdown li:first-child span {
+    display: none; } }
 
 @media all and (max-width: 480px) {
   .create-form .btn-form {
@@ -2678,6 +2761,19 @@ div[class*="panel-level-"] .panel > .panel-body {
     padding: 0 20px; }
   .login-container .form-group .btn-link {
     padding-left: 0; } }
+
+@media all and (min-width: 480px) {
+  .error-msg-wrap h2 {
+    padding-top: 300px;
+    -o-background-size: 300px;
+       background-size: 300px;
+    font-size: 32px; }
+  .error-msg-wrap p {
+    color: rgba(72, 72, 72, 0.7);
+    margin-bottom: 40px;
+    font-size: 16px; }
+  .error-msg-wrap a {
+    font-size: 16px; } }
 
 @media all and (min-width: 601px) {
   .settings-checkall-wrapper > .collection_form > .form-group > .form-group {

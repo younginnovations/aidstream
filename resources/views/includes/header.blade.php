@@ -2,14 +2,14 @@
     <nav class="navbar navbar-default">
         <div class="navbar-header">
             <a href="{{ url('/') }}" class="navbar-brand">Aidstream</a>
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#nav-collapse">
+            <button type="button" class="navbar-toggle collapsed">
                 <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
+                <span class="bar1"></span>
+                <span class="bar2"></span>
+                <span class="bar3"></span>
             </button>
         </div>
-        <div class="collapse navbar-collapse navbar-right" id="nav-collapse">
+        <div class="collapse navbar-collapse navbar-right">
             <ul class="nav navbar-nav">
                 <li><a href="{{ url('/about') }}">About</a></li>
                 <li><a href="{{ url('/who-is-using') }}">Who's Using</a></li>

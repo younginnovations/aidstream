@@ -394,6 +394,7 @@ $(document).ready(function () {
 
     $('.element-menu-wrapper').click(function () {
         $(this).children('.element-sidebar-wrapper').toggle();
+        $(this).find('.caret').toggleClass('caret-out');
     });
 
     $(document).mouseup(function (e) {
@@ -512,5 +513,4 @@ $(document).ready(function () {
             $(document).scrollTop(parseInt(a.style.height));
         }
     }
-
 });

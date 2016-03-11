@@ -32,19 +32,10 @@
 <nav class="navbar navbar-default">
     <div class="container-fluid">
         <div class="navbar-header">
-            <!--             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                                data-target="#bs-example-navbar-collapse-1">
-                            <span class="sr-only">Toggle Navigation</span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button> -->
-
             <div class="navbar-brand">
                 <a href="{{ Auth::user()->role_id == 3 ? url('admin/dashboard') : route('activity.index')  }}"
                    alt="Aidstream">Aidstream</a>
             </div>
-
         </div>
 
         <div class="collapse navbar-collapse navbar-right" id="bs-example-navbar-collapse-1">
@@ -89,6 +80,31 @@
                             {{--</span>--}}
                             {{--@endforeach--}}
                             {{--</li>--}}
+                            <li class="pull-left">
+                                @if((Session::get('role_id') == 3  || Session::get('role_id') == 4) && Session::get('org_id'))
+                                    <span class="width-490"><a href="{{ route('admin.switch-back') }}" class="pull-left">Switch Back</a></span>
+                                @endif
+                            </li>
+                            <li class="pull-left">
+                                <div class="navbar-left version-wrap width-490">
+                                    @if(Auth::user()->role_id != 3 && Auth::user()->role_id !=4)
+                                        <div class="version pull-right {{ (Session::get('version') == 'V201') ? 'old' : 'new' }}">
+
+                                            @if ((Session::get('version') == 'V201'))
+                                                <a class="version-text" href="{{route('upgrade-version.index')}}">Update available</a>
+                                                <span class="old-version">
+                         <a href="{{route('upgrade-version.index')}}">Upgrade to IATI version 2.0.2</a>
+                      </span>
+                                            @else
+                                                <span class="version-text">IATI version V202</span>
+                                                <span class="new-version">
+                   You’re using latest IATI version
+                 </span>
+                                            @endif
+                                        </div>
+                                    @endif
+                                </div>
+                            </li>
                         </ul>
                     </li>
                 @endif

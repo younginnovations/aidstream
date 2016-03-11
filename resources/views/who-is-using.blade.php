@@ -94,6 +94,18 @@
         });
         $('.load-more').trigger('click');
     });
+    $(document).ready(function () {
+        function hamburgerMenu() {
+            if ($(window).width() < 600) {
+                //responsive menu
+                $('.navbar-toggle').click(function(){
+                    $('.navbar-collapse').toggleClass('in');
+                    $(this).toggleClass('collapsed');
+                });
+            }
+        }
+        hamburgerMenu();
+    });
 </script>
 <style type="text/css">
     .loader {
