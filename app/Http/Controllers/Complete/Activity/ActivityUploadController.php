@@ -11,27 +11,45 @@ use App\Services\RequestManager\Activity\UploadActivity as UploadActivityRequest
 use App\Http\Requests\Request;
 use App\Services\SettingsManager;
 use Illuminate\Session\SessionManager;
+use Illuminate\Support\Facades\File;
+use Maatwebsite\Excel\Facades\Excel;
 
+/**
+ * Class ActivityUploadController
+ * @package App\Http\Controllers\Complete\Activity
+ */
 class ActivityUploadController extends Controller
 {
     /**
      * @var UploadActivity
      */
     protected $uploadActivity;
+
     /**
      * @var UploadActivityManager
      */
     protected $uploadActivityManager;
+
+    /**
+     * @var ActivityManager
+     */
     protected $activityManager;
+
+    /**
+     * @var
+     */
     protected $organizationId;
+
     /**
      * @var SessionManager
      */
     protected $sessionManager;
+
     /**
      * @var OrganizationManager
      */
     protected $organizationManager;
+
     /**
      * @var SettingsManager
      */
@@ -102,8 +120,9 @@ class ActivityUploadController extends Controller
         }
 
         $identifiers         = [];
-        $ActivityIdentifiers = $iatiIdentifierRepository->getIdentifiersForOrganization();
-        foreach ($ActivityIdentifiers as $identifier) {
+        $activityIdentifiers = $iatiIdentifierRepository->getIdentifiersForOrganization();
+
+        foreach ($activityIdentifiers as $identifier) {
             $identifiers[] = $identifier->identifier['activity_identifier'];
         }
 
@@ -120,13 +139,30 @@ class ActivityUploadController extends Controller
         }
 
         $validator = $csvImportValidator->validator->isValidActivityCsv($file, $identifiers);
+
         if ($validator->fails()) {
-            return redirect()->back()->withInput()->withErrors($validator);
+            $failedRows         = $validator->failures();
+            $uploadedActivities = $this->uploadActivityManager->getVersion()->getExcel()->load($file)->toArray();
+            $validActivities    = array_diff_key($uploadedActivities, $failedRows);
+            $filename           = 'temporary-' . $this->organizationId . 'activity';
+
+            $this->temporarilyStoreCsvFor($validActivities, $filename);
+
+            $validCsvFilePath = storage_path() . '/exports/' . $filename . '.csv';
+
+            if (!$this->saveValidatedActivities($validCsvFilePath, $defaultFieldValues)) {
+                return redirect()->back()->withResponse(['type' => 'warning', 'code' => ['save_failed', ['name' => 'Activity']]]);
+            }
+
+            return $this->invalidActivities($validator, $validActivities, $failedRows);
         }
+
         $check = $this->uploadActivityManager->save($file, $organization, $defaultFieldValues);
+
         if (is_a($check, 'Illuminate\View\View')) {
             return $check;
         }
+
         $response = ($check) ? ['type' => 'success', 'code' => ['updated', ['name' => 'Activities']]] : ['type' => 'danger', 'code' => ['update_failed', ['name' => 'Activities']]];
 
         return redirect()->to(sprintf('/activity'))->withResponse($response);
@@ -145,5 +181,63 @@ class ActivityUploadController extends Controller
         $response = ['type' => 'success', 'code' => ['updated', ['name' => 'Activities']]];
 
         return redirect()->to(sprintf('/activity'))->withResponse($response);
+    }
+
+    /**
+     * Save only those Activities passing Validation.
+     * @param       $validCsvFilePath
+     * @param array $defaultFieldValues
+     * @return bool|null
+     */
+    protected function saveValidatedActivities($validCsvFilePath, array $defaultFieldValues)
+    {
+        if ($this->uploadActivityManager->save($validCsvFilePath, $this->organizationManager->getOrganization($this->organizationId), $defaultFieldValues)) {
+            File::delete($validCsvFilePath);
+
+            return true;
+        }
+
+        return null;
+    }
+
+    /**
+     * Return response with uploaded Activities (if any) with the correct validation error messages for those not added due to validation errors.
+     * @param       $validator
+     * @param array $validActivities
+     * @param array $failedRows
+     * @return mixed
+     */
+    protected function invalidActivities($validator, array $validActivities, array $failedRows)
+    {
+        $uploadedActivities = [];
+
+        foreach ($validActivities as $index => $activity) {
+            $uploadedActivities[] = $index + 1;
+        }
+
+        $difference = array_diff_key(array_values($validActivities), array_values($failedRows));
+        $response   = ['type' => 'warning', 'code' => ['not_uploaded', ['rows' => empty(!$difference) ? implode(',', $failedRows) : '', 'invalidRows' => implode(',', $failedRows)]]];
+
+        return redirect()->back()->withInput()->withErrors($validator)->withResponse($response);
+    }
+
+    /**
+     * Save a new csv for the valid Activities.
+     * @param $validActivities
+     * @param $filename
+     */
+    protected function temporarilyStoreCsvFor($validActivities, $filename)
+    {
+        Excel::create(
+            $filename,
+            function ($excel) use ($validActivities) {
+                $excel->sheet(
+                    'test',
+                    function ($sheet) use ($validActivities) {
+                        $sheet->with($validActivities);
+                    }
+                );
+            }
+        )->store('csv');
     }
 }

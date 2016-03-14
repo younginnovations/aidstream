@@ -1,5 +1,6 @@
 <?php namespace App\Providers;
 
+use App\Core\V201\Requests\Activity\ActivityUploadValidationModifier;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider {
@@ -11,7 +12,11 @@ class AppServiceProvider extends ServiceProvider {
 	 */
 	public function boot()
 	{
-		//
+		$this->app['validator']->resolver(function ($translator, $data, $rules, $messages, $attributes) {
+
+			return new ActivityUploadValidationModifier($translator, $data, $rules, $messages, $attributes);
+
+		});
 	}
 
 	/**
