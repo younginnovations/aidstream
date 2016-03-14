@@ -16,8 +16,8 @@ class Administrative extends BaseForm
     public function buildForm()
     {
         $this
-            ->addSelect('vocabulary', $this->getCodeList('GeographicVocabulary', 'Activity'), 'Vocabulary', $this->addHelpText('Activity_Location_Administrative-vocabulary'))
-            ->add('code', 'text', ['help_block' => $this->addHelpText('Activity_Location_Administrative-code')])
+            ->addSelect('vocabulary', $this->getCodeList('GeographicVocabulary', 'Activity'), 'Vocabulary', $this->addHelpText('Activity_Location_Administrative-vocabulary'), null, true)
+            ->add('code', 'text', ['help_block' => $this->addHelpText('Activity_Location_Administrative-code'), 'required' => true])
             ->add('level', 'text', ['help_block' => $this->addHelpText('Activity_Location_Administrative-level')])
             ->addRemoveThisButton('remove');
     }

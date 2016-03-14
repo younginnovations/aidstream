@@ -69,7 +69,7 @@ class SuperAdmin implements SuperAdminInterface
      */
     public function getOrganizations()
     {
-        return $this->organization->with(['users', 'activities'])->orderBy('name', 'asc')->get();
+        return $this->organization->with(['users', 'activities', 'settings'])->orderBy('name', 'asc')->get();
     }
 
     /**

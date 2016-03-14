@@ -18,7 +18,9 @@ class PagesTest extends AidStreamSmokeTestCase
     public function providerFrontEndPaths()
     {
         return [
-            [$this->baseUrl, 302],
+            [$this->baseUrl, 200],
+            ['about', 200],
+            ['who-is-using', 200],
             ['auth/login', 200],
             ['auth/register', 200],
             ['password/email', 200]

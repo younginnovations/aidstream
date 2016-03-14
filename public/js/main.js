@@ -90,17 +90,17 @@ $(document).ready(function () {
 
         if ($('#removeDialog').length === 0) {
             $('body').append('' +
-                '<div class="modal" id="removeDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="z-index: 9999">' +
-                '<div class="modal-dialog">' +
-                '<div class="modal-content">' +
-                '<div class="modal-header">' +
-                '<h4 class="modal-title" id="myModalLabel"></h4>' +
-                '</div>' +
-                '<div class="modal-body"></div>' +
-                '<div class="modal-footer"></div>' +
-                '</div>' +
-                '</div>' +
-                '</div>');
+            '<div class="modal" id="removeDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="z-index: 9999">' +
+            '<div class="modal-dialog">' +
+            '<div class="modal-content">' +
+            '<div class="modal-header">' +
+            '<h4 class="modal-title" id="myModalLabel"></h4>' +
+            '</div>' +
+            '<div class="modal-body"></div>' +
+            '<div class="modal-footer"></div>' +
+            '</div>' +
+            '</div>' +
+            '</div>');
         }
 
         var removeDialog = $('#removeDialog');
@@ -245,17 +245,17 @@ $(document).ready(function () {
 
         if ($('#popDialog').length === 0) {
             $('body').append('' +
-                '<div class="modal" id="popDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="z-index: 9999">' +
-                '<div class="modal-dialog">' +
-                '<div class="modal-content">' +
-                '<div class="modal-header">' +
-                '<h4 class="modal-title" id="myModalLabel"></h4>' +
-                '</div>' +
-                '<div class="modal-body"></div>' +
-                '<div class="modal-footer"></div>' +
-                '</div>' +
-                '</div>' +
-                '</div>');
+            '<div class="modal" id="popDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="z-index: 9999">' +
+            '<div class="modal-dialog">' +
+            '<div class="modal-content">' +
+            '<div class="modal-header">' +
+            '<h4 class="modal-title" id="myModalLabel"></h4>' +
+            '</div>' +
+            '<div class="modal-body"></div>' +
+            '<div class="modal-footer"></div>' +
+            '</div>' +
+            '</div>' +
+            '</div>');
         }
 
         var popElem = $('#popDialog');
@@ -291,8 +291,8 @@ $(document).ready(function () {
         }
         var sectorClass = ['.sector_text', '.sector_select', '.sector_category_select'];
         var selectedSector = sectorClass[vocabulary] ? sectorClass[vocabulary] : sectorClass[0];
-        parent.siblings('.sector_types').addClass('hidden');
-        parent.siblings(selectedSector).removeClass('hidden');
+        parent.siblings('.sector_types').addClass('hidden').children('.form-control').removeAttr('required');
+        parent.siblings(selectedSector).removeClass('hidden').children('.form-control').attr('required', 'required');
     });
     $('.sector_vocabulary').trigger('change');
 
@@ -312,17 +312,17 @@ $(document).ready(function () {
 
         if ($('#delDialog').length === 0) {
             $('body').append('' +
-                '<div class="modal" id="delDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="z-index: 9999">' +
-                '<div class="modal-dialog">' +
-                '<div class="modal-content">' +
-                '<div class="modal-header">' +
-                '<h4 class="modal-title" id="myModalLabel"></h4>' +
-                '</div>' +
-                '<div class="modal-body"></div>' +
-                '<div class="modal-footer"></div>' +
-                '</div>' +
-                '</div>' +
-                '</div>');
+            '<div class="modal" id="delDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="z-index: 9999">' +
+            '<div class="modal-dialog">' +
+            '<div class="modal-content">' +
+            '<div class="modal-header">' +
+            '<h4 class="modal-title" id="myModalLabel"></h4>' +
+            '</div>' +
+            '<div class="modal-body"></div>' +
+            '<div class="modal-footer"></div>' +
+            '</div>' +
+            '</div>' +
+            '</div>');
         }
 
         var delDialog = $('#delDialog');
@@ -503,10 +503,11 @@ $(document).ready(function () {
     $("textarea").trigger('keyup');
 
     var minTextareaHeight = 45;
+
     function adaptiveheight(a) {
         $(a).height(minTextareaHeight);
         var scrollval = $(a)[0].scrollHeight;
-        if(scrollval > minTextareaHeight) {
+        if (scrollval > minTextareaHeight) {
             $(a).height(scrollval);
         }
         if (parseInt(a.style.height) > $(window).height() - 30) {

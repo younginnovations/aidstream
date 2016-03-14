@@ -32,7 +32,7 @@ class Sector extends V201Sector
                     'code'           => $sectorValue,
                     'percentage'     => $sector['percentage'],
                     'vocabulary'     => $vocabulary,
-                    'vocabulary-uri' => array_key_exists('vocabulary', $sector) ? $sector['vocabulary_uri'] : ''
+                    'vocabulary-uri' => array_key_exists('vocabulary_uri', $sector) ? $sector['vocabulary_uri'] : ''
                 ],
                 'narrative'   => $this->buildNarrative($sector['narrative'])
             ];

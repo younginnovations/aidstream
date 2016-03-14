@@ -21,7 +21,7 @@ trait Indicator
      */
     public function addMeasureList()
     {
-        return $this->addSelect('measure', $this->getCodeList('IndicatorMeasure', 'Activity'), 'Measure', $this->addHelpText('Activity_Result_Indicator-measure'));
+        return $this->addSelect('measure', $this->getCodeList('IndicatorMeasure', 'Activity'), 'Measure', $this->addHelpText('Activity_Result_Indicator-measure'), null, true);
     }
 
     /**

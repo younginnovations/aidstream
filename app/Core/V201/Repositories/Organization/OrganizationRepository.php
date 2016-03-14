@@ -167,7 +167,7 @@ class OrganizationRepository implements OrganizationRepositoryInterface
     public function publishToRegistry(Organization $organization, Settings $settings)
     {
         $orgPublishedFiles = $this->getPublishedFiles($organization->id);
-        $api_url           = config('xmlFiles.iati_registry_api_base_url');
+        $api_url           = config('filesystems.iati_registry_api_base_url');
         $apiCall           = new CkanClient($api_url, $settings['registry_info'][0]['api_id']);
 
         try {

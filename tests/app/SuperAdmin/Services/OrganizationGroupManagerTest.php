@@ -50,7 +50,7 @@ class OrganizationGroupManagerTest extends AidStreamTestCase
         $a = m::mock(UserGroup::class);
         $this->userGroup->shouldReceive('whereUserId->first')->andReturn($a);
         $a->shouldReceive('getAttribute')->once()->with('assigned_organizations')->andReturn([1]);
-        $this->organization->shouldReceive('whereIn->get')->andReturn(m::mock('\Illuminate\Database\Eloquent\Collection'));
+        $this->organization->shouldReceive('whereIn->with->get')->andReturn(m::mock('\Illuminate\Database\Eloquent\Collection'));
         $this->assertInstanceOf('\Illuminate\Database\Eloquent\Collection', $this->orgGroupManager->getGroupsByUserId(1));
     }
 

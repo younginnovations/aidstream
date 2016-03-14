@@ -81,25 +81,26 @@
                             <div class="input-wrapper">
                                 <div class="col-xs-12 col-md-12">
                                     <div class="form-group col-xs-12 col-sm-6 col-md-6">
-                                        <label class="control-label">Organization Name</label>
+                                        <label class="control-label">Organization Name*</label>
 
                                         <div class="col-xs-12 col-md-12">
-                                            <input type="text" class="form-control" name="organization_name" value="{{ old('organization_name') }}">
+                                            <input type="text" class="form-control" name="organization_name" value="{{ old('organization_name') }}" required="required">
                                         </div>
                                     </div>
                                     <div class="form-group col-xs-12 col-sm-6 col-md-6">
-                                        <label class="control-label">Organization Address</label>
+                                        <label class="control-label">Organization Address*</label>
 
                                         <div class="col-xs-12 col-md-12">
-                                            <input type="text" class="form-control" name="organization_address" value="{{ old('organization_address') }}">
+                                            <input type="text" class="form-control" name="organization_address" value="{{ old('organization_address') }}" required="required">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-md-12">
                                     <div class="form-group col-xs-12 col-sm-6 col-md-6">
-                                        <label class="control-label">Organization User Identifier</label>
+                                        <label class="control-label">Organization User Identifier*</label>
+
                                         <div class="col-xs-12 col-md-12">
-                                            <input type="text" class="form-control noSpace" name="organization_user_identifier" value="{{ old('organization_user_identifier') }}">
+                                            <input type="text" class="form-control noSpace" name="organization_user_identifier" value="{{ old('organization_user_identifier') }}" required="required">
                                             <span class="help-block">Your organisation user identifier will be used as a prefix for all the AidStream users in your organisation. We recommend that you use a short abbreviation that uniquely identifies your organisation. If your organisation is 'Acme Bellus Foundation', your organisation user identifier should be 'abf', depending upon it's availability.
                                             </span>
                                         </div>
@@ -110,8 +111,10 @@
                                     </div>
                                     <div class="form-group col-xs-12 col-sm-6 col-md-6 username_value hidden">
                                         <label class="control-label">Username</label>
+
                                         <div class="col-xs-12 col-md-12">
                                             <input type="hidden" class="form-control hover_help_text" name="username" value="{{ old('username') }}" readonly="readonly">
+
                                             <div class="alternate_input">{{ old('username') }}</div>
                                         <span class="help-text"
                                               title="AidStream will create a default username with your Organisation User Identifier as prefix. You will not be able to change '_admin' part of the username. This user will have administrative privilege and can create multiple AidStream users with different set of permissions."
@@ -125,10 +128,10 @@
                             <div class="input-wrapper">
                                 <div class="col-xs-12 col-md-12">
                                     <div class="form-group col-xs-12 col-sm-6 col-md-6">
-                                        <label class="control-label">Password</label>
+                                        <label class="control-label">Password*</label>
 
                                         <div class="col-xs-12 col-md-12">
-                                            <input type="password" class="form-control" name="password">
+                                            <input type="password" class="form-control" name="password" required="required">
                                         </div>
                                     </div>
                                     <div class="form-group col-xs-12 col-sm-6 col-md-6">
@@ -141,42 +144,42 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                            <div class="input-wrapper no-border">
-                                <div class="col-xs-12 col-md-12">
-                                    <div class="form-group col-xs-12 col-sm-6 col-md-6">
-                                        <label class="control-label">First Name</label>
+                                <div class="input-wrapper no-border">
+                                    <div class="col-xs-12 col-md-12">
+                                        <div class="form-group col-xs-12 col-sm-6 col-md-6">
+                                            <label class="control-label">First Name*</label>
 
-                                        <div class="col-xs-12 col-md-12">
-                                            <input type="text" class="form-control" name="first_name" value="{{ old('first_name') }}">
+                                            <div class="col-xs-12 col-md-12">
+                                                <input type="text" class="form-control" name="first_name" value="{{ old('first_name') }}" required="required">
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-xs-12 col-sm-6 col-md-6">
+                                            <label class="control-label">Last Name*</label>
+
+                                            <div class="col-xs-12 col-md-12">
+                                                <input type="text" class="form-control" name="last_name" value="{{ old('last_name') }}" required="required">
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="form-group col-xs-12 col-sm-6 col-md-6">
-                                        <label class="control-label">Last Name</label>
+                                    <div class="col-xs-12 col-md-12">
+                                        <div class="form-group col-xs-12 col-sm-6 col-md-6">
+                                            <label class="control-label">E-Mail Address*</label>
 
-                                        <div class="col-xs-12 col-md-12">
-                                            <input type="text" class="form-control" name="last_name" value="{{ old('last_name') }}">
+                                            <div class="col-xs-12 col-md-12">
+                                                <input type="email" class="form-control" name="email" value="{{ old('email') }}" required="required">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-md-12">
+                                        <div class="form-group col-xs-12 col-sm-6 col-md-6">
+                                            <label class="control-label">Country*</label>
+
+                                            <div class="col-xs-12 col-md-12">
+                                                {{Form::select('country', ['' => 'Select Country'] + $countries, null, ['required' => true])}}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-xs-12 col-md-12">
-                                    <div class="form-group col-xs-12 col-sm-6 col-md-6">
-                                        <label class="control-label">E-Mail Address</label>
-
-                                        <div class="col-xs-12 col-md-12">
-                                            <input type="email" class="form-control" name="email" value="{{ old('email') }}">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-xs-12 col-md-12">
-                                    <div class="form-group col-xs-12 col-sm-6 col-md-6">
-                                        <label class="control-label">Country</label>
-
-                                        <div class="col-xs-12 col-md-12">
-                                            {{Form::select('country', ['' => 'Select Country'] + $countries)}}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
 
                                 <div class="col-md-6">
                                     <button type="submit" class="btn btn-primary btn-submit btn-register">

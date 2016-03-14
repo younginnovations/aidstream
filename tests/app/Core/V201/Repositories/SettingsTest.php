@@ -7,7 +7,6 @@ use App\Models\Settings;
 use Test\AidStreamTestCase;
 use Illuminate\Session\SessionManager;
 use Illuminate\Database\DatabaseManager;
-use Psr\Log\LoggerInterface;
 use Mockery as m;
 
 class SettingsTest extends AidStreamTestCase
@@ -17,7 +16,6 @@ class SettingsTest extends AidStreamTestCase
     protected $organizationData;
     protected $sessionManager;
     protected $databaseManager;
-    protected $loggerInterface;
     protected $organization;
 
     public function setup()
@@ -28,8 +26,7 @@ class SettingsTest extends AidStreamTestCase
         $this->organization      = m::mock(Organization::class);
         $this->sessionManager    = m::mock(SessionManager::class);
         $this->databaseManager   = m::mock(DatabaseManager::class);
-        $this->loggerInterface   = m::mock(LoggerInterface::class);
-        $this->settingRepository = new SettingsRepository($this->settings, $this->organizationData, $this->sessionManager, $this->databaseManager, $this->loggerInterface);
+        $this->settingRepository = new SettingsRepository($this->settings, $this->organizationData, $this->sessionManager, $this->databaseManager);
     }
 
     public function testItShouldReturnSettingsDataWithSpecificOrganizationId()
@@ -40,21 +37,17 @@ class SettingsTest extends AidStreamTestCase
 
     public function testItShouldStoreSettings()
     {
-        $this->databaseManager->shouldReceive('beginTransaction');
         $this->organization->shouldReceive('organization->save')->with(['reporting_org' => 1]);
         $this->settings->shouldReceive('settings->create');
         $this->organizationData->shouldReceive('create')->with('organization_id');
-        $this->databaseManager->shouldReceive('commit');
         $this->assertTrue(true, 'Organization Settings Inserted');
     }
 
     public function testItShouldUpdateSettings()
     {
-        $this->databaseManager->shouldReceive('beginTransaction');
         $this->organization->shouldReceive('organization->save')->with(['reporting_org' => 1]);
         $this->settings->shouldReceive('settings->create');
         $this->organizationData->shouldReceive('firstOrCreate')->with('organization_id');
-        $this->databaseManager->shouldReceive('commit');
         $this->assertTrue(true, 'Organization Settings Updated');
     }
 
@@ -63,5 +56,4 @@ class SettingsTest extends AidStreamTestCase
         parent::tearDown();
         m::close();
     }
-
 }

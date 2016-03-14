@@ -20,23 +20,23 @@ class DocumentManager
     /**
      * @var Version
      */
-    private $version;
+    protected $version;
     /**
      * @var Guard
      */
-    private $auth;
+    protected $auth;
     /**
      * @var DatabaseManager
      */
-    private $database;
+    protected $database;
     /**
      * @var DbLogger
      */
-    private $dbLogger;
+    protected $dbLogger;
     /**
      * @var Logger
      */
-    private $logger;
+    protected $logger;
 
     /**
      * @param Version         $version
@@ -90,20 +90,21 @@ class DocumentManager
     /**
      * save document
      * @param Document $document
+     * @param bool     $update
      * @return mixed
      */
-    public function store(Document $document)
+    public function store(Document $document, $update = false)
     {
         try {
             $this->database->beginTransaction();
             $this->repo->store($document);
             $this->database->commit();
             $this->logger->info(
-                'Document saved successfully.',
+                sprintf('Document %s successfully.', $update ? 'updated' : 'saved'),
                 ['for' => $this->auth->user()->organization->id]
             );
             $this->dbLogger->activity(
-                "activity.document_saved",
+                sprintf("activity.document_%s", $update ? 'updated' : 'saved'),
                 [
                     'organization'    => $this->auth->user()->organization->name,
                     'organization_id' => $this->auth->user()->organization->id
@@ -114,7 +115,7 @@ class DocumentManager
         } catch (\Exception $exception) {
             $this->database->rollback();
             $this->logger->error(
-                'Failed to save document.',
+                sprintf('Failed to %s document.', $update ? 'updated' : 'saved'),
                 [
                     'version' => $document,
                     'trace'   => $exception->getTraceAsString()
@@ -123,5 +124,15 @@ class DocumentManager
         }
 
         return false;
+    }
+
+    /**
+     * update document
+     * @param Document $document
+     * @return mixed
+     */
+    public function update(Document $document)
+    {
+        return $this->store($document, true);
     }
 }

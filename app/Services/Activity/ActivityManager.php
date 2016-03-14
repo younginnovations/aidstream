@@ -2,8 +2,10 @@
 
 use App\Core\Version;
 use App\Models\Activity\Activity;
+use Exception;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Logging\Log as Logger;
+use Illuminate\Database\DatabaseManager;
 
 /**
  * Class ActivityManager
@@ -24,13 +26,18 @@ class ActivityManager
      * @var Version
      */
     protected $version;
+    /**
+     * @var DatabaseManager
+     */
+    private $database;
 
     /**
-     * @param Version $version
-     * @param Logger  $logger
-     * @param Guard   $auth
+     * @param Version         $version
+     * @param Guard           $auth
+     * @param Logger          $logger
+     * @param DatabaseManager $database
      */
-    public function __construct(Version $version, Guard $auth, Logger $logger)
+    public function __construct(Version $version, Guard $auth, Logger $logger, DatabaseManager $database)
     {
         $this->auth            = $auth;
         $this->logger          = $logger;
@@ -39,6 +46,7 @@ class ActivityManager
         $this->activityRepo    = $this->activityElement->getRepository();
         $this->transactionRepo = $this->activityElement->getTransactionRepository();
         $this->resultRepo      = $this->activityElement->getResultRepository();
+        $this->database        = $database;
     }
 
     /**
@@ -51,8 +59,10 @@ class ActivityManager
     public function store(array $input, $organizationId, array $defaultFieldValues)
     {
         try {
+            $this->database->beginTransaction();
             $result = $this->activityRepo->store($input, $organizationId, $defaultFieldValues);
             $this->activityRepo->saveDefaultValues($result->id, $defaultFieldValues);
+            $this->database->commit();
             $this->logger->info(
                 'Activity identifier added',
                 ['for ' => $input['activity_identifier']]
@@ -68,6 +78,7 @@ class ActivityManager
 
             return $result;
         } catch (Exception $exception) {
+            $this->database->rollback();
             $this->logger->error(
                 sprintf('Activity identifier couldn\'t be added due to %s', $exception->getMessage()),
                 [
@@ -104,7 +115,22 @@ class ActivityManager
      */
     public function updateStatus(array $input, Activity $activityData)
     {
-        return $this->activityRepo->updateStatus($input, $activityData);
+        $result = $this->activityRepo->updateStatus($input, $activityData);
+        if ($result) {
+            $activityWorkflow = $input['activity_workflow'];
+            $statusLabel      = ['Completed', 'Verified', 'Published'];
+            $status           = $statusLabel[$activityWorkflow - 1];
+            $this->logger->info(sprintf('Activity has been %s', $status));
+            $this->logger->activity(
+                "activity.activity_status_changed",
+                [
+                    'activity_id' => $activityData->id,
+                    'status'      => $status,
+                ]
+            );
+        }
+
+        return $result;
     }
 
     /**
@@ -176,5 +202,82 @@ class ActivityManager
     public function makePublished(Activity $activityData)
     {
         return $this->activityRepo->makePublished($activityData);
+    }
+
+    /**
+     * duplicate activity
+     * @param Activity $activityData
+     * @return bool
+     */
+    public function duplicateActivityAction(Activity $activityData)
+    {
+        try {
+            $this->database->beginTransaction();
+            $activityData->save();
+            $this->database->commit();
+            $this->logger->info(
+                'Activity has been Duplicated.',
+                ['for ' => $activityData->id]
+            );
+            $this->logger->activity(
+                "activity.activity_duplicated",
+                [
+                    'activity_id'     => $activityData->id,
+                    'organization'    => $this->auth->user()->organization->name,
+                    'organization_id' => $this->auth->user()->organization->id,
+                ]
+            );
+
+            return true;
+        } catch (Exception $exception) {
+            $this->database->rollback();
+            $this->logger->error(
+                sprintf('Activity couldn\'t be duplicated due to %s', $exception->getMessage()),
+                [
+                    'ActivityIdentifier' => $activityData,
+                    'trace'              => $exception->getTraceAsString()
+                ]
+            );
+        }
+
+        return false;
+    }
+
+    /**
+     * @param $activityData
+     * @return bool
+     */
+    public function destroy($activityData)
+    {
+        try {
+            $this->database->beginTransaction();
+            $activityData->delete();
+            $this->database->commit();
+            $this->logger->info(
+                'Activity has been Deleted.',
+                ['for ' => $activityData->id]
+            );
+            $this->logger->activity(
+                "activity.activity_deleted",
+                [
+                    'activity_id'     => $activityData->id,
+                    'organization'    => $this->auth->user()->organization->name,
+                    'organization_id' => $this->auth->user()->organization->id,
+                ]
+            );
+
+            return true;
+        } catch (Exception $exception) {
+            $this->database->rollback();
+            $this->logger->error(
+                sprintf('Activity couldn\'t be deleted due to %s', $exception->getMessage()),
+                [
+                    'ActivityIdentifier' => $activityData,
+                    'trace'              => $exception->getTraceAsString()
+                ]
+            );
+        }
+
+        return false;
     }
 }

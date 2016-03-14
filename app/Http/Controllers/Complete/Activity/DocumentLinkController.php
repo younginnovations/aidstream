@@ -78,7 +78,7 @@ class DocumentLinkController extends Controller
             $activities = (array) $document->activities;
             unset($activities[$id]);
             $document->activities = $activities;
-            $documentManager->store($document);
+            $documentManager->update($document);
         }
 
         if ($this->documentLinkManager->update($documentLinks, $activityData)) {
@@ -92,7 +92,7 @@ class DocumentLinkController extends Controller
                 $identifier           = $activityData->identifier['activity_identifier'];
                 $activities[$id]      = $identifier;
                 $document->activities = $activities;
-                $documentManager->store($document);
+                $documentManager->update($document);
             }
 
             return redirect()->to(sprintf('/activity/%s', $id))->withResponse($response);

@@ -36,7 +36,7 @@ class Condition extends BaseElement
         if ($conditions) {
             $activityData[] = [
                 '@attributes' => [
-                    'attached' => ($conditions) ? $conditions['condition_attached'] : ''
+                    'attached' => $conditions['condition_attached']
                 ],
                 'condition'   => $this->buildCondition($conditions['condition'])
             ];

@@ -258,9 +258,9 @@ class UploadActivity
         $sectors        = explode(';', $activityRow['sector_dac_5digit']);
         $sector         = [];
         foreach ($sectors as $sectorRow) {
-            $sectorTemplate['sector_vocabulary']    = 2;
-            $sectorTemplate['sector_category_code'] = $sectorRow;
-            $sector[]                               = $sectorTemplate;
+            $sectorTemplate['sector_vocabulary'] = 1;
+            $sectorTemplate['sector_code']       = $sectorRow;
+            $sector[]                            = $sectorTemplate;
         }
 
         return $sector;

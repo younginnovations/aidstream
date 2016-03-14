@@ -62,9 +62,9 @@ class ResultManagerTest extends AidStreamTestCase
         $this->activityResult->shouldReceive('getAttribute')->with('result')->andReturn('testResult');
         $this->activityResult->shouldReceive('getAttribute')->with('activity_id')->andReturn(1);
         $this->database->shouldReceive('commit');
-        $this->logger->shouldReceive('info')->with('Activity Result updated!', ['for' => 'testResult']);
+        $this->logger->shouldReceive('info')->with('Activity Result saved!', ['for' => 'testResult']);
         $this->dbLogger->shouldReceive('activity')->with(
-            'activity.result_updated',
+            'activity.result_saved',
             [
                 'activity_id'     => 1,
                 'organization'    => 'orgName',

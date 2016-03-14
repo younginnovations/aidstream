@@ -15,6 +15,7 @@ class Identifier extends BaseForm
                 [
                     'wrapper'    => ['class' => 'col-xs-12 col-sm-6'],
                     'attr'       => ['class' => 'noSpace'],
+                    'required'   => true,
                     'help_block' => $this->addHelpText('Activity_IatiIdentifier-activity_identifier', false)
                 ]
             )

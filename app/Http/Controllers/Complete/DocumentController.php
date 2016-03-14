@@ -59,7 +59,7 @@ class DocumentController extends Controller
             if ($document->exists) {
                 return ['status' => 'danger', 'message' => 'Document already exists.'];
             }
-            Storage::put(sprintf('documents/%s/%s', $this->orgId, $filename), File::get($file));
+            Storage::put(sprintf('%s/%s/%s', config('filesystems.xml'), $this->orgId, $filename), File::get($file));
             $this->documentManager->store($document);
         } catch (\Exception $e) {
             return ['status' => 'danger', 'message' => 'Failed to upload Document. Error: ' . $e->getMessage()];

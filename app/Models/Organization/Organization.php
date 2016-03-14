@@ -62,4 +62,13 @@ class Organization extends Model
 
         return $organization;
     }
+
+    /**
+     * organization has many settings
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function settings()
+    {
+        return $this->hasOne('App\Models\Settings', 'organization_id');
+    }
 }
