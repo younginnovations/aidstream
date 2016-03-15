@@ -152,9 +152,10 @@ class BaseForm extends Form
      * @param null  $label
      * @param null  $helpText
      * @param null  $defaultValue
+     * @param bool  $required
      * @return $this
      */
-    protected function addSelect($name, array $choices, $label = null, $helpText = null, $defaultValue = null)
+    protected function addSelect($name, array $choices, $label = null, $helpText = null, $defaultValue = null, $required = false)
     {
         return $this->add(
             $name,
@@ -164,7 +165,8 @@ class BaseForm extends Form
                 'label'         => $label,
                 'empty_value'   => 'Select one of the following options',
                 'default_value' => $defaultValue,
-                'help_block'    => $helpText
+                'help_block'    => $helpText,
+                'required'      => $required
             ]
         );
     }

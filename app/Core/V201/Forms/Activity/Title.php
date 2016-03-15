@@ -15,7 +15,9 @@ class Title extends BaseForm
     public function buildForm()
     {
         $class = $this->getData('class') ? $this->getData('class') : 'narrative';
+        $bool  = ($this->getData('narrative_true') || !$this->getName()) ? true : false;
         $this
+            ->addData(['narrative_required' => $bool])
             ->addNarrative($class)
             ->addAddMoreButton('add_title', $class);
     }

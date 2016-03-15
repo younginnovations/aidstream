@@ -14,8 +14,8 @@ class DocumentLink extends BaseForm
     public function buildForm()
     {
         $this
-            ->add('url', 'text', ['attr' => ['class' => 'form-control document_link'], 'help_block' => $this->addHelpText('Activity_DocumentLink-url')])
-            ->addSelect('format', $this->getCodeList('FileFormat', 'Activity'), 'Format', $this->addHelpText('Activity_DocumentLink-format'))
+            ->add('url', 'text', ['attr' => ['class' => 'form-control document_link'], 'help_block' => $this->addHelpText('Activity_DocumentLink-url'), 'required' => true])
+            ->addSelect('format', $this->getCodeList('FileFormat', 'Activity'), 'Format', $this->addHelpText('Activity_DocumentLink-format'), null, true)
             ->add(
                 'upload_text',
                 'static',

@@ -63,6 +63,7 @@ class ContactInfoController extends Controller
      * updates activity contact info
      * @param                           $id
      * @param Request                   $request
+     * @param ContactInfoRequestManager $contactInfoRequestManager
      * @return \Illuminate\Http\RedirectResponse
      */
     public function update($id, Request $request, ContactInfoRequestManager $contactInfoRequestManager)

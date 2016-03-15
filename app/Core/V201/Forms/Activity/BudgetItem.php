@@ -20,7 +20,8 @@ class BudgetItem extends BaseForm
                 [
                     'label'      => 'Code',
                     'wrapper'    => ['class' => 'form-group code_text codes'],
-                    'help_block' => $this->addHelpText('Activity_CountryBudgetItems_BudgetItem-non_iati')
+                    'help_block' => $this->addHelpText('Activity_CountryBudgetItems_BudgetItem-non_iati'),
+                    'required'   => true
                 ]
             )
             ->add(

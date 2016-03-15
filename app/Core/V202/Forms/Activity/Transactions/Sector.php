@@ -34,7 +34,8 @@ class Sector extends BaseForm
                     'choices'     => $this->getSectorCodeList(),
                     'empty_value' => 'Select one of the following option :',
                     'label'       => 'Sector',
-                    'wrapper'     => ['class' => 'form-group hidden sector_types sector_select']
+                    'wrapper'     => ['class' => 'form-group hidden sector_types sector_select'],
+                    'required'    => true
                 ]
             )
             ->add(
@@ -44,15 +45,17 @@ class Sector extends BaseForm
                     'choices'     => $this->getSectorCategoryCodeList(),
                     'empty_value' => 'Select one of the following option :',
                     'label'       => 'Sector',
-                    'wrapper'     => ['class' => 'form-group hidden sector_types sector_category_select']
+                    'wrapper'     => ['class' => 'form-group hidden sector_types sector_category_select'],
+                    'required'    => true
                 ]
             )
             ->add(
                 'sector_text',
                 'text',
                 [
-                    'label'   => 'Sector',
-                    'wrapper' => ['class' => 'form-group sector_types sector_text']
+                    'label'    => 'Sector',
+                    'wrapper'  => ['class' => 'form-group sector_types sector_text'],
+                    'required' => true
                 ]
             )
             ->addNarrative('sector_narrative')

@@ -13,6 +13,6 @@ class DefaultTiedStatus extends BaseForm
      */
     public function buildForm()
     {
-        $this->addSelect('default_tied_status', $this->getCodeList('TiedStatus', 'Activity'), 'Default Tied Status', $this->addHelpText('Activity_DefaultTiedStatus-code'));
+        $this->addSelect('default_tied_status', $this->getCodeList('TiedStatus', 'Activity'), 'Default Tied Status', $this->addHelpText('Activity_DefaultTiedStatus-code'), null, true);
     }
 }

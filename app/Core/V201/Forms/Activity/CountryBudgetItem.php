@@ -21,7 +21,8 @@ class CountryBudgetItem extends BaseForm
                     'choices'     => $this->getCodeList('BudgetIdentifierVocabulary', 'Activity'),
                     'empty_value' => 'Select one of the following option :',
                     'attr'        => ['class' => 'form-control vocabulary'],
-                    'help_block'  => $this->addHelpText('Activity_CountryBudgetItems-vocabulary')
+                    'help_block'  => $this->addHelpText('Activity_CountryBudgetItems-vocabulary'),
+                    'required'    => true
                 ]
             )
             ->addCollection('budget_item', 'Activity\BudgetItem', 'budget_item')

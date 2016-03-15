@@ -21,7 +21,7 @@ trait Result
      */
     public function addTypeList()
     {
-        return $this->addSelect('type', $this->getCodeList('ResultType', 'Activity'), null, $this->addHelpText('Activity_Result-type'));
+        return $this->addSelect('type', $this->getCodeList('ResultType', 'Activity'), null, $this->addHelpText('Activity_Result-type'), null, true);
     }
 
     /**

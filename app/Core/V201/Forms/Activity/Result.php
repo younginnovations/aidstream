@@ -22,7 +22,9 @@ class Result extends BaseForm
         $this
             ->addTypeList()
             ->addAggregationStatusList()
+            ->addData(['narrative_true' => true])
             ->addTitles()
+            ->addData(['narrative_true' => false])
             ->addDescriptions(['class' => 'description_narrative'])
             ->addIndicators()
             ->addAddMoreButton('add_indicator', 'indicator');
