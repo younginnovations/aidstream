@@ -59,7 +59,9 @@ class TransactionManager
         try {
             ($transactionId) ? $this->transactionRepo->update($transactionDetails, $transactionId) : $this->transactionRepo->create($transactionDetails, $activity);
             $this->logger->info(($transactionId) ? 'Activity Transaction Updated' : 'Activity Transaction added');
-            $this->dbLogger->activity(($transactionId) ? "activity.transaction_updated" : "activity.transaction_added", ['activity_id' => $activity->id,]);
+            $dbLoggerData = ['activity_id' => $activity->id];
+            (!$transactionId) ?: $dbLoggerData['transaction_id'] = $transactionId;
+            $this->dbLogger->activity(($transactionId) ? "activity.transaction_updated" : "activity.transaction_added", $dbLoggerData);
 
             return true;
         } catch (Exception $exception) {

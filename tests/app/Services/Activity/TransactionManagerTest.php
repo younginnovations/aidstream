@@ -38,7 +38,7 @@ class TransactionManagerTest extends AidStreamTestCase
         $this->logger->shouldReceive('info')->with('Activity Transaction Updated');
         $activity = m::mock(Activity::class);
         $activity->shouldReceive('getAttribute')->once()->with('id')->andReturn(1);
-        $this->dbLogger->shouldReceive('activity')->with('activity.transaction_updated', ['activity_id' => 1]);
+        $this->dbLogger->shouldReceive('activity')->with('activity.transaction_updated', ['activity_id' => 1, 'transaction_id' => 1]);
         $this->assertTrue($this->transactionManager->save([], $activity, 1));
     }
 

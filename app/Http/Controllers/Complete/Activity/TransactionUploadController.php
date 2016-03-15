@@ -82,9 +82,9 @@ class TransactionUploadController extends Controller
         }
 
         if (null !== $validator && $validator->fails()) {
-            $response = ['type' => 'danger', 'code' => ['update_failed', ['name' => 'Transaction']]];
+            $response = ['type' => 'danger', 'messages' => $validator->errors()->all()];
 
-            return redirect()->back()->withInput()->withErrors($validator)->withResponse($response);
+            return redirect()->back()->withInput()->withResponse($response);
         }
 
         $this->uploadTransactionManager->save($file, $activity);

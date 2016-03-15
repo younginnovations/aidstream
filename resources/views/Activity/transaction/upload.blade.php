@@ -9,15 +9,6 @@
             @include('includes.side_bar_menu')
             <div class="col-xs-9 col-md-9 col-lg-9 content-wrapper">
                 @include('includes.response')
-                @if(count($errors)>0)
-                    <div class="alert alert-danger">
-                        @foreach($errors->all() as $error)
-                            <ul>
-                                <li>{{$error}}</li>
-                            </ul>
-                        @endforeach
-                    </div>
-                @endif
                 <div class="panel-content-heading panel-title-heading">Upload Transaction for <span>{{$activity->IdentifierTitle}}</span>
                     <a href="{{ route('activity.transaction.index', $id) }}" class="btn btn-primary pull-right back-to-transaction">Back to Transaction List</a>
                 </div>
