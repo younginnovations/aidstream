@@ -1191,6 +1191,9 @@ label {
     margin-bottom: 0;
     clear: both; }
 
+.activity-element-toggle + .panel-body.panel-level-1 {
+  margin-bottom: 0 !important; }
+
 .panel-level-2 .panel-default > .panel-element-body {
   margin-bottom: 20px;
   margin-left: 20px; }
@@ -1709,10 +1712,13 @@ form > .add_to_collection[data-collection="legacy_data"] {
   float: left;
   clear: both; }
 
-.create-form .btn-form {
+.create-form .btn-form, .create-form .btn-cancel {
   position: absolute;
   bottom: 30px;
   left: 36px; }
+
+.create-form .btn-cancel {
+  left: 296px; }
 
 .modal-dialog {
   z-index: 10000; }
@@ -2435,6 +2441,23 @@ div[class*="panel-level-"] .panel > .panel-body {
     transform: translateY(-50%);
     width: 100%;
     padding: 0 10px; }
+
+.btn-cancel {
+  line-height: 37px;
+  margin-top: 24px;
+  margin-left: 20px;
+  width: 260px;
+  float: left;
+  background: none;
+  border: 2px solid #00A8FF;
+  color: #00A8FF;
+  -webkit-transition: background 0.1s ease-in-out;
+     -moz-transition: background 0.1s ease-in-out;
+       -o-transition: background 0.1s ease-in-out;
+          transition: background 0.1s ease-in-out; }
+  .btn-cancel:hover {
+    background: #038ED6;
+    color: #fff; }
 
 @media all and (max-width: 1030px) {
   .activity-status {
