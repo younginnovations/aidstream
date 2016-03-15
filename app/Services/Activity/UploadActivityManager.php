@@ -131,4 +131,13 @@ class UploadActivityManager
     {
         return $this->version->getExcel()->load($activityCsv);
     }
+
+    /**
+     * Returns the version object.
+     * @return Version
+     */
+    public function getVersion()
+    {
+        return $this->version;
+    }
 }

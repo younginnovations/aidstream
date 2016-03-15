@@ -23,5 +23,6 @@ return [
     'password_mismatch'        => 'Current Password doesn\'t match with the entered :name.',
     'empty_template'           => 'You have uploaded empty :name template.Please upload the template with data.',
     'header_mismatch'          => 'The header doesn\'t matched with the provided template. Please Check the headers.',
-    'message'                  => ':message'
+    'message'                  => ':message',
+    'not_uploaded'             => 'Some invalid activities (at row(s): :invalidRows) did not get saved while the valid ones (at row(s): :rows) have been saved.'
 ];
