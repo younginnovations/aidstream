@@ -21,7 +21,7 @@ class PolicyMarker extends V201PolicyMarker
             $activityData[] = [
                 '@attributes' => [
                     'vocabulary'     => $policyMarker['vocabulary'],
-                    'vocabulary-uri' => $policyMarker['vocabulary_uri'],
+                    'vocabulary-uri' => array_key_exists('vocabulary_uri', $policyMarker) ? $policyMarker['vocabulary_uri'] : '',
                     'code'           => $policyMarker['policy_marker'],
                     'significance'   => $policyMarker['significance']
                 ],
