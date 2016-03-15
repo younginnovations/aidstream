@@ -8,3 +8,8 @@ _ide_helper.php
 /public/files
 /bootstrap/cache
 /tests/_output
+/public/images/.DS_Store
+/public/css/.DS_Store
+/public/.DS_Store
+/public/css/.sass-cache
+
