@@ -11,6 +11,7 @@
             @include('includes.response')
             <div class="element-panel-heading">
                 <div>Activity Results</div>
+
                 @if(count($results) > 0)
                     <div class="panel-action-btn">
                         <a href="{{ route('activity.result.create', $id) }}" class="btn btn-primary pull-right add-new-btn">Add Another

@@ -42,7 +42,7 @@ class DocumentLinkController extends Controller
         $documentLink = $this->documentLinkManager->getDocumentLinkData($orgId);
         $form         = $this->documentLinkForm->editForm($documentLink, $orgId);
 
-        return view('Organization.documentLink.documentLink', compact('form', 'documentLink'));
+        return view('Organization.documentLink.documentLink', compact('form', 'documentLink', 'orgId'));
     }
 
 

@@ -10,6 +10,10 @@
                 @include('includes.response')
                 <div class="panel-content-heading">
                     <div>Recipient Region Budget</div>
+                    <div class="pull-right panel-action-btn">
+                        <a href="{{route('organization.show', $orgId)}}" class="btn btn-primary">View Organization Data
+                        </a>
+                    </div>
                 </div>
                 <div class="col-xs-8 col-md-8 col-lg-8 element-content-wrapper">
                     <div class="panel panel-default">

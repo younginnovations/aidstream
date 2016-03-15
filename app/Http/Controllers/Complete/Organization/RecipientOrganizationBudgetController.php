@@ -45,7 +45,7 @@ class RecipientOrganizationBudgetController extends Controller
             $organizationId
         );
 
-        return view('Organization.recipientOrgBudget.edit', compact('form', 'recipientCountryBudget'));
+        return view('Organization.recipientOrgBudget.edit', compact('form', 'recipientCountryBudget','organizationId'));
     }
 
 

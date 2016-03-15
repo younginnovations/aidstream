@@ -49,7 +49,7 @@ class TotalExpenditureController extends Controller
         $totalExpenditure = $this->totalExpenditureManager->getOrganizationTotalExpenditureData($orgId);
         $form             = $this->totalExpenditureForm->editForm($totalExpenditure, $orgId);
 
-        return view('Organization.totalExpenditure.edit', compact('form', 'totalExpenditure'));
+        return view('Organization.totalExpenditure.edit', compact('form', 'totalExpenditure','orgId'));
     }
 
     /**

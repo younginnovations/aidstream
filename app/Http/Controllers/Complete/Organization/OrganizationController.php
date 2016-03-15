@@ -154,7 +154,7 @@ class OrganizationController extends Controller
         $data         = $organization->reporting_org;
         $form         = $this->orgReportingOrgFormCreator->editForm($data, $organization);
 
-        return view('Organization.identifier.edit', compact('form', 'organization'));
+        return view('Organization.identifier.edit', compact('form', 'organization','id'));
     }
 
     /**

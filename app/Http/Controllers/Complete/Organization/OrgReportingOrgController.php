@@ -51,7 +51,7 @@ class OrgReportingOrgController extends Controller
         $reportingOrganization = $organization->reporting_org;
         $form                  = $this->orgReportingOrgFormCreator->editForm($reportingOrganization, $organization);
 
-        return view('Organization.reportingOrg.edit', compact('form', 'organization', 'reportingOrganization'));
+        return view('Organization.reportingOrg.edit', compact('form', 'organization', 'reportingOrganization','organizationId'));
     }
 
     /**
