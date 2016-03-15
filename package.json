@@ -24,6 +24,7 @@
   "author": "",
   "license": "BSD-2-Clause",
   "devDependencies": {
+    "gulp": "^3.9.1",
     "gulp-uncss": "^1.0.4"
   }
 }

@@ -36,7 +36,7 @@
                 <li><img src="images/ic-org-apt.png" alt=""></li>
             </ul>
             {{--<p>387 organisations have published their aid data. <a href="{{ url('/who-are-using') }}">{{ $organizationCount }}</a> have done it through AidStream</p>--}}
-            <p><a href="{{ url('/who-are-using') }}">{{ $organizationCount }}</a> organisations are using AidStream.</p>
+            <p><a href="{{ url('/who-is-using') }}">{{ $organizationCount }}</a> organisations are using AidStream.</p>
         </div>
     </div>
     <div class="information-wrapper bottom-line">
@@ -114,5 +114,19 @@
 @include('includes.footer')
 <script src="js/jquery.js"></script>
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
+<script>
+    $(document).ready(function () {
+        function hamburgerMenu() {
+            if ($(window).width() < 600) {
+                //responsive menu
+                $('.navbar-toggle').click(function(){
+                    $('.navbar-collapse').toggleClass('in');
+                    $(this).toggleClass('collapsed');
+                });
+            }
+        }
+        hamburgerMenu();
+    });
+</script>
 </body>
 </html>

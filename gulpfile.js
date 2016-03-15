@@ -18,13 +18,12 @@ gulp.task('sass', function () {
 
 /*
  * Watch scss files for changes & recompile
- * Watch html/md files, run jekyll & reload BrowserSync
  */
 gulp.task('watch', function () {
     gulp.watch('./resources/assets/app.scss', ['sass']);
 });
 
-/*ation-
+/*
  * Default task, running just `gulp` will compile the sass,
  */
 gulp.task('default', ['sass', 'watch']);

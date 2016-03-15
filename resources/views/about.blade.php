@@ -62,5 +62,19 @@
 <link rel="stylesheet" href="css/style.css">
 <script src="js/jquery.js"></script>
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
+<script>
+    $(document).ready(function () {
+        function hamburgerMenu() {
+            if ($(window).width() < 600) {
+                //responsive menu
+                $('.navbar-toggle').click(function(){
+                    $('.navbar-collapse').toggleClass('in');
+                    $(this).toggleClass('collapsed');
+                });
+            }
+        }
+        hamburgerMenu();
+    });
+</script>
 </body>
 </html>

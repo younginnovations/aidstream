@@ -12,7 +12,7 @@
             <div class="col-md-12">
                 <ul>
                     <li><a href="{{ url('/about') }}">About</a></li>
-                    <li><a href="{{ url('/who-are-using') }}">Who's using</a></li>
+                    <li><a href="{{ url('/who-is-using') }}">Who's using</a></li>
                     <!--<li><a href="#">Snapshot</a></li>-->
                 </ul>
                 <ul>
