@@ -141,10 +141,16 @@ class ActivityUploadController extends Controller
         $validator = $csvImportValidator->validator->isValidActivityCsv($file, $identifiers);
 
         if ($validator->fails()) {
-            $failedRows         = $validator->failures();
-            $uploadedActivities = $this->uploadActivityManager->getVersion()->getExcel()->load($file)->toArray();
-            $validActivities    = array_diff_key($uploadedActivities, $failedRows);
-            $filename           = 'temporary-' . $this->organizationId . 'activity';
+            $failedRows           = $validator->failures();
+            $uploadedActivities   = $this->uploadActivityManager->getVersion()->getExcel()->load($file)->toArray();
+            $validActivities      = array_keys(array_diff_key($uploadedActivities, $failedRows));
+            $validActivityIndices = [];
+
+            foreach ($validActivities as $validActivity) {
+                $validActivityIndices[] = $validActivity + 1;
+            }
+
+            $filename = 'temporary-' . $this->organizationId . 'activity';
 
             $this->temporarilyStoreCsvFor($validActivities, $filename);
 
@@ -154,7 +160,7 @@ class ActivityUploadController extends Controller
                 return redirect()->back()->withResponse(['type' => 'warning', 'code' => ['save_failed', ['name' => 'Activity']]]);
             }
 
-            return $this->invalidActivities($validator, $validActivities, $failedRows);
+            return $this->invalidActivities($validator, $validActivityIndices, $failedRows);
         }
 
         $check = $this->uploadActivityManager->save($file, $organization, $defaultFieldValues);
@@ -212,23 +218,21 @@ class ActivityUploadController extends Controller
         $uploadedActivities = [];
 
         foreach ($validActivities as $index => $activity) {
-            $uploadedActivities[] = $index + 1;
+            $uploadedActivities[] = $activity;
         }
 
-        $difference = array_diff_key(array_values($validActivities), array_values($failedRows));
+        $difference = array_diff_key(array_values($uploadedActivities), array_values($failedRows));
         $messages   = [];
         $messages[] = sprintf(
             'Some invalid activities (at row(s): %s) did not get saved while the valid ones (at row(s): %s) have been saved.',
             implode(',', $failedRows),
-            empty(!$difference) ? implode(',', $failedRows) : ''
+            !empty($difference) ? implode(',', $uploadedActivities) : ''
         );
+
         $messages   = array_merge($messages, $validator->errors()->all());
         $response   = ['type' => 'warning', 'messages' => $messages];
 
         return redirect()->back()->withInput()->withResponse($response);
-//            $response = ['type' => 'danger', 'messages' => $validator->errors()->all()];
-
-//            return redirect()->back()->withInput()->withResponse($response);
     }
 
     /**
