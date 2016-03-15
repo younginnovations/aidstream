@@ -15,8 +15,8 @@
                         <div class="element-panel-heading-info"><span>{{$activity->IdentifierTitle}}</span></div>
                     </div>
                     @if(count($activity->getTransactions()) > 0)
-                        <ul class="add-dropdown pull-right">
-                            <li class="dropdown">
+                        <ul class="add-dropdown">
+                            <li class="pull-right dropdown">
                                 <div><span class="btn btn-primary dropdown-toggle add-new-btn" data-toggle="dropdown">Add New
                                     Transaction<span class="caret"></span></span></div>
                                 <ul class="dropdown-menu" role="menu">
@@ -56,6 +56,7 @@
                                             <td>{{ $transaction['value'][0]['amount'] }}</td>
                                             <td>{{ formatDate($transaction['transaction_date'][0]['date']) }}</td>
                                             <td>
+                                                <a class="view" href="{{ route('activity.transaction.show', [$activity->id, $transaction['id']]) }}"></a>
                                                 <a class="edit"
                                                    href="{{ route('activity.transaction.edit', [$activity->id, $transaction['id']]) }}">Edit</a>
                                                 <a class="delete"

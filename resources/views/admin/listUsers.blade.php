@@ -13,10 +13,14 @@
                 @include('includes.response')
                 @include('includes.breadcrumb')
                 <div class="panel panel-default">
-                    <div class="panel-content-heading">User List
+                    <div class="element-panel-heading">
+                        <div>User List</div>
                         @if(count($users) > 0)
-                            <a href="{{ route('admin.register-user') }}" class="btn btn-primary add-new-btn pull-right">Add
-                                a user</a>
+                            <div>
+                                <a href="{{ route('admin.register-user') }}"
+                                   class="btn btn-primary add-new-btn pull-right">Add
+                                    a user</a>
+                            </div>
                         @endif
                     </div>
                     @if(count($users) > 0)
@@ -32,11 +36,12 @@
                                 </thead>
                                 <tbody>
                                 @foreach($users as $key => $value)
-                                    <tr class="clickable-row" data-href="{{ route('admin.view-profile', $value->id) }}">
+                                    <tr class="clickable-row" data-href="{{ route('admin.view-profile', $value->id)}}">
                                         <td>{{ $key+1 }}</td>
                                         <td>{{ $value->first_name}} {{$value->last_name}}</td>
                                         <td>{{$value->username}}</td>
                                         <td>
+                                            <a href="{{ route('admin.view-profile', $value->id) }}" class="view"></a>
                                             <a href="{{ url(sprintf('organization-user/%s/delete', $value->id)) }}"
                                                class="delete">Delete</a>
                                         </td>

@@ -13,16 +13,18 @@
                 @include('includes.response')
                 @include('includes.breadcrumb')
                 <div class="panel panel-default">
-                    <div class="panel-content-heading">Documents</div>
+                    <div class="element-panel-heading">
+                        <div>Documents</div>
+                    </div>
                     <div class="panel-body">
                         @if(count($documents) > 0)
                             <table class="table table-striped">
                                 <thead>
                                 <tr>
                                     <th width="30px">S.N.</th>
-                                    <th width="70%">Document Link</th>
-                                    <th>Activity Identifiers</th>
-                                    <th>Activity</th>
+                                    <th width="60%">Document Link</th>
+                                    <th width="20%">Activity Identifiers</th>
+                                    <th>Actions</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -48,14 +50,15 @@
                                         </td>
                                         <td>
                                             @if (!$identifiers)
-                                                <a href="{{ route('document.delete', $document['id']) }}" class="delete">Delete</a>
+                                                <a href="{{ route('document.delete', $document['id']) }}"
+                                                   class="delete">Delete</a>
                                             @endif
                                         </td>
                                     </tr>
                                 @endforeach
                                 </tbody>
                             </table>
-                            @else
+                        @else
                             <div class="text-center no-data no-document-data">
                                 You haven’t added any document yet.
                             </div>
