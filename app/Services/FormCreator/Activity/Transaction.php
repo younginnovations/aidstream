@@ -22,15 +22,15 @@ class Transaction
 
     public function createForm($activityId)
     {
-        return $this->displayForm('POST', sprintf('activity/%d/transaction', $activityId));
+        return $this->displayForm('POST', sprintf('activity/%d/transaction', $activityId), null, $activityId);
     }
 
     public function editForm($activity, $transactionId, $transactionDetails)
     {
-        return $this->displayForm('PUT', route('activity.transaction.update', [$activity->id, $transactionId]), $transactionDetails);
+        return $this->displayForm('PUT', route('activity.transaction.update', [$activity->id, $transactionId]), $transactionDetails,$activity->id);
     }
 
-    public function displayForm($method, $url, $data = null)
+    public function displayForm($method, $url, $data = null, $activityId = null)
     {
         $model['transaction'][0] = $data;
 
@@ -41,6 +41,16 @@ class Transaction
                 'model'  => $model,
                 'url'    => $url
             ]
-        )->add((null !== $data) ? 'Update' : 'Create', 'submit', ['attr' => ['class' => 'btn btn-submit btn-form']]);
+        )->add((null !== $data) ? 'Update' : 'Create', 'submit', ['attr' => ['class' => 'btn btn-submit btn-form']])
+            ->add('Cancel', 'static', [
+                'tag'     => 'a',
+                'label'   => false,
+                'value'   => 'Cancel',
+                'attr'    => [
+                    'class' => 'btn btn-cancel',
+                    'href'  => route('activity.transaction.index',$activityId)
+                ],
+                'wrapper' => false
+            ]);
     }
 }

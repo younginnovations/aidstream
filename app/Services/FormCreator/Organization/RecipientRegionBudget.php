@@ -47,6 +47,16 @@ class RecipientRegionBudget
                 'model'  => $modal,
                 'url'    => route('organization.recipient-region-budget.update', [$organizationId, 0])
             ]
-        )->add('Save', 'submit', ['attr' => ['class' => 'btn btn-submit btn-form']]);
+        )->add('Save', 'submit', ['attr' => ['class' => 'btn btn-submit btn-form']])
+            ->add('Cancel', 'static', [
+                'tag'     => 'a',
+                'label'   => false,
+                'value'   => 'Cancel',
+                'attr'    => [
+                    'class' => 'btn btn-cancel',
+                    'href'  => route('organization.show', $organizationId)
+                ],
+                'wrapper' => false
+            ]);
     }
 }
