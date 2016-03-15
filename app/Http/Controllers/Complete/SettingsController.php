@@ -78,7 +78,7 @@ class SettingsController extends Controller
 
         $model = [];
         if (isset($this->settings->default_field_groups)) {
-            $version                       = $this->settings->version;
+            $version = $this->settings->version;
 //            $model['version_form']         = [['version' => $version]];
             $model['publishing_type']      = [['publishing' => $this->settings->publishing_type]];
             $model['registry_info']        = $this->settings->registry_info;
@@ -132,37 +132,29 @@ class SettingsController extends Controller
      */
     public function update($id, SettingsRequestManager $request)
     {
-        $input = Input::all();
-        try {
-            $newPublishingType = $input['publishing_type'][0]['publishing'];
-            $oldIdentifier     = $this->organization->reporting_org[0]['reporting_organization_identifier'];
-            $settings          = $this->settingsManager->getSettings($this->organization->id);
-            $publishingType    = $settings->publishing_type;
-            $activities        = $this->activityManager->getActivities($this->organization->id);
-            if ($publishingType != $newPublishingType) {
-                $publishedFiles = $this->activityManager->getActivityPublishedFiles(Session::get('org_id'));
-                if (count($publishedFiles)) {
-                    $this->generateNewFiles($newPublishingType, $activities);
-                }
+        $input             = Input::all();
+        $newPublishingType = $input['publishing_type'][0]['publishing'];
+        $oldIdentifier     = $this->organization->reporting_org[0]['reporting_organization_identifier'];
+        $settings          = $this->settingsManager->getSettings($this->organization->id);
+        $publishingType    = $settings->publishing_type;
+        $activities        = $this->activityManager->getActivities($this->organization->id);
+        if ($publishingType != $newPublishingType) {
+            $publishedFiles = $this->activityManager->getActivityPublishedFiles(Session::get('org_id'));
+            if (count($publishedFiles)) {
+                $this->generateNewFiles($newPublishingType, $activities);
             }
-            $reportingOrgIdentifier = $input['reporting_organization_info'][0]['reporting_organization_identifier'];
-            foreach ($activities as $activity) {
-                $status          = $activity['published_to_registry'];
-                $otherIdentifier = (array) $activity->other_identifier;
-                if ($status == 1 && !in_array(["reference" => $oldIdentifier, "type" => "B1", 'owner_org' => []], $otherIdentifier) && ($oldIdentifier !== $reportingOrgIdentifier)) {
-                    $otherIdentifier[] = ['reference' => $oldIdentifier, 'type' => 'B1', 'owner_org' => []];
-                    $this->otherIdentifierManager->update(['other_identifier' => $otherIdentifier], $activity);
-                }
+        }
+        $reportingOrgIdentifier = $input['reporting_organization_info'][0]['reporting_organization_identifier'];
+        foreach ($activities as $activity) {
+            $status          = $activity['published_to_registry'];
+            $otherIdentifier = (array) $activity->other_identifier;
+            if ($status == 1 && !in_array(["reference" => $oldIdentifier, "type" => "B1", 'owner_org' => []], $otherIdentifier) && ($oldIdentifier !== $reportingOrgIdentifier)) {
+                $otherIdentifier[] = ['reference' => $oldIdentifier, 'type' => 'B1', 'owner_org' => []];
+                $this->otherIdentifierManager->update(['other_identifier' => $otherIdentifier], $activity);
             }
-            $this->settingsManager->updateSettings($input, $this->organization, $this->settings);
-        } catch (Exception $e) {
-            $this->loggerInterface->error(
-                sprintf('Settings could no be updated due to %s', $e->getMessage()),
-                [
-                    'settings' => $input,
-                    'trace'    => $e->getTraceAsString()
-                ]
-            );
+        }
+        $result = $this->settingsManager->updateSettings($input, $this->organization, $this->settings);
+        if (!$result) {
             $response = ['type' => 'danger', 'code' => ['update_failed', ['name' => 'Settings']]];
 
             return redirect()->back()->withResponse($response);
@@ -220,7 +212,7 @@ class SettingsController extends Controller
      */
     protected function generateXmlIfDoesNotExist($publishedActivity, $activity)
     {
-        $filePath = config('xmlFiles.xml-file') . $publishedActivity;
+        $filePath = config('filesystems.xml-path') . $publishedActivity;
         if (!file_exists($filePath)) {
             $this->settingsManager->generateXml($activity);
         }

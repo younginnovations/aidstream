@@ -60,11 +60,15 @@ class ResultManager
     {
         try {
             $this->database->beginTransaction();
+            $resultExists = $activityResult->exists;
             $this->resultRepo->update($resultData, $activityResult);
             $this->database->commit();
-            $this->logger->info('Activity Result updated!', ['for' => $activityResult->result]);
+            $this->logger->info(
+                sprintf('Activity Result %s!', $resultExists ? 'updated' : 'saved'),
+                ['for' => $activityResult->result]
+            );
             $this->dbLogger->activity(
-                "activity.result_updated",
+                sprintf("activity.result_%s", $resultExists ? 'updated' : 'saved'),
                 [
                     'activity_id'     => $activityResult->activity_id,
                     'organization'    => $this->auth->user()->organization->name,
@@ -76,7 +80,7 @@ class ResultManager
         } catch (Exception $exception) {
             $this->database->rollback();
             $this->logger->error(
-                sprintf('Activity Result could not be updated due to %s', $exception->getMessage()),
+                sprintf('Activity Result could not be %s due to %s', $resultExists ? 'updated' : 'saved', $exception->getMessage()),
                 [
                     'result' => $resultData,
                     'trace'  => $exception->getTraceAsString()

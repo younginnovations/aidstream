@@ -15,7 +15,7 @@ return [
     |
     */
 
-    'default' => 'local',
+    'default'                    => 'local',
     /*
     |--------------------------------------------------------------------------
     | Default Cloud Filesystem Disk
@@ -27,7 +27,7 @@ return [
     |
     */
 
-    'cloud'   => 's3',
+    'cloud'                      => 's3',
     /*
     |--------------------------------------------------------------------------
     | Filesystem Disks
@@ -39,11 +39,11 @@ return [
     |
     */
 
-    'disks'   => [
+    'disks'                      => [
 
         'local'     => [
             'driver' => 'local',
-            'root'   => public_path() . '/uploads/files',
+            'root'   => public_path('/uploads/files'),
         ],
         's3'        => [
             'driver' => 's3',
@@ -63,4 +63,18 @@ return [
         ],
 
     ],
+    /**
+     * Path where all the generated xml files are stored in Aidstream.
+     */
+    'xml'                        => 'xml',
+    'xml-path'                   => public_path('uploads/files/xml/'),
+    /**
+     * Path where all the uploaded documents are stored in Aidstream.
+     */
+    'documents'                  => 'documents',
+    /**
+     * Api URL for the IATI Registry.
+     */
+    'iati_registry_api_base_url' => 'http://iatiregistry.org/api/',
+
 ];

@@ -2,12 +2,16 @@
 
 use App\Core\Version;
 use App\Core\V201\Repositories\SettingsRepository;
+use App\Models\Organization\Organization;
 use App\Models\Settings;
 use Test\AidStreamTestCase;
 use Mockery as m;
-use App\Models\Activity\Activity;
 use App\Services\Activity\ActivityManager;
 use App\Services\Organization\OrganizationManager;
+use Illuminate\Database\DatabaseManager;
+use Illuminate\Contracts\Auth\Guard;
+use Psr\Log\LoggerInterface;
+use Illuminate\Contracts\Logging\Log;
 
 class SettingsManagerTest extends AidStreamTestCase
 {
@@ -18,6 +22,10 @@ class SettingsManagerTest extends AidStreamTestCase
     protected $setting;
     protected $activityManager;
     protected $organizationManager;
+    protected $logger;
+    protected $dbLogger;
+    protected $auth;
+    protected $dbManager;
 
     public function SetUp()
     {
@@ -28,7 +36,11 @@ class SettingsManagerTest extends AidStreamTestCase
         $this->activityManager     = m::mock(ActivityManager::class);
         $this->organizationManager = m::mock(OrganizationManager::class);
         $this->setting             = m::mock(Settings::class);
-        $this->settingManager      = new SettingsManager($this->version, $this->activityManager, $this->organizationManager);
+        $this->logger              = m::mock(LoggerInterface::class);
+        $this->dbLogger            = m::mock(Log::class);
+        $this->auth                = m::mock(Guard::class);
+        $this->dbManager           = m::mock(DatabaseManager::class);
+        $this->settingManager      = new SettingsManager($this->version, $this->activityManager, $this->organizationManager, $this->dbManager, $this->auth, $this->dbLogger, $this->logger);
     }
 
     public function testItShouldReturnSettingsDataWithSpecificOrganizationId()
@@ -45,14 +57,24 @@ class SettingsManagerTest extends AidStreamTestCase
 
     public function testItShouldUpdateSetting()
     {
-        $this->settingRepo->shouldReceive('updateSettings')->once()->with('testSetting', 1, 'settingsData')->andReturn(null);
-        $this->assertNull($this->settingManager->updateSettings('testSetting', 1, 'settingsData'));
-    }
-
-    public function testItShouldGenerateXml()
-    {
-        $this->settingRepo->shouldReceive('updateSettings')->once()->with('testSetting', 1, 'settingsData')->andReturn(null);
-        $this->assertNull($this->settingManager->updateSettings('testSetting', 1, 'settingsData'));
+        $this->dbManager->shouldReceive('beginTransaction');
+        $organizationModel = m::mock(Organization::class);
+        $organizationModel->shouldReceive('getAttribute')->once()->with('name')->andReturn('organizationName');
+        $organizationModel->shouldReceive('getAttribute')->once()->with('id')->andReturn(1);
+        $user = m::mock('App\User');
+        $user->shouldReceive('getAttribute')->twice()->with('organization')->andReturn($organizationModel);
+        $this->auth->shouldReceive('user')->twice()->andReturn($user);
+        $this->settingRepo->shouldReceive('updateSettings')->once()->with('testSetting', 1, 'settingsData')->andReturn(true);
+        $this->logger->shouldReceive('info')->once()->with('Settings Updated Successfully.');
+        $this->dbLogger->shouldReceive('activity')->once()->with(
+            'activity.settings_updated',
+            [
+                'organization'    => 'organizationName',
+                'organization_id' => 1
+            ]
+        );
+        $this->dbManager->shouldReceive('commit');
+        $this->assertTrue($this->settingManager->updateSettings('testSetting', 1, 'settingsData'));
     }
 
     public function tearDown()

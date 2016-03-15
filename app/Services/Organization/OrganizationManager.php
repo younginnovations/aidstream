@@ -6,21 +6,37 @@ use App\Models\Organization\Organization;
 use App\Models\Organization\OrganizationData;
 use App\Models\OrganizationPublished;
 use App\Models\Settings;
+use Illuminate\Contracts\Auth\Guard;
+use Illuminate\Contracts\Logging\Log as Logger;
 
 class OrganizationManager
 {
     protected $repo;
+    /**
+     * @var Logger
+     */
+    protected $logger;
+    /**
+     * @var Guard
+     */
+    protected $auth;
 
     /**
-     * @param Version $version
+     * @param Version               $version
+     * @param Guard                 $auth
+     * @param OrganizationData      $orgData
+     * @param OrganizationPublished $orgPublished
+     * @param Logger                $logger
      */
-    public function __construct(Version $version, OrganizationData $orgData, OrganizationPublished $orgPublished)
+    public function __construct(Version $version, Guard $auth, OrganizationData $orgData, OrganizationPublished $orgPublished, Logger $logger)
     {
         $this->version      = $version;
         $this->repo         = $version->getOrganizationElement()->getRepository();
         $this->orgElement   = $version->getOrganizationElement();
         $this->orgData      = $orgData;
         $this->orgPublished = $orgPublished;
+        $this->logger       = $logger;
+        $this->auth         = $auth;
     }
 
     /**
@@ -89,7 +105,22 @@ class OrganizationManager
      */
     public function updateStatus(array $input, OrganizationData $organizationData)
     {
-        return $this->repo->updateStatus($input, $organizationData);
+        $result = $this->repo->updateStatus($input, $organizationData);
+        if ($result) {
+            $organizationWorkflow = $input['status'];
+            $statusLabel          = ['Completed', 'Verified', 'Published'];
+            $status               = $statusLabel[$organizationWorkflow - 1];
+            $this->logger->info(sprintf('Organization has been %s', $status));
+            $this->logger->activity(
+                "organization.organization_status_changed",
+                [
+                    'name'   => $this->auth->user()->organization->name,
+                    'status' => $status
+                ]
+            );
+        }
+
+        return $result;
     }
 
     /**

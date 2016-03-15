@@ -269,9 +269,9 @@ class ActivityController extends Controller
     public function destroy($id)
     {
         $activity = $this->activityManager->getActivityData($id);
-        $response = ($activity->delete($activity)) ? ['type' => 'success', 'code' => ['deleted', ['name' => 'Activity']]] : [
+        $response = ($this->activityManager->destroy($activity)) ? ['type' => 'success', 'code' => ['deleted', ['name' => 'Activity']]] : [
             'type' => 'danger',
-            'code' => ['delete_failed', ['name' => 'activity']]
+            'code' => ['delete_failed', ['name' => 'Activity']]
         ];
 
         return redirect()->back()->withResponse($response);
@@ -338,7 +338,7 @@ class ActivityController extends Controller
     {
         $activityPublishedFiles = $this->activityManager->getActivityPublishedFiles($this->organization_id);
         $settings               = $this->settingsManager->getSettings($this->organization_id);
-        $api_url                = config('xmlFiles.iati_registry_api_base_url');
+        $api_url                = config('filesystems.iati_registry_api_base_url');
         $apiCall                = new CkanClient($api_url, $settings['registry_info'][0]['api_id']);
 
         try {
@@ -441,7 +441,12 @@ class ActivityController extends Controller
         $newItem->identifier            = ["activity_identifier" => $input['activity_identifier'], "iati_identifier_text" => $input['iati_identifier_text']];
         $newItem->activity_workflow     = 0;
         $newItem->published_to_registry = 0;
-        $newItem->save();
+        $result                         = $this->activityManager->duplicateActivityAction($newItem);
+        if (!$result) {
+            $response = ['type' => 'danger', 'code' => ['duplication_failed', []]];
+
+            return redirect()->back()->withInput()->withResponse($response);
+        }
         $response = ['type' => 'success', 'code' => ['duplicated', ['url' => route('activity.show', [$newItem->id])]]];
 
         return redirect('/activity')->withResponse($response);

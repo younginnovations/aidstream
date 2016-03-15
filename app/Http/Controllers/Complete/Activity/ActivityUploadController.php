@@ -36,7 +36,7 @@ class ActivityUploadController extends Controller
     protected $activityManager;
 
     /**
-     * @var
+     * id of active organization
      */
     protected $organizationId;
 
@@ -216,9 +216,19 @@ class ActivityUploadController extends Controller
         }
 
         $difference = array_diff_key(array_values($validActivities), array_values($failedRows));
-        $response   = ['type' => 'warning', 'code' => ['not_uploaded', ['rows' => empty(!$difference) ? implode(',', $failedRows) : '', 'invalidRows' => implode(',', $failedRows)]]];
+        $messages   = [];
+        $messages[] = sprintf(
+            'Some invalid activities (at row(s): %s) did not get saved while the valid ones (at row(s): %s) have been saved.',
+            implode(',', $failedRows),
+            empty(!$difference) ? implode(',', $failedRows) : ''
+        );
+        $messages   = array_merge($messages, $validator->errors()->all());
+        $response   = ['type' => 'warning', 'messages' => $messages];
 
-        return redirect()->back()->withInput()->withErrors($validator)->withResponse($response);
+        return redirect()->back()->withInput()->withResponse($response);
+//            $response = ['type' => 'danger', 'messages' => $validator->errors()->all()];
+
+//            return redirect()->back()->withInput()->withResponse($response);
     }
 
     /**
