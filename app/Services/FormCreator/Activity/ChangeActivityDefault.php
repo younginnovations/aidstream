@@ -23,18 +23,28 @@ class ChangeActivityDefault
 
     /**
      * @param $data
-     * @param $orgId
+     * @param $activityId
      * @return edit form
      */
-    public function edit($data, $orgId)
+    public function edit($data, $activityId)
     {
         return $this->formBuilder->create(
             $this->formPath,
             [
                 'method' => 'PUT',
                 'model'  => $data[0],
-                'url'    => route('update-activity-default', [$orgId])
+                'url'    => route('update-activity-default', [$activityId])
             ]
-        )->add('Save', 'submit', ['attr' => ['class' => 'btn btn-submit btn-form']]);
+        )->add('Save', 'submit', ['attr' => ['class' => 'btn btn-submit btn-form']])
+            ->add('Cancel', 'static', [
+                'tag'     => 'a',
+                'label'   => false,
+                'value'   => 'Cancel',
+                'attr'    => [
+                    'class' => 'btn btn-cancel',
+                    'href'  => route('activity.show', $activityId)
+                ],
+                'wrapper' => false
+            ]);
     }
 }

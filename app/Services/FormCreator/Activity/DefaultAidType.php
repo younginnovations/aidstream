@@ -49,6 +49,16 @@ class DefaultAidType
                 'model'  => $model,
                 'url'    => route('activity.default-aid-type.update', [$activityId, 0])
             ]
-        )->add('Save', 'submit', ['attr' => ['class' => 'btn btn-submit btn-form']]);
+        )->add('Save', 'submit', ['attr' => ['class' => 'btn btn-submit btn-form']])
+            ->add('Cancel', 'static', [
+                'tag'     => 'a',
+                'label'   => false,
+                'value'   => 'Cancel',
+                'attr'    => [
+                    'class' => 'btn btn-cancel',
+                    'href'  => route('activity.show', $activityId)
+                ],
+                'wrapper' => false
+            ]);   
     }
 }

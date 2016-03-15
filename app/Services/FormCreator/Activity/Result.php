@@ -49,6 +49,17 @@ class Result
                 'model'  => $modal,
                 'url'    => route('activity.result.update', [$activityId, $data ? $data->id : 0])
             ]
-        )->add('Save', 'submit', ['attr' => ['class' => 'btn btn-submit btn-form']]);
+        )->add('Save', 'submit', ['attr' => ['class' => 'btn btn-submit btn-form']])
+         ->add('Cancel', 'static', [
+                'tag'     => 'a',
+                'label'   => false,
+                'value'   => 'Cancel',
+                'attr'    => [
+                    'class' => 'btn btn-cancel',
+                    'href'  => route('activity.result.index', $activityId)
+                ],
+                'wrapper' => false
+            ]);
+
     }
 }

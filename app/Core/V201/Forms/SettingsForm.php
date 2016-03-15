@@ -40,6 +40,16 @@ class SettingsForm extends BaseForm
                 [
                     'attr' => ['class' => 'btn btn-submit btn-form']
                 ]
-            );
+            ) ->add('Cancel', 'static', [
+                'tag'     => 'a',
+                'label'   => false,
+                'value'   => 'Cancel',
+                'attr'    => [
+                    'class' => 'btn btn-cancel',
+                    'href'  => route('activity.index')
+                ],
+                'wrapper' => false
+            ]);
+
     }
 }

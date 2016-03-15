@@ -49,7 +49,18 @@ class Identifier
                 'model'  => $data,
                 'url'    => route('activity.iati-identifier.update', [$activityId, 0])
             ]
-        )->add('id', 'hidden', ['value' => $activityId])->add('Save', 'submit', ['attr' => ['class' => 'btn btn-submit btn-form']]);
+        )->add('id', 'hidden', ['value' => $activityId])
+            ->add('Save', 'submit', ['attr' => ['class' => 'btn btn-submit btn-form']])
+            ->add('Cancel', 'static', [
+                'tag'     => 'a',
+                'label'   => false,
+                'value'   => 'Cancel',
+                'attr'    => [
+                    'class' => 'btn btn-cancel',
+                    'href'  => route('activity.show', $activityId)
+                ],
+                'wrapper' => false
+            ]);
     }
 
     /**
