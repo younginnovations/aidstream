@@ -695,14 +695,16 @@ label {
         border-bottom: 0; }
       .navbar-admin-dropdown .dropdown-menu li a, .add-new-activity .dropdown-menu li a, .add-dropdown .dropdown-menu li a {
         line-height: 42px !important;
-        display: block; }
+        display: block;
+        color: #777;
+        padding: 5px 15px 5px 25px; }
         .navbar-admin-dropdown .dropdown-menu li a:hover, .add-new-activity .dropdown-menu li a:hover, .add-dropdown .dropdown-menu li a:hover {
           background-color: #484848 !important;
           color: #fff !important; }
 
 .navbar-admin-dropdown li > span {
   display: inline-block;
-  padding: 20px 0 20px 15px; }
+  padding: 20px 10px 20px 15px; }
 
 .nav.navbar-admin-dropdown > li {
   float: left; }
@@ -2044,6 +2046,10 @@ form > .add_to_collection[data-collection="legacy_data"] {
   overflow: hidden; }
   .content-wrapper .panel-profile .panel-body {
     margin-bottom: 50px; }
+  .content-wrapper .panel-profile .form-group {
+    padding-left: 0; }
+  .content-wrapper .panel-profile form > div:last-child {
+    padding-left: 0; }
 
 .panel-associated-organization {
   padding: 0 36px 40px; }
@@ -2325,6 +2331,24 @@ div[class*="panel-level-"] .panel > .panel-body {
   -webkit-border-radius: 4px;
           border-radius: 4px;
   width: 240px !important; }
+  .add-dropdown .dropdown-menu li:first-child a:hover {
+    -webkit-border-top-left-radius: 4px;
+            border-top-left-radius: 4px;
+    -webkit-border-top-right-radius: 4px;
+            border-top-right-radius: 4px;
+    -webkit-border-bottom-left-radius: 0;
+            border-bottom-left-radius: 0;
+    -webkit-border-bottom-right-radius: 0;
+            border-bottom-right-radius: 0; }
+  .add-dropdown .dropdown-menu li:last-child a:hover {
+    -webkit-border-top-left-radius: 0;
+            border-top-left-radius: 0;
+    -webkit-border-top-right-radius: 0;
+            border-top-right-radius: 0;
+    -webkit-border-bottom-left-radius: 4px;
+            border-bottom-left-radius: 4px;
+    -webkit-border-bottom-right-radius: 4px;
+            border-bottom-right-radius: 4px; }
   .add-dropdown .dropdown-menu a {
     -webkit-border-radius: 4px;
             border-radius: 4px; }
@@ -2684,6 +2708,8 @@ div[class*="panel-level-"] .panel > .panel-body {
   .create-form, .create-activity-form, .content-wrapper .panel-profile, .panel-associated-organization {
     padding-left: 14px;
     padding-right: 14px; }
+  .content-wrapper .panel-profile .username_text {
+    padding-left: 0; }
   .change-activity-form > form > .form-group {
     width: 100%; }
   .create-activity-form .panel-body > div {
@@ -2780,12 +2806,14 @@ div[class*="panel-level-"] .panel > .panel-body {
   .organization-name {
     text-align: center; } }
 
-@media all and (max-width: 600px) {
+@media all and (max-width: 630px) {
   .add-new-activity li.dropdown > a {
     text-indent: -9999px;
     padding: 21px 0 21px 10px; }
     .add-new-activity li.dropdown > a .caret {
-      margin-right: 10px; }
+      margin-right: 10px; } }
+
+@media all and (max-width: 600px) {
   .element-panel-heading > form, .panel-content-heading > a {
     float: none !important;
     display: block;
@@ -2800,19 +2828,28 @@ div[class*="panel-level-"] .panel > .panel-body {
       margin-top: 34px; } }
 
 @media all and (max-width: 500px) {
-  .version.old {
+  .version {
     display: none; }
+  .navbar-admin-dropdown .dropdown-menu li span.width-490 a {
+    padding: 0;
+    color: #00A8FF; }
+    .navbar-admin-dropdown .dropdown-menu li span.width-490 a:hover {
+      background: none !important;
+      color: #00A8FF !important; }
   .navbar-default .navbar-nav > li.dropdown:hover > ul {
     display: none; }
   .navbar-default .navbar-nav > li.dropdown.open > ul {
     display: block; }
-  .width-490 .version.old {
+  .width-490 .version {
     display: block;
     float: left !important;
     margin-left: 20px;
-    padding-bottom: 20px; }
+    padding-bottom: 10px;
+    margin-top: 8px; }
   .width-490 .old-version {
     display: none; }
+  .width-490 .old-version, .width-490 .new-version {
+    left: -100%; }
   .navbar-admin-dropdown li > span.width-490 {
     padding: 20px 0 20px 25px; }
   .navbar-admin-dropdown li:first-child span {
@@ -2851,6 +2888,10 @@ div[class*="panel-level-"] .panel > .panel-body {
     font-size: 16px; }
   .error-msg-wrap a {
     font-size: 16px; } }
+
+@media all and (min-width: 501px) {
+  .width-491 {
+    display: none; } }
 
 @media all and (min-width: 601px) {
   .settings-checkall-wrapper > .collection_form > .form-group > .form-group {
