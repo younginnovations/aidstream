@@ -91,21 +91,22 @@ class ResultController extends Controller
         $this->authorize('edit_activity');
         $result = $this->resultManager->getResult($resultId, $id);
 
-        return $this->loadForm($id, $result);
+        return $this->loadForm($id, $result, $resultId);
     }
 
     /**
      * return form view for create and edit result
      * @param      $id
      * @param null $result
+     * @param null $resultId
      * @return \Illuminate\View\View
      */
-    public function loadForm($id, $result = null)
+    public function loadForm($id, $result = null, $resultId = null)
     {
         $activityData = $this->activityManager->getActivityData($id);
         $form         = $this->resultForm->getForm($id, $result);
 
-        return view('Activity.result.edit', compact('form', 'activityData', 'id'));
+        return view('Activity.result.edit', compact('form', 'activityData', 'id', 'resultId'));
     }
 
     /**

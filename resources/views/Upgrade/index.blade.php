@@ -16,7 +16,7 @@
 					<div class="panel-body">
 						<div class="upload-wrapper">
 
-							<p>This will upgrade all data to version {{ session('next_version') }} compatible data for organization {{ $orgName }}.</p>
+							<p>This will upgrade all data to <a href="http://iatistandard.org/202/">IATI Version {{ session('next_version') }}</a> for <b>{{ $orgName }}</b>.</p>
 							<p>
 								<a href="{{ route('upgrade-version.update', session('next_version')) }}" class="btn btn-primary">Continue</a> <a href="{{ URL::previous() }}" class="btn btn-default">Cancel</a>
 							</p>
