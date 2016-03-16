@@ -12,8 +12,8 @@ class OtherIdentifier extends BaseForm
     public function buildForm()
     {
         $this
-            ->add('reference', 'text', ['help_block' => $this->addHelpText('Activity_OtherActivityIdentifier-ref')])
-            ->addSelect('type', $this->getCodeList('OtherIdentifierType', 'Activity'), 'Type', $this->addHelpText('Activity_OtherActivityIdentifier-type'))
+            ->add('reference', 'text', ['help_block' => $this->addHelpText('Activity_OtherActivityIdentifier-ref'), 'required' => true])
+            ->addSelect('type', $this->getCodeList('OtherIdentifierType', 'Activity'), 'Type', $this->addHelpText('Activity_OtherActivityIdentifier-type'), null, true)
             ->addCollection('owner_org', 'Activity\OwnerOrg', 'owner_organization')
             ->addRemoveThisButton('remove_other_identifier');
     }

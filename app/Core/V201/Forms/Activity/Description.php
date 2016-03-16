@@ -15,6 +15,7 @@ class Description extends BaseForm
     {
         $this
             ->addSelect('type', $this->getCodeList('DescriptionType', 'Activity'), 'Description Type', $this->addHelpText('Activity_Description-type'))
+            ->addData(['narrative_required' => true])
             ->addNarrative('narrative')
             ->addAddMoreButton('add_narrative', 'narrative')
             ->addRemoveThisButton('remove_description');

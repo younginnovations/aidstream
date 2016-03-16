@@ -15,7 +15,7 @@ class Budget extends BaseForm
     {
         $this
             ->addSelect('budget_type', $this->getCodeList('BudgetType', 'Activity'))
-            ->addSelect('status', $this->getCodeList('BudgetStatus', 'Activity'))
+            ->addSelect('status', $this->getCodeList('BudgetStatus', 'Activity'), null, null, null, true)
             ->addCollection('period_start', 'Activity\PeriodStart')
             ->addCollection('period_end', 'Activity\PeriodEnd')
             ->addCollection('value', 'Activity\ValueForm')

@@ -14,8 +14,8 @@ class DefaultFieldValuesForm extends BaseForm
     public function buildForm()
     {
         $this
-            ->addSelect('default_currency', $this->getCodeList('Currency', 'Organization'), 'Default Currency', $this->addHelpText('activity_defaults-default_currency', false))
-            ->addSelect('default_language', $this->getCodeList('Language', 'Organization'), 'Default Language', $this->addHelpText('activity_defaults-default_language', false))
+            ->addSelect('default_currency', $this->getCodeList('Currency', 'Organization'), 'Default Currency', $this->addHelpText('activity_defaults-default_currency', false), null, true)
+            ->addSelect('default_language', $this->getCodeList('Language', 'Organization'), 'Default Language', $this->addHelpText('activity_defaults-default_language', false), null, true)
             ->add('default_hierarchy', 'text', ['help_block' => $this->addHelpText('activity_defaults-hierarchy', false)])
             ->add('linked_data_uri', 'text', ['label' => 'Linked Data Default'])
             ->addSelect(

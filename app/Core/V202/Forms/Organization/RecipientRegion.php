@@ -16,7 +16,7 @@ class RecipientRegion extends BaseForm
         $this
             ->addSelect('vocabulary', $this->getCodeList('RegionVocabulary', 'Activity'))
             ->add('vocabulary_uri', 'text')
-            ->addSelect('code', $this->getCodeList('Region', 'Activity'))
+            ->addSelect('code', $this->getCodeList('Region', 'Activity'), null, null, null, true)
             ->addNarrative('recipient_region_narrative')
             ->addAddMoreButton('add_recipient_region_narrative', 'recipient_region_narrative')
             ->addRemoveThisButton('remove_recipient_region');
