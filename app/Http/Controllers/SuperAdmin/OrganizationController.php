@@ -162,7 +162,7 @@ class OrganizationController extends Controller
         $next_version = (end($versions) == $current_version) ? null : $versions[$versionKey + 1];
 
         Session::put('next_version', $next_version);
-        Session::put('version', 'V' . str_replace('.', '', $settings->version));
+        Session::put('version', 'V' . str_replace('.', '', $current_version));
         Auth::loginUsingId($userId);
 
         return redirect()->to(config('app.admin_dashboard'));
