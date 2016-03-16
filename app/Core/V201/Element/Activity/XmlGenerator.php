@@ -340,4 +340,10 @@ class XmlGenerator
 
         return $newActivity->published_activities;
     }
+
+    public function generateTemporaryXml(Activity $activity, Collection $transaction, Collection $result, Settings $settings, $activityElement, $orgElem, $organization)
+    {
+        $xml = $this->getXml($activity, $transaction, $result, $settings, $activityElement, $orgElem, $organization);
+        return $xml->saveXML();
+    }
 }

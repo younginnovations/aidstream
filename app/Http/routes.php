@@ -143,3 +143,10 @@ $router->get(
         'uses' => 'Complete\DocumentController@destroy'
     ]
 );
+$router->get(
+    'validate-schema/{activityId}',
+    [
+        'as'   => 'validate-schema',
+        'uses' => 'CompleteValidateController@show'
+    ]
+);

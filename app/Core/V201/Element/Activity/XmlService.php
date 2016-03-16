@@ -62,6 +62,12 @@ class XmlService
         $this->xmlGenerator->generateXml($activity, $transaction, $result, $settings, $activityElement, $orgElem, $organization);
     }
 
+    public function generateTemporaryActivityXml($activity, $transaction, $result, $settings, $activityElement, $orgElem, $organization)
+    {
+        return $this->xmlGenerator->generateTemporaryXml($activity, $transaction, $result, $settings, $activityElement, $orgElem, $organization);
+
+    }
+
     /**
      * @param $filename
      * @param $organizationId
