@@ -15,6 +15,7 @@
                                 <tr>
                                     <th>S.N.</th>
                                     <th>Organization Name</th>
+                                    <th>Version</th>
                                     <th>Users</th>
                                     <th>Activities</th>
                                     <th>Status</th>
@@ -33,6 +34,7 @@
                                                 @endforeach
                                             </div>
                                         </td>
+                                        <td>{{ $organization->settings->version }}</td>
                                         <td>{{ count($organization->users) }}</td>
                                         <td>{{ count($organization->activities) }}</td>
                                         <td>{{ $organization->orgStatus }}</td>

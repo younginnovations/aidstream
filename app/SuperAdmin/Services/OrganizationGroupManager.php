@@ -74,7 +74,7 @@ class OrganizationGroupManager
     {
         $userGroup = $this->userGroup->whereUserId($userId)->first();
 
-        return $this->organization->whereIn('id', $userGroup->assigned_organizations)->get();
+        return $this->organization->whereIn('id', $userGroup->assigned_organizations)->with(['settings'])->get();
     }
 
     /**
