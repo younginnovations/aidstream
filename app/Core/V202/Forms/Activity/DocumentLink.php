@@ -7,8 +7,8 @@ class DocumentLink extends V201DocumentLink
     public function buildForm()
     {
         $this
-            ->add('url', 'text', ['attr' => ['class' => 'document_link'], 'help_block' => $this->addHelpText('Activity_DocumentLink-url')])
-            ->addSelect('format', $this->getCodeList('FileFormat', 'Activity'), 'Format', $this->addHelpText('Activity_DocumentLink-format'))
+            ->add('url', 'text', ['attr' => ['class' => 'document_link'], 'help_block' => $this->addHelpText('Activity_DocumentLink-url'), 'required' => true])
+            ->addSelect('format', $this->getCodeList('FileFormat', 'Activity'), 'Format', $this->addHelpText('Activity_DocumentLink-format'), null, true)
             ->add(
                 'upload_text',
                 'static',

@@ -23,7 +23,8 @@ class Type extends BaseForm
                 $this->getTransactionTypeCodeList(),
                 'Transaction Type Code',
                 $this->addHelpText('Activity_Transaction_TransactionType-code'),
-                ['attr' => ['class' => 'form-control transaction_type']]
+                ['attr' => ['class' => 'form-control transaction_type']],
+                true
             );
     }
 }

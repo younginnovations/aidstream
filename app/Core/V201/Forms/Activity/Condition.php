@@ -14,7 +14,7 @@ class Condition extends BaseForm
     public function buildForm()
     {
         $this
-            ->addSelect('condition_type', $this->getCodeList('ConditionType', 'Activity'), 'Condition Type', $this->addHelpText('Activity_Conditions_Condition-type'))
+            ->addSelect('condition_type', $this->getCodeList('ConditionType', 'Activity'), 'Condition Type', $this->addHelpText('Activity_Conditions_Condition-type'), null, true)
             ->addNarrative('narrative')
             ->addAddMoreButton('add_narrative', 'narrative')
             ->addRemoveThisButton('remove');

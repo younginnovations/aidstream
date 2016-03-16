@@ -10,6 +10,6 @@ class PeriodEnd extends BaseForm
 {
     public function buildForm()
     {
-        $this->add('date', 'date', ['help_block' => $this->addHelpText('Activity_Budget_PeriodEnd-iso_date')]);
+        $this->add('date', 'date', ['help_block' => $this->addHelpText('Activity_Budget_PeriodEnd-iso_date'), 'required' => true]);
     }
 }

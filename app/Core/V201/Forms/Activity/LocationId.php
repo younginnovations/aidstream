@@ -16,8 +16,8 @@ class LocationId extends BaseForm
     public function buildForm()
     {
         $this
-            ->addSelect('vocabulary', $this->getCodeList('GeographicVocabulary', 'Activity'), 'Vocabulary', $this->addHelpText('Activity_Location_LocationId-vocabulary'))
-            ->add('code', 'text', ['help_block' => $this->addHelpText('Activity_Location_LocationId-code')])
+            ->addSelect('vocabulary', $this->getCodeList('GeographicVocabulary', 'Activity'), 'Vocabulary', $this->addHelpText('Activity_Location_LocationId-vocabulary'), null, true)
+            ->add('code', 'text', ['help_block' => $this->addHelpText('Activity_Location_LocationId-code'), 'required' => true])
             ->addRemoveThisButton('remove');
     }
 }
