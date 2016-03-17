@@ -2,6 +2,7 @@
 
 use App\Core\EmailQueue;
 use App\Core\Form\BaseForm;
+use App\Http\Controllers\Auth\Traits\ResetsOldPassword;
 use App\Http\Controllers\Controller;
 use App\Models\Settings;
 use App\Models\Organization\Organization;
@@ -32,7 +33,7 @@ class AuthController extends Controller
     |
     */
 
-    use AuthenticatesAndRegistersUsers;
+    use AuthenticatesAndRegistersUsers, ResetsOldPassword;
 
     /**
      * @var DatabaseManager
@@ -53,6 +54,16 @@ class AuthController extends Controller
      * @var Settings
      */
     protected $settings;
+
+    /**
+     * @var null
+     */
+    protected $attemptingUser = null;
+
+    /**
+     * Length of password stored using md5 encryption.
+     */
+    const MD5_PASSWORD_LENGTH = 32;
 
     /**
      * Create a new authentication controller instance.
@@ -159,6 +170,10 @@ class AuthController extends Controller
         $request->merge([$field => $login]);
 
         $credentials = $request->only($field, 'password');
+
+        if ($this->requiresPasswordReset($credentials)) {
+            $this->resetPassword($credentials['password']);
+        }
 
         if (Auth::attempt($credentials, $request->has('remember'))) {
             $user = Auth::user();
