@@ -9,7 +9,7 @@
     <div class="container main-container">
         <div class="row">
             @include('includes.side_bar_menu')
-            <div class="col-xs-9 col-md-9 col-lg-9 content-wrapper">
+            <div class="col-xs-9 col-md-9 col-lg-9 content-wrapper result-show">
                 @include('includes.response')
                 <div class="element-panel-heading">
                     <div>
@@ -24,6 +24,7 @@
                 </div>
                 <div class="col-xs-12 col-md-8 col-lg-8 element-content-wrapper">
                     <div class="panel panel-default panel-element-detail element-show">
+                        <div class="pull-right"><a href="#" class="edit-value"></a></div>
                         <div class="panel-body">
                             <div class="panel-element-body row">
                                 <div class="col-xs-12 col-md-12">

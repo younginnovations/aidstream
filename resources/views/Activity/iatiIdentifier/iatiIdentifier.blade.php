@@ -11,8 +11,8 @@
                 @include('includes.breadcrumb')
                 <div class="panel-content-heading panel-title-heading">
                     <div>Activity Identifier</div>
-                    <div class="pull-right panel-action-btn">
-                        <a href="{{ route('activity.show', $id) }}" class="btn btn-primary">View Activity
+                    <div class="panel-action-btn">
+                        <a href="{{ route('activity.show', $id) }}" class="btn btn-primary pull-right">View Activity
                         </a>
                     </div>
                 </div>
