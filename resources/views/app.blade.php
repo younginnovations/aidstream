@@ -32,7 +32,7 @@
     <div class="container-fluid">
         <div class="navbar-header">
             <div class="navbar-brand">
-                <a href="{{ Auth::user()->role_id == 3 ? url('admin/dashboard') : route('activity.index')  }}"
+                <a href="{{ Auth::user()->role_id == 3 ? url(config('app.super_admin_dashboard')) : config('app.admin_dashboard') }}"
                    alt="Aidstream">Aidstream</a>
             </div>
         </div>
@@ -73,43 +73,43 @@
                             <li><a href="{{ url('/auth/logout') }}">@lang('trans.logout')</a></li>
 
                             {{-- Unwanted for now. Will come in use later --}}
-                                {{--<li class="language-select-wrap">--}}
-                                {{--<label for="">Choose Language</label>--}}
-                                {{--@foreach(config('app.locales') as $key => $val)--}}
-                                {{--<span class="flag-wrapper" data-lang="{{ $key }}">--}}
-                                {{--<span class="img-thumbnail flag flag-icon-background flag-icon-{{ $key }}{{ $key == config('app.locale') ? ' active' : '' }}"></span>--}}
-                                {{--</span>--}}
-                                {{--@endforeach--}}
-                                {{--</li>--}}
+                            {{--<li class="language-select-wrap">--}}
+                            {{--<label for="">Choose Language</label>--}}
+                            {{--@foreach(config('app.locales') as $key => $val)--}}
+                            {{--<span class="flag-wrapper" data-lang="{{ $key }}">--}}
+                            {{--<span class="img-thumbnail flag flag-icon-background flag-icon-{{ $key }}{{ $key == config('app.locale') ? ' active' : '' }}"></span>--}}
+                            {{--</span>--}}
+                            {{--@endforeach--}}
+                            {{--</li>--}}
                             {{-- Unwanted for now. Will come in use later --}}
 
-                        {{-- For small screen (theming remains) --}}
+                            {{-- For small screen (theming remains) --}}
                             {{--<li class="pull-left">--}}
-                                {{--@if((Session::get('role_id') == 3  || Session::get('role_id') == 4) && Session::get('org_id'))--}}
-                                    {{--<span class="width-490"><a href="{{ route('admin.switch-back') }}" class="pull-left">Switch Back</a></span>--}}
-                                {{--@endif--}}
+                            {{--@if((Session::get('role_id') == 3  || Session::get('role_id') == 4) && Session::get('org_id'))--}}
+                            {{--<span class="width-490"><a href="{{ route('admin.switch-back') }}" class="pull-left">Switch Back</a></span>--}}
+                            {{--@endif--}}
                             {{--</li>--}}
                             {{--<li class="pull-left">--}}
-                                {{--<div class="navbar-left version-wrap width-490">--}}
-                                    {{--@if(Auth::user()->role_id != 3 && Auth::user()->role_id !=4)--}}
-                                        {{--<div class="version pull-right {{ (Session::get('version') == 'V201') ? 'old' : 'new' }}">--}}
+                            {{--<div class="navbar-left version-wrap width-490">--}}
+                            {{--@if(Auth::user()->role_id != 3 && Auth::user()->role_id !=4)--}}
+                            {{--<div class="version pull-right {{ (Session::get('version') == 'V201') ? 'old' : 'new' }}">--}}
 
-                                            {{--@if ((Session::get('version') == 'V201'))--}}
-                                                {{--<a class="version-text" href="{{route('upgrade-version.index')}}">Update available</a>--}}
-                                                {{--<span class="old-version">--}}
-                                                 {{--<a href="{{route('upgrade-version.index')}}">Upgrade to IATI version 2.0.2</a>--}}
-                                              {{--</span>--}}
-                                            {{--@else--}}
-                                                {{--<span class="version-text">IATI version V202</span>--}}
-                                                {{--<span class="new-version">--}}
-                                               {{--You’re using latest IATI version--}}
-                                             {{--</span>--}}
-                                            {{--@endif--}}
-                                        {{--</div>--}}
-                                    {{--@endif--}}
-                                {{--</div>--}}
+                            {{--@if ((Session::get('version') == 'V201'))--}}
+                            {{--<a class="version-text" href="{{route('upgrade-version.index')}}">Update available</a>--}}
+                            {{--<span class="old-version">--}}
+                            {{--<a href="{{route('upgrade-version.index')}}">Upgrade to IATI version 2.0.2</a>--}}
+                            {{--</span>--}}
+                            {{--@else--}}
+                            {{--<span class="version-text">IATI version V202</span>--}}
+                            {{--<span class="new-version">--}}
+                            {{--You’re using latest IATI version--}}
+                            {{--</span>--}}
+                            {{--@endif--}}
+                            {{--</div>--}}
+                            {{--@endif--}}
+                            {{--</div>--}}
                             {{--</li>--}}
-                        {{-- For small screen (theming remains) --}}
+                            {{-- For small screen (theming remains) --}}
                         </ul>
                     </li>
                 @endif
@@ -138,7 +138,7 @@
 
 @yield('content')
 
-        <!-- Scripts -->
+<!-- Scripts -->
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="{{url('/js/jquery-ui-1.10.4.tooltip.js')}}"></script>
