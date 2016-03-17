@@ -34,7 +34,7 @@
                                 </thead>
                                 <tbody>
                                 @foreach($results as $resultIndex=>$result)
-                                    <tr>
+                                    <tr data-href="{{ route('activity.result.show', [$id, $result->id]) }}" class="clickable-row">
                                         <td>{{ $resultIndex + 1 }}</td>
                                         <td class="activity_title">
                                             {{ $result->title }}

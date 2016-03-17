@@ -1211,9 +1211,11 @@ $full-sidebar-wrapper-width: 210px;
 .element-panel-heading-info {
   > span {
     font-size: 12px;
-    display: block;
     &:first-child {
       text-transform: uppercase;
+    }
+    &:only-child {
+      display: block;
     }
   }
   .last-updated-date {
@@ -2058,8 +2060,21 @@ form > .add_to_collection[data-collection="legacy_data"] {
   }
 }
 
+.panel-user-permission-edit {
+  overflow: hidden;
+  .btn-form {
+    width: 100px;
+    height: auto;
+    padding: 6px 0;
+    line-height: normal;
+    clear: none;
+    font-size: 14px;
+    margin: 0;
+  }
+}
+
 .panel-user {
-  padding: 20px 0 10px;
+  width: 80%;
   .panel-heading {
     font-size: 16px;
     border: 0;
@@ -2228,9 +2243,18 @@ form > .add_to_collection[data-collection="legacy_data"] {
   background: $color_white_lilac_approx;
 }
 
-//.transaction-show .panel-element-detail .panel > .panel {
-//  margin-bottom: 40px;
-//}
+.transaction-show, .result-show {
+  .element-show .edit-value {
+    display: block;
+  }
+}
+
+.transaction-show, .result-show {
+  .element-show > .pull-right + .panel-body {
+    clear: both;
+    padding-top: 20px;
+  }
+}
 
 // profile
 
@@ -2393,7 +2417,8 @@ $organization-logo-width: 124px;
 }
 
 .modal-title {
-  font-family: $font_1;
+  font-family: $font_0;
+  font-size: 20px;
 }
 
 .btn_del, .btn_del:hover, .btn_del:focus {
@@ -2712,6 +2737,9 @@ div[class*="panel-level-"] .panel > .panel-body {
 
 .panel-user-view {
   padding-top: 20px !important;
+  .modal-body > label {
+    padding-bottom: 10px;
+  }
 }
 
 .user-action-btn > a {
@@ -2769,6 +2797,26 @@ div[class*="panel-level-"] .panel > .panel-body {
   }
 }
 
+.modal-header .close {
+  background: none !important;
+}
+
+.admin-container {
+  .panel-default {
+    margin: 0;
+    border: 0;
+    box-shadow: none;
+  }
+  .panel-body {
+    padding: 0;
+  }
+}
+
+.organization-wrapper {
+  padding: 0 0 70px;
+  width: calc(100% - 267px);
+}
+
 @media all and (max-width: 1030px) {
   .activity-status {
     padding: 16px 10px 18px 50px;
@@ -2784,7 +2832,7 @@ div[class*="panel-level-"] .panel > .panel-body {
     right: 0;
   }
 
-  .element-content-wrapper {
+  .element-content-wrapper,.organization-wrapper {
     width: 100%;
     padding-bottom: 100px;
   }
@@ -2798,6 +2846,8 @@ div[class*="panel-level-"] .panel > .panel-body {
     display: block;
     margin-top: -48px;
     margin-right: 20px;
+    position: relative;
+    z-index: 1;
     .edit-element {
       width: 42px;
       height: 42px;
@@ -2973,6 +3023,26 @@ div[class*="panel-level-"] .panel > .panel-body {
   .published-wrapper td:nth-of-type(6):before {
     content: "Preview as";
   }
+
+  .organization-wrapper td:nth-of-type(1):before {
+    content: "S.N.";
+  }
+  .organization-wrapper td:nth-of-type(2):before {
+    content: "Organization Name";
+  }
+  .organization-wrapper td:nth-of-type(3):before {
+    content: "Published Date";
+  }
+  .organization-wrapper td:nth-of-type(4):before {
+    content: "Users";
+  }
+  .organization-wrapper td:nth-of-type(5):before {
+    content: "Activities";
+  }
+  .organization-wrapper td:nth-of-type(6):before {
+    content: "Status";
+  }
+
   .published-wrapper td:nth-of-type(7):before {
     content: "Action";
   }
@@ -3025,7 +3095,7 @@ div[class*="panel-level-"] .panel > .panel-body {
     padding: 0 !important;
   }
 
-  .create-form, .create-activity-form, .panel-user-permission-edit, .content-wrapper .panel-profile, .panel-associated-organization {
+  .create-form, .create-activity-form, .content-wrapper .panel-profile, .panel-associated-organization {
     padding-left: 14px;
     padding-right: 14px;
   }

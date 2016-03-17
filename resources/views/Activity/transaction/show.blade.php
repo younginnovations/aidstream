@@ -17,6 +17,7 @@
                 </div>
                 <div class="col-xs-12 col-md-8 col-lg-8 element-content-wrapper">
                     <div class="panel panel-default panel-element-detail element-show">
+                        <div class="pull-right"><a href="#" class="edit-value"></a></div>
                         <div class="panel-body">
                             <div class="panel panel-default">
                                 <div class="panel-heading">

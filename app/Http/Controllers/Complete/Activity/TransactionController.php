@@ -116,7 +116,7 @@ class TransactionController extends Controller
         $transaction       = $this->transactionManager->getTransaction($transactionId);
         $transactionDetail = $transaction->getTransaction();
 
-        return view('Activity.transaction.show', compact('transactionDetail', 'activity', 'id'));
+        return view('Activity.transaction.show', compact('transactionDetail', 'activity', 'id', 'transactionId'));
     }
 
     /**

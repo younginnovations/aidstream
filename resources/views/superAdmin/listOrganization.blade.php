@@ -3,17 +3,19 @@
 @section('title', 'Organizations')
 
 @section('content')
-    <div class="container">
+    <div class="container main-container admin-container">
         <div class="row">
-            <div class="col-xs-8">
+            <div class="panel-content-heading">
+                <div>Organizations</div>
+            </div>
+            <div class="col-xs-12 col-lg-8 organization-wrapper">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Organizations</div>
                     <div class="panel-body">
                         @if(count($organizations) > 0)
                             <table class="table table-striped">
                                 <thead>
                                 <tr>
-                                    <th>S.N.</th>
+                                    <th width="100px">S.N.</th>
                                     <th>Organization Name</th>
                                     <th>Version</th>
                                     <th>Users</th>
@@ -41,10 +43,12 @@
                                         <td>
                                             <div class="organization_actions">
                                                 @if(Auth::user()->isSuperAdmin())
-                                                    <a href="{{ route('admin.edit-organization', $organization->id)}}" class="edit">Edit</a> |
+                                                    <a href="{{ route('admin.edit-organization', $organization->id)}}"
+                                                       class="edit">Edit</a> |
                                                     <a href="{{ route('admin.change-organization-status', [$organization->id, ($organization->status == 1) ? 0 : 1]) }}">{{($organization->status == 1) ? 'Disable' : 'Enable'}}</a>
                                                     |
-                                                    <a href="{{ route('admin.delete-organization', $organization->id) }}" class="delete">Delete</a> |
+                                                    <a href="{{ route('admin.delete-organization', $organization->id) }}"
+                                                       class="delete">Delete</a> |
                                                 @endif
                                                 <a href="{{ route('admin.masquerade-organization', [$organization->id, $organization->users->where('role_id', 1)->first()->id]) }}">Masquerade</a>
                                             </div>
