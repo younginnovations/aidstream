@@ -212,7 +212,7 @@ class SettingsController extends Controller
      */
     protected function generateXmlIfDoesNotExist($publishedActivity, $activity)
     {
-        $filePath = config('filesystems.xml-path') . $publishedActivity;
+        $filePath = config('filesystems.xml') . $publishedActivity;
         if (!file_exists($filePath)) {
             $this->settingsManager->generateXml($activity);
         }

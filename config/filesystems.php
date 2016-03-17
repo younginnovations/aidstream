@@ -43,7 +43,7 @@ return [
 
         'local'     => [
             'driver' => 'local',
-            'root'   => public_path('/uploads/files'),
+            'root'   => public_path('/files'),
         ],
         's3'        => [
             'driver' => 's3',
@@ -66,12 +66,11 @@ return [
     /**
      * Path where all the generated xml files are stored in Aidstream.
      */
-    'xml'                        => 'xml',
-    'xml-path'                   => public_path('uploads/files/xml/'),
+    'xml'                        => public_path('files/xml/'),
     /**
      * Path where all the uploaded documents are stored in Aidstream.
      */
-    'documents'                  => 'documents',
+    'documents'                  => public_path('files/documents'),
     /**
      * Api URL for the IATI Registry.
      */

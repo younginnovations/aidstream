@@ -217,7 +217,7 @@ class XmlGenerator
 
         foreach ($published as $xml) {
             $addDom = new DOMDocument();
-            $file   = sprintf("%s/%s", config('filesystems.xml-path'), $xml);
+            $file   = sprintf("%s/%s", config('filesystems.xml'), $xml);
             $addDom->load($file);
             if ($addDom->documentElement) {
                 foreach ($addDom->documentElement->childNodes as $node) {
