@@ -8,15 +8,18 @@
 
 <ul>
     @forelse($messages as $message)
-        <li>{{ $message }}</li>
+        <li>{!! $message !!}</li>
     @empty
         <li>Validated!!</li>
     @endforelse
 </ul>
 <br/>
 
-<div>
-    {{ $tempXmlContent }}
+<div style="word-break: break-all;">
+@foreach($xmlLines as $key => $line)
+    {{--*/ $number = $key + 1; /*--}}
+    <div id="{{ $number }}"><strong style="{{ array_key_exists($number, $messages) ? 'color:red': ''  }}">{{ $number }}</strong>{{ $line }}</div>
+@endforeach
 </div>
 </body>
 </html>

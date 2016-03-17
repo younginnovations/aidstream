@@ -1,18 +1,12 @@
 <?php namespace App\Http\Controllers;
 
 use App\Services\Activity\ChangeActivityDefaultManager;
-use App\Services\Activity\ResultManager;
-use App\Services\Activity\TransactionManager;
 use App\Services\FormCreator\Activity\ChangeActivityDefault;
 use App\Services\Organization\OrganizationManager;
 
 use App\Services\SettingsManager;
 use Illuminate\Session\SessionManager;
 use App\Services\Activity\ActivityManager;
-use App\Services\FormCreator\Activity\Identifier;
-use App\User;
-use Psr\Log\LoggerInterface;
-
 
 class CompleteValidateController extends Controller
 {
@@ -77,14 +71,64 @@ class CompleteValidateController extends Controller
 
     public function validateCompletedActivity($activityData, $transactionData, $resultData, $settings, $activityElement, $orgElem, $organization)
     {
+        // Enable user error handling
+        libxml_use_internal_errors(true);
+
         $xmlService     = $activityElement->getActivityXmlService();
         $tempXmlContent = $xmlService->generateTemporaryActivityXml($activityData, $transactionData, $resultData, $settings, $activityElement, $orgElem, $organization);
+        $xml = new \DOMDocument();
+        $xml->loadXML($tempXmlContent);
+        $schemaPath = app_path(sprintf('/Core/%s/XmlSchema/iati-activities-schema.xsd', session('version')));
+        $messages   = [];
+        if (!$xml->schemaValidate($schemaPath)) {
+            $messages = $this->libxml_display_errors();
+        }
 
-        $messages = $xmlService->validateActivitySchema($activityData, $transactionData, $resultData, $settings, $activityElement, $orgElem, $organization);
+        $xmlString = htmlspecialchars($tempXmlContent);
+        $xmlString = str_replace(" ", "&nbsp;&nbsp;", $xmlString);
+        $xmlLines = explode("\n", $xmlString);
 
-        $messages !== '' ?: $messages = [];
+        return view('validate-schema', compact('messages', 'xmlLines'));
+    }
 
-        $tempXmlContent = htmlspecialchars($tempXmlContent);
-        return view('validate-schema', compact('messages', 'tempXmlContent'));
+    /**
+     * return xml validation message with type
+     * @param $error
+     * @return string
+     */
+    protected function libxml_display_error($error)
+    {
+        $return = '';
+        switch ($error->level) {
+            case LIBXML_ERR_WARNING:
+                $return .= "Warning $error->code:";
+                break;
+            case LIBXML_ERR_ERROR:
+                $return .= "Error $error->code:";
+                break;
+            case LIBXML_ERR_FATAL:
+                $return .= "Fatal Error $error->code:";
+                break;
+        }
+        $return .= trim($error->message);
+        $return .= "in  line no. <a href='#$error->line'><b>$error->line</b></a>";
+
+        return $return;
+    }
+
+    /**
+     * return xml validation error messages
+     * @return array
+     */
+    protected function libxml_display_errors()
+    {
+        $errors   = libxml_get_errors();
+        $messages = [];
+        foreach ($errors as $error) {
+            $messages[$error->line] = $this->libxml_display_error($error);
+        }
+        libxml_clear_errors();
+
+        return $messages;
     }
 }

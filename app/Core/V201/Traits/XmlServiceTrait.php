@@ -26,6 +26,7 @@ trait XmlServiceTrait
                 break;
         }
         $return .= trim($error->message);
+        $return .= "in line no. <b>$error->line</b>";
 
         return $return;
     }
@@ -39,7 +40,7 @@ trait XmlServiceTrait
         $errors   = libxml_get_errors();
         $messages = [];
         foreach ($errors as $error) {
-            $messages[] = $this->libxml_display_error($error);
+            $messages[$error->line] = $this->libxml_display_error($error);
         }
         libxml_clear_errors();
 
