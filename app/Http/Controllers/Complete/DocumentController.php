@@ -54,12 +54,12 @@ class DocumentController extends Controller
             $filename  = str_replace(' ', '-', preg_replace('/\s+/', ' ', $file->getClientOriginalName()));
             $extension = substr($filename, stripos($filename, '.'));
             $filename  = sprintf('%s-%s%s', substr($filename, 0, stripos($filename, '.')), date('Ymdhms'), $extension);
-            $url       = url(sprintf('uploads/files/documents/%s/%s', $this->orgId, $filename));
+            $url       = url(sprintf('files/documents/%s', $filename));
             $document  = $this->documentManager->getDocument($this->orgId, $url, $filename);
             if ($document->exists) {
                 return ['status' => 'danger', 'message' => 'Document already exists.'];
             }
-            Storage::put(sprintf('%s/%s/%s', config('filesystems.xml'), $this->orgId, $filename), File::get($file));
+            Storage::put(sprintf('%s/%s', 'documents', $filename), File::get($file));
             $this->documentManager->store($document);
         } catch (\Exception $e) {
             return ['status' => 'danger', 'message' => 'Failed to upload Document. Error: ' . $e->getMessage()];

@@ -3,7 +3,13 @@ $(document).ready(function () {
         var documentData = data;
         var documentList = '';
         for (var i = 0; i < documentData.length; i++) {
-            var url = documentData[i].url;
+            var document = documentData[i];
+            var url = '';
+            if (document.url) {
+                url = document.url;
+            } else if (document.filename) {
+                url = location.origin + '/files/documents/' + encodeURI(document.filename);
+            }
             documentList += '<tr>';
             documentList += '<td>' + url + '</td>';
             documentList += '<td><a href="' + url + '" class="use_this">Use this</a></td>';
@@ -56,6 +62,7 @@ $(document).ready(function () {
             },
             complete: function () {
                 $('body > .loader').addClass('hidden').remove();
+                $('[type="submit"]', _this).removeAttr('disabled');
             }
         });
     });
