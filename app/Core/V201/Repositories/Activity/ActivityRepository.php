@@ -1,6 +1,7 @@
 <?php namespace App\Core\V201\Repositories\Activity;
 
 use App\Models\Activity\Activity;
+use App\Models\Activity\ActivityInRegistry;
 use App\Models\ActivityPublished;
 
 /**
@@ -12,13 +13,15 @@ class ActivityRepository
     protected $activity;
 
     /**
-     * @param Activity          $activity
-     * @param ActivityPublished $activityPublished
+     * @param Activity           $activity
+     * @param ActivityPublished  $activityPublished
+     * @param ActivityInRegistry $activityInRegistry
      */
-    public function __construct(Activity $activity, ActivityPublished $activityPublished)
+    public function __construct(Activity $activity, ActivityPublished $activityPublished, ActivityInRegistry $activityInRegistry)
     {
-        $this->activity          = $activity;
-        $this->activityPublished = $activityPublished;
+        $this->activity           = $activity;
+        $this->activityPublished  = $activityPublished;
+        $this->activityInRegistry = $activityInRegistry;
     }
 
     /**
@@ -144,5 +147,32 @@ class ActivityRepository
         $activityData->published_to_registry = 1;
 
         return $activityData->save();
+    }
+
+    /**
+     * @param $activityData
+     * @param $jsonData
+     * @return bool
+     */
+    public function saveActivityRegistryData($activityData, $jsonData)
+    {
+        $activityInRegistry                  = $this->activityInRegistry->firstOrNew(['activity_id' => $activityData->id]);
+        $activityInRegistry->organization_id = session('org_id');
+        $activityInRegistry->activity_id     = $activityData->id;
+        $activityInRegistry->activity_data   = $jsonData;
+        if ($activityInRegistry->save()) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * @param $organizationId
+     * @return mixed
+     */
+    public function getDataForOrganization($organizationId)
+    {
+        return $this->activityInRegistry->whereOrganizationId($organizationId)->get();
     }
 }

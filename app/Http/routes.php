@@ -12,6 +12,7 @@ $router->get('who-is-using', 'WhoIsUsingController@index');
 $router->get('who-is-using/{page}/{count}', 'WhoIsUsingController@listOrganization');
 $router->get('admin/dashboard', 'SuperAdmin\OrganizationController@adminDashboard');
 $router->resource('settings', 'Complete\SettingsController');
+$router->get('who-is-using/{organization_id}', 'WhoIsUsingController@getDataForOrganization');
 
 $router->get(
     'test',

@@ -243,10 +243,15 @@ class ActivityController extends Controller
 
             if ($settings['registry_info'][0]['publish_files'] == 'yes') {
                 $publishedStatus = $this->publishToRegistry();
+                $this->activityManager->updateStatus($input, $activityData);
 
-                if (!$publishedStatus) {
-                    $this->activityManager->updateStatus($input, $activityData);
+                if ($publishedStatus) {
                     $this->activityManager->makePublished($activityData);
+                    $this->activityManager->activityInRegistry($activityData);
+                    $response = ['type' => 'warning', 'code' => ['publish_registry_publish', ['name' => '']]];
+
+                    return redirect()->back()->withResponse($response);
+                } else {
                     $response = ['type' => 'warning', 'code' => ['publish_registry', ['name' => '']]];
 
                     return redirect()->back()->withResponse($response);
@@ -359,7 +364,13 @@ class ActivityController extends Controller
 
             return true;
         } catch (\Exception $e) {
-            $this->loggerInterface->error(sprintf('Registry Info could not be registered due to %s', $e->getMessage()));
+            $this->loggerInterface->error(
+                sprintf('Registry Info could not be registered due to error code %s', $e->getCode()),
+                [
+                    'response' => $e->getMessage(),
+                    'trace'    => $e->getTraceAsString()
+                ]
+            );
 
             return false;
         }
