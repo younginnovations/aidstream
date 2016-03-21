@@ -136,7 +136,7 @@ class OrganizationRepository implements OrganizationRepositoryInterface
     {
         $result = $this->orgPublished->find($id);
         if ($result) {
-            $file   = public_path('uploads/files/organization/' . $result->filename);
+            $file = sprintf('%s%s', public_path('files'). config('filesystems.xml'), $result->filename);
             $result = $result->delete();
             if ($result && file_exists($file)) {
                 unlink($file);

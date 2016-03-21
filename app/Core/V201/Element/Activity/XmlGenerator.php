@@ -6,7 +6,6 @@ use App\Models\ActivityPublished;
 use App\Models\Settings;
 use DOMDocument;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 
 /**

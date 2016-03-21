@@ -280,4 +280,163 @@ class ActivityManager
 
         return false;
     }
+
+    /**
+     * @param Activity $activityData
+     */
+    public function activityInRegistry(Activity $activityData)
+    {
+        $transaction      = $this->getTransaction($activityData);
+        $activityStatus   = $this->getActivityStatus($activityData);
+        $recipientRegion  = $this->getRecipientRegion($activityData);
+        $recipientCountry = $this->getRecipientCountry($activityData);
+        $sector           = $this->getSector($activityData);
+        $title            = $activityData->title[0]['narrative'];
+        $identifier       = $activityData->identifier['iati_identifier_text'];
+
+        $jsonData = $this->convertIntoJson($transaction, $activityStatus, $recipientRegion, $recipientCountry, $sector, $title, $identifier);
+        $this->saveActivityRegistryData($activityData, $jsonData);
+
+    }
+
+    /**
+     * @param Activity $activityData
+     * @return array
+     */
+    protected function getTransaction(Activity $activityData)
+    {
+        $arrays       = [];
+        $transactions = $this->getTransactionData($activityData->id);
+        foreach ($transactions as $transactionData) {
+            $index = $transactionData->transaction['transaction_type'][0]['transaction_type_code'];
+            $value = $transactionData->transaction['value'][0]['amount'];
+
+            if (array_key_exists($index, $arrays)) {
+                $arrays[$index] = $arrays[$index] + $value;
+            } else {
+                $arrays[$index] = $value;
+            }
+
+        }
+
+        return $arrays;
+    }
+
+    /**
+     * @param Activity $activityData
+     * @return mixed
+     */
+    protected function getActivityStatus(Activity $activityData)
+    {
+        return $activityData->activity_status;
+    }
+
+    /**
+     * @param Activity $activityData
+     * @return array
+     */
+    protected function getRecipientRegion(Activity $activityData)
+    {
+        $arrays = [];
+        if ($activityData->recipient_region) {
+            foreach ($activityData->recipient_region as $recipientRegion) {
+                $index = $recipientRegion['region_code'];
+
+                if (array_key_exists($index, $arrays)) {
+                    $arrays[$index] = $arrays[$index] + 1;
+                } else {
+                    $arrays[$index] = 1;
+                }
+            }
+        }
+
+        return $arrays;
+    }
+
+    /**
+     * @param Activity $activityData
+     * @return array
+     */
+    protected function getRecipientCountry(Activity $activityData)
+    {
+        $arrays = [];
+        if ($activityData->recipient_country) {
+            foreach ($activityData->recipient_country as $recipientCountry) {
+                $index = $recipientCountry['country_code'];
+
+                if (array_key_exists($index, $arrays)) {
+                    $arrays[$index] = $arrays[$index] + 1;
+                } else {
+                    $arrays[$index] = 1;
+                }
+            }
+        }
+
+        return $arrays;
+    }
+
+    /**
+     * @param Activity $activityData
+     * @return array
+     */
+    protected function getSector(Activity $activityData)
+    {
+        $arrays = [];
+        foreach ($activityData->sector as $sectors) {
+            foreach ($sectors['narrative'] as $narrative) {
+                $index = $narrative['narrative'];
+                if ($index != "") {
+                    if (array_key_exists($index, $arrays)) {
+                        $arrays[$index] = $arrays[$index] + 1;
+                    } else {
+                        $arrays[$index] = 1;
+                    }
+                }
+            }
+        }
+
+
+        return $arrays;
+    }
+
+    /**
+     * @param $transaction
+     * @param $activityStatus
+     * @param $recipientRegion
+     * @param $recipientCountry
+     * @param $sector
+     * @param $title
+     * @param $identifier
+     * @return string
+     */
+    protected function convertIntoJson($transaction, $activityStatus, $recipientRegion, $recipientCountry, $sector, $title, $identifier)
+    {
+        return [
+            'transaction'       => $transaction,
+            'activity_status'   => $activityStatus,
+            'recipient_region'  => $recipientRegion,
+            'recipient_country' => $recipientCountry,
+            'sector'            => $sector,
+            'title'             => $title,
+            'identifier'        => $identifier
+        ];
+    }
+
+    /**
+     * @param $activityData
+     * @param $jsonData
+     */
+    protected function saveActivityRegistryData($activityData, $jsonData)
+    {
+        return $this->activityRepo->saveActivityRegistryData($activityData, $jsonData);
+    }
+
+    /**
+     * @param $organizationId
+     * @return mixed
+     */
+    public function getDataForOrganization($organizationId)
+    {
+        return $this->activityRepo->getDataForOrganization($organizationId);
+    }
 }
