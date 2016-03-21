@@ -216,7 +216,7 @@ class XmlGenerator
 
         foreach ($published as $xml) {
             $addDom = new DOMDocument();
-            $file   = sprintf("%s/%s", config('filesystems.xml'), $xml);
+            $file = sprintf("%s%s", public_path() .'/files'. config('filesystems.xml'), $xml);
             $addDom->load($file);
             if ($addDom->documentElement) {
                 foreach ($addDom->documentElement->childNodes as $node) {
@@ -326,7 +326,7 @@ class XmlGenerator
         }
 
         foreach ($publishedActivities as $publishedActivityRow) {
-            $publishedActivityColumn = $publishedActivityRow->published_activities;
+            $publishedActivityColumn = $publishedActivityRow->published_activities ? $publishedActivityRow->published_activities : [];
 
             if (in_array($publishedActivity, $publishedActivityColumn)) {
                 unset($publishedActivityColumn[array_search($publishedActivity, $publishedActivityColumn)]);
