@@ -119,8 +119,8 @@
         function hamburgerMenu() {
             if ($(window).width() < 600) {
                 //responsive menu
-                $('.navbar-toggle').click(function(){
-                    $('.navbar-collapse').toggleClass('in');
+                $('.navbar-toggle.collapsed').click(function(){
+                    $('.navbar-collapse').toggleClass('out');
                     $(this).toggleClass('collapsed');
                 });
             }

@@ -92,138 +92,6 @@ h2 {
   color: inherit;
 }
 
-.navbar-default .navbar-toggle {
-  background: transparent;
-  border: none;
-  padding: 0;
-  &:hover, &:focus {
-    background: transparent;
-  }
-  .icon-bar {
-    width: 25px;
-    height: 3px;
-    background: $color_dodger_blue_approx;
-  }
-}
-
-/*
- * Support for: Chrome 36+, IE9+, Firefox, 16+, Safari 3.2+
-*/
-.navbar-toggle {
-  margin-top: 13px;
-  z-index: 3;
-}
-
-.navbar-toggle * {
-  -ms-transition: all 0.5s ease;
-  -webkit-transition: all 0.5s ease;
-  -moz-transition: all 0.5s ease;
-  -o-transition: all 0.5s ease;
-  transition: all 0.5s ease;
-}
-
-.navbar-toggle {
-  height: 20px;
-  width: 20px;
-  cursor: pointer;
-  padding: 0px;
-  border-radius: 0px;
-  border: none;
-}
-
-.navbar-toggle.collapsed span {
-  width: 20px;
-  height: 3px;
-  margin-bottom: 3px;
-  display: block;
-  background: $color_dodger_blue_approx;
-}
-
-.navbar-toggle span{
-  width: 20px;
-  height: 3px;
-  margin-bottom: 3px;
-  display: block;
-  background: $color_white;
-}
-
-.navbar-toggle span.bar1 {
-  -ms-transform: rotate(45deg);
-  -webkit-transform: rotate(45deg);
-  -moz-transform: rotate(45deg);
-  -o-transform: rotate(45deg);
-  transform: rotate(45deg);
-  -ms-transform-origin: 1px 1px;
-  -webkit-transform-origin: 1px 1px;
-  -moz-transform-origin: 1px 1px;
-  -o-transform-origin: 1px 1px;
-  transform-origin: 1px 1px;
-  width: 24px;
-}
-
-.navbar-toggle span.bar2 {
-  -ms-transform: rotate(-360deg) scale(0);
-  -webkit-transform: rotate(-360deg) scale(0);
-  -moz-transform: rotate(-360deg) scale(0);
-  -o-transform: rotate(-360deg) scale(0);
-  transform: rotate(-360deg) scale(0);
-}
-
-.navbar-toggle span.bar3 {
-  -ms-transform: rotate(-45deg);
-  -webkit-transform: rotate(-45deg);
-  transform: rotate(-45deg);
-  -ms-transform-origin: 5px 4px;
-  -webkit-transform-origin: 5px 4px;
-  -moz-transform-origin: 5px 4px;
-  -o-transform-origin: 5px 4px;
-  transform-origin: 5px 4px;
-  width: 24px;
-}
-
-.navbar-toggle.collapsed span.bar1,
-.navbar-toggle.collapsed span.bar2,
-.navbar-toggle.collapsed span.bar3 {
-  -ms-transform: none;
-  -webkit-transform: none;
-  transform: none;
-  width: 24px;
-}
-
-.navbar-default {
-  .navbar-collapse.in {
-    position: absolute;
-    background: rgba(18, 18, 18, 0.95);
-    position: absolute;
-    top: 0;
-    right: 0;
-    left: 0;
-    min-height: 470px;
-    z-index: 2;
-    text-align: center;
-    .navbar-nav {
-      margin-top: 100px;
-      border-top: 2px solid rgba(255, 255, 255, 0.1);
-      padding-top: 50px;
-      > li {
-        padding-bottom: 30px;
-        > a {
-          color: #fff;
-          font-size: 20px;
-          display: inline-block;
-          &:hover{
-            color: #B7B7B7;
-          }
-        }
-      }
-    }
-    .action-btn.pull-left {
-      text-align: center;
-      float: none !important;
-    }
-  }
-}
-
 .action-btn {
   margin-top: 4px;
   a {
@@ -772,6 +640,163 @@ footer {
     }
   }
 }
+
+@media all and (max-width: 599px){
+  .navbar-default .navbar-toggle {
+    background: transparent;
+    border: none;
+    padding: 0;
+    &:hover, &:focus {
+      background: transparent;
+    }
+    .icon-bar {
+      width: 25px;
+      height: 3px;
+      background: $color_dodger_blue_approx;
+    }
+  }
+
+  /*
+   * Support for: Chrome 36+, IE9+, Firefox, 16+, Safari 3.2+
+  */
+  .navbar-toggle {
+    margin-top: 13px;
+    z-index: 3;
+  }
+
+  .navbar-toggle * {
+    -ms-transition: all 0.5s ease;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+  }
+
+  .navbar-toggle {
+    height: 20px;
+    width: 20px;
+    cursor: pointer;
+    padding: 0px;
+    border-radius: 0px;
+    border: none;
+  }
+
+  .navbar-toggle.collapsed span {
+    width: 20px;
+    height: 3px;
+    margin-bottom: 3px;
+    display: block;
+    background: $color_dodger_blue_approx;
+  }
+
+  .navbar-toggle span{
+    width: 20px;
+    height: 3px;
+    margin-bottom: 3px;
+    display: block;
+    background: $color_white;
+  }
+
+  .navbar-toggle span.bar1 {
+    -ms-transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    -o-transform: rotate(45deg);
+    transform: rotate(45deg);
+    -ms-transform-origin: 1px 1px;
+    -webkit-transform-origin: 1px 1px;
+    -moz-transform-origin: 1px 1px;
+    -o-transform-origin: 1px 1px;
+    transform-origin: 1px 1px;
+    width: 24px;
+  }
+
+  .navbar-toggle span.bar2 {
+    -ms-transform: rotate(-360deg) scale(0);
+    -webkit-transform: rotate(-360deg) scale(0);
+    -moz-transform: rotate(-360deg) scale(0);
+    -o-transform: rotate(-360deg) scale(0);
+    transform: rotate(-360deg) scale(0);
+  }
+
+  .navbar-toggle span.bar3 {
+    -ms-transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+    -ms-transform-origin: 5px 4px;
+    -webkit-transform-origin: 5px 4px;
+    -moz-transform-origin: 5px 4px;
+    -o-transform-origin: 5px 4px;
+    transform-origin: 5px 4px;
+    width: 24px;
+  }
+
+  .navbar-toggle.collapsed span.bar1,
+  .navbar-toggle.collapsed span.bar2,
+  .navbar-toggle.collapsed span.bar3 {
+    -ms-transform: none;
+    -webkit-transform: none;
+    transform: none;
+    width: 24px;
+  }
+
+  .navbar-default {
+    .navbar-collapse{
+      position: absolute;
+      background: rgba(18, 18, 18, 0.95);
+      top: 0;
+      right: 0;
+      left: 0;
+      min-height: 470px;
+      text-align: center;
+      opacity: 0;
+      pointer-events: none;
+      -webkit-transition: all .2s ease-in-out;
+      -moz-transition: all .2s ease-in-out;
+      -ms-transition: all .2s ease-in-out;
+      -o-transition: all .2s ease-in-out;
+      transition: all .2s ease-in-out;
+      .navbar-nav{
+        margin-top: 100px;
+        border-top: 2px solid rgba(255, 255, 255, 0.1);
+        padding-top: 50px;
+        > li{
+          padding-bottom: 30px;
+          color: #fff;
+          > a{
+            font-size: 20px;
+            line-height: 2;
+            color: #fff;
+            text-decoration: none;
+            border-bottom: 2px solid transparent;
+            -webkit-transition: all .2s linear;
+            -moz-transition: all .2s linear;
+            -ms-transition: all .2s linear;
+            -o-transition: all .2s linear;
+            transition: all .2s linear;
+            display: inline-block;
+            padding-bottom: 0;
+            &:hover{
+              color: #B7B7B7;
+              border-bottom: 2px solid #fff;
+            }
+          }
+        }
+      }
+      .action-btn.pull-left {
+        text-align: center;
+        float: none !important;
+      }
+    }
+    .navbar-collapse.out{
+      z-index: 1;
+      opacity: 1;
+      pointer-events: auto;
+    }
+  }
+}
+
+
 
 
 

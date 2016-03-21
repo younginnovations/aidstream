@@ -11,14 +11,10 @@
                 @include('includes.response')
             @endif
             @include('includes.errors')
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <div><span>Current Username : </span>{{Auth::user()->username}}</div>
-                    <div><span>Email : </span>{{Auth::user()->email}}</div>
+                <div class="element-panel-heading">
+                    <div>Change Username</div>
                 </div>
-            </div>
-            <div class="panel-content-heading panel-title-heading">Change Password</div>
-            <div class="col-xs-12 col-md-8 col-lg-8 element-content-wrapper">
+            <div class="col-xs-12 col-md-8 col-lg-8 element-content-wrapper profile-content-wrapper">
                 <div class="create-form create-user-form">
                     <form class="form-horizontal" role="form" method="POST"
                           action="{{ route('user.update-user-password', $user->id)}}">
