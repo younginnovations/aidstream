@@ -15,7 +15,7 @@ trait ResetsOldPassword
      */
     protected function requiresPasswordReset($credentials)
     {
-        if ($this->exists($credentials['username'])->withOld($credentials['password'])) {
+        if ($this->exists($credentials)->withOld($credentials['password'])) {
             return true;
         }
 
@@ -24,12 +24,14 @@ trait ResetsOldPassword
 
     /**
      * Check if the attempting User's username exists on the Aidstream database.
-     * @param $username
+     * @param $credentials
      * @return $this
      */
-    protected function exists($username)
+    protected function exists($credentials)
     {
-        $this->attemptingUser = $this->user->where('username', '=', $username)->first();
+        $this->attemptingUser = array_key_exists('username', $credentials)
+            ? $this->user->where('username', '=', $credentials['username'])->first()
+            : $this->user->where('email', '=', $credentials['email'])->first();
 
         return $this;
     }
