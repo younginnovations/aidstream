@@ -2,6 +2,7 @@
 
 use App\Core\Version;
 use App\Models\Activity\Activity;
+use Exception;
 use Illuminate\Contracts\Auth\Guard;
 use Psr\Log\LoggerInterface;
 use Illuminate\Contracts\Logging\Log;
@@ -38,9 +39,9 @@ class LegacyDataManager
      */
     public function __construct(Version $version, Log $dbLogger, Guard $auth, LoggerInterface $logger)
     {
-        $this->auth                 = $auth;
-        $this->dbLogger             = $dbLogger;
-        $this->logger               = $logger;
+        $this->auth           = $auth;
+        $this->dbLogger       = $dbLogger;
+        $this->logger         = $logger;
         $this->iatiLegacyRepo = $version->getActivityElement()->getLegacyData()->getRepository();
     }
 

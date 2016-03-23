@@ -19,7 +19,7 @@ class ActivityManager
      */
     protected $auth;
     /**
-     * @var Log
+     * @var Logger
      */
     protected $logger;
     /**
@@ -296,7 +296,6 @@ class ActivityManager
 
         $jsonData = $this->convertIntoJson($transaction, $activityStatus, $recipientRegion, $recipientCountry, $sector, $title, $identifier);
         $this->saveActivityRegistryData($activityData, $jsonData);
-
     }
 
     /**
@@ -395,11 +394,11 @@ class ActivityManager
             }
         }
 
-
         return $arrays;
     }
 
     /**
+     * Convert the given values into a json(array).
      * @param $transaction
      * @param $activityStatus
      * @param $recipientRegion
@@ -423,6 +422,7 @@ class ActivityManager
     }
 
     /**
+     * Save the Activity registry data.
      * @param $activityData
      * @param $jsonData
      */

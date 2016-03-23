@@ -13,11 +13,29 @@ use Exception;
  */
 class UploadActivityManager
 {
+    /**
+     * @var Guard
+     */
     protected $auth;
+    /**
+     * @var Version
+     */
     protected $version;
+    /**
+     * @var Log
+     */
     protected $dbLogger;
+    /**
+     * @var Logger
+     */
     protected $logger;
+    /**
+     * @var
+     */
     protected $activityRepo;
+    /**
+     * @var
+     */
     protected $uploadActivityRepo;
     /**
      * @var DatabaseManager

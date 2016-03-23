@@ -49,7 +49,7 @@ class UploadTransactionManager
     }
 
     /**
-     * prepared the data and save uploaded transaction
+     * Prepare the data and save uploaded transaction.
      * @param          $transactionCsv
      * @param Activity $activity
      * @return bool
@@ -91,7 +91,7 @@ class UploadTransactionManager
     }
 
     /**
-     * check if the uploaded csv is empty or not
+     * Check if the uploaded csv is empty or not
      * @param $transactionCsv
      * @return bool
      */
@@ -108,7 +108,7 @@ class UploadTransactionManager
     }
 
     /**
-     * check of the uploaded csv is detailed or not
+     * Check of the uploaded csv is detailed or not.
      * @param $transactionCsv
      * @return bool
      */
@@ -125,7 +125,7 @@ class UploadTransactionManager
     }
 
     /**
-     * check if the uploaded csv is simple or not
+     * Check if the uploaded csv is simple or not.
      * @param $transactionCsv
      * @return bool
      */
@@ -142,7 +142,7 @@ class UploadTransactionManager
     }
 
     /**
-     * get transaction csv
+     * Get transaction csv
      * @param $transactionCsv
      * @return \Maatwebsite\Excel\Readers\LaravelExcelReader
      */

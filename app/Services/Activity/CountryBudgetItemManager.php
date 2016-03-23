@@ -2,9 +2,11 @@
 
 use App\Core\Version;
 use App\Models\Activity\Activity;
+use Exception;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Logging\Log as Logger;
 use Illuminate\Database\DatabaseManager;
+use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class CountryBudgetItemManager
@@ -85,7 +87,7 @@ class CountryBudgetItemManager
 
     /**
      * @param $id
-     * @return model
+     * @return Model
      */
     public function getCountryBudgetItemData($id)
     {

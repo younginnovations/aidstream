@@ -2,8 +2,10 @@
 
 use App\Core\Version;
 use App\Models\Activity\Activity;
+use Exception;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Logging\Log;
+use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class TitleManager
@@ -55,7 +57,7 @@ class TitleManager
             $this->log->activity(
                 "activity.title_updated",
                 [
-                    'activity_id' => $activity->id,
+                    'activity_id'     => $activity->id,
                     'organization'    => $this->auth->user()->organization->name,
                     'organization_id' => $this->auth->user()->organization->id
                 ]
@@ -77,7 +79,7 @@ class TitleManager
 
     /**
      * @param $id
-     * @return model
+     * @return Model
      */
     public function getTitleData($id)
     {
@@ -86,11 +88,10 @@ class TitleManager
 
     /**
      * @param $id
-     * @return model
+     * @return Model
      */
     public function getActivityData($id)
     {
         return $this->iatiTitleRepo->getActivityData($id);
-
     }
 }

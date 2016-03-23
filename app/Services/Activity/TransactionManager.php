@@ -40,7 +40,6 @@ class TransactionManager
      */
     public function __construct(Version $version, Guard $auth, DbLogger $dbLogger, Logger $logger)
     {
-
         $this->auth            = $auth;
         $this->logger          = $logger;
         $this->dbLogger        = $dbLogger;

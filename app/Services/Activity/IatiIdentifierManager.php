@@ -2,8 +2,10 @@
 
 use App\Core\Version;
 use App\Models\Activity\Activity;
+use Exception;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Logging\Log;
+use Illuminate\Database\Eloquent\Model;
 
 class IatiIdentifierManager
 {
@@ -75,7 +77,7 @@ class IatiIdentifierManager
 
     /**
      * @param $id
-     * @return model
+     * @return Model
      */
     public function getIatiIdentifierData($id)
     {
@@ -84,7 +86,7 @@ class IatiIdentifierManager
 
     /**
      * @param $id
-     * @return model
+     * @return Model
      */
     public function getActivityData($id)
     {
