@@ -38,9 +38,9 @@ class RelatedActivityController extends Controller
 
     public function update($id, Request $request, RelatedActivityRequestManager $relatedActivityRequestManager)
     {
-        $this->authorize(['edit_activity', 'add_activity']);
-        $relatedActivity = $request->all();
         $activityData    = $this->activityManager->getActivityData($id);
+        $this->authorizeByRequestType($activityData, 'related_activity');
+        $relatedActivity = $request->all();
         if ($this->relatedActivityManager->update($relatedActivity, $activityData)) {
             $this->activityManager->resetActivityWorkflow($id);
             $response = ['type' => 'success', 'code' => ['updated', ['name' => 'Related Activity']]];

@@ -65,7 +65,8 @@ class ActivityDateController extends Controller
      */
     public function update($id, Request $request, ActivityDateRequestManager $activityDateRequestManager)
     {
-        $this->authorize(['edit_activity', 'add_activity']);
+        $activityData = $this->activityManager->getActivityData($id);
+        $this->authorizeByRequestType($activityData, 'activity_date');
         $activityDate = $request->all();
         $messages     = $this->validateData($request->get('activity_date'));
         if ($messages) {
@@ -73,7 +74,6 @@ class ActivityDateController extends Controller
 
             return redirect()->back()->withInput()->withResponse($response);
         }
-        $activityData = $this->activityManager->getActivityData($id);
         if ($this->activityDateManager->update($activityDate, $activityData)) {
             $this->activityManager->resetActivityWorkflow($id);
             $response = ['type' => 'success', 'code' => ['updated', ['name' => 'Activity Date']]];

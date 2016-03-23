@@ -76,7 +76,8 @@ class RecipientCountryController extends Controller
      */
     public function update($id, Request $request, RecipientCountryRequestManager $recipientCountryRequestManager)
     {
-        $this->authorize(['edit_activity', 'add_activity']);
+        $activityData     = $this->activityManager->getActivityData($id);
+        $this->authorizeByRequestType($activityData, 'recipient_country');
         $activityTransactions = $this->transactionManager->getTransactions($id);
         $count                = 0;
         if ($activityTransactions) {
@@ -99,7 +100,6 @@ class RecipientCountryController extends Controller
         }
 
         $recipientCountry = $request->all();
-        $activityData     = $this->activityManager->getActivityData($id);
         if ($this->recipientCountryManager->update($recipientCountry, $activityData)) {
             $this->activityManager->resetActivityWorkflow($id);
             $response = ['type' => 'success', 'code' => ['updated', ['name' => 'Recipient Country']]];

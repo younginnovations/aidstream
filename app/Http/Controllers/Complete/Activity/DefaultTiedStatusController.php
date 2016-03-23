@@ -62,9 +62,9 @@ class DefaultTiedStatusController extends Controller
      */
     public function update($id, Request $request, DefaultTiedStatusRequestManager $defaultTiedStatusRequestManager)
     {
-        $this->authorize(['edit_activity', 'add_activity']);
-        $defaultTiedStatus = $request->all();
         $activityData      = $this->activityManager->getActivityData($id);
+        $this->authorizeByRequestType($activityData, 'default_tied_status');
+        $defaultTiedStatus = $request->all();
         if ($this->defaultTiedStatusManager->update($defaultTiedStatus, $activityData)) {
             $this->activityManager->resetActivityWorkflow($id);
             $response = ['type' => 'success', 'code' => ['updated', ['name' => 'Default Tied Status']]];

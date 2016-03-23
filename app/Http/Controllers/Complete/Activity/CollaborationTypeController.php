@@ -62,9 +62,9 @@ class CollaborationTypeController extends Controller
      */
     public function update($id, Request $request, CollaborationTypeRequestManager $collaborationTypeRequestManager)
     {
-        $this->authorize(['edit_activity', 'add_activity']);
-        $collaborationType = $request->all();
         $activityData      = $this->activityManager->getActivityData($id);
+        $this->authorizeByRequestType($activityData, 'collaboration_type');
+        $collaborationType = $request->all();
         if ($this->collaborationTypeManager->update($collaborationType, $activityData)) {
             $this->activityManager->resetActivityWorkflow($id);
             $response = ['type' => 'success', 'code' => ['updated', ['name' => 'Collaboration Type']]];

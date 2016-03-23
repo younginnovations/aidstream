@@ -49,9 +49,9 @@ class PlannedDisbursementController extends Controller
      */
     public function update($id, Request $request, PlannedDisbursementRequestManager $plannedDisbursementRequestManager)
     {
-        $this->authorize(['edit_activity', 'add_activity']);
-        $plannedDisbursement = $request->all();
         $activityData        = $this->activityManager->getActivityData($id);
+        $this->authorizeByRequestType($activityData, 'planned_disbursement');
+        $plannedDisbursement = $request->all();
         if ($this->plannedDisbursementManager->update($plannedDisbursement, $activityData)) {
             $this->activityManager->resetActivityWorkflow($id);
             $response = ['type' => 'success', 'code' => ['updated', ['name' => 'Planned Disbursement']]];

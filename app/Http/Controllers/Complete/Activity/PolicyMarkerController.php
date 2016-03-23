@@ -48,9 +48,9 @@ class PolicyMarkerController extends Controller
      */
     public function update($id, Request $request, PolicyMarkerRequestManager $policyMarkerRequestManager)
     {
-        $this->authorize(['edit_activity', 'add_activity']);
-        $policyMarker = $request->all();
         $activityData = $this->activityManager->getActivityData($id);
+        $this->authorizeByRequestType($activityData, 'policy_marker');
+        $policyMarker = $request->all();
         if ($this->policyMarkerManager->update($policyMarker, $activityData)) {
             $this->activityManager->resetActivityWorkflow($id);
             $response = ['type' => 'success', 'code' => ['updated', ['name' => 'Policy Marker']]];

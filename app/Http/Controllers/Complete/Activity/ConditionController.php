@@ -32,9 +32,9 @@ class ConditionController extends Controller
 
     public function update($id, Request $request, ConditionRequestManager $conditionRequestManager)
     {
-        $this->authorize(['edit_activity', 'add_activity']);
-        $condition    = $request->except(['_token', '_method']);
         $activityData = $this->activityManager->getActivityData($id);
+        $this->authorizeByRequestType($activityData, 'conditions');
+        $condition    = $request->except(['_token', '_method']);
         if ($this->conditionManager->update($condition, $activityData)) {
             $this->activityManager->resetActivityWorkflow($id);
             $response = ['type' => 'success', 'code' => ['updated', ['name' => 'Conditions']]];

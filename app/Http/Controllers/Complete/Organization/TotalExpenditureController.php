@@ -61,8 +61,9 @@ class TotalExpenditureController extends Controller
      */
     public function update($orgId, Request $request, TotalExpenditureRequestManager $expenditureRequestManager)
     {
-        $totalExpenditure = $request->all();
         $organizationData = $this->totalExpenditureManager->getOrganizationData($orgId);
+        $this->authorizeByRequestType($organizationData, 'total_expenditure');
+        $totalExpenditure = $request->all();
 
         if ($this->totalExpenditureManager->update($totalExpenditure, $organizationData)) {
             $this->organizationManager->resetStatus($orgId);

@@ -66,9 +66,9 @@ class DocumentLinkController extends Controller
      */
     public function update($id, Request $request, DocumentLinkRequestManager $documentLinkRequestManager, DocumentManager $documentManager, DatabaseManager $database)
     {
-        $this->authorize(['edit_activity', 'add_activity']);
-        $documentLinks = $request->all();
         $activityData  = $this->activityManager->getActivityData($id);
+        $this->authorizeByRequestType($activityData, 'document_link');
+        $documentLinks = $request->all();
 
         $dbDocumentLinks = (array) $this->documentLinkManager->getDocumentLinkData($id);
 

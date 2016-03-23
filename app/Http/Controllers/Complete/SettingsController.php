@@ -69,6 +69,19 @@ class SettingsController extends Controller
      */
     public function index(FormBuilder $formBuilder, DatabaseManager $databaseManager)
     {
+        $currentUser = auth()->user();
+
+        if ($currentUser->isNotAdmin()) {
+            return redirect()->back()->withResponse(
+                [
+                    'type' => 'warning',
+                    'code' => [
+                        'message',
+                        ['message' => 'You do not have the correct privileges to view this page.']
+                    ]
+                ]
+            );
+        }
         $db_versions = $databaseManager->table('versions')->get();
         $versions    = [];
 

@@ -10,7 +10,7 @@
                 @include('includes.response')
                 <div class="element-panel-heading">
                     <div>
-                        <span>Default Tied Type</span>
+                        <span>Default Tied Status</span>
                         <div class="element-panel-heading-info"><span>{{$activityData->IdentifierTitle}}</span></div>
                     </div>
                     <div class="panel-action-btn">

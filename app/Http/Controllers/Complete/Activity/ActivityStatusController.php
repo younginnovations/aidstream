@@ -68,9 +68,9 @@ class ActivityStatusController extends Controller
      */
     public function update($id, Request $request, ActivityStatusRequestManager $activityStatusRequestManager)
     {
-        $this->authorize(['edit_activity', 'add_activity']);
-        $activityStatus = $request->all();
         $activityData   = $this->activityManager->getActivityData($id);
+        $this->authorizeByRequestType($activityData, 'activity_status');
+        $activityStatus = $request->all();
         if ($this->activityStatusManager->update($activityStatus, $activityData)) {
             $this->activityManager->resetActivityWorkflow($id);
             $response = ['type' => 'success', 'code' => ['updated', ['name' => 'Activity Status']]];

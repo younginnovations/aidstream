@@ -66,9 +66,9 @@ class OtherIdentifierController extends Controller
      */
     public function update(OtherIdentifierRequestManager $otherIdentifierRequestManager, Request $request, $id)
     {
-        $this->authorize(['edit_activity', 'add_activity']);
-        $input        = $request->all();
         $activityData = $this->otherIdentifierManager->getActivityData($id);
+        $this->authorizeByRequestType($activityData, 'other_identifier');
+        $input = $request->all();
         if ($this->otherIdentifierManager->update($input, $activityData)) {
             $this->activityManager->resetActivityWorkflow($id);
             $response = ['type' => 'success', 'code' => ['updated', ['name' => 'Other Activity Identifier']]];

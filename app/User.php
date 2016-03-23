@@ -167,4 +167,13 @@ class User extends Model implements AuthorizableContract, AuthenticatableContrac
 
         return $users;
     }
+
+    /**
+     * Check if the current User is not an Admin user.
+     * @return bool
+     */
+    public function isNotAdmin()
+    {
+        return (!$this->isAdmin() && !$this->isGroupAdmin() && !$this->isSuperAdmin());
+    }
 }

@@ -75,7 +75,8 @@ class RecipientRegionController extends Controller
      */
     public function update($id, Request $request, RecipientRegionRequestManager $recipientRegionRequestManager)
     {
-        $this->authorize(['edit_activity', 'add_activity']);
+        $activityData = $this->activityManager->getActivityData($id);
+        $this->authorizeByRequestType($activityData, 'recipient_region');
         $activityTransactions = $this->transactionManager->getTransactions($id);
         $count                = 0;
         if ($activityTransactions) {
@@ -100,7 +101,6 @@ class RecipientRegionController extends Controller
         foreach ($recipientRegions['recipient_region'] as &$recipientRegion) {
             ($recipientRegion['region_vocabulary'] != '') ?: $recipientRegion['region_vocabulary'] = '1';
         }
-        $activityData = $this->activityManager->getActivityData($id);
         if ($this->recipientRegionManager->update($recipientRegions, $activityData)) {
             $this->activityManager->resetActivityWorkflow($id);
             $response = ['type' => 'success', 'code' => ['updated', ['name' => 'Recipient Region']]];

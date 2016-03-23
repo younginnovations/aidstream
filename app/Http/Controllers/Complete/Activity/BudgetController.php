@@ -38,9 +38,9 @@ class BudgetController extends Controller
 
     public function update($id, Request $request, BudgetRequestManager $budgetRequestManager)
     {
-        $this->authorize(['edit_activity', 'add_activity']);
-        $budget       = $request->all();
         $activityData = $this->activityManager->getActivityData($id);
+        $this->authorizeByRequestType($activityData, 'budget');
+        $budget = $request->all();
         if ($this->budgetManager->update($budget, $activityData)) {
             $this->activityManager->resetActivityWorkflow($id);
             $response = ['type' => 'success', 'code' => ['updated', ['name' => 'Budget']]];

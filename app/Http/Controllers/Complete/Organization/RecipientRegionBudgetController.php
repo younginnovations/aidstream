@@ -59,8 +59,9 @@ class RecipientRegionBudgetController extends Controller
      */
     public function update($orgId, RecipientRegionBudgetRequest $recipientRegionBudgetRequest, Request $request)
     {
-        $input            = $request->all();
         $organizationData = $this->recipientRegionBudgetManager->getOrganizationData($orgId);
+        $this->authorizeByRequestType($organizationData, 'recipient_region_budget');
+        $input            = $request->all();
 
         if ($this->recipientRegionBudgetManager->update($input, $organizationData)) {
             $this->organizationManager->resetStatus($orgId);

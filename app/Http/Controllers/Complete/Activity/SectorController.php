@@ -65,7 +65,8 @@ class SectorController extends Controller
      */
     public function update($id, Request $request, SectorRequestManager $sectorRequestManager)
     {
-        $this->authorize(['edit_activity', 'add_activity']);
+        $activityData = $this->activityManager->getActivityData($id);
+        $this->authorizeByRequestType($activityData, 'sector');
         $sectors = $request->all();
         foreach ($sectors['sector'] as &$sector) {
             if ($sector['sector_vocabulary'] == 1 || $sector['sector_vocabulary'] == '') {
@@ -79,7 +80,6 @@ class SectorController extends Controller
                 $sector['sector_category_code'] = '';
             }
         }
-        $activityData = $this->activityManager->getActivityData($id);
         if ($this->sectorManager->update($sectors, $activityData)) {
             $this->activityManager->resetActivityWorkflow($id);
             $response = ['type' => 'success', 'code' => ['updated', ['name' => 'Sector']]];

@@ -63,9 +63,9 @@ class TitleController extends Controller
      */
     public function update($id, Request $request, TitleRequestManager $titleRequestManager)
     {
-        $this->authorize(['edit_activity', 'add_activity']);
+        $activityData = $this->titleManager->getActivityData($id);
+        $this->authorizeByRequestType($activityData, 'title');
         $activityTitle = $request->all();
-        $activityData  = $this->titleManager->getActivityData($id);
         if ($this->titleManager->update($activityTitle, $activityData)) {
             $this->activityManager->resetActivityWorkflow($id);
             $response = ['type' => 'success', 'code' => ['updated', ['name' => 'Activity Title']]];

@@ -62,9 +62,9 @@ class DefaultAidTypeController extends Controller
      */
     public function update($id, Request $request, DefaultAidTypeRequestManager $defaultAidTypeRequestManager)
     {
-        $this->authorize(['edit_activity', 'add_activity']);
-        $defaultAidType = $request->all();
         $activityData   = $this->activityManager->getActivityData($id);
+        $this->authorizeByRequestType($activityData, 'default_aid_type');
+        $defaultAidType = $request->all();
         if ($this->defaultAidTypeManager->update($defaultAidType, $activityData)) {
             $this->activityManager->resetActivityWorkflow($id);
             $response = ['type' => 'success', 'code' => ['updated', ['name' => 'Default Aid Type']]];

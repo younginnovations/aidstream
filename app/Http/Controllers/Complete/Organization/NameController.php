@@ -52,8 +52,9 @@ class NameController extends Controller
      */
     public function update($orgId, NameRequestManager $nameRequestManager, Request $request)
     {
-        $input            = $request->all();
         $organizationData = $this->nameManager->getOrganizationData($orgId);
+        $this->authorizeByRequestType($organizationData, 'name');
+        $input            = $request->all();
 
         if ($this->nameManager->update($input, $organizationData)) {
 

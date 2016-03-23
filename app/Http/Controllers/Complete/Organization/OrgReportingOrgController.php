@@ -67,6 +67,7 @@ class OrgReportingOrgController extends Controller
         CreateOrgReportingOrgRequestManager $createOrgReportingOrgRequestManager,
         Request $request
     ) {
+        $this->authorize('edit_activity');
         $input        = $request->all();
         $organization = $this->organizationManager->getOrganization($organizationId);
         $this->orgReportingOrgManager->update($input, $organization);
