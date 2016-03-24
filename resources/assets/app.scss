@@ -52,8 +52,26 @@ $url_3: url(../../images/ic-sprite.png);
 $url_4: url(../../images/ic-status-sprite.png);
 $url_5: url(../../images/ic-no-activity.png);
 $url_6: url(../../images/ic-no-document.png);
-$url_7: url(../../images/ic-no-user.png);
+//$url_7: url(../../images/ic-no-user.png);
 $url_8: url(../../images/404page.png);
+$url_9: url(../../images/ic-top-arrow.png);
+
+@mixin at2x($path, $ext: "jpg", $w: auto, $h: auto) {
+  $at1x_path: "#{$path}.#{$ext}";
+  $at2x_path: "#{$path}@2x.#{$ext}";
+
+  background-image: url("#{$at1x_path}");
+  background-repeat: no-repeat;
+
+  @media all and (-webkit-min-device-pixel-ratio: 1.5),
+  all and (-o-min-device-pixel-ratio: 3/2),
+  all and (min--moz-device-pixel-ratio: 1.5),
+  all and (min-device-pixel-ratio: 1.5) {
+    background-image: url("#{$at2x_path}");
+    background-repeat: no-repeat;
+    background-size: $w $h;
+  }
+}
 
 html, body {
   height: 100%;
@@ -114,6 +132,20 @@ select.form-control, form .select2-container {
 
 .select2-container {
   width: 100% !important;
+  height: auto !important;
+}
+
+.admin-container .select2-container {
+  padding: 1px !important;
+}
+
+.select2-search__field {
+  height: auto !important;
+}
+
+.select2-container--default .select2-selection--multiple, .select2-container--default.select2-container--focus .select2-selection--multiple {
+  border: 0 !important;
+  background: none !important;
 }
 
 .has-error {
@@ -307,7 +339,7 @@ label {
 
 .login-wrapper {
   background: $url_1 no-repeat bottom/cover;
-  padding-bottom: 80px;
+  padding: 80px 0;
   min-height: 100%;
   .language-select-wrapper {
     float: right;
@@ -408,12 +440,14 @@ label {
 }
 
 .checkbox label {
-  padding-left: 16px;
+  padding-left: 19px;
 }
 
 .checkbox input[type=checkbox] {
   left: 0;
-  margin-left: 0;
+  margin: 2px 0 0;
+  width: 14px;
+  height: 14px;
 }
 
 .btn-submit {
@@ -529,6 +563,9 @@ label {
 }
 
 // navbar
+.navbar.navbar-static {
+  padding: 14px 30px;
+}
 
 .navbar-default {
   background: $color_white;
@@ -650,7 +687,7 @@ label {
   }
 }
 
-a.version-text{
+a.version-text {
   padding: 7px 10px;
   line-height: normal !important;
 }
@@ -713,7 +750,7 @@ a.version-text{
     padding: 12px 0;
     display: block;
     color: #fff;
-    &:hover{
+    &:hover {
       &:before {
         border-bottom-color: #484848;
       }
@@ -842,7 +879,8 @@ a.version-text{
       white-space: nowrap;
       &:before {
         content: "";
-        background: $url_3 no-repeat -73px 0;
+        @include at2x('../../images/ic-sprite', png);
+        background-position: -73px 0;
         width: 34px;
         height: 34px;
         @include position(absolute, 24% auto auto 16px);
@@ -1127,19 +1165,20 @@ $full-sidebar-wrapper-width: 210px;
 .delete {
   @extend %extend_3;
   height: 23px;
-  background-position: -227px -332px;
+  background-position: -229px -332px;
   &:hover {
-    background-position: -228px -390px;
+    background-position: -230px -390px;
   }
 }
 
 .edit {
   @extend %extend_3;
   height: 23px;
-  width: 24px;
-  background-position: -308px -336px;
+  width: 14px;
+  margin-right: 6px;
+  background-position: -311px -335px;
   &:hover {
-    background-position: -301px -393px;
+    background-position: -304px -393px;
   }
 }
 
@@ -1151,6 +1190,34 @@ $full-sidebar-wrapper-width: 210px;
   background-position: -390px -334px;
   &:hover {
     background-position: -390px -394px;
+  }
+}
+
+.check-status {
+  @extend %extend_3;
+  height: 23px;
+  width: 24px;
+  &.Disable {
+    background-position: -450px -661px;
+    &:hover {
+      background-position: -393px -661px;
+    }
+  }
+  &.Enable {
+    background-position: -393px -661px;
+    &:hover {
+      background-position: -450px -661px;
+    }
+  }
+}
+
+.masquerade {
+  @extend %extend_3;
+  height: 23px;
+  width: 24px;
+  background-position: -289px -663px;
+  &:hover {
+    background-position: -332px -663px;
   }
 }
 
@@ -1187,13 +1254,14 @@ $full-sidebar-wrapper-width: 210px;
 }
 
 .no-user-data {
-  background: rgba($color_gravel_approx, 0.06) $url_7 no-repeat center 79px;
+  @include at2x('../../images/ic-no-user', png, 203px, 115px);
+  background-position: center 79px;
   padding: 204px 0 20px;
 }
 
 .element-panel-heading {
   background: $color_concrete;
-  padding: 8px 15px 8px 37px;
+  padding: 8px 15px 14px 37px;
   display: inline-block;
   width: 100%;
   height: 63px;
@@ -1208,7 +1276,6 @@ $full-sidebar-wrapper-width: 210px;
     vertical-align: middle;
     &:first-of-type {
       width: 80%;
-      padding-right: 20px;
     }
     > span {
       font-size: 20px;
@@ -1716,7 +1783,7 @@ $element-sidebar-wrapper-width: 267px;
 
 .create-form {
   position: relative;
-  padding-bottom: 80px;
+  padding-bottom: 120px;
   clear: both;
   > form {
     background: $color_romance_approx;
@@ -1903,14 +1970,13 @@ form > .add_to_collection[data-collection="legacy_data"] {
   clear: both;
 }
 
-.create-form .btn-form, .create-form .btn-cancel {
-  position: absolute;
-  bottom: 30px;
-  left: 36px;
+.create-form .btn-form {
+  @include position(absolute, auto auto 70px 36px);
 }
 
 .create-form .btn-cancel {
-  left: 296px;
+  position: absolute;
+  bottom: 0;
 }
 
 .modal-dialog {
@@ -2118,6 +2184,9 @@ form > .add_to_collection[data-collection="legacy_data"] {
   .create-form {
     border: 0;
     padding-bottom: 0;
+    > form > .form-group {
+      padding-right: 20px;
+    }
   }
   form {
     overflow: hidden;
@@ -2138,6 +2207,8 @@ form > .add_to_collection[data-collection="legacy_data"] {
     display: inline-block;
     vertical-align: middle;
     float: none;
+    font-size: 14px;
+    width: 292px;
   }
   > div {
     width: calc(100% - 370px);
@@ -2146,7 +2217,7 @@ form > .add_to_collection[data-collection="legacy_data"] {
     font-weight: normal;
     display: inline-block;
     vertical-align: middle;
-    margin-left: 44px;
+    margin-left: 40px;
     line-height: 18px;
   }
 }
@@ -2284,11 +2355,11 @@ form > .add_to_collection[data-collection="legacy_data"] {
   .panel-body {
     margin-bottom: 50px;
   }
-  .form-group{
+  .form-group {
     padding-left: 0;
   }
-  form > div{
-    &:last-child{
+  form > div {
+    &:last-child {
       padding-left: 0;
     }
   }
@@ -2375,6 +2446,9 @@ $organization-logo-width: 124px;
 .profile-info {
   margin: 36px 0 0 20px;
   float: left;
+  a {
+    font-size: 12px;
+  }
 }
 
 .profile-username {
@@ -2402,6 +2476,10 @@ $organization-logo-width: 124px;
       background-position: -221px -261px;
     }
   }
+}
+
+.form-password-group {
+  clear: both;
 }
 
 .disqus-wrapper {
@@ -2479,11 +2557,10 @@ $organization-logo-width: 124px;
 
 .result-content-wrapper {
   padding: 0;
+  > .panel .panel-body {
+    padding: 014px;
+  }
 }
-
-//.border-line > .form-group {
-//  border-left: 4px solid $color_emerald_approx!important;
-//}
 
 .duplicate-activity-description {
   margin: 0 36px;
@@ -2609,8 +2686,6 @@ div[class*="panel-level-"] .panel > .panel-body {
 .add-dropdown {
   background: none !important;
   margin-top: 5px;
-  display: table-cell;
-  vertical-align: middle;
   span.btn {
     .caret {
       margin-left: 4px;
@@ -2641,10 +2716,10 @@ div[class*="panel-level-"] .panel > .panel-body {
   top: 40px;
   border-radius: 4px;
   width: 240px !important;
-  li{
-    &:first-child{
-      a{
-        &:hover{
+  li {
+    &:first-child {
+      a {
+        &:hover {
           border-top-left-radius: 4px;
           border-top-right-radius: 4px;
           border-bottom-left-radius: 0;
@@ -2652,9 +2727,9 @@ div[class*="panel-level-"] .panel > .panel-body {
         }
       }
     }
-    &:last-child{
-      a{
-        &:hover{
+    &:last-child {
+      a {
+        &:hover {
           border-top-left-radius: 0;
           border-top-right-radius: 0;
           border-bottom-left-radius: 4px;
@@ -2672,12 +2747,16 @@ div[class*="panel-level-"] .panel > .panel-body {
   display: block;
 }
 
+.add-dropdown .dropdown {
+  display: inline-block;
+}
+
 .check-all-btn {
   margin-top: 14px;
 }
 
 .panel-action-btn {
-  margin-top: 2px;
+  margin-top: 8px;
 }
 
 .panel-body:after {
@@ -2860,6 +2939,94 @@ div[class*="panel-level-"] .panel > .panel-body {
   width: calc(100% - 267px);
 }
 
+.organization_actions a {
+  margin-left: 10px;
+  &:first-child {
+    margin-left: 0;
+  }
+}
+
+.inner-form-wrapper {
+  background: $color_romance_approx;
+  border: 1px solid #efefef;
+  border-radius: 4px;
+  margin-bottom: 12px;
+  padding-bottom: 25px;
+  clear: both;
+  overflow: hidden;
+  padding: 25px 20px 20px 20px;
+  .form-group:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.inner-form-wrapper:not(.checkall-wrapper) {
+  > .form-group > label {
+    display: block;
+    color: #484848;
+    font-size: 18px;
+    padding-bottom: 12px;
+  }
+}
+
+.admin-container .create-form {
+  padding: 20px 0 0;
+  margin-bottom: 0;
+}
+
+.checkall-wrapper {
+  > .form-group:nth-child(2) {
+    border-bottom: 1px solid rgba(151, 151, 151, 0.1);
+    padding-bottom: 4px;
+    overflow: hidden;
+  }
+  h2 {
+    font: 18px $font_0;
+  }
+  .form-group:nth-child(3) > .form-group > .form-group {
+    margin-top: 35px;
+    > label {
+      color: $color_gravel_approx;
+    }
+    > .form-group {
+      margin-bottom: 0;
+    }
+  }
+  .form-group:nth-child(3) > .form-group > .form-group:nth-child(-n+2) {
+    margin-top: 0;
+  }
+}
+
+label.required::after {
+  color: $color_mandy_approx;
+  margin-left: 2px;
+}
+
+.added-new-block {
+  border-top: 1px dashed #A9C6DE !important;
+  padding-bottom: 0 !important;
+}
+
+.scroll-top {
+  position: fixed;
+  bottom: 50px;
+  right: 70px;
+  display: none;
+  text-align: center;
+  color: $color_dodger_blue_approx;
+}
+
+.scrollup {
+  width: 36px;
+  height: 36px;
+  text-indent: -9999px;
+  background: $color_dodger_blue_approx $url_9 no-repeat center;
+  border-radius: 50%;
+  display: block;
+  text-align: center;
+  margin: 0 auto;
+}
+
 @media all and (max-width: 1030px) {
   .activity-status {
     padding: 16px 10px 18px 50px;
@@ -2875,7 +3042,7 @@ div[class*="panel-level-"] .panel > .panel-body {
     right: 0;
   }
 
-  .element-content-wrapper,.organization-wrapper {
+  .element-content-wrapper, .organization-wrapper {
     width: 100%;
     padding-bottom: 100px;
   }
@@ -2916,22 +3083,22 @@ div[class*="panel-level-"] .panel > .panel-body {
   .element-panel-heading form {
     margin-right: 40px;
   }
-
-  .panel-action-btn {
-    margin-right: 58px;
-  }
 }
 
 @media all and (max-width: 992px) {
-  //NirajanCss
   .element-panel-heading {
     padding-right: 70px;
   }
 }
 
 @media all and (max-width: 820px) {
-  .btn-form {
-    width: 47%;
+  .btn-form, .btn-cancel {
+    width: 45%;
+  }
+
+  .create-form .btn-cancel {
+    left: 47%;
+    bottom: 70px;
   }
 
   .organization-detail ul li.country {
@@ -3085,9 +3252,32 @@ div[class*="panel-level-"] .panel > .panel-body {
   .organization-wrapper td:nth-of-type(6):before {
     content: "Status";
   }
-
-  .published-wrapper td:nth-of-type(7):before {
+  .organization-wrapper td:nth-of-type(7):before {
     content: "Action";
+  }
+  .group-organization-wrapper td:nth-of-type(1):before {
+    content: "S.N.";
+  }
+  .group-organization-wrapper td:nth-of-type(2):before {
+    content: "Group Name";
+  }
+  .group-organization-wrapper td:nth-of-type(3):before {
+    content: "No. of organizations";
+  }
+  .group-organization-wrapper td:nth-of-type(4):before {
+    content: "Action";
+  }
+  .result-content-wrapper td:nth-of-type(1):before {
+    content: "S.N.";
+  }
+  .result-content-wrapper td:nth-of-type(2):before {
+    content: "Tilte";
+  }
+  .result-content-wrapper td:nth-of-type(3):before {
+    content: "Type";
+  }
+  .result-content-wrapper td:nth-of-type(4):before {
+    content: "Actions";
   }
 
   td input[type="checkbox"] {
@@ -3117,7 +3307,7 @@ div[class*="panel-level-"] .panel > .panel-body {
     margin: 0;
   }
 
-  .content-wrapper > .panel-default > .panel-body, .panel-element-detail > .panel-body, .transaction-wrapper > .panel > .panel-body {
+  .content-wrapper > .panel-default > .panel-body, .panel-element-detail > .panel-body, .transaction-wrapper > .panel > .panel-body, .organization-wrapper > .panel > .panel-body {
     padding: 0 14px;
   }
 
@@ -3144,7 +3334,7 @@ div[class*="panel-level-"] .panel > .panel-body {
   }
 
   .content-wrapper .panel-profile {
-    .username_text{
+    .username_text {
       padding-left: 0;
     }
   }
@@ -3221,7 +3411,7 @@ div[class*="panel-level-"] .panel > .panel-body {
   }
 
   table tbody tr:hover td:first-child {
-    border-left: 0;
+    border-left: 4px solid transparent;
   }
 
   .download-wrapper {
@@ -3239,7 +3429,6 @@ div[class*="panel-level-"] .panel > .panel-body {
   }
 
   .element-panel-heading {
-    padding-top: 20px !important;
     padding-right: 70px;
   }
 
@@ -3320,7 +3509,7 @@ div[class*="panel-level-"] .panel > .panel-body {
   }
 }
 
-@media all and (max-width: 630px){
+@media all and (max-width: 630px) {
   .add-new-activity li.dropdown > a {
     text-indent: -9999px;
     padding: 21px 0 21px 10px;
@@ -3352,13 +3541,17 @@ div[class*="panel-level-"] .panel > .panel-body {
   }
 }
 
+.element-panel-heading-info .last-updated-date {
+  display: block;
+  margin-left: 0;
+}
+
 @media all and (max-width: 500px) {
-  //NirajanCss
   .version {
     display: none;
   }
-  .navbar-admin-dropdown .dropdown-menu li span.width-490 a{
-    &:hover{
+  .navbar-admin-dropdown .dropdown-menu li span.width-490 a {
+    &:hover {
       background: none !important;
       color: #00A8FF !important;
     }
@@ -3382,7 +3575,7 @@ div[class*="panel-level-"] .panel > .panel-body {
     .old-version {
       display: none;
     }
-    .old-version, .new-version{
+    .old-version, .new-version {
       left: -100%;
     }
   }
@@ -3402,8 +3595,14 @@ div[class*="panel-level-"] .panel > .panel-body {
 }
 
 @media all and (max-width: 480px) {
-  .create-form .btn-form {
+  .create-form .btn-form, .btn-cancel {
     width: 92%;
+  }
+
+  .create-form .btn-cancel, .create-activity-form .btn-cancel {
+    left: -5px;
+    bottom: 0;
+    margin-left: 0;
   }
 
   .download-transaction-wrap > a, .create-activity-form button {
@@ -3460,7 +3659,7 @@ div[class*="panel-level-"] .panel > .panel-body {
 
 @media all and (min-width: 501px) {
   //NirajanCss
-  .width-491{
+  .width-491 {
     display: none;
   }
 }
@@ -3507,6 +3706,45 @@ div[class*="panel-level-"] .panel > .panel-body {
   .navbar-right ~ .navbar-right {
     margin-top: 14px;
   }
+
+  .inner-form-wrapper > .form-group > .form-group > .form-group {
+    display: inline-block;
+    width: 50%;
+    padding-right: 30px;
+    margin-right: -2px;
+    vertical-align: top;
+  }
+
+  .admin-information-wrapper > .form-group > .form-group > .form-group:last-child {
+    width: 100%;
+    padding-right: 0;
+    > .form-group {
+      width: 50%;
+      display: inline-block;
+      padding-right: 30px;
+      vertical-align: top;
+      margin-right: -2px;
+    }
+  }
+
+  .admin-container .create-form {
+    padding-left: 36px;
+    padding-right: 36px;
+  }
+
+  .organization-wrapper .btn-submit {
+    margin-left: 36px;
+  }
+
+  .create-form {
+    .btn-form, .btn-cancel {
+      width: 260px;
+    }
+    .btn-cancel {
+      left: 290px;
+      bottom: 70px;
+    }
+  }
 }
 
 @media all and (min-width: 1001px) {
@@ -3514,7 +3752,17 @@ div[class*="panel-level-"] .panel > .panel-body {
     display: block !important;
   }
 
-  .settings-checkall-wrapper > .collection_form > .form-group > .form-group {
+  .panel-action-btn, .add-dropdown {
+    margin: 0;
+    float: right;
+  }
+
+  .element-panel-heading-info {
+    float: left;
+    width: 80%;
+  }
+
+  .settings-checkall-wrapper > .collection_form > .form-group > .form-group, .checkall-wrapper .form-group:nth-child(3) > .form-group > .form-group {
     width: 33%;
     margin-top: 35px;
     &:nth-child(-n+3) {
@@ -3524,7 +3772,7 @@ div[class*="panel-level-"] .panel > .panel-body {
 }
 
 @media all and (min-width: 1200px) {
-  .settings-checkall-wrapper > .collection_form > .form-group > .form-group {
+  .settings-checkall-wrapper > .collection_form > .form-group > .form-group, .checkall-wrapper .form-group:nth-child(3) > .form-group > .form-group {
     width: 24.8%;
     margin-top: 35px;
     &:nth-child(-n+4) {
@@ -3552,7 +3800,7 @@ div[class*="panel-level-"] .panel > .panel-body {
 }
 
 @media all and (min-width: 1340px) {
-  .settings-checkall-wrapper > .collection_form > .form-group > .form-group {
+  .settings-checkall-wrapper > .collection_form > .form-group > .form-group, .checkall-wrapper .form-group:nth-child(3) > .form-group > .form-group {
     width: 20%;
     margin-right: -3px;
     margin-top: 35px;
@@ -3636,6 +3884,7 @@ div[class*="panel-level-"] .panel > .panel-body {
 .document-wrapper td a {
   word-wrap: break-word;
 }
+
 
 
 

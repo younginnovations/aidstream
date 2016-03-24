@@ -4,6 +4,7 @@
   font-weight: normal;
   src: url("../fonts/opensans-regular-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/opensans-regular-webfont.woff2") format("woff2"), url("../fonts/opensans-regular-webfont.woff") format("woff"), url("../fonts/opensans-regular-webfont.svg#Open-Sans-Regular") format("svg"); }
 @font-face {
+  font-family: Open-Sans-Bold;
   font-style: normal;
   font-weight: normal;
   src: url("../fonts/opensans-bold-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/opensans-bold-webfont.woff2") format("woff2"), url("../fonts/opensans-bold-webfont.woff") format("woff"), url("../fonts/opensans-bold-webfont.svg#Open-Sans-Bold") format("svg"); }
@@ -39,7 +40,7 @@ h2 {
 
 .bottom-line {
   border-bottom: 1px solid #eee;
-  padding-bottom: 40px;
+  padding-bottom: 20px;
   overflow: hidden; }
 
 .col-md-12 {
@@ -58,12 +59,14 @@ h2 {
   text-indent: -9999px; }
 
 .navbar-default .navbar-nav > li > a {
-  color: inherit; }
+  color: inherit;
+  padding: 0;
+  margin: 11px 15px; }
 
 .action-btn {
-  margin-top: 4px; }
+  margin-left: 8px; }
   .action-btn a {
-    padding: 11px 24px; }
+    padding: 13px 24px; }
 
 .btn {
   background: #00A8FF;
@@ -144,11 +147,12 @@ blockquote {
 .detail {
   font-size: 14px; }
   .detail h3 {
-    font: 14px/20px "Open-Sans-Bold"; }
+    font: 14px/20px "Open-Sans-Bold";
+    margin-bottom: 5px; }
   .detail span {
     font-style: italic;
     display: block;
-    margin-bottom: 5px;
+    margin-bottom: 8px;
     color: rgba(72, 72, 72, 0.7); }
 
 .convince-wrapper {
@@ -363,8 +367,7 @@ footer {
     float: right !important;
     margin-right: -15px; }
 
-  .navbar-default .navbar-nav > li > a:focus,
-  .navbar-default .navbar-nav > li > a:hover {
+  .navbar-default .navbar-nav > li > a:focus, .navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a.active {
     color: #038ED6; }
 
   .navbar-nav > li {
@@ -434,6 +437,9 @@ footer {
     padding-left: 0; }
 
   .information-section img {
+    margin-left: -52px; }
+
+  .information-section:nth-child(even) .right-wrapper img {
     margin-left: -40px; }
 
   .footer-nav > .col-md-12 {

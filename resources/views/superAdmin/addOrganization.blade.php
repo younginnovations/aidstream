@@ -3,40 +3,60 @@
 @section('title', 'Add Organization')
 
 @section('content')
-    <div class="container">
+    <div class="container main-container admin-container">
         <div class="row">
-            <div class="col-xs-8">
+            <div class="panel-content-heading">
+                <div>
+                    <a href="{{url('admin/list-organization')}}">Dashboard</a> > Add Organization
+                </div>
+            </div>
+            <div class="col-xs-12 col-lg-8 organization-wrapper">
                 <div class="panel panel-default">
-                    <div class="panel-heading"><a href="{{url('admin/dashboard')}}">Dashboard</a> > Add Organization</div>
                     <div class="panel-body">
                         {!! form_start($form) !!}
 
                         <div class="panel panel-default">
-                            <div class="panel-heading">Organization Information</div>
                             <div class="panel-body">
-                                {!! form_row($form->organization_information) !!}
+                                <div class="create-form">
+                                    <div class="inner-form-wrapper">
+                                        {!! form_row($form->organization_information) !!}
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
                         <div class="panel panel-default">
-                            <div class="panel-heading">Admin Information</div>
                             <div class="panel-body">
-                                {!! form_row($form->admin_information) !!}
+                                <div class="create-form">
+                                    <div class="inner-form-wrapper admin-information-wrapper">
+                                        {!! form_row($form->admin_information) !!}
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
                         <div class="panel panel-default">
-                            <div class="panel-heading">Default Field Values</div>
                             <div class="panel-body">
-                                {!! form_row($form->default_field_values) !!}
+                                <div class="create-form">
+                                    <div class="inner-form-wrapper">
+                                        {!! form_row($form->default_field_values) !!}
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
                         <div class="panel panel-default">
-                            <div class="panel-heading">Default Field Groups</div>
                             <div class="panel-body">
-                                <label><input type="checkbox" class="hidden checkAll"/><span class="btn btn-primary">Check All</span></label>
-                                {!! form_row($form->default_field_groups) !!}
+                                <div class="create-form">
+                                    <div class="inner-form-wrapper checkall-wrapper">
+                                        <h2>Choose elements to show/ hide</h2>
+                                        <div class="form-group">
+                                            <label><input type="checkbox" class="checkAll"/><span
+                                                        class="check-text">Check All</span></label>
+                                        </div>
+                                        {!! form_row($form->default_field_groups) !!}
+                                    </div>
+                                </div>
                             </div>
                         </div>
 

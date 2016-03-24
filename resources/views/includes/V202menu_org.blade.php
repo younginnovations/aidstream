@@ -4,6 +4,10 @@
 $orgData = $organizationData->get();
 $orgId = session('org_id');
 /*--}}
+<div class="element-menu-wrapper">
+    <div class="element-sidebar-dropdown">
+        <div class="edit-element">edit<span class="caret"></span></div>
+    </div>
 <div class="col-xs-4 col-md-4 col-lg-4 element-sidebar-wrapper">
     <div class="panel panel-default">
         <div class="panel-heading">Identification</div>

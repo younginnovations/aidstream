@@ -12,10 +12,10 @@
                     <div><span>Activity Date</span>
                         <div class="element-panel-heading-info">
                             <span>{{$activityData->IdentifierTitle}}</span></div>
-                    </div>
-                    <div class="panel-action-btn">
-                        <a href="{{ route('activity.show', $id) }}" class="btn btn-primary pull-right">View Activity
-                        </a>
+                        <div class="panel-action-btn">
+                            <a href="{{ route('activity.show', $id) }}" class="btn btn-primary">View Activity
+                            </a>
+                        </div>
                     </div>
                 </div>
 

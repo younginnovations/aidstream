@@ -19,6 +19,7 @@ $url_2: url("../images/social-sprite.png");
 }
 
 @font-face {
+  font-family: Open-Sans-Bold;
   font-style: normal;
   font-weight: normal;
   src: url("../fonts/opensans-bold-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/opensans-bold-webfont.woff2") format("woff2"), url("../fonts/opensans-bold-webfont.woff") format("woff"), url("../fonts/opensans-bold-webfont.svg#Open-Sans-Bold") format("svg");
@@ -64,7 +65,7 @@ h2 {
 
 .bottom-line {
   border-bottom: 1px solid $color_gallery_approx;
-  padding-bottom: 40px;
+  padding-bottom: 20px;
   overflow: hidden;
 }
 
@@ -90,12 +91,14 @@ h2 {
 
 .navbar-default .navbar-nav > li > a {
   color: inherit;
+  padding: 0;
+  margin: 11px 15px;
 }
 
 .action-btn {
-  margin-top: 4px;
+  margin-left: 8px;
   a {
-    padding: 11px 24px;
+    padding: 13px 24px;
   }
 }
 
@@ -208,11 +211,12 @@ blockquote {
   font-size: 14px;
   h3 {
     font: 14px/20px "Open-Sans-Bold";
+    margin-bottom: 5px;
   }
   span {
     font-style: italic;
     display: block;
-    margin-bottom: 5px;
+    margin-bottom: 8px;
     color: rgba($color_gravel_approx, 0.7);
   }
 }
@@ -508,11 +512,11 @@ footer {
     margin-right: -15px;
   }
 
-  .navbar-default .navbar-nav > li > a:focus,
-  .navbar-default .navbar-nav > li > a:hover {
-    color: $color_lochmara_approx;
+  .navbar-default .navbar-nav > li > a {
+    &:focus,&:hover,&.active {
+      color: $color_lochmara_approx;
+    }
   }
-
   .navbar-nav > li {
     float: left;
   }
@@ -553,7 +557,7 @@ footer {
       display: inline-block;
       vertical-align: top;
     }
-    .width-900.text-center{
+    .width-900.text-center {
       padding-top: 40px;
     }
     .bottom-line {
@@ -600,6 +604,10 @@ footer {
   }
 
   .information-section img {
+    margin-left: -52px;
+  }
+
+  .information-section:nth-child(even) .right-wrapper img {
     margin-left: -40px;
   }
 
@@ -641,7 +649,7 @@ footer {
   }
 }
 
-@media all and (max-width: 599px){
+@media all and (max-width: 599px) {
   .navbar-default .navbar-toggle {
     background: transparent;
     border: none;
@@ -689,7 +697,7 @@ footer {
     background: $color_dodger_blue_approx;
   }
 
-  .navbar-toggle span{
+  .navbar-toggle span {
     width: 20px;
     height: 3px;
     margin-bottom: 3px;
@@ -741,7 +749,7 @@ footer {
   }
 
   .navbar-default {
-    .navbar-collapse{
+    .navbar-collapse {
       position: absolute;
       background: rgba(18, 18, 18, 0.95);
       top: 0;
@@ -756,14 +764,14 @@ footer {
       -ms-transition: all .2s ease-in-out;
       -o-transition: all .2s ease-in-out;
       transition: all .2s ease-in-out;
-      .navbar-nav{
+      .navbar-nav {
         margin-top: 100px;
         border-top: 2px solid rgba(255, 255, 255, 0.1);
         padding-top: 50px;
-        > li{
+        > li {
           padding-bottom: 30px;
           color: #fff;
-          > a{
+          > a {
             font-size: 20px;
             line-height: 2;
             color: #fff;
@@ -776,7 +784,7 @@ footer {
             transition: all .2s linear;
             display: inline-block;
             padding-bottom: 0;
-            &:hover{
+            &:hover {
               color: #B7B7B7;
               border-bottom: 2px solid #fff;
             }
@@ -788,13 +796,14 @@ footer {
         float: none !important;
       }
     }
-    .navbar-collapse.out{
+    .navbar-collapse.out {
       z-index: 1;
       opacity: 1;
       pointer-events: auto;
     }
   }
 }
+
 
 
 

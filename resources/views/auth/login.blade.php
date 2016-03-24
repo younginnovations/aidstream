@@ -3,12 +3,13 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
     <title>Aidstream - Login</title>
     <link rel="shotcut icon" type="image/png" sizes="32*32" href="{{ asset('/images/favicon.png') }}"/>
     <link href="{{ asset('/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('/css/flag-icon.css') }}" rel="stylesheet">
     <link href="{{ asset('/css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('/css/style.css') }}" rel="stylesheet">
 
     <!-- Fonts -->
     <link href='//fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
@@ -24,18 +25,39 @@
 
 </head>
 <body>
+<header>
+    <nav class="navbar navbar-default navbar-static">
+        <div class="navbar-header">
+            <a href="{{ url('/') }}" class="navbar-brand">Aidstream</a>
+            <button type="button" class="navbar-toggle collapsed">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="bar1"></span>
+                <span class="bar2"></span>
+                <span class="bar3"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse navbar-right">
+            <ul class="nav navbar-nav">
+                <li><a class="{{ Request::is('about') ? 'active' : '' }}" href="{{ url('/about') }}">About</a></li>
+                <li><a class="{{ Request::is('who-is-using') ? 'active' : '' }}" href="{{ url('/who-is-using') }}">Who's Using</a></li>
+                <!--<li><a href="#">Snapshot</a></li>-->
+            </ul>
+        </div>
+    </nav>
+</header>
+
 <div class="login-wrapper">
     {{--<div class="language-select-wrapper">--}}
-        {{--<label for="" class="pull-left">Language</label>--}}
+    {{--<label for="" class="pull-left">Language</label>--}}
     {{--<div class="language-selector pull-left">--}}
-        {{--<span class="flag-wrapper"><span class="img-thumbnail flag flag-icon-background flag-icon-{{ config('app.locale') }}"></span></span>--}}
-        {{--<span class="caret pull-right"></span>--}}
+    {{--<span class="flag-wrapper"><span class="img-thumbnail flag flag-icon-background flag-icon-{{ config('app.locale') }}"></span></span>--}}
+    {{--<span class="caret pull-right"></span>--}}
     {{--</div>--}}
-            {{--<ul class="language-select-wrap language-flag-wrap">--}}
-                {{--@foreach(config('app.locales') as $key => $val)--}}
-                {{--<li class="flag-wrapper" data-lang="{{ $key }}"><span class="img-thumbnail flag flag-icon-background flag-icon-{{ $key }}"></span><span class="language">{{ $val }}</span></li>--}}
-                {{--@endforeach--}}
-            {{--</ul>--}}
+    {{--<ul class="language-select-wrap language-flag-wrap">--}}
+    {{--@foreach(config('app.locales') as $key => $val)--}}
+    {{--<li class="flag-wrapper" data-lang="{{ $key }}"><span class="img-thumbnail flag flag-icon-background flag-icon-{{ $key }}"></span><span class="language">{{ $val }}</span></li>--}}
+    {{--@endforeach--}}
+    {{--</ul>--}}
     {{--</div>--}}
     <div class="container-fluid login-container">
         <div class="row">

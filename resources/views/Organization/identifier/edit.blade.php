@@ -9,16 +9,17 @@
             <div class="col-xs-9 col-md-9 col-lg-9 content-wrapper">
                 @include('includes.response')
                 <div class="panel-content-heading">
-                    <div>Organization Identifier</div>
-                    <div class="pull-right panel-action-btn">
+                    <div>Organization Identifier
+                    <div class="panel-action-btn">
                         <a href="{{route('organization.show', $id)}}" class="btn btn-primary">View Organization Data
                         </a>
+                    </div>
                     </div>
                 </div>
                 <div class="col-xs-12 col-md-8 col-lg-8 element-content-wrapper">
                     <div class="panel panel-default">
                         <div class="panel-body">
-                            <div class="create-form">
+                            <div class="create-activity-form">
                                 {!! form_row($form->reporting_org->getChildren()[0]->reporting_organization_identifier) !!}
                             </div>
                         </div>
