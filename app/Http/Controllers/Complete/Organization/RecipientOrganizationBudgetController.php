@@ -58,8 +58,9 @@ class RecipientOrganizationBudgetController extends Controller
      */
     public function update($orgId, CreateOrgRecipientOrgBudgetRequestManager $request, Request $request)
     {
-        $input            = $request->all();
         $organizationData = $this->recipientOrgBudgetManager->getOrganizationData($orgId);
+        $this->authorizeByRequestType($organizationData, 'recipient_organization_budget');
+        $input            = $request->all();
 
         if ($this->recipientOrgBudgetManager->update($input, $organizationData)) {
             $this->organizationManager->resetStatus($orgId);

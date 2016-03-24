@@ -87,9 +87,9 @@ class IatiIdentifierController extends Controller
      */
     public function update($activityId, IatiIdentifierRequestManager $iatiIdentifierRequestManager, Request $request)
     {
-        $this->authorize(['edit_activity', 'add_activity']);
-        $input              = $request->all();
         $iatiIdentifierData = $this->iatiIdentifierManager->getActivityData($activityId);
+        $this->authorizeByRequestType($iatiIdentifierData, 'identifier');
+        $input              = $request->all();
 
         if ($this->iatiIdentifierManager->update($input, $iatiIdentifierData)) {
             $this->activityManager->resetActivityWorkflow($activityId);

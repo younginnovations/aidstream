@@ -64,9 +64,9 @@ class LocationController extends Controller
      */
     public function update($id, Request $request, LocationRequestManager $locationRequestManager)
     {
-        $this->authorize(['edit_activity', 'add_activity']);
-        $location     = $request->all();
         $activityData = $this->activityManager->getActivityData($id);
+        $this->authorizeByRequestType($activityData, 'location');
+        $location     = $request->all();
         if ($this->locationManager->update($location, $activityData)) {
             $this->activityManager->resetActivityWorkflow($id);
             $response = ['type' => 'success', 'code' => ['updated', ['name' => 'Location']]];

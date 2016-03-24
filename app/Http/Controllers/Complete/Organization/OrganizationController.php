@@ -102,11 +102,16 @@ class OrganizationController extends Controller
      */
     public function updateStatus($id, Request $request)
     {
-        $input            = $request->all();
+
+        $input  = $request->all();
+        $status = $input['status'];
+
+        if ($status == 3) {
+            $this->authorize('publish_activity');
+        }
         $organization     = $this->organizationManager->getOrganization($id);
         $organizationData = $this->organizationManager->getOrganizationData($id);
         $settings         = $this->settingsManager->getSettings($id);
-        $status           = $input['status'];
 
         $orgElem    = $this->organizationManager->getOrganizationElement();
         $xmlService = $orgElem->getOrgXmlService();
@@ -154,7 +159,7 @@ class OrganizationController extends Controller
         $data         = $organization->reporting_org;
         $form         = $this->orgReportingOrgFormCreator->editForm($data, $organization);
 
-        return view('Organization.identifier.edit', compact('form', 'organization','id'));
+        return view('Organization.identifier.edit', compact('form', 'organization', 'id'));
     }
 
     /**

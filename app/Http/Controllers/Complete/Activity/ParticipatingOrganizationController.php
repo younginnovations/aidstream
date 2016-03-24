@@ -68,14 +68,14 @@ class ParticipatingOrganizationController extends Controller
      */
     public function update($id, Request $request, ParticipatingOrganizationRequestManager $participatingOrganizationRequestManager)
     {
-        $this->authorize(['edit_activity', 'add_activity']);
+        $activityData = $this->activityManager->getActivityData($id);
+        $this->authorizeByRequestType($activityData, 'participating_organization');
         $participatingOrganization = $request->all();
         if (!$this->validateData($request->get('participating_organization'))) {
             $response = ['type' => 'warning', 'code' => ['participating_org', ['name' => 'participating organization']]];
 
             return redirect()->back()->withInput()->withResponse($response);
         }
-        $activityData = $this->activityManager->getActivityData($id);
         if ($this->participatingOrganizationManager->update($participatingOrganization, $activityData)) {
             $this->activityManager->resetActivityWorkflow($id);
 

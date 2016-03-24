@@ -54,8 +54,9 @@ class DocumentLinkController extends Controller
      */
     public function update($orgId, DocumentLinkRequestManager $documentLinkRequestManager, Request $request)
     {
-        $input            = $request->all();
         $organizationData = $this->documentLinkManager->getOrganizationData($orgId);
+        $this->authorizeByRequestType($organizationData, 'document_link');
+        $input            = $request->all();
 
         if ($this->documentLinkManager->update($input, $organizationData)) {
             $this->organizationManager->resetStatus($orgId);

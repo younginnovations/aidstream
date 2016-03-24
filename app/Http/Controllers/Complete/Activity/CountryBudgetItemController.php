@@ -65,13 +65,13 @@ class CountryBudgetItemController extends Controller
      */
     public function update($id, Request $request, CountryBudgetItemRequestManager $countryBudgetItemRequestManager)
     {
-        $this->authorize(['edit_activity', 'add_activity']);
+        $activityData = $this->activityManager->getActivityData($id);
+        $this->authorizeByRequestType($activityData, 'country_budget_items');
         $countryBudgetItems = $request->all();
         foreach ($countryBudgetItems['country_budget_item'] as &$countryBudgetItem) {
             $code                                       = $countryBudgetItem['vocabulary'] == 1 ? 'code_text' : 'code';
             $countryBudgetItem['budget_item'][0][$code] = '';
         }
-        $activityData = $this->activityManager->getActivityData($id);
         if ($this->countryBudgetItemManager->update($countryBudgetItems, $activityData)) {
             $this->activityManager->resetActivityWorkflow($id);
             $response = ['type' => 'success', 'code' => ['updated', ['name' => 'Country Budget Item']]];

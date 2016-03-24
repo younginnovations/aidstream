@@ -167,6 +167,7 @@ class ActivityController extends Controller
      */
     public function store(IatiIdentifierRequest $request)
     {
+        $this->authorize('add_activity');
         $settings           = $this->settingsManager->getSettings($this->organization_id);
         $defaultFieldValues = $settings->default_field_values;
         $input              = $request->all();
@@ -208,10 +209,14 @@ class ActivityController extends Controller
      */
     public function updateStatus($id, Request $request, ActivityElementValidator $activityElementValidator)
     {
+        $this->authorize('edit_activity');
         $input            = $request->all();
+        $activityWorkflow = $input['activity_workflow'];
+        if($activityWorkflow == 3) {
+            $this->authorize('publish_activity');
+        }
         $activityData     = $this->activityManager->getActivityData($id);
         $settings         = $this->settingsManager->getSettings($activityData['organization_id']);
-        $activityWorkflow = $input['activity_workflow'];
         $transactionData  = $this->activityManager->getTransactionData($id);
         $resultData       = $this->activityManager->getResultData($id);
         $organization     = $this->organizationManager->getOrganization($activityData->organization_id);
@@ -273,6 +278,7 @@ class ActivityController extends Controller
      */
     public function destroy($id)
     {
+        $this->authorize('delete_activity');
         $activity = $this->activityManager->getActivityData($id);
         $response = ($this->activityManager->destroy($activity)) ? ['type' => 'success', 'code' => ['deleted', ['name' => 'Activity']]] : [
             'type' => 'danger',
@@ -288,6 +294,7 @@ class ActivityController extends Controller
      */
     public function deletePublishedFile($id)
     {
+        $this->authorize('delete_activity');
         $result   = $this->activityManager->deletePublishedFile($id);
         $message  = $result ? 'File deleted successfully' : 'File couldn\'t be deleted.';
         $type     = $result ? 'success' : 'danger';
@@ -319,6 +326,7 @@ class ActivityController extends Controller
      */
     public function updateActivityDefault($activityId, Request $request, ChangeActivityDefaultRequest $changeActivityDefaultRequest)
     {
+        $this->authorize('edit_activity');
         $activityData               = $this->activityManager->getActivityData($activityId);
         $settings                   = $this->settingsManager->getSettings($this->organization_id);
         $SettingsDefaultFieldValues = $settings->default_field_values;
@@ -446,6 +454,7 @@ class ActivityController extends Controller
      */
     public function duplicateActivityAction($activityId, IatiIdentifierRequest $request)
     {
+        $this->authorize('add_activity');
         $activityData                   = $this->activityManager->getActivityData($activityId);
         $newItem                        = $activityData->replicate();
         $input                          = $request->all();

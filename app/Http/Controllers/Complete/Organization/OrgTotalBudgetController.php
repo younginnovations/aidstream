@@ -52,8 +52,9 @@ class OrgTotalBudgetController extends Controller
      */
     public function update($orgId, TotalBudgetRequestManager $totalBudgetRequestManager, Request $request)
     {
-        $input            = $request->all();
         $organizationData = $this->totalBudgetManager->getOrganizationData($orgId);
+        $this->authorizeByRequestType($organizationData, 'total_budget');
+        $input            = $request->all();
 
         if ($this->totalBudgetManager->update($input, $organizationData)) {
             $this->organizationManager->resetStatus($orgId);

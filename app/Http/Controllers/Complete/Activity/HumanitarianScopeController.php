@@ -58,9 +58,9 @@ class HumanitarianScopeController extends Controller
      */
     public function update($id, Request $request, HumanitarianScopeRequest $humanitarianScopeRequest)
     {
-        $this->authorize(['edit_activity', 'add_activity']);
-        $humanitarianScope = $request->all();
         $activityData      = $this->activityManager->getActivityData($id);
+        $this->authorizeByRequestType($activityData, 'humanitarian_scope');
+        $humanitarianScope = $request->all();
         if ($this->humanitarianScopeManager->update($humanitarianScope, $activityData)) {
             $this->activityManager->resetActivityWorkflow($id);
             $response = ['type' => 'success', 'code' => ['updated', ['name' => 'Humanitarian Scope']]];
