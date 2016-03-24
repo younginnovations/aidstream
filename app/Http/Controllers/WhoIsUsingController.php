@@ -35,7 +35,7 @@ class WhoIsUsingController extends Controller
     {
         $skip                  = $page * $count;
         $data['next_page']     = Organization::count() > ($skip + $count);
-        $data['organizations'] = Organization::select('name', 'logo_url')->skip($skip)->take($count)->get();
+        $data['organizations'] = Organization::select('name', 'logo_url', 'id')->skip($skip)->take($count)->get();
 
         return $data;
     }
