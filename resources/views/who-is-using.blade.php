@@ -62,10 +62,11 @@
         $('.load-more').click(function (e) {
             e.preventDefault();
             $('body').append('<div class="loader">.....</div>');
+            var baseUrl = '{{ url('/who-is-using') }}';
 
             $.ajax({
                 type: 'get',
-                url: '{{ url('/who-is-using') }}' + '/' + page + '/' + count,
+                url: baseUrl + '/' + page + '/' + count,
                 success: function (data) {
                     if (!data.next_page) {
                         $('.load-more').addClass('hidden').remove();
@@ -75,12 +76,18 @@
                     for (var i = 0; i < organizations.length; i++) {
                         var organization = organizations[i];
                         var logo = '';
+                        var link = baseUrl + '/' + organization.id;
                         if (organization.logo_url) {
                             logo = $('.has-image-logo').clone();
+                            logo.append("<a href=" + link + "></a>");
                             $('img', logo).attr({src: organization.logo_url, alt: organization.name});
                         } else {
                             logo = $('.no-image-logo').clone();
-                            $('span', logo).html(organization.name);
+
+                            $('span', logo)
+                                .append($("<a/>")
+                                .attr({href: link})
+                                .html(organization.name));
                         }
                         logos += logo.html();
                     }
