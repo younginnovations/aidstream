@@ -1,6 +1,7 @@
 <?php namespace App\Core\V201\Forms\Settings;
 
 use App\Core\Form\BaseForm;
+use Illuminate\Database\DatabaseManager;
 
 /**
  * Class Narrative
@@ -19,6 +20,8 @@ class Narrative extends BaseForm
      */
     public function buildForm()
     {
+        $defaultLanguage    = config('app.default_language');
+
         $this
             ->add(
                 'narrative',
@@ -33,7 +36,8 @@ class Narrative extends BaseForm
                 'language',
                 $this->getCodeList('Language', 'Activity'),
                 null,
-                $this->addHelpText($this->getData('help-text-language') ? $this->getData('help-text-language') : 'activity-xml_lang', false)
+                $this->addHelpText($this->getData('help-text-language') ? $this->getData('help-text-language') : 'activity-xml_lang', false),
+                $defaultLanguage
             )
             ->addRemoveThisButton('remove_from_collection');
     }
