@@ -111,6 +111,7 @@ class ActivityUploadController extends Controller
         $this->authorize('add_activity');
         $settings           = $this->settingsManager->getSettings($this->organizationId);
         $defaultFieldValues = $settings->default_field_values;
+        $defaultFieldGroups = $settings->default_field_groups;
         $organization       = $this->organizationManager->getOrganization($this->organizationId);
 
         if (!isset($organization->reporting_org[0])) {
@@ -127,6 +128,23 @@ class ActivityUploadController extends Controller
         }
 
         $file = $request->file('activity');
+
+        $uploadedActivityArray = $this->uploadActivityManager->getVersion()->getExcel()->load($file)->toArray();
+        $geopolitical          = $defaultFieldGroups[0]['Geopolitical Information'];
+
+        foreach ($uploadedActivityArray as $activity) {
+            $recipientRegionExist = array_key_exists('recipient_region', $geopolitical);
+            if (!$recipientRegionExist && !is_null($activity['recipient_region'])) {
+
+                return redirect()->back()
+                                 ->withResponse(
+                                     [
+                                         'type' => 'danger',
+                                         'code' => ['recipient_region_unselected_in_settings', ['name' => 'Activity']]
+                                     ]
+                                 );
+            }
+        }
 
         if ($this->uploadActivityManager->isEmptyCsv($file)) {
             return redirect()->back()
@@ -145,11 +163,9 @@ class ActivityUploadController extends Controller
             $uploadedActivities   = $this->uploadActivityManager->getVersion()->getExcel()->load($file)->toArray();
             $validActivities      = array_keys(array_diff_key($uploadedActivities, $failedRows));
             $validActivityIndices = [];
-
             foreach ($validActivities as $validActivity) {
                 $validActivityIndices[] = $validActivity + 1;
             }
-
             $filename = 'temporary-' . $this->organizationId . 'activity';
 
             $this->temporarilyStoreCsvFor($validActivities, $filename);
@@ -162,7 +178,6 @@ class ActivityUploadController extends Controller
 
             return $this->invalidActivities($validator, $validActivityIndices, $failedRows);
         }
-
         $check = $this->uploadActivityManager->save($file, $organization, $defaultFieldValues);
 
         if (is_a($check, 'Illuminate\View\View')) {
@@ -228,10 +243,8 @@ class ActivityUploadController extends Controller
             implode(',', $failedRows),
             !empty($difference) ? implode(',', $uploadedActivities) : ''
         );
-
         $messages   = array_merge($messages, $validator->errors()->all());
         $response   = ['type' => 'warning', 'messages' => $messages];
-
         return redirect()->back()->withInput()->withResponse($response);
     }
 
