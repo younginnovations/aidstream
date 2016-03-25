@@ -67,6 +67,7 @@ $(document).ready(function () {
         }
         var protoHtml = level === 0 ? $('.collection-container') : $('.' + collection, '.collection-container');
         protoHtml = protoHtml.clone();
+        protoHtml.children('.form-group').addClass('added-new-block');
         protoHtml.children('label').remove();
         var proto = protoHtml.html();
         for (var i = 0; i < level; i++) {
@@ -83,6 +84,12 @@ $(document).ready(function () {
         bindTooltip();
         $('form select').select2();
     });
+
+    /* remove html5 validation and scroll to first invalid field */
+    $('form').attr('novalidate', 'novalidate');
+    if($('form .form-group.has-error').eq(0).length> 0){
+        $(document).scrollTop($('form .form-group.has-error').eq(0).offset().top - $('.navbar-default').eq(0).height());
+    }
 
     /* Removes form on click to Remove This button */
     $('form').delegate('.remove_from_collection', 'click', function () {
