@@ -75,5 +75,6 @@ return [
      * Api URL for the IATI Registry.
      */
     'iati_registry_api_base_url' => 'http://iatiregistry.org/api/',
+    'iati_registry_dummy_url' => ''
 
 ];
