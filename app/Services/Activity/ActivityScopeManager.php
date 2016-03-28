@@ -2,8 +2,10 @@
 
 use App\Core\Version;
 use App\Models\Activity\Activity;
+use Exception;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Logging\Log;
+use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class ActivityScope
@@ -15,10 +17,12 @@ class ActivityScopeManager
      * @var Guard
      */
     protected $auth;
+
     /**
      * @var Log
      */
     protected $log;
+
     /**
      * @var Version
      */
@@ -38,7 +42,7 @@ class ActivityScopeManager
     }
 
     /**
-     * update activity Status
+     * Update Activity Status
      * @param array    $input
      * @param Activity $activity
      * @return bool
@@ -75,8 +79,9 @@ class ActivityScopeManager
     }
 
     /**
+     * Get the Activity Scope data for Activity with the given id.
      * @param $id
-     * @return model
+     * @return Model
      */
     public function getActivityScopeData($id)
     {

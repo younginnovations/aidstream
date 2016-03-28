@@ -2,8 +2,10 @@
 
 use App\Core\Version;
 use App\Models\Activity\Activity;
+use Exception;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Logging\Log as DbLogger;
+use Illuminate\Database\Eloquent\Model;
 use Psr\Log\LoggerInterface as Logger;
 use Illuminate\Database\DatabaseManager;
 
@@ -92,7 +94,7 @@ class CapitalSpendManager
 
     /**
      * @param $id
-     * @return model
+     * @return Model
      */
     public function getCapitalSpendData($id)
     {

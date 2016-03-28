@@ -2,8 +2,11 @@
 
 use App\Core\Version;
 use App\Models\Activity\ActivityResult;
+use Exception;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Logging\Log as DbLogger;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 use Psr\Log\LoggerInterface as Logger;
 use Illuminate\Database\DatabaseManager;
 
@@ -93,7 +96,7 @@ class ResultManager
 
     /**
      * @param $activityId
-     * @return collection
+     * @return Collection
      */
     public function getResults($activityId)
     {
@@ -102,7 +105,7 @@ class ResultManager
 
     /**
      * @param $id
-     * @return model
+     * @return Model
      */
     public function getResult($id, $activityId)
     {

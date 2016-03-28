@@ -2,8 +2,10 @@
 
 use App\Core\Version;
 use App\Models\Activity\Activity;
+use Exception;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Logging\Log;
+use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class ContactInfoManager
@@ -76,7 +78,7 @@ class ContactInfoManager
 
     /**
      * @param $id
-     * @return model
+     * @return Model
      */
     public function getContactInfoData($id)
     {

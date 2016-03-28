@@ -32,8 +32,22 @@ class ActivityElementValidation
             $messages[] = 'Sector is required.';
         }
 
+        $transactionCountryRegion = false;
+
         if (empty($activityData->recipient_country) && empty($activityData->recipient_region)) {
-            $messages[] = 'Either Recipient Country or Recipient Region is required';
+            if (!empty($transactionData)) {
+                foreach ($transactionData as $transactions) {
+                    $transactionDetail = $transactions->transaction;
+                    removeEmptyValues($transactionDetail);
+                    if (!empty($transactionDetail['recipient_country']) || !empty($transactionDetail['recipient_region'])) {
+                        $transactionCountryRegion = true;
+                    } else {
+                        $messages[] = 'Either Recipient Country or Recipient Region is required';
+                    }
+                }
+            } else {
+                $messages[] = 'Either Recipient Country or Recipient Region is required';
+            }
         }
 
         $recipientCountryValue         = false;
@@ -69,18 +83,6 @@ class ActivityElementValidation
                 $messages[] = 'The sum of percentage in Recipient Countries must be 100.';
             } elseif ($recipientRegionValue == true) {
                 $messages[] = 'The sum of percentage in Recipient Regions must be 100.';
-            }
-        }
-
-        $transactionCountryRegion = false;
-
-        if (!empty($transactionData)) {
-            foreach ($transactionData as $transactions) {
-                $transactionDetail = $transactions->transaction;
-                removeEmptyValues($transactionDetail);
-                if (!empty($transactionDetail['recipient_country']) || !empty($transactionDetail['recipient_region'])) {
-                    $transactionCountryRegion = true;
-                }
             }
         }
 

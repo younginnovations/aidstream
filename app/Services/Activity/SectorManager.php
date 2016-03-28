@@ -16,7 +16,7 @@ class SectorManager
      */
     protected $auth;
     /**
-     * @var Log
+     * @var Logger
      */
     protected $logger;
     /**
