@@ -1,4 +1,4 @@
-@if(!empty($reporting_org))
+@if(!emptyOrHasEmptyTemplate($reporting_org))
     <div class="panel panel-default">
         <div class="panel-heading">
             <div class="activity-element-title">

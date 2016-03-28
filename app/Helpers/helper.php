@@ -28,3 +28,15 @@ function trimInput($input)
 {
     return trim(preg_replace('/\s+/', " ", $input));
 }
+
+/**
+ * checks empty template or empty array
+ * @param $input
+ * @return bool
+ */
+function emptyOrHasEmptyTemplate($data)
+{
+    $temp = $data;
+    removeEmptyValues($temp);
+    return(!boolval($temp));
+}

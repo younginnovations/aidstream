@@ -1,4 +1,4 @@
-@if(!empty($plannedDisbursements))
+@if(!emptyOrHasEmptyTemplate($plannedDisbursements))
     <div class="panel panel-default expanded">
         <div class="panel-heading">
             <div class="activity-element-title">

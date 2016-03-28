@@ -1,4 +1,4 @@
-@if(!empty($total_budget))
+@if(!emptyOrHasEmptyTemplate($total_budget))
     <div class="panel panel-default expanded">
         <div class="panel-heading">
             <div class="activity-element-title">Total Budget</div>

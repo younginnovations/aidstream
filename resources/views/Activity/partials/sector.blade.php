@@ -1,4 +1,4 @@
-@if(!empty($sectors))
+@if(!emptyOrHasEmptyTemplate($sectors))
     <div class="panel panel-default expanded">
         <div class="panel-heading">
             <div class="activity-element-title">
