@@ -1,5 +1,6 @@
 <?php namespace App\Http\Controllers;
 
+use App\Helpers\GetCodeName;
 use App\Models\Organization\Organization;
 use App\Services\Activity\ActivityManager;
 
@@ -146,9 +147,11 @@ class WhoIsUsingController extends Controller
      */
     protected function mergeActivityStatus($data)
     {
+        $helper = app()->make(GetCodeName::class);
+
         $arrays = [];
         foreach ($data as $key => $datum) {
-            $index = $datum->activity_data['activity_status'];
+            $index = $helper->getCodeName('Activity', 'ActivityStatus', $datum->activity_data['activity_status']);
             if ($index != null) {
                 if (array_key_exists($index, $arrays)) {
                     $arrays[$index] = $arrays[$index] + 1;
