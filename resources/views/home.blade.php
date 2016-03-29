@@ -61,11 +61,9 @@
                 <div class="left-wrapper">
                     <h2>Easy to use interfaces</h2>
 
-                    <p>Entering data in AidStream is as easy as filling a simple form. The system hides all the
-                        complexities
-                        and technicalities of the xml. With AidStream, the necessity to understand the details of the
-                        IATI
-                        standard becomes lesser.</p>
+                    <p>
+                        AidStream has simple interface which allows you to quickly add and edit an activity and import activities in bulk. AidStream ensures that your activities are of good quality.
+                    </p>
                 </div>
                 <div class="right-wrapper">
                     <img src="images/img-2.png" alt="">
@@ -77,11 +75,9 @@
                 <div class="left-wrapper">
                     <h2>Publish data with ease!</h2>
 
-                    <p>Entering data in AidStream is as easy as filling a simple form. The system hides all the
-                        complexities
-                        and technicalities of the xml. With AidStream, the necessity to understand the details of the
-                        IATI
-                        standard becomes lesser.</p>
+                    <p>
+                        AidStream takes care of generating XML from your data and sending it to IATI Registry with a single click. You don’t have to worry about anything, everything will be taken care of.
+                    </p>
                 </div>
                 <div class="right-wrapper">
                     <img src="images/img-3.png" alt="">
@@ -104,7 +100,7 @@
     </div>
     <div class="convince-wrapper">
         <div class="col-md-12 text-center width-900">
-            <h2>Convinced yet?</h2>
+            <h2>Not convinced yet?</h2>
 
             <p>Lets just say, with AidStream, making your data open will be a piece of cake and a fun experience</p>
             <a href="{{ url('/auth/register') }}" class="btn btn-primary get-started-btn">Get Started</a>
