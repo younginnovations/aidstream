@@ -43,7 +43,7 @@ class ContactInfo extends ActivityBaseRequest
                 $this->getRulesForPersonName($contactInfo['person_name'], $contactInfoForm),
                 $this->getRulesForJobTitle($contactInfo['job_title'], $contactInfoForm),
                 $this->getRulesForMailingAddress($contactInfo['mailing_address'], $contactInfoForm),
-                $this->getRulesForTelephone($contactInfo['telephone'], $contactInfoForm),
+//                $this->getRulesForTelephone($contactInfo['telephone'], $contactInfoForm),
                 $this->getRulesForEmail($contactInfo['email'], $contactInfoForm),
                 $this->getRulesForWebsite($contactInfo['website'], $contactInfoForm)
             );
