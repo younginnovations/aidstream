@@ -539,8 +539,8 @@ $(document).ready(function () {
 
     $('form .datepicker').datetimepicker({
         timepicker: false,
-        format: 'm/d/Y',
-        formatDate: 'm/d/Y',
+        format: 'Y-m-d',
+        formatDate: 'Y-m-d',
         mask: true
     });
 });
