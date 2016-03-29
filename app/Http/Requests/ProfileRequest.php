@@ -20,15 +20,15 @@ class ProfileRequest extends Request
     public function rules()
     {
         return [
-            'first_name'             => 'required',
-            'last_name'              => 'required',
-            'email'                  => 'required|email',
-            'time_zone'              => 'required',
-            'organization_name'      => 'required',
-            'organization_address'   => 'required',
-            'country'                => 'required',
-            'organization_telephone' => 'numeric',
-            'organization_url'       => 'url',
+            'first_name'           => 'required',
+            'last_name'            => 'required',
+            'email'                => 'required|email',
+            'time_zone'            => 'required',
+            'organization_name'    => 'required',
+            'organization_address' => 'required',
+            'country'              => 'required',
+            'organization_url'     => 'url',
+            'organization_logo'    => 'image'
         ];
     }
 }

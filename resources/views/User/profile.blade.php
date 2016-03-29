@@ -52,7 +52,7 @@
                                     @endif
                                     @if($organization[0]->organization_url)
                                         <li class="website col-xs-6 col-md-4 col-lg-4"><label>Website</label><a
-                                                    href="#">{{$organization[0]->organization_url}}</a></li>
+                                                    href="{{$organization[0]->organization_url}}" target="_blank">{{$organization[0]->organization_url}}</a></li>
                                     @endif
                                     @if($organization[0]->address)
                                         <li class="address col-xs-6 col-md-4 col-lg-4">

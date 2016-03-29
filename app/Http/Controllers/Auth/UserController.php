@@ -198,7 +198,7 @@ class UserController extends Controller
         $file         = Input::file('organization_logo');
 
         if ($file) {
-            $fileUrl  = url('uploads/files/logos/' . $this->orgId . '.' . $file->getClientOriginalExtension());
+            $fileUrl  = url('files/logos/' . $this->orgId . '.' . $file->getClientOriginalExtension());
             $fileName = $this->orgId . '.' . $file->getClientOriginalExtension();
             $image    = Image::make(File::get($file))->resize(150, 150)->encode();
             Storage::put('logos/' . $fileName, $image);

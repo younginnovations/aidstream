@@ -9,7 +9,8 @@
         <div class="panel-body panel-level-1">
             @foreach($budgets as $budget)
                 <div class="panel-heading">
-                    <div class="activity-element-title">{{$getCode->getActivityCodeName('BudgetType', $budget['budget_type']) . ' ; [USD] '. $budget['value'][0]['amount'] . ' ; '. formatDate($budget['value'][0]['value_date']) }}</div>
+                    <div class="activity-element-title">{{$getCode->getActivityCodeName('BudgetType', $budget['budget_type']) . ' ; '. $getCode->getCode('Activity', 'Currency', $budget['value'][0]['currency']) . ' ; '. formatDate($budget['value'][0]['value_date']) }}</div>
+{{--                    <div class="activity-element-title">{{$getCode->getActivityCodeName('BudgetType', $budget['budget_type']) . ' ; [USD] '. $budget['value'][0]['amount'] . ' ; '. formatDate($budget['value'][0]['value_date']) }}</div>--}}
                 </div>
                 <div class="panel-body">
                     <div class="panel panel-default">
