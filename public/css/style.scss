@@ -10,6 +10,11 @@ $color_alabaster_approx: #f9f9f9;
 //images
 $url_1: url("../images/logo-aidstream.png");
 $url_2: url("../images/social-sprite.png");
+$url_3: url("../images/ic-mail.png");
+$url_4: url("../images/ic-web.png");
+$url_5: url("../images/ic-twitter.png");
+$url_6: url("../images/ic-location.png");
+$url_7: url("../images/ic-tel.png");
 
 @font-face {
   font-family: Open-Sans-Regular;
@@ -79,6 +84,7 @@ h2 {
   padding: 40px 16px 20px;
   background: $color_white;
   border: 0;
+  border-radius: 0;
 }
 
 .navbar-brand {
@@ -355,6 +361,7 @@ footer {
     li {
       list-style: none;
       line-height: 192px;
+      height: 192px;
       display: inline-block;
       vertical-align: middle;
       border-bottom: 1px solid $color_alabaster_approx;
@@ -362,12 +369,21 @@ footer {
       width: 50%;
       margin-left: -3px;
       span {
-        display: inline-block;
+        display: table;
         vertical-align: middle;
         line-height: normal;
-        color: rgba($color_gravel_approx, 0.7);
         font-size: 16px;
-        padding: 0 30px;
+        width: 100%;
+        height: 100%;
+        a {
+          padding: 0 30px;
+          display: table-cell;
+          vertical-align: middle;
+          color: rgba($color_gravel_approx, 0.7);
+          &:hover {
+            text-decoration: none;
+          }
+        }
       }
     }
   }
@@ -419,6 +435,137 @@ footer {
   clear: both;
   padding-bottom: 40px;
   margin-top: 0;
+}
+
+//organization-detail
+.organisation-detail-container {
+  .contact-section {
+    padding: 0 10px 20px;
+    text-align: center;
+  }
+  .detail span {
+    font-style: normal;
+  }
+  .social-logo {
+    margin-bottom: 10px;
+    span {
+      display: inline-block;
+      margin-right: 10px;
+      vertical-align: middle;
+      margin-bottom: 0;
+      line-height: 5px;
+      a{
+        display: inline-block;
+        text-indent: 101%;
+        overflow: hidden;
+        white-space: nowrap;
+        width: 16px;
+        height: 16px;
+      }
+      &:last-child{
+        margin-right: 0;
+      }
+    }
+    a.mail{
+      background: $url_3 no-repeat left;
+    }
+    a.web{
+      background: $url_4 no-repeat left;
+    }
+    a.twitter{
+      background: $url_5 no-repeat left;
+    }
+  }
+  .address{
+    margin: 10px 0 0;
+    display: inline-block;
+    padding-left: 20px;
+  }
+  .tel {
+    display: inline-block;
+    margin-left: 20px;
+  }
+  .address {
+    background: $url_6 no-repeat left;
+  }
+  .tel a{
+    margin: 10px 0 0;
+    display: inline-block;
+    padding-left: 20px;
+    background: $url_7 no-repeat left;
+  }
+  .activities-detail-section {
+    background: #f9f9f9;
+    > div {
+      padding: 0 10px 20px;
+    }
+    .content-1 {
+      padding: 20px 0;
+      text-align: center;
+      span {
+        color: rgba(72, 72, 72, 0.7);
+      }
+      p {
+        font-family: Open-Sans-Bold;
+        font-size: 28px;
+        line-height: 34px;
+        margin: 10px 0;
+      }
+    }
+    .content-2 {
+      margin-bottom: 20px;
+      h2 {
+        margin: 0;
+        font-size: 22px;
+        line-height: 28px;
+      }
+      .info {
+        margin-top: 18px;
+        border-bottom: 1px solid #F9F9F9;
+        p {
+          color: rgba(72, 72, 72, 0.7);
+          font-size: 11px;
+          margin: 7px 0 0;
+        }
+        &:last-child {
+          border-bottom: none;
+        }
+      }
+      .content-item {
+        background: #FFFFFF;
+        box-shadow: 0px 2px 40px 0px rgba(0, 0, 0, 0.10);
+        border-radius: 4px;
+        padding: 20px;
+        margin-bottom: 20px;
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
+    .content-3 {
+      h2 {
+        margin: 0;
+        font-size: 22px;
+        line-height: 28px;
+      }
+      .content-item {
+        background: #FFFFFF;
+        box-shadow: 0px 2px 40px 0px rgba(0, 0, 0, 0.1);
+        border-radius: 4px;
+        padding: 20px;
+      }
+      svg {
+        max-width: 100%;
+        max-height: 300px;
+      }
+    }
+  }
+  #horizontalBarChart {
+    width: 100%;
+    svg:not(:root) {
+      max-width: 100% !important;
+    }
+  }
 }
 
 @media all and (min-width: 480px) {
@@ -513,7 +660,7 @@ footer {
   }
 
   .navbar-default .navbar-nav > li > a {
-    &:focus,&:hover,&.active {
+    &:focus, &:hover, &.active {
       color: $color_lochmara_approx;
     }
   }
@@ -622,6 +769,84 @@ footer {
   .about-information-section img {
     margin-bottom: 0;
   }
+
+  //organization-detail
+  .organisation-detail-container {
+    .contact-section {
+      text-align: left;
+      padding-bottom: 40px;
+      max-width: 960px;
+      margin: 0 auto;
+      .logo,
+      .detail{
+        float: left;
+      }
+      .detail h2{
+        margin-bottom: 0;
+      }
+      .social-logo{
+        position: relative;
+        &:before{
+          position: absolute;
+          content: '';
+          height: 23px;
+          border-left: 1px solid #d8d8d8;
+          right: -12px;
+        }
+      }
+      .tel{
+        a{
+          position: relative;
+          &:before{
+            position: absolute;
+            content: '';
+            height: 23px;
+            border-left: 1px solid #d8d8d8;
+            left: -12px;
+          }
+        }
+      }
+      .logo{
+        margin-right: 20px;
+        margin-top: 25px;
+      }
+      .social-logo {
+        display: inline-block;
+        margin-right: 20px;
+      }
+    }
+    .activities-detail-section {
+      > div {
+        max-width: 960px;
+        margin: 0 auto;
+      }
+      .content-1 {
+        text-align: left;
+        padding-bottom: 60px;
+        .content-item {
+          float: left;
+          width: 22.3%;
+          margin-right: 20px;
+        }
+      }
+      .content-2 {
+        .content-item {
+          float: left;
+          width: 48.6%;
+          margin-right: 20px;
+          min-height: 170px;
+          margin-bottom: 0;
+          &:last-child {
+            margin-right: 0;
+          }
+        }
+      }
+      .content-3 svg {
+        max-height: 600px;
+        margin-left: -50px;
+      }
+    }
+  }
 }
 
 @media all and (min-width: 1000px) {
@@ -644,6 +869,26 @@ footer {
       height: 92px;
       &:last-child {
         padding-right: 0;
+      }
+    }
+  }
+
+  .organisation-detail-container {
+    .activities-detail-section {
+      .content-1 {
+        padding-top: 50px;
+      }
+      .content-2 {
+        margin-bottom: 40px;
+        .content-item {
+          width: 47.8%;
+          margin-right: 40px;
+          padding: 35px;
+          min-height: 198px;
+        }
+      }
+      .content-3 .content-item {
+        padding: 35px;
       }
     }
   }
@@ -803,17 +1048,3 @@ footer {
     }
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-

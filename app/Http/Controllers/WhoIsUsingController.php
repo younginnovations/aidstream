@@ -3,6 +3,8 @@
 use App\Helpers\GetCodeName;
 use App\Models\Organization\Organization;
 use App\Services\Activity\ActivityManager;
+use App\Services\Organization\OrganizationManager;
+use App\User;
 
 /**
  * Class WhoIsUsingController
@@ -11,9 +13,11 @@ use App\Services\Activity\ActivityManager;
 class WhoIsUsingController extends Controller
 {
 
-    function __construct(ActivityManager $activityManager)
+    function __construct(ActivityManager $activityManager, OrganizationManager $organizationManager, User $user)
     {
         $this->activityManager = $activityManager;
+        $this->orgManager      = $organizationManager;
+        $this->user = $user;
     }
 
     /**
@@ -48,17 +52,28 @@ class WhoIsUsingController extends Controller
      */
     public function getDataForOrganization($organizationId)
     {
-        $data             = $this->activityManager->getDataForOrganization($organizationId);
-        $transaction      = $this->mergeTransaction($data);
-        $recipientRegion  = $this->mergeRecipientRegion($data);
-        $recipientCountry = $this->mergeRecipientCountry($data);
-        $sector           = $this->mergeSector($data);
-        $activityStatus   = $this->mergeActivityStatus($data);
-        $activityName     = $this->getActivityName($data);
+        $data               = $this->activityManager->getDataForOrganization($organizationId);
+        $orgInfo            = $this->orgManager->getOrganization($organizationId);
+        $transaction        = $this->mergeTransaction($data);
+        $transactionType    = $this->getTransactionName($transaction);
+        $recipientRegion    = $this->mergeRecipientRegion($data);
+        $recipientCountry   = $this->mergeRecipientCountry($data);
+        $sector             = $this->mergeSector($data);
+        $activityStatus     = $this->mergeActivityStatus($data);
+        $activityStatusJson = $this->convertIntoFormat($activityStatus);
+        $activityName       = $this->getActivityName($data);
 
-        $final_data = $this->getDataMerge($transaction, $recipientRegion, $recipientCountry, $sector, $activityName, $activityStatus);
+        $final_data = $this->getDataMerge(
+            $transactionType,
+            $recipientRegion,
+            $recipientCountry,
+            $sector,
+            $activityName,
+            $activityStatusJson
+        );
 
-        return view('who-is-using-organization', compact('final_data'));
+        $user = $this->user->getDataByOrgIdAndRoleId($organizationId, '1');
+        return view('who-is-using-organization', compact('final_data', 'orgInfo', 'user'));
     }
 
     /**
@@ -175,6 +190,47 @@ class WhoIsUsingController extends Controller
         foreach ($data as $key => $datum) {
             $arrays['title'][]      = $datum->activity_data['title'];
             $arrays['identifier'][] = $datum->activity_data['identifier'];
+        }
+
+        return $arrays;
+    }
+
+    protected function convertIntoFormat($data)
+    {
+        $arrays = [];
+        foreach ($data as $key => $datum) {
+            $arrays[] = [
+                'region' => $key,
+                'values' => $datum
+            ];
+        }
+
+        return $arrays;
+    }
+
+    /**
+     * @param $transaction
+     * @return array
+     */
+    protected function getTransactionName($transaction)
+    {
+        $arrays = [
+            'incomingFunds' => 0,
+            'commitment'    => 0,
+            'disbursement'  => 0,
+            'expenditure'   => 0
+        ];
+
+        foreach ($transaction as $key => $value) {
+            if ($key == 1) {
+                $arrays['incomingFunds'] += (float) $value;
+            } elseif ($key == 2) {
+                $arrays['commitment'] += (float) $value;
+            } elseif ($key == 3) {
+                $arrays['disbursement'] += (float) $value;
+            } elseif ($key == 4) {
+                $arrays['expenditure'] += (float) $value;
+            }
         }
 
         return $arrays;

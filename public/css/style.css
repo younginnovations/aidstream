@@ -49,7 +49,8 @@ h2 {
 .navbar {
   padding: 40px 16px 20px;
   background: #fff;
-  border: 0; }
+  border: 0;
+  border-radius: 0; }
 
 .navbar-brand {
   background: url("../images/logo-aidstream.png") no-repeat left;
@@ -247,6 +248,7 @@ footer {
     .organisations-list ul li {
       list-style: none;
       line-height: 192px;
+      height: 192px;
       display: inline-block;
       vertical-align: middle;
       border-bottom: 1px solid #f9f9f9;
@@ -254,12 +256,19 @@ footer {
       width: 50%;
       margin-left: -3px; }
       .organisations-list ul li span {
-        display: inline-block;
+        display: table;
         vertical-align: middle;
         line-height: normal;
-        color: rgba(72, 72, 72, 0.7);
         font-size: 16px;
-        padding: 0 30px; }
+        width: 100%;
+        height: 100%; }
+        .organisations-list ul li span a {
+          padding: 0 30px;
+          display: table-cell;
+          vertical-align: middle;
+          color: rgba(72, 72, 72, 0.7); }
+          .organisations-list ul li span a:hover {
+            text-decoration: none; }
 
 .load-more {
   width: 188px;
@@ -297,6 +306,102 @@ footer {
   clear: both;
   padding-bottom: 40px;
   margin-top: 0; }
+
+.organisation-detail-container .contact-section {
+  padding: 0 10px 20px;
+  text-align: center; }
+.organisation-detail-container .detail span {
+  font-style: normal; }
+.organisation-detail-container .social-logo {
+  margin-bottom: 10px; }
+  .organisation-detail-container .social-logo span {
+    display: inline-block;
+    margin-right: 10px;
+    vertical-align: middle;
+    margin-bottom: 0;
+    line-height: 5px; }
+    .organisation-detail-container .social-logo span a {
+      display: inline-block;
+      text-indent: 101%;
+      overflow: hidden;
+      white-space: nowrap;
+      width: 16px;
+      height: 16px; }
+    .organisation-detail-container .social-logo span:last-child {
+      margin-right: 0; }
+  .organisation-detail-container .social-logo a.mail {
+    background: url("../images/ic-mail.png") no-repeat left; }
+  .organisation-detail-container .social-logo a.web {
+    background: url("../images/ic-web.png") no-repeat left; }
+  .organisation-detail-container .social-logo a.twitter {
+    background: url("../images/ic-twitter.png") no-repeat left; }
+.organisation-detail-container .address {
+  margin: 10px 0 0;
+  display: inline-block;
+  padding-left: 20px; }
+.organisation-detail-container .tel {
+  display: inline-block;
+  margin-left: 20px; }
+.organisation-detail-container .address {
+  background: url("../images/ic-location.png") no-repeat left; }
+.organisation-detail-container .tel a {
+  margin: 10px 0 0;
+  display: inline-block;
+  padding-left: 20px;
+  background: url("../images/ic-tel.png") no-repeat left; }
+.organisation-detail-container .activities-detail-section {
+  background: #f9f9f9; }
+  .organisation-detail-container .activities-detail-section > div {
+    padding: 0 10px 20px; }
+  .organisation-detail-container .activities-detail-section .content-1 {
+    padding: 20px 0;
+    text-align: center; }
+    .organisation-detail-container .activities-detail-section .content-1 span {
+      color: rgba(72, 72, 72, 0.7); }
+    .organisation-detail-container .activities-detail-section .content-1 p {
+      font-family: Open-Sans-Bold;
+      font-size: 28px;
+      line-height: 34px;
+      margin: 10px 0; }
+  .organisation-detail-container .activities-detail-section .content-2 {
+    margin-bottom: 20px; }
+    .organisation-detail-container .activities-detail-section .content-2 h2 {
+      margin: 0;
+      font-size: 22px;
+      line-height: 28px; }
+    .organisation-detail-container .activities-detail-section .content-2 .info {
+      margin-top: 18px;
+      border-bottom: 1px solid #F9F9F9; }
+      .organisation-detail-container .activities-detail-section .content-2 .info p {
+        color: rgba(72, 72, 72, 0.7);
+        font-size: 11px;
+        margin: 7px 0 0; }
+      .organisation-detail-container .activities-detail-section .content-2 .info:last-child {
+        border-bottom: none; }
+    .organisation-detail-container .activities-detail-section .content-2 .content-item {
+      background: #FFFFFF;
+      box-shadow: 0px 2px 40px 0px rgba(0, 0, 0, 0.1);
+      border-radius: 4px;
+      padding: 20px;
+      margin-bottom: 20px; }
+      .organisation-detail-container .activities-detail-section .content-2 .content-item:last-child {
+        margin-bottom: 0; }
+  .organisation-detail-container .activities-detail-section .content-3 h2 {
+    margin: 0;
+    font-size: 22px;
+    line-height: 28px; }
+  .organisation-detail-container .activities-detail-section .content-3 .content-item {
+    background: #FFFFFF;
+    box-shadow: 0px 2px 40px 0px rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    padding: 20px; }
+  .organisation-detail-container .activities-detail-section .content-3 svg {
+    max-width: 100%;
+    max-height: 300px; }
+.organisation-detail-container #horizontalBarChart {
+  width: 100%; }
+  .organisation-detail-container #horizontalBarChart svg:not(:root) {
+    max-width: 100% !important; }
 
 @media all and (min-width: 480px) {
   .organization-wrapper ul li {
@@ -449,7 +554,61 @@ footer {
     width: 25%; }
 
   .about-information-section img {
-    margin-bottom: 0; } }
+    margin-bottom: 0; }
+
+  .organisation-detail-container .contact-section {
+    text-align: left;
+    padding-bottom: 40px;
+    max-width: 960px;
+    margin: 0 auto; }
+    .organisation-detail-container .contact-section .logo,
+    .organisation-detail-container .contact-section .detail {
+      float: left; }
+    .organisation-detail-container .contact-section .detail h2 {
+      margin-bottom: 0; }
+    .organisation-detail-container .contact-section .social-logo {
+      position: relative; }
+      .organisation-detail-container .contact-section .social-logo:before {
+        position: absolute;
+        content: '';
+        height: 23px;
+        border-left: 1px solid #d8d8d8;
+        right: -12px; }
+    .organisation-detail-container .contact-section .tel a {
+      position: relative; }
+      .organisation-detail-container .contact-section .tel a:before {
+        position: absolute;
+        content: '';
+        height: 23px;
+        border-left: 1px solid #d8d8d8;
+        left: -12px; }
+    .organisation-detail-container .contact-section .logo {
+      margin-right: 20px;
+      margin-top: 25px; }
+    .organisation-detail-container .contact-section .social-logo {
+      display: inline-block;
+      margin-right: 20px; }
+  .organisation-detail-container .activities-detail-section > div {
+    max-width: 960px;
+    margin: 0 auto; }
+  .organisation-detail-container .activities-detail-section .content-1 {
+    text-align: left;
+    padding-bottom: 60px; }
+    .organisation-detail-container .activities-detail-section .content-1 .content-item {
+      float: left;
+      width: 22.3%;
+      margin-right: 20px; }
+  .organisation-detail-container .activities-detail-section .content-2 .content-item {
+    float: left;
+    width: 48.6%;
+    margin-right: 20px;
+    min-height: 170px;
+    margin-bottom: 0; }
+    .organisation-detail-container .activities-detail-section .content-2 .content-item:last-child {
+      margin-right: 0; }
+  .organisation-detail-container .activities-detail-section .content-3 svg {
+    max-height: 600px;
+    margin-left: -50px; } }
 @media all and (min-width: 1000px) {
   .width-900 {
     width: 900px;
@@ -467,7 +626,19 @@ footer {
       padding-right: 32px;
       height: 92px; }
       .organization-wrapper ul li:last-child {
-        padding-right: 0; } }
+        padding-right: 0; }
+
+  .organisation-detail-container .activities-detail-section .content-1 {
+    padding-top: 50px; }
+  .organisation-detail-container .activities-detail-section .content-2 {
+    margin-bottom: 40px; }
+    .organisation-detail-container .activities-detail-section .content-2 .content-item {
+      width: 47.8%;
+      margin-right: 40px;
+      padding: 35px;
+      min-height: 198px; }
+  .organisation-detail-container .activities-detail-section .content-3 .content-item {
+    padding: 35px; } }
 @media all and (max-width: 599px) {
   .navbar-default .navbar-toggle {
     background: transparent;

@@ -41,7 +41,6 @@
     </div>
 </section>
 @include('includes.footer')
-
 <div class="hidden">
     <ul class="no-image-logo">
         <li><span></span></li>
@@ -50,8 +49,6 @@
         <li><img/></li>
     </ul>
 </div>
-
-<link rel="stylesheet" href="css/style.css">
 <script src="js/jquery.js"></script>
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
 <script type="text/javascript">
