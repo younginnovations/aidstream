@@ -1,4 +1,4 @@
-@if(!empty($org_name))
+@if(!emptyOrHasEmptyTemplate($org_name))
     <div class="panel panel-default">
         <div class="panel-heading">
             <div class="activity-element-title">Name</div>

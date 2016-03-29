@@ -1,4 +1,4 @@
-@if(!empty($document_link))
+@if(!emptyOrHasEmptyTemplate($document_link))
     <div class="panel panel-default expanded">
         <div class="panel-heading">
             <div class="activity-element-title">Document Link</div>

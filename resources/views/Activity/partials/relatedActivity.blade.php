@@ -1,4 +1,4 @@
-@if(!empty($relatedActivities))
+@if(!emptyOrHasEmptyTemplate($relatedActivities))
     <div class="panel panel-default expanded">
         <div class="panel-heading">
             <div class="activity-element-title">

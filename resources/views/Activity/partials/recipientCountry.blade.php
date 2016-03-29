@@ -1,4 +1,4 @@
-@if(!empty($recipientCountries))
+@if(!emptyOrHasEmptyTemplate($recipientCountries))
     <div class="panel panel-default expanded">
         <div class="panel-heading">
             <div class="activity-element-title">
