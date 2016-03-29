@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport'/>
     <title>AidStream - @yield('title', 'No Title')</title>
     <link rel="shotcut icon" type="image/png" sizes="32*32" href="{{ asset('/images/favicon.png') }}"/>
     <link href="{{ asset('/css/bootstrap.min.css') }}" rel="stylesheet">
@@ -64,7 +64,9 @@
                     </li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                           aria-expanded="false"><span class="avatar-img"><img src="{{url('images/avatar.png')}}" width="36" height="36" alt="{{Auth::user()->name}}"></span>
+                           aria-expanded="false"><span class="avatar-img"><img src="{{url('images/avatar.png')}}"
+                                                                               width="36" height="36"
+                                                                               alt="{{Auth::user()->name}}"></span>
                             <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
                             @if(Auth::user()->role_id != 3 && Auth::user()->role_id !=4)
@@ -110,19 +112,20 @@
                             {{--</div>--}}
                             {{--</li>--}}
                             {{-- For small screen (theming remains) --}}
-                                {{--<li class="language-select-wrap">--}}
-                                {{--<label for="">Choose Language</label>--}}
-                                {{--@foreach(config('app.locales') as $key => $val)--}}
-                                {{--<span class="flag-wrapper" data-lang="{{ $key }}">--}}
-                                {{--<span class="img-thumbnail flag flag-icon-background flag-icon-{{ $key }}{{ $key == config('app.locale') ? ' active' : '' }}"></span>--}}
-                                {{--</span>--}}
-                                {{--@endforeach--}}
-                                {{--</li>--}}
+                            {{--<li class="language-select-wrap">--}}
+                            {{--<label for="">Choose Language</label>--}}
+                            {{--@foreach(config('app.locales') as $key => $val)--}}
+                            {{--<span class="flag-wrapper" data-lang="{{ $key }}">--}}
+                            {{--<span class="img-thumbnail flag flag-icon-background flag-icon-{{ $key }}{{ $key == config('app.locale') ? ' active' : '' }}"></span>--}}
+                            {{--</span>--}}
+                            {{--@endforeach--}}
+                            {{--</li>--}}
                             {{-- Unwanted for now. Will come in use later --}}
 
                             <li class="pull-left width-491">
                                 @if((Session::get('role_id') == 3  || Session::get('role_id') == 4) && Session::get('org_id'))
-                                    <span class="width-490"><a href="{{ route('admin.switch-back') }}" class="pull-left">Switch Back</a></span>
+                                    <span class="width-490"><a href="{{ route('admin.switch-back') }}"
+                                                               class="pull-left">Switch Back</a></span>
                                 @endif
                             </li>
                             <li class="pull-left width-491">
@@ -131,9 +134,11 @@
                                         <div class="version pull-right {{ (Session::get('version') == 'V201') ? 'old' : 'new' }}">
 
                                             @if ((Session::get('version') == 'V201'))
-                                                <a class="version-text" href="{{route('upgrade-version.index')}}">Update available</a>
+                                                <a class="version-text" href="{{route('upgrade-version.index')}}">Update
+                                                    available</a>
                                                 <span class="old-version">
-                                                 <a href="{{route('upgrade-version.index')}}">Upgrade to IATI version 2.0.2</a>
+                                                 <a href="{{route('upgrade-version.index')}}">Upgrade to IATI version
+                                                     2.0.2</a>
                                               </span>
                                             @else
                                                 <span class="version-text">IATI version V202</span>
@@ -157,7 +162,8 @@
                     @if (session('next_version'))
                         <a class="version-text" href="{{route('upgrade-version.index')}}">Update available</a>
                         <span class="old-version">
-                            <a href="{{route('upgrade-version.index')}}">Upgrade to IATI version {{ session('next_version') }} </a>
+                            <a href="{{route('upgrade-version.index')}}">Upgrade to IATI
+                                version {{ session('next_version') }} </a>
                       </span>
                     @else
                         <span class="version-text">IATI version {{ session('current_version') }}</span>
@@ -173,13 +179,17 @@
 
 @yield('content')
 
-        <!-- Scripts -->
+<div class="scroll-top">
+    <a href="#" class="scrollup" title="Scroll to top">icon</a>
+</div>
+<!-- Scripts -->
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="{{url('/js/jquery-ui-1.10.4.tooltip.js')}}"></script>
 <script type="text/javascript" src="{{url('/js/jquery.cookie.js')}}"></script>
 <script type="text/javascript" src="{{url('/js/jquery.mCustomScrollbar.concat.min.js')}}"></script>
 <script type="text/javascript" src="{{url('/js/main.js')}}"></script>
+<script type="text/javascript" src="{{url('/js/retina.js')}}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2/js/select2.full.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {

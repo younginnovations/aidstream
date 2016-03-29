@@ -194,13 +194,12 @@ class BaseForm extends Form
      */
     protected function addSaveButton()
     {
-        return $this->add('Save', 'submit', ['attr' => ['class' => 'btn btn-primary']]);
+        return $this->add('Save', 'submit', ['attr' => ['class' => 'btn btn-primary btn-form btn-submit']]);
     }
 
     /**
      * add help text in the form fields
-     * @param      $helpText
-     * @param bool $tooltip
+     * @param      $helpTexte
      * @return array
      */
     protected function addHelpText($helpText, $tooltip = true)

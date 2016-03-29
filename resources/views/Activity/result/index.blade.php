@@ -10,14 +10,14 @@
         <div class="col-xs-9 col-md-9 col-lg-9 content-wrapper">
             @include('includes.response')
             <div class="element-panel-heading">
-                <div>Activity Results</div>
-
+                <div>Activity Results
                 @if(count($results) > 0)
                     <div class="panel-action-btn">
-                        <a href="{{ route('activity.result.create', $id) }}" class="btn btn-primary pull-right add-new-btn">Add Another
+                        <a href="{{ route('activity.result.create', $id) }}" class="btn btn-primary add-new-btn">Add Another
                             Result</a>
                     </div>
                 @endif
+                </div>
             </div>
             <div class="col-xs-12 col-md-8 col-lg-8 element-content-wrapper result-content-wrapper">
                 <div class="panel panel-default">

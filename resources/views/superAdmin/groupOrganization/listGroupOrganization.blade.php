@@ -3,11 +3,13 @@
 @section('title', 'Organization Groups')
 
 @section('content')
-    <div class="container">
+    <div class="container main-container admin-container">
         <div class="row">
-            <div class="col-xs-8">
+            <div class="panel-content-heading">
+                <div>Organization Groups</div>
+            </div>
+            <div class="col-xs-12 col-lg-8 organization-wrapper group-organization-wrapper">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Organization Groups</div>
                     <div class="panel-body">
                         @if(count($organizations) > 0)
                             <table class="table table-striped">
@@ -38,7 +40,7 @@
                         @else
                             <div class="text-center no-data">No Organization has been grouped Yet ::</div>
                         @endif
-                        <a href="{{ route('admin.create-organization-group') }}" class="btn btn-primary">Create Organization Group</a>
+                        <a href="{{ route('admin.create-organization-group') }}" class="btn btn-primary btn-submit btn-form">Create Organization Group</a>
                     </div>
                 </div>
             </div>

@@ -16,12 +16,12 @@
                                 <thead>
                                 <tr>
                                     <th width="100px">S.N.</th>
-                                    <th>Organization Name</th>
+                                    <th width="30%">Organization Name</th>
                                     <th>Version</th>
                                     <th>Users</th>
                                     <th>Activities</th>
                                     <th>Status</th>
-                                    <th>Action</th>
+                                    <th width="150px">Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -44,13 +44,11 @@
                                             <div class="organization_actions">
                                                 @if(Auth::user()->isSuperAdmin())
                                                     <a href="{{ route('admin.edit-organization', $organization->id)}}"
-                                                       class="edit">Edit</a> |
-                                                    <a href="{{ route('admin.change-organization-status', [$organization->id, ($organization->status == 1) ? 0 : 1]) }}">{{($organization->status == 1) ? 'Disable' : 'Enable'}}</a>
-                                                    |
-                                                    <a href="{{ route('admin.delete-organization', $organization->id) }}"
-                                                       class="delete">Delete</a> |
+                                                       class="edit" title="Edit">Edit</a>
+                                                    <a href="{{ route('admin.change-organization-status', [$organization->id, ($organization->status == 1) ? 0 : 1]) }}" class="check-status {{($organization->status == 1) ? 'Disable' : 'Enable'}}" title="{{($organization->status == 1) ? 'Disable' : 'Enable'}}">{{($organization->status == 1) ? 'Disable' : 'Enable'}}</a>
+                                                    <a href="{{ route('admin.delete-organization', $organization->id) }}" class="delete" title="delete">Delete</a>
                                                 @endif
-                                                <a href="{{ route('admin.masquerade-organization', [$organization->id, $organization->users->where('role_id', 1)->first()->id]) }}">Masquerade</a>
+                                                <a href="{{ route('admin.masquerade-organization', [$organization->id, $organization->users->where('role_id', 1)->first()->id]) }}" class="masquerade" title="Masquerade">Masquerade</a>
                                             </div>
                                         </td>
                                     </tr>

@@ -3,14 +3,22 @@
 @section('title', 'Upload Activity Transaction - ' . $activity->IdentifierTitle)
 
 @section('content')
-
     <div class="container main-container">
         <div class="row">
             @include('includes.side_bar_menu')
             <div class="col-xs-9 col-md-9 col-lg-9 content-wrapper">
                 @include('includes.response')
-                <div class="panel-content-heading panel-title-heading">Upload Transaction for <span>{{$activity->IdentifierTitle}}</span>
-                    <a href="{{ route('activity.transaction.index', $id) }}" class="btn btn-primary pull-right back-to-transaction">Back to Transaction List</a>
+                <div class="element-panel-heading">
+                    <div>
+                        <span>Upload Transaction</span>
+                        <div class="element-panel-heading-info">
+                            <span>{{$activity->IdentifierTitle}}</span>
+                        </div>
+                        <div class="panel-action-btn">
+                            <a href="{{ route('activity.transaction.index', $id) }}"
+                               class="btn btn-primary back-to-transaction">Back to Transaction List</a>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-xs-12 col-md-8 col-lg-8 element-content-wrapper">
                     <div class="panel panel-default panel-upload">

@@ -12,9 +12,9 @@
                     <div>
                         <span>Edit Result</span>
                         <div class="element-panel-heading-info"><span>{{$activityData->IdentifierTitle}}</span></div>
-                    </div>
-                    <div class="pull-right panel-action-btn">
-                        <a href="{{route('activity.result.show',[$id, $resultId])}}" class="btn btn-primary">View Result</a>
+                        <div class="panel-action-btn">
+                            <a href="{{route('activity.result.show',[$id, $resultId])}}" class="btn btn-primary">View Result</a>
+                        </div>
                     </div>
                 </div>
                 <div class="col-xs-12 col-md-8 col-lg-8 element-content-wrapper result-content-wrapper">

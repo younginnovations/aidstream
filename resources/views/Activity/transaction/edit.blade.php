@@ -11,13 +11,11 @@
                 <div class="element-panel-heading">
                     <div>
                         <span>Edit Transaction</span>
-
                         <div class="element-panel-heading-info"><span>{{$activity->IdentifierTitle}}</span></div>
-                    </div>
-
-                    <div class="pull-right panel-action-btn">
-                        <a href="{{route('activity.transaction.index',$id)}}" class="btn btn-primary">View Transaction
-                        </a>
+                        <div class="panel-action-btn">
+                            <a href="{{route('activity.transaction.index',$id)}}" class="btn btn-primary">View Transaction
+                            </a>
+                        </div>
                     </div>
                 </div>
                 <div class="col-xs-12 col-md-8 col-lg-8 element-content-wrapper">
