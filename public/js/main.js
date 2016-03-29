@@ -87,7 +87,7 @@ $(document).ready(function () {
 
     /* remove html5 validation and scroll to first invalid field */
     $('form').attr('novalidate', 'novalidate');
-    if($('form .form-group.has-error').eq(0).length> 0){
+    if ($('form .form-group.has-error').eq(0).length > 0) {
         $(document).scrollTop($('form .form-group.has-error').eq(0).offset().top - $('.navbar-default').eq(0).height());
     }
 
@@ -495,6 +495,7 @@ $(document).ready(function () {
         elementSidebar.css('height', windowHeight - elementSidebar.offset().top);
         menuSidebar.css('height', windowHeight - menuSidebar.offset().top - 80);
     }
+
     sidebarHeight();
 
     if ($(".element-sidebar-wrapper, .sidebar-wrapper .nav").length > 0) {
@@ -534,5 +535,12 @@ $(document).ready(function () {
             scrollTop: 0
         }, 600);
         return false;
+    });
+
+    $('form .datepicker').datetimepicker({
+        timepicker: false,
+        format: 'm/d/Y',
+        formatDate: 'm/d/Y',
+        mask: true
     });
 });
