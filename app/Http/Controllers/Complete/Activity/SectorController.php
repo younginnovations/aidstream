@@ -70,6 +70,7 @@ class SectorController extends Controller
         $sectors = $request->all();
         foreach ($sectors['sector'] as &$sector) {
             if ($sector['sector_vocabulary'] == 1 || $sector['sector_vocabulary'] == '') {
+                $sector['sector_vocabulary'] = 1;
                 $sector['sector_category_code'] = '';
                 $sector['sector_text']          = '';
             } elseif ($sector['sector_vocabulary'] == 2) {

@@ -21,10 +21,11 @@ class Sector extends BaseForm
                 'sector_vocabulary',
                 'select',
                 [
-                    'choices'     => $this->getSectorVocabularyCodeList(),
-                    'empty_value' => 'Select one of the following option :',
-                    'attr'        => ['class' => 'form-control sector_vocabulary'],
-                    'help_block'  => $this->addHelpText('Activity_Sector-vocabulary')
+                    'choices'       => $this->getSectorVocabularyCodeList(),
+                    'empty_value'   => 'Select one of the following option :',
+                    'default_value' => '1',
+                    'attr'          => ['class' => 'form-control sector_vocabulary'],
+                    'help_block'    => $this->addHelpText('Activity_Sector-vocabulary')
                 ]
             )
             ->add(
