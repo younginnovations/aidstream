@@ -176,4 +176,19 @@ class User extends Model implements AuthorizableContract, AuthenticatableContrac
     {
         return (!$this->isAdmin() && !$this->isGroupAdmin() && !$this->isSuperAdmin());
     }
+
+    /**
+     * Check if the current User is not an Admin user.
+     * @return bool
+     */
+    public function getDataByOrgIdAndRoleId($orgId, $roleId)
+    {
+        $users = DB::table($this->table)
+                        ->where('org_id', '=', $orgId)
+                        ->where('role_id', '=', $roleId)
+                        ->first();
+        return $users;
+    }
+
+
 }

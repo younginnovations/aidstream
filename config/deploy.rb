@@ -153,7 +153,7 @@ namespace :aidstream do
         on roles(:all) do
             invoke "aidstream:create_storage_folder"
             invoke "aidstream:create_uploads_folder"
-            invoke "environment:create_variables"
+#            invoke "environment:create_variables"
         end
     end
 end
