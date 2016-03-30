@@ -67,6 +67,7 @@ $(document).ready(function () {
         }
         var protoHtml = level === 0 ? $('.collection-container') : $('.' + collection, '.collection-container');
         protoHtml = protoHtml.clone();
+        $('[type="date"]', protoHtml).attr('type', 'text').addClass('datepicker');
         protoHtml.children('.form-group').addClass('added-new-block');
         protoHtml.children('label').remove();
         var proto = protoHtml.html();
@@ -80,7 +81,7 @@ $(document).ready(function () {
         proto = proto.replace(new RegExp('__NAME' + level + '__', 'g'), newIndex);
         proto = proto.replace(/__NAME[\d]+__/g, 0);
         container.append(proto);
-
+        addDatepicker();
         bindTooltip();
         $('form select').select2();
     });
@@ -537,10 +538,15 @@ $(document).ready(function () {
         return false;
     });
 
-    $('form .datepicker').datetimepicker({
-        timepicker: false,
-        format: 'Y-m-d',
-        formatDate: 'Y-m-d',
-        mask: true
-    });
+    function addDatepicker() {
+        $('form .datepicker').datetimepicker({
+            timepicker: false,
+            format: 'Y-m-d',
+            formatDate: 'Y-m-d',
+            mask: true,
+            lazyInit: true
+        });
+    }
+
+    addDatepicker();
 });
