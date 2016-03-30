@@ -10,7 +10,7 @@
     <link href="{{ asset('/css/flag-icon.css') }}" rel="stylesheet">
     <link href="{{ asset('/css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('/css/jquery-ui-1.10.4.tooltip.css') }}" rel="stylesheet">
-    <link href="{{ asset('/css/jquery.mCustomScrollbar.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('/css/jquery.jscrollpane.css') }}" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2-rc.1/css/select2.min.css" rel="stylesheet"/>
     <link rel="stylesheet" type="text/css" href="/css/jquery.datetimepicker.css"/>
 
@@ -195,7 +195,7 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="{{url('/js/jquery-ui-1.10.4.tooltip.js')}}"></script>
 <script type="text/javascript" src="{{url('/js/jquery.cookie.js')}}"></script>
-<script type="text/javascript" src="{{url('/js/jquery.mCustomScrollbar.concat.min.js')}}"></script>
+<script type="text/javascript" src="{{url('/js/jquery.jscrollpane.min.js')}}"></script>
 <script type="text/javascript" src="{{url('/js/main.js')}}"></script>
 <script type="text/javascript" src="{{url('/js/retina.js')}}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2/js/select2.full.min.js"></script>

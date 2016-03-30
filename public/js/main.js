@@ -480,7 +480,7 @@ $(document).ready(function () {
     $(window).scroll(function () {
         var elementSidebar = $('.element-sidebar-wrapper');
         if (elementSidebar.length > 0) {
-            if ($(this).scrollTop() > elementSidebar.position().top) {
+            if ($('.element-menu-wrapper').offset().top - $(this).scrollTop() <= $('.navbar-default').eq(0).height()) {
                 elementSidebar.addClass('element-sidebar-fixed');
             } else {
                 elementSidebar.removeClass('element-sidebar-fixed');
@@ -489,21 +489,45 @@ $(document).ready(function () {
     });
 
 //sidebar scrollable
-    $(window).resize(sidebarHeight);
-    function sidebarHeight() {
+    function menuHeight() {
+        var windowHeight = $(window).height();
+        var menuSidebar = $('.sidebar-wrapper .nav');
+        menuSidebar.css('height', windowHeight - $('.sidebar-wrapper').position().top - menuSidebar.siblings('.support').height() - 20);
+    }
+
+    function elementMenuHeight() {
         var windowHeight = $(window).height();
         var elementSidebar = $('.element-sidebar-wrapper');
-        var menuSidebar = $('.sidebar-wrapper .nav');
-        elementSidebar.css('height', windowHeight - elementSidebar.offset().top);
-        menuSidebar.css('height', windowHeight - menuSidebar.offset().top - 80);
+        var scrollTop = $(document).scrollTop();
+        elementSidebar.css('height', windowHeight - (elementSidebar.offset().top - scrollTop));
+    }
+
+    var jScrollPaneSettings = {
+        showArrows: true,
+        arrowScrollOnHover: true,
+        autoReinitialise: true,
+        autoReinitialiseDelay: 100
+    };
+
+    function sidebarHeight() {
+        if ($(".element-sidebar-wrapper").length > 0) {
+            elementMenuHeight();
+        }
+
+        if ($(".sidebar-wrapper .nav").length > 0) {
+            menuHeight();
+        }
     }
 
     sidebarHeight();
+    $(window).on('resize scroll', sidebarHeight);
 
-    if ($(".element-sidebar-wrapper, .sidebar-wrapper .nav").length > 0) {
-        $(".element-sidebar-wrapper, .sidebar-wrapper .nav").mCustomScrollbar({
-            theme: "minimal"
-        });
+    if ($(".element-sidebar-wrapper").length > 0) {
+        $(".element-sidebar-wrapper").jScrollPane(jScrollPaneSettings);
+    }
+
+    if ($(".sidebar-wrapper .nav").length > 0) {
+        $(".sidebar-wrapper .nav").jScrollPane(jScrollPaneSettings);
     }
 
     $("textarea").keyup(function (e) {
