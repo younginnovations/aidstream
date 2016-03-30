@@ -48,7 +48,7 @@
                                     @endif
                                     @if($organization[0]->twitter)
                                         <li class="twitter col-xs-6 col-md-4 col-lg-4"><label>Twitter</label><a
-                                                    href="#">{{$organization[0]->twitter}}</a></li>
+                                                    href="http://www.twitter.com/{{ $organization[0]->twitter }}">{{$organization[0]->twitter}}</a></li>
                                     @endif
                                     @if($organization[0]->organization_url)
                                         <li class="website col-xs-6 col-md-4 col-lg-4"><label>Website</label><a

@@ -1,4 +1,5 @@
 <?php
+use Illuminate\Database\DatabaseManager;
 
 /**
  * removes empty values
@@ -38,5 +39,18 @@ function emptyOrHasEmptyTemplate($data)
 {
     $temp = $data;
     removeEmptyValues($temp);
-    return(!boolval($temp));
+
+    return (!boolval($temp));
+}
+
+/**
+ * get default currency which is predefined under settings
+ * @return null
+ */
+function getDefaultCurrency()
+{
+    $defaultFieldValues = app()->make(Databasemanager::class)->table('settings')->select('default_field_values')->where('organization_id', '=', session('org_id'))->first();
+    $defaultCurrency    = $defaultFieldValues ? json_decode($defaultFieldValues->default_field_values, true)[0]['default_currency'] : null;
+
+    return $defaultCurrency;
 }

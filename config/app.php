@@ -80,6 +80,7 @@ return [
     'default_version_name'  => 'V201',
     'super_admin_dashboard' => '/admin/list-organization',
     'admin_dashboard'       => '/activity',
+    'default_language'      => 'en',
     /*
     |--------------------------------------------------------------------------
     | Logging Configuration

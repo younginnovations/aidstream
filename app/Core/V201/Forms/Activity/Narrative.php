@@ -1,6 +1,7 @@
 <?php namespace App\Core\V201\Forms\Activity;
 
 use App\Core\Form\BaseForm;
+use Illuminate\Database\DatabaseManager;
 
 /**
  * Class Narrative
@@ -19,6 +20,9 @@ class Narrative extends BaseForm
      */
     public function buildForm()
     {
+        $defaultFieldValues = app()->make(Databasemanager::class)->table('settings')->select('default_field_values')->where('organization_id', '=', session('org_id'))->first();
+        $defaultLanguage    = $defaultFieldValues ? json_decode($defaultFieldValues->default_field_values, true)[0]['default_language'] : null;
+
         $this
             ->add(
                 'narrative',
@@ -27,14 +31,15 @@ class Narrative extends BaseForm
                     'label'      => $this->getData('label'),
                     'help_block' => $this->addHelpText($this->getData('help-text-narrative') ? $this->getData('help-text-narrative') : 'Narrative-text'),
                     'attr'       => ['rows' => 4],
-                    'required' =>  $this->getData('narrative_required')
+                    'required'   => $this->getData('narrative_required')
                 ]
             )
             ->addSelect(
                 'language',
                 $this->getCodeList('Language', 'Activity'),
                 null,
-                $this->addHelpText($this->getData('help-text-language') ? $this->getData('help-text-language') : 'activity-xml_lang')
+                $this->addHelpText($this->getData('help-text-language') ? $this->getData('help-text-language') : 'activity-xml_lang'),
+                $defaultLanguage
             )
             ->addRemoveThisButton('remove_from_collection');
     }
