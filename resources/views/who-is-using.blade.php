@@ -43,10 +43,10 @@
 @include('includes.footer')
 <div class="hidden">
     <ul class="no-image-logo">
-        <li><span></span></li>
+        <li><span><a href=""></a></span></li>
     </ul>
     <ul class="has-image-logo">
-        <li><img/></li>
+        <li><a href=""><img/></a></li>
     </ul>
 </div>
 <script src="js/jquery.js"></script>
@@ -76,15 +76,10 @@
                         var link = baseUrl + '/' + organization.id;
                         if (organization.logo_url) {
                             logo = $('.has-image-logo').clone();
-                            logo.append("<a href=" + link + "></a>");
-                            $('img', logo).attr({src: organization.logo_url, alt: organization.name});
+                            $('a', logo).attr({href: link}).children('img').attr({src: organization.logo_url, alt: organization.name});
                         } else {
                             logo = $('.no-image-logo').clone();
-
-                            $('span', logo)
-                                .append($("<a/>")
-                                .attr({href: link})
-                                .html(organization.name));
+                            $('span a', logo).attr({href: link}).html(organization.name);
                         }
                         logos += logo.html();
                     }
