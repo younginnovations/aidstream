@@ -530,9 +530,13 @@ $(document).ready(function () {
         $(".sidebar-wrapper .nav").jScrollPane(jScrollPaneSettings);
     }
 
-    $('.element-sidebar-wrapper a').hover(function() {
-        $('#action-icon').css({display: 'block', top: $(this).offset().top - $('.element-menu-wrapper').offset().top + 9, left: -16}).removeAttr('class').addClass('action-icon ' + $(this).attr('data-action'));
-    }, function() {
+    $('.element-sidebar-wrapper a').hover(function () {
+        $('#action-icon').css({
+            display: 'block',
+            top: $(this).offset().top - $('.element-menu-wrapper').offset().top + 9,
+            left: -16
+        }).removeAttr('class').addClass('action-icon ' + $(this).attr('data-action'));
+    }, function () {
         $('#action-icon').css({display: 'none'});
     });
 
@@ -570,6 +574,9 @@ $(document).ready(function () {
     });
 
     function addDatepicker() {
+        if (typeof $.datetimepicker == 'undefined') {
+            return false;
+        }
         $('form .datepicker').datetimepicker({
             timepicker: false,
             format: 'Y-m-d',
@@ -586,6 +593,7 @@ $(document).ready(function () {
     function isTouchDevice() {
         return true == ("ontouchstart" in window || window.DocumentTouch && document instanceof DocumentTouch);
     }
+
     if (isTouchDevice() === true) {
         $('.sidebar-wrapper').addClass('touch-sidebar-wrapper');
     } else {

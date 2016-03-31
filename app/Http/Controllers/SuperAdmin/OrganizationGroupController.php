@@ -66,14 +66,7 @@ class OrganizationGroupController extends Controller
      */
     public function save(OrganizationGroup $groupRequest, $groupId = null)
     {
-        $groupData    = $groupRequest->all();
-        $assignedOrgs = $groupData['new_organization_group'][0]['organizations'];
-
-        foreach ($assignedOrgs as $assignedOrgIndex => $assignedOrg) {
-            $assignedOrgs[$assignedOrgIndex] = $assignedOrg[0];
-        }
-
-        $groupData['new_organization_group'][0]['organizations'] = $assignedOrgs;
+        $groupData = $groupRequest->all();
         (null !== $groupId) ? $this->orgGroupManager->save($groupData, $groupId) : $this->orgGroupManager->save($groupData);
 
         return redirect()->to('admin/group-organizations')->withMessage(
