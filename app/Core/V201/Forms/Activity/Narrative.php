@@ -20,9 +20,6 @@ class Narrative extends BaseForm
      */
     public function buildForm()
     {
-        $defaultFieldValues = app()->make(Databasemanager::class)->table('settings')->select('default_field_values')->where('organization_id', '=', session('org_id'))->first();
-        $defaultLanguage    = $defaultFieldValues ? json_decode($defaultFieldValues->default_field_values, true)[0]['default_language'] : null;
-
         $this
             ->add(
                 'narrative',
@@ -38,8 +35,7 @@ class Narrative extends BaseForm
                 'language',
                 $this->getCodeList('Language', 'Activity'),
                 null,
-                $this->addHelpText($this->getData('help-text-language') ? $this->getData('help-text-language') : 'activity-xml_lang'),
-                $defaultLanguage
+                $this->addHelpText($this->getData('help-text-language') ? $this->getData('help-text-language') : 'activity-xml_lang')
             )
             ->addRemoveThisButton('remove_from_collection');
     }
