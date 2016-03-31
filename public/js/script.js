@@ -47,7 +47,7 @@ $(document).ready(function () {
         var container = $(this).prev('.collection_form');
         var parents = $(this).parents('.collection_form');
         var level = parents.length;
-        var indexString = $(' > .form-group:last-child .form-control', container).eq(0).attr('name');
+        var indexString = $(' > .form-group:last .form-control', container).eq(0).attr('name');
         if (indexString === undefined) {
             indexString = '';
         }
@@ -82,7 +82,8 @@ $(document).ready(function () {
         }
         proto = proto.replace(new RegExp('__NAME' + level + '__', 'g'), newIndex);
         proto = proto.replace(/__NAME[\d]+__/g, 0);
-        container.append(proto);
+        $(' > .form-group:last', container).after(proto);
+        //container.append(proto);
         addDatepicker();
         bindTooltip();
         $('form select').select2();

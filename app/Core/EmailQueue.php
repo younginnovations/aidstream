@@ -35,7 +35,7 @@ class EmailQueue
                 $message->to($data['email']);
             };
         }
-        $this->addToQueue('emails.registration', $data, $callback);
+        $this->sendMail('emails.registration', $data, $callback);
     }
 
     /**
@@ -47,5 +47,16 @@ class EmailQueue
     protected function addToQueue($view, $data, $callback)
     {
         $this->mailer->queue($view, $data, $callback);
+    }
+
+    /**
+     * send mail
+     * @param $view
+     * @param $data
+     * @param $callback
+     */
+    protected function sendMail($view, $data, $callback)
+    {
+        $this->mailer->send($view, $data, $callback);
     }
 }

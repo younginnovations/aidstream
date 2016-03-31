@@ -75,6 +75,7 @@ return [
     "timezone"             => "The :attribute must be a valid zone.",
     /* Custom validation messages */
     "exclude_operators"    => "Symbols are not allowed.",
+    "unique_default_lang"  => 'Leaving language empty is same as selecting default language. Default language ":language" has already been selected.',
     /*
     |--------------------------------------------------------------------------
     | Custom Validation Language Lines

@@ -85,3 +85,18 @@ function getVal($arr, $arguments, $default = "")
         }
     }
 }
+
+/**
+ * @param array $data
+ * @return bool
+ */
+function checkDataExists(array $data)
+{
+    foreach ($data as $index => $value) {
+        if ($value) {
+            return true;
+        }
+    }
+
+    return false;
+}

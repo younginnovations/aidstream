@@ -163,6 +163,7 @@ class User extends Model implements AuthorizableContract, AuthenticatableContrac
     {
         $users = DB::table($this->table)
                    ->where('org_id', '=', Session::get('org_id'))
+                   ->where('role_id', '=', 1)
                    ->get();
 
         return $users;

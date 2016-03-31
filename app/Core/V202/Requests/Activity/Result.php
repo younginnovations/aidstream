@@ -1,6 +1,7 @@
 <?php namespace App\Core\V202\Requests\Activity;
 
 use App\Core\V201\Requests\Activity\Result as V201Result;
+use Illuminate\Database\DatabaseManager;
 
 /**
  * Class Result
@@ -95,6 +96,10 @@ class Result extends V201Result
      */
     protected function getMessagesForResultNarrative($formFields, $formBase)
     {
+
+        $defaultFieldValues = app()->make(Databasemanager::class)->table('settings')->select('default_field_values')->where('organization_id', '=', session('org_id'))->first();
+        $defaultLanguage    = $defaultFieldValues ? json_decode($defaultFieldValues->default_field_values, true)[0]['default_language'] : null;
+
         $messages                                                 = [];
         $messages[sprintf('%s.narrative.unique_lang', $formBase)] = 'Languages should be unique.';
         foreach ($formFields as $narrativeIndex => $narrative) {
