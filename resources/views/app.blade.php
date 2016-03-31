@@ -197,7 +197,7 @@
 <script type="text/javascript" src="{{url('/js/jquery.cookie.js')}}"></script>
 <script type="text/javascript" src="{{url('/js/jquery.jscrollpane.min.js')}}"></script>
 <script type="text/javascript" src="{{url('/js/main.js')}}"></script>
-<script type="text/javascript" src="{{url('/js/retina.js')}}"></script>
+{{--<script type="text/javascript" src="{{url('/js/retina.js')}}"></script>--}}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2/js/select2.full.min.js"></script>
 <script type="text/javascript" src="/js/jquery.datetimepicker.full.min.js"></script>
 <script type="text/javascript">

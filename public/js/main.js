@@ -530,6 +530,12 @@ $(document).ready(function () {
         $(".sidebar-wrapper .nav").jScrollPane(jScrollPaneSettings);
     }
 
+    $('.element-sidebar-wrapper a').hover(function() {
+        $('#action-icon').css({display: 'block', top: $(this).offset().top - $('.element-menu-wrapper').offset().top + 9, left: -16}).removeAttr('class').addClass('action-icon ' + $(this).attr('data-action'));
+    }, function() {
+        $('#action-icon').css({display: 'none'});
+    });
+
     $("textarea").keyup(function (e) {
         adaptiveheight(this);
     });
@@ -574,4 +580,15 @@ $(document).ready(function () {
     }
 
     addDatepicker();
+
+    $('.element-sidebar-wrapper').parents('body').find('.scroll-top').addClass('full-scroll-top');
+
+    function isTouchDevice() {
+        return true == ("ontouchstart" in window || window.DocumentTouch && document instanceof DocumentTouch);
+    }
+    if (isTouchDevice() === true) {
+        $('.sidebar-wrapper').addClass('touch-sidebar-wrapper');
+    } else {
+        //alert('Not a Touch Device'); //your logic for non touch device here
+    }
 });
