@@ -18,11 +18,9 @@ class Value extends BaseForm
      */
     public function buildForm()
     {
-        $defaultCurrency = getDefaultCurrency();
-
         $this
             ->add('amount', 'text', ['help_block' => $this->addHelpText('Activity_Transaction_Value-text'), 'required' => true])
             ->add('date', 'date', ['label' => 'Value Date', 'help_block' => $this->addHelpText('Activity_Transaction_Value-value_date'), 'required' => true])
-            ->add('currency', 'select', ['choices' => $this->getCurrencyCodeList(), 'empty_value' => 'Select one of the following option :', 'attr' => ['class' => 'form-control currency'], 'selected' => $defaultCurrency]);
+            ->add('currency', 'select', ['choices' => $this->getCurrencyCodeList(), 'empty_value' => 'Select one of the following option :', 'attr' => ['class' => 'form-control currency']]);
     }
 }
