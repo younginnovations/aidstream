@@ -1,4 +1,5 @@
 <?php
+use App\Models\Activity\Activity;
 use Illuminate\Database\DatabaseManager;
 
 /**
@@ -44,15 +45,27 @@ function emptyOrHasEmptyTemplate($data)
 }
 
 /**
- * get default currency which is predefined under settings
+ * get default currency which is predefined under activity defaults
  * @return null
  */
 function getDefaultCurrency()
 {
-    $defaultFieldValues = app()->make(Databasemanager::class)->table('settings')->select('default_field_values')->where('organization_id', '=', session('org_id'))->first();
-    $defaultCurrency    = $defaultFieldValues ? json_decode($defaultFieldValues->default_field_values, true)[0]['default_currency'] : null;
+    $defaultFieldValues = app(Activity::class)->find(request()->activity)->default_field_values;
+    $defaultCurrency    = $defaultFieldValues ? $defaultFieldValues[0]['default_currency'] : null;
 
     return $defaultCurrency;
+}
+
+/**
+ * get default language which is predefined under  activity defaults
+ * @return null
+ */
+function getDefaultLanguage()
+{
+    $defaultFieldValues = app(Activity::class)->find(request()->activity)->default_field_values;
+    $defaultLanguage    = $defaultFieldValues ? $defaultFieldValues[0]['default_language'] : null;
+
+    return $defaultLanguage;
 }
 
 /**
@@ -84,4 +97,19 @@ function getVal($arr, $arguments, $default = "")
             return $default;
         }
     }
+}
+
+/**
+ * @param array $data
+ * @return bool
+ */
+function checkDataExists(array $data)
+{
+    foreach ($data as $index => $value) {
+        if ($value) {
+            return true;
+        }
+    }
+
+    return false;
 }

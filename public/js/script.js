@@ -47,7 +47,7 @@ $(document).ready(function () {
         var container = $(this).prev('.collection_form');
         var parents = $(this).parents('.collection_form');
         var level = parents.length;
-        var indexString = $(' > .form-group:last-child .form-control', container).eq(0).attr('name');
+        var indexString = $(' > .form-group:last .form-control', container).eq(0).attr('name');
         if (indexString === undefined) {
             indexString = '';
         }
@@ -82,7 +82,13 @@ $(document).ready(function () {
         }
         proto = proto.replace(new RegExp('__NAME' + level + '__', 'g'), newIndex);
         proto = proto.replace(/__NAME[\d]+__/g, 0);
-        container.append(proto);
+        if ($(' > .form-group:last', container).length > 0) {
+            $(' > .form-group:last', container).after(proto);
+        } else if ($(' > .text-danger:first', container).length > 0) {
+            $(' > .text-danger:first', container).before(proto);
+        } else {
+            $(container).append(proto);
+        }
         addDatepicker();
         bindTooltip();
         $('form select').select2();
@@ -139,7 +145,10 @@ $(document).ready(function () {
 
             /* reset indexes */
             var level = parents.length - 1;
-            var indexString = $(' > .form-group:last-child .form-control', collectionForm).eq(0).attr('name');
+            var indexString = $(' > .form-group:last .form-control', collectionForm).eq(0).attr('name');
+            if (indexString === undefined) {
+                indexString = '';
+            }
 
             var bracketIndexes = [0];
             while ((bracketIndex = indexString.indexOf('[', bracketIndexes.slice(-1)[0] + 1)) != -1) {

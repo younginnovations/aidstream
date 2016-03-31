@@ -1,5 +1,7 @@
 <?php namespace App\Core\V201\Requests\Activity;
 
+use Illuminate\Database\DatabaseManager;
+
 /**
  * Class Title
  * @package App\Core\V201\Requests\Activity
@@ -14,7 +16,7 @@ class Title extends ActivityBaseRequest
     public function rules()
     {
         $rules['narrative.*.narrative'] = 'required';
-        $rules['narrative']             = 'unique_lang';
+        $rules['narrative']             = 'unique_lang|unique_default_lang';
 
         return $rules;
     }

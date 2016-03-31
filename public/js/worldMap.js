@@ -26,7 +26,6 @@ d3.json("/data/countries.geo.json",function (countries){
         var plotMap = group.append("path")
             .attr("d", geoPath)
             .style("fill",function(d){
-                console.log(countryNames[d.id2]);
                 if(countryNames[d.id2] > 0)
                     return "#00A8FF";
 

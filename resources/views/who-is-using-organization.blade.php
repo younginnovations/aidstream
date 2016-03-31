@@ -37,11 +37,14 @@
 
 <section class="organisation-detail-container">
     <div class="contact-section clearfix">
-        <div class="logo">
-            <img src="{{$orgInfo['logo'] ? $orgInfo['logo_url'] : url('images/no-logo.png')}}">
-        </div>
+        @if($orgInfo['logo'])
+            <div class="logo">
+                <img src="{{ $orgInfo['logo_url'] }}">
+            </div>
+        @endif
         <div class="detail">
             <h2>{{$orgInfo['name']}}</h2>
+
             <div>
                 <div class="social-logo">
                     @if($user->email)
@@ -70,18 +73,22 @@
             <div class="content-1 clearfix">
                 <div class="content-item">
                     <span>Total Commitments</span>
+
                     <p>${{$final_data['transaction']['commitment']}}</p>
                 </div>
                 <div class="content-item">
                     <span>Total Disbursements</span>
+
                     <p>${{$final_data['transaction']['disbursement']}}</p>
                 </div>
                 <div class="content-item">
                     <span>Total Expenditures</span>
+
                     <p>${{$final_data['transaction']['expenditure']}}</p>
                 </div>
                 <div class="content-item">
                     <span>Total Incoming Funds</span>
+
                     <p>${{$final_data['transaction']['incomingFunds']}}</p>
                 </div>
             </div>
@@ -89,6 +96,7 @@
                 <div class="content-2 clearfix">
                     <div class="content-item">
                         <h2>Activities By Status</h2>
+
                         <div id="horizontalBarChart"></div>
                     </div>
                     <div class="content-item">
@@ -97,10 +105,12 @@
                             $identifier = $final_data['activity_name']['identifier'];
                             ?>
                             <h2> Activities ({{count($identifier)}}) </h2>
+
                             <div class="content-activity">
                                 @foreach($title as $index => $value)
                                     <div class="info">
                                         <span>{{ $identifier[$index] }}</span>
+
                                         <p>{{ $title[$index] }}</p>
                                     </div>
                                 @endforeach
@@ -112,6 +122,7 @@
             <div class="content-3">
                 <div class="content-item">
                     <h2>Recipient Country</h2>
+
                     <div id="map"></div>
                 </div>
             </div>
@@ -168,7 +179,11 @@
 
 
 <script>
-    var finalData = {!! json_encode($final_data) !!};
+    var finalData = {
+    !!json_encode($final_data)
+    !!
+    }
+    ;
 </script>
 
 <script src="/js/d3.min.js"></script>
