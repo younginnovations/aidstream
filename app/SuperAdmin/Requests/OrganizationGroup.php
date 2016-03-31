@@ -1,6 +1,7 @@
 <?php namespace App\SuperAdmin\Requests;
 
 use App\Http\Requests\Request;
+use App\Models\SuperAdmin\UserGroup;
 
 class OrganizationGroup extends Request
 {
@@ -22,6 +23,11 @@ class OrganizationGroup extends Request
      */
     public function rules()
     {
+        $email_rule   = 'required|email|unique:users,email';
+        $groupAdminId = $this->route()->id;
+        $userGroup    = app(UserGroup::class);
+        (!$groupAdminId) ?: $email_rule = sprintf('%s,%s,email', $email_rule, $userGroup->find($groupAdminId)->user->email);
+
         $rules                                            = [];
         $orgGroup                                         = 'new_organization_group.0';
         $adminGroup                                       = 'group_admin_information.0';
@@ -30,7 +36,7 @@ class OrganizationGroup extends Request
         $rules[sprintf('%s.group_identifier', $orgGroup)] = 'required|unique:user_group,group_identifier';
         $rules[sprintf('%s.first_name', $adminGroup)]     = 'required';
         $rules[sprintf('%s.last_name', $adminGroup)]      = 'required';
-        $rules[sprintf('%s.email', $adminGroup)]          = 'required|email|unique:users,email';
+        $rules[sprintf('%s.email', $adminGroup)]          = $email_rule;
         $rules[sprintf('%s.password', $adminGroup)]       = 'required|confirmed|min:6';
         if ($this->method() === 'PUT') {
             $rules[sprintf('%s.group_identifier', $orgGroup)] = 'required';
