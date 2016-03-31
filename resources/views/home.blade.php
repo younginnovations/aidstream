@@ -14,10 +14,17 @@
 <section class="main-container">
     <div class="introduction-wrapper bottom-line">
         <div class="col-md-12 text-center">
-            <h1>Publish your Aid data in <a href="http://iatistandard.org/">IATI format</a> effortlessly</h1>
+            {{--<h1>Publish your Aid data in <a href="http://iatistandard.org/">IATI format</a> effortlessly</h1>--}}
 
-            <p>AidStream is an online platform for organisations that wish to publish aid data in the International Aid
-                Transparency Initiative(IATI) format without getting into complexities of IATI. </p>
+            <h1>Effortlessly publish your Aid data in <a href="http://iatistandard.org/">IATI format</a></h1>
+
+            {{--<p>AidStream is an online platform for organisations that wish to publish aid data in the International Aid--}}
+                {{--Transparency Initiative(IATI) format without getting into complexities of IATI. </p>--}}
+
+            <p>
+                AidStream is an online platform for organisations that wish to publish aid data in accordance with the International Aid Transparency Initiative(IATI) format but want to avoid dealing with the complexities of creating XML.
+            </p>
+
             <a href="{{ url('/auth/register') }}" class="btn btn-primary get-started-btn">Get Started</a>
 
             <div class="screenshot">
@@ -45,11 +52,7 @@
                 <div class="left-wrapper">
                     <h2>Less IATI XML complexities</h2>
 
-                    <p>Entering data in AidStream is as easy as filling a simple form. The system hides all the
-                        complexities
-                        and technicalities of the xml. With AidStream, the necessity to understand the details of the
-                        IATI
-                        standard becomes lesser.</p>
+                    <p>Entering data in AidStream is as easy as filling out a simple form. Unsure what XML is, or how to create it? No problem! AidStream hides all the complexities and technicalities of the final XML file so that you can focus on inputting clear data in the right place.</p>
                 </div>
                 <div class="right-wrapper">
                     <img src="images/img-1.png" alt="">
@@ -59,10 +62,10 @@
         <div class="information-section">
             <div class="col-md-12 width-900">
                 <div class="left-wrapper">
-                    <h2>Easy to use interfaces</h2>
+                    <h2>Easy-to-use interface</h2>
 
                     <p>
-                        AidStream has simple interface which allows you to quickly add and edit an activity and import activities in bulk. AidStream ensures that your activities are of good quality.
+                        AidStream has a clear, clean and easy-to-use interface which allows you to quickly add and edit activities, as well as offering you the option of importing activities in bulk. Using AidStream guarantees that your data will always be logged correctly in the right section, with no messy XML causing you to make mistakes!
                     </p>
                 </div>
                 <div class="right-wrapper">
@@ -73,10 +76,10 @@
         <div class="information-section">
             <div class="col-md-12 width-900">
                 <div class="left-wrapper">
-                    <h2>Publish data with ease!</h2>
+                    <h2>Publish data easily!</h2>
 
                     <p>
-                        AidStream takes care of generating XML from your data and sending it to IATI Registry with a single click. You don’t have to worry about anything, everything will be taken care of.
+                        AidStream uses the form you fill out to generate the necessary XML files and sends your data direct to the IATI Registry - all with a single click! All you have to do is sit back and relax - AidStream takes care of everything else.
                     </p>
                 </div>
                 <div class="right-wrapper">
@@ -85,24 +88,24 @@
             </div>
         </div>
     </div>
-    <div class="testimonials-wrapper">
-        <div class="col-md-12 text-center">
-            <blockquote>
-                <p>"Neat - AidStream makes it easy for an organisation to publish #IATI #opendata"</p>
+    {{--<div class="testimonials-wrapper">--}}
+        {{--<div class="col-md-12 text-center">--}}
+            {{--<blockquote>--}}
+                {{--<p>"Neat - AidStream makes it easy for an organisation to publish #IATI #opendata"</p>--}}
 
-                <div class="detail">
-                    <h3>Tariq Khokhar</h3>
-                    <span>Global Data Editor, WorldBank</span>
-                    <img src="images/speaker.png" alt="">
-                </div>
-            </blockquote>
-        </div>
-    </div>
+                {{--<div class="detail">--}}
+                    {{--<h3>Tariq Khokhar</h3>--}}
+                    {{--<span>Global Data Editor, WorldBank</span>--}}
+                    {{--<img src="images/speaker.png" alt="">--}}
+                {{--</div>--}}
+            {{--</blockquote>--}}
+        {{--</div>--}}
+    {{--</div>--}}
     <div class="convince-wrapper">
         <div class="col-md-12 text-center width-900">
-            <h2>Not convinced yet?</h2>
+            <h2>Still not convinced?</h2>
 
-            <p>Lets just say, with AidStream, making your data open will be a piece of cake and a fun experience</p>
+            <p>Did we mention that it’s free!? You can’t go wrong - with AidStream, publishing your data to IATI is a piece of cake!</p>
             <a href="{{ url('/auth/register') }}" class="btn btn-primary get-started-btn">Get Started</a>
         </div>
     </div>
