@@ -351,7 +351,7 @@ class ActivityController extends Controller
     {
         $activityPublishedFiles = $this->activityManager->getActivityPublishedFiles($this->organization_id);
         $settings               = $this->settingsManager->getSettings($this->organization_id);
-        $api_url                = config('filesystems.iati_registry_dummy_url');
+        $api_url                = config('filesystems.iati_registry_api_base_url');
         $apiCall                = new CkanClient($api_url, $settings['registry_info'][0]['api_id']);
 
         try {

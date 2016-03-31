@@ -10,7 +10,7 @@
             @foreach($plannedDisbursements as $plannedDisbursement)
                 <div class="panel-heading">
                     <div class="activity-element-title">
-                        {{'[USD]'. $plannedDisbursement['value'][0]['amount'] . ' ; '. formatDate($plannedDisbursement['value'][0]['value_date']) }}
+                        {{$getCode->getCode('Activity', 'Currency', $plannedDisbursement['value'][0]['currency']) . ' ; '. formatDate($plannedDisbursement['value'][0]['value_date']) }}
                     </div>
                 </div>
                 <div class="panel-body">
