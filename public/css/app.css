@@ -909,9 +909,7 @@ a.version-text {
       white-space: nowrap; }
       .sidebar-wrapper ul li a:before {
         content: "";
-        background-image: url("../../images/ic-sprite.png");
-        background-repeat: no-repeat;
-        background-position: -73px 0;
+        background: url(../../images/ic-sprite.png) no-repeat -73px 0;
         width: 34px;
         height: 34px;
         position: absolute;
@@ -919,12 +917,6 @@ a.version-text {
         right: auto;
         bottom: auto;
         left: 16px; }
-        @media all and (-webkit-min-device-pixel-ratio: 1.5), all and (-o-min-device-pixel-ratio: 3 / 2), all and (min--moz-device-pixel-ratio: 1.5), all and (min-device-pixel-ratio: 1.5) {
-          .sidebar-wrapper ul li a:before {
-            background-image: url("../../images/ic-sprite@2x.png");
-            background-repeat: no-repeat;
-            -o-background-size: auto auto;
-               background-size: auto auto; } }
       .sidebar-wrapper ul li a:hover, .sidebar-wrapper ul li a:focus {
         opacity: 1;
         background: none;
@@ -1025,7 +1017,7 @@ a.version-text {
     height: 100%; }
 
 .content-wrapper {
-  padding: 0 0 70px;
+  padding: 0;
   border-left: 1px solid #ededed;
   min-height: 100%;
   width: -webkit-calc(100% - 62px);
@@ -1319,6 +1311,8 @@ a.version-text {
     padding: 10px 22px; }
   .element-sidebar-wrapper .panel-default {
     margin-bottom: 30px; }
+    .element-sidebar-wrapper .panel-default:last-child {
+      margin-bottom: 0; }
   .element-sidebar-wrapper .panel-body li {
     border-bottom: 1px solid #ededed;
     width: 100%;
@@ -1346,19 +1340,15 @@ a.version-text {
     .element-sidebar-wrapper .panel-body li .highlight + .help-text {
       background: url(../../images/ic-sprite.png) no-repeat -308px -200px; }
 
-.element-sidebar-wrapper .mCSB_container, .element-sidebar-wrapper .mCustomScrollBox {
-  overflow: visible; }
-
 .element-sidebar-fixed {
   position: fixed !important;
   right: 0;
   top: 63px; }
 
-.mCSB_dragger_bar {
-  background: rgba(72, 72, 72, 0.8) !important; }
-
-.sidebar-wrapper .mCSB_dragger_bar {
-  background: rgba(255, 255, 255, 0.8) !important; }
+.element-menu-wrapper {
+  float: right;
+  position: relative;
+  width: 267px; }
 
 .action-icon {
   width: 33px;
@@ -2652,22 +2642,80 @@ label.required::after {
 
 .scroll-top {
   position: fixed;
-  bottom: 50px;
-  right: 70px;
+  bottom: 20px;
+  right: 30px;
   display: none;
   text-align: center;
   color: #00A8FF; }
+
+.full-scroll-top {
+  right: 272px; }
 
 .scrollup {
   width: 36px;
   height: 36px;
   text-indent: -9999px;
-  background: #00A8FF url(../../images/ic-top-arrow.png) no-repeat center;
+  background: rgba(0, 168, 255, 0.5) url(../../images/ic-top-arrow.png) no-repeat center;
   -webkit-border-radius: 50%;
           border-radius: 50%;
   display: block;
   text-align: center;
   margin: 0 auto; }
+  .scrollup:hover {
+    background-color: #00A8FF; }
+
+.jspVerticalBar, .jspTrack {
+  background: none !important; }
+
+.jspVerticalBar {
+  width: 4px !important;
+  right: 3px !important; }
+
+.jspDrag {
+  -webkit-border-radius: 4px;
+          border-radius: 4px;
+  background: rgba(72, 72, 72, 0.8) !important; }
+
+.element-sidebar-wrapper .jspPane {
+  width: 266px !important; }
+
+.jspHorizontalBar {
+  display: none; }
+
+.jspVerticalBar .jspArrow.jspDisabled {
+  display: none; }
+
+.jspScrollable:focus {
+  display: none; }
+
+.jspVerticalBar .jspArrow {
+  height: 42px !important;
+  position: absolute;
+  top: auto;
+  right: -3px;
+  bottom: 0;
+  left: auto;
+  width: 266px;
+  background: #00A8FF; }
+  .jspVerticalBar .jspArrow:before {
+    content: 'View all elements';
+    display: inline-block;
+    color: #fff;
+    width: 100%;
+    position: absolute;
+    left: 70px;
+    top: 28%;
+    text-indent: 1px; }
+
+.sidebar-wrapper .jspVerticalBar .jspArrow:before {
+  left: 47px; }
+
+.jspVerticalBar .jspArrowUp {
+  display: none; }
+
+.touch-sidebar-wrapper li {
+  width: 62px;
+  overflow: hidden; }
 
 @media all and (max-width: 1030px) {
   .activity-status {
@@ -2678,7 +2726,8 @@ label.required::after {
 @media all and (max-width: 1000px) {
   .element-menu-wrapper {
     position: absolute;
-    right: 0; }
+    right: 0;
+    width: 267px; }
   .element-content-wrapper, .organization-wrapper {
     width: 100%;
     padding-bottom: 100px; }
@@ -2711,11 +2760,15 @@ label.required::after {
              -o-transform: rotate(180deg);
                 transform: rotate(180deg); }
   .element-panel-heading form {
-    margin-right: 40px; } }
+    margin-right: 40px; }
+  .scroll-top {
+    right: 30px; } }
 
 @media all and (max-width: 992px) {
   .element-panel-heading {
-    padding-right: 70px; } }
+    padding-right: 70px; }
+  .register-container {
+    margin: 0 15px; } }
 
 @media all and (max-width: 820px) {
   .btn-form, .btn-cancel {
@@ -2900,11 +2953,8 @@ label.required::after {
     padding-right: 80px; }
   .change-activity-form .btn-form {
     left: 14px; }
-  .register-container .form-body {
-    -webkit-border-radius: 0;
-            border-radius: 0; }
-    .register-container .form-body select {
-      width: 100%; }
+  .register-container .form-body select {
+    width: 100%; }
   .input-wrapper > .col-md-12 .form-group {
     padding: 0 !important; }
   .create-wizard-form .btn-submit {
@@ -2987,7 +3037,11 @@ label.required::after {
   .activity-file-choose {
     width: 94%; }
     .activity-file-choose + button {
-      margin-top: 34px; } }
+      margin-top: 34px; }
+  .navbar.navbar-static {
+    padding: 14px 16px; }
+    .navbar.navbar-static .navbar-header {
+      float: none; } }
 
 .element-panel-heading-info .last-updated-date {
   display: block;
@@ -3131,6 +3185,20 @@ label.required::after {
     .settings-checkall-wrapper > .collection_form > .form-group > .form-group:nth-child(-n+3), .checkall-wrapper .form-group:nth-child(3) > .form-group > .form-group:nth-child(-n+3) {
       margin-top: 0; } }
 
+@media all and (max-width: 1200px) {
+  .sidebar-wrapper:not(.full-sidebar-wrapper) .jspVerticalBar .jspArrow {
+    background: #fff;
+    height: 20px !important; }
+    .sidebar-wrapper:not(.full-sidebar-wrapper) .jspVerticalBar .jspArrow:before {
+      border-left: 5px solid transparent;
+      border-right: 5px solid transparent;
+      border-top: 7px solid #00aaff;
+      width: 4px;
+      right: 27px;
+      top: 7px;
+      height: 16px;
+      left: auto !important; } }
+
 @media all and (min-width: 1200px) {
   .settings-checkall-wrapper > .collection_form > .form-group > .form-group, .checkall-wrapper .form-group:nth-child(3) > .form-group > .form-group {
     width: 24.8%;
@@ -3148,7 +3216,14 @@ label.required::after {
     display: none; }
   .support p {
     display: block !important;
-    opacity: 1 !important; } }
+    opacity: 1 !important; }
+  .jspPane {
+    width: 210px !important; }
+  .jspVerticalBar .jspArrow {
+    background: #484848;
+    width: 210px; }
+  .element-sidebar-wrapper .jspVerticalBar .jspArrow {
+    width: 267px; } }
 
 @media all and (min-width: 1340px) {
   .settings-checkall-wrapper > .collection_form > .form-group > .form-group, .checkall-wrapper .form-group:nth-child(3) > .form-group > .form-group {

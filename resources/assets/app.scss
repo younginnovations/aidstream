@@ -879,8 +879,9 @@ a.version-text {
       white-space: nowrap;
       &:before {
         content: "";
-        @include at2x('../../images/ic-sprite', png);
-        background-position: -73px 0;
+        background: $url_3 no-repeat -73px 0;
+        //@include at2x('../../images/ic-sprite', png);
+        //background-position: -73px 0;
         width: 34px;
         height: 34px;
         @include position(absolute, 24% auto auto 16px);
@@ -1041,7 +1042,7 @@ $full-sidebar-wrapper-width: 210px;
 }
 
 .content-wrapper {
-  padding: 0 0 70px;
+  padding: 0;
   border-left: 1px solid $color_gallery_approx;
   min-height: 100%;
   width: calc(100% - 62px);
@@ -1405,6 +1406,9 @@ $element-sidebar-wrapper-width: 267px;
   }
   .panel-default {
     margin-bottom: 30px;
+    &:last-child {
+      margin-bottom: 0;
+    }
   }
   .panel-body li {
     border-bottom: 1px solid $color_gallery_approx;
@@ -1441,24 +1445,16 @@ $element-sidebar-wrapper-width: 267px;
   }
 }
 
-.element-sidebar-wrapper {
-  .mCSB_container, .mCustomScrollBox {
-    overflow: visible;
-  }
-}
-
 .element-sidebar-fixed {
   position: fixed !important;
   right: 0;
   top: 63px;
 }
 
-.mCSB_dragger_bar {
-  background: rgba($color_gravel_approx, 0.8) !important;
-}
-
-.sidebar-wrapper .mCSB_dragger_bar {
-  background: rgba($color_white, 0.8) !important;
+.element-menu-wrapper {
+  float: right;
+  position: relative;
+  width: 267px;
 }
 
 .action-icon {
@@ -3009,22 +3005,89 @@ label.required::after {
 
 .scroll-top {
   position: fixed;
-  bottom: 50px;
-  right: 70px;
+  bottom: 20px;
+  right: 30px;
   display: none;
   text-align: center;
   color: $color_dodger_blue_approx;
+}
+
+.full-scroll-top {
+  right: 272px;
 }
 
 .scrollup {
   width: 36px;
   height: 36px;
   text-indent: -9999px;
-  background: $color_dodger_blue_approx $url_9 no-repeat center;
+  background: rgba($color_dodger_blue_approx, 0.5) $url_9 no-repeat center;
   border-radius: 50%;
   display: block;
   text-align: center;
   margin: 0 auto;
+  &:hover {
+    background-color: $color_dodger_blue_approx;
+  }
+}
+
+.jspVerticalBar, .jspTrack {
+  background: none !important;
+}
+
+.jspVerticalBar {
+  width: 4px !important;
+  right: 3px !important;
+}
+
+.jspDrag {
+  border-radius: 4px;
+  background: rgba($color_gravel_approx, 0.8) !important;
+}
+
+.element-sidebar-wrapper .jspPane {
+  width: 266px !important;
+}
+
+.jspHorizontalBar {
+  display: none;
+}
+
+.jspVerticalBar .jspArrow.jspDisabled {
+  display: none;
+}
+
+.jspScrollable:focus {
+  display: none;
+}
+
+.jspVerticalBar .jspArrow {
+  height: 42px !important;
+  @include position(absolute,auto -3px 0 auto);
+  width: 266px;
+  background: $color_dodger_blue_approx;
+  &:before {
+    content: 'View all elements';
+    display: inline-block;
+    color: #fff;
+    width: 100%;
+    position: absolute;
+    left: 70px;
+    top: 28%;
+    text-indent: 1px;
+  }
+}
+
+.sidebar-wrapper .jspVerticalBar .jspArrow:before {
+  left: 47px;
+}
+
+.jspVerticalBar .jspArrowUp {
+  display: none;
+}
+
+.touch-sidebar-wrapper li {
+  width: 62px;
+  overflow: hidden;
 }
 
 @media all and (max-width: 1030px) {
@@ -3040,6 +3103,7 @@ label.required::after {
   .element-menu-wrapper {
     position: absolute;
     right: 0;
+    width: 267px;
   }
 
   .element-content-wrapper, .organization-wrapper {
@@ -3083,11 +3147,19 @@ label.required::after {
   .element-panel-heading form {
     margin-right: 40px;
   }
+
+  .scroll-top {
+    right: 30px;
+  }
 }
 
 @media all and (max-width: 992px) {
   .element-panel-heading {
     padding-right: 70px;
+  }
+
+  .register-container {
+    margin: 0 15px;
   }
 }
 
@@ -3388,7 +3460,6 @@ label.required::after {
   }
 
   .register-container .form-body {
-    border-radius: 0;
     select {
       width: 100%;
     }
@@ -3537,6 +3608,13 @@ label.required::after {
     width: 94%;
     + button {
       margin-top: 34px;
+    }
+  }
+
+  .navbar.navbar-static {
+    padding: 14px 16px;
+    .navbar-header {
+      float: none;
     }
   }
 }
@@ -3771,6 +3849,23 @@ label.required::after {
   }
 }
 
+@media all and (max-width: 1200px) {
+  .sidebar-wrapper:not(.full-sidebar-wrapper) .jspVerticalBar .jspArrow {
+    background: #fff;
+    height: 20px!important;
+    &:before {
+      border-left: 5px solid transparent;
+      border-right: 5px solid transparent;
+      border-top: 7px solid #00aaff;
+      width: 4px;
+      right: 27px;
+      top: 7px;
+      height: 16px;
+      left: auto!important;
+    }
+  }
+}
+
 @media all and (min-width: 1200px) {
   .settings-checkall-wrapper > .collection_form > .form-group > .form-group, .checkall-wrapper .form-group:nth-child(3) > .form-group > .form-group {
     width: 24.8%;
@@ -3796,6 +3891,22 @@ label.required::after {
       display: block !important;
       opacity: 1 !important;
     }
+  }
+
+  .jspPane {
+    width: 210px !important;
+  }
+
+  .jspVerticalBar .jspArrow {
+    background: $color_gravel_approx;
+    width: 210px;
+    //&:before {
+    //  left: 96px;
+    //}
+  }
+
+  .element-sidebar-wrapper .jspVerticalBar .jspArrow {
+    width: 267px;
   }
 }
 

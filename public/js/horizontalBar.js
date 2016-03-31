@@ -2,7 +2,7 @@ hello(finalData.activity_status);
 function hello(data) {
     var barHeight = 35;
     var height = barHeight * data.length;
-    var marginHorz = { top: 20, right: 20, bottom: 40, left: 100},
+    var marginHorz = { top: 20, right: 60, bottom: 40, left: 120},
         widthHorz = 480 - marginHorz.left - marginHorz.right,
         heightHorz = height;
 

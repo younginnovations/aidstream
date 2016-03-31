@@ -42,9 +42,18 @@
                 <li><a class="{{ Request::is('who-is-using') ? 'active' : '' }}" href="{{ url('/who-is-using') }}">Who's Using</a></li>
                 <!--<li><a href="#">Snapshot</a></li>-->
             </ul>
+            <div class="action-btn pull-left">
+                @if(auth()->check())
+                    <a href="{{ url((auth()->user()->role_id == 1 || auth()->user()->role_id == 2) ? config('app.admin_dashboard') : config('app.super_admin_dashboard'))}}" class="btn btn-primary">Go
+                        to Dashboard</a>
+                @else
+                    <a href="{{ url('/auth/login')}}" class="btn btn-primary">Login/Register</a>
+                @endif
+            </div>
         </div>
     </nav>
 </header>
+
 
 <div class="login-wrapper">
     {{--<div class="language-select-wrapper">--}}
@@ -138,6 +147,16 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="{{url('/js/jquery.cookie.js')}}"></script>
-<script type="text/javascript" src="{{url('/js/main.js')}}"></script>
+<script>
+    $(document).ready(function () {
+        function hamburgerMenu() {
+            $('.navbar-toggle.collapsed').click(function(){
+                $('.navbar-collapse').toggleClass('out');
+                $(this).toggleClass('collapsed');
+            });
+        }
+        hamburgerMenu();
+    });
+</script>
 </body>
 </html>

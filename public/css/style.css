@@ -298,6 +298,8 @@ footer {
   margin-bottom: 20px; }
 .about-information-section .right-wrapper {
   text-align: left; }
+.about-information-section p {
+  margin-bottom: 20px; }
 
 .support-desc {
   text-align: center;
@@ -370,14 +372,20 @@ footer {
       font-size: 22px;
       line-height: 28px; }
     .organisation-detail-container .activities-detail-section .content-2 .info {
-      margin-top: 18px;
-      border-bottom: 1px solid #F9F9F9; }
+      margin-top: 14px;
+      border-bottom: 1px solid #F9F9F9;
+      padding-bottom: 12px;
+      padding-right: 12px; }
       .organisation-detail-container .activities-detail-section .content-2 .info p {
         color: rgba(72, 72, 72, 0.7);
         font-size: 11px;
         margin: 7px 0 0; }
+      .organisation-detail-container .activities-detail-section .content-2 .info:first-of-type {
+        margin-top: 20px; }
       .organisation-detail-container .activities-detail-section .content-2 .info:last-child {
-        border-bottom: none; }
+        border-bottom: none;
+        margin-bottom: 0;
+        padding-bottom: 0; }
     .organisation-detail-container .activities-detail-section .content-2 .content-item {
       background: #FFFFFF;
       box-shadow: 0px 2px 40px 0px rgba(0, 0, 0, 0.1);
@@ -606,9 +614,39 @@ footer {
     margin-bottom: 0; }
     .organisation-detail-container .activities-detail-section .content-2 .content-item:last-child {
       margin-right: 0; }
+  .organisation-detail-container .activities-detail-section .content-2 .content-item {
+    height: 348px; }
+  .organisation-detail-container .activities-detail-section .content-2 .content-activity {
+    height: 250px;
+    overflow: auto; }
   .organisation-detail-container .activities-detail-section .content-3 svg {
     max-height: 600px;
-    margin-left: -50px; } }
+    margin-left: -50px; }
+
+  .about-information-section > .col-md-12 > div {
+    width: 694px;
+    margin-left: auto;
+    margin-right: auto; }
+
+  .organisation-detail-container .contact-section .detail {
+    margin-top: 10px; } }
+.jspVerticalBar, .jspTrack {
+  background: #f9f9f9 !important; }
+
+.jspVerticalBar {
+  width: 4px !important;
+  right: 3px !important; }
+
+.jspDrag {
+  border-radius: 4px;
+  background: #d8d8d8 !important; }
+
+.jspScrollable:focus {
+  outline: none; }
+
+text {
+  font: 12px Open-Sans-Regular; }
+
 @media all and (min-width: 1000px) {
   .width-900 {
     width: 900px;
@@ -635,7 +673,7 @@ footer {
     .organisation-detail-container .activities-detail-section .content-2 .content-item {
       width: 47.8%;
       margin-right: 40px;
-      padding: 35px;
+      padding: 35px 35px 26px;
       min-height: 198px; }
   .organisation-detail-container .activities-detail-section .content-3 .content-item {
     padding: 35px; } }
