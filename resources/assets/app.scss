@@ -492,6 +492,11 @@ label {
 .panel-title {
   font: 32px $font_2;
   padding-top: 20px;
+  & + p {
+    color: rgba($color_gravel_approx,0.8);
+    padding: 20px 33px 0;
+    margin-bottom: -10px;
+  }
 }
 
 .register-container {

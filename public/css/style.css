@@ -213,7 +213,7 @@ footer {
 
 .footer-nav > .col-md-12 {
   padding-top: 30px;
-  width: 250px;
+  width: 268px;
   margin: 0 auto; }
 .footer-nav ul {
   float: left; }
@@ -450,7 +450,7 @@ footer {
 
   .footer-nav {
     float: left;
-    width: 250px;
+    width: 268px;
     border: none;
     padding-bottom: 15px; }
 
@@ -780,7 +780,7 @@ text {
     top: 0;
     right: 0;
     left: 0;
-    min-height: 470px;
+    height: 100vh;
     text-align: center;
     opacity: 0;
     pointer-events: none;
