@@ -171,45 +171,49 @@ class AuthController extends Controller
 
         $credentials = $request->only($field, 'password');
 
-        if ($this->requiresPasswordReset($credentials)) {
-            $this->resetPassword($credentials['password']);
-        }
-
-        if (Auth::attempt($credentials, $request->has('remember'))) {
-            $user = Auth::user();
-            Session::put('role_id', $user->role_id);
-            Session::put('org_id', $user->org_id);
-            $settings       = Settings::where('organization_id', $user->org_id)->first();
-            $settings_check = isset($settings);
-            $version        = ($settings_check) ? $settings->version : config('app.default_version');
-            Session::put('current_version', $version);
-            $versions_db= $this->database->table('versions')->get();
-            $versions = [];
-            foreach ($versions_db as $ver) {
-               $versions[] = $ver->version;
+        try {
+            if ($this->requiresPasswordReset($credentials)) {
+                $this->resetPassword($credentials['password']);
             }
-            $versionKey  = array_search($version, $versions);
-            $next_version = (end($versions) == $version) ? null : $versions[$versionKey + 1];
 
-            Session::put('next_version',$next_version);
-            $version        = 'V' . str_replace('.', '', $version);
-            Session::put('version', $version);
-            $redirectPath = ($user->role_id == 1 || $user->role_id == 2) ? config('app.admin_dashboard') : config('app.super_admin_dashboard');
-            $intendedUrl  = Session::get('url.intended');
+            if (Auth::attempt($credentials, $request->has('remember'))) {
+                $user = Auth::user();
+                Session::put('role_id', $user->role_id);
+                Session::put('org_id', $user->org_id);
+                $settings       = Settings::where('organization_id', $user->org_id)->first();
+                $settings_check = isset($settings);
+                $version        = ($settings_check) ? $settings->version : config('app.default_version');
+                Session::put('current_version', $version);
+                $versions_db= $this->database->table('versions')->get();
+                $versions = [];
+                foreach ($versions_db as $ver) {
+                    $versions[] = $ver->version;
+                }
+                $versionKey  = array_search($version, $versions);
+                $next_version = (end($versions) == $version) ? null : $versions[$versionKey + 1];
 
-            !(($user->role_id == 3 || $user->role_id == 4) && strpos($intendedUrl, '/admin') === false) ?: $intendedUrl = url('/');
-            !($intendedUrl == url('/')) ?: Session::set('url.intended', $redirectPath);
+                Session::put('next_version',$next_version);
+                $version        = 'V' . str_replace('.', '', $version);
+                Session::put('version', $version);
+                $redirectPath = ($user->role_id == 1 || $user->role_id == 2) ? config('app.admin_dashboard') : config('app.super_admin_dashboard');
+                $intendedUrl  = Session::get('url.intended');
 
-            return redirect()->intended($redirectPath);
+                !(($user->role_id == 3 || $user->role_id == 4) && strpos($intendedUrl, '/admin') === false) ?: $intendedUrl = url('/');
+                !($intendedUrl == url('/')) ?: Session::set('url.intended', $redirectPath);
+
+                return redirect()->intended($redirectPath);
+            }
+
+            return redirect($this->loginPath())
+                ->withInput($request->only($field, 'remember'))
+                ->withErrors(
+                    [
+                        $field => $this->getFailedLoginMessage(),
+                    ]
+                );
+        } catch (\Exception $exception) {
+            return redirect()->back()->withErrors($exception->getMessage());
         }
-
-        return redirect($this->loginPath())
-            ->withInput($request->only($field, 'remember'))
-            ->withErrors(
-                [
-                    $field => $this->getFailedLoginMessage(),
-                ]
-            );
     }
 
     /**

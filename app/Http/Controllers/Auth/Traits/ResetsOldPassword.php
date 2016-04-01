@@ -1,5 +1,6 @@
 <?php namespace App\Http\Controllers\Auth\Traits;
 
+use App\Exceptions\Aidstream\InvalidUserException;
 use Illuminate\Support\Facades\Hash;
 
 /**
@@ -32,6 +33,10 @@ trait ResetsOldPassword
         $this->attemptingUser = array_key_exists('username', $credentials)
             ? $this->user->where('username', '=', $credentials['username'])->first()
             : $this->user->where('email', '=', $credentials['email'])->first();
+
+        if (!$this->attemptingUser) {
+            throw new InvalidUserException('The username/email you entered does not exist.');
+        }
 
         return $this;
     }

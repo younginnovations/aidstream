@@ -71,4 +71,14 @@ class Organization extends Model
     {
         return $this->hasOne('App\Models\Settings', 'organization_id');
     }
+
+    /**
+     * Get Admin User.
+     * If no Admin User is present, returns an arbitrary user.
+     * @return mixed
+     */
+    public function getAdminUser()
+    {
+        return ($user = $this->users->where('role_id', '=', 1)->first()) ? $user : $this->users()->first();
+    }
 }

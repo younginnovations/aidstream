@@ -86,7 +86,7 @@ class ActivityDateController extends Controller
     }
 
     /**
-     * validate activity date data based on Activity Date and Activity Date Type
+     * Validate activity date data based on Activity Date and Activity Date Type
      * @param array $data
      * @return bool
      */
@@ -105,16 +105,27 @@ class ActivityDateController extends Controller
                 $hasStart = true;
             } elseif ($type == 3 || $type == 4) {
                 $prevData = isset($data[$activityDateIndex - 1]) ? $data[$activityDateIndex - 1] : null;
-                if ($prevData) {
-                    (strtotime($prevData['date']) < strtotime($date)) ?: $check = false;
-                    if ($type == 3) {
-                        $prevData['type'] == 1 ?: $messages[] = sprintf('Ends should be after respective Starts in Activity Date Type (block %s)', $blockIndex);
-                    } else {
-                        $prevData['type'] == 2 ?: $messages[] = sprintf('Ends should be after respective Starts in Activity Date Type (block %s)', $blockIndex);
-                    }
-                } else {
+
+                if (!$prevData) {
                     $messages[] = sprintf('Ends should be after respective Starts in Activity Date Type (block %s)', $blockIndex);
+                } else {
+                    if (strtotime($date) < strtotime($prevData['date'])) {
+                        $messages[] = sprintf('End date must be after start dates (block %s)', $blockIndex);
+                    }
                 }
+
+/*
+ * Commented in case of further confusions.
+ */
+//                    (strtotime($prevData['date']) < strtotime($date)) ?: $check = false;
+//                    if ($type == 3) {
+//                        $prevData['type'] == 1 ?: $messages[] = sprintf('Ends should be after respective Starts in Activity Date Type (block %s)', $blockIndex);
+//                    } else {
+//                        $prevData['type'] == 2 ?: $messages[] = sprintf('Ends should be after respective Starts in Activity Date Type (block %s)', $blockIndex);
+//                    }
+//                else {
+//                    $messages[] = sprintf('Ends should be after respective Starts in Activity Date Type (block %s)', $blockIndex);
+//                }
             }
         }
 
