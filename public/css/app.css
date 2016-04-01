@@ -491,7 +491,6 @@ label {
   max-width: 392px;
   margin-left: auto;
   margin-right: auto;
-  padding-top: 50px;
   clear: both; }
   .login-container::after {
     clear: both;
@@ -584,7 +583,6 @@ label {
   max-width: 814px;
   margin-left: auto;
   margin-right: auto;
-  padding-top: 50px;
   clear: both; }
   .register-container::after {
     clear: both;
@@ -637,7 +635,8 @@ label {
   max-width: 174px; }
 
 .navbar.navbar-static {
-  padding: 14px 30px; }
+  padding: 14px 30px;
+  position: static; }
 
 .navbar-default {
   background: #fff;
@@ -882,7 +881,7 @@ a.version-text {
   position: fixed;
   top: 63px;
   left: 0;
-  height: 90vh;
+  height: 93vh;
   z-index: 1; }
   .sidebar-wrapper .panel {
     border: 0;
@@ -1297,11 +1296,10 @@ a.version-text {
 
 .element-sidebar-wrapper {
   padding: 0;
-  border-left: 1px solid #ededed;
   float: right;
-  width: 267px;
+  width: 283px;
   padding-right: 0;
-  background: #fff; }
+  background: url(../../images/ic-line-bg.png) repeat-y 16px; }
   .element-sidebar-wrapper .panel-heading {
     background: transparent;
     font: 12px 'Open-Sans-Bold';
@@ -1310,7 +1308,11 @@ a.version-text {
     border-color: #ededed;
     padding: 10px 22px; }
   .element-sidebar-wrapper .panel-default {
-    margin-bottom: 30px; }
+    padding-bottom: 30px;
+    -webkit-border-radius: 0;
+            border-radius: 0;
+    background: none;
+    margin-left: 16px; }
     .element-sidebar-wrapper .panel-default:last-child {
       margin-bottom: 0; }
   .element-sidebar-wrapper .panel-body li {
@@ -1348,7 +1350,7 @@ a.version-text {
 .element-menu-wrapper {
   float: right;
   position: relative;
-  width: 267px; }
+  width: 283px; }
 
 .action-icon {
   width: 33px;
@@ -1359,7 +1361,7 @@ a.version-text {
   top: 11px;
   right: auto;
   bottom: auto;
-  left: -17px;
+  left: -16px;
   padding-left: 0 !important;
   -webkit-border-radius: 50%;
           border-radius: 50%;
@@ -1392,10 +1394,10 @@ a.version-text {
   right: 18px; }
 
 .element-content-wrapper {
-  padding: 20px 0 0;
-  width: -webkit-calc(100% - 267px);
-  width: -moz-calc(100% - 267px);
-  width: calc(100% - 267px); }
+  padding: 20px 0 0 16px;
+  width: -webkit-calc(100% - 283px);
+  width: -moz-calc(100% - 283px);
+  width: calc(100% - 283px); }
   .element-content-wrapper .panel-heading {
     background: transparent; }
   .element-content-wrapper h3 {
@@ -1474,7 +1476,7 @@ a.version-text {
   background: #52cc88; }
 
 .panel-element-detail {
-  padding: 0 36px; }
+  padding: 0 20px; }
   .panel-element-detail > .panel-default {
     margin-bottom: 42px; }
   .panel-element-detail .panel-heading {
@@ -1636,7 +1638,7 @@ a.version-text {
   display: none; }
 
 .collection_form > .form-group + .form-group {
-  background: #F7FBFD;
+  background: #fdfdfd;
   padding-bottom: 25px; }
 
 .create-form > form > .form-group {
@@ -2503,9 +2505,6 @@ div[class*="panel-level-"] .panel > .panel-body {
 .registry-info-wrapper {
   margin-top: 0; }
 
-.sector_types {
-  padding-left: 15px; }
-
 .panel-user-view {
   padding-top: 20px !important; }
   .panel-user-view .modal-body > label {
@@ -2649,7 +2648,7 @@ label.required::after {
   color: #00A8FF; }
 
 .full-scroll-top {
-  right: 272px; }
+  right: 275px; }
 
 .scrollup {
   width: 36px;
@@ -2674,10 +2673,13 @@ label.required::after {
 .jspDrag {
   -webkit-border-radius: 4px;
           border-radius: 4px;
-  background: rgba(72, 72, 72, 0.8) !important; }
+  background: rgba(255, 255, 255, 0.8) !important; }
 
 .element-sidebar-wrapper .jspPane {
-  width: 266px !important; }
+  width: 283px !important; }
+
+.element-sidebar-wrapper .jspDrag {
+  background: rgba(72, 72, 72, 0.8) !important; }
 
 .jspHorizontalBar {
   display: none; }
@@ -2686,7 +2688,7 @@ label.required::after {
   display: none; }
 
 .jspScrollable:focus {
-  display: none; }
+  outline: none; }
 
 .jspVerticalBar .jspArrow {
   height: 42px !important;
@@ -2706,6 +2708,14 @@ label.required::after {
     left: 70px;
     top: 28%;
     text-indent: 1px; }
+
+.element-sidebar-wrapper .jspVerticalBar .jspArrow {
+  background: #f2f2f2;
+  width: 266px; }
+  .element-sidebar-wrapper .jspVerticalBar .jspArrow:before {
+    color: #00A8FF; }
+  .element-sidebar-wrapper .jspVerticalBar .jspArrow:hover {
+    background: #e8e8e8; }
 
 .sidebar-wrapper .jspVerticalBar .jspArrow:before {
   left: 47px; }
@@ -2732,7 +2742,8 @@ label.required::after {
     width: 100%;
     padding-bottom: 100px; }
   .element-sidebar-wrapper {
-    display: none; }
+    display: none;
+    background-color: #fff !important; }
   .element-sidebar-dropdown {
     float: right;
     display: block;
@@ -2780,7 +2791,7 @@ label.required::after {
     width: 100%; } }
 
 @media all and (max-width: 767px) {
-  table, thead, tbody, th, td, tr {
+  div:not(.xdsoft_calendar) > table, div:not(.xdsoft_calendar) > table thead, div:not(.xdsoft_calendar) > table tbody, div:not(.xdsoft_calendar) > table th, div:not(.xdsoft_calendar) > table td, div:not(.xdsoft_calendar) > table tr {
     display: block; }
   /* Hide table headers (but not display: none;, for accessibility) */
   thead tr {
@@ -3185,6 +3196,15 @@ label.required::after {
     .settings-checkall-wrapper > .collection_form > .form-group > .form-group:nth-child(-n+3), .checkall-wrapper .form-group:nth-child(3) > .form-group > .form-group:nth-child(-n+3) {
       margin-top: 0; } }
 
+.organization-wrapper + .element-menu-wrapper {
+  width: 267px; }
+
+.organization-wrapper + .element-menu-wrapper .element-sidebar-wrapper {
+  width: 267px;
+  background: url(../../images/ic-line-bg.png) repeat-y 0; }
+  .organization-wrapper + .element-menu-wrapper .element-sidebar-wrapper .jspPane {
+    width: 267px !important; }
+
 @media all and (max-width: 1200px) {
   .sidebar-wrapper:not(.full-sidebar-wrapper) .jspVerticalBar .jspArrow {
     background: #fff;
@@ -3220,10 +3240,14 @@ label.required::after {
   .jspPane {
     width: 210px !important; }
   .jspVerticalBar .jspArrow {
-    background: #484848;
+    background: #f2f2f2;
     width: 210px; }
+    .jspVerticalBar .jspArrow:before {
+      color: #00A8FF; }
+    .jspVerticalBar .jspArrow:hover {
+      background: #e8e8e8; }
   .element-sidebar-wrapper .jspVerticalBar .jspArrow {
-    width: 267px; } }
+    width: 266px; } }
 
 @media all and (min-width: 1340px) {
   .settings-checkall-wrapper > .collection_form > .form-group > .form-group, .checkall-wrapper .form-group:nth-child(3) > .form-group > .form-group {
