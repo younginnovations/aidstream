@@ -195,6 +195,7 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="{{url('/js/jquery-ui-1.10.4.tooltip.js')}}"></script>
 <script type="text/javascript" src="{{url('/js/jquery.cookie.js')}}"></script>
+<script type="text/javascript" src="{{url('/js/jquery.mousewheel.js')}}"></script>
 <script type="text/javascript" src="{{url('/js/jquery.jscrollpane.min.js')}}"></script>
 <script type="text/javascript" src="{{url('/js/main.js')}}"></script>
 {{--<script type="text/javascript" src="{{url('/js/retina.js')}}"></script>--}}

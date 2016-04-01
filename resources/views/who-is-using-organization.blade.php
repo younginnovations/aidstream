@@ -175,6 +175,7 @@
 <script src="/js/horizontalBar.js"></script>
 <script type="text/javascript" src="/js/worldMap.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script type="text/javascript" src="{{url('/js/jquery.mousewheel.js')}}"></script>
 <script type="text/javascript" src="{{url('/js/jquery.jscrollpane.min.js')}}"></script>
 <script>
     $(document).ready(function () {

@@ -882,7 +882,7 @@ a.version-text {
   position: fixed;
   top: 63px;
   left: 0;
-  height: 93vh;
+  height: 90vh;
   z-index: 1; }
   .sidebar-wrapper .panel {
     border: 0;
@@ -2780,7 +2780,7 @@ label.required::after {
     width: 100%; } }
 
 @media all and (max-width: 767px) {
-  div:not(.xdsoft_calendar) > table, div:not(.xdsoft_calendar) > table thead, div:not(.xdsoft_calendar) > table tbody, div:not(.xdsoft_calendar) > table th, div:not(.xdsoft_calendar) > table td, div:not(.xdsoft_calendar) > table tr {
+  table, thead, tbody, th, td, tr {
     display: block; }
   /* Hide table headers (but not display: none;, for accessibility) */
   thead tr {
