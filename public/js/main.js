@@ -85,6 +85,9 @@ $(document).ready(function () {
         addDatepicker();
         bindTooltip();
         $('form select').select2();
+        if (typeof addMoreCallback == 'function') {
+            addMoreCallback();
+        }
     });
 
     /* remove html5 validation and scroll to first invalid field */
