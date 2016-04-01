@@ -12,5 +12,6 @@ _ide_helper.php
 /public/css/.DS_Store
 /public/.DS_Store
 /public/css/.sass-cache
+/public/css/style.css.map
 .DS_store
 

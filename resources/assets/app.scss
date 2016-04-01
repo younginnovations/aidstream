@@ -850,7 +850,7 @@ a.version-text {
   position: fixed;
   top: 63px;
   left: 0;
-  height: 90vh;
+  height: 93vh;
   z-index: 1;
   .panel {
     border: 0;
@@ -3179,8 +3179,11 @@ label.required::after {
 }
 
 @media all and (max-width: 767px) {
-  table, thead, tbody, th, td, tr {
-    display: block;
+
+  div:not(.xdsoft_calendar) {
+    > table, >table thead, > table tbody, > table th, > table td, > table tr {
+      display: block;
+    }
   }
 
   /* Hide table headers (but not display: none;, for accessibility) */

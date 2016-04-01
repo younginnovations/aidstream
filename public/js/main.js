@@ -530,16 +530,6 @@ $(document).ready(function () {
         $(".sidebar-wrapper .nav").jScrollPane(jScrollPaneSettings);
     }
 
-    $('.element-sidebar-wrapper a').hover(function () {
-        $('#action-icon').css({
-            display: 'block',
-            top: $(this).offset().top - $('.element-menu-wrapper').offset().top + 9,
-            left: -16
-        }).removeAttr('class').addClass('action-icon ' + $(this).attr('data-action'));
-    }, function () {
-        $('#action-icon').css({display: 'none'});
-    });
-
     $("textarea").keyup(function (e) {
         adaptiveheight(this);
     });
