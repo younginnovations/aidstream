@@ -33,13 +33,13 @@
     <div class="container-fluid">
         <div class="navbar-header">
             <div class="navbar-brand">
-                <a href="{{ Auth::user()->role_id == 3 ? url(config('app.super_admin_dashboard')) : config('app.admin_dashboard') }}"
+                <a href="{{ (auth()->user() && Auth::user()->role_id == 3) ? url(config('app.super_admin_dashboard')) : config('app.admin_dashboard') }}"
                    alt="Aidstream">Aidstream</a>
             </div>
         </div>
 
         <div class="collapse navbar-collapse navbar-right" id="bs-example-navbar-collapse-1">
-            @if(Auth::user()->role_id != 3 && Auth::user()->role_id !=4)
+            @if(auth()->user() && (Auth::user()->role_id != 3 && Auth::user()->role_id !=4))
                 <ul class="nav navbar-nav pull-left add-new-activity">
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
@@ -157,7 +157,7 @@
             </ul>
         </div>
         <div class="navbar-right version-wrap">
-            @if(Auth::user()->role_id != 3 && Auth::user()->role_id !=4)
+            @if(auth()->user() && Auth::user()->role_id != 3 && Auth::user()->role_id !=4)
                 <div class="version pull-right {{ (Session::get('version') == 'V201') ? 'old' : 'new' }}">
                     {{--{{dd(session('next_version'))}}--}}
                     @if (session('next_version'))
