@@ -48,7 +48,9 @@
                                                     <a href="{{ route('admin.change-organization-status', [$organization->id, ($organization->status == 1) ? 0 : 1]) }}" class="check-status {{($organization->status == 1) ? 'Disable' : 'Enable'}}" title="{{($organization->status == 1) ? 'Disable' : 'Enable'}}">{{($organization->status == 1) ? 'Disable' : 'Enable'}}</a>
                                                     <a href="{{ route('admin.delete-organization', $organization->id) }}" class="delete" title="delete">Delete</a>
                                                 @endif
-                                                <a href="{{ route('admin.masquerade-organization', [$organization->id, $organization->users->where('role_id', 1)->first()->id]) }}" class="masquerade" title="Masquerade">Masquerade</a>
+                                                @if ($organization->getAdminUser())
+                                                    <a href="{{ route('admin.masquerade-organization', [$organization->id, $organization->getAdminUser()->id]) }}" class="masquerade" title="Masquerade">Masquerade</a>
+                                                @endif
                                             </div>
                                         </td>
                                     </tr>

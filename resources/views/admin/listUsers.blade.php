@@ -42,8 +42,9 @@
                                         <td>{{$value->username}}</td>
                                         <td>
                                             <a href="{{ route('admin.view-profile', $value->id) }}" class="view"></a>
-                                            <a href="{{ url(sprintf('organization-user/%s/delete', $value->id)) }}"
-                                               class="delete">Delete</a>
+                                            @if (auth()->user()->isAdmin())
+                                                <a href="{{ url(sprintf('organization-user/%s/delete', $value->id)) }}" class="delete">Delete</a>
+                                            @endif
                                         </td>
                                     </tr>
                                 @endforeach
