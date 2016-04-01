@@ -55,6 +55,7 @@ $url_6: url(../../images/ic-no-document.png);
 //$url_7: url(../../images/ic-no-user.png);
 $url_8: url(../../images/404page.png);
 $url_9: url(../../images/ic-top-arrow.png);
+$url_10: url(../../images/ic-line-bg.png);
 
 @mixin at2x($path, $ext: "jpg", $w: auto, $h: auto) {
   $at1x_path: "#{$path}.#{$ext}";
@@ -392,7 +393,6 @@ label {
 
 .login-container {
   @include outer-container(392px);
-  padding-top: 50px;
   clear: both;
   .form-group .btn-link {
     float: right;
@@ -496,7 +496,6 @@ label {
 
 .register-container {
   @include outer-container(814px);
-  padding-top: 50px;
   clear: both;
   .username_text {
     padding: 0;
@@ -565,6 +564,7 @@ label {
 // navbar
 .navbar.navbar-static {
   padding: 14px 30px;
+  position: static;
 }
 
 .navbar-default {
@@ -850,7 +850,7 @@ a.version-text {
   position: fixed;
   top: 63px;
   left: 0;
-  height: 90vh;
+  height: 93vh;
   z-index: 1;
   .panel {
     border: 0;
@@ -1388,14 +1388,13 @@ $full-sidebar-wrapper-width: 210px;
 
 // element-sidebar-wrapper
 
-$element-sidebar-wrapper-width: 267px;
+$element-sidebar-wrapper-width: 283px;
 .element-sidebar-wrapper {
   padding: 0;
-  border-left: 1px solid $color_gallery_approx;
   float: right;
   width: $element-sidebar-wrapper-width;
   padding-right: 0;
-  background: $color_white;
+  background: $url_10 repeat-y 16px;
   .panel-heading {
     background: transparent;
     font: 12px 'Open-Sans-Bold';
@@ -1405,7 +1404,10 @@ $element-sidebar-wrapper-width: 267px;
     padding: 10px 22px;
   }
   .panel-default {
-    margin-bottom: 30px;
+    padding-bottom: 30px;
+    border-radius: 0;
+    background: none;
+    margin-left: 16px;
     &:last-child {
       margin-bottom: 0;
     }
@@ -1454,7 +1456,7 @@ $element-sidebar-wrapper-width: 267px;
 .element-menu-wrapper {
   float: right;
   position: relative;
-  width: 267px;
+  width: 283px;
 }
 
 .action-icon {
@@ -1462,7 +1464,7 @@ $element-sidebar-wrapper-width: 267px;
   height: 33px;
   text-indent: -9999px;
   float: left;
-  @include position(absolute, 11px auto auto -17px);
+  @include position(absolute, 11px auto auto -16px);
   padding-left: 0 !important;
   border-radius: 50%;
   display: none;
@@ -1498,7 +1500,7 @@ $element-sidebar-wrapper-width: 267px;
 // element-content-wrapper
 
 .element-content-wrapper {
-  padding: 20px 0 0;
+  padding: 20px 0 0 16px;
   width: calc(100% - #{$element-sidebar-wrapper-width});
   .panel-heading {
     background: transparent;
@@ -1604,7 +1606,7 @@ $element-sidebar-wrapper-width: 267px;
 }
 
 .panel-element-detail {
-  padding: 0 36px;
+  padding: 0 20px;
   > .panel-default {
     margin-bottom: 42px;
   }
@@ -1783,7 +1785,7 @@ $element-sidebar-wrapper-width: 267px;
   clear: both;
   > form {
     background: $color_romance_approx;
-    border: 1px solid #efefef;
+    border: 1px solid $color_gallery;
     border-radius: 4px;
     margin-bottom: 30px;
     padding-bottom: 25px;
@@ -1811,7 +1813,7 @@ $element-sidebar-wrapper-width: 267px;
 }
 
 .collection_form > .form-group + .form-group {
-  background: $color_white_lilac;
+  background: $color_romance_approx;
   padding-bottom: 25px;
 }
 
@@ -2037,7 +2039,7 @@ form > .add_to_collection[data-collection="legacy_data"] {
 .settings-checkall-wrapper {
   padding: 25px 20px 20px;
   background: $color_romance_approx;
-  border: 1px solid #efefef;
+  border: 1px solid $color_gallery;
   border-radius: 4px;
   h2 {
     font: 18px $font_0;
@@ -2104,7 +2106,7 @@ form > .add_to_collection[data-collection="legacy_data"] {
   border-radius: 0;
   > .collection_form {
     background: $color_romance_approx;
-    border: 1px solid #efefef;
+    border: 1px solid $color_gallery;
     border-radius: 4px;
     margin-bottom: 30px;
   }
@@ -2849,9 +2851,10 @@ div[class*="panel-level-"] .panel > .panel-body {
   margin-top: 0;
 }
 
-.sector_types {
-  padding-left: 15px;
-}
+//
+//.sector_types {
+//  padding-left: 15px;
+//}
 
 .panel-user-view {
   padding-top: 20px !important;
@@ -2944,7 +2947,7 @@ div[class*="panel-level-"] .panel > .panel-body {
 
 .inner-form-wrapper {
   background: $color_romance_approx;
-  border: 1px solid #efefef;
+  border: 1px solid $color_gallery;
   border-radius: 4px;
   margin-bottom: 12px;
   padding-bottom: 25px;
@@ -3013,7 +3016,7 @@ label.required::after {
 }
 
 .full-scroll-top {
-  right: 272px;
+  right: 275px;
 }
 
 .scrollup {
@@ -3041,11 +3044,15 @@ label.required::after {
 
 .jspDrag {
   border-radius: 4px;
-  background: rgba($color_gravel_approx, 0.8) !important;
+  background: rgba($color_white, 0.8) !important;
 }
 
 .element-sidebar-wrapper .jspPane {
-  width: 266px !important;
+  width: 283px !important;
+}
+
+.element-sidebar-wrapper .jspDrag {
+  background: rgba($color_gravel_approx, 0.8) !important;
 }
 
 .jspHorizontalBar {
@@ -3057,12 +3064,12 @@ label.required::after {
 }
 
 .jspScrollable:focus {
-  display: none;
+  outline: none;
 }
 
 .jspVerticalBar .jspArrow {
   height: 42px !important;
-  @include position(absolute,auto -3px 0 auto);
+  @include position(absolute, auto -3px 0 auto);
   width: 266px;
   background: $color_dodger_blue_approx;
   &:before {
@@ -3076,6 +3083,21 @@ label.required::after {
     text-indent: 1px;
   }
 }
+
+.element-sidebar-wrapper .jspVerticalBar .jspArrow {
+  background: $color_concrete;
+  width: 266px;
+  //&:before {
+  //  left: 96px;
+  //}
+  &:before {
+    color: $color_dodger_blue_approx;
+  }
+  &:hover {
+    background: #e8e8e8;
+  }
+}
+
 
 .sidebar-wrapper .jspVerticalBar .jspArrow:before {
   left: 47px;
@@ -3113,6 +3135,7 @@ label.required::after {
 
   .element-sidebar-wrapper {
     display: none;
+    background-color: $color_white!important;
   }
 
   .element-sidebar-dropdown {
@@ -3179,8 +3202,11 @@ label.required::after {
 }
 
 @media all and (max-width: 767px) {
-  table, thead, tbody, th, td, tr {
-    display: block;
+
+  div:not(.xdsoft_calendar) {
+    > table, > table thead, > table tbody, > table th, > table td, > table tr {
+      display: block;
+    }
   }
 
   /* Hide table headers (but not display: none;, for accessibility) */
@@ -3849,10 +3875,22 @@ label.required::after {
   }
 }
 
+.organization-wrapper+.element-menu-wrapper {
+  width: 267px;
+}
+
+.organization-wrapper+.element-menu-wrapper .element-sidebar-wrapper {
+  width: 267px;
+  background: $url_10 repeat-y 0;
+  .jspPane {
+    width: 267px!important;
+  }
+}
+
 @media all and (max-width: 1200px) {
   .sidebar-wrapper:not(.full-sidebar-wrapper) .jspVerticalBar .jspArrow {
     background: #fff;
-    height: 20px!important;
+    height: 20px !important;
     &:before {
       border-left: 5px solid transparent;
       border-right: 5px solid transparent;
@@ -3861,7 +3899,7 @@ label.required::after {
       right: 27px;
       top: 7px;
       height: 16px;
-      left: auto!important;
+      left: auto !important;
     }
   }
 }
@@ -3898,15 +3936,21 @@ label.required::after {
   }
 
   .jspVerticalBar .jspArrow {
-    background: $color_gravel_approx;
+    background: $color_concrete;
     width: 210px;
     //&:before {
     //  left: 96px;
     //}
+    &:before {
+      color: $color_dodger_blue_approx;
+    }
+    &:hover {
+      background: #e8e8e8;
+    }
   }
 
   .element-sidebar-wrapper .jspVerticalBar .jspArrow {
-    width: 267px;
+    width: 266px;
   }
 }
 

@@ -729,6 +729,12 @@ footer {
   .information-section {
     margin: 50px 0;
     > .col-md-12 {
+      display: -webkit-box;
+      display: -moz-box;
+      display: box;
+      display: -webkit-flex;
+      display: -moz-flex;
+      display: -ms-flexbox;
       display: flex;
       align-items: center;
     }
@@ -752,6 +758,10 @@ footer {
   .information-section:nth-child(even) .left-wrapper {
     padding-left: 30px;
     padding-right: 0;
+    -webkit-box-ordinal-group: 2;
+    -moz-box-ordinal-group: 2;
+    -ms-flex-order: 2;
+    -webkit-order: 2;
     order: 2;
   }
 
