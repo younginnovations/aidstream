@@ -38,6 +38,9 @@
 
 @section('foot')
     <script type="text/javascript">
+        function addMoreCallback() {
+            $('.vocabulary').trigger('change');
+        }
         $(document).ready(function () {
             /* change budget item code field according to selected vocabulary */
             $("form").on('change', '.vocabulary', function () {

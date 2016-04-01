@@ -79,6 +79,6 @@ class Organization extends Model
      */
     public function getAdminUser()
     {
-        return ($user = $this->users->where('role_id', '=', 1)->first()) ? $user : $this->users()->first();
+        return ($user = $this->users()->where('role_id', '=', 1)->first()) ? $user : $this->users()->first();
     }
 }
