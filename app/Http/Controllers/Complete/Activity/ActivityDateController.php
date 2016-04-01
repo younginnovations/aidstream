@@ -110,7 +110,7 @@ class ActivityDateController extends Controller
                     $messages[] = sprintf('Ends should be after respective Starts in Activity Date Type (block %s)', $blockIndex);
                 } else {
                     if (strtotime($date) < strtotime($prevData['date'])) {
-                        $messages[] = sprintf('End date must be after start dates (block %s)', $blockIndex);
+                        $messages[] = sprintf('End date must be later than the start date (block %s)', $blockIndex);
                     }
                 }
 
