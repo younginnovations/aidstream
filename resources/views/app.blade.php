@@ -6,13 +6,8 @@
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport'/>
     <title>AidStream - @yield('title', 'No Title')</title>
     <link rel="shotcut icon" type="image/png" sizes="32*32" href="{{ asset('/images/favicon.png') }}"/>
-    <link href="{{ asset('/css/bootstrap.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('/css/flag-icon.css') }}" rel="stylesheet">
-    <link href="{{ asset('/css/app.css') }}" rel="stylesheet">
-    <link href="{{ asset('/css/jquery-ui-1.10.4.tooltip.css') }}" rel="stylesheet">
-    <link href="{{ asset('/css/jquery.jscrollpane.css') }}" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2-rc.1/css/select2.min.css" rel="stylesheet"/>
-    <link rel="stylesheet" type="text/css" href="/css/jquery.datetimepicker.css"/>
+    <link href="{{ asset('/css/main.min.css') }}" rel="stylesheet">
 
 
     <!-- Fonts -->
@@ -192,16 +187,15 @@
         dateFields[i].classList.add('datepicker');
     }
 </script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="{{url('/js/jquery-ui-1.10.4.tooltip.js')}}"></script>
-<script type="text/javascript" src="{{url('/js/jquery.cookie.js')}}"></script>
-<script type="text/javascript" src="{{url('/js/jquery.mousewheel.js')}}"></script>
-<script type="text/javascript" src="{{url('/js/jquery.jscrollpane.min.js')}}"></script>
-<script type="text/javascript" src="{{url('/js/main.js')}}"></script>
-{{--<script type="text/javascript" src="{{url('/js/retina.js')}}"></script>--}}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2/js/select2.full.min.js"></script>
-<script type="text/javascript" src="/js/jquery.datetimepicker.full.min.js"></script>
+{{--<script type="text/javascript" src="{{url('/js/jquery.js')}}"></script>--}}
+{{--<script type="text/javascript" src="{{url('/js/bootstrap.min.js')}}"></script>--}}
+{{--<script type="text/javascript" src="{{url('/js/jquery-ui-1.10.4.tooltip.js')}}"></script>--}}
+{{--<script type="text/javascript" src="{{url('/js/jquery.cookie.js')}}"></script>--}}
+{{--<script type="text/javascript" src="{{url('/js/jquery.mousewheel.js')}}"></script>--}}
+{{--<script type="text/javascript" src="{{url('/js/jquery.jscrollpane.min.js')}}"></script>--}}
+{{--<script type="text/javascript" src="{{url('/js/select2.min.js')}}"></script>--}}
+{{--<script type="text/javascript" src="{{url('/js/jquery.datetimepicker.full.min.js')}}"></script>--}}
+<script type="text/javascript" src="{{url('/js/main.min.js')}}"></script>
 <script type="text/javascript">
     $(document).ready(function () {
         $('form select').select2();

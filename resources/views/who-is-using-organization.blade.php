@@ -8,7 +8,7 @@
     <link rel="shortcut icon" type="image/png" sizes="16*16" href="/images/favicon.png"/>
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link href="{{ asset('/css/jquery.jscrollpane.css') }}" rel="stylesheet">
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/style.min.css">
 </head>
 <style type="text/css">
     .bar {
