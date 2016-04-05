@@ -24,6 +24,8 @@ class Kernel extends ConsoleKernel {
 	{
 		$schedule->command('inspire')
 				 ->hourly();
+
+		$schedule->command('backup:run')->daily(7, 14);
 	}
 
 }

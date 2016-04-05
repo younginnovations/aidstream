@@ -7,12 +7,12 @@ return [
     ],
 
     'dropbox' => [
-        'type' => 'Dropbox',
-        'token' => 'bY8UZyfHGjAAAAAAAAAACPqw7CSNZPXRCsmiZxo9iA7MrPNork6PA6rJg7YdbqFC',
-        'key' => 'tr24572ugfqtlpy',
-        'secret' => 'rbpajdgu9syp907',
-        'app' => 'db_test_backup',
-        'root' => '',
+        'type'   => 'Dropbox',
+        'token'  => 'a0wiCcl26gAAAAAAAAAACe-D16Q4L0XO370EgwLD0md8Emu9rHpCnEqVTTq6WBuM',
+        'key'    => 'smvhhpg0z6mwqqm',
+        'secret' => 'kyt2f5tzknnbngz',
+        'app'    => 'Aidstream',
+        'root'   => '',
     ],
 
 ];
