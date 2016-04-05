@@ -43,7 +43,7 @@ class UpgradeController extends Controller
         $db_organization = $databaseManager->table('organizations')->select('name')->where('id','=',$this->orgId)->first();
         $this->orgName = $db_organization->name;
         $settings    = $settingsManager->getSettings($this->orgId);
-        $this->currentVersion   = $settings->version;
+        $this->currentVersion   = $settings ? $settings->version : null;
         $db_versions = $databaseManager->table('versions')->get();
         $versions    = [];
         foreach ($db_versions as $ver) {

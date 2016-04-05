@@ -23,6 +23,10 @@ class ConditionController extends Controller
 
     public function index($id)
     {
+        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
+        }
+
         $condition    = $this->conditionManager->getConditionData($id);
         $activityData = $this->activityManager->getActivityData($id);
         $form         = $this->conditionForm->editForm($condition, $id);
@@ -32,6 +36,10 @@ class ConditionController extends Controller
 
     public function update($id, Request $request, ConditionRequestManager $conditionRequestManager)
     {
+        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
+        }
+
         $activityData = $this->activityManager->getActivityData($id);
         $this->authorizeByRequestType($activityData, 'conditions');
         $condition    = $request->except(['_token', '_method']);

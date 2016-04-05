@@ -59,6 +59,10 @@ class OrganizationController extends Controller
      */
     public function show($id)
     {
+        if (!$this->userBelongsToOrganization($id)) {
+            return redirect()->route('activity.index')->withResponse($this->getNoPrivilegesMessage());
+        }
+
         $organization = $this->organizationManager->getOrganization($id);
 
         if (!isset($organization->reporting_org[0])) {
@@ -102,6 +106,9 @@ class OrganizationController extends Controller
      */
     public function updateStatus($id, Request $request)
     {
+        if (!$this->userBelongsToOrganization($id)) {
+            return redirect()->route('activity.index')->withResponse($this->getNoPrivilegesMessage());
+        }
 
         $input  = $request->all();
         $status = $input['status'];
@@ -155,6 +162,10 @@ class OrganizationController extends Controller
      */
     public function showIdentifier($id)
     {
+        if (!$this->userBelongsToOrganization($id)) {
+            return redirect()->route('activity.index')->withResponse($this->getNoPrivilegesMessage());
+        }
+
         $organization = $this->organizationManager->getOrganization($id);
         $data         = $organization->reporting_org;
         $form         = $this->orgReportingOrgFormCreator->editForm($data, $organization);

@@ -45,6 +45,10 @@ class RecipientRegionBudgetController extends Controller
      */
     public function index($orgId)
     {
+        if (!$this->userBelongsToOrganization($orgId)) {
+            return redirect()->route('activity.index')->withResponse($this->getNoPrivilegesMessage());
+        }
+
         $recipientRegionBudget = $this->recipientRegionBudgetManager->getRecipientRegionBudgetData($orgId);
         $form                  = $this->recipientRegionBudget->editForm($recipientRegionBudget, $orgId);
 
@@ -59,6 +63,10 @@ class RecipientRegionBudgetController extends Controller
      */
     public function update($orgId, RecipientRegionBudgetRequest $recipientRegionBudgetRequest, Request $request)
     {
+        if (!$this->userBelongsToOrganization($orgId)) {
+            return redirect()->route('activity.index')->withResponse($this->getNoPrivilegesMessage());
+        }
+
         $organizationData = $this->recipientRegionBudgetManager->getOrganizationData($orgId);
         $this->authorizeByRequestType($organizationData, 'recipient_region_budget');
         $input            = $request->all();

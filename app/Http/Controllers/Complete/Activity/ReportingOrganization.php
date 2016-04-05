@@ -22,6 +22,10 @@ class ReportingOrganization extends Controller
      */
     public function index($id, OrganizationManager $organizationManager)
     {
+        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
+        }
+
         $activity = Activity::find($id);
 
         if ($activity) {

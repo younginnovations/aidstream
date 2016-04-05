@@ -46,6 +46,10 @@ class TotalExpenditureController extends Controller
      */
     public function index($orgId)
     {
+        if (!$this->userBelongsToOrganization($orgId)) {
+            return redirect()->route('activity.index')->withResponse($this->getNoPrivilegesMessage());
+        }
+
         $totalExpenditure = $this->totalExpenditureManager->getOrganizationTotalExpenditureData($orgId);
         $form             = $this->totalExpenditureForm->editForm($totalExpenditure, $orgId);
 
@@ -61,6 +65,10 @@ class TotalExpenditureController extends Controller
      */
     public function update($orgId, Request $request, TotalExpenditureRequestManager $expenditureRequestManager)
     {
+        if (!$this->userBelongsToOrganization($orgId)) {
+            return redirect()->route('activity.index')->withResponse($this->getNoPrivilegesMessage());
+        }
+
         $organizationData = $this->totalExpenditureManager->getOrganizationData($orgId);
         $this->authorizeByRequestType($organizationData, 'total_expenditure');
         $totalExpenditure = $request->all();

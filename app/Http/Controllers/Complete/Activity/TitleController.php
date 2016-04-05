@@ -23,6 +23,11 @@ class TitleController extends Controller
      */
     protected $titleManager;
 
+    /**
+     * @var ActivityManager
+     */
+    protected $activityManager;
+
 
     /**
      * @param TitleManager    $titleManager
@@ -44,6 +49,10 @@ class TitleController extends Controller
      */
     public function index($id)
     {
+        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
+        }
+
         $activityData  = $this->activityManager->getActivityData($id);
         $activityTitle = $this->titleManager->getTitleData($id);
         $form          = $this->title->editForm($activityTitle, $id);
@@ -63,6 +72,10 @@ class TitleController extends Controller
      */
     public function update($id, Request $request, TitleRequestManager $titleRequestManager)
     {
+        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
+        }
+
         $activityData = $this->titleManager->getActivityData($id);
         $this->authorizeByRequestType($activityData, 'title');
         $activityTitle = $request->all();

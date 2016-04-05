@@ -46,6 +46,10 @@ class DefaultFinanceTypeController extends Controller
      */
     public function  index($id)
     {
+        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
+        }
+
         $defaultFinanceType = $this->defaultFinanceTypeManager->getDefaultFinanceTypeData($id);
         $activityData       = $this->activityManager->getActivityData($id);
         $form               = $this->defaultFinanceTypeForm->editForm($defaultFinanceType, $id);
@@ -62,6 +66,10 @@ class DefaultFinanceTypeController extends Controller
      */
     public function update($id, Request $request, DefaultFinanceTypeRequestManager $defaultFinanceTypeRequestManager)
     {
+        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
+        }
+
         $activityData       = $this->activityManager->getActivityData($id);
         $this->authorizeByRequestType($activityData, 'default_finance_type');
         $defaultFinanceType = $request->all();

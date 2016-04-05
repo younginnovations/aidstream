@@ -49,6 +49,10 @@ class ParticipatingOrganizationController extends Controller
      */
     public function index($id)
     {
+        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
+        }
+
         $participatingOrganization = $this->participatingOrganizationManager->getParticipatingOrganizationData($id);
         $activityData              = $this->activityManager->getActivityData($id);
         $form                      = $this->participatingOrganizationForm->editForm($participatingOrganization, $id);

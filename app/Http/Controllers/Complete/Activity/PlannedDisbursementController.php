@@ -34,6 +34,10 @@ class PlannedDisbursementController extends Controller
      */
     public function index($id)
     {
+        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
+        }
+
         $plannedDisbursement = $this->plannedDisbursementManager->getPlannedDisbursementData($id);
         $activityData        = $this->activityManager->getActivityData($id);
         $form                = $this->plannedDisbursementForm->editForm($plannedDisbursement, $id);
@@ -49,6 +53,10 @@ class PlannedDisbursementController extends Controller
      */
     public function update($id, Request $request, PlannedDisbursementRequestManager $plannedDisbursementRequestManager)
     {
+        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
+        }
+
         $activityData        = $this->activityManager->getActivityData($id);
         $this->authorizeByRequestType($activityData, 'planned_disbursement');
         $plannedDisbursement = $request->all();

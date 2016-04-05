@@ -47,6 +47,10 @@ class OrgReportingOrgController extends Controller
      */
     public function index($organizationId)
     {
+        if (!$this->userBelongsToOrganization($organizationId)) {
+            return redirect()->route('activity.index')->withResponse($this->getNoPrivilegesMessage());
+        }
+
         $organization          = $this->organizationManager->getOrganization($organizationId);
         $reportingOrganization = $organization->reporting_org;
         $form                  = $this->orgReportingOrgFormCreator->editForm($reportingOrganization, $organization);
@@ -67,6 +71,10 @@ class OrgReportingOrgController extends Controller
         CreateOrgReportingOrgRequestManager $createOrgReportingOrgRequestManager,
         Request $request
     ) {
+        if (!$this->userBelongsToOrganization($organizationId)) {
+            return redirect()->route('activity.index')->withResponse($this->getNoPrivilegesMessage());
+        }
+
         $this->authorize('edit_activity');
         $input        = $request->all();
         $organization = $this->organizationManager->getOrganization($organizationId);

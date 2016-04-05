@@ -35,10 +35,15 @@ class RecipientOrganizationBudgetController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param $organizationId
      * @return Response
      */
     public function index($organizationId)
     {
+        if (!$this->userBelongsToOrganization($organizationId)) {
+            return redirect()->route('activity.index')->withResponse($this->getNoPrivilegesMessage());
+        }
+
         $recipientCountryBudget = $this->recipientOrgBudgetManager->getRecipientOrgBudgetData($organizationId);
         $form                   = $this->recipientOrgBudgetFormCreator->editForm(
             $recipientCountryBudget,
@@ -58,6 +63,10 @@ class RecipientOrganizationBudgetController extends Controller
      */
     public function update($orgId, CreateOrgRecipientOrgBudgetRequestManager $request, Request $request)
     {
+        if (!$this->userBelongsToOrganization($orgId)) {
+            return redirect()->route('activity.index')->withResponse($this->getNoPrivilegesMessage());
+        }
+
         $organizationData = $this->recipientOrgBudgetManager->getOrganizationData($orgId);
         $this->authorizeByRequestType($organizationData, 'recipient_organization_budget');
         $input            = $request->all();

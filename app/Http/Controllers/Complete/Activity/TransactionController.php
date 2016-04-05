@@ -51,6 +51,10 @@ class TransactionController extends Controller
      */
     public function index($id)
     {
+        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
+        }
+
         $activity = $this->activityManager->getActivityData($id);
 
         return view('Activity.transaction.list', compact('activity', 'id'));
@@ -63,6 +67,10 @@ class TransactionController extends Controller
      */
     public function create($id)
     {
+        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
+        }
+
         $this->authorize('add_activity');
         $activity = $this->activityManager->getActivityData($id);
         $form     = $this->transactionForm->createForm($id);
@@ -79,6 +87,10 @@ class TransactionController extends Controller
      */
     public function store(Request $request, $activityId, TransactionRequest $transactionRequest)
     {
+        if (!$this->currentUserIsAuthorizedForActivity($activityId)) {
+            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
+        }
+
         $this->authorize('add_activity');
         $activity          = $this->activityManager->getActivityData($activityId);
         $data              = $request->all();
@@ -112,6 +124,14 @@ class TransactionController extends Controller
      */
     public function show($id, $transactionId)
     {
+        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
+        }
+
+        if (!$this->currentUserIsAuthorizedForTransaction($transactionId)) {
+            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
+        }
+
         $activity          = $this->activityManager->getActivityData($id);
         $transaction       = $this->transactionManager->getTransaction($transactionId);
         $transactionDetail = $transaction->getTransaction();
@@ -127,6 +147,14 @@ class TransactionController extends Controller
      */
     public function edit($id, $transactionId)
     {
+        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
+        }
+
+        if (!$this->currentUserIsAuthorizedForTransaction($transactionId)) {
+            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
+        }
+
         $this->authorize('edit_activity');
         $activity    = $this->activityManager->getActivityData($id);
         $transaction = $this->transactionManager->getTransaction($transactionId);
@@ -145,6 +173,14 @@ class TransactionController extends Controller
      */
     public function update(Request $request, $id, $transactionId, TransactionRequest $transactionRequest)
     {
+        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
+        }
+
+        if (!$this->currentUserIsAuthorizedForTransaction($transactionId)) {
+            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
+        }
+
         $this->authorize('edit_activity');
         $transactionDetails = $transactionData = $request->except(['_token', '_method']);
         removeEmptyValues($transactionData);
@@ -204,6 +240,14 @@ class TransactionController extends Controller
      */
     public function destroy($id, $transactionId)
     {
+        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
+        }
+
+        if (!$this->currentUserIsAuthorizedForTransaction($transactionId)) {
+            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
+        }
+
         $this->authorize('delete_activity');
         $transaction = $this->transactionManager->getTransaction($transactionId);
         $response    = ($transaction->delete($transaction)) ? ['type' => 'success', 'code' => ['deleted', ['name' => 'Transaction']]] : [

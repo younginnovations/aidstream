@@ -29,6 +29,10 @@ class RelatedActivityController extends Controller
 
     public function index($id)
     {
+        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
+        }
+
         $budget       = $this->relatedActivityManager->getRelatedActivityData($id);
         $activityData = $this->activityManager->getActivityData($id);
         $form         = $this->relatedActivityForm->editForm($budget, $id);
@@ -38,6 +42,10 @@ class RelatedActivityController extends Controller
 
     public function update($id, Request $request, RelatedActivityRequestManager $relatedActivityRequestManager)
     {
+        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
+        }
+
         $activityData    = $this->activityManager->getActivityData($id);
         $this->authorizeByRequestType($activityData, 'related_activity');
         $relatedActivity = $request->all();

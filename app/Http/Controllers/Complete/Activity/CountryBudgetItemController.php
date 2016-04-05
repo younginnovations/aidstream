@@ -49,6 +49,10 @@ class CountryBudgetItemController extends Controller
      */
     public function index($id)
     {
+        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
+        }
+
         $countryBudgetItem = $this->countryBudgetItemManager->getCountryBudgetItemData($id);
         $activityData      = $this->activityManager->getActivityData($id);
         $form              = $this->countryBudgetItemForm->editForm($countryBudgetItem, $id);
@@ -65,6 +69,10 @@ class CountryBudgetItemController extends Controller
      */
     public function update($id, Request $request, CountryBudgetItemRequestManager $countryBudgetItemRequestManager)
     {
+        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
+        }
+
         $activityData = $this->activityManager->getActivityData($id);
         $this->authorizeByRequestType($activityData, 'country_budget_items');
         $countryBudgetItems = $request->all();

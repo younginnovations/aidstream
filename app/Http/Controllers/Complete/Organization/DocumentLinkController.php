@@ -39,6 +39,10 @@ class DocumentLinkController extends Controller
      */
     public function index($orgId)
     {
+        if (!$this->userBelongsToOrganization($orgId)) {
+            return redirect()->route('activity.index')->withResponse($this->getNoPrivilegesMessage());
+        }
+
         $documentLink = $this->documentLinkManager->getDocumentLinkData($orgId);
         $form         = $this->documentLinkForm->editForm($documentLink, $orgId);
 
@@ -54,6 +58,10 @@ class DocumentLinkController extends Controller
      */
     public function update($orgId, DocumentLinkRequestManager $documentLinkRequestManager, Request $request)
     {
+        if (!$this->userBelongsToOrganization($orgId)) {
+            return redirect()->route('activity.index')->withResponse($this->getNoPrivilegesMessage());
+        }
+
         $organizationData = $this->documentLinkManager->getOrganizationData($orgId);
         $this->authorizeByRequestType($organizationData, 'document_link');
         $input            = $request->all();

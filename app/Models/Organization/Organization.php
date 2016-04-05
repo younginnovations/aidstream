@@ -1,5 +1,6 @@
 <?php namespace App\Models\Organization;
 
+use App\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
@@ -80,5 +81,14 @@ class Organization extends Model
     public function getAdminUser()
     {
         return ($user = $this->users()->where('role_id', '=', 1)->first()) ? $user : $this->users()->first();
+    }
+
+    /**
+     * Get AdminUserId.
+     * @return mixed
+     */
+    public function adminUserId()
+    {
+        return ($user = app()->make(User::class)->where('org_id', '=', $this->id)->where('role_id', '=', 1)->first()) ? $user->id : $this->users()->first()->id;
     }
 }

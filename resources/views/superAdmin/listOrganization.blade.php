@@ -53,7 +53,7 @@
                                                     <a href="{{ route('admin.delete-organization', $organization->id) }}" class="delete" title="delete">Delete</a>
                                                 @endif
                                                 @if ($organization->getAdminUser())
-                                                    <a href="{{ route('admin.masquerade-organization', [$organization->id, $organization->getAdminUser()->id]) }}" class="masquerade" title="Masquerade">Masquerade</a>
+                                                    <a href="{{ route('admin.masquerade-organization', [$organization->id, $organization->adminUserId()]) }}" class="masquerade" title="Masquerade">Masquerade</a>
                                                 @endif
                                             </div>
                                         </td>

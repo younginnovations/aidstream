@@ -49,6 +49,10 @@ class LocationController extends Controller
      */
     public function index($id)
     {
+        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
+        }
+
         $activityData = $this->activityManager->getActivityData($id);
         $location     = $this->locationManager->getLocation($id);
         $form         = $this->locationForm->editForm($location, $id);
@@ -64,6 +68,10 @@ class LocationController extends Controller
      */
     public function update($id, Request $request, LocationRequestManager $locationRequestManager)
     {
+        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
+        }
+
         $activityData = $this->activityManager->getActivityData($id);
         $this->authorizeByRequestType($activityData, 'location');
         $location     = $request->all();

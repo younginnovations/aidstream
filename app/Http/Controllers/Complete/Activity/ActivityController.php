@@ -143,6 +143,10 @@ class ActivityController extends Controller
      */
     public function create($duplicate = false, $activityId = 0)
     {
+        if ($activityId && !$this->currentUserIsAuthorizedForActivity($activityId)) {
+            return redirect()->route('activity.index')->withResponse($this->getNoPrivilegesMessage());
+        }
+
         $this->authorize('add_activity');
         $organization = $this->organizationManager->getOrganization($this->organization_id);
         $form         = $duplicate ? $this->identifierForm->duplicate($activityId) : $this->identifierForm->create();
@@ -191,6 +195,10 @@ class ActivityController extends Controller
      */
     public function show($id)
     {
+        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+            return redirect()->route('activity.index')->withResponse($this->getNoPrivilegesMessage());
+        }
+
         $activityData                    = $this->activityManager->getActivityData($id);
         $activityDataList                = $activityData->activity_data_list;
         $activityResult                  = $this->resultManager->getResults($id)->toArray();
@@ -209,6 +217,10 @@ class ActivityController extends Controller
      */
     public function updateStatus($id, Request $request, ActivityElementValidator $activityElementValidator)
     {
+        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+            return redirect()->route('activity.index')->withResponse($this->getNoPrivilegesMessage());
+        }
+
         $this->authorize('edit_activity');
         $input            = $request->all();
         $activityWorkflow = $input['activity_workflow'];
@@ -278,6 +290,10 @@ class ActivityController extends Controller
      */
     public function destroy($id)
     {
+        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
+        }
+
         $this->authorize('delete_activity');
         $activity = $this->activityManager->getActivityData($id);
         $response = ($this->activityManager->destroy($activity)) ? ['type' => 'success', 'code' => ['deleted', ['name' => 'Activity']]] : [
@@ -294,6 +310,10 @@ class ActivityController extends Controller
      */
     public function deletePublishedFile($id)
     {
+        if (!$this->currentUserIsAuthorizedForActivityToDelete($id)) {
+            return redirect()->route('activity.index')->withResponse($this->getNoPrivilegesMessage());
+        }
+
         $this->authorize('delete_activity');
         $result   = $this->activityManager->deletePublishedFile($id);
         $message  = $result ? 'File deleted successfully' : 'File couldn\'t be deleted.';
@@ -310,6 +330,10 @@ class ActivityController extends Controller
      */
     public function changeActivityDefault($activityId)
     {
+        if (!$this->currentUserIsAuthorizedForActivity($activityId)) {
+            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
+        }
+
         $activityData       = $this->activityManager->getActivityData($activityId);
         $defaultFieldValues = $activityData->default_field_values;
         $form               = $this->changeActivityDefaultForm->edit($defaultFieldValues, $activityId);
@@ -326,6 +350,10 @@ class ActivityController extends Controller
      */
     public function updateActivityDefault($activityId, Request $request, ChangeActivityDefaultRequest $changeActivityDefaultRequest)
     {
+        if (!$this->currentUserIsAuthorizedForActivity($activityId)) {
+            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
+        }
+
         $this->authorize('edit_activity');
         $activityData               = $this->activityManager->getActivityData($activityId);
         $settings                   = $this->settingsManager->getSettings($this->organization_id);
@@ -443,6 +471,10 @@ class ActivityController extends Controller
      */
     public function duplicateActivity($activityId)
     {
+        if (!$this->currentUserIsAuthorizedForActivity($activityId)) {
+            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
+        }
+
         return $this->create(true, $activityId);
     }
 
@@ -454,6 +486,10 @@ class ActivityController extends Controller
      */
     public function duplicateActivityAction($activityId, IatiIdentifierRequest $request)
     {
+        if (!$this->currentUserIsAuthorizedForActivity($activityId)) {
+            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
+        }
+
         $this->authorize('add_activity');
         $activityData                   = $this->activityManager->getActivityData($activityId);
         $newItem                        = $activityData->replicate();

@@ -46,6 +46,10 @@ class ActivityDateController extends Controller
      */
     public function index($id)
     {
+        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+            return redirect()->route('activity.index')->withResponse($this->getNoPrivilegesMessage());
+        }
+
         $activityDate = $this->activityDateManager->getActivityDateData($id);
         $activityData = $this->activityManager->getActivityData($id);
         $form         = $this->activityDateForm->editForm($activityDate, $id);
@@ -65,6 +69,10 @@ class ActivityDateController extends Controller
      */
     public function update($id, Request $request, ActivityDateRequestManager $activityDateRequestManager)
     {
+        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+            return redirect()->route('activity.index')->withResponse($this->getNoPrivilegesMessage());
+        }
+
         $activityData = $this->activityManager->getActivityData($id);
         $this->authorizeByRequestType($activityData, 'activity_date');
         $activityDate = $request->all();

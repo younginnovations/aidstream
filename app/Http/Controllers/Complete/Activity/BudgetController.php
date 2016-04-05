@@ -29,6 +29,10 @@ class BudgetController extends Controller
 
     public function index($id)
     {
+        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
+        }
+
         $budget       = $this->budgetManager->getbudgetData($id);
         $activityData = $this->activityManager->getActivityData($id);
         $form         = $this->budgetForm->editForm($budget, $id);
@@ -38,6 +42,10 @@ class BudgetController extends Controller
 
     public function update($id, Request $request, BudgetRequestManager $budgetRequestManager)
     {
+        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
+        }
+
         $activityData = $this->activityManager->getActivityData($id);
         $this->authorizeByRequestType($activityData, 'budget');
         $budget = $request->all();

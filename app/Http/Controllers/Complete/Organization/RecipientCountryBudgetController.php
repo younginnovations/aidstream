@@ -36,6 +36,10 @@ class RecipientCountryBudgetController extends Controller
      */
     public function index($orgId)
     {
+        if (!$this->userBelongsToOrganization($orgId)) {
+            return redirect()->route('activity.index')->withResponse($this->getNoPrivilegesMessage());
+        }
+
         $recipientCountryBudget = $this->recipientCountryBudgetManager->getRecipientCountryBudgetData($orgId);
         $form                   = $this->recipientCountryBudgetForm->editForm($recipientCountryBudget, $orgId);
 
@@ -53,6 +57,10 @@ class RecipientCountryBudgetController extends Controller
      */
     public function update($orgId, RecipientCountryBudgetRequestManager $recipientCountryBudgetRequestManager, Request $request)
     {
+        if (!$this->userBelongsToOrganization($orgId)) {
+            return redirect()->route('activity.index')->withResponse($this->getNoPrivilegesMessage());
+        }
+
         $organizationData = $this->recipientCountryBudgetManager->getOrganizationData($orgId);
         $this->authorizeByRequestType($organizationData, 'recipient_country_budget');
         $input            = $request->all();
