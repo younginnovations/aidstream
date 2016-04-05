@@ -101,5 +101,12 @@ $router->group(
                 'uses' => 'OrganizationGroupController@save'
             ]
         );
+        $router->get(
+            'admin/hide-organization/org_id/{id}/status/{status}',
+            [
+                'as' => 'admin.hide-organization',
+                'uses' => 'OrganizationController@hideOrganization'
+            ]
+        );
     }
 );

@@ -177,6 +177,9 @@ class AuthController extends Controller
             }
 
             if (Auth::attempt($credentials, $request->has('remember'))) {
+                if (!Auth::user()->enabled) {
+                    return redirect('/auth/login')->withErrors('Your account has been disabled. Please contact the system administrator.');
+                }
                 $user = Auth::user();
                 Session::put('role_id', $user->role_id);
                 Session::put('org_id', $user->org_id);
@@ -184,16 +187,16 @@ class AuthController extends Controller
                 $settings_check = isset($settings);
                 $version        = ($settings_check) ? $settings->version : config('app.default_version');
                 Session::put('current_version', $version);
-                $versions_db= $this->database->table('versions')->get();
-                $versions = [];
+                $versions_db = $this->database->table('versions')->get();
+                $versions    = [];
                 foreach ($versions_db as $ver) {
                     $versions[] = $ver->version;
                 }
-                $versionKey  = array_search($version, $versions);
+                $versionKey   = array_search($version, $versions);
                 $next_version = (end($versions) == $version) ? null : $versions[$versionKey + 1];
 
-                Session::put('next_version',$next_version);
-                $version        = 'V' . str_replace('.', '', $version);
+                Session::put('next_version', $next_version);
+                $version = 'V' . str_replace('.', '', $version);
                 Session::put('version', $version);
                 $redirectPath = ($user->role_id == 1 || $user->role_id == 2) ? config('app.admin_dashboard') : config('app.super_admin_dashboard');
                 $intendedUrl  = Session::get('url.intended');

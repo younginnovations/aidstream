@@ -17,7 +17,7 @@ class WhoIsUsingController extends Controller
     {
         $this->activityManager = $activityManager;
         $this->orgManager      = $organizationManager;
-        $this->user = $user;
+        $this->user            = $user;
     }
 
     /**
@@ -40,7 +40,7 @@ class WhoIsUsingController extends Controller
     {
         $skip                  = $page * $count;
         $data['next_page']     = Organization::count() > ($skip + $count);
-        $data['organizations'] = Organization::select('name', 'logo_url', 'id')->skip($skip)->take($count)->get();
+        $data['organizations'] = Organization::select('name', 'logo_url', 'id')->orderBy('name')->where('display', 1)->skip($skip)->take($count)->get();
 
         return $data;
     }
@@ -73,6 +73,7 @@ class WhoIsUsingController extends Controller
         );
 
         $user = $this->user->getDataByOrgIdAndRoleId($organizationId, '1');
+
         return view('who-is-using-organization', compact('final_data', 'orgInfo', 'user'));
     }
 
@@ -223,13 +224,13 @@ class WhoIsUsingController extends Controller
 
         foreach ($transaction as $key => $value) {
             if ($key == 1) {
-                $arrays['incomingFunds'] += (float) $value;
+                $arrays['incomingFunds'] += (float)$value;
             } elseif ($key == 2) {
-                $arrays['commitment'] += (float) $value;
+                $arrays['commitment'] += (float)$value;
             } elseif ($key == 3) {
-                $arrays['disbursement'] += (float) $value;
+                $arrays['disbursement'] += (float)$value;
             } elseif ($key == 4) {
-                $arrays['expenditure'] += (float) $value;
+                $arrays['expenditure'] += (float)$value;
             }
         }
 

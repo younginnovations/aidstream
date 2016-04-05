@@ -184,10 +184,19 @@ class User extends Model implements AuthorizableContract, AuthenticatableContrac
     public function getDataByOrgIdAndRoleId($orgId, $roleId)
     {
         $users = DB::table($this->table)
-                        ->where('org_id', '=', $orgId)
-                        ->where('role_id', '=', $roleId)
-                        ->first();
+                   ->where('org_id', '=', $orgId)
+                   ->where('role_id', '=', $roleId)
+                   ->first();
+
         return $users;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getEnabledAttribute()
+    {
+        return ($this->isGroupAdmin() || $this->isSuperAdmin() || $this->organization->status);
     }
 
 
