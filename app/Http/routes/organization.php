@@ -22,5 +22,13 @@ $router->group(
                 'uses' => 'OrganizationController@listPublishedFiles'
             ]
         );
+
+        $router->post(
+            'publish/org-files',
+            [
+                'as'   => 'org.bulk-publish',
+                'uses' => 'OrganizationController@orgBulkPublishToRegistry'
+            ]
+        );
     }
 );

@@ -194,4 +194,40 @@ class OrganizationController extends Controller
 
         return view('published-files', compact('list', 'activity_list'));
     }
+
+    /**
+     * @param Request $request
+     */
+    public function orgBulkPublishToRegistry(Request $request)
+    {
+        $data     = $request->get('org_files');
+        $pubFiles   = [];
+        $unpubFiles = [];
+        $value = [];
+
+        if (is_null($data)) {
+            $data = [];
+        }
+        foreach ($data as $datum) {
+            $orgId    = explode(':', $datum)[0];
+            $filename = explode(':', $datum)[1];
+            $this->organizationManager->saveOrganizationPublishedFiles($filename, $orgId);
+            $organization = $this->organizationManager->getOrganization($orgId);
+            $settings     = $this->settingsManager->getSettings($orgId);
+            $result      = $this->organizationManager->publishToRegistry($organization, $settings);
+            if ($result) {
+                $pubFiles[] = $filename;
+            } else {
+                $unpubFiles[] = $filename;
+            }
+        }
+
+        if ($unpubFiles) {
+            $value['unpublished'] = sprintf("The files %s could not be published to registry. Please try again.", implode(',', $unpubFiles));
+        } elseif ($pubFiles) {
+            $value['published'] = sprintf("The files %s have been published to registry", implode(',', $pubFiles));
+        }
+
+        return redirect()->back()->withValue($value);
+    }
 }

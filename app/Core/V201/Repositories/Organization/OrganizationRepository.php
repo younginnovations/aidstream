@@ -136,7 +136,7 @@ class OrganizationRepository implements OrganizationRepositoryInterface
     {
         $result = $this->orgPublished->find($id);
         if ($result) {
-            $file = sprintf('%s%s', public_path('files'). config('filesystems.xml'), $result->filename);
+            $file   = sprintf('%s%s', public_path('files') . config('filesystems.xml'), $result->filename);
             $result = $result->delete();
             if ($result && file_exists($file)) {
                 unlink($file);
@@ -199,11 +199,25 @@ class OrganizationRepository implements OrganizationRepositoryInterface
      */
     protected function generateJson($publishedFile, Settings $settings, Organization $organization)
     {
-        $organization = $this->getOrganization($organization->id);
+        $filePath = sprintf('%s%s%s', public_path('files'), config('filesystems.xml'), $publishedFile->filename);
+        if (file_exists($filePath)) {
+            $xml = simplexml_load_string(file_get_contents($filePath));
+            $xml = json_decode(json_encode($xml), true);
+
+            if (count($xml['iati-organisation']['name']) == 1) {
+                $orgTitle = $xml['iati-organisation']['name']['narrative'];
+            } elseif(count($xml['iati-organisation']['name']) > 0) {
+                $orgTitle = $xml['iati-organisation']['name']['narrative'][0];
+            }
+        } else {
+            $organization = $this->getOrganization($organization->id);
+            $orgTitle     = $organization->name;
+        }
+
         $email        = $this->user->getUserByOrgId();
         $author_email = $email[0]->email;
 
-        $title = $organization->name . 'Organization File';
+        $title = $orgTitle . 'Organization File';
         $name  = $settings['registry_info'][0]['publisher_id'] . '-org';
 
         $data = '{
@@ -227,5 +241,15 @@ class OrganizationRepository implements OrganizationRepositoryInterface
 
         return $data;
 
+    }
+
+    public function saveOrganizationPublishedFiles($filename, $orgId)
+    {
+        $published = $this->orgPublished->firstOrNew(['filename' => $filename, 'organization_id' => $orgId]);
+        $published->touch();
+        $published->filename        = $filename;
+        $published->organization_id = $orgId;
+
+        return $published->save();
     }
 }

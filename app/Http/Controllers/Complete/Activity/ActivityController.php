@@ -224,17 +224,17 @@ class ActivityController extends Controller
         $this->authorize('edit_activity');
         $input            = $request->all();
         $activityWorkflow = $input['activity_workflow'];
-        if($activityWorkflow == 3) {
+        if ($activityWorkflow == 3) {
             $this->authorize('publish_activity');
         }
-        $activityData     = $this->activityManager->getActivityData($id);
-        $settings         = $this->settingsManager->getSettings($activityData['organization_id']);
-        $transactionData  = $this->activityManager->getTransactionData($id);
-        $resultData       = $this->activityManager->getResultData($id);
-        $organization     = $this->organizationManager->getOrganization($activityData->organization_id);
-        $orgElem          = $this->organizationManager->getOrganizationElement();
-        $activityElement  = $this->activityManager->getActivityElement();
-        $xmlService       = $activityElement->getActivityXmlService();
+        $activityData    = $this->activityManager->getActivityData($id);
+        $settings        = $this->settingsManager->getSettings($activityData['organization_id']);
+        $transactionData = $this->activityManager->getTransactionData($id);
+        $resultData      = $this->activityManager->getResultData($id);
+        $organization    = $this->organizationManager->getOrganization($activityData->organization_id);
+        $orgElem         = $this->organizationManager->getOrganizationElement();
+        $activityElement = $this->activityManager->getActivityElement();
+        $xmlService      = $activityElement->getActivityXmlService();
 
         if ($activityWorkflow == 1) {
             $validationMessage = $activityElementValidator->validateActivity($activityData, $transactionData);
@@ -523,5 +523,122 @@ class ActivityController extends Controller
             'resources'    => $data->resources,
             'extras'       => $data->extras
         ];
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function activityBulkPublishToRegistry(Request $request)
+    {
+        $files = $request->get('activity_files');
+        if (is_null($files)) {
+            $files = [];
+        }
+        $pubFiles   = [];
+        $unpubFiles = [];
+        $value      = [];
+
+        foreach ($files as $data) {
+            $orgId    = explode(':', $data)[0];
+            $filename = explode(':', $data)[1];
+
+            $publishedFile = $this->activityManager->getActivityPublishedData($filename, $orgId);
+            $result        = $this->publishToRegistryForBulk($publishedFile, $orgId);
+            if ($result) {
+                $pubFiles[] = $filename;
+                $this->savePublishedDataInActivityRegistry($publishedFile);
+            } else {
+                $unpubFiles[] = $filename;
+            }
+        }
+
+        if ($unpubFiles) {
+            $value['unpublished'] = sprintf("The files %s could not be published to registry. Please try again.", implode(',', $unpubFiles));
+        } elseif ($pubFiles) {
+            $value['published'] = sprintf("The files %s have been published to registry", implode(',', $pubFiles));
+        }
+
+        return redirect()->back()->with('value', $value);
+    }
+
+    /**
+     * @param $publishedFile
+     * @param $orgId
+     * @return bool
+     */
+    protected function publishToRegistryForBulk($publishedFile, $orgId)
+    {
+        $settings = $this->settingsManager->getSettings($orgId);
+        $api_url  = config('filesystems.iati_registry_api_base_url');
+        $apiCall  = new CkanClient($api_url, $settings['registry_info'][0]['api_id']);
+
+        try {
+            $data = $this->generateJson($publishedFile);
+            if ($publishedFile['published_to_register'] == 0) {
+                $apiCall->package_create($data);
+                $this->activityManager->updatePublishToRegister($publishedFile->id);
+            } elseif ($publishedFile['published_to_register'] == 1) {
+                $apiCall->package_update($this->convertIntoArray(json_decode($data)));
+            }
+
+            return true;
+        } catch (\Exception $e) {
+            $this->loggerInterface->error(
+                sprintf('Registry Info could not be registered due to error code %s', $e->getCode()),
+                [
+                    'response' => $e->getMessage(),
+                    'trace'    => $e->getTraceAsString()
+                ]
+            );
+
+            return false;
+        }
+    }
+
+    public function savePublishedDataInActivityRegistry($publishedFile)
+    {
+        $files = $publishedFile->published_activities;
+
+        foreach ($files as $xmlFile) {
+            $transaction      = [];
+            $recipientCountry = [];
+            $recipientRegion  = [];
+            $title            = [];
+
+            $filePath = sprintf('%s%s%s', public_path('files'), config('filesystems.xml'), $xmlFile);
+            if (file_exists($filePath)) {
+                $xml = simplexml_load_string(file_get_contents($filePath));
+                $xml = json_decode(json_encode($xml), true);
+                if (key_exists('transaction', $xml['iati-activity'])) {
+                    $xmlTransaction = $xml['iati-activity']['transaction'];
+                    $transaction    = $this->activityManager->getTransactionForBulk($xmlTransaction);
+                }
+
+                if (key_exists('recipient-country', $xml['iati-activity'])) {
+                    $xmlRecipientCountry = $xml['iati-activity']['recipient-country'];
+                    $recipientCountry    = $this->activityManager->getRecipientCountryForBulk($xmlRecipientCountry);
+                }
+
+                $activityStatus = $xml['iati-activity']['activity-status']['@attributes']['code'];
+
+                $identifier = $xml['iati-activity']['iati-identifier'];
+
+                if (count($xml['iati-activity']['title']['narrative']) == 1) {
+                    $title = $xml['iati-activity']['title']['narrative'];
+                } elseif (count($xml['iati-activity']['title']['narrative']) > 1) {
+                    $title = $xml['iati-activity']['title']['narrative'][0];
+                }
+
+                $xmlSector = $xml['iati-activity']['sector'];
+                $sector    = $this->activityManager->getSectorForBulk($xmlSector);
+
+                $jsonData          = $this->activityManager->convertIntoJson($transaction, $activityStatus, $recipientRegion, $recipientCountry, $sector, $title, $identifier);
+                $explodeActivityId = explode('.', explode('-', $xmlFile)[1]);
+                $activityId        = $explodeActivityId[0];
+                $this->activityManager->saveBulkPublishDataInActivityRegistry($activityId, $jsonData);
+
+            }
+        }
     }
 }

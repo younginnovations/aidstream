@@ -408,7 +408,7 @@ class ActivityManager
      * @param $identifier
      * @return string
      */
-    protected function convertIntoJson($transaction, $activityStatus, $recipientRegion, $recipientCountry, $sector, $title, $identifier)
+    public function convertIntoJson($transaction, $activityStatus, $recipientRegion, $recipientCountry, $sector, $title, $identifier)
     {
         return [
             'transaction'       => $transaction,
@@ -438,5 +438,97 @@ class ActivityManager
     public function getDataForOrganization($organizationId)
     {
         return $this->activityRepo->getDataForOrganization($organizationId);
+    }
+
+    /**
+     * @param $filename
+     * @param $orgId
+     * @return mixed
+     */
+    public function getActivityPublishedData($filename, $orgId)
+    {
+        return $this->activityRepo->getActivityPublished($filename, $orgId);
+    }
+
+    /**
+     * @param $sector
+     * @return array
+     */
+    public function getSectorForBulk($sector)
+    {
+        $arrays = [];
+        if (count($sector['narrative']) == 1) {
+            $arrays[$sector['narrative']] = 1;
+        } elseif (count($sector['narrative']) > 1) {
+            foreach ($sector['narrative'] as $key => $data) {
+                $index = $data;
+                if (array_key_exists($index, $arrays)) {
+                    $arrays[$index] = $arrays[$index] + 1;
+                } else {
+                    $arrays[$index] = 1;
+                }
+            }
+        }
+
+        return $arrays;
+    }
+
+    /**
+     * @param $recipientCountry
+     * @return array
+     */
+    public function getRecipientCountryForBulk($recipientCountry)
+    {
+        $arrays = [];
+        if (count($recipientCountry['@attributes']['code']) == 1) {
+            $arrays[$recipientCountry['@attributes']['code']] = 1;
+        } elseif (count($recipientCountry['@attributes']['code']) > 1) {
+            foreach ($recipientCountry as $data) {
+                $index = $data['@attributes']['code'];
+                if (array_key_exists($index, $arrays)) {
+                    $arrays[$index] = $arrays[$index] + 1;
+                } else {
+                    $arrays[$index] = 1;
+                }
+            }
+        }
+
+        return $arrays;
+    }
+
+    /**
+     * @param $transaction
+     * @return array
+     */
+    public function getTransactionForBulk($transaction)
+    {
+        $arrays = [];
+        if(count($transaction['transaction-type']) == 1){
+            $arrays[$transaction['transaction-type']['@attributes']['code']] = $transaction['value'];
+        }elseif(count($transaction) > 1){
+            foreach($transaction as $data){
+                $index = $data['transaction-type']['@attributes']['code'];
+                $value = $data['value'];
+
+                if (array_key_exists($index, $arrays)) {
+                    $arrays[$index] = $arrays[$index] + $value;
+                } else {
+                    $arrays[$index] = $value;
+                }
+
+            }
+        }
+
+        return $arrays;
+    }
+
+    /**
+     * @param $activityId
+     * @param $jsonData
+     * @return mixed
+     */
+    public function saveBulkPublishDataInActivityRegistry($activityId,$jsonData)
+    {
+        return $this->activityRepo->saveBulkPublishDataInActivityRegistry($activityId,$jsonData);
     }
 }

@@ -175,4 +175,30 @@ class ActivityRepository
     {
         return $this->activityInRegistry->whereOrganizationId($organizationId)->get();
     }
+
+    /**
+     * @param $filename
+     * @param $orgId
+     * @return mixed
+     */
+    public function getActivityPublished($filename, $orgId)
+    {
+        return $this->activityPublished->where('filename', '=', $filename)
+                                        ->whereOrganizationId($orgId)
+                                        ->first();
+    }
+
+    /**
+     * @param $activityId
+     * @param $jsonData
+     * @return bool
+     */
+    public function saveBulkPublishDataInActivityRegistry($activityId,$jsonData)
+    {
+        $activityInRegistry                  = $this->activityInRegistry->firstOrNew(['activity_id' => $activityId]);
+        $activityInRegistry->organization_id = session('org_id');
+        $activityInRegistry->activity_id     = $activityData->id;
+        $activityInRegistry->activity_data   = $jsonData;
+        return $activityInRegistry->save();
+    }
 }
