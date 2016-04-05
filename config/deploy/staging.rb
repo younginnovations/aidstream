@@ -1,11 +1,12 @@
-server '128.199.73.92',user: 'yipl', roles: %w{web app db}
+server '104.236.75.41',user: 'newstage', roles: %w{web app db}
 
 # Directory to deploy
 # ===================
 set :env, 'staging'
-set :deploy_to, '/home/yipl/app/staging'
-set :shared_path, '/home/yipl/app/staging/shared'
-set :overlay_path, '/home/yipl/app/overlay'
+set :deploy_to, '/home/newstage/newstage'
+set :shared_path, '/home/newstage/newstage/shared'
+set :overlay_path, '/home/newstage/overlay'
+set :tmp_dir, '/home/newstage/tmp'
 set :app_env, 'production'
 set :app_debug, 'false'
 set :session_driver, 'file'
