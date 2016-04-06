@@ -15,7 +15,7 @@ return [
     |
     */
 
-    'default'                    => 'local',
+    'default' => 'local',
     /*
     |--------------------------------------------------------------------------
     | Default Cloud Filesystem Disk
@@ -27,7 +27,7 @@ return [
     |
     */
 
-    'cloud'                      => 's3',
+    'cloud' => 's3',
     /*
     |--------------------------------------------------------------------------
     | Filesystem Disks
@@ -61,6 +61,11 @@ return [
             'region'    => 'IAD',
             'url_type'  => 'publicURL'
         ],
+        'dropbox'   => [
+            'driver'      => 'dropbox',
+            'accessToken' => env('DROPBOX_ACCESS_TOKEN'),
+            'appSecret'   => env('DROPBOX_APP_SECRET'),
+        ]
 
     ],
     /**
@@ -75,6 +80,6 @@ return [
      * Api URL for the IATI Registry.
      */
     'iati_registry_api_base_url' => 'http://iatiregistry.org/api/',
-    'iati_registry_dummy_url' => ''
+    'iati_registry_dummy_url'    => ''
 
 ];

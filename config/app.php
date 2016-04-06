@@ -150,6 +150,9 @@ return [
         'Maatwebsite\Excel\ExcelServiceProvider',
         'Intervention\Image\ImageServiceProvider',
         'Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider',
+        'BackupManager\Laravel\Laravel5ServiceProvider',
+        'Spatie\Backup\BackupServiceProvider',
+        'App\Providers\DropboxFilesystemServiceProvider'
     ],
     /*
     |--------------------------------------------------------------------------
