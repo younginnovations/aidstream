@@ -5,6 +5,10 @@ if (isset($language)) {
     App::setLocale($language);
 }
 
+$router->get('/public/files/xml/{file}', function ($file) {
+    return redirect('/files/xml/' . $file);
+});
+
 $router->get('/', 'HomeController@index');
 $router->get('home', 'HomeController@index');
 $router->get('about', 'AboutController@index');
