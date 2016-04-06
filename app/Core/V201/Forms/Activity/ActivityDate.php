@@ -14,7 +14,7 @@ class ActivityDate extends BaseForm
     public function buildForm()
     {
         $this
-            ->add('date', 'date', ['help_block' => $this->addHelpText('Activity_ActivityDate-iso_date'), 'required' => true])
+            ->add('date', 'date', ['help_block' => $this->addHelpText('Activity_ActivityDate-iso_date'), 'required' => true, 'attr' => ['placeholder' => 'YYYY-MM-DD']])
             ->addSelect('type', $this->getCodeList('ActivityDateType', 'Activity'), 'Activity Date Type', $this->addHelpText('Activity_ActivityDate-type'), null, true)
             ->addNarrative('narrative')
             ->addAddMoreButton('add_narrative', 'narrative')

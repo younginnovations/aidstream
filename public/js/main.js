@@ -567,16 +567,13 @@ $(document).ready(function () {
     });
 
     function addDatepicker() {
-        if (typeof $.datetimepicker == 'undefined') {
-            return false;
+        if (typeof $.datetimepicker != 'undefined') {
+            $('form .datepicker').datetimepicker({
+                timepicker: false,
+                format: 'Y-m-d',
+                formatDate: 'Y-m-d'
+            });
         }
-        $('form .datepicker').datetimepicker({
-            timepicker: false,
-            format: 'Y-m-d',
-            formatDate: 'Y-m-d',
-            mask: true,
-            lazyInit: true
-        });
     }
 
     addDatepicker();
