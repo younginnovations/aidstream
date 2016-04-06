@@ -3385,6 +3385,10 @@ label {
 .panel-title {
   font: 32px Open-Sans-Light;
   padding-top: 20px; }
+  .panel-title + p {
+    color: rgba(72, 72, 72, 0.8);
+    padding: 20px 33px 0;
+    margin-bottom: -10px; }
 
 .register-container {
   max-width: 814px;
