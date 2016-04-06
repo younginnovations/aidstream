@@ -37,6 +37,10 @@ class OrgTotalBudgetController extends Controller
      */
     public function index($orgId)
     {
+        if (!$this->userBelongsToOrganization($orgId)) {
+            return redirect()->route('activity.index')->withResponse($this->getNoPrivilegesMessage());
+        }
+
         $totalBudget = $this->totalBudgetManager->getOrganizationTotalBudgetData($orgId);
         $form        = $this->totalBudgetForm->editForm($totalBudget, $orgId);
 
@@ -52,6 +56,10 @@ class OrgTotalBudgetController extends Controller
      */
     public function update($orgId, TotalBudgetRequestManager $totalBudgetRequestManager, Request $request)
     {
+        if (!$this->userBelongsToOrganization($orgId)) {
+            return redirect()->route('activity.index')->withResponse($this->getNoPrivilegesMessage());
+        }
+
         $organizationData = $this->totalBudgetManager->getOrganizationData($orgId);
         $this->authorizeByRequestType($organizationData, 'total_budget');
         $input            = $request->all();

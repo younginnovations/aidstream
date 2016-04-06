@@ -46,14 +46,15 @@ class SectorController extends Controller
      */
     public function index($id)
     {
+        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
+        }
+
         $sector       = $this->sectorManager->getSectorData($id);
         $activityData = $this->activityManager->getActivityData($id);
         $form         = $this->sectorForm->editForm($sector, $id);
 
-        return view(
-            'Activity.sector.edit',
-            compact('form', 'activityData', 'id')
-        );
+        return view('Activity.sector.edit', compact('form', 'activityData', 'id'));
     }
 
     /**
@@ -65,6 +66,10 @@ class SectorController extends Controller
      */
     public function update($id, Request $request, SectorRequestManager $sectorRequestManager)
     {
+        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
+        }
+
         $activityData = $this->activityManager->getActivityData($id);
         $this->authorizeByRequestType($activityData, 'sector');
         $sectors = $request->all();

@@ -18,6 +18,7 @@ class NameController extends Controller
     protected $formBuilder;
     protected $nameManager;
     protected $nameForm;
+    protected $organizationManager;
 
     public function __construct(
         FormBuilder $formBuilder,
@@ -37,6 +38,10 @@ class NameController extends Controller
      */
     public function index($orgId)
     {
+        if (!$this->userBelongsToOrganization($orgId)) {
+            return redirect()->route('activity.index')->withResponse($this->getNoPrivilegesMessage());
+        }
+
         $orgName = $this->nameManager->getOrganizationNameData($orgId);
         $form    = $this->nameForm->editForm($orgName, $orgId);
 
@@ -52,6 +57,10 @@ class NameController extends Controller
      */
     public function update($orgId, NameRequestManager $nameRequestManager, Request $request)
     {
+        if (!$this->userBelongsToOrganization($orgId)) {
+            return redirect()->route('activity.index')->withResponse($this->getNoPrivilegesMessage());
+        }
+
         $organizationData = $this->nameManager->getOrganizationData($orgId);
         $this->authorizeByRequestType($organizationData, 'name');
         $input            = $request->all();

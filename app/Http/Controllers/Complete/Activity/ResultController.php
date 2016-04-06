@@ -46,6 +46,10 @@ class ResultController extends Controller
      */
     public function index($id)
     {
+        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
+        }
+
         $results      = $this->resultManager->getResults($id);
         $activityData = $this->activityManager->getActivityData($id);
 
@@ -60,6 +64,14 @@ class ResultController extends Controller
      */
     public function show($activityId, $id)
     {
+        if (!$this->currentUserIsAuthorizedForActivity($activityId)) {
+            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
+        }
+
+        if (!$this->currentUserIsAuthorizedForResult($id)) {
+            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
+        }
+
         $result       = $this->resultManager->getResult($id, $activityId);
         $activityData = $this->activityManager->getActivityData($activityId);
         $resultId     = $id;
@@ -73,8 +85,12 @@ class ResultController extends Controller
      * @param $id
      * @return \Illuminate\View\View
      */
-    public function  create($id)
+    public function create($id)
     {
+        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+            return redirect()->route('activity.index')->withResponse($this->getNoPrivilegesMessage());
+        }
+
         $this->authorize('add_activity');
 
         return $this->loadForm($id);
@@ -89,6 +105,10 @@ class ResultController extends Controller
      */
     public function edit($id, $resultId)
     {
+        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
+        }
+
         $this->authorize('edit_activity');
         $result = $this->resultManager->getResult($resultId, $id);
 
@@ -142,6 +162,14 @@ class ResultController extends Controller
      */
     public function destroy($id, $resultId)
     {
+        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
+        }
+
+        if (!$this->currentUserIsAuthorizedFor($id)) {
+            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
+        }
+
         $this->authorize('delete_activity');
         $activityResult = $this->resultManager->getResult($resultId, $id);
 

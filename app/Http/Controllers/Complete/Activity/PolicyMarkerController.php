@@ -33,6 +33,10 @@ class PolicyMarkerController extends Controller
      */
     public function index($id)
     {
+        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
+        }
+
         $policyMarker = $this->policyMarkerManager->getPolicyMarkerData($id);
         $activityData = $this->activityManager->getActivityData($id);
         $form         = $this->policyMarkerForm->editForm($policyMarker, $id);
@@ -48,6 +52,10 @@ class PolicyMarkerController extends Controller
      */
     public function update($id, Request $request, PolicyMarkerRequestManager $policyMarkerRequestManager)
     {
+        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
+        }
+
         $activityData = $this->activityManager->getActivityData($id);
         $this->authorizeByRequestType($activityData, 'policy_marker');
         $policyMarker = $request->all();

@@ -49,6 +49,10 @@ class ActivityScopeController extends Controller
      */
     public function index($id)
     {
+        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+            return redirect()->route('activity.index')->withResponse($this->getNoPrivilegesMessage());
+        }
+
         $activityScope = $this->activityScopeManager->getActivityScopeData($id);
         $activityData  = $this->activityManager->getActivityData($id);
         $form          = $this->activityScopeForm->editForm($activityScope, $id);
@@ -68,6 +72,10 @@ class ActivityScopeController extends Controller
      */
     public function update($id, Request $request, ActivityScopeRequestManager $activityScopeRequestManager)
     {
+        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+            return redirect()->route('activity.index')->withResponse($this->getNoPrivilegesMessage());
+        }
+
         $activityData   = $this->activityManager->getActivityData($id);
         $this->authorizeByRequestType($activityData, 'activity_scope');
         $activityStatus = $request->all();

@@ -71,6 +71,10 @@ class IatiIdentifierController extends Controller
      */
     function index($id)
     {
+        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
+        }
+
         $iatiIdentifier        = $this->iatiIdentifierManager->getIatiIdentifierData($id);
         $organization          = $this->organizationManager->getOrganization($this->organization_id);
         $reportingOrganization = $organization->reporting_org;
@@ -87,6 +91,10 @@ class IatiIdentifierController extends Controller
      */
     public function update($activityId, IatiIdentifierRequestManager $iatiIdentifierRequestManager, Request $request)
     {
+        if (!$this->currentUserIsAuthorizedForActivity($activityId)) {
+            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
+        }
+
         $iatiIdentifierData = $this->iatiIdentifierManager->getActivityData($activityId);
         $this->authorizeByRequestType($iatiIdentifierData, 'identifier');
         $input              = $request->all();

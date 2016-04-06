@@ -46,6 +46,10 @@ class DefaultAidTypeController extends Controller
      */
     public function  index($id)
     {
+        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
+        }
+
         $defaultAidType = $this->defaultAidTypeManager->getDefaultAidTypeData($id);
         $activityData   = $this->activityManager->getActivityData($id);
         $form           = $this->defaultAidTypeForm->editForm($defaultAidType, $id);
@@ -62,6 +66,10 @@ class DefaultAidTypeController extends Controller
      */
     public function update($id, Request $request, DefaultAidTypeRequestManager $defaultAidTypeRequestManager)
     {
+        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
+        }
+
         $activityData   = $this->activityManager->getActivityData($id);
         $this->authorizeByRequestType($activityData, 'default_aid_type');
         $defaultAidType = $request->all();

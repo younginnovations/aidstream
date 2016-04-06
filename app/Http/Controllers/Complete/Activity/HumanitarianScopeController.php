@@ -40,8 +40,12 @@ class HumanitarianScopeController extends Controller
      * @param $id
      * @return \Illuminate\View\View
      */
-    public function  index($id)
+    public function index($id)
     {
+        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
+        }
+
         $countryBudgetItem = $this->humanitarianScopeManager->getActivityHumanitarianScopeData($id);
         $activityData      = $this->activityManager->getActivityData($id);
         $form              = $this->humanitarianScopeForm->editForm($countryBudgetItem, $id);
@@ -58,6 +62,10 @@ class HumanitarianScopeController extends Controller
      */
     public function update($id, Request $request, HumanitarianScopeRequest $humanitarianScopeRequest)
     {
+        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
+        }
+
         $activityData      = $this->activityManager->getActivityData($id);
         $this->authorizeByRequestType($activityData, 'humanitarian_scope');
         $humanitarianScope = $request->all();

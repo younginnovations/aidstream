@@ -47,6 +47,10 @@ class OtherIdentifierController extends Controller
      */
     public function index($id)
     {
+        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
+        }
+
         $activityData    = $this->activityManager->getActivityData($id);
         $otherIdentifier = $this->otherIdentifierManager->getOtherIdentifierData($id);
         $form            = $this->otherIdentifierForm->editForm($otherIdentifier, $id);
@@ -66,6 +70,10 @@ class OtherIdentifierController extends Controller
      */
     public function update(OtherIdentifierRequestManager $otherIdentifierRequestManager, Request $request, $id)
     {
+        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
+        }
+
         $activityData = $this->otherIdentifierManager->getActivityData($id);
         $this->authorizeByRequestType($activityData, 'other_identifier');
         $input = $request->all();

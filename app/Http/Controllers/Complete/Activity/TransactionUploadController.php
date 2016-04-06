@@ -45,6 +45,10 @@ class TransactionUploadController extends Controller
      */
     public function index($id)
     {
+        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
+        }
+
         $activity = $this->activityManager->getActivityData($id);
         $form     = $this->uploadTransaction->createForm($id);
 
@@ -61,6 +65,10 @@ class TransactionUploadController extends Controller
      */
     public function store(Request $request, $id, UploadTransactionRequest $uploadTransactionRequest, CsvImportValidator $csvImportValidator)
     {
+        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
+        }
+
         $this->authorize('add_activity');
         $activity = $this->activityManager->getActivityData($id);
         $file     = $request->file('transaction');

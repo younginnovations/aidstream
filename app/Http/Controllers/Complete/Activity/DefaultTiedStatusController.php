@@ -46,6 +46,10 @@ class DefaultTiedStatusController extends Controller
      */
     public function  index($id)
     {
+        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
+        }
+
         $defaultTiedStatus = $this->defaultTiedStatusManager->getDefaultTiedStatusData($id);
         $activityData      = $this->activityManager->getActivityData($id);
         $form              = $this->defaultTiedStatusForm->editForm($defaultTiedStatus, $id);
@@ -62,6 +66,10 @@ class DefaultTiedStatusController extends Controller
      */
     public function update($id, Request $request, DefaultTiedStatusRequestManager $defaultTiedStatusRequestManager)
     {
+        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
+        }
+
         $activityData      = $this->activityManager->getActivityData($id);
         $this->authorizeByRequestType($activityData, 'default_tied_status');
         $defaultTiedStatus = $request->all();

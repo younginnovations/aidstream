@@ -48,6 +48,10 @@ class DocumentLinkController extends Controller
      */
     public function index($id)
     {
+        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
+        }
+
         $documentLink = $this->documentLinkManager->getDocumentLinkData($id);
         $activityData = $this->activityManager->getActivityData($id);
         $form         = $this->documentLinkForm->editForm($documentLink, $id);
@@ -66,6 +70,10 @@ class DocumentLinkController extends Controller
      */
     public function update($id, Request $request, DocumentLinkRequestManager $documentLinkRequestManager, DocumentManager $documentManager, DatabaseManager $database)
     {
+        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
+        }
+
         $activityData  = $this->activityManager->getActivityData($id);
         $this->authorizeByRequestType($activityData, 'document_link');
         $documentLinks = $request->all();

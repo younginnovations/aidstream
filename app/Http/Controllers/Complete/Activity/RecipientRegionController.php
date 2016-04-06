@@ -56,6 +56,10 @@ class RecipientRegionController extends Controller
      */
     public function index($id)
     {
+        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
+        }
+
         $recipientRegion = $this->recipientRegionManager->getRecipientRegionData($id);
         $activityData    = $this->activityManager->getActivityData($id);
         $form            = $this->recipientRegionForm->editForm($recipientRegion, $id);
@@ -75,6 +79,10 @@ class RecipientRegionController extends Controller
      */
     public function update($id, Request $request, RecipientRegionRequestManager $recipientRegionRequestManager)
     {
+        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
+        }
+
         $activityData = $this->activityManager->getActivityData($id);
         $this->authorizeByRequestType($activityData, 'recipient_region');
         $activityTransactions = $this->transactionManager->getTransactions($id);

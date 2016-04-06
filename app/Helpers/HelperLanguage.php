@@ -7,5 +7,11 @@ function message($response)
     $message = trans($version . "/message");
     $code    = (is_array($message) ? $version : config('app.default_version_name')) . '/message.' . $code;
 
-    return trans($code, $response['code'][1]);
+    if (array_key_exists(1, $response['code'])) {
+        $result = $response['code'][1];
+    } else {
+        $result = $response['code'];
+    }
+
+    return trans($code, $result);
 }

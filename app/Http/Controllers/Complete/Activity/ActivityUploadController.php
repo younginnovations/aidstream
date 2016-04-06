@@ -197,6 +197,10 @@ class ActivityUploadController extends Controller
      */
     public function update($id, Request $request)
     {
+        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+            return redirect()->route('activity.index')->withResponse($this->getNoPrivilegesMessage());
+        }
+
         $activityDetails = $request->get('checkbox');
         $this->uploadActivityManager->update($activityDetails);
         $response = ['type' => 'success', 'code' => ['updated', ['name' => 'Activities']]];

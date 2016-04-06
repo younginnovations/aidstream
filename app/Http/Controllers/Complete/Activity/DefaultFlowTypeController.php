@@ -46,6 +46,10 @@ class DefaultFlowTypeController extends Controller
      */
     public function  index($id)
     {
+        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
+        }
+
         $defaultFlowType = $this->defaultFlowTypeManager->getDefaultFlowTypeData($id);
         $activityData    = $this->activityManager->getActivityData($id);
         $form            = $this->defaultFlowTypeForm->editForm($defaultFlowType, $id);
@@ -62,6 +66,10 @@ class DefaultFlowTypeController extends Controller
      */
     public function update($id, Request $request, DefaultFlowTypeRequestManager $defaultFlowTypeRequestManager)
     {
+        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
+        }
+
         $activityData    = $this->activityManager->getActivityData($id);
         $this->authorizeByRequestType($activityData, 'default_flow_type');
         $defaultFlowType = $request->all();

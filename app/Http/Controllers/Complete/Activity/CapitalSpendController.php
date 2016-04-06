@@ -46,6 +46,10 @@ class CapitalSpendController extends Controller
      */
     public function  index($id)
     {
+        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
+        }
+
         $capitalSpend = $this->capitalSpendManager->getCapitalSpendData($id);
         $activityData = $this->activityManager->getActivityData($id);
         $form         = $this->capitalSpendForm->editForm($capitalSpend, $id);
@@ -62,6 +66,10 @@ class CapitalSpendController extends Controller
      */
     public function update($id, Request $request, CapitalSpendRequestManager $capitalSpendRequestManager)
     {
+        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
+        }
+
         $activityData = $this->activityManager->getActivityData($id);
         $this->authorizeByRequestType($activityData, 'capital_spend');
         $capitalSpend = $request->all();

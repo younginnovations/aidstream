@@ -49,6 +49,10 @@ class ContactInfoController extends Controller
      */
     public function index($id)
     {
+        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
+        }
+
         $ContactInfo  = $this->contactInfoManager->getContactInfoData($id);
         $activityData = $this->activityManager->getActivityData($id);
         $form         = $this->contactInfoForm->editForm($ContactInfo, $id);
@@ -68,6 +72,10 @@ class ContactInfoController extends Controller
      */
     public function update($id, Request $request, ContactInfoRequestManager $contactInfoRequestManager)
     {
+        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
+        }
+
         $activityData = $this->activityManager->getActivityData($id);
         $this->authorizeByRequestType($activityData, 'contact_info');
         $contactInfo  = $request->all();

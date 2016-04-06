@@ -47,6 +47,10 @@ class DescriptionController extends Controller
      */
     public function index($id)
     {
+        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
+        }
+
         $activityDescription = $this->descriptionManager->getDescriptionData($id);
         $activityData        = $this->activityManager->getActivityData($id);
         $form                = $this->description->editForm($activityDescription, $id);
@@ -66,6 +70,10 @@ class DescriptionController extends Controller
      */
     public function update($id, Request $request, DescriptionRequestManager $descriptionRequestManager)
     {
+        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
+        }
+
         $activityData = $this->activityManager->getActivityData($id);
         $this->authorizeByRequestType($activityData, 'description');
         $activityDescription = $request->all();
