@@ -14,6 +14,6 @@ class PeriodDate extends BaseForm
      */
     public function buildForm()
     {
-        $this->add('date', 'date', ['help_block' => $this->addHelpText('Activity_Result_Indicator_Period_PeriodStart-iso_date'), 'required' => true]);
+        $this->add('date', 'date', ['help_block' => $this->addHelpText('Activity_Result_Indicator_Period_PeriodStart-iso_date'), 'required' => true, 'attr' => ['placeholder' => 'YYYY-MM-DD']]);
     }
 }

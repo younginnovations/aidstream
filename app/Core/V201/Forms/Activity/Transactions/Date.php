@@ -15,6 +15,6 @@ class Date extends BaseForm
      */
     public function buildForm()
     {
-        $this->add('date', 'date', ['help_block' => $this->addHelpText('Activity_Transaction_TransactionDate-iso_date'), 'required' => true]);
+        $this->add('date', 'date', ['help_block' => $this->addHelpText('Activity_Transaction_TransactionDate-iso_date'), 'required' => true, 'attr' => ['placeholder' => 'YYYY-MM-DD']]);
     }
 }
