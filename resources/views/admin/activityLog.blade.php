@@ -17,7 +17,7 @@
                     <tbody>
                     @foreach($activity as $key => $value)
                         <tr>
-                            <td>{{$value->user->username}}</td>
+                            <td>{{$value->user ? $value->user->username : 'The user has been deleted.'}}</td>
                             <td>{{trans($value->action,$value->param)}}</td>
                         </tr>
                     @endforeach
