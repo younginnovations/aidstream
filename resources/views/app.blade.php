@@ -37,7 +37,6 @@
                    alt="Aidstream">Aidstream</a>
             </div>
         </div>
-
         <div class="collapse navbar-collapse navbar-right" id="bs-example-navbar-collapse-1">
             @if(auth()->user() && (Auth::user()->role_id != 3 && Auth::user()->role_id !=4))
                 <ul class="nav navbar-nav pull-left add-new-activity">
@@ -134,15 +133,15 @@
                                     @if(Auth::user()->role_id != 3 && Auth::user()->role_id !=4)
                                         <div class="version pull-right {{ (Session::get('version') == 'V201') ? 'old' : 'new' }}">
 
-                                            @if ((Session::get('version') == 'V201'))
+                                            @if ((session('version') == 'V201'))
                                                 <a class="version-text" href="{{route('upgrade-version.index')}}">Update
                                                     available</a>
                                                 <span class="old-version">
                                                  <a href="{{route('upgrade-version.index')}}">Upgrade to IATI version
-                                                     2.0.2</a>
+                                                     {{ session('next_version') }}</a>
                                               </span>
                                             @else
-                                                <span class="version-text">IATI version V202</span>
+                                                <span class="version-text">IATI version {{Session::get('current_version')}}</span>
                                                 <span class="new-version">
                                                You’re using latest IATI version
                                              </span>

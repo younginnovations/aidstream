@@ -178,7 +178,7 @@ class AuthController extends Controller
 
             if (Auth::attempt($credentials, $request->has('remember'))) {
                 if (!Auth::user()->enabled) {
-                    return redirect('/auth/login')->withErrors('Your account has been disabled. Please contact the system administrator.');
+                    return redirect('/auth/login')->withErrors("Your account has been disabled. Please contact us at <a href='mailto:support@aidstream.org'>support@aidstream.org</a> ");
                 }
                 $user = Auth::user();
                 Session::put('role_id', $user->role_id);
