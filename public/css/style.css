@@ -58,7 +58,7 @@ h2 {
   border-radius: 0; }
 
 .navbar-brand {
-  background: url("../images/logo-aidstream.png") no-repeat left;
+  background: url("../images/logo-aidstream.svg") no-repeat left;
   width: 160px;
   height: 42px;
   display: block;
@@ -196,7 +196,7 @@ footer {
       text-indent: -9999px;
       display: block; }
       .social-wrapper li a:before {
-        background: url("../images/social-sprite.png") no-repeat;
+        background: url("../images/social-sprite.svg") no-repeat;
         float: left;
         content: '';
         width: 32px;
@@ -375,11 +375,11 @@ footer {
     .organisation-detail-container .social-logo span:last-child {
       margin-right: 0; }
   .organisation-detail-container .social-logo a.mail {
-    background: url("../images/ic-mail.png") no-repeat left; }
+    background: url("../images/ic-mail.svg") no-repeat left; }
   .organisation-detail-container .social-logo a.web {
-    background: url("../images/ic-web.png") no-repeat left; }
+    background: url("../images/ic-web.svg") no-repeat left; }
   .organisation-detail-container .social-logo a.twitter {
-    background: url("../images/ic-twitter.png") no-repeat left; }
+    background: url("../images/ic-twitter.svg") no-repeat left; }
 .organisation-detail-container .address {
   margin: 10px 0 0;
   display: inline-block;
@@ -388,7 +388,7 @@ footer {
   display: inline-block;
   margin-left: 20px; }
 .organisation-detail-container .address {
-  background: url("../images/ic-location.png") no-repeat left; }
+  background: url("../images/ic-location.svg") no-repeat left; }
 .organisation-detail-container .tel a {
   margin: 10px 0 0;
   display: inline-block;

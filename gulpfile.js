@@ -33,7 +33,7 @@ var js_files = [
     './public/js/jquery.jscrollpane.min.js',
     './public/js/select2.min.js',
     './public/js/jquery.datetimepicker.full.min.js',
-    './public/js/main.js'
+    './public/js/script.js'
 ];
 
 

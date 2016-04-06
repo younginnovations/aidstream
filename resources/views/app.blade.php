@@ -59,7 +59,7 @@
                     </li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                           aria-expanded="false"><span class="avatar-img"><img src="{{url('images/avatar.png')}}"
+                           aria-expanded="false"><span class="avatar-img"><img src="{{url('images/avatar.svg')}}"
                                                                                width="36" height="36"
                                                                                alt="{{Auth::user()->name}}"></span>
                             <span class="caret"></span></a>

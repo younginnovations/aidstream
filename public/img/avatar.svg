@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="36px" height="36px" viewBox="0 0 36 36" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 3.6.1 (26313) - http://www.bohemiancoding.com/sketch -->
+    <title>ic_user</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="UI-elements" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Avatar" transform="translate(-956.000000, -16.000000)">
+            <g id="user_profile" transform="translate(936.000000, 0.000000)">
+                <g id="ic_user" transform="translate(20.000000, 16.000000)">
+                    <path d="M18,34 L18,34 C26.836556,34 34,26.836556 34,18 C34,9.163444 26.836556,2 18,2 C9.163444,2 2,9.163444 2,18 C2,26.836556 9.163444,34 18,34 L18,34 Z M18,36 L18,36 C8.0588745,36 0,27.9411255 0,18 C0,8.0588745 8.0588745,0 18,0 C27.9411255,0 36,8.0588745 36,18 C36,27.9411255 27.9411255,36 18,36 L18,36 Z" id="Oval-81" fill="#484848"></path>
+                    <path d="M6,29.75 C6.14382899,24.7686538 9.14356551,19.7766895 13.369415,17.9540759 C11.9645383,16.5866889 11.087796,14.6488835 11.087796,12.5 C11.087796,8.35786438 14.3453741,5 18.3638002,5 C22.3822264,5 25.6398044,8.35786438 25.6398044,12.5 C25.6398044,14.7688271 24.6624569,16.8023549 23.1180632,18.177651 C27.0854848,20.1078219 29.8617658,24.9624216 30,29.75" id="ic_users" stroke="#484848" stroke-width="2" stroke-linecap="square"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

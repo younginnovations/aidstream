@@ -47,32 +47,15 @@ $font_2: Open-Sans-Light;
 @include font-face($font_2, "../../fonts/opensans-light-webfont", $file-formats: eot svg woff woff2);
 
 $url_1: url(../../images/login-bg.jpg);
-$url_2: url(../../images/logo-text.png);
-$url_3: url(../../images/ic-sprite.png);
-$url_4: url(../../images/ic-status-sprite.png);
-$url_5: url(../../images/ic-no-activity.png);
-$url_6: url(../../images/ic-no-document.png);
-//$url_7: url(../../images/ic-no-user.png);
-$url_8: url(../../images/404page.png);
-$url_9: url(../../images/ic-top-arrow.png);
+$url_2: url(../../images/logo-text.svg);
+$url_3: url(../../images/ic-sprite.svg);
+$url_4: url(../../images/ic-status-sprite.svg);
+$url_5: url(../../images/ic-no-activity.svg);
+$url_6: url(../../images/ic-no-document.svg);
+$url_7: url(../../images/ic-no-user.svg);
+$url_8: url(../../images/404page.svg);
+$url_9: url(../../images/ic-top-arrow.svg);
 $url_10: url(../../images/ic-line-bg.png);
-
-@mixin at2x($path, $ext: "jpg", $w: auto, $h: auto) {
-  $at1x_path: "#{$path}.#{$ext}";
-  $at2x_path: "#{$path}@2x.#{$ext}";
-
-  background-image: url("#{$at1x_path}");
-  background-repeat: no-repeat;
-
-  @media all and (-webkit-min-device-pixel-ratio: 1.5),
-  all and (-o-min-device-pixel-ratio: 3/2),
-  all and (min--moz-device-pixel-ratio: 1.5),
-  all and (min-device-pixel-ratio: 1.5) {
-    background-image: url("#{$at2x_path}");
-    background-repeat: no-repeat;
-    background-size: $w $h;
-  }
-}
 
 html, body {
   height: 100%;
@@ -393,6 +376,7 @@ label {
 
 .login-container {
   @include outer-container(392px);
+  padding-top: 40px;
   clear: both;
   .form-group .btn-link {
     float: right;
@@ -464,7 +448,6 @@ label {
 
 .create-account-wrapper {
   font-size: 15px;
-  margin-bottom: 60px;
   color: $color_white;
   padding: 0 10px;
   text-align: center;
@@ -480,8 +463,7 @@ label {
 .support-desc {
   text-align: center;
   font-size: 13px;
-  color: rgba($color_white, 0.7);
-  max-width: 276px;
+  color: $color_gravel_approx;
   margin: 0 auto;
   float: none;
   clear: both;
@@ -501,6 +483,7 @@ label {
 
 .register-container {
   @include outer-container(814px);
+  padding-top: 40px;
   clear: both;
   .username_text {
     padding: 0;
@@ -569,7 +552,6 @@ label {
 // navbar
 .navbar.navbar-static {
   padding: 14px 30px;
-  position: static;
 }
 
 .navbar-default {
@@ -885,10 +867,8 @@ a.version-text {
       &:before {
         content: "";
         background: $url_3 no-repeat -73px 0;
-        //@include at2x('../../images/ic-sprite', png);
-        //background-position: -73px 0;
-        width: 34px;
-        height: 34px;
+        width: 35px;
+        height: 35px;
         @include position(absolute, 24% auto auto 16px);
       }
       &:hover, &:focus {
@@ -939,21 +919,21 @@ a.version-text {
   }
   .users a {
     &:before {
-      background-position: -73px -188px;
+      background-position: -73px -187px;
     }
     &:hover, &.active, &:focus {
       &:before {
-        background-position: -73px -188px;
+        background-position: -73px -187px;
       }
     }
   }
   .documents a {
     &:before {
-      background-position: -73px -252px;
+      background-position: -73px -251px;
     }
     &:hover, &.active, &:focus {
       &:before {
-        background-position: -73px -252px;
+        background-position: -73px -251px;
       }
     }
   }
@@ -1162,7 +1142,7 @@ $full-sidebar-wrapper-width: 210px;
 
 .view {
   @extend %extend_3;
-  margin: 9px 6px 0 0;
+  margin: 9px 10px 0 0;
   &:hover {
     background-position: -159px -401px;
   }
@@ -1181,7 +1161,7 @@ $full-sidebar-wrapper-width: 210px;
   @extend %extend_3;
   height: 23px;
   width: 14px;
-  margin-right: 6px;
+  margin-right: 10px;
   background-position: -311px -335px;
   &:hover {
     background-position: -304px -393px;
@@ -1260,8 +1240,7 @@ $full-sidebar-wrapper-width: 210px;
 }
 
 .no-user-data {
-  @include at2x('../../images/ic-no-user', png, 203px, 115px);
-  background-position: center 79px;
+  background: rgba($color_gravel_approx, 0.06) $url_7 no-repeat center 79px;
   padding: 204px 0 20px;
 }
 
@@ -1664,7 +1643,7 @@ $element-sidebar-wrapper-width: 283px;
   width: 18px;
   height: 18px;
   &:hover {
-    background-position: -74px -587px;
+    background-position: -84px -587px;
   }
 }
 
@@ -2817,9 +2796,9 @@ div[class*="panel-level-"] .panel > .panel-body {
   position: absolute;
   bottom: 20px;
   span {
-    width: 33px;
-    height: 33px;
-    background: $url_3 no-repeat -634px -643px;
+    width: 34px;
+    height: 34px;
+    background: $url_3 no-repeat -633px -642px;
     display: block;
     text-indent: -9999px;
     position: absolute;
@@ -2886,7 +2865,6 @@ div[class*="panel-level-"] .panel > .panel-body {
   h2 {
     padding-top: 175px;
     background: $url_8 no-repeat top center;
-    background-size: 200px;
     font-size: 22px;
     color: $color_gravel_approx;
   }
@@ -3025,8 +3003,8 @@ label.required::after {
 }
 
 .scrollup {
-  width: 36px;
-  height: 36px;
+  width: 40px;
+  height: 40px;
   text-indent: -9999px;
   background: rgba($color_dodger_blue_approx, 0.5) $url_9 no-repeat center;
   border-radius: 50%;
@@ -3853,6 +3831,10 @@ label.required::after {
       left: 290px;
       bottom: 70px;
     }
+  }
+
+  .login-container,.register-container {
+    padding-top: 80px;
   }
 }
 

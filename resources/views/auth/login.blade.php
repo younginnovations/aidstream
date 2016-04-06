@@ -51,8 +51,6 @@
         </div>
     </nav>
 </header>
-
-
 <div class="login-wrapper">
     {{--<div class="language-select-wrapper">--}}
     {{--<label for="" class="pull-left">Language</label>--}}
@@ -71,7 +69,7 @@
             <div class="col-lg-4 col-md-8 col-md-offset-2 form-body">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <img src="{{url('images/logo.png')}}" alt="">
+                        <img src="{{url('images/logo.svg')}}" alt="">
                     </div>
                     <div class="panel-body">
                         @if (count($errors) > 0)
@@ -133,17 +131,12 @@
             <div class="col-md-12 create-account-wrapper">
                 Don’t have an AidStream account? <a href="{{ url('/auth/register') }}">Create an account</a>
             </div>
-            <div class="col-md-12 logo-text">Aidstream</div>
-            <div class="col-md-12 support-desc">
-                For queries, suggestions, shoot us an email at <a href="mailto:support@aidstream.org">support@aidstream.org</a>
-            </div>
         </div>
     </div>
 </div>
+@include('includes.footer')
 <!-- Scripts -->
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="{{url('/js/jquery.cookie.js')}}"></script>
+<script type="text/javascript" src="{{url('/js/main.min.js')}}"></script>
 <!-- Google Analytics -->
 <script type="text/javascript" src="{{url('/js/ga.js')}}"></script>
 <!-- End Google Analytics -->
