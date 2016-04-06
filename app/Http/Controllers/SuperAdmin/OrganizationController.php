@@ -20,6 +20,7 @@ class OrganizationController extends Controller
      * @var SuperAdminManager
      */
     protected $adminManager;
+
     protected $organizationInfo;
     /**
      * @var SettingsManager
@@ -179,5 +180,19 @@ class OrganizationController extends Controller
         Auth::loginUsingId($adminId);
 
         return redirect()->to(config('app.super_admin_dashboard'));
+    }
+
+    /**
+     * @param $id
+     * @param $status
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function hideOrganization($id, $status)
+    {
+        $organization          = $this->adminManager->getOrganizationById($id);
+        $organization->display = $status;
+        $organization->save();
+
+        return redirect()->back();
     }
 }

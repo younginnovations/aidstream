@@ -6,9 +6,7 @@
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
     <title>Aidstream - Register</title>
     <link rel="shotcut icon" type="image/png" sizes="32*32" href="{{ asset('/images/favicon.png') }}"/>
-    <link href="{{ asset('/css/bootstrap.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('/css/flag-icon.css') }}" rel="stylesheet">
-    <link href="{{ asset('/css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('/css/main.min.css') }}" rel="stylesheet">
     <link href="{{ asset('/css/style.css') }}" rel="stylesheet">
 
     <!-- Fonts -->
@@ -36,7 +34,6 @@
     </script>
 
     @yield('head')
-
 </head>
 <body>
 <header>
@@ -236,6 +233,9 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="{{url('/js/jquery.cookie.js')}}"></script>
+<!-- Google Analytics -->
+<script type="text/javascript" src="{{url('/js/ga.js')}}"></script>
+<!-- End Google Analytics -->
 <script>
     $(document).ready(function () {
         function hamburgerMenu() {
