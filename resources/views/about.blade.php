@@ -7,6 +7,7 @@
     <title>Aidstream</title>
     <link rel="shortcut icon" type="image/png" sizes="16*16" href="images/favicon.png"/>
     <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.min.css">
 </head>
 <body>
 @include('includes.header')
@@ -59,7 +60,6 @@
     </div>
 </section>
 @include('includes.footer')
-<link rel="stylesheet" href="css/style.css">
 <script src="js/jquery.js"></script>
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
 <script>
