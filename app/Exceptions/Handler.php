@@ -53,7 +53,9 @@ class Handler extends ExceptionHandler
 
             return parent::render($request, $e);
         }
-        $this->log->error('Error:' . $e->getMessage());
+
+        $error = $e->getMessage() ? sprintf('Error: %s', $e->getMessage()) : 'UnknownError';
+        $this->log->error($error, ['url' => $request->url(), 'session' => session()->all(), 'trace' => $e->getTraceAsString()]);
         $message = 'Whoops, look like something went wrong.';
 
         return response()->view(sprintf('errors.%s', auth()->check() ? 'errors' : 'noAuthErrors'), compact('message'));
