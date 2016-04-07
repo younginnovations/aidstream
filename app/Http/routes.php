@@ -5,9 +5,12 @@ if (isset($language)) {
     App::setLocale($language);
 }
 
-$router->get('/public/files/xml/{file}', function ($file) {
-    return redirect('/files/xml/' . $file);
-});
+$router->get(
+    '/public/files/xml/{file}',
+    function ($file) {
+        return redirect('/files/xml/' . $file);
+    }
+);
 
 $router->get('/', 'HomeController@index');
 $router->get('home', 'HomeController@index');
@@ -28,6 +31,14 @@ $router->controllers(
     [
         'auth'     => 'Auth\AuthController',
         'password' => 'Auth\PasswordController',
+    ]
+);
+
+$router->post(
+    'check-organization-user-identifier',
+    [
+        'as'   => 'check-organization-user-identifier',
+        'uses' => 'Auth\AuthController@checkUserIdentifier'
     ]
 );
 
