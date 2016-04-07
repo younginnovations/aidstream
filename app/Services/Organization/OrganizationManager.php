@@ -167,4 +167,9 @@ class OrganizationManager
     {
         return $this->repo->publishToRegistry($organization, $settings);
     }
+
+    public function saveOrganizationPublishedFiles($filename, $orgId)
+    {
+        return $this->repo->saveOrganizationPublishedFiles($filename, $orgId);
+    }
 }

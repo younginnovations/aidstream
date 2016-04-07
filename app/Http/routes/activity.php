@@ -77,5 +77,12 @@ $router->group(
                 'uses' => 'ActivityController@duplicateActivityAction'
             ]
         );
+        $router->post(
+            'publish/activity',
+            [
+                'as'   => 'activity.bulk-publish',
+                'uses' => 'ActivityController@activityBulkPublishToRegistry'
+            ]
+        );
     }
 );
