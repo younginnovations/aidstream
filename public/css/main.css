@@ -2805,7 +2805,6 @@ body .ui-tooltip {
 	border: 1px solid #666;
 	}
 
-@import url(https://fonts.googleapis.com/css?family=Bree+Serif);
 html {
   -webkit-box-sizing: border-box;
      -moz-box-sizing: border-box;
@@ -3104,6 +3103,9 @@ select.form-control, form .select2-container {
 
 .has-error .select2-container, .has-error textarea {
   border: 1px solid #A94441 !important; }
+
+button, input, input[type=button], input[type=reset], input[type=submit], label, select {
+  font-family: Open-Sans-Regular; }
 
 .btn-primary {
   border-color: transparent; }
@@ -3547,9 +3549,9 @@ label {
   .version:hover .old-version, .version:hover .new-version {
     display: block; }
 
-a.version-text {
-  padding: 7px 10px;
-  line-height: normal !important; }
+.navbar-admin-dropdown .dropdown-menu li a.version-text {
+  padding: 0 !important;
+  line-height: 30px !important; }
 
 .version-text {
   -webkit-border-radius: 17px;
@@ -3609,13 +3611,28 @@ a.version-text {
   .old-version a {
     color: inherit;
     text-decoration: none !important;
-    padding: 12px 0;
+    padding: 12px 0 !important;
+    line-height: normal !important;
     display: block;
-    color: #fff; }
+    color: #fff !important; }
     .old-version a:hover:before {
-      border-bottom-color: #484848; }
+      border-bottom-color: #484848 !important; }
   .old-version:before {
     border-bottom-color: #00A8FF !important; }
+
+.navbar-admin-dropdown .dropdown-menu li .old-version:hover {
+  background: #484848 !important; }
+  .navbar-admin-dropdown .dropdown-menu li .old-version:hover:before {
+    border-bottom-color: #484848 !important; }
+
+.navbar-admin-dropdown .dropdown-menu li .old-version a {
+  line-height: normal !important;
+  background: transparent !important; }
+
+.navbar-admin-dropdown .dropdown-menu li .old a.version-text:hover {
+  text-decoration: none;
+  background: transparent !important;
+  color: #777 !important; }
 
 .new-version {
   background: #fff;
@@ -3626,6 +3643,9 @@ a.version-text {
     -webkit-filter: drop-shadow(0 -2px 7px rgba(0, 0, 0, 0.5));
             filter: drop-shadow(0 -2px 7px rgba(0, 0, 0, 0.5));
     margin-top: -18px; }
+
+.navbar-default .navbar-nav .open .dropdown-menu > li > a {
+  color: #777; }
 
 .avatar-img + .caret {
   margin-top: -30px;
@@ -3770,6 +3790,18 @@ a.version-text {
   .sidebar-wrapper .settings a:hover:before, .sidebar-wrapper .settings a.active:before, .sidebar-wrapper .settings a:focus:before {
     background-position: -73px -380px; }
 
+.sidebar-wrapper .jspScrollable, .sidebar-wrapper .jspContainer {
+  width: auto !important; }
+
+.sidebar-wrapper .jspDrag {
+  display: none; }
+
+.sidebar-wrapper:not(.touch-sidebar-wrapper) .jspPane {
+  width: 210px !important; }
+
+.touch-sidebar-wrapper .jspScrollable, .touch-sidebar-wrapper .jspContainer {
+  width: 62px !important; }
+
 .sidebar-wrapper + .content-wrapper {
   margin-left: 62px; }
 
@@ -3784,6 +3816,19 @@ a.version-text {
     opacity: 0; }
   .full-sidebar-wrapper .support p {
     opacity: 1; }
+
+.touch-sidebar-wrapper + .content-wrapper {
+  width: -webkit-calc(100% - 62px);
+  width: -moz-calc(100% - 62px);
+  width: calc(100% - 62px);
+  margin-left: 62px !important; }
+
+.touch-sidebar-wrapper .support p {
+  opacity: 0 !important; }
+
+.touch-sidebar-wrapper .support span {
+  opacity: 1 !important;
+  display: block; }
 
 .breadcrumb-wrapper {
   padding: 26px 37px 20px;
@@ -3916,7 +3961,7 @@ a.version-text {
   .published:before {
     background: #52cc88; }
 
-.view, .delete, .edit, .duplicate, .check-status, .masquerade {
+.view, .delete, .display, .edit, .duplicate, .check-status, .masquerade {
   float: left;
   text-indent: -9999px;
   width: 18px;
@@ -3934,10 +3979,23 @@ a.version-text {
   .delete:hover {
     background-position: -230px -390px; }
 
+.display {
+  height: 26px;
+  width: 29px;
+  margin-right: 4px; }
+  .display.Yes {
+    background-position: -500px -661px; }
+    .display.Yes:hover {
+      background-position: -550px -661px; }
+  .display.No {
+    background-position: -550px -661px; }
+    .display.No:hover {
+      background-position: -500px -661px; }
+
 .edit {
-  height: 23px;
-  width: 14px;
-  margin-right: 10px;
+  height: 27px;
+  width: 17px;
+  margin-right: 2px;
   background-position: -311px -335px; }
   .edit:hover {
     background-position: -304px -393px; }
@@ -4732,7 +4790,8 @@ form > .add_to_collection[data-collection="legacy_data"] {
   border: 0;
   padding-bottom: 0; }
   .panel-upload .create-form > form > .form-group {
-    padding-right: 20px; }
+    padding-right: 20px;
+    padding-left: 20px; }
 
 .panel-upload form {
   overflow: hidden; }
@@ -4751,8 +4810,8 @@ form > .add_to_collection[data-collection="legacy_data"] {
     display: inline-block;
     vertical-align: middle;
     float: none;
-    font-size: 14px;
-    width: 292px; }
+    font-size: 13px;
+    width: 260px; }
   .download-transaction-wrap > div {
     width: -webkit-calc(100% - 370px);
     width: -moz-calc(100% - 370px);
@@ -4790,7 +4849,8 @@ form > .add_to_collection[data-collection="legacy_data"] {
 
 .back-to-list {
   font-size: 14px;
-  display: block; }
+  display: block;
+  min-width: 140px; }
   .back-to-list span {
     font-style: normal;
     color: inherit;
@@ -4802,8 +4862,8 @@ form > .add_to_collection[data-collection="legacy_data"] {
   font-size: 14px;
   margin-top: 5px; }
 
-.panel-download {
-  padding: 0 36px !important; }
+.content-wrapper .panel-body.panel-download {
+  padding: 0 36px; }
 
 .download-wrapper {
   display: -webkit-box;
@@ -4917,8 +4977,16 @@ form > .add_to_collection[data-collection="legacy_data"] {
 
 .panel-sub-heading {
   margin: 22px 0 10px;
-  padding-left: 40px;
-  text-transform: uppercase; }
+  padding-left: 36px;
+  text-transform: uppercase;
+  font-family: Open-Sans-Regular; }
+
+.panel-sub-heading + .panel-body {
+  clear: both; }
+
+.published-wrapper .panel-sub-heading {
+  float: left;
+  margin-top: 26px; }
 
 .organization-logo {
   float: left;
@@ -5386,7 +5454,7 @@ div[class*="panel-level-"] .panel > .panel-body {
   width: calc(100% - 267px); }
 
 .organization_actions a {
-  margin-left: 10px; }
+  margin-left: 6px; }
   .organization_actions a:first-child {
     margin-left: 0; }
 
@@ -5523,9 +5591,28 @@ label.required::after {
 .jspVerticalBar .jspArrowUp {
   display: none; }
 
-.touch-sidebar-wrapper li {
-  width: 62px;
+.touch-sidebar-wrapper, .full-sidebar.wrapper.touch-sidebar-wrapper, .touch-sidebar-wrapper li {
+  width: 62px !important;
   overflow: hidden; }
+
+.touch-sidebar-wrapper:not(.full-sidebar-wrapper) .jspVerticalBar .jspArrow {
+  background: #fff;
+  height: 20px !important; }
+  .touch-sidebar-wrapper:not(.full-sidebar-wrapper) .jspVerticalBar .jspArrow:before {
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 7px solid #00aaff;
+    width: 4px;
+    right: 27px;
+    top: 7px;
+    height: 16px;
+    left: auto !important; }
+
+.publish-btn input {
+  min-width: 230px; }
+
+.upload-activity-wrapper .element-panel-heading {
+  padding-right: 36px; }
 
 @media all and (max-width: 1030px) {
   .activity-status {
@@ -5573,7 +5660,10 @@ label.required::after {
   .element-panel-heading form {
     margin-right: 40px; }
   .scroll-top {
-    right: 30px; } }
+    right: 30px; }
+  .element-content-wrapper {
+    padding-left: 0;
+    padding-right: 0; } }
 
 @media all and (max-width: 992px) {
   .element-panel-heading {
@@ -5591,7 +5681,7 @@ label.required::after {
     width: 100%; } }
 
 @media all and (max-width: 767px) {
-  div:not(.xdsoft_calendar) > table, div:not(.xdsoft_calendar) > table thead, div:not(.xdsoft_calendar) > table tbody, div:not(.xdsoft_calendar) > table th, div:not(.xdsoft_calendar) > table td, div:not(.xdsoft_calendar) > table tr {
+  *:not(.xdsoft_calendar) > table, *:not(.xdsoft_calendar) > table thead, *:not(.xdsoft_calendar) > table tbody, *:not(.xdsoft_calendar) > table th, *:not(.xdsoft_calendar) > table td, *:not(.xdsoft_calendar) > table tr {
     display: block; }
   /* Hide table headers (but not display: none;, for accessibility) */
   thead tr {
@@ -5673,24 +5763,22 @@ label.required::after {
   .published-wrapper td:nth-of-type(3):before {
     content: "Published Date"; }
   .published-wrapper td:nth-of-type(4):before {
-    content: "Activity Identifier"; }
-  .published-wrapper td:nth-of-type(5):before {
     content: "Registered in IATI"; }
-  .published-wrapper td:nth-of-type(6):before {
+  .published-wrapper td:nth-of-type(5):before {
     content: "Preview as"; }
+  .published-wrapper td:nth-of-type(6):before {
+    content: "Action"; }
   .organization-wrapper td:nth-of-type(1):before {
     content: "S.N."; }
   .organization-wrapper td:nth-of-type(2):before {
     content: "Organization Name"; }
   .organization-wrapper td:nth-of-type(3):before {
-    content: "Published Date"; }
+    content: "Version"; }
   .organization-wrapper td:nth-of-type(4):before {
     content: "Users"; }
   .organization-wrapper td:nth-of-type(5):before {
     content: "Activities"; }
   .organization-wrapper td:nth-of-type(6):before {
-    content: "Status"; }
-  .organization-wrapper td:nth-of-type(7):before {
     content: "Action"; }
   .group-organization-wrapper td:nth-of-type(1):before {
     content: "S.N."; }
@@ -5735,6 +5823,10 @@ label.required::after {
   .create-form, .create-activity-form, .content-wrapper .panel-profile, .panel-associated-organization {
     padding-left: 14px;
     padding-right: 14px; }
+  .upload-activity-wrapper .element-panel-heading {
+    padding-right: 14px; }
+  .element-content-wrapper {
+    padding-left: 0; }
   .content-wrapper .panel-profile .username_text {
     padding-left: 0; }
   .change-activity-form > form > .form-group {
@@ -5788,6 +5880,9 @@ label.required::after {
     padding-top: 20px; }
   .create-form .btn-form {
     left: 14px; }
+  .panel-sub-heading {
+    padding-left: 14px;
+    padding-right: 14px; }
   #change_status {
     float: none !important;
     margin-top: 20px;
@@ -5816,7 +5911,9 @@ label.required::after {
   .activity-status-verified ol li > span {
     color: #4f7286; }
   .activity-status-published ol li > span {
-    color: #52cc88; } }
+    color: #52cc88; }
+  .transaction-show .element-show .edit-value {
+    margin-right: 20px; } }
 
 @media all and (max-width: 640px) {
   .create-form > form > .collection_form > .form-group {
@@ -5846,13 +5943,16 @@ label.required::after {
     margin-top: 8px;
     max-width: 160px; }
   .activity-file-choose {
-    width: 94%; }
+    width: 94%;
+    padding-left: 20px !important; }
     .activity-file-choose + button {
       margin-top: 34px; }
   .navbar.navbar-static {
     padding: 14px 16px; }
     .navbar.navbar-static .navbar-header {
-      float: none; } }
+      float: none; }
+  .panel-sub-heading + div {
+    clear: both; } }
 
 .element-panel-heading-info .last-updated-date {
   display: block;
@@ -5891,8 +5991,7 @@ label.required::after {
     width: 92%; }
   .create-form .btn-cancel, .create-activity-form .btn-cancel {
     left: -5px;
-    bottom: 0;
-    margin-left: 0; }
+    bottom: 0; }
   .download-transaction-wrap > a, .create-activity-form button {
     width: 91%; }
   .panel-upload button {
@@ -5933,7 +6032,10 @@ label.required::after {
     display: inline-block;
     vertical-align: top;
     width: 50%;
-    margin-right: -2px; } }
+    margin-right: -2px; }
+  .publish-btn {
+    float: right;
+    margin-top: -50px; } }
 
 @media all and (min-width: 768px) {
   .create-form > form > .collection_form > .form-group > .collection_form .form-group > .form-group {
@@ -5981,7 +6083,9 @@ label.required::after {
     left: 290px;
     bottom: 70px; }
   .login-container, .register-container {
-    padding-top: 80px; } }
+    padding-top: 80px; }
+  .publish-btn {
+    margin-right: 20px; } }
 
 @media all and (min-width: 1001px) {
   .element-sidebar-wrapper {
@@ -6008,10 +6112,10 @@ label.required::after {
     width: 267px !important; }
 
 @media all and (max-width: 1200px) {
-  .sidebar-wrapper:not(.full-sidebar-wrapper) .jspVerticalBar .jspArrow {
+  .sidebar-wrapper:not(.full-sidebar-wrapper) .jspVerticalBar .jspArrow, .touch-sidebar-wrapper .jspVerticalBar .jspArrow {
     background: #fff;
     height: 20px !important; }
-    .sidebar-wrapper:not(.full-sidebar-wrapper) .jspVerticalBar .jspArrow:before {
+    .sidebar-wrapper:not(.full-sidebar-wrapper) .jspVerticalBar .jspArrow:before, .touch-sidebar-wrapper .jspVerticalBar .jspArrow:before {
       border-left: 5px solid transparent;
       border-right: 5px solid transparent;
       border-top: 7px solid #00aaff;
@@ -6027,9 +6131,9 @@ label.required::after {
     margin-top: 35px; }
     .settings-checkall-wrapper > .collection_form > .form-group > .form-group:nth-child(-n+4), .checkall-wrapper .form-group:nth-child(3) > .form-group > .form-group:nth-child(-n+4) {
       margin-top: 0; }
-  .sidebar-wrapper {
+  .sidebar-wrapper:not(.touch-sidebar-wrapper) {
     width: 210px !important; }
-    .sidebar-wrapper + .content-wrapper {
+    .sidebar-wrapper:not(.touch-sidebar-wrapper) + .content-wrapper {
       width: -webkit-calc(100% - 210px) !important;
       width: -moz-calc(100% - 210px) !important;
       width: calc(100% - 210px) !important;
@@ -6048,8 +6152,30 @@ label.required::after {
       color: #00A8FF; }
     .jspVerticalBar .jspArrow:hover {
       background: #e8e8e8; }
+  .touch-sidebar-wrapper .jspVerticalBar .jspArrow {
+    background: #fff;
+    height: 20px !important; }
+  .touch-sidebar-wrapper .jspVerticalBar .jspArrow:before {
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 7px solid #0af;
+    width: 4px;
+    right: 27px;
+    top: 7px;
+    height: 16px;
+    left: auto !important; }
   .element-sidebar-wrapper .jspVerticalBar .jspArrow {
-    width: 266px; } }
+    width: 266px; }
+  .touch-sidebar-wrapper {
+    width: 62px !important; }
+  .touch-sidebar-wrapper + .content-wrapper {
+    width: -webkit-calc(100% - 62px) !important;
+    width: -moz-calc(100% - 62px) !important;
+    width: calc(100% - 62px) !important;
+    margin-left: 62px !important; }
+  .touch-sidebar-wrapper, .touch-sidebar-wrapper li, .touch-sidebar-wrapper .jspPane {
+    width: 62px !important;
+    overflow: hidden; } }
 
 @media all and (min-width: 1340px) {
   .settings-checkall-wrapper > .collection_form > .form-group > .form-group, .checkall-wrapper .form-group:nth-child(3) > .form-group > .form-group {
