@@ -310,7 +310,7 @@ class ActivityController extends Controller
      */
     public function deletePublishedFile($id)
     {
-        if (!$this->currentUserIsAuthorizedForActivityToDelete($id)) {
+        if (!$this->currentUserIsAuthorizedToDelete($id)) {
             return redirect()->route('activity.index')->withResponse($this->getNoPrivilegesMessage());
         }
 
