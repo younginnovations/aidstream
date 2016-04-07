@@ -20,9 +20,7 @@
                                     <th>Version</th>
                                     <th>Users</th>
                                     <th>Activities</th>
-                                    <th>Status</th>
-                                    <th>Display</th>
-                                    <th width="150px">Action</th>
+                                    <th width="180px">Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -40,13 +38,10 @@
                                         <td>{{ $organization->settings ? $organization->settings->version : '' }}</td>
                                         <td>{{ count($organization->users) }}</td>
                                         <td>{{ count($organization->activities) }}</td>
-                                        <td>{{ $organization->orgStatus }}</td>
-                                        <td>
-                                            <a href="{{ route('admin.hide-organization', [$organization->id,($organization->display) ? 0 : 1 ]) }}" title="{{($organization->display) ? 'Hide' : 'Unhide'}}">{{($organization->display) ? 'Yes' : 'No'}}</a>
-                                        </td>
                                         <td>
                                             <div class="organization_actions">
                                                 @if(Auth::user()->isSuperAdmin())
+                                                    <a href="{{ route('admin.hide-organization', [$organization->id,($organization->display) ? 0 : 1 ]) }}" title="{{($organization->display) ? 'Hide' : 'Show'}}" class="display {{($organization->display) ? 'Yes' : 'No'}}">{{($organization->display) ? 'Yes' : 'No'}}</a>
                                                     <a href="{{ route('admin.edit-organization', $organization->id)}}"
                                                        class="edit" title="Edit">Edit</a>
                                                     <a href="{{ route('admin.change-organization-status', [$organization->id, ($organization->status) ? 0 : 1]) }}" class="check-status {{($organization->status) ? 'Disable' : 'Enable'}}" title="{{($organization->status) ? 'Disable' : 'Enable'}}">{{($organization->status == 1) ? 'Disable' : 'Enable'}}</a>
