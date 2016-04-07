@@ -7,7 +7,7 @@
     <div class="container main-container">
         <div class="row">
             @include('includes.side_bar_menu')
-            <div class="col-xs-9 col-md-9 col-lg-9 content-wrapper">
+            <div class="col-xs-9 col-md-9 col-lg-9 content-wrapper upload-activity-wrapper">
                 @include('includes.response')
                 <div class="element-panel-heading">
                     <div>
