@@ -45,7 +45,7 @@ class AdminController extends Controller
      */
     function __construct(Session $session, User $user, OrganizationManager $organizationManager, DbLogger $dbLogger)
     {
-        $this->middleware('auth');
+        $this->middleware('auth.superAdmin');
         $this->session             = $session;
         $this->org_id              = $this->session->get('org_id');
         $this->user                = $user;
@@ -130,7 +130,7 @@ class AdminController extends Controller
     {
         $user     = $this->user->findOrFail($userId);
         $response = ($user->delete($user)) ? ['type' => 'success', 'code' => ['deleted', ['name' => 'User']]] : ['type' => 'danger', 'code' => ['delete_failed', ['name' => 'user']]];
-        $this->dbLogger->activity("admin.user_deleted", ['orgId' => $this->org_id , 'userId' => $userId]);
+        $this->dbLogger->activity("admin.user_deleted", ['orgId' => $this->org_id, 'userId' => $userId]);
 
         return redirect()->back()->withResponse($response);
     }
@@ -187,7 +187,7 @@ class AdminController extends Controller
             'type' => 'danger',
             'code' => ['update_failed', ['name' => 'User Permission']]
         ];
-        $this->dbLogger->activity("admin.permission_updated", ['orgId' => $this->org_id , 'userId' => $userId]);
+        $this->dbLogger->activity("admin.permission_updated", ['orgId' => $this->org_id, 'userId' => $userId]);
 
         return redirect()->route('admin.list-users')->withResponse($response);
 
