@@ -71,7 +71,7 @@
             <div class="col-lg-4 col-md-8 col-md-offset-2 form-body">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <img src="{{url('images/logo.png')}}" alt="">
+                        <img src="{{url('images/logo.svg')}}" alt="">
 
                         <div class="panel-title">Reset password</div>
                     </div>
@@ -119,10 +119,9 @@
         </div>
     </div>
 </div>
+@include('includes.footer')
 <!-- Scripts -->
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="{{url('/js/jquery.cookie.js')}}"></script>
+<script type="text/javascript" src="{{url('/js/main.min.js')}}"></script>
 <!-- Google Analytics -->
 <script type="text/javascript" src="{{url('/js/ga.js')}}"></script>
 <!-- End Google Analytics -->

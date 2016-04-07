@@ -28,7 +28,7 @@
         </div>
         <div class="footer-logo">
             <div class="col-md-12 text-center">
-                <a href="{{ url('/') }}"><img src="images/logo-text.png" alt=""></a>
+                <a href="{{ url('/') }}"><img src="/images/logo-aidstream.svg" alt=""></a>
             </div>
         </div>
     </div>
