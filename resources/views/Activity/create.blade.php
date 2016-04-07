@@ -10,7 +10,7 @@
                 @include('includes.response')
                 @include('includes.breadcrumb')
                 <div class="panel panel-default panel-create">
-                    <div class="panel-content-heading panel-title-heading">{{($duplicate) ? 'Duplicate Activity' : 'Add Activity'}}</div>
+                    <div class="panel-content-heading panel-title-heading"><div>{{($duplicate) ? 'Duplicate Activity' : 'Add Activity'}}</div></div>
                     <div class="panel-body">
                         <div class="create-activity-form">
                             {!! form_start($form) !!}
