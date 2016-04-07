@@ -18,9 +18,7 @@ class AuthServiceProvider extends ServiceProvider
      *
      * @var array
      */
-    protected $policies = [
-        'App\Model' => 'App\Policies\ModelPolicy',
-    ];
+    protected $policies = [];
 
     /**
      * Register any application authentication / authorization services.
@@ -30,11 +28,27 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot(GateContract $gate)
     {
-        parent::registerPolicies($gate);
+        $this->registerPolicies($gate);
+
+        $gate->define('ownership', function ($user, $activity) {
+            return $this->checkUserOwnershipFor($user, $activity);
+        });
+
+        $gate->define('create', function ($user, $organization) {
+            return $user->org_id == $organization->id;
+        });
+
+        $gate->define('update-status', function ($user, $activity) {
+            if ($user->isAdmin() || $user->isSuperAdmin()) {
+                return true;
+            }
+
+            return $this->checkUserOwnershipFor($user, $activity);
+        });
 
         $gate->before(
-            function ($user, $ability) {
-                if ($user->isSuperAdmin() || $user->isAdmin()) {
+            function ($user, $ability, $activity) {
+                if ($user->isAdmin() || $user->isSuperAdmin()) {
                     return true;
                 }
             }
@@ -48,6 +62,17 @@ class AuthServiceProvider extends ServiceProvider
                 }
             );
         }
+    }
+
+    /**
+     * Check the ownership of an Activity by Organization's user.
+     * @param $user
+     * @param $activity
+     * @return bool
+     */
+    protected function checkUserOwnershipFor($user, $activity)
+    {
+        return ($user->org_id == $activity->organization_id);
     }
 }
 
