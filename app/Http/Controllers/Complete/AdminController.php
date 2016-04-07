@@ -45,7 +45,7 @@ class AdminController extends Controller
      */
     function __construct(Session $session, User $user, OrganizationManager $organizationManager, DbLogger $dbLogger)
     {
-        $this->middleware('auth.superAdmin');
+        $this->middleware('auth');
         $this->session             = $session;
         $this->org_id              = $this->session->get('org_id');
         $this->user                = $user;

@@ -1,5 +1,4 @@
 @import "plugins/plugins-dir";
-@import url(https://fonts.googleapis.com/css?family=Bree+Serif);
 
 //colors
 
@@ -138,6 +137,10 @@ select.form-control, form .select2-container {
 
 .has-error .select2-container, .has-error textarea {
   border: 1px solid #A94441 !important;
+}
+
+button, input, input[type=button], input[type=reset], input[type=submit], label, select {
+  font-family: $font_0;
 }
 
 .btn-primary {
@@ -475,7 +478,7 @@ label {
   font: 32px $font_2;
   padding-top: 20px;
   & + p {
-    color: rgba($color_gravel_approx,0.8);
+    color: rgba($color_gravel_approx, 0.8);
     padding: 20px 33px 0;
     margin-bottom: -10px;
   }
@@ -959,9 +962,24 @@ a.version-text {
   }
 }
 
-//.sidebar-wrapper .mCSB_container {
-//  height: 88vh;
-//}
+.sidebar-wrapper {
+  .jspScrollable, .jspContainer {
+    width: auto !important;
+  }
+  .jspDrag {
+    display: none;
+  }
+}
+
+.sidebar-wrapper .jspPane {
+  width: 210px!important;
+}
+
+.touch-sidebar-wrapper {
+  .jspScrollable, .jspContainer {
+    width: 62px !important;
+  }
+}
 
 .sidebar-wrapper + .content-wrapper {
   margin-left: 62px;
@@ -984,6 +1002,20 @@ $full-sidebar-wrapper-width: 210px;
   }
 }
 
+
+.touch-sidebar-wrapper+.content-wrapper {
+  width: calc(100% - 62px );
+  margin-left: 62px!important;
+}
+
+.touch-sidebar-wrapper .support p {
+  opacity: 0!important;
+}
+
+.touch-sidebar-wrapper .support span {
+  opacity: 1!important;
+  display: block;
+}
 // breadcrumb
 .breadcrumb-wrapper {
   padding: 26px 37px 20px;
@@ -1157,11 +1189,30 @@ $full-sidebar-wrapper-width: 210px;
   }
 }
 
+.display {
+  @extend %extend_3;
+  height: 26px;
+  width: 29px;
+  margin-right: 4px;
+  &.Yes {
+    background-position: -500px -661px;
+    &:hover {
+      background-position: -550px -661px;
+    }
+  }
+  &.No {
+    background-position: -550px -661px;
+    &:hover {
+      background-position: -500px -661px;
+    }
+  }
+}
+
 .edit {
   @extend %extend_3;
-  height: 23px;
-  width: 14px;
-  margin-right: 10px;
+  height: 27px;
+  width: 17px;
+  margin-right: 2px;
   background-position: -311px -335px;
   &:hover {
     background-position: -304px -393px;
@@ -2254,8 +2305,8 @@ form > .add_to_collection[data-collection="legacy_data"] {
 
 // download
 
-.panel-download {
-  padding: 0 36px !important;
+.content-wrapper .panel-body.panel-download {
+  padding: 0 36px;
 }
 
 .download-wrapper {
@@ -2356,8 +2407,18 @@ form > .add_to_collection[data-collection="legacy_data"] {
 
 .panel-sub-heading {
   margin: 22px 0 10px;
-  padding-left: 40px;
+  padding-left: 36px;
   text-transform: uppercase;
+  font-family: $font_0;
+}
+
+.panel-sub-heading + .panel-body {
+  clear: both;
+}
+
+.published-wrapper .panel-sub-heading {
+  float: left;
+  margin-top: 26px;
 }
 
 $organization-logo-width: 124px;
@@ -2922,7 +2983,7 @@ div[class*="panel-level-"] .panel > .panel-body {
 }
 
 .organization_actions a {
-  margin-left: 10px;
+  margin-left: 6px;
   &:first-child {
     margin-left: 0;
   }
@@ -3081,7 +3142,6 @@ label.required::after {
   }
 }
 
-
 .sidebar-wrapper .jspVerticalBar .jspArrow:before {
   left: 47px;
 }
@@ -3090,9 +3150,28 @@ label.required::after {
   display: none;
 }
 
-.touch-sidebar-wrapper li {
-  width: 62px;
+.touch-sidebar-wrapper,.full-sidebar.wrapper.touch-sidebar-wrapper,.touch-sidebar-wrapper li {
+  width: 62px!important;
   overflow: hidden;
+}
+
+.touch-sidebar-wrapper:not(.full-sidebar-wrapper) .jspVerticalBar .jspArrow {
+  background: #fff;
+  height: 20px !important;
+  &:before {
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 7px solid #00aaff;
+    width: 4px;
+    right: 27px;
+    top: 7px;
+    height: 16px;
+    left: auto !important;
+  }
+}
+
+.publish-btn input {
+  min-width: 230px;
 }
 
 @media all and (max-width: 1030px) {
@@ -3118,7 +3197,7 @@ label.required::after {
 
   .element-sidebar-wrapper {
     display: none;
-    background-color: $color_white!important;
+    background-color: $color_white !important;
   }
 
   .element-sidebar-dropdown {
@@ -3186,7 +3265,7 @@ label.required::after {
 
 @media all and (max-width: 767px) {
 
-  div:not(.xdsoft_calendar) {
+  *:not(.xdsoft_calendar) {
     > table, > table thead, > table tbody, > table th, > table td, > table tr {
       display: block;
     }
@@ -3306,13 +3385,13 @@ label.required::after {
     content: "Published Date";
   }
   .published-wrapper td:nth-of-type(4):before {
-    content: "Activity Identifier";
-  }
-  .published-wrapper td:nth-of-type(5):before {
     content: "Registered in IATI";
   }
-  .published-wrapper td:nth-of-type(6):before {
+  .published-wrapper td:nth-of-type(5):before {
     content: "Preview as";
+  }
+  .published-wrapper td:nth-of-type(6):before {
+    content: "Action";
   }
 
   .organization-wrapper td:nth-of-type(1):before {
@@ -3322,7 +3401,7 @@ label.required::after {
     content: "Organization Name";
   }
   .organization-wrapper td:nth-of-type(3):before {
-    content: "Published Date";
+    content: "Version";
   }
   .organization-wrapper td:nth-of-type(4):before {
     content: "Users";
@@ -3331,9 +3410,6 @@ label.required::after {
     content: "Activities";
   }
   .organization-wrapper td:nth-of-type(6):before {
-    content: "Status";
-  }
-  .organization-wrapper td:nth-of-type(7):before {
     content: "Action";
   }
   .group-organization-wrapper td:nth-of-type(1):before {
@@ -3412,6 +3488,10 @@ label.required::after {
   .create-form, .create-activity-form, .content-wrapper .panel-profile, .panel-associated-organization {
     padding-left: 14px;
     padding-right: 14px;
+  }
+
+  .element-content-wrapper {
+    padding-left: 0;
   }
 
   .content-wrapper .panel-profile {
@@ -3520,6 +3600,11 @@ label.required::after {
     left: 14px;
   }
 
+  .panel-sub-heading {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
   #change_status {
     float: none !important;
     margin-top: 20px;
@@ -3626,6 +3711,10 @@ label.required::after {
       float: none;
     }
   }
+
+  .panel-sub-heading + div {
+    clear: both;
+  }
 }
 
 .element-panel-heading-info .last-updated-date {
@@ -3689,7 +3778,6 @@ label.required::after {
   .create-form .btn-cancel, .create-activity-form .btn-cancel {
     left: -5px;
     bottom: 0;
-    margin-left: 0;
   }
 
   .download-transaction-wrap > a, .create-activity-form button {
@@ -3745,7 +3833,6 @@ label.required::after {
 }
 
 @media all and (min-width: 501px) {
-  //NirajanCss
   .width-491 {
     display: none;
   }
@@ -3757,6 +3844,11 @@ label.required::after {
     vertical-align: top;
     width: 50%;
     margin-right: -2px;
+  }
+
+  .publish-btn {
+    float: right;
+    margin-top: -50px;
   }
 }
 
@@ -3833,8 +3925,12 @@ label.required::after {
     }
   }
 
-  .login-container,.register-container {
+  .login-container, .register-container {
     padding-top: 80px;
+  }
+
+  .publish-btn {
+    margin-right: 20px;
   }
 }
 
@@ -3862,15 +3958,15 @@ label.required::after {
   }
 }
 
-.organization-wrapper+.element-menu-wrapper {
+.organization-wrapper + .element-menu-wrapper {
   width: 267px;
 }
 
-.organization-wrapper+.element-menu-wrapper .element-sidebar-wrapper {
+.organization-wrapper + .element-menu-wrapper .element-sidebar-wrapper {
   width: 267px;
   background: $url_10 repeat-y 0;
   .jspPane {
-    width: 267px!important;
+    width: 267px !important;
   }
 }
 
@@ -3900,7 +3996,7 @@ label.required::after {
     }
   }
 
-  .sidebar-wrapper {
+  .sidebar-wrapper:not(.touch-sidebar-wrapper) {
     width: 210px !important;
     & + .content-wrapper {
       width: calc(100% - 210px) !important;
@@ -3925,9 +4021,6 @@ label.required::after {
   .jspVerticalBar .jspArrow {
     background: $color_concrete;
     width: 210px;
-    //&:before {
-    //  left: 96px;
-    //}
     &:before {
       color: $color_dodger_blue_approx;
     }
@@ -3936,8 +4029,38 @@ label.required::after {
     }
   }
 
+  .touch-sidebar-wrapper .jspVerticalBar .jspArrow {
+    background: #fff;
+    height: 20px!important;
+  }
+
+  .touch-sidebar-wrapper .jspVerticalBar .jspArrow:before {
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 7px solid #0af;
+    width: 4px;
+    right: 27px;
+    top: 7px;
+    height: 16px;
+    left: auto!important;
+  }
+
   .element-sidebar-wrapper .jspVerticalBar .jspArrow {
     width: 266px;
+  }
+
+  .touch-sidebar-wrapper {
+    width: 62px!important;
+  }
+
+  .touch-sidebar-wrapper+.content-wrapper {
+    width: calc(100% - 62px)!important;
+    margin-left: 62px!important;
+  }
+
+  .touch-sidebar-wrapper,.touch-sidebar-wrapper li,.touch-sidebar-wrapper .jspPane {
+    width: 62px!important;
+    overflow: hidden;
   }
 }
 
@@ -4026,6 +4149,7 @@ label.required::after {
 .document-wrapper td a {
   word-wrap: break-word;
 }
+
 
 
 
