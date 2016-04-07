@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport'/>
     <title>Aidstream - Register</title>
     <link rel="shotcut icon" type="image/png" sizes="32*32" href="{{ asset('/images/favicon.png') }}"/>
     <link href="{{ asset('/css/main.min.css') }}" rel="stylesheet">
@@ -93,7 +93,7 @@
                         @if (count($errors) > 0)
                             <div class="alert alert-danger">
                                 <span>
-                                  <strong>Whoops!</strong> There were some problems with your input.
+                                  There were some problems with your input.
                                   <ul>
                                       @foreach ($errors->all() as $error)
                                           <li>{{ $error }}</li>
@@ -129,8 +129,8 @@
 
                                         <div class="col-xs-12 col-md-12">
                                             <input type="text" class="form-control noSpace" name="organization_user_identifier" value="{{ old('organization_user_identifier') }}" required="required">
-                                            <span class="help-block">Your organisation user identifier will be used as a prefix for all the AidStream users in your organisation. We recommend that you use a short abbreviation that uniquely identifies your organisation. If your organisation is 'Acme Bellus Foundation', your organisation user identifier should be 'abf', depending upon it's availability.
-                                            </span>
+                                            <span class="availability-check hidden"></span>
+                                            <span class="help-block">Your organisation user identifier will be used as a prefix for all the AidStream users in your organisation. We recommend that you use a short abbreviation that uniquely identifies your organisation. If your organisation is 'Acme Bellus Foundation', your organisation user identifier should be 'abf', depending upon it's availability.</span>
                                         </div>
                                     </div>
                                     <div class="col-xs-12 col-sm-6 username_text">
@@ -234,12 +234,33 @@
 <script>
     $(document).ready(function () {
         function hamburgerMenu() {
-            $('.navbar-toggle.collapsed').click(function(){
+            $('.navbar-toggle.collapsed').click(function () {
                 $('.navbar-collapse').toggleClass('out');
                 $(this).toggleClass('collapsed');
             });
         }
+
         hamburgerMenu();
+
+        $('[name="organization_user_identifier"]').on('change', checkAvailability);
+        $('[name="organization_user_identifier"]').on('keydown', function () {
+            $('.availability-check').html('').addClass('hidden').removeClass('text-success text-danger');
+        });
+        function checkAvailability() {
+            var userIdentifier = $(this).val();
+            if ($.trim(userIdentifier) == "") {
+                return false;
+            }
+            $.ajax({
+                headers: {'X-CSRF-TOKEN': $('[name="_token"]').val()},
+                type: 'POST',
+                url: '{{ route('check-organization-user-identifier') }}',
+                data: {userIdentifier: $(this).val()},
+                success: function (data) {
+                    $('.availability-check').removeClass('hidden').addClass('text-' + data.status).html(data.message);
+                }
+            });
+        }
     });
 </script>
 </body>

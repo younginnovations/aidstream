@@ -179,6 +179,7 @@ class AuthController extends Controller
             if (Auth::attempt($credentials, $request->has('remember'))) {
                 if (!Auth::user()->enabled) {
                     Auth::logout();
+
                     return redirect('/auth/login')->withErrors("Your account has been disabled. Please contact us at <a href='mailto:support@aidstream.org'>support@aidstream.org</a> ");
                 }
                 $user = Auth::user();
@@ -273,5 +274,17 @@ class AuthController extends Controller
         Session::flush();
 
         return redirect(property_exists($this, 'redirectAfterLogout') ? $this->redirectAfterLogout : '/');
+    }
+
+    public function checkUserIdentifier(Request $request)
+    {
+        $userIdentifier = $request->get('userIdentifier');
+        if ($this->organization->where('user_identifier', $userIdentifier)->count() == 0) {
+            $response = ['status' => 'success', 'message' => 'The organization user identifier is available.'];
+        } else {
+            $response = ['status' => 'danger', 'message' => 'The organization user identifier has already been taken.'];
+        }
+
+        return $response;
     }
 }
