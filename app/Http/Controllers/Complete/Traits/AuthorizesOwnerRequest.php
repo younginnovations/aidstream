@@ -5,6 +5,7 @@ use App\Models\Activity\ActivityResult;
 use App\Models\Activity\Transaction;
 use App\Models\ActivityPublished;
 use App\Models\Organization\Organization;
+use App\Models\OrganizationPublished;
 
 trait AuthorizesOwnerRequest
 {
@@ -89,5 +90,21 @@ trait AuthorizesOwnerRequest
         $user = $this->getCurrentUser();
 
         return ($user->org_id == $organizationId);
+    }
+
+    protected function currentUserIsAuthorizedToDeleteOrganizationFile($fileId)
+    {
+        if ($this->organizationFileBelongsToOrganizationsUser($fileId)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    protected function organizationFileBelongsToOrganizationsUser($fileId)
+    {
+        $publishedFile = app()->make(OrganizationPublished::class)->find($fileId);
+
+        return ($publishedFile->organization_id == $this->getCurrentUser()->org_id);
     }
 }

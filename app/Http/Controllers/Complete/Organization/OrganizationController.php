@@ -180,6 +180,10 @@ class OrganizationController extends Controller
      */
     public function listPublishedFiles($action = '', $id = '')
     {
+        if ($id && !$this->currentUserIsAuthorizedToDeleteOrganizationFile($id)) {
+            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
+        }
+
         if ($action == 'delete') {
             $result   = $this->organizationManager->deletePublishedFile($id);
             $message  = $result ? 'File deleted successfully' : 'File couldn\'t be deleted.';
