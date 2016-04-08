@@ -27,5 +27,6 @@ return [
     'header_mismatch'                         => 'The header doesn\'t matched with the provided template. Please Check the headers.',
     'message'                                 => ':message',
     'not_uploaded'                            => 'Some invalid activities (at row(s): :invalidRows) did not get saved while the valid ones (at row(s): :rows) have been saved.',
-    'recipient_region_unselected_in_settings' => 'Recipient Region is not selected in Settings.Please empty this field.'
+    'recipient_region_unselected_in_settings' => 'Recipient Region is not selected in Settings.Please empty this field.',
+    'csv_template_error'                      => 'The CSV file you uploaded does not match with the Activity Template. Please download Activity template from below.'
 ];

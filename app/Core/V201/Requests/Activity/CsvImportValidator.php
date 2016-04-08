@@ -197,101 +197,106 @@ class CsvImportValidator
      */
     public function isValidActivityCsv($file, $identifiers)
     {
-        $activities            = Excel::load($file)->get()->toArray();
-        $activityStatus        = implode(',', $this->getCodes('ActivityStatus', 'Activity'));
-        $sectorCategory        = implode(',', $this->getCodes('Sector', 'Activity'));
-        $recipientCountryCodes = implode(',', $this->getCodes('Country', 'Organization'));
-        $recipientRegionCodes  = implode(',', $this->getCodes('Region', 'Activity'));
+        try {
+            $activities            = Excel::load($file)->get()->toArray();
+            $activityStatus        = implode(',', $this->getCodes('ActivityStatus', 'Activity'));
+            $sectorCategory        = implode(',', $this->getCodes('Sector', 'Activity'));
+            $recipientCountryCodes = implode(',', $this->getCodes('Country', 'Organization'));
+            $recipientRegionCodes  = implode(',', $this->getCodes('Region', 'Activity'));
+            $rules                 = [];
+            $messages              = [];
+            $identifiers           = implode(',', $identifiers);
+            foreach ($activities as $activityIndex => $activityRow) {
+                $rules = array_merge(
+                    $rules,
+                    [
+                        "$activityIndex.activity_identifier"                => sprintf(
+                            'required|unique_validation:%s.activity_identifier,%s,%s,activity_identifier|not_in:%s',
+                            $activityIndex,
+                            trimInput($activityRow['activity_identifier']),
+                            $file,
+                            $identifiers
+                        ),
+                        "$activityIndex.activity_title"                     => 'required',
+                        "$activityIndex.actual_start_date"                  => sprintf(
+                            'date|required_any:%s.actual_start_date,%s,%s.actual_end_date,%s,%s.planned_start_date,%s,%s.planned_end_date,%s',
+                            $activityIndex,
+                            trimInput($activityRow['actual_start_date']),
+                            $activityIndex,
+                            trimInput($activityRow['actual_end_date']),
+                            $activityIndex,
+                            trimInput($activityRow['planned_start_date']),
+                            $activityIndex,
+                            trimInput($activityRow['planned_end_date'])
+                        ),
+                        "$activityIndex.actual_end_date"                    => 'date',
+                        "$activityIndex.planned_start_date"                 => 'date',
+                        "$activityIndex.planned_end_date"                   => 'date',
+                        "$activityIndex.description_general"                => sprintf(
+                            'required_any:%s.description_general,%s,%s.description_objectives,%s,%s.description_target_group,%s',
+                            $activityIndex,
+                            trimInput($activityRow['description_general']),
+                            $activityIndex,
+                            trimInput($activityRow['description_objectives']),
+                            $activityIndex,
+                            trimInput($activityRow['description_target_group'])
+                        ),
+                        "$activityIndex.funding_participating_organization" => sprintf(
+                            'required_any:%s.funding_participating_organization,%s,%s.implementing_participating_organization,%s',
+                            $activityIndex,
+                            trimInput($activityRow['funding_participating_organization']),
+                            $activityIndex,
+                            trimInput($activityRow['implementing_participating_organization'])
+                        ),
+                        "$activityIndex.activity_status"                    => 'required|in:' . $activityStatus,
+                        "$activityIndex.sector_dac_5digit"                  => 'required|multiple_value_in:' . $sectorCategory,
+                        "$activityIndex.recipient_country"                  => 'required_without:' . $activityIndex . '.recipient_region|multiple_value_in:' . $recipientCountryCodes,
+                        "$activityIndex.recipient_region"                   => 'required_without:' . $activityIndex . '.recipient_country|multiple_value_in:' . $recipientRegionCodes
+                    ]
+                );
 
-        $rules       = [];
-        $messages    = [];
-        $identifiers = implode(',', $identifiers);
-        foreach ($activities as $activityIndex => $activityRow) {
-            $rules = array_merge(
-                $rules,
-                [
-                    "$activityIndex.activity_identifier"                => sprintf(
-                        'required|unique_validation:%s.activity_identifier,%s,%s,activity_identifier|not_in:%s',
-                        $activityIndex,
-                        trimInput($activityRow['activity_identifier']),
-                        $file,
-                        $identifiers
-                    ),
-                    "$activityIndex.activity_title"                     => 'required',
-                    "$activityIndex.actual_start_date"                  => sprintf(
-                        'date|required_any:%s.actual_start_date,%s,%s.actual_end_date,%s,%s.planned_start_date,%s,%s.planned_end_date,%s',
-                        $activityIndex,
-                        trimInput($activityRow['actual_start_date']),
-                        $activityIndex,
-                        trimInput($activityRow['actual_end_date']),
-                        $activityIndex,
-                        trimInput($activityRow['planned_start_date']),
-                        $activityIndex,
-                        trimInput($activityRow['planned_end_date'])
-                    ),
-                    "$activityIndex.actual_end_date"                    => 'date',
-                    "$activityIndex.planned_start_date"                 => 'date',
-                    "$activityIndex.planned_end_date"                   => 'date',
-                    "$activityIndex.description_general"                => sprintf(
-                        'required_any:%s.description_general,%s,%s.description_objectives,%s,%s.description_target_group,%s',
-                        $activityIndex,
-                        trimInput($activityRow['description_general']),
-                        $activityIndex,
-                        trimInput($activityRow['description_objectives']),
-                        $activityIndex,
-                        trimInput($activityRow['description_target_group'])
-                    ),
-                    "$activityIndex.funding_participating_organization" => sprintf(
-                        'required_any:%s.funding_participating_organization,%s,%s.implementing_participating_organization,%s',
-                        $activityIndex,
-                        trimInput($activityRow['funding_participating_organization']),
-                        $activityIndex,
-                        trimInput($activityRow['implementing_participating_organization'])
-                    ),
-                    "$activityIndex.activity_status"                    => 'required|in:' . $activityStatus,
-                    "$activityIndex.sector_dac_5digit"                  => 'required|multiple_value_in:' . $sectorCategory,
-                    "$activityIndex.recipient_country"                  => 'required_without:' . $activityIndex . '.recipient_region|multiple_value_in:' . $recipientCountryCodes,
-                    "$activityIndex.recipient_region"                   => 'required_without:' . $activityIndex . '.recipient_country|multiple_value_in:' . $recipientRegionCodes
-                ]
-            );
+                $messages = array_merge(
+                    $messages,
+                    [
+                        "$activityIndex.sector_dac_5digit.multiple_value_in"             => sprintf('At row %s Sector_DAC_5Digit category code is invalid.', $activityIndex + 1),
+                        "$activityIndex.sector_dac_5digit.required"                      => sprintf('At row %s Sector_DAC_5Digit category code is required.', $activityIndex + 1),
+                        "$activityIndex.recipient_country.multiple_value_in"             => sprintf('At row %s Recipient_Country is invalid.', $activityIndex + 1),
+                        "$activityIndex.recipient_country.required_without"              => sprintf('At row %s either Recipient_Country or Recipient_Region is required.', $activityIndex + 1),
+                        "$activityIndex.recipient_region.multiple_value_in"              => sprintf('At row %s Recipient_Region is invalid.', $activityIndex + 1),
+                        "$activityIndex.recipient_region.required_without"               => sprintf('At row %s either Recipient_Country or Recipient_Region is required.', $activityIndex + 1),
+                        "$activityIndex.activity_status.in"                              => sprintf('At row %s Activity_Status is invalid.', $activityIndex + 1),
+                        "$activityIndex.activity_status.required"                        => sprintf('At row %s Activity_Status is required.', $activityIndex + 1),
+                        "$activityIndex.activity_identifier.required"                    => sprintf('At row %s Activity_Identifier is required.', $activityIndex + 1),
+                        "$activityIndex.activity_identifier.not_in"                      => sprintf('At row %s Activity_Identifier already exists.', $activityIndex + 1),
+                        "$activityIndex.activity_identifier.unique_validation"           => sprintf('At row %s Activity_Identifier is invalid and must be unique.', $activityIndex + 1),
+                        "$activityIndex.activity_title.required"                         => sprintf('At row %s Activity_Title is required.', $activityIndex + 1),
+                        "$activityIndex.actual_start_date.date"                          => sprintf('At row %s Actual_start_date is invalid.', $activityIndex + 1),
+                        "$activityIndex.actual_end_date.date"                            => sprintf('At row %s Actual_end_date is invalid.', $activityIndex + 1),
+                        "$activityIndex.planned_start_date.date"                         => sprintf('At row %s Planned_start_date is invalid.', $activityIndex + 1),
+                        "$activityIndex.planned_end_date.date"                           => sprintf('At row %s Planned_end_date is invalid.', $activityIndex + 1),
+                        "$activityIndex.actual_start_date.required_any"                  => sprintf(
+                            'At row %s date among Actual_start_date/Actual_end_date/Planned_start_date/Planned_end_date is required.',
+                            $activityIndex + 1
+                        ),
+                        "$activityIndex.description_general.required_any"                => sprintf(
+                            'At row %s at least one description among description_general/description_objectives/description_target_group is required.',
+                            $activityIndex + 1
+                        ),
+                        "$activityIndex.funding_participating_organization.required_any" => sprintf(
+                            'At row %s at least one participating_organization among funding/implementing is required.',
+                            $activityIndex + 1
+                        ),
+                    ]
+                );
 
-            $messages = array_merge(
-                $messages,
-                [
-                    "$activityIndex.sector_dac_5digit.multiple_value_in"             => sprintf('At row %s Sector_DAC_5Digit category code is invalid.', $activityIndex + 1),
-                    "$activityIndex.sector_dac_5digit.required"                      => sprintf('At row %s Sector_DAC_5Digit category code is required.', $activityIndex + 1),
-                    "$activityIndex.recipient_country.multiple_value_in"             => sprintf('At row %s Recipient_Country is invalid.', $activityIndex + 1),
-                    "$activityIndex.recipient_country.required_without"              => sprintf('At row %s either Recipient_Country or Recipient_Region is required.', $activityIndex + 1),
-                    "$activityIndex.recipient_region.multiple_value_in"              => sprintf('At row %s Recipient_Region is invalid.', $activityIndex + 1),
-                    "$activityIndex.recipient_region.required_without"               => sprintf('At row %s either Recipient_Country or Recipient_Region is required.', $activityIndex + 1),
-                    "$activityIndex.activity_status.in"                              => sprintf('At row %s Activity_Status is invalid.', $activityIndex + 1),
-                    "$activityIndex.activity_status.required"                        => sprintf('At row %s Activity_Status is required.', $activityIndex + 1),
-                    "$activityIndex.activity_identifier.required"                    => sprintf('At row %s Activity_Identifier is required.', $activityIndex + 1),
-                    "$activityIndex.activity_identifier.not_in"                      => sprintf('At row %s Activity_Identifier already exists.', $activityIndex + 1),
-                    "$activityIndex.activity_identifier.unique_validation"           => sprintf('At row %s Activity_Identifier is invalid and must be unique.', $activityIndex + 1),
-                    "$activityIndex.activity_title.required"                         => sprintf('At row %s Activity_Title is required.', $activityIndex + 1),
-                    "$activityIndex.actual_start_date.date"                          => sprintf('At row %s Actual_start_date is invalid.', $activityIndex + 1),
-                    "$activityIndex.actual_end_date.date"                            => sprintf('At row %s Actual_end_date is invalid.', $activityIndex + 1),
-                    "$activityIndex.planned_start_date.date"                         => sprintf('At row %s Planned_start_date is invalid.', $activityIndex + 1),
-                    "$activityIndex.planned_end_date.date"                           => sprintf('At row %s Planned_end_date is invalid.', $activityIndex + 1),
-                    "$activityIndex.actual_start_date.required_any"                  => sprintf(
-                        'At row %s date among Actual_start_date/Actual_end_date/Planned_start_date/Planned_end_date is required.',
-                        $activityIndex + 1
-                    ),
-                    "$activityIndex.description_general.required_any"                => sprintf(
-                        'At row %s at least one description among description_general/description_objectives/description_target_group is required.',
-                        $activityIndex + 1
-                    ),
-                    "$activityIndex.funding_participating_organization.required_any" => sprintf(
-                        'At row %s at least one participating_organization among funding/implementing is required.',
-                        $activityIndex + 1
-                    ),
-                ]
-            );
+            }
 
+            return Validator::make($activities, $rules, $messages);
+        } catch (\Exception $e) {
+            if (strpos($e->getMessage(), 'Undefined index:') == 0) {
+                return false;
+            }
         }
-
-        return Validator::make($activities, $rules, $messages);
     }
 
     public function getSimpleCsvValidator($file)
