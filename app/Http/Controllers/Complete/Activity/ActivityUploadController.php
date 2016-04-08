@@ -157,8 +157,11 @@ class ActivityUploadController extends Controller
         }
 
         $validator = $csvImportValidator->validator->isValidActivityCsv($file, $identifiers);
+        if (!$validator) {
+            $response = ['type' => 'danger', 'code' => ['csv_template_error', ['name' => '']]];
 
-        if ($validator->fails()) {
+            return redirect()->back()->withResponse($response);
+        } elseif ($validator->fails()) {
             $failedRows           = $validator->failures();
             $uploadedActivities   = $this->uploadActivityManager->getVersion()->getExcel()->load($file)->toArray();
             $validActivities      = array_keys(array_diff_key($uploadedActivities, $failedRows));
@@ -249,6 +252,7 @@ class ActivityUploadController extends Controller
         );
         $messages   = array_merge($messages, $validator->errors()->all());
         $response   = ['type' => 'warning', 'messages' => $messages];
+
         return redirect()->back()->withInput()->withResponse($response);
     }
 
