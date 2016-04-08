@@ -457,9 +457,9 @@ class ActivityManager
     public function getSectorForBulk($sector)
     {
         $arrays = [];
-        if (count($sector['narrative']) == 1) {
+        if (isset($sector['narrative']) && count($sector['narrative']) == 1) {
             $arrays[$sector['narrative']] = 1;
-        } elseif (count($sector['narrative']) > 1) {
+        } elseif (isset($sector['narrative']) && count($sector['narrative']) > 1) {
             foreach ($sector['narrative'] as $key => $data) {
                 $index = $data;
                 if (array_key_exists($index, $arrays)) {
@@ -503,10 +503,10 @@ class ActivityManager
     public function getTransactionForBulk($transaction)
     {
         $arrays = [];
-        if(count($transaction['transaction-type']) == 1){
+        if (count($transaction['transaction-type']) == 1) {
             $arrays[$transaction['transaction-type']['@attributes']['code']] = $transaction['value'];
-        }elseif(count($transaction) > 1){
-            foreach($transaction as $data){
+        } elseif (count($transaction) > 1) {
+            foreach ($transaction as $data) {
                 $index = $data['transaction-type']['@attributes']['code'];
                 $value = $data['value'];
 
@@ -527,8 +527,8 @@ class ActivityManager
      * @param $jsonData
      * @return mixed
      */
-    public function saveBulkPublishDataInActivityRegistry($activityId,$jsonData)
+    public function saveBulkPublishDataInActivityRegistry($activityId, $jsonData)
     {
-        return $this->activityRepo->saveBulkPublishDataInActivityRegistry($activityId,$jsonData);
+        return $this->activityRepo->saveBulkPublishDataInActivityRegistry($activityId, $jsonData);
     }
 }

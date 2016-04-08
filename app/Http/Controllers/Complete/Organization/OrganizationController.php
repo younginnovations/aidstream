@@ -204,13 +204,15 @@ class OrganizationController extends Controller
      */
     public function orgBulkPublishToRegistry(Request $request)
     {
-        $data     = $request->get('org_files');
+        $data       = $request->get('org_files');
         $pubFiles   = [];
         $unpubFiles = [];
-        $value = [];
+        $value      = [];
 
         if (is_null($data)) {
-            $data = [];
+            $response = ['type' => 'warning', 'code' => ['message', ['message' => 'Please select organization XML files to be published.']]];
+
+            return redirect()->back()->withResponse($response);
         }
         foreach ($data as $datum) {
             $orgId    = explode(':', $datum)[0];
@@ -218,7 +220,7 @@ class OrganizationController extends Controller
             $this->organizationManager->saveOrganizationPublishedFiles($filename, $orgId);
             $organization = $this->organizationManager->getOrganization($orgId);
             $settings     = $this->settingsManager->getSettings($orgId);
-            $result      = $this->organizationManager->publishToRegistry($organization, $settings);
+            $result       = $this->organizationManager->publishToRegistry($organization, $settings);
             if ($result) {
                 $pubFiles[] = $filename;
             } else {

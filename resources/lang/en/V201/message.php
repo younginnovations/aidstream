@@ -15,7 +15,7 @@ return [
     'org_statuses'                            => 'Organization has been :name.',
     'org_statuses_failed'                     => 'Organization cannot be :name.',
     'settings_registry_info'                  => 'Please fill up Publisher Id & Api Id to publish.',
-    'publish_registry'                        => 'Could not publish registry. Try Again.',
+    'publish_registry'                        => 'Could not publish to registry. Try Again.',
     'publish_registry_publish'                => 'Activity has been Published',
     'upgraded'                                => 'Version upgraded to :version.',
     'upgrade_failed'                          => 'Failed to upgrade. Try Again.',

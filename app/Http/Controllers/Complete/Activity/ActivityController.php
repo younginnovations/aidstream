@@ -265,7 +265,7 @@ class ActivityController extends Controller
                 if ($publishedStatus) {
                     $this->activityManager->makePublished($activityData);
                     $this->activityManager->activityInRegistry($activityData);
-                    $response = ['type' => 'warning', 'code' => ['publish_registry_publish', ['name' => '']]];
+                    $response = ['type' => 'success', 'code' => ['publish_registry_publish', ['name' => '']]];
 
                     return redirect()->back()->withResponse($response);
                 } else {
@@ -533,7 +533,9 @@ class ActivityController extends Controller
     {
         $files = $request->get('activity_files');
         if (is_null($files)) {
-            $files = [];
+            $response = ['type' => 'warning', 'code' => ['message', ['message' => 'Please select activity XML files to be published.']]];
+
+            return redirect()->back()->withResponse($response);
         }
         $pubFiles   = [];
         $unpubFiles = [];
@@ -555,7 +557,9 @@ class ActivityController extends Controller
 
         if ($unpubFiles) {
             $value['unpublished'] = sprintf("The files %s could not be published to registry. Please try again.", implode(',', $unpubFiles));
-        } elseif ($pubFiles) {
+        }
+
+        if ($pubFiles) {
             $value['published'] = sprintf("The files %s have been published to registry", implode(',', $pubFiles));
         }
 
@@ -610,12 +614,12 @@ class ActivityController extends Controller
             if (file_exists($filePath)) {
                 $xml = simplexml_load_string(file_get_contents($filePath));
                 $xml = json_decode(json_encode($xml), true);
-                if (key_exists('transaction', $xml['iati-activity'])) {
+                if (isset($xml['iati-activity']['asdfasf']['fasdf']['transaction'])) {
                     $xmlTransaction = $xml['iati-activity']['transaction'];
                     $transaction    = $this->activityManager->getTransactionForBulk($xmlTransaction);
                 }
 
-                if (key_exists('recipient-country', $xml['iati-activity'])) {
+                if (isset($xml['iati-activity']['recipient-country'])) {
                     $xmlRecipientCountry = $xml['iati-activity']['recipient-country'];
                     $recipientCountry    = $this->activityManager->getRecipientCountryForBulk($xmlRecipientCountry);
                 }
