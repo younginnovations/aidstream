@@ -16,7 +16,7 @@
         <div class="col-md-12 text-center">
             <h1>{{ $organizationCount }} organisations are using AidStream</h1>
 
-            <p>The organisations listed below are using AidStream to publish their aid data in IATI.</p>
+            <p>The organisations listed below are using AidStream.</p>
 
             <div class="organisations-list width-900">
                 <ul>{{--
