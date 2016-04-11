@@ -6,6 +6,7 @@ use App\Services\Activity\ActivityManager;
 use App\Services\FormCreator\Activity\ActivityStatus as ActivityStatusForm;
 use App\Services\RequestManager\Activity\ActivityStatus as ActivityStatusRequestManager;
 use App\Http\Requests\Request;
+use Illuminate\Support\Facades\Gate;
 
 /**
  * Class ActivityStatusController
@@ -49,7 +50,9 @@ class ActivityStatusController extends Controller
      */
     public function index($id)
     {
-        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+        $activityData  = $this->activityManager->getActivityData($id);
+
+        if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
@@ -72,9 +75,11 @@ class ActivityStatusController extends Controller
      */
     public function update($id, Request $request, ActivityStatusRequestManager $activityStatusRequestManager)
     {
-        if (!$this->currentUserIsAuthorizedForActivity($id)) {
-            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
-        }
+//        $activityData  = $this->activityManager->getActivityData($id);
+//
+//        if (Gate::denies('ownership', $activityData)) {
+//            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
+//        }
 
         $activityData   = $this->activityManager->getActivityData($id);
         $this->authorizeByRequestType($activityData, 'activity_status');

@@ -487,7 +487,7 @@ class ActivityController extends Controller
         if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
-
+// create permission
         return $this->create(true, $activityId);
     }
 

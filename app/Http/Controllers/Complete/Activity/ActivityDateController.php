@@ -6,6 +6,7 @@ use App\Services\Activity\ActivityManager;
 use App\Services\FormCreator\Activity\ActivityDate as ActivityDateForm;
 use App\Services\RequestManager\Activity\ActivityDate as ActivityDateRequestManager;
 use App\Http\Requests\Request;
+use Illuminate\Support\Facades\Gate;
 
 /**
  * Class ActivityDateController
@@ -46,8 +47,10 @@ class ActivityDateController extends Controller
      */
     public function index($id)
     {
-        if (!$this->currentUserIsAuthorizedForActivity($id)) {
-            return redirect()->route('activity.index')->withResponse($this->getNoPrivilegesMessage());
+        $activityData  = $this->activityManager->getActivityData($id);
+
+        if (Gate::denies('ownership', $activityData)) {
+            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
         $activityDate = $this->activityDateManager->getActivityDateData($id);
@@ -69,8 +72,10 @@ class ActivityDateController extends Controller
      */
     public function update($id, Request $request, ActivityDateRequestManager $activityDateRequestManager)
     {
-        if (!$this->currentUserIsAuthorizedForActivity($id)) {
-            return redirect()->route('activity.index')->withResponse($this->getNoPrivilegesMessage());
+        $activityData  = $this->activityManager->getActivityData($id);
+
+        if (Gate::denies('ownership', $activityData)) {
+            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
         $activityData = $this->activityManager->getActivityData($id);

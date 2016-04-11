@@ -7,6 +7,7 @@ use App\Services\Activity\TransactionManager;
 use App\Services\FormCreator\Activity\RecipientCountry as RecipientCountryForm;
 use App\Services\Activity\RecipientCountryManager;
 use App\Services\RequestManager\Activity\RecipientCountry as RecipientCountryRequestManager;
+use Illuminate\Support\Facades\Gate;
 
 /**
  * Class RecipientCountryController
@@ -60,7 +61,9 @@ class RecipientCountryController extends Controller
      */
     public function index($id)
     {
-        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+        $activityData  = $this->activityManager->getActivityData($id);
+
+        if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
@@ -80,7 +83,9 @@ class RecipientCountryController extends Controller
      */
     public function update($id, Request $request, RecipientCountryRequestManager $recipientCountryRequestManager)
     {
-        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+        $activityData  = $this->activityManager->getActivityData($id);
+
+        if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 

@@ -6,6 +6,7 @@ use App\Services\FormCreator\Activity\Budget as BudgetForm;
 use App\Services\Activity\ActivityManager;
 use App\Http\Requests\Request;
 use App\Services\RequestManager\Activity\Budget as BudgetRequestManager;
+use Illuminate\Support\Facades\Gate;
 
 /**
  * Class BudgetController
@@ -29,7 +30,9 @@ class BudgetController extends Controller
 
     public function index($id)
     {
-        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+        $activityData  = $this->activityManager->getActivityData($id);
+
+        if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
@@ -42,7 +45,9 @@ class BudgetController extends Controller
 
     public function update($id, Request $request, BudgetRequestManager $budgetRequestManager)
     {
-        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+        $activityData  = $this->activityManager->getActivityData($id);
+
+        if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 

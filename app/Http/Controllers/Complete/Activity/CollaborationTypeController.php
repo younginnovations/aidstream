@@ -46,7 +46,9 @@ class CollaborationTypeController extends Controller
      */
     public function  index($id)
     {
-        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+        $activityData  = $this->activityManager->getActivityData($id);
+
+        if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
@@ -66,7 +68,9 @@ class CollaborationTypeController extends Controller
      */
     public function update($id, Request $request, CollaborationTypeRequestManager $collaborationTypeRequestManager)
     {
-        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+        $activityData  = $this->activityManager->getActivityData($id);
+
+        if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 

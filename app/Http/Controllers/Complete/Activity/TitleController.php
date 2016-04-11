@@ -6,6 +6,7 @@ use App\Services\Activity\TitleManager;
 use App\Services\FormCreator\Activity\Title;
 use App\Services\RequestManager\Activity\TitleRequestManager;
 use App\Http\Requests\Request;
+use Illuminate\Support\Facades\Gate;
 
 /**
  * Class TitleController
@@ -49,11 +50,12 @@ class TitleController extends Controller
      */
     public function index($id)
     {
-        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+        $activityData  = $this->activityManager->getActivityData($id);
+
+        if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
-        $activityData  = $this->activityManager->getActivityData($id);
         $activityTitle = $this->titleManager->getTitleData($id);
         $form          = $this->title->editForm($activityTitle, $id);
 

@@ -6,6 +6,7 @@ use App\Services\Activity\DefaultFinanceTypeManager;
 use App\Services\FormCreator\Activity\DefaultFinanceType as DefaultFinanceTypeForm;
 use App\Services\RequestManager\Activity\DefaultFinanceType as DefaultFinanceTypeRequestManager;
 use App\Http\Requests\Request;
+use Illuminate\Support\Facades\Gate;
 
 /**
  * Class DefaultFinanceTypeController
@@ -46,7 +47,9 @@ class DefaultFinanceTypeController extends Controller
      */
     public function  index($id)
     {
-        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+        $activityData  = $this->activityManager->getActivityData($id);
+
+        if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
@@ -66,7 +69,9 @@ class DefaultFinanceTypeController extends Controller
      */
     public function update($id, Request $request, DefaultFinanceTypeRequestManager $defaultFinanceTypeRequestManager)
     {
-        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+        $activityData  = $this->activityManager->getActivityData($id);
+
+        if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 

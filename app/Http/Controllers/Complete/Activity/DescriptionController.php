@@ -6,6 +6,7 @@ use App\Services\Activity\DescriptionManager;
 use App\Services\FormCreator\Activity\Description as DescriptionForm;
 use App\Services\RequestManager\Activity\Description as DescriptionRequestManager;
 use App\Http\Requests\Request;
+use Illuminate\Support\Facades\Gate;
 
 /**
  * Class DescriptionController
@@ -47,7 +48,9 @@ class DescriptionController extends Controller
      */
     public function index($id)
     {
-        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+        $activityData  = $this->activityManager->getActivityData($id);
+
+        if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
@@ -70,7 +73,9 @@ class DescriptionController extends Controller
      */
     public function update($id, Request $request, DescriptionRequestManager $descriptionRequestManager)
     {
-        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+        $activityData  = $this->activityManager->getActivityData($id);
+
+        if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 

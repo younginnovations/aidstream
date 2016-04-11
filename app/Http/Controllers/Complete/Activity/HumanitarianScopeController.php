@@ -6,6 +6,7 @@ use App\Services\Activity\HumanitarianScopeManager;
 use App\Services\FormCreator\Activity\HumanitarianScope;
 use App\Services\RequestManager\Activity\HumanitarianScope as HumanitarianScopeRequest;
 use App\Http\Requests\Request;
+use Illuminate\Support\Facades\Gate;
 
 /**
  * Class HumanitarianScopeController
@@ -42,7 +43,9 @@ class HumanitarianScopeController extends Controller
      */
     public function index($id)
     {
-        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+        $activityData  = $this->activityManager->getActivityData($id);
+
+        if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
@@ -62,7 +65,9 @@ class HumanitarianScopeController extends Controller
      */
     public function update($id, Request $request, HumanitarianScopeRequest $humanitarianScopeRequest)
     {
-        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+        $activityData  = $this->activityManager->getActivityData($id);
+
+        if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 

@@ -6,6 +6,7 @@ use App\Services\Activity\ActivityManager;
 use App\Services\FormCreator\Activity\ContactInfo as ContactInfoForm;
 use App\Services\RequestManager\Activity\ContactInfo as ContactInfoRequestManager;
 use App\Http\Requests\Request;
+use Illuminate\Support\Facades\Gate;
 
 /**
  * Class ContactInfoController
@@ -49,7 +50,9 @@ class ContactInfoController extends Controller
      */
     public function index($id)
     {
-        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+        $activityData  = $this->activityManager->getActivityData($id);
+
+        if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
@@ -72,7 +75,9 @@ class ContactInfoController extends Controller
      */
     public function update($id, Request $request, ContactInfoRequestManager $contactInfoRequestManager)
     {
-        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+        $activityData  = $this->activityManager->getActivityData($id);
+
+        if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 

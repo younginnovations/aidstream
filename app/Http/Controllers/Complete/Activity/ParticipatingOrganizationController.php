@@ -6,6 +6,7 @@ use App\Services\Activity\ActivityManager;
 use App\Services\FormCreator\Activity\ParticipatingOrganization as ParticipatingOrganizationForm;
 use App\Services\RequestManager\Activity\ParticipatingOrganization as ParticipatingOrganizationRequestManager;
 use App\Http\Requests\Request;
+use Illuminate\Support\Facades\Gate;
 
 /**
  * Class ParticipatingOrganizationController
@@ -49,7 +50,9 @@ class ParticipatingOrganizationController extends Controller
      */
     public function index($id)
     {
-        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+        $activityData  = $this->activityManager->getActivityData($id);
+
+        if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
@@ -72,6 +75,12 @@ class ParticipatingOrganizationController extends Controller
      */
     public function update($id, Request $request, ParticipatingOrganizationRequestManager $participatingOrganizationRequestManager)
     {
+        $activityData  = $this->activityManager->getActivityData($id);
+
+        if (Gate::denies('ownership', $activityData)) {
+            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
+        }
+
         $activityData = $this->activityManager->getActivityData($id);
         $this->authorizeByRequestType($activityData, 'participating_organization');
         $participatingOrganization = $request->all();

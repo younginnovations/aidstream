@@ -6,6 +6,7 @@ use App\Services\Activity\CapitalSpendManager;
 use App\Services\FormCreator\Activity\CapitalSpend as CapitalSpendForm;
 use App\Services\RequestManager\Activity\CapitalSpend as CapitalSpendRequestManager;
 use App\Http\Requests\Request;
+use Illuminate\Support\Facades\Gate;
 
 /**
  * Class CapitalSpendController
@@ -46,7 +47,9 @@ class CapitalSpendController extends Controller
      */
     public function  index($id)
     {
-        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+        $activityData  = $this->activityManager->getActivityData($id);
+
+        if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
@@ -66,7 +69,9 @@ class CapitalSpendController extends Controller
      */
     public function update($id, Request $request, CapitalSpendRequestManager $capitalSpendRequestManager)
     {
-        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+        $activityData  = $this->activityManager->getActivityData($id);
+
+        if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 

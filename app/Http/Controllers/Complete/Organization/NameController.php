@@ -4,6 +4,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Services\Organization\OrganizationManager;
 use App\Services\Organization\OrgNameManager;
+use Illuminate\Support\Facades\Gate;
 use Session;
 use URL;
 use App\Http\Requests\Request;
@@ -38,8 +39,9 @@ class NameController extends Controller
      */
     public function index($orgId)
     {
-        if (!$this->userBelongsToOrganization($orgId)) {
-            return redirect()->route('activity.index')->withResponse($this->getNoPrivilegesMessage());
+        $organization = $this->organizationManager->getOrganization($orgId);
+        if (Gate::denies('belongsToOrganization', $organization)) {
+            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
         $orgName = $this->nameManager->getOrganizationNameData($orgId);
@@ -57,8 +59,9 @@ class NameController extends Controller
      */
     public function update($orgId, NameRequestManager $nameRequestManager, Request $request)
     {
-        if (!$this->userBelongsToOrganization($orgId)) {
-            return redirect()->route('activity.index')->withResponse($this->getNoPrivilegesMessage());
+        $organization = $this->organizationManager->getOrganization($orgId);
+        if (Gate::denies('belongsToOrganization', $organization)) {
+            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
         $organizationData = $this->nameManager->getOrganizationData($orgId);

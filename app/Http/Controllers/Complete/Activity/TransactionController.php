@@ -7,6 +7,7 @@ use App\Services\Activity\TransactionManager;
 use App\Services\FormCreator\Activity\Transaction;
 use App\Services\RequestManager\Activity\Transaction as TransactionRequest;
 use App\Http\Requests\Request;
+use Illuminate\Support\Facades\Gate;
 
 /**
  * Class TransactionController
@@ -51,7 +52,9 @@ class TransactionController extends Controller
      */
     public function index($id)
     {
-        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+        $activityData  = $this->activityManager->getActivityData($id);
+
+        if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
@@ -67,7 +70,9 @@ class TransactionController extends Controller
      */
     public function create($id)
     {
-        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+        $activityData  = $this->activityManager->getActivityData($id);
+
+        if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
@@ -87,7 +92,9 @@ class TransactionController extends Controller
      */
     public function store(Request $request, $activityId, TransactionRequest $transactionRequest)
     {
-        if (!$this->currentUserIsAuthorizedForActivity($activityId)) {
+        $activityData  = $this->activityManager->getActivityData($id);
+
+        if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
@@ -124,11 +131,9 @@ class TransactionController extends Controller
      */
     public function show($id, $transactionId)
     {
-        if (!$this->currentUserIsAuthorizedForActivity($id)) {
-            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
-        }
+        $activityData  = $this->activityManager->getActivityData($id);
 
-        if (!$this->currentUserIsAuthorizedForTransaction($transactionId)) {
+        if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
@@ -147,11 +152,9 @@ class TransactionController extends Controller
      */
     public function edit($id, $transactionId)
     {
-        if (!$this->currentUserIsAuthorizedForActivity($id)) {
-            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
-        }
+        $activityData  = $this->activityManager->getActivityData($id);
 
-        if (!$this->currentUserIsAuthorizedForTransaction($transactionId)) {
+        if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
@@ -173,11 +176,9 @@ class TransactionController extends Controller
      */
     public function update(Request $request, $id, $transactionId, TransactionRequest $transactionRequest)
     {
-        if (!$this->currentUserIsAuthorizedForActivity($id)) {
-            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
-        }
+        $activityData  = $this->activityManager->getActivityData($id);
 
-        if (!$this->currentUserIsAuthorizedForTransaction($transactionId)) {
+        if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 

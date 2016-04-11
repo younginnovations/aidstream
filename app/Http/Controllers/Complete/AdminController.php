@@ -141,6 +141,8 @@ class AdminController extends Controller
      */
     public function resetUserPassword($userID)
     {
+        $u = Session::get('user_id');
+
         $user = $this->user->findOrFail($userID);
 
         return view('admin.resetUserPassword', compact('user'));

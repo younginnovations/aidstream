@@ -6,6 +6,7 @@ use App\Services\Activity\ResultManager;
 use App\Services\FormCreator\Activity\Result as ResultForm;
 use App\Services\RequestManager\Activity\Result as ResultRequestManager;
 use App\Http\Requests\Request;
+use Illuminate\Support\Facades\Gate;
 
 /**
  * Class ResultController
@@ -46,7 +47,9 @@ class ResultController extends Controller
      */
     public function index($id)
     {
-        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+        $activityData  = $this->activityManager->getActivityData($id);
+
+        if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
@@ -64,11 +67,9 @@ class ResultController extends Controller
      */
     public function show($activityId, $id)
     {
-        if (!$this->currentUserIsAuthorizedForActivity($activityId)) {
-            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
-        }
+        $activityData  = $this->activityManager->getActivityData($id);
 
-        if (!$this->currentUserIsAuthorizedForResult($id)) {
+        if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
@@ -87,8 +88,10 @@ class ResultController extends Controller
      */
     public function create($id)
     {
-        if (!$this->currentUserIsAuthorizedForActivity($id)) {
-            return redirect()->route('activity.index')->withResponse($this->getNoPrivilegesMessage());
+        $activityData  = $this->activityManager->getActivityData($id);
+
+        if (Gate::denies('ownership', $activityData)) {
+            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
         $this->authorize('add_activity');
@@ -105,7 +108,9 @@ class ResultController extends Controller
      */
     public function edit($id, $resultId)
     {
-        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+        $activityData  = $this->activityManager->getActivityData($id);
+
+        if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
@@ -162,11 +167,9 @@ class ResultController extends Controller
      */
     public function destroy($id, $resultId)
     {
-        if (!$this->currentUserIsAuthorizedForActivity($id)) {
-            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
-        }
+        $activityData  = $this->activityManager->getActivityData($id);
 
-        if (!$this->currentUserIsAuthorizedFor($id)) {
+        if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 

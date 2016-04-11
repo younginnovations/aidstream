@@ -66,7 +66,9 @@ class DefaultTiedStatusController extends Controller
      */
     public function update($id, Request $request, DefaultTiedStatusRequestManager $defaultTiedStatusRequestManager)
     {
-        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+        $activityData  = $this->activityManager->getActivityData($id);
+
+        if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 

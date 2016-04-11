@@ -35,8 +35,20 @@ class AuthServiceProvider extends ServiceProvider
         });
 
         $gate->define('create', function ($user, $organization) {
-            return $user->org_id == $organization->id;
+            return $this->doesUserBelongToOrganization($user, $organization);
         });
+
+        $gate->define('belongsToOrganization', function ($user, $organization) {
+            return $this->doesUserBelongToOrganization($user, $organization);
+        });
+
+        $gate->define('settings-update', function ($user) {
+            if ($user->isAdmin()) {
+                return true;
+            }
+            return false;
+        });
+
 
         $gate->define('update-status', function ($user, $activity) {
             if ($user->isAdmin() || $user->isSuperAdmin()) {
@@ -47,9 +59,11 @@ class AuthServiceProvider extends ServiceProvider
         });
 
         $gate->before(
-            function ($user, $ability, $activity) {
-                if ($user->isAdmin() || $user->isSuperAdmin()) {
+            function ($user, $ability, $activity = null) {
+                if ($user->isSuperAdmin()) {
                     return true;
+                } elseif ($user->isAdmin()) {
+                    return $this->checkUserOwnershipFor($user, $activity);
                 }
             }
         );
@@ -72,7 +86,18 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected function checkUserOwnershipFor($user, $activity)
     {
-        return ($user->org_id == $activity->organization_id);
+        return $activity ? ($user->org_id == $activity->organization_id) : false;
+    }
+
+    /**
+     * Check if the current user belongs to an Organization.
+     * @param $user
+     * @param $organization
+     * @return bool
+     */
+    protected function doesUserBelongToOrganization($user, $organization)
+    {
+        return $organization ? ($user->org_id == $organization->id) : false;
     }
 }
 

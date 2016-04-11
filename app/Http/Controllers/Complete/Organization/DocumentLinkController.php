@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Services\Organization\OrganizationManager;
 use App\Http\Requests\Request;
 use App\Services\Organization\DocumentLinkManager;
+use Illuminate\Support\Facades\Gate;
 use Session;
 use URL;
 use Illuminate\Support\Facades\Input;
@@ -39,8 +40,9 @@ class DocumentLinkController extends Controller
      */
     public function index($orgId)
     {
-        if (!$this->userBelongsToOrganization($orgId)) {
-            return redirect()->route('activity.index')->withResponse($this->getNoPrivilegesMessage());
+        $organization = $this->organizationManager->getOrganization($orgId);
+        if (Gate::denies('belongsToOrganization', $organization)) {
+            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
         $documentLink = $this->documentLinkManager->getDocumentLinkData($orgId);
@@ -58,8 +60,9 @@ class DocumentLinkController extends Controller
      */
     public function update($orgId, DocumentLinkRequestManager $documentLinkRequestManager, Request $request)
     {
-        if (!$this->userBelongsToOrganization($orgId)) {
-            return redirect()->route('activity.index')->withResponse($this->getNoPrivilegesMessage());
+        $organization = $this->organizationManager->getOrganization($orgId);
+        if (Gate::denies('belongsToOrganization', $organization)) {
+            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
         $organizationData = $this->documentLinkManager->getOrganizationData($orgId);

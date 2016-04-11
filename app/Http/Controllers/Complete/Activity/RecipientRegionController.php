@@ -7,6 +7,7 @@ use App\Services\Activity\TransactionManager;
 use App\Services\FormCreator\Activity\RecipientRegion as RecipientRegionForm;
 use App\Services\RequestManager\Activity\RecipientRegion as RecipientRegionRequestManager;
 use App\Http\Requests\Request;
+use Illuminate\Support\Facades\Gate;
 
 class RecipientRegionController extends Controller
 {
@@ -56,7 +57,9 @@ class RecipientRegionController extends Controller
      */
     public function index($id)
     {
-        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+        $activityData  = $this->activityManager->getActivityData($id);
+
+        if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
@@ -79,7 +82,9 @@ class RecipientRegionController extends Controller
      */
     public function update($id, Request $request, RecipientRegionRequestManager $recipientRegionRequestManager)
     {
-        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+        $activityData  = $this->activityManager->getActivityData($id);
+
+        if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 

@@ -6,6 +6,7 @@ use App\Services\Activity\CountryBudgetItemManager;
 use App\Services\FormCreator\Activity\CountryBudgetItem as CountryBudgetItemForm;
 use App\Services\RequestManager\Activity\CountryBudgetItem as CountryBudgetItemRequestManager;
 use App\Http\Requests\Request;
+use Illuminate\Support\Facades\Gate;
 
 /**
  * Class CountryBudgetItemController
@@ -49,7 +50,9 @@ class CountryBudgetItemController extends Controller
      */
     public function index($id)
     {
-        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+        $activityData  = $this->activityManager->getActivityData($id);
+
+        if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
@@ -69,7 +72,9 @@ class CountryBudgetItemController extends Controller
      */
     public function update($id, Request $request, CountryBudgetItemRequestManager $countryBudgetItemRequestManager)
     {
-        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+        $activityData  = $this->activityManager->getActivityData($id);
+
+        if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 

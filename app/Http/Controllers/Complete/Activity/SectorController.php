@@ -6,6 +6,7 @@ use App\Services\Activity\SectorManager;
 use App\Services\FormCreator\Activity\Sector as SectorForm;
 use App\Services\RequestManager\Activity\Sector as SectorRequestManager;
 use App\Http\Requests\Request;
+use Illuminate\Support\Facades\Gate;
 
 /**
  * Class SectorController
@@ -46,9 +47,12 @@ class SectorController extends Controller
      */
     public function index($id)
     {
-        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+        $activityData  = $this->activityManager->getActivityData($id);
+
+        if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
+
 
         $sector       = $this->sectorManager->getSectorData($id);
         $activityData = $this->activityManager->getActivityData($id);
@@ -66,7 +70,9 @@ class SectorController extends Controller
      */
     public function update($id, Request $request, SectorRequestManager $sectorRequestManager)
     {
-        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+        $activityData  = $this->activityManager->getActivityData($id);
+
+        if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
