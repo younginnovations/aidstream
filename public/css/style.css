@@ -294,11 +294,21 @@ footer {
       .organisations-list ul li img {
         line-height: normal;
         text-align: center;
-        width: 100%;
-        display: block;
         position: relative;
         height: 100%;
         font-family: Open-Sans-Regular; }
+      .organisations-list ul li img:before {
+        content: "";
+        font: 16px Open-Sans-Regular;
+        color: rgba(72, 72, 72, 0.7);
+        display: block;
+        position: absolute;
+        z-index: 2;
+        top: -20px;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #fff url("../images/ic-img.png") no-repeat 50% 35%; }
       .organisations-list ul li img:after {
         content: attr(alt);
         font: 16px Open-Sans-Regular;
@@ -307,11 +317,10 @@ footer {
         position: absolute;
         z-index: 2;
         top: 0;
+        background: #fff;
         left: 0;
         width: 100%;
-        height: 100%;
-        background: #fff url("../images/ic-img.png") no-repeat 50% 35%;
-        padding: 36% 0; }
+        height: 100%; }
 
 .load-more {
   width: 188px;

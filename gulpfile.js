@@ -27,6 +27,7 @@ var css_style = [
 var js_files = [
     './public/js/jquery.js',
     './public/js/bootstrap.min.js',
+    './public/js/modernizr.js',
     './public/js/jquery-ui-1.10.4.tooltip.js',
     './public/js/jquery.cookie.js',
     './public/js/jquery.mousewheel.js',

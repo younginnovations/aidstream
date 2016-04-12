@@ -172,6 +172,7 @@
 </script>
 
 <script src="/js/d3.min.js"></script>
+<script src="js/jquery.js"></script>
 <script src="/js/horizontalBar.js"></script>
 <script type="text/javascript" src="/js/worldMap.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>

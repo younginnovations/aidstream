@@ -112,6 +112,7 @@
 </section>
 @include('includes.footer')
 <script src="js/jquery.js"></script>
+<script src="js/modernizr.js"></script>
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
 <script>
     $(document).ready(function () {
