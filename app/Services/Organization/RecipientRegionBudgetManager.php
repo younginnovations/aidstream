@@ -5,6 +5,7 @@ use App\Models\Organization\OrganizationData;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Database\DatabaseManager;
 use Illuminate\Contracts\Logging\Log as DbLogger;
+use Illuminate\Database\Eloquent\Model;
 use Psr\Log\LoggerInterface as Logger;
 
 /**
@@ -90,7 +91,7 @@ class RecipientRegionBudgetManager
     /**
      * return organization data
      * @param $id
-     * @return model
+     * @return Model
      */
     public function getOrganizationData($id)
     {

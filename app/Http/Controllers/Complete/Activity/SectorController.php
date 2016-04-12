@@ -53,7 +53,6 @@ class SectorController extends Controller
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
-
         $sector       = $this->sectorManager->getSectorData($id);
         $activityData = $this->activityManager->getActivityData($id);
         $form         = $this->sectorForm->editForm($sector, $id);

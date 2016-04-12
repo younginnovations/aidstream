@@ -38,6 +38,7 @@ class RecipientCountryBudgetController extends Controller
     public function index($orgId)
     {
         $organization = $this->organizationManager->getOrganization($orgId);
+
         if (Gate::denies('belongsToOrganization', $organization)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }

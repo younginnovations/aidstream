@@ -7,6 +7,7 @@ use App\Services\FormCreator\Activity\UploadTransaction;
 use App\Services\RequestManager\Activity\CsvImportValidator;
 use App\Services\RequestManager\Activity\UploadTransaction as UploadTransactionRequest;
 use App\Http\Requests\Request;
+use Illuminate\Support\Facades\Gate;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class TransactionUploadController extends Controller
@@ -45,12 +46,13 @@ class TransactionUploadController extends Controller
      */
     public function index($id)
     {
-        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+        $activity = $this->activityManager->getActivityData($id);
+
+        if (Gate::denies('ownership', $activity)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
-        $activity = $this->activityManager->getActivityData($id);
-        $form     = $this->uploadTransaction->createForm($id);
+        $form = $this->uploadTransaction->createForm($id);
 
         return view('Activity.transaction.upload', compact('form', 'activity', 'id'));
     }
@@ -65,12 +67,13 @@ class TransactionUploadController extends Controller
      */
     public function store(Request $request, $id, UploadTransactionRequest $uploadTransactionRequest, CsvImportValidator $csvImportValidator)
     {
-        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+        $activity = $this->activityManager->getActivityData($id);
+
+        if (Gate::denies('ownership', $activity)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
-        $this->authorize('add_activity');
-        $activity = $this->activityManager->getActivityData($id);
+        $this->authorize('add_activity', $activity);
         $file     = $request->file('transaction');
 
         if ($this->uploadTransactionManager->isEmptyCsv($file)) {

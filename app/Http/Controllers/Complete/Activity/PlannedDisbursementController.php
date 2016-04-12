@@ -62,7 +62,6 @@ class PlannedDisbursementController extends Controller
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
-        $activityData        = $this->activityManager->getActivityData($id);
         $this->authorizeByRequestType($activityData, 'planned_disbursement');
         $plannedDisbursement = $request->all();
         if ($this->plannedDisbursementManager->update($plannedDisbursement, $activityData)) {

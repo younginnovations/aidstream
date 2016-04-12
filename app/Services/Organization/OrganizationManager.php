@@ -172,4 +172,21 @@ class OrganizationManager
     {
         return $this->repo->saveOrganizationPublishedFiles($filename, $orgId);
     }
+
+    /**
+     * Returns an array of Organization's users' Ids.
+     * @param $id
+     * @return array
+     */
+    public function getOrganizationUsers($id)
+    {
+        $users   = $this->repo->getOrganization($id)->users;
+        $userIds = [];
+
+        foreach ($users as $user) {
+            $userIds[] = $user->id;
+        }
+
+        return $userIds;
+    }
 }

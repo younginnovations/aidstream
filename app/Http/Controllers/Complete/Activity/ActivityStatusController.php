@@ -57,7 +57,6 @@ class ActivityStatusController extends Controller
         }
 
         $activityStatus = $this->activityStatusManager->getActivityStatusData($id);
-        $activityData   = $this->activityManager->getActivityData($id);
         $form           = $this->activityStatusForm->editForm($activityStatus, $id);
 
         return view(
@@ -75,13 +74,12 @@ class ActivityStatusController extends Controller
      */
     public function update($id, Request $request, ActivityStatusRequestManager $activityStatusRequestManager)
     {
-//        $activityData  = $this->activityManager->getActivityData($id);
-//
-//        if (Gate::denies('ownership', $activityData)) {
-//            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
-//        }
+        $activityData  = $this->activityManager->getActivityData($id);
 
-        $activityData   = $this->activityManager->getActivityData($id);
+        if (Gate::denies('ownership', $activityData)) {
+            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
+        }
+
         $this->authorizeByRequestType($activityData, 'activity_status');
         $activityStatus = $request->all();
         if ($this->activityStatusManager->update($activityStatus, $activityData)) {

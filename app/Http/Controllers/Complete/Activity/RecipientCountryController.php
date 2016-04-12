@@ -89,7 +89,6 @@ class RecipientCountryController extends Controller
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
-        $activityData     = $this->activityManager->getActivityData($id);
         $this->authorizeByRequestType($activityData, 'recipient_country');
         $activityTransactions = $this->transactionManager->getTransactions($id);
         $count                = 0;

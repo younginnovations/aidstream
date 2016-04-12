@@ -55,7 +55,6 @@ class DescriptionController extends Controller
         }
 
         $activityDescription = $this->descriptionManager->getDescriptionData($id);
-        $activityData        = $this->activityManager->getActivityData($id);
         $form                = $this->description->editForm($activityDescription, $id);
 
         return view(
@@ -79,7 +78,6 @@ class DescriptionController extends Controller
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
-        $activityData = $this->activityManager->getActivityData($id);
         $this->authorizeByRequestType($activityData, 'description');
         $activityDescription = $request->all();
         if (!$this->validateDescription($request->get('description'))) {

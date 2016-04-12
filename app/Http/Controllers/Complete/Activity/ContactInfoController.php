@@ -57,7 +57,6 @@ class ContactInfoController extends Controller
         }
 
         $ContactInfo  = $this->contactInfoManager->getContactInfoData($id);
-        $activityData = $this->activityManager->getActivityData($id);
         $form         = $this->contactInfoForm->editForm($ContactInfo, $id);
 
         return view(
@@ -81,7 +80,6 @@ class ContactInfoController extends Controller
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
-        $activityData = $this->activityManager->getActivityData($id);
         $this->authorizeByRequestType($activityData, 'contact_info');
         $contactInfo  = $request->all();
         if ($this->contactInfoManager->update($contactInfo, $activityData)) {

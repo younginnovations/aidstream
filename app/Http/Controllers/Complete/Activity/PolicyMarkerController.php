@@ -61,7 +61,6 @@ class PolicyMarkerController extends Controller
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
-        $activityData = $this->activityManager->getActivityData($id);
         $this->authorizeByRequestType($activityData, 'policy_marker');
         $policyMarker = $request->all();
         if ($this->policyMarkerManager->update($policyMarker, $activityData)) {

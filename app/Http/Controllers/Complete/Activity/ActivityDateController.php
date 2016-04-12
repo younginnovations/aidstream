@@ -54,7 +54,6 @@ class ActivityDateController extends Controller
         }
 
         $activityDate = $this->activityDateManager->getActivityDateData($id);
-        $activityData = $this->activityManager->getActivityData($id);
         $form         = $this->activityDateForm->editForm($activityDate, $id);
 
         return view(
@@ -78,7 +77,6 @@ class ActivityDateController extends Controller
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
-        $activityData = $this->activityManager->getActivityData($id);
         $this->authorizeByRequestType($activityData, 'activity_date');
         $activityDate = $request->all();
         $messages     = $this->validateData($request->get('activity_date'));

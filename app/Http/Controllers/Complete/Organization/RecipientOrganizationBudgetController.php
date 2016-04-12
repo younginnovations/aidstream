@@ -42,6 +42,7 @@ class RecipientOrganizationBudgetController extends Controller
     public function index($organizationId)
     {
         $organization = $this->organizationManager->getOrganization($organizationId);
+
         if (Gate::denies('belongsToOrganization', $organization)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
@@ -66,6 +67,7 @@ class RecipientOrganizationBudgetController extends Controller
     public function update($orgId, CreateOrgRecipientOrgBudgetRequestManager $request, Request $request)
     {
         $organization = $this->organizationManager->getOrganization($orgId);
+
         if (Gate::denies('belongsToOrganization', $organization)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }

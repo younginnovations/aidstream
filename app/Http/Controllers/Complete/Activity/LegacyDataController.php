@@ -6,6 +6,7 @@ use App\Services\FormCreator\Activity\LegacyData as LegacyDataForm;
 use App\Services\Activity\ActivityManager;
 use App\Http\Requests\Request;
 use App\Services\RequestManager\Activity\LegacyData as LegacyDataRequestManager;
+use Illuminate\Support\Facades\Gate;
 
 /**
  * Class LegacyDataController
@@ -49,12 +50,13 @@ class LegacyDataController extends Controller
      */
     public function index($id)
     {
-        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+        $activityData = $this->activityManager->getActivityData($id);
+
+        if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
         $legacyData   = $this->legacyDataManager->getLegacyData($id);
-        $activityData = $this->activityManager->getActivityData($id);
         $form         = $this->legacyDataForm->editForm($legacyData, $id);
 
         return view('Activity.legacyData.edit', compact('form', 'activityData', 'id'));
@@ -68,11 +70,12 @@ class LegacyDataController extends Controller
      */
     public function update($id, Request $request, LegacyDataRequestManager $legacyDataRequestManager)
     {
-        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+        $activityData = $this->activityManager->getActivityData($id);
+
+        if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
-        $activityData = $this->activityManager->getActivityData($id);
         $this->authorizeByRequestType($activityData, 'legacy_data');
         $legacyData   = $request->all();
         if ($this->legacyDataManager->update($legacyData, $activityData)) {

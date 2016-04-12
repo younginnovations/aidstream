@@ -6,6 +6,7 @@ use App\Services\Activity\OtherIdentifierManager;
 use App\Services\FormCreator\Activity\OtherIdentifierForm;
 use App\Services\RequestManager\Activity\OtherIdentifierRequestManager;
 use App\Http\Requests\Request;
+use Illuminate\Support\Facades\Gate;
 
 /**
  * Class OtherIdentifierController
@@ -47,11 +48,12 @@ class OtherIdentifierController extends Controller
      */
     public function index($id)
     {
-        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+        $activityData    = $this->activityManager->getActivityData($id);
+
+        if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
-        $activityData    = $this->activityManager->getActivityData($id);
         $otherIdentifier = $this->otherIdentifierManager->getOtherIdentifierData($id);
         $form            = $this->otherIdentifierForm->editForm($otherIdentifier, $id);
 
@@ -70,11 +72,12 @@ class OtherIdentifierController extends Controller
      */
     public function update(OtherIdentifierRequestManager $otherIdentifierRequestManager, Request $request, $id)
     {
-        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+        $activityData = $this->otherIdentifierManager->getActivityData($id);
+
+        if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
-        $activityData = $this->otherIdentifierManager->getActivityData($id);
         $this->authorizeByRequestType($activityData, 'other_identifier');
         $input = $request->all();
         if ($this->otherIdentifierManager->update($input, $activityData)) {

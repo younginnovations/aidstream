@@ -56,7 +56,6 @@ class LocationController extends Controller
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
-        $activityData = $this->activityManager->getActivityData($id);
         $location     = $this->locationManager->getLocation($id);
         $form         = $this->locationForm->editForm($location, $id);
 
@@ -77,7 +76,6 @@ class LocationController extends Controller
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
-        $activityData = $this->activityManager->getActivityData($id);
         $this->authorizeByRequestType($activityData, 'location');
         $location     = $request->all();
         if ($this->locationManager->update($location, $activityData)) {

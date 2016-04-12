@@ -10,6 +10,7 @@ use App\User;
 use Illuminate\Database\DatabaseManager;
 use Illuminate\Session\SessionManager;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Storage;
@@ -68,6 +69,12 @@ class UserController extends Controller
     {
         $user = $this->user->findOrFail($userId);
 
+        if (Gate::denies('isValidUser', $user)) {
+            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
+        }
+
+        $this->authorize('edit_activity', $user);
+
         return view('User.changeUserName', compact('user'));
     }
 
@@ -107,6 +114,10 @@ class UserController extends Controller
     {
         $user = $this->user->findOrFail($userId);
 
+        if (Gate::denies('isValidUser', $user)) {
+            return redirect()->route('user.profile')->withResponse($this->getNoPrivilegesMessage());
+        }
+
         return view('User.updateUserPassword', compact('user'));
     }
 
@@ -120,6 +131,10 @@ class UserController extends Controller
     {
         $input = Input::all();
         $user  = $this->user->findOrFail($userId);
+
+        if (Gate::denies('isValidUser', $user)) {
+            return redirect()->route('user.profile')->withResponse($this->getNoPrivilegesMessage());
+        }
 
         if (!Hash::check($input['old_password'], $user->password)) {
             $response = ['type' => 'danger', 'code' => ['password_mismatch', ['name' => 'Password']]];
@@ -141,7 +156,12 @@ class UserController extends Controller
      */
     public function editProfile($userId)
     {
-        $user         = $this->user->findOrFail($userId);
+        $user = $this->user->findOrFail($userId);
+
+        if (Gate::denies('isValidUser', $user)) {
+            return redirect()->route('user.profile')->withResponse($this->getNoPrivilegesMessage());
+        }
+
         $organization = $this->organization->findOrFail($this->orgId);
         $baseForm     = new BaseForm();
         $timeZone     = $baseForm->getCodeList('TimeZone', 'Activity', false);
@@ -157,7 +177,13 @@ class UserController extends Controller
      */
     public function updateProfile($userId, ProfileRequest $profileRequest)
     {
-        $input        = $profileRequest->all();
+        $input = $profileRequest->all();
+        $user  = $this->user->findOrFail($userId);
+
+        if (Gate::denies('isValidUser', $user)) {
+            return redirect()->route('user.profile')->withResponse($this->getNoPrivilegesMessage());
+        }
+
         $user         = $this->updateUserProfile($input, $userId);
         $organization = $this->updateOrganizationProfile($input);
         $response     = ($user && $organization) ? ['type' => 'success', 'code' => ['updated', ['name' => 'Profile']]] : [

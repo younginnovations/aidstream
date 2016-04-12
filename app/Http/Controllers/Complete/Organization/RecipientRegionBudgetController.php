@@ -6,6 +6,7 @@ use App\Services\Organization\RecipientRegionBudgetManager;
 use App\Http\Requests\Request;
 use App\Services\RequestManager\Organization\RecipientRegionBudget as RecipientRegionBudgetRequest;
 use App\Services\FormCreator\Organization\RecipientRegionBudget;
+use Illuminate\Support\Facades\Gate;
 
 /**
  * Class OrgRecipientRegionBudgetController
@@ -45,8 +46,10 @@ class RecipientRegionBudgetController extends Controller
      */
     public function index($orgId)
     {
-        if (!$this->userBelongsToOrganization($orgId)) {
-            return redirect()->route('activity.index')->withResponse($this->getNoPrivilegesMessage());
+        $organization = $this->organizationManager->getOrganization($orgId);
+
+        if (Gate::denies('belongsToOrganization', $organization)) {
+            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
         $recipientRegionBudget = $this->recipientRegionBudgetManager->getRecipientRegionBudgetData($orgId);
@@ -63,11 +66,12 @@ class RecipientRegionBudgetController extends Controller
      */
     public function update($orgId, RecipientRegionBudgetRequest $recipientRegionBudgetRequest, Request $request)
     {
-        if (!$this->userBelongsToOrganization($orgId)) {
-            return redirect()->route('activity.index')->withResponse($this->getNoPrivilegesMessage());
+        $organizationData = $this->recipientRegionBudgetManager->getOrganizationData($orgId);
+
+        if (Gate::denies('belongsToOrganization', $organizationData)) {
+            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
-        $organizationData = $this->recipientRegionBudgetManager->getOrganizationData($orgId);
         $this->authorizeByRequestType($organizationData, 'recipient_region_budget');
         $input            = $request->all();
 

@@ -25,6 +25,7 @@
                             <div class="col-xs-12 col-md-4">Email:</div>
                             <div class="col-xs-12 col-md-8">{{$userProfile->email}}</div>
                         </div>
+                        @if (auth()->user()->isAdmin())
                         <div class="col-md-12">
                             <div class="col-xs-12 col-md-4">User permissions:</div>
                             <div class="col-xs-12 col-md-8">
@@ -82,6 +83,7 @@
                                 </div>
                             </div>
                         </div>
+                        @endif
                     </div>
                     <div class="user-action-btn">
                         <a class="btn btn-primary btn-form btn-submit"

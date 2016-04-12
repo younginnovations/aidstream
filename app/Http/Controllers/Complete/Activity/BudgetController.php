@@ -14,6 +14,10 @@ use Illuminate\Support\Facades\Gate;
  */
 class BudgetController extends Controller
 {
+    /**
+     * @var ActivityManager
+     */
+    protected $activityManager;
 
     /**
      * @param BudgetManager   $budgetManager
@@ -28,6 +32,10 @@ class BudgetController extends Controller
         $this->activityManager = $activityManager;
     }
 
+    /**
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function index($id)
     {
         $activityData  = $this->activityManager->getActivityData($id);
@@ -37,12 +45,17 @@ class BudgetController extends Controller
         }
 
         $budget       = $this->budgetManager->getbudgetData($id);
-        $activityData = $this->activityManager->getActivityData($id);
         $form         = $this->budgetForm->editForm($budget, $id);
 
         return view('Activity.budget.edit', compact('form', 'activityData', 'id'));
     }
 
+    /**
+     * @param                      $id
+     * @param Request              $request
+     * @param BudgetRequestManager $budgetRequestManager
+     * @return mixed
+     */
     public function update($id, Request $request, BudgetRequestManager $budgetRequestManager)
     {
         $activityData  = $this->activityManager->getActivityData($id);
@@ -51,7 +64,6 @@ class BudgetController extends Controller
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
-        $activityData = $this->activityManager->getActivityData($id);
         $this->authorizeByRequestType($activityData, 'budget');
         $budget = $request->all();
         if ($this->budgetManager->update($budget, $activityData)) {

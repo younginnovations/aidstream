@@ -54,7 +54,6 @@ class DefaultAidTypeController extends Controller
         }
 
         $defaultAidType = $this->defaultAidTypeManager->getDefaultAidTypeData($id);
-        $activityData   = $this->activityManager->getActivityData($id);
         $form           = $this->defaultAidTypeForm->editForm($defaultAidType, $id);
 
         return view('Activity.defaultAidType.edit', compact('form', 'activityData', 'id'));
@@ -75,7 +74,6 @@ class DefaultAidTypeController extends Controller
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
-        $activityData   = $this->activityManager->getActivityData($id);
         $this->authorizeByRequestType($activityData, 'default_aid_type');
         $defaultAidType = $request->all();
         if ($this->defaultAidTypeManager->update($defaultAidType, $activityData)) {

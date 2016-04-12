@@ -39,9 +39,13 @@ class OrgTotalBudgetController extends Controller
     public function index($orgId)
     {
         $organization = $this->organizationManager->getOrganization($orgId);
+
         if (Gate::denies('belongsToOrganization', $organization)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
+
+        $this->authorize('edit_activity', $organization);
+
         $totalBudget = $this->totalBudgetManager->getOrganizationTotalBudgetData($orgId);
         $form        = $this->totalBudgetForm->editForm($totalBudget, $orgId);
 

@@ -8,6 +8,7 @@ use App\Services\FormCreator\Activity\DocumentLink as DocumentLinkForm;
 use App\Services\RequestManager\Activity\DocumentLink as DocumentLinkRequestManager;
 use App\Http\Requests\Request;
 use Illuminate\Database\DatabaseManager;
+use Illuminate\Support\Facades\Gate;
 
 /**
  * Class DocumentLinkController
@@ -48,12 +49,13 @@ class DocumentLinkController extends Controller
      */
     public function index($id)
     {
-        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+        $activityData = $this->activityManager->getActivityData($id);
+
+        if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
         $documentLink = $this->documentLinkManager->getDocumentLinkData($id);
-        $activityData = $this->activityManager->getActivityData($id);
         $form         = $this->documentLinkForm->editForm($documentLink, $id);
 
         return view('Activity.documentLink.edit', compact('form', 'activityData', 'id'));
@@ -70,11 +72,12 @@ class DocumentLinkController extends Controller
      */
     public function update($id, Request $request, DocumentLinkRequestManager $documentLinkRequestManager, DocumentManager $documentManager, DatabaseManager $database)
     {
-        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+        $activityData  = $this->activityManager->getActivityData($id);
+
+        if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
-        $activityData  = $this->activityManager->getActivityData($id);
         $this->authorizeByRequestType($activityData, 'document_link');
         $documentLinks = $request->all();
 

@@ -81,7 +81,6 @@ class ParticipatingOrganizationController extends Controller
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
-        $activityData = $this->activityManager->getActivityData($id);
         $this->authorizeByRequestType($activityData, 'participating_organization');
         $participatingOrganization = $request->all();
         if (!$this->validateData($request->get('participating_organization'))) {

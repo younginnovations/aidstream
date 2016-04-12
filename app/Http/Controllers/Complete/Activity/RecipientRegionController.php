@@ -88,7 +88,6 @@ class RecipientRegionController extends Controller
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
-        $activityData = $this->activityManager->getActivityData($id);
         $this->authorizeByRequestType($activityData, 'recipient_region');
         $activityTransactions = $this->transactionManager->getTransactions($id);
         $count                = 0;

@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Models\Activity\Activity;
+use App\Models\Organization\Organization;
 use Illuminate\Contracts\Auth\Access\Gate as GateContract;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
@@ -49,7 +51,6 @@ class AuthServiceProvider extends ServiceProvider
             return false;
         });
 
-
         $gate->define('update-status', function ($user, $activity) {
             if ($user->isAdmin() || $user->isSuperAdmin()) {
                 return true;
@@ -58,21 +59,34 @@ class AuthServiceProvider extends ServiceProvider
             return $this->checkUserOwnershipFor($user, $activity);
         });
 
-        $gate->before(
-            function ($user, $ability, $activity = null) {
-                if ($user->isSuperAdmin()) {
-                    return true;
-                } elseif ($user->isAdmin()) {
-                    return $this->checkUserOwnershipFor($user, $activity);
+        $gate->define('isValidUser', function ($user, $currentUser) {
+            return ($user->id == $currentUser->id);
+        });
+
+        $gate->before(function ($user, $ability, $model) {
+            if ($user->isSuperAdmin()) {
+                return true;
+            }
+
+            if ($user->isAdmin()) {
+                if ($model instanceof Organization) {
+                    if ($this->doesUserBelongToOrganization($user, $model)) {
+                        return true;
+                    }
                 }
             }
-        );
+        });
+
 
         foreach ($this->permissions as $permission) {
             $gate->define(
                 $permission,
                 function ($user) use ($permission) {
-                    return $user->hasPermission($permission);
+                    if (($user->isSuperAdmin() || $user->isAdmin())) {
+                        return true;
+                    } else {
+                        return $user->hasPermission($permission);
+                    }
                 }
             );
         }
@@ -86,7 +100,11 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected function checkUserOwnershipFor($user, $activity)
     {
-        return $activity ? ($user->org_id == $activity->organization_id) : false;
+        if ($activity instanceof Activity) {
+            return ($user->org_id == $activity->organization_id);
+        }
+
+        return false;
     }
 
     /**
@@ -97,7 +115,11 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected function doesUserBelongToOrganization($user, $organization)
     {
-        return $organization ? ($user->org_id == $organization->id) : false;
+        if ($organization instanceof Organization) {
+            return ($user->org_id == $organization->id);
+        }
+
+        return false;
     }
 }
 

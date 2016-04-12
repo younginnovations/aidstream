@@ -54,7 +54,6 @@ class DefaultFinanceTypeController extends Controller
         }
 
         $defaultFinanceType = $this->defaultFinanceTypeManager->getDefaultFinanceTypeData($id);
-        $activityData       = $this->activityManager->getActivityData($id);
         $form               = $this->defaultFinanceTypeForm->editForm($defaultFinanceType, $id);
 
         return view('Activity.defaultFinanceType.edit', compact('form', 'activityData', 'id'));
@@ -75,7 +74,6 @@ class DefaultFinanceTypeController extends Controller
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
-        $activityData       = $this->activityManager->getActivityData($id);
         $this->authorizeByRequestType($activityData, 'default_finance_type');
         $defaultFinanceType = $request->all();
         if ($this->defaultFinanceTypeManager->update($defaultFinanceType, $activityData)) {

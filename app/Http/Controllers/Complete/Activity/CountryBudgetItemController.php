@@ -57,7 +57,6 @@ class CountryBudgetItemController extends Controller
         }
 
         $countryBudgetItem = $this->countryBudgetItemManager->getCountryBudgetItemData($id);
-        $activityData      = $this->activityManager->getActivityData($id);
         $form              = $this->countryBudgetItemForm->editForm($countryBudgetItem, $id);
 
         return view('Activity.countryBudgetItem.edit', compact('form', 'activityData', 'id'));
@@ -78,7 +77,6 @@ class CountryBudgetItemController extends Controller
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
-        $activityData = $this->activityManager->getActivityData($id);
         $this->authorizeByRequestType($activityData, 'country_budget_items');
         $countryBudgetItems = $request->all();
         foreach ($countryBudgetItems['country_budget_item'] as &$countryBudgetItem) {

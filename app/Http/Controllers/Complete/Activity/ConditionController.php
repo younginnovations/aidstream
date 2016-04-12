@@ -14,6 +14,11 @@ use Illuminate\Support\Facades\Gate;
  */
 class ConditionController extends Controller
 {
+    /**
+     * @var ActivityManager
+     */
+    protected $activityManager;
+
     function __construct(ConditionManager $conditionManager, ConditionForm $conditionForm, ActivityManager $activityManager)
     {
         $this->middleware('auth');
@@ -31,7 +36,6 @@ class ConditionController extends Controller
         }
 
         $condition    = $this->conditionManager->getConditionData($id);
-        $activityData = $this->activityManager->getActivityData($id);
         $form         = $this->conditionForm->editForm($condition, $id);
 
         return view('Activity.condition.edit', compact('form', 'activityData', 'id'));
@@ -45,7 +49,6 @@ class ConditionController extends Controller
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
-        $activityData = $this->activityManager->getActivityData($id);
         $this->authorizeByRequestType($activityData, 'conditions');
         $condition    = $request->except(['_token', '_method']);
         if ($this->conditionManager->update($condition, $activityData)) {

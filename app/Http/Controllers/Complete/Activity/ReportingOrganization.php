@@ -3,6 +3,7 @@
 use App\Http\Controllers\Controller;
 use App\Models\Activity\Activity;
 use App\Services\Organization\OrganizationManager;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Session;
 
 class ReportingOrganization extends Controller
@@ -22,11 +23,11 @@ class ReportingOrganization extends Controller
      */
     public function index($id, OrganizationManager $organizationManager)
     {
-        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+        $activity = Activity::find($id);
+
+        if (Gate::denies('ownership', $activity)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
-
-        $activity = Activity::find($id);
 
         if ($activity) {
             $reportingOrganization = $organizationManager->getOrganization(Session::get('org_id'))->reporting_org;

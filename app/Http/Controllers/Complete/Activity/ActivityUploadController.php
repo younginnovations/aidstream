@@ -108,11 +108,12 @@ class ActivityUploadController extends Controller
      */
     public function store(Request $request, UploadActivityRequest $uploadActivityRequest, CsvImportValidator $csvImportValidator, IatiIdentifierRepository $iatiIdentifierRepository)
     {
-        $this->authorize('add_activity');
+        $organization       = $this->organizationManager->getOrganization($this->organizationId);
+
+        $this->authorize('add_activity', $organization);
         $settings           = $this->settingsManager->getSettings($this->organizationId);
         $defaultFieldValues = $settings->default_field_values;
         $defaultFieldGroups = $settings->default_field_groups;
-        $organization       = $this->organizationManager->getOrganization($this->organizationId);
 
         if (!isset($organization->reporting_org[0])) {
             $response = ['type' => 'warning', 'code' => ['settings', ['name' => 'activity']]];

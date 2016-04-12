@@ -63,7 +63,7 @@ class OrganizationController extends Controller
         $organization = $this->organizationManager->getOrganization($id);
 
         if (Gate::denies('belongsToOrganization', $organization)) {
-            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
+            return redirect()->route('activity.index')->withResponse($this->getNoPrivilegesMessage());
         }
 
         if (!isset($organization->reporting_org[0])) {
@@ -108,6 +108,7 @@ class OrganizationController extends Controller
     public function updateStatus($id, Request $request)
     {
         $organization = $this->organizationManager->getOrganization($id);
+
         if (Gate::denies('belongsToOrganization', $organization)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
@@ -116,7 +117,7 @@ class OrganizationController extends Controller
         $status = $input['status'];
 
         if ($status == 3) {
-            $this->authorize('publish_activity');
+            $this->authorize('publish_activity', $organization);
         }
         $organization     = $this->organizationManager->getOrganization($id);
         $organizationData = $this->organizationManager->getOrganizationData($id);

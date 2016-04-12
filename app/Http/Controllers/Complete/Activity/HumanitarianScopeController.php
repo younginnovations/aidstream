@@ -24,6 +24,11 @@ class HumanitarianScopeController extends Controller
     protected $humanitarianScopeManager;
 
     /**
+     * @var ActivityManager
+     */
+    protected $activityManager;
+
+    /**
      * @param HumanitarianScopeManager $humanitarianScopeManager
      * @param HumanitarianScope        $humanitarianScopeForm
      * @param ActivityManager          $activityManager
@@ -50,7 +55,6 @@ class HumanitarianScopeController extends Controller
         }
 
         $countryBudgetItem = $this->humanitarianScopeManager->getActivityHumanitarianScopeData($id);
-        $activityData      = $this->activityManager->getActivityData($id);
         $form              = $this->humanitarianScopeForm->editForm($countryBudgetItem, $id);
 
         return view('Activity.humanitarianScope.edit', compact('form', 'activityData', 'id'));
@@ -71,7 +75,6 @@ class HumanitarianScopeController extends Controller
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
-        $activityData      = $this->activityManager->getActivityData($id);
         $this->authorizeByRequestType($activityData, 'humanitarian_scope');
         $humanitarianScope = $request->all();
         if ($this->humanitarianScopeManager->update($humanitarianScope, $activityData)) {

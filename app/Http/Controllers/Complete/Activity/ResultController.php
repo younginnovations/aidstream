@@ -47,7 +47,7 @@ class ResultController extends Controller
      */
     public function index($id)
     {
-        $activityData  = $this->activityManager->getActivityData($id);
+        $activityData = $this->activityManager->getActivityData($id);
 
         if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
@@ -67,7 +67,7 @@ class ResultController extends Controller
      */
     public function show($activityId, $id)
     {
-        $activityData  = $this->activityManager->getActivityData($id);
+        $activityData = $this->activityManager->getActivityData($id);
 
         if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
@@ -88,13 +88,13 @@ class ResultController extends Controller
      */
     public function create($id)
     {
-        $activityData  = $this->activityManager->getActivityData($id);
+        $activityData = $this->activityManager->getActivityData($id);
 
         if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
-        $this->authorize('add_activity');
+        $this->authorize('add_activity', $activityData);
 
         return $this->loadForm($id);
     }
@@ -108,13 +108,13 @@ class ResultController extends Controller
      */
     public function edit($id, $resultId)
     {
-        $activityData  = $this->activityManager->getActivityData($id);
+        $activityData = $this->activityManager->getActivityData($id);
 
         if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
-        $this->authorize('edit_activity');
+        $this->authorize('edit_activity', $activityData);
         $result = $this->resultManager->getResult($resultId, $id);
 
         return $this->loadForm($id, $result, $resultId);
@@ -147,6 +147,12 @@ class ResultController extends Controller
     {
         $resultData     = $request->all();
         $activityResult = $this->resultManager->getResult($resultId, $id);
+        $activityData   = $this->activityManager->getActivityData($id);
+
+        if (Gate::denies('ownership', $activityData)) {
+            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
+        }
+
         $this->authorizeByRequestType($activityResult, 'result', true);
         if ($this->resultManager->update($resultData, $activityResult)) {
             $this->activityManager->resetActivityWorkflow($id);
@@ -167,13 +173,13 @@ class ResultController extends Controller
      */
     public function destroy($id, $resultId)
     {
-        $activityData  = $this->activityManager->getActivityData($id);
+        $activityData = $this->activityManager->getActivityData($id);
 
         if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
-        $this->authorize('delete_activity');
+        $this->authorize('delete_activity', $activityData);
         $activityResult = $this->resultManager->getResult($resultId, $id);
 
         $response = ($this->resultManager->deleteResult($activityResult)) ? ['type' => 'success', 'code' => ['deleted', ['name' => 'Result']]] : [

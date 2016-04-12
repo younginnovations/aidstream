@@ -151,7 +151,6 @@ class ActivityController extends Controller
         }
 
         $this->authorize('add_activity', $organization);
-        $organization = $this->organizationManager->getOrganization($this->organization_id);
         $form         = $duplicate ? $this->identifierForm->duplicate($activityId) : $this->identifierForm->create();
         $settings     = $this->settingsManager->getSettings($this->organization_id);
 
@@ -223,6 +222,10 @@ class ActivityController extends Controller
     public function updateStatus($id, Request $request, ActivityElementValidator $activityElementValidator)
     {
         $activityData = $this->activityManager->getActivityData($id);
+
+        if (Gate::denies('ownership', $activityData)) {
+            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
+        }
 
         $this->authorize('edit_activity', $activityData);
         $input            = $request->all();

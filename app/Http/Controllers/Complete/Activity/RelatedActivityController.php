@@ -51,7 +51,6 @@ class RelatedActivityController extends Controller
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
-        $activityData    = $this->activityManager->getActivityData($id);
         $this->authorizeByRequestType($activityData, 'related_activity');
         $relatedActivity = $request->all();
         if ($this->relatedActivityManager->update($relatedActivity, $activityData)) {

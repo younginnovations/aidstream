@@ -57,7 +57,6 @@ class ActivityScopeController extends Controller
         }
 
         $activityScope = $this->activityScopeManager->getActivityScopeData($id);
-        $activityData  = $this->activityManager->getActivityData($id);
         $form          = $this->activityScopeForm->editForm($activityScope, $id);
 
         return view(
@@ -81,7 +80,6 @@ class ActivityScopeController extends Controller
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
-        $activityData   = $this->activityManager->getActivityData($id);
         $this->authorizeByRequestType($activityData, 'activity_scope');
         $activityStatus = $request->all();
         if ($this->activityScopeManager->update($activityStatus, $activityData)) {

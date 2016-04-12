@@ -54,7 +54,6 @@ class DefaultFlowTypeController extends Controller
         }
 
         $defaultFlowType = $this->defaultFlowTypeManager->getDefaultFlowTypeData($id);
-        $activityData    = $this->activityManager->getActivityData($id);
         $form            = $this->defaultFlowTypeForm->editForm($defaultFlowType, $id);
 
         return view('Activity.defaultFlowType.edit', compact('form', 'activityData', 'id'));
@@ -75,7 +74,6 @@ class DefaultFlowTypeController extends Controller
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
-        $activityData    = $this->activityManager->getActivityData($id);
         $this->authorizeByRequestType($activityData, 'default_flow_type');
         $defaultFlowType = $request->all();
         if ($this->defaultFlowTypeManager->update($defaultFlowType, $activityData)) {

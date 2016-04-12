@@ -54,7 +54,6 @@ class CapitalSpendController extends Controller
         }
 
         $capitalSpend = $this->capitalSpendManager->getCapitalSpendData($id);
-        $activityData = $this->activityManager->getActivityData($id);
         $form         = $this->capitalSpendForm->editForm($capitalSpend, $id);
 
         return view('Activity.capitalSpend.edit', compact('form', 'activityData', 'id'));
@@ -75,7 +74,6 @@ class CapitalSpendController extends Controller
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
-        $activityData = $this->activityManager->getActivityData($id);
         $this->authorizeByRequestType($activityData, 'capital_spend');
         $capitalSpend = $request->all();
         if ($this->capitalSpendManager->update($capitalSpend, $activityData)) {

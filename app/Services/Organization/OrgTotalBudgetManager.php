@@ -6,6 +6,7 @@ use App;
 use App\Models\Organization\OrganizationData;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Logging\Log;
+use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class OrgTotalBudgetManager
@@ -70,7 +71,7 @@ class OrgTotalBudgetManager
 
     /**
      * @param $id
-     * @return model
+     * @return Model
      */
     public function getOrganizationData($id)
     {
@@ -79,7 +80,7 @@ class OrgTotalBudgetManager
 
     /**
      * @param $id
-     * @return model
+     * @return Model
      */
     public function getOrganizationTotalBudgetData($id)
     {

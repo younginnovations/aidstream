@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 use App\Services\Organization\OrganizationManager;
 use App\Services\Organization\OrgReportingOrgManager;
 use App\Services\RequestManager\Organization\CreateOrgReportingOrgRequestManager;
+use Illuminate\Support\Facades\Gate;
 use Session;
 use URL;
 use App\Http\Requests\Request;
@@ -47,11 +48,12 @@ class OrgReportingOrgController extends Controller
      */
     public function index($organizationId)
     {
-        if (!$this->userBelongsToOrganization($organizationId)) {
+        $organization          = $this->organizationManager->getOrganization($organizationId);
+
+        if (Gate::denies('belongsToOrganization', $organization)) {
             return redirect()->route('activity.index')->withResponse($this->getNoPrivilegesMessage());
         }
 
-        $organization          = $this->organizationManager->getOrganization($organizationId);
         $reportingOrganization = $organization->reporting_org;
         $form                  = $this->orgReportingOrgFormCreator->editForm($reportingOrganization, $organization);
 
@@ -71,13 +73,15 @@ class OrgReportingOrgController extends Controller
         CreateOrgReportingOrgRequestManager $createOrgReportingOrgRequestManager,
         Request $request
     ) {
-        if (!$this->userBelongsToOrganization($organizationId)) {
+        $organization = $this->organizationManager->getOrganization($organizationId);
+
+        if (Gate::denies('belongsToOrganization', $organization)) {
             return redirect()->route('activity.index')->withResponse($this->getNoPrivilegesMessage());
         }
 
-        $this->authorize('edit_activity');
+        $this->authorize('edit_activity', $organization);
         $input        = $request->all();
-        $organization = $this->organizationManager->getOrganization($organizationId);
+
         $this->orgReportingOrgManager->update($input, $organization);
         $this->organizationManager->resetStatus($organizationId);
 

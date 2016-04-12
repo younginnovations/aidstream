@@ -40,6 +40,7 @@ class NameController extends Controller
     public function index($orgId)
     {
         $organization = $this->organizationManager->getOrganization($orgId);
+
         if (Gate::denies('belongsToOrganization', $organization)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
@@ -60,9 +61,12 @@ class NameController extends Controller
     public function update($orgId, NameRequestManager $nameRequestManager, Request $request)
     {
         $organization = $this->organizationManager->getOrganization($orgId);
+
         if (Gate::denies('belongsToOrganization', $organization)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
+
+        $this->authorize('edit_activity', $organization);
 
         $organizationData = $this->nameManager->getOrganizationData($orgId);
         $this->authorizeByRequestType($organizationData, 'name');
