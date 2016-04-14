@@ -24,10 +24,10 @@ class DevelopmentServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->app->register('Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider');
         if (getenv('APP_ENV') == "local"){
             $this->app->register('Barryvdh\Debugbar\ServiceProvider');
             $this->app->register(IdeHelperServiceProvider::class);
-            $this->app->register('Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider');
         }
     }
 }
