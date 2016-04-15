@@ -9,6 +9,7 @@ use App\Services\Organization\OrganizationManager;
 use App\Services\RequestManager\Activity\IatiIdentifierRequestManager;
 use App\Http\Requests\Request;
 use Illuminate\Session\SessionManager;
+use Illuminate\Support\Facades\Gate;
 
 class IatiIdentifierController extends Controller
 {
@@ -71,7 +72,9 @@ class IatiIdentifierController extends Controller
      */
     function index($id)
     {
-        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+        $activityData = $this->activityManager->getActivityData($id);
+
+        if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
@@ -91,7 +94,9 @@ class IatiIdentifierController extends Controller
      */
     public function update($activityId, IatiIdentifierRequestManager $iatiIdentifierRequestManager, Request $request)
     {
-        if (!$this->currentUserIsAuthorizedForActivity($activityId)) {
+        $activityData     = $this->activityManager->getActivityData($activityId);
+
+        if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 

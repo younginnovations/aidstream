@@ -6,7 +6,8 @@ use App\Http\Requests\UserRequest;
 use App\Models\UserActivity;
 use App\Services\Organization\OrganizationManager;
 use App\User;
-use Input;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Input;
 use Illuminate\Session\SessionManager as Session;
 use Illuminate\Contracts\Logging\Log as DbLogger;
 
@@ -119,6 +120,10 @@ class AdminController extends Controller
     {
         $userProfile = $this->user->findOrNew($userId);
 
+        if (!in_array($userId, $this->organizationManager->getOrganizationUsers($this->org_id))) {
+            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
+        }
+
         return view('admin.viewUserProfile', compact('userProfile'));
     }
 
@@ -128,6 +133,10 @@ class AdminController extends Controller
      */
     public function deleteUser($userId)
     {
+        if (!in_array($userId, $this->organizationManager->getOrganizationUsers($this->org_id))) {
+            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
+        }
+
         $user     = $this->user->findOrFail($userId);
         $response = ($user->delete($user)) ? ['type' => 'success', 'code' => ['deleted', ['name' => 'User']]] : ['type' => 'danger', 'code' => ['delete_failed', ['name' => 'user']]];
         $this->dbLogger->activity("admin.user_deleted", ['orgId' => $this->org_id, 'userId' => $userId]);
@@ -136,12 +145,16 @@ class AdminController extends Controller
     }
 
     /**
-     * @param $userID
+     * @param $userId
      * @return \Illuminate\View\View
      */
-    public function resetUserPassword($userID)
+    public function resetUserPassword($userId)
     {
-        $user = $this->user->findOrFail($userID);
+        if (!in_array($userId, $this->organizationManager->getOrganizationUsers($this->org_id))) {
+            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
+        }
+
+        $user = $this->user->findOrFail($userId);
 
         return view('admin.resetUserPassword', compact('user'));
     }
@@ -154,6 +167,10 @@ class AdminController extends Controller
      */
     public function updateUserPassword($userId, UpdatePasswordRequest $updatePasswordRequest)
     {
+        if (!in_array($userId, $this->organizationManager->getOrganizationUsers($this->org_id))) {
+            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
+        }
+
         $input          = Input::all();
         $user           = $this->user->findOrFail($userId);
         $user->password = bcrypt($input['password']);
@@ -170,6 +187,10 @@ class AdminController extends Controller
     {
         $user = $this->user->findOrFail($userId);
 
+        if (!in_array($userId, $this->organizationManager->getOrganizationUsers($this->org_id))) {
+            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
+        }
+
         return view('admin.editUserPermission', compact('user'));
     }
 
@@ -180,6 +201,10 @@ class AdminController extends Controller
      */
     public function updateUserPermission($userId)
     {
+        if (!in_array($userId, $this->organizationManager->getOrganizationUsers($this->org_id))) {
+            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
+        }
+
         $input                 = Input::all();
         $user                  = $this->user->findOrFail($userId);
         $user->user_permission = isset($input['user_permission']) ? $input['user_permission'] : [];

@@ -8,6 +8,7 @@ use App\Services\Organization\OrganizationManager;
 use App\Services\FormCreator\Organization\OrgReportingOrgForm;
 use App\Http\Requests\Request;
 use App\Services\Organization\OrgNameManager;
+use Illuminate\Support\Facades\Gate;
 
 /**
  * Class OrganizationController
@@ -59,11 +60,11 @@ class OrganizationController extends Controller
      */
     public function show($id)
     {
-        if (!$this->userBelongsToOrganization($id)) {
+        $organization = $this->organizationManager->getOrganization($id);
+
+        if (Gate::denies('belongsToOrganization', $organization)) {
             return redirect()->route('activity.index')->withResponse($this->getNoPrivilegesMessage());
         }
-
-        $organization = $this->organizationManager->getOrganization($id);
 
         if (!isset($organization->reporting_org[0])) {
             $response = ['type' => 'warning', 'code' => ['settings', ['name' => 'organization']]];
@@ -106,15 +107,17 @@ class OrganizationController extends Controller
      */
     public function updateStatus($id, Request $request)
     {
-        if (!$this->userBelongsToOrganization($id)) {
-            return redirect()->route('activity.index')->withResponse($this->getNoPrivilegesMessage());
+        $organization = $this->organizationManager->getOrganization($id);
+
+        if (Gate::denies('belongsToOrganization', $organization)) {
+            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
         $input  = $request->all();
         $status = $input['status'];
 
         if ($status == 3) {
-            $this->authorize('publish_activity');
+            $this->authorize('publish_activity', $organization);
         }
         $organization     = $this->organizationManager->getOrganization($id);
         $organizationData = $this->organizationManager->getOrganizationData($id);
@@ -163,7 +166,7 @@ class OrganizationController extends Controller
     public function showIdentifier($id)
     {
         if (!$this->userBelongsToOrganization($id)) {
-            return redirect()->route('activity.index')->withResponse($this->getNoPrivilegesMessage());
+            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
         $organization = $this->organizationManager->getOrganization($id);

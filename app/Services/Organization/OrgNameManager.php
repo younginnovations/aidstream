@@ -3,8 +3,10 @@
 use App\Core\Version;
 use App;
 use App\Models\Organization\OrganizationData;
+use Exception;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Logging\Log;
+use Illuminate\Database\Eloquent\Model;
 
 class OrgNameManager
 {
@@ -38,7 +40,7 @@ class OrgNameManager
     /**
      * write brief description
      * @param $id
-     * @return model
+     * @return Model
      */
     public function getOrganizationData($id)
     {
@@ -48,7 +50,7 @@ class OrgNameManager
     /**
      * write brief description
      * @param $id
-     * @return model
+     * @return Model
      */
     public function getOrganizationNameData($id)
     {

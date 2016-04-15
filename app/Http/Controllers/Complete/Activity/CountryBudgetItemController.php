@@ -6,6 +6,7 @@ use App\Services\Activity\CountryBudgetItemManager;
 use App\Services\FormCreator\Activity\CountryBudgetItem as CountryBudgetItemForm;
 use App\Services\RequestManager\Activity\CountryBudgetItem as CountryBudgetItemRequestManager;
 use App\Http\Requests\Request;
+use Illuminate\Support\Facades\Gate;
 
 /**
  * Class CountryBudgetItemController
@@ -49,12 +50,13 @@ class CountryBudgetItemController extends Controller
      */
     public function index($id)
     {
-        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+        $activityData  = $this->activityManager->getActivityData($id);
+
+        if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
         $countryBudgetItem = $this->countryBudgetItemManager->getCountryBudgetItemData($id);
-        $activityData      = $this->activityManager->getActivityData($id);
         $form              = $this->countryBudgetItemForm->editForm($countryBudgetItem, $id);
 
         return view('Activity.countryBudgetItem.edit', compact('form', 'activityData', 'id'));
@@ -69,11 +71,12 @@ class CountryBudgetItemController extends Controller
      */
     public function update($id, Request $request, CountryBudgetItemRequestManager $countryBudgetItemRequestManager)
     {
-        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+        $activityData  = $this->activityManager->getActivityData($id);
+
+        if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
-        $activityData = $this->activityManager->getActivityData($id);
         $this->authorizeByRequestType($activityData, 'country_budget_items');
         $countryBudgetItems = $request->all();
         foreach ($countryBudgetItems['country_budget_item'] as &$countryBudgetItem) {

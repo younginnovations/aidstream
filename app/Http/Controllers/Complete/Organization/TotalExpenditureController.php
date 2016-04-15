@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 use App\Services\Organization\OrganizationManager;
 use App\Services\Organization\TotalExpenditureManager;
 use App\Services\RequestManager\Organization\TotalExpenditureRequestManager;
+use Illuminate\Support\Facades\Gate;
 use Session;
 use URL;
 use App\Http\Requests\Request;
@@ -17,8 +18,21 @@ use App\Services\FormCreator\Organization\TotalExpenditure as FormBuilder;
 class TotalExpenditureController extends Controller
 {
 
+    /**
+     * @var
+     */
     protected $formBuilder;
+
+    /**
+     * @var OrganizationManager
+     */
     protected $organizationManager;
+
+    /**
+     * @var FormBuilder
+     */
+    protected $totalExpenditureForm;
+
     /**
      * @var TotalExpenditureManager
      */
@@ -46,8 +60,10 @@ class TotalExpenditureController extends Controller
      */
     public function index($orgId)
     {
-        if (!$this->userBelongsToOrganization($orgId)) {
-            return redirect()->route('activity.index')->withResponse($this->getNoPrivilegesMessage());
+        $organization = $this->organizationManager->getOrganization($orgId);
+
+        if (Gate::denies('belongsToOrganization', $organization)) {
+            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
         $totalExpenditure = $this->totalExpenditureManager->getOrganizationTotalExpenditureData($orgId);
@@ -65,8 +81,10 @@ class TotalExpenditureController extends Controller
      */
     public function update($orgId, Request $request, TotalExpenditureRequestManager $expenditureRequestManager)
     {
-        if (!$this->userBelongsToOrganization($orgId)) {
-            return redirect()->route('activity.index')->withResponse($this->getNoPrivilegesMessage());
+        $organizationData = $this->totalExpenditureManager->getOrganizationData($orgId);
+
+        if (Gate::denies('belongsToOrganization', $organizationData)) {
+            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
         $organizationData = $this->totalExpenditureManager->getOrganizationData($orgId);

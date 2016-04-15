@@ -6,6 +6,7 @@ use App\Services\Activity\PolicyMarkerManager;
 use App\Services\FormCreator\Activity\PolicyMarker as PolicyMarkerForm;
 use App\Services\RequestManager\Activity\PolicyMarker as PolicyMarkerRequestManager;
 use App\Http\Requests\Request;
+use Illuminate\Support\Facades\Gate;
 
 /**
  * Class PolicyMarkerController
@@ -33,7 +34,9 @@ class PolicyMarkerController extends Controller
      */
     public function index($id)
     {
-        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+        $activityData  = $this->activityManager->getActivityData($id);
+
+        if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
@@ -52,11 +55,12 @@ class PolicyMarkerController extends Controller
      */
     public function update($id, Request $request, PolicyMarkerRequestManager $policyMarkerRequestManager)
     {
-        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+        $activityData  = $this->activityManager->getActivityData($id);
+
+        if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
-        $activityData = $this->activityManager->getActivityData($id);
         $this->authorizeByRequestType($activityData, 'policy_marker');
         $policyMarker = $request->all();
         if ($this->policyMarkerManager->update($policyMarker, $activityData)) {

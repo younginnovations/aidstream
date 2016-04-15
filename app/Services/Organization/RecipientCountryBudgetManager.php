@@ -6,6 +6,7 @@ use App;
 use App\Models\Organization\OrganizationData;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Logging\Log;
+use Illuminate\Database\Eloquent\Model;
 
 class RecipientCountryBudgetManager
 {
@@ -74,7 +75,7 @@ class RecipientCountryBudgetManager
     /**
      * return organization data
      * @param $id
-     * @return model
+     * @return Model
      */
     public function getOrganizationData($id)
     {

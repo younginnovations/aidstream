@@ -6,6 +6,7 @@ use App\Services\FormCreator\Activity\PlannedDisbursement as PlannedDisbursement
 use App\Services\Activity\ActivityManager;
 use App\Http\Requests\Request;
 use App\Services\RequestManager\Activity\PlannedDisbursement as PlannedDisbursementRequestManager;
+use Illuminate\Support\Facades\Gate;
 
 
 /**
@@ -34,7 +35,9 @@ class PlannedDisbursementController extends Controller
      */
     public function index($id)
     {
-        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+        $activityData  = $this->activityManager->getActivityData($id);
+
+        if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
@@ -53,11 +56,12 @@ class PlannedDisbursementController extends Controller
      */
     public function update($id, Request $request, PlannedDisbursementRequestManager $plannedDisbursementRequestManager)
     {
-        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+        $activityData  = $this->activityManager->getActivityData($id);
+
+        if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
-        $activityData        = $this->activityManager->getActivityData($id);
         $this->authorizeByRequestType($activityData, 'planned_disbursement');
         $plannedDisbursement = $request->all();
         if ($this->plannedDisbursementManager->update($plannedDisbursement, $activityData)) {

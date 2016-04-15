@@ -6,6 +6,7 @@ use App;
 use App\Models\Organization\OrganizationData;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Logging\Log;
+use Illuminate\Database\Eloquent\Model;
 
 class DocumentLinkManager
 {
@@ -74,7 +75,7 @@ class DocumentLinkManager
     /**
      * write brief description
      * @param $id
-     * @return model
+     * @return Model
      */
     public function getOrganizationData($id)
     {
@@ -85,7 +86,7 @@ class DocumentLinkManager
     /**
      * write brief description
      * @param $id
-     * @return model
+     * @return Model
      */
     public function getDocumentLinkData($id)
     {

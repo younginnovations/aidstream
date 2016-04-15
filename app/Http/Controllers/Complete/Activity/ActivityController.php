@@ -14,10 +14,11 @@ use App\Http\Requests\Request;
 use Illuminate\Session\SessionManager;
 use App\Services\Activity\ActivityManager;
 use App\Services\FormCreator\Activity\Identifier;
-use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Gate;
 use App\Http\API\CKAN\CkanClient;
 use App\User;
 use Psr\Log\LoggerInterface;
+
 
 /**
  * Class ActivityController
@@ -143,12 +144,13 @@ class ActivityController extends Controller
      */
     public function create($duplicate = false, $activityId = 0)
     {
-        if ($activityId && !$this->currentUserIsAuthorizedForActivity($activityId)) {
+        $organization = $this->organizationManager->getOrganization($this->organization_id);
+
+        if (Gate::denies('create', $organization)) {
             return redirect()->route('activity.index')->withResponse($this->getNoPrivilegesMessage());
         }
 
-        $this->authorize('add_activity');
-        $organization = $this->organizationManager->getOrganization($this->organization_id);
+        $this->authorize('add_activity', $organization);
         $form         = $duplicate ? $this->identifierForm->duplicate($activityId) : $this->identifierForm->create();
         $settings     = $this->settingsManager->getSettings($this->organization_id);
 
@@ -171,7 +173,8 @@ class ActivityController extends Controller
      */
     public function store(IatiIdentifierRequest $request)
     {
-        $this->authorize('add_activity');
+        $organization = $this->organizationManager->getOrganization($this->organization_id);
+        $this->authorize('add_activity', $organization);
         $settings           = $this->settingsManager->getSettings($this->organization_id);
         $defaultFieldValues = $settings->default_field_values;
         $input              = $request->all();
@@ -195,11 +198,12 @@ class ActivityController extends Controller
      */
     public function show($id)
     {
-        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+        $activityData = $this->activityManager->getActivityData($id);
+
+        if (Gate::denies('ownership', $activityData)) {
             return redirect()->route('activity.index')->withResponse($this->getNoPrivilegesMessage());
         }
 
-        $activityData                    = $this->activityManager->getActivityData($id);
         $activityDataList                = $activityData->activity_data_list;
         $activityResult                  = $this->resultManager->getResults($id)->toArray();
         $activityTransaction             = $this->transactionManager->getTransactions($id)->toArray();
@@ -217,17 +221,20 @@ class ActivityController extends Controller
      */
     public function updateStatus($id, Request $request, ActivityElementValidator $activityElementValidator)
     {
-        if (!$this->currentUserIsAuthorizedForActivity($id)) {
-            return redirect()->route('activity.index')->withResponse($this->getNoPrivilegesMessage());
+        $activityData = $this->activityManager->getActivityData($id);
+
+        if (Gate::denies('ownership', $activityData)) {
+            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
-        $this->authorize('edit_activity');
+        $this->authorize('edit_activity', $activityData);
         $input            = $request->all();
         $activityWorkflow = $input['activity_workflow'];
+
         if ($activityWorkflow == 3) {
-            $this->authorize('publish_activity');
+            $this->authorize('publish_activity', $activityData);
         }
-        $activityData    = $this->activityManager->getActivityData($id);
+
         $settings        = $this->settingsManager->getSettings($activityData['organization_id']);
         $transactionData = $this->activityManager->getTransactionData($id);
         $resultData      = $this->activityManager->getResultData($id);
@@ -290,12 +297,14 @@ class ActivityController extends Controller
      */
     public function destroy($id)
     {
-        if (!$this->currentUserIsAuthorizedForActivity($id)) {
-            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
+        $activity = $this->activityManager->getActivityData($id);
+
+        if (Gate::denies('ownership', $activity)) {
+            return redirect()->route('activity.index')->withResponse($this->getNoPrivilegesMessage());
         }
 
-        $this->authorize('delete_activity');
-        $activity = $this->activityManager->getActivityData($id);
+        $this->authorize('delete_activity', $activity);
+
         $response = ($this->activityManager->destroy($activity)) ? ['type' => 'success', 'code' => ['deleted', ['name' => 'Activity']]] : [
             'type' => 'danger',
             'code' => ['delete_failed', ['name' => 'Activity']]
@@ -310,11 +319,13 @@ class ActivityController extends Controller
      */
     public function deletePublishedFile($id)
     {
-        if (!$this->currentUserIsAuthorizedToDelete($id)) {
+        $file = $this->getActivityPublishedFile($id);
+
+        if (Gate::denies('ownership', $file)) {
             return redirect()->route('activity.index')->withResponse($this->getNoPrivilegesMessage());
         }
 
-        $this->authorize('delete_activity');
+        $this->authorize('delete_activity', $file);
         $result   = $this->activityManager->deletePublishedFile($id);
         $message  = $result ? 'File deleted successfully' : 'File couldn\'t be deleted.';
         $type     = $result ? 'success' : 'danger';
@@ -330,11 +341,13 @@ class ActivityController extends Controller
      */
     public function changeActivityDefault($activityId)
     {
-        if (!$this->currentUserIsAuthorizedForActivity($activityId)) {
-            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
+        $activityData = $this->activityManager->getActivityData($activityId);
+
+        if (Gate::denies('ownership', $activityData)) {
+            return redirect()->route('activity.index')->withResponse($this->getNoPrivilegesMessage());
         }
 
-        $activityData       = $this->activityManager->getActivityData($activityId);
+        $this->authorize('edit_activity', $activityData);
         $defaultFieldValues = $activityData->default_field_values;
         $form               = $this->changeActivityDefaultForm->edit($defaultFieldValues, $activityId);
 
@@ -350,12 +363,13 @@ class ActivityController extends Controller
      */
     public function updateActivityDefault($activityId, Request $request, ChangeActivityDefaultRequest $changeActivityDefaultRequest)
     {
-        if (!$this->currentUserIsAuthorizedForActivity($activityId)) {
-            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
+        $activityData = $this->activityManager->getActivityData($activityId);
+
+        if (Gate::denies('ownership', $activityData)) {
+            return redirect()->route('activity.index')->withResponse($this->getNoPrivilegesMessage());
         }
 
-        $this->authorize('edit_activity');
-        $activityData               = $this->activityManager->getActivityData($activityId);
+        $this->authorize('edit_activity', $activityData);
         $settings                   = $this->settingsManager->getSettings($this->organization_id);
         $SettingsDefaultFieldValues = $settings->default_field_values;
         $defaultFieldValues         = ($activityData->default_field_values[0]) ? $activityData->default_field_values[0] : $SettingsDefaultFieldValues[0];
@@ -471,10 +485,12 @@ class ActivityController extends Controller
      */
     public function duplicateActivity($activityId)
     {
-        if (!$this->currentUserIsAuthorizedForActivity($activityId)) {
+        $activityData                   = $this->activityManager->getActivityData($activityId);
+
+        if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
-
+// create permission
         return $this->create(true, $activityId);
     }
 
@@ -486,12 +502,13 @@ class ActivityController extends Controller
      */
     public function duplicateActivityAction($activityId, IatiIdentifierRequest $request)
     {
-        if (!$this->currentUserIsAuthorizedForActivity($activityId)) {
-            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
+        $activityData                   = $this->activityManager->getActivityData($activityId);
+
+        if (Gate::denies('ownership', $activityData)) {
+            return redirect()->route('activity.index')->withResponse($this->getNoPrivilegesMessage());
         }
 
-        $this->authorize('add_activity');
-        $activityData                   = $this->activityManager->getActivityData($activityId);
+        $this->authorize('add_activity', $activityData);
         $newItem                        = $activityData->replicate();
         $input                          = $request->all();
         $newItem->identifier            = ["activity_identifier" => $input['activity_identifier'], "iati_identifier_text" => $input['iati_identifier_text']];

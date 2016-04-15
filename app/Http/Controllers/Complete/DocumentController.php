@@ -2,6 +2,7 @@
 
 use App\Http\Requests\Request;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\Controller;
 use App\Services\DocumentManager;
@@ -86,6 +87,11 @@ class DocumentController extends Controller
     public function destroy($id)
     {
         $document = $this->documentManager->getDocumentById($id);
+
+        if (Gate::denies('ownership', $document)) {
+            return redirect()->route('activity.index')->withResponse($this->getNoPrivilegesMessage());
+        }
+
         $response = ($document->delete()) ? ['type' => 'success', 'code' => ['deleted', ['name' => 'Document']]] : [
             'type' => 'danger',
             'code' => ['delete_failed', ['name' => 'Document']]

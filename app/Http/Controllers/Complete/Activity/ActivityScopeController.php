@@ -6,6 +6,7 @@ use App\Services\Activity\ActivityManager;
 use App\Services\FormCreator\Activity\ActivityScope as ActivityScopeForm;
 use App\Services\RequestManager\Activity\ActivityScope as ActivityScopeRequestManager;
 use App\Http\Requests\Request;
+use Illuminate\Support\Facades\Gate;
 
 /**
  * Class ActivityScopeController
@@ -49,12 +50,13 @@ class ActivityScopeController extends Controller
      */
     public function index($id)
     {
-        if (!$this->currentUserIsAuthorizedForActivity($id)) {
-            return redirect()->route('activity.index')->withResponse($this->getNoPrivilegesMessage());
+        $activityData  = $this->activityManager->getActivityData($id);
+
+        if (Gate::denies('ownership', $activityData)) {
+            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
         $activityScope = $this->activityScopeManager->getActivityScopeData($id);
-        $activityData  = $this->activityManager->getActivityData($id);
         $form          = $this->activityScopeForm->editForm($activityScope, $id);
 
         return view(
@@ -72,11 +74,12 @@ class ActivityScopeController extends Controller
      */
     public function update($id, Request $request, ActivityScopeRequestManager $activityScopeRequestManager)
     {
-        if (!$this->currentUserIsAuthorizedForActivity($id)) {
-            return redirect()->route('activity.index')->withResponse($this->getNoPrivilegesMessage());
+        $activityData  = $this->activityManager->getActivityData($id);
+
+        if (Gate::denies('ownership', $activityData)) {
+            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
-        $activityData   = $this->activityManager->getActivityData($id);
         $this->authorizeByRequestType($activityData, 'activity_scope');
         $activityStatus = $request->all();
         if ($this->activityScopeManager->update($activityStatus, $activityData)) {

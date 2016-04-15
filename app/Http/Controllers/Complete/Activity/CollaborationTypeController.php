@@ -6,6 +6,7 @@ use App\Services\Activity\CollaborationTypeManager;
 use App\Services\FormCreator\Activity\CollaborationType as CollaborationTypeForm;
 use App\Services\RequestManager\Activity\CollaborationType as CollaborationTypeRequestManager;
 use App\Http\Requests\Request;
+use Illuminate\Support\Facades\Gate;
 
 /**
  * Class CollaborationTypeController
@@ -46,12 +47,13 @@ class CollaborationTypeController extends Controller
      */
     public function  index($id)
     {
-        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+        $activityData  = $this->activityManager->getActivityData($id);
+
+        if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
         $collaborationType = $this->collaborationTypeManager->getCollaborationTypeData($id);
-        $activityData      = $this->activityManager->getActivityData($id);
         $form              = $this->collaborationTypeForm->editForm($collaborationType, $id);
 
         return view('Activity.collaborationType.edit', compact('form', 'activityData', 'id'));
@@ -66,11 +68,12 @@ class CollaborationTypeController extends Controller
      */
     public function update($id, Request $request, CollaborationTypeRequestManager $collaborationTypeRequestManager)
     {
-        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+        $activityData  = $this->activityManager->getActivityData($id);
+
+        if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
-        $activityData      = $this->activityManager->getActivityData($id);
         $this->authorizeByRequestType($activityData, 'collaboration_type');
         $collaborationType = $request->all();
         if ($this->collaborationTypeManager->update($collaborationType, $activityData)) {

@@ -6,6 +6,7 @@ use App\Services\Activity\ResultManager;
 use App\Services\FormCreator\Activity\Result as ResultForm;
 use App\Services\RequestManager\Activity\Result as ResultRequestManager;
 use App\Http\Requests\Request;
+use Illuminate\Support\Facades\Gate;
 
 /**
  * Class ResultController
@@ -46,7 +47,9 @@ class ResultController extends Controller
      */
     public function index($id)
     {
-        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+        $activityData = $this->activityManager->getActivityData($id);
+
+        if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
@@ -64,11 +67,9 @@ class ResultController extends Controller
      */
     public function show($activityId, $id)
     {
-        if (!$this->currentUserIsAuthorizedForActivity($activityId)) {
-            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
-        }
+        $activityData = $this->activityManager->getActivityData($id);
 
-        if (!$this->currentUserIsAuthorizedForResult($id)) {
+        if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
@@ -87,11 +88,13 @@ class ResultController extends Controller
      */
     public function create($id)
     {
-        if (!$this->currentUserIsAuthorizedForActivity($id)) {
-            return redirect()->route('activity.index')->withResponse($this->getNoPrivilegesMessage());
+        $activityData = $this->activityManager->getActivityData($id);
+
+        if (Gate::denies('ownership', $activityData)) {
+            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
-        $this->authorize('add_activity');
+        $this->authorize('add_activity', $activityData);
 
         return $this->loadForm($id);
     }
@@ -105,11 +108,13 @@ class ResultController extends Controller
      */
     public function edit($id, $resultId)
     {
-        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+        $activityData = $this->activityManager->getActivityData($id);
+
+        if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
-        $this->authorize('edit_activity');
+        $this->authorize('edit_activity', $activityData);
         $result = $this->resultManager->getResult($resultId, $id);
 
         return $this->loadForm($id, $result, $resultId);
@@ -142,6 +147,12 @@ class ResultController extends Controller
     {
         $resultData     = $request->all();
         $activityResult = $this->resultManager->getResult($resultId, $id);
+        $activityData   = $this->activityManager->getActivityData($id);
+
+        if (Gate::denies('ownership', $activityData)) {
+            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
+        }
+
         $this->authorizeByRequestType($activityResult, 'result', true);
         if ($this->resultManager->update($resultData, $activityResult)) {
             $this->activityManager->resetActivityWorkflow($id);
@@ -162,15 +173,13 @@ class ResultController extends Controller
      */
     public function destroy($id, $resultId)
     {
-        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+        $activityData = $this->activityManager->getActivityData($id);
+
+        if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
-        if (!$this->currentUserIsAuthorizedFor($id)) {
-            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
-        }
-
-        $this->authorize('delete_activity');
+        $this->authorize('delete_activity', $activityData);
         $activityResult = $this->resultManager->getResult($resultId, $id);
 
         $response = ($this->resultManager->deleteResult($activityResult)) ? ['type' => 'success', 'code' => ['deleted', ['name' => 'Result']]] : [

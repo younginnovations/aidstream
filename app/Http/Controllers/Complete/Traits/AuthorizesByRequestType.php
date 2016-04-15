@@ -29,10 +29,10 @@ trait AuthorizesByRequestType
     protected function generalAuthorization(Model $model, $column)
     {
         if (is_null($model->$column) || $model->$column == "" ) {
-            return $this->authorize('add_activity');
+            return $this->authorize('add_activity', $model);
         }
 
-        return $this->authorize('edit_activity');
+        return $this->authorize('edit_activity', $model);
     }
 
     /**
@@ -43,10 +43,10 @@ trait AuthorizesByRequestType
     protected function authorizeForResults(Model $model, $column)
     {
         if (!array_key_exists($column, $model->toArray())) {
-            return $this->authorize('add_activity');
+            return $this->authorize('add_activity', $model);
         }
 
-        return $this->authorize('edit_activity');
+        return $this->authorize('edit_activity', $model);
     }
 }
 

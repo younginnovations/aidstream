@@ -6,6 +6,7 @@ use App\Services\Activity\HumanitarianScopeManager;
 use App\Services\FormCreator\Activity\HumanitarianScope;
 use App\Services\RequestManager\Activity\HumanitarianScope as HumanitarianScopeRequest;
 use App\Http\Requests\Request;
+use Illuminate\Support\Facades\Gate;
 
 /**
  * Class HumanitarianScopeController
@@ -21,6 +22,11 @@ class HumanitarianScopeController extends Controller
      * @var HumanitarianScopeManager
      */
     protected $humanitarianScopeManager;
+
+    /**
+     * @var ActivityManager
+     */
+    protected $activityManager;
 
     /**
      * @param HumanitarianScopeManager $humanitarianScopeManager
@@ -42,12 +48,13 @@ class HumanitarianScopeController extends Controller
      */
     public function index($id)
     {
-        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+        $activityData  = $this->activityManager->getActivityData($id);
+
+        if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
         $countryBudgetItem = $this->humanitarianScopeManager->getActivityHumanitarianScopeData($id);
-        $activityData      = $this->activityManager->getActivityData($id);
         $form              = $this->humanitarianScopeForm->editForm($countryBudgetItem, $id);
 
         return view('Activity.humanitarianScope.edit', compact('form', 'activityData', 'id'));
@@ -62,11 +69,12 @@ class HumanitarianScopeController extends Controller
      */
     public function update($id, Request $request, HumanitarianScopeRequest $humanitarianScopeRequest)
     {
-        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+        $activityData  = $this->activityManager->getActivityData($id);
+
+        if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
-        $activityData      = $this->activityManager->getActivityData($id);
         $this->authorizeByRequestType($activityData, 'humanitarian_scope');
         $humanitarianScope = $request->all();
         if ($this->humanitarianScopeManager->update($humanitarianScope, $activityData)) {

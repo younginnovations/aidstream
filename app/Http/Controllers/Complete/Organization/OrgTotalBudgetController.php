@@ -7,6 +7,7 @@ use App\Services\Organization\OrgTotalBudgetManager;
 use App\Http\Requests\Request;
 use App\Services\RequestManager\Organization\TotalBudgetRequestManager;
 use App\Services\FormCreator\Organization\TotalBudgetForm as FormBuilder;
+use Illuminate\Support\Facades\Gate;
 
 /**
  * Class OrgTotalBudgetController
@@ -37,9 +38,13 @@ class OrgTotalBudgetController extends Controller
      */
     public function index($orgId)
     {
-        if (!$this->userBelongsToOrganization($orgId)) {
-            return redirect()->route('activity.index')->withResponse($this->getNoPrivilegesMessage());
+        $organization = $this->organizationManager->getOrganization($orgId);
+
+        if (Gate::denies('belongsToOrganization', $organization)) {
+            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
+
+        $this->authorize('edit_activity', $organization);
 
         $totalBudget = $this->totalBudgetManager->getOrganizationTotalBudgetData($orgId);
         $form        = $this->totalBudgetForm->editForm($totalBudget, $orgId);
@@ -56,8 +61,9 @@ class OrgTotalBudgetController extends Controller
      */
     public function update($orgId, TotalBudgetRequestManager $totalBudgetRequestManager, Request $request)
     {
-        if (!$this->userBelongsToOrganization($orgId)) {
-            return redirect()->route('activity.index')->withResponse($this->getNoPrivilegesMessage());
+        $organization = $this->organizationManager->getOrganization($orgId);
+        if (Gate::denies('belongsToOrganization', $organization)) {
+            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
         $organizationData = $this->totalBudgetManager->getOrganizationData($orgId);

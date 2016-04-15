@@ -3,7 +3,10 @@
 $router->group(
     ['namespace' => 'Auth'],
     function ($router) {
-        $router->get('user/profile', 'UserController@viewProfile');
+        $router->get('user/profile', [
+            'as'   => 'user.profile',
+            'uses' => 'UserController@viewProfile'
+        ]);
         $router->get(
             'user/change-username/{id}',
             [

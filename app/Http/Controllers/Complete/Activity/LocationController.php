@@ -6,6 +6,7 @@ use App\Services\Activity\ActivityManager;
 use App\Services\FormCreator\Activity\Location as LocationForm;
 use App\Services\Activity\LocationManager;
 use App\Services\RequestManager\Activity\Location as LocationRequestManager;
+use Illuminate\Support\Facades\Gate;
 
 /**
  * Class LocationController
@@ -49,11 +50,12 @@ class LocationController extends Controller
      */
     public function index($id)
     {
-        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+        $activityData  = $this->activityManager->getActivityData($id);
+
+        if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
-        $activityData = $this->activityManager->getActivityData($id);
         $location     = $this->locationManager->getLocation($id);
         $form         = $this->locationForm->editForm($location, $id);
 
@@ -68,11 +70,12 @@ class LocationController extends Controller
      */
     public function update($id, Request $request, LocationRequestManager $locationRequestManager)
     {
-        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+        $activityData  = $this->activityManager->getActivityData($id);
+
+        if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
-        $activityData = $this->activityManager->getActivityData($id);
         $this->authorizeByRequestType($activityData, 'location');
         $location     = $request->all();
         if ($this->locationManager->update($location, $activityData)) {

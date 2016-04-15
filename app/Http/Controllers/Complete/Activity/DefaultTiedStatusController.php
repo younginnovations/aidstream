@@ -6,6 +6,7 @@ use App\Services\Activity\DefaultTiedStatusManager;
 use App\Services\FormCreator\Activity\DefaultTiedStatus as DefaultTiedStatusForm;
 use App\Services\RequestManager\Activity\DefaultTiedStatus as DefaultTiedStatusRequestManager;
 use App\Http\Requests\Request;
+use Illuminate\Support\Facades\Gate;
 
 /**
  * Class DefaultTiedStatusController
@@ -46,12 +47,13 @@ class DefaultTiedStatusController extends Controller
      */
     public function  index($id)
     {
-        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+        $activityData      = $this->activityManager->getActivityData($id);
+
+        if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
         $defaultTiedStatus = $this->defaultTiedStatusManager->getDefaultTiedStatusData($id);
-        $activityData      = $this->activityManager->getActivityData($id);
         $form              = $this->defaultTiedStatusForm->editForm($defaultTiedStatus, $id);
 
         return view('Activity.defaultTiedStatus.edit', compact('form', 'activityData', 'id'));
@@ -66,11 +68,12 @@ class DefaultTiedStatusController extends Controller
      */
     public function update($id, Request $request, DefaultTiedStatusRequestManager $defaultTiedStatusRequestManager)
     {
-        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+        $activityData  = $this->activityManager->getActivityData($id);
+
+        if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
-        $activityData      = $this->activityManager->getActivityData($id);
         $this->authorizeByRequestType($activityData, 'default_tied_status');
         $defaultTiedStatus = $request->all();
         if ($this->defaultTiedStatusManager->update($defaultTiedStatus, $activityData)) {

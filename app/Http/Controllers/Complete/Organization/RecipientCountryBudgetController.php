@@ -4,6 +4,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Services\Organization\OrganizationManager;
 use App\Services\Organization\RecipientCountryBudgetManager;
+use Illuminate\Support\Facades\Gate;
 use Session;
 use URL;
 use App\Http\Requests\Request;
@@ -36,8 +37,10 @@ class RecipientCountryBudgetController extends Controller
      */
     public function index($orgId)
     {
-        if (!$this->userBelongsToOrganization($orgId)) {
-            return redirect()->route('activity.index')->withResponse($this->getNoPrivilegesMessage());
+        $organization = $this->organizationManager->getOrganization($orgId);
+
+        if (Gate::denies('belongsToOrganization', $organization)) {
+            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
         $recipientCountryBudget = $this->recipientCountryBudgetManager->getRecipientCountryBudgetData($orgId);
@@ -57,8 +60,9 @@ class RecipientCountryBudgetController extends Controller
      */
     public function update($orgId, RecipientCountryBudgetRequestManager $recipientCountryBudgetRequestManager, Request $request)
     {
-        if (!$this->userBelongsToOrganization($orgId)) {
-            return redirect()->route('activity.index')->withResponse($this->getNoPrivilegesMessage());
+        $organization = $this->organizationManager->getOrganization($orgId);
+        if (Gate::denies('belongsToOrganization', $organization)) {
+            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
         $organizationData = $this->recipientCountryBudgetManager->getOrganizationData($orgId);

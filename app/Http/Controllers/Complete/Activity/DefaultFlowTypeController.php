@@ -6,6 +6,7 @@ use App\Services\Activity\DefaultFlowTypeManager;
 use App\Services\FormCreator\Activity\DefaultFlowType as DefaultFlowTypeForm;
 use App\Services\RequestManager\Activity\DefaultFlowType as DefaultFlowTypeRequestManager;
 use App\Http\Requests\Request;
+use Illuminate\Support\Facades\Gate;
 
 /**
  * Class DefaultFlowTypeController
@@ -46,12 +47,13 @@ class DefaultFlowTypeController extends Controller
      */
     public function  index($id)
     {
-        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+        $activityData  = $this->activityManager->getActivityData($id);
+
+        if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
         $defaultFlowType = $this->defaultFlowTypeManager->getDefaultFlowTypeData($id);
-        $activityData    = $this->activityManager->getActivityData($id);
         $form            = $this->defaultFlowTypeForm->editForm($defaultFlowType, $id);
 
         return view('Activity.defaultFlowType.edit', compact('form', 'activityData', 'id'));
@@ -66,11 +68,12 @@ class DefaultFlowTypeController extends Controller
      */
     public function update($id, Request $request, DefaultFlowTypeRequestManager $defaultFlowTypeRequestManager)
     {
-        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+        $activityData  = $this->activityManager->getActivityData($id);
+
+        if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
-        $activityData    = $this->activityManager->getActivityData($id);
         $this->authorizeByRequestType($activityData, 'default_flow_type');
         $defaultFlowType = $request->all();
         if ($this->defaultFlowTypeManager->update($defaultFlowType, $activityData)) {

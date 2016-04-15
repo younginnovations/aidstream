@@ -6,6 +6,7 @@ use App\Services\Activity\DefaultAidTypeManager;
 use App\Services\FormCreator\Activity\DefaultAidType as DefaultAidTypeForm;
 use App\Services\RequestManager\Activity\DefaultAidType as DefaultAidTypeRequestManager;
 use App\Http\Requests\Request;
+use Illuminate\Support\Facades\Gate;
 
 /**
  * Class DefaultAidTypeController
@@ -46,12 +47,13 @@ class DefaultAidTypeController extends Controller
      */
     public function  index($id)
     {
-        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+        $activityData  = $this->activityManager->getActivityData($id);
+
+        if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
         $defaultAidType = $this->defaultAidTypeManager->getDefaultAidTypeData($id);
-        $activityData   = $this->activityManager->getActivityData($id);
         $form           = $this->defaultAidTypeForm->editForm($defaultAidType, $id);
 
         return view('Activity.defaultAidType.edit', compact('form', 'activityData', 'id'));
@@ -66,11 +68,12 @@ class DefaultAidTypeController extends Controller
      */
     public function update($id, Request $request, DefaultAidTypeRequestManager $defaultAidTypeRequestManager)
     {
-        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+        $activityData  = $this->activityManager->getActivityData($id);
+
+        if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
-        $activityData   = $this->activityManager->getActivityData($id);
         $this->authorizeByRequestType($activityData, 'default_aid_type');
         $defaultAidType = $request->all();
         if ($this->defaultAidTypeManager->update($defaultAidType, $activityData)) {

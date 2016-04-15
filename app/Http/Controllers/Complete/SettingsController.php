@@ -11,11 +11,13 @@ use App\Services\Organization\OrganizationManager;
 
 use Exception;
 use Illuminate\Database\DatabaseManager;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use Kris\LaravelFormBuilder\FormBuilder;
 use Psr\Log\LoggerInterface;
+
 
 /**
  * Class SettingsController
@@ -125,6 +127,19 @@ class SettingsController extends Controller
      */
     public function store(SettingsRequestManager $request)
     {
+        $currentUser = auth()->user();
+
+        if ($currentUser->isNotAdmin()) {
+            return redirect()->back()->withResponse(
+                [
+                    'type' => 'warning',
+                    'code' => [
+                        'message',
+                        ['message' => 'You do not have the correct privileges to view this page.']
+                    ]
+                ]
+            );
+        }
         $input    = Input::all();
         $response = ($this->settingsManager->storeSettings($input, $this->organization)) ? ['type' => 'success', 'code' => ['created', ['name' => 'Settings']]] : [
             'type' => 'danger',
@@ -145,6 +160,19 @@ class SettingsController extends Controller
      */
     public function update($id, SettingsRequestManager $request)
     {
+        $currentUser = auth()->user();
+
+        if ($currentUser->isNotAdmin()) {
+            return redirect()->back()->withResponse(
+                [
+                    'type' => 'warning',
+                    'code' => [
+                        'message',
+                        ['message' => 'You do not have the correct privileges to view this page.']
+                    ]
+                ]
+            );
+        }
         $input             = Input::all();
         $newPublishingType = $input['publishing_type'][0]['publishing'];
         $oldIdentifier     = $this->organization->reporting_org[0]['reporting_organization_identifier'];

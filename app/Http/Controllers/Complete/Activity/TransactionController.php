@@ -7,6 +7,7 @@ use App\Services\Activity\TransactionManager;
 use App\Services\FormCreator\Activity\Transaction;
 use App\Services\RequestManager\Activity\Transaction as TransactionRequest;
 use App\Http\Requests\Request;
+use Illuminate\Support\Facades\Gate;
 
 /**
  * Class TransactionController
@@ -51,11 +52,11 @@ class TransactionController extends Controller
      */
     public function index($id)
     {
-        if (!$this->currentUserIsAuthorizedForActivity($id)) {
-            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
-        }
-
         $activity = $this->activityManager->getActivityData($id);
+
+        if (Gate::denies('ownership', $activity)) {
+            return redirect()->route('activity.index')->withResponse($this->getNoPrivilegesMessage());
+        }
 
         return view('Activity.transaction.list', compact('activity', 'id'));
     }
@@ -67,12 +68,13 @@ class TransactionController extends Controller
      */
     public function create($id)
     {
-        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+        $activity = $this->activityManager->getActivityData($id);
+
+        if (Gate::denies('ownership', $activity)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
-        $this->authorize('add_activity');
-        $activity = $this->activityManager->getActivityData($id);
+        $this->authorize('add_activity', $activity);
         $form     = $this->transactionForm->createForm($id);
 
         return view('Activity.transaction.create', compact('form', 'activity', 'id'));
@@ -87,14 +89,15 @@ class TransactionController extends Controller
      */
     public function store(Request $request, $activityId, TransactionRequest $transactionRequest)
     {
-        if (!$this->currentUserIsAuthorizedForActivity($activityId)) {
+        $activityData = $this->activityManager->getActivityData($activityId);
+
+        if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
-        $this->authorize('add_activity');
-        $activity          = $this->activityManager->getActivityData($activityId);
+        $this->authorize('add_activity', $activityData);
         $data              = $request->all();
-        $activityAsAnArray = $activity->toArray();
+        $activityAsAnArray = $activityData->toArray();
 
         if ($this->recipientCountryAndRegionAreInvalid($activityAsAnArray, $data)) {
             $response = [
@@ -109,7 +112,7 @@ class TransactionController extends Controller
         }
 
         $this->filterSector($data);
-        $this->transactionManager->save($data, $activity);
+        $this->transactionManager->save($data, $activityData);
         $this->activityManager->resetActivityWorkflow($activityId);
         $response = ['type' => 'success', 'code' => ['created', ['name' => 'Transaction']]];
 
@@ -124,16 +127,17 @@ class TransactionController extends Controller
      */
     public function show($id, $transactionId)
     {
-        if (!$this->currentUserIsAuthorizedForActivity($id)) {
-            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
+        $activity    = $this->activityManager->getActivityData($id);
+        $transaction = $this->transactionManager->getTransaction($transactionId);
+
+        if (Gate::denies('ownership', $activity)) {
+            return redirect()->route('activity.index')->withResponse($this->getNoPrivilegesMessage());
         }
 
         if (!$this->currentUserIsAuthorizedForTransaction($transactionId)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
-        $activity          = $this->activityManager->getActivityData($id);
-        $transaction       = $this->transactionManager->getTransaction($transactionId);
         $transactionDetail = $transaction->getTransaction();
 
         return view('Activity.transaction.show', compact('transactionDetail', 'activity', 'id', 'transactionId'));
@@ -147,7 +151,9 @@ class TransactionController extends Controller
      */
     public function edit($id, $transactionId)
     {
-        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+        $activity = $this->activityManager->getActivityData($id);
+
+        if (Gate::denies('ownership', $activity)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
@@ -155,8 +161,7 @@ class TransactionController extends Controller
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
-        $this->authorize('edit_activity');
-        $activity    = $this->activityManager->getActivityData($id);
+        $this->authorize('edit_activity', $activity);
         $transaction = $this->transactionManager->getTransaction($transactionId);
         $form        = $this->transactionForm->editForm($activity, $transactionId, $transaction->getTransaction());
 
@@ -173,7 +178,9 @@ class TransactionController extends Controller
      */
     public function update(Request $request, $id, $transactionId, TransactionRequest $transactionRequest)
     {
-        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+        $activity = $this->activityManager->getActivityData($id);
+
+        if (Gate::denies('ownership', $activity)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
@@ -181,10 +188,9 @@ class TransactionController extends Controller
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
-        $this->authorize('edit_activity');
+        $this->authorize('edit_activity', $activity);
         $transactionDetails = $transactionData = $request->except(['_token', '_method']);
         removeEmptyValues($transactionData);
-        $activity = $this->activityManager->getActivityData($id);
 
         $activityDetails = $activity->toArray();
         removeEmptyValues($activityDetails);
@@ -240,7 +246,9 @@ class TransactionController extends Controller
      */
     public function destroy($id, $transactionId)
     {
-        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+        $activity = $this->activityManager->getActivityData($id);
+
+        if (Gate::denies('ownership', $activity)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
@@ -248,7 +256,7 @@ class TransactionController extends Controller
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
-        $this->authorize('delete_activity');
+        $this->authorize('delete_activity', $activity);
         $transaction = $this->transactionManager->getTransaction($transactionId);
         $response    = ($transaction->delete($transaction)) ? ['type' => 'success', 'code' => ['deleted', ['name' => 'Transaction']]] : [
             'type' => 'danger',

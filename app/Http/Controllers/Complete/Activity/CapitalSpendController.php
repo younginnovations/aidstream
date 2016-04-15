@@ -6,6 +6,7 @@ use App\Services\Activity\CapitalSpendManager;
 use App\Services\FormCreator\Activity\CapitalSpend as CapitalSpendForm;
 use App\Services\RequestManager\Activity\CapitalSpend as CapitalSpendRequestManager;
 use App\Http\Requests\Request;
+use Illuminate\Support\Facades\Gate;
 
 /**
  * Class CapitalSpendController
@@ -46,12 +47,13 @@ class CapitalSpendController extends Controller
      */
     public function  index($id)
     {
-        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+        $activityData  = $this->activityManager->getActivityData($id);
+
+        if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
         $capitalSpend = $this->capitalSpendManager->getCapitalSpendData($id);
-        $activityData = $this->activityManager->getActivityData($id);
         $form         = $this->capitalSpendForm->editForm($capitalSpend, $id);
 
         return view('Activity.capitalSpend.edit', compact('form', 'activityData', 'id'));
@@ -66,11 +68,12 @@ class CapitalSpendController extends Controller
      */
     public function update($id, Request $request, CapitalSpendRequestManager $capitalSpendRequestManager)
     {
-        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+        $activityData  = $this->activityManager->getActivityData($id);
+
+        if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
-        $activityData = $this->activityManager->getActivityData($id);
         $this->authorizeByRequestType($activityData, 'capital_spend');
         $capitalSpend = $request->all();
         if ($this->capitalSpendManager->update($capitalSpend, $activityData)) {

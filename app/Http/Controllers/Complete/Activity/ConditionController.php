@@ -6,6 +6,7 @@ use App\Services\FormCreator\Activity\Condition as ConditionForm;
 use App\Services\Activity\ActivityManager;
 use App\Http\Requests\Request;
 use App\Services\RequestManager\Activity\Condition as ConditionRequestManager;
+use Illuminate\Support\Facades\Gate;
 
 /**
  * Class ConditionController
@@ -13,6 +14,11 @@ use App\Services\RequestManager\Activity\Condition as ConditionRequestManager;
  */
 class ConditionController extends Controller
 {
+    /**
+     * @var ActivityManager
+     */
+    protected $activityManager;
+
     function __construct(ConditionManager $conditionManager, ConditionForm $conditionForm, ActivityManager $activityManager)
     {
         $this->middleware('auth');
@@ -23,12 +29,13 @@ class ConditionController extends Controller
 
     public function index($id)
     {
-        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+        $activityData  = $this->activityManager->getActivityData($id);
+
+        if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
         $condition    = $this->conditionManager->getConditionData($id);
-        $activityData = $this->activityManager->getActivityData($id);
         $form         = $this->conditionForm->editForm($condition, $id);
 
         return view('Activity.condition.edit', compact('form', 'activityData', 'id'));
@@ -36,11 +43,12 @@ class ConditionController extends Controller
 
     public function update($id, Request $request, ConditionRequestManager $conditionRequestManager)
     {
-        if (!$this->currentUserIsAuthorizedForActivity($id)) {
+        $activityData  = $this->activityManager->getActivityData($id);
+
+        if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
-        $activityData = $this->activityManager->getActivityData($id);
         $this->authorizeByRequestType($activityData, 'conditions');
         $condition    = $request->except(['_token', '_method']);
         if ($this->conditionManager->update($condition, $activityData)) {
