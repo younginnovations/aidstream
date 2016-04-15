@@ -17,7 +17,15 @@ class PlannedDisbursement extends V201PlannedDisbursement
     {
         $activityData         = [];
         $plannedDisbursements = (array) $activity->planned_disbursement;
+
         foreach ($plannedDisbursements as $plannedDisbursement) {
+            if (!array_key_exists('provider_org', $plannedDisbursement)) {
+                $plannedDisbursement['provider_org'] = $this->plannedDisbursementTemplate();
+            }
+
+            if (!array_key_exists('reciever_org', $plannedDisbursement)) {
+                $plannedDisbursement['reciever_org'] = $this->plannedDisbursementTemplate();
+            }
             $activityData[] = [
                 '@attributes'  => [
                     'type' => $plannedDisbursement['planned_disbursement_type']
@@ -59,5 +67,10 @@ class PlannedDisbursement extends V201PlannedDisbursement
         }
 
         return $activityData;
+    }
+
+    protected function plannedDisbursementTemplate()
+    {
+        return [['ref' => '', 'activity_id' => '', 'type' => '', 'narrative' => [['narrative' => '', 'language' => '']]]];
     }
 }
