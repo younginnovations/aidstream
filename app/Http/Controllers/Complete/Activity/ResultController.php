@@ -53,8 +53,7 @@ class ResultController extends Controller
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
-        $results      = $this->resultManager->getResults($id);
-        $activityData = $this->activityManager->getActivityData($id);
+        $results = $this->resultManager->getResults($id);
 
         return view('Activity.result.index', compact('results', 'activityData', 'id'));
     }
@@ -67,16 +66,15 @@ class ResultController extends Controller
      */
     public function show($activityId, $id)
     {
-        $activityData = $this->activityManager->getActivityData($id);
+        $activityData = $this->activityManager->getActivityData($activityId);
 
         if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
-        $result       = $this->resultManager->getResult($id, $activityId);
-        $activityData = $this->activityManager->getActivityData($activityId);
-        $resultId     = $id;
-        $id           = $activityId;
+        $result   = $this->resultManager->getResult($id, $activityId);
+        $resultId = $id;
+        $id       = $activityId;
 
         return view('Activity.result.show', compact('result', 'activityData', 'id', 'resultId'));
     }
