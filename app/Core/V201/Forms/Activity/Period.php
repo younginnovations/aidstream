@@ -22,6 +22,7 @@ class Period extends BaseForm
             ->addPeriodStart()
             ->addPeriodEnd()
             ->addTargets(['class' => 'indicator_period_target_comment_title_narrative'])
-            ->addActualTargets(['class' => 'indicator_period_actual_comment_title_narrative']);
+            ->addActualTargets(['class' => 'indicator_period_actual_comment_title_narrative'])
+            ->addRemoveThisButton('remove_period');
     }
 }

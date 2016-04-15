@@ -28,6 +28,7 @@ class Indicator extends BaseForm
             ->addDescriptions(['class' => 'indicator_description_title_narrative'])
             ->addBaselines(['class' => 'indicator_baseline_comment_title_narrative'])
             ->addPeriods()
+            ->addAddMoreButton('add_period', 'period')
             ->addRemoveThisButton('remove_indicator');
     }
 }

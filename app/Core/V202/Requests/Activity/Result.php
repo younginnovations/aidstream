@@ -23,12 +23,34 @@ class Result extends V201Result
             $rules[sprintf('%s.measure', $indicatorForm)] = 'required';
             $rules                                        = array_merge(
                 $rules,
-                $this->getRulesForNarrative($indicator['title'], sprintf('%s.title.0', $indicatorForm)),
+                $this->getRulesForResultNarrative($indicator['title'], sprintf('%s.title.0', $indicatorForm)),
                 $this->getRulesForNarrative($indicator['description'], sprintf('%s.description.0', $indicatorForm)),
                 $this->getRulesForReference($indicator['reference'], $indicatorForm),
                 $this->getRulesForBaseline($indicator['baseline'], $indicatorForm),
                 $this->getRulesForPeriod($indicator['period'], $indicatorForm)
             );
+        }
+
+        return $rules;
+    }
+
+    /**
+     * returns rules for reference
+     * @param $formFields
+     * @param $formBase
+     * @return array|mixed
+     */
+    protected function getRulesForReference($formFields, $formBase)
+    {
+        $rules = [];
+
+        foreach ($formFields as $referenceIndex => $reference) {
+            $referenceForm                                      = sprintf(
+                '%s.reference.%s',
+                $formBase,
+                $referenceIndex
+            );
+            $rules[sprintf('%s.indicator_uri', $referenceForm)] = 'url';
         }
 
         return $rules;
@@ -45,11 +67,16 @@ class Result extends V201Result
         $messages = [];
 
         foreach ($formFields as $indicatorIndex => $indicator) {
-            $indicatorForm                                            = sprintf('%s.indicator.%s', $formBase, $indicatorIndex);
+            $indicatorForm                                            = sprintf(
+                '%s.indicator.%s',
+                $formBase,
+                $indicatorIndex
+            );
             $messages[sprintf('%s.measure.required', $indicatorForm)] = 'Measure is required.';
             $messages                                                 = array_merge(
                 $messages,
                 $this->getMessagesForNarrative($indicator['title'], sprintf('%s.title.0', $indicatorForm)),
+                $this->getMessagesForResultNarrative($indicator['title'], sprintf('%s.title.0', $indicatorForm)),
                 $this->getMessagesForNarrative($indicator['description'], sprintf('%s.description.0', $indicatorForm)),
                 $this->getMessagesForReference($indicator['reference'], $indicatorForm),
                 $this->getMessagesForBaseline($indicator['baseline'], $indicatorForm),
@@ -61,21 +88,25 @@ class Result extends V201Result
     }
 
     /**
-     * returns rules for reference
+     * returns the message for indicator title.
      * @param $formFields
      * @param $formBase
-     * @return array|mixed
+     * @return array
      */
-    protected function getRulesForReference($formFields, $formBase)
+    protected function getMessagesForResultNarrative($formFields, $formBase)
     {
-        $rules = [];
-
-        foreach ($formFields as $referenceIndex => $reference) {
-            $referenceForm                                      = sprintf('%s.reference.%s', $formBase, $referenceIndex);
-            $rules[sprintf('%s.indicator_uri', $referenceForm)] = 'url';
+        $messages                                                 = [];
+        $messages[sprintf('%s.narrative.unique_lang', $formBase)] = 'Languages should be unique.';
+        foreach ($formFields as $narrativeIndex => $narrative) {
+            $messages[sprintf(
+                '%s.narrative.%s.narrative.required',
+                $formBase,
+                $narrativeIndex
+            )] = 'Indicator Narrative is required.';
         }
 
-        return $rules;
+        return $messages;
+
     }
 
     /**
@@ -89,8 +120,12 @@ class Result extends V201Result
         $messages = [];
 
         foreach ($formFields as $referenceIndex => $reference) {
-            $referenceForm                                               = sprintf('%s.reference.%s', $formBase, $referenceIndex);
-            $messages[sprintf('%s.indicator_uri.url', $referenceForm)]   = 'Enter valid URL. eg. http://example.com';
+            $referenceForm                                             = sprintf(
+                '%s.reference.%s',
+                $formBase,
+                $referenceIndex
+            );
+            $messages[sprintf('%s.indicator_uri.url', $referenceForm)] = 'Enter valid URL. eg. http://example.com';
         }
 
         return $messages;
