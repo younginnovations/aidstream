@@ -8,6 +8,11 @@
         </div>
         <div class="panel-body panel-level-1">
             @foreach($documentLinks as $documentLink)
+                @if(!$documentLink['title'][0]['narrative'])
+                    {{--*/
+                    $documentLink['title'][0]['narrative'] = [['narrative' => '', 'language' => '']];
+                    /*--}}
+                @endif
                 <div class="panel-heading">
                     <div class="activity-element-title">
                         {{$documentLink['title'][0]['narrative'][0]['narrative'] .  hideEmptyArray('Organization', 'Language', $documentLink['title'][0]['narrative'][0]['language'])}}
@@ -69,19 +74,19 @@
                                 </div>
                             </div>
                             @if(array_key_exists('document_date', $documentLink))
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <div class="activity-element-title">Document Date</div>
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <div class="activity-element-title">Document Date</div>
+                                    </div>
+                                    <div class="panel-element-body row">
+                                        @foreach($documentLink['document_date'] as $date)
+                                            <div class="col-xs-12 col-md-12">
+                                                <div class="col-xs-12 col-sm-4">Date:</div>
+                                                <div class="col-xs-12 col-sm-8">{{ ($date['date']) ? formatDate($date['date']) : '' }}</div>
+                                            </div>
+                                        @endforeach
+                                    </div>
                                 </div>
-                                <div class="panel-element-body row">
-                                    @foreach($documentLink['document_date'] as $date)
-                                        <div class="col-xs-12 col-md-12">
-                                            <div class="col-xs-12 col-sm-4">Date:</div>
-                                            <div class="col-xs-12 col-sm-8">{{ ($date['date']) ? formatDate($date['date']) : '' }}</div>
-                                        </div>
-                                    @endforeach
-                                </div>
-                            </div>
                             @endif
                         </div>
                     </div>
