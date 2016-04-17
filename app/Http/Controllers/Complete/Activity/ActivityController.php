@@ -151,8 +151,8 @@ class ActivityController extends Controller
         }
 
         $this->authorize('add_activity', $organization);
-        $form         = $duplicate ? $this->identifierForm->duplicate($activityId) : $this->identifierForm->create();
-        $settings     = $this->settingsManager->getSettings($this->organization_id);
+        $form     = $duplicate ? $this->identifierForm->duplicate($activityId) : $this->identifierForm->create();
+        $settings = $this->settingsManager->getSettings($this->organization_id);
 
         if (!isset($organization->reporting_org[0])) {
             $response = ['type' => 'warning', 'code' => ['settings', ['name' => 'activity']]];
@@ -399,10 +399,12 @@ class ActivityController extends Controller
         try {
             foreach ($activityPublishedFiles as $publishedFile) {
                 $data = $this->generateJson($publishedFile);
+
                 if ($settings->publishing_type == "segmented") {
                     $filename = explode('-', $publishedFile->filename);
                     $code     = str_replace('.xml', '', end($filename));
                 }
+
                 if ($publishedFile['published_to_register'] == 0) {
                     $apiCall->package_create($data);
                     $this->activityManager->updatePublishToRegister($publishedFile->id);
@@ -410,6 +412,8 @@ class ActivityController extends Controller
 //                    $package = ($settings->publishing_type == "segmented") ? $settings['registry_info'][0]['publisher_id'] . '-' . $code : $settings['registry_info'][0]['publisher_id'] . '-activities';
                     $apiCall->package_update($this->convertIntoArray(json_decode($data)));
                 }
+
+                $this->loggerInterface->info('Activity file published to registry.', ['payload' => $data, 'by_user' =>auth()->user()->name]);
             }
 
             return true;
@@ -451,31 +455,23 @@ class ActivityController extends Controller
             $key = "country";
         }
 
-        $title = ($settings->publishing_type == "segmented") ? $organization->name . 'Activity File-' . $code : $organization->name . 'Activity File';
+        $title = ($settings->publishing_type == "segmented") ? $organization->name . ' Activity File-' . $code : $organization->name . ' Activity File';
         $name  = ($settings->publishing_type == "segmented") ? $settings['registry_info'][0]['publisher_id'] . '-' . $code : $settings['registry_info'][0]['publisher_id'] . '-activities';
 
-        $data = '{
-        "title": "' . $title . '",
-        "name": "' . $name . '",
-        "author_email": "' . $author_email . '",
-        "owner_org" : "' . $settings['registry_info'][0]['publisher_id'] . '",
-        "resources": [
-        {
-            "format":"IATI-XML",
-            "mimetype":"application/xml",
-            "url":"' . url('files/xml/' . $publishedFile->filename) . '"
-        }
-        ],
-        "extras":
-        [
-        {"key":"filetype","value":"activity"},
-        {"key":"' . $key . '","value":"' . $code . '"},
-        {"key":"data_updated","value":"' . $publishedFile->updated_at . '"},
-        {"key":"activity_count", "value":"' . count($publishedFile->published_activities) . '"},
-        {"key":"language","value":"' . config('app.locale') . '"},
-        {"key":"verified","value":"no"}]}';
+        $requiredData = [
+            'title'          => $title,
+            'name'           => $name,
+            'author_email'   => $author_email,
+            'owner_org'      => $settings['registry_info'][0]['publisher_id'],
+            'file_url'       => url(sprintf('files/xml/%s', $publishedFile->filename)),
+            'geographicKey'  => $key,
+            'geographicCode' => $code,
+            'data_updated'   => $publishedFile->updated_at->toDateTimeString(),
+            'activity_count' => count($publishedFile->published_activities),
+            'language'       => config('app.locale')
+        ];
 
-        return $data;
+        return $this->generatePayload($requiredData);
     }
 
     /**
@@ -485,11 +481,12 @@ class ActivityController extends Controller
      */
     public function duplicateActivity($activityId)
     {
-        $activityData                   = $this->activityManager->getActivityData($activityId);
+        $activityData = $this->activityManager->getActivityData($activityId);
 
         if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
+
 // create permission
         return $this->create(true, $activityId);
     }
@@ -502,7 +499,7 @@ class ActivityController extends Controller
      */
     public function duplicateActivityAction($activityId, IatiIdentifierRequest $request)
     {
-        $activityData                   = $this->activityManager->getActivityData($activityId);
+        $activityData = $this->activityManager->getActivityData($activityId);
 
         if (Gate::denies('ownership', $activityData)) {
             return redirect()->route('activity.index')->withResponse($this->getNoPrivilegesMessage());
@@ -603,6 +600,14 @@ class ActivityController extends Controller
                 $apiCall->package_update($this->convertIntoArray(json_decode($data)));
             }
 
+            $this->loggerInterface->info(
+                'Successfully published selected activity files',
+                [
+                    'payload' => $data,
+                    'by_user' => auth()->user()->name
+                ]
+            );
+
             return true;
         } catch (\Exception $e) {
             $this->loggerInterface->error(
@@ -661,5 +666,35 @@ class ActivityController extends Controller
 
             }
         }
+    }
+
+    /**
+     * Returns the request header payload while publishing any files to the IATI Registry.
+     * @param $data
+     * @return array
+     */
+    protected function generatePayload($data)
+    {
+        return json_encode(
+            [
+                'title'        => $data['title'],
+                'name'         => $data['name'],
+                'author_email' => $data['author_email'],
+                'owner_org'    => $data['owner_org'],
+                'resources'    => [
+                    'format'   => config('xmlFiles.format'),
+                    'mimetype' => config('xmlFiles.mimeType'),
+                    'url'      => $data['file_url']
+                ],
+                'extras'       => [
+                    ['key' => 'filetype', 'value' => 'activity'],
+                    ['key' => $data['geographicKey'], 'value' => $data['geographicCode']],
+                    ['key' => 'data_updated', 'value' => $data['data_updated']],
+                    ['key' => 'activity_count', 'value' => $data['activity_count']],
+                    ['key' => 'language', 'value' => $data['language']],
+                    ['key' => 'verified', 'value' => 'no']
+                ]
+            ]
+        );
     }
 }
