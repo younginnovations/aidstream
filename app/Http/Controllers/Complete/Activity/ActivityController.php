@@ -151,8 +151,8 @@ class ActivityController extends Controller
         }
 
         $this->authorize('add_activity', $organization);
-        $form         = $duplicate ? $this->identifierForm->duplicate($activityId) : $this->identifierForm->create();
-        $settings     = $this->settingsManager->getSettings($this->organization_id);
+        $form     = $duplicate ? $this->identifierForm->duplicate($activityId) : $this->identifierForm->create();
+        $settings = $this->settingsManager->getSettings($this->organization_id);
 
         if (!isset($organization->reporting_org[0])) {
             $response = ['type' => 'warning', 'code' => ['settings', ['name' => 'activity']]];
@@ -485,11 +485,12 @@ class ActivityController extends Controller
      */
     public function duplicateActivity($activityId)
     {
-        $activityData                   = $this->activityManager->getActivityData($activityId);
+        $activityData = $this->activityManager->getActivityData($activityId);
 
         if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
+
 // create permission
         return $this->create(true, $activityId);
     }
@@ -502,7 +503,7 @@ class ActivityController extends Controller
      */
     public function duplicateActivityAction($activityId, IatiIdentifierRequest $request)
     {
-        $activityData                   = $this->activityManager->getActivityData($activityId);
+        $activityData = $this->activityManager->getActivityData($activityId);
 
         if (Gate::denies('ownership', $activityData)) {
             return redirect()->route('activity.index')->withResponse($this->getNoPrivilegesMessage());
@@ -631,7 +632,7 @@ class ActivityController extends Controller
             if (file_exists($filePath)) {
                 $xml = simplexml_load_string(file_get_contents($filePath));
                 $xml = json_decode(json_encode($xml), true);
-                if (isset($xml['iati-activity']['asdfasf']['fasdf']['transaction'])) {
+                if (isset($xml['iati-activity']['transaction'])) {
                     $xmlTransaction = $xml['iati-activity']['transaction'];
                     $transaction    = $this->activityManager->getTransactionForBulk($xmlTransaction);
                 }
