@@ -681,10 +681,13 @@ class ActivityController extends Controller
                 'name'         => $data['name'],
                 'author_email' => $data['author_email'],
                 'owner_org'    => $data['owner_org'],
+                'license_id'   => 'other-open',
                 'resources'    => [
-                    'format'   => config('xmlFiles.format'),
-                    'mimetype' => config('xmlFiles.mimeType'),
-                    'url'      => $data['file_url']
+                    [
+                        'format'   => config('xmlFiles.format'),
+                        'mimetype' => config('xmlFiles.mimeType'),
+                        'url'      => $data['file_url']
+                    ]
                 ],
                 'extras'       => [
                     ['key' => 'filetype', 'value' => 'activity'],
