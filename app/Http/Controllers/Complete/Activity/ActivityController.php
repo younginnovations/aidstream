@@ -414,6 +414,8 @@ class ActivityController extends Controller
 //                    $package = ($settings->publishing_type == "segmented") ? $settings['registry_info'][0]['publisher_id'] . '-' . $code : $settings['registry_info'][0]['publisher_id'] . '-activities';
                     $apiCall->package_update($data);
                 }
+
+                $this->loggerInterface->info('Activity file published to registry.', ['payload' => $data, 'by_user' =>auth()->user()->name]);
             }
 
             return true;
@@ -607,6 +609,14 @@ class ActivityController extends Controller
             } elseif ($publishedFile['published_to_register'] == 1) {
                 $apiCall->package_update($data);
             }
+
+            $this->loggerInterface->info(
+                'Successfully published selected activity files',
+                [
+                    'payload' => $data,
+                    'by_user' => auth()->user()->name
+                ]
+            );
 
             return true;
         } catch (\Exception $e) {
