@@ -38,7 +38,7 @@ class DocumentLink extends V201DocumentLink
                 ],
                 'document-date' => [
                     '@attributes' => [
-                        'iso-date' => array_key_exists('document_date', $documentLink) ? $documentLink['document_date'][0]['date'] : ''
+                        'iso-date' => getVal($documentLink, ['document_date',0,'date'])
                     ]
                 ]
             ];

@@ -54,3 +54,27 @@ function getDefaultCurrency()
 
     return $defaultCurrency;
 }
+
+/**
+ * check to see if key exists while completing specific activity
+ * @param        $arr
+ * @param        $arguments
+ * @param string $default
+ * @return string
+ */
+function getVal($arr, $arguments, $default = "")
+{
+    if (is_array($arr)) {
+        if ($arr[$arguments[0]] && count(array_slice($arguments, 1)) === 0) {
+            return $arr[$arguments[0]];
+        } else {
+            return getVal($arr[$arguments[0]], array_slice($arguments, 1), $default);
+        }
+    } else {
+        if (isset($arr) && !is_array($arr)) {
+            return $arr;
+        } else {
+            return $default;
+        }
+    }
+}
