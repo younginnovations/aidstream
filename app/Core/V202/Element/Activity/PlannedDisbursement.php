@@ -53,7 +53,7 @@ class PlannedDisbursement extends V201PlannedDisbursement
                         'provider-activity-id' => getVal($plannedDisbursement, ['provider_org', 0, 'activity_id']),
                         'type'                 => getVal($plannedDisbursement, ['provider_org', 0, 'type'])
                     ],
-                    'narrative'   => $this->buildNarrative($plannedDisbursement['provider_org'][0]['narrative'])
+                    'narrative'   => $this->buildNarrative(getVal($plannedDisbursement, ['provider_org', 0, 'narrative'], []))
                 ],
                 'receiver-org' => [
                     '@attributes' => [
@@ -61,7 +61,7 @@ class PlannedDisbursement extends V201PlannedDisbursement
                         'receiver-activity-id' => getVal($plannedDisbursement, ['receiver_org', 0, 'activity_id']),
                         'type'                 => getVal($plannedDisbursement, ['receiver_org', 0, 'type'])
                     ],
-                    'narrative'   => $this->buildNarrative($plannedDisbursement['receiver_org'][0]['narrative'])
+                    'narrative'   => $this->buildNarrative(getVal($plannedDisbursement, ['receiver_org', 0, 'narrative'], []))
                 ]
             ];
         }

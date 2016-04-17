@@ -56,7 +56,7 @@ function getDefaultCurrency()
 }
 
 /**
- * check to see if key exists while completing specific activity
+ * Get the required index from a nested array.
  * @param        $arr
  * @param        $arguments
  * @param string $default
@@ -65,10 +65,14 @@ function getDefaultCurrency()
 function getVal($arr, $arguments, $default = "")
 {
     if (is_array($arr)) {
-        if ($arr[$arguments[0]] && count(array_slice($arguments, 1)) === 0) {
+        if (isset($arr[$arguments[0]]) && count(array_slice($arguments, 1)) === 0) {
             return $arr[$arguments[0]];
         } else {
-            return getVal($arr[$arguments[0]], array_slice($arguments, 1), $default);
+            if (isset($arr[$arguments[0]]) && is_array($arr[$arguments[0]])) {
+                return getVal($arr[$arguments[0]], array_slice($arguments, 1), $default);
+            } else {
+                return $default;
+            }
         }
     } else {
         if (isset($arr) && !is_array($arr)) {

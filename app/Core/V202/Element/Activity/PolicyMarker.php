@@ -22,10 +22,10 @@ class PolicyMarker extends V201PolicyMarker
                 '@attributes' => [
                     'vocabulary'     => $policyMarker['vocabulary'],
                     'vocabulary-uri' => getVal($policyMarker, ['vocabulary_uri']),
-                    'code'           => $policyMarker['policy_marker'],
-                    'significance'   => $policyMarker['significance']
+                    'code'           => getVal($policyMarker, ['policy_marker']),
+                    'significance'   => getVal($policyMarker, ['significance'])
                 ],
-                'narrative'   => $this->buildNarrative($policyMarker['narrative'])
+                'narrative'   => $this->buildNarrative(getVal($policyMarker, ['narrative'], []))
             ];
         }
 

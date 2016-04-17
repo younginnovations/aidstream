@@ -75,7 +75,7 @@ class Result extends V201Result
             'location'    => getVal($data, [0, 'location']),
             'dimension'   => getVal($data, [0, 'dimension']),
             'comment'     => [
-                'narrative' => $this->buildNarrative($data[0]['comment'][0]['narrative'])
+                'narrative' => $this->buildNarrative(getVal($data, [0, 'comment', 0, 'narrative'], []))
             ]
         ];
 

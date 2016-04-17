@@ -400,6 +400,8 @@ class ActivityController extends Controller
             foreach ($activityPublishedFiles as $publishedFile) {
                 $data = $this->generateJson($publishedFile);
 
+                $this->loggerInterface->info('Payload for publishing', ['payload' => $data, 'by_user' => auth()->user()->name]);
+
                 if ($settings->publishing_type == "segmented") {
                     $filename = explode('-', $publishedFile->filename);
                     $code     = str_replace('.xml', '', end($filename));
@@ -412,8 +414,6 @@ class ActivityController extends Controller
 //                    $package = ($settings->publishing_type == "segmented") ? $settings['registry_info'][0]['publisher_id'] . '-' . $code : $settings['registry_info'][0]['publisher_id'] . '-activities';
                     $apiCall->package_update($this->convertIntoArray(json_decode($data)));
                 }
-
-                $this->loggerInterface->info('Activity file published to registry.', ['payload' => $data, 'by_user' =>auth()->user()->name]);
             }
 
             return true;
