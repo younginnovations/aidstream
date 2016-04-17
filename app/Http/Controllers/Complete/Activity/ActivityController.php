@@ -412,7 +412,7 @@ class ActivityController extends Controller
                     $this->activityManager->updatePublishToRegister($publishedFile->id);
                 } elseif ($publishedFile['published_to_register'] == 1) {
 //                    $package = ($settings->publishing_type == "segmented") ? $settings['registry_info'][0]['publisher_id'] . '-' . $code : $settings['registry_info'][0]['publisher_id'] . '-activities';
-                    $apiCall->package_update($this->convertIntoArray(json_decode($data)));
+                    $apiCall->package_update($data);
                 }
             }
 
@@ -593,13 +593,6 @@ class ActivityController extends Controller
 
         try {
             $data = $this->generateJson($publishedFile);
-            if ($publishedFile['published_to_register'] == 0) {
-                $apiCall->package_create($data);
-                $this->activityManager->updatePublishToRegister($publishedFile->id);
-            } elseif ($publishedFile['published_to_register'] == 1) {
-                $apiCall->package_update($this->convertIntoArray(json_decode($data)));
-            }
-
             $this->loggerInterface->info(
                 'Successfully published selected activity files',
                 [
@@ -607,6 +600,13 @@ class ActivityController extends Controller
                     'by_user' => auth()->user()->name
                 ]
             );
+
+            if ($publishedFile['published_to_register'] == 0) {
+                $apiCall->package_create($data);
+                $this->activityManager->updatePublishToRegister($publishedFile->id);
+            } elseif ($publishedFile['published_to_register'] == 1) {
+                $apiCall->package_update($data);
+            }
 
             return true;
         } catch (\Exception $e) {

@@ -493,9 +493,9 @@ class CkanClient
      * @return mixed
      * @link http://docs.ckan.org/en/latest/api/index.html#ckan.logic.action.update.package_update
      */
-    public function package_update(array $data)
+    public function package_update($data)
     {
-        $data = json_encode($data, JSON_PRETTY_PRINT);
+//        $data = json_encode($data, JSON_PRETTY_PRINT);
 
         return $this->make_request(
             'POST',
