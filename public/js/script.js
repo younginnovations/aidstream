@@ -416,7 +416,7 @@ $(document).ready(function () {
 
     //js for form input check and leave page alert
     var preventNavigation = false;
-    $('form').delegate('textarea, select, input:not(".ignore_change")', 'change', function () {
+    $('form').delegate('textarea:not(".ignore_change"), select:not(".ignore_change"), input:not(".ignore_change")', 'change', function () {
         preventNavigation = true;
     });
 
@@ -553,8 +553,8 @@ $(document).ready(function () {
         return false;
     });
 
-    if(!Modernizr.svg) {
-        $('img[src*="svg"]').attr('src', function() {
+    if (!Modernizr.svg) {
+        $('img[src*="svg"]').attr('src', function () {
             return $(this).attr('src').replace('.svg', '.png');
         });
     }

@@ -10,6 +10,7 @@
                     @if(Auth::user()->role_id == 3)
                         {{--<li><a href="{{ route('admin.add-organization') }}">Add Organization</a></li>--}}
                         <li><a href="{{ route('admin.group-organizations') }}">Group Organization</a></li>
+                        <li class="activity-logs"><a href="{{ route('admin.activity-log') }}">Activity Logs</a></li>
                         {{-- May require in future--}}
                         {{--<li><a href="#">List Help Topics</a></li>--}}
                         {{--<li><a href="#">Activity Status</a></li>--}}
