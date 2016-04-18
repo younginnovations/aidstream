@@ -138,7 +138,7 @@ class Result extends ActivityBaseRequest
 
         foreach ($formFields as $indicatorIndex => $indicator) {
             $indicatorForm                                            = sprintf('%s.indicator.%s', $formBase, $indicatorIndex);
-            $messages[sprintf('%s.measure.required', $indicatorForm)] = 'Measure is required.';
+            $messages[sprintf('%s.measure.required', $indicatorForm)] = 'Measure is required.'; 
             $messages                                                 = array_merge(
                 $messages,
                 $this->getMessagesForNarrative($indicator['title'][0]['narrative'], sprintf('%s.title.0', $indicatorForm)),
