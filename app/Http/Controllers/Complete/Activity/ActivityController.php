@@ -145,7 +145,6 @@ class ActivityController extends Controller
     public function create($duplicate = false, $activityId = 0)
     {
         $organization = $this->organizationManager->getOrganization($this->organization_id);
-
         if (Gate::denies('create', $organization)) {
             return redirect()->route('activity.index')->withResponse($this->getNoPrivilegesMessage());
         }
@@ -154,7 +153,7 @@ class ActivityController extends Controller
         $form     = $duplicate ? $this->identifierForm->duplicate($activityId) : $this->identifierForm->create();
         $settings = $this->settingsManager->getSettings($this->organization_id);
 
-        if (!isset($organization->reporting_org[0])) {
+        if ($organization->reporting_org == null || $organization->reporting_org[0]['reporting_organization_identifier'] == "" || $organization->reporting_org[0]['reporting_organization_type'] == "") {
             $response = ['type' => 'warning', 'code' => ['settings', ['name' => 'activity']]];
 
             return redirect('/settings')->withResponse($response);

@@ -34,6 +34,16 @@ class Location extends BaseElement
         $activityData = [];
         $locations    = (array) $activity->location;
         foreach ($locations as $location) {
+            $point = [];
+            if (($location['point'][0]['position'][0]['latitude'] != "") && ($location['point'][0]['position'][0]['longitude'] != "")) {
+                $point = [
+                    '@attributes' => [
+                        'srsName' => $location['point'][0]['srs_name']
+                    ],
+                    'pos'         => $location['point'][0]['position'][0]['latitude'] . ' ' . $location['point'][0]['position'][0]['longitude']
+                ];
+            }
+
             $activityData[] = [
                 '@attributes'          => [
                     'ref' => $location['reference']
@@ -65,13 +75,7 @@ class Location extends BaseElement
                         'level'      => $location['administrative'][0]['level']
                     ]
                 ],
-                'point'                => [
-                    '@attributes' => [
-                        'srsName' => $location['point'][0]['srs_name']
-                    ],
-                    'pos'         => $location['point'][0]['position'][0]['latitude'] . ' ' . $location['point'][0]['position'][0]['longitude']
-
-                ],
+                'point'                => $point,
                 'exactness'            => [
                     '@attributes' => [
                         'code' => $location['exactness'][0]['code']
