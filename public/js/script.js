@@ -377,32 +377,9 @@ $(document).ready(function () {
             $(this).removeClass('full-sidebar-wrapper');
         });
 
-    //js for form input check and leave page alert
-    var preventNavigation = false;
-    $('form').delegate('textarea, select, input:not(".ignore_change")', 'change keyup', function () {
-        preventNavigation = true;
-    });
-
     $('.language-selector').click(function () {
         $(this).siblings('.language-flag-wrap').toggle();
     });
-
-
-    //js for form input check and leave page alert
-    var preventNavigation = false;
-    $('form').delegate('textarea, select, input:not(".ignore_change")', 'change keyup', function (e) {
-        preventNavigation = true;
-    });
-
-    $('[type="submit"]').click(function () {
-        preventNavigation = false;
-    });
-
-    window.onbeforeunload = function () {
-        if (preventNavigation) {
-            return 'You have unsaved changes.';
-        }
-    };
 
     $('.element-menu-wrapper').click(function () {
         $(this).children('.element-sidebar-wrapper').toggle();
@@ -435,6 +412,16 @@ $(document).ready(function () {
 
     $('form').submit(function () {
         $('[type="submit"]', this).attr('disabled', 'disabled');
+    });
+
+    //js for form input check and leave page alert
+    var preventNavigation = false;
+    $('form').delegate('textarea, select, input:not(".ignore_change")', 'change', function () {
+        preventNavigation = true;
+    });
+
+    $('[type="submit"]').click(function () {
+        preventNavigation = false;
     });
 
     window.onbeforeunload = function () {
