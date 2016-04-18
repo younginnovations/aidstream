@@ -69,7 +69,9 @@ function getVal($arr, $arguments, $default = "")
             return $arr[$arguments[0]];
         } else {
             if (isset($arr[$arguments[0]]) && is_array($arr[$arguments[0]])) {
-                return getVal($arr[$arguments[0]], array_slice($arguments, 1), $default);
+                $result = getVal($arr[$arguments[0]], array_slice($arguments, 1), $default);
+
+                return $result ? $result : $default;
             } else {
                 return $default;
             }

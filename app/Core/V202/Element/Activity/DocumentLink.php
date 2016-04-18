@@ -17,6 +17,7 @@ class DocumentLink extends V201DocumentLink
     {
         $activityData  = [];
         $documentLinks = (array) $activity->document_link;
+
         foreach ($documentLinks as $documentLink) {
             $activityData[] = [
                 '@attributes'   => [
@@ -24,16 +25,16 @@ class DocumentLink extends V201DocumentLink
                     'format' => $documentLink['format']
                 ],
                 'title'         => [
-                    'narrative' => $this->buildNarrative($documentLink['title'][0]['narrative'])
+                    'narrative' => $this->buildNarrative(getVal($documentLink, ['title', 0, 'narrative'], []))
                 ],
                 'category'      => [
                     '@attributes' => [
-                        'code' => $documentLink['category'][0]['code']
+                        'code' => getVal($documentLink, ['category', 0, 'code'])
                     ]
                 ],
                 'language'      => [
                     '@attributes' => [
-                        'code' => $documentLink['language'][0]['language']
+                        'code' => getVal($documentLink, ['language', 0, 'language'])
                     ]
                 ],
                 'document-date' => [
