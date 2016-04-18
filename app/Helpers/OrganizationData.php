@@ -15,7 +15,7 @@ class OrganizationData
      */
     public function get()
     {
-        $id                       = Session::get('org_id');
+        $id                       = request()->route()->organization;
         $orgData                  = OrgData::where('organization_id', $id)->first()->toArray();
         $orgData['reporting_org'] = Organization::find($id)->reporting_org;
 
