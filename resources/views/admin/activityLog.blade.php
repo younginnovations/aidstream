@@ -6,7 +6,7 @@
     <div class="container main-container admin-container">
         <div class="row">
             <div class="panel-content-heading">
-                <div>Organizations</div>
+                <div>Activity Logs</div>
             </div>
             <div class="col-xs-12 col-lg-8 organization-wrapper">
                 <div class="panel panel-default">
