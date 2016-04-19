@@ -5,6 +5,7 @@
                 Planned Disbursements
             </div>
             <a href="{{route('activity.planned-disbursement.index', $id)}}" class="edit-element">edit</a>
+            <a href="{{route('activity.delete-element', [$id, 'planned_disbursement'])}}" class="delete pull-right">remove</a>
         </div>
         <div class="panel-body panel-level-1">
             @foreach($plannedDisbursements as $plannedDisbursement)

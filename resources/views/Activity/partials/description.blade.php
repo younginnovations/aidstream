@@ -5,6 +5,7 @@
                 Description
             </div>
             <a href="{{route('activity.description.index', $id)}}" class="edit-element">edit</a>
+            <a href="{{route('activity.delete-element', [$id, 'description'])}}" class="delete pull-right">remove</a>
         </div>
         <div class="panel-body panel-level-1">
             @foreach($descriptions as $description)

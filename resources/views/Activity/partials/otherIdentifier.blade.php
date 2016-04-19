@@ -5,6 +5,7 @@
                 Other Identifier
             </div>
             <a href="{{route('activity.other-identifier.index', $id)}}" class="edit-element">edit</a>
+            <a href="{{route('activity.delete-element', [$id, 'other_identifier'])}}" class="delete pull-right">remove</a>
         </div>
         <div class="panel-body panel-level-1">
             @foreach($otherIdentifiers as $other_identifier)

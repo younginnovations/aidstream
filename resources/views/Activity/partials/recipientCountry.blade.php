@@ -5,6 +5,7 @@
                 Recipient Country
             </div>
             <a href="{{route('activity.recipient-country.index', $id)}}" class="edit-element">edit</a>
+            <a href="{{route('activity.delete-element', [$id, 'recipient_country'])}}" class="delete pull-right">remove</a>
         </div>
         <div class="panel-body panel-level-1">
             @foreach($recipientCountries as $recipientCountry)

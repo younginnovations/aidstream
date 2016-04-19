@@ -5,6 +5,7 @@
                 Location
             </div>
             <a href="{{route('activity.location.index', $id)}}" class="edit-element">edit</a>
+            <a href="{{route('activity.delete-element', [$id, 'location'])}}" class="delete pull-right">remove</a>
         </div>
         <div class="panel-body panel-level-1">
             @foreach($locations as $location)

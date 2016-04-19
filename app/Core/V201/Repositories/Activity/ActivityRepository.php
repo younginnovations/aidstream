@@ -202,4 +202,16 @@ class ActivityRepository
 
         return $activityInRegistry->save();
     }
+
+    /**
+     * @param Activity $activity
+     * @param          $element
+     * @return bool
+     */
+    public function deleteElement(Activity $activity, $element)
+    {
+        $activity->$element = null;
+
+        return $activity->save();
+    }
 }

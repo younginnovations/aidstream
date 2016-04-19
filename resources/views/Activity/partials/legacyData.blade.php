@@ -5,6 +5,7 @@
                 Legacy Data
             </div>
             <a href="{{route('activity.legacy-data.index', $id)}}" class="edit-element">edit</a>
+            <a href="{{route('activity.delete-element', [$id, 'legacy_data'])}}" class="delete pull-right">remove</a>
         </div>
         <div class="panel-body panel-level-1">
             @foreach($legacyDatas as $legacyData)

@@ -5,6 +5,7 @@
                 Policy Markers
             </div>
             <a href="{{route('activity.policy-marker.index', $id)}}" class="edit-element">edit</a>
+            <a href="{{route('activity.delete-element', [$id, 'policy_marker'])}}" class="delete pull-right">remove</a>
         </div>
         <div class="panel-body panel-level-1">
             @foreach($policyMarkers as $policyMarker)

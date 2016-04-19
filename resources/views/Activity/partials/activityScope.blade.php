@@ -5,6 +5,7 @@
                 Activity Scope
             </div>
             <a href="{{route('activity.activity-scope.index', $id)}}" class="edit-element">edit</a>
+            <a href="{{route('activity.delete-element', [$id, 'activity_scope'])}}" class="delete pull-right">remove</a>
         </div>
         <div class="panel-body panel-element-body">
             <div class="col-xs-12 col-md-12 clearfix">

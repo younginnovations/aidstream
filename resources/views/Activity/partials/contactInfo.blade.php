@@ -5,6 +5,7 @@
                 Contact Info
             </div>
             <a href="{{route('activity.contact-info.index', $id)}}" class="edit-element">edit</a>
+            <a href="{{route('activity.delete-element', [$id, 'contact_info'])}}" class="delete pull-right">remove</a>
         </div>
         <div class="panel-body panel-level-1">
             @foreach($contactInfo as $info)
