@@ -19,7 +19,8 @@ class DefaultFieldGroups
      */
     public function get()
     {
-        $settings           = Settings::where('organization_id', Session::get('org_id'))->first();
+        $orgId              = Activity::find(request()->route()->activity)->organization_id;
+        $settings           = Settings::where('organization_id', $orgId)->first();
         $defaultFieldGroups = $settings->default_field_groups[0];
 
         $identification                      = isset($defaultFieldGroups['Identification']) ? $defaultFieldGroups['Identification'] : [];
@@ -111,7 +112,7 @@ class DefaultFieldGroups
 
         if ($activityData) {
             $activityData                           = $activityData->toArray();
-            $reportingOrg                           = Organization::find(Session::get('org_id'))->reporting_org;
+            $reportingOrg                           = Organization::find($activityData['organization_id'])->reporting_org;
             $results                                = ActivityResult::where('activity_id', $id)->get()->toArray();
             $transactions                           = Transaction::where('activity_id', $id)->get()->toArray();
             $activityData['results']                = $results;

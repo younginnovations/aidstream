@@ -50,7 +50,7 @@ class ActivityRepository
      */
     public function getActivities($organizationId)
     {
-        return $this->activity->where('organization_id', $organizationId)->get();
+        return $this->activity->where('organization_id', $organizationId)->orderBy('updated_at','desc')->get();
     }
 
     /**

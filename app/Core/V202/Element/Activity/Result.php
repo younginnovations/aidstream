@@ -26,7 +26,7 @@ class Result extends V201Result
             'description' => [
                 'narrative' => $this->buildNarrative($indicator[0]['description'][0]['narrative'])
             ],
-            'reference'   => getVal($indicator, [0, 'reference']),
+            'reference'   => $this->buildReference(getVal($indicator, [0, 'reference'], [])),
             'baseline'    => [
                 '@attributes' => [
                     'year'  => $indicator[0]['baseline'][0]['year'],
@@ -72,8 +72,8 @@ class Result extends V201Result
             '@attributes' => [
                 'value' => $data[0]['value']
             ],
-            'location'    => getVal($data, [0, 'location']),
-            'dimension'   => getVal($data, [0, 'dimension']),
+            'location'    => $this->buildLocation(getVal($data, [0, 'location'])),
+            'dimension'   => $this->buildDimension(getVal($data, [0, 'dimension'])),
             'comment'     => [
                 'narrative' => $this->buildNarrative(getVal($data, [0, 'comment', 0, 'narrative'], []))
             ]

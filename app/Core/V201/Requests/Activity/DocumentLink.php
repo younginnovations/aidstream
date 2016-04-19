@@ -37,9 +37,9 @@ class DocumentLink extends ActivityBaseRequest
             $rules[sprintf('document_link.%s.format', $documentLinkIndex)] = 'required';
             $rules                                                         = array_merge(
                 $rules,
-                $this->getRulesForNarrative($documentLink['title'][0]['narrative'], sprintf('%s.title.0', $documentLinkForm)),
-                $this->getRulesForDocumentCategory($documentLink['category'], $documentLinkForm),
-                $this->getRulesForDocumentLanguage($documentLink['language'], $documentLinkForm)
+                $this->getRulesForNarrative(getVal($documentLink, ['title', 0, 'narrative']), sprintf('%s.title.0', $documentLinkForm)),
+                $this->getRulesForDocumentCategory(getVal($documentLink, ['category'], []), $documentLinkForm),
+                $this->getRulesForDocumentLanguage(getVal($documentLink, ['language'], []), $documentLinkForm)
             );
         }
 
@@ -61,9 +61,9 @@ class DocumentLink extends ActivityBaseRequest
             $messages[sprintf('document_link.%s.format.required', $documentLinkIndex)] = 'Format is required';
             $messages                                                                  = array_merge(
                 $messages,
-                $this->getMessagesForNarrative($documentLink['title'][0]['narrative'], sprintf('%s.title.0', $documentLinkForm)),
-                $this->getMessagesForDocumentCategory($documentLink['category'], $documentLinkForm),
-                $this->getMessagesForDocumentLanguage($documentLink['language'], $documentLinkForm)
+                $this->getMessagesForNarrative(getVal($documentLink, ['title', 0, 'narrative']), sprintf('%s.title.0', $documentLinkForm)),
+                $this->getMessagesForDocumentCategory(getVal($documentLink, ['category'], []), $documentLinkForm),
+                $this->getMessagesForDocumentLanguage(getVal($documentLink, ['language'], []), $documentLinkForm)
             );
         }
 

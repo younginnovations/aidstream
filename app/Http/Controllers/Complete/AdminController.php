@@ -3,6 +3,7 @@
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdatePasswordRequest;
 use App\Http\Requests\UserRequest;
+use App\Models\Organization\Organization;
 use App\Models\UserActivity;
 use App\Services\Organization\OrganizationManager;
 use App\User;
@@ -55,13 +56,19 @@ class AdminController extends Controller
     }
 
     /**
+     * @param null $orgId
      * @return \Illuminate\View\View
      */
-    public function index()
+    public function index($orgId = null)
     {
-        $activity = UserActivity::with('user')->orderBy('id', 'desc')->get();
+        $activity      = UserActivity::join('users', 'users.id', '=', 'user_activities.user_id')
+                                     ->join('organizations', 'organizations.id', '=', 'users.org_id')
+                                     ->where('organizations.id', $orgId)
+                                     ->orderBy('user_activities.id', 'desc')
+                                     ->get();
+        $organizations = Organization::select('name', 'id')->get();
 
-        return view('admin.activityLog', compact('activity'));
+        return view('admin.activityLog', compact('activity', 'organizations', 'orgId'));
     }
 
     /**
