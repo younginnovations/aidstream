@@ -5,6 +5,7 @@
 @section('content')
     <div class="container main-container admin-container">
         <div class="row">
+            @include('includes.response')
             <div class="panel-content-heading">
                 <div><a href="{{url('admin/list-organization')}}">Dashboard</a> > Create Organisation
                     Group

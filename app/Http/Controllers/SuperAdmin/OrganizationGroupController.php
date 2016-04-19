@@ -4,6 +4,7 @@ use App\Http\Controllers\Controller;
 use App\Models\SuperAdmin\UserGroup;
 use App\SuperAdmin\Requests\OrganizationGroup;
 use App\SuperAdmin\Services\OrganizationGroupManager;
+use Illuminate\Contracts\Logging\Log;
 use Kris\LaravelFormBuilder\FormBuilder;
 
 /**
@@ -83,6 +84,13 @@ class OrganizationGroupController extends Controller
     {
         $user = $this->userGroup->findOrFail($id);
         $user->delete($user);
+        app(Log::class)->activity(
+            "activity.group_organization_deleted",
+            [
+                'group_name'  => $user->group_name,
+                'super_admin' => auth()->user()->username,
+            ]
+        );
 
         return redirect()->back()->withMessage('Organization group has been deleted.');
     }

@@ -22,6 +22,8 @@ class Handler extends ExceptionHandler
         HttpException::class,
         ModelNotFoundException::class,
         ValidationException::class,
+        TokenMismatchException::class,
+        HttpResponseException::class,
     ];
 
     /**
@@ -47,7 +49,7 @@ class Handler extends ExceptionHandler
     public function render($request, Exception $e)
     {
         if ($e instanceof TokenMismatchException) {
-            return redirect()->back()->withInput()->withResponse(['type' => 'warning', 'code' => ['message', ['message' => 'Token has been expired. Please resubmit the form again.']]]);
+            return redirect()->back()->exceptInput('_token')->withResponse(['type' => 'warning', 'code' => ['message', ['message' => 'Token has been expired. Please resubmit the form again.']]]);
         }
 
         if ($e instanceof AuthorizationException) {
@@ -63,8 +65,7 @@ class Handler extends ExceptionHandler
             return parent::render($request, $e);
         }
 
-        $error = $e->getMessage() ? sprintf('Error: %s', $e->getMessage()) : 'Unknown Error:';
-        $this->log->error($error, ['url' => $request->url(), 'session' => session()->all(), 'trace' => $e->getTraceAsString()]);
+        $this->log->error($e);
         $message = 'Whoops, look like something went wrong.';
 
         return response()->view(sprintf('errors.%s', auth()->check() ? 'errors' : 'noAuthErrors'), compact('message'));
