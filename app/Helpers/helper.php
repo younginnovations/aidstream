@@ -64,6 +64,7 @@ function getDefaultCurrency()
  */
 function getVal($arr, $arguments, $default = "")
 {
+    (!is_string($arguments)) ?: $arguments = explode('.', $arguments);
     if (is_array($arr)) {
         if (isset($arr[$arguments[0]]) && count(array_slice($arguments, 1)) === 0) {
             return $arr[$arguments[0]];
