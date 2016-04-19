@@ -21,11 +21,11 @@ class PolicyMarker extends V201PolicyMarker
             $activityData[] = [
                 '@attributes' => [
                     'vocabulary'     => $policyMarker['vocabulary'],
-                    'vocabulary-uri' => array_key_exists('vocabulary_uri', $policyMarker) ? $policyMarker['vocabulary_uri'] : '',
-                    'code'           => $policyMarker['policy_marker'],
-                    'significance'   => $policyMarker['significance']
+                    'vocabulary-uri' => getVal($policyMarker, ['vocabulary_uri']),
+                    'code'           => getVal($policyMarker, ['policy_marker']),
+                    'significance'   => getVal($policyMarker, ['significance'])
                 ],
-                'narrative'   => $this->buildNarrative($policyMarker['narrative'])
+                'narrative'   => $this->buildNarrative(getVal($policyMarker, ['narrative'], []))
             ];
         }
 

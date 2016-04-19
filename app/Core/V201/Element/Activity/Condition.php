@@ -51,6 +51,10 @@ class Condition extends BaseElement
      */
     private function buildCondition($conditions)
     {
+        if (!boolval($conditions)) {
+            $conditions = [['condition_type' => null, 'narrative' => [['narrative' => '', 'language' => '']]]];
+        }
+
         foreach ($conditions as $condition) {
             $conditionData[] = [
                 '@attributes' => [

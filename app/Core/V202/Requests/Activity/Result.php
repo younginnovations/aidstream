@@ -72,8 +72,6 @@ class Result extends V201Result
 
         foreach ($formFields as $referenceIndex => $reference) {
             $referenceForm                                      = sprintf('%s.reference.%s', $formBase, $referenceIndex);
-            $rules[sprintf('%s.vocabulary', $referenceForm)]    = 'required';
-            $rules[sprintf('%s.code', $referenceForm)]          = 'required';
             $rules[sprintf('%s.indicator_uri', $referenceForm)] = 'url';
         }
 
@@ -92,8 +90,6 @@ class Result extends V201Result
 
         foreach ($formFields as $referenceIndex => $reference) {
             $referenceForm                                               = sprintf('%s.reference.%s', $formBase, $referenceIndex);
-            $messages[sprintf('%s.vocabulary.required', $referenceForm)] = 'Vocabulary is required.';
-            $messages[sprintf('%s.code.required', $referenceForm)]       = 'Code is required.';
             $messages[sprintf('%s.indicator_uri.url', $referenceForm)]   = 'Enter valid URL. eg. http://example.com';
         }
 

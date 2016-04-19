@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\Activity\Activity;
+use App\Models\ActivityPublished;
 use App\Models\Organization\Organization;
 use Illuminate\Contracts\Auth\Access\Gate as GateContract;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
@@ -101,6 +102,10 @@ class AuthServiceProvider extends ServiceProvider
     protected function checkUserOwnershipFor($user, $activity)
     {
         if ($activity instanceof Activity) {
+            return ($user->org_id == $activity->organization_id);
+        }
+
+        if ($activity instanceof ActivityPublished) {
             return ($user->org_id == $activity->organization_id);
         }
 

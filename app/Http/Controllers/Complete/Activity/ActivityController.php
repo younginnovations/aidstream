@@ -399,16 +399,20 @@ class ActivityController extends Controller
         try {
             foreach ($activityPublishedFiles as $publishedFile) {
                 $data = $this->generateJson($publishedFile);
+
+                $this->loggerInterface->info('Payload for publishing', ['payload' => $data, 'by_user' => auth()->user()->name]);
+
                 if ($settings->publishing_type == "segmented") {
                     $filename = explode('-', $publishedFile->filename);
                     $code     = str_replace('.xml', '', end($filename));
                 }
+
                 if ($publishedFile['published_to_register'] == 0) {
                     $apiCall->package_create($data);
                     $this->activityManager->updatePublishToRegister($publishedFile->id);
                 } elseif ($publishedFile['published_to_register'] == 1) {
 //                    $package = ($settings->publishing_type == "segmented") ? $settings['registry_info'][0]['publisher_id'] . '-' . $code : $settings['registry_info'][0]['publisher_id'] . '-activities';
-                    $apiCall->package_update($this->convertIntoArray(json_decode($data)));
+                    $apiCall->package_update($data);
                 }
             }
 
@@ -451,31 +455,23 @@ class ActivityController extends Controller
             $key = "country";
         }
 
-        $title = ($settings->publishing_type == "segmented") ? $organization->name . 'Activity File-' . $code : $organization->name . 'Activity File';
+        $title = ($settings->publishing_type == "segmented") ? $organization->name . ' Activity File-' . $code : $organization->name . ' Activity File';
         $name  = ($settings->publishing_type == "segmented") ? $settings['registry_info'][0]['publisher_id'] . '-' . $code : $settings['registry_info'][0]['publisher_id'] . '-activities';
 
-        $data = '{
-        "title": "' . $title . '",
-        "name": "' . $name . '",
-        "author_email": "' . $author_email . '",
-        "owner_org" : "' . $settings['registry_info'][0]['publisher_id'] . '",
-        "resources": [
-        {
-            "format":"IATI-XML",
-            "mimetype":"application/xml",
-            "url":"' . url('files/xml/' . $publishedFile->filename) . '"
-        }
-        ],
-        "extras":
-        [
-        {"key":"filetype","value":"activity"},
-        {"key":"' . $key . '","value":"' . $code . '"},
-        {"key":"data_updated","value":"' . $publishedFile->updated_at . '"},
-        {"key":"activity_count", "value":"' . count($publishedFile->published_activities) . '"},
-        {"key":"language","value":"' . config('app.locale') . '"},
-        {"key":"verified","value":"no"}]}';
+        $requiredData = [
+            'title'          => $title,
+            'name'           => $name,
+            'author_email'   => $author_email,
+            'owner_org'      => $settings['registry_info'][0]['publisher_id'],
+            'file_url'       => url(sprintf('files/xml/%s', $publishedFile->filename)),
+            'geographicKey'  => $key,
+            'geographicCode' => $code,
+            'data_updated'   => $publishedFile->updated_at->toDateTimeString(),
+            'activity_count' => count($publishedFile->published_activities),
+            'language'       => config('app.locale')
+        ];
 
-        return $data;
+        return $this->generatePayload($requiredData);
     }
 
     /**
@@ -597,11 +593,19 @@ class ActivityController extends Controller
 
         try {
             $data = $this->generateJson($publishedFile);
+            $this->loggerInterface->info(
+                'Successfully published selected activity files',
+                [
+                    'payload' => $data,
+                    'by_user' => auth()->user()->name
+                ]
+            );
+
             if ($publishedFile['published_to_register'] == 0) {
                 $apiCall->package_create($data);
                 $this->activityManager->updatePublishToRegister($publishedFile->id);
             } elseif ($publishedFile['published_to_register'] == 1) {
-                $apiCall->package_update($this->convertIntoArray(json_decode($data)));
+                $apiCall->package_update($data);
             }
 
             return true;
@@ -662,5 +666,38 @@ class ActivityController extends Controller
 
             }
         }
+    }
+
+    /**
+     * Returns the request header payload while publishing any files to the IATI Registry.
+     * @param $data
+     * @return array
+     */
+    protected function generatePayload($data)
+    {
+        return json_encode(
+            [
+                'title'        => $data['title'],
+                'name'         => $data['name'],
+                'author_email' => $data['author_email'],
+                'owner_org'    => $data['owner_org'],
+                'license_id'   => 'other-open',
+                'resources'    => [
+                    [
+                        'format'   => config('xmlFiles.format'),
+                        'mimetype' => config('xmlFiles.mimeType'),
+                        'url'      => $data['file_url']
+                    ]
+                ],
+                'extras'       => [
+                    ['key' => 'filetype', 'value' => 'activity'],
+                    ['key' => $data['geographicKey'], 'value' => $data['geographicCode']],
+                    ['key' => 'data_updated', 'value' => $data['data_updated']],
+                    ['key' => 'activity_count', 'value' => $data['activity_count']],
+                    ['key' => 'language', 'value' => $data['language']],
+                    ['key' => 'verified', 'value' => 'no']
+                ]
+            ]
+        );
     }
 }

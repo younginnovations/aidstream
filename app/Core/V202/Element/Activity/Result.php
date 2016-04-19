@@ -15,7 +15,6 @@ class Result extends V201Result
      */
     protected function buildIndicator($indicator)
     {
-
         $indicator = [
             '@attributes' => [
                 'measure'   => $indicator[0]['measure'],
@@ -27,7 +26,7 @@ class Result extends V201Result
             'description' => [
                 'narrative' => $this->buildNarrative($indicator[0]['description'][0]['narrative'])
             ],
-            'reference'   => $this->buildReference($indicator[0]['reference']),
+            'reference'   => getVal($indicator, [0, 'reference']),
             'baseline'    => [
                 '@attributes' => [
                     'year'  => $indicator[0]['baseline'][0]['year'],
@@ -73,10 +72,10 @@ class Result extends V201Result
             '@attributes' => [
                 'value' => $data[0]['value']
             ],
-            'location'    => $this->buildLocation($data[0]['location']),
-            'dimension'   => $this->buildDimension($data[0]['dimension']),
+            'location'    => getVal($data, [0, 'location']),
+            'dimension'   => getVal($data, [0, 'dimension']),
             'comment'     => [
-                'narrative' => $this->buildNarrative($data[0]['comment'][0]['narrative'])
+                'narrative' => $this->buildNarrative(getVal($data, [0, 'comment', 0, 'narrative'], []))
             ]
         ];
 

@@ -17,7 +17,15 @@ class PlannedDisbursement extends V201PlannedDisbursement
     {
         $activityData         = [];
         $plannedDisbursements = (array) $activity->planned_disbursement;
+
         foreach ($plannedDisbursements as $plannedDisbursement) {
+            if (!array_key_exists('provider_org', $plannedDisbursement)) {
+                $plannedDisbursement['provider_org'] = $this->plannedDisbursementTemplate();
+            }
+
+            if (!array_key_exists('reciever_org', $plannedDisbursement)) {
+                $plannedDisbursement['reciever_org'] = $this->plannedDisbursementTemplate();
+            }
             $activityData[] = [
                 '@attributes'  => [
                     'type' => $plannedDisbursement['planned_disbursement_type']
@@ -41,23 +49,28 @@ class PlannedDisbursement extends V201PlannedDisbursement
                 ],
                 'provider-org' => [
                     '@attributes' => [
-                        'ref'                  => $plannedDisbursement['provider_org'][0]['ref'],
-                        'provider-activity-id' => $plannedDisbursement['provider_org'][0]['activity_id'],
-                        'type'                 => $plannedDisbursement['provider_org'][0]['type']
+                        'ref'                  => getVal($plannedDisbursement, ['provider_org', 0, 'ref']),
+                        'provider-activity-id' => getVal($plannedDisbursement, ['provider_org', 0, 'activity_id']),
+                        'type'                 => getVal($plannedDisbursement, ['provider_org', 0, 'type'])
                     ],
-                    'narrative'   => $this->buildNarrative($plannedDisbursement['provider_org'][0]['narrative'])
+                    'narrative'   => $this->buildNarrative(getVal($plannedDisbursement, ['provider_org', 0, 'narrative'], []))
                 ],
                 'receiver-org' => [
                     '@attributes' => [
-                        'ref'                  => $plannedDisbursement['receiver_org'][0]['ref'],
-                        'receiver-activity-id' => $plannedDisbursement['receiver_org'][0]['activity_id'],
-                        'type'                 => $plannedDisbursement['receiver_org'][0]['type']
+                        'ref'                  => getVal($plannedDisbursement, ['receiver_org', 0, 'ref']),
+                        'receiver-activity-id' => getVal($plannedDisbursement, ['receiver_org', 0, 'activity_id']),
+                        'type'                 => getVal($plannedDisbursement, ['receiver_org', 0, 'type'])
                     ],
-                    'narrative'   => $this->buildNarrative($plannedDisbursement['receiver_org'][0]['narrative'])
+                    'narrative'   => $this->buildNarrative(getVal($plannedDisbursement, ['receiver_org', 0, 'narrative'], []))
                 ]
             ];
         }
 
         return $activityData;
+    }
+
+    protected function plannedDisbursementTemplate()
+    {
+        return [['ref' => '', 'activity_id' => '', 'type' => '', 'narrative' => [['narrative' => '', 'language' => '']]]];
     }
 }

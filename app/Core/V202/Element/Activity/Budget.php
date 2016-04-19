@@ -21,7 +21,7 @@ class Budget extends V201Budget
             $activityData[] = [
                 '@attributes'  => [
                     'type'   => $budget['budget_type'],
-                    'status' => $budget['status']
+                    'status' => getVal($budget, ['status'])
                 ],
                 'period-start' => [
                     '@attributes' => [

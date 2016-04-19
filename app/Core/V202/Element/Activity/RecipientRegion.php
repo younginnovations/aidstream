@@ -20,12 +20,12 @@ class RecipientRegion extends V201RecipientRegion
         foreach ($recipientRegions as $recipientRegion) {
             $activityData[] = [
                 '@attributes' => [
-                    'code'           => $recipientRegion['region_code'],
-                    'percentage'     => $recipientRegion['percentage'],
-                    'vocabulary'     => $recipientRegion['region_vocabulary'],
-                    'vocabulary-uri' => array_key_exists('vocabulary_uri', $recipientRegion) ? $recipientRegion['vocabulary_uri'] : ''
+                    'code'           => getVal($recipientRegion, ['region_code']),
+                    'percentage'     => getVal($recipientRegion, ['percentage']),
+                    'vocabulary'     => getVal($recipientRegion, ['region_vocabulary']),
+                    'vocabulary-uri' => getVal($recipientRegion, ['vocabulary_uri'])
                 ],
-                'narrative'   => $this->buildNarrative($recipientRegion['narrative'])
+                'narrative'   => $this->buildNarrative(getVal($recipientRegion, ['narrative'], []))
             ];
         }
 
