@@ -152,7 +152,8 @@ return [
         'Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider',
         'BackupManager\Laravel\Laravel5ServiceProvider',
         'Spatie\Backup\BackupServiceProvider',
-        'App\Providers\DropboxFilesystemServiceProvider'
+        'App\Providers\DropboxFilesystemServiceProvider',
+        'Thujohn\Twitter\TwitterServiceProvider',
     ],
     /*
     |--------------------------------------------------------------------------
@@ -205,6 +206,7 @@ return [
         'Gate'        => Illuminate\Support\Facades\Gate::class,
         'Excel'       => 'Maatwebsite\Excel\Facades\Excel',
         'Image'       => 'Intervention\Image\Facades\Image',
+        'Twitter'     => 'Thujohn\Twitter\Facades\Twitter',
     ],
 
 ];

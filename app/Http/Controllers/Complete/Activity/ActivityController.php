@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Gate;
 use App\Http\API\CKAN\CkanClient;
 use App\User;
 use Psr\Log\LoggerInterface;
+use Thujohn\Twitter\Facades\Twitter;
 
 
 /**
@@ -271,6 +272,7 @@ class ActivityController extends Controller
                 if ($publishedStatus) {
                     $this->activityManager->makePublished($activityData);
                     $this->activityManager->activityInRegistry($activityData);
+                    $this->twitterPost();
                     $response = ['type' => 'success', 'code' => ['publish_registry_publish', ['name' => '']]];
 
                     return redirect()->back()->withResponse($response);
@@ -558,6 +560,7 @@ class ActivityController extends Controller
             $result        = $this->publishToRegistryForBulk($publishedFile, $orgId);
             if ($result) {
                 $pubFiles[] = $filename;
+                $this->twitterPost();
                 $this->savePublishedDataInActivityRegistry($publishedFile);
             } else {
                 $unpubFiles[] = $filename;
@@ -715,5 +718,28 @@ class ActivityController extends Controller
         }
 
         return redirect()->back()->withResponse($response);
+    }
+
+    /*
+     * tweet if organization published their activities
+     */
+    public function twitterPost()
+    {
+        $settings = $this->settingsManager->getSettings(session('org_id'));
+        $apiId    = $settings['registry_info'][0]['publisher_id'];
+
+        $org     = $this->organizationManager->getOrganization(session('org_id'));
+        $twitter = "";
+        if ($org->twitter != "") {
+            $twitter = $org->twitter;
+            if (substr($twitter, 0, 1) != '@') {
+                $twitter = '@' . $twitter;
+            }
+        }
+
+        $status = $org->name . ' ' . $twitter . " has published their #IATIData. View the data here: ";
+        $status .= 'http://iatiregistry.org/publisher/' . $apiId . ' #AidStream';
+
+        Twitter::postTweet(['status' => $status, 'format' => 'json']);
     }
 }

@@ -91,5 +91,11 @@ $router->group(
                 'uses' => 'ActivityController@deleteElement'
             ]
         );
+
+        $router->get('/tweet',
+            [
+                'as' => 'twitter',
+                'uses' => 'ActivityController@twitterPost'
+            ]);
     }
 );
