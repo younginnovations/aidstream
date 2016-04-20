@@ -11,7 +11,8 @@
                 <div class="panel-default">
                     <div class="panel-heading">
                         <div class="activity-element-title">
-                            {{$getCode->getActivityCodeName('TransactionType', $transaction['transaction']['transaction_type'][0]['transaction_type_code']) .' ; '. $transaction['transaction']['value'][0]['amount'] . ' ; ' . formatDate($transaction['transaction']['value'][0]['date'])}}
+                            {{$getCode->getActivityCodeName('TransactionType', $transaction['transaction']['transaction_type'][0]['transaction_type_code']) .' ; '. $transaction['transaction']['value'][0]['amount']. ' '.$getCode->getCode('Organization', 'Currency', $transaction['transaction']['value'][0]['currency']) . ' ; ' . formatDate($transaction['transaction']['value'][0]['date'])}}
+{{--                            {{$getCode->getActivityCodeName('TransactionType', $transaction['transaction']['transaction_type'][0]['transaction_type_code']) .' ; '. $transaction['transaction']['value'][0]['amount'] . ' ; ' . formatDate($transaction['transaction']['value'][0]['date'])}}--}}
                         </div>
                     </div>
                     <div class="panel-body">
