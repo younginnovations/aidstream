@@ -31,6 +31,7 @@
     "gulp-notify": "^2.2.0",
     "gulp-rename": "^1.2.2",
     "gulp-uglify": "^1.5.3",
-    "gulp-uncss": "^1.0.4"
+    "gulp-uncss": "^1.0.4",
+    "imagemin-pngquant": "^4.2.2"
   }
 }
