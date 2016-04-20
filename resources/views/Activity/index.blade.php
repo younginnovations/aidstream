@@ -22,15 +22,14 @@
                     </div>
                     <div class="panel-body">
                         @if(count($activities) > 0)
-                            <table class="table table-striped">
+                            <table class="table table-striped" id="data-table">
                                 <thead>
                                 <tr>
-                                    <th width="20px"></th>
-                                    <th width="40px">S.N.</th>
+                                    <th width="20px" class="no-sort">S.N.</th>
                                     <th width="50%">Activity Title</th>
-                                    <th>Last Updated</th>
+                                    <th class="default-sort">Last Updated</th>
                                     <th class="status">Status</th>
-                                    <th>Actions</th>
+                                    <th class="no-sort">Actions</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -39,18 +38,21 @@
                                 ?>
                                 @foreach($activities as $key=>$activity)
                                     <tr class="clickable-row" data-href="{{ route('activity.show', [$activity->id]) }}">
-                                        <td><input type="checkbox"/></td>
                                         <td>{{ $key + 1 }}</td>
                                         <td class="activity_title">
                                             {{ $activity->title ? $activity->title[0]['narrative'] : 'No Title' }}
                                             <span>{{ $activity->identifier['activity_identifier'] }}</span>
                                         </td>
                                         <td class="updated-date">{{ changeTimeZone($activity->updated_at) }}</td>
-                                        <td><span class="{{ $status_label[$activity->activity_workflow] }}">{{ $status_label[$activity->activity_workflow] }}</span></td>
+                                        <td>
+                                            <span class="{{ $status_label[$activity->activity_workflow] }}">{{ $status_label[$activity->activity_workflow] }}</span>
+                                        </td>
                                         <td>
                                             <a href="{{ route('activity.show', [$activity->id]) }}" class="view"></a>
-                                            <a href="{{ url(sprintf('activity/%s/delete', $activity->id)) }}" class="delete">Delete</a>
-                                            <a href="{{ route('activity.duplicate', [$activity->id]) }}" class="duplicate">Duplicate</a>
+                                            <a href="{{ url(sprintf('activity/%s/delete', $activity->id)) }}"
+                                               class="delete">Delete</a>
+                                            <a href="{{ route('activity.duplicate', [$activity->id]) }}"
+                                               class="duplicate">Duplicate</a>
                                         </td>
                                     </tr>
                                 @endforeach

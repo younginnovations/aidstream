@@ -38,14 +38,14 @@
                     <div class="panel panel-default">
                         <div class="panel-body">
                             @if(count($activity->getTransactions()) > 0)
-                                <table class="table table-striped">
+                                <table class="table table-striped" id="data-table">
                                     <thead>
                                     <tr>
                                         <th>Internal Ref</th>
                                         <th>Transaction Type</th>
                                         <th>Transaction Value</th>
-                                        <th>Transaction Date</th>
-                                        <th>Actions</th>
+                                        <th class="default-sort">Transaction Date</th>
+                                        <th class="no-sort">Actions</th>
                                     </tr>
                                     </thead>
                                     <tbody>

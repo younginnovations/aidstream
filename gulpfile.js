@@ -34,7 +34,8 @@ var js_files = [
     './public/js/jquery.jscrollpane.min.js',
     './public/js/select2.min.js',
     './public/js/jquery.datetimepicker.full.min.js',
-    './public/js/script.js'
+    './public/js/script.js',
+    './public/js/datatable.js'
 ];
 
 

@@ -23,13 +23,13 @@
                 <div class="panel panel-default">
                     <div class="panel-body">
                         @if(count($results) > 0)
-                            <table class="table table-striped">
+                            <table class="table table-striped" id="data-table">
                                 <thead>
                                 <tr>
-                                    <th width="10%">S.N.</th>
-                                    <th width="45%">Title</th>
+                                    <th width="10%" class="no-sort">S.N.</th>
+                                    <th width="45%" class="default-sort">Title</th>
                                     <th width="30%">Type</th>
-                                    <th width="15%">Actions</th>
+                                    <th width="15%" class="no-sort">Actions</th>
                                 </tr>
                                 </thead>
                                 <tbody>
