@@ -61,13 +61,7 @@ class SectorManager
 
             return true;
         } catch (Exception $exception) {
-            $this->logger->error(
-                sprintf('Activity sector could not be updated due to %s', $exception->getMessage()),
-                [
-                    'sector' => $activityDetails,
-                    'trace'  => $exception->getTraceAsString()
-                ]
-            );
+            $this->logger->error($exception, ['sector' => $activityDetails]);
         }
 
         return false;

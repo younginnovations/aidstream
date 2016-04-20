@@ -99,13 +99,7 @@ class UploadActivityManager
             return true;
         } catch (Exception $exception) {
             $this->database->rollback();
-            $this->logger->error(
-                sprintf('Activity could not be uploaded due to %s', $exception->getMessage()),
-                [
-                    'activity' => 'activityDetails',
-                    'trace'    => $exception->getTraceAsString()
-                ]
-            );
+            $this->logger->error($exception, ['activity' => 'activityDetails']);
         }
 
         return false;

@@ -78,13 +78,7 @@ class UpgradeManager
             return true;
         } catch (Exception $exception) {
             $this->database->rollback();
-            $this->logger->error(
-                sprintf('Version upgrade failed due to %s', $exception->getMessage()),
-                [
-                    'version' => $version,
-                    'trace'   => $exception->getTraceAsString()
-                ]
-            );
+            $this->logger->error($exception, ['version' => $version]);
         }
 
         return false;

@@ -79,13 +79,7 @@ class ActivityManager
             return $result;
         } catch (Exception $exception) {
             $this->database->rollback();
-            $this->logger->error(
-                sprintf('Activity identifier couldn\'t be added due to %s', $exception->getMessage()),
-                [
-                    'ActivityIdentifier' => $input,
-                    'trace'              => $exception->getTraceAsString()
-                ]
-            );
+            $this->logger->error($exception, ['ActivityIdentifier' => $input]);
         }
 
         return false;
@@ -231,13 +225,7 @@ class ActivityManager
             return true;
         } catch (Exception $exception) {
             $this->database->rollback();
-            $this->logger->error(
-                sprintf('Activity couldn\'t be duplicated due to %s', $exception->getMessage()),
-                [
-                    'ActivityIdentifier' => $activityData,
-                    'trace'              => $exception->getTraceAsString()
-                ]
-            );
+            $this->logger->error($exception, ['ActivityIdentifier' => $activityData]);
         }
 
         return false;
@@ -269,13 +257,7 @@ class ActivityManager
             return true;
         } catch (Exception $exception) {
             $this->database->rollback();
-            $this->logger->error(
-                sprintf('Activity couldn\'t be deleted due to %s', $exception->getMessage()),
-                [
-                    'ActivityIdentifier' => $activityData,
-                    'trace'              => $exception->getTraceAsString()
-                ]
-            );
+            $this->logger->error($exception, ['ActivityIdentifier' => $activityData]);
         }
 
         return false;

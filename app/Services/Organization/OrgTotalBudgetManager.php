@@ -56,14 +56,7 @@ class OrgTotalBudgetManager
 
             return true;
         } catch (Exception $exception) {
-
-            $this->log->error(
-                sprintf('Total Budget could not be updated due to %s', $exception->getMessage()),
-                [
-                    'OrganizationTotalBudget' => $input,
-                    'trace'                   => $exception->getTraceAsString()
-                ]
-            );
+            $this->log->error($exception, ['OrganizationTotalBudget' => $input]);
         }
 
         return false;

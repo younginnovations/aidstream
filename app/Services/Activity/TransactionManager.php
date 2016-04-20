@@ -64,17 +64,7 @@ class TransactionManager
 
             return true;
         } catch (Exception $exception) {
-            $this->logger->error(
-                sprintf(
-                    'Transaction could not be %s due to %s',
-                    ($transactionId) ? 'updated' : 'added',
-                    $exception->getMessage()
-                ),
-                [
-                    'transaction' => $transactionDetails,
-                    'trace'       => $exception->getTraceAsString()
-                ]
-            );
+            $this->logger->error($exception, ['transaction' => $transactionDetails]);
         }
 
         return false;

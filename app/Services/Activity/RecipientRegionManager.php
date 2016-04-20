@@ -63,13 +63,7 @@ class RecipientRegionManager
 
             return true;
         } catch (Exception $exception) {
-            $this->log->error(
-                sprintf('Activity Recipient Region could not be updated due to %s', $exception->getMessage()),
-                [
-                    'recipientRegion' => $activityDetails,
-                    'trace'           => $exception->getTraceAsString()
-                ]
-            );
+            $this->log->error($exception, ['recipientRegion' => $activityDetails]);
         }
 
         return false;

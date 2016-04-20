@@ -113,13 +113,7 @@ class SettingsManager
             return true;
         } catch (Exception $e) {
             $this->dbManager->rollback();
-            $this->logger->error(
-                sprintf('Settings could no be updated due to %s', $e->getMessage()),
-                [
-                    'settings' => $input,
-                    'trace'    => $e->getTraceAsString()
-                ]
-            );
+            $this->logger->error($e, ['settings' => $input]);
         }
 
         return false;

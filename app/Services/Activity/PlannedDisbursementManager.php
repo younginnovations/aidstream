@@ -69,13 +69,7 @@ class PlannedDisbursementManager
 
             return true;
         } catch (Exception $exception) {
-            $this->logger->error(
-                sprintf('Planned Disbursement could not be updated due to %s', $exception->getMessage()),
-                [
-                    'Planned Disbursement' => $activityDetails,
-                    'trace'                => $exception->getTraceAsString()
-                ]
-            );
+            $this->logger->error($exception, ['Planned Disbursement' => $activityDetails]);
         }
 
         return false;

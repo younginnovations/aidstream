@@ -64,13 +64,7 @@ class RecipientCountryManager
 
             return true;
         } catch (Exception $exception) {
-            $this->log->error(
-                sprintf('Recipient Country could not be updated due to %s', $exception->getMessage()),
-                [
-                    'RecipientCountry' => $input,
-                    'trace'            => $exception->getTraceAsString()
-                ]
-            );
+            $this->log->error($exception, ['RecipientCountry' => $input]);
         }
 
         return false;

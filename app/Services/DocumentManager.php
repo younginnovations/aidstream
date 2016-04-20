@@ -114,13 +114,7 @@ class DocumentManager
             return true;
         } catch (\Exception $exception) {
             $this->database->rollback();
-            $this->logger->error(
-                sprintf('Failed to %s document.', $update ? 'updated' : 'saved'),
-                [
-                    'version' => $document,
-                    'trace'   => $exception->getTraceAsString()
-                ]
-            );
+            $this->logger->error($exception, ['document' => $document]);
         }
 
         return false;

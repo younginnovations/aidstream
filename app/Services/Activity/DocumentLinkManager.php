@@ -78,13 +78,7 @@ class DocumentLinkManager
             return true;
         } catch (\Exception $exception) {
             $this->database->rollback();
-            $this->logger->error(
-                sprintf('Activity Document Link could not be updated due to %s', $exception->getMessage()),
-                [
-                    'documentLink' => $activityDetails,
-                    'trace'        => $exception->getTraceAsString()
-                ]
-            );
+            $this->logger->error($exception, ['documentLink' => $activityDetails]);
         }
 
         return false;

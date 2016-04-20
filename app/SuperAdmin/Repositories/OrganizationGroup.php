@@ -95,18 +95,7 @@ class OrganizationGroup implements OrganizationGroupInterface
             );
         } catch (Exception $exception) {
             $this->database->rollback();
-
-            $this->logger->error(
-                sprintf(
-                    'organization group information could no be %s due to %s',
-                    ($id) ? 'updated' : 'added',
-                    $exception->getMessage()
-                ),
-                [
-                    'settings' => $groupDetails,
-                    'trace'    => $exception->getTraceAsString()
-                ]
-            );
+            $this->logger->error($exception, ['settings' => $groupDetails]);
         }
     }
 

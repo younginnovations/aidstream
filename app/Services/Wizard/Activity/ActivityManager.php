@@ -72,13 +72,7 @@ class ActivityManager
             return $result;
         } catch (Exception $exception) {
             $this->database->rollback();
-            $this->logger->error(
-                sprintf('Activity identifier couldn\'t be added due to %s', $exception->getMessage()),
-                [
-                    'ActivityIdentifier' => $identifier,
-                    'trace'              => $exception->getTraceAsString()
-                ]
-            );
+            $this->logger->error($exception, ['ActivityIdentifier' => $identifier]);
         }
 
         return false;

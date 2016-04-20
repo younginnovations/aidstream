@@ -55,7 +55,7 @@ class ActivityDateManager
             $this->log->activity(
                 "activity.activity_date_updated",
                 [
-                    'activity_id'    => $activity->id,
+                    'activity_id'     => $activity->id,
                     'organization'    => $this->auth->user()->organization->name,
                     'organization_id' => $this->auth->user()->organization->id
                 ]
@@ -63,13 +63,7 @@ class ActivityDateManager
 
             return true;
         } catch (Exception $exception) {
-            $this->log->error(
-                sprintf('Activity Date could not be updated due to %s', $exception->getMessage()),
-                [
-                    'ActivityDate' => $activityDetails,
-                    'trace'        => $exception->getTraceAsString()
-                ]
-            );
+            $this->log->error($exception, ['ActivityDate' => $activityDetails]);
         }
 
         return false;

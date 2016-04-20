@@ -414,18 +414,12 @@ class ActivityController extends Controller
                     $apiCall->package_update($data);
                 }
 
-                $this->loggerInterface->info('Activity file published to registry.', ['payload' => $data, 'by_user' =>auth()->user()->name]);
+                $this->loggerInterface->info('Activity file published to registry.', ['payload' => $data, 'by_user' => auth()->user()->name]);
             }
 
             return true;
         } catch (\Exception $e) {
-            $this->loggerInterface->error(
-                sprintf('Registry Info could not be registered due to error code %s', $e->getCode()),
-                [
-                    'response' => $e->getMessage(),
-                    'trace'    => $e->getTraceAsString()
-                ]
-            );
+            $this->loggerInterface->error($e);
 
             return false;
         }
@@ -619,13 +613,7 @@ class ActivityController extends Controller
 
             return true;
         } catch (\Exception $e) {
-            $this->loggerInterface->error(
-                sprintf('Registry Info could not be registered due to error code %s', $e->getCode()),
-                [
-                    'response' => $e->getMessage(),
-                    'trace'    => $e->getTraceAsString()
-                ]
-            );
+            $this->loggerInterface->error($e);
 
             return false;
         }

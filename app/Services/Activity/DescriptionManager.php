@@ -64,13 +64,7 @@ class DescriptionManager
 
             return true;
         } catch (Exception $exception) {
-            $this->log->error(
-                sprintf('Activity Description could not be updated due to %s', $exception->getMessage()),
-                [
-                    'Description' => $activityDetails,
-                    'trace'       => $exception->getTraceAsString()
-                ]
-            );
+            $this->log->error($exception, ['Description' => $activityDetails]);
         }
 
         return false;

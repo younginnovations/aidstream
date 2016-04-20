@@ -58,14 +58,7 @@ class RecipientOrgBudgetManager
 
             return true;
         } catch (Exception $exception) {
-
-            $this->log->error(
-                sprintf('Recipient Organization Budget could not be updated due to %s', $exception->getMessage()),
-                [
-                    'OrganizationRecipientOrganizationBudget' => $input,
-                    'trace'                                   => $exception->getTraceAsString()
-                ]
-            );
+            $this->log->error($exception, ['OrganizationRecipientOrganizationBudget' => $input]);
         }
 
         return false;
