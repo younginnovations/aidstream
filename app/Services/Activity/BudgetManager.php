@@ -70,13 +70,7 @@ class BudgetManager
 
             return true;
         } catch (Exception $exception) {
-            $this->logger->error(
-                sprintf('Budget could not be updated due to %s', $exception->getMessage()),
-                [
-                    'Budget' => $activityDetails,
-                    'trace'  => $exception->getTraceAsString()
-                ]
-            );
+            $this->logger->error($exception, ['Budget' => $activityDetails]);
         }
 
         return false;

@@ -65,13 +65,7 @@ class TitleManager
 
             return true;
         } catch (Exception $exception) {
-            $this->log->error(
-                sprintf('Activity Title could not be updated due to %s', $exception->getMessage()),
-                [
-                    'Title' => $activityDetails,
-                    'trace' => $exception->getTraceAsString()
-                ]
-            );
+            $this->log->error($exception, ['Title' => $activityDetails]);
         }
 
         return false;

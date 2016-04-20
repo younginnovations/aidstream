@@ -58,14 +58,7 @@ class DocumentLinkManager
 
             return true;
         } catch (Exception $exception) {
-
-            $this->log->error(
-                sprintf('Document Link could not be updated due to %s', $exception->getMessage()),
-                [
-                    'OrganizationDocumentLink' => $input,
-                    'trace'                    => $exception->getTraceAsString()
-                ]
-            );
+            $this->log->error($exception, ['OrganizationDocumentLink' => $input]);
         }
 
         return false;
@@ -73,7 +66,7 @@ class DocumentLinkManager
 
 
     /**
-     * write brief description
+     * get organization data
      * @param $id
      * @return Model
      */

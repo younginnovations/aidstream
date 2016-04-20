@@ -96,18 +96,8 @@ class CompleteCsvDataFormatter extends CompleteCsvFactoryGenerator
             return $this->fillActivityElementData($elementFactories, $activities)
                         ->fillTransactionData($activities)
                         ->fillResultData($activities);
-        } catch (BadMethodCallException $exception) {
-            $this->logger
-                ->error(
-                    sprintf('Error: BadMethodCallException - %s', $exception->getMessage()),
-                    ['trace' => $exception->getTraceAsString()]
-                );
         } catch (Exception $exception) {
-            $this->logger
-                ->error(
-                    sprintf('Csv not generated due to %s', $exception->getMessage()),
-                    ['trace' => $exception->getTraceAsString()]
-                );
+            $this->logger->error($exception);
         }
 
         return null;

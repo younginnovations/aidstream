@@ -127,18 +127,7 @@ class SuperAdmin implements SuperAdminInterface
             );
         } catch (Exception $exception) {
             $this->database->rollback();
-
-            $this->logger->error(
-                sprintf(
-                    'organization information could no be %s due to %s',
-                    ($orgId) ? 'updated' : 'added',
-                    $exception->getMessage()
-                ),
-                [
-                    'settings' => $orgDetails,
-                    'trace'    => $exception->getTraceAsString()
-                ]
-            );
+            $this->logger->error($exception, ['settings' => $orgDetails]);
         }
     }
 

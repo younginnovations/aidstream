@@ -80,13 +80,7 @@ class DefaultFinanceTypeManager
             return true;
         } catch (Exception $exception) {
             $this->database->rollback();
-            $this->logger->error(
-                sprintf('Activity Default Finance Type could not be updated due to %s', $exception->getMessage()),
-                [
-                    'defaultFinanceType' => $activityDetails,
-                    'trace'              => $exception->getTraceAsString()
-                ]
-            );
+            $this->logger->error($exception, ['defaultFinanceType' => $activityDetails]);
         }
 
         return false;

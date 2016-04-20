@@ -185,7 +185,7 @@ class OrganizationRepository implements OrganizationRepositoryInterface
 
             return true;
         } catch (\Exception $e) {
-            $this->loggerInterface->error(sprintf('Registry Info could not be registered due to %s', $e->getMessage()));
+            $this->loggerInterface->error($e);
 
             return false;
         }
@@ -206,7 +206,7 @@ class OrganizationRepository implements OrganizationRepositoryInterface
 
             if (count($xml['iati-organisation']['name']) == 1) {
                 $orgTitle = $xml['iati-organisation']['name']['narrative'];
-            } elseif(count($xml['iati-organisation']['name']) > 0) {
+            } elseif (count($xml['iati-organisation']['name']) > 0) {
                 $orgTitle = $xml['iati-organisation']['name']['narrative'][0];
             }
         } else {

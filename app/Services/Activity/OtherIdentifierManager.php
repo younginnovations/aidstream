@@ -66,13 +66,7 @@ class OtherIdentifierManager
 
             return true;
         } catch (Exception $exception) {
-            $this->log->error(
-                sprintf('Other Identifier could not be updated due to %s', $exception->getMessage()),
-                [
-                    'OtherIdentifier' => $input,
-                    'trace'           => $exception->getTraceAsString()
-                ]
-            );
+            $this->log->error($exception, ['OtherIdentifier' => $input]);
         }
 
         return false;

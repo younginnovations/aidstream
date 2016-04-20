@@ -70,13 +70,7 @@ class LegacyDataManager
 
             return true;
         } catch (Exception $exception) {
-            $this->logger->error(
-                sprintf('Legacy Data could not be updated due to %s', $exception->getMessage()),
-                [
-                    'legacyData' => $activityDetails,
-                    'trace'      => $exception->getTraceAsString()
-                ]
-            );
+            $this->logger->error($exception, ['legacyData' => $activityDetails]);
         }
 
         return false;

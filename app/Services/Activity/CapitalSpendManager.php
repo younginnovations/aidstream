@@ -80,13 +80,7 @@ class CapitalSpendManager
             return true;
         } catch (Exception $exception) {
             $this->database->rollback();
-            $this->logger->error(
-                sprintf('Activity Capital Spend could not be updated due to %s', $exception->getMessage()),
-                [
-                    'capitalSpend' => $activityDetails,
-                    'trace'        => $exception->getTraceAsString()
-                ]
-            );
+            $this->logger->error($exception, ['capitalSpend' => $activityDetails]);
         }
 
         return false;

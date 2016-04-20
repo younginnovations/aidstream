@@ -70,13 +70,7 @@ class ConditionManager
 
             return true;
         } catch (Exception $exception) {
-            $this->logger->error(
-                sprintf('Condition could not be updated due to %s', $exception->getMessage()),
-                [
-                    'condition' => $activityDetails,
-                    'trace'     => $exception->getTraceAsString()
-                ]
-            );
+            $this->logger->error($exception, ['condition' => $activityDetails]);
         }
 
         return false;

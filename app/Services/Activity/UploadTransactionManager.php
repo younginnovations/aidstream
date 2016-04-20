@@ -78,13 +78,7 @@ class UploadTransactionManager
 
             return true;
         } catch (Exception $exception) {
-            $this->logger->error(
-                sprintf('Transaction could not be uploaded due to %s', $exception->getMessage()),
-                [
-                    'transaction' => $transactionDetails,
-                    'trace'       => $exception->getTraceAsString()
-                ]
-            );
+            $this->logger->error($exception, ['transaction' => $transactionDetails]);
         }
 
         return false;

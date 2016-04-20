@@ -61,13 +61,7 @@ class ActivityStatus
 
             return true;
         } catch (Exception $exception) {
-            $this->log->error(
-                sprintf('Activity Status could not be updated due to %s', $exception->getMessage()),
-                [
-                    'ActivityStatus' => $input,
-                    'trace'          => $exception->getTraceAsString()
-                ]
-            );
+            $this->log->error($exception, ['ActivityStatus' => $input]);
         }
 
         return false;

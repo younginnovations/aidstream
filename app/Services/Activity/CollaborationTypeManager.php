@@ -80,13 +80,7 @@ class CollaborationTypeManager
             return true;
         } catch (Exception $exception) {
             $this->database->rollback();
-            $this->logger->error(
-                sprintf('Activity Collaboration Type could not be updated due to %s', $exception->getMessage()),
-                [
-                    'collaborationType' => $activityDetails,
-                    'trace'             => $exception->getTraceAsString()
-                ]
-            );
+            $this->logger->error($exception, ['collaborationType' => $activityDetails]);
         }
 
         return false;

@@ -59,14 +59,7 @@ class RecipientCountryBudgetManager
 
             return true;
         } catch (Exception $exception) {
-
-            $this->log->error(
-                sprintf('Recipient Country Budget could not be updated due to %s', $exception->getMessage()),
-                [
-                    'OrganizationRecipientCountryBudget' => $input,
-                    'trace'                              => $exception->getTraceAsString()
-                ]
-            );
+            $this->log->error($exception, ['OrganizationRecipientCountryBudget' => $input]);
         }
 
         return false;

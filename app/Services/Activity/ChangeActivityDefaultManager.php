@@ -80,13 +80,7 @@ class ChangeActivityDefaultManager
             return true;
         } catch (Exception $exception) {
             $this->database->rollback();
-            $this->logger->error(
-                sprintf('Activity Default Values could not be updated due to %s', $exception->getMessage()),
-                [
-                    'activityDefaultValues' => $activityDefaults,
-                    'trace'                 => $exception->getTraceAsString()
-                ]
-            );
+            $this->logger->error($exception, ['activityDefaultValues' => $activityDefaults]);
         }
 
         return false;

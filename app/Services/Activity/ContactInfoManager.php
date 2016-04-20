@@ -64,13 +64,7 @@ class ContactInfoManager
 
             return true;
         } catch (Exception $exception) {
-            $this->log->error(
-                sprintf('Activity contact info could not be updated due to %s', $exception->getMessage()),
-                [
-                    'ContactInfo' => $activityDetails,
-                    'trace'       => $exception->getTraceAsString()
-                ]
-            );
+            $this->log->error($exception, ['ContactInfo' => $activityDetails]);
         }
 
         return false;

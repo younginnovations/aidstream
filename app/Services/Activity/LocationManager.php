@@ -64,13 +64,7 @@ class LocationManager
 
             return true;
         } catch (Exception $exception) {
-            $this->log->error(
-                sprintf('Location could not be updated due to %s', $exception->getMessage()),
-                [
-                    'Location' => $input,
-                    'trace'    => $exception->getTraceAsString()
-                ]
-            );
+            $this->log->error($exception, ['Location' => $input]);
         }
 
         return false;

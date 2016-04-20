@@ -92,13 +92,7 @@ class HumanitarianScopeManager
             return true;
         } catch (Exception $exception) {
             $this->database->rollback();
-            $this->logger->error(
-                sprintf('Humanitarian Scope could not be updated due to %s', $exception->getMessage()),
-                [
-                    'HumanitarianScope' => $humanitarianScope,
-                    'trace'             => $exception->getTraceAsString()
-                ]
-            );
+            $this->logger->error($exception, ['HumanitarianScope' => $humanitarianScope]);
         }
 
         return false;

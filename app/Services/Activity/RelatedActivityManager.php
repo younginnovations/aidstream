@@ -70,13 +70,7 @@ class RelatedActivityManager
 
             return true;
         } catch (Exception $exception) {
-            $this->logger->error(
-                sprintf('Related Activity could not be updated due to %s', $exception->getMessage()),
-                [
-                    'relatedActivity' => $activityDetails,
-                    'trace'           => $exception->getTraceAsString()
-                ]
-            );
+            $this->logger->error($exception, ['relatedActivity' => $activityDetails]);
         }
 
         return false;

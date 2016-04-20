@@ -82,13 +82,7 @@ class ResultManager
             return true;
         } catch (Exception $exception) {
             $this->database->rollback();
-            $this->logger->error(
-                sprintf('Activity Result could not be %s due to %s', $resultExists ? 'updated' : 'saved', $exception->getMessage()),
-                [
-                    'result' => $resultData,
-                    'trace'  => $exception->getTraceAsString()
-                ]
-            );
+            $this->logger->error($exception, ['result' => $resultData]);
         }
 
         return false;

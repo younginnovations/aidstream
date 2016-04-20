@@ -80,13 +80,7 @@ class DefaultTiedStatusManager
             return true;
         } catch (Exception $exception) {
             $this->database->rollback();
-            $this->logger->error(
-                sprintf('Activity Default Tied Status could not be updated due to %s', $exception->getMessage()),
-                [
-                    'defaultTiedStatus' => $activityDetails,
-                    'trace'             => $exception->getTraceAsString()
-                ]
-            );
+            $this->logger->error($exception, ['defaultTiedStatus' => $activityDetails]);
         }
 
         return false;

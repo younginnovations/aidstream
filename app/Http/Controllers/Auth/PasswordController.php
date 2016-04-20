@@ -73,13 +73,7 @@ class PasswordController extends Controller
                     return redirect()->back()->withErrors(['email' => trans($response)]);
             }
         } catch (\Exception $e) {
-            $this->logger->error(
-                sprintf('Failed to send reset link due to %s', $e->getMessage()),
-                [
-                    'email' => $request->email,
-                    'trace' => $e->getTraceAsString()
-                ]
-            );
+            $this->logger->error($e, ['email' => $request->email]);
 
             return redirect()->back()->withErrors(['email' => 'Failed to send email.']);
         }

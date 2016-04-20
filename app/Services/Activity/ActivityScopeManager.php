@@ -66,13 +66,7 @@ class ActivityScopeManager
 
             return true;
         } catch (Exception $exception) {
-            $this->log->error(
-                sprintf('Activity Scope could not be updated due to %s', $exception->getMessage()),
-                [
-                    'ActivityScope' => $input,
-                    'trace'         => $exception->getTraceAsString()
-                ]
-            );
+            $this->log->error($exception, ['ActivityScope' => $input]);
         }
 
         return false;

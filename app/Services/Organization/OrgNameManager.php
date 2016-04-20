@@ -78,13 +78,7 @@ class OrgNameManager
 
             return true;
         } catch (Exception $exception) {
-            $this->log->error(
-                sprintf('Name could not be updated due to %s', $exception->getMessage()),
-                [
-                    'OrganizationName' => $input,
-                    'trace'            => $exception->getTraceAsString()
-                ]
-            );
+            $this->log->error($exception, ['OrganizationName' => $input]);
         }
 
         return false;

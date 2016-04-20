@@ -71,22 +71,16 @@ class DefaultAidTypeManager
             $this->dbLogger->activity(
                 "activity.default_aid_type",
                 [
-                    'activity_id' => $activity->id,
-                    'organization'     => $this->auth->user()->organization->name,
-                    'organization_id'  => $this->auth->user()->organization->id
+                    'activity_id'     => $activity->id,
+                    'organization'    => $this->auth->user()->organization->name,
+                    'organization_id' => $this->auth->user()->organization->id
                 ]
             );
 
             return true;
         } catch (Exception $exception) {
             $this->database->rollback();
-            $this->logger->error(
-                sprintf('Activity Default Aid Type could not be updated due to %s', $exception->getMessage()),
-                [
-                    'defaultAidType' => $activityDetails,
-                    'trace'          => $exception->getTraceAsString()
-                ]
-            );
+            $this->logger->error($exception, ['defaultAidType' => $activityDetails]);
         }
 
         return false;

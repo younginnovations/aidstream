@@ -65,13 +65,7 @@ class ParticipatingOrganizationManager
 
             return true;
         } catch (Exception $exception) {
-            $this->log->error(
-                sprintf('Activity Participating Organization could not be updated due to %s', $exception->getMessage()),
-                [
-                    'ParticipatingOrganization' => $activityDetails,
-                    'trace'                     => $exception->getTraceAsString()
-                ]
-            );
+            $this->log->error($exception, ['ParticipatingOrganization' => $activityDetails]);
         }
 
         return false;

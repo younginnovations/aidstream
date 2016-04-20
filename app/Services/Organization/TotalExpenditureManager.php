@@ -94,13 +94,7 @@ class TotalExpenditureManager
             return true;
         } catch (Exception $exception) {
             $this->database->rollback();
-            $this->logger->error(
-                sprintf('Total Expenditure could not be updated due to %s', $exception->getMessage()),
-                [
-                    'OrganizationTotalBudget' => $totalExpenditure,
-                    'trace'                   => $exception->getTraceAsString()
-                ]
-            );
+            $this->logger->error($exception, ['TotalExpenditure' => $totalExpenditure]);
         }
 
         return false;

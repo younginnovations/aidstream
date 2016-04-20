@@ -81,13 +81,7 @@ class DefaultFlowTypeManager
             return true;
         } catch (Exception $exception) {
             $this->database->rollback();
-            $this->logger->error(
-                sprintf('Activity Default Flow Type could not be updated due to %s', $exception->getMessage()),
-                [
-                    'defaultFlowType' => $activityDetails,
-                    'trace'           => $exception->getTraceAsString()
-                ]
-            );
+            $this->logger->error($exception, ['defaultFlowType' => $activityDetails]);
         }
 
         return false;

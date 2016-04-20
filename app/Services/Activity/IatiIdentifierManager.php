@@ -62,14 +62,7 @@ class IatiIdentifierManager
 
             return true;
         } catch (Exception $exception) {
-
-            $this->log->error(
-                sprintf('Iati identifier could not be updated due to %s', $exception->getMessage()),
-                [
-                    'IatiIdentifier' => $input,
-                    'trace'          => $exception->getTraceAsString()
-                ]
-            );
+            $this->log->error($exception, ['IatiIdentifier' => $input]);
         }
 
         return false;

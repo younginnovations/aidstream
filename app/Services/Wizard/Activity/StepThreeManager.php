@@ -72,13 +72,7 @@ class StepThreeManager
             return true;
         } catch (Exception $exception) {
             $this->database->rollback();
-            $this->logger->error(
-                sprintf('Step 3 could not be completes due to %s', $exception->getMessage()),
-                [
-                    'stepThree' => $activityDetails,
-                    'trace'     => $exception->getTraceAsString()
-                ]
-            );
+            $this->logger->error($exception, ['stepThree' => $activityDetails]);
         }
 
         return false;
