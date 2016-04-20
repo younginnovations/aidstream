@@ -6,6 +6,7 @@ use App\SuperAdmin\Requests\Organization;
 use App\SuperAdmin\Services\OrganizationGroupManager;
 use App\SuperAdmin\Services\SuperAdminManager;
 use Auth;
+use Illuminate\Contracts\Logging\Log;
 use Illuminate\Support\Facades\Session;
 use Kris\LaravelFormBuilder\FormBuilder;
 use Illuminate\Database\DatabaseManager;
@@ -134,6 +135,13 @@ class OrganizationController extends Controller
     {
         $organization = $this->adminManager->getOrganizationById($id);
         $organization->delete($organization);
+        app(Log::class)->activity(
+            "activity.organization_deleted",
+            [
+                'org_name'    => $organization->name,
+                'super_admin' => auth()->user()->username,
+            ]
+        );
 
         return redirect()->back()->withMessage('Organization has been deleted.');
     }
