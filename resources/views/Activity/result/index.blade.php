@@ -13,7 +13,7 @@
                 <div>Activity Results
                 @if(count($results) > 0)
                     <div class="panel-action-btn">
-                        <a href="{{ route('activity.result.create', $id) }}" class="btn btn-primary add-new-btn">Add Another
+                        <a href="{{ route('activity.result.create', $id) }}" class="btn btn-primary add-new-btn">Add New
                             Result</a>
                     </div>
                 @endif
@@ -59,8 +59,7 @@
                         @else
                             <div class="text-center no-data no-result-data">
                                 You haven’t added any result yet.
-                                <a href="{{ route('activity.result.create', $id) }}" class="btn btn-primary">Add Another
-                                    Result</a>
+                                <a href="{{ route('activity.result.create', $id) }}" class="btn btn-primary">Add New Result</a>
                             </div>
                         @endif
                     </div>

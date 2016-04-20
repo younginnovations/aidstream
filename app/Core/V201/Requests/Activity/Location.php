@@ -35,12 +35,8 @@ class Location extends ActivityBaseRequest
     {
         $rules = [];
         foreach ($formFields as $locationIndex => $location) {
-            $locationForm                                                   = 'location.' . $locationIndex;
-            $rules[sprintf('%s.location_reach.0.code', $locationForm)]      = 'required';
-            $rules[sprintf('%s.exactness.0.code', $locationForm)]           = 'required';
-            $rules[sprintf('%s.location_class.0.code', $locationForm)]      = 'required';
-            $rules[sprintf('%s.feature_designation.0.code', $locationForm)] = 'required';
-            $rules                                                          = array_merge(
+            $locationForm = 'location.' . $locationIndex;
+            $rules        = array_merge(
                 $rules,
                 $this->getRulesForLocationId($location['location_id'], $locationForm),
                 $this->getRulesForName($location['name'], $locationForm),
@@ -63,12 +59,8 @@ class Location extends ActivityBaseRequest
     {
         $messages = [];
         foreach ($formFields as $locationIndex => $location) {
-            $locationForm                                                               = 'location.' . $locationIndex;
-            $messages[sprintf('%s.location_reach.0.code.required', $locationForm)]      = 'Code is required.';
-            $messages[sprintf('%s.exactness.0.code.required', $locationForm)]           = 'Code is required.';
-            $messages[sprintf('%s.location_class.0.code.required', $locationForm)]      = 'Code is required.';
-            $messages[sprintf('%s.feature_designation.0.code.required', $locationForm)] = 'Code is required.';
-            $messages                                                                   = array_merge(
+            $locationForm = 'location.' . $locationIndex;
+            $messages     = array_merge(
                 $messages,
                 $this->getMessagesForLocationId($location['location_id'], $locationForm),
                 $this->getMessagesForName($location['name'], $locationForm),
@@ -92,11 +84,14 @@ class Location extends ActivityBaseRequest
     {
         $rules = [];
         foreach ($formFields as $locationIdIndex => $locationId) {
-            $locationIdForm                                   = sprintf('%s.location_id.%s', $formBase, $locationIdIndex);
-            $rules[sprintf('%s.vocabulary', $locationIdForm)] = 'required';
-            $rules[sprintf('%s.code', $locationIdForm)]       = 'required';
+            $locationIdForm = sprintf('%s.location_id.%s', $formBase, $locationIdIndex);
+            if ($locationId['code'] != "") {
+                $rules[sprintf('%s.vocabulary', $locationIdForm)] = 'required_with:' . sprintf('%s.code', $locationIdForm);
+            }
+            if ($locationId['vocabulary'] != "") {
+                $rules[sprintf('%s.code', $locationIdForm)] = 'required_with:' . sprintf('%s.vocabulary', $locationIdForm);
+            }
         }
-
         return $rules;
     }
 
@@ -110,11 +105,14 @@ class Location extends ActivityBaseRequest
     {
         $messages = [];
         foreach ($formFields as $locationIdIndex => $locationId) {
-            $locationIdForm                                               = sprintf('%s.location_id.%s', $formBase, $locationIdIndex);
-            $messages[sprintf('%s.vocabulary.required', $locationIdForm)] = 'Vocabulary is required.';
-            $messages[sprintf('%s.code.required', $locationIdForm)]       = 'Code is required.';
+            $locationIdForm = sprintf('%s.location_id.%s', $formBase, $locationIdIndex);
+            if ($locationId['code'] != "") {
+                $messages[sprintf('%s.vocabulary.required_with', $locationIdForm)] = 'Vocabulary is required when Code is present';
+            }
+            if ($locationId['vocabulary'] != "") {
+                $messages[sprintf('%s.code.required_with', $locationIdForm)] = 'Code is required when Vocabulary is present';
+            }
         }
-
         return $messages;
     }
 
@@ -230,10 +228,8 @@ class Location extends ActivityBaseRequest
     {
         $rules = [];
         foreach ($formFields as $administrativeIndex => $administrative) {
-            $administrativeForm                                   = sprintf('%s.administrative.%s', $formBase, $administrativeIndex);
-            $rules[sprintf('%s.vocabulary', $administrativeForm)] = 'required';
-            $rules[sprintf('%s.code', $administrativeForm)]       = 'required';
-            $rules[sprintf('%s.level', $administrativeForm)]      = 'min:0|integer';
+            $administrativeForm                              = sprintf('%s.administrative.%s', $formBase, $administrativeIndex);
+            $rules[sprintf('%s.level', $administrativeForm)] = 'min:0|integer';
         }
 
         return $rules;
@@ -249,10 +245,8 @@ class Location extends ActivityBaseRequest
     {
         $messages = [];
         foreach ($formFields as $administrativeIndex => $administrative) {
-            $administrativeForm                                               = sprintf('%s.administrative.%s', $formBase, $administrativeIndex);
-            $messages[sprintf('%s.vocabulary.required', $administrativeForm)] = 'Vocabulary is Required';
-            $messages[sprintf('%s.code.required', $administrativeForm)]       = 'Code is Required';
-            $messages[sprintf('%s.level.integer', $administrativeForm)]      = 'Level should be a non-negative integer.';
+            $administrativeForm                                         = sprintf('%s.administrative.%s', $formBase, $administrativeIndex);
+            $messages[sprintf('%s.level.integer', $administrativeForm)] = 'Level should be a non-negative integer.';
         }
 
         return $messages;

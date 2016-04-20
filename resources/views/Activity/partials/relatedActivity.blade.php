@@ -5,6 +5,7 @@
                 Related Activity
             </div>
             <a href="{{route('activity.related-activity.index', $id)}}" class="edit-element">edit</a>
+            <a href="{{route('activity.delete-element', [$id, 'related_activity'])}}" class="delete pull-right">remove</a>
         </div>
         <div class="panel-body panel-level-1">
             @foreach($relatedActivities as $relatedActivity)

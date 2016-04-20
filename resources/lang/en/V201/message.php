@@ -28,5 +28,7 @@ return [
     'message'                                 => ':message',
     'not_uploaded'                            => 'Some invalid activities (at row(s): :invalidRows) did not get saved while the valid ones (at row(s): :rows) have been saved.',
     'recipient_region_unselected_in_settings' => 'Recipient Region is not selected in Settings.Please empty this field.',
-    'csv_template_error'                      => 'The CSV file you uploaded does not match with the Activity Template. Please download Activity template from below.'
+    'csv_template_error'                      => 'The CSV file you uploaded does not match with the Activity Template. Please download Activity template from below.',
+    'activity_element_removed'                => 'Activity element has been removed successfully.',
+    'activity_element_not_removed'            => 'Failed to remove activity element.'
 ];

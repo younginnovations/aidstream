@@ -38,8 +38,13 @@ class AuthenticateSuperAdmin
             } else {
                 return redirect()->guest('auth/login');
             }
-        } elseif (session('org_id') && $request->getPathInfo() != '/admin/switch-back') {
+        } elseif (session('role_id') == 3 && session('org_id') && $request->getPathInfo() == '/admin/list-organization') {
             $response = ['type' => 'warning', 'code' => ['message', ['message' => 'Please click on Switch Back to go back to your Superadmin Dashboard.']]];
+
+            return redirect(config('app.admin_dashboard'))->withResponse($response);
+
+        } elseif ($request->getPathInfo() == '/logs' && session('role_id') != 3) {
+            $response = ['type' => 'warning', 'code' => ['message', ['message' => "You don't have correct privilege"]]];
 
             return redirect(config('app.admin_dashboard'))->withResponse($response);
         }

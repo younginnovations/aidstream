@@ -709,4 +709,23 @@ class ActivityController extends Controller
             ]
         );
     }
+
+    /**
+     * deletes activity element
+     * @param $id
+     * @param $element
+     * @return mixed
+     */
+    public function deleteElement($id, $element)
+    {
+        $activity = $this->activityManager->getActivityData($id);
+        $result   = $this->activityManager->deleteElement($activity, $element);
+        if ($result) {
+            $response = ['type' => 'success', 'code' => ['activity_element_removed', ['element' => 'activity']]];
+        } else {
+            $response = ['type' => 'danger', 'code' => ['activity_element_not_removed', ['element' => 'activity']]];
+        }
+
+        return redirect()->back()->withResponse($response);
+    }
 }

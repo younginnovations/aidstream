@@ -531,4 +531,43 @@ class ActivityManager
     {
         return $this->activityRepo->saveBulkPublishDataInActivityRegistry($activityId, $jsonData);
     }
+
+    /**
+     * @param Activity $activity
+     * @param          $element
+     * @return bool
+     */
+    public function deleteElement(Activity $activity, $element)
+    {
+        try {
+            $this->database->beginTransaction();
+            $this->activityRepo->deleteElement($activity, $element);
+            $this->database->commit();
+            $this->logger->info(
+                sprintf('Activity element %s has been deleted.', $element),
+                ['for ' => $activity->id]
+            );
+            $this->logger->activity(
+                "activity.activity_element_deleted",
+                [
+                    'element'         => $element,
+                    'activity_id'     => $activity->id,
+                    'organization'    => $this->auth->user()->organization->name,
+                    'organization_id' => $this->auth->user()->organization->id,
+                ]
+            );
+
+            return true;
+        } catch (Exception $exception) {
+            $this->database->rollback();
+            $this->logger->error(
+                sprintf('Activity element %s couldn\'t be deleted due to %s', $element, $exception->getMessage()),
+                [
+                    'trace' => $exception->getTraceAsString()
+                ]
+            );
+        }
+
+        return false;
+    }
 }

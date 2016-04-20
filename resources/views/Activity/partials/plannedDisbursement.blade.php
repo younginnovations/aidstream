@@ -5,12 +5,14 @@
                 Planned Disbursements
             </div>
             <a href="{{route('activity.planned-disbursement.index', $id)}}" class="edit-element">edit</a>
+            <a href="{{route('activity.delete-element', [$id, 'planned_disbursement'])}}" class="delete pull-right">remove</a>
         </div>
         <div class="panel-body panel-level-1">
             @foreach($plannedDisbursements as $plannedDisbursement)
                 <div class="panel-heading">
                     <div class="activity-element-title">
-                        {{$getCode->getCode('Activity', 'Currency', $plannedDisbursement['value'][0]['currency']) . ' ; '. formatDate($plannedDisbursement['value'][0]['value_date']) }}
+                        {{(is_null($getCode->getActivityCodeName('BudgetType', $plannedDisbursement['planned_disbursement_type']))?'': $getCode->getActivityCodeName('BudgetType', $plannedDisbursement['planned_disbursement_type']) .' ; ').$plannedDisbursement['value'][0]['amount'].' '.$getCode->getCode('Activity', 'Currency', $plannedDisbursement['value'][0]['currency']) . ' ; '. formatDate($plannedDisbursement['value'][0]['value_date']) }}
+{{--                        {{$getCode->getCode('Activity', 'Currency', $plannedDisbursement['value'][0]['currency']) . ' ; '. formatDate($plannedDisbursement['value'][0]['value_date']) }}--}}
                     </div>
                 </div>
                 <div class="panel-body">

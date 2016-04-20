@@ -5,6 +5,7 @@
                 Country Budget Items
             </div>
             <a href="{{route('activity.country-budget-items.index', $id)}}" class="edit-element">edit</a>
+            <a href="{{route('activity.delete-element', [$id, 'country_budget_items'])}}" class="delete pull-right">remove</a>
         </div>
         <div class="panel-body panel-level-1">
             @foreach($countryBudgetItems as $countryBudgetItem)

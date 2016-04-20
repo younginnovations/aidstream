@@ -42,9 +42,16 @@ $router->post(
     ]
 );
 
-//if (getenv('APP_ENV') == "local") {
-$router->get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
-//}
+$router->get('logs', 'LogViewerController@index');
+
+$router->get(
+    'show-logs',
+    [
+        'as'   => 'show-logs',
+        'uses' => '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index'
+    ]
+);
+
 
 $router->get(
     'admin/activity-log',

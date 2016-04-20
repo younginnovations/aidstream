@@ -5,6 +5,7 @@
                 Activity Date
             </div>
             <a href="{{route('activity.activity-date.index', $id)}}" class="edit-element">edit</a>
+            <a href="{{route('activity.delete-element', [$id, 'activity_date'])}}" class="delete pull-right">remove</a>
         </div>
         <div class="panel-body panel-level-1">
             @foreach($activityDates as $activity_date)

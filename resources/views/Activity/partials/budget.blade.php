@@ -5,12 +5,12 @@
                 Budgets
             </div>
             <a href="{{route('activity.budget.index', $id)}}" class="edit-element">edit</a>
+            <a href="{{route('activity.delete-element', [$id, 'budget'])}}" class="delete pull-right">remove</a>
         </div>
         <div class="panel-body panel-level-1">
             @foreach($budgets as $budget)
                 <div class="panel-heading">
-                    <div class="activity-element-title">{{$getCode->getActivityCodeName('BudgetType', $budget['budget_type']) . ' ; '. $getCode->getCode('Activity', 'Currency', $budget['value'][0]['currency']) . ' ; '. formatDate($budget['value'][0]['value_date']) }}</div>
-{{--                    <div class="activity-element-title">{{$getCode->getActivityCodeName('BudgetType', $budget['budget_type']) . ' ; [USD] '. $budget['value'][0]['amount'] . ' ; '. formatDate($budget['value'][0]['value_date']) }}</div>--}}
+                    <div class="activity-element-title">{{(is_null($getCode->getActivityCodeName('BudgetType', $budget['budget_type']))?'': $getCode->getActivityCodeName('BudgetType', $budget['budget_type']) . ' ; '). $budget['value'][0]['amount'] .' '. $getCode->getCode('Activity', 'Currency', $budget['value'][0]['currency']) . ' ; '. formatDate($budget['value'][0]['value_date']) }}</div>
                 </div>
                 <div class="panel-body">
                     <div class="panel panel-default">

@@ -5,6 +5,7 @@
                 Recipient Region
             </div>
             <a href="{{route('activity.recipient-region.index', $id)}}" class="edit-element">edit</a>
+            <a href="{{route('activity.delete-element', [$id, 'recipient_region'])}}" class="delete pull-right">remove</a>
         </div>
         <div class="panel-body panel-level-1">
             @foreach($recipientRegions as $recipientRegion)

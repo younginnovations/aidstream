@@ -5,6 +5,7 @@
                 Humanitarian Scope
             </div>
             <a href="{{route('activity.humanitarian-scope.index', $id)}}" class="edit-element">edit</a>
+            <a href="{{route('activity.delete-element', [$id, 'humanitarian_scope'])}}" class="delete pull-right">remove</a>
         </div>
         <div class="panel-body panel-level-1">
             @foreach($humanitarianScopes as $humanitarianScope)

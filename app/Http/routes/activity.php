@@ -84,5 +84,12 @@ $router->group(
                 'uses' => 'ActivityController@activityBulkPublishToRegistry'
             ]
         );
+        $router->get(
+            'activity/{id}/delete-element/{element}',
+            [
+                'as'   => 'activity.delete-element',
+                'uses' => 'ActivityController@deleteElement'
+            ]
+        );
     }
 );

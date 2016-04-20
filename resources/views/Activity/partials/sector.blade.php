@@ -5,6 +5,7 @@
                 Sectors
             </div>
             <a href="{{route('activity.sector.index', $id)}}" class="edit-element">edit</a>
+            <a href="{{route('activity.delete-element', [$id, 'sector'])}}" class="delete pull-right">remove</a>
         </div>
         <div class="panel-body panel-level-1">
             @foreach($sectors as $sector)
