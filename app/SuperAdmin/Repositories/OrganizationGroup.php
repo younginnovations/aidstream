@@ -87,10 +87,9 @@ class OrganizationGroup implements OrganizationGroupInterface
 
             $this->logger->info(($id) ? 'Group information Updated' : 'Organization Group added');
             $this->dbLogger->activity(
-                ($id) ? "group_updated" : "group_added",
+                ($id) ? "activity.group_updated" : "activity.group_added",
                 [
-                    'group_id' => $group->id,
-                    'user_id'  => $id
+                    'group_id' => $group->id
                 ]
             );
         } catch (Exception $exception) {

@@ -77,7 +77,7 @@ class SuperAdminTest extends AidStreamTestCase
         $this->settings->shouldReceive('fill->save')->andReturn(true);
         $this->loggerInterface->shouldReceive('info')->once()->with('Organization information Updated');
         $this->logger->shouldReceive('activity')->once()->with(
-            'organization_updated',
+            'activity.organization_updated',
             ['user_id' => 1, 'organization_id' => 1]
         );
         $this->database->shouldReceive('commit')->once()->andReturnSelf();

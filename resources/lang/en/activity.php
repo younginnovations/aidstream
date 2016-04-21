@@ -124,7 +124,7 @@ return [
         route('organization.show', ':organization_id')
     ),
     'organization_added'           => sprintf(
-        'New organization added with organization id <a href="%s">":organization_id"</a> and user id ":user_id"</a>',
+        'New organization added with organization id <a href="%s">":organization_id"</a> and user id ":user_id"',
         route('organization.show', ':organization_id')
     ),
     'organization_updated'         => sprintf('Organization updated with organization id <a href="%s">":organization_id"</a> and user id ":user_id"', route('organization.show', ':organization_id')),
@@ -195,4 +195,9 @@ return [
         route('activity.show', ':activity_id'),
         route('organization.show', ':organization_id')
     ),
+    'group_added'                  => sprintf(
+        'New group organization has been added with id <a href="%s">":group_id"</a>',
+        route('admin.edit-group', ':group_id')
+    ),
+    'group_updated'                => sprintf('Group organization has been updated with id <a href="%s">":group_id"</a>', route('admin.edit-group', ':group_id')),
 ];

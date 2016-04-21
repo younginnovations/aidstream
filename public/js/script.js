@@ -102,17 +102,17 @@ $(document).ready(function () {
 
         if ($('#removeDialog').length === 0) {
             $('body').append('' +
-                '<div class="modal" id="removeDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="z-index: 9999">' +
-                '<div class="modal-dialog">' +
-                '<div class="modal-content">' +
-                '<div class="modal-header">' +
-                '<h4 class="modal-title" id="myModalLabel"></h4>' +
-                '</div>' +
-                '<div class="modal-body"></div>' +
-                '<div class="modal-footer"></div>' +
-                '</div>' +
-                '</div>' +
-                '</div>');
+            '<div class="modal" id="removeDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="z-index: 9999">' +
+            '<div class="modal-dialog">' +
+            '<div class="modal-content">' +
+            '<div class="modal-header">' +
+            '<h4 class="modal-title" id="myModalLabel"></h4>' +
+            '</div>' +
+            '<div class="modal-body"></div>' +
+            '<div class="modal-footer"></div>' +
+            '</div>' +
+            '</div>' +
+            '</div>');
         }
 
         var removeDialog = $('#removeDialog');
@@ -257,17 +257,17 @@ $(document).ready(function () {
 
         if ($('#popDialog').length === 0) {
             $('body').append('' +
-                '<div class="modal" id="popDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="z-index: 9999">' +
-                '<div class="modal-dialog">' +
-                '<div class="modal-content">' +
-                '<div class="modal-header">' +
-                '<h4 class="modal-title" id="myModalLabel"></h4>' +
-                '</div>' +
-                '<div class="modal-body"></div>' +
-                '<div class="modal-footer"></div>' +
-                '</div>' +
-                '</div>' +
-                '</div>');
+            '<div class="modal" id="popDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="z-index: 9999">' +
+            '<div class="modal-dialog">' +
+            '<div class="modal-content">' +
+            '<div class="modal-header">' +
+            '<h4 class="modal-title" id="myModalLabel"></h4>' +
+            '</div>' +
+            '<div class="modal-body"></div>' +
+            '<div class="modal-footer"></div>' +
+            '</div>' +
+            '</div>' +
+            '</div>');
         }
 
         var popElem = $('#popDialog');
@@ -324,17 +324,17 @@ $(document).ready(function () {
 
         if ($('#delDialog').length === 0) {
             $('body').append('' +
-                '<div class="modal" id="delDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="z-index: 9999">' +
-                '<div class="modal-dialog">' +
-                '<div class="modal-content">' +
-                '<div class="modal-header">' +
-                '<h4 class="modal-title" id="myModalLabel"></h4>' +
-                '</div>' +
-                '<div class="modal-body"></div>' +
-                '<div class="modal-footer"></div>' +
-                '</div>' +
-                '</div>' +
-                '</div>');
+            '<div class="modal" id="delDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="z-index: 9999">' +
+            '<div class="modal-dialog">' +
+            '<div class="modal-content">' +
+            '<div class="modal-header">' +
+            '<h4 class="modal-title" id="myModalLabel"></h4>' +
+            '</div>' +
+            '<div class="modal-body"></div>' +
+            '<div class="modal-footer"></div>' +
+            '</div>' +
+            '</div>' +
+            '</div>');
         }
 
         var delDialog = $('#delDialog');
@@ -413,22 +413,6 @@ $(document).ready(function () {
     $('form').submit(function () {
         $('[type="submit"]', this).attr('disabled', 'disabled');
     });
-
-    //js for form input check and leave page alert
-    var preventNavigation = false;
-    $('form').delegate('textarea:not(".ignore_change"), select:not(".ignore_change"), input:not(".ignore_change")', 'change', function () {
-        preventNavigation = true;
-    });
-
-    $('[type="submit"]').click(function () {
-        preventNavigation = false;
-    });
-
-    window.onbeforeunload = function () {
-        if (preventNavigation) {
-            return 'You have unsaved changes.';
-        }
-    };
 
     $(".clickable-row").click(function (e) {
         if (!($(e.target).is('input') || $(e.target).is('a'))) {
@@ -582,4 +566,25 @@ $(document).ready(function () {
     } else {
         //alert('Not a Touch Device'); //your logic for non touch device here
     }
+
+    //js for form input check and leave page alert
+    var preventNavigation = false;
+    $('form').delegate('textarea:not(".ignore_change"), select:not(".ignore_change"), input:not(".ignore_change")', 'change keyup', function (e) {
+        var element = $(e.target);
+        if (e.isTrigger !== undefined && (element.is('input') || element.is('textarea'))) {
+            return false;
+        }
+        preventNavigation = true;
+    });
+
+    $('[type="submit"]').click(function () {
+        preventNavigation = false;
+    });
+
+    window.onbeforeunload = function () {
+        if (preventNavigation) {
+            return 'You have unsaved changes.';
+        }
+    };
+
 });

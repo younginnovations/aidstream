@@ -61,14 +61,25 @@ class AdminController extends Controller
      */
     public function index($orgId = null)
     {
-        $activity      = UserActivity::join('users', 'users.id', '=', 'user_activities.user_id')
-                                     ->join('organizations', 'organizations.id', '=', 'users.org_id')
-                                     ->where('organizations.id', $orgId)
-                                     ->orderBy('user_activities.id', 'desc')
-                                     ->get();
-        $organizations = Organization::select('name', 'id')->get();
+        if ($orgId && strpos($orgId, 'sa-') !== false) {
+            $activity = UserActivity::join('users', 'users.id', '=', 'user_activities.user_id')
+                                    ->where('user_activities.user_id', str_replace('sa-', '', $orgId))
+                                    ->orderBy('user_activities.id', 'desc')
+                                    ->select('*', 'user_activities.created_at as created_date')
+                                    ->get();
+        } else {
+            $activity = UserActivity::join('users', 'users.id', '=', 'user_activities.user_id')
+                                    ->join('organizations', 'organizations.id', '=', 'users.org_id')
+                                    ->where('organizations.id', $orgId)
+                                    ->orderBy('user_activities.id', 'desc')
+                                    ->select('*', 'user_activities.created_at as created_date')
+                                    ->get();
+        }
 
-        return view('admin.activityLog', compact('activity', 'organizations', 'orgId'));
+        $organizations = Organization::select('name', 'id')->get();
+        $superAdmins   = User::where('org_id', null)->get();
+
+        return view('admin.activityLog', compact('activity', 'organizations', 'superAdmins', 'orgId'));
     }
 
     /**
