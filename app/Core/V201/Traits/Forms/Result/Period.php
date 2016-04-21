@@ -12,7 +12,7 @@ trait Period
      */
     public function addPeriods()
     {
-        return $this->addCollection('period', 'Activity\Period');
+        return $this->addCollection('period', 'Activity\Period', 'period');
     }
 
     /**

@@ -111,9 +111,9 @@ class Result extends ActivityBaseRequest
         $rules = [];
 
         foreach ($formFields as $indicatorIndex => $indicator) {
-            $indicatorForm                                = sprintf('%s.indicator.%s', $formBase, $indicatorIndex);
-            $rules[sprintf('%s.measure', $indicatorForm)] = 'required';
-            $rules                                        = array_merge(
+            $indicatorForm                                                        = sprintf('%s.indicator.%s', $formBase, $indicatorIndex);
+            $rules[sprintf('%s.measure', $indicatorForm)]                         = 'required';
+            $rules                                                                = array_merge(
                 $rules,
                 $this->getRulesForNarrative($indicator['title'][0]['narrative'], sprintf('%s.title.0', $indicatorForm)),
                 $this->getRulesForNarrative($indicator['description'][0]['narrative'], sprintf('%s.description.0', $indicatorForm)),
@@ -137,9 +137,9 @@ class Result extends ActivityBaseRequest
         $messages = [];
 
         foreach ($formFields as $indicatorIndex => $indicator) {
-            $indicatorForm                                            = sprintf('%s.indicator.%s', $formBase, $indicatorIndex);
-            $messages[sprintf('%s.measure.required', $indicatorForm)] = 'Measure is required.'; 
-            $messages                                                 = array_merge(
+            $indicatorForm                                                                  = sprintf('%s.indicator.%s', $formBase, $indicatorIndex);
+            $messages[sprintf('%s.measure.required', $indicatorForm)]                       = 'Measure is required.';
+            $messages                                                                       = array_merge(
                 $messages,
                 $this->getMessagesForNarrative($indicator['title'][0]['narrative'], sprintf('%s.title.0', $indicatorForm)),
                 $this->getMessagesForNarrative($indicator['description'][0]['narrative'], sprintf('%s.description.0', $indicatorForm)),
@@ -216,8 +216,8 @@ class Result extends ActivityBaseRequest
             $periodForm = sprintf('%s.period.%s', $formBase, $periodIndex);
             $rules      = array_merge(
                 $rules,
-                $this->getRulesForPeriodStart($period['period_start'], $periodForm),
-                $this->getRulesForPeriodEnd($period['period_end'], $periodForm),
+                $this->getRulesForResultPeriodStart($period['period_start'], $periodForm, $period['period_end']),
+                $this->getRulesForResultPeriodEnd($period['period_end'], $periodForm, $period['period_start']),
                 $this->getRulesForTarget($period['target'], sprintf('%s.target', $periodForm)),
                 $this->getRulesForTarget($period['actual'], sprintf('%s.actual', $periodForm))
             );
@@ -240,8 +240,8 @@ class Result extends ActivityBaseRequest
             $periodForm = sprintf('%s.period.%s', $formBase, $periodIndex);
             $messages   = array_merge(
                 $messages,
-                $this->getMessagesForPeriodStart($period['period_start'], $periodForm),
-                $this->getMessagesForPeriodEnd($period['period_end'], $periodForm),
+                $this->getMessagesForResultPeriodStart($period['period_start'], $periodForm, $period['period_end']),
+                $this->getMessagesForResultPeriodEnd($period['period_end'], $periodForm, $period['period_start']),
                 $this->getMessagesForTarget($period['target'], sprintf('%s.target', $periodForm)),
                 $this->getMessagesForTarget($period['actual'], sprintf('%s.actual', $periodForm))
             );
@@ -289,6 +289,83 @@ class Result extends ActivityBaseRequest
                 $messages,
                 $this->getMessagesForNarrative($target['comment'][0]['narrative'], sprintf('%s.comment.0', $targetForm))
             );
+        }
+
+        return $messages;
+    }
+
+    /**
+     * @param $formFields
+     * @param $formBase
+     * @param $periodEnd
+     * @return array
+     */
+    protected function getRulesForResultPeriodStart($formFields, $formBase, $periodEnd)
+    {
+        $rules = [];
+        foreach ($formFields as $periodStartKey => $periodStartVal) {
+            $periodEndLocation = $formBase . '.period_end.' . $periodStartKey . '.date';
+            if ($periodEnd[$periodStartKey]['date'] != "") {
+                $rules[$formBase . '.period_start.' . $periodStartKey . '.date'] = sprintf('required_with:%s|date', $periodEndLocation);
+            }
+        }
+
+        return $rules;
+    }
+
+    /**
+     * @param $formFields
+     * @param $formBase
+     * @param $periodEnd
+     * @return array
+     */
+    protected function getMessagesForResultPeriodStart($formFields, $formBase, $periodEnd)
+    {
+        $messages = [];
+        foreach ($formFields as $periodStartKey => $periodStartVal) {
+            if ($periodEnd[$periodStartKey]['date'] != "") {
+                $messages[$formBase . '.period_start.' . $periodStartKey . '.date.required_with'] = 'Period Start is required with Period Date';
+            }
+            $messages[$formBase . '.period_end.' . $periodStartKey . '.date.date'] = 'Period Start is not a valid date.';
+        }
+
+        return $messages;
+    }
+
+    /**
+     * @param $formFields
+     * @param $formBase
+     * @param $periodStart
+     * @return array
+     */
+    protected function getRulesForResultPeriodEnd($formFields, $formBase, $periodStart)
+    {
+        $rules = [];
+        foreach ($formFields as $periodEndKey => $periodEndVal) {
+            $periodStartLocation = $formBase . '.period_start.' . $periodEndKey . '.date';
+            if ($periodStart[$periodEndKey]['date'] != "") {
+                $rules[$formBase . '.period_end.' . $periodEndKey . '.date'] = sprintf('required_with:%s|date|after:%s', $periodStartLocation, $formBase . '.period_start.' . $periodEndKey . '.date');
+            }
+        }
+
+        return $rules;
+    }
+
+    /**
+     * @param $formFields
+     * @param $formBase
+     * @param $periodStart
+     * @return array
+     */
+    protected function getMessagesForResultPeriodEnd($formFields, $formBase, $periodStart)
+    {
+        $messages = [];
+        foreach ($formFields as $periodEndKey => $periodEndVal) {
+            if ($periodStart[$periodEndKey]['date'] != "") {
+                $messages[$formBase . '.period_end.' . $periodEndKey . '.date.required_with'] = 'Period End is required with Period Start';
+            }
+            $messages[$formBase . '.period_end.' . $periodEndKey . '.date.date']  = 'Period End is not a valid date.';
+            $messages[$formBase . '.period_end.' . $periodEndKey . '.date.after'] = 'Period End must be a date after Period Start';
         }
 
         return $messages;

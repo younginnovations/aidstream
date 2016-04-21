@@ -64,6 +64,23 @@ class ActivityBaseRequest extends Request
     }
 
     /**
+     * returns rules for narrative
+     * @param      $formFields
+     * @param      $formBase
+     * @return array
+     */
+    public function getRulesForResultNarrative($formFields, $formBase)
+    {
+        $rules                                     = [];
+        $rules[sprintf('%s.narrative', $formBase)] = 'unique_lang';
+        foreach ($formFields as $narrativeIndex => $narrative) {
+            $rules[sprintf('%s.narrative.%s.narrative', $formBase, $narrativeIndex)][] = 'required';
+        }
+
+        return $rules;
+    }
+
+    /**
      * returns messages for narrative
      * @param $formFields
      * @param $formBase
@@ -74,7 +91,11 @@ class ActivityBaseRequest extends Request
         $messages                                                 = [];
         $messages[sprintf('%s.narrative.unique_lang', $formBase)] = 'Languages should be unique.';
         foreach ($formFields as $narrativeIndex => $narrative) {
-            $messages[sprintf('%s.narrative.%s.narrative.required_with_language', $formBase, $narrativeIndex)] = 'Narrative is required with language.';
+            $messages[sprintf(
+                '%s.narrative.%s.narrative.required_with_language',
+                $formBase,
+                $narrativeIndex
+            )] = 'Narrative is required with language.';
         }
 
         return $messages;
@@ -93,7 +114,11 @@ class ActivityBaseRequest extends Request
 
         foreach ($formFields as $narrativeIndex => $narrative) {
             if (boolval($narrative['language'])) {
-                $rules[sprintf('%s.narrative.%s.narrative', $formBase, $narrativeIndex)] = 'required_with:' . sprintf('%s.narrative.%s.language', $formBase, $narrativeIndex);
+                $rules[sprintf('%s.narrative.%s.narrative', $formBase, $narrativeIndex)] = 'required_with:'.sprintf(
+                        '%s.narrative.%s.language',
+                        $formBase,
+                        $narrativeIndex
+                    );
             } else {
                 $rules[sprintf('%s.narrative.%s.narrative', $formBase, $narrativeIndex)] = 'required';
             }
@@ -115,9 +140,17 @@ class ActivityBaseRequest extends Request
 
         foreach ($formFields as $narrativeIndex => $narrative) {
             if (boolval($narrative['language'])) {
-                $rules[sprintf('%s.narrative.%s.narrative.required_with', $formBase, $narrativeIndex)] = 'Narrative is required with language';
+                $rules[sprintf(
+                    '%s.narrative.%s.narrative.required_with',
+                    $formBase,
+                    $narrativeIndex
+                )] = 'Narrative is required with language';
             } else {
-                $rules[sprintf('%s.narrative.%s.narrative.required', $formBase, $narrativeIndex)] = 'Narrative is required';
+                $rules[sprintf(
+                    '%s.narrative.%s.narrative.required',
+                    $formBase,
+                    $narrativeIndex
+                )] = 'Narrative is required';
             }
         }
 
@@ -134,7 +167,7 @@ class ActivityBaseRequest extends Request
     {
         $rules = [];
         foreach ($formFields as $periodStartKey => $periodStartVal) {
-            $rules[$formBase . '.period_start.' . $periodStartKey . '.date'] = 'required|date';
+            $rules[$formBase.'.period_start.'.$periodStartKey.'.date'] = 'required|date';
         }
 
         return $rules;
@@ -150,8 +183,8 @@ class ActivityBaseRequest extends Request
     {
         $messages = [];
         foreach ($formFields as $periodStartKey => $periodStartVal) {
-            $messages[$formBase . '.period_start.' . $periodStartKey . '.date.required'] = 'Period Start is required';
-            $messages[$formBase . '.period_end.' . $periodStartKey . '.date.date']       = 'Period Start is not a valid date.';
+            $messages[$formBase.'.period_start.'.$periodStartKey.'.date.required'] = 'Period Start is required';
+            $messages[$formBase.'.period_end.'.$periodStartKey.'.date.date']       = 'Period Start is not a valid date.';
         }
 
         return $messages;
@@ -167,7 +200,10 @@ class ActivityBaseRequest extends Request
     {
         $rules = [];
         foreach ($formFields as $periodEndKey => $periodEndVal) {
-            $rules[$formBase . '.period_end.' . $periodEndKey . '.date'] = sprintf('required|date|after:%s', $formBase . '.period_start.' . $periodEndKey . '.date');
+            $rules[$formBase.'.period_end.'.$periodEndKey.'.date'] = sprintf(
+                'required|date|after:%s',
+                $formBase.'.period_start.'.$periodEndKey.'.date'
+            );
         }
 
         return $rules;
@@ -183,9 +219,9 @@ class ActivityBaseRequest extends Request
     {
         $messages = [];
         foreach ($formFields as $periodEndKey => $periodEndVal) {
-            $messages[$formBase . '.period_end.' . $periodEndKey . '.date.required'] = 'Period End is required.';
-            $messages[$formBase . '.period_end.' . $periodEndKey . '.date.date']     = 'Period End is not a valid date.';
-            $messages[$formBase . '.period_end.' . $periodEndKey . '.date.after']    = 'Period End must be a date after Period Start';
+            $messages[$formBase.'.period_end.'.$periodEndKey.'.date.required'] = 'Period End is required.';
+            $messages[$formBase.'.period_end.'.$periodEndKey.'.date.date']     = 'Period End is not a valid date.';
+            $messages[$formBase.'.period_end.'.$periodEndKey.'.date.after']    = 'Period End must be a date after Period Start';
         }
 
         return $messages;
