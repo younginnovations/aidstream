@@ -19,7 +19,8 @@
     "dropbox/dropbox-sdk":"1.1.*",
     "backup-manager/laravel": "^1.1",
     "league/flysystem-dropbox": "^1.0",
-    "spatie/laravel-backup": "^3.4"
+    "spatie/laravel-backup": "^3.4",
+    "thujohn/twitter": "~2.0"
   },
   "require-dev": {
     "phpunit/phpunit": "~4.0",

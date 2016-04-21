@@ -21,10 +21,9 @@ class DocumentLink extends V201DocumentLink
             $rules[sprintf('document_link.%s.format', $documentLinkIndex)] = 'required';
             $rules                                                         = array_merge(
                 $rules,
-                $this->getRulesForNarrative(getVal($documentLink, ['title', 0, 'narrative']), sprintf('%s.title.0', $documentLinkForm)),
-                $this->getRulesForDocumentCategory(getVal($documentLink, ['category'], []), $documentLinkForm),
-                $this->getRulesForDocumentLanguage(getVal($documentLink, ['language'], []), $documentLinkForm),
-                $this->getRulesForDocumentDate(getVal($documentLink, ['document_date'], []), $documentLinkForm)
+                $this->getRulesForNarrative($documentLink['title'][0]['narrative'], sprintf('%s.title.0', $documentLinkForm)),
+                $this->getRulesForDocumentCategory($documentLink['category'], $documentLinkForm),
+                $this->getRulesForDocumentLanguage($documentLink['language'], $documentLinkForm)
             );
         }
 
@@ -46,45 +45,13 @@ class DocumentLink extends V201DocumentLink
             $messages[sprintf('document_link.%s.format.required', $documentLinkIndex)] = 'Format is required';
             $messages                                                                  = array_merge(
                 $messages,
-                $this->getMessagesForNarrative(getVal($documentLink, ['title', 0, 'narrative']), sprintf('%s.title.0', $documentLinkForm)),
-                $this->getMessagesForDocumentCategory(getVal($documentLink, ['category'], []), $documentLinkForm),
-                $this->getMessagesForDocumentLanguage(getVal($documentLink, ['language'], []), $documentLinkForm),
-                $this->getMessagesForDocumentDate(getVal($documentLink, ['document_date'], []), $documentLinkForm)
+                $this->getMessagesForNarrative($documentLink['title'][0]['narrative'], sprintf('%s.title.0', $documentLinkForm)),
+                $this->getMessagesForDocumentCategory($documentLink['category'], $documentLinkForm),
+                $this->getMessagesForDocumentLanguage($documentLink['language'], $documentLinkForm)
             );
         }
 
         return $messages;
 
-    }
-
-    /**
-     * @param $formFields
-     * @param $formIndex
-     * @return array
-     */
-    protected function getRulesForDocumentDate($formFields, $formIndex)
-    {
-        $rules = [];
-        foreach ($formFields as $dateKey => $dateVal) {
-            $rules[sprintf('%s.document_date.%s.date', $formIndex, $dateKey)] = 'required|date';
-        }
-
-        return $rules;
-    }
-
-    /**
-     * @param $formFields
-     * @param $formIndex
-     * @return array
-     */
-    protected function getMessagesForDocumentDate($formFields, $formIndex)
-    {
-        $messages = [];
-        foreach ($formFields as $dateKey => $dateVal) {
-            $messages[sprintf('%s.document_date.%s.date.required', $formIndex, $dateKey)] = 'Document date is required.';
-            $messages[sprintf('%s.document_date.%s.date.date', $formIndex, $dateKey)]     = 'Please enter valid date.';
-        }
-
-        return $messages;
     }
 }
