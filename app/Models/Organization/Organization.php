@@ -1,5 +1,6 @@
 <?php namespace App\Models\Organization;
 
+use App\Models\ActivityPublished;
 use App\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
@@ -90,5 +91,14 @@ class Organization extends Model
     public function adminUserId()
     {
         return ($user = app()->make(User::class)->where('org_id', '=', $this->id)->where('role_id', '=', 1)->first()) ? $user->id : $this->users()->first()->id;
+    }
+
+    /**
+     * An Organization can have many Activities published.
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function publishedFiles()
+    {
+        return $this->hasMany(ActivityPublished::class);
     }
 }

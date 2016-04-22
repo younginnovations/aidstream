@@ -1,0 +1,38 @@
+<?php
+
+$router->group(
+    ['namespace' => 'SuperAdmin'],
+    function () use ($router) {
+        $router->get(
+            'correct-published-files/{organizationId}',
+            [
+                'as'   => 'superadmin.correct-published-files',
+                'uses' => 'PublishedFilesCorrectionController@show'
+            ]
+        );
+
+        $router->delete(
+            'delete-xml-file/{organizationId}/{fileId}',
+            [
+                'as'   => 'superadmin.deleteXmlFile',
+                'uses' => 'PublishedFilesCorrectionController@deleteXmlFile'
+            ]
+        );
+
+        $router->get(
+            'unlink-xml-file/{organizationId}/{fileId}',
+            [
+                'as'   => 'superadmin.unlinkXmlFile',
+                'uses' => 'PublishedFilesCorrectionController@unlinkXmlFile'
+            ]
+        );
+
+        $router->get(
+            'resync-registry-data/{organizationId}',
+            [
+                'as'   => 'superadmin.reSync',
+                'uses' => 'PublishedFilesCorrectionController@reSyncRegistryData'
+            ]
+        );
+    }
+);
