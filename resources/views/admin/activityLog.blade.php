@@ -15,6 +15,9 @@
                             <form id="filter_organization">
                                 <select name="orgId" id="organization" class="ignore_change form-control">
                                     <option value="">Select Organization</option>
+                                    @foreach($superAdmins as $superAdmin)
+                                        <option value="sa-{{ $superAdmin->id }}" @if($orgId == "sa-$superAdmin->id") selected="selected" @endif>Super Admin - {{ $superAdmin->name }}</option>
+                                    @endforeach
                                     @foreach($organizations as $organization)
                                         <option value="{{ $organization->id }}" @if($orgId == $organization->id) selected="selected" @endif>{{ $organization->name }}</option>
                                     @endforeach
@@ -32,8 +35,8 @@
                             <tbody>
                             @forelse($activity as $key => $value)
                                 <tr>
-                                    <td>{{ $value->created_at }}</td>
-                                    <td>{!! trans($value->action,$value->param) !!}</td>
+                                    <td>{{ $value->created_date }}</td>
+                                    <td>{!! trans($value->action, $value->param) !!}</td>
                                     <td>{{$value->user ? $value->user->username : 'The user has been deleted.'}}</td>
                                 </tr>
                             @empty

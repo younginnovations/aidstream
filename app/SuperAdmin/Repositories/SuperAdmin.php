@@ -119,7 +119,7 @@ class SuperAdmin implements SuperAdminInterface
 
             $this->logger->info(($orgId) ? 'Organization information Updated' : 'Organization added');
             $this->dbLogger->activity(
-                ($orgId) ? "organization_updated" : "organization_added",
+                ($orgId) ? "activity.organization_updated" : "activity.organization_added",
                 [
                     'user_id'         => $user->id,
                     'organization_id' => $orgId
