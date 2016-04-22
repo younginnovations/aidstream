@@ -30,5 +30,7 @@ return [
     'recipient_region_unselected_in_settings' => 'Recipient Region is not selected in Settings.Please empty this field.',
     'csv_template_error'                      => 'The CSV file you uploaded does not match with the Activity Template. Please download Activity template from below.',
     'activity_element_removed'                => 'Activity element has been removed successfully.',
-    'activity_element_not_removed'            => 'Failed to remove activity element.'
+    'activity_element_not_removed'            => 'Failed to remove activity element.',
+    'transaction_block_removed'               => 'The block from Transaction has been removed successfully.',
+    'transaction_block_not_removed'           => 'Failed to remove the block from Transaction.'
 ];

@@ -75,7 +75,7 @@ class TransactionController extends Controller
         }
 
         $this->authorize('add_activity', $activity);
-        $form     = $this->transactionForm->createForm($id);
+        $form = $this->transactionForm->createForm($id);
 
         return view('Activity.transaction.create', compact('form', 'activity', 'id'));
     }
@@ -262,6 +262,24 @@ class TransactionController extends Controller
             'type' => 'danger',
             'code' => ['delete_failed', ['name' => 'transaction']]
         ];
+
+        return redirect()->back()->withResponse($response);
+    }
+
+    /**
+     * deletes data block from transaction
+     * @param $id
+     * @param $transactionId
+     * @param $jsonPath
+     */
+    public function deleteBlock($id, $transactionId, $jsonPath)
+    {
+        $result = $this->transactionManager->deleteBlock($transactionId, $jsonPath);
+        if ($result) {
+            $response = ['type' => 'success', 'code' => ['transaction_block_removed', ['element' => 'activity']]];
+        } else {
+            $response = ['type' => 'danger', 'code' => ['transaction_block_not_removed', ['element' => 'activity']]];
+        }
 
         return redirect()->back()->withResponse($response);
     }
