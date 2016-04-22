@@ -28,6 +28,10 @@
                                 <div class="col-xs-12 col-sm-4">Role:</div>
                                 <div class="col-xs-12 col-sm-8">{{$getCode->getActivityCodeName('OrganisationRole', $participatingOrganization['organization_role'])}}</div>
                             </div>
+                            <div class="col-xs-12 col-md-12">
+                                <div class="col-xs-12 col-sm-4">Activity ID:</div>
+                                <div class="col-xs-12 col-sm-8">{{ getVal($participatingOrganization, ['activity_id']) }}</div>
+                            </div>
                             @foreach($participatingOrganization['narrative'] as $narrative)
                                 <div class="col-xs-12 col-md-12">
                                     <div class="col-xs-12 col-sm-4">Organization Name:</div>
