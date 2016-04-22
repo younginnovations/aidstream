@@ -148,12 +148,13 @@ class OrganizationController extends Controller
 
     /**
      * masquerade as an specific organization by superadmin
-     * @param $orgId
-     * @param $userId
+     * @param                 $orgId
+     * @param                 $userId
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function masqueradeOrganization($orgId, $userId, DatabaseManager $database)
+    public function masqueradeOrganization($orgId, $userId)
     {
+        $database = app(DatabaseManager::class);
         $adminId  = Auth::user()->id;
         $settings = $this->settingsManager->getSettings($orgId);
         Session::put('org_id', $orgId);

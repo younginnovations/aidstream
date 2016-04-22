@@ -1,5 +1,6 @@
 <?php namespace App\Http\Middleware;
 
+use App\Http\Controllers\SuperAdmin\OrganizationController;
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
 
@@ -38,6 +39,8 @@ class AuthenticateSuperAdmin
             } else {
                 return redirect()->guest('auth/login');
             }
+        } elseif (session('role_id') == 3 && auth()->user()->isAdmin()) {
+            app(OrganizationController::class)->switchBackAsSuperAdmin();
         } elseif (session('role_id') == 3 && session('org_id') && $request->getPathInfo() == '/admin/list-organization') {
             $response = ['type' => 'warning', 'code' => ['message', ['message' => 'Please click on Switch Back to go back to your Superadmin Dashboard.']]];
 
