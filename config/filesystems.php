@@ -79,7 +79,7 @@ return [
     /**
      * Api URL for the IATI Registry.
      */
-    'iati_registry_api_base_url' => env('REGISTRY_URL'),
+    'iati_registry_api_base_url' => env('REGISTRY_URL', 'test'),
     'iati_registry_dummy_url'    => ''
 
 ];

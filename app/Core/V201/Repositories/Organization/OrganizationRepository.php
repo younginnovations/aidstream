@@ -9,10 +9,32 @@ use App\Models\Settings;
 use App\User;
 use Psr\Log\LoggerInterface;
 
+/**
+ * Class OrganizationRepository
+ * @package App\Core\V201\Repositories\Organization
+ */
 class OrganizationRepository implements OrganizationRepositoryInterface
 {
+    /**
+     * @var LoggerInterface
+     */
     protected $loggerInterface;
+
+    /**
+     * @var User
+     */
     protected $user;
+
+    /**
+     * @var OrganizationData
+     */
+    protected $orgData;
+
+    /**
+     * @var OrganizationPublished
+     */
+    protected $orgPublished;
+
     /**
      * @var Organization
      */
@@ -178,7 +200,7 @@ class OrganizationRepository implements OrganizationRepositoryInterface
                     $apiCall->package_create($data);
                     $this->updatePublishToRegister($publishedFile->id);
                 } elseif ($publishedFile['published_to_register'] == 1) {
-                    $package = $settings['registry_info'][0]['publisher_id'] . '-org';
+//                    $package = $settings['registry_info'][0]['publisher_id'] . '-org';
                     $apiCall->package_update($data);
                 }
             }
@@ -217,32 +239,37 @@ class OrganizationRepository implements OrganizationRepositoryInterface
         $email        = $this->user->getUserByOrgId();
         $author_email = $email[0]->email;
 
-        $title = $orgTitle . 'Organization File';
+        $title = $orgTitle . ' Organization File';
         $name  = $settings['registry_info'][0]['publisher_id'] . '-org';
 
-        $data = '{
-        "title": "' . $title . '",
-        "name": "' . $name . '",
-        "author_email": "' . $author_email . '",
-        "owner_org" : "' . $settings['registry_info'][0]['publisher_id'] . '",
-        "resources": [
-        {
-            "format":"IATI-XML",
-            "mimetype":"application/xml",
-            "url":"' . url('uploads/files/organization/' . $publishedFile->filename) . '"
-        }
-        ],
-        "extras":
-        [
-        {"key":"filetype","value":"organization"},
-        {"key":"data_updated","value":"' . $publishedFile->updated_at . '"},
-        {"key":"language","value":"' . config('app.locale') . '"},
-        {"key":"verified","value":"no"}]}';
+        $data = [
+            'title'        => $title,
+            'name'         => $name,
+            'author_email' => $author_email,
+            'owner_org'    => $settings['registry_info'][0]['publisher_id'],
+            'resources'    => [
+                [
+                    'format'   => config('xmlFiles.format'),
+                    'mimetype' => config('xmlFiles.mimeType'),
+                    'url'      => public_path('files') . config('filesystems.xml') . $publishedFile->filename
+                ]
+            ],
+            'extras'       => [
+                ['key' => 'filetype', 'value' => 'organization'],
+                ['key' => 'data_updated', 'value' => $publishedFile->updated_at->toDateTimeString()],
+                ['key' => 'language', 'value' => config('app.locale')],
+                ['key' => 'verified', 'value' => 'no']
+            ]
+        ];
 
-        return $data;
-
+        return json_encode($data);
     }
 
+    /**
+     * @param $filename
+     * @param $orgId
+     * @return bool
+     */
     public function saveOrganizationPublishedFiles($filename, $orgId)
     {
         $published = $this->orgPublished->firstOrNew(['filename' => $filename, 'organization_id' => $orgId]);
