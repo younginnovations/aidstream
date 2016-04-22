@@ -40,6 +40,8 @@ class Transaction extends BaseElement
                 $sectorValue = $transaction['sector'][0]['sector_code'];
             } elseif ($vocabulary == 2) {
                 $sectorValue = $transaction['sector'][0]['sector_category_code'];
+            } elseif ($vocabulary == "") {
+                $sectorValue = $transaction['sector'][0]['sector_code'];
             } else {
                 $sectorValue = $transaction['sector'][0]['sector_text'];
             }
