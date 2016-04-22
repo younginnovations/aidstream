@@ -25,6 +25,22 @@ function initMap(elem, latlng) {
         L.marker(e.latlng).addTo(map);
         populateValues(elem, e.latlng);
     });
+
+    var parentName = elem.replace('[map]', '');
+    var lat_id = '#' + parentName + '[latitude]';
+    lat_id = lat_id.replace(/([\[\]])/g, '\\$1');
+
+    var lng_id = '#' + parentName + '[longitude]';
+    lng_id = lng_id.replace(/([\[\]])/g, '\\$1');
+
+    $(lat_id).keyup(function () {
+        changeMap(lat_id, lng_id, elem, map);
+    });
+
+    $(lng_id).keyup(function(){
+       changeMap(lat_id, lng_id, elem, map);
+    });
+
     return map;
 }
 
@@ -38,4 +54,23 @@ function populateValues(elem, latLong) {
     var parentName = elem.replace('[map]', '');
     $('input[name="' + parentName + '[latitude]"]').val(latLong.lat);
     $('input[name="' + parentName + '[longitude]"]').val(latLong.lng);
+}
+
+function isNumber(n) {
+    return !isNaN(parseFloat(n)) && isFinite(n);
+}
+
+function changeMap(lat_id, lng_id, elem, map){
+    var lat = $(lat_id).val();
+    var latNum = isNumber(lat);
+
+    var lng = $(lng_id).val();
+    var lngNum = isNumber(lng);
+
+    if(latNum && lngNum){
+        clearMarker(elem);
+        var latLng = L.latLng(lat, lng);
+        map.panTo(latLng);
+        L.marker([lat, lng]).addTo(map);
+    }
 }
