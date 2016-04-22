@@ -115,7 +115,7 @@ class XmlGenerator
         $publishedActivity = sprintf('%s-%s.xml', $publisherId, $activity->id);
         $xml               = $this->getXml($activity, $transaction, $result, $settings, $activityElement, $orgElem, $organization);
 
-        $result = Storage::put(sprintf('%s/%s', config('filesystems.xml'), $publishedActivity), $xml->saveXML());
+        $result = Storage::put(sprintf('%s%s', public_path('files') . config('filesystems.xml'), $publishedActivity), $xml->saveXML());
 
         if ($result) {
             $publishedFiles = ($settings->publishing_type != "segmented")
@@ -216,7 +216,7 @@ class XmlGenerator
 
         foreach ($published as $xml) {
             $addDom = new DOMDocument();
-            $file = sprintf("%s%s", public_path() .'/files'. config('filesystems.xml'), $xml);
+            $file = sprintf("%s%s", public_path('files') . config('filesystems.xml'), $xml);
             $addDom->load($file);
             if ($addDom->documentElement) {
                 foreach ($addDom->documentElement->childNodes as $node) {
@@ -227,7 +227,9 @@ class XmlGenerator
             }
         }
 
-        Storage::put(sprintf('%s/%s', config('filesystems.xml'), $filename), $dom->saveXML());
+        $filePath = sprintf('%s%s%s', public_path('files'), config('filesystems.xml'), $filename);
+
+        $this->saveXMLFile($filePath, $dom);
     }
 
     /**
@@ -271,11 +273,13 @@ class XmlGenerator
         $published = $this->activityPublished->firstOrNew(['filename' => $filename, 'organization_id' => $organizationId]);
         $published->touch();
         $publishedActivities = $publishedActivity;
+
         if (!is_array($publishedActivity)) {
             $publishedActivities = (array) $published->published_activities;
             (in_array($publishedActivity, $publishedActivities)) ?: array_push($publishedActivities, $publishedActivity);
         }
-        $published->published_activities = $publishedActivities;
+
+        $published->published_activities = array_unique($publishedActivities);
         $published->save();
 
         return $published->published_activities;
@@ -304,7 +308,6 @@ class XmlGenerator
         $activityXml         = [];
         $organizationId      = $activity->organization_id;
         $publishedActivities = $this->activityPublished->where('organization_id', '=', $organizationId)->get();
-
         $activityForSameCountryCode = $this->activityPublished->where('filename', '=', $filename)
                                                               ->where('organization_id', '=', $organizationId)
                                                               ->first();
@@ -319,7 +322,7 @@ class XmlGenerator
                 }
             }
 
-            $newActivity->published_activities = $activityXml;
+            $newActivity->published_activities = array_unique($activityXml);
             $newActivity->save();
 
             return $newActivity->published_activities;
@@ -344,5 +347,15 @@ class XmlGenerator
     {
         $xml = $this->getXml($activity, $transaction, $result, $settings, $activityElement, $orgElem, $organization);
         return $xml->saveXML();
+    }
+
+    protected function saveXMLFile($filePath, $dom)
+    {
+        if (file_exists($filePath)) {
+            unlink($filePath);
+        }
+
+        file_put_contents($filePath, $dom->saveXML());
+        chmod($filePath, 777);
     }
 }

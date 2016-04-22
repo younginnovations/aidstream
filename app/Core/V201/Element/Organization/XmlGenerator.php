@@ -65,7 +65,7 @@ class XmlGenerator
         $xml      = $this->getXml($organization, $organizationData, $settings, $orgElem);
         $filename = $settings['registry_info'][0]['publisher_id'] . '-org.xml';
 
-        $result = Storage::put(sprintf('%s/%s', config('filesystems.xml'), $filename), $xml->saveXML());
+        $result = Storage::put(sprintf('%s%s', public_path('files') . config('filesystems.xml'), $filename), $xml->saveXML());
 
         if ($result) {
             $published = $this->organizationPublished->firstOrNew(['filename' => $filename, 'organization_id' => $organization->id]);
