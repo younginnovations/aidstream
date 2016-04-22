@@ -91,11 +91,20 @@ $router->group(
                 'uses' => 'ActivityController@deleteElement'
             ]
         );
-
-        $router->get('/tweet',
+        $router->get(
+            'activity/{id}/transaction/{transactionId}/{jsonPath}',
             [
-                'as' => 'twitter',
+                'as'   => 'activity.transaction.delete-block',
+                'uses' => 'TransactionController@deleteBlock'
+            ]
+        )->where(['jsonPath' => '[a-z0-9_/]+']);
+
+        $router->get(
+            '/tweet',
+            [
+                'as'   => 'twitter',
                 'uses' => 'ActivityController@twitterPost'
-            ]);
+            ]
+        );
     }
 );

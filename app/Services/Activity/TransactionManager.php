@@ -88,4 +88,24 @@ class TransactionManager
     {
         return $this->transactionRepo->getTransactionData($activityId);
     }
+
+    /**
+     * deletes data block from transaction
+     * @param $transactionId
+     * @param $jsonPath
+     * @return bool
+     */
+    public function deleteBlock($transactionId, $jsonPath)
+    {
+        try {
+            $jsonPath = explode('/', $jsonPath);
+            $this->transactionRepo->deleteBlock($transactionId, $jsonPath);
+
+            return true;
+        } catch (Exception $exception) {
+            $this->logger->error($exception, ['transactionId' => $transactionId]);
+        }
+
+        return false;
+    }
 }

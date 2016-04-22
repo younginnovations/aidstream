@@ -706,7 +706,6 @@ class ActivityController extends Controller
      * deletes activity element
      * @param $id
      * @param $element
-     * @return mixed
      */
     public function deleteElement($id, $element)
     {

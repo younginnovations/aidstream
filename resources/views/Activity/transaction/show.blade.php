@@ -161,9 +161,11 @@
                                         </div>
                                     </div>
                                 </div>
+                                @if(getVal($transactionDetail, ['recipient_country'], []))
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
                                         <div class="activity-element-title">Recipient Country</div>
+                                        <a href="{{ route('activity.transaction.delete-block', [$id, $transactionId, 'recipient_country']) }}" class="delete pull-right">remove</a>
                                     </div>
                                     {{--*/ $recipientCountry = $transactionDetail['recipient_country'][0] /*--}}
                                     <div class="panel-body panel-element-body">
@@ -181,9 +183,13 @@
                                         </div>
                                     </div>
                                 </div>
+                                @endif
+
+                                @if(getVal($transactionDetail, ['recipient_region'], []))
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
                                         <div class="activity-element-title">Recipient Region</div>
+                                        <a href="{{ route('activity.transaction.delete-block', [$id, $transactionId, 'recipient_region']) }}" class="delete pull-right">remove</a>
                                     </div>
                                     {{--*/ $recipientRegion = $transactionDetail['recipient_region'][0] /*--}}
                                     <div class="panel-body panel-element-body">
@@ -201,6 +207,8 @@
                                         </div>
                                     </div>
                                 </div>
+                                @endif
+
                                 @if($transactionDetail['flow_type'][0]['flow_type'])
                                     <div class="panel panel-default">
                                         <div class="panel-heading">

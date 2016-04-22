@@ -12,7 +12,7 @@
                     <div class="panel-heading">
                         <div class="activity-element-title">
                             {{$getCode->getActivityCodeName('TransactionType', $transaction['transaction']['transaction_type'][0]['transaction_type_code']) .' ; '. $transaction['transaction']['value'][0]['amount']. ' '.$getCode->getCode('Organization', 'Currency', $transaction['transaction']['value'][0]['currency']) . ' ; ' . formatDate($transaction['transaction']['value'][0]['date'])}}
-{{--                            {{$getCode->getActivityCodeName('TransactionType', $transaction['transaction']['transaction_type'][0]['transaction_type_code']) .' ; '. $transaction['transaction']['value'][0]['amount'] . ' ; ' . formatDate($transaction['transaction']['value'][0]['date'])}}--}}
+                            {{--                            {{$getCode->getActivityCodeName('TransactionType', $transaction['transaction']['transaction_type'][0]['transaction_type_code']) .' ; '. $transaction['transaction']['value'][0]['amount'] . ' ; ' . formatDate($transaction['transaction']['value'][0]['date'])}}--}}
                         </div>
                     </div>
                     <div class="panel-body">
@@ -163,6 +163,58 @@
                                     @endforeach
                                 </div>
                             </div>
+                            @if(getVal($transaction, ['transaction', 'recipient_country'], []))
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <div class="activity-element-title">Recipient Country</div>
+                                        <a href="{{ route('activity.transaction.delete-block', [$transaction['activity_id'], $transaction['id'], 'recipient_country']) }}" class="delete pull-right">remove</a>
+                                    </div>
+                                    <div class="panel-element-body row">
+                                        <div class="col-xs-12 col-md-12">
+                                            <div class="col-xs-12 col-sm-4">Country:</div>
+                                            <div class="col-xs-12 col-sm-8">{{ $getCode->getOrganizationCodeName('Country', getVal($transaction, ['transaction', 'recipient_country', 0, 'country_code'])) }}</div>
+                                        </div>
+                                        @foreach($transaction['transaction']['recipient_country'] as $recipientCountry)
+                                            @foreach($recipientCountry['narrative'] as $narrative)
+                                                <div class="col-xs-12 col-md-12">
+                                                    <div class="col-xs-12 col-sm-4">Text:</div>
+                                                    <div class="col-xs-12 col-sm-8">{{$narrative['narrative'] . hideEmptyArray('Organization', 'Language', $narrative['language'])}}</div>
+                                                </div>
+                                            @endforeach
+                                        @endforeach
+                                    </div>
+                                </div>
+                            @endif
+                            @if(getVal($transaction, ['transaction', 'recipient_region'], []))
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <div class="activity-element-title">Recipient Region</div>
+                                        <a href="{{ route('activity.transaction.delete-block', [$transaction['activity_id'], $transaction['id'], 'recipient_region']) }}" class="delete pull-right">remove</a>
+                                    </div>
+                                    <div class="panel-element-body row">
+                                        <div class="col-xs-12 col-md-12">
+                                            <div class="col-xs-12 col-sm-4">Region:</div>
+                                            <div class="col-xs-12 col-sm-8">{{ $getCode->getActivityCodeName('Region', getVal($transaction, ['transaction', 'recipient_region', 0, 'region_code'])) }}</div>
+                                        </div>
+                                        <div class="col-xs-12 col-md-12">
+                                            <div class="col-xs-12 col-sm-4">Vocabulary:</div>
+                                            <div class="col-xs-12 col-sm-8">{{ $getCode->getActivityCodeName('RegionVocabulary', getVal($transaction, ['transaction', 'recipient_region', 0, 'vocabulary'])) }}</div>
+                                        </div>
+                                        <div class="col-xs-12 col-md-12">
+                                            <div class="col-xs-12 col-sm-4">Vocabulary URI:</div>
+                                            <div class="col-xs-12 col-sm-8">{{ getVal($transaction, ['transaction', 'recipient_region', 0, 'vocabulary_uri']) }}</div>
+                                        </div>
+                                        @foreach($transaction['transaction']['recipient_region'] as $recipientRegion)
+                                            @foreach($recipientRegion['narrative'] as $narrative)
+                                                <div class="col-xs-12 col-md-12">
+                                                    <div class="col-xs-12 col-sm-4">Text:</div>
+                                                    <div class="col-xs-12 col-sm-8">{{$narrative['narrative'] . hideEmptyArray('Organization', 'Language', $narrative['language'])}}</div>
+                                                </div>
+                                            @endforeach
+                                        @endforeach
+                                    </div>
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>
