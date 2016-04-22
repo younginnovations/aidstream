@@ -20,7 +20,7 @@ class ParticipatingOrganization extends V201ParticipatingOrganization
                     'ref'         => $participatingOrganization['identifier'],
                     'type'        => $participatingOrganization['organization_type'],
                     'role'        => $participatingOrganization['organization_role'],
-                    'activity-id' => $activity->id
+                    'activity-id' => getVal($participatingOrganization, ['activity_id'])
                 ],
                 'narrative'   => $this->buildNarrative($participatingOrganization['narrative'])
             ];
