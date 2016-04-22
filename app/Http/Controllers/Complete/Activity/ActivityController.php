@@ -18,7 +18,6 @@ use Illuminate\Support\Facades\Gate;
 use App\Http\API\CKAN\CkanClient;
 use App\User;
 use Psr\Log\LoggerInterface;
-use Thujohn\Twitter\Facades\Twitter;
 
 
 /**
@@ -728,18 +727,7 @@ class ActivityController extends Controller
         $settings = $this->settingsManager->getSettings(session('org_id'));
         $apiId    = $settings['registry_info'][0]['publisher_id'];
 
-        $org     = $this->organizationManager->getOrganization(session('org_id'));
-        $twitter = "";
-        if ($org->twitter != "") {
-            $twitter = $org->twitter;
-            if (substr($twitter, 0, 1) != '@') {
-                $twitter = '@' . $twitter;
-            }
-        }
-
-        $status = $org->name . ' ' . $twitter . " has published their #IATIData. View the data here: ";
-        $status .= 'http://iatiregistry.org/publisher/' . $apiId . ' #AidStream';
-
-        Twitter::postTweet(['status' => $status, 'format' => 'json']);
+        $org = $this->organizationManager->getOrganization(session('org_id'));
+        $this->activityManager->postInTwitter($apiId, $org);
     }
 }
