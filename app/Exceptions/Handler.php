@@ -58,7 +58,13 @@ class Handler extends ExceptionHandler
 
         if (is_a($e, HttpResponseException::class) || is_a($e, ValidationException::class) || env('APP_DEBUG')) {
             if (is_a($e, HttpResponseException::class)) {
-                $response = ['type' => 'danger', 'code' => ['message', ['message' => 'Failed to save data due to validation errors.']]];
+                $response = [
+                    'type' => 'danger',
+                    'code' => [
+                        'message',
+                        ['message' => 'Failed to save data due to validation errors. Please review and correct the errors marked in red below and once complete, save the form.']
+                    ]
+                ];
                 session()->flash('response', $response);
             }
 
@@ -66,7 +72,7 @@ class Handler extends ExceptionHandler
         }
 
         $this->log->error($e);
-        $message = 'Whoops, look like something went wrong.';
+        $message = 'Something went wrong. Please contact us at <a href="support@aidstream.org" target="_blank">support@aidstream.org</a>';
 
         return response()->view(sprintf('errors.%s', auth()->check() ? 'errors' : 'noAuthErrors'), compact('message'));
     }
