@@ -19,6 +19,7 @@ $(document).ready(function () {
         $('.collection-container').removeAttr('data-prototype').append(result);
     }
 
+    /* Add tooltip */
     function bindTooltip() {
         $('[data-toggle="tooltip"]').tooltip({
             position: {
@@ -178,6 +179,7 @@ $(document).ready(function () {
         removeDialog.modal('show');
     });
 
+    /* change application language */
     var language = $.cookie('language');
     language = language ? language : 'en';
     $('.language-select-wrap .flag-icon-' + language).parent().addClass('active');
@@ -186,6 +188,7 @@ $(document).ready(function () {
         window.location.reload();
     });
 
+    /* auto-generate username */
     $('input[name="organization_user_identifier"]').on('keyup change', function () {
         var username = '';
         if ($(this).val() == "") {
@@ -203,6 +206,7 @@ $(document).ready(function () {
         $('input[name="organization_user_identifier"]').trigger('keyup');
     }
 
+    /* auto-generate iati activity identifier */
     $('input[name="activity_identifier"]').on('keyup change', function () {
         var iatiIdentifier = '';
         if ($(this).val() == "") {
@@ -220,22 +224,26 @@ $(document).ready(function () {
         $('input[name="activity_identifier"]').trigger('keyup');
     }
 
+    /* show/hide tooltip on hover/out */
     $('.hover_help_text').hover(function () {
         $(this).next('.help-text').trigger('mouseover');
     }, function () {
         $(this).next('.help-text').trigger('mouseout');
     });
 
+    /* check/uncheck all check boxes with attribute readonly */
     $('.checkAll').click(function () {
         var checked = this.checked;
         $('.field1').not('[readonly="readonly"]').prop('checked', checked);
         $('.check-text').text(checked ? 'Uncheck All' : 'Check All');
     });
 
+    /* prevent check/uncheck of readonly checkboxes */
     $('input[type="checkbox"][readonly="readonly"]').change(function () {
         $(this).prop('checked', !this.checked);
     });
 
+    /* prevent selection for readonly select fields */
     $('form').delegate('select[readonly=readonly]', 'mousedown', function (e) {
         e.preventDefault();
     });
@@ -245,9 +253,9 @@ $(document).ready(function () {
      * Usage:
      * Define Submit button params as:
      *   type = "button"
-     *   class="btn_confirm"
-     *   data-title="confirmation title" (optional)
-     *   data-message="confirmation message"
+     *   class = "btn_confirm"
+     *   data-title = "confirmation title" (optional)
+     *   data-message = "confirmation message"
      * */
     $('.btn_confirm').click(function () {
 
@@ -318,6 +326,7 @@ $(document).ready(function () {
         $('#group_admin_username').val($(this).val() + '_group');
     });
 
+    /* show confirmation box on clicking delete */
     $('.delete').click(function (e) {
         e.preventDefault();
         var location = this.href;
@@ -352,17 +361,19 @@ $(document).ready(function () {
         });
 
         delDialog.modal('show');
-
     });
 
+    /* display border on block to be removed while hovering remove button on form */
     $('form').delegate('.remove_from_collection', 'mouseenter mouseleave', function () {
         $(this).parent('.form-group').toggleClass('fill-border');
     });
 
+    /* display border on hovered form block */
     $('form').delegate('.collection_form', 'mouseenter mouseleave', function () {
         $(this).toggleClass('border-line');
     });
 
+    /* display/hide action icon on menu elements */
     $('.element-sidebar-wrapper .panel-body li a').hover(function () {
             $(this).children('.action-icon').css('display', 'block');
         },
@@ -370,6 +381,7 @@ $(document).ready(function () {
             $(this).children('.action-icon').css('display', 'none');
         });
 
+    /* change size of menu on hover */
     $('.sidebar-wrapper').hover(function () {
             $(this).addClass('full-sidebar-wrapper');
         },
@@ -380,6 +392,7 @@ $(document).ready(function () {
     $('.language-selector').click(function () {
         $(this).siblings('.language-flag-wrap').toggle();
     });
+
 
     $('.element-menu-wrapper').click(function () {
         $(this).children('.element-sidebar-wrapper').toggle();
@@ -394,6 +407,7 @@ $(document).ready(function () {
         }
     });
 
+    /* add selection to active element page */
     $('.element-sidebar-wrapper a').each(function () {
         var aHref = $(this).attr('href');
         var href = location.href;
@@ -402,6 +416,7 @@ $(document).ready(function () {
         }
     });
 
+    /* add selection to active page */
     $('.sidebar-wrapper a').each(function () {
         var aHref = $(this).attr('href');
         var href = location.href;
@@ -410,6 +425,7 @@ $(document).ready(function () {
         }
     });
 
+    /* prevent multiple submission on multiple click */
     $('form').submit(function () {
         $('[type="submit"]', this).attr('disabled', 'disabled');
     });
@@ -424,11 +440,13 @@ $(document).ready(function () {
         $(this).parents('.clickable-row').toggleClass('clickable-row-bg');
     });
 
+    /* accordion */
     $('.activity-element-title').click(function () {
         $(this).parent('.panel-heading').toggleClass('activity-element-toggle').next().slideToggle();
     });
 
 
+    /* auto-generate username while creating user by organization admin */
     $('input[name="userIdentifier"]').on('keyup change', function () {
         var username = '';
         if ($(this).val() == "") {
@@ -451,6 +469,7 @@ $(document).ready(function () {
             return false;
     });
 
+    /* snaps element menu on scroll */
     $(window).scroll(function () {
         var elementSidebar = $('.element-sidebar-wrapper');
         if (elementSidebar.length > 0) {
@@ -462,7 +481,7 @@ $(document).ready(function () {
         }
     });
 
-//sidebar scrollable
+    //sidebar scrollable
     function menuHeight() {
         var windowHeight = $(window).height();
         var menuSidebar = $('.sidebar-wrapper .nav');
@@ -504,6 +523,7 @@ $(document).ready(function () {
         $(".sidebar-wrapper .nav").jScrollPane(jScrollPaneSettings);
     }
 
+    /* auto-adjust textarea height */
     $("textarea").keyup(function (e) {
         adaptiveheight(this);
     });
@@ -543,6 +563,7 @@ $(document).ready(function () {
         });
     }
 
+    /* initialize calendar to form fields with class datepicker */
     function addDatepicker() {
         if (typeof $.datetimepicker != 'undefined') {
             $('form .datepicker').datetimepicker({
