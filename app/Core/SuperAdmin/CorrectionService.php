@@ -27,6 +27,9 @@ class CorrectionService
      */
     protected $organization = null;
 
+    /**
+     * @var ActivityPublished
+     */
     protected $activityPublished;
 
     /**
@@ -98,7 +101,7 @@ class CorrectionService
      */
     protected function getFilePath($fileName)
     {
-        return public_path() . config('filesystems.xml') . $fileName;
+        return sprintf('%s%s%s', public_path('files'), config('filesystems.xml'), $fileName);
     }
 
     /**
@@ -145,7 +148,7 @@ class CorrectionService
     /**
      * Get Publisher data from IATI Registry.
      * @param Organization $organization
-     * @return array|mixed
+     * @return $this
      */
     public function getPublisherDataFor(Organization $organization)
     {
@@ -154,9 +157,9 @@ class CorrectionService
         $publisherId = $this->extract('publisher_id', $settings);
 
         try {
-            $registry = $this->initializeRegistry('http://iatiregistry.org/api/', $apiKey);
+            $registry           = $this->initializeRegistry('http://iatiregistry.org/api/', $apiKey);
+            $this->organization = $organization;
 
-            $this->organization      = $organization;
             $this->publisherMetaData = json_decode($registry->package_search($publisherId));
         } catch (\Exception $exception) {
             $this->logger->error(sprintf('Package could not be found'));
@@ -184,6 +187,10 @@ class CorrectionService
         return '';
     }
 
+    /**
+     * Sync Publisher data from the IATI Registry.
+     * @return bool
+     */
     public function syncPublisherData()
     {
         if (!is_null($this->publisherMetaData) && !is_null($this->organization)) {
@@ -195,6 +202,12 @@ class CorrectionService
         }
     }
 
+    /**
+     * Sync Aidstream Database with the data on the IATI Registry.
+     * @param $currentlyPublishedActivities
+     * @param $actuallyPublishedActivities
+     * @return bool
+     */
     protected function syncDatabase($currentlyPublishedActivities, $actuallyPublishedActivities)
     {
         $actuallyPublishedFiles = $this->getXmlFileName($actuallyPublishedActivities, true);
@@ -240,8 +253,17 @@ class CorrectionService
         return $this->activityPublished->query()->where('organization_id', '=', $this->organization->id)->get();
     }
 
+    /**
+     * Remove the linkage of an Activity Xml file from the IATI Registry from the Aidstream Database.
+     * @param      $publishedActivity
+     * @param bool $resync
+     */
     protected function unlink($publishedActivity, $resync = false)
     {
+
+        $publishedActivities                   = $publishedActivity->published_activities;
+        $publishedActivity->published_activities = array_unique($publishedActivities);
+
         if ($resync) {
             $publishedActivity->published_to_register = 1;
 

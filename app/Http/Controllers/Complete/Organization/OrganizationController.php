@@ -141,6 +141,7 @@ class OrganizationController extends Controller
                     return redirect()->to('/settings')->withResponse($response);
                 }
                 $result = $xmlService->generateOrgXml($organization, $organizationData, $settings, $orgElem);
+
                 if (!$result) {
                     $this->organizationManager->updateStatus($input, $organizationData);
                     $response = ['type' => 'warning', 'code' => ['publish_registry', ['name' => '']]];

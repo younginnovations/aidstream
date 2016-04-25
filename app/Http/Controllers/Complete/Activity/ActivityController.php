@@ -244,6 +244,7 @@ class ActivityController extends Controller
 
         if ($activityWorkflow == 1) {
             $validationMessage = $activityElementValidator->validateActivity($activityData, $transactionData);
+
             if ($validationMessage) {
                 $response = ['type' => 'warning', 'code' => ['message', ['message' => $validationMessage]]];
 
@@ -392,6 +393,7 @@ class ActivityController extends Controller
     public function publishToRegistry()
     {
         $activityPublishedFiles = $this->activityManager->getActivityPublishedFiles($this->organization_id);
+
         $settings               = $this->settingsManager->getSettings($this->organization_id);
         $api_url                = config('filesystems.iati_registry_api_base_url');
         $apiCall                = new CkanClient($api_url, $settings['registry_info'][0]['api_id']);
