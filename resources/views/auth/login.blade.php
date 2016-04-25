@@ -136,7 +136,13 @@
 </div>
 @include('includes.footer')
 <!-- Scripts -->
-<script type="text/javascript" src="{{url('/js/main.min.js')}}"></script>
+@if(env('APP_ENV') == 'local')
+    <script type="text/javascript" src="{{url('/js/jquery.js')}}"></script>
+    <script type="text/javascript" src="{{url('/js/bootstrap.min.js')}}"></script>
+    <script type="text/javascript" src="{{url('/js/jquery.cookie.js')}}"></script>
+@else
+    <script type="text/javascript" src="{{url('/js/main.min.js')}}"></script>
+@endif
 <!-- Google Analytics -->
 <script type="text/javascript" src="{{url('/js/ga.js')}}"></script>
 <!-- End Google Analytics -->
