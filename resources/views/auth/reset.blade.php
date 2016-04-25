@@ -105,6 +105,7 @@
 
                             <div class="form-group">
                                 <label class="control-label">E-Mail Address</label>
+
                                 <div class="col-md-12">
                                     <input type="email" class="form-control" name="email" value="{{ old('email') }}">
                                 </div>
@@ -112,6 +113,7 @@
 
                             <div class="form-group">
                                 <label class="control-label">New Password</label>
+
                                 <div class="col-md-12">
                                     <input type="password" class="form-control" name="password">
                                 </div>
@@ -119,6 +121,7 @@
 
                             <div class="form-group">
                                 <label class="control-label">Confirm Password</label>
+
                                 <div class="col-md-12">
                                     <input type="password" class="form-control" name="password_confirmation">
                                 </div>
@@ -140,7 +143,13 @@
 </div>
 @include('includes.footer')
 <!-- Scripts -->
-<script type="text/javascript" src="{{url('/js/main.min.js')}}"></script>
+@if(env('APP_ENV') == 'local')
+    <script type="text/javascript" src="{{url('/js/jquery.js')}}"></script>
+    <script type="text/javascript" src="{{url('/js/bootstrap.min.js')}}"></script>
+    <script type="text/javascript" src="{{url('/js/jquery.cookie.js')}}"></script>
+@else
+    <script type="text/javascript" src="{{url('/js/main.min.js')}}"></script>
+@endif
 <script>
     $(document).ready(function () {
         function hamburgerMenu() {

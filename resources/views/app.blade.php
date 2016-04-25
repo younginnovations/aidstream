@@ -186,15 +186,21 @@
         dateFields[i].classList.add('datepicker');
     }
 </script>
-{{--<script type="text/javascript" src="{{url('/js/jquery.js')}}"></script>--}}
-{{--<script type="text/javascript" src="{{url('/js/bootstrap.min.js')}}"></script>--}}
-{{--<script type="text/javascript" src="{{url('/js/jquery-ui-1.10.4.tooltip.js')}}"></script>--}}
-{{--<script type="text/javascript" src="{{url('/js/jquery.cookie.js')}}"></script>--}}
-{{--<script type="text/javascript" src="{{url('/js/jquery.mousewheel.js')}}"></script>--}}
-{{--<script type="text/javascript" src="{{url('/js/jquery.jscrollpane.min.js')}}"></script>--}}
-{{--<script type="text/javascript" src="{{url('/js/select2.min.js')}}"></script>--}}
-{{--<script type="text/javascript" src="{{url('/js/jquery.datetimepicker.full.min.js')}}"></script>--}}
-<script type="text/javascript" src="{{url('/js/main.min.js')}}"></script>
+
+@if(env('APP_ENV') == 'local')
+    <script type="text/javascript" src="{{url('/js/jquery.js')}}"></script>
+    <script type="text/javascript" src="{{url('/js/bootstrap.min.js')}}"></script>
+    <script type="text/javascript" src="{{url('/js/modernizr.js')}}"></script>
+    <script type="text/javascript" src="{{url('/js/jquery-ui-1.10.4.tooltip.js')}}"></script>
+    <script type="text/javascript" src="{{url('/js/jquery.cookie.js')}}"></script>
+    <script type="text/javascript" src="{{url('/js/jquery.mousewheel.js')}}"></script>
+    <script type="text/javascript" src="{{url('/js/jquery.jscrollpane.min.js')}}"></script>
+    <script type="text/javascript" src="{{url('/js/select2.min.js')}}"></script>
+    <script type="text/javascript" src="{{url('/js/jquery.datetimepicker.full.min.js')}}"></script>
+    <script type="text/javascript" src="{{url('/js/script.js')}}"></script>
+@else
+    <script type="text/javascript" src="{{url('/js/main.min.js')}}"></script>
+@endif
 <script type="text/javascript">
     $(document).ready(function () {
         $('form select').select2();

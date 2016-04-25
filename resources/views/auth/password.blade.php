@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport'/>
     <title>Aidstream - Forgot Password</title>
     <link rel="shotcut icon" type="image/png" sizes="32*32" href="{{ asset('/images/favicon.png') }}"/>
     <link href="{{ asset('/css/main.min.css') }}" rel="stylesheet">
@@ -121,18 +121,24 @@
 </div>
 @include('includes.footer')
 <!-- Scripts -->
-<script type="text/javascript" src="{{url('/js/main.min.js')}}"></script>
-<!-- Google Analytics -->
+@if(env('APP_ENV') == 'local')
+    <script type="text/javascript" src="{{url('/js/jquery.js')}}"></script>
+    <script type="text/javascript" src="{{url('/js/bootstrap.min.js')}}"></script>
+    <script type="text/javascript" src="{{url('/js/jquery.cookie.js')}}"></script>
+@else
+    <script type="text/javascript" src="{{url('/js/main.min.js')}}"></script>
+@endif
 <script type="text/javascript" src="{{url('/js/ga.js')}}"></script>
 <!-- End Google Analytics -->
 <script>
     $(document).ready(function () {
         function hamburgerMenu() {
-            $('.navbar-toggle.collapsed').click(function(){
+            $('.navbar-toggle.collapsed').click(function () {
                 $('.navbar-collapse').toggleClass('out');
                 $(this).toggleClass('collapsed');
             });
         }
+
         hamburgerMenu();
     });
 </script>
