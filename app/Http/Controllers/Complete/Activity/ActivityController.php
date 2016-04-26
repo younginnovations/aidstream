@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Gate;
 use App\Http\API\CKAN\CkanClient;
 use App\User;
 use Psr\Log\LoggerInterface;
+use App\Services\Twitter\TwitterAPI;
 
 
 /**
@@ -98,6 +99,7 @@ class ActivityController extends Controller
      * @param ChangeActivityDefaultManager $changeActivityDefaultManager
      * @param User                         $user
      * @param LoggerInterface              $loggerInterface
+     * @param TwitterAPI                   $twitterAPI
      */
     function __construct(
         SettingsManager $settingsManager,
@@ -110,7 +112,8 @@ class ActivityController extends Controller
         ChangeActivityDefault $changeActivityDefaultForm,
         ChangeActivityDefaultManager $changeActivityDefaultManager,
         User $user,
-        LoggerInterface $loggerInterface
+        LoggerInterface $loggerInterface,
+        TwitterAPI $twitterAPI
     ) {
         $this->middleware('auth');
         $this->settingsManager              = $settingsManager;
@@ -125,6 +128,7 @@ class ActivityController extends Controller
         $this->changeActivityDefaultManager = $changeActivityDefaultManager;
         $this->user                         = $user;
         $this->loggerInterface              = $loggerInterface;
+        $this->twitter                      = $twitterAPI;
     }
 
     /**
@@ -272,7 +276,7 @@ class ActivityController extends Controller
                 if ($publishedStatus) {
                     $this->activityManager->makePublished($activityData);
                     $this->activityManager->activityInRegistry($activityData);
-                    $this->twitterPost();
+                    $this->twitter->post($settings, $organization);
                     $response = ['type' => 'success', 'code' => ['publish_registry_publish', ['name' => '']]];
 
                     return redirect()->back()->withResponse($response);
@@ -543,7 +547,9 @@ class ActivityController extends Controller
      */
     public function activityBulkPublishToRegistry(Request $request)
     {
-        $files = $request->get('activity_files');
+        $files        = $request->get('activity_files');
+        $settings     = $this->settingsManager->getSettings(session('org_id'));
+        $organization = $this->organizationManager->getOrganization(session('org_id'));
         if (is_null($files)) {
             $response = ['type' => 'warning', 'code' => ['message', ['message' => 'Please select activity XML files to be published.']]];
 
@@ -561,7 +567,6 @@ class ActivityController extends Controller
             $result        = $this->publishToRegistryForBulk($publishedFile, $orgId);
             if ($result) {
                 $pubFiles[] = $filename;
-                $this->twitterPost();
                 $this->savePublishedDataInActivityRegistry($publishedFile);
             } else {
                 $unpubFiles[] = $filename;
@@ -573,6 +578,7 @@ class ActivityController extends Controller
         }
 
         if ($pubFiles) {
+            $this->twitter->post($settings, $organization);
             $value['published'] = sprintf("The files %s have been published to registry", implode(',', $pubFiles));
         }
 
@@ -718,17 +724,5 @@ class ActivityController extends Controller
         }
 
         return redirect()->back()->withResponse($response);
-    }
-
-    /*
-     * tweet if organization published their activities
-     */
-    public function twitterPost()
-    {
-        $settings = $this->settingsManager->getSettings(session('org_id'));
-        $apiId    = $settings['registry_info'][0]['publisher_id'];
-
-        $org = $this->organizationManager->getOrganization(session('org_id'));
-        $this->activityManager->postInTwitter($apiId, $org);
     }
 }

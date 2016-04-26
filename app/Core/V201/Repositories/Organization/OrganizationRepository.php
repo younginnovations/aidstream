@@ -195,7 +195,6 @@ class OrganizationRepository implements OrganizationRepositoryInterface
         try {
             foreach ($orgPublishedFiles as $publishedFile) {
                 $data = $this->generateJson($publishedFile, $settings, $organization);
-
                 if ($publishedFile['published_to_register'] == 0) {
                     $apiCall->package_create($data);
                     $this->updatePublishToRegister($publishedFile->id);
@@ -203,11 +202,18 @@ class OrganizationRepository implements OrganizationRepositoryInterface
 //                    $package = $settings['registry_info'][0]['publisher_id'] . '-org';
                     $apiCall->package_update($data);
                 }
+
+                $this->loggerInterface->info('Organization File Published', [
+                    'payload' => $data
+                ]);
             }
 
             return true;
         } catch (\Exception $e) {
-            $this->loggerInterface->error($e);
+            $this->loggerInterface->error($e, [
+                'trace' => $e->getTraceAsString(),
+                'payload' => $data
+            ]);
 
             return false;
         }
@@ -226,10 +232,10 @@ class OrganizationRepository implements OrganizationRepositoryInterface
             $xml = simplexml_load_string(file_get_contents($filePath));
             $xml = json_decode(json_encode($xml), true);
 
-            if (count($xml['iati-organisation']['name']) == 1) {
-                $orgTitle = $xml['iati-organisation']['name']['narrative'];
-            } elseif (count($xml['iati-organisation']['name']) > 0) {
+            if (is_array($xml['iati-organisation']['name']['narrative'])) {
                 $orgTitle = $xml['iati-organisation']['name']['narrative'][0];
+            } else {
+                $orgTitle = $xml['iati-organisation']['name']['narrative'];
             }
         } else {
             $organization = $this->getOrganization($organization->id);
@@ -251,7 +257,7 @@ class OrganizationRepository implements OrganizationRepositoryInterface
                 [
                     'format'   => config('xmlFiles.format'),
                     'mimetype' => config('xmlFiles.mimeType'),
-                    'url'      => public_path('files') . config('filesystems.xml') . $publishedFile->filename
+                    'url'      => url(sprintf('files/xml/%s', $publishedFile->filename))
                 ]
             ],
             'extras'       => [

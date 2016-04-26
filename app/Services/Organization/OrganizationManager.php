@@ -8,6 +8,7 @@ use App\Models\OrganizationPublished;
 use App\Models\Settings;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Logging\Log as Logger;
+use App\Services\Twitter\TwitterAPI;
 
 class OrganizationManager
 {
@@ -27,8 +28,9 @@ class OrganizationManager
      * @param OrganizationData      $orgData
      * @param OrganizationPublished $orgPublished
      * @param Logger                $logger
+     * @param TwitterAPI            $twitter
      */
-    public function __construct(Version $version, Guard $auth, OrganizationData $orgData, OrganizationPublished $orgPublished, Logger $logger)
+    public function __construct(Version $version, Guard $auth, OrganizationData $orgData, OrganizationPublished $orgPublished, Logger $logger, TwitterAPI $twitter)
     {
         $this->version      = $version;
         $this->repo         = $version->getOrganizationElement()->getRepository();
@@ -37,6 +39,7 @@ class OrganizationManager
         $this->orgPublished = $orgPublished;
         $this->logger       = $logger;
         $this->auth         = $auth;
+        $this->twitterApi   = $twitter;
     }
 
     /**
@@ -165,7 +168,12 @@ class OrganizationManager
      */
     public function publishToRegistry(Organization $organization, Settings $settings)
     {
-        return $this->repo->publishToRegistry($organization, $settings);
+        $response = $this->repo->publishToRegistry($organization, $settings);
+        if ($response) {
+            $twitter = $this->twitterApi->post($settings, $organization);
+        }
+
+        return $response;
     }
 
     public function saveOrganizationPublishedFiles($filename, $orgId)
