@@ -392,6 +392,15 @@
     },
     {
       "category": "151",
+      "code": "15114",
+      "name": "Tax policy and tax administration support",
+      "language": "en",
+      "category-description": "Macro-economic, fiscal and monetary policy and planning; social planning; economic and social analysis and forecasting; development planning and preparation of structural reforms; organisational development; support to ministries involved in aid co-ordination; other ministries and government departments when sector cannot be specified. (Use code 51010 for budget support to macroeconomic reforms.)",
+      "category-name": "Government and civil society, general",
+      "description": "Support to the ministries of finance, revenue authorities or other local, regional or national public bodies on tax policy, analysis and administration (including “non-tax” public revenue)."
+    },
+    {
+      "category": "151",
       "code": "15120",
       "name": "Public sector financial management",
       "language": "en",
