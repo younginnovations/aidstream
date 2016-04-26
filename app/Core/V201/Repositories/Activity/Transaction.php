@@ -2,6 +2,7 @@
 
 use App\Models\Activity\Activity;
 use App\Models\Activity\Transaction as TransactionModel;
+use Illuminate\Support\Facades\DB;
 
 /**
  * Class Transaction
@@ -61,5 +62,34 @@ class Transaction
     public function getTransactionData($activityId)
     {
         return $this->transaction->where('activity_id', $activityId)->get();
+    }
+
+    /**
+     * deletes data block from transaction
+     * @param $transactionId
+     * @param $jsonPath
+     * @return bool
+     */
+    public function deleteBlock($transactionId, $jsonPath)
+    {
+        $transactionRow = $this->getTransaction($transactionId);
+        $transaction    = $transactionRow->transaction;
+        $this->removeArrayValue($transaction, $jsonPath);
+        $transactionRow->transaction = $transaction;
+
+        return $transactionRow->save();
+    }
+
+    /*
+     * removes value form array with array path
+     * */
+    protected function removeArrayValue(array &$array, array &$arrayPath)
+    {
+        if (count($arrayPath) == 1) {
+            $array[$arrayPath[0]] = [];
+        } else {
+            $key = array_shift($arrayPath);
+            $this->removeArrayValue($array[$key], $arrayPath);
+        }
     }
 }
