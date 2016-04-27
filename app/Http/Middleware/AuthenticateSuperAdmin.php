@@ -50,6 +50,10 @@ class AuthenticateSuperAdmin
             $response = ['type' => 'warning', 'code' => ['message', ['message' => "You don't have correct privilege"]]];
 
             return redirect(config('app.admin_dashboard'))->withResponse($response);
+        } elseif (auth()->user()->isAdmin()) {
+            $response = ['type' => 'warning', 'code' => ['message', ['message' => "You don't have correct privilege"]]];
+
+            return redirect(config('app.admin_dashboard'))->withResponse($response);
         }
 
         return $next($request);
