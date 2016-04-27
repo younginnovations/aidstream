@@ -16,9 +16,9 @@ class BaseElement
         $narrativeData = [];
         foreach ($narratives as $narrative) {
             $narrativeData[] = [
-                '@value'      => isset($narrative['narrative']) ? $narrative['narrative'] : '',
+                '@value'      => getVal($narrative, ['narrative']),
                 '@attributes' => [
-                    'xml:lang' => $narrative['language']
+                    'xml:lang' => getVal($narrative, ['language'])
                 ]
             ];
         }
