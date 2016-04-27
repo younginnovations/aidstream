@@ -38,8 +38,8 @@ class XmlService
         // Enable user error handling
         libxml_use_internal_errors(true);
 
-        $tempXml        = $this->xmlGenerator->getXml($activityData, $transactionData, $resultData, $settings, $activityElement, $orgElem, $organization);
-        $xml = new \DOMDocument();
+        $tempXml = $this->xmlGenerator->getXml($activityData, $transactionData, $resultData, $settings, $activityElement, $orgElem, $organization);
+        $xml     = new \DOMDocument();
         $xml->loadXML($tempXml->saveXML());
         $schemaPath = app_path(sprintf('/Core/%s/XmlSchema/iati-activities-schema.xsd', session('version')));
         $messages   = [];

@@ -58,4 +58,9 @@ class XmlService
         return $this->xmlGenerator->generateXml($organization, $organizationData, $settings, $orgElem);
     }
 
+    public function generateTemporaryOrganizationXml($organization, $organizationData, $settings, $orgElem)
+    {
+        return $this->xmlGenerator->generateTemporaryXml($organization, $organizationData, $settings, $orgElem);
+    }
+
 }

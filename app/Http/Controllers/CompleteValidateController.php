@@ -49,19 +49,19 @@ class CompleteValidateController extends Controller
         OrganizationManager $organizationManager,
         ActivityManager $activityManager
     ) {
-        $this->middleware('auth');
+        $this->middleware('auth.superAdmin');
         $this->settingsManager     = $settingsManager;
         $this->sessionManager      = $sessionManager;
         $this->organizationManager = $organizationManager;
         $this->activityManager     = $activityManager;
     }
 
-    public function show($activityId)
+    public function validateActivity($id)
     {
-        $activityData    = $this->activityManager->getActivityData($activityId);
+        $activityData    = $this->activityManager->getActivityData($id);
         $settings        = $this->settingsManager->getSettings($activityData['organization_id']);
-        $transactionData = $this->activityManager->getTransactionData($activityId);
-        $resultData      = $this->activityManager->getResultData($activityId);
+        $transactionData = $this->activityManager->getTransactionData($id);
+        $resultData      = $this->activityManager->getResultData($id);
         $organization    = $this->organizationManager->getOrganization($activityData->organization_id);
         $orgElem         = $this->organizationManager->getOrganizationElement();
         $activityElement = $this->activityManager->getActivityElement();
@@ -76,7 +76,7 @@ class CompleteValidateController extends Controller
 
         $xmlService     = $activityElement->getActivityXmlService();
         $tempXmlContent = $xmlService->generateTemporaryActivityXml($activityData, $transactionData, $resultData, $settings, $activityElement, $orgElem, $organization);
-        $xml = new \DOMDocument();
+        $xml            = new \DOMDocument();
         $xml->loadXML($tempXmlContent);
         $schemaPath = app_path(sprintf('/Core/%s/XmlSchema/iati-activities-schema.xsd', session('version')));
         $messages   = [];
@@ -86,7 +86,38 @@ class CompleteValidateController extends Controller
 
         $xmlString = htmlspecialchars($tempXmlContent);
         $xmlString = str_replace(" ", "&nbsp;&nbsp;", $xmlString);
-        $xmlLines = explode("\n", $xmlString);
+        $xmlLines  = explode("\n", $xmlString);
+
+        return view('validate-schema', compact('messages', 'xmlLines'));
+    }
+
+    public function validateOrganization($id)
+    {
+        $organization     = $this->organizationManager->getOrganization($id);
+        $settings         = $this->settingsManager->getSettings($id);
+        $organizationData = $this->organizationManager->getOrganizationData($id);
+        $orgElem          = $this->organizationManager->getOrganizationElement();
+
+        return $this->validateCompletedOrganization($organization, $settings, $organizationData, $orgElem);
+    }
+
+    public function validateCompletedOrganization($organization, $settings, $organizationData, $orgElem)
+    {
+        libxml_use_internal_errors(true);
+
+        $xmlService     = $orgElem->getOrgXmlService();
+        $tempXmlContent = $xmlService->generateTemporaryOrganizationXml($organization, $organizationData, $settings, $orgElem);
+        $xml            = new \DOMDocument();
+        $xml->loadXML($tempXmlContent);
+        $schemaPath = app_path(sprintf('/Core/%s/XmlSchema/iati-organisations-schema.xsd', session('version')));
+        $messages   = [];
+        if (!$xml->schemaValidate($schemaPath)) {
+            $messages = $this->libxml_display_errors();
+        }
+
+        $xmlString = htmlspecialchars($tempXmlContent);
+        $xmlString = str_replace(" ", "&nbsp;&nbsp;", $xmlString);
+        $xmlLines  = explode("\n", $xmlString);
 
         return view('validate-schema', compact('messages', 'xmlLines'));
     }

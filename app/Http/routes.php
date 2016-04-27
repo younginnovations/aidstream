@@ -175,9 +175,16 @@ $router->get(
     ]
 );
 $router->get(
-    'validate-schema/{activityId}',
+    'validate-activity/{id}',
     [
-        'as'   => 'validate-schema',
-        'uses' => 'CompleteValidateController@show'
+        'as'   => 'validate-activity',
+        'uses' => 'CompleteValidateController@validateActivity'
+    ]
+);
+$router->get(
+    'validate-organization/{id}',
+    [
+        'as'   => 'validate-organization',
+        'uses' => 'CompleteValidateController@validateOrganization'
     ]
 );
