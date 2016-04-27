@@ -124,4 +124,11 @@ class XmlGenerator
 
         return $xmlOrganization;
     }
+
+    public function generateTemporaryXml(Organization $organization, OrganizationData $organizationData, Settings $settings, $orgElem)
+    {
+        $xml = $this->getXml($organization, $organizationData, $settings, $orgElem);
+
+        return $xml->saveXML();
+    }
 }
