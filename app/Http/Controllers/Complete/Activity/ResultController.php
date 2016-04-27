@@ -6,6 +6,7 @@ use App\Services\Activity\ResultManager;
 use App\Services\FormCreator\Activity\Result as ResultForm;
 use App\Services\RequestManager\Activity\Result as ResultRequestManager;
 use App\Http\Requests\Request;
+use Illuminate\Contracts\Logging\Log;
 use Illuminate\Support\Facades\Gate;
 
 /**
@@ -184,6 +185,14 @@ class ResultController extends Controller
             'type' => 'danger',
             'code' => ['delete_failed', ['name' => 'result']]
         ];
+
+        app(Log::class)->activity(
+            "activity.activity_result_deleted",
+            [
+                'result_id'   => $resultId,
+                'activity_id' => $id
+            ]
+        );
 
         return redirect()->back()->withResponse($response);
     }
