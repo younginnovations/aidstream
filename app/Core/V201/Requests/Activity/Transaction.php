@@ -60,9 +60,9 @@ class Transaction extends ActivityBaseRequest
                 $transactionReferences[] = $referenceKey;
             }
 
-            $transactionReference                                                                        = implode(',', $transactionReferences);
-            $rules                                                                                       = [];
-            $rules[sprintf('%s.reference', $transactionForm)]                                            = 'not_in:' . $transactionReference;
+            $transactionReference                             = implode(',', $transactionReferences);
+            $rules                                            = [];
+            $rules[sprintf('%s.reference', $transactionForm)] = 'not_in:' . $transactionReference;
 //            $rules[sprintf('%s.disbursement_channel.0.disbursement_channel_code', $transactionForm)]     = 'required';
             $rules[sprintf('%s.provider_organization.0.organization_identifier_code', $transactionForm)] = 'exclude_operators';
             $rules[sprintf('%s.receiver_organization.0.organization_identifier_code', $transactionForm)] = 'exclude_operators';
@@ -72,9 +72,9 @@ class Transaction extends ActivityBaseRequest
                 $this->getTransactionTypeRules($transaction['transaction_type'], $transactionForm),
                 $this->getTransactionDateRules($transaction['transaction_date'], $transactionForm),
                 $this->getValueRules($transaction['value'], $transactionForm),
-                $this->getDescriptionRules($transaction['description'], $transactionForm)
+                $this->getDescriptionRules($transaction['description'], $transactionForm),
+                $this->getSectorsRules($transaction['sector'], $transactionForm)
             //This might ne useful later
-//                $this->getSectorsRules($transaction['sector'], $transactionForm),
 //                $this->getRecipientRegionRules($transaction['recipient_region'], $transactionForm)
             );
         }
@@ -101,9 +101,9 @@ class Transaction extends ActivityBaseRequest
                 $this->getTransactionTypeMessages($transaction['transaction_type'], $transactionForm),
                 $this->getTransactionDateMessages($transaction['transaction_date'], $transactionForm),
                 $this->getValueMessages($transaction['value'], $transactionForm),
-                $this->getDescriptionMessages($transaction['description'], $transactionForm)
+                $this->getDescriptionMessages($transaction['description'], $transactionForm),
+                $this->getSectorsMessages($transaction['sector'], $transactionForm)
             //This might ne useful later
-//                $this->getSectorsMessages($transaction['sector'], $transactionForm),
 //                $this->getRecipientRegionMessages($transaction['recipient_region'], $transactionForm)
             );
         }
@@ -265,21 +265,61 @@ class Transaction extends ActivityBaseRequest
     public function getSectorsRules($formFields, $formBase)
     {
         $rules = [];
-
         foreach ($formFields as $sectorIndex => $sector) {
-            $sectorForm = sprintf('%s.sector.%s', $formBase, $sectorIndex);
-            if ($sector['sector_vocabulary'] == 1 || $sector['sector_vocabulary'] == '') {
-                $rules[sprintf('%s.sector_code', $sectorForm)] = 'required';
-            } elseif ($sector['sector_vocabulary'] == 2) {
-                $rules[sprintf('%s.sector_category_code', $sectorForm)] = 'required';
+            $sectorForm                                       = sprintf('%s.sector.%s', $formBase, $sectorIndex);
+            $rules[sprintf('%s.vocabulary_uri', $sectorForm)] = 'url';
+
+            if ($sector['sector_vocabulary'] == 1 || $sector['sector_vocabulary'] == 2) {
+                if ($sector['sector_vocabulary'] == 1) {
+                    $rules[sprintf('%s.sector_code', $sectorForm)] = 'required_with:' . $sectorForm . '.sector_vocabulary';
+                }
+                if ($sector['sector_code'] != "") {
+                    $rules[sprintf('%s.sector_vocabulary', $sectorForm)] = 'required_with:' . $sectorForm . '.sector_code';
+                }
+                if ($sector['sector_vocabulary'] == 2) {
+                    $rules[sprintf('%s.sector_category_code', $sectorForm)] = 'required_with:' . $sectorForm . '.sector_vocabulary';
+                }
+                if ($sector['sector_category_code'] != "") {
+                    $rules[sprintf('%s.sector_vocabulary', $sectorForm)] = 'required_with:' . $sectorForm . '.sector_category_code';
+                }
             } else {
-                $rules[sprintf('%s.sector_text', $sectorForm)] = 'required';
+                if ($sector['sector_vocabulary'] != "") {
+                    $rules[sprintf('%s.sector_text', $sectorForm)] = 'required_with:' . $sectorForm . '.sector_vocabulary';
+                }
+
+                if ($sector['sector_text'] != "") {
+                    $rules[sprintf('%s.sector_vocabulary', $sectorForm)] = 'required_with:' . $sectorForm . '.sector_text';
+                }
             }
             $rules = array_merge($rules, $this->getRulesForNarrative($sector['narrative'], $sectorForm));
         }
-
         return $rules;
     }
+    /**
+     * returns rules for sector
+     * @param $formFields
+     * @param $formBase
+     * @return array|mixed
+     */
+//    This might be useful later
+//    public function getSectorsRules($formFields, $formBase)
+//    {
+//        $rules = [];
+//
+//        foreach ($formFields as $sectorIndex => $sector) {
+//            $sectorForm = sprintf('%s.sector.%s', $formBase, $sectorIndex);
+//            if ($sector['sector_vocabulary'] == 1 || $sector['sector_vocabulary'] == '') {
+//                $rules[sprintf('%s.sector_code', $sectorForm)] = 'required';
+//            } elseif ($sector['sector_vocabulary'] == 2) {
+//                $rules[sprintf('%s.sector_category_code', $sectorForm)] = 'required';
+//            } else {
+//                $rules[sprintf('%s.sector_text', $sectorForm)] = 'required';
+//            }
+//            $rules = array_merge($rules, $this->getRulesForNarrative($sector['narrative'], $sectorForm));
+//        }
+//
+//        return $rules;
+//    }
 
     /**
      * returns messages for sector
@@ -292,19 +332,58 @@ class Transaction extends ActivityBaseRequest
         $messages = [];
 
         foreach ($formFields as $sectorIndex => $sector) {
-            $sectorForm = sprintf('%s.sector.%s', $formBase, $sectorIndex);
-            if ($sector['sector_vocabulary'] == 1 || $sector['sector_vocabulary'] == '') {
-                $messages[sprintf('%s.sector_code.%s', $sectorForm, 'required')] = 'Sector is required.';
-            } elseif ($sector['sector_vocabulary'] == 2) {
-                $messages[sprintf('%s.sector_category_code.%s', $sectorForm, 'required')] = 'Sector is required.';
+            $sectorForm                                              = sprintf('%s.sector.%s', $formBase, $sectorIndex);
+            $messages[sprintf('%s.vocabulary_uri.url', $sectorForm)] = 'Enter valid URL. eg. http://example.com';
+
+            if ($sector['sector_vocabulary'] == 1 || $sector['sector_vocabulary'] == 2) {
+                if ($sector['sector_vocabulary'] == 1) {
+                    $messages[sprintf('%s.sector_code.%s', $sectorForm, 'required_with')] = 'Sector is required with Sector vocabulary.';
+                }
+                if ($sector['sector_code'] != "") {
+                    $messages[sprintf('%s.sector_vocabulary.%s', $sectorForm, 'required_with')] = 'Sector vocabulary is required with Sector.';
+                }
+                if ($sector['sector_vocabulary'] == 2) {
+                    $messages[sprintf('%s.sector_category_code.%s', $sectorForm, 'required_with')] = 'Sector is required with Sector vocabulary.';
+                }
+                if ($sector['sector_category_code'] != "") {
+                    $messages[sprintf('%s.sector_vocabulary.%s', $sectorForm, 'required_with')] = 'Sector vocabulary is required with Sector.';
+                }
             } else {
-                $messages[sprintf('%s.sector_text.%s', $sectorForm, 'required')] = 'Sector is required.';
+                if ($sector['sector_vocabulary'] != "") {
+                    $messages[sprintf('%s.sector_text.%s', $sectorForm, 'required_with')] = 'Sector is required with Sector vocabulary.';
+                }
+
+                if ($sector['sector_text'] != "") {
+                    $messages[sprintf('%s.sector_vocabulary.%s', $sectorForm, 'required_with')] = 'Sector vocabulary is required with Sector.';
+                }
+
+                if ($sector['sector_vocabulary'] == "99" || $sector['sector_vocabulary'] == "98") {
+                    $messages[sprintf('%s.vocabulary_uri.%s', $sectorForm, 'required_with')] = 'Vocabulary URI is required with Sector vocabulary.';
+                }
             }
             $messages = array_merge($messages, $this->getMessagesForNarrative($sector['narrative'], $sectorForm));
         }
-
         return $messages;
     }
+//    This might be useful later
+//    public function getSectorsMessages($formFields, $formBase)
+//    {
+//        $messages = [];
+//
+//        foreach ($formFields as $sectorIndex => $sector) {
+//            $sectorForm = sprintf('%s.sector.%s', $formBase, $sectorIndex);
+//            if ($sector['sector_vocabulary'] == 1 || $sector['sector_vocabulary'] == '') {
+//                $messages[sprintf('%s.sector_code.%s', $sectorForm, 'required')] = 'Sector is required.';
+//            } elseif ($sector['sector_vocabulary'] == 2) {
+//                $messages[sprintf('%s.sector_category_code.%s', $sectorForm, 'required')] = 'Sector is required.';
+//            } else {
+//                $messages[sprintf('%s.sector_text.%s', $sectorForm, 'required')] = 'Sector is required.';
+//            }
+//            $messages = array_merge($messages, $this->getMessagesForNarrative($sector['narrative'], $sectorForm));
+//        }
+//
+//        return $messages;
+//    }
 
     /**
      * returns rules for recipient region

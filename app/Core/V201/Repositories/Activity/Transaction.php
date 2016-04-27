@@ -30,7 +30,8 @@ class Transaction
      */
     public function create(array $transactionDetails, Activity $activity)
     {
-        $transaction = $this->transaction->newInstance(['transaction' => $transactionDetails['transaction'][0]]);
+        $transactionDetails = $this->checkSectorVocabulary($transactionDetails);
+        $transaction        = $this->transaction->newInstance(['transaction' => $transactionDetails['transaction'][0]]);
         $activity->transactions()->save($transaction);
     }
 
@@ -41,6 +42,7 @@ class Transaction
      */
     public function update(array $transactionDetails, $transactionId)
     {
+        $transactionDetails        = $this->checkSectorVocabulary($transactionDetails);
         $transactions              = $this->getTransaction($transactionId);
         $transactions->transaction = $transactionDetails['transaction'][0];
         $transactions->save();
@@ -91,5 +93,17 @@ class Transaction
             $key = array_shift($arrayPath);
             $this->removeArrayValue($array[$key], $arrayPath);
         }
+    }
+    /*
+     * insert sector vocabulary by default "1" if sector code is present
+     * @param $transactionDetails
+     */
+    protected function checkSectorVocabulary($transactionDetails)
+    {
+        if ($transactionDetails['transaction'][0]['sector'][0]['sector_code'] != "") {
+            $transactionDetails['transaction'][0]['sector'][0]['sector_vocabulary'] = "1";
+        }
+
+        return $transactionDetails;
     }
 }
