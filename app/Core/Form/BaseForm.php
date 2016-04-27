@@ -22,46 +22,6 @@ class BaseForm extends Form
     }
 
     /**
-     * adds add more button to form
-     * @param $buttonId
-     * @param $formClass
-     * @return $this
-     */
-    protected function addAddMoreButton($buttonId, $formClass)
-    {
-        return $this->add(
-            $buttonId,
-            'button',
-            [
-                'label' => 'Add More',
-                'attr'  => [
-                    'class'           => 'add_to_collection',
-                    'data-collection' => $formClass
-                ]
-            ]
-        );
-    }
-
-    /**
-     * adds remove this button to form
-     * @param $buttonId
-     * @return $this
-     */
-    protected function addRemoveThisButton($buttonId)
-    {
-        return $this->add(
-            $buttonId,
-            'button',
-            [
-                'label' => 'Remove This',
-                'attr'  => [
-                    'class' => 'remove_from_collection',
-                ]
-            ]
-        );
-    }
-
-    /**
      * return codeList array from json codeList
      * @param      $listName
      * @param      $listType
@@ -85,10 +45,53 @@ class BaseForm extends Form
         $data             = [];
 
         foreach ($codeList as $list) {
-            $data[$list['code']] = ($code) ? $list['code'] . (array_key_exists('name', $list) ? ' - ' . $list['name'] : '') : $list['name'];
+            $data[$list['code']] = ($code) ? $list['code'].(array_key_exists(
+                    'name',
+                    $list
+                ) ? ' - '.$list['name'] : '') : $list['name'];
         }
 
         return $data;
+    }
+
+    /**
+     * adds add more button to form
+     * @param $buttonId
+     * @param $formClass
+     * @return $this
+     */
+    protected function addAddMoreButton($buttonId, $formClass)
+    {
+        return $this->add(
+            $buttonId,
+            'button',
+            [
+                'label' => 'Add More',
+                'attr'  => [
+                    'class'           => 'add_to_collection',
+                    'data-collection' => $formClass,
+                ],
+            ]
+        );
+    }
+
+    /**
+     * adds remove this button to form
+     * @param $buttonId
+     * @return $this
+     */
+    protected function addRemoveThisButton($buttonId)
+    {
+        return $this->add(
+            $buttonId,
+            'button',
+            [
+                'label' => 'Remove This',
+                'attr'  => [
+                    'class' => 'remove_from_collection',
+                ],
+            ]
+        );
     }
 
     /**
@@ -114,7 +117,11 @@ class BaseForm extends Form
         $class .= ($class ? ' has_add_more' : '');
         $defaultVersion = config('app.default_version_name');
         $filePath       = sprintf('App\Core\%s\Forms\%s', session()->get('version'), $file);
-        $FormClass      = !class_exists($filePath) ? sprintf('App\Core\%s\Forms\%s', $defaultVersion, $file) : $filePath;
+        $FormClass      = !class_exists($filePath) ? sprintf(
+            'App\Core\%s\Forms\%s',
+            $defaultVersion,
+            $file
+        ) : $filePath;
 
         return $this->add(
             $name,
@@ -128,8 +135,8 @@ class BaseForm extends Form
                 ],
                 'label'   => $label,
                 'wrapper' => [
-                    'class' => sprintf('collection_form %s', $class)
-                ]
+                    'class' => sprintf('collection_form %s', $class),
+                ],
             ]
         );
     }
@@ -143,7 +150,11 @@ class BaseForm extends Form
      */
     protected function addCheckBox($name, $value, $checked = null, $readonly = null)
     {
-        return $this->add($name, 'checkbox', ['value' => $value, 'checked' => $checked, 'attr' => ['class' => 'field1', 'readonly' => $readonly]]);
+        return $this->add(
+            $name,
+            'checkbox',
+            ['value' => $value, 'checked' => $checked, 'attr' => ['class' => 'field1', 'readonly' => $readonly]]
+        );
     }
 
     /**
@@ -155,8 +166,14 @@ class BaseForm extends Form
      * @param bool  $required
      * @return $this
      */
-    protected function addSelect($name, array $choices, $label = null, $helpText = null, $defaultValue = null, $required = false)
-    {
+    protected function addSelect(
+        $name,
+        array $choices,
+        $label = null,
+        $helpText = null,
+        $defaultValue = null,
+        $required = false
+    ) {
         return $this->add(
             $name,
             'select',
@@ -166,7 +183,7 @@ class BaseForm extends Form
                 'empty_value'   => 'Select one of the following options',
                 'default_value' => $defaultValue,
                 'help_block'    => $helpText,
-                'required'      => $required
+                'required'      => $required,
             ]
         );
     }
@@ -204,14 +221,14 @@ class BaseForm extends Form
      */
     protected function addHelpText($helpText, $tooltip = true)
     {
-        $help = trans(session()->get('version') . "/help");
-        is_array($help) ?: $help = trans(config('app.default_version_name') . '/help');
+        $help = trans(session()->get('version')."/help");
+        is_array($help) ?: $help = trans(config('app.default_version_name').'/help');
         if (!isset($help[$helpText])) {
             return null;
         }
 
         $attr = [
-            'class' => 'help-block'
+            'class' => 'help-block',
         ];
 
         if ($tooltip) {
@@ -221,7 +238,7 @@ class BaseForm extends Form
                     'class'          => 'help-text',
                     'title'          => htmlspecialchars($help[$helpText]),
                     'data-toggle'    => 'tooltip',
-                    'data-placement' => 'top'
+                    'data-placement' => 'top',
                 ]
             );
         }
