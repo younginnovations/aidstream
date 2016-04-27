@@ -38,7 +38,7 @@ class Condition extends BaseElement
                 '@attributes' => [
                     'attached' => $conditions['condition_attached']
                 ],
-                'condition'   => $this->buildCondition($conditions['condition'])
+                'condition'   => $conditions['condition_attached'] == '1' ? $this->buildCondition($conditions['condition']) : []
             ];
         }
 
