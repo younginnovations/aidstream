@@ -398,26 +398,28 @@ button, input[type="button"], input[type="reset"], input[type="submit"], .btn {
   right: -20px;
   top: auto; }
 
-.table > thead > tr > th {
-  text-transform: uppercase;
-  font: normal 12px Open-Sans-Regular;
-  color: #484848;
-  border-bottom: 1px solid rgba(72, 72, 72, 0.1); }
-  .table > thead > tr > th:first-child {
-    padding-left: 37px;
-    padding-right: 22px; }
-
-.table > tbody > tr {
-  background: #fff !important; }
-  .table > tbody > tr > td {
-    border: 0;
-    padding: 15px 8px 12px;
-    word-wrap: break-word; }
-    .table > tbody > tr > td:first-child {
+.table {
+  table-layout: auto;
+  margin-top: 20px !important; }
+  .table > thead > tr > th {
+    text-transform: uppercase;
+    font: normal 12px Open-Sans-Regular;
+    color: #484848;
+    border-bottom: 1px solid rgba(72, 72, 72, 0.1); }
+    .table > thead > tr > th:first-child {
       padding-left: 37px;
       padding-right: 22px; }
-  .table > tbody > tr:nth-child(even) {
-    background: #f6f8fa !important; }
+  .table > tbody > tr {
+    background: #fff !important; }
+    .table > tbody > tr > td {
+      border: 0;
+      padding: 15px 8px 12px;
+      word-wrap: break-word; }
+      .table > tbody > tr > td:first-child {
+        padding-left: 37px;
+        padding-right: 22px; }
+    .table > tbody > tr:nth-child(even) {
+      background: #f6f8fa !important; }
 
 th.status {
   padding-left: 24px !important; }
@@ -2696,7 +2698,7 @@ label.required::after {
   color: #e15454;
   margin-left: 2px; }
 
-.added-new-block {
+.added-new-block, .has_add_more > .form-group + .form-group {
   border-top: 1px dashed #A9C6DE !important;
   padding-bottom: 0 !important; }
 
@@ -2806,6 +2808,24 @@ label.required::after {
 
 .upload-activity-wrapper .element-panel-heading {
   padding-right: 36px; }
+
+table.dataTable.no-footer {
+  border-bottom: none; }
+
+.dataTable > thead > tr > th, .dataTable > tbody > tr > td {
+  padding-left: 20px;
+  padding-right: 20px; }
+  .dataTable > thead > tr > th:focus, .dataTable > tbody > tr > td:focus {
+    outline: 0; }
+
+table.dataTable thead .sorting {
+  background: url(../../images/ic-sort-both.svg) no-repeat right; }
+
+table.dataTable thead .sorting_asc {
+  background: url(../../images/ic-sort-asc.svg) no-repeat right; }
+
+table.dataTable thead .sorting_desc {
+  background: url(../../images/ic-sort-desc.svg) no-repeat right; }
 
 @media all and (max-width: 1030px) {
   .activity-status {
