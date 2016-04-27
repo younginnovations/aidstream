@@ -72,7 +72,14 @@
                                 </div>
                                 <div class="panel-element-body row">
                                     @foreach($transaction['transaction']['description'] as $description)
+                                        {{--*/
+                                        $ValidNarrative = getVal($description, ['narrative'], []);
+                                        $description['narrative'] = $ValidNarrative;
+                                        /*--}}
                                         @foreach($description['narrative'] as $narrative)
+                                            {{--*/
+                                            $narrative['language'] = getVal($narrative, ['language'], '');
+                                            /*--}}
                                             <div class="panel-element-body row">
                                                 <div class="col-xs-12 col-md-12">
                                                     <div class="col-xs-12 col-sm-4">Text:</div>
@@ -97,7 +104,14 @@
                                         <div class="col-xs-12 col-sm-8">{{$transaction['transaction']['provider_organization'][0]['provider_activity_id']}}</div>
                                     </div>
                                     @foreach($transaction['transaction']['provider_organization'] as $narrative)
+                                        {{--*/
+                                        $ValidNarrative = getVal($narrative, ['narrative'], []);
+                                        $narrative['narrative'] = $ValidNarrative;
+                                        /*--}}
                                         @foreach($narrative['narrative'] as $narrative)
+                                            {{--*/
+                                            $narrative['language'] = getVal($narrative, ['language'], '');
+                                            /*--}}
                                             <div class="col-xs-12 col-md-12">
                                                 <div class="col-xs-12 col-sm-4">Text:</div>
                                                 <div class="col-xs-12 col-sm-8">{{$narrative['narrative'] . hideEmptyArray('Organization', 'Language', $narrative['language'])}}</div>
@@ -120,7 +134,14 @@
                                         <div class="col-xs-12 col-sm-8">{{$transaction['transaction']['receiver_organization'][0]['receiver_activity_id']}}</div>
                                     </div>
                                     @foreach($transaction['transaction']['receiver_organization'] as $narrative)
+                                        {{--*/
+                                        $ValidNarrative = getVal($narrative, ['narrative'], []);
+                                        $narrative['narrative'] = $ValidNarrative;
+                                        /*--}}
                                         @foreach($narrative['narrative'] as $narrative)
+                                            {{--*/
+                                            $narrative['language'] = getVal($narrative, ['language'], '');
+                                            /*--}}
                                             <div class="col-xs-12 col-md-12">
                                                 <div class="col-xs-12 col-sm-4">Text:</div>
                                                 <div class="col-xs-12 col-sm-8">{{$narrative['narrative'] . hideEmptyArray('Organization', 'Language', $narrative['language'])}}</div>
@@ -154,7 +175,14 @@
                                         <div class="col-xs-12 col-sm-8">{{ $sectorValue }}</div>
                                     </div>
                                     @foreach($transaction['transaction']['sector'] as $narrative)
+                                        {{--*/
+                                        $ValidNarrative = getVal($narrative, ['narrative'], []);
+                                        $narrative['narrative'] = $ValidNarrative;
+                                        /*--}}
                                         @foreach($narrative['narrative'] as $narrative)
+                                            {{--*/
+                                            $narrative['language'] = getVal($narrative, ['language'], '');
+                                            /*--}}
                                             <div class="col-xs-12 col-md-12">
                                                 <div class="col-xs-12 col-sm-4">Text:</div>
                                                 <div class="col-xs-12 col-sm-8">{{$narrative['narrative'] . hideEmptyArray('Organization', 'Language', $narrative['language'])}}</div>
@@ -175,7 +203,14 @@
                                             <div class="col-xs-12 col-sm-8">{{ $getCode->getOrganizationCodeName('Country', getVal($transaction, ['transaction', 'recipient_country', 0, 'country_code'])) }}</div>
                                         </div>
                                         @foreach($transaction['transaction']['recipient_country'] as $recipientCountry)
+                                            {{--*/
+                                            $ValidNarrative = getVal($recipientCountry, ['narrative'], []);
+                                            $recipientCountry['narrative'] = $ValidNarrative;
+                                            /*--}}
                                             @foreach($recipientCountry['narrative'] as $narrative)
+                                                {{--*/
+                                                $narrative['language'] = getVal($narrative, ['language'], '');
+                                                /*--}}
                                                 <div class="col-xs-12 col-md-12">
                                                     <div class="col-xs-12 col-sm-4">Text:</div>
                                                     <div class="col-xs-12 col-sm-8">{{$narrative['narrative'] . hideEmptyArray('Organization', 'Language', $narrative['language'])}}</div>
@@ -205,7 +240,14 @@
                                             <div class="col-xs-12 col-sm-8">{{ getVal($transaction, ['transaction', 'recipient_region', 0, 'vocabulary_uri']) }}</div>
                                         </div>
                                         @foreach($transaction['transaction']['recipient_region'] as $recipientRegion)
+                                            {{--*/
+                                            $ValidNarrative = getVal($recipientRegion, ['narrative'], []);
+                                            $recipientRegion['narrative'] = $ValidNarrative;
+                                            /*--}}
                                             @foreach($recipientRegion['narrative'] as $narrative)
+                                                {{--*/
+                                                $narrative['language'] = getVal($narrative, ['language'], '');
+                                                /*--}}
                                                 <div class="col-xs-12 col-md-12">
                                                     <div class="col-xs-12 col-sm-4">Text:</div>
                                                     <div class="col-xs-12 col-sm-8">{{$narrative['narrative'] . hideEmptyArray('Organization', 'Language', $narrative['language'])}}</div>

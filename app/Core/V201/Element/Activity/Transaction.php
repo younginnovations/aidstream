@@ -67,21 +67,21 @@ class Transaction extends BaseElement
                     '@value'      => $transaction['value'][0]['amount']
                 ],
                 'description'          => [
-                    'narrative' => $this->buildNarrative($transaction['description'][0]['narrative'])
+                    'narrative' => $this->buildNarrative(getVal($transaction, ['description', 0, 'narrative'], []))
                 ],
                 'provider-org'         => [
                     '@attributes' => [
                         'ref'                  => $transaction['provider_organization'][0]['organization_identifier_code'],
                         'provider-activity-id' => $transaction['provider_organization'][0]['provider_activity_id']
                     ],
-                    'narrative'   => $this->buildNarrative($transaction['provider_organization'][0]['narrative'])
+                    'narrative'   => $this->buildNarrative(getVal($transaction, ['provider_organization', 0, 'narrative'], []))
                 ],
                 'receiver-org'         => [
                     '@attributes' => [
                         'ref'                  => $transaction['receiver_organization'][0]['organization_identifier_code'],
                         'receiver-activity-id' => $transaction['receiver_organization'][0]['receiver_activity_id']
                     ],
-                    'narrative'   => $this->buildNarrative($transaction['receiver_organization'][0]['narrative'])
+                    'narrative'   => $this->buildNarrative(getVal($transaction, ['receiver_organization', 0, 'narrative'], []))
                 ],
                 'disbursement-channel' => [
                     '@attributes' => [
@@ -93,7 +93,7 @@ class Transaction extends BaseElement
                         'vocabulary' => $vocabulary,
                         'code'       => $sectorValue
                     ],
-                    'narrative'   => $this->buildNarrative($transaction['sector'][0]['narrative'])
+                    'narrative'   => $this->buildNarrative(getVal($transaction, ['sector', 0, 'narrative'], []))
                 ],
                 'recipient-country'    => [
                     '@attributes' => [
