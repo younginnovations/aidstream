@@ -70,7 +70,7 @@ class Transaction
      * deletes data block from transaction
      * @param $transactionId
      * @param $jsonPath
-     * @return bool
+     * @return TransactionModel/bool
      */
     public function deleteBlock($transactionId, $jsonPath)
     {
@@ -79,7 +79,11 @@ class Transaction
         $this->removeArrayValue($transaction, $jsonPath);
         $transactionRow->transaction = $transaction;
 
-        return $transactionRow->save();
+        if ($transactionRow->save()) {
+            return $transactionRow;
+        }
+
+        return false;
     }
 
     /*

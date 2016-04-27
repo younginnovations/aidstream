@@ -7,6 +7,7 @@ use App\Services\Activity\TransactionManager;
 use App\Services\FormCreator\Activity\Transaction;
 use App\Services\RequestManager\Activity\Transaction as TransactionRequest;
 use App\Http\Requests\Request;
+use Illuminate\Contracts\Logging\Log;
 use Illuminate\Support\Facades\Gate;
 
 /**
@@ -262,6 +263,14 @@ class TransactionController extends Controller
             'type' => 'danger',
             'code' => ['delete_failed', ['name' => 'transaction']]
         ];
+
+        app(Log::class)->activity(
+            "activity.activity_transaction_deleted",
+            [
+                'transaction_id' => $transactionId,
+                'activity_id'    => $id
+            ]
+        );
 
         return redirect()->back()->withResponse($response);
     }
