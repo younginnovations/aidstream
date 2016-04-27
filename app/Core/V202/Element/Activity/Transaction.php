@@ -87,7 +87,7 @@ class Transaction extends V201Transaction
                     '@attributes' => [
                         'code' => $transaction['recipient_country'][0]['country_code']
                     ],
-                    'narrative'   => $this->buildNarrative($transaction['recipient_country'][0]['narrative'])
+                    'narrative'   => $this->buildNarrative(getVal($transaction, ['recipient_country', 0, 'narrative'], []))
                 ],
                 'recipient-region'     => [
                     '@attributes' => [
@@ -95,7 +95,7 @@ class Transaction extends V201Transaction
                         'vocabulary'     => $transaction['recipient_region'][0]['vocabulary'],
                         'vocabulary-uri' => getVal($transaction, ['recipient_region', 0, 'vocabulary_uri']),
                     ],
-                    'narrative'   => $this->buildNarrative($transaction['recipient_region'][0]['narrative'])
+                    'narrative'   => $this->buildNarrative(getVal($transaction, ['recipient_region', 0, 'narrative'], []))
                 ],
                 'flow-type'            => [
                     '@attributes' => [

@@ -98,11 +98,19 @@ class TransactionManager
     public function deleteBlock($transactionId, $jsonPath)
     {
         try {
-            $jsonPath = explode('/', $jsonPath);
-            $this->transactionRepo->deleteBlock($transactionId, $jsonPath);
+            $jsonPath        = explode('/', $jsonPath);
+            $transactionData = $this->transactionRepo->deleteBlock($transactionId, $jsonPath);
+            if (!$transactionData) {
+                return false;
+            }
+            $this->dbLogger->activity(
+                "activity.transaction_block_removed",
+                ['activity_id' => $transactionData->activity_id, 'transaction_id' => $transactionId, 'json_path' => implode('->', $jsonPath)]
+            );
 
             return true;
         } catch (Exception $exception) {
+            dd($exception);
             $this->logger->error($exception, ['transactionId' => $transactionId]);
         }
 

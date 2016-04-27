@@ -99,14 +99,14 @@ class Transaction extends BaseElement
                     '@attributes' => [
                         'code' => $transaction['recipient_country'][0]['country_code']
                     ],
-                    'narrative'   => $this->buildNarrative($transaction['recipient_country'][0]['narrative'])
+                    'narrative'   => $this->buildNarrative(getVal($transaction, ['recipient_country', 0, 'narrative'], []))
                 ],
                 'recipient-region'     => [
                     '@attributes' => [
                         'code'       => $transaction['recipient_region'][0]['region_code'],
                         'vocabulary' => $transaction['recipient_region'][0]['vocabulary'],
                     ],
-                    'narrative'   => $this->buildNarrative($transaction['recipient_region'][0]['narrative'])
+                    'narrative'   => $this->buildNarrative(getVal($transaction, ['recipient_region', 0, 'narrative'], []))
                 ],
                 'flow-type'            => [
                     '@attributes' => [

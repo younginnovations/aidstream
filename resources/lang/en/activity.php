@@ -200,4 +200,18 @@ return [
         route('admin.edit-group', ':group_id')
     ),
     'group_updated'                => sprintf('Group organization has been updated with id <a href="%s">":group_id"</a>', route('admin.edit-group', ':group_id')),
+    'activity_result_deleted'      => sprintf(
+        'Result has been deleted with id <a href="%s">":result_id"</a> from activity with id <a href="%s">":activity_id"</a>',
+        route('activity.result.show', [':activity_id', ':result_id']),
+        route('activity.show', ':activity_id')
+    ),
+    'activity_transaction_deleted' => sprintf(
+        'Transaction has been deleted with id <a href="%s">":transaction_id"</a> from activity with id <a href="%s">":activity_id"</a>',
+        route('activity.transaction.show', [':activity_id', ':transaction_id']),
+        route('activity.show', ':activity_id')
+    ),
+    'transaction_block_removed'    => sprintf(
+        'Data block ":json_path" has been deleted from transaction with id ":transaction_id" from activity with id <a href="%s">":activity_id"</a>',
+        route('activity.show', [':activity_id'])
+    )
 ];
