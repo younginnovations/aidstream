@@ -199,9 +199,12 @@ class ActivityBaseRequest extends Request
     public function getRulesForPeriodEnd($formFields, $formBase)
     {
         $rules = [];
+
         foreach ($formFields as $periodEndKey => $periodEndVal) {
-            $rules[$formBase.'.period_end.'.$periodEndKey.'.date'] = sprintf(
-                'required|date|after:%s',
+            $rules[$formBase.'.period_end.'.$periodEndKey.'.date'][] = 'required';
+            $rules[$formBase.'.period_end.'.$periodEndKey.'.date'][] = 'date';
+            $rules[$formBase.'.period_end.'.$periodEndKey.'.date'][] = sprintf(
+                'after:%s',
                 $formBase.'.period_start.'.$periodEndKey.'.date'
             );
         }

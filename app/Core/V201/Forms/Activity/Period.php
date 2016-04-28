@@ -18,11 +18,10 @@ class Period extends BaseForm
      */
     public function buildForm()
     {
-        $this
-            ->addPeriodStart()
-            ->addPeriodEnd()
-            ->addTargets(['class' => 'indicator_period_target_comment_title_narrative'])
-            ->addActualTargets(['class' => 'indicator_period_actual_comment_title_narrative'])
-            ->addRemoveThisButton('remove_period');
+        $this->addPeriodStart()
+             ->addPeriodEnd()
+             ->addTargets(['class' => 'indicator_period_target_comment_title_narrative'])
+             ->addActualTargets(['class' => 'indicator_period_actual_comment_title_narrative'])
+             ->addRemoveThisButton('remove_period');
     }
 }
