@@ -34,5 +34,29 @@ $router->group(
                 'uses' => 'PublishedFilesCorrectionController@reSyncRegistryData'
             ]
         );
+
+        $router->get(
+            'unlink-org-xml-file/{organizationId}/{fileId}',
+            [
+                'as'   => 'superadmin.unlinkOrganizationXmlFile',
+                'uses' => 'PublishedFilesCorrectionController@unlinkOrganizationXmlFile'
+            ]
+        );
+
+        $router->delete(
+            'delete-org-xml-file/{organizationId}/{fileId}',
+            [
+                'as'   => 'superadmin.deleteOrganizationXmlFile',
+                'uses' => 'PublishedFilesCorrectionController@deleteOrganizationXmlFile'
+            ]
+        );
+
+        $router->get(
+            'resync-org-registry-data/{organizationId}',
+            [
+                'as'   => 'superadmin.reSyncOrganizationData',
+                'uses' => 'PublishedFilesCorrectionController@reSyncOrganizationData'
+            ]
+        );
     }
 );

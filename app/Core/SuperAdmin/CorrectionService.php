@@ -3,7 +3,9 @@
 use App\Http\API\CKAN\CkanClient;
 use App\Models\ActivityPublished;
 use App\Models\Organization\Organization;
+use App\Models\OrganizationPublished;
 use App\Models\Settings;
+use Exception;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -33,21 +35,28 @@ class CorrectionService
     protected $activityPublished;
 
     /**
-     * CorrectionService constructor.
-     * @param ActivityPublished $activityPublished
-     * @param LoggerInterface   $logger
+     * @var OrganizationPublished
      */
-    public function __construct(ActivityPublished $activityPublished, LoggerInterface $logger)
+    protected $organizationPublished;
+
+    /**
+     * CorrectionService constructor.
+     * @param ActivityPublished     $activityPublished
+     * @param LoggerInterface       $logger
+     * @param OrganizationPublished $organizationPublished
+     */
+    public function __construct(ActivityPublished $activityPublished, LoggerInterface $logger, OrganizationPublished $organizationPublished)
     {
-        $this->activityPublished = $activityPublished;
-        $this->logger            = $logger;
+        $this->activityPublished     = $activityPublished;
+        $this->logger                = $logger;
+        $this->organizationPublished = $organizationPublished;
     }
 
     /**
      * @param ActivityPublished $file
      * @return bool
      */
-    public function isLinkedToRegistry(ActivityPublished $file)
+    public function isLinkedToRegistry($file)
     {
         return ($file->published_to_register == 1);
     }
@@ -56,19 +65,17 @@ class CorrectionService
      * @param ActivityPublished $file
      * @return bool
      */
-    public function delete(ActivityPublished $file)
+    public function delete($file)
     {
-        $activityFiles = $file->published_activities;
         $xmlFile       = $file->filename;
         $currentUser   = auth()->user();
 
         try {
+            $filePath = $this->getFilePath($xmlFile);
+
             $file->delete();
-
-            if (file_exists($xmlFile)) {
-                unlink($this->getFilePath($xmlFile));
-
-                $this->deleteActivityXmlFiles($activityFiles);
+            if (file_exists($filePath)) {
+                unlink($filePath);
             }
 
             $this->logger->info(sprintf('%s (%s) deleted file %s', $currentUser->name, $currentUser->username, $xmlFile));
@@ -88,8 +95,10 @@ class CorrectionService
     protected function deleteActivityXmlFiles(array $activityFiles)
     {
         foreach ($activityFiles as $file) {
-            if (file_exists($file)) {
-                unlink($this->getFilePath($file));
+            $filePath = $this->getFilePath($file);
+
+            if (file_exists($filePath)) {
+                unlink($filePath);
             }
         }
     }
@@ -112,26 +121,8 @@ class CorrectionService
     public function unlinkActivityFile(ActivityPublished $file, Settings $settings)
     {
         $publishedFileId = explode('.', $file->filename)[0];
-        $apiKey          = $this->extract('api_id', $settings->toArray());
-        $registry        = $this->initializeRegistry('http://iatiregistry.org/api/', $apiKey);
-        $currentUser     = auth()->user();
 
-        try {
-            $response = $registry->package_delete($publishedFileId);
-
-            $this->logger->info(
-                sprintf('%s (%s) unlinked the file %s from the IATI registry', $currentUser->name, $currentUser->username, $file->filename),
-                [
-                    'response' => $response
-                ]
-            );
-
-            return true;
-        } catch (\Exception $exception) {
-            $this->logger->error($exception);
-        }
-
-        return false;
+        return $this->unlinkFromRegistry($publishedFileId, $file, $settings);
     }
 
     /**
@@ -157,7 +148,8 @@ class CorrectionService
         $publisherId = $this->extract('publisher_id', $settings);
 
         try {
-            $registry           = $this->initializeRegistry('http://iatiregistry.org/api/', $apiKey);
+            $registry = $this->initializeRegistry('http://iatiregistry.org/api/', $apiKey);
+
             $this->organization = $organization;
 
             $this->publisherMetaData = json_decode($registry->package_search($publisherId));
@@ -200,6 +192,8 @@ class CorrectionService
 
             return $this->syncDatabase($currentlyPublishedActivities, $actuallyPublishedActivities);
         }
+
+        return false;
     }
 
     /**
@@ -260,9 +254,8 @@ class CorrectionService
      */
     protected function unlink($publishedActivity, $resync = false)
     {
-
-        $publishedActivities                   = $publishedActivity->published_activities;
-        $publishedActivity->published_activities = array_unique($publishedActivities);
+        $publishedActivities                     = $publishedActivity->published_activities;
+        $publishedActivity->published_activities = $publishedActivities ? array_unique($publishedActivities) : null;
 
         if ($resync) {
             $publishedActivity->published_to_register = 1;
@@ -277,5 +270,122 @@ class CorrectionService
 
             $publishedActivity->save();
         }
+    }
+
+    /**
+     * @param OrganizationPublished $file
+     * @param Settings              $settings
+     * @return bool
+     */
+    public function unlinkOrganizationFile(OrganizationPublished $file, Settings $settings)
+    {
+        $publishedFileId = explode('.', $file->filename)[0];
+
+        return $this->unlinkFromRegistry($publishedFileId, $file, $settings);
+    }
+
+    /**
+     * @param $publishedFileId
+     * @param $file
+     * @param $settings
+     * @return bool
+     */
+    protected function unlinkFromRegistry($publishedFileId, $file, $settings)
+    {
+        try {
+            $apiKey   = $this->extract('api_id', $settings->toArray());
+            $registry = $this->initializeRegistry('http://iatiregistry.org/api/', $apiKey);
+
+            $response    = $registry->package_delete($publishedFileId);
+            $currentUser = auth()->user();
+
+            $this->logger->info(
+                sprintf('%s (%s) unlinked the file %s from the IATI registry', $currentUser->name, $currentUser->username, $file->filename),
+                [
+                    'response' => $response
+                ]
+            );
+
+            return true;
+        } catch (Exception $exception) {
+            $this->logger->error(
+                $exception->getMessage(),
+                [
+                    'trace' => $exception->getTraceAsString(),
+                ]
+            );
+
+            return false;
+        }
+    }
+
+    /**
+     * Sync Organization data with the IATI Registry.
+     * @return bool
+     */
+    public function syncOrgData()
+    {
+        if (!is_null($this->publisherMetaData) && !is_null($this->organization)) {
+            $organizationFile = $this->getCurrentlyPublishedOrganizationFile();
+
+            $actuallyPublishedOrganizationFile = $this->getOrganizationFileName();
+
+            if ($actuallyPublishedOrganizationFile) {
+                return $this->syncOrgDatabase($organizationFile, $actuallyPublishedOrganizationFile);
+            }
+
+            return false;
+        }
+
+        return false;
+    }
+
+    /**
+     * Get the OrganizationPublished model.
+     * @return mixed
+     */
+    protected function getCurrentlyPublishedOrganizationFile()
+    {
+        return $this->organizationPublished->where('organization_id', '=', $this->organization->id)->get();
+    }
+
+    /**
+     * Get the full Organization filename.
+     * @return null
+     */
+    protected function getOrganizationFileName()
+    {
+        $publisherId = $this->organization->settings->registry_info[0]['publisher_id'] . '-org';
+
+        foreach ($this->publisherMetaData->result->results as $result) {
+            if ($result->name == $publisherId) {
+                return $result->name;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Sync OrganizationPublished table with the IATI Registry.
+     * @param $organizationFiles
+     * @param $actuallyPublishedOrganizationFile
+     * @return bool
+     */
+    protected function syncOrgDatabase($organizationFiles, $actuallyPublishedOrganizationFile)
+    {
+        $actuallyPublishedOrganizationFile = sprintf('%s.xml', $actuallyPublishedOrganizationFile);
+
+        foreach ($organizationFiles as $publishedFile) {
+            if ($publishedFile->filename == $actuallyPublishedOrganizationFile) {
+                $publishedFile->published_to_register = 1;
+                $publishedFile->save();
+            } else {
+                $publishedFile->published_to_register = 0;
+                $publishedFile->save();
+            }
+        }
+
+        return true;
     }
 }

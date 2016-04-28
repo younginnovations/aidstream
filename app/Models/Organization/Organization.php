@@ -1,6 +1,7 @@
 <?php namespace App\Models\Organization;
 
 use App\Models\ActivityPublished;
+use App\Models\OrganizationPublished;
 use App\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
@@ -100,5 +101,14 @@ class Organization extends Model
     public function publishedFiles()
     {
         return $this->hasMany(ActivityPublished::class);
+    }
+
+    /**
+     * An Organization can have many Organization Published files.
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function organizationPublished()
+    {
+        return $this->hasMany(OrganizationPublished::class);
     }
 }
