@@ -45,14 +45,13 @@ class Sector extends V201Sector
                 }
 
                 if ($sector['sector_vocabulary'] == "99" || $sector['sector_vocabulary'] == "98") {
-                    $rules[sprintf('%s.vocabulary_uri', $sectorForm)] = 'required_with:' . $sectorForm . '.sector_vocabulary';
+                    $rules[sprintf('%s.vocabulary_uri', $sectorForm)] = 'url|required_with:' . $sectorForm . '.sector_vocabulary';
                 }
             }
 
             $rules[sprintf('%s.percentage', $sectorForm)] = 'numeric|max:100';
             $rules                                        = array_merge($rules, $this->getRulesForNarrative($sector['narrative'], $sectorForm));
         }
-
         return $rules;
     }
 

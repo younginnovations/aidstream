@@ -356,6 +356,6 @@ class XmlGenerator
         }
 
         file_put_contents($filePath, $dom->saveXML());
-        chmod($filePath, 777);
+        chmod($filePath, 00777);
     }
 }

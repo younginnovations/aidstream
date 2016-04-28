@@ -125,7 +125,6 @@ class OrganizationController extends Controller
 
         $orgElem    = $this->organizationManager->getOrganizationElement();
         $xmlService = $orgElem->getOrgXmlService();
-
         if ($status === "1") {
             $messages = $xmlService->validateOrgSchema($organization, $organizationData, $settings, $orgElem);
             if ($messages !== '') {
