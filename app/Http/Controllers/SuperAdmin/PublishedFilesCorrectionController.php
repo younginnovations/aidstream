@@ -42,11 +42,12 @@ class PublishedFilesCorrectionController extends Controller
      */
     public function show($organizationId)
     {
-        $organization   = $this->organizationService->find($organizationId);
-        $publishedFiles = $organization->publishedFiles;
-        $settings       = $organization->settings;
+        $organization               = $this->organizationService->find($organizationId);
+        $publishedFiles             = $organization->publishedFiles;
+        $organizationPublishedFiles = $organization->organizationPublished;
+        $settings                   = $organization->settings;
 
-        return view('superAdmin.publishedFilesCorrection.show', compact('organization', 'publishedFiles', 'settings'));
+        return view('superAdmin.publishedFilesCorrection.show', compact('organization', 'publishedFiles', 'settings', 'organizationPublishedFiles'));
     }
 
     /**
@@ -59,25 +60,16 @@ class PublishedFilesCorrectionController extends Controller
     {
         $file = $this->organizationService->findPublishedFile($fileId);
 
-        if ($this->correctionService->isLinkedToRegistry($file)) {
-            return redirect()->route('superadmin.correct-published-files', $organizationId)->withResponse(['messages' => ['message' => 'File is linked with the registry.'], 'type' => 'warning']);
-        }
-
-        if (!$this->correctionService->delete($file)) {
-            return redirect()->route('superadmin.correct-published-files', $organizationId)->withResponse(['messages' => ['message' => 'File could not be deleted.'], 'type' => 'warning']);
-        }
-
-        return redirect()->route('superadmin.correct-published-files', $organizationId)->withResponse(['messages' => ['message' => 'File Successfully deleted.'], 'type' => 'success']);
+        return $this->deleteFile($file, $organizationId);
     }
 
     /**
      * Unlink an Xml File.
      * @param         $organizationId
      * @param         $fileId
-     * @param Request $request
      * @return mixed
      */
-    public function unlinkXmlFile($organizationId, $fileId, Request $request)
+    public function unlinkXmlFile($organizationId, $fileId)
     {
         $settings = $this->organizationService->find($organizationId)->settings;
         $file     = $this->organizationService->findPublishedFile($fileId);
@@ -114,5 +106,83 @@ class PublishedFilesCorrectionController extends Controller
         return redirect()->route('superadmin.correct-published-files', $organizationId)->withResponse(
             ['messages' => ['message' => 'Database Successfully synced with the registry.'], 'type' => 'success']
         );
+    }
+
+    /**
+     * Delete an Organization's Xml file.
+     * @param $organizationId
+     * @param $fileId
+     * @return mixed
+     */
+    public function deleteOrganizationXmlFile($organizationId, $fileId)
+    {
+        $file = $this->organizationService->findOrganizationFile($fileId);
+
+        return $this->deleteFile($file, $organizationId);
+    }
+
+    /**
+     * Unlink Organization File from the IATI Registry.
+     * @param $organizationId
+     * @param $fileId
+     * @return mixed
+     */
+    public function unlinkOrganizationXmlFile($organizationId, $fileId)
+    {
+        $settings = $this->organizationService->find($organizationId)->settings;
+        $file     = $this->organizationService->findOrganizationFile($fileId);
+
+        if (!$this->correctionService->unlinkOrganizationFile($file, $settings)) {
+            return redirect()->route('superadmin.correct-published-files', $organizationId)->withResponse(
+                ['messages' => ['message' => 'File could not be Unlinked from the IATI Registry.'], 'type' => 'warning']
+            );
+        }
+
+        if (!$this->organizationService->updateOrganizationPublished($file)) {
+            return redirect()->route('superadmin.correct-published-files', $organizationId)->withResponse(
+                ['messages' => ['message' => 'File could not be updated from the IATI Registry.'], 'type' => 'warning']
+            );
+        }
+
+        return redirect()->route('superadmin.correct-published-files', $organizationId)->withResponse(
+            ['messages' => ['message' => 'File successfully Unlinked from the IATI Registry.'], 'type' => 'success']
+        );
+    }
+
+    /**
+     * Resync OrganizationPublished with the IATI Registry.
+     * @param $organizationId
+     * @return mixed
+     */
+    public function reSyncOrganizationData($organizationId)
+    {
+        $organization = $this->organizationService->find($organizationId);
+
+        if (!$this->correctionService->getPublisherDataFor($organization)->syncOrgData()) {
+            return redirect()->route('superadmin.correct-published-files', $organizationId)->withReponse(['messages' => ['message' => 'Looks like something is not right.'], 'type' => 'warning']);
+        }
+
+        return redirect()->route('superadmin.correct-published-files', $organizationId)->withResponse(
+            ['messages' => ['message' => 'Database Successfully synced with the registry.'], 'type' => 'success']
+        );
+    }
+
+    /**
+     * Delete a file.
+     * @param $file
+     * @param $organizationId
+     * @return mixed
+     */
+    protected function deleteFile($file, $organizationId)
+    {
+        if ($this->correctionService->isLinkedToRegistry($file)) {
+            return redirect()->route('superadmin.correct-published-files', $organizationId)->withResponse(['messages' => ['message' => 'File is linked with the registry.'], 'type' => 'warning']);
+        }
+
+        if (!$this->correctionService->delete($file)) {
+            return redirect()->route('superadmin.correct-published-files', $organizationId)->withResponse(['messages' => ['message' => 'File could not be deleted.'], 'type' => 'warning']);
+        }
+
+        return redirect()->route('superadmin.correct-published-files', $organizationId)->withResponse(['messages' => ['message' => 'File Successfully deleted.'], 'type' => 'success']);
     }
 }

@@ -3,6 +3,7 @@
 use App\Models\Activity\Activity;
 use App\Models\ActivityPublished;
 use App\Models\Organization\Organization;
+use App\Models\OrganizationPublished;
 
 /**
  * Class OrganizationService
@@ -24,16 +25,22 @@ class OrganizationService
     protected $activity;
 
     /**
+     * @var OrganizationPublished
+     */
+    protected $organizationPublished;
+
+    /**
      * OrganizationService constructor.
      * @param Organization      $organization
      * @param Activity          $activity
      * @param ActivityPublished $activityPublished
      */
-    public function __construct(Organization $organization, Activity $activity, ActivityPublished $activityPublished)
+    public function __construct(Organization $organization, Activity $activity, ActivityPublished $activityPublished, OrganizationPublished $organizationPublished)
     {
-        $this->organization      = $organization;
-        $this->activity          = $activity;
-        $this->activityPublished = $activityPublished;
+        $this->organization          = $organization;
+        $this->activity              = $activity;
+        $this->activityPublished     = $activityPublished;
+        $this->organizationPublished = $organizationPublished;
     }
 
     /**
@@ -62,6 +69,27 @@ class OrganizationService
      * @return bool|null
      */
     public function updateUnPublished(ActivityPublished $file)
+    {
+        $file->published_to_register = 0;
+
+        if (!$file->save()) {
+            return null;
+        }
+
+        return true;
+    }
+
+    /**
+     * Gets a record from OrganizationPublished with the specific fileId.
+     * @param $fileId
+     * @return mixed
+     */
+    public function findOrganizationFile($fileId)
+    {
+        return $this->organizationPublished->findOrFail($fileId);
+    }
+
+    public function updateOrganizationPublished(OrganizationPublished $file)
     {
         $file->published_to_register = 0;
 

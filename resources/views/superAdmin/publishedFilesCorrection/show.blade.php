@@ -21,61 +21,9 @@
                     <img class="pull-right" src="{{ $organization->logo_url }}" alt="Organization Logo" width="100" height="100">
                 </div>
                 <div class="col-xs-12 col-md-8 col-lg-8 element-content-wrapper">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>S. N.</th>
-                                <th>Activity File</th>
-                                <th>Activities Included</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <div class="pull-right">
-                            <strong>
-                                <a href="{{ route('superadmin.reSync', $organization->id) }}">Sync</a>
-                            </strong>
-                        </div>
-                        <tbody>
-                        @forelse ($publishedFiles as $index => $publishedFile)
-                            <tr>
-                                <td>
-                                    {{ $index + 1 }}
-                                </td>
-                                <td>
-                                    @if ($publishedFile->published_activities)
-                                        @foreach ($publishedFile->published_activities as $publishedActivity)
-                                            <a href="{{ url('/files/xml/') . '/' . $publishedActivity }}">{{ $publishedActivity }}, </a>
-                                        @endforeach
-                                    @else
-                                        None
-                                    @endif
-                                </td>
-                                <td>
-                                    @if (file_exists(public_path('/files/xml/') . '/' . $publishedFile->filename))
-                                        <a href="{{ url('/files/xml/') . '/' . $publishedFile->filename }}">{{ $publishedFile->filename }}</a>
-                                    @else
-                                        {{ $publishedFile->filename }}
-                                    @endif
-                                </td>
-                                <td>
-                                    <a href="{{ route('superadmin.unlinkXmlFile', [$organization->id, $publishedFile->id]) }}">Unlink</a>
-
-                                    @if (!$publishedFile->published_to_register)
-                                        {!! Form::open(['method' =>'DELETE', 'url' => route('superadmin.deleteXmlFile', ['organizationId' => $organization->id, 'fileId' => $publishedFile->id])]) !!}
-                                        {!! Form::submit('Delete') !!}
-                                        {!! Form::close() !!}
-                                    @endif
-                                </td>
-                            </tr>
-                        @empty
-                            <tr>
-                                <td colspan="4" class="text-center">
-                                    <b>No Files Found.</b>
-                                </td>
-                            </tr>
-                        @endforelse
-                        </tbody>
-                    </table>
+                    @include('superAdmin.publishedFilesCorrection.partials.activityFileCorrection')
+                    <hr>
+                    @include('superAdmin.publishedFilesCorrection.partials.organizationFileCorrection')
                 </div>
             </div>
         </div>
