@@ -438,16 +438,30 @@ class ActivityManager
      */
     public function getSectorForBulk($sector)
     {
-        $arrays = [];
-        if (isset($sector['narrative']) && count($sector['narrative']) == 1) {
-            $arrays[$sector['narrative']] = 1;
-        } elseif (isset($sector['narrative']) && count($sector['narrative']) > 1) {
-            foreach ($sector['narrative'] as $key => $data) {
-                $index = $data;
-                if (array_key_exists($index, $arrays)) {
-                    $arrays[$index] = $arrays[$index] + 1;
-                } else {
-                    $arrays[$index] = 1;
+        $arrays   = [];
+        $multiple = false;
+        $multiple = $this->isMultipleArray(array_keys($sector), $multiple);
+        if (!$multiple) {
+            $sector = [$sector];
+        }
+
+        foreach ($sector as $data) {
+            if (isset($data['narrative']) && is_array($data['narrative'])) {
+                foreach ($data['narrative'] as $datum) {
+                    $index = $datum;
+                    if (array_key_exists($index, $arrays)) {
+                        $arrays[$index] = $arrays[$index] + 1;
+                    } else {
+                        $arrays[$index] = 1;
+                    }
+                }
+            } else {
+                if(array_key_exists('narrative', $data)) {
+                    if (isset($data['narrative']) && array_key_exists($data['narrative'], $arrays)) {
+                        $arrays[$data['narrative']] = $arrays[$data['narrative']] + 1;
+                    } else {
+                        $arrays[$data['narrative']] = 1;
+                    }
                 }
             }
         }
@@ -461,10 +475,10 @@ class ActivityManager
      */
     public function getRecipientCountryForBulk($recipientCountry)
     {
-        $arrays = [];
-        if (count($recipientCountry['@attributes']['code']) == 1) {
-            $arrays[$recipientCountry['@attributes']['code']] = 1;
-        } elseif (count($recipientCountry['@attributes']['code']) > 1) {
+        $arrays   = [];
+        $multiple = false;
+        $multiple = $this->isMultipleArray(array_keys($recipientCountry), $multiple);
+        if ($multiple) {
             foreach ($recipientCountry as $data) {
                 $index = $data['@attributes']['code'];
                 if (array_key_exists($index, $arrays)) {
@@ -473,6 +487,8 @@ class ActivityManager
                     $arrays[$index] = 1;
                 }
             }
+        } else {
+            $arrays[$recipientCountry['@attributes']['code']] = 1;
         }
 
         return $arrays;
@@ -484,10 +500,10 @@ class ActivityManager
      */
     public function getTransactionForBulk($transaction)
     {
-        $arrays = [];
-        if (count($transaction['transaction-type']) == 1) {
-            $arrays[$transaction['transaction-type']['@attributes']['code']] = $transaction['value'];
-        } elseif (count($transaction) > 1) {
+        $arrays   = [];
+        $multiple = false;
+        $multiple = $this->isMultipleArray(array_keys($transaction), $multiple);
+        if ($multiple) {
             foreach ($transaction as $data) {
                 $index = $data['transaction-type']['@attributes']['code'];
                 $value = $data['value'];
@@ -499,6 +515,8 @@ class ActivityManager
                 }
 
             }
+        } else {
+            $arrays[$transaction['transaction-type']['@attributes']['code']] = $transaction['value'];
         }
 
         return $arrays;
@@ -551,5 +569,22 @@ class ActivityManager
         }
 
         return false;
+    }
+
+    /**
+     * write brief description
+     * @param $keys
+     * @param $multiple
+     * @return mixed
+     */
+    public function isMultipleArray($keys, $multiple)
+    {
+        array_walk($keys, function ($key, $index) use (&$multiple) {
+            if (is_int($key)) {
+                $multiple = true;
+            }
+        });
+
+        return $multiple;
     }
 }
