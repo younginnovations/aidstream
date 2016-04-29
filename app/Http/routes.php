@@ -182,7 +182,21 @@ $router->get(
     ]
 );
 $router->get(
+    'validate-activity/{id}/version/{version?}',
+    [
+        'as'   => 'validate-activity',
+        'uses' => 'CompleteValidateController@validateActivity'
+    ]
+);
+$router->get(
     'validate-organization/{id}',
+    [
+        'as'   => 'validate-organization',
+        'uses' => 'CompleteValidateController@validateOrganization'
+    ]
+);
+$router->get(
+    'validate-organization/{id}/version/{version?}',
     [
         'as'   => 'validate-organization',
         'uses' => 'CompleteValidateController@validateOrganization'
