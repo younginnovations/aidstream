@@ -56,7 +56,13 @@ class CompleteValidateController extends Controller
         $this->activityManager     = $activityManager;
     }
 
-    public function validateActivity($id)
+    /**
+     * it validates activity schema according to version standard
+     * @param      $id
+     * @param null $version
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function validateActivity($id, $version = null)
     {
         $activityData    = $this->activityManager->getActivityData($id);
         $settings        = $this->settingsManager->getSettings($activityData['organization_id']);
@@ -66,19 +72,33 @@ class CompleteValidateController extends Controller
         $orgElem         = $this->organizationManager->getOrganizationElement();
         $activityElement = $this->activityManager->getActivityElement();
 
-        return $this->validateCompletedActivity($activityData, $transactionData, $resultData, $settings, $activityElement, $orgElem, $organization);
+        if ($version == null) {
+            $version = config('app.default_version_name');
+        }
+
+        return $this->validateCompletedActivity($activityData, $transactionData, $resultData, $settings, $activityElement, $orgElem, $organization, $version);
     }
 
-    public function validateCompletedActivity($activityData, $transactionData, $resultData, $settings, $activityElement, $orgElem, $organization)
+    /**
+     * @param $activityData
+     * @param $transactionData
+     * @param $resultData
+     * @param $settings
+     * @param $activityElement
+     * @param $orgElem
+     * @param $organization
+     * @param $version
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function validateCompletedActivity($activityData, $transactionData, $resultData, $settings, $activityElement, $orgElem, $organization, $version)
     {
         // Enable user error handling
         libxml_use_internal_errors(true);
-
         $xmlService     = $activityElement->getActivityXmlService();
         $tempXmlContent = $xmlService->generateTemporaryActivityXml($activityData, $transactionData, $resultData, $settings, $activityElement, $orgElem, $organization);
         $xml            = new \DOMDocument();
         $xml->loadXML($tempXmlContent);
-        $schemaPath = app_path(sprintf('/Core/%s/XmlSchema/iati-activities-schema.xsd', session('version')));
+        $schemaPath = app_path(sprintf('/Core/%s/XmlSchema/iati-activities-schema.xsd', $version));
         $messages   = [];
         if (!$xml->schemaValidate($schemaPath)) {
             $messages = $this->libxml_display_errors();
@@ -91,17 +111,27 @@ class CompleteValidateController extends Controller
         return view('validate-schema', compact('messages', 'xmlLines'));
     }
 
-    public function validateOrganization($id)
+    /**
+     * it validates organization schema according to version standard
+     * @param      $id
+     * @param null $version
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function validateOrganization($id, $version = null)
     {
         $organization     = $this->organizationManager->getOrganization($id);
         $settings         = $this->settingsManager->getSettings($id);
         $organizationData = $this->organizationManager->getOrganizationData($id);
         $orgElem          = $this->organizationManager->getOrganizationElement();
 
-        return $this->validateCompletedOrganization($organization, $settings, $organizationData, $orgElem);
+        if ($version == null) {
+            $version = config('app.default_version_name');
+        }
+
+        return $this->validateCompletedOrganization($organization, $settings, $organizationData, $orgElem, $version);
     }
 
-    public function validateCompletedOrganization($organization, $settings, $organizationData, $orgElem)
+    public function validateCompletedOrganization($organization, $settings, $organizationData, $orgElem, $version)
     {
         libxml_use_internal_errors(true);
 
@@ -109,7 +139,7 @@ class CompleteValidateController extends Controller
         $tempXmlContent = $xmlService->generateTemporaryOrganizationXml($organization, $organizationData, $settings, $orgElem);
         $xml            = new \DOMDocument();
         $xml->loadXML($tempXmlContent);
-        $schemaPath = app_path(sprintf('/Core/%s/XmlSchema/iati-organisations-schema.xsd', session('version')));
+        $schemaPath = app_path(sprintf('/Core/%s/XmlSchema/iati-organisations-schema.xsd', $version));
         $messages   = [];
         if (!$xml->schemaValidate($schemaPath)) {
             $messages = $this->libxml_display_errors();
