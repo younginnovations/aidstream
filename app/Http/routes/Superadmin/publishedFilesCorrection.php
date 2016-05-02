@@ -28,14 +28,6 @@ $router->group(
         );
 
         $router->get(
-            'resync-registry-data/{organizationId}',
-            [
-                'as'   => 'superadmin.reSync',
-                'uses' => 'PublishedFilesCorrectionController@reSyncRegistryData'
-            ]
-        );
-
-        $router->get(
             'unlink-org-xml-file/{organizationId}/{fileId}',
             [
                 'as'   => 'superadmin.unlinkOrganizationXmlFile',
@@ -58,5 +50,14 @@ $router->group(
                 'uses' => 'PublishedFilesCorrectionController@reSyncOrganizationData'
             ]
         );
+
+        $router->get(
+            'resync-registry-data/{organizationId}',
+            [
+                'as'   => 'superadmin.reSync',
+                'uses' => 'PublishedFilesCorrectionController@reSyncRegistryData'
+            ]
+        );
+
     }
 );

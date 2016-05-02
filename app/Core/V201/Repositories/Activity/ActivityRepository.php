@@ -50,7 +50,7 @@ class ActivityRepository
      */
     public function getActivities($organizationId)
     {
-        return $this->activity->where('organization_id', $organizationId)->orderBy('updated_at','desc')->get();
+        return $this->activity->where('organization_id', $organizationId)->orderBy('updated_at', 'desc')->get();
     }
 
     /**
@@ -115,10 +115,10 @@ class ActivityRepository
      */
     public function updatePublishToRegister($publishedId)
     {
-        $activityPublished                        = $this->activityPublished->find($publishedId);
-        $activityPublished->published_to_register = 1;
+        $activityPublished = $this->activityPublished->find($publishedId);
+        $activityPublished->update(['published_to_register' => 1]);
 
-        return $activityPublished->save();
+        $this->updateActivityData($activityPublished->published_activities);
     }
 
     /**
@@ -213,5 +213,18 @@ class ActivityRepository
         $activity->$element = null;
 
         return $activity->save();
+    }
+
+    /**
+     * Update published_to_registry field for ActivityData table.
+     * @param $publishedActivities
+     */
+    protected function updateActivityData($publishedActivities)
+    {
+        foreach ($publishedActivities as $id => $activityFile) {
+            $activity = $this->activity->findOrFail($id);
+
+            $activity->update(['published_to_registry' => 1]);
+        }
     }
 }

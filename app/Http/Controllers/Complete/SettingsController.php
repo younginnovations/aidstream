@@ -6,11 +6,13 @@ use App\Services\Activity\ActivityManager;
 use App\Services\Activity\OtherIdentifierManager;
 use App\Services\RequestManager\Organization\SettingsRequestManager;
 use App;
+use App\Services\Settings\SettingsService;
 use App\Services\SettingsManager;
 use App\Services\Organization\OrganizationManager;
 
 use Exception;
 use Illuminate\Database\DatabaseManager;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
@@ -25,24 +27,47 @@ use Psr\Log\LoggerInterface;
  */
 class SettingsController extends Controller
 {
+    /**
+     * @var SettingsService
+     */
+    protected $settingsService;
 
+    /**
+     * @var SettingsManager
+     */
     protected $settingsManager;
+
+    /**
+     * @var mixed
+     */
     protected $settings;
+
+    /**
+     * @var App\Models\Organization\Organization
+     */
     protected $organization;
+
     /**
      * @var ActivityManager
      */
     protected $activityManager;
+
     /**
      * @var OtherIdentifierManager
      */
     protected $otherIdentifierManager;
 
     /**
+     * @var LoggerInterface
+     */
+    protected $loggerInterface;
+
+    /**
      * @param SettingsManager        $settingsManager
      * @param OrganizationManager    $organizationManager
      * @param ActivityManager        $activityManager
      * @param OtherIdentifierManager $otherIdentifierManager
+     * @param SettingsService        $settingsService
      * @param LoggerInterface        $loggerInterface
      */
     function __construct(
@@ -50,6 +75,7 @@ class SettingsController extends Controller
         OrganizationManager $organizationManager,
         ActivityManager $activityManager,
         OtherIdentifierManager $otherIdentifierManager,
+        SettingsService $settingsService,
         LoggerInterface $loggerInterface
     ) {
         $this->middleware('auth');
@@ -59,6 +85,7 @@ class SettingsController extends Controller
         $this->organization           = $organizationManager->getOrganization($org_id);
         $this->activityManager        = $activityManager;
         $this->otherIdentifierManager = $otherIdentifierManager;
+        $this->settingsService        = $settingsService;
         $this->loggerInterface        = $loggerInterface;
     }
 
@@ -107,7 +134,7 @@ class SettingsController extends Controller
         if (isset($this->organization)) {
             $model['reporting_organization_info'] = $this->organization->reporting_org;
         };
-        $url         = (isset($this->settings) ? route('settings.update', [0]) : route('settings.store'));
+        $url         = (isset($this->settings) ? route('update-settings') : route('settings.store'));
         $method      = isset($this->settings) ? 'PUT' : 'POST';
         $formOptions = [
             'method' => $method,
@@ -257,6 +284,78 @@ class SettingsController extends Controller
 
         if (!file_exists($filePath)) {
             $this->settingsManager->generateXml($activity);
+        }
+    }
+
+    /**
+     * Update Settings with segmentation changes.
+     * @param Request                $request
+     * @param SettingsRequestManager $requestManager
+     * @return mixed
+     */
+    public function updateSettings(Request $request, SettingsRequestManager $requestManager)
+    {
+        $organizationId = session('org_id');
+        $settings       = $request->all();
+
+        if ($this->settingsService->hasSegmentationChanged($organizationId, $settings)) {
+            $changes = $this->settingsService->getChangeLog($organizationId, $settings);
+
+            if (empty($changes['previous']) && empty($changes['changes'])) {
+
+                return redirect()->route('settings.index')->withResponse(['type' => 'warning', 'messages' => ['You do not have any files for the segmentation change to take effect on.']]);
+            }
+
+            return view('settings.change-log', compact('organizationId', 'changes', 'settings'));
+        }
+
+        if (!$this->settingsManager->updateSettings($settings, $this->organization, $this->settings)) {
+            $response = ['type' => 'danger', 'code' => ['update_failed', ['name' => 'Settings']]];
+        } else {
+            $response = ['type' => 'success', 'code' => ['updated', ['name' => 'Settings']]];
+        }
+
+        return redirect()->to(config('app.admin_dashboard'))->withResponse($response);
+    }
+
+    /**
+     * Change the segmentation for an Organization.
+     * @param Request $request
+     * @return mixed
+     */
+    public function changeSegmentation(Request $request)
+    {
+        $segmentationChange = $this->settingsService->changeSegmentation($request->all());
+
+        if (null === $segmentationChange || false === $segmentationChange) {
+            $response = ['type' => 'warning', 'messages' => $this->getMessageFor($segmentationChange)];
+
+            return redirect()->to(config('app.admin_dashboard'))->withResponse($response);
+        }
+
+        if (!$this->settingsManager->updateSettings(json_decode($request->get('settings'), true), $this->organization, $this->settings)) {
+            $response = ['type' => 'danger', 'messages' => ['Failed to update Settings']];
+
+            return redirect()->to(config('app.admin_dashboard'))->withResponse($response);
+        }
+        $response = ['type' => 'success', 'messages' => ['Settings updated successfully.']];
+
+        return redirect()->to(config('app.admin_dashboard'))->withResponse($response);
+    }
+
+    /**
+     * Returns message for the segmentationChange.
+     * @param $segmentationChange
+     * @return string
+     */
+    protected function getMessageFor($segmentationChange)
+    {
+        if (null === $segmentationChange) {
+            return ['Could not change segmentation.'];
+        }
+
+        if (false === $segmentationChange) {
+            return ['Could not publish to registry.'];
         }
     }
 }
