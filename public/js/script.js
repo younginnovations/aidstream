@@ -532,12 +532,6 @@ $(document).ready(function () {
         $(".sidebar-wrapper .nav").jScrollPane(jScrollPaneSettings);
     }
 
-    /* auto-adjust textarea height */
-    $("textarea").keyup(function (e) {
-        adaptiveheight(this);
-    });
-    $("textarea").trigger('keyup');
-
     var minTextareaHeight = 45;
 
     function adaptiveheight(a) {
@@ -550,6 +544,12 @@ $(document).ready(function () {
             $(document).scrollTop(parseInt(a.style.height));
         }
     }
+
+    /* auto-adjust textarea height */
+    $("form").delegate('textarea', 'keyup', function (e) {
+        adaptiveheight(this);
+    });
+    $("textarea").trigger('keyup');
 
     $(window).scroll(function () {
         if ($(this).scrollTop() > 100) {
