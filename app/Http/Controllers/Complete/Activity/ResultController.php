@@ -191,7 +191,8 @@ class ResultController extends Controller
             [
                 'result_id'   => $resultId,
                 'activity_id' => $id
-            ]
+            ],
+            $activityResult->toArray()
         );
 
         return redirect()->back()->withResponse($response);

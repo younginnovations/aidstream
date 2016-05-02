@@ -31,12 +31,7 @@ class TwitterAPI
             );
 
         } catch (\Exception $e) {
-            $this->logger->error(
-                sprintf('Twitter couldn\'t be tweeted for organization %s due to %s', $org->name, $e->getMessage()),
-                [
-                    'trace' => $e->getTraceAsString()
-                ]
-            );
+            $this->logger->error($e, ['org_name' => $org->name]);
         }
     }
 }

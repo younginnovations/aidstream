@@ -110,7 +110,6 @@ class TransactionManager
 
             return true;
         } catch (Exception $exception) {
-            dd($exception);
             $this->logger->error($exception, ['transactionId' => $transactionId]);
         }
 

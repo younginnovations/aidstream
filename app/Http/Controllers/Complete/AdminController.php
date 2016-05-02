@@ -3,13 +3,10 @@
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdatePasswordRequest;
 use App\Http\Requests\UserRequest;
-use App\Models\Organization\Organization;
-use App\Models\UserActivity;
+use App\Services\ActivityLog\ActivityManager;
 use App\Services\Organization\OrganizationManager;
 use App\User;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Input;
-use Illuminate\Session\SessionManager as Session;
 use Illuminate\Contracts\Logging\Log as DbLogger;
 
 /**
@@ -19,10 +16,6 @@ use Illuminate\Contracts\Logging\Log as DbLogger;
 class AdminController extends Controller
 {
     protected $org_id;
-    /**
-     * @var Session
-     */
-    protected $session;
 
     /**
      * @var User
@@ -38,21 +31,25 @@ class AdminController extends Controller
      * @var DbLogger
      */
     protected $dbLogger;
+    /**
+     * @var ActivityManager
+     */
+    protected $userActivityManager;
 
     /**
-     * @param Session             $session
      * @param User                $user
      * @param OrganizationManager $organizationManager
      * @param DbLogger            $dbLogger
+     * @param ActivityManager     $userActivityManager
      */
-    function __construct(Session $session, User $user, OrganizationManager $organizationManager, DbLogger $dbLogger)
+    function __construct(User $user, OrganizationManager $organizationManager, DbLogger $dbLogger, ActivityManager $userActivityManager)
     {
         $this->middleware('auth');
-        $this->session             = $session;
-        $this->org_id              = $this->session->get('org_id');
+        $this->org_id              = session('org_id');
         $this->user                = $user;
         $this->organizationManager = $organizationManager;
         $this->dbLogger            = $dbLogger;
+        $this->userActivityManager = $userActivityManager;
     }
 
     /**
@@ -61,25 +58,23 @@ class AdminController extends Controller
      */
     public function index($orgId = null)
     {
-        if ($orgId && strpos($orgId, 'sa-') !== false) {
-            $activity = UserActivity::join('users', 'users.id', '=', 'user_activities.user_id')
-                                    ->where('user_activities.user_id', str_replace('sa-', '', $orgId))
-                                    ->orderBy('user_activities.id', 'desc')
-                                    ->select('*', 'user_activities.created_at as created_date')
-                                    ->get();
-        } else {
-            $activity = UserActivity::join('users', 'users.id', '=', 'user_activities.user_id')
-                                    ->join('organizations', 'organizations.id', '=', 'users.org_id')
-                                    ->where('organizations.id', $orgId)
-                                    ->orderBy('user_activities.id', 'desc')
-                                    ->select('*', 'user_activities.created_at as created_date')
-                                    ->get();
-        }
-
-        $organizations = Organization::select('name', 'id')->get();
-        $superAdmins   = User::where('org_id', null)->get();
+        $activity      = $this->userActivityManager->getUserActivities($orgId);
+        $organizations = $this->organizationManager->getOrganizations(['name', 'id']);
+        $superAdmins   = $this->user->getSuperAdmins();
 
         return view('admin.activityLog', compact('activity', 'organizations', 'superAdmins', 'orgId'));
+    }
+
+    /**
+     * display activity log data
+     * @param              $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function viewData($id)
+    {
+        $data = $this->userActivityManager->getUserActivityData($id);
+
+        return view('admin.logData', compact('data'));
     }
 
     /**
@@ -106,7 +101,7 @@ class AdminController extends Controller
         $this->user->last_name       = $input['last_name'];
         $this->user->email           = $input['email'];
         $this->user->username        = $input['username'];
-        $this->user->org_id          = $this->session->get('org_id');
+        $this->user->org_id          = $this->org_id;
         $this->user->role_id         = 2;
         $this->user->password        = bcrypt($input['password']);
         $this->user->user_permission = isset($input['user_permission']) ? $input['user_permission'] : [];

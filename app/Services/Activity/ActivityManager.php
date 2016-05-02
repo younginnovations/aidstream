@@ -238,20 +238,24 @@ class ActivityManager
     public function destroy($activityData)
     {
         try {
+            $activityId = $activityData->id;
             $this->database->beginTransaction();
+            $activityData->transactions = $this->transactionRepo->getTransactionData($activityId);
+            $activityData->results      = $this->resultRepo->getResults($activityId);
             $activityData->delete();
             $this->database->commit();
             $this->logger->info(
                 'Activity has been Deleted.',
-                ['for ' => $activityData->id]
+                ['for ' => $activityId]
             );
             $this->logger->activity(
                 "activity.activity_deleted",
                 [
-                    'activity_id'     => $activityData->id,
+                    'activity_id'     => $activityId,
                     'organization'    => $this->auth->user()->organization->name,
                     'organization_id' => $this->auth->user()->organization->id,
-                ]
+                ],
+                $activityData->toArray()
             );
 
             return true;
@@ -456,7 +460,7 @@ class ActivityManager
                     }
                 }
             } else {
-                if(array_key_exists('narrative', $data)) {
+                if (array_key_exists('narrative', $data)) {
                     if (isset($data['narrative']) && array_key_exists($data['narrative'], $arrays)) {
                         $arrays[$data['narrative']] = $arrays[$data['narrative']] + 1;
                     } else {
@@ -561,12 +565,7 @@ class ActivityManager
             return true;
         } catch (Exception $exception) {
             $this->database->rollback();
-            $this->logger->error(
-                sprintf('Activity element %s couldn\'t be deleted due to %s', $element, $exception->getMessage()),
-                [
-                    'trace' => $exception->getTraceAsString()
-                ]
-            );
+            $this->logger->error($exception);
         }
 
         return false;
@@ -580,11 +579,14 @@ class ActivityManager
      */
     public function isMultipleArray($keys, $multiple)
     {
-        array_walk($keys, function ($key, $index) use (&$multiple) {
-            if (is_int($key)) {
-                $multiple = true;
+        array_walk(
+            $keys,
+            function ($key, $index) use (&$multiple) {
+                if (is_int($key)) {
+                    $multiple = true;
+                }
             }
-        });
+        );
 
         return $multiple;
     }

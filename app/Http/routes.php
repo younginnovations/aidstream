@@ -52,7 +52,6 @@ $router->get(
     ]
 );
 
-
 $router->get(
     'admin/activity-log',
     [
@@ -66,6 +65,14 @@ $router->get(
     [
         'as'   => 'admin.activity-log.organization',
         'uses' => 'Complete\AdminController@index'
+    ]
+);
+
+$router->get(
+    'admin/activity-log/{id}',
+    [
+        'as'   => 'admin.activity-log.view-data',
+        'uses' => 'Complete\AdminController@viewData'
     ]
 );
 

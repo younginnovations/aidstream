@@ -1,7 +1,7 @@
 <?php namespace App\Services\ActivityLog;
 
+use App\Core\V201\Repositories\UserActivity;
 use App\Core\Version;
-use App\Models\UserActivity;
 use Illuminate\Contracts\Auth\Guard;
 
 /**
@@ -9,27 +9,31 @@ use Illuminate\Contracts\Auth\Guard;
  */
 class ActivityManager
 {
-
-    /**
-     * @var UserActivity
-     */
-    protected $activity;
     /**
      * @var Guard
      */
     private $auth;
     protected $repo;
+    /**
+     * @var Version
+     */
+    private $version;
+    /**
+     * @var UserActivity
+     */
+    protected $userActivityRepo;
 
     /**
-     * @param UserActivity $activity
+     * @param UserActivity $userActivityRepo
      * @param Guard        $auth
      * @param Version      $version
      */
-    public function __construct(UserActivity $activity, Guard $auth, Version $version)
+    public function __construct(UserActivity $userActivityRepo, Guard $auth, Version $version)
     {
-        $this->activity = $activity;
-        $this->auth     = $auth;
-        $this->repo     = $version->getActivityElement()->getRepository();
+        $this->auth             = $auth;
+        $this->repo             = $version->getActivityElement()->getRepository();
+        $this->version          = $version;
+        $this->userActivityRepo = $userActivityRepo;
     }
 
 
@@ -38,13 +42,15 @@ class ActivityManager
      *
      * @param       $action
      * @param array $param
+     * @param array $data
      * @return UserActivity
      */
-    public function save($action, array $param = [])
+    public function save($action, array $param = [], array $data = null)
     {
         $activityData = [
             'action' => $action,
-            'param'  => $param
+            'param'  => $param,
+            'data'   => $data
         ];
         if (session('role_id') == '3' || session('role_id') == '4') {
             $userId = session('admin_id');
@@ -53,7 +59,7 @@ class ActivityManager
         }
         $activityData['user_id'] = $userId;
 
-        return $this->activity->create($activityData);
+        return $this->userActivityRepo->save($activityData);
     }
 
     /**
@@ -63,5 +69,47 @@ class ActivityManager
     public function getActivityData($id)
     {
         return $this->repo->getActivityData($id);
+    }
+
+    /**
+     * @param $id
+     * @return model
+     */
+    public function getUserActivity($id)
+    {
+        return $this->userActivityRepo->getUserActivity($id);
+    }
+
+    /**
+     * @param $id
+     * @return model
+     */
+    public function getUserActivityData($id)
+    {
+        $userActivityRow = $this->getUserActivity($id);
+
+        return $userActivityRow ? $userActivityRow->data : '';
+    }
+
+    /**
+     * @param $orgId
+     * @return \App\Models\UserActivity
+     */
+    public function getUserActivities($orgId)
+    {
+        $type     = sprintf('get%sActivities', $this->isSuperAdminActivity($orgId) ? 'SuperAdmin' : 'Organization');
+        $activity = $this->userActivityRepo->$type($orgId);
+
+        return $activity;
+    }
+
+    /**
+     * check if user activity is of super admin
+     * @param $orgId
+     * @return bool
+     */
+    protected function isSuperAdminActivity($orgId)
+    {
+        return ($orgId && strpos($orgId, 'sa-') !== false);
     }
 }
