@@ -36,7 +36,12 @@
                             @forelse($activity as $key => $value)
                                 <tr>
                                     <td>{{ $value->created_date }}</td>
-                                    <td>{!! trans($value->action, $value->param) !!}</td>
+                                    <td>
+                                        {!! trans($value->action, $value->param) !!}
+                                        @if($value->data)
+                                            : <a href="{{ route('admin.activity-log.view-data', $value->user_activity_id) }}" target="_blank">View Data</a>
+                                        @endif
+                                    </td>
                                     <td>{{$value->user ? $value->user->username : 'The user has been deleted.'}}</td>
                                 </tr>
                             @empty

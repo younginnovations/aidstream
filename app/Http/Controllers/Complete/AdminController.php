@@ -65,14 +65,14 @@ class AdminController extends Controller
             $activity = UserActivity::join('users', 'users.id', '=', 'user_activities.user_id')
                                     ->where('user_activities.user_id', str_replace('sa-', '', $orgId))
                                     ->orderBy('user_activities.id', 'desc')
-                                    ->select('*', 'user_activities.created_at as created_date')
+                                    ->select('*', 'user_activities.id as user_activity_id', 'user_activities.created_at as created_date')
                                     ->get();
         } else {
             $activity = UserActivity::join('users', 'users.id', '=', 'user_activities.user_id')
                                     ->join('organizations', 'organizations.id', '=', 'users.org_id')
                                     ->where('organizations.id', $orgId)
                                     ->orderBy('user_activities.id', 'desc')
-                                    ->select('*', 'user_activities.created_at as created_date')
+                                    ->select('*', 'user_activities.id as user_activity_id', 'user_activities.created_at as created_date')
                                     ->get();
         }
 
@@ -80,6 +80,18 @@ class AdminController extends Controller
         $superAdmins   = User::where('org_id', null)->get();
 
         return view('admin.activityLog', compact('activity', 'organizations', 'superAdmins', 'orgId'));
+    }
+
+    /**
+     * display activity log data
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function viewData($id)
+    {
+        $data = UserActivity::find($id)->data;
+
+        return view('admin.logData', compact('data'));
     }
 
     /**

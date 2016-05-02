@@ -269,7 +269,8 @@ class TransactionController extends Controller
             [
                 'transaction_id' => $transactionId,
                 'activity_id'    => $id
-            ]
+            ],
+            $transaction->toArray()
         );
 
         return redirect()->back()->withResponse($response);

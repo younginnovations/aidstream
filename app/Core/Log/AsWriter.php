@@ -13,13 +13,14 @@ class AsWriter extends Writer
      * User Activity Log
      * @param       $action
      * @param array $param
+     * @param array $data
      * @return
      */
-    public function activity($action, array $param = [])
+    public function activity($action, array $param = [], array $data = null)
     {
         $activity = app(ActivityManager::class);
 
-        return $activity->save($action, $param);
+        return $activity->save($action, $param, $data);
     }
 
     /**

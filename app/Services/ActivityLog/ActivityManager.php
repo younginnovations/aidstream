@@ -38,13 +38,15 @@ class ActivityManager
      *
      * @param       $action
      * @param array $param
+     * @param array $data
      * @return UserActivity
      */
-    public function save($action, array $param = [])
+    public function save($action, array $param = [], array $data = null)
     {
         $activityData = [
             'action' => $action,
-            'param'  => $param
+            'param'  => $param,
+            'data'   => $data
         ];
         if (session('role_id') == '3' || session('role_id') == '4') {
             $userId = session('admin_id');
