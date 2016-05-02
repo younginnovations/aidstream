@@ -1,6 +1,7 @@
 <?php namespace App\Core\V202\Requests\Activity;
 
 use App\Core\V201\Requests\Activity\Result as V201Result;
+use Illuminate\Database\DatabaseManager;
 
 /**
  * Class Result

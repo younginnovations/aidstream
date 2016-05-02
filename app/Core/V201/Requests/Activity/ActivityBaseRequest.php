@@ -1,8 +1,10 @@
 <?php namespace App\Core\V201\Requests\Activity;
 
 use App\Http\Requests\Request;
+use App\Models\Activity\Activity;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
+use App\Helpers\GetCodeName;
 
 /**
  * Class ActivityBaseRequest
@@ -11,8 +13,10 @@ use Illuminate\Support\Facades\Validator;
  */
 class ActivityBaseRequest extends Request
 {
+
     function __construct()
     {
+
         Validator::extendImplicit(
             'unique_lang',
             function ($attribute, $value, $parameters, $validator) {
@@ -26,6 +30,34 @@ class ActivityBaseRequest extends Request
                 }
 
                 return true;
+            }
+        );
+
+        Validator::extendImplicit(
+            'unique_default_lang',
+            function ($attribute, $value, $parameters, $validator) {
+                $languages       = [];
+                $defaultLanguage = getDefaultLanguage();
+
+                $validator->addReplacer(
+                    'unique_default_lang',
+                    function ($message, $attribute, $rule, $parameters) use ($validator, $defaultLanguage) {
+                        return str_replace(':language', app(GetCodeName::class)->getActivityCodeName('Language', $defaultLanguage), $message);
+                    }
+                );
+
+                $check = true;
+                foreach ($value as $narrative) {
+                    $languages[] = $narrative['language'];
+                }
+
+                if (count($languages) === count(array_unique($languages))) {
+                    if (in_array("", $languages) && in_array($defaultLanguage, $languages)) {
+                        $check = false;
+                    }
+                }
+
+                return $check;
             }
         );
 
@@ -54,8 +86,9 @@ class ActivityBaseRequest extends Request
      */
     public function getRulesForNarrative($formFields, $formBase)
     {
-        $rules                                     = [];
-        $rules[sprintf('%s.narrative', $formBase)] = 'unique_lang';
+        $rules                                       = [];
+        $rules[sprintf('%s.narrative', $formBase)][] = 'unique_lang';
+        $rules[sprintf('%s.narrative', $formBase)][] = 'unique_default_lang';
         foreach ($formFields as $narrativeIndex => $narrative) {
             $rules[sprintf('%s.narrative.%s.narrative', $formBase, $narrativeIndex)][] = 'required_with_language';
         }
@@ -71,8 +104,9 @@ class ActivityBaseRequest extends Request
      */
     public function getRulesForResultNarrative($formFields, $formBase)
     {
-        $rules                                     = [];
-        $rules[sprintf('%s.narrative', $formBase)] = 'unique_lang';
+        $rules                                       = [];
+        $rules[sprintf('%s.narrative', $formBase)][] = 'unique_lang';
+        $rules[sprintf('%s.narrative', $formBase)][] = 'unique_default_lang';
         foreach ($formFields as $narrativeIndex => $narrative) {
             $rules[sprintf('%s.narrative.%s.narrative', $formBase, $narrativeIndex)][] = 'required';
         }
@@ -109,12 +143,13 @@ class ActivityBaseRequest extends Request
      */
     public function getRulesForRequiredNarrative($formFields, $formBase)
     {
-        $rules                                     = [];
-        $rules[sprintf('%s.narrative', $formBase)] = 'unique_lang';
+        $rules                                       = [];
+        $rules[sprintf('%s.narrative', $formBase)][] = 'unique_lang';
+        $rules[sprintf('%s.narrative', $formBase)][] = 'unique_default_lang';
 
         foreach ($formFields as $narrativeIndex => $narrative) {
             if (boolval($narrative['language'])) {
-                $rules[sprintf('%s.narrative.%s.narrative', $formBase, $narrativeIndex)] = 'required_with:'.sprintf(
+                $rules[sprintf('%s.narrative.%s.narrative', $formBase, $narrativeIndex)] = 'required_with:' . sprintf(
                         '%s.narrative.%s.language',
                         $formBase,
                         $narrativeIndex
@@ -135,18 +170,18 @@ class ActivityBaseRequest extends Request
      */
     public function getMessagesForRequiredNarrative($formFields, $formBase)
     {
-        $rules                                                 = [];
-        $rules[sprintf('%s.narrative.unique_lang', $formBase)] = 'Languages should be unique';
+        $messages                                                 = [];
+        $messages[sprintf('%s.narrative.unique_lang', $formBase)] = 'Languages should be unique';
 
         foreach ($formFields as $narrativeIndex => $narrative) {
             if (boolval($narrative['language'])) {
-                $rules[sprintf(
+                $messages[sprintf(
                     '%s.narrative.%s.narrative.required_with',
                     $formBase,
                     $narrativeIndex
                 )] = 'Narrative is required with language';
             } else {
-                $rules[sprintf(
+                $messages[sprintf(
                     '%s.narrative.%s.narrative.required',
                     $formBase,
                     $narrativeIndex
@@ -154,7 +189,7 @@ class ActivityBaseRequest extends Request
             }
         }
 
-        return $rules;
+        return $messages;
     }
 
     /**
@@ -167,7 +202,7 @@ class ActivityBaseRequest extends Request
     {
         $rules = [];
         foreach ($formFields as $periodStartKey => $periodStartVal) {
-            $rules[$formBase.'.period_start.'.$periodStartKey.'.date'] = 'required|date';
+            $rules[$formBase . '.period_start.' . $periodStartKey . '.date'] = 'required|date';
         }
 
         return $rules;
@@ -183,8 +218,8 @@ class ActivityBaseRequest extends Request
     {
         $messages = [];
         foreach ($formFields as $periodStartKey => $periodStartVal) {
-            $messages[$formBase.'.period_start.'.$periodStartKey.'.date.required'] = 'Period Start is required';
-            $messages[$formBase.'.period_end.'.$periodStartKey.'.date.date']       = 'Period Start is not a valid date.';
+            $messages[$formBase . '.period_start.' . $periodStartKey . '.date.required'] = 'Period Start is required';
+            $messages[$formBase . '.period_end.' . $periodStartKey . '.date.date']       = 'Period Start is not a valid date.';
         }
 
         return $messages;
@@ -201,11 +236,11 @@ class ActivityBaseRequest extends Request
         $rules = [];
 
         foreach ($formFields as $periodEndKey => $periodEndVal) {
-            $rules[$formBase.'.period_end.'.$periodEndKey.'.date'][] = 'required';
-            $rules[$formBase.'.period_end.'.$periodEndKey.'.date'][] = 'date';
-            $rules[$formBase.'.period_end.'.$periodEndKey.'.date'][] = sprintf(
+            $rules[$formBase . '.period_end.' . $periodEndKey . '.date'][] = 'required';
+            $rules[$formBase . '.period_end.' . $periodEndKey . '.date'][] = 'date';
+            $rules[$formBase . '.period_end.' . $periodEndKey . '.date'][] = sprintf(
                 'after:%s',
-                $formBase.'.period_start.'.$periodEndKey.'.date'
+                $formBase . '.period_start.' . $periodEndKey . '.date'
             );
         }
 
@@ -222,9 +257,9 @@ class ActivityBaseRequest extends Request
     {
         $messages = [];
         foreach ($formFields as $periodEndKey => $periodEndVal) {
-            $messages[$formBase.'.period_end.'.$periodEndKey.'.date.required'] = 'Period End is required.';
-            $messages[$formBase.'.period_end.'.$periodEndKey.'.date.date']     = 'Period End is not a valid date.';
-            $messages[$formBase.'.period_end.'.$periodEndKey.'.date.after']    = 'Period End must be a date after Period Start';
+            $messages[$formBase . '.period_end.' . $periodEndKey . '.date.required'] = 'Period End is required.';
+            $messages[$formBase . '.period_end.' . $periodEndKey . '.date.date']     = 'Period End is not a valid date.';
+            $messages[$formBase . '.period_end.' . $periodEndKey . '.date.after']    = 'Period End must be a date after Period Start';
         }
 
         return $messages;
