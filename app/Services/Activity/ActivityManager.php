@@ -106,25 +106,32 @@ class ActivityManager
     /**
      * @param array    $input
      * @param Activity $activityData
+     * @return bool
      */
     public function updateStatus(array $input, Activity $activityData)
     {
-        $result = $this->activityRepo->updateStatus($input, $activityData);
-        if ($result) {
-            $activityWorkflow = $input['activity_workflow'];
-            $statusLabel      = ['Completed', 'Verified', 'Published'];
-            $status           = $statusLabel[$activityWorkflow - 1];
-            $this->logger->info(sprintf('Activity has been %s', $status));
-            $this->logger->activity(
-                "activity.activity_status_changed",
-                [
-                    'activity_id' => $activityData->id,
-                    'status'      => $status,
-                ]
-            );
-        }
+        try {
+            if ($this->activityRepo->updateStatus($input, $activityData)) {
+                $activityWorkflow = $input['activity_workflow'];
+                $statusLabel      = ['Completed', 'Verified', 'Published'];
+                $status           = $statusLabel[$activityWorkflow - 1];
+                $this->logger->info(sprintf('Activity has been %s', $status));
 
-        return $result;
+                $this->logger->activity(
+                    "activity.activity_status_changed",
+                    [
+                        'activity_id' => $activityData->id,
+                        'status'      => $status,
+                    ]
+                );
+            }
+
+            return true;
+        } catch (Exception $exception) {
+            $this->logger->error($exception);
+
+            return false;
+        }
     }
 
     /**
@@ -238,16 +245,26 @@ class ActivityManager
     public function destroy($activityData)
     {
         try {
-            $activityId = $activityData->id;
+            $activityId   = $activityData->id;
+            $organization = $activityData->organization;
+
             $this->database->beginTransaction();
+
             $activityData->transactions = $this->transactionRepo->getTransactionData($activityId);
             $activityData->results      = $this->resultRepo->getResults($activityId);
+            $publishedFiles             = $organization->publishedFiles;
+
+            $this->removeActivityAssociation($activityId, $publishedFiles);
+
             $activityData->delete();
+
             $this->database->commit();
+
             $this->logger->info(
                 'Activity has been Deleted.',
                 ['for ' => $activityId]
             );
+
             $this->logger->activity(
                 "activity.activity_deleted",
                 [
@@ -589,5 +606,26 @@ class ActivityManager
         );
 
         return $multiple;
+    }
+
+    /**
+     * Remove deleted Activities from published_activities column of ActivityPublished table.
+     * @param $activityId
+     * @param $publishedFiles
+     */
+    protected function removeActivityAssociation($activityId, $publishedFiles)
+    {
+        foreach ($publishedFiles as $publishedFile) {
+            $containedActivities = $publishedFile->extractActivityId();
+
+            foreach ($containedActivities as $id => $filename) {
+                if ($id == $activityId) {
+                    $containedActivities = array_except($containedActivities, $id);
+                }
+
+                $publishedFile->published_activities = $containedActivities;
+                $publishedFile->save();
+            }
+        }
     }
 }

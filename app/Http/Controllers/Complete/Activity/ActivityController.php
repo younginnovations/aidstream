@@ -93,6 +93,11 @@ class ActivityController extends Controller
     protected $documentLinkManager;
 
     /**
+     * @var TwitterAPI
+     */
+    protected $twitter;
+
+    /**
      * @param SettingsManager              $settingsManager
      * @param SessionManager               $sessionManager
      * @param OrganizationManager          $organizationManager
@@ -223,7 +228,15 @@ class ActivityController extends Controller
         $activityDataList['transaction']    = $activityTransaction;
         $activityDataList['document_links'] = $activityDocumentLinks;
 
-        return view('Activity.show', compact('activityDataList', 'id'));
+        if ($activityDataList['activity_workflow'] == 0) {
+            $nextRoute                          = route('activity.complete', $id);
+        } elseif ($activityDataList['activity_workflow'] == 1) {
+            $nextRoute                          = route('activity.verify', $id);
+        } else {
+            $nextRoute = route('activity.publish', $id);
+        }
+
+        return view('Activity.show', compact('activityDataList', 'id', 'nextRoute'));
     }
 
     /**
@@ -608,13 +621,6 @@ class ActivityController extends Controller
 
         try {
             $data = $this->generateJson($publishedFile);
-            $this->loggerInterface->info(
-                'Successfully published selected activity files',
-                [
-                    'payload' => $data,
-                    'by_user' => auth()->user()->name
-                ]
-            );
 
             if ($publishedFile['published_to_register'] == 0) {
                 $apiCall->package_create($data);
@@ -691,7 +697,6 @@ class ActivityController extends Controller
 
                 $jsonData = $this->activityManager->convertIntoJson($transaction, $activityStatus, $recipientRegion, $recipientCountry, $sector, $title, $identifier);
                 $this->activityManager->saveBulkPublishDataInActivityRegistry($activityId, $jsonData);
-
             }
         }
     }

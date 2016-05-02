@@ -106,7 +106,11 @@ class AuthServiceProvider extends ServiceProvider
         }
 
         if ($activity instanceof ActivityPublished) {
-            return ($user->org_id == $activity->organization_id);
+            if (!$user->isAdmin()) {
+                return ($user->org_id == $activity->organization_id);
+            } else {
+                return true;
+            }
         }
 
         return false;

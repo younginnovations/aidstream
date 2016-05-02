@@ -1,5 +1,7 @@
 <?php namespace App\Providers;
 
+use App\Services\Settings\Segmentation\SegmentationInterface;
+use App\Services\Settings\Segmentation\SegmentationService;
 use Illuminate\Support\ServiceProvider;
 
 /**
@@ -27,6 +29,11 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(
             'App\SuperAdmin\Repositories\SuperAdminInterfaces\OrganizationGroup',
             'App\SuperAdmin\Repositories\OrganizationGroup'
+        );
+
+        $this->app->bind(
+            SegmentationInterface::class,
+            SegmentationService::class
         );
     }
 }

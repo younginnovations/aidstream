@@ -31,9 +31,10 @@ class OrganizationService
 
     /**
      * OrganizationService constructor.
-     * @param Organization      $organization
-     * @param Activity          $activity
-     * @param ActivityPublished $activityPublished
+     * @param Organization          $organization
+     * @param Activity              $activity
+     * @param ActivityPublished     $activityPublished
+     * @param OrganizationPublished $organizationPublished
      */
     public function __construct(Organization $organization, Activity $activity, ActivityPublished $activityPublished, OrganizationPublished $organizationPublished)
     {
@@ -54,21 +55,25 @@ class OrganizationService
     }
 
     /**
-     * Gets a record from ActivityPublished with the specific fileId.
-     * @param $fileId
+     * Gets a record for Activities published/Organizations published with the specific fileId.
+     * @param      $fileId
+     * @param null $organization
      * @return mixed
      */
-    public function findPublishedFile($fileId)
+    public function findPublishedFile($fileId, $organization = null)
     {
-        return $this->activityPublished->findOrFail($fileId);
+        if (!$organization) {
+            return $this->activityPublished->findOrFail($fileId);
+        }
+
+        return $this->organizationPublished->findOrFail($fileId);
     }
 
     /**
-     * Updates publish to register field in ActivityPublished.
      * @param ActivityPublished $file
      * @return bool|null
      */
-    public function updateUnPublished(ActivityPublished $file)
+    public function updatePublishedStatus($file)
     {
         $file->published_to_register = 0;
 
@@ -87,16 +92,5 @@ class OrganizationService
     public function findOrganizationFile($fileId)
     {
         return $this->organizationPublished->findOrFail($fileId);
-    }
-
-    public function updateOrganizationPublished(OrganizationPublished $file)
-    {
-        $file->published_to_register = 0;
-
-        if (!$file->save()) {
-            return null;
-        }
-
-        return true;
     }
 }
