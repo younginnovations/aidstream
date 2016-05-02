@@ -26,7 +26,7 @@ class Kernel extends ConsoleKernel {
 				 ->hourly();
 
 		$schedule->command('backup:run')->daily(7, 14);
-		$schedule->command('php artisan db:backup --database=pgsql --destination=sftp --destinationPath=`date +\%Y/%d-%m-%Y` --compression=gzip')->daily(7, 14);
+		$schedule->command('db:backup --database=pgsql --destination=sftp --destinationPath=`date +\%Y/%d-%m-%Y` --compression=gzip')->daily(7, 14);
 	}
 
 }
