@@ -60,7 +60,8 @@ class TotalBudget extends BaseElement
                         'currency'   => $orgTotalBudget['value'][0]['currency'],
                         'value-date' => $orgTotalBudget['value'][0]['value_date']
                     ]
-                ]
+                ],
+                'budget-line' => $this->buildBudgetLine($orgTotalBudget['budget_line'])
             ];
         }
 

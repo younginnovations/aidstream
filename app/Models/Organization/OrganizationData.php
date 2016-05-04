@@ -75,4 +75,13 @@ class OrganizationData extends Model
     {
         return json_decode($this->document_link, true);
     }
+
+    /**
+     * OrganizationData belongs to an Organization.
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function organization()
+    {
+        return $this->belongsTo(Organization::class);
+    }
 }

@@ -44,7 +44,8 @@ class RecipientOrgBudget extends V201RecipientOrgBudget
                         'currency'   => $RecipientOrgBudget['value'][0]['currency'],
                         'value-date' => $RecipientOrgBudget['value'][0]['value_date']
                     ]
-                ]
+                ],
+                'budget-line' => $this->buildBudgetLine($RecipientOrgBudget['budget_line'])
             ];
         }
 

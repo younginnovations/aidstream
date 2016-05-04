@@ -81,9 +81,10 @@ class TotalExpenditureController extends Controller
      */
     public function update($orgId, Request $request, TotalExpenditureRequestManager $expenditureRequestManager)
     {
+        $organization = $this->organizationManager->getOrganization($orgId);
         $organizationData = $this->totalExpenditureManager->getOrganizationData($orgId);
 
-        if (Gate::denies('belongsToOrganization', $organizationData)) {
+        if (Gate::denies('belongsToOrganization', $organization)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
