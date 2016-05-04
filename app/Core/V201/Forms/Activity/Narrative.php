@@ -20,34 +20,23 @@ class Narrative extends BaseForm
      */
     public function buildForm()
     {
-        $defaultLanguage = getDefaultLanguage();
-
-        $this->add(
-            'narrative',
-            'textarea',
-            [
-                'label'      => $this->getData('label'),
-                'help_block' => $this->addHelpText($this->getData('help-text-narrative') ? $this->getData('help-text-narrative') : 'Narrative-text'),
-                'attr'       => ['rows' => 4],
-                'required'   => $this->getData('narrative_required')
-            ]
-        );
-
-        $model = $this->model;
-        if (isset($model['transaction'])) {
-            $model = $model['transaction'];
-        } elseif (isset($model['result'])) {
-            $model = $model['result'];
-        }
-        !(checkDataExists($model)) ?: $defaultLanguage = null;
-        $this->addSelect(
-            'language',
-            $this->getCodeList('Language', 'Activity'),
-            null,
-            $this->addHelpText($this->getData('help-text-language') ? $this->getData('help-text-language') : 'activity-xml_lang'),
-            $defaultLanguage
-        );
-
-        $this->addRemoveThisButton('remove_from_collection');
+        $this
+            ->add(
+                'narrative',
+                'textarea',
+                [
+                    'label'      => $this->getData('label'),
+                    'help_block' => $this->addHelpText($this->getData('help-text-narrative') ? $this->getData('help-text-narrative') : 'Narrative-text'),
+                    'attr'       => ['rows' => 4],
+                    'required'   => $this->getData('narrative_required')
+                ]
+            )
+            ->addSelect(
+                'language',
+                $this->getCodeList('Language', 'Activity'),
+                null,
+                $this->addHelpText($this->getData('help-text-language') ? $this->getData('help-text-language') : 'activity-xml_lang')
+            )
+            ->addRemoveThisButton('remove_from_collection');
     }
 }
