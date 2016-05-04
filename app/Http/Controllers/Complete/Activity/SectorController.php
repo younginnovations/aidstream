@@ -47,7 +47,7 @@ class SectorController extends Controller
      */
     public function index($id)
     {
-        $activityData  = $this->activityManager->getActivityData($id);
+        $activityData = $this->activityManager->getActivityData($id);
 
         if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
@@ -69,18 +69,17 @@ class SectorController extends Controller
      */
     public function update($id, Request $request, SectorRequestManager $sectorRequestManager)
     {
-        $activityData  = $this->activityManager->getActivityData($id);
+        $activityData = $this->activityManager->getActivityData($id);
 
         if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
-        $activityData = $this->activityManager->getActivityData($id);
         $this->authorizeByRequestType($activityData, 'sector');
         $sectors = $request->all();
         foreach ($sectors['sector'] as &$sector) {
             if ($sector['sector_vocabulary'] == 1 || $sector['sector_vocabulary'] == '') {
-                $sector['sector_vocabulary'] = 1;
+                $sector['sector_vocabulary']    = 1;
                 $sector['sector_category_code'] = '';
                 $sector['sector_text']          = '';
             } elseif ($sector['sector_vocabulary'] == 2) {

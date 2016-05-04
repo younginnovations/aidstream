@@ -62,6 +62,13 @@ class ActivityBaseRequest extends Request
         );
 
         Validator::extendImplicit(
+            'sum',
+            function ($attribute, $value, $parameters, $validator) {
+                return false;
+            }
+        );
+
+        Validator::extendImplicit(
             'required_with_language',
             function ($attribute, $value, $parameters, $validator) {
                 $language = preg_replace('/([^~]+).narrative/', '$1.language', $attribute);

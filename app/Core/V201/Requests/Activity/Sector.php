@@ -57,11 +57,72 @@ class Sector extends ActivityBaseRequest
             }
 
             $rules[sprintf('%s.percentage', $sectorForm)] = 'numeric|max:100';
-            $rules                                        = array_merge($rules, $this->getRulesForNarrative($sector['narrative'], $sectorForm));
+            if (count($formFields) > 1) {
+                $rules[sprintf('%s.percentage', $sectorForm)] = 'required|numeric|max:100';
+            }
+            $rules = array_merge($rules, $this->getRulesForNarrative($sector['narrative'], $sectorForm));
+        }
+
+        $totalPercentage = $this->getRulesForPercentage($this->get('sector'));
+
+        $indexes = [];
+
+        foreach ($totalPercentage as $index => $value) {
+            if (is_numeric($index) && $value != 100) {
+                $indexes[] = $index;
+            }
+        }
+
+        $fields = [];
+
+        foreach ($totalPercentage as $i => $percentage) {
+            foreach ($indexes as $index) {
+                if ($index == $percentage) {
+                    $fields[] = $i;
+                }
+            }
+        }
+
+        foreach ($fields as $field) {
+            $rules[$field] = 'sum';
         }
 
         return $rules;
     }
+
+    /**
+     * write brief description
+     * @param $sectors
+     * @return array
+     */
+    protected function getRulesForPercentage($sectors)
+    {
+        $array     = [];
+        $totalPercentage = 0;
+
+        if (count($sectors) > 1) {
+            foreach ($sectors as $sectorIndex => $sector) {
+                $sectorForm       = sprintf('sector.%s', $sectorIndex);
+                $percentage       = $sector['percentage'];
+                $sectorVocabulary = $sector['sector_vocabulary'];
+
+                if (array_key_exists($sectorVocabulary, $array)) {
+                    $totalPercentage += $percentage;
+                    $array[$sectorVocabulary] = $totalPercentage;
+                    $array[sprintf('%s.percentage', $sectorForm)] = $sectorVocabulary;
+
+                } else {
+                    $totalPercentage = $percentage;
+                    $array[$sectorVocabulary] = $totalPercentage;
+
+                    $array[sprintf('%s.percentage', $sectorForm)] = $sectorVocabulary;
+                }
+            }
+        }
+
+        return $array;
+    }
+
 
     /**
      * returns messages for sector
@@ -99,9 +160,12 @@ class Sector extends ActivityBaseRequest
                 }
             }
 
-            $messages[sprintf('%s.percentage.numeric', $sectorForm)] = 'Percentage should be numeric';
-            $messages[sprintf('%s.percentage.max', $sectorForm)]     = 'Percentage should be less than or equal to :max';
-            $messages                                                = array_merge($messages, $this->getMessagesForNarrative($sector['narrative'], $sectorForm));
+            $messages[sprintf('%s.percentage.numeric', $sectorForm)]  = 'Percentage should be numeric.';
+            $messages[sprintf('%s.percentage.max', $sectorForm)]      = 'Percentage should be less than or equal to :max.';
+            $messages[sprintf('%s.percentage.required', $sectorForm)] = 'Percentage is required.';
+            $messages[sprintf('%s.percentage.sum', $sectorForm)]      = 'Total percentage of sectors under the same vocabulary must be equal to 100.';
+
+            $messages = array_merge($messages, $this->getMessagesForNarrative($sector['narrative'], $sectorForm));
         }
 
         return $messages;

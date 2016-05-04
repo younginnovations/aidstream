@@ -10,11 +10,15 @@ Use App;
 class Sector
 {
 
+    public $sector;
+
     /**
      * @param Version $version
      */
     function __construct(Version $version)
     {
-        return $version->getActivityElement()->getSectorRequest();
+        $this->sector = $version->getActivityElement()->getSectorRequest();
+
+        return $this->sector;
     }
 }
