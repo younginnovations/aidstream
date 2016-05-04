@@ -50,8 +50,36 @@ class Sector extends V201Sector
             }
 
             $rules[sprintf('%s.percentage', $sectorForm)] = 'numeric|max:100';
-            $rules                                        = array_merge($rules, $this->getRulesForNarrative($sector['narrative'], $sectorForm));
+            if (count($formFields) > 1) {
+                $rules[sprintf('%s.percentage', $sectorForm)] = 'required|numeric|max:100';
+            }
+            $rules = array_merge($rules, $this->getRulesForNarrative($sector['narrative'], $sectorForm));
         }
+
+        $totalPercentage = $this->getRulesForPercentage($this->get('sector'));
+
+        $indexes = [];
+
+        foreach ($totalPercentage as $index => $value) {
+            if (is_numeric($index) && $value != 100) {
+                $indexes[] = $index;
+            }
+        }
+
+        $fields = [];
+
+        foreach ($totalPercentage as $i => $percentage) {
+            foreach ($indexes as $index) {
+                if ($index == $percentage) {
+                    $fields[] = $i;
+                }
+            }
+        }
+
+        foreach ($fields as $field) {
+            $rules[$field] = 'required|sum|numeric|max:100';
+        }
+
         return $rules;
     }
 
@@ -96,9 +124,11 @@ class Sector extends V201Sector
                 }
             }
 
-            $messages[sprintf('%s.percentage.numeric', $sectorForm)] = 'Percentage should be numeric';
-            $messages[sprintf('%s.percentage.max', $sectorForm)]     = 'Percentage should be less than or equal to :max';
-            $messages                                                = array_merge($messages, $this->getMessagesForNarrative($sector['narrative'], $sectorForm));
+            $messages[sprintf('%s.percentage.numeric', $sectorForm)]  = 'Percentage should be numeric.';
+            $messages[sprintf('%s.percentage.max', $sectorForm)]      = 'Percentage should be less than or equal to :max.';
+            $messages[sprintf('%s.percentage.required', $sectorForm)] = 'Percentage is required.';
+            $messages[sprintf('%s.percentage.sum', $sectorForm)]      = 'Total percentage of sectors under the same vocabulary must be equal to 100.';
+            $messages                                                 = array_merge($messages, $this->getMessagesForNarrative($sector['narrative'], $sectorForm));
         }
 
         return $messages;

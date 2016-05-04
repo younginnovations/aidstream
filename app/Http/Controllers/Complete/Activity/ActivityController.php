@@ -398,9 +398,9 @@ class ActivityController extends Controller
     {
         $activityPublishedFiles = $this->activityManager->getActivityPublishedFiles($this->organization_id);
 
-        $settings               = $this->settingsManager->getSettings($this->organization_id);
-        $api_url                = config('filesystems.iati_registry_api_base_url');
-        $apiCall                = new CkanClient($api_url, $settings['registry_info'][0]['api_id']);
+        $settings = $this->settingsManager->getSettings($this->organization_id);
+        $api_url  = config('filesystems.iati_registry_api_base_url');
+        $apiCall  = new CkanClient($api_url, $settings['registry_info'][0]['api_id']);
 
         try {
             foreach ($activityPublishedFiles as $publishedFile) {
@@ -634,6 +634,10 @@ class ActivityController extends Controller
         $files = $publishedFile->published_activities;
 
         foreach ($files as $xmlFile) {
+            $activityId = array_last(explode('-', explode('.', $xmlFile)[0]), function ($value) {
+                return true;
+            });
+
             $transaction      = [];
             $recipientCountry = [];
             $recipientRegion  = [];
@@ -666,9 +670,7 @@ class ActivityController extends Controller
                 $xmlSector = $xml['iati-activity']['sector'];
                 $sector    = $this->activityManager->getSectorForBulk($xmlSector);
 
-                $jsonData          = $this->activityManager->convertIntoJson($transaction, $activityStatus, $recipientRegion, $recipientCountry, $sector, $title, $identifier);
-                $explodeActivityId = explode('.', explode('-', $xmlFile)[1]);
-                $activityId        = $explodeActivityId[0];
+                $jsonData = $this->activityManager->convertIntoJson($transaction, $activityStatus, $recipientRegion, $recipientCountry, $sector, $title, $identifier);
                 $this->activityManager->saveBulkPublishDataInActivityRegistry($activityId, $jsonData);
 
             }
