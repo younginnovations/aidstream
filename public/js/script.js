@@ -71,7 +71,6 @@ $(document).ready(function () {
         $('[type="date"]', protoHtml).attr('type', 'text').addClass('datepicker');
         protoHtml.children('.form-group').addClass('added-new-block');
         protoHtml.children('label').remove();
-        $('select[name$="[language]"] [selected="selected"], select[name$="[currency]"] [selected="selected"]', protoHtml).removeAttr('selected');
         var proto = protoHtml.html();
         for (var i = 0; i < level; i++) {
             var parentIndex = parentIndexes[i];

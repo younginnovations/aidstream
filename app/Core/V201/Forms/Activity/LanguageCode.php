@@ -9,11 +9,8 @@ class LanguageCode extends BaseForm
 
     public function buildForm()
     {
-        $defaultLanguage = getDefaultLanguage();
-        !(checkDataExists($this->model)) ?: $defaultLanguage = null;
-
         $this
-            ->addSelect('language', $this->getCodeList('Language', 'Activity'), 'Language', $this->addHelpText('Activity_DocumentLink_Language-code'), $defaultLanguage, true)
+            ->addSelect('language', $this->getCodeList('Language', 'Activity'), 'Language', $this->addHelpText('Activity_DocumentLink_Language-code'), null, true)
             ->addRemoveThisButton('remove_language_code');
     }
 }

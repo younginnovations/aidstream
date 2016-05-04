@@ -184,6 +184,7 @@
     var dateFields = document.querySelectorAll('form [type="date"]');
     for (var i = 0; i < dateFields.length; i++) {
         dateFields[i].setAttribute('type', 'text');
+        dateFields[i].setAttribute('autocomplete', 'off');
         dateFields[i].classList.add('datepicker');
     }
 </script>
