@@ -657,17 +657,23 @@ class ActivityController extends Controller
                     $recipientCountry    = $this->activityManager->getRecipientCountryForBulk($xmlRecipientCountry);
                 }
 
-                $activityStatus = $xml['iati-activity']['activity-status']['@attributes']['code'];
+                $activityStatus = '';
+
+                if (is_array($xml['iati-activity']['activity-status'])) {
+                    $activityStatus = $xml['iati-activity']['activity-status']['@attributes']['code'];
+                }
 
                 $identifier = $xml['iati-activity']['iati-identifier'];
 
-                if (count($xml['iati-activity']['title']['narrative']) == 1) {
-                    $title = $xml['iati-activity']['title']['narrative'];
-                } elseif (count($xml['iati-activity']['title']['narrative']) > 1) {
-                    $title = $xml['iati-activity']['title']['narrative'][0];
+                if (is_array($xml['iati-activity']['title'])) {
+                    if (count($xml['iati-activity']['title']['narrative']) == 1) {
+                        $title = $xml['iati-activity']['title']['narrative'];
+                    } elseif (count($xml['iati-activity']['title']['narrative']) > 1) {
+                        $title = $xml['iati-activity']['title']['narrative'][0];
+                    }
                 }
 
-                $xmlSector = $xml['iati-activity']['sector'];
+                $xmlSector = is_array($xml['iati-activity']['sector']) ? $xml['iati-activity']['sector'] : [];
                 $sector    = $this->activityManager->getSectorForBulk($xmlSector);
 
                 $jsonData = $this->activityManager->convertIntoJson($transaction, $activityStatus, $recipientRegion, $recipientCountry, $sector, $title, $identifier);
