@@ -41,19 +41,23 @@ class Authenticate
             } else {
                 return redirect()->guest('auth/login');
             }
-        } elseif (auth()->user()->isSuperAdmin()) {
+        } elseif (session('role_id') == 3) {
             $route     = $request->route();
             $routeName = $route->getName();
-            $orgId     = '';
             if ($routeName == 'activity.show') {
                 $activityId = $route->getParameter('activity');
                 $orgId      = Activity::select('organization_id')->find($activityId)->organization_id;
             } elseif ($routeName == 'organization.show') {
                 $orgId = $route->getParameter('organization');
+            } else {
+                $orgId = session('org_id');
             }
+
             if ($orgId) {
                 $userId = User::select('id')->where('org_id', $orgId)->where('role_id', 1)->first()->id;
                 app(OrganizationController::class)->masqueradeOrganization($orgId, $userId);
+            } else {
+                return redirect(config('app.super_admin_dashboard'));
             }
         }
 

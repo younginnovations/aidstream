@@ -28,12 +28,12 @@
     <div class="container-fluid">
         <div class="navbar-header">
             <div class="navbar-brand">
-                <a href="{{ (auth()->user() && Auth::user()->role_id == 3) ? url(config('app.super_admin_dashboard')) : config('app.admin_dashboard') }}"
+                <a href="{{ (auth()->user() && session('role_id') == 3) ? url(config('app.super_admin_dashboard')) : config('app.admin_dashboard') }}"
                    alt="Aidstream">Aidstream</a>
             </div>
         </div>
         <div class="collapse navbar-collapse navbar-right" id="bs-example-navbar-collapse-1">
-            @if(auth()->user() && (Auth::user()->role_id != 3 && Auth::user()->role_id !=4))
+            @if(auth()->user() && !isSuperAdminRoute())
                 <ul class="nav navbar-nav pull-left add-new-activity">
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
@@ -53,7 +53,7 @@
                     <li><a href="{{ url('/auth/register') }}">@lang('trans.register')</a></li>
                 @else
                     <li>
-                        @if((Session::get('role_id') == 3  || Session::get('role_id') == 4) && Session::get('org_id'))
+                        @if((session('role_id') == 3  || session('role_id') == 4) && !isSuperAdminRoute())
                             <span><a href="{{ route('admin.switch-back') }}" class="pull-left">Switch Back</a></span>
                         @endif
                     </li>
@@ -64,7 +64,7 @@
                                                                                alt="{{Auth::user()->name}}"></span>
                             <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
-                            @if(Auth::user()->role_id != 3 && Auth::user()->role_id !=4)
+                            @if(!isSuperAdminRoute())
                                 <li><a href="{{url('user/profile')}}">@lang('trans.my_profile')</a></li>
                             @endif
                             <li><a href="{{ url('/auth/logout') }}">@lang('trans.logout')</a></li>
@@ -118,15 +118,15 @@
                             {{-- Unwanted for now. Will come in use later --}}
 
                             <li class="pull-left width-491">
-                                @if((Session::get('role_id') == 3  || Session::get('role_id') == 4) && Session::get('org_id'))
+                                @if(!isSuperAdminRoute())
                                     <span class="width-490"><a href="{{ route('admin.switch-back') }}"
                                                                class="pull-left">Switch Back</a></span>
                                 @endif
                             </li>
                             <li class="pull-left width-491">
                                 <div class="navbar-left version-wrap width-490">
-                                    @if(Auth::user()->role_id != 3 && Auth::user()->role_id !=4)
-                                        <div class="version pull-right {{ (Session::get('version') == 'V201') ? 'old' : 'new' }}">
+                                    @if(!isSuperAdminRoute())
+                                        <div class="version pull-right {{ (session('version') == 'V201') ? 'old' : 'new' }}">
 
                                             @if ((session('version') == 'V201'))
                                                 <a class="version-text" href="{{route('upgrade-version.index')}}">Update
@@ -136,7 +136,7 @@
                                                      {{ session('next_version') }}</a>
                                               </span>
                                             @else
-                                                <span class="version-text">IATI version {{Session::get('current_version')}}</span>
+                                                <span class="version-text">IATI version {{session('current_version')}}</span>
                                                 <span class="new-version">
                                                You’re using latest IATI version
                                              </span>
@@ -151,8 +151,8 @@
             </ul>
         </div>
         <div class="navbar-right version-wrap">
-            @if(auth()->user() && Auth::user()->role_id != 3 && Auth::user()->role_id !=4)
-                <div class="version pull-right {{ (Session::get('version') == 'V201') ? 'old' : 'new' }}">
+            @if(auth()->user() && !isSuperAdminRoute())
+                <div class="version pull-right {{ (session('version') == 'V201') ? 'old' : 'new' }}">
                     {{--{{dd(session('next_version'))}}--}}
                     @if (session('next_version'))
                         <a class="version-text" href="{{route('upgrade-version.index')}}">Update available</a>

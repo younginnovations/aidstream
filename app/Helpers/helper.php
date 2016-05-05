@@ -118,3 +118,12 @@ function getVal($arr, $arguments, $default = "")
         }
     }
 }
+
+/**
+ * Checks if the request route contains prefix SuperAdmin.
+ * @return bool
+ */
+function isSuperAdminRoute() {
+    $routeAction = request()->route()->getAction();
+    return isset($routeAction['SuperAdmin']);
+}
