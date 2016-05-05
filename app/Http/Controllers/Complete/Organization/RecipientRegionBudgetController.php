@@ -66,9 +66,10 @@ class RecipientRegionBudgetController extends Controller
      */
     public function update($orgId, RecipientRegionBudgetRequest $recipientRegionBudgetRequest, Request $request)
     {
+        $organization = $this->organizationManager->getOrganization($orgId);
         $organizationData = $this->recipientRegionBudgetManager->getOrganizationData($orgId);
 
-        if (Gate::denies('belongsToOrganization', $organizationData)) {
+        if (Gate::denies('belongsToOrganization', $organization)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 

@@ -25,4 +25,45 @@ class BaseElement
 
         return $narrativeData;
     }
+
+    /**
+     * @param $budgetLines
+     * @return array
+     */
+    public function buildBudgetLine($budgetLines)
+    {
+        $budgetLineData = [];
+        foreach ($budgetLines as $budgetLine) {
+            $budgetLineData[] = [
+                '@attributes' => [
+                    'ref' => $budgetLine['reference']
+                ],
+                'value'       => $this->buildValue($budgetLine['value']),
+                'narrative'   => $this->buildNarrative($budgetLine['narrative'])
+            ];
+        }
+
+        return $budgetLineData;
+    }
+
+    /**
+     * 
+     * @param $values
+     * @return array
+     */
+    protected function buildValue($values)
+    {
+        $valueData = [];
+        foreach ($values as $value) {
+            $valueData[] = [
+                '@value'      => $value['amount'],
+                '@attributes' => [
+                    'currency'   => $value['currency'],
+                    'value-date' => $value['value_date']
+                ]
+            ];
+        }
+
+        return $valueData;
+    }
 }

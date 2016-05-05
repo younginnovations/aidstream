@@ -69,25 +69,4 @@ class RecipientRegionBudget extends BaseElement
 
         return $valueData;
     }
-
-    /**
-     * return budget line xml data
-     * @param $budgetLines
-     * @return array
-     */
-    protected function buildBudgetLine($budgetLines)
-    {
-        $budgetLineData = [];
-        foreach ($budgetLines as $budgetLine) {
-            $budgetLineData[] = [
-                '@attributes' => [
-                    'ref' => $budgetLine['reference']
-                ],
-                'value'       => $this->buildValue($budgetLine['value']),
-                'narrative'   => $this->buildNarrative($budgetLine['narrative'])
-            ];
-        }
-
-        return $budgetLineData;
-    }
 }

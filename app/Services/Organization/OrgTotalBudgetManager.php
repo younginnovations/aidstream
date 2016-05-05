@@ -4,6 +4,7 @@ namespace App\Services\Organization;
 use App\Core\Version;
 use App;
 use App\Models\Organization\OrganizationData;
+use Exception;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Logging\Log;
 use Illuminate\Database\Eloquent\Model;
@@ -52,7 +53,7 @@ class OrgTotalBudgetManager
         try {
             $this->repo->update($input, $organization);
             $this->log->info('Organization Total Budget Updated', ['for ' => $organization['total_budget']]);
-            $this->log->activity("organization.total_budget_updated", ['name' => $this->auth->user()->organization->name]);
+            $this->log->activity("organization.total_budget_updated", ['name' => $organization->organization->name]);
 
             return true;
         } catch (Exception $exception) {

@@ -61,7 +61,8 @@ class RecipientCountryBudget extends BaseElement
                         'currency' => $orgRecipientCountry['value'][0]['currency'],
                         'value-date' => $orgRecipientCountry['value'][0]['value_date']
                     ]
-                ]
+                ],
+                'budget-line' => $this->buildBudgetLine($orgRecipientCountry['budget_line'])
             ];
         }
 
