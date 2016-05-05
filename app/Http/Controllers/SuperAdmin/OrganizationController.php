@@ -155,10 +155,8 @@ class OrganizationController extends Controller
     public function masqueradeOrganization($orgId, $userId)
     {
         $database = app(DatabaseManager::class);
-        $adminId  = Auth::user()->id;
         $settings = $this->settingsManager->getSettings($orgId);
         Session::put('org_id', $orgId);
-        Session::put('admin_id', $adminId);
 
         $current_version = (isset($settings)) ? $settings->version : config('app.default_version');
         Session::put('current_version', $current_version);
