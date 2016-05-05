@@ -10,19 +10,6 @@ use App\Core\V201\Repositories\Activity\UploadTransaction as UploadTransactionV2
 class UploadTransaction extends UploadTransactionV201
 {
     /**
-     * @var CsvReader
-     */
-    protected $readCsv;
-
-    /**
-     * @param CsvReader $readCsv
-     */
-    function __construct(CsvReader $readCsv)
-    {
-        $this->readCsv = $readCsv;
-    }
-
-    /**
      * format rows form simple csv
      * @param $transactionRow
      * @return array
@@ -64,5 +51,10 @@ class UploadTransaction extends UploadTransactionV201
         $transaction['receiver_organization'][0]['narrative'][0]['narrative']    = $transactionRow['receiver_org_name'];
 
         return $transaction;
+    }
+
+    public function isSimpleCsv($count)
+    {
+        return $count == 15;
     }
 }
