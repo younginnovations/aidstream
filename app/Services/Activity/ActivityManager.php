@@ -505,15 +505,16 @@ class ActivityManager
         $multiple = $this->isMultipleArray(array_keys($transaction), $multiple);
         if ($multiple) {
             foreach ($transaction as $data) {
-                $index = $data['transaction-type']['@attributes']['code'];
-                $value = $data['value'];
+                if (is_array($data['transaction-type'])) {
+                    $index = $data['transaction-type']['@attributes']['code'];
+                    $value = $data['value'];
 
-                if (array_key_exists($index, $arrays)) {
-                    $arrays[$index] = $arrays[$index] + $value;
-                } else {
-                    $arrays[$index] = $value;
+                    if (array_key_exists($index, $arrays)) {
+                        $arrays[$index] = $arrays[$index] + $value;
+                    } else {
+                        $arrays[$index] = $value;
+                    }
                 }
-
             }
         } else {
             $arrays[$transaction['transaction-type']['@attributes']['code']] = $transaction['value'];

@@ -210,9 +210,17 @@ class OrganizationRepository implements OrganizationRepositoryInterface
 
             return true;
         } catch (\Exception $e) {
+            if (isset($data)) {
+                $this->loggerInterface->error($e, [
+                    'trace' => $e->getTraceAsString(),
+                    'payload' => $data
+                ]);
+
+                return false;
+            }
+
             $this->loggerInterface->error($e, [
-                'trace' => $e->getTraceAsString(),
-                'payload' => $data
+                'trace' => $e->getTraceAsString()
             ]);
 
             return false;
@@ -232,10 +240,14 @@ class OrganizationRepository implements OrganizationRepositoryInterface
             $xml = simplexml_load_string(file_get_contents($filePath));
             $xml = json_decode(json_encode($xml), true);
 
-            if (is_array($xml['iati-organisation']['name']['narrative'])) {
-                $orgTitle = $xml['iati-organisation']['name']['narrative'][0];
+            if (is_array($xml['iati-organisation']['name'])) {
+                if (is_array($xml['iati-organisation']['name']['narrative'])) {
+                    $orgTitle = $xml['iati-organisation']['name']['narrative'][0];
+                } else {
+                    $orgTitle = $xml['iati-organisation']['name']['narrative'];
+                }
             } else {
-                $orgTitle = $xml['iati-organisation']['name']['narrative'];
+                $orgTitle = $xml['iati-organisation']['name'];
             }
         } else {
             $organization = $this->getOrganization($organization->id);
