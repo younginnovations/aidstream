@@ -68,7 +68,7 @@ class OrganizationManager
 
     /**
      * @param $id
-     * @return model
+     * @return Organization
      */
     public function getOrganization($id)
     {
@@ -164,11 +164,13 @@ class OrganizationManager
     /**
      * @param Organization $organization
      * @param Settings     $settings
+     * @param              $filename
      * @return mixed
      */
-    public function publishToRegistry(Organization $organization, Settings $settings)
+    public function publishToRegistry(Organization $organization, Settings $settings, $filename)
     {
-        $response = $this->repo->publishToRegistry($organization, $settings);
+        $response = $this->repo->publishToRegistry($organization, $settings, $filename);
+
         if ($response) {
             $twitter = $this->twitterApi->post($settings, $organization);
         }

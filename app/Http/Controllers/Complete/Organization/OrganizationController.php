@@ -223,7 +223,7 @@ class OrganizationController extends Controller
             $this->organizationManager->saveOrganizationPublishedFiles($filename, $orgId);
             $organization = $this->organizationManager->getOrganization($orgId);
             $settings     = $this->settingsManager->getSettings($orgId);
-            $result       = $this->organizationManager->publishToRegistry($organization, $settings);
+            $result       = $this->organizationManager->publishToRegistry($organization, $settings, $filename);
             if ($result) {
                 $pubFiles[] = $filename;
             } else {

@@ -145,9 +145,16 @@ class OrganizationRepository implements OrganizationRepositoryInterface
      * @param $id
      * @return model
      */
-    public function getPublishedFiles($id)
+    public function getPublishedFiles($id, $filename = null)
     {
-        return $this->orgPublished->where('organization_id', $id)->get();
+        if ($filename) {
+            return $this->orgPublished->where('organization_id', $id)
+                                      ->where('filename', '=', $filename)
+                                      ->get();
+        }
+
+        return $this->orgPublished->where('organization_id', $id)
+                                  ->get();
     }
 
     /**
@@ -184,11 +191,12 @@ class OrganizationRepository implements OrganizationRepositoryInterface
     /**
      * @param Organization $organization
      * @param Settings     $settings
+     * @param              $filename
      * @return bool
      */
-    public function publishToRegistry(Organization $organization, Settings $settings)
+    public function publishToRegistry(Organization $organization, Settings $settings, $filename)
     {
-        $orgPublishedFiles = $this->getPublishedFiles($organization->id);
+        $orgPublishedFiles = $this->getPublishedFiles($organization->id, $filename);
         $api_url           = config('filesystems.iati_registry_api_base_url');
         $apiCall           = new CkanClient($api_url, $settings['registry_info'][0]['api_id']);
 
@@ -203,25 +211,34 @@ class OrganizationRepository implements OrganizationRepositoryInterface
                     $apiCall->package_update($data);
                 }
 
-                $this->loggerInterface->info('Organization File Published', [
-                    'payload' => $data
-                ]);
+                $this->loggerInterface->info(
+                    'Organization File Published',
+                    [
+                        'payload' => $data
+                    ]
+                );
             }
 
             return true;
         } catch (\Exception $e) {
             if (isset($data)) {
-                $this->loggerInterface->error($e, [
-                    'trace' => $e->getTraceAsString(),
-                    'payload' => $data
-                ]);
+                $this->loggerInterface->error(
+                    $e,
+                    [
+                        'trace'   => $e->getTraceAsString(),
+                        'payload' => $data
+                    ]
+                );
 
                 return false;
             }
 
-            $this->loggerInterface->error($e, [
-                'trace' => $e->getTraceAsString()
-            ]);
+            $this->loggerInterface->error(
+                $e,
+                [
+                    'trace' => $e->getTraceAsString()
+                ]
+            );
 
             return false;
         }
