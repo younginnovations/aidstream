@@ -10,7 +10,7 @@ use App\Models\Activity\Transaction as TransactionModel;
  */
 class UploadTransaction
 {
-    const SIMPLE_CSV_COLUMN_COUNT = 14;
+    const SIMPLE_CSV_COLUMN_COUNT = 15;
     /**
      * @var TransactionModel
      */

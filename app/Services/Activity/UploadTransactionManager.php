@@ -128,7 +128,7 @@ class UploadTransactionManager
         $loadTransactionCsv = $this->getTransactionCsv($transactionCsv);
         $headerCount        = $loadTransactionCsv->first()->keys()->count();
 
-        if ($headerCount == 14) {
+        if ($headerCount == 15) {
             return true;
         }
 
