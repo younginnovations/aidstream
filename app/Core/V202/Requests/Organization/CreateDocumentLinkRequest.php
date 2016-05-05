@@ -22,12 +22,11 @@ class CreateDocumentLinkRequest extends V201CreateDocumentLinkRequest
             );
             $rules[sprintf('document_link.%s.url', $documentLinkIndex)]                  = 'required|url';
             $rules[sprintf('document_link.%s.format', $documentLinkIndex)]               = 'required';
-            $rules[sprintf('document_link.%s.document_date.0.date', $documentLinkIndex)] = 'required|date';
+            $rules[sprintf('document_link.%s.document_date.0.date', $documentLinkIndex)] = 'date';
             $rules                                                                       = array_merge(
                 $rules,
                 $this->getRulesForNarrative($documentLink['narrative'], $documentLinkForm),
                 $this->getRulesForDocumentCategory($documentLink['category'], $documentLinkForm),
-                $this->getRulesForDocumentLanguage($documentLink['language'], $documentLinkForm),
                 $this->getRulesForRecipientCountry($documentLink['recipient_country'], $documentLinkForm)
             );
         }
@@ -53,13 +52,11 @@ class CreateDocumentLinkRequest extends V201CreateDocumentLinkRequest
                 $documentLinkIndex
             )]                                                                                       = 'Enter valid URL. eg. http://example.com';
             $messages[sprintf('document_link.%s.format.required', $documentLinkIndex)]               = 'Format is required';
-            $messages[sprintf('document_link.%s.document_date.0.date.required', $documentLinkIndex)] = 'Document date is required';
             $messages[sprintf('document_link.%s.document_date.0.date.date', $documentLinkIndex)]     = 'Please enter a valid date.';
             $messages                                                                                = array_merge(
                 $messages,
                 $this->getMessagesForNarrative($documentLink['narrative'], $documentLinkForm),
                 $this->getMessagesForDocumentCategory($documentLink['category'], $documentLinkForm),
-                $this->getMessagesForDocumentLanguage($documentLink['language'], $documentLinkForm),
                 $this->getMessagesForRecipientCountry($documentLink['recipient_country'], $documentLinkForm)
             );
         }
