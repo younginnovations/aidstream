@@ -49,9 +49,17 @@ class OrganizationBaseRequest extends Request
     {
         $rules                                     = [];
         $rules[sprintf('%s.narrative', $formBase)] = 'unique_lang';
-        foreach ($formFields as $narrativeIndex => $narrative) {
-            $rules[sprintf('%s.narrative.%s.narrative', $formBase, $narrativeIndex)][] = 'required_with_language';
+
+        if (count($formFields) === 1) {
+            foreach ($formFields as $narrativeIndex => $narrative) {
+                $rules[sprintf('%s.narrative.%s.narrative', $formBase, $narrativeIndex)][] = 'required';
+            }
+        } else {
+            foreach ($formFields as $narrativeIndex => $narrative) {
+                $rules[sprintf('%s.narrative.%s.narrative', $formBase, $narrativeIndex)][] = 'required_with_language';
+            }
         }
+
 
         return $rules;
     }
@@ -66,8 +74,15 @@ class OrganizationBaseRequest extends Request
     {
         $messages                                                 = [];
         $messages[sprintf('%s.narrative.unique_lang', $formBase)] = 'Languages should be unique.';
-        foreach ($formFields as $narrativeIndex => $narrative) {
-            $messages[sprintf('%s.narrative.%s.narrative.required_with_language', $formBase, $narrativeIndex)] = 'Narrative is required with language.';
+
+        if (count($formFields) === 1) {
+            foreach ($formFields as $narrativeIndex => $narrative) {
+                $messages[sprintf('%s.narrative.%s.narrative.required', $formBase, $narrativeIndex)] = 'Narrative is required.';
+            }
+        } else {
+            foreach ($formFields as $narrativeIndex => $narrative) {
+                $messages[sprintf('%s.narrative.%s.narrative.required_with_language', $formBase, $narrativeIndex)] = 'Narrative is required with language.';
+            }
         }
 
         return $messages;

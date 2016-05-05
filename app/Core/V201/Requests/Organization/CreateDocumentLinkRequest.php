@@ -54,7 +54,6 @@ class CreateDocumentLinkRequest extends OrganizationBaseRequest
                 $rules,
                 $this->getRulesForNarrative($documentLink['narrative'], $documentLinkForm),
                 $this->getRulesForDocumentCategory($documentLink['category'], $documentLinkForm),
-                $this->getRulesForDocumentLanguage($documentLink['language'], $documentLinkForm),
                 $this->getRulesForRecipientCountry($documentLink['recipient_country'], $documentLinkForm)
             );
         }
@@ -84,7 +83,6 @@ class CreateDocumentLinkRequest extends OrganizationBaseRequest
                 $messages,
                 $this->getMessagesForNarrative($documentLink['narrative'], $documentLinkForm),
                 $this->getMessagesForDocumentCategory($documentLink['category'], $documentLinkForm),
-                $this->getMessagesForDocumentLanguage($documentLink['language'], $documentLinkForm),
                 $this->getMessagesForRecipientCountry($documentLink['recipient_country'], $documentLinkForm)
             );
         }
@@ -131,47 +129,12 @@ class CreateDocumentLinkRequest extends OrganizationBaseRequest
      * @param $formIndex
      * @return array
      */
-    public function getRulesForDocumentLanguage($formFields, $formIndex)
-    {
-        $rules = [];
-        foreach ($formFields as $languageKey => $languageVal) {
-            $rules[sprintf('%s.language.%s.language', $formIndex, $languageKey)] = 'required';
-        }
-
-        return $rules;
-    }
-
-    /**
-     * @param $formFields
-     * @param $formIndex
-     * @return array
-     */
-    public function getMessagesForDocumentLanguage($formFields, $formIndex)
-    {
-        $messages = [];
-        foreach ($formFields as $languageKey => $languageVal) {
-            $messages[sprintf('%s.language.%s.language.required', $formIndex, $languageKey)] = 'Language is required';
-        }
-
-        return $messages;
-    }
-
-    /**
-     * @param $formFields
-     * @param $formIndex
-     * @return array
-     */
     public function getRulesForRecipientCountry($formFields, $formIndex)
     {
         $rules = [];
         foreach ($formFields as $recipientCountryIndex => $recipientCountryVal) {
-            $budgetItemForm                                                                     = sprintf(
-                '%s.recipient_country.%s',
-                $formIndex,
-                $recipientCountryIndex
-            );
-            $rules[sprintf('%s.recipient_country.%s.code', $formIndex, $recipientCountryIndex)] = 'required';
-            $rules                                                                              = array_merge(
+            $budgetItemForm = sprintf('%s.recipient_country.%s', $formIndex, $recipientCountryIndex);
+            $rules          = array_merge(
                 $rules,
                 $this->getRulesForNarrative($recipientCountryVal['narrative'], $budgetItemForm)
             );
@@ -189,16 +152,7 @@ class CreateDocumentLinkRequest extends OrganizationBaseRequest
     {
         $messages = [];
         foreach ($formFields as $recipientCountryIndex => $recipientCountryVal) {
-            $budgetItemForm = sprintf(
-                '%s.recipient_country.%s',
-                $formIndex,
-                $recipientCountryIndex
-            );
-            $messages[sprintf(
-                '%s.recipient_country.%s.code.required',
-                $formIndex,
-                $recipientCountryIndex
-            )]              = 'Code is required';
+            $budgetItemForm = sprintf('%s.recipient_country.%s', $formIndex, $recipientCountryIndex);
             $messages       = array_merge(
                 $messages,
                 $this->getMessagesForNarrative($recipientCountryVal['narrative'], $budgetItemForm)
