@@ -17,7 +17,7 @@ class UserActivity extends Model
     /**
      * @var array
      */
-    protected $fillable = ['user_id', 'action', 'param', 'data'];
+    protected $fillable = ['user_id', 'action', 'param', 'data', 'organization_id'];
 
     protected $casts = ['data' => 'json'];
 

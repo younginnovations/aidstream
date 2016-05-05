@@ -53,10 +53,10 @@ class Authenticate
                 $orgId = session('org_id');
             }
 
-            if ($orgId) {
+            if ($orgId && $this->auth->user()->isSuperAdmin()) {
                 $userId = User::select('id')->where('org_id', $orgId)->where('role_id', 1)->first()->id;
                 app(OrganizationController::class)->masqueradeOrganization($orgId, $userId);
-            } elseif(!isSuperAdminRoute()){
+            } elseif (!$orgId && !isSuperAdminRoute()) {
                 return redirect(config('app.super_admin_dashboard'));
             }
         } elseif (isSuperAdminRoute()) {
