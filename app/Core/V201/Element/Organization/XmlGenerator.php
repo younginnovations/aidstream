@@ -75,7 +75,7 @@ class XmlGenerator
             $published->save();
         }
 
-        return ($settings['registry_info'][0]['publish_files'] == 'yes') ? $this->organizationManager->publishToRegistry($organization, $settings) : true;
+        return ($settings['registry_info'][0]['publish_files'] == 'yes') ? $this->organizationManager->publishToRegistry($organization, $settings, $filename) : true;
     }
 
     /**
