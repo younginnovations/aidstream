@@ -20,18 +20,20 @@ class TransactionTest extends AidStreamTestCase
 
     public function testItShouldCreateTransactionCorrespondingToCertainActivityId()
     {
+        $transaction = ['transaction' => [['sector' => [['sector_code' => 11110, 'sector_vocabulary' => 1]]]]];
         $activityModel = m::mock(Activity::class);
-        $this->transactionModel->shouldReceive('newInstance')->once()->with(['transaction' => 'hi'])->andReturnSelf();
+        $this->transactionModel->shouldReceive('newInstance')->once()->with(['transaction' => $transaction['transaction'][0]])->andReturnSelf();
         $activityModel->shouldReceive('transactions->save')->once()->with($this->transactionModel)->andReturn(true);
-        $this->transactionRepo->create(['transaction' => ['hi']], $activityModel);
+        $this->assertNull($this->transactionRepo->create($transaction, $activityModel));
     }
 
     public function testItShouldUpdateTransaction()
     {
+        $transaction = ['transaction' => [['sector' => [['sector_code' => 11110, 'sector_vocabulary' => 1]]]]];
         $this->transactionModel->shouldReceive('findOrFail')->with(1)->andReturn($this->transactionModel);
-        $this->transactionModel->shouldReceive('setAttribute')->with('transaction', 'testTran');
+        $this->transactionModel->shouldReceive('setAttribute')->with('transaction', $transaction['transaction'][0]);
         $this->transactionModel->shouldReceive('save')->andReturn(true);
-        $this->transactionRepo->update(['transaction' => [0 => 'testTran']], 1);
+        $this->assertNull($this->transactionRepo->update($transaction, 1));
     }
 
     public function testItShouldGetTheTransactionsWithCertainId()

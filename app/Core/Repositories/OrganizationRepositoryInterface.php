@@ -4,7 +4,7 @@ interface OrganizationRepositoryInterface
 {
     public function createOrganization(array $input);
 
-    public function getOrganizations();
+    public function getOrganizations($select);
 
     public function getOrganization($id);
 

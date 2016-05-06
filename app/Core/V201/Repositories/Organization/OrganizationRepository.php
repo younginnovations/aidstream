@@ -72,11 +72,12 @@ class OrganizationRepository implements OrganizationRepositoryInterface
     }
 
     /**
+     * @param $select
      * @return \Illuminate\Database\Eloquent\Collection|static[]
      */
-    public function getOrganizations()
+    public function getOrganizations($select)
     {
-        return $this->org->all();
+        return $this->org->select($select)->get();
     }
 
     /**

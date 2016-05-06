@@ -200,5 +200,10 @@ class User extends Model implements AuthorizableContract, AuthenticatableContrac
         return ($this->isGroupAdmin() || $this->isSuperAdmin() || $this->organization->status);
     }
 
+    public function getSuperAdmins()
+    {
+        return $this->where('org_id', null)->get();
+    }
+
 
 }

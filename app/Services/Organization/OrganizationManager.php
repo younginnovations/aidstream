@@ -59,11 +59,12 @@ class OrganizationManager
     }
 
     /**
+     * @param $select
      * @return model
      */
-    public function getOrganizations()
+    public function getOrganizations($select = '*')
     {
-        return $this->repo->getOrganizations();
+        return $this->repo->getOrganizations($select);
     }
 
     /**
