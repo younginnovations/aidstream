@@ -60,28 +60,19 @@ class UserActivity
      * @param $orgId
      * @return UserActivityModel /null
      */
-    public function getSuperAdminActivities($orgId)
+    public function getAllActivities()
     {
         return $this->userActivity->join('users', 'users.id', '=', 'user_activities.user_id')
-                                  ->where('user_activities.user_id', str_replace('sa-', '', $orgId))
+                                  ->join('organizations', 'organizations.id', '=', 'user_activities.organization_id')
                                   ->orderBy('user_activities.id', 'desc')
-                                  ->select('*', 'user_activities.id as user_activity_id', 'user_activities.created_at as created_date')
-                                  ->get();
+                                  ->select('*', 'user_activities.id as user_activity_id', 'user_activities.created_at as created_date');
     }
 
-    /**
-     * return user activity
-     * @param $orgId
-     * @return UserActivityModel /null
-     */
     public function getOrganizationActivities($orgId)
     {
-        return $this->userActivity->join('users', 'users.id', '=', 'user_activities.user_id')
-                                  ->join('organizations', 'organizations.id', '=', 'users.org_id')
-                                  ->where('organizations.id', $orgId)
-                                  ->orderBy('user_activities.id', 'desc')
-                                  ->select('*', 'user_activities.id as user_activity_id', 'user_activities.created_at as created_date')
-                                  ->get();
+        $this->query = $this->getAllActivities()->where('user_activities.organization_id', $orgId);
+
+        return $this->query;
     }
 
     /** Returns all the logs of the organization

@@ -75,7 +75,7 @@ class ActivityManager
         } else {
             $userId = $this->auth->id();
         }
-        $activityData['user_id'] = $userId;
+        $activityData['user_id']         = $userId;
         $activityData['organization_id'] = session('org_id');
 
         return $this->userActivityRepo->save($activityData);
@@ -116,10 +116,12 @@ class ActivityManager
      */
     public function getUserActivities($orgId)
     {
-        $type     = sprintf('get%sActivities', $this->isSuperAdminActivity($orgId) ? 'SuperAdmin' : 'Organization');
-        $activity = $this->userActivityRepo->$type($orgId);
+        if ($orgId != "all") {
+            return $this->userActivityRepo->getOrganizationActivities($orgId)->paginate(20);
+        } else {
+            return $this->userActivityRepo->getAllActivities()->paginate(20);
+        }
 
-        return $activity;
     }
 
     /**
