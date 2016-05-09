@@ -159,7 +159,7 @@ class ResultController extends Controller
 
             return redirect()->to(sprintf('/activity/%s/result', $id))->withResponse($response);
         }
-        $response = ['type' => 'danger', 'code' => ['update_failed', ['name' => 'Related Activity']]];
+        $response = ['type' => 'danger', 'code' => [($resultId) ? 'update_failed' : 'save_failed', ['name' => 'Activity Result']]];
 
         return redirect()->back()->withInput()->withResponse($response);
     }
@@ -181,19 +181,12 @@ class ResultController extends Controller
         $this->authorize('delete_activity', $activityData);
         $activityResult = $this->resultManager->getResult($resultId, $id);
 
-        $response = ($this->resultManager->deleteResult($activityResult)) ? ['type' => 'success', 'code' => ['deleted', ['name' => 'Result']]] : [
-            'type' => 'danger',
-            'code' => ['delete_failed', ['name' => 'result']]
-        ];
-
-        app(Log::class)->activity(
-            "activity.activity_result_deleted",
-            [
-                'result_id'   => $resultId,
-                'activity_id' => $id
-            ],
-            $activityResult->toArray()
-        );
+        if ($this->resultManager->deleteResult($activityResult)) {
+            $this->activityManager->resetActivityWorkflow($id);
+            $response = ['type' => 'success', 'code' => ['deleted', ['name' => 'Result']]];
+        } else {
+            $response = ['type' => 'danger', 'code' => ['delete_failed', ['name' => 'result']]];
+        }
 
         return redirect()->back()->withResponse($response);
     }

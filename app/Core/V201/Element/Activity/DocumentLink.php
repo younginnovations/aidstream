@@ -32,8 +32,10 @@ class DocumentLink extends BaseElement
     public function getXmlData(Activity $activity)
     {
         $activityData  = [];
-        $documentLinks = (array) $activity->document_link;
+        $documentLinks = $activity->documentLinks()->get();
+
         foreach ($documentLinks as $documentLink) {
+            $documentLink   = $documentLink->document_link;
             $activityData[] = [
                 '@attributes' => [
                     'url'    => $documentLink['url'],

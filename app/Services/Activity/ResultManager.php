@@ -6,7 +6,6 @@ use Exception;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Logging\Log as DbLogger;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model;
 use Psr\Log\LoggerInterface as Logger;
 use Illuminate\Database\DatabaseManager;
 
@@ -99,7 +98,8 @@ class ResultManager
 
     /**
      * @param $id
-     * @return Model
+     * @param $activityId
+     * @return ActivityResult
      */
     public function getResult($id, $activityId)
     {
@@ -112,6 +112,23 @@ class ResultManager
      */
     public function deleteResult(ActivityResult $activityResult)
     {
-        return $this->resultRepo->deleteResult($activityResult);
+        try {
+            $this->resultRepo->deleteResult($activityResult);
+
+            $this->dbLogger->activity(
+                "activity.activity_result_deleted",
+                [
+                    'result_id'   => $activityResult->id,
+                    'activity_id' => $activityResult->activity_id
+                ],
+                $activityResult->toArray()
+            );
+
+            return true;
+        } catch (Exception $exception) {
+            $this->logger->error($exception, ['result' => $activityResult]);
+        }
+
+        return false;
     }
 }

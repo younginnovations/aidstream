@@ -1,6 +1,7 @@
 <?php namespace App\Helpers;
 
 use App\Models\Activity\Activity;
+use App\Models\Activity\ActivityDocumentLink;
 use App\Models\Activity\ActivityResult;
 use App\Models\Activity\Transaction;
 use App\Models\Organization\Organization;
@@ -115,8 +116,10 @@ class DefaultFieldGroups
             $reportingOrg                           = Organization::find($activityData['organization_id'])->reporting_org;
             $results                                = ActivityResult::where('activity_id', $id)->get()->toArray();
             $transactions                           = Transaction::where('activity_id', $id)->get()->toArray();
+            $documentLinks                          = ActivityDocumentLink::where('activity_id', $id)->get()->toArray();
             $activityData['results']                = $results;
             $activityData['transactions']           = $transactions;
+            $activityData['document_link']          = $documentLinks;
             $activityData['reporting_organization'] = $reportingOrg;
         }
 
