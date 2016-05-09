@@ -2138,7 +2138,8 @@ $(document).ready(function () {
         }
         var protoHtml = level === 0 ? $('.collection-container') : $('.' + collection, '.collection-container');
         protoHtml = protoHtml.clone();
-        $('[type="date"]', protoHtml).attr('type', 'text').addClass('datepicker');
+        $('[type="date"]', protoHtml).attr('type', 'text').addClass('datepicker')
+        $('option[selected="selected"]', protoHtml).removeAttr('selected');
         protoHtml.children('.form-group').addClass('added-new-block');
         protoHtml.children('label').remove();
         var proto = protoHtml.html();
