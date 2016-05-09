@@ -77,6 +77,11 @@ class IatiActivity extends V201
         return app('App\Core\V202\Requests\Activity\Transaction');
     }
 
+    public function getUploadTransaction()
+    {
+        return app('App\Core\V202\Element\Activity\UploadTransaction');
+    }
+
     public function getDocumentLink()
     {
         return app('App\Core\V202\Element\Activity\DocumentLink');

@@ -1,7 +1,3 @@
-{{ header("Cache-Control: no-cache, no-store, must-revalidate")}}
-{{ header("Pragma: no-cache") }}
-{{ header("Expires: 0 ")}}
-
 @extends('app')
 
 @section('title', 'Organizations')
@@ -44,7 +40,7 @@
                                         <td>{{ count($organization->activities) }}</td>
                                         <td>
                                             <div class="organization_actions">
-                                                @if(Auth::user()->isSuperAdmin())
+                                                @if(session('role_id') == 3)
                                                     <a href="{{ route('admin.hide-organization', [$organization->id,($organization->display) ? 0 : 1 ]) }}" title="{{($organization->display) ? 'Hide' : 'Show'}}" class="display {{($organization->display) ? 'Yes' : 'No'}}">{{($organization->display) ? 'Yes' : 'No'}}</a>
                                                     <a href="{{ route('admin.edit-organization', $organization->id)}}"
                                                        class="edit" title="Edit">Edit</a>

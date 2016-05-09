@@ -59,7 +59,7 @@ class OrganizationController extends Controller
      */
     public function listOrganizations()
     {
-        $organizations = (Auth::user()->role_id == 3) ? $this->adminManager->getOrganizations() : $this->groupManager->getGroupsByUserId(Auth::user()->id);
+        $organizations = (session('role_id') == 3) ? $this->adminManager->getOrganizations() : $this->groupManager->getGroupsByUserId(Auth::user()->id);
 
         return view('superAdmin.listOrganization', compact('organizations'));
     }
@@ -155,10 +155,8 @@ class OrganizationController extends Controller
     public function masqueradeOrganization($orgId, $userId)
     {
         $database = app(DatabaseManager::class);
-        $adminId  = Auth::user()->id;
         $settings = $this->settingsManager->getSettings($orgId);
         Session::put('org_id', $orgId);
-        Session::put('admin_id', $adminId);
 
         $current_version = (isset($settings)) ? $settings->version : config('app.default_version');
         Session::put('current_version', $current_version);
@@ -184,7 +182,6 @@ class OrganizationController extends Controller
      */
     public function switchBackAsSuperAdmin()
     {
-        Session::forget(['org_id', 'version']);
         $adminId = Session::get('admin_id');
         Auth::loginUsingId($adminId);
 

@@ -111,7 +111,7 @@ class UploadTransactionManager
         $loadTransactionCsv = $this->getTransactionCsv($transactionCsv);
         $headerCount        = $loadTransactionCsv->first()->keys()->count();
 
-        if ($headerCount == 25) {
+        if ($this->uploadTransactionRepo->isDetailedCsv($headerCount)) {
             return true;
         }
 
@@ -128,7 +128,7 @@ class UploadTransactionManager
         $loadTransactionCsv = $this->getTransactionCsv($transactionCsv);
         $headerCount        = $loadTransactionCsv->first()->keys()->count();
 
-        if ($headerCount == 15) {
+        if ($this->uploadTransactionRepo->isSimpleCsv($headerCount)) {
             return true;
         }
 

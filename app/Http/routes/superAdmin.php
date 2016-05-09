@@ -1,7 +1,7 @@
 <?php
 
 $router->group(
-    ['namespace' => 'SuperAdmin'],
+    ['namespace' => 'SuperAdmin', 'SuperAdmin' => true],
     function ($router) {
         $router->get(
             'admin/list-organization',

@@ -55,22 +55,25 @@ $router->get(
 $router->get(
     'admin/activity-log',
     [
-        'as'   => 'admin.activity-log',
-        'uses' => 'Complete\AdminController@index'
+        'SuperAdmin' => true,
+        'as'         => 'admin.activity-log',
+        'uses'       => 'Complete\AdminController@index'
     ]
 );
 
 $router->get(
     'admin/activity-log/organization/{orgId}',
     [
-        'as'   => 'admin.activity-log.organization',
-        'uses' => 'Complete\AdminController@index'
+        'SuperAdmin' => true,
+        'as'         => 'admin.activity-log.organization',
+        'uses'       => 'Complete\AdminController@index'
     ]
 );
 
 $router->get(
     'admin/activity-log/{id}',
     [
+        'SuperAdmin' => true,
         'as'   => 'admin.activity-log.view-data',
         'uses' => 'Complete\AdminController@viewData'
     ]
@@ -207,5 +210,12 @@ $router->get(
     [
         'as'   => 'validate-organization',
         'uses' => 'CompleteValidateController@validateOrganization'
+    ]
+);
+$router->get(
+    'admin/updateOrganizationIdForUserActivities',
+    [
+        'as'   => 'admin.updateOrganizationIdForUserActivities',
+        'uses' => 'Complete\AdminController@updateOrganizationIdForUserActivities'
     ]
 );

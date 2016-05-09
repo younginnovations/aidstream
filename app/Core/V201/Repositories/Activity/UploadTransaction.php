@@ -10,7 +10,6 @@ use App\Models\Activity\Transaction as TransactionModel;
  */
 class UploadTransaction
 {
-    const SIMPLE_CSV_COLUMN_COUNT = 15;
     /**
      * @var TransactionModel
      */
@@ -60,13 +59,33 @@ class UploadTransaction
     }
 
     /**
+     * checks if csv is in simple format
+     * @param $count
+     * @return bool
+     */
+    public function isSimpleCsv($count)
+    {
+        return $count == 14;
+    }
+
+    /**
+     * checks if csv is in detailed format
+     * @param $count
+     * @return bool
+     */
+    public function isDetailedCsv($count)
+    {
+        return $count == 25;
+    }
+
+    /**
      * prepare transaction array for upload
      * @param $transactionRow
      * @return array
      */
     public function formatFromExcelRow($transactionRow)
     {
-        if (count($transactionRow) == self::SIMPLE_CSV_COLUMN_COUNT) {
+        if ($this->isSimpleCsv(count($transactionRow))) {
             return $this->formatFromSimpleCsv($transactionRow);
         }
 
@@ -110,6 +129,7 @@ class UploadTransaction
 
     /**
      * get the references of all transaction
+     * @param $activityId
      * @return array
      */
     public function getTransactionReferences($activityId)

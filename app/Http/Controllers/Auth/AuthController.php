@@ -185,6 +185,7 @@ class AuthController extends Controller
                 $user = Auth::user();
                 Session::put('role_id', $user->role_id);
                 Session::put('org_id', $user->org_id);
+                Session::put('admin_id',$user->id);
                 $settings       = Settings::where('organization_id', $user->org_id)->first();
                 $settings_check = isset($settings);
                 $version        = ($settings_check) ? $settings->version : config('app.default_version');
