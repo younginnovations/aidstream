@@ -4,11 +4,15 @@
             <div class="activity-element-title">
                 Document Link
             </div>
-            <a href="{{route('activity.document-link.index', $id)}}" class="edit-element">edit</a>
-            <a href="{{route('activity.delete-element', [$id, 'document_link'])}}" class="delete pull-right">remove</a>
+            @if(!request()->route()->hasParameter('document_link'))
+                <a href="{{route('activity.document-link.index', $id)}}" class="edit-element">edit</a>
+            @endif
         </div>
         <div class="panel-body panel-level-1">
             @foreach($documentLinks as $documentLink)
+                {{--*/
+                    $documentLink = $documentLink['document_link'];
+                /*--}}
                 @if(!$documentLink['title'][0]['narrative'])
                     {{--*/
                     $documentLink['title'][0]['narrative'] = [['narrative' => '', 'language' => '']];

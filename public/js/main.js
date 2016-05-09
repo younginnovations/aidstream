@@ -2645,7 +2645,8 @@ $(document).ready(function () {
             $('form .datepicker').datetimepicker({
                 timepicker: false,
                 format: 'Y-m-d',
-                formatDate: 'Y-m-d'
+                formatDate: 'Y-m-d',
+                scrollMonth: false
             });
         }
     }

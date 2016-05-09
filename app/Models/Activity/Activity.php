@@ -172,4 +172,13 @@ class Activity extends Model
     {
         return date('Y-m-d H:i:s', strtotime($date));
     }
+
+    /**
+     * An Activity has many ActivityDocumentLink.
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function documentLinks()
+    {
+        return $this->hasMany(ActivityDocumentLink::class);
+    }
 }
