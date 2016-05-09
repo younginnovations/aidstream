@@ -1,3 +1,5 @@
+var preventNavigation = false;
+
 $(document).ready(function () {
 
     var removedAll = false;
@@ -598,7 +600,6 @@ $(document).ready(function () {
     }
 
     //js for form input check and leave page alert
-    var preventNavigation = false;
     $('form').delegate('textarea:not(".ignore_change"), select:not(".ignore_change"), input:not(".ignore_change")', 'change keyup', function (e) {
         var element = $(e.target);
         if (e.isTrigger !== undefined && (element.is('input') || element.is('textarea'))) {

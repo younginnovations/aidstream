@@ -2,7 +2,11 @@
 
 use App\Core\V201\Repositories\UserActivity;
 use App\Core\Version;
+use App\Services\Organization\OrganizationManager;
 use Illuminate\Contracts\Auth\Guard;
+use App\Services\Activity\ActivityManager as ActivitiesManager;
+use Illuminate\Pagination\Paginator;
+
 
 /**
  * Class ActivityManager
@@ -24,16 +28,30 @@ class ActivityManager
     protected $userActivityRepo;
 
     /**
-     * @param UserActivity $userActivityRepo
-     * @param Guard        $auth
-     * @param Version      $version
+     * @var OrganizationManager
      */
-    public function __construct(UserActivity $userActivityRepo, Guard $auth, Version $version)
+    protected $organizationManager;
+
+    /**
+     * @var ActivitiesManager
+     */
+    protected $activityManager;
+
+    /**
+     * @param OrganizationManager $organizationManager
+     * @param ActivitiesManager   $activityManager
+     * @param UserActivity        $userActivityRepo
+     * @param Guard               $auth
+     * @param Version             $version
+     */
+    public function __construct(OrganizationManager $organizationManager, ActivitiesManager $activityManager, UserActivity $userActivityRepo, Guard $auth, Version $version)
     {
-        $this->auth             = $auth;
-        $this->repo             = $version->getActivityElement()->getRepository();
-        $this->version          = $version;
-        $this->userActivityRepo = $userActivityRepo;
+        $this->auth                = $auth;
+        $this->repo                = $version->getActivityElement()->getRepository();
+        $this->version             = $version;
+        $this->userActivityRepo    = $userActivityRepo;
+        $this->organizationManager = $organizationManager;
+        $this->activityManager     = $activityManager;
     }
 
 
@@ -112,5 +130,37 @@ class ActivityManager
     protected function isSuperAdminActivity($orgId)
     {
         return ($orgId && strpos($orgId, 'sa-') !== false);
+    }
+
+    /** Returns all the users of the organization
+     * @param $orgId
+     * @return mixed
+     */
+    public function getUsersOfOrganization($orgId)
+    {
+        $users = $this->userActivityRepo->getUsersOfOrganization($orgId);
+
+        return $users;
+    }
+
+    /** Returns all the activities of the organization
+     * @param $orgId
+     * @return \App\Models\Activity\Activity
+     */
+    public function getActivitiesOfOrganization($orgId)
+    {
+        $activities = $this->activityManager->getActivities($orgId);
+
+        return $activities;
+    }
+
+    /** Returns result according to the selection of the filter.
+     * @param $userSelection
+     * @param $dataSelection
+     * @return mixed
+     */
+    public function getResult($userSelection, $dataSelection)
+    {
+        return $this->userActivityRepo->getResult($userSelection, $dataSelection);
     }
 }
