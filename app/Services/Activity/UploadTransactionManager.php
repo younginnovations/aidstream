@@ -92,9 +92,9 @@ class UploadTransactionManager
     public function isEmptyCsv($transactionCsv)
     {
         $loadTransactionCsv = $this->getTransactionCsv($transactionCsv);
-        $transactionRows    = $loadTransactionCsv->getTotalRowsOfFile();
+        $transactionRows    = count($loadTransactionCsv->get()->toArray());
 
-        if ($transactionRows == 1 || $transactionRows == 0) {
+        if ($transactionRows == 0) {
             return true;
         }
 

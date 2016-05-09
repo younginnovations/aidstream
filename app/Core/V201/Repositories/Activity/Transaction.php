@@ -98,6 +98,7 @@ class Transaction
             $this->removeArrayValue($array[$key], $arrayPath);
         }
     }
+
     /*
      * insert sector vocabulary by default "1" if sector code is present
      * @param $transactionDetails
@@ -109,5 +110,16 @@ class Transaction
         }
 
         return $transactionDetails;
+    }
+
+    /**
+     * Delete specific activity transaction
+     * @param TransactionModel $transaction
+     * @return bool|null
+     * @throws \Exception
+     */
+    public function deleteTransaction(TransactionModel $transaction)
+    {
+        return $transaction->delete();
     }
 }

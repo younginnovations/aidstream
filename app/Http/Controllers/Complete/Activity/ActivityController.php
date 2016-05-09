@@ -3,6 +3,7 @@
 use App\Core\V201\Requests\Activity\IatiIdentifierRequest;
 use App\Http\Controllers\Controller;
 use App\Services\Activity\ChangeActivityDefaultManager;
+use App\Services\Activity\DocumentLinkManager;
 use App\Services\Activity\ResultManager;
 use App\Services\Activity\TransactionManager;
 use App\Services\FormCreator\Activity\ChangeActivityDefault;
@@ -86,6 +87,10 @@ class ActivityController extends Controller
      * @var ChangeActivityDefaultManager
      */
     protected $changeActivityDefaultManager;
+    /**
+     * @var DocumentLinkManager
+     */
+    protected $documentLinkManager;
 
     /**
      * @param SettingsManager              $settingsManager
@@ -95,6 +100,7 @@ class ActivityController extends Controller
      * @param ActivityManager              $activityManager
      * @param ResultManager                $resultManager
      * @param TransactionManager           $transactionManager
+     * @param DocumentLinkManager          $documentLinkManager
      * @param ChangeActivityDefault        $changeActivityDefaultForm
      * @param ChangeActivityDefaultManager $changeActivityDefaultManager
      * @param User                         $user
@@ -109,6 +115,7 @@ class ActivityController extends Controller
         ActivityManager $activityManager,
         ResultManager $resultManager,
         TransactionManager $transactionManager,
+        DocumentLinkManager $documentLinkManager,
         ChangeActivityDefault $changeActivityDefaultForm,
         ChangeActivityDefaultManager $changeActivityDefaultManager,
         User $user,
@@ -129,6 +136,7 @@ class ActivityController extends Controller
         $this->user                         = $user;
         $this->loggerInterface              = $loggerInterface;
         $this->twitter                      = $twitterAPI;
+        $this->documentLinkManager          = $documentLinkManager;
     }
 
     /**
@@ -207,11 +215,13 @@ class ActivityController extends Controller
             return redirect()->route('activity.index')->withResponse($this->getNoPrivilegesMessage());
         }
 
-        $activityDataList                = $activityData->activity_data_list;
-        $activityResult                  = $this->resultManager->getResults($id)->toArray();
-        $activityTransaction             = $this->transactionManager->getTransactions($id)->toArray();
-        $activityDataList['results']     = $activityResult;
-        $activityDataList['transaction'] = $activityTransaction;
+        $activityDataList                   = $activityData->activity_data_list;
+        $activityResult                     = $this->resultManager->getResults($id)->toArray();
+        $activityTransaction                = $this->transactionManager->getTransactions($id)->toArray();
+        $activityDocumentLinks              = $this->documentLinkManager->getDocumentLinks($id)->toArray();
+        $activityDataList['results']        = $activityResult;
+        $activityDataList['transaction']    = $activityTransaction;
+        $activityDataList['document_links'] = $activityDocumentLinks;
 
         return view('Activity.show', compact('activityDataList', 'id'));
     }
@@ -634,9 +644,12 @@ class ActivityController extends Controller
         $files = $publishedFile->published_activities;
 
         foreach ($files as $xmlFile) {
-            $activityId = array_last(explode('-', explode('.', $xmlFile)[0]), function ($value) {
-                return true;
-            });
+            $activityId = array_last(
+                explode('-', explode('.', $xmlFile)[0]),
+                function ($value) {
+                    return true;
+                }
+            );
 
             $transaction      = [];
             $recipientCountry = [];
@@ -726,6 +739,7 @@ class ActivityController extends Controller
         $activity = $this->activityManager->getActivityData($id);
         $result   = $this->activityManager->deleteElement($activity, $element);
         if ($result) {
+            $this->activityManager->resetActivityWorkflow($id);
             $response = ['type' => 'success', 'code' => ['activity_element_removed', ['element' => 'activity']]];
         } else {
             $response = ['type' => 'danger', 'code' => ['activity_element_not_removed', ['element' => 'activity']]];

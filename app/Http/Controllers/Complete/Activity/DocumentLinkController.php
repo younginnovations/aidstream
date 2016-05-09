@@ -7,6 +7,7 @@ use App\Services\DocumentManager;
 use App\Services\FormCreator\Activity\DocumentLink as DocumentLinkForm;
 use App\Services\RequestManager\Activity\DocumentLink as DocumentLinkRequestManager;
 use App\Http\Requests\Request;
+use Illuminate\Contracts\Logging\Log;
 use Illuminate\Database\DatabaseManager;
 use Illuminate\Support\Facades\Gate;
 
@@ -43,7 +44,7 @@ class DocumentLinkController extends Controller
     }
 
     /**
-     * returns the activity document link edit form
+     * Return document link list
      * @param $id
      * @return \Illuminate\View\View
      */
@@ -55,61 +56,137 @@ class DocumentLinkController extends Controller
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
-        $documentLink = $this->documentLinkManager->getDocumentLinkData($id);
-        $form         = $this->documentLinkForm->editForm($documentLink, $id);
+        $documentLinks = $activityData->documentLinks()->orderBy('updated_at', 'desc')->get();
 
-        return view('Activity.documentLink.edit', compact('form', 'activityData', 'id'));
+        return view('Activity.documentLink.index', compact('documentLinks', 'activityData', 'id'));
     }
 
     /**
-     * updates activity document link
-     * @param                            $id
-     * @param Request                    $request
-     * @param DocumentLinkRequestManager $documentLinkRequestManager
-     * @param DocumentManager            $documentManager
-     * @param DatabaseManager            $database
-     * @return \Illuminate\Http\RedirectResponse
+     * display document link with specific id
+     * @param $activityId
+     * @param $documentLinkId
+     * @return \Illuminate\View\View
      */
-    public function update($id, Request $request, DocumentLinkRequestManager $documentLinkRequestManager, DocumentManager $documentManager, DatabaseManager $database)
+    public function show($activityId, $documentLinkId)
     {
-        $activityData  = $this->activityManager->getActivityData($id);
+        $activityData = $this->activityManager->getActivityData($activityId);
 
         if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
-        $this->authorizeByRequestType($activityData, 'document_link');
-        $documentLinks = $request->all();
+        $documentLinks = [$this->documentLinkManager->getDocumentLink($documentLinkId, $activityId)];
+        $id            = $activityId;
 
-        $dbDocumentLinks = (array) $this->documentLinkManager->getDocumentLinkData($id);
+        return view('Activity.documentLink.show', compact('documentLinks', 'activityData', 'id', 'documentLinkId'));
+    }
 
-        foreach ($dbDocumentLinks as $documentLink) {
-            $url        = $documentLink['url'];
-            $document   = $documentManager->getDocument(session('org_id'), $url);
-            $activities = (array) $document->activities;
-            unset($activities[$id]);
-            $document->activities = $activities;
-            $documentManager->update($document);
+    /**
+     * Show the form for creating document link
+     * @param $id
+     * @return \Illuminate\View\View
+     */
+    public function create($id)
+    {
+        $activityData = $this->activityManager->getActivityData($id);
+
+        if (Gate::denies('ownership', $activityData)) {
+            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
-        if ($this->documentLinkManager->update($documentLinks, $activityData)) {
+        $this->authorize('add_activity', $activityData);
+
+        return $this->loadForm($id);
+    }
+
+    /**
+     * Show the form for editing document link
+     * @param $id
+     * @param $documentLinkId
+     * @return \Illuminate\View\View
+     */
+    public function edit($id, $documentLinkId)
+    {
+        $activityData = $this->activityManager->getActivityData($id);
+
+        if (Gate::denies('ownership', $activityData)) {
+            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
+        }
+
+        $this->authorize('add_activity', $activityData);
+        $documentLink = $this->documentLinkManager->getDocumentLink($documentLinkId, $id);
+
+        return $this->loadForm($id, $documentLink, $documentLinkId);
+    }
+
+    /**
+     * return form view for create and edit result
+     * @param      $id
+     * @param null $documentLink
+     * @param null $documentLinkId
+     * @return \Illuminate\View\View
+     */
+    public function loadForm($id, $documentLink = null, $documentLinkId = null)
+    {
+        $activityData = $this->activityManager->getActivityData($id);
+        $form         = $this->documentLinkForm->getForm($id, $documentLink);
+
+        return view('Activity.documentLink.edit', compact('form', 'activityData', 'id', 'documentLinkId'));
+    }
+
+    /**
+     * Update activity document link
+     * @param                            $id
+     * @param                            $documentLinkId
+     * @param Request                    $request
+     * @param DocumentLinkRequestManager $documentLinkRequestManager
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function update($id, $documentLinkId, Request $request, DocumentLinkRequestManager $documentLinkRequestManager)
+    {
+        $documentLinkData     = $request->get('document_link');
+        $activityDocumentLink = $this->documentLinkManager->getDocumentLink($documentLinkId, $id);
+        $activityData         = $this->activityManager->getActivityData($id);
+
+        if (Gate::denies('ownership', $activityData)) {
+            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
+        }
+
+        $this->authorizeByRequestType($activityDocumentLink, 'document_link', true);
+        if ($this->documentLinkManager->update($documentLinkData, $activityDocumentLink)) {
             $this->activityManager->resetActivityWorkflow($id);
-            $response = ['type' => 'success', 'code' => ['updated', ['name' => 'Document Link']]];
+            $response = ['type' => 'success', 'code' => [($documentLinkId) ? 'updated' : 'created', ['name' => 'Activity Document Link']]];
 
-            foreach ($documentLinks['document_link'] as $documentLink) {
-                $url                  = $documentLink['url'];
-                $document             = $documentManager->getDocument(session('org_id'), $url);
-                $activities           = (array) $document->activities;
-                $identifier           = $activityData->identifier['activity_identifier'];
-                $activities[$id]      = $identifier;
-                $document->activities = $activities;
-                $documentManager->update($document);
-            }
-
-            return redirect()->to(sprintf('/activity/%s', $id))->withResponse($response);
+            return redirect()->to(route('activity.document-link.index', $id))->withResponse($response);
         }
-        $response = ['type' => 'danger', 'code' => ['update_failed', ['name' => 'Document Link']]];
+        $response = ['type' => 'danger', 'code' => [($documentLinkId) ? 'update_failed' : 'save_failed', ['name' => 'Activity Document Link']]];
 
         return redirect()->back()->withInput()->withResponse($response);
+    }
+
+    /**
+     * Remove document link from database.
+     * @param  int $id
+     * @param      $documentLinkId
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id, $documentLinkId)
+    {
+        $activityData = $this->activityManager->getActivityData($id);
+
+        if (Gate::denies('ownership', $activityData)) {
+            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
+        }
+
+        $this->authorize('delete_activity', $activityData);
+        $activityDocumentLink = $this->documentLinkManager->getDocumentLink($documentLinkId, $id);
+        if ($this->documentLinkManager->delete($activityDocumentLink)) {
+            $this->activityManager->resetActivityWorkflow($id);
+            $response = ['type' => 'success', 'code' => ['deleted', ['name' => 'Document Link']]];
+        } else {
+            $response = ['type' => 'danger', 'code' => ['delete_failed', ['name' => 'Document Link']]];
+        }
+
+        return redirect()->back()->withResponse($response);
     }
 }

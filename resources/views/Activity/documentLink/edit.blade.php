@@ -13,8 +13,7 @@
                         <span>Document Link</span>
                         <div class="element-panel-heading-info"><span>{{$activityData->IdentifierTitle}}</span></div>
                         <div class="panel-action-btn">
-                            <a href="{{ route('activity.show', $id) }}" class="btn btn-primary">View Activity
-                            </a>
+                            <a href="{{route('activity.document-link.show',[$id, $documentLinkId])}}" class="btn btn-primary">View Document Link</a>
                         </div>
                     </div>
                 </div>
