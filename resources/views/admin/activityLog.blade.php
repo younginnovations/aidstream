@@ -14,10 +14,7 @@
                         <div>
                             <form id="filter_organization">
                                 <select name="orgId" id="organization" class="ignore_change form-control">
-                                    <option value="">Select Organization</option>
-                                    @foreach($superAdmins as $superAdmin)
-                                        <option value="sa-{{ $superAdmin->id }}" @if($orgId == "sa-$superAdmin->id") selected="selected" @endif>Super Admin - {{ $superAdmin->name }}</option>
-                                    @endforeach
+                                    <option value="all">All</option>
                                     @foreach($organizations as $organization)
                                         <option value="{{ $organization->id }}" @if($orgId == $organization->id) selected="selected" @endif>{{ $organization->name }}</option>
                                     @endforeach
@@ -42,13 +39,14 @@
                                             : <a href="{{ route('admin.activity-log.view-data', $value->user_activity_id) }}" target="_blank">View Data</a>
                                         @endif
                                     </td>
-                                    <td>{{$value->user ? $value->user->username : 'The user has been deleted.'}}</td>
+                                    <td>{{$value->user ? $value->user->first_name." ".$value->user->last_name : 'The user has been deleted.'}}</td>
                                 </tr>
                             @empty
                                 <td class="text-center no-data" colspan="4">No Activity Log Yet::</td>
                             @endforelse
                             </tbody>
                         </table>
+                        {!! $activity->render() !!}
                     </div>
                 </div>
             </div>

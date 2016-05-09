@@ -35,16 +35,8 @@
 
 @section('foot')
     <script type="text/javascript" src="{{url('/js/jquery.jsonview.js')}}"></script>
+    <script type="text/javascript" src="{{url('/js/chunk.js')}}"></script>
     <script type="text/javascript">
-        $(function () {
-            var data = '{!! json_encode($data) !!}';
-            $("#json-view").JSONView(data, {
-                collapsed: true
-            });
-
-            $('#toggle-btn').on('click', function () {
-                $('#json-view').JSONView('toggle');
-            });
-        });
+        Chunk.toggleData('{!! json_encode($data) !!}');
     </script>
 @endsection
