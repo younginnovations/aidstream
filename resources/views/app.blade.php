@@ -199,6 +199,7 @@
     <script type="text/javascript" src="{{url('/js/select2.min.js')}}"></script>
     <script type="text/javascript" src="{{url('/js/jquery.datetimepicker.full.min.js')}}"></script>
     <script type="text/javascript" src="{{url('/js/script.js')}}"></script>
+    <script type="text/javascript" src="{{url('/js/datatable.js')}}"></script>
 @else
     <script type="text/javascript" src="{{url('/js/main.min.js')}}"></script>
 @endif

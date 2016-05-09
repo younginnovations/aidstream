@@ -29,7 +29,6 @@ class DocumentLink extends BaseForm
             ->addCollection('category', 'Activity\CategoryCode', 'category')
             ->addAddMoreButton('add_category', 'category')
             ->addCollection('language', 'Activity\LanguageCode', 'language')
-            ->addAddMoreButton('add_language', 'language')
-            ->addRemoveThisButton('remove_document_link');
+            ->addAddMoreButton('add_language', 'language');
     }
 }

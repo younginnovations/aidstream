@@ -259,19 +259,9 @@ class TransactionController extends Controller
 
         $this->authorize('delete_activity', $activity);
         $transaction = $this->transactionManager->getTransaction($transactionId);
-        $response    = ($transaction->delete($transaction)) ? ['type' => 'success', 'code' => ['deleted', ['name' => 'Transaction']]] : [
-            'type' => 'danger',
-            'code' => ['delete_failed', ['name' => 'transaction']]
-        ];
-
-        app(Log::class)->activity(
-            "activity.activity_transaction_deleted",
-            [
-                'transaction_id' => $transactionId,
-                'activity_id'    => $id
-            ],
-            $transaction->toArray()
-        );
+        $response    = ($this->transactionManager->deleteTransaction($transaction))
+            ? ['type' => 'success', 'code' => ['deleted', ['name' => 'Transaction']]]
+            : ['type' => 'danger', 'code' => ['delete_failed', ['name' => 'transaction']]];
 
         return redirect()->back()->withResponse($response);
     }

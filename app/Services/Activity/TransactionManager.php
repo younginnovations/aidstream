@@ -3,6 +3,7 @@
 use App\Core\Version;
 use App;
 use App\Models\Activity\Activity;
+use App\Models\Activity\Transaction;
 use Exception;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Logging\Log as DbLogger;
@@ -111,6 +112,32 @@ class TransactionManager
             return true;
         } catch (Exception $exception) {
             $this->logger->error($exception, ['transactionId' => $transactionId]);
+        }
+
+        return false;
+    }
+
+    /**
+     * @param Transaction $transaction
+     * @return bool
+     */
+    public function deleteTransaction(Transaction $transaction)
+    {
+        try {
+            $this->transactionRepo->deleteTransaction($transaction);
+
+            $this->dbLogger->activity(
+                "activity.activity_transaction_deleted",
+                [
+                    'transaction_id' => $transaction->id,
+                    'activity_id'    => $transaction->activity_id
+                ],
+                $transaction->toArray()
+            );
+
+            return true;
+        } catch (Exception $exception) {
+            $this->logger->error($exception, ['result' => $transaction]);
         }
 
         return false;

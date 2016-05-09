@@ -3,8 +3,10 @@
 use App\Core\V201\Repositories\Activity\DocumentLink;
 use App\Core\Version;
 use App\Models\Activity\Activity;
+use App\Models\Activity\ActivityDocumentLink;
 use App\Models\Organization\Organization;
 use App\Services\Activity\DocumentLinkManager;
+use App\Services\DocumentManager;
 use App\User;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Logging\Log;
@@ -27,17 +29,21 @@ class DocumentLinkManagerTest extends AidStreamTestCase
     protected $documentLinkManager;
     protected $activity;
     protected $database;
+    protected $documentLinkModel;
+    protected $documentManager;
 
     public function SetUp()
     {
         parent::setUp();
-        $this->version          = m::mock(Version::class);
-        $this->auth             = m::mock(Guard::class);
-        $this->dbLogger         = m::mock(Log::class);
-        $this->logger           = m::mock(LoggerInterface::class);
-        $this->documentLinkRepo = m::mock(DocumentLink::class);
-        $this->activity         = m::mock(Activity::class);
-        $this->database         = m::mock(DatabaseManager::class);
+        $this->version           = m::mock(Version::class);
+        $this->auth              = m::mock(Guard::class);
+        $this->dbLogger          = m::mock(Log::class);
+        $this->logger            = m::mock(LoggerInterface::class);
+        $this->documentLinkRepo  = m::mock(DocumentLink::class);
+        $this->activity          = m::mock(Activity::class);
+        $this->documentLinkModel = m::mock(ActivityDocumentLink::class);
+        $this->documentManager   = m::mock(DocumentManager::class);
+        $this->database          = m::mock(DatabaseManager::class);
         $this->version->shouldReceive('getActivityElement->getDocumentLink->getRepository')->andReturn(
             $this->documentLinkRepo
         );
@@ -52,50 +58,61 @@ class DocumentLinkManagerTest extends AidStreamTestCase
 
     public function testItShouldUpdateActivityDocumentLink()
     {
+        $documentLinkData = [['url' => 'testUrl']];
+        $this->database->shouldReceive('beginTransaction')->once()->andReturnSelf();
+
+        $this->documentLinkModel->shouldReceive('getAttribute')->with('exists')->andReturn(false);
+        $this->documentLinkModel->shouldReceive('getAttribute')->with('activity_id')->andReturn(1);
+        $this->documentLinkModel->shouldReceive('getAttribute')->once()->with('id')->andReturn(1);
+        $this->documentLinkModel->shouldReceive('getAttribute')->once()->with('activity')->andReturn($this->activity);
+        $this->activity->shouldReceive('getAttribute')->once()->with('identifier')->andReturn(['activity_identifier' => 1]);
+
         $orgModel = m::mock(Organization::class);
         $orgModel->shouldReceive('getAttribute')->once()->with('name')->andReturn('orgName');
         $orgModel->shouldREceive('getAttribute')->once()->with('id')->andReturn(1);
         $user = m::mock(User::class);
         $user->shouldReceive('getAttribute')->twice()->with('organization')->andReturn($orgModel);
         $this->auth->shouldReceive('user')->twice()->andReturn($user);
-        $activityModel = $this->activity;
-        $activityModel->shouldReceive('getAttribute')->with('id')->andreturn(1);
-        $activityModel->shouldReceive('getAttribute')->once()->with('document_link')->andReturn(
-            'testDocumentLink'
-        );
         $this->documentLinkRepo->shouldReceive('update')
                                ->once()
-                               ->with(['document_link' => 'testDocumentLink'], $activityModel)
+                               ->with($documentLinkData, $this->documentLinkModel)
                                ->andReturn(true);
         $this->logger->shouldReceive('info')->once()->with(
-            'Activity Document Link updated!',
-            ['for' => 'testDocumentLink']
+            'Activity Document Link saved!',
+            ['for' => $documentLinkData]
         );
+
         $this->dbLogger->shouldReceive('activity')->once()->with(
-            'activity.document_link',
+            'activity.document_link_saved',
             [
-                'activity_id'     => 1,
-                'organization'    => 'orgName',
-                'organization_id' => 1
+                'activity_id'      => 1,
+                'document_link_id' => 1,
+                'organization'     => 'orgName',
+                'organization_id'  => 1
             ]
         );
-        $this->database->shouldReceive('beginTransaction')->once()->andReturnSelf();
         $this->database->shouldReceive('commit')->once()->andReturnSelf();
         $this->assertTrue(
             $this->documentLinkManager->update(
-                ['document_link' => 'testDocumentLink'],
-                $activityModel
+                $documentLinkData,
+                $this->documentLinkModel
             )
         );
     }
 
-    public function testItShouldGetDocumentLinkDataWithCertainId()
+    public function testItShouldGetDocumentLinkWithCertainIdAndActivityId()
     {
-        $this->documentLinkRepo->shouldReceive('getDocumentLinkData')->once()->with(1)->andReturn($this->activity);
+        $this->documentLinkRepo->shouldReceive('getDocumentLink')->once()->with(1, 2)->andReturn($this->documentLinkModel);
         $this->assertInstanceOf(
-            'App\Models\Activity\Activity',
-            $this->documentLinkManager->getDocumentLinkData(1)
+            'App\Models\Activity\ActivityDocumentLink',
+            $this->documentLinkManager->getDocumentLink(1, 2)
         );
+    }
+
+    public function testItShouldGetDocumentLinksWithCertainActivityId()
+    {
+        $this->documentLinkRepo->shouldReceive('getDocumentLinks')->once()->with(2)->andReturn([]);
+        $this->assertEquals([], $this->documentLinkManager->getDocumentLinks(2));
     }
 
     public function tearDown()

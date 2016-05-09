@@ -83,6 +83,7 @@
                             $conditions = $activityDataList['conditions'];
                             $results = $activityDataList['results'];
                             $transactions = $activityDataList['transaction'];
+                            $documentLinks = $activityDataList['document_links'];
                             $capitalSpend = $activityDataList['capital_spend'];
                             $humanitarianScopes = $activityDataList['humanitarian_scope'];
                             /*--}}
