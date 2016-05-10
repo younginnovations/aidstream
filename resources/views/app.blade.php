@@ -180,7 +180,6 @@
 
 <!-- Scripts -->
 <script type="text/javascript">
-
     var dateFields = document.querySelectorAll('form [type="date"]');
     for (var i = 0; i < dateFields.length; i++) {
         dateFields[i].setAttribute('type', 'text');

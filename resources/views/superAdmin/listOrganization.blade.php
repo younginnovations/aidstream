@@ -65,4 +65,21 @@
             @include('includes.superAdmin.side_bar_menu')
         </div>
     </div>
+
+
+    <script type="text/javascript">
+        var masqueradeBtn = document.querySelectorAll('.masquerade');
+
+        var preventClick = false;
+        for (var i = 0; i < masqueradeBtn.length; i++) {
+            var button = masqueradeBtn[i];
+            button.onclick = function(event) {
+                if(preventClick) {
+                    event.preventDefault();
+                }
+                preventClick = true;
+            }
+        }
+    </script>
+
 @endsection

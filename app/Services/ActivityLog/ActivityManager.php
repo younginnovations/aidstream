@@ -58,6 +58,7 @@ class ActivityManager
             $userId = $this->auth->id();
         }
         $activityData['user_id'] = $userId;
+        $activityData['organization_id'] = session('org_id');
 
         return $this->userActivityRepo->save($activityData);
     }

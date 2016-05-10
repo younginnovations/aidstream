@@ -3,6 +3,8 @@
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdatePasswordRequest;
 use App\Http\Requests\UserRequest;
+use App\Models\Activity\Activity;
+use App\Models\UserActivity;
 use App\Services\ActivityLog\ActivityManager;
 use App\Services\Organization\OrganizationManager;
 use App\User;
@@ -15,6 +17,9 @@ use Illuminate\Contracts\Logging\Log as DbLogger;
  */
 class AdminController extends Controller
 {
+    /**
+     * @var
+     */
     protected $org_id;
 
     /**
@@ -230,4 +235,38 @@ class AdminController extends Controller
         return redirect()->route('admin.list-users')->withResponse($response);
 
     }
+
+    public function updateOrganizationIdForUserActivities()
+    {
+        $userActivities = UserActivity::all();
+
+        $userActivities->each(
+            function ($userActivity) {
+                $organizationId = null;
+                if ($userActivity->user && $userActivity->user->role_id != 3) {
+                    if ($organization = $userActivity->user->organization) {
+                        $organizationId = $organization->id;
+                    }
+                } else {
+                    $parameterColumn = $userActivity->param;
+                    if (array_key_exists('organization_id', $parameterColumn)) {
+                        $organizationId = $parameterColumn['organization_id'];
+                    } elseif (array_key_exists('orgId', $parameterColumn)) {
+                        $organizationId = $parameterColumn['orgId'];
+                    } else {
+                        if (array_key_exists('activity_id', $parameterColumn)) {
+                            $activity       = Activity::find($parameterColumn['activity_id']);
+                            $organizationId = $activity ? $activity->organization_id : null;
+                        }
+                    }
+                }
+
+                $userActivity->organization_id = $organizationId;
+                $userActivity->save();
+
+            }
+        );
+    }
+
+
 }

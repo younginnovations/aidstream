@@ -74,8 +74,8 @@ $router->get(
     'admin/activity-log/{id}',
     [
         'SuperAdmin' => true,
-        'as'   => 'admin.activity-log.view-data',
-        'uses' => 'Complete\AdminController@viewData'
+        'as'         => 'admin.activity-log.view-data',
+        'uses'       => 'Complete\AdminController@viewData'
     ]
 );
 
@@ -215,7 +215,8 @@ $router->get(
 $router->get(
     'admin/updateOrganizationIdForUserActivities',
     [
-        'as'   => 'admin.updateOrganizationIdForUserActivities',
-        'uses' => 'Complete\AdminController@updateOrganizationIdForUserActivities'
+        'SuperAdmin' => true,
+        'as'         => 'admin.updateOrganizationIdForUserActivities',
+        'uses'       => 'Complete\AdminController@updateOrganizationIdForUserActivities'
     ]
 );
