@@ -200,4 +200,14 @@ class OrganizationManager
 
         return $userIds;
     }
+
+    /**
+     * check if reporting organization already exists while saving settings
+     * @param $reportOrg
+     * @return mixed
+     */
+    public function checkReportingOrganization($reportOrg)
+    {
+        return $this->repo->getReportingOrganizations($reportOrg);
+    }
 }
