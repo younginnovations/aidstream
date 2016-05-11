@@ -315,4 +315,16 @@ class OrganizationRepository implements OrganizationRepositoryInterface
 
         return $published->save();
     }
+
+    /**
+     * check in DB if new reporting org is already present
+     * @param $reportOrg
+     * @return mixed
+     */
+    public function getReportingOrganizations($reportOrg)
+    {
+        $result = Organization::where('id', '<>', session('org_id'))
+                              ->whereRaw("reporting_org #>> '{0, reporting_organization_identifier}' = '" . $reportOrg['reporting_organization_identifier'] . "'");
+        return $result->first();
+    }
 }
