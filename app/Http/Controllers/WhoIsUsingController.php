@@ -1,10 +1,12 @@
 <?php namespace App\Http\Controllers;
 
 use App\Helpers\GetCodeName;
+use App\Models\ActivityPublished;
 use App\Models\Organization\Organization;
 use App\Services\Activity\ActivityManager;
 use App\Services\Organization\OrganizationManager;
 use App\User;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * Class WhoIsUsingController
@@ -25,9 +27,23 @@ class WhoIsUsingController extends Controller
      */
     public function index()
     {
-        $organizationCount = Organization::where('display', 1)->get()->count();
+        $organizationCount = $this->initializeOrganizationQueryBuilder()->get()->count();
 
         return view('who-is-using', compact('organizationCount'));
+    }
+
+    /** Returns query builder of organizations having activity or organization file published.
+     * @return mixed
+     */
+    public function initializeOrganizationQueryBuilder()
+    {
+        return Organization::join('activity_published', 'organizations.id', '=', 'activity_published.organization_id')
+                           ->join('organization_published', 'organizations.id', '=', 'organization_published.organization_id')
+                           ->where('activity_published.published_to_register', 1)
+                           ->orWhere('organization_published.published_to_register', 1)
+                           ->select('organizations.id', 'organizations.name', 'organizations.logo_url')
+                           ->groupBy('organizations.id')
+                           ->orderBy('organizations.name');
     }
 
     /**
@@ -39,8 +55,8 @@ class WhoIsUsingController extends Controller
     public function listOrganization($page = 0, $count = 20)
     {
         $skip                  = $page * $count;
-        $data['next_page']     = Organization::count() > ($skip + $count);
-        $data['organizations'] = Organization::select('name', 'logo_url', 'id')->orderBy('name')->where('display', 1)->skip($skip)->take($count)->get();
+        $data['next_page']     = $this->initializeOrganizationQueryBuilder()->get()->count() > ($skip + $count);
+        $data['organizations'] = $this->initializeOrganizationQueryBuilder()->skip($skip)->take($count)->get();
 
         return $data;
     }
@@ -52,6 +68,12 @@ class WhoIsUsingController extends Controller
      */
     public function getDataForOrganization($organizationId)
     {
+        $organizationIdExists = $this->initializeOrganizationQueryBuilder()->having('organizations.id', '=', $organizationId)->get();
+
+        if (count($organizationIdExists) == 0) {
+            throw new NotFoundHttpException();
+        }
+
         $data               = $this->activityManager->getDataForOrganization($organizationId);
         $orgInfo            = $this->orgManager->getOrganization($organizationId);
         $transaction        = $this->mergeTransaction($data);
@@ -75,6 +97,7 @@ class WhoIsUsingController extends Controller
         $user = $this->user->getDataByOrgIdAndRoleId($organizationId, '1');
 
         return view('who-is-using-organization', compact('final_data', 'orgInfo', 'user'));
+
     }
 
     /**
@@ -224,13 +247,13 @@ class WhoIsUsingController extends Controller
 
         foreach ($transaction as $key => $value) {
             if ($key == 1) {
-                $arrays['incomingFunds'] += (float)$value;
+                $arrays['incomingFunds'] += (float) $value;
             } elseif ($key == 2) {
-                $arrays['commitment'] += (float)$value;
+                $arrays['commitment'] += (float) $value;
             } elseif ($key == 3) {
-                $arrays['disbursement'] += (float)$value;
+                $arrays['disbursement'] += (float) $value;
             } elseif ($key == 4) {
-                $arrays['expenditure'] += (float)$value;
+                $arrays['expenditure'] += (float) $value;
             }
         }
 

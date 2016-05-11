@@ -48,7 +48,7 @@
                         <div class="alert alert-danger">
                             <span>
                                 <p>
-                                    {{ $message }}
+                                    {!! $message !!}
                                 </p>
                                 <p>Return to <a href="{{ url('/auth/login') }}">@lang('trans.login').</a></p>
                             </span>
