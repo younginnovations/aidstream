@@ -22,8 +22,7 @@ class DocumentLink extends V201DocumentLink
             $rules                                                                   = array_merge(
                 $rules,
                 $this->getRulesForNarrative($documentLink['title'][0]['narrative'], sprintf('%s.title.0', $documentLinkForm)),
-                $this->getRulesForDocumentCategory($documentLink['category'], $documentLinkForm),
-                $this->getRulesForDocumentLanguage($documentLink['language'], $documentLinkForm)
+                $this->getRulesForDocumentCategory($documentLink['category'], $documentLinkForm)
             );
             $rules[sprintf('%s.title.0.narrative.0.narrative', $documentLinkForm)][] = 'required';
         }
@@ -47,8 +46,7 @@ class DocumentLink extends V201DocumentLink
             $messages                                                                          = array_merge(
                 $messages,
                 $this->getMessagesForNarrative($documentLink['title'][0]['narrative'], sprintf('%s.title.0', $documentLinkForm)),
-                $this->getMessagesForDocumentCategory($documentLink['category'], $documentLinkForm),
-                $this->getMessagesForDocumentLanguage($documentLink['language'], $documentLinkForm)
+                $this->getMessagesForDocumentCategory($documentLink['category'], $documentLinkForm)
             );
             $messages[sprintf('%s.title.0.narrative.0.narrative.required', $documentLinkForm)] = 'Narrative is required.';
         }

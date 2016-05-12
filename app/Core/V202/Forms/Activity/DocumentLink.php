@@ -23,6 +23,6 @@ class DocumentLink extends V201DocumentLink
             ->addAddMoreButton('add_category', 'category')
             ->addCollection('language', 'Activity\LanguageCode', 'language')
             ->addAddMoreButton('add_language', 'language')
-            ->addCollection('document_date', 'Activity\PeriodStart');
+            ->addCollection('document_date', 'Activity\Date');
     }
 }

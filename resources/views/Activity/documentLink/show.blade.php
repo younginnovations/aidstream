@@ -30,6 +30,7 @@
                                 <div class="panel panel-default expanded">
                                     @foreach($documentLinks as $documentLink)
                                         {{--*/
+                                            $documentLinkId = $documentLink->id;
                                             $documentLink = $documentLink['document_link'];
                                         /*--}}
                                         @if(!$documentLink['title'][0]['narrative'])
@@ -41,6 +42,7 @@
                                             <div class="activity-element-title">
                                                 {{$documentLink['title'][0]['narrative'][0]['narrative'] .  hideEmptyArray('Organization', 'Language', $documentLink['title'][0]['narrative'][0]['language'])}}
                                             </div>
+                                            <a href="{{route('activity.document-link.edit', [$id, $documentLinkId])}}" class="edit-element">edit</a>
                                         </div>
                                         <div class="panel-body">
                                             <div class="panel panel-default">
