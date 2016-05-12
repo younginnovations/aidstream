@@ -34,7 +34,7 @@ class Sector extends BaseForm
                 [
                     'choices'     => $this->getSectorCodeList(),
                     'empty_value' => 'Select one of the following option :',
-                    'label'       => 'Sector',
+                    'label'       => 'Sector Code',
                     'wrapper'     => ['class' => 'form-group sector_types sector_select'],
                     'help_block'  => $this->addHelpText('Activity_Sector-code'),
                     'required'    => true
@@ -46,7 +46,7 @@ class Sector extends BaseForm
                 [
                     'choices'     => $this->getSectorCategoryCodeList(),
                     'empty_value' => 'Select one of the following option :',
-                    'label'       => 'Sector',
+                    'label'       => 'Sector Code',
                     'wrapper'     => ['class' => 'form-group hidden sector_types sector_category_select'],
                     'help_block'  => $this->addHelpText('Activity_Sector-dac_three_code'),
                     'required'    => true
@@ -56,7 +56,7 @@ class Sector extends BaseForm
                 'sector_text',
                 'text',
                 [
-                    'label'      => 'Sector',
+                    'label'      => 'Sector Code',
                     'wrapper'    => ['class' => 'form-group hidden sector_types sector_text'],
                     'help_block' => $this->addHelpText('Activity_Sector-non_dac_code'),
                     'required'   => true

@@ -33,7 +33,7 @@ class Sector extends BaseForm
                 [
                     'choices'     => $this->getSectorCodeList(),
                     'empty_value' => 'Select one of the following option :',
-                    'label'       => 'Sector',
+                    'label'       => 'Sector Code',
                     'wrapper'     => ['class' => 'form-group hidden sector_types sector_select']
                 ]
             )
@@ -43,7 +43,7 @@ class Sector extends BaseForm
                 [
                     'choices'     => $this->getSectorCategoryCodeList(),
                     'empty_value' => 'Select one of the following option :',
-                    'label'       => 'Sector',
+                    'label'       => 'Sector Code',
                     'wrapper'     => ['class' => 'form-group hidden sector_types sector_category_select']
                 ]
             )
@@ -51,7 +51,7 @@ class Sector extends BaseForm
                 'sector_text',
                 'text',
                 [
-                    'label'    => 'Sector',
+                    'label'    => 'Sector Code',
                     'wrapper'  => ['class' => 'form-group sector_types sector_text']
                 ]
             )
