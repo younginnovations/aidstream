@@ -16,15 +16,16 @@ class DocumentLink extends V201DocumentLink
     {
         $rules = [];
         foreach ($formFields as $documentLinkIndex => $documentLink) {
-            $documentLinkForm                                              = sprintf('document_link.%s', $documentLinkIndex);
-            $rules[sprintf('document_link.%s.url', $documentLinkIndex)]    = 'required|url';
-            $rules[sprintf('document_link.%s.format', $documentLinkIndex)] = 'required';
-            $rules                                                         = array_merge(
+            $documentLinkForm                                                        = sprintf('document_link.%s', $documentLinkIndex);
+            $rules[sprintf('document_link.%s.url', $documentLinkIndex)]              = 'required|url';
+            $rules[sprintf('document_link.%s.format', $documentLinkIndex)]           = 'required';
+            $rules                                                                   = array_merge(
                 $rules,
                 $this->getRulesForNarrative($documentLink['title'][0]['narrative'], sprintf('%s.title.0', $documentLinkForm)),
                 $this->getRulesForDocumentCategory($documentLink['category'], $documentLinkForm),
                 $this->getRulesForDocumentLanguage($documentLink['language'], $documentLinkForm)
             );
+            $rules[sprintf('%s.title.0.narrative.0.narrative', $documentLinkForm)][] = 'required';
         }
 
         return $rules;
@@ -39,16 +40,17 @@ class DocumentLink extends V201DocumentLink
     {
         $messages = [];
         foreach ($formFields as $documentLinkIndex => $documentLink) {
-            $documentLinkForm                                                          = sprintf('document_link.%s', $documentLinkIndex);
-            $messages[sprintf('document_link.%s.url.required', $documentLinkIndex)]    = 'Url is required';
-            $messages[sprintf('document_link.%s.url.url', $documentLinkIndex)]         = 'Enter valid URL. eg. http://example.com';
-            $messages[sprintf('document_link.%s.format.required', $documentLinkIndex)] = 'Format is required';
-            $messages                                                                  = array_merge(
+            $documentLinkForm                                                                  = sprintf('document_link.%s', $documentLinkIndex);
+            $messages[sprintf('document_link.%s.url.required', $documentLinkIndex)]            = 'Url is required';
+            $messages[sprintf('document_link.%s.url.url', $documentLinkIndex)]                 = 'Enter valid URL. eg. http://example.com';
+            $messages[sprintf('document_link.%s.format.required', $documentLinkIndex)]         = 'Format is required';
+            $messages                                                                          = array_merge(
                 $messages,
                 $this->getMessagesForNarrative($documentLink['title'][0]['narrative'], sprintf('%s.title.0', $documentLinkForm)),
                 $this->getMessagesForDocumentCategory($documentLink['category'], $documentLinkForm),
                 $this->getMessagesForDocumentLanguage($documentLink['language'], $documentLinkForm)
             );
+            $messages[sprintf('%s.title.0.narrative.0.narrative.required', $documentLinkForm)] = 'Narrative is required.';
         }
 
         return $messages;
