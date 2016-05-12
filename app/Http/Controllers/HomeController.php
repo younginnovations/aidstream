@@ -8,8 +8,14 @@ use App\Models\Organization\Organization;
  */
 class HomeController extends Controller
 {
-    function __construct()
+    /**
+     * @var WhoIsUsingController
+     */
+    protected $organizationCount;
+
+    function __construct(WhoIsUsingController $organizationCount)
     {
+        $this->organizationCount = $organizationCount;
     }
 
     /**
@@ -17,7 +23,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $organizationCount = Organization::where('display', 1)->get()->count();
+        $organizationCount = $this->organizationCount->initializeOrganizationQueryBuilder()->get()->count();
 
         return view('home', compact('organizationCount'));
     }

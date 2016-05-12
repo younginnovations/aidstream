@@ -179,11 +179,7 @@
 
 
 <script>
-    var finalData = {
-    !!json_encode($final_data)
-    !!
-    }
-    ;
+    var finalData = {!!json_encode($final_data)!!};
 </script>
 
 <script src="/js/d3.min.js"></script>
