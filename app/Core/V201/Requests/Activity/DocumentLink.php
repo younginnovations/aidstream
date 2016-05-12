@@ -38,8 +38,7 @@ class DocumentLink extends ActivityBaseRequest
             $rules                                                                   = array_merge(
                 $rules,
                 $this->getRulesForNarrative(getVal($documentLink, ['title', 0, 'narrative']), sprintf('%s.title.0', $documentLinkForm)),
-                $this->getRulesForDocumentCategory(getVal($documentLink, ['category'], []), $documentLinkForm),
-                $this->getRulesForDocumentLanguage(getVal($documentLink, ['language'], []), $documentLinkForm)
+                $this->getRulesForDocumentCategory(getVal($documentLink, ['category'], []), $documentLinkForm)
             );
             $rules[sprintf('%s.title.0.narrative.0.narrative', $documentLinkForm)][] = 'required';
         }
@@ -63,8 +62,7 @@ class DocumentLink extends ActivityBaseRequest
             $messages                                                                          = array_merge(
                 $messages,
                 $this->getMessagesForNarrative(getVal($documentLink, ['title', 0, 'narrative']), sprintf('%s.title.0', $documentLinkForm)),
-                $this->getMessagesForDocumentCategory(getVal($documentLink, ['category'], []), $documentLinkForm),
-                $this->getMessagesForDocumentLanguage(getVal($documentLink, ['language'], []), $documentLinkForm)
+                $this->getMessagesForDocumentCategory(getVal($documentLink, ['category'], []), $documentLinkForm)
             );
             $messages[sprintf('%s.title.0.narrative.0.narrative.required', $documentLinkForm)] = 'Narrative is required.';
         }
@@ -98,36 +96,6 @@ class DocumentLink extends ActivityBaseRequest
         $messages = [];
         foreach ($formFields as $documentCategoryIndex => $documentCategory) {
             $messages[sprintf('%s.category.%s.code.required', $formIndex, $documentCategoryIndex)] = 'Category is required';
-        }
-
-        return $messages;
-    }
-
-    /**
-     * @param $formFields
-     * @param $formIndex
-     * @return array
-     */
-    protected function getRulesForDocumentLanguage($formFields, $formIndex)
-    {
-        $rules = [];
-        foreach ($formFields as $languageKey => $languageVal) {
-            $rules[sprintf('%s.language.%s.language', $formIndex, $languageKey)] = 'required';
-        }
-
-        return $rules;
-    }
-
-    /**
-     * @param $formFields
-     * @param $formIndex
-     * @return array
-     */
-    protected function getMessagesForDocumentLanguage($formFields, $formIndex)
-    {
-        $messages = [];
-        foreach ($formFields as $languageKey => $languageVal) {
-            $messages[sprintf('%s.language.%s.language.required', $formIndex, $languageKey)] = 'Language is required';
         }
 
         return $messages;
