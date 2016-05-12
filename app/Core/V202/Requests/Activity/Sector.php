@@ -99,24 +99,24 @@ class Sector extends V201Sector
 
             if ($sector['sector_vocabulary'] == 1 || $sector['sector_vocabulary'] == 2) {
                 if ($sector['sector_vocabulary'] == 1) {
-                    $messages[sprintf('%s.sector_code.%s', $sectorForm, 'required_with')] = 'Sector is required with Sector vocabulary.';
+                    $messages[sprintf('%s.sector_code.%s', $sectorForm, 'required_with')] = 'Sector code is required with Sector vocabulary.';
                 }
                 if ($sector['sector_code'] != "") {
-                    $messages[sprintf('%s.sector_vocabulary.%s', $sectorForm, 'required_with')] = 'Sector vocabulary is required with Sector.';
+                    $messages[sprintf('%s.sector_vocabulary.%s', $sectorForm, 'required_with')] = 'Sector vocabulary is required with Sector code.';
                 }
                 if ($sector['sector_vocabulary'] == 2) {
-                    $messages[sprintf('%s.sector_category_code.%s', $sectorForm, 'required_with')] = 'Sector is required with Sector vocabulary.';
+                    $messages[sprintf('%s.sector_category_code.%s', $sectorForm, 'required_with')] = 'Sector code is required with Sector vocabulary.';
                 }
                 if ($sector['sector_category_code'] != "") {
-                    $messages[sprintf('%s.sector_vocabulary.%s', $sectorForm, 'required_with')] = 'Sector vocabulary is required with Sector.';
+                    $messages[sprintf('%s.sector_vocabulary.%s', $sectorForm, 'required_with')] = 'Sector vocabulary is required with Sector code.';
                 }
             } else {
                 if ($sector['sector_vocabulary'] != "") {
-                    $messages[sprintf('%s.sector_text.%s', $sectorForm, 'required_with')] = 'Sector is required with Sector vocabulary.';
+                    $messages[sprintf('%s.sector_text.%s', $sectorForm, 'required_with')] = 'Sector code is required with Sector vocabulary.';
                 }
 
                 if ($sector['sector_text'] != "") {
-                    $messages[sprintf('%s.sector_vocabulary.%s', $sectorForm, 'required_with')] = 'Sector vocabulary is required with Sector.';
+                    $messages[sprintf('%s.sector_vocabulary.%s', $sectorForm, 'required_with')] = 'Sector vocabulary is required with Sector code.';
                 }
 
                 if ($sector['sector_vocabulary'] == "99" || $sector['sector_vocabulary'] == "98") {
