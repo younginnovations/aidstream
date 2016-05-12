@@ -117,7 +117,7 @@ select.form-control, form .select2-container {
 }
 
 .select2-container {
-  width: 100% !important;
+  //width: 100% !important;
   height: auto !important;
 }
 
@@ -568,7 +568,7 @@ label {
   margin-bottom: 0;
   border-top: 0;
   position: fixed;
-  z-index: 2;
+  z-index: 10000;
   width: 100%;
 }
 
@@ -985,6 +985,16 @@ label {
     &:hover, &.active, &:focus {
       &:before {
         background-position: -73px -380px;
+      }
+    }
+  }
+  .logs a {
+    &:before {
+      background-position: -69px -447px;
+    }
+    &:hover, &.active, &:focus {
+      &:before {
+        background-position: -69px -447px;
       }
     }
   }
@@ -3234,6 +3244,34 @@ table.dataTable thead .sorting_desc {
   background: $url_13 no-repeat right;
 }
 
+.logs-container .collection_form .form-group+.form-group {
+  padding-top: 10px;
+}
+
+.settings-wrapper .create-form.activity-log-filter-wrap {
+  .collection_form > label {
+    font-size: 16px;
+  }
+  .collection_form > .form-group {
+    padding-top: 8px;
+  }
+  .select2-container {
+    width: 415px!important;
+  }
+}
+
+#btnSearch {
+  margin-left: 20px;
+  margin-top: 10px;
+  width: 200px;
+  float: left;
+  clear: both;
+}
+
+.logs-container .create-form {
+  padding-bottom: 0;
+}
+
 @media all and (max-width: 1030px) {
   .activity-status {
     padding: 16px 10px 18px 50px;
@@ -3500,6 +3538,16 @@ table.dataTable thead .sorting_desc {
   }
   .result-content-wrapper td:nth-of-type(4):before {
     content: "Actions";
+  }
+
+  .logs-container table td:nth-of-type(1):before {
+    content: "Date";
+  }
+  .logs-container table td:nth-of-type(2):before {
+    content: "Action";
+  }
+  .logs-container table td:nth-of-type(3):before {
+    content: "User";
   }
 
   td input[type="checkbox"] {
@@ -3924,6 +3972,23 @@ table.dataTable thead .sorting_desc {
     float: right;
     margin-top: -50px;
   }
+
+  .logs-container {
+    .create-form > form {
+      margin-bottom: 20px;
+    }
+    .collection_form .form-group {
+      float: left;
+      width: 50% !important;
+    }
+    table {
+      margin-bottom: 54px;
+    }
+  }
+
+  .logs-container .collection_form .form-group+.form-group {
+    padding-top: 25px;
+  }
 }
 
 @media all and (min-width: 768px) {
@@ -4225,7 +4290,9 @@ table.dataTable thead .sorting_desc {
 }
 
 
-
+.logs-container .settings-wrapper .create-form.activity-log-filter-wrap .select2-container {
+  width: 100%!important;
+}
 
 
 

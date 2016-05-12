@@ -11,6 +11,11 @@ if (typeof(Chunk) == "undefined") var Chunk = {};
                 $('#form-filter').submit();
             });
         },
+        submitFilter: function () {
+            $('#form-filter').submit(function () {
+                preventNavigation = false;
+            });
+        },
         toggleData: function (data) {
             $("#json-view").JSONView(data, {
                 collapsed: true
