@@ -38,7 +38,7 @@ class CsvGenerator
      * @param       $filename
      * @param $data
      */
-    public function generate($filename, $data)
+    public function generate($filename, array $data)
     {
         return $this->generator->create(
             $filename,

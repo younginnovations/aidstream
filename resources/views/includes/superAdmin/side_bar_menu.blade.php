@@ -16,8 +16,10 @@
                         {{--<li><a href="#">Activity Status</a></li>--}}
                         {{--<li><a href="#">Validate XMl</a></li>--}}
                         {{--<li><a href="#">Generate Published XML Files</a></li>--}}
+                        <li><a href="{{ route('admin.exportOrganizationInfo') }}">Export Organization Details</a></li>
                     @endif
                 </ul>
+
             </div>
         </div>
     </div>
