@@ -37,8 +37,8 @@ class WhoIsUsingController extends Controller
      */
     public function initializeOrganizationQueryBuilder()
     {
-        return Organization::join('activity_published', 'organizations.id', '=', 'activity_published.organization_id')
-                           ->join('organization_published', 'organizations.id', '=', 'organization_published.organization_id')
+        return Organization::leftJoin('activity_published', 'organizations.id', '=', 'activity_published.organization_id')
+                           ->leftJoin('organization_published', 'organizations.id', '=', 'organization_published.organization_id')
                            ->where('activity_published.published_to_register', 1)
                            ->orWhere('organization_published.published_to_register', 1)
                            ->select('organizations.id', 'organizations.name', 'organizations.logo_url')
