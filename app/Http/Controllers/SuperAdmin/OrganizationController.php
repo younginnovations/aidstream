@@ -201,4 +201,13 @@ class OrganizationController extends Controller
 
         return redirect()->back();
     }
+
+    /**
+     *  Generates csv file containing details of the organization
+     */
+    public function exportOrganizationInfo()
+    {
+        $organizationDetails = $this->adminManager->getAllOrganizationInfo();
+        return $this->adminManager->exportDetails($organizationDetails);
+    }
 }

@@ -104,8 +104,15 @@ $router->group(
         $router->get(
             'admin/hide-organization/org_id/{id}/status/{status}',
             [
-                'as' => 'admin.hide-organization',
+                'as'   => 'admin.hide-organization',
                 'uses' => 'OrganizationController@hideOrganization'
+            ]
+        );
+        $router->get(
+            'admin/exportOrganizationInfo',
+            [
+                'as'   => 'admin.exportOrganizationInfo',
+                'uses' => 'OrganizationController@exportOrganizationInfo'
             ]
         );
     }

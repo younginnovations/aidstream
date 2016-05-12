@@ -1,6 +1,7 @@
 <?php namespace App\Models\Activity;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 /**
  * Class Activity
@@ -180,5 +181,18 @@ class Activity extends Model
     public function documentLinks()
     {
         return $this->hasMany(ActivityDocumentLink::class);
+    }
+
+    /** Returns total number of activities of given organization
+     * @param $orgId
+     * @return mixed
+     */
+    public function getNoOfActivities($orgId)
+    {
+        return DB::table('organizations')
+                 ->join('activity_data', 'activity_data.organization_id', '=', 'organizations.id')
+                 ->select(DB::raw('count(activity_data.id) as NoOfActivities'))
+                 ->where('organizations.id', $orgId)
+                 ->get();
     }
 }
