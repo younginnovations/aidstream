@@ -259,19 +259,13 @@ class TransactionController extends Controller
 
         $this->authorize('delete_activity', $activity);
         $transaction = $this->transactionManager->getTransaction($transactionId);
-        $response    = ($transaction->delete($transaction)) ? ['type' => 'success', 'code' => ['deleted', ['name' => 'Transaction']]] : [
-            'type' => 'danger',
-            'code' => ['delete_failed', ['name' => 'transaction']]
-        ];
 
-        app(Log::class)->activity(
-            "activity.activity_transaction_deleted",
-            [
-                'transaction_id' => $transactionId,
-                'activity_id'    => $id
-            ],
-            $transaction->toArray()
-        );
+        if ($this->transactionManager->deleteTransaction($transaction)) {
+            $this->activityManager->resetActivityWorkflow($id);
+            $response = ['type' => 'success', 'code' => ['deleted', ['name' => 'Transaction']]];
+        } else {
+            $response = ['type' => 'danger', 'code' => ['delete_failed', ['name' => 'transaction']]];
+        }
 
         return redirect()->back()->withResponse($response);
     }
@@ -286,6 +280,7 @@ class TransactionController extends Controller
     {
         $result = $this->transactionManager->deleteBlock($transactionId, $jsonPath);
         if ($result) {
+            $this->activityManager->resetActivityWorkflow($id);
             $response = ['type' => 'success', 'code' => ['transaction_block_removed', ['element' => 'activity']]];
         } else {
             $response = ['type' => 'danger', 'code' => ['transaction_block_not_removed', ['element' => 'activity']]];

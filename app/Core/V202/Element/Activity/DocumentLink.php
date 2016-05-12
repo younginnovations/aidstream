@@ -16,9 +16,10 @@ class DocumentLink extends V201DocumentLink
     public function getXmlData(Activity $activity)
     {
         $activityData  = [];
-        $documentLinks = (array) $activity->document_link;
+        $documentLinks = $activity->documentLinks()->get();
 
         foreach ($documentLinks as $documentLink) {
+            $documentLink   = $documentLink->document_link;
             $activityData[] = [
                 '@attributes'   => [
                     'url'    => $documentLink['url'],
@@ -39,7 +40,7 @@ class DocumentLink extends V201DocumentLink
                 ],
                 'document-date' => [
                     '@attributes' => [
-                        'iso-date' => getVal($documentLink, ['document_date',0,'date'])
+                        'iso-date' => getVal($documentLink, ['document_date', 0, 'date'])
                     ]
                 ]
             ];

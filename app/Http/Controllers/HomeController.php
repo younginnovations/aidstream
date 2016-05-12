@@ -17,7 +17,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $organizationCount = Organization::count();
+        $organizationCount = Organization::where('display', 1)->get()->count();
 
         return view('home', compact('organizationCount'));
     }

@@ -125,9 +125,9 @@ class UploadActivityManager
     public function isEmptyCsv($activityCsv)
     {
         $loadActivityCsv = $this->getActivityCsv($activityCsv);
-        $activityRows    = $loadActivityCsv->getTotalRowsOfFile();
+        $activityRows    = count($loadActivityCsv->get()->toArray());
 
-        if ($activityRows == 1 || $activityRows == 0) {
+        if ($activityRows == 0) {
             return true;
         }
 

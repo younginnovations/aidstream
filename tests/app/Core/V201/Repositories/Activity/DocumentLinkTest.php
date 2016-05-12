@@ -1,7 +1,7 @@
 <?php namespace Test\app\Core\V201\Repositories\Activity;
 
 use App\Core\V201\Repositories\Activity\DocumentLink;
-use App\Models\Activity\Activity;
+use App\Models\Activity\ActivityDocumentLink;
 use Mockery as m;
 use Test\AidStreamTestCase;
 
@@ -14,35 +14,39 @@ class DocumentLinkTest extends AidStreamTestCase
     /**
      * @var
      */
-    protected $activityData;
+    protected $documentLinkModel;
     protected $documentLink;
 
     public function setUp()
     {
         parent::setUp();
-        $this->activityData      = m::mock(Activity::class);
-        $this->documentLink = new DocumentLink($this->activityData);
+        $this->documentLinkModel = m::mock(ActivityDocumentLink::class);
+        $this->documentLink      = new DocumentLink($this->documentLinkModel);
     }
 
     public function testItShouldUpdateActivityDocumentLink()
     {
-        $this->activityData->shouldReceive('setAttribute')->once()->with(
+        $this->documentLinkModel->shouldReceive('setAttribute')->once()->with(
             'document_link',
             'testDocumentLink'
         );
-        $this->activityData->shouldReceive('save')->once()->andReturn(true);
+        $this->documentLinkModel->shouldReceive('save')->once()->andReturn(true);
         $this->assertTrue(
-            $this->documentLink->update(['document_link' => 'testDocumentLink'], $this->activityData)
+            $this->documentLink->update(['testDocumentLink'], $this->documentLinkModel)
         );
 
     }
 
-    public function testItShouldReturnDocumentLinkData()
+    public function testItShouldReturnDocumentLinkWithSpecificIdAndActivityId()
     {
-        $this->activityData->shouldReceive('findOrFail')->once()->with(1)->andReturnSelf()->shouldReceive(
-            'getAttribute'
-        )->once()->with('document_link')->andReturn([]);
-        $this->assertTrue(is_array($this->documentLink->getDocumentLinkData(1)));
+        $this->documentLinkModel->shouldReceive('firstOrNew')->once()->with(['id' => 1, 'activity_id' => 2])->andReturn($this->documentLinkModel);
+        $this->assertInstanceOf('App\Models\Activity\ActivityDocumentLink', $this->documentLink->getDocumentLink(1, 2));
+    }
+
+    public function testItShouldReturnDocumentLinksWithSpecificActivityId()
+    {
+        $this->documentLinkModel->shouldReceive('where->get')->once()->andReturn([]);
+        $this->assertEquals([], $this->documentLink->getDocumentLinks(1));
     }
 
     public function tearDown()

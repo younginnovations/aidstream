@@ -33,6 +33,7 @@ $router->group(
         $router->resource('activity.condition', 'ConditionController');
         $router->resource('activity.planned-disbursement', 'PlannedDisbursementController');
         $router->resource('activity.document-link', 'DocumentLinkController');
+        $router->resource('activity.document-link.delete', 'DocumentLinkController@destroy');
         $router->resource('activity.related-activity', 'RelatedActivityController');
         $router->resource('activity.transaction', 'TransactionController');
         $router->resource('activity.transaction.delete', 'TransactionController@destroy');
