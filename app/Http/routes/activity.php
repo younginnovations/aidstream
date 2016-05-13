@@ -107,5 +107,30 @@ $router->group(
                 'uses' => 'ActivityController@twitterPost'
             ]
         );
+
+        $router->get(
+            '/import-activity',
+            [
+                'as'   => 'import-activity.index',
+                'uses' => 'ImportActivityController@index'
+            ]
+        );
+
+        $router->match(
+            ['get', 'post'],
+            '/import-activity/list-activities',
+            [
+                'as'   => 'import-activity.list-activities',
+                'uses' => 'ImportActivityController@listActivities'
+            ]
+        );
+
+        $router->post(
+            '/import-activity/import-activities',
+            [
+                'as'   => 'import-activity.import',
+                'uses' => 'ImportActivityController@importActivities'
+            ]
+        );
     }
 );

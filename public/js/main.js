@@ -2330,6 +2330,7 @@ $(document).ready(function () {
     /*
      * Confirmation for form submission
      * Usage:
+     * Define form id
      * Define Submit button params as:
      *   type = "button"
      *   class = "btn_confirm"
@@ -2375,6 +2376,7 @@ $(document).ready(function () {
         $('.modal-footer', popElem).html(buttons);
 
         $('body').undelegate('.btn_yes', 'click').delegate('.btn_yes', 'click', function () {
+            preventNavigation = false;
             $('#' + formId).submit();
         });
 

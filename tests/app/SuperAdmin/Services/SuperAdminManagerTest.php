@@ -1,6 +1,11 @@
 <?php namespace Test\SuperAdmin\Services;
 
+use App\Models\Activity\Activity;
+use App\Models\ActivityPublished;
+use App\Models\OrganizationPublished;
+use App\Services\Export\CsvGenerator;
 use App\SuperAdmin\Services\SuperAdminManager;
+use App\User;
 use Test\AidStreamTestCase;
 use Mockery as m;
 
@@ -12,12 +17,23 @@ class SuperAdminManagerTest extends AidStreamTestCase
 {
     protected $adminInterface;
     protected $superAdminManager;
+    protected $generator;
+    protected $user;
+    protected $activityPublished;
+    protected $organizationPublished;
+    protected $activity;
 
     public function setUp()
     {
         parent::setUp();
-        $this->adminInterface    = m::mock('App\SuperAdmin\Repositories\SuperAdminInterfaces\SuperAdmin');
-        $this->superAdminManager = new SuperAdminManager($this->adminInterface);
+        $this->adminInterface        = m::mock('App\SuperAdmin\Repositories\SuperAdminInterfaces\SuperAdmin');
+        $this->generator             = m::mock(CsvGenerator::class);
+        $this->user                  = m::mock(User::class);
+        $this->activityPublished     = m::mock(ActivityPublished::class);
+        $this->organizationPublished = m::mock(OrganizationPublished::class);
+        $this->activity              = m::mock(Activity::class);
+
+        $this->superAdminManager = new SuperAdminManager($this->adminInterface, $this->generator, $this->user, $this->activityPublished, $this->organizationPublished, $this->activity);
     }
 
     public function testItShouldGetAllOrganizations()

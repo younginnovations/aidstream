@@ -96,6 +96,17 @@ class ResultManagerTest extends AidStreamTestCase
     public function testItShouldReceiveDeleteResult()
     {
         $this->resultRepo->shouldReceive('deleteResult')->with($this->activityResult)->andReturn(true);
+        $this->activityResult->shouldReceive('toArray')->once()->andReturn([]);
+        $this->activityResult->shouldReceive('getAttribute')->once()->with('id')->andReturn(1);
+        $this->activityResult->shouldReceive('getAttribute')->once()->with('activity_id')->andReturn(2);
+        $this->dbLogger->shouldReceive('activity')->with(
+            "activity.activity_result_deleted",
+            [
+                'result_id'   => 1,
+                'activity_id' => 2
+            ],
+            []
+        );
         $this->assertTrue($this->resultManager->deleteResult($this->activityResult));
     }
 

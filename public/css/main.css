@@ -4791,6 +4791,8 @@ form > .add_to_collection[data-collection="legacy_data"] {
   .panel-upload .create-form > form > .form-group {
     padding-right: 20px;
     padding-left: 20px; }
+  .panel-upload .create-form button {
+    margin-top: 45px; }
 
 .panel-upload form {
   overflow: hidden; }
@@ -4798,9 +4800,13 @@ form > .add_to_collection[data-collection="legacy_data"] {
 .panel-upload .form-group {
   float: left; }
 
-.panel-upload button {
-  margin: 45px 0 0px 20px;
-  color: #fff !important; }
+.panel-upload .btn_confirm[disabled], .panel-upload .btn_confirm[disabled]:hover {
+  background: #ddd;
+  color: #aaa; }
+
+.panel-upload > .panel-body p {
+  font-size: 16px;
+  margin-bottom: 20px; }
 
 .download-transaction-wrap {
   padding: 0 36px; }
@@ -5643,6 +5649,124 @@ table.dataTable thead .sorting_desc {
 .logs-container .create-form {
   padding-bottom: 0; }
 
+.activity-title {
+  font-family: Open-Sans-Bold; }
+
+.activity-identifier {
+  margin: 3px 0 0 16px;
+  font-size: 12px;
+  color: rgba(72, 72, 72, 0.7); }
+
+.activity-errors {
+  margin: 0 0 14px 20px; }
+  .activity-errors ol {
+    padding-left: 15px; }
+  .activity-errors p {
+    margin-bottom: 0; }
+
+.csv-upload-wrapper {
+  padding-left: 36px;
+  padding-right: 36px;
+  width: 100%; }
+
+.activity-csv-status > div {
+  -webkit-border-radius: 4px;
+          border-radius: 4px; }
+  .activity-csv-status > div p:first-child {
+    font-size: 16px;
+    margin-bottom: 0;
+    padding: 11px 20px 11px 50px;
+    position: relative; }
+    .activity-csv-status > div p:first-child:before {
+      position: absolute;
+      top: 10px;
+      right: auto;
+      bottom: auto;
+      left: 20px;
+      content: "";
+      width: 22px;
+      height: 22px;
+      -webkit-border-radius: 50%;
+              border-radius: 50%; }
+
+.activity-csv-status ol {
+  padding-left: 17px;
+  line-height: 22px;
+  margin-bottom: 10px; }
+
+.activity-success p:first-child {
+  color: #52cc88;
+  background: #f5fff9;
+  border-bottom: 1px solid #d5f2e2; }
+  .activity-success p:first-child:before {
+    background: #52cc88 url(../../images/ic-csv-status.svg) no-repeat 5px 7px; }
+
+.activity-success p:last-child {
+  color: #52cc88; }
+
+.activity-error p:first-child {
+  color: #e15454;
+  background: #fff7f7;
+  border-bottom: 1px solid #ffe2e2; }
+  .activity-error p:first-child:before {
+    background: #e15454 url(../../images/ic-csv-status.svg) no-repeat 5px -22px; }
+
+.activity-error p:last-child {
+  color: #e15454; }
+
+.activity-warning p:first-child {
+  color: #feb752;
+  background: #fffaf2;
+  border-bottom: 1px solid #ffebca; }
+  .activity-warning p:first-child:before {
+    background: #feb752 url(../../images/ic-csv-status.svg) no-repeat 5px -52px; }
+
+.activity-warning p:last-child {
+  color: #feb752; }
+  .activity-warning p:last-child a {
+    text-decoration: underline;
+    font-style: italic;
+    color: inherit;
+    margin-left: 2px; }
+
+.activity-block {
+  overflow: hidden;
+  margin-bottom: 30px;
+  -webkit-border-radius: 4px;
+          border-radius: 4px; }
+
+.activity-warning-block {
+  border: 1px solid #ffebca; }
+
+.activity-errors-block {
+  border: 1px solid #ffe2e2; }
+
+.activity-success-block {
+  border: 1px solid #d5f2e2; }
+
+.activity-check-title {
+  padding: 20px;
+  margin-bottom: 10px;
+  font-size: 14px; }
+  .activity-check-title p {
+    clear: both;
+    font-size: 14px !important;
+    color: #52cc88;
+    margin: 0 0 0 24px !important; }
+  .activity-check-title ol {
+    margin-left: 24px;
+    clear: both; }
+
+.activity-title {
+  font-family: Open-Sans-Bold;
+  margin-bottom: 14px;
+  float: left;
+  margin-left: 6px; }
+
+.no-title {
+  color: #9B9B9B;
+  font-style: italic; }
+
 @media all and (max-width: 1030px) {
   .activity-status {
     padding: 16px 10px 18px 50px; }
@@ -5689,7 +5813,7 @@ table.dataTable thead .sorting_desc {
     margin-right: 40px; }
   .scroll-top {
     right: 30px; }
-  .element-content-wrapper {
+  .element-content-wrapper:not(.csv-upload-wrapper) {
     padding-left: 0;
     padding-right: 0; } }
 
@@ -5880,7 +6004,7 @@ table.dataTable thead .sorting_desc {
     margin: 0; }
   .panel-content-heading, .element-panel-heading, .create-form,
   .panel-add-wizard .panel-heading, .panel-add-wizard h4,
-  .download-transaction-wrap {
+  .download-transaction-wrap, .csv-upload-wrapper {
     padding-left: 14px;
     padding-right: 14px; }
   .upload-wrapper {
@@ -6223,7 +6347,9 @@ table.dataTable thead .sorting_desc {
     margin-right: -3px;
     margin-top: 35px; }
     .settings-checkall-wrapper > .collection_form > .form-group > .form-group:nth-child(-n+5), .checkall-wrapper .form-group:nth-child(3) > .form-group > .form-group:nth-child(-n+5) {
-      margin-top: 0; } }
+      margin-top: 0; }
+  .activity-block {
+    width: 80%; } }
 
 .alert {
   padding: 15px !important;

@@ -99,7 +99,7 @@ class UploadActivityManager
             return true;
         } catch (Exception $exception) {
             $this->database->rollback();
-            $this->logger->error($exception, ['activity' => 'activityDetails']);
+            $this->logger->error($exception, ['activity' => $activityDetails]);
         }
 
         return false;

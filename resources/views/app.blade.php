@@ -41,8 +41,8 @@
                                     class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
                             <li><a href="{{route('activity.create') }}">Add Activity Manually</a></li>
-                            {{--                            <li><a href="{{route('wizard.activity.create') }}">Add Activity using Wizard</a></li>--}}
-                            <li><a href="{{ route('activity-upload.index') }}">Upload Activities</a></li>
+                            {{--<li><a href="{{route('wizard.activity.create') }}">Add Activity using Wizard</a></li>--}}
+                            <li><a href="{{ route('import-activity.index') }}">Upload Activities</a></li>
                         </ul>
                     </li>
                 </ul>

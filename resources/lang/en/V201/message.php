@@ -32,5 +32,8 @@ return [
     'activity_element_removed'                => 'Activity element has been removed successfully.',
     'activity_element_not_removed'            => 'Failed to remove activity element.',
     'transaction_block_removed'               => 'The block from Transaction has been removed successfully.',
-    'transaction_block_not_removed'           => 'Failed to remove the block from Transaction.'
+    'transaction_block_not_removed'           => 'Failed to remove the block from Transaction.',
+    'activity_imported'                       => sprintf('One Activity %s has been imported successfully.', ':activities'),
+    'activities_imported'                     => sprintf('Activities %s have been imported successfully.', ':activities'),
+    'activities_import_failed'                => 'Failed to import activities.'
 ];

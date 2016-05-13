@@ -77,6 +77,9 @@ class Version
         $this->iatiAttributes = $iatiAttributes;
     }
 
+    /**
+     * @return App\Core\V201\IatiActivity
+     */
     public function getActivityElement()
     {
         return $this->activityElement;
