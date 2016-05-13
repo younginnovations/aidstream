@@ -26,7 +26,8 @@ trait XmlServiceTrait
                 break;
         }
         $return .= trim($error->message);
-        $return .= "in line no. <b>$error->line</b>";
+        $errorLine = $error->line - 4;
+        $return .= "in  line no. <a href='#$errorLine'><b>$error->line</b></a>";
 
         return $return;
     }

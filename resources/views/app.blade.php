@@ -212,6 +212,7 @@
 <script type="text/javascript" src="{{url('/js/ga.js')}}"></script>
 <script type="text/javascript" src="//cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
 <!-- End Google Analytics -->
+
 @yield('script')
 @yield('foot')
 

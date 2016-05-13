@@ -3,6 +3,7 @@
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Services\Activity\ActivityManager;
+use App\Services\RequestManager\OrganizationElementValidator;
 use App\Services\SettingsManager;
 use App\Services\Organization\OrganizationManager;
 use App\Services\FormCreator\Organization\OrgReportingOrgForm;
@@ -86,6 +87,7 @@ class OrganizationController extends Controller
         return view(
             'Organization/show',
             compact(
+                'id',
                 'organization',
                 'reporting_org',
                 'org_name',
@@ -101,11 +103,12 @@ class OrganizationController extends Controller
     }
 
     /**
-     * @param         $id
-     * @param Request $request
+     * @param                              $id
+     * @param Request                      $request
+     * @param OrganizationElementValidator $orgElementValidator
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function updateStatus($id, Request $request)
+    public function updateStatus($id, Request $request, OrganizationElementValidator $orgElementValidator)
     {
         $organization = $this->organizationManager->getOrganization($id);
 
@@ -126,9 +129,17 @@ class OrganizationController extends Controller
         $orgElem    = $this->organizationManager->getOrganizationElement();
         $xmlService = $orgElem->getOrgXmlService();
         if ($status === "1") {
+            $validationMessage = $orgElementValidator->validateOrganization($organizationData);
+
+            if ($validationMessage) {
+                $response = ['type' => 'warning', 'code' => ['message', ['message' => $validationMessage]]];
+
+                return redirect()->back()->withResponse($response);
+            }
+
             $messages = $xmlService->validateOrgSchema($organization, $organizationData, $settings, $orgElem);
-            if ($messages !== '') {
-                $response = ['type' => 'danger', 'messages' => $messages];
+            if ($messages != []) {
+                $response = ['type' => 'danger', 'messages' => $messages, 'schema' => 'true'];
 
                 return redirect()->back()->withResponse($response);
             }
@@ -238,5 +249,41 @@ class OrganizationController extends Controller
         }
 
         return redirect()->back()->withValue($value);
+    }
+
+    /**
+     * View organization xml file
+     * @param $orgId
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function viewOrganizationXml($orgId, $viewErrors = false)
+    {
+        $orgElem    = $this->organizationManager->getOrganizationElement();
+        $xmlService = $orgElem->getOrgXmlService();
+        $xml        = $xmlService->generateTemporaryOrganizationXml($this->organizationManager->getOrganization($orgId), $this->organizationManager->getOrganizationData($orgId),
+            $this->settingsManager->getSettings($orgId), $orgElem);
+
+        $xmlLines = $xmlService->getFormattedXml($xml);
+        $messages = $xmlService->getSchemaErrors($xml, session('version'));
+
+        return view('Organization.xmlView', compact('xmlLines', 'messages', 'orgId', 'viewErrors'));
+    }
+
+    /**
+     * Download organization xml
+     * @param $orgId
+     * @return \Illuminate\Http\Response
+     */
+    public function downloadOrganizationXml($orgId)
+    {
+        $orgElem    = $this->organizationManager->getOrganizationElement();
+        $xmlService = $orgElem->getOrgXmlService();
+        $xml        = $xmlService->generateTemporaryOrganizationXml($this->organizationManager->getOrganization($orgId), $this->organizationManager->getOrganizationData($orgId),
+            $this->settingsManager->getSettings($orgId), $orgElem);
+
+        return response()->make($xml, 200, [
+            'Content-type'        => 'text/xml',
+            'Content-Disposition' => sprintf('attachment; filename=orgXmlFile.xml')
+        ]);
     }
 }

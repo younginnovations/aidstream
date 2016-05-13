@@ -9,6 +9,9 @@
                     <li>- {!! $message !!}</li>
                 @endforeach
             </ul>
+            @if(array_key_exists('schema', $response))
+                <a target="_blank" href="{{route('errors.organizationXml', ['organizationId' => request()->route('organization'), 'true' => true])}}" class="view-error">View error in organization xml</a>
+            @endif
         </div>
     @else
         <div class="alert alert-{{$response['type']}}">

@@ -21,6 +21,7 @@
                 ?>
                 <div class="element-panel-heading">
                     <div><span class="pull-left">Organization</span></div>
+                    <div class="view-xml-btn org-xml-btn"><span class="pull-left"><a href="{{route('view.organizationXml', ['orgId' => $id])}}">View IATI XML file</a></span></div>
                 </div>
                 <div class="col-xs-12 col-md-8 col-lg-8 element-content-wrapper">
                     <div class="activity-status activity-status-{{ $status_label[$status] }}">
@@ -41,7 +42,7 @@
                                     <input type="button" value="Mark as {{ $btn_text }}" class="btn_confirm"
                                            data-title="Confirmation" data-message="Are you sure you want to Publish?">
                                 @else
-                                    <input type="submit" value="Mark as {{ $btn_text }}">
+                                    <input type="submit" value="Mark as {{ $btn_text }}"> 
                                 @endif
                             </form>
                         @endif
