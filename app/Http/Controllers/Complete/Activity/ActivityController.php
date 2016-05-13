@@ -279,7 +279,7 @@ class ActivityController extends Controller
             }
 
             $messages = $xmlService->validateActivitySchema($activityData, $transactionData, $resultData, $settings, $activityElement, $orgElem, $organization);
-            if ($messages) {
+            if ($messages != []) {
                 $response = ['type' => 'danger', 'messages' => $messages];
 
                 return redirect()->back()->withResponse($response);
