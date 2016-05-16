@@ -150,47 +150,49 @@
                                     @endforeach
                                 </div>
                             </div>
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <div class="activity-element-title">Sector</div>
-                                </div>
-                                <div class="panel-element-body row">
-                                    {{--*/
-                                        $vocabulary = $transaction['transaction']['sector'][0]['sector_vocabulary'];
-                                        $vocabularyValue = $getCode->getActivityCodeName('SectorVocabulary', $vocabulary);
-                                        if ($vocabulary == 1 || $vocabulary == '') {
-                                            $sectorValue = $getCode->getActivityCodeName('Sector', $transaction['transaction']['sector'][0]['sector_code']);
-                                        } elseif ($vocabulary == 2) {
-                                            $sectorValue = $getCode->getActivityCodeName('SectorCategory', $transaction['transaction']['sector'][0]['sector_category_code']);
-                                        } else {
-                                            $sectorValue = $transaction['transaction']['sector'][0]['sector_text'];
-                                        }
-                                    /*--}}
-                                    <div class="col-xs-12 col-md-12">
-                                        <div class="col-xs-12 col-sm-4">Vocabulary:</div>
-                                        <div class="col-xs-12 col-sm-8">{{ $vocabularyValue }}</div>
+                            @if(getVal($transaction, ['transaction', 'sector'], []))
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <div class="activity-element-title">Sector</div>
                                     </div>
-                                    <div class="col-xs-12 col-md-12">
-                                        <div class="col-xs-12 col-sm-4">Code:</div>
-                                        <div class="col-xs-12 col-sm-8">{{ $sectorValue }}</div>
-                                    </div>
-                                    @foreach($transaction['transaction']['sector'] as $narrative)
+                                    <div class="panel-element-body row">
                                         {{--*/
-                                        $ValidNarrative = getVal($narrative, ['narrative'], []);
-                                        $narrative['narrative'] = $ValidNarrative;
+                                            $vocabulary = $transaction['transaction']['sector'][0]['sector_vocabulary'];
+                                            $vocabularyValue = $getCode->getActivityCodeName('SectorVocabulary', $vocabulary);
+                                            if ($vocabulary == 1 || $vocabulary == '') {
+                                                $sectorValue = $getCode->getActivityCodeName('Sector', $transaction['transaction']['sector'][0]['sector_code']);
+                                            } elseif ($vocabulary == 2) {
+                                                $sectorValue = $getCode->getActivityCodeName('SectorCategory', $transaction['transaction']['sector'][0]['sector_category_code']);
+                                            } else {
+                                                $sectorValue = $transaction['transaction']['sector'][0]['sector_text'];
+                                            }
                                         /*--}}
-                                        @foreach($narrative['narrative'] as $narrative)
+                                        <div class="col-xs-12 col-md-12">
+                                            <div class="col-xs-12 col-sm-4">Vocabulary:</div>
+                                            <div class="col-xs-12 col-sm-8">{{ $vocabularyValue }}</div>
+                                        </div>
+                                        <div class="col-xs-12 col-md-12">
+                                            <div class="col-xs-12 col-sm-4">Code:</div>
+                                            <div class="col-xs-12 col-sm-8">{{ $sectorValue }}</div>
+                                        </div>
+                                        @foreach($transaction['transaction']['sector'] as $narrative)
                                             {{--*/
-                                            $narrative['language'] = getVal($narrative, ['language'], '');
+                                            $ValidNarrative = getVal($narrative, ['narrative'], []);
+                                            $narrative['narrative'] = $ValidNarrative;
                                             /*--}}
-                                            <div class="col-xs-12 col-md-12">
-                                                <div class="col-xs-12 col-sm-4">Text:</div>
-                                                <div class="col-xs-12 col-sm-8">{{$narrative['narrative'] . hideEmptyArray('Organization', 'Language', $narrative['language'])}}</div>
-                                            </div>
+                                            @foreach($narrative['narrative'] as $narrative)
+                                                {{--*/
+                                                $narrative['language'] = getVal($narrative, ['language'], '');
+                                                /*--}}
+                                                <div class="col-xs-12 col-md-12">
+                                                    <div class="col-xs-12 col-sm-4">Text:</div>
+                                                    <div class="col-xs-12 col-sm-8">{{$narrative['narrative'] . hideEmptyArray('Organization', 'Language', $narrative['language'])}}</div>
+                                                </div>
+                                            @endforeach
                                         @endforeach
-                                    @endforeach
+                                    </div>
                                 </div>
-                            </div>
+                            @endif
                             @if(getVal($transaction, ['transaction', 'recipient_country'], []))
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
