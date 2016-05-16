@@ -93,20 +93,10 @@ class CompleteValidateController extends Controller
     public function validateCompletedActivity($activityData, $transactionData, $resultData, $settings, $activityElement, $orgElem, $organization, $version)
     {
         // Enable user error handling
-        libxml_use_internal_errors(true);
         $xmlService     = $activityElement->getActivityXmlService();
         $tempXmlContent = $xmlService->generateTemporaryActivityXml($activityData, $transactionData, $resultData, $settings, $activityElement, $orgElem, $organization);
-        $xml            = new \DOMDocument();
-        $xml->loadXML($tempXmlContent);
-        $schemaPath = app_path(sprintf('/Core/%s/XmlSchema/iati-activities-schema.xsd', $version));
-        $messages   = [];
-        if (!$xml->schemaValidate($schemaPath)) {
-            $messages = $this->libxml_display_errors();
-        }
-
-        $xmlString = htmlspecialchars($tempXmlContent);
-        $xmlString = str_replace(" ", "&nbsp;&nbsp;", $xmlString);
-        $xmlLines  = explode("\n", $xmlString);
+        $messages       = $xmlService->getSchemaErrors($tempXmlContent, $version);
+        $xmlLines       = $xmlService->getFormattedXml($tempXmlContent);
 
         return view('validate-schema', compact('messages', 'xmlLines'));
     }

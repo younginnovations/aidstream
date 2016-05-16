@@ -23,6 +23,7 @@
                             <span>{{$activityDataList['identifier']['iati_identifier_text']}}</span>
                             <span class="last-updated-date">Last Updated on: {{changeTimeZone($activityDataList['updated_at'], 'M d, Y H:i')}}</span>
                         </div>
+                        <div class="view-xml-btn"><a href="{{route('view.activityXml', ['activityId' => $id])}}">View IATI XML file</a></div>
                     </div>
                 </div>
                 <div class="col-xs-12 col-md-8 col-lg-8 element-content-wrapper">

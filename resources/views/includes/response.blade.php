@@ -11,6 +11,8 @@
             </ul>
             @if(array_key_exists('schema', $response))
                 <a target="_blank" href="{{route('errors.organizationXml', ['organizationId' => request()->route('organization'), 'true' => true])}}" class="view-error">View error in organization xml</a>
+
+                    <a target="_blank" href="{{route('errors.activityXml', ['activityId' => request()->route('activity'), 'true' => true])}}" class="view-error">View error in activity xml</a>
             @endif
         </div>
     @else

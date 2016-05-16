@@ -3497,22 +3497,28 @@ table.dataTable thead .sorting_desc {
 }
 
 .xml-info {
-   word-break: break-all;
-   li.error, li.success {
-     background: $color_mandy_approx;
-     color: $color_white;
-     padding: 10px 36px;
-     margin-bottom: 20px;
+  word-break: break-all;
+  li.error, li.success {
+    background: $color_mandy_approx;
+    color: $color_white;
+    padding: 10px 36px;
+    margin-bottom: 20px;
     a {
       color: $color_white;
       text-decoration: underline;
     }
   }
-    li.success {
+   li.success {
       > div {
       background: $color_emerald_approx;
        padding: 0 36px;
     }
+  }
+  div + .pln {
+    display: none;
+  }
+  div > span.pln:first-child {
+    display: none;
   }
 }
 
@@ -3529,18 +3535,16 @@ table.dataTable thead .sorting_desc {
   float: right;
 }
 
-.xml-info {
-  div + .pln {
-    display: none;
-  }
-  div > span.pln:first-child {
-    display: none;
-  }
+pre.prettyprint {
+  border: 0!important;
+  padding: 10px!important;
 }
 
-pre.prettyprint {
-  border: 0 !important;
-  padding: 10px !important;
+.view-error, .view-error:hover {
+  color: $color_white;
+  text-decoration: underline;
+  margin-left: 57px;
+  display: inline-block;
 }
 
 @media all and (max-width: 1030px) {
@@ -4381,7 +4385,7 @@ pre.prettyprint {
 
   .element-panel-heading-info {
     float: left;
-    width: 80%;
+    width: 72%;
   }
 
   .settings-checkall-wrapper > .collection_form > .form-group > .form-group, .checkall-wrapper .form-group:nth-child(3) > .form-group > .form-group {
@@ -4403,6 +4407,10 @@ pre.prettyprint {
   .jspPane {
     width: 267px !important;
   }
+}
+
+.panel-xml-btn {
+  margin-top: 8px;
 }
 
 @media all and (max-width: 1200px) {
