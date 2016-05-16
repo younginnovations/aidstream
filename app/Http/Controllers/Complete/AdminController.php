@@ -61,13 +61,12 @@ class AdminController extends Controller
      * @param null $orgId
      * @return \Illuminate\View\View
      */
-    public function index($orgId = null)
+    public function index($orgId = "all")
     {
         $activity      = $this->userActivityManager->getUserActivities($orgId);
         $organizations = $this->organizationManager->getOrganizations(['name', 'id']);
-        $superAdmins   = $this->user->getSuperAdmins();
 
-        return view('admin.activityLog', compact('activity', 'organizations', 'superAdmins', 'orgId'));
+        return view('admin.activityLog', compact('activity', 'organizations', 'orgId'));
     }
 
     /**
@@ -235,38 +234,4 @@ class AdminController extends Controller
         return redirect()->route('admin.list-users')->withResponse($response);
 
     }
-
-    public function updateOrganizationIdForUserActivities()
-    {
-        $userActivities = UserActivity::all();
-
-        $userActivities->each(
-            function ($userActivity) {
-                $organizationId = null;
-                if ($userActivity->user && $userActivity->user->role_id != 3) {
-                    if ($organization = $userActivity->user->organization) {
-                        $organizationId = $organization->id;
-                    }
-                } else {
-                    $parameterColumn = $userActivity->param;
-                    if (array_key_exists('organization_id', $parameterColumn)) {
-                        $organizationId = $parameterColumn['organization_id'];
-                    } elseif (array_key_exists('orgId', $parameterColumn)) {
-                        $organizationId = $parameterColumn['orgId'];
-                    } else {
-                        if (array_key_exists('activity_id', $parameterColumn)) {
-                            $activity       = Activity::find($parameterColumn['activity_id']);
-                            $organizationId = $activity ? $activity->organization_id : null;
-                        }
-                    }
-                }
-
-                $userActivity->organization_id = $organizationId;
-                $userActivity->save();
-
-            }
-        );
-    }
-
-
 }
