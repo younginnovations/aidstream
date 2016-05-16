@@ -3,6 +3,7 @@
 use App\Models\Activity\Activity;
 use App\Models\ActivityPublished;
 use App\Models\Organization\Organization;
+use App\Models\Organization\OrganizationData;
 use App\Models\OrganizationPublished;
 use App\Services\Export\CsvGenerator;
 use App\SuperAdmin\Repositories\SuperAdminInterfaces\SuperAdmin as SuperAdminInterface;
@@ -50,8 +51,14 @@ class SuperAdminManager
      * @param OrganizationPublished $organizationPublished
      * @param Activity              $activity
      */
-    function __construct(SuperAdminInterface $adminInterface, CsvGenerator $generator, User $user, ActivityPublished $activityPublished, OrganizationPublished $organizationPublished, Activity $activity)
-    {
+    function __construct(
+        SuperAdminInterface $adminInterface,
+        CsvGenerator $generator,
+        User $user,
+        ActivityPublished $activityPublished,
+        OrganizationPublished $organizationPublished,
+        Activity $activity
+    ) {
         $this->adminInterface        = $adminInterface;
         $this->user                  = $user;
         $this->activity              = $activity;
@@ -114,9 +121,13 @@ class SuperAdminManager
                 $organizationId                                                    = $organization->id;
                 $organizationDetails[$organizationId]['name']                      = $organization->name;
                 $organizationDetails[$organizationId]['admin_email']               = $this->getEmailOfOrganizationAdmin($organizationId);
-                $organizationDetails[$organizationId]['noOfActivities']            = $this->getNoOfActivities($organizationId)[0]->noofactivities;
+                $activities                                                        = $this->getActivitiesData($organizationId);
+                $organizationDetails[$organizationId]['noOfActivities']            = $activities ? $activities[0]->noofactivities : ' ';
+                $organizationDetails[$organizationId]['activityLastUpdatedAt']     = $activities ? $activities[0]->updated_at : ' ';
                 $organizationDetails[$organizationId]['noOfActivitiesPublished']   = $this->getNoOfActivitiesPublished($organizationId)[0]->noofpublishedactivities;
                 $organizationDetails[$organizationId]['organizationDataPublished'] = $this->statusOfOrganizationDataPublished($organizationId)[0]->organizationdatapublished;
+                $organizationUpdatedAt                                             = OrganizationData::where('organization_id', $organizationId)->select('updated_at')->first();
+                $organizationDetails[$organizationId]['organizationLastUpdatedAt'] = $organizationUpdatedAt ? $organizationUpdatedAt->updated_at : ' ';
             }
         );
 
@@ -129,18 +140,28 @@ class SuperAdminManager
      */
     public function exportDetails($organizationDetails)
     {
-        $headers = ['Organization Name', 'Admin Email','No. of Activities', 'No. of Published activities', 'Organization Data Published'];
+        $headers = [
+            'Organization Name',
+            'Admin Email',
+            'No. of Activities',
+            'Activity Last Updated At',
+            'No. of Published activities',
+            'Organization Data Published',
+            'Organization Data Last Updated At'
+        ];
 
         $this->generator->generateWithHeaders("Organization details", $organizationDetails, $headers);
     }
 
-    /** Returns no. of activities present in the organization
+    /** Returns no. of activities and last updated date of activity of given organization
      * @param $orgId
      * @return mixed
      */
-    public function getNoOfActivities($orgId)
+    public function getActivitiesData($orgId)
     {
-        return $this->activity->getNoOfActivities($orgId);
+        $activitiesData = $this->activity->getActivitiesData($orgId);
+
+        return $activitiesData;
     }
 
     /** Returns no. of activities published in the registry.
