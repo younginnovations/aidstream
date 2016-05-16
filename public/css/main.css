@@ -3083,6 +3083,9 @@ select.form-control, form .select2-container {
 .select2-container {
   height: auto !important; }
 
+form .select2-container {
+  width: 100% !important; }
+
 .admin-container .select2-container {
   padding: 1px !important; }
 
@@ -6303,5 +6306,8 @@ table.dataTable thead .sorting_desc {
 
 .logs-container .settings-wrapper .create-form.activity-log-filter-wrap .select2-container {
   width: 100% !important; }
+
+.sector_category_select label, .sector_category_select .select2-container {
+  margin-left: 15px; }
 
 /*# sourceMappingURL=maps/app.css.map */

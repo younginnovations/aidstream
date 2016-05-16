@@ -107,19 +107,17 @@ class Sector extends ActivityBaseRequest
                 $sectorVocabulary = $sector['sector_vocabulary'];
 
                 if (array_key_exists($sectorVocabulary, $array)) {
-                    $totalPercentage += $percentage;
+                    $totalPercentage = $array[$sectorVocabulary] + $percentage;
                     $array[$sectorVocabulary] = $totalPercentage;
                     $array[sprintf('%s.percentage', $sectorForm)] = $sectorVocabulary;
 
                 } else {
-                    $totalPercentage = $percentage;
-                    $array[$sectorVocabulary] = $totalPercentage;
+                    $array[$sectorVocabulary] = $percentage;
 
                     $array[sprintf('%s.percentage', $sectorForm)] = $sectorVocabulary;
                 }
             }
         }
-
         return $array;
     }
 
