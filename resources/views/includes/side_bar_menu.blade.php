@@ -11,6 +11,9 @@
                 @if(Auth::user()->role_id == 1)
                     <li class="settings"><a href="{{ route('settings.index') }}">Settings</a></li>
                 @endif
+                @if(Auth::user()->role_id == 1)
+                    <li class="logs"><a href="{{ route('user-logs') }}">Activity Log</a></li>
+                @endif
             </ul>
             <div class="support">
                 <span>icon</span>
