@@ -19,6 +19,6 @@ class Target extends BaseForm
     {
         $this
             ->add('value', 'text', ['help_block' => $this->addHelpText('Activity_Result_Indicator_Period_Target-value')])
-            ->addComments();
+            ->addComments($this->getData());
     }
 }

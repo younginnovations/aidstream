@@ -20,6 +20,6 @@ class Baseline extends BaseForm
         $this
             ->add('year', 'text', ['help_block' => $this->addHelpText('Activity_Result_Indicator_Baseline-year')])
             ->add('value', 'text', ['help_block' => $this->addHelpText('Activity_Result_Indicator_Baseline-value')])
-            ->addComments();
+            ->addComments(['class' => 'indicator_baseline_comment_title_narrative']);
     }
 }

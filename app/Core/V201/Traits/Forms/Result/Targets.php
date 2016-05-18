@@ -1,5 +1,7 @@
 <?php namespace App\Core\V201\Traits\Forms\Result;
 
+use App\Core\V201\Forms\Activity\Result as ResultForm;
+
 /**
  * Class Targets
  * @package App\Core\V201\Forms\Activity
@@ -8,29 +10,19 @@ trait Targets
 {
     /**
      * Return target form
-     * @param array $data
-     * @return mixed
+     * @return ResultForm
      */
-    public function addTargets($data = [])
+    public function addTargets()
     {
-        $data ?: ['class' => 'narrative'];
-
-        return $this
-            ->addData($data)
-            ->addCollection('target', 'Activity\Target');
+        return $this->addCollection('target', 'Activity\Target', '', ['class' => 'indicator_period_target_comment_title_narrative']);
     }
 
     /**
      * Return actual target form
-     * @param array $data
-     * @return mixed
+     * @return ResultForm
      */
-    public function addActualTargets($data = [])
+    public function addActualTargets()
     {
-        $data ?: ['class' => 'narrative'];
-
-        return $this
-            ->addData($data)
-            ->addCollection('actual', 'Activity\Target');
+        return $this->addCollection('actual', 'Activity\Target', '', ['class' => 'indicator_period_actual_comment_title_narrative']);
     }
 }
