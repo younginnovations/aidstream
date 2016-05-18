@@ -1825,7 +1825,10 @@ form > .add_to_collection[data-collection="legacy_data"] {
   position: absolute;
   bottom: 0; }
 
-.modal-dialog {
+.modal {
+  z-index: 10001 !important; }
+
+.modal-backdrop {
   z-index: 10000; }
 
 .full-width-wrap {

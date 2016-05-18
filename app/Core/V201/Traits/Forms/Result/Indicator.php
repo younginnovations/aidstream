@@ -1,5 +1,7 @@
 <?php namespace App\Core\V201\Traits\Forms\Result;
 
+use App\Core\V201\Forms\Activity\Result as ResultForm;
+
 /**
  * Class Indicator
  * @package App\Core\V201\Forms\Activity
@@ -8,7 +10,7 @@ trait Indicator
 {
     /**
      * Return indicator form
-     * @return mixed
+     * @return ResultForm
      */
     public function addIndicators()
     {
@@ -17,7 +19,7 @@ trait Indicator
 
     /**
      * Return measure field
-     * @return mixed
+     * @return ResultForm
      */
     public function addMeasureList()
     {
@@ -26,7 +28,7 @@ trait Indicator
 
     /**
      * Return ascending field
-     * @return mixed
+     * @return ResultForm
      */
     public function addAscendingList()
     {

@@ -1,5 +1,7 @@
 <?php namespace App\Core\V201\Traits\Forms\Result;
 
+use App\Core\V201\Forms\Activity\Result as ResultForm;
+
 /**
  * Class Period
  * @package App\Core\V201\Forms\Activity
@@ -8,7 +10,7 @@ trait Period
 {
     /**
      * Return period form
-     * @return mixed
+     * @return ResultForm
      */
     public function addPeriods()
     {
@@ -17,7 +19,7 @@ trait Period
 
     /**
      * Return period start form
-     * @return mixed
+     * @return ResultForm
      */
     public function addPeriodStart()
     {
@@ -26,7 +28,7 @@ trait Period
 
     /**
      * Return period end form
-     * @return mixed
+     * @return ResultForm
      */
     public function addPeriodEnd()
     {

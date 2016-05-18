@@ -1,14 +1,17 @@
 <?php namespace App\Core\V201\Traits\Forms\Result;
 
+use App\Core\V201\Forms\Activity\Result as ResultForm;
+
 /**
  * Class Result
  * @package App\Core\V201\Forms\Activity
  */
 trait Result
 {
+
     /**
      * Return result form
-     * @return mixed
+     * @return ResultForm
      */
     public function addResults()
     {
@@ -17,7 +20,7 @@ trait Result
 
     /**
      * Return type field
-     * @return mixed
+     * @return ResultForm
      */
     public function addTypeList()
     {
@@ -26,7 +29,7 @@ trait Result
 
     /**
      * Return aggregation status field
-     * @return mixed
+     * @return ResultForm
      */
     public function addAggregationStatusList()
     {

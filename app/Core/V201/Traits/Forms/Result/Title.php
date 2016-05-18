@@ -1,5 +1,7 @@
 <?php namespace App\Core\V201\Traits\Forms\Result;
 
+use App\Core\V201\Forms\Activity\Result as ResultForm;
+
 /**
  * Class Title
  * @package App\Core\V201\Forms\Activity
@@ -9,14 +11,10 @@ trait Title
     /**
      * Return title form
      * @param array $data
-     * @return mixed
+     * @return ResultForm
      */
-    public function addTitles($data = [])
+    public function addTitles(array $data = [])
     {
-        $data ?: ['class' => 'narrative'];
-
-        return $this
-            ->addData($data)
-            ->addCollection('title', 'Activity\Title');
+        return $this->addCollection('title', 'Activity\Title', '', $data);
     }
 }

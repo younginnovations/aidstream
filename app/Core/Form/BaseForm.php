@@ -45,10 +45,10 @@ class BaseForm extends Form
         $data             = [];
 
         foreach ($codeList as $list) {
-            $data[$list['code']] = ($code) ? $list['code'].(array_key_exists(
+            $data[$list['code']] = ($code) ? $list['code'] . (array_key_exists(
                     'name',
                     $list
-                ) ? ' - '.$list['name'] : '') : $list['name'];
+                ) ? ' - ' . $list['name'] : '') : $list['name'];
         }
 
         return $data;
@@ -97,11 +97,14 @@ class BaseForm extends Form
     /**
      * @param        $className
      * @param string $label
+     * @param array  $data
      * @return BaseForm
      */
-    protected function addNarrative($className, $label = 'Text')
+    protected function addNarrative($className, $label = 'Text', $data = [])
     {
-        return $this->addCollection('narrative', 'Activity\Narrative', $className, ['label' => $label]);
+        $data['label'] = $label;
+
+        return $this->addCollection('narrative', 'Activity\Narrative', $className, $data);
     }
 
     /**
@@ -221,8 +224,8 @@ class BaseForm extends Form
      */
     protected function addHelpText($helpText, $tooltip = true)
     {
-        $help = trans(session()->get('version')."/help");
-        is_array($help) ?: $help = trans(config('app.default_version_name').'/help');
+        $help = trans(session()->get('version') . "/help");
+        is_array($help) ?: $help = trans(config('app.default_version_name') . '/help');
         if (!isset($help[$helpText])) {
             return null;
         }
