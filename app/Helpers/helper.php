@@ -95,7 +95,7 @@ function getDefaultLanguage()
  * @param string $default
  * @return string
  */
-function getVal($arr, $arguments, $default = "")
+function getVal(array $arr, array $arguments, $default = "")
 {
     (!is_string($arguments)) ?: $arguments = explode('.', $arguments);
     if (is_array($arr)) {
