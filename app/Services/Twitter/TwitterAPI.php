@@ -17,8 +17,9 @@ class TwitterAPI
         if ($org->twitter != "") {
             $twitter = $org->twitter;
             if (substr($twitter, 0, 1) != '@') {
-                $twitter = ' @' . $twitter;
+                $twitter = '@' . $twitter;
             }
+            $twitter = ' '. $twitter;
         }
 
         $status = $org->name . $twitter . " has published their #IATIData. View the data here: ";

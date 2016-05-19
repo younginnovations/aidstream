@@ -78,7 +78,7 @@ class Transaction extends V201Transaction
                 'sector'               => [
                     '@attributes' => [
                         'vocabulary'     => $vocabulary,
-                        'vocabulary-url' => getVal($transaction, ['sector', 0, 'vocabulary_uri']),
+                        'vocabulary-uri' => getVal($transaction, ['sector', 0, 'vocabulary_uri']),
                         'code'           => $sectorValue
                     ],
                     'narrative'   => $this->buildNarrative(getVal($transaction, ['sector', 0, 'narrative'], []))
