@@ -18,7 +18,7 @@ class ReportingOrganizationInfoForm extends Baseform
                 null,
                 true
             )
-            ->addCollection('narrative', 'Settings\Narrative', 'narrative')
+            ->addCollection('narrative', 'Settings\Narrative', 'narrative', ['label' => 'Text'], 'Organization Name')
             ->addAddMoreButton('add_narrative', 'narrative');
     }
 }

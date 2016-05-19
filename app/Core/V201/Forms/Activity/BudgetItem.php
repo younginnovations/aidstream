@@ -31,7 +31,8 @@ class BudgetItem extends BaseForm
                     'choices'     => $this->getCodeList('BudgetIdentifier', 'Activity'),
                     'empty_value' => 'Select one of the following option :',
                     'wrapper'     => ['class' => 'form-group code codes hidden'],
-                    'help_block'  => $this->addHelpText('Activity_CountryBudgetItems_BudgetItem-non_iati')
+                    'help_block'  => $this->addHelpText('Activity_CountryBudgetItems_BudgetItem-non_iati'),
+                    'required'   => true
                 ]
             )
             ->addPercentage($this->addHelpText('Activity_CountryBudgetItems_BudgetItem-percentage'))

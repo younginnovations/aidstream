@@ -18,9 +18,7 @@ class Budget extends V201BudgetRequest
         $rules = [];
 
         foreach ($formFields as $budgetIndex => $budget) {
-            $budgetForm = sprintf('budget.%s', $budgetIndex);
-            $newDate    = Carbon::createFromFormat('Y-m-d', $budget['period_start'][0]['date'])->addYear(1);
-
+            $budgetForm                               = sprintf('budget.%s', $budgetIndex);
             $rules[sprintf('%s.status', $budgetForm)] = 'required';
             $rules                                    = array_merge(
                 $rules,
@@ -29,7 +27,11 @@ class Budget extends V201BudgetRequest
                 $this->getRulesForValue($budget['value'], $budgetForm)
             );
 
-            $rules[$budgetForm.'.period_end.0.date'][] = sprintf('before:%s', $newDate);
+            $startDate = getVal($budget, ['period_start', 0, 'date']);
+            $newDate   = $startDate ? date('Y-m-d', strtotime($startDate . '+1year')) : '';
+            if ($newDate) {
+                $rules[$budgetForm . '.period_end.0.date'][] = sprintf('before:%s', $newDate);
+            }
 
         }
 
@@ -54,7 +56,7 @@ class Budget extends V201BudgetRequest
                 $this->getMessagesForPeriodEnd($budget['period_end'], $budgetForm),
                 $this->getMessagesForValue($budget['value'], $budgetForm)
             );
-            $messages[$budgetForm.'.period_end.0.date.before']    = 'Period End must not be more than a year from Period Start';
+            $messages[$budgetForm . '.period_end.0.date.before']  = 'Period End must not be more than a year from Period Start';
 
         }
 
