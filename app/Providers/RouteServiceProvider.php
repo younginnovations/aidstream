@@ -36,17 +36,21 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function map(Router $router)
     {
-        $router->group(['namespace' => $this->namespace], function ($router) {
-            require app_path('Http/routes/Tz/project.php');
-            require app_path('Http/routes.php');
-            require app_path('Http/routes/organization.php');
-            require app_path('Http/routes/activity.php');
-            require app_path('Http/routes/wizard/activity.php');
-            require app_path('Http/routes/superAdmin.php');
-            require app_path('Http/routes/organizationGroup.php');
-            require app_path('Http/routes/user.php');
-            require app_path('Http/routes/download.php');
-            require app_path('Http/routes/Superadmin/publishedFilesCorrection.php');
-        });
+        $router->group(
+            ['namespace' => $this->namespace],
+            function ($router) {
+                require app_path('Http/routes/Tz/project.php');
+                require app_path('Http/routes/Tz/settings.php');
+                require app_path('Http/routes.php');
+                require app_path('Http/routes/organization.php');
+                require app_path('Http/routes/activity.php');
+                require app_path('Http/routes/wizard/activity.php');
+                require app_path('Http/routes/superAdmin.php');
+                require app_path('Http/routes/organizationGroup.php');
+                require app_path('Http/routes/user.php');
+                require app_path('Http/routes/download.php');
+                require app_path('Http/routes/Superadmin/publishedFilesCorrection.php');
+            }
+        );
     }
 }

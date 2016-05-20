@@ -31,7 +31,6 @@
             <a href="{{ route('change-project-defaults', $id) }}" class="pull-right">
                 <span class="glyphicon glyphicon-triangle-left"></span>Override Activity Default
             </a>
-
             <div class="panel panel-default panel-element-detail element-show">
                 <div class="panel-body">
                 </div>
