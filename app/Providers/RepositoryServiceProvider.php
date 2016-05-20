@@ -2,6 +2,8 @@
 
 use App\Services\Settings\Segmentation\SegmentationInterface;
 use App\Services\Settings\Segmentation\SegmentationService;
+use App\Tz\Aidstream\Repositories\Project\ProjectRepository;
+use App\Tz\Aidstream\Repositories\Project\ProjectRepositoryInterface;
 use Illuminate\Support\ServiceProvider;
 
 /**
@@ -35,5 +37,7 @@ class RepositoryServiceProvider extends ServiceProvider
             SegmentationInterface::class,
             SegmentationService::class
         );
+
+        $this->app->bind(ProjectRepositoryInterface::class, ProjectRepository::class);
     }
 }
