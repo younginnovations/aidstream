@@ -1,86 +1,64 @@
 @if(!emptyOrHasEmptyTemplate($contactInfo))
-    <div class="panel panel-default expanded">
-        <div class="panel-heading">
-            <div class="activity-element-title">
-                Contact Info
-            </div>
-            <a href="{{route('activity.contact-info.index', $id)}}" class="edit-element">edit</a>
-            <a href="{{route('activity.delete-element', [$id, 'contact_info'])}}" class="delete pull-right">remove</a>
-        </div>
-        <div class="panel-body panel-level-1">
-            @foreach($contactInfo as $info)
-                <div class="panel-heading">
-                    <div class="activity-element-title">
-                        {{ $getCode->getActivityCodeName('ContactType', $info['type']) }}
-                    </div>
-                </div>
-                <div class="panel-body row">
-                    <div class="panel-element-body">
-                        <div class="col-xs-12 col-md-12">
-                            <div class="col-xs-12 col-sm-4">Type:</div>
-                            <div class="col-xs-12 col-sm-8">{{ $getCode->getActivityCodeName('ContactType', $info['type']) }}</div>
+    <div class="activity-element-wrapper">
+        <div class="title">@lang('activityView.contact_info')</div>
+        @foreach(groupContactInformation($contactInfo) as $key => $contactInformation)
+            <div class="activity-element-list">
+                <div class="activity-element-label">{{ checkIfEmpty($getCode->getCodeNameOnly('ContactType' , $key), "General Enquiries") }}</div>
+                <div class="activity-element-info">
+                    @foreach($contactInformation as $information)
+                        <li>
+                            {!! getFirstNarrative($information['person_name'][0]) !!}
+                            @include('Activity.partials.viewInOtherLanguage', ['otherLanguages' => getOtherLanguages($information['person_name'][0]['narrative'])])
+                            ,{!! getFirstNarrative($information['organization'][0]) !!}
+                            @include('Activity.partials.viewInOtherLanguage', ['otherLanguages' => getOtherLanguages($information['organization'][0]['narrative'])])
+                        </li>
+
+                        <div class="toggle-btn">
+                            <span class="show-more-info">Show more info</span>
+                            <span class="hide-more-info hidden">Hide more info</span>
                         </div>
-                        @foreach($info['organization'] as $organization)
-                            @foreach($organization['narrative'] as $narrative)
-                                <div class="col-xs-12 col-md-12">
-                                    <div class="col-xs-12 col-sm-4">Organization Name:</div>
-                                    <div class="col-xs-12 col-sm-8">{{$narrative['narrative'] . hideEmptyArray('Organization', 'Language', $narrative['language'])}}</div>
+                        <div class="more-info hidden">
+                            <div class="element-info">
+                                <div class="activity-element-label">@lang('activityView.department')</div>
+                                <div class="activity-element-info">
+                                    {!!  getFirstNarrative($information['department'][0])  !!}
+                                    @include('Activity.partials.viewInOtherLanguage', ['otherLanguages' => getOtherLanguages($information['department'][0]['narrative'])])
                                 </div>
-                            @endforeach
-                        @endforeach
-                        @foreach($info['department'] as $department)
-                            @foreach($department['narrative'] as $narrative)
-                                <div class="col-xs-12 col-md-12">
-                                    <div class="col-xs-12 col-sm-4">Department:</div>
-                                    <div class="col-xs-12 col-sm-8">{{$narrative['narrative'] . hideEmptyArray('Organization', 'Language', $narrative['language'])}}</div>
-                                </div>
-                            @endforeach
-                        @endforeach
-                        @foreach($info['person_name'] as $person_name)
-                            @foreach($person_name['narrative'] as $narrative)
-                                <div class="col-xs-12 col-md-12">
-                                    <div class="col-xs-12 col-sm-4">Person Name:</div>
-                                    <div class="col-xs-12 col-sm-8">{{$narrative['narrative'] . hideEmptyArray('Organization', 'Language', $narrative['language'])}}</div>
-                                </div>
-                            @endforeach
-                        @endforeach
-                        @foreach($info['job_title'] as $job_title)
-                            @foreach($job_title['narrative'] as $narrative)
-                                <div class="col-xs-12 col-md-12">
-                                    <div class="col-xs-12 col-sm-4">Job Title:</div>
-                                    <div class="col-xs-12 col-sm-8">{{$narrative['narrative'] . hideEmptyArray('Organization', 'Language', $narrative['language'])}}</div>
-                                </div>
-                            @endforeach
-                        @endforeach
-                        @foreach($info['telephone'] as $telephone)
-                            <div class="col-xs-12 col-md-12 clearfix">
-                                <div class="col-xs-12 col-sm-4">Telephone:</div>
-                                <div class="col-xs-12 col-sm-8">{{$telephone['telephone']}}</div>
+
                             </div>
-                        @endforeach
-                        @foreach($info['email'] as $email)
-                            <div class="col-xs-12 col-md-12 clearfix">
-                                <div class="col-xs-12 col-sm-4">Email:</div>
-                                <div class="col-xs-12 col-sm-8">{{$email['email']}}</div>
-                            </div>
-                        @endforeach
-                        @foreach($info['website'] as $website)
-                            <div class="col-xs-12 col-md-12 clearfix">
-                                <div class="col-xs-12 col-sm-4">Website:</div>
-                                <div class="col-xs-12 col-sm-8">{{$website['website']}}</div>
-                            </div>
-                        @endforeach
-                        @foreach($info['mailing_address'] as $mailing_address)
-                            @foreach($mailing_address['narrative'] as $narrative)
-                                <div class="col-xs-12 col-md-12 clearfix">
-                                    <div class="col-xs-12 col-sm-4">Mailing Address:</div>
-                                    <div class="col-xs-12 col-sm-8">{{$narrative['narrative'] . hideEmptyArray('Organization', 'Language', $narrative['language'])}}</div>
+                            <div class="element-info">
+                                <div class="activity-element-label">@lang('activityView.job_title')</div>
+                                <div class="activity-element-info">
+                                    {!! getFirstNarrative($information['job_title'][0]) !!}
+                                    @include('Activity.partials.viewInOtherLanguage', ['otherLanguages' => getOtherLanguages($information['job_title'][0]['narrative'])])
                                 </div>
-                            @endforeach
-                        @endforeach
-                    </div>
+
+                            </div>
+                            <div class="element-info">
+                                <div class="activity-element-label">@lang('activityView.telephone')</div>
+                                <div class="activity-element-info">{!! getContactInfo('telephone', $information['telephone'])  !!}</div>
+                            </div>
+                            <div class="element-info">
+                                <div class="activity-element-label">@lang('activityView.email')</div>
+                                <div class="activity-element-info">{!! getContactInfo('email', $information['email']) !!}</div>
+                            </div>
+                            <div class="element-info">
+                                <div class="activity-element-label">@lang('activityView.website')</div>
+                                <div class="activity-element-info">{!! getContactInfo('website' , $information['website']) !!}</div>
+                            </div>
+                            <div class="element-info">
+                                <div class="activity-element-label">@lang('activityView.mailing_address')</div>
+                                <div class="activity-element-info">
+                                    {!!  getFirstNarrative($information['mailing_address'][0])  !!}
+                                    @include('Activity.partials.viewInOtherLanguage' ,['otherLanguages' => getOtherLanguages($information['mailing_address'][0]['narrative'])])
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
                 </div>
-            @endforeach
-        </div>
+            </div>
+        @endforeach
+        <a href="{{route('activity.contact-info.index', $id)}}" class="edit-element">edit</a>
+        <a href="{{route('activity.delete-element', [$id, 'contact_info'])}}" class="delete pull-right">remove</a>
     </div>
 @endif

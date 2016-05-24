@@ -1,25 +1,25 @@
 <?php namespace App\Http\Controllers\Complete\Activity;
 
 use App\Core\V201\Requests\Activity\IatiIdentifierRequest;
+use App\Http\API\CKAN\CkanClient;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Request;
+use App\Services\Activity\ActivityManager;
 use App\Services\Activity\ChangeActivityDefaultManager;
 use App\Services\Activity\DocumentLinkManager;
 use App\Services\Activity\ResultManager;
 use App\Services\Activity\TransactionManager;
 use App\Services\FormCreator\Activity\ChangeActivityDefault;
+use App\Services\FormCreator\Activity\Identifier;
 use App\Services\Organization\OrganizationManager;
 use App\Services\RequestManager\Activity\ChangeActivityDefault as ChangeActivityDefaultRequest;
 use App\Services\RequestManager\ActivityElementValidator;
 use App\Services\SettingsManager;
-use App\Http\Requests\Request;
-use Illuminate\Session\SessionManager;
-use App\Services\Activity\ActivityManager;
-use App\Services\FormCreator\Activity\Identifier;
-use Illuminate\Support\Facades\Gate;
-use App\Http\API\CKAN\CkanClient;
-use App\User;
-use Psr\Log\LoggerInterface;
 use App\Services\Twitter\TwitterAPI;
+use App\User;
+use Illuminate\Session\SessionManager;
+use Illuminate\Support\Facades\Gate;
+use Psr\Log\LoggerInterface;
 
 
 /**
@@ -155,34 +155,6 @@ class ActivityController extends Controller
     }
 
     /**
-     * @param bool $duplicate
-     * @param int  $activityId
-     * @return \Illuminate\View\View
-     */
-    public function create($duplicate = false, $activityId = 0)
-    {
-        $organization = $this->organizationManager->getOrganization($this->organization_id);
-        if (Gate::denies('create', $organization)) {
-            return redirect()->route('activity.index')->withResponse($this->getNoPrivilegesMessage());
-        }
-
-        $this->authorize('add_activity', $organization);
-        $form     = $duplicate ? $this->identifierForm->duplicate($activityId) : $this->identifierForm->create();
-        $settings = $this->settingsManager->getSettings($this->organization_id);
-
-        if ($organization->reporting_org == null || $organization->reporting_org[0]['reporting_organization_identifier'] == "" || $organization->reporting_org[0]['reporting_organization_type'] == "") {
-            $response = ['type' => 'warning', 'code' => ['settings', ['name' => 'activity']]];
-
-            return redirect('/settings')->withResponse($response);
-        }
-
-        $defaultFieldValues    = $settings->default_field_values;
-        $reportingOrganization = $organization->reporting_org;
-
-        return view('Activity.create', compact('form', 'organization', 'reportingOrganization', 'defaultFieldValues', 'duplicate'));
-    }
-
-    /**
      * store the activity identifier
      * @param IatiIdentifierRequest $request
      * @return \Illuminate\Http\RedirectResponse
@@ -227,6 +199,7 @@ class ActivityController extends Controller
         $activityDataList['results']        = $activityResult;
         $activityDataList['transaction']    = $activityTransaction;
         $activityDataList['document_links'] = $activityDocumentLinks;
+        $activityDataList['reporting_org'] = $activityData->organization->reporting_org;
 
         if ($activityDataList['activity_workflow'] == 0) {
             $nextRoute                          = route('activity.complete', $id);
@@ -291,7 +264,15 @@ class ActivityController extends Controller
 
                 return redirect()->to('/settings')->withResponse($response);
             }
-            $xmlService->generateActivityXml($activityData, $transactionData, $resultData, $settings, $activityElement, $orgElem, $organization);
+            $xmlService->generateActivityXml(
+                $activityData,
+                $transactionData,
+                $resultData,
+                $settings,
+                $activityElement,
+                $orgElem,
+                $organization
+            );
 
             if ($settings['registry_info'][0]['publish_files'] == 'yes') {
                 $publishedStatus = $this->publishToRegistry();
@@ -315,9 +296,136 @@ class ActivityController extends Controller
         $statusLabel = ['Completed', 'Verified', 'Published'];
         $response    = ($this->activityManager->updateStatus($input, $activityData)) ?
             ['type' => 'success', 'code' => ['activity_statuses', ['name' => $statusLabel[$activityWorkflow - 1]]]] :
-            ['type' => 'danger', 'code' => ['activity_statuses_failed', ['name' => $statusLabel[$activityWorkflow - 1]]]];
+            [
+                'type' => 'danger',
+                'code' => ['activity_statuses_failed', ['name' => $statusLabel[$activityWorkflow - 1]]],
+            ];
 
         return redirect()->back()->withResponse($response);
+    }
+
+    /**
+     * @return bool
+     */
+    public function publishToRegistry()
+    {
+        $activityPublishedFiles = $this->activityManager->getActivityPublishedFiles($this->organization_id);
+
+        $settings = $this->settingsManager->getSettings($this->organization_id);
+        $api_url  = config('filesystems.iati_registry_api_base_url');
+        $apiCall  = new CkanClient($api_url, $settings['registry_info'][0]['api_id']);
+
+        try {
+            foreach ($activityPublishedFiles as $publishedFile) {
+                $data = $this->generateJson($publishedFile);
+
+                $this->loggerInterface->info(
+                    'Payload for publishing',
+                    ['payload' => $data, 'by_user' => auth()->user()->name]
+                );
+
+                if ($settings->publishing_type == "segmented") {
+                    $filename = explode('-', $publishedFile->filename);
+                    $code     = str_replace('.xml', '', end($filename));
+                }
+
+                if ($publishedFile['published_to_register'] == 0) {
+                    $apiCall->package_create($data);
+                    $this->activityManager->updatePublishToRegister($publishedFile->id);
+                } elseif ($publishedFile['published_to_register'] == 1) {
+//                    $package = ($settings->publishing_type == "segmented") ? $settings['registry_info'][0]['publisher_id'] . '-' . $code : $settings['registry_info'][0]['publisher_id'] . '-activities';
+                    $apiCall->package_update($data);
+                }
+
+                $this->loggerInterface->info(
+                    'Activity file published to registry.',
+                    ['payload' => $data, 'by_user' => auth()->user()->name]
+                );
+            }
+
+            return true;
+        } catch (\Exception $e) {
+            $this->loggerInterface->error($e);
+
+            return false;
+        }
+    }
+
+    /**
+     * @param $publishedFile
+     * @return string
+     */
+    public function generateJson($publishedFile)
+    {
+        $settings     = $this->settingsManager->getSettings($this->organization_id);
+        $organization = $this->organizationManager->getOrganization($this->organization_id);
+        $email        = $this->user->getUserByOrgId();
+        $author_email = $email[0]->email;
+        $code         = "";
+
+        if ($settings->publishing_type == "segmented") {
+            $filename = explode('-', $publishedFile->filename);
+            $code     = str_replace('.xml', '', end($filename));
+        }
+
+        if ($code == "998") {
+            $key = "Others";
+        } elseif (is_numeric($code)) {
+            $key = "region";
+        } else {
+            $key = "country";
+        }
+
+        $title = ($settings->publishing_type == "segmented") ? $organization->name.' Activity File-'.$code : $organization->name.' Activity File';
+        $name  = ($settings->publishing_type == "segmented") ? $settings['registry_info'][0]['publisher_id'].'-'.$code : $settings['registry_info'][0]['publisher_id'].'-activities';
+
+        $requiredData = [
+            'title'          => $title,
+            'name'           => $name,
+            'author_email'   => $author_email,
+            'owner_org'      => $settings['registry_info'][0]['publisher_id'],
+            'file_url'       => url(sprintf('files/xml/%s', $publishedFile->filename)),
+            'geographicKey'  => $key,
+            'geographicCode' => $code,
+            'data_updated'   => $publishedFile->updated_at->toDateTimeString(),
+            'activity_count' => count($publishedFile->published_activities),
+            'language'       => config('app.locale')
+        ];
+
+        return $this->generatePayload($requiredData);
+    }
+
+    /**
+     * Returns the request header payload while publishing any files to the IATI Registry.
+     * @param $data
+     * @return array
+     */
+    protected function generatePayload($data)
+    {
+        return json_encode(
+            [
+                'title'        => $data['title'],
+                'name'         => $data['name'],
+                'author_email' => $data['author_email'],
+                'owner_org'    => $data['owner_org'],
+                'license_id'   => 'other-open',
+                'resources'    => [
+                    [
+                        'format'   => config('xmlFiles.format'),
+                        'mimetype' => config('xmlFiles.mimeType'),
+                        'url'      => $data['file_url'],
+                    ],
+                ],
+                'extras'       => [
+                    ['key' => 'filetype', 'value' => 'activity'],
+                    ['key' => $data['geographicKey'], 'value' => $data['geographicCode']],
+                    ['key' => 'data_updated', 'value' => $data['data_updated']],
+                    ['key' => 'activity_count', 'value' => $data['activity_count']],
+                    ['key' => 'language', 'value' => $data['language']],
+                    ['key' => 'verified', 'value' => 'no'],
+                ],
+            ]
+        );
     }
 
     /**
@@ -334,9 +442,12 @@ class ActivityController extends Controller
 
         $this->authorize('delete_activity', $activity);
 
-        $response = ($this->activityManager->destroy($activity)) ? ['type' => 'success', 'code' => ['deleted', ['name' => 'Activity']]] : [
+        $response = ($this->activityManager->destroy($activity)) ? [
+            'type' => 'success',
+            'code' => ['deleted', ['name' => 'Activity']],
+        ] : [
             'type' => 'danger',
-            'code' => ['delete_failed', ['name' => 'Activity']]
+            'code' => ['delete_failed', ['name' => 'Activity']],
         ];
 
         return redirect()->back()->withResponse($response);
@@ -390,8 +501,11 @@ class ActivityController extends Controller
      * @param ChangeActivityDefaultRequest $changeActivityDefaultRequest
      * @return mixed
      */
-    public function updateActivityDefault($activityId, Request $request, ChangeActivityDefaultRequest $changeActivityDefaultRequest)
-    {
+    public function updateActivityDefault(
+        $activityId,
+        Request $request,
+        ChangeActivityDefaultRequest $changeActivityDefaultRequest
+    ) {
         $activityData = $this->activityManager->getActivityData($activityId);
 
         if (Gate::denies('ownership', $activityData)) {
@@ -416,91 +530,6 @@ class ActivityController extends Controller
     }
 
     /**
-     * @return bool
-     */
-    public function publishToRegistry()
-    {
-        $activityPublishedFiles = $this->activityManager->getActivityPublishedFiles($this->organization_id);
-
-        $settings = $this->settingsManager->getSettings($this->organization_id);
-        $api_url  = config('filesystems.iati_registry_api_base_url');
-        $apiCall  = new CkanClient($api_url, $settings['registry_info'][0]['api_id']);
-
-        try {
-            foreach ($activityPublishedFiles as $publishedFile) {
-                $data = $this->generateJson($publishedFile);
-
-                $this->loggerInterface->info('Payload for publishing', ['payload' => $data, 'by_user' => auth()->user()->name]);
-
-                if ($settings->publishing_type == "segmented") {
-                    $filename = explode('-', $publishedFile->filename);
-                    $code     = str_replace('.xml', '', end($filename));
-                }
-
-                if ($publishedFile['published_to_register'] == 0) {
-                    $apiCall->package_create($data);
-                    $this->activityManager->updatePublishToRegister($publishedFile->id);
-                } elseif ($publishedFile['published_to_register'] == 1) {
-//                    $package = ($settings->publishing_type == "segmented") ? $settings['registry_info'][0]['publisher_id'] . '-' . $code : $settings['registry_info'][0]['publisher_id'] . '-activities';
-                    $apiCall->package_update($data);
-                }
-
-                $this->loggerInterface->info('Activity file published to registry.', ['payload' => $data, 'by_user' => auth()->user()->name]);
-            }
-
-            return true;
-        } catch (\Exception $e) {
-            $this->loggerInterface->error($e);
-
-            return false;
-        }
-    }
-
-    /**
-     * @param $publishedFile
-     * @return string
-     */
-    public function generateJson($publishedFile)
-    {
-        $settings     = $this->settingsManager->getSettings($this->organization_id);
-        $organization = $this->organizationManager->getOrganization($this->organization_id);
-        $email        = $this->user->getUserByOrgId();
-        $author_email = $email[0]->email;
-        $code         = "";
-
-        if ($settings->publishing_type == "segmented") {
-            $filename = explode('-', $publishedFile->filename);
-            $code     = str_replace('.xml', '', end($filename));
-        }
-
-        if ($code == "998") {
-            $key = "Others";
-        } elseif (is_numeric($code)) {
-            $key = "region";
-        } else {
-            $key = "country";
-        }
-
-        $title = ($settings->publishing_type == "segmented") ? $organization->name . ' Activity File-' . $code : $organization->name . ' Activity File';
-        $name  = ($settings->publishing_type == "segmented") ? $settings['registry_info'][0]['publisher_id'] . '-' . $code : $settings['registry_info'][0]['publisher_id'] . '-activities';
-
-        $requiredData = [
-            'title'          => $title,
-            'name'           => $name,
-            'author_email'   => $author_email,
-            'owner_org'      => $settings['registry_info'][0]['publisher_id'],
-            'file_url'       => url(sprintf('files/xml/%s', $publishedFile->filename)),
-            'geographicKey'  => $key,
-            'geographicCode' => $code,
-            'data_updated'   => $publishedFile->updated_at->toDateTimeString(),
-            'activity_count' => count($publishedFile->published_activities),
-            'language'       => config('app.locale')
-        ];
-
-        return $this->generatePayload($requiredData);
-    }
-
-    /**
      * show identifier form to duplicate activity
      * @param $activityId
      * @return \Illuminate\View\View
@@ -515,6 +544,37 @@ class ActivityController extends Controller
 
 // create permission
         return $this->create(true, $activityId);
+    }
+
+    /**
+     * @param bool $duplicate
+     * @param int  $activityId
+     * @return \Illuminate\View\View
+     */
+    public function create($duplicate = false, $activityId = 0)
+    {
+        $organization = $this->organizationManager->getOrganization($this->organization_id);
+        if (Gate::denies('create', $organization)) {
+            return redirect()->route('activity.index')->withResponse($this->getNoPrivilegesMessage());
+        }
+
+        $this->authorize('add_activity', $organization);
+        $form     = $duplicate ? $this->identifierForm->duplicate($activityId) : $this->identifierForm->create();
+        $settings = $this->settingsManager->getSettings($this->organization_id);
+
+        if ($organization->reporting_org == null || $organization->reporting_org[0]['reporting_organization_identifier'] == "" || $organization->reporting_org[0]['reporting_organization_type'] == "") {
+            $response = ['type' => 'warning', 'code' => ['settings', ['name' => 'activity']]];
+
+            return redirect('/settings')->withResponse($response);
+        }
+
+        $defaultFieldValues    = $settings->default_field_values;
+        $reportingOrganization = $organization->reporting_org;
+
+        return view(
+            'Activity.create',
+            compact('form', 'organization', 'reportingOrganization', 'defaultFieldValues', 'duplicate')
+        );
     }
 
     /**
@@ -534,7 +594,10 @@ class ActivityController extends Controller
         $this->authorize('add_activity', $activityData);
         $newItem                        = $activityData->replicate();
         $input                          = $request->all();
-        $newItem->identifier            = ["activity_identifier" => $input['activity_identifier'], "iati_identifier_text" => $input['iati_identifier_text']];
+        $newItem->identifier            = [
+            "activity_identifier"  => $input['activity_identifier'],
+            "iati_identifier_text" => $input['iati_identifier_text'],
+        ];
         $newItem->activity_workflow     = 0;
         $newItem->published_to_registry = 0;
         $result                         = $this->activityManager->duplicateActivityAction($newItem);
@@ -549,23 +612,6 @@ class ActivityController extends Controller
     }
 
     /**
-     * Convert object of StdClass into an array for registry package update.
-     * @param $data
-     * @return array
-     */
-    protected function convertIntoArray($data)
-    {
-        return [
-            'title'        => $data->title,
-            'name'         => $data->name,
-            'author_email' => $data->author_email,
-            'owner_org'    => $data->owner_org,
-            'resources'    => $data->resources,
-            'extras'       => $data->extras
-        ];
-    }
-
-    /**
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
@@ -575,7 +621,10 @@ class ActivityController extends Controller
         $settings     = $this->settingsManager->getSettings(session('org_id'));
         $organization = $this->organizationManager->getOrganization(session('org_id'));
         if (is_null($files)) {
-            $response = ['type' => 'warning', 'code' => ['message', ['message' => 'Please select activity XML files to be published.']]];
+            $response = [
+                'type' => 'warning',
+                'code' => ['message', ['message' => 'Please select activity XML files to be published.']],
+            ];
 
             return redirect()->back()->withResponse($response);
         }
@@ -703,39 +752,6 @@ class ActivityController extends Controller
     }
 
     /**
-     * Returns the request header payload while publishing any files to the IATI Registry.
-     * @param $data
-     * @return array
-     */
-    protected function generatePayload($data)
-    {
-        return json_encode(
-            [
-                'title'        => $data['title'],
-                'name'         => $data['name'],
-                'author_email' => $data['author_email'],
-                'owner_org'    => $data['owner_org'],
-                'license_id'   => 'other-open',
-                'resources'    => [
-                    [
-                        'format'   => config('xmlFiles.format'),
-                        'mimetype' => config('xmlFiles.mimeType'),
-                        'url'      => $data['file_url']
-                    ]
-                ],
-                'extras'       => [
-                    ['key' => 'filetype', 'value' => 'activity'],
-                    ['key' => $data['geographicKey'], 'value' => $data['geographicCode']],
-                    ['key' => 'data_updated', 'value' => $data['data_updated']],
-                    ['key' => 'activity_count', 'value' => $data['activity_count']],
-                    ['key' => 'language', 'value' => $data['language']],
-                    ['key' => 'verified', 'value' => 'no']
-                ]
-            ]
-        );
-    }
-
-    /**
      * deletes activity element
      * @param $id
      * @param $element
@@ -758,6 +774,23 @@ class ActivityController extends Controller
         }
 
         return redirect()->back()->withResponse($response);
+    }
+
+    /**
+     * Convert object of StdClass into an array for registry package update.
+     * @param $data
+     * @return array
+     */
+    protected function convertIntoArray($data)
+    {
+        return [
+            'title'        => $data->title,
+            'name'         => $data->name,
+            'author_email' => $data->author_email,
+            'owner_org'    => $data->owner_org,
+            'resources'    => $data->resources,
+            'extras'       => $data->extras,
+        ];
     }
 
     /**

@@ -2,11 +2,11 @@
 
 @section('title', 'Organization - ' . $reporting_org['reporting_organization_identifier'])
 
+@inject('getCode', 'App\Helpers\GetCodeName')
+
 @section('content')
 
-    {{--*/
-    $orgId = session('org_id');
-    /*--}}
+    {{--*/ $orgId = session('org_id');   /*--}}
     @inject('code', 'App\Helpers\GetCodeName')
     <div class="container main-container">
         <div class="row">
@@ -35,7 +35,8 @@
                             @endforeach
                         </ol>
                         @if($btn_text != "")
-                            <form method="POST" id="change_status" class="pull-right" action="{{ url('/organization/' . Auth::user()->org_id . '/update-status') }}">
+                            <form method="POST" id="change_status" class="pull-right"
+                                  action="{{ url('/organization/' . Auth::user()->org_id . '/update-status') }}">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
                                 <input type="hidden" name="status" value="{{ $status + 1 }}">
                                 @if($status == 2)
@@ -48,15 +49,16 @@
                         @endif
                     </div>
                     <div class="panel panel-default panel-element-detail element-show">
-                        <div class="panel-body">
+                        <div class="panel-body panel-organization-body">
                             @include('Organization.partials.reportingOrganization')
+                            @include('Organization.partials.organizationIdentifier')
                             @include('Organization.partials.organizationName')
                             @include('Organization.partials.totalBudget')
                             @include('Organization.partials.recipientOrganizationBudget')
-                            @include('Organization.partials.recipientCountryBudget')
-                            @include('Organization.partials.documentLink')
                             @include('Organization.partials.recipientRegionBudget')
+                            @include('Organization.partials.recipientCountryBudget')
                             @include('Organization.partials.totalExpenditure')
+                            @include('Organization.partials.documentLink')
                         </div>
                     </div>
                 </div>

@@ -1,40 +1,26 @@
 @if(!emptyOrHasEmptyTemplate($reporting_org))
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <div class="activity-element-title">
-                Reporting Organization
-            </div>
-            <a href="{{ url('/organization/' . $orgId . '/reportingOrg') }}" class="edit-element">edit</a>
-        </div>
-        <div class="panel-body panel-element-body row">
-            <div class="col-xs-12 col-md-12">
-                <div class="col-xs-12 col-xs-4">Ref:</div>
-                <div class="col-xs-12 col-xs-8">{{ $reporting_org['reporting_organization_identifier'] }}</div>
-            </div>
-            <div class="col-xs-12 col-md-12">
-                <div class="col-xs-12 col-xs-4">Type:</div>
-                <div class="col-xs-12 col-xs-8">{{ $reporting_org['reporting_organization_type'] }}</div>
-            </div>
-            @foreach($reporting_org['narrative'] as $narrative)
-                <div class="col-xs-12 col-md-12">
-                    <div class="col-xs-12 col-xs-4">Narrative Text:</div>
-                    <div class="col-xs-12 col-xs-8">{{ $narrative['narrative'] . hideEmptyArray('Organization', 'Language', $narrative['language']) }}</div>
+    <div class="activity-element-wrapper">
+        <div class="activity-element-list">
+            <div class="activity-element-label">@lang('activityView.reporting_organization')</div>
+            <div class="activity-element-info">
+                {!! checkIfEmpty(getFirstNarrative($reporting_org)) !!}
+                @include('Activity.partials.viewInOtherLanguage', ['otherLanguages' => getOtherLanguages($reporting_org['narrative'])])
+                <div class="toggle-btn">
+                    <span class="show-more-info">Show more info</span>
+                    <span class="hide-more-info hidden">Hide more info</span>                 
                 </div>
-            @endforeach
-        </div>
-    </div>
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <div class="activity-element-title">
-                Organization Identifier
-            </div>
-            <a href="{{ url('/organization/' . $orgId . '/identifier') }}" class="edit-element">edit</a>
-        </div>
-        <div class="panel-body panel-element-body row">
-            <div class="col-xs-12 col-md-12">
-                <div class="col-xs-12 col-xs-4">Text:</div>
-                <div class="col-xs-12 col-xs-8">{{ $reporting_org['reporting_organization_identifier'] }}</div>
+                <div class="more-info hidden">
+                    <div class="element-info">
+                        <div class="activity-element-label pull-left">@lang('activityView.identifier')</div>
+                        <div class="activity-element-info pull-left">{!! checkIfEmpty($reporting_org['reporting_organization_identifier']) !!}</div>
+                    </div>
+                    <div class="element-info">
+                        <div class="activity-element-label pull-left">@lang('activityView.organization_type')</div>
+                        <div class="activity-element-info pull-left">{!! getCodeNameWithCodeValue('OrganisationType' , $reporting_org['reporting_organization_type'] , -4) !!}</div>
+                    </div>
+                </div>
             </div>
         </div>
+        <a href="{{ url('/organization/' . $orgId . '/reportingOrg') }}" class="edit-element">edit</a>
     </div>
 @endif

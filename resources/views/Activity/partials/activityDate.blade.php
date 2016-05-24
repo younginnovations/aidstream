@@ -1,38 +1,31 @@
 @if(!emptyOrHasEmptyTemplate($activityDates))
-    <div class="panel panel-default expanded">
-        <div class="panel-heading">
-            <div class="activity-element-title">
-                Activity Date
-            </div>
-            <a href="{{route('activity.activity-date.index', $id)}}" class="edit-element">edit</a>
-            <a href="{{route('activity.delete-element', [$id, 'activity_date'])}}" class="delete pull-right">remove</a>
-        </div>
-        <div class="panel-body panel-level-1">
-            @foreach($activityDates as $activity_date)
-                <div class="panel-heading">
-                    <div class="activity-element-title">
-                        {{$getCode->getActivityCodeName('ActivityDateType', $activity_date['type'])}}
-                    </div>
+    <div class="activity-element-wrapper">
+        <div class="title">@lang('activityView.activity_date')</div>
+        @foreach(groupActivityElements($activityDates , 'type') as $key => $groupedDates)
+            <div class="activity-element-list">
+                <div class="activity-element-label">
+                    {{ $getCode->getCodeNameOnly('ActivityDateType', $key) }} @lang('activityView.date')
                 </div>
-                <div class="panel-body">
-                    <div class="panel-element-body row">
-                        <div class="col-xs-12 col-md-12">
-                            <div class="col-xs-12 col-sm-4">Type:</div>
-                            <div class="col-xs-12 col-sm-8">{{$getCode->getActivityCodeName('ActivityDateType', $activity_date['type'])}}</div>
+                <div class="activity-element-info">
+                    @foreach($groupedDates as $groupedDate)
+                        <li>{{ formatDate($groupedDate['date']) }}</li>
+                        <div class="toggle-btn">
+                            <span class="show-more-info">Show more info</span>
+                            <span class="hide-more-info hidden">Hide more info</span>
                         </div>
-                        <div class="col-xs-12 col-md-12">
-                            <div class="col-xs-12 col-sm-4">Date:</div>
-                            <div class="col-xs-12 col-sm-8">{{ formatDate($activity_date['date']) }}</div>
-                        </div>
-                        @foreach($activity_date['narrative'] as $narrative)
-                            <div class="col-xs-12 col-md-12">
-                                <div class="col-xs-12 col-sm-4">Text:</div>
-                                <div class="col-xs-12 col-sm-8">{{$narrative['narrative'] . hideEmptyArray('Organization', 'Language', $narrative['language'])}}</div>
+                        <div class="more-info hidden">
+                            <div class="element-info">
+                                <div class="activity-element-label">{{ $getCode->getCodeNameOnly('ActivityDateType', $key) }} @lang('activityView.description')</div>
+                                <div class="activity-element-info">{!! checkIfEmpty(checkIfEmpty(getFirstNarrative($groupedDate))) !!}
+                                    @include('Activity.partials.viewInOtherLanguage' ,['otherLanguages' => getOtherLanguages($groupedDate['narrative'])])
+                                </div>
                             </div>
-                        @endforeach
-                    </div>
+                        </div>
+                    @endforeach
                 </div>
-            @endforeach
-        </div>
+            </div>
+        @endforeach
+        <a href="{{route('activity.activity-date.index', $id)}}" class="edit-element">edit</a>
+        <a href="{{route('activity.delete-element', [$id, 'activity_date'])}}" class="delete pull-right">remove</a>
     </div>
 @endif

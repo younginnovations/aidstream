@@ -19,24 +19,13 @@ class GetCodeName
     }
 
     /**
-     * get organization code name
-     * @param $listName
-     * @param $code
-     * @return mixed
-     */
-    public function getOrganizationCodeName($listName, $code)
-    {
-        return $this->getCodeName('Organization', $listName, $code);
-    }
-
-    /**
      * get the corresponding code name
      * @param $listType
      * @param $listName
      * @param $code
      * @return mixed
      */
-    public function  getCodeName($listType, $listName, $code)
+    public function getCodeName($listType, $listName, $code)
     {
         $defaultVersion = config('app.default_version_name');
         $defaultLocale  = config('app.fallback_locale');
@@ -59,12 +48,37 @@ class GetCodeName
     }
 
     /**
+     * Get Only the activity code name (without the code value)
+     * @param     $listName
+     * @param     $code
+     * @param int $default
+     * @return string
+     */
+    public function getCodeNameOnly($listName, $code, $default = -4)
+    {
+        $descriptionWithCode = $this->getCodeName('Activity', $listName, $code);
+
+        return sprintf("%s", substr($descriptionWithCode, 0, $default));
+    }
+
+    /**
+     * get organization code name
+     * @param $listName
+     * @param $code
+     * @return mixed
+     */
+    public function getOrganizationCodeName($listName, $code)
+    {
+        return $this->getCodeName('Organization', $listName, $code);
+    }
+
+    /**
      * @param $listType
      * @param $listName
      * @param $code
      * @return string
      */
-    public function  getCode($listType, $listName, $code)
+    public function getCode($listType, $listName, $code)
     {
         $defaultVersion = config('app.default_version_name');
         $defaultLocale  = config('app.fallback_locale');
