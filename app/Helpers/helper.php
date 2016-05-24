@@ -127,3 +127,15 @@ function isSuperAdminRoute() {
     $routeAction = request()->route()->getAction();
     return isset($routeAction['SuperAdmin']);
 }
+
+/**
+ * Check if the host contains a subdomain.
+ * @return bool
+ */
+ function hasSubdomain()
+{
+    $host        = request()->getHost();
+    $routePieces = explode('.', $host);
+
+    return (count($routePieces) > 1);
+}

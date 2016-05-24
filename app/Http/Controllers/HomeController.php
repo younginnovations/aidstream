@@ -25,6 +25,10 @@ class HomeController extends Controller
     {
         $organizationCount = $this->organizationCount->initializeOrganizationQueryBuilder()->get()->count();
 
+        if ($this->hasSubdomain($this->getRoutePieces())) {
+            return view('tz.homepage', compact('organizationCount'));
+        }
+
         return view('home', compact('organizationCount'));
     }
 }

@@ -5,8 +5,9 @@ use App\Services\SettingsManager;
 use App\SuperAdmin\Requests\Organization;
 use App\SuperAdmin\Services\OrganizationGroupManager;
 use App\SuperAdmin\Services\SuperAdminManager;
-use Auth;
+use App\User;
 use Illuminate\Contracts\Logging\Log;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Kris\LaravelFormBuilder\FormBuilder;
 use Illuminate\Database\DatabaseManager;
@@ -172,8 +173,11 @@ class OrganizationController extends Controller
         Session::put('next_version', $next_version);
         Session::put('version', 'V' . str_replace('.', '', $current_version));
         Auth::loginUsingId($userId);
+        $user = User::findOrFail($userId);
 
-        return redirect()->to(config('app.admin_dashboard'));
+        $redirectPath = $this->routeByHostFor($user);
+
+        return redirect()->to($redirectPath);
     }
 
     /**
@@ -208,6 +212,7 @@ class OrganizationController extends Controller
     public function exportOrganizationInfo()
     {
         $organizationDetails = $this->adminManager->getAllOrganizationInfo();
+
         return $this->adminManager->exportDetails($organizationDetails);
     }
 }

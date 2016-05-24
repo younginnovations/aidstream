@@ -27,7 +27,7 @@ class WorkflowController extends Controller
      * WorkflowController constructor.
      * @param WorkflowManager $workFlowManager
      */
-    public function __construct(WorkFlowManager $workFlowManager)
+    public function __construct(WorkflowManager $workFlowManager)
     {
         $this->middleware('auth');
         $this->workFlowManager = $workFlowManager;
