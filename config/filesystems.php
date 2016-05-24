@@ -80,6 +80,18 @@ return [
      * Api URL for the IATI Registry.
      */
     'iati_registry_api_base_url' => env('REGISTRY_URL', 'test'),
-    'iati_registry_dummy_url'    => ''
+    'iati_registry_dummy_url'    => '',
+    'languages' => [
+        'v201' => [
+            'activity' => [
+                'language_codelist_path' => '/Core/V201/Codelist/en/Activity/Language.json'
+            ]
+        ],
+        'v202' => [
+            'activity' => [
+                'language_codelist_path' => '/Core/V201/Codelist/en/Activity/Language.json'
+            ]
+        ]
+    ]
 
 ];

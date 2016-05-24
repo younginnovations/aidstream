@@ -1,44 +1,28 @@
 @if(!empty($conditions))
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <div class="activity-element-title">
-                Conditions
+    <div class="activity-element-wrapper">
+        <div class="title">@lang('activityView.conditions')</div>
+        @if($conditions['condition_attached'] == 0)
+            <div class="activity-element-list">
+                <div class="activity-element-label">@lang('activityView.condition_not_attached')</div>
             </div>
-            <a href="{{route('activity.condition.index', $id)}}" class="edit-element">edit</a>
-            <a href="{{route('activity.delete-element', [$id, 'conditions'])}}" class="delete pull-right">remove</a>
-        </div>
-        <div class="panel-body panel-level-1">
-            <div class="panel panel-default">
-                <div class="panel-element-body">
-                    <div class="col-xs-12 col-md-12">
-                        <div class="col-xs-12 col-sm-4">Attached:</div>
-                        <div class="col-xs-12 col-sm-8"> {{($conditions['condition_attached'] == "1") ? 'Yes' : 'No' }}</div>
+        @else
+            @foreach(groupActivityElements($conditions['condition'], 'condition_type') as $key => $condition)
+                <div class="activity-element-list">
+                    <div class="activity-element-label">
+                        {{ $getCode->getCodeNameOnly('ConditionType',$key) }}
+                    </div>
+                    <div class="activity-element-info">
+                        @foreach($condition as $conditionInfo)
+                            <li>
+                                {!! getFirstNarrative($conditionInfo) !!}
+                                @include('Activity.partials.viewInOtherLanguage', ['otherLanguages' => getOtherLanguages($conditionInfo['narrative'])])
+                            </li>
+                        @endforeach
                     </div>
                 </div>
-            </div>
-            <div class="panel panel-default">
-                <div class="panel-heading">Description</div>
-                <div class="panel-body row">
-                    @if(!empty($conditions['condition']))
-                        @foreach($conditions['condition'] as $data)
-                            <div class="panel panel-default">
-                                <div class="panel-element-body">
-                                    <div class="col-xs-12 col-md-12">
-                                        <div class="col-xs-12 col-sm-4">Type:</div>
-                                        <div class="col-xs-12 col-sm-8">{{$getCode->getActivityCodeName('ConditionType', $data['condition_type'])}}</div>
-                                    </div>
-                                    @foreach($data['narrative'] as $narrative)
-                                        <div class="col-xs-12 col-md-12">
-                                            <div class="col-xs-12 col-sm-4">Text:</div>
-                                            <div class="col-xs-12 col-sm-8">{{$narrative['narrative'] . hideEmptyArray('Organization', 'Language', $narrative['language'])}}</div>
-                                        </div>
-                                    @endforeach
-                                </div>
-                            </div>
-                        @endforeach
-                    @endif
-                </div>
-            </div>
-        </div>
+            @endforeach
+        @endif
+        <a href="{{route('activity.condition.index', $id)}}" class="edit-element">edit</a>
+        <a href="{{route('activity.delete-element', [$id, 'condition'])}}" class="delete pull-right">remove</a>
     </div>
 @endif

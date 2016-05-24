@@ -1,42 +1,37 @@
 @if(!emptyOrHasEmptyTemplate($recipientRegions))
-    <div class="panel panel-default expanded">
-        <div class="panel-heading">
-            <div class="activity-element-title">
-                Recipient Region
-            </div>
-            <a href="{{route('activity.recipient-region.index', $id)}}" class="edit-element">edit</a>
-            <a href="{{route('activity.delete-element', [$id, 'recipient_region'])}}" class="delete pull-right">remove</a>
-        </div>
-        <div class="panel-body panel-level-1">
-            @foreach($recipientRegions as $recipientRegion)
-                <div class="panel-heading">
-                    <div class="activity-element-title">
-                        {{$getCode->getActivityCodeName('Region', $recipientRegion['region_code']) . ' ; ' . $recipientRegion['percentage']}}
+    <div class="activity-element-wrapper">
+        <div class="activity-element-list">
+            <div class="activity-element-label">@lang('activityView.recipient_region')</div>
+            <div class="activity-element-info">
+                @foreach($recipientRegions as $recipientRegion)
+                    <li>{!! getRecipientInformation($recipientRegion['region_code'], $recipientRegion['percentage'], 'Region') !!}</li>
+                    <div class="toggle-btn">
+                        <span class="show-more-info">Show more info</span>
+                        <span class="hide-more-info hidden">Hide more info</span>
                     </div>
-                </div>
-                <div class="panel-body">
-                    <div class="panel-element-body row">
-                        <div class="col-xs-12 col-md-12">
-                            <div class="col-xs-12 col-sm-4">Percentage:</div>
-                            <div class="col-xs-12 col-sm-8">{{$recipientRegion['percentage']}}</div>
+                    <div class="more-info hidden">
+                        <div class="element-info">
+                            <div class="activity-element-label">@lang('activityView.region_vocabulary')</div>
+                            <div class="activity-element-info">{{ $recipientRegion['region_vocabulary'] . '-' . substr($getCode->getActivityCodeName('RegionVocabulary', $recipientRegion['region_vocabulary']) , 0 , -4) }}</div>
                         </div>
-                        <div class="col-xs-12 col-md-12">
-                            <div class="col-xs-12 col-sm-4">Code:</div>
-                            <div class="col-xs-12 col-sm-8">{{$getCode->getActivityCodeName('Region', $recipientRegion['region_code'])}}</div>
-                        </div>
-                        <div class="col-xs-12 col-md-12">
-                            <div class="col-xs-12 col-sm-4">Vocabulary:</div>
-                            <div class="col-xs-12 col-sm-8">{{$getCode->getActivityCodeName('RegionVocabulary', $recipientRegion['region_vocabulary'])}}</div>
-                        </div>
-                        @foreach($recipientRegion['narrative'] as $narrative)
-                            <div class="col-xs-12 col-md-12">
-                                <div class="col-xs-12 col-sm-4">Text:</div>
-                                <div class="col-xs-12 col-sm-8">{{$narrative['narrative'] . hideEmptyArray('Organization', 'Language', $narrative['language'])}}</div>
+                        @if(session('version') != 'V201')
+                            <div class="element-info">
+                                <div class="activity-element-label">@lang('activityView.vocabulary_uri')</div>
+                                <div class="activity-element-info">{!!  getClickableLink(getVal($recipientRegion, ['vocabulary_uri'])) !!}</div>
                             </div>
-                        @endforeach
+                        @endif
+                        <div class="element-info">
+                            <div class="activity-element-label">@lang('activityView.description')</div>
+                            <div class="activity-element-info">
+                                {!! getFirstNarrative($recipientRegion) !!}
+                                @include('Activity.partials.viewInOtherLanguage', ['otherLanguages' => getOtherLanguages($recipientRegion['narrative'])])
+                            </div>
+                        </div>
                     </div>
-                </div>
-            @endforeach
+                @endforeach
+            </div>
         </div>
+        <a href="{{route('activity.recipient-region.index', $id)}}" class="edit-element">edit</a>
+        <a href="{{route('activity.delete-element', [$id, 'recipient_region'])}}" class="delete pull-right">remove</a>
     </div>
 @endif

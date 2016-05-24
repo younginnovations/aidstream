@@ -1,102 +1,49 @@
 @if(!emptyOrHasEmptyTemplate($documentLinks))
-    <div class="panel panel-default expanded">
-        <div class="panel-heading">
-            <div class="activity-element-title">
-                Document Link
+    <div class="activity-element-wrapper">
+        <div class="activity-element-list">
+            <div class="activity-element-label">@lang('activityView.document_link')</div>
+            <div class="activity-element-info">
+                @foreach($documentLinks as $documentLink)
+                    <li>{!! getClickableLink($documentLink['document_link']['url']) !!}</li>
+                    <div class="toggle-btn">
+                        <span class="show-more-info">Show more info</span>
+                        <span class="hide-more-info hidden">Hide more info</span>
+                    </div>
+                    <div class="more-info hidden">
+                        <div class="element-info">
+                            <div class="activity-element-label">@lang('activityView.title')</div>
+                            <div class="activity-element-info">
+                                {!! getFirstNarrative($documentLink['document_link']['title'][0]) !!}
+                                @include('Activity.partials.viewInOtherLanguage', ['otherLanguages' => getOtherLanguages($documentLink['document_link']['title'][0]['narrative'])])
+                            </div>
+
+                        </div>
+                        <div class="element-info">
+                            <div class="activity-element-label">@lang('activityView.format')</div>
+                            <div class="activity-element-info">{{ $documentLink['document_link']['format'] }}</div>
+                        </div>
+                        <div class="element-info">
+                            <div class="activity-element-label">@lang('activityView.category')</div>
+                            @foreach($documentLink['document_link']['category'] as $category)
+                                <div class="activity-element-info">{!! getCodeNameWithCodeValue('DocumentCategory' , $category['code'] , -5) !!}</div>
+                            @endforeach
+                        </div>
+                        <div class="element-info">
+                            <div class="activity-element-label">@lang('activityView.language')</div>
+                            <div class="activity-element-info">{!! checkIfEmpty(getDocumentLinkLanguages($documentLink['document_link']['language'])) !!}</div>
+                        </div>
+                        @if(session('version') != 'V201')
+                            <div class="element-info">
+                                <div class="activity-element-label">@lang('activityView.document_date')</div>
+                                <div class="activity-element-info">{!! checkIfEmpty(formatDate(getVal($documentLink , ['document_link' , 'document_date' , 0 , 'date']))) !!}</div>
+                            </div>
+                        @endif
+                    </div>
+                @endforeach
             </div>
-            @if(!request()->route()->hasParameter('document_link'))
-                <a href="{{route('activity.document-link.index', $id)}}" class="edit-element">edit</a>
-            @endif
         </div>
-        <div class="panel-body panel-level-1">
-            @foreach($documentLinks as $documentLink)
-                {{--*/
-                    $documentLink = $documentLink['document_link'];
-                /*--}}
-                @if(!$documentLink['title'][0]['narrative'])
-                    {{--*/
-                    $documentLink['title'][0]['narrative'] = [['narrative' => '', 'language' => '']];
-                    /*--}}
-                @endif
-                <div class="panel-heading">
-                    <div class="activity-element-title">
-                        {{$documentLink['title'][0]['narrative'][0]['narrative'] .  hideEmptyArray('Organization', 'Language', $documentLink['title'][0]['narrative'][0]['language'])}}
-                    </div>
-                </div>
-                <div class="panel-body">
-                    <div class="panel panel-default">
-                        <div class="panel-element-body row">
-                            <div class="col-xs-12 col-md-12">
-                                <div class="col-xs-12 col-sm-4">Url:</div>
-                                <div class="col-xs-12 col-sm-8">{{$documentLink['url']}}</div>
-                            </div>
-                            <div class="col-xs-12 col-md-12">
-                                <div class="col-xs-12 col-sm-4">Format:</div>
-                                <div class="col-xs-12 col-sm-8">{{$getCode->getActivityCodeName('FileFormat', $documentLink['format'])}}</div>
-                            </div>
-                        </div>
-                        <div class="col-xs-12 col-md-12 col-lg-12 panel-level-2">
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <div class="activity-element-title">Title</div>
-                                </div>
-                                <div class="panel-element-body row">
-                                    @foreach($documentLink['title'] as $title)
-                                        @foreach($title['narrative'] as $narrative)
-                                            <div class="col-xs-12 col-md-12">
-                                                <div class="col-xs-12 col-sm-4">Text:</div>
-                                                <div class="col-xs-12 col-sm-8">{{$narrative['narrative'] . hideEmptyArray('Organization', 'Language', $narrative['language'])}}</div>
-                                                <br/>
-                                            </div>
-                                        @endforeach
-                                    @endforeach
-                                </div>
-                            </div>
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <div class="activity-element-title">Category</div>
-                                </div>
-                                <div class="panel-element-body row">
-                                    @foreach($documentLink['category'] as $category)
-                                        <div class="col-xs-12 col-md-12">
-                                            <div class="col-xs-12 col-sm-4">Code:</div>
-                                            <div class="col-xs-12 col-sm-8">{{$getCode->getActivityCodeName('DocumentCategory', $category['code'])}}</div>
-                                        </div>
-                                    @endforeach
-                                </div>
-                            </div>
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <div class="activity-element-title">Language</div>
-                                </div>
-                                <div class="panel-element-body row">
-                                    @foreach($documentLink['language'] as $language)
-                                        <div class="col-xs-12 col-md-12">
-                                            <div class="col-xs-12 col-sm-4">Code:</div>
-                                            <div class="col-xs-12 col-sm-8">{{$getCode->getActivityCodeName('Language', $language['language'])}}</div>
-                                        </div>
-                                    @endforeach
-                                </div>
-                            </div>
-                            @if(array_key_exists('document_date', $documentLink))
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <div class="activity-element-title">Document Date</div>
-                                    </div>
-                                    <div class="panel-element-body row">
-                                        @foreach($documentLink['document_date'] as $date)
-                                            <div class="col-xs-12 col-md-12">
-                                                <div class="col-xs-12 col-sm-4">Date:</div>
-                                                <div class="col-xs-12 col-sm-8">{{ ($date['date']) ? formatDate($date['date']) : '' }}</div>
-                                            </div>
-                                        @endforeach
-                                    </div>
-                                </div>
-                            @endif
-                        </div>
-                    </div>
-                </div>
-            @endforeach
-        </div>
+        @if(!request()->route()->hasParameter('document_link'))
+            <a href="{{route('activity.document-link.index', $id)}}" class="edit-element">edit</a>
+        @endif
     </div>
 @endif
