@@ -30,7 +30,7 @@ class User extends Model implements AuthorizableContract, AuthenticatableContrac
     /**
      * The attributes that are mass assignable.
      *
-     * @var array
+     * @var array (auth()->user() && auth()->user()->role_id == 3) ? url(config('app.super_admin_dashboard')) : config('app.admin_dashboard')
      */
     protected $fillable = [
         'first_name',

@@ -28,7 +28,7 @@
     <div class="container-fluid">
         <div class="navbar-header">
             <div class="navbar-brand">
-                <a href="{{ (auth()->user() && session('role_id') == 3) ? url(config('app.super_admin_dashboard')) : config('app.admin_dashboard') }}"
+                <a href="{{ ($loggedInUser && $loggedInUser->role_id == 3) ? url(config('app.super_admin_dashboard')) : config('app.admin_dashboard') }}"
                    alt="Aidstream">Aidstream</a>
             </div>
         </div>
@@ -48,7 +48,7 @@
                 </ul>
             @endif
             <ul class="nav navbar-nav navbar-right navbar-admin-dropdown">
-                @if (Auth::guest())
+                @if (auth()->guest())
                     <li><a href="{{ url('/auth/login') }}">@lang('trans.login')</a></li>
                     <li><a href="{{ url('/auth/register') }}">@lang('trans.register')</a></li>
                 @else
@@ -58,64 +58,19 @@
                         @endif
                     </li>
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                           aria-expanded="false"><span class="avatar-img"><img src="{{url('images/avatar.svg')}}"
-                                                                               width="36" height="36"
-                                                                               alt="{{Auth::user()->name}}"></span>
-                            <span class="caret"></span></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                            <span class="avatar-img">
+                                <img src="{{url('images/avatar.svg')}}" width="36" height="36" alt="{{$loggedInUser->name}}">
+                            </span>
+                            <span class="caret"></span>
+                        </a>
                         <ul class="dropdown-menu" role="menu">
                             @if(!isSuperAdminRoute())
                                 <li><a href="{{url('user/profile')}}">@lang('trans.my_profile')</a></li>
                             @endif
                             <li><a href="{{ url('/auth/logout') }}">@lang('trans.logout')</a></li>
 
-                            {{-- Unwanted for now. Will come in use later --}}
-                            {{--<li class="language-select-wrap">--}}
-                            {{--<label for="">Choose Language</label>--}}
-                            {{--@foreach(config('app.locales') as $key => $val)--}}
-                            {{--<span class="flag-wrapper" data-lang="{{ $key }}">--}}
-                            {{--<span class="img-thumbnail flag flag-icon-background flag-icon-{{ $key }}{{ $key == config('app.locale') ? ' active' : '' }}"></span>--}}
-                            {{--</span>--}}
-                            {{--@endforeach--}}
-                            {{--</li>--}}
-                            {{-- Unwanted for now. Will come in use later --}}
-
-                            {{-- For small screen (theming remains) --}}
-                            {{--<li class="pull-left">--}}
-                            {{--@if((Session::get('role_id') == 3  || Session::get('role_id') == 4) && Session::get('org_id'))--}}
-                            {{--<span class="width-490"><a href="{{ route('admin.switch-back') }}" class="pull-left">Switch Back</a></span>--}}
-                            {{--@endif--}}
-                            {{--</li>--}}
-                            {{--<li class="pull-left">--}}
-                            {{--<div class="navbar-left version-wrap width-490">--}}
-                            {{--@if(Auth::user()->role_id != 3 && Auth::user()->role_id !=4)--}}
-                            {{--<div class="version pull-right {{ (Session::get('version') == 'V201') ? 'old' : 'new' }}">--}}
-
-                            {{--@if ((Session::get('version') == 'V201'))--}}
-                            {{--<a class="version-text" href="{{route('upgrade-version.index')}}">Update available</a>--}}
-                            {{--<span class="old-version">--}}
-                            {{--<a href="{{route('upgrade-version.index')}}">Upgrade to IATI version 2.0.2</a>--}}
-                            {{--</span>--}}
-                            {{--@else--}}
-                            {{--<span class="version-text">IATI version V202</span>--}}
-                            {{--<span class="new-version">--}}
-                            {{--You’re using latest IATI version--}}
-                            {{--</span>--}}
-                            {{--@endif--}}
-                            {{--</div>--}}
-                            {{--@endif--}}
-                            {{--</div>--}}
-                            {{--</li>--}}
-                            {{-- For small screen (theming remains) --}}
-                            {{--<li class="language-select-wrap">--}}
-                            {{--<label for="">Choose Language</label>--}}
-                            {{--@foreach(config('app.locales') as $key => $val)--}}
-                            {{--<span class="flag-wrapper" data-lang="{{ $key }}">--}}
-                            {{--<span class="img-thumbnail flag flag-icon-background flag-icon-{{ $key }}{{ $key == config('app.locale') ? ' active' : '' }}"></span>--}}
-                            {{--</span>--}}
-                            {{--@endforeach--}}
-                            {{--</li>--}}
-                            {{-- Unwanted for now. Will come in use later --}}
+                            @include('unwanted')
 
                             <li class="pull-left width-491">
                                 @if(!isSuperAdminRoute())
@@ -127,7 +82,6 @@
                                 <div class="navbar-left version-wrap width-490">
                                     @if(!isSuperAdminRoute())
                                         <div class="version pull-right {{ (session('version') == 'V201') ? 'old' : 'new' }}">
-
                                             @if ((session('version') == 'V201'))
                                                 <a class="version-text" href="{{route('upgrade-version.index')}}">Update
                                                     available</a>
@@ -153,7 +107,6 @@
         <div class="navbar-right version-wrap">
             @if(auth()->user() && !isSuperAdminRoute())
                 <div class="version pull-right {{ (session('version') == 'V201') ? 'old' : 'new' }}">
-                    {{--{{dd(session('next_version'))}}--}}
                     @if (session('next_version'))
                         <a class="version-text" href="{{route('upgrade-version.index')}}">Update available</a>
                         <span class="old-version">
@@ -173,7 +126,6 @@
 </nav>
 
 @yield('content')
-
 <div class="scroll-top">
     <a href="#" class="scrollup" title="Scroll to top">icon</a>
 </div>
