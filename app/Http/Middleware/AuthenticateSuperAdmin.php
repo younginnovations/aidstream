@@ -39,7 +39,7 @@ class AuthenticateSuperAdmin
             } else {
                 return redirect()->guest('auth/login');
             }
-        } elseif (session('role_id') != 3) {
+        } elseif (session('role_id') != 3 && session('role_id') != 4) {
             $response = ['type' => 'warning', 'code' => ['message', ['message' => "You don't have correct privilege"]]];
 
             return redirect(config('app.admin_dashboard'))->withResponse($response);
