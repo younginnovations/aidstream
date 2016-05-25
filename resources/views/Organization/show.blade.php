@@ -46,6 +46,13 @@
                                     <input type="submit" value="Mark as {{ $btn_text }}"> 
                                 @endif
                             </form>
+                        @else
+                            <div class="popup-link-content">
+                                <a href="#" title="{{ucfirst($organizationDataStatus)}}" class="{{ucfirst($organizationDataStatus)}}">{{ucfirst($organizationDataStatus)}}</a>
+                                <div class="link-content-message">
+                                    {!!$message!!}
+                                </div>
+                            </div>
                         @endif
                     </div>
                     <div class="panel panel-default panel-element-detail element-show">
@@ -66,4 +73,11 @@
             </div>
         </div>
     </div>
+@endsection
+@section('foot')
+    <script>
+        $(document).ready(function () {
+            $('[data-toggle="popover"]').popover({html: true});
+        });
+    </script>
 @endsection

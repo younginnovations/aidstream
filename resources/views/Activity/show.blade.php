@@ -33,7 +33,8 @@
                 @endforeach
             </ol>
             @if($btn_text != "")
-                <form method="POST" id="change_status" class="pull-right" action="{{ $nextRoute }}">
+                <form method="POST" id="change_status" class="pull-right"
+                      action="{{ url('/activity/' . $id . '/update-status') }}">
                     <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
                     <input type="hidden" name="activity_workflow" value="{{ $activity_workflow + 1 }}">
                     @if($activity_workflow == 2)
@@ -43,6 +44,11 @@
                         <input type="submit" value="Mark as {{ $btn_text }}">
                     @endif
                 </form>
+            @else
+                <div class="popup-link-content">
+                    <a href="#" title="{{ucfirst($activityPublishedStatus)}}" class="{{ucfirst($activityPublishedStatus)}}">{{ucfirst($activityPublishedStatus)}}</a>
+                    <div class="link-content-message">{!!$message!!}</div>
+                </div>
             @endif
         </div>
         <a href="{{route('change-activity-default', $id)}}" class="pull-right">
@@ -50,4 +56,11 @@
         </a>
         @include('Activity.partials.elements')
     </div>
+@endsection
+@section('foot')
+    <script>
+        $(document).ready(function () {
+            $('[data-toggle="popover"]').popover({html: true});
+        });
+    </script>
 @endsection

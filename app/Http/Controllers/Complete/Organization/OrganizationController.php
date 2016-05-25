@@ -84,6 +84,13 @@ class OrganizationController extends Controller
 
         $status = $organizationData->status;
 
+        if ($status == 3) {
+            $organization_id        = session('org_id');
+            $filename               = $this->getPublishedOrganizationFilename($organization_id);
+            $organizationDataStatus = $this->getPublishedOrganizationStatus($organization_id);
+            $message                = $this->getMessageForOrganizationData($organizationDataStatus, $filename);
+        }
+
         return view(
             'Organization/show',
             compact(
@@ -97,7 +104,10 @@ class OrganizationController extends Controller
                 'document_link',
                 'status',
                 'recipient_region_budget',
-                'total_expenditure'
+                'total_expenditure',
+                'filename',
+                'organizationDataStatus',
+                'message'
             )
         );
     }
@@ -306,9 +316,9 @@ class OrganizationController extends Controller
      */
     public function downloadOrganizationXml($orgId)
     {
-        $orgElem    = $this->organizationManager->getOrganizationElement();
+        $orgElem = $this->organizationManager->getOrganizationElement();
         $xmlService = $orgElem->getOrgXmlService();
-        $xml        = $xmlService->generateTemporaryOrganizationXml(
+        $xml = $xmlService->generateTemporaryOrganizationXml(
             $this->organizationManager->getOrganization($orgId),
             $this->organizationManager->getOrganizationData($orgId),
             $this->settingsManager->getSettings($orgId),
@@ -319,9 +329,59 @@ class OrganizationController extends Controller
             $xml,
             200,
             [
-                'Content-type'        => 'text/xml',
+                'Content-type' => 'text/xml',
                 'Content-Disposition' => sprintf('attachment; filename=orgXmlFile.xml')
             ]
         );
+    }
+
+    /** Returns filename of the published data of organization
+     * @param $organization_id
+     * @return string
+     */
+    public function getPublishedOrganizationFilename($organization_id)
+    {
+        $organization_data = $this->organizationManager->getPublishedOrganizationData($organization_id);
+
+        return $organization_data->filename;
+    }
+
+    /** Returns status of the published data of organization.
+     * @param $organization_id
+     * @return string
+     */
+    public function getPublishedOrganizationStatus($organization_id)
+    {
+        $organization_data = $this->organizationManager->getPublishedOrganizationData($organization_id);
+        $settings          = $this->settingsManager->getSettings($organization_id);
+        $autoPublishing    = $settings['registry_info'][0]['publish_files'];
+        if ($organization_data && $autoPublishing == "no") {
+            ($organization_data->published_to_register == 1) ? $status = "Linked" : $status = "Unlinked";
+        } else {
+            $status = "unlinked";
+        }
+
+        return $status;
+    }
+
+    /** Returns message according to status of the organization data.
+     * @param $status
+     * @param $filename
+     * @return string
+     */
+    protected function getMessageForOrganizationData($status, $filename)
+    {
+        if ($status == "Linked") {
+            $message = "Your organization data has been published to the IATI registry. It is included in the file
+                                    <a href='/files/xml/$filename'>$filename</a>";
+        } elseif ($status == "Unlinked") {
+            $message = "Your organization data has not been published to the IATI registry. Please go to Published files to manually publish your file to the registry. If you need help please
+                                    contact us at <a href='mailto:support@aidstream.org'>support@aidstream.org</a>.";
+        } else {
+            $message = "Your organization data has not been published to the IATI registry. Please re-publish this activity again. If you need help please
+                                    contact us at <a href='mailto:support@aidstream.org'>support@aidstream.org</a>.";
+        }
+
+        return $message;
     }
 }

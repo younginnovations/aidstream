@@ -5,6 +5,7 @@ use App\Http\API\CKAN\CkanClient;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Request;
 use App\Services\Activity\ActivityManager;
+use App\Models\Settings;
 use App\Services\Activity\ChangeActivityDefaultManager;
 use App\Services\Activity\DocumentLinkManager;
 use App\Services\Activity\ResultManager;
@@ -92,6 +93,8 @@ class ActivityController extends Controller
      */
     protected $documentLinkManager;
 
+    protected $settings;
+
     /**
      * @var TwitterAPI
      */
@@ -109,6 +112,7 @@ class ActivityController extends Controller
      * @param ChangeActivityDefault        $changeActivityDefaultForm
      * @param ChangeActivityDefaultManager $changeActivityDefaultManager
      * @param User                         $user
+     * @param Settings                     $settings
      * @param LoggerInterface              $loggerInterface
      * @param TwitterAPI                   $twitterAPI
      */
@@ -124,6 +128,7 @@ class ActivityController extends Controller
         ChangeActivityDefault $changeActivityDefaultForm,
         ChangeActivityDefaultManager $changeActivityDefaultManager,
         User $user,
+        Settings $settings,
         LoggerInterface $loggerInterface,
         TwitterAPI $twitterAPI
     ) {
@@ -138,6 +143,7 @@ class ActivityController extends Controller
         $this->transactionManager           = $transactionManager;
         $this->changeActivityDefaultForm    = $changeActivityDefaultForm;
         $this->changeActivityDefaultManager = $changeActivityDefaultManager;
+        $this->settings                     = $settings;
         $this->user                         = $user;
         $this->loggerInterface              = $loggerInterface;
         $this->twitter                      = $twitterAPI;
@@ -150,8 +156,18 @@ class ActivityController extends Controller
     public function index()
     {
         $activities = $this->activityManager->getActivities($this->organization_id);
+        foreach ($activities as $key => $activity) {
+            if ($activity->activity_workflow == 3) {
+                $filename                              = $this->getPublishedActivityFilename($this->organization_id, $activity);
+                $filenames[$activity->id]              = $filename;
+                $activityPublishedStatus               = $this->getPublishedActivityStatus($filename, $this->organization_id);
+                $activityPublishedStats[$activity->id] = $activityPublishedStatus;
+                $message                               = $this->getMessageForPublishedActivity($activityPublishedStatus, $filename);
+                $messages[$activity->id]               = $message;
+            }
+        }
 
-        return view('Activity.index', compact('activities'));
+        return view('Activity.index', compact('activities', 'filenames', 'activityPublishedStats', 'messages'));
     }
 
     /**
@@ -188,6 +204,12 @@ class ActivityController extends Controller
     {
         $activityData = $this->activityManager->getActivityData($id);
 
+        if ($activityData->activity_workflow == 3) {
+            $filename                = $this->getPublishedActivityFilename($this->organization_id, $activityData);
+            $activityPublishedStatus = $this->getPublishedActivityStatus($filename, $this->organization_id);
+            $message                 = $this->getMessageForPublishedActivity($activityPublishedStatus, $filename);
+        }
+
         if (Gate::denies('ownership', $activityData)) {
             return redirect()->route('activity.index')->withResponse($this->getNoPrivilegesMessage());
         }
@@ -209,7 +231,7 @@ class ActivityController extends Controller
             $nextRoute = route('activity.publish', $id);
         }
 
-        return view('Activity.show', compact('activityDataList', 'id', 'nextRoute'));
+        return view('Activity.show', compact('activityDataList', 'id', 'filename', 'activityPublishedStatus', 'message', 'nextRoute'));
     }
 
     /**
@@ -828,9 +850,9 @@ class ActivityController extends Controller
      */
     public function downloadActivityXml($activityId)
     {
-        $activityData    = $this->activityManager->getActivityData($activityId);
+        $activityData = $this->activityManager->getActivityData($activityId);
         $activityElement = $this->activityManager->getActivityElement();
-        $xmlService      = $activityElement->getActivityXmlService();
+        $xmlService = $activityElement->getActivityXmlService();
 
         $xml = $xmlService->generateTemporaryActivityXml(
             $this->activityManager->getActivityData($activityId),
@@ -846,9 +868,73 @@ class ActivityController extends Controller
             $xml,
             200,
             [
-                'Content-type'        => 'text/xml',
+                'Content-type' => 'text/xml',
                 'Content-Disposition' => sprintf('attachment; filename=activityXmlFile.xml')
             ]
         );
+    }
+
+    /** Returns the filename that is generated when activity is published based on publishing type.
+     * @param $organization_id
+     * @param $activity
+     * @return string
+     */
+    public function getPublishedActivityFilename($organization_id, $activity)
+    {
+        $settings       = $this->settings->where('organization_id', $organization_id)->first();
+        $publisherId    = $settings->registry_info[0]['publisher_id'];
+        $publishingType = $settings->publishing_type;
+
+        if ($publishingType != "segmented") {
+            $endName = 'activities';
+        } else {
+            $activityElement = $this->activityManager->getActivityElement();
+            $xmlService      = $activityElement->getActivityXmlService();
+            $endName         = $xmlService->segmentedXmlFile($activity);
+        }
+        $filename = sprintf('%s' . '-' . '%s.xml', $publisherId, $endName);
+
+        return $filename;
+    }
+
+    /** Returns according to published to registry status of the activity.
+     * @param $filename
+     * @param $organization_id
+     * @return string
+     */
+    public function getPublishedActivityStatus($filename, $organization_id)
+    {
+        $activityPublished   = $this->activityManager->getActivityPublishedData($filename, $organization_id);
+        $settings            = $this->settings->where('organization_id', $organization_id)->first();
+        $autoPublishSettings = $settings->registry_info[0]['publish_files'];
+
+        if ($activityPublished && $autoPublishSettings == "no") {
+            ($activityPublished->published_to_register == 0) ? $status = "Unlinked" : $status = "Linked";
+        } else {
+            ($activityPublished->published_to_register == 0) ? $status = "unlinked" : $status = "Linked";
+        }
+
+        return $status;
+    }
+
+    /** Returns message according to the status of the activity
+     * @param $status
+     * @param $filename
+     * @return string
+     */
+    protected function getMessageForPublishedActivity($status, $filename)
+    {
+        if ($status == "Unlinked") {
+            $message = "This activity has not been published to the IATI registry. Please go to Published files to manually publish your file to the registry. If you need help please
+                                    contact us at <a href='mailto:support@aidstream.org'>support@aidstream.org</a>.";
+        } elseif ($status == "Linked") {
+            $message = " This activity has been published to the IATI registry. It is included in the file
+                                    <a href='/files/xml/$filename'>$filename</a>";
+        } else {
+            $message = "This activity has not been published to the IATI registry. Please re-publish this activity again. If you need help please
+                                    contact us at <a href='mailto:support@aidstream.org'>support@aidstream.org</a>.";
+        }
+
+        return $message;
     }
 }
