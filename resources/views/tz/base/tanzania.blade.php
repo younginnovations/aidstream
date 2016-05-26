@@ -38,7 +38,7 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Add a New Project<span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
                             <li><a href="{{ route('project.create') }}">Add Project Manually</a></li>
-                            <li><a href="{{ route('project.upload') }}">Upload Projects</a></li>
+{{--                            <li><a href="{{ route('project.upload') }}">Upload Projects</a></li>--}}
                         </ul>
                     </li>
                 </ul>

@@ -3,6 +3,7 @@
 use App\Core\Form\BaseForm;
 use App\Http\Controllers\Tz\TanzanianController;
 use App\Tz\Aidstream\Services\Project\ProjectService;
+use App\Tz\Aidstream\Services\Transaction\TransactionService;
 use App\Tz\Aidstream\Traits\FormatsProjectFormInformation;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -20,14 +21,17 @@ class ProjectController extends TanzanianController
      * @var ProjectService
      */
     protected $project;
+    protected $transaction;
 
     /**
      * ProjectController constructor.
-     * @param ProjectService $project
+     * @param ProjectService     $project
+     * @param TransactionService $transaction
      */
-    public function __construct(ProjectService $project)
+    public function __construct(ProjectService $project, TransactionService $transaction)
     {
-        $this->project = $project;
+        $this->project     = $project;
+        $this->transaction = $transaction;
     }
 
     /**
@@ -52,9 +56,14 @@ class ProjectController extends TanzanianController
         $codeList           = $baseForm->getCodeList('ActivityStatus', 'Activity');
         $sectors            = $baseForm->getCodeList('SectorCategory', 'Activity');
         $recipientRegions   = $baseForm->getCodeList('Region', 'Activity');
+        $participatingOrg   = $baseForm->getCodeList('OrganisationRole', 'Activity');
+        $organizationType   = $baseForm->getCodeList('OrganisationType', 'Activity');
         $recipientCountries = $baseForm->getCodeList('Country', 'Organization');
+        $fileFormat         = $baseForm->getCodeList('FileFormat', 'Activity');
+        $transactionType    = $baseForm->getCodeList('TransactionType', 'Activity');
+        $currency           = $baseForm->getCodeList('Currency', 'Activity');
 
-        return view('tz.project.create', compact('codeList', 'sectors', 'recipientRegions', 'recipientCountries'));
+        return view('tz.project.create', compact('codeList', 'sectors', 'recipientRegions', 'participatingOrg', 'organizationType', 'recipientCountries', 'fileFormat', 'transactionType', 'currency'));
     }
 
     /**
@@ -80,7 +89,8 @@ class ProjectController extends TanzanianController
      */
     public function show($id)
     {
-        $project = $this->project->find($id);
+        $project      = $this->project->find($id);
+        $transactions = $this->transaction->findByActivityId($id);
 
         if (Gate::denies('ownership', $project)) {
             return redirect()->route('project.index')->withResponse($this->getNoPrivilegesMessage());
@@ -99,7 +109,7 @@ class ProjectController extends TanzanianController
             $nextRoute = route('activity.publish', $id);
         }
 
-        return view('tz.project.show', compact('project', 'activityResult', 'id', 'statusLabel', 'btn_text', 'activityWorkflow', 'nextRoute'));
+        return view('tz.project.show', compact('project', 'transactions', 'activityResult', 'id', 'statusLabel', 'btn_text', 'activityWorkflow', 'nextRoute'));
     }
 
     /**
