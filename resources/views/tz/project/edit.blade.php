@@ -76,6 +76,54 @@
                                     {!! Form::select('recipient_region', ['' => 'Select one of the following.'] + $recipientRegions, $project['recipient_region'], ['class' => 'form-control', 'required' => 'required']) !!}
                                 </div>
 
+                                <div class="col-sm-12">
+                                    <h2>Funding</h2>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    {!! Form::label('funding_organization_name', 'Organization Name', ['class' => 'control-label required']) !!}
+                                    {!! Form::text('funding_organization_name', null, ['class' => 'form-control', 'required' => 'required']) !!}
+                                </div>
+
+                                <div class="col-sm-6">
+                                    {!! Form::label('funding_organization_type', 'Organization Type', ['class' => 'control-label required']) !!}
+                                    {!! Form::select('funding_organization_type', ['' => 'Select one of the following.'] + $organizationType, null, ['class' => 'form-control', 'required' => 'required']) !!}
+                                </div>
+
+                                <div class="col-sm-12">
+                                    <h2>Implementing</h2>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    {!! Form::label('implementing_organization_name', 'Organization Name', ['class' => 'control-label required']) !!}
+                                    {!! Form::text('implementing_organization_name', null, ['class' => 'form-control', 'required' => 'required']) !!}
+                                </div>
+
+                                <div class="col-sm-6">
+                                    {!! Form::label('implementing_organization_type', 'Organization Type', ['class' => 'control-label required']) !!}
+                                    {!! Form::select('implementing_organization_type', ['' => 'Select one of the following.'] + $organizationType, null, ['class' => 'form-control', 'required' => 'required']) !!}
+                                </div>
+
+                                <div class="col-sm-6">
+                                    {!! Form::label('document_url_title', 'Title', ['class' => 'control-label required']) !!}
+                                    {!! Form::text('document_url_title', null, ['class' => 'form-control', 'required' => 'required']) !!}
+                                </div>
+                                <div class="col-sm-6">
+                                    {!! Form::label('document_url', 'Document URL', ['class' => 'control-label required']) !!}
+                                    {!! Form::text('document_url', null, ['class' => 'form-control', 'required' => 'required']) !!}
+                                </div>
+
+                                <div class="col-sm-6">
+                                    {!! Form::label('annual_reports', 'Annual Report', ['class' => 'control-label required']) !!}
+                                    {!! Form::select('annual_reports', ['' => 'Select one of the following.'] + $fileFormat, null, ['class' => 'form-control', 'required' => 'required']) !!}
+                                </div>
+
+
+                                <div class="col-sm-6">
+                                    {!! Form::label('document_title', 'Title', ['class' => 'control-label required']) !!}
+                                    {!! Form::text('document_title', null, ['class' => 'form-control', 'required' => 'required']) !!}
+                                </div>
+
                                 <a class="btn btn-primary btn-sm pull-right" id="projectNextStep" href="javascript:void(0)">
                                     Next
                                     <span class="glyphicon glyphicon-arrow-right"></span>

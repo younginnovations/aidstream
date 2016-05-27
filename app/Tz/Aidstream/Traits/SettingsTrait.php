@@ -57,11 +57,11 @@ trait SettingsTrait
             'reporting_org_type'       => getVal($organization, ['reporting_org', 0, 'reporting_organization_type']),
             'narrative'                => getVal($organization, ['reporting_org', 0, 'narrative', 0, 'narrative']),
             'language'                 => getVal($organization, ['reporting_org', 0, 'narrative', 0, 'language']),
-            'publisher_id'             => getVal($settings->registry_info, [0, 'publisher_id']),
-            'api_id'                   => getVal($settings->registry_info, [0, 'api_id']),
-            'publish_files'            => getVal($settings->registry_info, [0, 'publish_files']),
-            'default_currency'         => getVal($settings->default_field_values, [0, 'default_currency']),
-            'default_language'         => getVal($settings->default_field_values, [0, 'default_language'])
+            'publisher_id'             => $settings->registry_info ? getVal($settings->registry_info, [0, 'publisher_id']) : '',
+            'api_id'                   => $settings->registry_info ? getVal($settings->registry_info, [0, 'api_id']) : '',
+            'publish_files'            => $settings->registry_info ? getVal($settings->registry_info, [0, 'publish_files']) : '',
+            'default_currency'         => $settings->default_field_values ? getVal($settings->default_field_values, [0, 'default_currency']) : '',
+            'default_language'         => $settings->default_field_values ? getVal($settings->default_field_values, [0, 'default_language']) : ''
         ];
     }
 

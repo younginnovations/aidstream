@@ -2,6 +2,7 @@
 
 use App\Core\Form\BaseForm;
 use App\Http\Controllers\Tz\TanzanianController;
+use App\Models\Organization\Organization;
 use App\Tz\Aidstream\Services\Project\ProjectService;
 use App\Tz\Aidstream\Services\Transaction\TransactionService;
 use App\Tz\Aidstream\Traits\FormatsProjectFormInformation;
@@ -126,8 +127,10 @@ class ProjectController extends TanzanianController
         $sectors            = $baseForm->getCodeList('SectorCategory', 'Activity');
         $recipientRegions   = $baseForm->getCodeList('Region', 'Activity');
         $recipientCountries = $baseForm->getCodeList('Country', 'Organization');
+        $organizationType   = $baseForm->getCodeList('OrganisationType', 'Activity');
+        $fileFormat         = $baseForm->getCodeList('FileFormat', 'Activity');
 
-        return view('tz.project.edit', compact('project', 'codeList', 'sectors', 'recipientRegions', 'recipientCountries'));
+        return view('tz.project.edit', compact('project', 'codeList', 'sectors', 'recipientRegions', 'recipientCountries', 'organizationType', 'fileFormat'));
     }
 
     /**

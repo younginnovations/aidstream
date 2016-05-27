@@ -60,11 +60,6 @@
                                 </div>
 
                                 <div class="col-sm-6">
-                                    {!! Form::label('start_date', 'Start Date', ['class' => 'control-label required']) !!}
-                                    {!! Form::text('start_date', null, ['class' => 'form-control', 'required' => 'required']) !!}
-                                </div>
-
-                                <div class="col-sm-6">
                                     {!! Form::label('end_date', 'End Date', ['class' => 'control-label required']) !!}
                                     {!! Form::text('end_date', null, ['class' => 'form-control', 'required' => 'required']) !!}
                                 </div>
@@ -105,11 +100,6 @@
                                 <div class="col-sm-6">
                                     {!! Form::label('implementing_organization_type', 'Organization Type', ['class' => 'control-label required']) !!}
                                     {!! Form::select('implementing_organization_type', ['' => 'Select one of the following.'] + $organizationType, null, ['class' => 'form-control', 'required' => 'required']) !!}
-                                </div>
-
-                                <div class="col-sm-6">
-                                    {!! Form::label('recipient_country', 'Recipient Country', ['class' => 'control-label required']) !!}
-                                    {!! Form::select('recipient_country', ['' => 'Select one of the following.'] + $recipientCountries, null, ['class' => 'form-control', 'required' => 'required']) !!}
                                 </div>
 
                                 <div class="col-sm-6">

@@ -96,7 +96,7 @@
                     </div>
                 </div>
 
-                @if($getCode->getActivityCodeName('SectorCategory', $project->sector['sector_category_code']) != null)
+                @if($getCode->getActivityCodeName('SectorCategory', getVal($project->sector, [0, 'sector_category_code'])))
                     <div class="panel-body">
                         <div class="panel-heading">
                             Sectors
@@ -104,7 +104,7 @@
                         <div class="col-xs-12 col-md-12">
                             <div class="col-xs-12 col-sm-4">Sector:</div>
                             <div class="col-xs-12 col-sm-8">
-                                {{ $getCode->getActivityCodeName('SectorCategory', $project->sector['sector_category_code'])}}
+                                {{ $getCode->getActivityCodeName('SectorCategory', getVal($project->sector, [0, 'sector_category_code'])) }}
                             </div>
                         </div>
                     </div>
@@ -242,11 +242,7 @@
                         </div>
                     @endforeach
                 </div>
-
             </div>
-
         </div>
-    </div>
-
     </div>
 @endsection

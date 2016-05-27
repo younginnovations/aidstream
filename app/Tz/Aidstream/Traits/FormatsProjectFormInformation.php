@@ -1,6 +1,7 @@
 <?php namespace App\Tz\Aidstream\Traits;
 
-use App\Tz\Aidstream\Models\Project;
+use App\Tz\Aidstream\Models\Organization;
+
 
 /**
  * Class FormatsProjectFormInformation
@@ -162,9 +163,7 @@ trait FormatsProjectFormInformation
             $map = camel_case($key);
 
             if (method_exists($this, $map)) {
-                if ($key != 'participating_organization') {
-                    $mappings[$key] = $this->$map($projectDetails);
-                }
+                $mappings[$key] = $this->$map($projectDetails);
             }
         }
 
@@ -178,9 +177,12 @@ trait FormatsProjectFormInformation
      */
     protected function identifier($projectDetails)
     {
+        $organization   = app()->make(Organization::class)->find(session('org_id'));
+        $iatiIdentifier = sprintf('%s-%s', $organization->reporting_org[0]['reporting_organization_identifier'], $projectDetails['identifier']);
+
         return [
             'activity_identifier'  => $projectDetails['identifier'],
-            'iati_identifier_text' => ''
+            'iati_identifier_text' => $iatiIdentifier
         ];
     }
 
@@ -240,13 +242,15 @@ trait FormatsProjectFormInformation
     protected function sector($projectDetails)
     {
         return [
-            "sector_vocabulary"    => 2,
-            "sector_code"          => $projectDetails['sector'],
-            "sector_category_code" => "",
-            "sector_text"          => "",
-            "percentage"           => "",
-            "narrative"            => [["narrative" => "", "language" => ""]],
-            "vocabulary_uri"       => ""
+            [
+                "sector_vocabulary"    => 2,
+                "sector_code"          => '',
+                "sector_category_code" => $projectDetails['sector'],
+                "sector_text"          => "",
+                "percentage"           => "",
+                "narrative"            => [["narrative" => "", "language" => ""]],
+                "vocabulary_uri"       => ""
+            ]
         ];
     }
 
@@ -348,6 +352,11 @@ trait FormatsProjectFormInformation
         ];
     }
 
+    /**
+     * Map data in reverse order for views.
+     * @param $projectDetails
+     * @return array|mixed
+     */
     public function reverseMap($projectDetails)
     {
         $details['identifier']        = $projectDetails->identifier ? getVal($projectDetails->identifier, ['activity_identifier']) : '';
@@ -359,6 +368,7 @@ trait FormatsProjectFormInformation
         $details['recipient_region']  = $projectDetails->recipient_region ? getVal($projectDetails->recipient_region, [0, 'region_code']) : '';
         $details['activity_status']   = $projectDetails->activity_status;
         $details['id']                = $projectDetails->id;
+        $details                      = $this->mapParticipatingOrganization($projectDetails, $details);
 
         return $details;
     }
@@ -402,6 +412,29 @@ trait FormatsProjectFormInformation
 
             if (getVal($activityDate, ['type']) == 4) {
                 $details['end_date'] = getVal($activityDate, ['date']);
+            }
+        }
+
+        return $details;
+    }
+
+    /**
+     * Map Participating Organization.
+     * @param       $projectDetails
+     * @param array $details
+     * @return array
+     */
+    protected function mapParticipatingOrganization($projectDetails, array $details)
+    {
+        foreach ($projectDetails->participating_organization as $participatingOrganization) {
+            if (getVal($participatingOrganization, ['organization_role']) == 1) {
+                $details['funding_organization_name'] = getVal($participatingOrganization, ['narrative', 0, 'narrative']);
+                $details['funding_organization_type'] = getVal($participatingOrganization, ['organization_role']);
+            }
+
+            if (getVal($participatingOrganization, ['organization_role']) == 4) {
+                $details['implementing_organization_name'] = getVal($participatingOrganization, ['narrative', 0, 'narrative']);
+                $details['implementing_organization_type'] = getVal($participatingOrganization, ['organization_role']);
             }
         }
 
