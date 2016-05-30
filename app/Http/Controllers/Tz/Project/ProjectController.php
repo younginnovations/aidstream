@@ -2,7 +2,6 @@
 
 use App\Core\Form\BaseForm;
 use App\Http\Controllers\Tz\TanzanianController;
-use App\Models\Organization\Organization;
 use App\Tz\Aidstream\Services\Project\ProjectService;
 use App\Tz\Aidstream\Services\Transaction\TransactionService;
 use App\Tz\Aidstream\Traits\FormatsProjectFormInformation;
@@ -179,13 +178,18 @@ class ProjectController extends TanzanianController
 
         $this->authorize('edit_activity', $project);
 
+        $settings = $project->organization->settings;
+        $baseForm = new BaseForm();
+        $language = $baseForm->getCodeList('Language', 'Organization');
+        $currency = $baseForm->getCodeList('Currency', 'Organization');
+
         $project = [
             'id'               => $project->id,
-            'default_currency' => $project->default_field_values[0]['default_currency'],
-            'default_language' => $project->default_field_values[0]['default_language']
+            'default_currency' => $project->default_field_values[0]['default_currency'] ? $project->default_field_values[0]['default_currency'] : getVal($settings->default_field_values, [0, 'default_currency']),
+            'default_language' => $project->default_field_values[0]['default_language'] ? $project->default_field_values[0]['default_language'] : getVal($settings->default_field_values, [0, 'default_language'])
         ];
 
-        return view('tz.project.overrideProjectDefaults', compact('project'));
+        return view('tz.project.overrideProjectDefaults', compact('project', 'language', 'currency'));
     }
 
     /**
@@ -236,5 +240,14 @@ class ProjectController extends TanzanianController
         $users = $this->project->getUsers();
 
         return view('tz.users', compact('users'));
+    }
+
+    /**
+     * Show the download page.
+     * @return mixed
+     */
+    public function download()
+    {
+        return view('tz.downloads.index');
     }
 }

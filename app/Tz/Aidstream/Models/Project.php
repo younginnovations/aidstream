@@ -29,7 +29,8 @@ class Project extends Activity
         'participating_organization',
         'activity_date',
         'location',
-        'sector'
+        'sector',
+        'default_field_values'
     ];
 
     /**

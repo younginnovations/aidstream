@@ -46,6 +46,14 @@ $router->group(
                         'uses' => 'ProjectController@listUsers'
                     ]
                 );
+
+                $router->get(
+                    'downloads',
+                    [
+                        'as'   => 'downloads',
+                        'uses' => 'ProjectController@download'
+                    ]
+                );
             }
         );
     }

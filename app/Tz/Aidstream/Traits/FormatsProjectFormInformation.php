@@ -345,8 +345,9 @@ trait FormatsProjectFormInformation
         return [
             'default_field_values' => [
                 [
-                    'default_currency' => $projectDetails['default_currency'],
-                    'default_language' => $projectDetails['default_language']
+                    'default_currency'  => $projectDetails['default_currency'],
+                    'default_language'  => $projectDetails['default_language'],
+                    'default_hierarchy' => 1
                 ]
             ]
         ];
