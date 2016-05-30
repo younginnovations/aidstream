@@ -96,7 +96,7 @@
                     </div>
                 </div>
 
-                @if($getCode->getActivityCodeName('SectorCategory', getVal($project->sector, [0, 'sector_category_code'])))
+                @if($getCode->getActivityCodeName('SectorCategory', getVal($project->sector, [0, 'sector_category_code'])) != null)
                     <div class="panel-body">
                         <div class="panel-heading">
                             Sectors
@@ -194,53 +194,105 @@
                     </div>
                 </div>
 
-                <div class="panel-body">
-                    <div class="panel-heading">
-                        Transactions
-                    </div>
-                    @foreach($transactions as $transaction)
-                        <div class="col-xs-12 col-md-12">
-                            <div class="panel-heading">
-                                {{$getCode->getActivityCodeName('TransactionType', $transaction->transaction['transaction_type'][0]['transaction_type_code']) }}:
-                            </div>
-                            <div class="col-xs-12 col-md-12">
-                                <div class="col-xs-12 col-sm-4">Transaction Reference:</div>
-                                <div class="col-xs-12 col-sm-8">
-                                    {{$transaction->transaction['reference']}}
+                <div class="panel panel-default">
+                    <div class="panel-body">
+
+                        <div class="row form-group">
+                            @if(count($disbursement) > 0)
+                                <div class="col-sm-12 transaction-title">
+                                    <span>Disbursement</span>
                                 </div>
-                            </div>
-                            <div class="col-xs-12 col-md-12">
-                                <div class="col-xs-12 col-sm-4">Transaction Date:</div>
-                                <div class="col-xs-12 col-sm-8">
-                                    {{$transaction->transaction['transaction_date'][0]['date']}}
+                                <table class="table table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th>Internal Ref</th>
+                                        <th>Transaction Value</th>
+                                        <th>Transaction Date</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach($disbursement as $data)
+                                        <tr>
+                                            <td>{{$data['reference']}}</td>
+                                            <td>{{$data['amount']}}</td>
+                                            <td>{{$data['date']}}</td>
+                                        </tr>
+                                    @endforeach
+                                    </tbody>
+                                </table>
+                            @else
+                                <div class="col-sm-12 transaction-title">
+                                    <span>Disbursement</span>
+                                    <a class="transaction-btn add-transaction-type" href="{{ url(sprintf('activity/%s/transaction/%s/create', $project->id,3)) }}"><span>Add a Disbursement</span></a>
                                 </div>
-                            </div>
-                            <div class="col-xs-12 col-md-12">
-                                <div class="col-xs-12 col-sm-4">Amount:</div>
-                                <div class="col-xs-12 col-sm-8">
-                                    {{$transaction->transaction['value'][0]['amount']}}
-                                </div>
-                            </div>
-                            <div class="col-xs-12 col-md-12">
-                                <div class="col-xs-12 col-sm-4">Currency:</div>
-                                <div class="col-xs-12 col-sm-8">
-                                    {{$getCode->getCode('Organization', 'Currency', $transaction->transaction['value'][0]['currency'])}}
-                                </div>
-                            </div>
-                            <div class="col-xs-12 col-md-12">
-                                <div class="col-xs-12 col-sm-4">Description:</div>
-                                <div class="col-xs-12 col-sm-8">
-                                    {{$transaction->transaction['description'][0]['narrative'][0]['narrative']}}
-                                </div>
-                            </div>
-                            <div class="col-xs-12 col-md-12">
-                                <div class="col-xs-12 col-sm-4">Provider Organization:</div>
-                                <div class="col-xs-12 col-sm-8">
-                                    {{$transaction->transaction['provider_organization'][0]['narrative'][0]['narrative']}}
-                                </div>
-                            </div>
+                            @endif
                         </div>
-                    @endforeach
+
+                        <div class="row form-group">
+
+                            @if(count($expenditure) > 0)
+                                <div class="col-sm-12 transaction-title">
+                                    <span>Expenditure</span>
+                                </div>
+                                <table class="table table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th>Internal Ref</th>
+                                        <th>Transaction Value</th>
+                                        <th>Transaction Date</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach($expenditure as $data)
+                                        <tr>
+                                            <td>{{$data['reference']}}</td>
+                                            <td>{{$data['amount']}}</td>
+                                            <td>{{$data['date']}}</td>
+                                        </tr>
+                                    @endforeach
+                                    </tbody>
+                                </table>
+                            @else
+                                <div class="col-sm-12 transaction-title">
+                                    <span>Expenditure</span>
+                                </div>
+                            @endif
+                        </div>
+
+                        <div class="row form-group">
+
+                            @if(count($incomingFund) > 0)
+                                <div class="col-sm-12 transaction-title">
+                                    <span>Incoming Funds</span>
+                                </div>
+                                <table class="table table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th>Internal Ref</th>
+                                        <th>Transaction Value</th>
+                                        <th>Transaction Date</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach($incomingFund as $data)
+                                        <tr>
+                                            <td>{{$data['reference']}}</td>
+                                            <td>{{$data['amount']}}</td>
+                                            <td>{{$data['date']}}</td>
+                                        </tr>
+                                    @endforeach
+                                    </tbody>
+                                </table>
+                            @else
+                                <div class="col-sm-12 transaction-title">
+                                    <span>Incoming Funds</span>
+                                </div>
+                            @endif
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
