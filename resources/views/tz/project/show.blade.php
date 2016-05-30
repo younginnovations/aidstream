@@ -236,7 +236,6 @@
                                 <div class="col-sm-12 transaction-title">
                                     <span>Expenditure</span>
                                     <a href="{{url(sprintf('project/%s/transaction/%s/edit', $project->id,4))}}"><span>Edit a Expenditure</span></a>
-
                                 </div>
                                 <table class="table table-striped">
                                     <thead>
@@ -271,7 +270,6 @@
                                 <div class="col-sm-12 transaction-title">
                                     <span>Incoming Funds</span>
                                     <a href="{{url(sprintf('project/%s/transaction/%s/edit', $project->id,1))}}"><span>Edit a Incoming Fund</span></a>
-
                                 </div>
                                 <table class="table table-striped">
                                     <thead>
