@@ -89,12 +89,16 @@ class ProjectController extends TanzanianController
      */
     public function show($id)
     {
-        $project      = $this->project->find($id);
-        $transactions = $this->transaction->findByActivityId($id);
+        $project = $this->project->find($id);
 
         if (Gate::denies('ownership', $project)) {
             return redirect()->route('project.index')->withResponse($this->getNoPrivilegesMessage());
         }
+
+        $incomingFund = $this->transaction->getTransactions($id, 1);
+        $disbursement = $this->transaction->getTransactions($id, 3);
+        $expenditure  = $this->transaction->getTransactions($id, 4);
+        $transactions = $this->transaction->findByActivityId($id);
 
         $statusLabel      = ['draft', 'completed', 'verified', 'published'];
         $activityWorkflow = $project->activity_workflow;
@@ -109,7 +113,10 @@ class ProjectController extends TanzanianController
             $nextRoute = route('activity.publish', $id);
         }
 
-        return view('tz.project.show', compact('project', 'transactions', 'activityResult', 'id', 'statusLabel', 'btn_text', 'activityWorkflow', 'nextRoute'));
+        return view(
+            'tz.project.show',
+            compact('project', 'transactions', 'activityResult', 'id', 'statusLabel', 'btn_text', 'activityWorkflow', 'nextRoute', 'incomingFund', 'disbursement', 'expenditure')
+        );
     }
 
     /**
