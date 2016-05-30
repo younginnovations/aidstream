@@ -14,6 +14,7 @@ interface TransactionRepositoryInterface
     public function findByActivityId($activityId);
 
     /**
+     * Get data from db 
      * @param $activityId
      * @param $transactionType
      * @return mixed
@@ -21,6 +22,7 @@ interface TransactionRepositoryInterface
     public function getTransactionTypeData($activityId, $transactionType);
 
     /**
+     * Create Transactions
      * @param $transactions
      * @return mixed
      */
