@@ -36,7 +36,10 @@
                                 {!! Form::open(['method' => 'DELETE', 'route' => ['project.destroy', $project->id], 'class' => 'hidden', 'role' => 'form', 'id' => 'project-delete-form']) !!}
                                 {!! Form::submit('Delete') !!}
                                 {!! Form::close() !!}
-                                {{--<a href="{{ route('activity.duplicate', [$project->id]) }}" class="duplicate">Duplicate</a>--}}
+                                <a href="javascript:void(0)" class="duplicate" id="duplicate-project">Duplicate</a>
+                                {!! Form::open(['method' => 'POST', 'route' => ['project.duplicate', $project->id], 'class' => 'hidden', 'role' => 'form', 'id' => 'project-duplicate-form']) !!}
+                                {!! Form::submit('Duplicate') !!}
+                                {!! Form::close() !!}
                             </td>
                         </tr>
                     @empty
@@ -68,7 +71,8 @@
                     </div>
                     <div class="modal-footer">
                         <button class="btn btn_del" type="button" id="yes-delete">Yes</button>
-                        <button class="btn btn-default" type="button" data-dismiss="modal">No</button>;
+                        <button class="btn btn-default" type="button" data-dismiss="modal">No</button>
+                        ;
                     </div>
                 </div>
             </div>

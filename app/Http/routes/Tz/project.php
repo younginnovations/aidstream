@@ -1,7 +1,7 @@
 <?php
 
 $router->group(
-    ['domain' => 'tz.' . env('HOST'), 'namespace' => 'Tz'],
+    ['domain' => 'tz1.' . env('HOST'), 'namespace' => 'Tz'],
     function ($router) {
         $router->group(
             ['namespace' => 'Project'],
@@ -52,6 +52,14 @@ $router->group(
                     [
                         'as'   => 'downloads',
                         'uses' => 'ProjectController@download'
+                    ]
+                );
+
+                $router->post(
+                    'project/{project}/duplicate',
+                    [
+                        'as'   => 'project.duplicate',
+                        'uses' => 'ProjectController@duplicate'
                     ]
                 );
             }

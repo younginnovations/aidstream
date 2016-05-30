@@ -49,13 +49,36 @@ class TransactionRepository implements TransactionRepositoryInterface
 
     /**
      * Save data into database
-     * @param $transaction
+     * @param $transactions
      * @return bool
      */
-    public function create($transaction)
+    public function create($transactions)
     {
-        $transaction = $this->transaction->newInstance($transaction);
+        foreach ($transactions['transaction'] as $transaction) {
+            $transactionData = $this->transaction->newInstance(['transaction' => $transaction, 'activity_id' => $transactions['project_id']]);
+            $transactionData->save();
+        }
 
-        return $transaction->save();
+        return true;
     }
+
+    /**
+     * Update Transactions
+     * @param $transactions
+     * @return bool
+     */
+    public function update($transactions)
+    {
+        foreach ($transactions['transaction'] as $transactionData) {
+            $transaction = $this->transaction->find($transactionData['id']);
+            unset($transactionData['id']);
+            $transactionData = [
+                'transaction' => $transactionData
+            ];
+            $transaction->update($transactionData);
+        }
+
+        return true;
+    }
+
 }

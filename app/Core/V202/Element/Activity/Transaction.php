@@ -19,15 +19,15 @@ class Transaction extends V201Transaction
 
         foreach ($transactions as $totalTransaction) {
             $transaction = $totalTransaction->transaction;
-            $vocabulary  = $transaction['sector'][0]['sector_vocabulary'];
+            $vocabulary  = getVal($transaction, ['sector', 0, 'sector_vocabulary']);
             if ($vocabulary == 1) {
-                $sectorValue = $transaction['sector'][0]['sector_code'];
+                $sectorValue = getVal($transaction, ['sector', 0, 'sector_code']);
             } elseif ($vocabulary == 2) {
-                $sectorValue = $transaction['sector'][0]['sector_category_code'];
+                $sectorValue = getVal($transaction, ['sector', 0, 'sector_category_code']);
             } elseif ($vocabulary == "") {
-                $sectorValue = $transaction['sector'][0]['sector_code'];
+                $sectorValue = getVal($transaction, ['sector', 0, 'sector_code']);
             } else {
-                $sectorValue = $transaction['sector'][0]['sector_text'];
+                $sectorValue = getVal($transaction, ['sector', 0, 'sector_text']);
             }
             $transactionData[] = [
                 '@attributes'          => [
@@ -36,43 +36,43 @@ class Transaction extends V201Transaction
                 ],
                 'transaction-type'     => [
                     '@attributes' => [
-                        'code' => $transaction['transaction_type'][0]['transaction_type_code']
+                        'code' => getVal($transaction,['transaction_type',0,'transaction_type_code'])
                     ]
                 ],
                 'transaction-date'     => [
                     '@attributes' => [
-                        'iso-date' => $transaction['transaction_date'][0]['date']
+                        'iso-date' => getVal($transaction,['transaction_date',0,'date'])
                     ]
                 ],
                 'value'                => [
                     '@attributes' => [
-                        'currency'   => $transaction['value'][0]['currency'],
-                        'value-date' => $transaction['value'][0]['date']
+                        'currency'   => getVal($transaction,['value',0,'currency']),
+                        'value-date' => getVal($transaction, ['value', 0, 'date'])
                     ],
-                    '@value'      => $transaction['value'][0]['amount']
+                    '@value'      => getVal($transaction,['value',0,'amount'])
                 ],
                 'description'          => [
                     'narrative' => $this->buildNarrative(getVal($transaction, ['description', 0, 'narrative'], []))
                 ],
                 'provider-org'         => [
                     '@attributes' => [
-                        'ref'                  => $transaction['provider_organization'][0]['organization_identifier_code'],
-                        'provider-activity-id' => $transaction['provider_organization'][0]['provider_activity_id'],
+                        'ref'                  => getVal($transaction,['provider_organization',0,'organization_identifier_code']),
+                        'provider-activity-id' => getVal($transaction,['provider_organization',0,'provider_activity_id']),
                         'type'                 => getVal($transaction, ['provider_organization', 0, 'type'])
                     ],
                     'narrative'   => $this->buildNarrative(getVal($transaction, ['provider_organization', 0, 'narrative'], []))
                 ],
                 'receiver-org'         => [
                     '@attributes' => [
-                        'ref'                  => $transaction['receiver_organization'][0]['organization_identifier_code'],
-                        'receiver-activity-id' => $transaction['receiver_organization'][0]['receiver_activity_id'],
+                        'ref'                  => getVal($transaction,['receiver_organization',0,'organization_identifier_code']),
+                        'receiver-activity-id' => getVal($transaction,['receiver_organization',0,'receiver_activity_id']),
                         'type'                 => getVal($transaction, ['receiver_organization', 0, 'type'])
                     ],
                     'narrative'   => $this->buildNarrative(getVal($transaction, ['receiver_organization', 0, 'narrative'], []))
                 ],
                 'disbursement-channel' => [
                     '@attributes' => [
-                        'code' => $transaction['disbursement_channel'][0]['disbursement_channel_code']
+                        'code' => getVal($transaction,['disbursement_channel',0,'disbursement_channel_code'])
                     ]
                 ],
                 'sector'               => [
@@ -85,36 +85,36 @@ class Transaction extends V201Transaction
                 ],
                 'recipient-country'    => [
                     '@attributes' => [
-                        'code' => $transaction['recipient_country'][0]['country_code']
+                        'code' => getVal($transaction,['recipient_country',0,'country_code'])
                     ],
                     'narrative'   => $this->buildNarrative(getVal($transaction, ['recipient_country', 0, 'narrative'], []))
                 ],
                 'recipient-region'     => [
                     '@attributes' => [
-                        'code'           => $transaction['recipient_region'][0]['region_code'],
-                        'vocabulary'     => $transaction['recipient_region'][0]['vocabulary'],
+                        'code'           => getVal($transaction,['recipient_region',0,'region_code']),
+                        'vocabulary'     => getVal($transaction,['recipient_region',0,'vocabulary']),
                         'vocabulary-uri' => getVal($transaction, ['recipient_region', 0, 'vocabulary_uri']),
                     ],
                     'narrative'   => $this->buildNarrative(getVal($transaction, ['recipient_region', 0, 'narrative'], []))
                 ],
                 'flow-type'            => [
                     '@attributes' => [
-                        'code' => $transaction['flow_type'][0]['flow_type'],
+                        'code' => getVal($transaction,['flow_type',0,'flow_type']),
                     ]
                 ],
                 'finance-type'         => [
                     '@attributes' => [
-                        'code' => $transaction['finance_type'][0]['finance_type'],
+                        'code' => getVal($transaction,['finance_type',0,'finance_type']),
                     ]
                 ],
                 'aid-type'             => [
                     '@attributes' => [
-                        'code' => $transaction['aid_type'][0]['aid_type'],
+                        'code' => getVal($transaction,['aid_type',0,'aid_type']),
                     ]
                 ],
                 'tied-status'          => [
                     '@attributes' => [
-                        'code' => $transaction['tied_status'][0]['tied_status_code'],
+                        'code' => getVal($transaction,['tied_status',0,'tied_status_code']),
                     ]
                 ]
             ];

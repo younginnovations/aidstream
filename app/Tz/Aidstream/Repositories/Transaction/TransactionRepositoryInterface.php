@@ -27,4 +27,11 @@ interface TransactionRepositoryInterface
      * @return mixed
      */
     public function create($transactions);
+
+    /**
+     * Update Transactions
+     * @param $transactions
+     * @return mixed
+     */
+    public function update($transactions);
 }

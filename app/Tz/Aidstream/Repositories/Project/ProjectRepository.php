@@ -80,4 +80,15 @@ class ProjectRepository implements ProjectRepositoryInterface
                              ->groupBy('activity_published.id')
                              ->get(['activity_published.*']);
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function duplicate(Project $project)
+    {
+        $projectDetails = array_except($project->toArray(), ['id', 'created_at', 'updated_at', 'activity_workflow']);
+        $project        = $this->project->newInstance($projectDetails);
+
+        return $project->save();
+    }
 }

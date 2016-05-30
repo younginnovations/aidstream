@@ -37,7 +37,7 @@ class XmlGenerator extends XmlGenerator201
             'default-currency'      => $activity->default_field_values[0]['default_currency'],
             'humanitarian'          => ($activity->default_field_values) ? (array_key_exists('humanitarian', $activity->default_field_values[0]) ? (int) $activity->default_field_values[0]['humanitarian'] : false) : '',
             'hierarchy'             => $activity->default_field_values[0]['default_hierarchy'],
-            'linked-data-uri'       => $activity->default_field_values[0]['linked_data_uri']
+            'linked-data-uri'       => getVal($activity->default_field_values, [0, 'linked_data_uri'])
         ];
 
         return $this->arrayToXml->createXML('iati-activities', $xmlData);

@@ -47,4 +47,11 @@ interface ProjectRepositoryInterface
      * @return Collection
      */
     public function getPublishedFiles($organizationId);
+
+    /**
+     * Duplicate an existing Project.
+     * @param Project $project
+     * @return bool
+     */
+    public function duplicate(Project $project);
 }

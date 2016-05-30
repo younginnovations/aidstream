@@ -21,6 +21,10 @@ class ProjectController extends TanzanianController
      * @var ProjectService
      */
     protected $project;
+
+    /**
+     * @var TransactionService
+     */
     protected $transaction;
 
     /**
@@ -185,16 +189,10 @@ class ProjectController extends TanzanianController
 
         $this->authorize('edit_activity', $project);
 
-        $settings = $project->organization->settings;
         $baseForm = new BaseForm();
         $language = $baseForm->getCodeList('Language', 'Organization');
         $currency = $baseForm->getCodeList('Currency', 'Organization');
-
-        $project = [
-            'id'               => $project->id,
-            'default_currency' => $project->default_field_values[0]['default_currency'] ? $project->default_field_values[0]['default_currency'] : getVal($settings->default_field_values, [0, 'default_currency']),
-            'default_language' => $project->default_field_values[0]['default_language'] ? $project->default_field_values[0]['default_language'] : getVal($settings->default_field_values, [0, 'default_language'])
-        ];
+        $project  = $this->projectDefaults($project, $project->organization->settings);
 
         return view('tz.project.overrideProjectDefaults', compact('project', 'language', 'currency'));
     }
@@ -256,5 +254,49 @@ class ProjectController extends TanzanianController
     public function download()
     {
         return view('tz.downloads.index');
+    }
+
+    /**
+     * Duplicate an existing Project.
+     * @param         $id
+     * @return mixed
+     */
+    public function duplicate($id)
+    {
+        $project = $this->project->find($id);
+
+        if (Gate::denies('ownership', $project)) {
+            return redirect()->route('project.index')->withResponse($this->getNoPrivilegesMessage());
+        }
+
+        if (!$this->project->duplicate($project)) {
+            $response = ['type' => 'danger', 'code' => ['message', ['message' => 'Project could not be duplicated.']]];
+        } else {
+            $response = ['type' => 'success', 'code' => ['message', ['message' => 'Project successfully duplicated.']]];
+        }
+
+        return redirect()->route('project.index', $id)->withResponse($response);
+    }
+
+    /**
+     * Get a Project's default field values.
+     * @param $project
+     * @param $settings
+     * @return array
+     */
+    protected function projectDefaults($project, $settings)
+    {
+        return [
+            'id'               => $project->id,
+            'default_currency' => $project->default_field_values[0]['default_currency']
+                ? getVal($project->default_field_values, [0, 'default_currency'])
+                : getVal($settings->default_field_values, [0, 'default_currency']),
+            'default_language' => $project->default_field_values[0]['default_language']
+                ? getVal($project->default_field_values, [0, 'default_language'])
+                : getVal(
+                    $settings->default_field_values,
+                    [0, 'default_language']
+                )
+        ];
     }
 }
