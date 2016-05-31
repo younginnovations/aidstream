@@ -1,7 +1,7 @@
 <?php
 
 $router->group(
-    ['domain' => 'tz1.' . env('HOST'), 'namespace' => 'Tz'],
+    ['domain' => config('tz.domain.subdomain') . env('HOST'), 'namespace' => 'Tz'],
     function ($router) {
         $router->group(
             ['namespace' => 'Project'],

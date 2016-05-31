@@ -1,7 +1,7 @@
 <?php
 
 $router->group(
-    ['domain' => 'tz1.' . env('HOST'), 'namespace' => 'Tz'],
+    ['domain' => config('tz.domain.subdomain') . env('HOST'), 'namespace' => 'Tz'],
     function ($router) {
         $router->group(
             ['namespace' => 'Transaction'],
@@ -27,6 +27,14 @@ $router->group(
                     [
                         'as'   => 'transaction.update',
                         'uses' => 'TransactionController@update'
+                    ]
+                );
+
+                $router->post(
+                    '/project/{projectId}/transaction/{transactionId}/delete',
+                    [
+                        'as'   => 'transaction.destroy',
+                        'uses' => 'TransactionController@destroy'
                     ]
                 );
 

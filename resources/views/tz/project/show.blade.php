@@ -228,6 +228,11 @@
                                             <td>{{$data['reference']}}</td>
                                             <td>{{$data['amount']}}</td>
                                             <td>{{$data['date']}}</td>
+                                            <td>
+                                                {!! Form::open(['route' => ['transaction.destroy', $project->id, $data['id']]]) !!}
+                                                {!! Form::submit('Delete') !!}
+                                                {!! Form::close() !!}
+                                            </td>
                                         </tr>
                                     @endforeach
                                     </tbody>
@@ -261,6 +266,11 @@
                                             <td>{{$data['reference']}}</td>
                                             <td>{{$data['amount']}}</td>
                                             <td>{{$data['date']}}</td>
+                                            <td>
+                                                {!! Form::open(['route' => ['transaction.destroy', $project->id, $data['id']]]) !!}
+                                                {!! Form::submit('Delete') !!}
+                                                {!! Form::close() !!}
+                                            </td>
                                         </tr>
                                     @endforeach
                                     </tbody>
@@ -294,6 +304,11 @@
                                             <td>{{$data['reference']}}</td>
                                             <td>{{$data['amount']}}</td>
                                             <td>{{$data['date']}}</td>
+                                            <td>
+                                                {!! Form::open(['route' => ['transaction.destroy', $project->id, $data['id']]]) !!}
+                                                {!! Form::submit('Delete') !!}
+                                                {!! Form::close() !!}
+                                            </td>
                                         </tr>
                                     @endforeach
                                     </tbody>

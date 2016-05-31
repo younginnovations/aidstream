@@ -88,6 +88,7 @@ class TransactionService
     {
         try {
             $this->databaseManager->beginTransaction();
+            $transactions = $this->saveValueDate($transactions);
             $this->transaction->create($transactions);
             $this->resetWorkflow($transactions['project_id']);
 
@@ -159,6 +160,7 @@ class TransactionService
     {
         try {
             $this->databaseManager->beginTransaction();
+            $transactions = $this->saveValueDate($transactions);
             $this->transaction->update($transactions);
             $this->databaseManager->commit();
             $this->logger->info(
@@ -194,5 +196,61 @@ class TransactionService
         $project->activity_workflow = 0;
 
         $project->save();
+    }
+
+    /**
+     * Find specific transaction
+     * @param $id
+     * @return mixed
+     */
+    public function find($id)
+    {
+        return $this->transaction->find($id);
+    }
+
+    /**
+     * Delete specific transaction
+     * @param $transaction
+     * @return bool|null
+     */
+    public function destroy($transaction)
+    {
+        try {
+            $this->databaseManager->beginTransaction();
+            $this->transaction->destroy($transaction);
+            $this->databaseManager->commit();
+            $this->logger->info(
+                'Transactions successfully deleted.',
+                [
+                    'byUser' => auth()->user()->getNameAttribute()
+                ]
+            );
+
+            return true;
+        } catch (Exception $exception) {
+            $this->databaseManager->rollback();
+            $this->logger->error(
+                sprintf('Transactions could not deleted due to %s', $exception->getMessage()),
+                [
+                    'byUser' => auth()->user()->getNameAttribute()
+                ]
+            );
+
+            return null;
+        }
+    }
+
+    /**
+     * Save value date equivalent to transaction date
+     * @param $transactions
+     * @return mixed
+     */
+    public function saveValueDate($transactions)
+    {
+        foreach ($transactions['transaction'] as $key => $transaction) {
+            $transactions['transaction'][$key]['value'][0]['date'] = $transaction['transaction_date'][0]['date'];
+        }
+
+        return $transactions;
     }
 }
