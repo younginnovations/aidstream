@@ -2,6 +2,7 @@
 
 use App\Core\Form\BaseForm;
 use App\Http\Controllers\Tz\TanzanianController;
+use App\Tz\Aidstream\Requests\ProjectRequests;
 use App\Tz\Aidstream\Services\Project\ProjectService;
 use App\Tz\Aidstream\Services\Transaction\TransactionService;
 use App\Tz\Aidstream\Traits\FormatsProjectFormInformation;
@@ -72,12 +73,13 @@ class ProjectController extends TanzanianController
 
     /**
      * Store a new Project into the database
-     * @param Request $request
+     * @param Request         $request
+     * @param ProjectRequests $projectRequests
      * @return RedirectResponse
      */
-    public function store(Request $request)
+    public function store(Request $request, ProjectRequests $projectRequests)
     {
-        if (!$this->project->create($this->process($request->all()))) {
+        if (!$this->project->create($this->process($request->all()), $request->all())) {
             $response = ['type' => 'danger', 'code' => ['message', ['message' => 'Project could not be saved.']]];
         } else {
             $response = ['type' => 'success', 'code' => ['message', ['message' => 'Project successfully saved.']]];
@@ -132,6 +134,7 @@ class ProjectController extends TanzanianController
     {
         $project            = $this->project->find($id);
         $project            = $this->reverseMap($project);
+        $documentLinks      = $this->project->findDocumentLinkByProjectId($id);
         $baseForm           = new BaseForm();
         $codeList           = $baseForm->getCodeList('ActivityStatus', 'Activity');
         $sectors            = $baseForm->getCodeList('SectorCategory', 'Activity');
@@ -140,18 +143,19 @@ class ProjectController extends TanzanianController
         $organizationType   = $baseForm->getCodeList('OrganisationType', 'Activity');
         $fileFormat         = $baseForm->getCodeList('FileFormat', 'Activity');
 
-        return view('tz.project.edit', compact('project', 'codeList', 'sectors', 'recipientRegions', 'recipientCountries', 'organizationType', 'fileFormat'));
+        return view('tz.project.edit', compact('documentLinks', 'project', 'codeList', 'sectors', 'recipientRegions', 'recipientCountries', 'organizationType', 'fileFormat'));
     }
 
     /**
      * Update an existing Project.
-     * @param         $id
-     * @param Request $request
+     * @param                 $id
+     * @param Request         $request
+     * @param ProjectRequests $requests
      * @return mixed
      */
-    public function update($id, Request $request)
+    public function update($id, Request $request, ProjectRequests $requests)
     {
-        if (!$this->project->update($id, $this->process($request->all()))) {
+        if (!$this->project->update($id, $this->process($request->all()), $request->all())) {
             $response = ['type' => 'danger', 'code' => ['message', ['message' => 'Project could not be updated.']]];
         } else {
             $response = ['type' => 'success', 'code' => ['message', ['message' => 'Project successfully updated.']]];

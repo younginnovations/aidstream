@@ -1,7 +1,9 @@
 <?php namespace App\Tz\Aidstream\Services\Project;
 
 use App\Tz\Aidstream\Models\Project;
+use App\Tz\Aidstream\Repositories\DocumentLink\DocumentLinkRepositoryInterface;
 use App\Tz\Aidstream\Repositories\Project\ProjectRepositoryInterface;
+use App\Tz\Aidstream\Traits\DocumentLinkTrait;
 use App\User;
 use Exception;
 use Psr\Log\LoggerInterface;
@@ -12,6 +14,7 @@ use Psr\Log\LoggerInterface;
  */
 class ProjectService
 {
+    use DocumentLinkTrait;
     /**
      * @var ProjectRepositoryInterface
      */
@@ -26,18 +29,21 @@ class ProjectService
      * @var LoggerInterface
      */
     protected $logger;
+    protected $documentLink;
 
     /**
      * ProjectService constructor.
-     * @param ProjectRepositoryInterface $project
-     * @param User                       $user
-     * @param LoggerInterface            $logger
+     * @param ProjectRepositoryInterface                            $project
+     * @param User                                                  $user
+     * @param LoggerInterface                                       $logger
+     * @param DocumentLinkRepositoryInterface $documentLink
      */
-    public function __construct(ProjectRepositoryInterface $project, User $user, LoggerInterface $logger)
+    public function __construct(ProjectRepositoryInterface $project, User $user, LoggerInterface $logger, DocumentLinkRepositoryInterface $documentLink)
     {
-        $this->project = $project;
-        $this->user    = $user;
-        $this->logger  = $logger;
+        $this->project      = $project;
+        $this->user         = $user;
+        $this->logger       = $logger;
+        $this->documentLink = $documentLink;
     }
 
     /**
@@ -64,11 +70,13 @@ class ProjectService
      * @param array $projectDetails
      * @return bool|null
      */
-    public function create(array $projectDetails)
+    public function create(array $projectDetails, $request)
     {
         try {
             $projectDetails['organization_id'] = session('org_id');
-            $this->project->create($projectDetails);
+            $projectId = $this->project->create($projectDetails);
+            $documentLink = $this->documentLinkJsonFormat($request['document_link'], $projectId);
+            $this->documentLink->create($documentLink);
 
             $this->logger->info(
                 'Project successfully created.',
@@ -168,10 +176,15 @@ class ProjectService
      * @param array $projectDetails
      * @return bool|null
      */
-    public function update($id, array $projectDetails)
+    public function update($id, array $projectDetails, $request)
     {
         try {
             $this->project->update($id, $projectDetails);
+//            $documents = $this->documentLink->findByProjectId($id);
+//            dd($documents);
+//            $documentLink = $this->updateDocumentLinkJsonFormat($documents, $request['document_link'], $id);
+//            dd($documentLink);
+            $this->documentLink->update($id, $request);
             $this->resetWorkflow($this->project->find($id));
 
             $this->logger->info(
@@ -275,4 +288,11 @@ class ProjectService
             }
         }
     }
+    
+    public function findDocumentLinkByProjectId($projectId)
+    {
+        $documentLinks = $this->documentLink->findByProjectId($projectId);
+        return $this->dbDocumentLinkFormat($documentLinks);
+    }
+
 }

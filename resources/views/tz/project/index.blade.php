@@ -32,10 +32,13 @@
                             </td>
                             <td>
                                 <a href="{{ route('project.show', [$project->id]) }}" class="view"></a>
-                                <a href="javascript:void(0)" class="delete" data-route="{{ route('project.destroy', [$project->id]) }}">Delete</a>
+                                <a href="javascript:void(0)" class="delete-project" data-route="{{ route('project.destroy', [$project->id]) }}">Delete</a>
                                 {!! Form::open(['method' => 'DELETE', 'route' => ['project.destroy', $project->id], 'class' => 'hidden', 'role' => 'form', 'id' => 'project-delete-form']) !!}
                                 {!! Form::submit('Delete') !!}
                                 {!! Form::close() !!}
+
+                                <a href="{{ route('project.edit', $project->id) }}" class="edit">Edit</a>
+
                                 <a href="javascript:void(0)" class="duplicate" id="duplicate-project">Duplicate</a>
                                 {!! Form::open(['method' => 'POST', 'route' => ['project.duplicate', $project->id], 'class' => 'hidden', 'role' => 'form', 'id' => 'project-duplicate-form']) !!}
                                 {!! Form::submit('Duplicate') !!}

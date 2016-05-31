@@ -3,6 +3,7 @@
 use App\Core\Form\BaseForm;
 use App\Http\Controllers\Tz\TanzanianController;
 use App\Http\Requests\Request;
+use App\Tz\Aidstream\Requests\SettingRequests;
 use App\Tz\Aidstream\Services\Setting\SettingService;
 
 /**
@@ -54,10 +55,11 @@ class SettingsController extends TanzanianController
 
     /**
      * Save settings
-     * @param Request $request
+     * @param Request         $request
+     * @param SettingRequests $settingRequest
      * @return mixed
      */
-    public function store(Request $request)
+    public function store(Request $request, SettingRequests $settingRequest)
     {
         if (!$this->settings->create($request->all())) {
             $response = ['type' => 'danger', 'code' => ['message', ['message' => 'Settings could not be saved.']]];
@@ -87,11 +89,12 @@ class SettingsController extends TanzanianController
 
     /**
      * Update Settings
-     * @param Request $request
-     * @param         $id
+     * @param Request         $request
+     * @param                 $id
+     * @param SettingRequests $settingRequest
      * @return mixed
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id, SettingRequests $settingRequest)
     {
         if (!$this->settings->update($request->all(), $id)) {
             $response = ['type' => 'danger', 'code' => ['message', ['message' => 'Settings could not be updated.']]];

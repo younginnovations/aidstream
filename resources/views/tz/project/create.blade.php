@@ -36,12 +36,14 @@
                                 {!! Form::text('objectives', null, ['class' => 'form-control', 'required' => 'required']) !!}
                             </div>
                         </div>
+
                         <div class="col-sm-12">
                             <div class="col-sm-6">
                                 {!! Form::label('target_groups', 'Target Groups', ['class' => 'control-label required']) !!}
                                 {!! Form::text('target_groups', null, ['class' => 'form-control', 'required' => 'required']) !!}
                             </div>
                         </div>
+
                         <div class="col-sm-12">
                             <div class="col-sm-6">
                                 {!! Form::label('activity_status', 'Project Status', ['class' => 'control-label required']) !!}
@@ -53,6 +55,7 @@
                                 {!! Form::select('sector', ['' => 'Select one of the following.'] + $sectors, null, ['class' => 'form-control', 'required' => 'required']) !!}
                             </div>
                         </div>
+
                         <div class="col-sm-12">
                             <div class="col-sm-6">
                                 {!! Form::label('start_date', 'Start Date', ['class' => 'control-label required']) !!}
@@ -68,12 +71,8 @@
                                 {!! Form::label('recipient_country', 'Project Country', ['class' => 'control-label required']) !!}
                                 {!! Form::select('recipient_country', ['' => 'Select one of the following.'] + $recipientCountries, null, ['class' => 'form-control', 'required' => 'required']) !!}
                             </div>
-
-                            <div class="col-sm-6">
-                                {!! Form::label('recipient_region', 'Recipient Region', ['class' => 'control-label required']) !!}
-                                {!! Form::select('recipient_region', ['' => 'Select one of the following.'] + $recipientRegions, null, ['class' => 'form-control', 'required' => 'required']) !!}
-                            </div>
                         </div>
+                        @include('tz.project.partials.location')
                         <div class="col-sm-12 add-wrap" id="funding-wrap">
                             <h2>Funding</h2>
                             <div class="col-sm-6">
@@ -103,65 +102,76 @@
                                 Implementing Organization
                             </button>
                         </div>
+
                         <div class="col-sm-12 add-wrap">
                             <h2>Results/Outcomes Documents</h2>
+                            {!! Form::hidden('document_link[0][category][0][code]', 'A08') !!}
+                            {!! Form::hidden('document_link[0][format]', 'text/html') !!}
+                            {!! Form::hidden('document_link[0][title][0][narrative][0][language]', "") !!}
+                            {!! Form::hidden('document_link[0][language]', '[]') !!}
+
                             <div class="col-sm-6">
                                 {!! Form::label('result_document_title', 'Title', ['class' => 'control-label required']) !!}
-                                {!! Form::text('result_document_title', null, ['class' => 'form-control', 'required' => 'required']) !!}
+                                {!! Form::text('document_link[0][title][0][narrative][0][narrative]', null, ['class' => 'form-control', 'required' => 'required']) !!}
                             </div>
                             <div class="col-sm-6">
                                 {!! Form::label('result_document_url', 'Document URL', ['class' => 'control-label required']) !!}
-                                {!! Form::text('result_document_url', null, ['class' => 'form-control', 'required' => 'required']) !!}
+                                {!! Form::text('document_link[0][url]', null, ['class' => 'form-control', 'required' => 'required']) !!}
                             </div>
                         </div>
+
                         <div class="col-sm-12 add-wrap">
                             <h2>Annual Reports</h2>
+                            {!! Form::hidden('document_link[1][category][0][code]', 'B01') !!}
+                            {!! Form::hidden('document_link[1][format]', 'text/html') !!}
+                            {!! Form::hidden('document_link[1][title][0][narrative][0][language]', "") !!}
+                            {!! Form::hidden('document_link[1][language]', '[]') !!}
                             <div class="col-sm-6">
                                 {!! Form::label('annual_document_title', 'Title', ['class' => 'control-label required']) !!}
-                                {!! Form::text('annual_document_title', null, ['class' => 'form-control', 'required' => 'required']) !!}
+                                {!! Form::text('document_link[1][title][0][narrative][0][narrative]', null, ['class' => 'form-control', 'required' => 'required']) !!}
                             </div>
 
                             <div class="col-sm-6">
                                 {!! Form::label('annual_document_url', 'Document Url', ['class' => 'control-label required']) !!}
-                                {!! Form::text('annual_document_url', null, ['class' => 'form-control', 'required' => 'required']) !!}
+                                {!! Form::text('document_link[1][url]', null, ['class' => 'form-control', 'required' => 'required']) !!}
                             </div>
                         </div>
                     </div>
                     {!! Form::submit('Create Project', ['class' => 'btn btn-primary btn-form btn-create']) !!}
                 </div>
-
-                <div class="hidden" id="funding-org">
-                    <div class="col-sm-6">
-                        {!! Form::label('funding_organization[index][funding_organization_name]', 'Organization Name', ['class' => 'control-label required']) !!}
-                        {!! Form::text('funding_organization[index][funding_organization_name]', null, ['class' => 'form-control', 'required' => 'required']) !!}
-                    </div>
-
-                    <div class="col-sm-6">
-                        {!! Form::label('funding_organization[index][funding_organization_type]', 'Organization Type', ['class' => 'control-label required']) !!}
-                        {!! Form::select('funding_organization[index][funding_organization_type]', ['' => 'Select one of the following.'] + $organizationType, null, ['class' => 'form-control', 'required' => 'required']) !!}
-                    </div>
-                    <a href="javascript:void(0)" onclick="removeFunding(this)" class="remove_from_collection">Remove</a>
-                </div>
-
-                <div class="hidden" id="implementing-org">
-                    <div class="col-sm-6">
-                        {!! Form::label('implementing_organization[index][implementing_organization_name]', 'Organization Name', ['class' => 'control-label required']) !!}
-                        {!! Form::text('implementing_organization[index][implementing_organization_name]', null, ['class' => 'form-control', 'required' => 'required']) !!}
-                    </div>
-
-                    <div class="col-sm-6">
-                        {!! Form::label('implementing_organization[index][implementing_organization_type]', 'Organization Type', ['class' => 'control-label required']) !!}
-                        {!! Form::select('implementing_organization[index][implementing_organization_type]', ['' => 'Select one of the following.'] + $organizationType, null, ['class' => 'form-control', 'required' => 'required']) !!}
-                    </div>
-
-                    <a href="javascript:void(0)" onclick="removeImplementing(this)" class="remove_from_collection">Remove</a>
-                </div>
             </div>
+
+            <div class="hidden" id="funding-org">
+                <div class="col-sm-6">
+                    {!! Form::label('funding_organization[index][funding_organization_name]', 'Organization Name', ['class' => 'control-label required']) !!}
+                    {!! Form::text('funding_organization[index][funding_organization_name]', null, ['class' => 'form-control', 'required' => 'required']) !!}
+                </div>
+
+                <div class="col-sm-6">
+                    {!! Form::label('funding_organization[index][funding_organization_type]', 'Organization Type', ['class' => 'control-label required']) !!}
+                    {!! Form::select('funding_organization[index][funding_organization_type]', ['' => 'Select one of the following.'] + $organizationType, null, ['class' => 'form-control', 'required' => 'required']) !!}
+                </div>
+                <a href="javascript:void(0)" onclick="removeFunding(this)" class="remove_from_collection">Remove</a>
+            </div>
+
+            <div class="hidden" id="implementing-org">
+                <div class="col-sm-6">
+                    {!! Form::label('implementing_organization[index][implementing_organization_name]', 'Organization Name', ['class' => 'control-label required']) !!}
+                    {!! Form::text('implementing_organization[index][implementing_organization_name]', null, ['class' => 'form-control', 'required' => 'required']) !!}
+                </div>
+
+                <div class="col-sm-6">
+                    {!! Form::label('implementing_organization[index][implementing_organization_type]', 'Organization Type', ['class' => 'control-label required']) !!}
+                    {!! Form::select('implementing_organization[index][implementing_organization_type]', ['' => 'Select one of the following.'] + $organizationType, null, ['class' => 'form-control', 'required' => 'required']) !!}
+                </div>
+
+                <a href="javascript:void(0)" onclick="removeImplementing(this)" class="remove_from_collection">Remove</a>
+            </div>
+
+            @include('tz.project.partials.location-clone')
+            @include('tz.project.partials.tz-location-clone')
         </div>
     </div>
-
-    </div>
-
 @stop
 
 @section('script')

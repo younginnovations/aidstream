@@ -2,6 +2,8 @@
 
 use App\Services\Settings\Segmentation\SegmentationInterface;
 use App\Services\Settings\Segmentation\SegmentationService;
+use App\Tz\Aidstream\Repositories\DocumentLink\DocumentLinkRepository;
+use App\Tz\Aidstream\Repositories\DocumentLink\DocumentLinkRepositoryInterface;
 use App\Tz\Aidstream\Repositories\Project\ProjectRepository;
 use App\Tz\Aidstream\Repositories\Project\ProjectRepositoryInterface;
 use App\Tz\Aidstream\Repositories\Setting\SettingRepository;
@@ -45,5 +47,6 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(ProjectRepositoryInterface::class, ProjectRepository::class);
         $this->app->bind(SettingRepositoryInterface::class, SettingRepository::class);
         $this->app->bind(TransactionRepositoryInterface::class, TransactionRepository::class);
+        $this->app->bind(DocumentLinkRepositoryInterface::class, DocumentLinkRepository::class);
     }
 }

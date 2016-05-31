@@ -45,8 +45,9 @@ class ProjectRepository implements ProjectRepositoryInterface
     public function create(array $projectDetails)
     {
         $project = $this->project->newInstance($projectDetails);
+        $project->save();
 
-        return $project->save();
+        return $project->id;
     }
 
     /**

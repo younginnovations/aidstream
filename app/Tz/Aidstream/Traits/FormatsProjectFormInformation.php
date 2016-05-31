@@ -155,8 +155,41 @@ trait FormatsProjectFormInformation
                 'default_language'  => getVal($settings->default_field_values, [0, 'default_language']),
                 'default_hierarchy' => 1
             ]
-
         ];
+
+        $details['location'][0]['administrative'] = $projectDetails['location'];
+
+        foreach ($projectDetails['location'] as $key => $location) {
+            $details['location'][$key]                   = $this->location[0];
+            $details['location'][$key]['administrative'] = $location['administrative'];
+        }
+
+//        $funding = [];
+//        $implementing = [];
+//
+//        foreach ($projectDetails['funding_organization'] as $key => $fundingOrganization) {
+//            $funding[$key]['organization_role']         = 1;
+//            $funding[$key]['identifier']                = '';
+//            $funding[$key]['organization_type']         = $fundingOrganization['funding_organization_type'];
+//            $funding[$key]['narrative'][0]['narrative'] = $fundingOrganization['funding_organization_name'];
+//        }
+//
+//        foreach ($projectDetails['implementing_organization'] as $key => $implementingOrganization) {
+//            $implementing[$key]['organization_role']         = 4;
+//            $implementing[$key]['identifier']                = '';
+//            $implementing[$key]['organization_type']         = $implementingOrganization['implementing_organization_type'];
+//            $implementing[$key]['narrative'][0]['narrative'] = $implementingOrganization['implementing_organization_name'];
+//        }
+//
+//        $details['participating_organization'] = [];
+//
+//        foreach ($funding as $value) {
+//            $details['participating_organization'][] = $value;
+//        }
+//
+//        foreach ($implementing as $value) {
+//            $details['participating_organization'][] = $value;
+//        }
 
         return $details;
     }
@@ -280,22 +313,22 @@ trait FormatsProjectFormInformation
         ];
     }
 
-    /**
-     * Map Recipient Region.
-     * @param $projectDetails
-     * @return array
-     */
-    protected function recipientRegion($projectDetails)
-    {
-        return [
-            [
-                "region_code"       => $projectDetails['recipient_region'],
-                "region_vocabulary" => "",
-                "percentage"        => "",
-                "narrative"         => [["narrative" => "", "language" => ""]]
-            ]
-        ];
-    }
+//    /**
+//     * Map Recipient Region.
+//     * @param $projectDetails
+//     * @return array
+//     */
+//    protected function recipientRegion($projectDetails)
+//    {
+//        return [
+//            [
+//                "region_code"       => $projectDetails['recipient_region'],
+//                "region_vocabulary" => "",
+//                "percentage"        => "",
+//                "narrative"         => [["narrative" => "", "language" => ""]]
+//            ]
+//        ];
+//    }
 
     /**
      * Map Activity Date.
@@ -383,10 +416,10 @@ trait FormatsProjectFormInformation
         $details['sector']            = $projectDetails->sector ? getVal($projectDetails->sector, [0, 'sector_category_code']) : '';
         $details                      = $this->mapProjectDate($projectDetails, $details);
         $details['recipient_country'] = $projectDetails->recipient_country ? getVal($projectDetails->recipient_country, [0, 'country_code']) : '';
-        $details['recipient_region']  = $projectDetails->recipient_region ? getVal($projectDetails->recipient_region, [0, 'region_code']) : '';
         $details['activity_status']   = $projectDetails->activity_status;
         $details['id']                = $projectDetails->id;
         $details                      = $this->mapParticipatingOrganization($projectDetails, $details);
+        $details['location']          = $projectDetails['location'];
 
         return $details;
     }
@@ -444,17 +477,24 @@ trait FormatsProjectFormInformation
      */
     protected function mapParticipatingOrganization($projectDetails, array $details)
     {
+        $participatingOrganizationDetails = [];
+
         foreach ($projectDetails->participating_organization as $participatingOrganization) {
             if (getVal($participatingOrganization, ['organization_role']) == 1) {
-                $details['funding_organization_name'] = getVal($participatingOrganization, ['narrative', 0, 'narrative']);
-                $details['funding_organization_type'] = getVal($participatingOrganization, ['organization_role']);
+                $participatingOrganizationDetails['funding_organization'][] = [
+                    'funding_organization_name' => getVal($participatingOrganization, ['narrative', 0, 'narrative']),
+                    'funding_organization_type' => getVal($participatingOrganization, ['organization_role'])
+                ];
             }
 
             if (getVal($participatingOrganization, ['organization_role']) == 4) {
-                $details['implementing_organization_name'] = getVal($participatingOrganization, ['narrative', 0, 'narrative']);
-                $details['implementing_organization_type'] = getVal($participatingOrganization, ['organization_role']);
+                $participatingOrganizationDetails['implementing_organization'][] = [
+                    'implementing_organization_name' => getVal($participatingOrganization, ['narrative', 0, 'narrative']),
+                    'implementing_organization_type' => getVal($participatingOrganization, ['organization_role'])
+                ];
             }
         }
+        $details['participating_organization'] = $participatingOrganizationDetails;
 
         return $details;
     }

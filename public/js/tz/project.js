@@ -3,6 +3,14 @@ var form;
 var fundingOrganizationCount = 0;
 var implementingOrganizationCount = 0;
 var projectForm = $('#project-form');
+var tanzanianCountryCode = 'TZ';
+var tanzaniaChosen = false;
+var selectOptions;
+var region;
+var district;
+var tanzanianRegion;
+var tanzanianDistrict;
+var locationCount = 0;
 
 var Project = {
     /*
@@ -72,11 +80,152 @@ var Project = {
     removeBlock: function (element, type) {
         if (type == 'implementing') {
             implementingOrganizationCount--;
-        } else {
+        } else if (type == 'funding') {
             fundingOrganizationCount--;
+        } else {
+            locationCount--;
         }
 
         $(element).parent().remove();
+    },
+    changeFieldsForTanzania: function () {
+        Project.resetForm();
+        var regionName;
+        var districtName;
+        var regionWrapper = $('#region-wrap');
+        var districtWrapper = $('#district-wrap');
+
+        var regionFields = $('.region');
+        var districtFields = $('.district');
+
+        Project.setDefault(regionFields, districtFields);
+
+        regionFields.hide();
+        districtFields.hide();
+
+        regionName = Project.rememberName(regionFields);
+        districtName = Project.rememberName(districtFields);
+
+        var options = [{code: '', value: 'Select one of the following.'}, {code: 1, value: 'one'}, {code: 2, value: 'two'}];
+        var districts = [{code: '', value: 'Select one of the following.'}, {code: 1, value: 'D1'}, {code: 2, value: 'D2'}];
+
+        var regionSelect = Project.addRegions(options, regionName);
+        var districtSelect = Project.addDistricts(districts, districtName);
+
+        tanzanianRegion = regionSelect;
+        tanzanianDistrict = districtSelect;
+
+        regionWrapper.append(regionSelect);
+        districtWrapper.append(districtSelect);
+    },
+    rememberName: function (fields) {
+        var name;
+
+        fields.each(function (index, field) {
+            name = field.name;
+        });
+
+        return name;
+    },
+    improviseForm: function (selectedCountryCode, edit) {
+        if (selectedCountryCode == tanzanianCountryCode) {
+            tanzaniaChosen = true;
+            Project.changeFieldsForTanzania();
+        } else {
+            tanzaniaChosen = false;
+            Project.resetForm(edit);
+        }
+    },
+    addRegions: function (options, regionName) {
+        regionName = regionName.replace(/index/g, locationCount);
+
+        var regionSelect = $('<select/>', {
+            class: 'form-control col-sm-4 region-select',
+            name: regionName
+        });
+
+        Project.add(options).to(regionSelect);
+
+        return regionSelect;
+    },
+    addDistricts: function (districts, districtName) {
+        districtName = districtName.replace(/index/g, locationCount);
+
+        var districtSelect = $('<select/>', {
+            class: 'form-control col-sm-4',
+            name: districtName,
+            disabled: 'disabled'
+        });
+
+        Project.add(districts).to(districtSelect);
+
+        return districtSelect;
+    },
+    add: function (options) {
+        selectOptions = options;
+
+        return this;
+    },
+    to: function (regionSelect) {
+        for (var i = 0; i < selectOptions.length; i++) {
+            regionSelect.append($('<option/>', {
+                value: selectOptions[i].code,
+                html: selectOptions[i].value
+            }));
+        }
+    },
+    setDefault: function (defaultRegion, defaultDistrict) {
+        region = defaultRegion;
+        district = defaultDistrict;
+    },
+    addLocation: function (tanzaniaChosen) {
+        locationCount++;
+        var newLocation;
+
+        if (!tanzaniaChosen) {
+            newLocation = Project.clone($('#location-clone'), locationCount);
+        } else {
+            newLocation = Project.clone($('#tz-location-clone'), locationCount);
+        }
+
+        var tempDiv = $('<div/>', {
+            class: 'col-sm-12'
+        }).append(newLocation);
+
+        projectForm.find('#location-wrap').find('#add-more-location').before(tempDiv);
+    },
+    resetForm: function (edit) {
+        var fields = $('#location-wrap').children();
+
+        if (!edit) {
+            fields.each(function (index, field) {
+                if (index > 1 && $(field).is('div')) {
+                    field.remove();
+                }
+            });
+
+            if (tanzanianRegion && tanzanianDistrict) {
+                tanzanianDistrict.remove();
+                tanzanianRegion.remove();
+            }
+
+            if (region && district) {
+                region.show();
+                district.show();
+            }
+        } else {
+            fields.each(function (index, field) {
+                if ($(field).is('div')) {
+                    field.remove();
+                }
+            });
+
+            var clone = $(Project.clone($('#location-clone'), locationCount));
+
+            $('input.region, input.district', clone).show();
+
+            $('#location-wrap').find('#add-more-location').before($('<div/>').append(clone));
+        }
     }
 };
 
@@ -108,6 +257,21 @@ var removeImplementing = function (element) {
     Project.removeBlock(element, 'implementing');
 };
 
-$(document).ready(function () {
-    $('.datepicker').datepicker();
+var removeLocation = function (element) {
+    Project.removeBlock(element, 'location');
+};
+
+$('#project-country').on('change', function () {
+    locationCount = 0;
+    var that = $(this);
+
+    Project.setForm(that.parent().find('#project-form')).improviseForm(that.val());
+});
+
+$('#add-more-location').on('click', function () {
+    if (tanzaniaChosen) {
+        Project.addLocation(true);
+    } else {
+        Project.addLocation(false);
+    }
 });

@@ -3,6 +3,7 @@
 use App\Core\Form\BaseForm;
 use App\Http\Controllers\Tz\TanzanianController;
 use App\Http\Requests\Request;
+use App\Tz\Aidstream\Requests\TransactionRequests;
 use App\Tz\Aidstream\Services\Transaction\TransactionService;
 
 /**
@@ -42,10 +43,12 @@ class TransactionController extends TanzanianController
 
     /**
      * Save transaction to DB
-     * @param Request $request
+     * @param                             $id
+     * @param Request                     $request
+     * @param Request|TransactionRequests $request
      * @return mixed
      */
-    public function store($id, Request $request)
+    public function store($id, Request $request, TransactionRequests $request)
     {
         $transactionDetails               = $request->all();
         $transactionDetails['project_id'] = $id;
@@ -75,12 +78,13 @@ class TransactionController extends TanzanianController
 
     /**
      * update transaction
-     * @param         $projectId
-     * @param         $transactionType
-     * @param Request $request
+     * @param                     $projectId
+     * @param                     $transactionType
+     * @param Request             $request
+     * @param TransactionRequests $transactionRequests
      * @return mixed
      */
-    public function update($projectId, $transactionType, Request $request)
+    public function update($projectId, $transactionType, Request $request, TransactionRequests $transactionRequests)
     {
         if (!$this->transaction->update($request->all())) {
             $response = ['type' => 'danger', 'code' => ['message', ['message' => 'Transaction could not be updated.']]];
