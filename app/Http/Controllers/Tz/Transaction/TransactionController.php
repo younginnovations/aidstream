@@ -47,7 +47,7 @@ class TransactionController extends TanzanianController
      */
     public function store($id, Request $request)
     {
-        $transactionDetails                = $request->all();
+        $transactionDetails               = $request->all();
         $transactionDetails['project_id'] = $id;
 
         if (!$this->transaction->create($transactionDetails)) {
@@ -86,6 +86,25 @@ class TransactionController extends TanzanianController
             $response = ['type' => 'danger', 'code' => ['message', ['message' => 'Transaction could not be updated.']]];
         } else {
             $response = ['type' => 'success', 'code' => ['message', ['message' => 'Transaction successfully updated.']]];
+        }
+
+        return redirect()->route('project.index')->withResponse($response);
+    }
+
+    /**
+     * Delete specific transaction
+     * @param $projectId
+     * @param $transactionId
+     * @return mixed
+     */
+    public function destroy($projectId, $transactionId)
+    {
+        $transaction = $this->transaction->find($transactionId);
+
+        if ($this->transaction->destroy($transaction)) {
+            $response = ['type' => 'success', 'code' => ['message', ['message' => 'Transaction successfully deleted.']]];
+        } else {
+            $response = ['type' => 'danger', 'code' => ['message', ['message' => 'Transaction could not be deleted.']]];
         }
 
         return redirect()->route('project.index')->withResponse($response);

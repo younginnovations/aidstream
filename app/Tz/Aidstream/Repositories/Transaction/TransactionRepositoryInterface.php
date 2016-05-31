@@ -34,4 +34,18 @@ interface TransactionRepositoryInterface
      * @return mixed
      */
     public function update($transactions);
+
+    /**
+     * Find transaction by Id
+     * @param $id
+     * @return mixed
+     */
+    public function find($id);
+
+    /**
+     * Delete specific transaction
+     * @param $transaction
+     * @return mixed
+     */
+    public function destroy($transaction);
 }

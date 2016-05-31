@@ -80,4 +80,24 @@ class TransactionRepository implements TransactionRepositoryInterface
 
         return true;
     }
+
+    /**
+     * Find specific transaction data
+     * @param $id
+     * @return mixed
+     */
+    public function find($id)
+    {
+        return $this->transaction->find($id);
+    }
+
+    /**
+     * Delete specific transaction
+     * @param $transaction
+     * @return mixed
+     */
+    public function destroy($transaction)
+    {
+        return $transaction->delete();
+    }
 }
