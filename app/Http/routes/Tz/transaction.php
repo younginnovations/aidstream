@@ -1,7 +1,7 @@
 <?php
 
 $router->group(
-    ['domain' => 'tz.' . env('HOST'), 'namespace' => 'Tz'],
+    ['domain' => 'tz1.' . env('HOST'), 'namespace' => 'Tz'],
     function ($router) {
         $router->group(
             ['namespace' => 'Transaction'],
@@ -10,10 +10,27 @@ $router->group(
                     '/project/{projectId}/transaction/{transactionType}/create',
                     [
                         'as'   => 'transaction.create',
-                        'uses' => 'TransactionController@transactionCreate'
+                        'uses' => 'TransactionController@createTransaction'
                     ]
                 );
-                $router->resource('transaction', 'TransactionController');
+
+                $router->get(
+                    '/project/{projectId}/transaction/{transactionType}/edit',
+                    [
+                        'as'   => 'transaction.edit',
+                        'uses' => 'TransactionController@editTransaction'
+                    ]
+                );
+
+                $router->post(
+                    '/project/{projectId}/transaction/{transactionType}/update',
+                    [
+                        'as'   => 'transaction.update',
+                        'uses' => 'TransactionController@update'
+                    ]
+                );
+
+                $router->resource('project.transaction', 'TransactionController', ['only' => 'store']);
             }
         );
     }

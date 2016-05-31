@@ -32,7 +32,7 @@ class TransactionController extends TanzanianController
      * @param $transactionType
      * @return mixed
      */
-    public function transactionCreate($id, $transactionType)
+    public function createTransaction($id, $transactionType)
     {
         $baseForm = new BaseForm();
         $currency = $baseForm->getCodeList('Currency', 'Activity');
@@ -45,26 +45,49 @@ class TransactionController extends TanzanianController
      * @param Request $request
      * @return mixed
      */
-    public function store(Request $request)
+    public function store($id, Request $request)
     {
-        if (!$this->transaction->create($request->all())) {
-            $response = ['type' => 'danger', 'code' => ['message', ['message' => 'Project could not be saved.']]];
+        $transactionDetails                = $request->all();
+        $transactionDetails['project_id'] = $id;
+
+        if (!$this->transaction->create($transactionDetails)) {
+            $response = ['type' => 'danger', 'code' => ['message', ['message' => 'Transaction could not be saved.']]];
         } else {
-            $response = ['type' => 'success', 'code' => ['message', ['message' => 'Project successfully saved.']]];
+            $response = ['type' => 'success', 'code' => ['message', ['message' => 'Transaction successfully saved.']]];
         }
 
         return redirect()->route('project.index')->withResponse($response);
     }
 
     /**
-     * @param $id
      * @param $projectId
      * @param $transactionType
+     * @internal param $id
      */
-    public function editTransaction($id, $projectId, $transactionType)
+    public function editTransaction($projectId, $transactionType)
     {
-        $baseForm    = new BaseForm();
-        $currency    = $baseForm->getCodeList('Currency', 'Activity');
-        $transaction = $this->transaction->getTransactions($id, $transactionType);
+        $baseForm     = new BaseForm();
+        $currency     = $baseForm->getCodeList('Currency', 'Activity');
+        $transactions = $this->transaction->getTransactionsData($projectId, $transactionType, true);
+
+        return view('tz.transaction.edit', compact('currency', 'projectId', 'transactionType', 'transactions'));
+    }
+
+    /**
+     * update transaction
+     * @param         $projectId
+     * @param         $transactionType
+     * @param Request $request
+     * @return mixed
+     */
+    public function update($projectId, $transactionType, Request $request)
+    {
+        if (!$this->transaction->update($request->all())) {
+            $response = ['type' => 'danger', 'code' => ['message', ['message' => 'Transaction could not be updated.']]];
+        } else {
+            $response = ['type' => 'success', 'code' => ['message', ['message' => 'Transaction successfully updated.']]];
+        }
+
+        return redirect()->route('project.index')->withResponse($response);
     }
 }

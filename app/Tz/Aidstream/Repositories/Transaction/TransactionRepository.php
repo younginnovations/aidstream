@@ -36,26 +36,48 @@ class TransactionRepository implements TransactionRepositoryInterface
 
     /**
      * Select data on basis of transactions type and project id
-     * @param $activityId
+     * @param $projectId
      * @param $transactionType
      * @return mixed
      */
-    public function getTransactionTypeData($activityId, $transactionType)
+    public function getTransactionTypeData($projectId, $transactionType)
     {
-        $transaction = DB::select("select * from activity_transactions where activity_id = ? and transaction #>> '{transaction_type,0,transaction_type_code}' = ?", [$activityId, $transactionType]);
+        $transaction = DB::select("select * from activity_transactions where activity_id = ? and transaction #>> '{transaction_type,0,transaction_type_code}' = ?", [$projectId, $transactionType]);
 
         return $transaction;
     }
 
     /**
-     * Save data into database 
-     * @param $transaction
+     * Save data into database
+     * @param $transactions
      * @return bool
      */
-    public function create($transaction)
+    public function create($transactions)
     {
-        $transaction = $this->transaction->newInstance($transaction);
+        foreach ($transactions['transaction'] as $transaction) {
+            $transactionData = $this->transaction->newInstance(['transaction' => $transaction, 'activity_id' => $transactions['project_id']]);
+            $transactionData->save();
+        }
 
-        return $transaction->save();
+        return true;
+    }
+
+    /**
+     * Update Transactions
+     * @param $transactions
+     * @return bool
+     */
+    public function update($transactions)
+    {
+        foreach ($transactions['transaction'] as $transactionData) {
+            $transaction = $this->transaction->find($transactionData['id']);
+            unset($transactionData['id']);
+            $transactionData = [
+                'transaction' => $transactionData
+            ];
+            $transaction->update($transactionData);
+        }
+
+        return true;
     }
 }
