@@ -9,10 +9,11 @@
                     <div class="panel-content-heading">
                         <div>Settings > ChangeLog</div>
                     </div>
-                    <div class="panel-body">
-                        <table class="table table-striped" id="data-table">
+                    <div class="panel-body panel-changelog">
+                        <p>When you change your “Publishing Type” option, your previous activities file(s) will be unlinked from IATI registry and deleted from AidStream.</p>
+                        <table class="table table-striped table-previous-activities" id="data-table">
                             <thead>
-                            <span>Your current files are</span>
+                            <span>Your previous activities file(s) are as follows</span>
                             <tr>
                                 <th width="30%">Current File</th>
                                 <th class="default-sort">Activities Included</th>
@@ -27,9 +28,9 @@
                                         </td>
                                         <td>
                                             @forelse($change['included_activities'] as $activityId => $activity)
-                                                <span><a href="{{ url('/files/xml/') . '/' . $activity }}">{{ $activity }}</a></span><br>
+                                                <a href="{{ url('/files/xml/') . '/' . $activity }}">{{ $activity }}</a>
                                             @empty
-                                                <span>No Activities Included.</span><br>
+                                                <span>No Activities Included.</span>
                                             @endforelse
                                         </td>
                                         <td>
@@ -39,12 +40,8 @@
                                 @endforeach
                             </tbody>
                         </table>
-                    </div>
-
-                    <div class="panel-body">
-                        These files will be generated after your publishing type changes to {{ ucfirst($changes['segmentation']) }}.
-
-                        <table class="table table-striped" id="data-table">
+                        <span>These files will be generated after your publishing type changes to {{ ucfirst($changes['segmentation']) }}.</span>
+                        <table class="table table-striped table-new-activities" id="data-table">
                             <thead>
                             <tr>
                                 <th width="30%">New Files</th>
@@ -58,9 +55,9 @@
                                     <td><a href="{{ url('files/xml/') .'/'. $index }}">{{ $index }}</a></td>
                                     <td>
                                         @forelse($change['included_activities'] as $activityId => $activity)
-                                            <span><a href="">{{ $activity }}</a></span><br>
+                                            <a href="">{{ $activity }}</a>
                                         @empty
-                                            <span>No Activities Included.</span><br>
+                                            <span>No Activities Included.</span>
                                         @endforelse
                                     </td>
                                     <td>
@@ -70,18 +67,21 @@
                             @endforeach
                             </tbody>
                         </table>
+                        <div class="changelog-message">
+                            In your settings page, you have selected “Yes” to ‘Automatically Update to IATI Registry when publishing files’. AidStream will publish you newly generated activities file(s) to the IATI registry.
+                        </div>
+                        <form action="{{ route('change-segmentation') }}" method="POST" class="form-group">
+                            <p>Do you want to continue with the change to Unsegmentation Publishing Type ?</p>
+                            <input type="hidden" value="{{ csrf_token() }}" name="_token">
+                            <input type="hidden" value="{{ $organizationId }}" name="organizationId">
+                            <input type="hidden" value="{{ json_encode($changes) }}" name="changes">
+                            <input type="hidden" value="{{ json_encode($settings) }}" name="settings">
+
+                            <input type="submit" value="Yes" class="btn">
+                            <a href="{{ route('settings.index') }}" class="btn btn-danger">No</a>
+                        </form>
                     </div>
 
-                    <form action="{{ route('change-segmentation') }}" method="POST" class="form-group">
-                        Do you want to continue ??
-                        <input type="hidden" value="{{ csrf_token() }}" name="_token">
-                        <input type="hidden" value="{{ $organizationId }}" name="organizationId">
-                        <input type="hidden" value="{{ json_encode($changes) }}" name="changes">
-                        <input type="hidden" value="{{ json_encode($settings) }}" name="settings">
-
-                        <input type="submit" value="Yes">
-                        <a href="{{ route('settings.index') }}" class="btn btn-danger">No</a>
-                    </form>
                 </div>
             </div>
         </div>
