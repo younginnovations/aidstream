@@ -3255,15 +3255,15 @@ table.dataTable.no-footer {
 }
 
 table.dataTable thead .sorting {
-  background: $url_11 no-repeat right;
+  background: $url_11 no-repeat 96%;
 }
 
 table.dataTable thead .sorting_asc {
-  background: $url_12 no-repeat right;
+  background: $url_12 no-repeat 96%;
 }
 
 table.dataTable thead .sorting_desc {
-  background: $url_13 no-repeat right;
+  background: $url_13 no-repeat 96%;
 }
 
 .logs-container .collection_form .form-group + .form-group {
@@ -3436,6 +3436,54 @@ table.dataTable thead .sorting_desc {
 .no-title {
   color: #9B9B9B;
   font-style: italic;
+}
+.panel-changelog {
+  padding: 50px 36px !important;
+  p:first-of-type {
+    margin-bottom: 40px;
+  }
+  span {
+    font-family: $font_1;
+    margin-bottom: 15px;
+    display: block;
+  }
+}
+
+.panel-changelog table {
+  background: $color_romance_approx;
+  border: 1px solid $color_gallery !important;
+  border-radius: 4px;
+  margin-bottom: 20px;
+  margin-top: 0 !important;
+  border-collapse: separate;
+  td span {
+    margin-bottom: 0;
+  }
+}
+
+.panel-changelog form .btn {
+  width: 100px;
+  line-height: 46px;
+  margin-right: 20px;
+  padding: 0;
+  border: 1px solid $color_dodger_blue_approx;
+}
+
+.panel-changelog form a.btn {
+  background: none;
+  color: $color_dodger_blue_approx;
+  &:hover {
+    background: $color_dodger_blue_approx;
+    color: $color_white;
+  }
+}
+
+.changelog-message {
+  background: $color_concrete;
+  border-radius: 4px;
+  padding: 17px;
+  font-style: italic;
+  margin-bottom: 40px;
 }
 
 @media all and (max-width: 1030px) {
@@ -3715,6 +3763,27 @@ table.dataTable thead .sorting_desc {
   .logs-container table td:nth-of-type(3):before {
     content: "User";
   }
+  .table-previous-activities td:nth-of-type(1) {
+    display: block;
+  }
+  .table-previous-activities td:nth-of-type(1):before {
+    content: "Current File";
+  }
+  .table-previous-activities td:nth-of-type(2):before {
+    content: "Activities Included";
+  }
+  .table-previous-activities td:nth-of-type(3):before {
+    content: "Published Status";
+  }
+  .table-new-activities td:nth-of-type(1):before {
+    content: "New Files";
+  }
+  .table-new-activities td:nth-of-type(2):before {
+    content: "Activities Included";
+  }
+  .table-new-activities td:nth-of-type(3):before {
+    content: "Published Status";
+  }
 
   td input[type="checkbox"] {
     display: none;
@@ -3767,6 +3836,10 @@ table.dataTable thead .sorting_desc {
   .create-form, .create-activity-form, .content-wrapper .panel-profile, .panel-associated-organization {
     padding-left: 14px;
     padding-right: 14px;
+  }
+
+  .panel-changelog {
+    padding: 0 14px!important;
   }
 
   .upload-activity-wrapper .element-panel-heading {

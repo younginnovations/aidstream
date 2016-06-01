@@ -5619,13 +5619,13 @@ table.dataTable.no-footer {
     outline: 0; }
 
 table.dataTable thead .sorting {
-  background: url(../../images/ic-sort-both.svg) no-repeat right; }
+  background: url(../../images/ic-sort-both.svg) no-repeat 96%; }
 
 table.dataTable thead .sorting_asc {
-  background: url(../../images/ic-sort-asc.svg) no-repeat right; }
+  background: url(../../images/ic-sort-asc.svg) no-repeat 96%; }
 
 table.dataTable thead .sorting_desc {
-  background: url(../../images/ic-sort-desc.svg) no-repeat right; }
+  background: url(../../images/ic-sort-desc.svg) no-repeat 96%; }
 
 .logs-container .collection_form .form-group + .form-group {
   padding-top: 10px; }
@@ -5766,6 +5766,48 @@ table.dataTable thead .sorting_desc {
 .no-title {
   color: #9B9B9B;
   font-style: italic; }
+
+.panel-changelog {
+  padding: 50px 36px !important; }
+  .panel-changelog p:first-of-type {
+    margin-bottom: 40px; }
+  .panel-changelog span {
+    font-family: Open-Sans-Bold;
+    margin-bottom: 15px;
+    display: block; }
+
+.panel-changelog table {
+  background: #fdfdfd;
+  border: 1px solid #efefef !important;
+  -webkit-border-radius: 4px;
+          border-radius: 4px;
+  margin-bottom: 20px;
+  margin-top: 0 !important;
+  border-collapse: separate; }
+  .panel-changelog table td span {
+    margin-bottom: 0; }
+
+.panel-changelog form .btn {
+  width: 100px;
+  line-height: 46px;
+  margin-right: 20px;
+  padding: 0;
+  border: 1px solid #00A8FF; }
+
+.panel-changelog form a.btn {
+  background: none;
+  color: #00A8FF; }
+  .panel-changelog form a.btn:hover {
+    background: #00A8FF;
+    color: #fff; }
+
+.changelog-message {
+  background: #f2f2f2;
+  -webkit-border-radius: 4px;
+          border-radius: 4px;
+  padding: 17px;
+  font-style: italic;
+  margin-bottom: 40px; }
 
 @media all and (max-width: 1030px) {
   .activity-status {
@@ -5954,6 +5996,20 @@ table.dataTable thead .sorting_desc {
     content: "Action"; }
   .logs-container table td:nth-of-type(3):before {
     content: "User"; }
+  .table-previous-activities td:nth-of-type(1) {
+    display: block; }
+  .table-previous-activities td:nth-of-type(1):before {
+    content: "Current File"; }
+  .table-previous-activities td:nth-of-type(2):before {
+    content: "Activities Included"; }
+  .table-previous-activities td:nth-of-type(3):before {
+    content: "Published Status"; }
+  .table-new-activities td:nth-of-type(1):before {
+    content: "New Files"; }
+  .table-new-activities td:nth-of-type(2):before {
+    content: "Activities Included"; }
+  .table-new-activities td:nth-of-type(3):before {
+    content: "Published Status"; }
   td input[type="checkbox"] {
     display: none; }
   .table > tbody > tr > td.no-data {
@@ -5981,6 +6037,8 @@ table.dataTable thead .sorting_desc {
   .create-form, .create-activity-form, .content-wrapper .panel-profile, .panel-associated-organization {
     padding-left: 14px;
     padding-right: 14px; }
+  .panel-changelog {
+    padding: 0 14px !important; }
   .upload-activity-wrapper .element-panel-heading {
     padding-right: 14px; }
   .element-content-wrapper {

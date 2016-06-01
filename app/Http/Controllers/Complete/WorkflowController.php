@@ -117,11 +117,17 @@ class WorkflowController extends Controller
             return redirect()->route('settings.index')->withResponse(['type' => 'warning', 'code' => ['settings_registry_info', ['name' => '']]]);
         }
 
-        if (!$this->workFlowManager->publish($activity, $request->all())) {
-            return redirect()->back()->withResponse(['type' => 'warning', 'code' => ['publish_registry', ['name' => '']]]);
+        $result = $this->workFlowManager->publish($activity, $request->all());
+
+        if (null === $result) {
+            return redirect()->back()->withResponse(['type' => 'warning', 'code' => ['message', ['message' => 'Something does not seem to be right.']]]);
         }
 
-        return redirect()->back()->withResponse(['type' => 'success', 'code' => ['publish_registry_publish', ['name' => '']]]);
+        if (true === $result) {
+            return redirect()->back()->withResponse(['type' => 'success', 'code' => ['publish_registry_publish', ['name' => '']]]);
+        }
+
+        return redirect()->back()->withResponse(['type' => 'warning', 'code' => ['message', ['message' => 'Could not publish to registry. (' . $result . ')']]]);
     }
 
     /**

@@ -148,12 +148,17 @@ class WorkflowManager
 
             $this->update($details, $activity);
 
-
             return true;
+        } catch (\ErrorException $exception) {
+            $this->logger->error($exception);
+
+            return null;
         } catch (Exception $exception) {
             $this->logger->error($exception);
 
-            return false;
+            return array_first(explode("\n", $exception->getMessage()), function () {
+                return true;
+            });
         }
     }
 }
