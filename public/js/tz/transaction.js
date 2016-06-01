@@ -27,7 +27,9 @@ var Transaction = {
      */
     appendFields: function (transaction) {
         var form = dom.find('form').find('#submit-transaction');
-        var tempDiv = $('<div/>').append(Transaction.index(transaction));
+        var tempDiv = $('<div/>',{
+            class: 'added-new-block'
+        }).append(Transaction.index(transaction));
 
         form.before(tempDiv);
     },

@@ -39,7 +39,9 @@ var Project = {
         fundingOrganizationCount++;
         var newFundingOrganization = Project.clone($('#funding-org'), fundingOrganizationCount);
 
-        var tempDiv = $('<div/>').append(newFundingOrganization);
+        var tempDiv = $('<div/>', {
+            class: 'added-new-block'
+        }).append(newFundingOrganization);
 
         projectForm.find('#funding-wrap').find('#add-more-funding-organization').before(tempDiv);
     },
@@ -50,7 +52,9 @@ var Project = {
         implementingOrganizationCount++;
         var newImplementingOrganization = Project.clone($('#implementing-org'), implementingOrganizationCount)
 
-        var tempDiv = $('<div/>').append(newImplementingOrganization);
+        var tempDiv = $('<div/>', {
+            class: 'added-new-block'
+        }).append(newImplementingOrganization);
 
         projectForm.find('#implementing-wrap').find('#add-more-implementing-organization').before(tempDiv);
     },

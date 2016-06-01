@@ -11,20 +11,14 @@
             </div>
 
             <div class="panel-body">
-                <div class="create-activity-form">
-                    <div class="panel panel-default">
-                        <div class="panel-body">
-                            {!! Form::open(['method' => 'post', 'route' => 'settings.store', 'role' => 'form']) !!}
-                            @include('tz.settings.forms')
-                            {!! Form::submit('Save Settings', ['class' => 'btn btn-primary btn-create pull-left']) !!}
-                            {!! Form::close() !!}
-                        </div>
-                    </div>
+                <div class="create-form create-project-form">
+                    {!! Form::open(['method' => 'post', 'route' => 'settings.store', 'role' => 'form']) !!}
+                    @include('tz.settings.forms')
+                    {!! Form::submit('Save Settings', ['class' => 'btn btn-primary btn-create pull-left']) !!}
+                    {!! Form::close() !!}
                 </div>
-
             </div>
         </div>
-    </div>
     </div>
 @stop
 

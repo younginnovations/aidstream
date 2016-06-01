@@ -16,7 +16,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-xs-12 col-md-8 col-lg-8 element-content-wrapper">
+        <div class="col-xs-12 col-md-8 col-lg-8 element-content-wrapper fullwidth-wrapper">
             <div class="activity-status activity-status-{{ $statusLabel[$activityWorkflow] }}">
                 <ol>
                     @foreach($statusLabel as $key => $value)
@@ -34,33 +34,38 @@
                 <span class="glyphicon glyphicon-triangle-left"></span>Override Activity Default
             </a>
             <div class="panel panel-default panel-element-detail element-show">
-                <div class="panel-body">
-                    <div class="panel-heading">
-                        Identifier
-                    </div>
-                    <div class="col-xs-12 col-md-12">
-                        <div class="col-xs-12 col-sm-4">IATI Identifier Text:</div>
-                        <div class="col-xs-12 col-sm-8">{{$project->identifier['iati_identifier_text']}}</div>
+
+                <div class="activity-element-wrapper">
+                    <div class="activity-element-list">
+                        <div class="activity-element-label">
+                            Project Identifier:
+                        </div>
+                        <div class="activity-element-info">
+                            {{$project->identifier['iati_identifier_text']}}
+                        </div>
                     </div>
                 </div>
 
-                <div class="panel-body">
-                    <div class="panel-heading">
-                        Title
-                    </div>
-                    <div class="col-xs-12 col-md-12">
-                        <div class="col-xs-12 col-sm-4">Text:</div>
-                        <div class="col-xs-12 col-sm-8">{{$project->title[0]['narrative']}}</div>
+                <div class="activity-element-wrapper">
+                    <div class="activity-element-list">
+                        <div class="activity-element-label">
+                            Project Title:
+                        </div>
+                        <div class="activity-element-info">
+                            {{$project->title[0]['narrative']}}
+                        </div>
                     </div>
                 </div>
 
-                <div class="panel-body">
-                    <div class="panel-heading">
+                <div class="activity-element-wrapper">
+                    <div class="title">
                         Description
                     </div>
-                    <div class="col-xs-12 col-md-12">
-                        <div class="col-xs-12 col-sm-4">General Description:</div>
-                        <div class="col-xs-12 col-sm-8">
+                    <div class="activity-element-list">
+                        <div class="activity-element-label">
+                            General Description:
+                        </div>
+                        <div class="activity-element-info">
                             @if(getVal($project->description, [0, 'type']) == 1)
                                 {{$project->description[0]['narrative'][0]['narrative']}}
                             @else
@@ -68,58 +73,63 @@
                             @endif
                         </div>
                     </div>
-                    @if(getVal($project->description, [0, 'type']) == 2)
-                        <div class="col-xs-12 col-md-12">
-                            <div class="col-xs-12 col-sm-4">Objectives:</div>
-                            <div class="col-xs-12 col-sm-8">
-                                {{$project->description[0]['narrative'][0]['narrative']}}
-                            </div>
-                        </div>
-                    @endif
-                    @if(getVal($project->description, [0, 'type']) == 3)
-                        <div class="col-xs-12 col-md-12">
-                            <div class="col-xs-12 col-sm-4">Target Groups:</div>
-                            <div class="col-xs-12 col-sm-8">
-                                {{$project->description[0]['narrative'][0]['narrative']}}
-                            </div>
-                        </div>
-                    @endif
                 </div>
 
-                <div class="panel-body">
-                    <div class="panel-heading">
-                        Project Status
-                    </div>
-                    <div class="col-xs-12 col-md-12">
-                        <div class="col-xs-12 col-sm-4">Status:</div>
-                        <div class="col-xs-12 col-sm-8">
-                            {{ $getCode->getActivityCodeName('ActivityStatus', $project->activity_status) }}
-                        </div>
-                    </div>
-                </div>
-
-                @if($getCode->getActivityCodeName('SectorCategory', getVal($project->sector, [0, 'sector_category_code'])) != null)
-                    <div class="panel-body">
-                        <div class="panel-heading">
-                            Sectors
-                        </div>
-                        <div class="col-xs-12 col-md-12">
-                            <div class="col-xs-12 col-sm-4">Sector:</div>
-                            <div class="col-xs-12 col-sm-8">
-                                {{ $getCode->getActivityCodeName('SectorCategory', getVal($project->sector, [0, 'sector_category_code'])) }}
+                @if(getVal($project->description, [0, 'type']) == 2)
+                    <div class="activity-element-wrapper">
+                        <div class="activity-element-list">
+                            <div class="activity-element-label">
+                                Objectives:
+                            </div>
+                            <div class="activity-element-info">
+                                {{$project->description[0]['narrative'][0]['narrative']}}
                             </div>
                         </div>
                     </div>
                 @endif
 
-                @if(getVal($project->activity_date, [0, 'type']) == 2)
-                    <div class="panel-body">
-                        <div class="panel-heading">
-                            Start Date
+                @if(getVal($project->description, [0, 'type']) == 3)
+                    <div class="activity-element-wrapper">
+                        <div class="activity-element-list">
+                            <div class="activity-element-label">
+                                Target Groups:
+                            </div>
+                            <div class="activity-element-info">
+                                {{$project->description[0]['narrative'][0]['narrative']}}
+                            </div>
                         </div>
-                        <div class="col-xs-12 col-md-12">
-                            <div class="col-xs-12 col-sm-4">Date:</div>
-                            <div class="col-xs-12 col-sm-8">
+                    </div>
+                @endif
+
+                <div class="activity-element-wrapper">
+                    <div class="activity-element-list">
+                        <div class="activity-element-label">
+                            Project Status:
+                        </div>
+                        <div class="activity-element-info">
+                            {{ $getCode->getActivityCodeName('ActivityStatus', $project->activity_status) }}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="activity-element-wrapper">
+                    <div class="activity-element-list">
+                        <div class="activity-element-label">
+                            Sector:
+                        </div>
+                        <div class="activity-element-info">
+                            {{ $getCode->getActivityCodeName('SectorCategory', getVal($project->sector, [0, 'sector_category_code'])) }}
+                        </div>
+                    </div>
+                </div>
+
+                @if(getVal($project->activity_date, [0, 'type']) == 2)
+                    <div class="activity-element-wrapper">
+                        <div class="activity-element-list">
+                            <div class="activity-element-label">
+                                Start Date:
+                            </div>
+                            <div class="activity-element-info">
                                 {{$project->activity_date[0]['date']}}
                             </div>
                         </div>
@@ -127,201 +137,323 @@
                 @endif
 
                 @if(getVal($project->activity_date, [0, 'type']) == 4)
-                    <div class="panel-body">
-                        <div class="panel-heading">
-                            End Date
-                        </div>
-                        <div class="col-xs-12 col-md-12">
-                            <div class="col-xs-12 col-sm-4">Date:</div>
-                            <div class="col-xs-12 col-sm-8">
+                    <div class="activity-element-wrapper">
+                        <div class="activity-element-list">
+                            <div class="activity-element-label">
+                                End Date:
+                            </div>
+                            <div class="activity-element-info">
                                 {{ getVal($project->activity_date, [0, 'date']) }}
                             </div>
                         </div>
                     </div>
                 @endif
 
-                <div class="panel-body">
-                    <div class="panel-heading">
+                <div class="activity-element-wrapper">
+                    <div class="title">
                         Participating Organization
                     </div>
                     @foreach ($project->participating_organization as $participatingOrganization)
                         @if(getVal($participatingOrganization, ['organization_role']) == "1")
-                            <div class="col-xs-12 col-md-12">
-                                <div class="panel-heading">
-                                    Funding:
+                            <div class="activity-element-list">
+                                <div class="activity-element-label">
+                                    Funding Organization Name:
                                 </div>
-                                <div class="col-xs-12 col-md-12">
-                                    <div class="col-xs-12 col-sm-4">Organization Name:</div>
-                                    <div class="col-sm-12 col-sm-4">
-                                        {{ getVal($participatingOrganization, ['narrative', 0, 'narrative']) }}
-                                    </div>
-                                    <br>
-                                    <div class="col-xs-12 col-sm-4">Organization Type:</div>
-                                    <div class="col-xs-12 col-sm-8">
-                                        {{$getCode->getActivityCodeName('OrganisationType', getVal($participatingOrganization, ['organization_type']))}}
-                                    </div>
+                                <div class="activity-element-info">
+                                    {{ getVal($participatingOrganization, ['narrative', 0, 'narrative']) }}
+                                </div>
+                            </div>
+                            <div class="activity-element-list">
+                                <div class="activity-element-label">
+                                    Funding Organization Type:
+                                </div>
+                                <div class="activity-element-info">
+                                    {{$getCode->getActivityCodeName('OrganisationType', getVal($participatingOrganization, ['organization_type']))}}
                                 </div>
                             </div>
                         @endif
+
                         @if(getVal($participatingOrganization, ['organization_role']) == 4)
-                            <div class="col-xs-12 col-md-12">
-                                <div class="panel-heading">
-                                    Implementing:
+                            <div class="activity-element-list">
+                                <div class="activity-element-label">
+                                    Implementing Organization Name:
                                 </div>
-                                <div class="col-xs-12 col-md-12">
-                                    <div class="col-xs-12 col-sm-4">Organization Type:</div>
-                                    <div class="col-xs-12 col-sm-8">
-                                        {{$getCode->getActivityCodeName('OrganisationType', getVal($participatingOrganization, ['organization_type']))}}
-                                    </div>
+                                <div class="activity-element-info">
+                                    {{ getVal($participatingOrganization, ['narrative', 0, 'narrative']) }}
+                                </div>
+                            </div>
+                            <div class="activity-element-list">
+                                <div class="activity-element-label">
+                                    Implementing Organization Type:
+                                </div>
+                                <div class="activity-element-info">
+                                    {{$getCode->getActivityCodeName('OrganisationType', getVal($participatingOrganization, ['organization_type']))}}
                                 </div>
                             </div>
                         @endif
                     @endforeach
                 </div>
 
-                @if ($project->document_link)
-                    <div class="panel-body">
-                        <div class="panel-heading">
-                            Document Link
+                <div class="activity-element-wrapper">
+                    <div class="activity-element-list">
+                        <div class="activity-element-label">
+                            Recipient Country:
                         </div>
-                        <div class="col-xs-12 col-md-12">
-                            <div class="col-xs-12 col-sm-4">Document URL:</div>
-                            <div class="col-xs-12 col-sm-8">
-                                {{ getVal($project->document_link, [0, 'url']) }}
-                            </div>
-                        </div>
-                        <div class="col-xs-12 col-md-12">
-                            <div class="col-xs-12 col-sm-4">Annual Report:</div>
-                            <div class="col-xs-12 col-sm-8">
-                                {{$getCode->getActivityCodeName('FileFormat', getVal($project->documentLink, [0, 'format']))}}
-                            </div>
-                        </div>
-                        <div class="col-xs-12 col-md-12">
-                            <div class="col-xs-12 col-sm-4">Title:</div>
-                            <div class="col-xs-12 col-sm-8">
-                                {{ getVal($project->document_link, [0, 'title', 0, 'narrative']) }}
-                            </div>
-                        </div>
-                    </div>
-                @endif
-
-                <div class="panel panel-default">
-                    <div class="panel-body">
-                        <div class="row form-group">
-                            @if(count($disbursement) > 0)
-                                <div class="col-sm-12 transaction-title">
-                                    <span>Disbursement</span>
-                                    <a href="{{url(sprintf('project/%s/transaction/%s/edit', $project->id,3))}}"><span>Edit a Disbursement</span></a>
-                                </div>
-                                <table class="table table-striped">
-                                    <thead>
-                                    <tr>
-                                        <th>Internal Ref</th>
-                                        <th>Transaction Value</th>
-                                        <th>Transaction Date</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    @foreach($disbursement as $data)
-                                        <tr>
-                                            <td>{{$data['reference']}}</td>
-                                            <td>{{$data['amount']}}</td>
-                                            <td>{{$data['date']}}</td>
-                                            <td>
-                                                {!! Form::open(['route' => ['transaction.destroy', $project->id, $data['id']]]) !!}
-                                                {!! Form::submit('Delete') !!}
-                                                {!! Form::close() !!}
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                    </tbody>
-                                </table>
-                            @else
-                                <div class="col-sm-12 transaction-title">
-                                    <span>Disbursement</span>
-                                    <a href="{{ url(sprintf('project/%s/transaction/%s/create', $project->id,3)) }}"><span>Add a Disbursement</span></a>
-                                </div>
-                            @endif
-                        </div>
-
-                        <div class="row form-group">
-                            @if(count($expenditure) > 0)
-                                <div class="col-sm-12 transaction-title">
-                                    <span>Expenditure</span>
-                                    <a href="{{url(sprintf('project/%s/transaction/%s/edit', $project->id,4))}}"><span>Edit a Expenditure</span></a>
-                                </div>
-                                <table class="table table-striped">
-                                    <thead>
-                                    <tr>
-                                        <th>Internal Ref</th>
-                                        <th>Transaction Value</th>
-                                        <th>Transaction Date</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    @foreach($expenditure as $data)
-                                        <tr>
-                                            <td>{{$data['reference']}}</td>
-                                            <td>{{$data['amount']}}</td>
-                                            <td>{{$data['date']}}</td>
-                                            <td>
-                                                {!! Form::open(['route' => ['transaction.destroy', $project->id, $data['id']]]) !!}
-                                                {!! Form::submit('Delete') !!}
-                                                {!! Form::close() !!}
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                    </tbody>
-                                </table>
-                            @else
-                                <div class="col-sm-12 transaction-title">
-                                    <span>Expenditure</span>
-                                    <a href="{{ url(sprintf('project/%s/transaction/%s/create', $project->id,4)) }}"><span>Add a Expenditure</span></a>
-                                </div>
-                            @endif
-                        </div>
-
-                        <div class="row form-group">
-                            @if(count($incomingFund) > 0)
-                                <div class="col-sm-12 transaction-title">
-                                    <span>Incoming Funds</span>
-                                    <a href="{{url(sprintf('project/%s/transaction/%s/edit', $project->id,1))}}"><span>Edit a Incoming Fund</span></a>
-                                </div>
-                                <table class="table table-striped">
-                                    <thead>
-                                    <tr>
-                                        <th>Internal Ref</th>
-                                        <th>Transaction Value</th>
-                                        <th>Transaction Date</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    @foreach($incomingFund as $data)
-                                        <tr>
-                                            <td>{{$data['reference']}}</td>
-                                            <td>{{$data['amount']}}</td>
-                                            <td>{{$data['date']}}</td>
-                                            <td>
-                                                {!! Form::open(['route' => ['transaction.destroy', $project->id, $data['id']]]) !!}
-                                                {!! Form::submit('Delete') !!}
-                                                {!! Form::close() !!}
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                    </tbody>
-                                </table>
-                            @else
-                                <div class="col-sm-12 transaction-title">
-                                    <span>Incoming Funds</span>
-                                    <a href="{{ url(sprintf('project/%s/transaction/%s/create', $project->id,1)) }}"><span>Add a Incoming Funds</span></a>
-                                </div>
-                            @endif
+                        <div class="activity-element-info">
+                            {{$getCode->getOrganizationCodeName('Country', $project->recipient_country[0]['country_code'])}}
                         </div>
                     </div>
                 </div>
+
+                <div class="activity-element-wrapper">
+                    <div class="activity-element-list">
+                        <div class="activity-element-label">
+                            Recipient Region:
+                        </div>
+                        <div class="activity-element-info">
+                            {{$getCode->getActivityCodeName('Region', $project->recipient_region[0]['region_code'])}}
+                        </div>
+                    </div>
+
+                    <div class="activity-element-wrapper">
+                        <div class="title">Disbursement</div>
+                        <a href="{{ url(sprintf('project/%s/transaction/%s/create', $project->id,3)) }}"><span>Add a Disbursement</span></a>
+                    </div>
+                </div>
+
+                <div class="activity-element-wrapper">
+                    <div class="title">
+                        Transactions
+                    </div>
+                    @if(count($disbursement) > 0)
+                        <a href="{{url(sprintf('project/%s/transaction/%s/edit', $project->id,3))}}"
+                           class="edit-element"><span>Edit a Disbursement</span></a>
+                        <div class="title">
+                            Disbursement
+                        </div>
+                        @foreach($disbursement as $data)
+                            <div>
+                                {!! Form::open(['route' => ['transaction.destroy', $project->id, $data['id']]]) !!}
+                                {!! Form::submit('Delete', ['class' => 'pull-left delete']) !!}
+                                {!! Form::close() !!}
+                            </div>
+                            <div class="activity-element-list">
+                                <div class="activity-element-label">
+                                    Disbursement
+                                </div>
+                                <div class="activity-element-info">
+                                    <li>{{ $getCode->getOrganizationCodeName('Currency', $data['value'][0]['currency']) }}</li>
+                                    <div class="toggle-btn">
+                                        <span class="show-more-info">Show more info</span>
+                                        <span class="hide-more-info hidden">Hide more info</span>
+                                    </div>
+                                    <div class="more-info hidden">
+                                        <div class="element-info">
+                                            <div class="activity-element-label">
+                                                Internal Ref:
+                                            </div>
+                                            <div class="activity-element-info">
+                                                {{$data['reference']}}
+                                            </div>
+                                        </div>
+                                        <div class="element-info">
+                                            <div class="activity-element-label">
+                                                Transaction Value:
+                                            </div>
+                                            <div class="activity-element-info">
+                                                {{$data['value'][0]['amount']}}
+                                            </div>
+                                        </div>
+                                        <div class="element-info">
+                                            <div class="activity-element-label">
+                                                Transaction Date:
+                                            </div>
+                                            <div class="activity-element-info">
+                                                {{$data['transaction_date'][0]['date']}}
+                                            </div>
+                                        </div>
+                                        <div class="element-info">
+                                            <div class="activity-element-label">
+                                                Description
+                                            </div>
+                                            <div class="activity-element-info">
+                                                {{$data['description'][0]['narrative'][0]['narrative']}}
+                                            </div>
+                                        </div>
+                                        <div class="element-info">
+                                            <div class="activity-element-label">
+                                                Receiver Organization
+                                            </div>
+                                            <div class="activity-element-info">
+                                                {{$data['provider_organization'][0]['narrative'][0]['narrative']}}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        @endforeach
+                    @else
+                        <div class="activity-element-list">
+                            <div class="title">Disbursement</div>
+                            <a href="{{ url(sprintf('project/%s/transaction/%s/create', $project->id,3)) }}"
+                               class="add-more"><span>Add a Disbursement</span></a>
+                        </div>
+                    @endif
+                </div>
+                <div class="activity-element-wrapper">
+                    @if(count($expenditure) > 0)
+                        <div class="title">
+                            Expenditure
+                            <a href="{{url(sprintf('project/%s/transaction/%s/edit', $project->id,4))}}"
+                               class="edit-element"><span>Edit a Expenditure</span></a>
+                        </div>
+                        @foreach($expenditure as $data)
+                            <div>
+                                {!! Form::open(['route' => ['transaction.destroy', $project->id, $data['id']]]) !!}
+                                {!! Form::submit('Delete', ['class' => 'pull-left delete']) !!}
+                                {!! Form::close() !!}
+                            </div>
+                            <div class="activity-element-list">
+                                <div class="activity-element-label">
+                                    Expenditure
+                                </div>
+                                <div class="activity-element-info">
+                                    <li>{{ $getCode->getOrganizationCodeName('Currency', $data['value'][0]['currency']) }}</li>
+                                    <div class="toggle-btn">
+                                        <span class="show-more-info">Show more info</span>
+                                        <span class="hide-more-info hidden">Hide more info</span>
+                                    </div>
+                                    <div class="more-info hidden">
+                                        <div class="element-info">
+                                            <div class="activity-element-label">
+                                                Internal Ref:
+                                            </div>
+                                            <div class="activity-element-info">
+                                                {{$data['reference']}}
+                                            </div>
+                                        </div>
+                                        <div class="element-info">
+                                            <div class="activity-element-label">
+                                                Transaction Value:
+                                            </div>
+                                            <div class="activity-element-info">
+                                                {{$data['value'][0]['amount']}}
+                                            </div>
+                                        </div>
+                                        <div class="element-info">
+                                            <div class="activity-element-label">
+                                                Transaction Date:
+                                            </div>
+                                            <div class="activity-element-info">
+                                                {{$data['transaction_date'][0]['date']}}
+                                            </div>
+                                        </div>
+                                        <div class="element-info">
+                                            <div class="activity-element-label">
+                                                Description
+                                            </div>
+                                            <div class="activity-element-info">
+                                                {{$data['description'][0]['narrative'][0]['narrative']}}
+                                            </div>
+                                        </div>
+                                        <div class="element-info">
+                                            <div class="activity-element-label">
+                                                Receiver Organization
+                                            </div>
+                                            <div class="activity-element-info">
+                                                {{$data['provider_organization'][0]['narrative'][0]['narrative']}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    @else
+                        <div class="activity-element-list">
+                            <div class="title">Expenditure</div>
+                            <a href="{{ url(sprintf('project/%s/transaction/%s/create', $project->id,4)) }}"
+                               class="add-more"><span>Add a Expenditure</span></a>
+                        </div>
+                    @endif
+                </div>
+                @if(count($incomingFund) > 0)
+                    <div class="activity-element-wrapper">
+                        <div class="title">
+                            Incoming Fund
+                            <a href="{{url(sprintf('project/%s/transaction/%s/edit', $project->id,1))}}"
+                               class="edit-element"><span>Edit a Incoming Fund</span></a>
+                        </div>
+                        @foreach($incomingFund as $data)
+                            <div>
+                                {!! Form::open(['route' => ['transaction.destroy', $project->id, $data['id']]]) !!}
+                                {!! Form::submit('Delete', ['class' => 'pull-left delete']) !!}
+                                {!! Form::close() !!}
+                            </div>
+                            <div class="activity-element-list">
+                                <div class="activity-element-label">
+                                    Incoming Fund
+                                </div>
+                                <div class="activity-element-info">
+                                    <li>{{ $getCode->getOrganizationCodeName('Currency', $data['value'][0]['currency']) }}</li>
+                                    <div class="toggle-btn">
+                                        <span class="show-more-info">Show more info</span>
+                                        <span class="hide-more-info hidden">Hide more info</span>
+                                    </div>
+                                    <div class="more-info hidden">
+                                        <div class="element-info">
+                                            <div class="activity-element-label">
+                                                Internal Ref:
+                                            </div>
+                                            <div class="activity-element-info">
+                                                {{$data['reference']}}
+                                            </div>
+                                        </div>
+                                        <div class="element-info">
+                                            <div class="activity-element-label">
+                                                Transaction Value:
+                                            </div>
+                                            <div class="activity-element-info">
+                                                {{$data['value'][0]['amount']}}
+                                            </div>
+                                        </div>
+                                        <div class="element-info">
+                                            <div class="activity-element-label">
+                                                Transaction Date:
+                                            </div>
+                                            <div class="activity-element-info">
+                                                {{$data['transaction_date'][0]['date']}}
+                                            </div>
+                                        </div>
+                                        <div class="element-info">
+                                            <div class="activity-element-label">
+                                                Description
+                                            </div>
+                                            <div class="activity-element-info">
+                                                {{$data['description'][0]['narrative'][0]['narrative']}}
+                                            </div>
+                                        </div>
+                                        <div class="element-info">
+                                            <div class="activity-element-label">
+                                                Receiver Organization
+                                            </div>
+                                            <div class="activity-element-info">
+                                                {{$data['provider_organization'][0]['narrative'][0]['narrative']}}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        @endforeach
+                        @else
+                            <div class="activity-element-list">
+                                <div class="title">Incoming Fund</div>
+                                <a href="{{ url(sprintf('project/%s/transaction/%s/create', $project->id,1)) }}"
+                                   class="add-more"><span>Add a Incoming Fund</span></a>
+                            </div>
+                    </div>
+                @endif
             </div>
         </div>
     </div>

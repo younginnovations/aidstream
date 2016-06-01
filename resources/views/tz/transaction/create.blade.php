@@ -11,20 +11,19 @@
                 <div>Add Transaction</div>
             </div>
             <div class="panel-body">
-                <div class="create-activity-form">
+                <div class="col-sm-12 panel-transaction-heading">
+                    @if($transactionType == 1)
+                        Incoming Funds
+                    @elseif($transactionType == 3)
+                        Disbursements
+                    @elseif($transactionType == 4)
+                        Expenditure
+                    @endif
+                </div>
+                <div class="create-form create-activity-form create-project-form">
                     {!! Form::open(['route' => ['project.transaction.store', $id], 'method' => 'POST']) !!}
                     {!! Form::hidden('transaction[0][transaction_type][0][transaction_type_code]', $transactionType) !!}
-                    <div class="panel panel-default">
-                        <div class="panel-body">
-                            <div class="col-sm-12">
-                                @if($transactionType == 1)
-                                    Incoming Funds
-                                @elseif($transactionType == 3)
-                                    Disbursements
-                                @elseif($transactionType == 4)
-                                    Expenditure
-                                @endif
-                            </div>
+
 
                             <div class="col-sm-6">
                                 {!! Form::label('transaction[0][reference]', 'Transaction Reference', ['class' => 'control-label required']) !!}
@@ -58,9 +57,7 @@
                                 {!! Form::text('transaction[0][provider_organization][0][narrative][0][narrative]', null, ['class' => 'form-control', 'required' => 'required']) !!}
                                 {!! Form::text('transaction[0][provider_organization][0][narrative][0][language]', null, ['class' => 'hidden']) !!}
                             </div>
-                        </div>
-                    </div>
-                    {!! Form::submit('Save', ['class' => 'pull-right', 'id' => 'submit-transaction']) !!}
+                    {!! Form::submit('Save', ['class' => 'pull-left btn-form', 'id' => 'submit-transaction']) !!}
 
                     @if($transactionType == 1)
                         <button type="button" id="add-more-transaction" class="add-more">Add More Incoming Funds</button>

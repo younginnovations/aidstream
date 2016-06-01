@@ -11,22 +11,18 @@
                 <div>Edit Transaction</div>
             </div>
             <div class="panel-body">
-                <div class="create-activity-form">
-
+                <div class="col-sm-12 panel-transaction-heading">
+                    @if($transactionType == 1)
+                        Incoming Funds
+                    @elseif($transactionType == 3)
+                        Disbursements
+                    @elseif($transactionType == 4)
+                        Expenditure
+                    @endif
+                </div>
+                <div class="create-form create-activity-form create-project-form">
                     {!! Form::open(['route' => ['transaction.update', $projectId, $transactionType], 'method' => 'POST']) !!}
                     {!! Form::hidden('activity_id', $projectId) !!}
-
-                    <div class="panel panel-default">
-                        <div class="panel-body">
-                            <div class="col-sm-12">
-                                @if($transactionType == 1)
-                                    Incoming Funds
-                                @elseif($transactionType == 3)
-                                    Disbursements
-                                @elseif($transactionType == 4)
-                                    Expenditure
-                                @endif
-                            </div>
 
                             @foreach($transactions as $key => $transaction)
                                 {!! Form::hidden("transaction[$key][id]", $transactions[$key]['id']) !!}
@@ -62,9 +58,7 @@
                                     {!! Form::text("transaction[$key][provider_organization][0][narrative][0][narrative]", $transaction['transaction']['provider_organization'][0]['narrative'][0]['narrative'], ['class' => 'form-control', 'required' => 'required']) !!}
                                 </div>
                             @endforeach
-                        </div>
-                    </div>
-                    {!! Form::submit('Edit') !!}
+                    {!! Form::submit('Save', ['class' => 'pull-left btn-form']) !!}
 
                     @if($transactionType == 1)
                         <button type="button" id="add-more-transaction" class="add-more">Add More Incoming Funds</button>

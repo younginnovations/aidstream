@@ -29,13 +29,15 @@
         {!! Form::text('api_id', null, ['class' => 'form-control', 'required' => 'required']) !!}
     </div>
 
-    <div class="col-sm-12">
-        <label class="control-label">
-            No <input type="radio" name="publish_files" value="no" checked="checked">
-            Yes <input type="radio" name="publish_files" value="yes">
+    <div class="col-sm-11 auto-publish">
+        <label>Auto Publish</label>
+        <label class="control-label pull-left">
+            <input type="radio" name="publish_files" value="no" checked="checked"> No
+        </label>
+        <label class="control-label pull-left">
+            <input type="radio" name="publish_files" value="yes"> Yes
         </label>
     </div>
-    <br/>
     <div class="col-sm-6">
         {!! Form::label('default currency', 'Default Currency', ['class' => 'control-label required']) !!}
         {!! Form::select('default_currency', ['' => 'Select one of following:'] + $currency, $settings['default_currency'],['class' => 'form-control', 'required' => 'required']) !!}

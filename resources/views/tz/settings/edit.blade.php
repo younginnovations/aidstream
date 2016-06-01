@@ -11,20 +11,14 @@
             </div>
 
             <div class="panel-body">
-                <div class="create-activity-form">
-                    <div class="panel panel-default">
-                        <div class="panel-body">
-                            {{ Form::model($settings, array('route' => array('settings.update', $settings['id']), 'method' => 'PUT')) }}
-                                @include('tz.settings.partials.edit-form')
-                            {!! Form::submit('Edit Settings', ['class' => 'btn btn-primary btn-create pull-left']) !!}
-                            {!! Form::close() !!}
-                        </div>
-                    </div>
+                <div class="create-form create-project-form">
+                    {{ Form::model($settings, array('route' => array('settings.update', $settings['id']), 'method' => 'PUT')) }}
+                    @include('tz.settings.partials.edit-form')
+                    {!! Form::submit('Edit Settings', ['class' => 'btn btn-primary btn-form pull-left']) !!}
+                    {!! Form::close() !!}
                 </div>
-
             </div>
         </div>
-    </div>
     </div>
 @stop
 

@@ -64,16 +64,11 @@ class TransactionService
 
         $data = [];
 
-        foreach ($transactions as $transaction) {
+        foreach ($transactions as $key => $transaction) {
             $id                                = $transaction->id;
             $transaction                       = json_decode($transaction->transaction, true);
-            $transactionDetail['id']           = $id;
-            $transactionDetail['reference']    = $transaction['reference'];
-            $transactionDetail['date']         = $transaction['transaction_date'][0]['date'];
-            $transactionDetail['amount']       = $transaction['value'][0]['amount'];
-            $transactionDetail['narrative']    = $transaction['description'][0]['narrative'][0]['narrative'];
-            $transactionDetail['receiver_org'] = $transaction['provider_organization'][0]['narrative'][0]['narrative'];
-            $data[]                            = $transactionDetail;
+            $data[]                            = $transaction;
+            $data[$key]['id'] = $id;
         }
 
         return $data;

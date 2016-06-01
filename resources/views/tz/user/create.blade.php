@@ -5,7 +5,9 @@
 @section('content')
     <div class="col-xs-9 col-md-9 col-lg-9 content-wrapper">
         @include('includes.errors')
-        <div class="panel-content-heading">User Information</div>
+        <div class="panel-content-heading">
+            <div>User Information</div>
+        </div>
         <div class="col-xs-12 col-md-8 col-lg-8 element-content-wrapper user-content-wrapper">
             <div class="create-form create-user-form">
                 <form class="form-horizontal" role="form" method="POST" action="{{ route('admin.signup-user')}}">
@@ -14,26 +16,26 @@
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
                             <div class="row">
                                 <div class="col-xs-12 col-sm-6">
-                                    <label class="control-label">First Name*</label>
+                                    <label class="control-label required">First Name</label>
                                     <input type="text" class="form-control" name="first_name"
                                            value="{{ old('first_name') }}" required="required">
                                 </div>
                                 <div class="col-xs-12 col-sm-6">
-                                    <label class="control-label">Last Name*</label>
+                                    <label class="control-label required">Last Name</label>
                                     <input type="text" class="form-control" name="last_name"
                                            value="{{ old('last_name') }}" required="required">
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-xs-12 col-sm-6">
-                                    <label class="control-label">E-Mail Address*</label>
+                                    <label class="control-label required">E-Mail Address</label>
                                     <input type="email" class="form-control" name="email"
                                            value="{{ old('email') }}" required="required">
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-xs-12 col-sm-6">
-                                    <label class="control-label">User Identifier*</label>
+                                    <label class="control-label required">User Identifier</label>
                                     <input type="text" class="form-control noSpace" name="userIdentifier"
                                            id="userIdentifier"
                                            value="{{ old('userIdentifier') }}"
@@ -56,7 +58,7 @@
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-6">
-                                <label class="control-label">Password*</label>
+                                <label class="control-label required">Password</label>
                                 <input type="password" class="form-control" name="password" required="required">
                             </div>
                             <div class="col-xs-12 col-sm-6">
@@ -77,12 +79,14 @@
                                 <div class="checkbox">
                                     <label><input type="checkbox" value="edit_activity"
                                                   name=user_permission[edit] class="field1"
-                                                  @if(old('user_permission.edit'))) checked="checked" @endif >Edit</label>
+                                                  @if(old('user_permission.edit')))
+                                                  checked="checked" @endif >Edit</label>
                                 </div>
                                 <div class="checkbox">
                                     <label><input type="checkbox" value="delete_activity"
                                                   name=user_permission[delete] class="field1"
-                                                  @if(old('user_permission.delete'))) checked="checked" @endif >Delete</label>
+                                                  @if(old('user_permission.delete')))
+                                                  checked="checked" @endif >Delete</label>
                                 </div>
                                 <div class="checkbox">
                                     <label><input type="checkbox" value="publish_activity"
