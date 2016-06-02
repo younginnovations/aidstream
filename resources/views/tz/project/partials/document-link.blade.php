@@ -1,5 +1,5 @@
 @if(isset($edit))
-    <div class="col-sm-12">
+    <div class="col-sm-12 add-wrap">
         <h2>Results/Outcomes Documents</h2>
         {!! Form::hidden('document_link[0][category][0][code]', 'A08') !!}
         {!! Form::hidden('document_link[0][format]', 'text/html') !!}
@@ -17,7 +17,7 @@
         </div>
     </div>
 
-    <div class="col-sm-12">
+    <div class="col-sm-12 add-wrap">
         <h2>Annual Reports</h2>
         {!! Form::hidden('document_link[1][category][0][code]', 'B01') !!}
         {!! Form::hidden('document_link[1][format]', 'text/html') !!}
@@ -36,7 +36,7 @@
 
     </div>
 @else
-    <div class="col-sm-12">
+    <div class="col-sm-12 add-wrap">
         <h2>Results/Outcomes Documents</h2>
         {!! Form::hidden('document_link[0][category][0][code]', 'A08') !!}
         {!! Form::hidden('document_link[0][format]', 'text/html') !!}
@@ -53,7 +53,7 @@
         </div>
     </div>
 
-    <div class="col-sm-12">
+    <div class="col-sm-12 add-wrap">
         <h2>Annual Reports</h2>
         {!! Form::hidden('document_link[1][category][0][code]', 'B01') !!}
         {!! Form::hidden('document_link[1][format]', 'text/html') !!}

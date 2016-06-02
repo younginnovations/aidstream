@@ -189,7 +189,7 @@ var Project = {
         }
 
         var tempDiv = $('<div/>', {
-            class: 'col-sm-12'
+            class: 'added-new-block'
         }).append(newLocation);
 
         projectForm.find('#location-wrap').find('#add-more-location').before(tempDiv);

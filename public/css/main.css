@@ -3970,7 +3970,7 @@ label {
   .published:before {
     background: #52cc88; }
 
-.view, .delete, .display, .edit, .duplicate, .check-status, .masquerade {
+.view, .delete, .delete-project, .display, .edit, .duplicate, .check-status, .masquerade {
   float: left;
   text-indent: -9999px;
   width: 18px;
@@ -3982,11 +3982,14 @@ label {
   .view:hover {
     background-position: -159px -401px; }
 
-.delete {
+.delete, .delete-project {
   height: 23px;
   background-position: -229px -332px; }
-  .delete:hover {
+  .delete:hover, .delete-project:hover {
     background-position: -230px -390px; }
+
+.delete-project {
+  margin-right: 6px; }
 
 .display {
   height: 26px;
@@ -5424,7 +5427,8 @@ div[class*="panel-level-"] .panel > .panel-body {
   bottom: 30px; }
 
 .profile-wrapper {
-  width: 100%; }
+  width: 100%;
+  padding: 0; }
 
 .error-msg-wrap {
   text-align: center; }
@@ -5694,11 +5698,13 @@ table.dataTable thead .sorting_desc {
   padding: 25px 0 10px; }
   .create-project-form > form .col-sm-12 {
     padding: 0; }
-  .create-project-form > form .btn-form {
-    height: 53px;
-    bottom: 40px; }
-  .create-project-form > form .btn-create {
-    background-position: -175px -116px; }
+
+.create-project-form .btn-form {
+  height: 53px;
+  bottom: 40px; }
+
+.create-project-form .btn-create {
+  background-position: -175px -116px; }
 
 .create-project-form input, .create-project-form select, .create-project-form .select2-container {
   margin-bottom: 20px; }
@@ -5746,11 +5752,13 @@ table.dataTable thead .sorting_desc {
   border-bottom: 1px solid rgba(151, 151, 151, 0.2);
   padding: 0 36px 10px;
   margin-bottom: 10px;
-  position: relative; }
+  position: relative;
+  display: inline-block;
+  width: 100%; }
   .activity-element-wrapper .edit-element, .activity-element-wrapper .delete {
     position: absolute;
     top: 2px;
-    right: 20px;
+    right: 40px;
     bottom: auto;
     left: auto;
     background: url(../../images/ic-action-sprite.svg) no-repeat 0 0;
@@ -5760,11 +5768,12 @@ table.dataTable thead .sorting_desc {
     .activity-element-wrapper .edit-element:hover, .activity-element-wrapper .delete:hover {
       background-position: 0 -20px; }
   .activity-element-wrapper .delete {
-    background-position: -19px 0;
-    right: 0; }
+    background: url(../../images/ic-action-sprite.svg) no-repeat -19px 0;
+    right: 20px;
+    padding: 0; }
     .activity-element-wrapper .delete:hover {
-      background-position: -19px -20px; }
-  .activity-element-wrapper:hover > .edit-element, .activity-element-wrapper:hover > .delete {
+      background: url(../../images/ic-action-sprite.svg) no-repeat -19px -20px; }
+  .activity-element-wrapper:hover > .edit-element, .activity-element-wrapper:hover .delete {
     display: block; }
 
 .activity-element-wrapper .activity-element-label {
@@ -5806,13 +5815,13 @@ table.dataTable thead .sorting_desc {
   -webkit-border-radius: 4px;
   border-radius: 4px;
   position: relative;
-  margin: 12px 0 0 -240px; }
+  margin: 12px 0 0 -260px; }
   .more-info:before {
     position: absolute;
     top: -6px;
     right: auto;
     bottom: auto;
-    left: 270px;
+    left: 300px;
     content: '';
     border-left: 6px solid transparent;
     border-right: 6px solid transparent;
@@ -5825,7 +5834,7 @@ table.dataTable thead .sorting_desc {
   display: inline-block;
   width: 100%; }
   .more-info > div .activity-element-label {
-    width: 225px; }
+    width: 255px; }
   .more-info > div:last-of-type {
     border-bottom: 0; }
 
@@ -5860,7 +5869,7 @@ table.dataTable thead .sorting_desc {
       margin-top: 0; }
 
 .activity-element-info + .activity-element-info {
-  margin: 10px 0 0 225px; }
+  margin: 10px 0 0 260px; }
 
 .activity-element-info li + .toggle-btn {
   margin-left: 10px; }

@@ -209,70 +209,69 @@
                     <div class="title">
                         Transactions
                     </div>
-                    <div class="activity-element-label">
-                        Disbursement
-                    </div>
                     @if(count($disbursement) > 0)
-                        <a href="{{url(sprintf('project/%s/transaction/%s/edit', $project->id,3))}}" class="edit-element">
+                        <div class="activity-element-label">
+                            Disbursement
+                        </div>
+                        <a href="{{url(sprintf('project/%s/transaction/%s/edit', $project->id,3))}}"
+                           class="edit-element">
                             <span>Edit a Disbursement</span>
                         </a>
+                        <div>
+                            {!! Form::open(['route' => ['transaction.destroy', $project->id, 'changethis']]) !!}
+                            {!! Form::submit('Delete', ['class' => 'pull-left delete']) !!}
+                            {!! Form::close() !!}
+                        </div>
                         @foreach($disbursement as $data)
-                            <div>
-                                {!! Form::open(['route' => ['transaction.destroy', $project->id, $data['id']]]) !!}
-                                {!! Form::submit('Delete', ['class' => 'pull-left delete']) !!}
-                                {!! Form::close() !!}
-                            </div>
-                            <div class="activity-element-list">
-                                <div class="activity-element-info">
-                                    <li>{{ $getCode->getOrganizationCodeName('Currency', $data['value'][0]['currency']) }}</li>
-                                    <div class="toggle-btn">
-                                        <span class="show-more-info">Show more info</span>
-                                        <span class="hide-more-info hidden">Hide more info</span>
-                                    </div>
-                                    <div class="more-info hidden">
-                                        <div class="element-info">
-                                            <div class="activity-element-label">
-                                                Internal Ref:
-                                            </div>
-                                            <div class="activity-element-info">
-                                                {{$data['reference']}}
-                                            </div>
-                                        </div>
-                                        <div class="element-info">
-                                            <div class="activity-element-label">
-                                                Transaction Value:
-                                            </div>
-                                            <div class="activity-element-info">
-                                                {{$data['value'][0]['amount']}}
-                                            </div>
-                                        </div>
-                                        <div class="element-info">
-                                            <div class="activity-element-label">
-                                                Transaction Date:
-                                            </div>
-                                            <div class="activity-element-info">
-                                                {{$data['transaction_date'][0]['date']}}
-                                            </div>
-                                        </div>
-                                        <div class="element-info">
-                                            <div class="activity-element-label">
-                                                Description
-                                            </div>
-                                            <div class="activity-element-info">
-                                                {{$data['description'][0]['narrative'][0]['narrative']}}
-                                            </div>
-                                        </div>
-                                        <div class="element-info">
-                                            <div class="activity-element-label">
-                                                Receiver Organization
-                                            </div>
-                                            <div class="activity-element-info">
-                                                {{$data['provider_organization'][0]['narrative'][0]['narrative']}}
-                                            </div>
-                                        </div>
-                                    </div>
-
+                            <div class="activity-element-info">
+                                <li>{{ $getCode->getOrganizationCodeName('Currency', $data['value'][0]['currency']) }}</li>
+                                <div class="toggle-btn">
+                                    <span class="show-more-info">Show more info</span>
+                                    <span class="hide-more-info hidden">Hide more info</span>
                                 </div>
+                                <div class="more-info hidden">
+                                    <div class="element-info">
+                                        <div class="activity-element-label">
+                                            Internal Ref:
+                                        </div>
+                                        <div class="activity-element-info">
+                                            {{$data['reference']}}
+                                        </div>
+                                    </div>
+                                    <div class="element-info">
+                                        <div class="activity-element-label">
+                                            Transaction Value:
+                                        </div>
+                                        <div class="activity-element-info">
+                                            {{$data['value'][0]['amount']}}
+                                        </div>
+                                    </div>
+                                    <div class="element-info">
+                                        <div class="activity-element-label">
+                                            Transaction Date:
+                                        </div>
+                                        <div class="activity-element-info">
+                                            {{$data['transaction_date'][0]['date']}}
+                                        </div>
+                                    </div>
+                                    <div class="element-info">
+                                        <div class="activity-element-label">
+                                            Description
+                                        </div>
+                                        <div class="activity-element-info">
+                                            {{$data['description'][0]['narrative'][0]['narrative']}}
+                                        </div>
+                                    </div>
+                                    <div class="element-info">
+                                        <div class="activity-element-label">
+                                            Receiver Organization
+                                        </div>
+                                        <div class="activity-element-info">
+                                            {{$data['provider_organization'][0]['narrative'][0]['narrative']}}
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div>
                         @endforeach
                     @else
@@ -287,64 +286,63 @@
                         <div class="activity-element-label">
                             Expenditure
                         </div>
-                        <a href="{{url(sprintf('project/%s/transaction/%s/edit', $project->id,4))}}" class="edit-element">
+                        <a href="{{url(sprintf('project/%s/transaction/%s/edit', $project->id,4))}}"
+                           class="edit-element">
                                 <span>
                                     Edit a Expenditure
                                 </span>
                         </a>
+                        <div>
+                            {!! Form::open(['route' => ['transaction.destroy', $project->id, 'changethis']]) !!}
+                            {!! Form::submit('Delete', ['class' => 'pull-left delete']) !!}
+                            {!! Form::close() !!}
+                        </div>
                         @foreach($expenditure as $data)
-                            <div>
-                                {!! Form::open(['route' => ['transaction.destroy', $project->id, $data['id']]]) !!}
-                                {!! Form::submit('Delete', ['class' => 'pull-left delete']) !!}
-                                {!! Form::close() !!}
-                            </div>
-                            <div class="activity-element-list">
-                                <div class="activity-element-info">
-                                    <li>{{ $getCode->getOrganizationCodeName('Currency', $data['value'][0]['currency']) }}</li>
-                                    <div class="toggle-btn">
-                                        <span class="show-more-info">Show more info</span>
-                                        <span class="hide-more-info hidden">Hide more info</span>
+                            <div class="activity-element-info">
+                                <li>{{ $getCode->getOrganizationCodeName('Currency', $data['value'][0]['currency']) }}</li>
+                                <div class="toggle-btn">
+                                    <span class="show-more-info">Show more info</span>
+                                    <span class="hide-more-info hidden">Hide more info</span>
+                                </div>
+                                <div class="more-info hidden">
+                                    <div class="element-info">
+                                        <div class="activity-element-label">
+                                            Internal Ref:
+                                        </div>
+                                        <div class="activity-element-info">
+                                            {{$data['reference']}}
+                                        </div>
                                     </div>
-                                    <div class="more-info hidden">
-                                        <div class="element-info">
-                                            <div class="activity-element-label">
-                                                Internal Ref:
-                                            </div>
-                                            <div class="activity-element-info">
-                                                {{$data['reference']}}
-                                            </div>
+                                    <div class="element-info">
+                                        <div class="activity-element-label">
+                                            Transaction Value:
                                         </div>
-                                        <div class="element-info">
-                                            <div class="activity-element-label">
-                                                Transaction Value:
-                                            </div>
-                                            <div class="activity-element-info">
-                                                {{$data['value'][0]['amount']}}
-                                            </div>
+                                        <div class="activity-element-info">
+                                            {{$data['value'][0]['amount']}}
                                         </div>
-                                        <div class="element-info">
-                                            <div class="activity-element-label">
-                                                Transaction Date:
-                                            </div>
-                                            <div class="activity-element-info">
-                                                {{$data['transaction_date'][0]['date']}}
-                                            </div>
+                                    </div>
+                                    <div class="element-info">
+                                        <div class="activity-element-label">
+                                            Transaction Date:
                                         </div>
-                                        <div class="element-info">
-                                            <div class="activity-element-label">
-                                                Description
-                                            </div>
-                                            <div class="activity-element-info">
-                                                {{$data['description'][0]['narrative'][0]['narrative']}}
-                                            </div>
+                                        <div class="activity-element-info">
+                                            {{$data['transaction_date'][0]['date']}}
                                         </div>
-                                        <div class="element-info">
-                                            <div class="activity-element-label">
-                                                Receiver Organization
-                                            </div>
-                                            <div class="activity-element-info">
-                                                {{$data['provider_organization'][0]['narrative'][0]['narrative']}}
-                                            </div>
+                                    </div>
+                                    <div class="element-info">
+                                        <div class="activity-element-label">
+                                            Description
+                                        </div>
+                                        <div class="activity-element-info">
+                                            {{$data['description'][0]['narrative'][0]['narrative']}}
+                                        </div>
+                                    </div>
+                                    <div class="element-info">
+                                        <div class="activity-element-label">
+                                            Receiver Organization
+                                        </div>
+                                        <div class="activity-element-info">
+                                            {{$data['provider_organization'][0]['narrative'][0]['narrative']}}
                                         </div>
                                     </div>
                                 </div>
@@ -360,66 +358,62 @@
                 </div>
                 <div class="activity-element-wrapper">
                     @if(count($incomingFund) > 0)
-                        {{--<div class="title">--}}
-                            {{--Incoming Fund--}}
-                        {{--</div>--}}
-                        <a href="{{url(sprintf('project/%s/transaction/%s/edit', $project->id,1))}}" class="edit-element"><span>Edit a Incoming Fund</span></a>
                         <div class="activity-element-label">
                             Incoming Fund
                         </div>
+                        <a href="{{url(sprintf('project/%s/transaction/%s/edit', $project->id,1))}}"
+                           class="edit-element"><span>Edit a Incoming Fund</span></a>
+                        <div>
+                            {!! Form::open(['route' => ['transaction.destroy', $project->id, 'changethis']]) !!}
+                            {!! Form::submit('Delete', ['class' => 'pull-left delete']) !!}
+                            {!! Form::close() !!}
+                        </div>
                         @foreach($incomingFund as $data)
-                            <div>
-                                {!! Form::open(['route' => ['transaction.destroy', $project->id, $data['id']]]) !!}
-                                {!! Form::submit('Delete', ['class' => 'pull-left delete']) !!}
-                                {!! Form::close() !!}
-                            </div>
-                            <div class="activity-element-list">
-                                <div class="activity-element-info">
-                                    <li>{{ $getCode->getOrganizationCodeName('Currency', $data['value'][0]['currency']) }}</li>
-                                    <div class="toggle-btn">
-                                        <span class="show-more-info">Show more info</span>
-                                        <span class="hide-more-info hidden">Hide more info</span>
+                            <div class="activity-element-info">
+                                <li>{{ $getCode->getOrganizationCodeName('Currency', $data['value'][0]['currency']) }}</li>
+                                <div class="toggle-btn">
+                                    <span class="show-more-info">Show more info</span>
+                                    <span class="hide-more-info hidden">Hide more info</span>
+                                </div>
+                                <div class="more-info hidden">
+                                    <div class="element-info">
+                                        <div class="activity-element-label">
+                                            Internal Ref:
+                                        </div>
+                                        <div class="activity-element-info">
+                                            {{$data['reference']}}
+                                        </div>
                                     </div>
-                                    <div class="more-info hidden">
-                                        <div class="element-info">
-                                            <div class="activity-element-label">
-                                                Internal Ref:
-                                            </div>
-                                            <div class="activity-element-info">
-                                                {{$data['reference']}}
-                                            </div>
+                                    <div class="element-info">
+                                        <div class="activity-element-label">
+                                            Transaction Value:
                                         </div>
-                                        <div class="element-info">
-                                            <div class="activity-element-label">
-                                                Transaction Value:
-                                            </div>
-                                            <div class="activity-element-info">
-                                                {{$data['value'][0]['amount']}}
-                                            </div>
+                                        <div class="activity-element-info">
+                                            {{$data['value'][0]['amount']}}
                                         </div>
-                                        <div class="element-info">
-                                            <div class="activity-element-label">
-                                                Transaction Date:
-                                            </div>
-                                            <div class="activity-element-info">
-                                                {{$data['transaction_date'][0]['date']}}
-                                            </div>
+                                    </div>
+                                    <div class="element-info">
+                                        <div class="activity-element-label">
+                                            Transaction Date:
                                         </div>
-                                        <div class="element-info">
-                                            <div class="activity-element-label">
-                                                Description
-                                            </div>
-                                            <div class="activity-element-info">
-                                                {{$data['description'][0]['narrative'][0]['narrative']}}
-                                            </div>
+                                        <div class="activity-element-info">
+                                            {{$data['transaction_date'][0]['date']}}
                                         </div>
-                                        <div class="element-info">
-                                            <div class="activity-element-label">
-                                                Receiver Organization
-                                            </div>
-                                            <div class="activity-element-info">
-                                                {{$data['provider_organization'][0]['narrative'][0]['narrative']}}
-                                            </div>
+                                    </div>
+                                    <div class="element-info">
+                                        <div class="activity-element-label">
+                                            Description
+                                        </div>
+                                        <div class="activity-element-info">
+                                            {{$data['description'][0]['narrative'][0]['narrative']}}
+                                        </div>
+                                    </div>
+                                    <div class="element-info">
+                                        <div class="activity-element-label">
+                                            Receiver Organization
+                                        </div>
+                                        <div class="activity-element-info">
+                                            {{$data['provider_organization'][0]['narrative'][0]['narrative']}}
                                         </div>
                                     </div>
                                 </div>
@@ -428,7 +422,8 @@
                     @else
                         <div class="activity-element-list">
                             <div class="title">Incoming Fund</div>
-                            <a href="{{ url(sprintf('project/%s/transaction/%s/create', $project->id,1)) }}" class="add-more"><span>Add a Incoming Fund</span></a>
+                            <a href="{{ url(sprintf('project/%s/transaction/%s/create', $project->id,1)) }}"
+                               class="add-more"><span>Add a Incoming Fund</span></a>
                         </div>
                     @endif
 

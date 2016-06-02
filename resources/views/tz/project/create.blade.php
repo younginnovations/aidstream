@@ -138,6 +138,7 @@
                         </div>
                     </div>
                     {!! Form::submit('Create Project', ['class' => 'btn btn-primary btn-form btn-create']) !!}
+                    {!! Form::close() !!}
                 </div>
             </div>
 
@@ -165,7 +166,8 @@
                     {!! Form::select('implementing_organization[index][implementing_organization_type]', ['' => 'Select one of the following.'] + $organizationType, null, ['class' => 'form-control', 'required' => 'required']) !!}
                 </div>
 
-                <a href="javascript:void(0)" onclick="removeImplementing(this)" class="remove_from_collection">Remove</a>
+                <a href="javascript:void(0)" onclick="removeImplementing(this)"
+                   class="remove_from_collection">Remove</a>
             </div>
 
             @include('tz.project.partials.location-clone')

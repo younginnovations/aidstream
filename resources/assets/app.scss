@@ -37,7 +37,6 @@ $color_mabel_approx: #d9f1fe;
 $color_black_approx: #262626;
 $color_hawkes_blue_approx: #cbe9f7;
 
-
 //fonts
 $font_0: Open-Sans-Regular;
 $font_1: Open-Sans-Bold;
@@ -1224,13 +1223,17 @@ $full-sidebar-wrapper-width: 210px;
   }
 }
 
-.delete {
+.delete, .delete-project {
   @extend %extend_3;
   height: 23px;
   background-position: -229px -332px;
   &:hover {
     background-position: -230px -390px;
   }
+}
+
+.delete-project {
+  margin-right: 6px;
 }
 
 .display {
@@ -1974,7 +1977,7 @@ form .form-group + .text-danger {
   }
 }
 
-.add-more,.add-more:focus,.add-more:active {
+.add-more, .add-more:focus, .add-more:active {
   position: relative;
   background: none;
   padding-left: 42px;
@@ -2992,6 +2995,7 @@ div[class*="panel-level-"] .panel > .panel-body {
 
 .profile-wrapper {
   width: 100%;
+  padding: 0;
 }
 
 .error-msg-wrap {
@@ -3305,10 +3309,12 @@ table.dataTable thead .sorting_desc {
   padding-bottom: 0;
 }
 
-.create-project-form > form {
-  padding: 25px 0 10px;
-  .col-sm-12 {
-    padding: 0;
+.create-project-form {
+  > form {
+    padding: 25px 0 10px;
+    .col-sm-12 {
+      padding: 0;
+    }
   }
   .btn-form {
     height: 53px;
@@ -3320,7 +3326,7 @@ table.dataTable thead .sorting_desc {
 }
 
 .create-project-form {
-  input, select,.select2-container {
+  input, select, .select2-container {
     margin-bottom: 20px;
   }
 }
@@ -3335,17 +3341,18 @@ table.dataTable thead .sorting_desc {
     padding-right: 25px;
     padding-left: 20px;
   }
-  .col-sm-12 > .col-sm-6:last-of-type,.col-sm-12 > h2 + .col-sm-6 + .col-sm-6 {
+  .col-sm-12 > .col-sm-6:last-of-type, .col-sm-12 > h2 + .col-sm-6 + .col-sm-6 {
     padding-left: 25px;
     padding-right: 20px;
   }
   .col-sm-12 > .col-sm-6:only-of-type {
-    padding-left: 20px!important;
+    padding-left: 20px !important;
   }
   .remove_from_collection, .remove_from_collection:focus {
     top: 5px;
   }
 }
+
 //
 //.added-new-block .col-sm-6:nth-child(2) {
 //  padding-left: 25px;
@@ -3355,7 +3362,7 @@ table.dataTable thead .sorting_desc {
 .add-wrap {
   border-top: 1px solid $color_gallery;
   margin-top: 10px;
-  padding-top: 20px!important;
+  padding-top: 20px !important;
 }
 
 .added-new-block {
@@ -3382,8 +3389,10 @@ table.dataTable thead .sorting_desc {
   padding: 0 36px 10px;
   margin-bottom: 10px;
   position: relative;
-  .edit-element,.delete {
-    @include position(absolute,2px 20px auto auto);
+  display: inline-block;
+  width: 100%;
+  .edit-element, .delete {
+    @include position(absolute, 2px 40px auto auto);
     background: $url_14 no-repeat 0 0;
     @include size(10px);
     display: none;
@@ -3392,16 +3401,18 @@ table.dataTable thead .sorting_desc {
     }
   }
   .delete {
-    background-position: -19px 0;
-    right: 0;
+    background: $url_14 no-repeat -19px 0;
+    right: 20px;
+    padding: 0;
     &:hover {
-      background-position: -19px -20px;
+      background: $url_14 no-repeat -19px -20px;
     }
   }
-  &:hover > .edit-element,&:hover > .delete {
+  &:hover > .edit-element, &:hover .delete {
     display: block;
   }
 }
+
 .activity-element-wrapper .activity-element-label {
   margin-top: 0;
   font-weight: normal;
@@ -3448,9 +3459,9 @@ table.dataTable thead .sorting_desc {
   -webkit-border-radius: 4px;
   border-radius: 4px;
   position: relative;
-  margin: 12px 0 0 -240px;
+  margin: 12px 0 0 -260px;
   &:before {
-    @include position(absolute, -6px auto auto 270px);
+    @include position(absolute, -6px auto auto 300px);
     content: '';
     border-left: 6px solid transparent;
     border-right: 6px solid transparent;
@@ -3465,7 +3476,7 @@ table.dataTable thead .sorting_desc {
   display: inline-block;
   width: 100%;
   .activity-element-label {
-    width: 225px;
+    width: 255px;
   }
   &:last-of-type {
     border-bottom: 0;
@@ -3476,7 +3487,7 @@ table.dataTable thead .sorting_desc {
   display: inline-block;
   width: 100%;
   .title {
-    font-family: $font_0!important;
+    font-family: $font_0 !important;
   }
   .add-more {
     padding-left: 26px;
@@ -3510,8 +3521,8 @@ table.dataTable thead .sorting_desc {
   }
 }
 
-.activity-element-info+.activity-element-info {
-  margin: 10px 0 0 225px;
+.activity-element-info + .activity-element-info {
+  margin: 10px 0 0 260px;
 }
 
 .activity-element-info li + .toggle-btn {
@@ -3535,7 +3546,7 @@ table.dataTable thead .sorting_desc {
   }
 }
 
-.expanded>div .activity-element-label {
+.expanded > div .activity-element-label {
   width: 210px;
 }
 
@@ -3548,7 +3559,7 @@ table.dataTable thead .sorting_desc {
 .view-language-info {
   background: $color_white;
   border-radius: 4px;
-  box-shadow: 0 2px 10px 0 rgba(0,0,0,0.5);
+  box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.5);
   width: 262px;
   padding: 12px 18px;
   position: absolute;
@@ -3556,12 +3567,12 @@ table.dataTable thead .sorting_desc {
   left: -30px;
   &:before {
     content: "";
-    @include position(absolute,-5px auto auto 40%);
+    @include position(absolute, -5px auto auto 40%);
     width: 10px;
     height: 10px;
     background: $color_white;
     transform: rotate(45deg);
-    box-shadow: -3px -3px 8px -2px rgba(0,0,0,.5);
+    box-shadow: -3px -3px 8px -2px rgba(0, 0, 0, .5);
   }
   ul:not(:last-child) {
     margin-bottom: 4px;

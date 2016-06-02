@@ -1,5 +1,5 @@
 @if(isset($multiple))
-    <div class="col-sm-12" id="funding-wrap">
+    <div class="col-sm-12 add-wrap" id="funding-wrap">
         <h2>Funding</h2>
         @forelse (getVal($project, ['participating_organization', 'funding_organization'], []) as $fundingOrganization)
             <div class="col-sm-6">
@@ -24,7 +24,7 @@
         @endforelse
         <button type="button" id="add-more-funding-organization" class="add-more">Add More Funding Organization</button>
     </div>
-    <div class="col-sm-12" id="implementing-wrap">
+    <div class="col-sm-12 add-wrap" id="implementing-wrap">
         <h2>Implementing</h2>
         @forelse (getVal($project, ['participating_organization', 'implementing_organization'], []) as $implementingOrganization)
             <div class="col-sm-6">
@@ -51,7 +51,7 @@
     </div>
 
 @else
-    <div class="col-sm-12" id="funding-wrap">
+    <div class="col-sm-12 add-wrap" id="funding-wrap">
         <h2>Funding</h2>
         <div class="col-sm-6">
             {!! Form::label('funding_organization[0][funding_organization_name]', 'Organization Name', ['class' => 'control-label required']) !!}
@@ -64,7 +64,7 @@
         </div>
         <button type="button" id="add-more-funding-organization" class="add-more">Add More Funding Organization</button>
     </div>
-    <div class="col-sm-12" id="implementing-wrap">
+    <div class="col-sm-12 add-wrap" id="implementing-wrap">
         <h2>Implementing</h2>
         <div class="col-sm-6">
             {!! Form::label('implementing_organization[0][implementing_organization_name]', 'Organization Name', ['class' => 'control-label required']) !!}
