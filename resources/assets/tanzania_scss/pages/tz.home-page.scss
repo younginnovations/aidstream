@@ -1,0 +1,74 @@
+
+/* ------- style for header banner ------- */
+
+.container{
+  padding-right: 0;
+  padding-left: 0;
+}
+
+.navbar-brand,.footer-logo a{
+  width: 182px;
+  position: relative;
+  display: block;
+}
+
+
+.tanzania-flag{
+  position: absolute;
+  width: 18px;
+  height: 12px;
+  background: url(#{$img-path}/ic_tanzania-flag.svg) center center  no-repeat;
+  top: 21px;
+  right: 0;
+}
+
+.header-banner{
+  background: linear-gradient(
+                  rgba(255, 255, 255, 0.92),
+                  rgba(255, 255, 255, 0.92)),
+                url("#{$img-path}/tz-banner-bg.jpg") top center no-repeat;
+  background-size: cover;
+
+  .navbar,.navbar-default{
+    background: transparent;
+  }
+}
+
+/* ------- style for search section ------ */
+.search-wrap{
+  margin-top: 15px;
+  input{
+    padding: 15px 20px 15px 47px;
+    background: #fff url("#{$img-path}/ic_search-darkgray.svg") top 12px left 15px no-repeat;
+    border-radius: 26px;
+    border: solid 2px #f2f2f2;
+    outline: none;
+    min-width: 372px;
+    color: rgba(72,72,72,0.72);
+    font-size: 12px;
+    line-height: 18px;
+    margin-bottom: 15px;
+    position: relative;
+
+    &:hover,&:focus{
+      outline: none;
+    }
+  }
+
+}
+
+/* -------- style for footer -------- */
+
+footer {
+  @media (min-width: 768px){
+    padding: 84px 0 50px;
+  }
+
+  .footer-logo a{
+    img{
+      float: left;
+    }
+  }
+}
+
+

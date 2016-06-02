@@ -11,33 +11,76 @@
     <link rel="shortcut icon" type="image/png" sizes="16*16" href="images/favicon.png"/>
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/style.min.css">
+    {{--<link rel="stylesheet" href="css/main.min.css">--}}
+    <link href="{{ asset('/css/tanzania_style/tz.style.css') }}" rel="stylesheet">
 </head>
-<body>
-@include('tz.partials.header')
-<section class="main-container">
+<body class="front-page">
+<div class="header-banner">
+    @include('tz.partials.header')
     <div class="introduction-wrapper bottom-line">
         <div class="col-md-12 text-center">
-            {{--<h1>Publish your Aid data in <a href="http://iatistandard.org/">IATI format</a> effortlessly</h1>--}}
-
-            <h1>Effortlessly publish your Aid data in <a href="http://iatistandard.org/">IATI format</a></h1>
-
-            {{--<p>AidStream is an online platform for organisations that wish to publish aid data in the International Aid--}}
-            {{--Transparency Initiative(IATI) format without getting into complexities of IATI. </p>--}}
+            <h1>Publish your Aid data in <a href="http://iatistandard.org/">IATI format</a> format effortlessly </h1>
 
             <p>
-                AidStream is an online platform for organisations that wish to publish aid data in accordance with the
-                International Aid Transparency Initiative(IATI) format but want to avoid dealing with the complexities
-                of creating XML.
+                For organisations based in Tanzania
             </p>
 
             <a href="{{ url('/auth/register') }}" class="btn btn-primary get-started-btn">Get Started</a>
-
-            <div class="screenshot">
-                <img src="images/screenshot.png" alt="">
-            </div>
         </div>
     </div>
-    <div class="organization-wrapper bottom-line">
+</div>
+<section class="main-container container">
+
+    <div class="col-md-12">
+        <div class="search-wrap">
+            <input type="text" placeholder="Search for an activity...">
+        </div>
+    </div>
+
+    <div class="col-md-12">
+        <table class="table table-striped custom-table" id="data-table">
+            <thead>
+                <tr>
+                    <th width="40%">Project Title</th>
+                    <th class="">Project Identifier</th>
+                    <th class="">Last Updated</th>
+                    <th class="status">Status</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td class="bold-col">Press Conference</td>
+                    <td>GPAF-IMP-062</td>
+                    <td class="light-col">Oct 4, 2015</td>
+                    <td>Draft</td>
+                </tr>
+                <tr>
+                    <td class="bold-col">Press Conference</td>
+                    <td>GPAF-IMP-062</td>
+                    <td class="light-col">Oct 4, 2015</td>
+                    <td>Draft</td>
+                </tr>
+                <tr>
+                    <td class="bold-col">Press Conference</td>
+                    <td>GPAF-IMP-062</td>
+                    <td class="light-col">Oct 4, 2015</td>
+                    <td>Draft</td>
+                </tr>
+                <tr>
+                    <td colspan="5">
+                        <div class="text-center no-data"> You haven’t added any Projects yet.
+                            <a href="#" class="btn btn-primary">Add a Project</a>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+
+        </table>
+    </div>
+
+
+  {{--  <div class="organization-wrapper bottom-line">
         <div class="col-md-12 width-900">
             <ul>
                 <li><img src="images/ic-org-add.png" alt=""></li>
@@ -47,7 +90,7 @@
                 <li><img src="images/ic-org-amref-health.png" alt=""></li>
                 <li><img src="images/ic-org-apt.png" alt=""></li>
             </ul>
-            {{--<p>387 organisations have published their aid data. <a href="{{ url('/who-are-using') }}">{{ $organizationCount }}</a> have done it through AidStream</p>--}}
+            --}}{{--<p>387 organisations have published their aid data. <a href="{{ url('/who-are-using') }}">{{ $organizationCount }}</a> have done it through AidStream</p>--}}{{--
             <p><a href="{{ url('/who-is-using') }}">{{ $organizationCount }}</a> organisations are using AidStream.</p>
         </div>
     </div>
@@ -99,19 +142,6 @@
             </div>
         </div>
     </div>
-    {{--<div class="testimonials-wrapper">--}}
-    {{--<div class="col-md-12 text-center">--}}
-    {{--<blockquote>--}}
-    {{--<p>"Neat - AidStream makes it easy for an organisation to publish #IATI #opendata"</p>--}}
-
-    {{--<div class="detail">--}}
-    {{--<h3>Tariq Khokhar</h3>--}}
-    {{--<span>Global Data Editor, WorldBank</span>--}}
-    {{--<img src="images/speaker.png" alt="">--}}
-    {{--</div>--}}
-    {{--</blockquote>--}}
-    {{--</div>--}}
-    {{--</div>--}}
     <div class="convince-wrapper">
         <div class="col-md-12 text-center width-900">
             <h2>Still not convinced?</h2>
@@ -120,7 +150,7 @@
                 piece of cake!</p>
             <a href="{{ url('/auth/register') }}" class="btn btn-primary get-started-btn">Get Started</a>
         </div>
-    </div>
+    </div>--}}
 </section>
 @include('tz.partials.footer')
 <script src="js/jquery.js"></script>

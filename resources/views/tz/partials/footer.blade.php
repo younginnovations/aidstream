@@ -27,15 +27,15 @@
         </div>
         <div class="footer-logo">
             <div class="col-md-12 text-center">
-                <a href="{{ url('/') }}"><img src="/images/logo-aidstream.svg" alt=""></a>
+                <a href="{{ url('/') }}"><img src="/images/logo-aidstream.svg" alt=""><span class="tanzania-flag"></span></a>
             </div>
         </div>
     </div>
-    <div class="width-900 text-center">
+    {{--<div class="width-900 text-center">
         <div class="col-md-12 support-desc">
             For queries, suggestions, shoot us an email at <a href="mailto:support@aidstream.org">support@aidstream.org</a>
         </div>
-    </div>
+    </div>--}}
     <!-- Google Analytics -->
     <script type="text/javascript" src="{{url('/js/ga.js')}}"></script>
     <!-- End Google Analytics -->

@@ -62,6 +62,24 @@ $router->group(
                         'uses' => 'ProjectController@duplicate'
                     ]
                 );
+
+                $router->get(
+                    'details',
+                    [
+                        'as'   => 'project.details',
+                        'uses' => 'ProjectController@projectDetails'
+                    ]
+                );
+
+                $router->get(
+                    'public/page',
+                    [
+                        'as'   => 'project.public',
+                        'uses' => 'ProjectController@projectPublicPage'
+                    ]
+                );
+
+
             }
         );
     }
