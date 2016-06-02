@@ -78,7 +78,7 @@ class Registration
 
     /**
      * saves organization and return organization model
-     * @param $orgInfo 
+     * @param $orgInfo
      * @return Organization
      */
     protected function saveOrganization($orgInfo)

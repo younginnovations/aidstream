@@ -493,7 +493,7 @@ function slash(value) {
                         }
                     }
                 }
-            })
+            });
             function setIdentifier() {
                 $('#username').val($('.organization_name_abbr').val() + '_admin');
             }
