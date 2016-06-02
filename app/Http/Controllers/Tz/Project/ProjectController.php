@@ -99,6 +99,7 @@ class ProjectController extends TanzanianController
      */
     public function show($id)
     {
+        $this->project->searchData('test');
         $project = $this->project->find($id);
 
         if (Gate::denies('ownership', $project)) {
@@ -308,13 +309,40 @@ class ProjectController extends TanzanianController
         ];
     }
 
-    public function projectDetails()
+    /**
+     * view project 
+     * @param $id
+     * @return mixed
+     */
+    public function projectDetails($id)
     {
-        return view('tz.projectDetail');
+        $project = $this->project->find($id);
+
+//        if (Gate::denies('ownership', $project)) {
+//            return redirect()->route('project.index')->withResponse($this->getNoPrivilegesMessage());
+//        }
+
+        $incomingFunds = $this->transaction->getTransactions($id, 1);
+        $disbursements = $this->transaction->getTransactions($id, 3);
+        $expenditures  = $this->transaction->getTransactions($id, 4);
+        $documentLinks = $this->project->findDocumentLinkByProjectId($id);
+        $fundings = $this->project->getParticipatingOrganizations($id,1);
+        $implementings = $this->project->getParticipatingOrganizations($id,4);
+
+        return view('tz.projectDetail', compact('project','incomingFunds', 'disbursements', 'expenditures', 'documentLinks', 'fundings', 'implementings'));
     }
 
-    public function projectPublicPage()
+    public function projectPublic($orgId)
     {
-        return view('tz.projectPublicPage');
+        $projectId = 3115;
+        $projects = $this->project->getProjectData($projectId);
+        $jsonData = $this->project->getJsonData($projects);
+
+//        $projects = $this->project->getProjectsByOrganisationId($orgId);
+//        $transactionCount = $this->transaction->getTransactionsSum($projects);
+//        $orgDetails = $this->orgManager->getOrganization($orgId);
+//        $user = $this->user->getDataByOrgIdAndRoleId($orgId, '1');
+//
+//        return view('tz.projectPublicPage', compact('projects', 'orgDetails', 'user', 'transactionCount'));
     }
 }

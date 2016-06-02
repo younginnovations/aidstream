@@ -264,3 +264,11 @@ $router->get(
         'uses' => 'Complete\UserLogController@viewDeletedData'
     ]
 );
+
+$router->get(
+    'public/{orgId}/page',
+    [
+        'as'   => 'project.public',
+        'uses' => 'HomeController@projectPublicPage'
+    ]
+);

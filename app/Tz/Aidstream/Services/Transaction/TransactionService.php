@@ -258,4 +258,34 @@ class TransactionService
     {
         return $this->transaction->findByType($projectId, $transactionType);
     }
+
+    public function getTransactionsSum($projects)
+    {
+        $transactions      = [];
+        $incomingFundCount = 0;
+        $disbursementCount = 0;
+        $expenditureCount  = 0;
+        foreach ($projects as $project) {
+            $transactions[] = $this->findByActivityId($project->id);
+        }
+
+        foreach ($transactions as $transactionData) {
+            foreach ($transactionData as $transaction) {
+                if ($transaction->transaction['transaction_type'][0]['transaction_type_code'] == "1") {
+                    $incomingFundCount += $transaction->transaction['value'][0]['amount'];
+                } elseif ($transaction->transaction['transaction_type'][0]['transaction_type_code'] == "3") {
+                    $disbursementCount += $transaction->transaction['value'][0]['amount'];
+                } elseif ($transaction->transaction['transaction_type'][0]['transaction_type_code'] == "4") {
+                    $expenditureCount += $transaction->transaction['value'][0]['amount'];
+                }
+            }
+
+        }
+
+        return [
+            'incoming_fund' => $incomingFundCount,
+            'disbursement'  => $disbursementCount,
+            'expenditure'   => $expenditureCount
+        ];
+    }
 }

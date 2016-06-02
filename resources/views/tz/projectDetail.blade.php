@@ -1,150 +1,196 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport'/>
-    {{ header("Cache-Control: no-cache, no-store, must-revalidate")}}
-    {{ header("Pragma: no-cache") }}
-    {{ header("Expires: 0 ")}}
-    <title>Aidstream</title>
-    <link rel="shortcut icon" type="image/png" sizes="16*16" href="images/favicon.png"/>
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/style.min.css">
-    <link href="{{ asset('/css/tanzania_style/tz.style.css') }}" rel="stylesheet">
-</head>
-<body>
-    @include('tz.partials.header')
+@extends('tz.base.app')
+@inject('getCode', 'App\Helpers\GetCodeName')
 
-<section class="main-container">
-    <div class="container">
-        <div class="title-section">
-            <h1>Unite for Body Rights Ethiopia</h1>
-            <div>NL-KVK-41150298-5113</div>
-            <div class="light-text">Last updated on: Oct 4, 2015</div>
-        </div>
-    </div>
-   
-    <div class="container container--shadow">
-        <div class="col-md-12 intro-section clearfix">
-            <div class="col-md-3 vertical-horizontal-center-wrap">
-                <div class="vertical-horizontal-centerize">
-                    <div class="organization-logo"><img src= {{asset("./images/ic_add-international.svg")}} width="106px" height="100px"> </div>
-                    <div class="organization-name">Tanzania office</div>
-                </div>
+@section('content')
+    <section class="main-container">
+        <div class="container">
+            <div class="title-section">
+                <h1>{{$project->title[0]['narrative']}}</h1>
+                <div>{{$project->identifier['activity_identifier']}}</div>
+                <div class="light-text">Last updated on: {{ formatDate($project['updated_at']) }}</div>
             </div>
-            <div class="col-md-9" style="height: 277px;"></div>
         </div>
-        <div class="col-md-12 name-value-section">
-            <dl class="clearfix">
-                <dt class="col-md-3">General description</dt>
-                <dd class="col-md-9">I’m not really sure how old I was when I got the gift for Christmas, but I remember thinking it was a pretty impressive piece of electronic hardware. It was really cool looking (technologically speaking), and I was awfully proud to own it. It certainly made for lots of fun times.</dd>
-            </dl>
 
-            <dl class="clearfix">
-                <dt class="col-md-3">Sector</dt>
-                <dd class="col-md-9">Basic education</dd>
-            </dl>
+        <div class="container container--shadow">
+            <div class="col-md-12 intro-section clearfix">
+                <div class="col-md-3 vertical-horizontal-center-wrap">
+                    <div class="vertical-horizontal-centerize">
+                        <div class="organization-logo"><img src={{asset("./images/ic_add-international.svg")}} width="106px" height="100px"></div>
+                        <div class="organization-name">Tanzania office</div>
+                    </div>
+                </div>
+                <div class="col-md-9" style="height: 277px;"></div>
+            </div>
+            <div class="col-md-12 name-value-section">
+                @foreach($project->description as $description)
+                    @if(getVal($description, ['type']) == 1)
+                        <dl class="clearfix">
+                            <dt class="col-md-3">General description</dt>
+                            <dd class="col-md-9">
+                                {{$description['narrative'][0]['narrative']}}
+                            </dd>
+                        </dl>
+                    @endif
 
-            <dl class="clearfix">
-                <dt class="col-md-3">Location</dt>
-                <dd class="col-md-9 list-wrap">
-                    <div>Chamwino District Council, Dodoma Region</div>
-                    <div>Tanzania Airports Authority (Government)</div>
-                </dd>
-            </dl>
+                    @if(getVal($description, ['type']) == 2)
+                        <dl class="clearfix">
+                            <dt class="col-md-3">Objectives</dt>
+                            <dd class="col-md-9">
+                                {{$description['narrative'][0]['narrative']}}
+                            </dd>
+                        </dl>
+                    @endif
 
-            <dl class="clearfix">
-                <dt class="col-md-3">Sector</dt>
-                <dd class="col-md-9"><a href="#">i am a link</a></dd>
-            </dl>
+                    @if(getVal($description, ['type']) == 3)
+                        <dl class="clearfix">
+                            <dt class="col-md-3">Target Groups</dt>
+                            <dd class="col-md-9">
+                                {{$description['narrative'][0]['narrative']}}
+                            </dd>
+                        </dl>
+                    @endif
+                @endforeach
+
+
+                <dl class="clearfix">
+                    <dt class="col-md-3">Project Status</dt>
+                    <dd class="col-md-9">{{ $getCode->getActivityCodeName('ActivityStatus', $project->activity_status) }}</dd>
+                </dl>
+
+                @foreach($project->activity_date as $date)
+                    @if($date['type'] == 2)
+                        <dl class="clearfix">
+                            <dt class="col-md-3">Start Date</dt>
+                            <dd class="col-md-9">{{ $date['date']}}</dd>
+                        </dl>
+                    @elseif($date['type'] == 4)
+                        <dl class="clearfix">
+                            <dt class="col-md-3">End Date</dt>
+                            <dd class="col-md-9">{{ $date['date']}}</dd>
+                        </dl>
+                    @endif
+                @endforeach
+
+                <dl class="clearfix">
+                    <dt class="col-md-3">Project Country</dt>
+                    <dd class="col-md-9">{{$getCode->getOrganizationCodeName('Country', $project->recipient_country[0]['country_code'])}}</dd>
+                </dl>
+
+                @foreach($documentLinks as $documentLink)
+                    @foreach($documentLink as $index => $data)
+                        <dl class="clearfix">
+                            <dt class="col-md-3">
+                                @if($index == 0)
+                                    Results/Outcomes Documents
+                                @elseif($index == 1)
+                                    Annual Reports
+                                @endif
+                            </dt>
+                            <dd class="col-md-9">
+                                {{$data['url']}}
+                            </dd>
+                            @endforeach
+                            @endforeach
+
+                            @if(!empty($fundings))
+                                <dl class="clearfix">
+                                    <dt class="col-md-3">Funding Organisation</dt>
+                                    <dd class="col-md-9 list-wrap">
+                                        @foreach($fundings as $funding)
+                                            <div>{{$funding['narrative'][0]['narrative']}} <span>{{ $getCode->getActivityCodeName('OrganisationType', $funding['organization_type']) }}</span></div>
+                                        @endforeach
+                                    </dd>
+                                </dl>
+                            @endif
+
+                            @if(!empty($implementings))
+                                <dl class="clearfix">
+                                    <dt class="col-md-3">Implemeting Organisation</dt>
+                                    <dd class="col-md-9 list-wrap">
+                                        @foreach($implementings as $implementing)
+                                            <div>{{$implementing['narrative'][0]['narrative']}} <span>{{ $getCode->getActivityCodeName('OrganisationType', $implementing['organization_type']) }}</span>
+                                            </div>
+                                        @endforeach
+                                    </dd>
+                                </dl>
+                            @endif
+
+                            {{--<dl class="clearfix">--}}
+                                {{--<dt class="col-md-3">Sector</dt>--}}
+                                {{--<dd class="col-md-9"><a href="#">i am a link</a></dd>--}}
+                            {{--</dl>--}}
+            </div>
+            @if(!empty($disbursements))
+                <div class="col-md-12">
+                    <div class="title">Disbursements</div>
+                    <table class="table table-striped custom-table" id="data-table">
+                        <thead>
+                        <tr>
+                            <th width="40%">Date</th>
+                            <th class="">Amount</th>
+                            <th class="">Receiver</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        @foreach($disbursements as $disbursement)
+                            <tr>
+                                <td>{{ formatDate($disbursement['transaction_date'][0]['date']) }}</td>
+                                <td>{{ $disbursement['value'][0]['amount'] }}</td>
+                                <td>{{ $disbursement['provider_organization'][0]['narrative'][0]['narrative'] }}</td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+                    @endif
+
+                    @if(!empty($expenditures))
+                        <div class="title">Expenditures</div>
+                        <table class="table table-striped custom-table" id="data-table">
+                            <thead>
+                            <tr>
+                                <th width="40%">Date</th>
+                                <th class="">Amount</th>
+                                <th class="">Receiver</th>
+                            </tr>
+                            </thead>
+
+                            <tbody>
+                            @foreach($expenditures as $expenditure)
+                                <tr>
+                                    <td>{{ formatDate($expenditure['transaction_date'][0]['date']) }}</td>
+                                    <td>{{ $expenditure['value'][0]['amount'] }}</td>
+                                    <td>{{ $expenditure['provider_organization'][0]['narrative'][0]['narrative'] }}</td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    @endif
+
+                    @if(!empty($incomingFunds))
+                        <div class="title">Incoming Funds</div>
+                        <table class="table table-striped custom-table" id="data-table">
+                            <thead>
+                            <tr>
+                                <th width="40%">Date</th>
+                                <th class="">Amount</th>
+                                <th class="">Receiver</th>
+                            </tr>
+                            </thead>
+
+                            <tbody>
+                            @foreach($incomingFunds as $incomingFund)
+                                <tr>
+                                    <td>{{ formatDate($incomingFund['transaction_date'][0]['date']) }}</td>
+                                    <td>{{ $incomingFund['value'][0]['amount'] }}</td>
+                                    <td>{{ $incomingFund['provider_organization'][0]['narrative'][0]['narrative'] }}</td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    @endif
+                </div>
         </div>
-        <div class="col-md-12">
-            <div class="title">Disbursements</div>
-            <table class="table table-striped custom-table" id="data-table">
-                <thead>
-                <tr>
-                    <th width="40%">Project Title</th>
-                    <th class="">Project Identifier</th>
-                    <th class="">Last Updated</th>
-                    <th class="status">Status</th>
-                </tr>
-                </thead>
+    </section>
+@endsection
 
-                <tbody>
-                <tr>
-                    <td class="bold-col">Press Conference</td>
-                    <td>GPAF-IMP-062</td>
-                    <td class="light-col">Oct 4, 2015</td>
-                    <td>Draft</td>
-                </tr>
-                <tr>
-                    <td class="bold-col">Press Conference</td>
-                    <td>GPAF-IMP-062</td>
-                    <td class="light-col">Oct 4, 2015</td>
-                    <td>Draft</td>
-                </tr>
-                <tr>
-                    <td class="bold-col">Press Conference</td>
-                    <td>GPAF-IMP-062</td>
-                    <td class="light-col">Oct 4, 2015</td>
-                    <td>Draft</td>
-                </tr>
-                </tbody>
-
-            </table>
-
-            <div class="title">Disbursements</div>
-            <table class="table table-striped custom-table" id="data-table">
-                <thead>
-                <tr>
-                    <th width="40%">Project Title</th>
-                    <th class="">Project Identifier</th>
-                    <th class="">Last Updated</th>
-                    <th class="status">Status</th>
-                </tr>
-                </thead>
-
-                <tbody>
-                <tr>
-                    <td class="bold-col">Press Conference</td>
-                    <td>GPAF-IMP-062</td>
-                    <td class="light-col">Oct 4, 2015</td>
-                    <td>Draft</td>
-                </tr>
-                <tr>
-                    <td class="bold-col">Press Conference</td>
-                    <td>GPAF-IMP-062</td>
-                    <td class="light-col">Oct 4, 2015</td>
-                    <td>Draft</td>
-                </tr>
-                <tr>
-                    <td class="bold-col">Press Conference</td>
-                    <td>GPAF-IMP-062</td>
-                    <td class="light-col">Oct 4, 2015</td>
-                    <td>Draft</td>
-                </tr>
-                </tbody>
-
-            </table>
-    </div>
-    </div>
-</section>
-@include('tz.partials.footer')
-<script src="js/jquery.js"></script>
-<script src="js/modernizr.js"></script>
-<script type="text/javascript" src="js/bootstrap.min.js"></script>
-<script>
-    $(document).ready(function () {
-        function hamburgerMenu() {
-            $('.navbar-toggle.collapsed').click(function () {
-                $('.navbar-collapse').toggleClass('out');
-                $(this).toggleClass('collapsed');
-            });
-        }
-
-        hamburgerMenu();
-    });
-</script>
-</body>
-</html>

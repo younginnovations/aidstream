@@ -54,4 +54,12 @@ interface ProjectRepositoryInterface
      * @return bool
      */
     public function duplicate(Project $project);
+    
+    public function searchData($data);
+    
+    public function getParticipatingOrganizations($id, $orgType);
+    
+    public function getProjectData($projectId);
+    
+    public function getProjectsByOrganisationId($orgId);
 }

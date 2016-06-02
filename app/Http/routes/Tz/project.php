@@ -64,7 +64,7 @@ $router->group(
                 );
 
                 $router->get(
-                    'details',
+                    'project/{projectId}/details',
                     [
                         'as'   => 'project.details',
                         'uses' => 'ProjectController@projectDetails'
@@ -72,10 +72,10 @@ $router->group(
                 );
 
                 $router->get(
-                    'public/page',
+                    'public/view/{orgid}',
                     [
                         'as'   => 'project.public',
-                        'uses' => 'ProjectController@projectPublicPage'
+                        'uses' => 'ProjectController@projectPublic'
                     ]
                 );
 

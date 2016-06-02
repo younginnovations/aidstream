@@ -6,6 +6,7 @@ use App\Tz\Aidstream\Repositories\Project\ProjectRepositoryInterface;
 use App\Tz\Aidstream\Traits\DocumentLinkTrait;
 use App\User;
 use Exception;
+use Illuminate\Database\Eloquent\Collection;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -33,9 +34,9 @@ class ProjectService
 
     /**
      * ProjectService constructor.
-     * @param ProjectRepositoryInterface                            $project
-     * @param User                                                  $user
-     * @param LoggerInterface                                       $logger
+     * @param ProjectRepositoryInterface      $project
+     * @param User                            $user
+     * @param LoggerInterface                 $logger
      * @param DocumentLinkRepositoryInterface $documentLink
      */
     public function __construct(ProjectRepositoryInterface $project, User $user, LoggerInterface $logger, DocumentLinkRepositoryInterface $documentLink)
@@ -74,8 +75,8 @@ class ProjectService
     {
         try {
             $projectDetails['organization_id'] = session('org_id');
-            $projectId = $this->project->create($projectDetails);
-            $documentLink = $this->documentLinkJsonFormat($request['document_link'], $projectId);
+            $projectId                         = $this->project->create($projectDetails);
+            $documentLink                      = $this->documentLinkJsonFormat($request['document_link'], $projectId);
             $this->documentLink->create($documentLink);
 
             $this->logger->info(
@@ -284,11 +285,107 @@ class ProjectService
             }
         }
     }
-    
+
     public function findDocumentLinkByProjectId($projectId)
     {
         $documentLinks = $this->documentLink->findByProjectId($projectId);
+
         return $this->dbDocumentLinkFormat($documentLinks);
     }
 
+    public function getParticipatingOrganizations($id, $orgType)
+    {
+        return $this->project->getParticipatingOrganizations($id, $orgType);
+    }
+
+    public function searchData($data)
+    {
+        $this->project->searchData($data);
+    }
+
+    public function getProjectData($projectId = null)
+    {
+        return $this->project->getProjectData($projectId);
+    }
+
+    public function getJsonData($projects)
+    {
+        $regionName = [];
+        $startDate  = "";
+        $endDate    = "";
+        $jsonData = [];
+
+        if($projects instanceof Collection){
+            foreach ($projects as $index => $data){
+                if($data->activity_date != null) {
+                    foreach ($data->activity_date as $activityDate) {
+                        if ($activityDate['type'] == 2) {
+                            $startDate = $activityDate['date'];
+                        } elseif ($activityDate['type'] == 4) {
+                            $endDate = $activityDate['date'];
+                        }
+                    }
+                }
+
+                if($data->location != null) {
+                    $i = 0;
+                    foreach ($data->location as $location) {
+                        foreach ($location['administrative'] as $index => $administrative) {
+                            if ($index == 0) {
+                                $regionName[$i] = $administrative['code'];
+                                $i ++;
+                            }
+
+                        }
+                    }
+                }
+
+                $jsonData[$index] = [
+                    'id'         => $data->id,
+                    'identifier' => $data->identifier['activity_identifier'],
+                    'title'      => $data->title[0]['narrative'],
+                    'sectors'    => [$data->sector[0]['sector_category_code']],
+                    'regions'    => $regionName,
+                    'startdate'  => $startDate,
+                    'enddate'    => $endDate
+                ];
+            }
+        }else{
+            foreach ($projects->activity_date as $activityDate) {
+                if ($activityDate['type'] == 2) {
+                    $startDate = $activityDate['date'];
+                } elseif ($activityDate['type'] == 4) {
+                    $endDate = $activityDate['date'];
+                }
+            }
+
+            $i = 0;
+            foreach ($projects->location as $location) {
+                foreach ($location['administrative'] as $index => $administrative) {
+                    if ($index == 0) {
+                        $regionName[$i] = $administrative['code'];
+                        $i ++;
+                    }
+
+                }
+            }
+
+            $jsonData[0] = [
+                'id'         => $projects->id,
+                'identifier' => $projects->identifier['activity_identifier'],
+                'title'      => $projects->title[0]['narrative'],
+                'sectors'    => [$projects->sector[0]['sector_category_code']],
+                'regions'    => $regionName,
+                'startdate'  => $startDate,
+                'enddate'    => $endDate
+            ];
+        }
+
+        return $jsonData;
+    }
+    
+    public function getProjectsByOrganisationId($orgId)
+    {
+        return $this->project->getProjectsByOrganisationId($orgId);
+    }
 }
