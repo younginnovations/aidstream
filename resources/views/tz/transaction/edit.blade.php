@@ -58,7 +58,7 @@
                                     {!! Form::text("transaction[$key][provider_organization][0][narrative][0][narrative]", $transaction['transaction']['provider_organization'][0]['narrative'][0]['narrative'], ['class' => 'form-control', 'required' => 'required']) !!}
                                 </div>
                             @endforeach
-                    {!! Form::submit('Save', ['class' => 'pull-left btn-form']) !!}
+                    {!! Form::submit('Save', ['class' => 'pull-left btn-form', 'id' => 'submit-transaction']) !!}
 
                     @if($transactionType == 1)
                         <button type="button" id="add-more-transaction" class="add-more">Add More Incoming Funds</button>

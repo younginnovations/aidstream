@@ -50,6 +50,6 @@ var removeBlock = function (element) {
     $(element).parent().remove();
 };
 
-$(document).ready(function () {
-    $('.datepicker').datepicker();
-});
+// $(document).ready(function () {
+//     $('.datepicker').datepicker();
+// });

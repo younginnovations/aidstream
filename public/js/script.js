@@ -619,4 +619,9 @@ $(document).ready(function () {
         }
     };
 
+    $('.show-more-info,.hide-more-info').click(function () {
+        $(this).toggleClass('hidden').siblings('span').toggleClass('hidden');
+        $(this).parents('.toggle-btn').next('.more-info').toggleClass('hidden');
+    });
+
 });
