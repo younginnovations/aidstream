@@ -62,12 +62,12 @@
                         <div class="col-sm-12">
                             <div class="col-sm-6">
                                 {!! Form::label('start_date', 'Start Date', ['class' => 'control-label required']) !!}
-                                {!! Form::text('start_date', null, ['class' => 'form-control', 'required' => 'required']) !!}
+                                {!! Form::text('start_date', null, ['class' => 'form-control datepicker', 'required' => 'required']) !!}
                             </div>
 
                             <div class="col-sm-6">
                                 {!! Form::label('end_date', 'End Date', ['class' => 'control-label required']) !!}
-                                {!! Form::text('end_date', null, ['class' => 'form-control', 'required' => 'required']) !!}
+                                {!! Form::text('end_date', null, ['class' => 'form-control datepicker', 'required' => 'required']) !!}
                             </div>
                         </div>
 

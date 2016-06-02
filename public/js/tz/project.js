@@ -51,7 +51,7 @@ var Project = {
             class: 'added-new-block'
         }).append(newFundingOrganization);
 
-        projectForm.find('#funding-wrap').find('#add-more-funding-organization').before(tempDiv);
+        $('#add-more-funding-organization').before(tempDiv);
     },
     /*
      * Add more Implementing Organization.
@@ -64,7 +64,7 @@ var Project = {
             class: 'added-new-block'
         }).append(newImplementingOrganization);
 
-        projectForm.find('#implementing-wrap').find('#add-more-implementing-organization').before(tempDiv);
+        $('#add-more-implementing-organization').before(tempDiv);
     },
     /*
      * Clone the form fields from the DOCUMENT.

@@ -61,11 +61,11 @@
                     {!! Form::submit('Save', ['class' => 'pull-left btn-form', 'id' => 'submit-transaction']) !!}
 
                     @if($transactionType == 1)
-                        <button type="button" id="add-more-transaction" class="add-more">Add More Incoming Funds</button>
+                        <button type="button" id="add-more-transaction-edit" class="add-more">Add More Incoming Funds</button>
                     @elseif($transactionType == 3)
-                        <button type="button" id="add-more-transaction" class="add-more">Add More Disbursements</button>
+                        <button type="button" id="add-more-transaction-edit" class="add-more">Add More Disbursements</button>
                     @elseif($transactionType == 4)
-                        <button type="button" id="add-more-transaction" class="add-more">Add More Expenditure</button>
+                        <button type="button" id="add-more-transaction-edit" class="add-more">Add More Expenditure</button>
                     @endif
 
                     {!! Form::close() !!}
@@ -78,5 +78,8 @@
 @stop
 
 @section('script')
+    <script>
+        var currentTransactionCount = "{{ count($transactions) - 1 }}";
+    </script>
     <script src="{{ asset('/js/tz/transaction.js') }}"></script>
 @stop

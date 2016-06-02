@@ -8,5 +8,5 @@
         {!! Form::label('funding_organization[index][funding_organization_type]', 'Organization Type', ['class' => 'control-label required']) !!}
         {!! Form::select('funding_organization[index][funding_organization_type]', ['' => 'Select one of the following.'] + $organizationType, null, ['class' => 'form-control', 'required' => 'required']) !!}
     </div>
-    <a href="javascript:void(0)" onclick="removeFunding(this)">Remove</a>
+    <a href="javascript:void(0)" onclick="removeFunding(this)" class="remove_from_collection">Remove</a>
 </div>

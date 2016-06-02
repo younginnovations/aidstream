@@ -7,7 +7,7 @@
 
             <div class="col-sm-6">
                 {!! Form::label('transaction[index][transaction_date][0][date]', 'Transaction Date', ['class' => 'control-label required']) !!}
-                {!! Form::text('transaction[index][transaction_date][0][date]', null, ['class' => 'form-control', 'required' => 'required']) !!}
+                {!! Form::text('transaction[index][transaction_date][0][date]', null, ['class' => 'form-control added-datepicker', 'required' => 'required']) !!}
             </div>
 
             <div class="col-sm-6">
