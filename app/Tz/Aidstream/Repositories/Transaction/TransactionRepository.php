@@ -70,12 +70,22 @@ class TransactionRepository implements TransactionRepositoryInterface
     public function update($transactions)
     {
         foreach ($transactions['transaction'] as $transactionData) {
-            $transaction = $this->transaction->find($transactionData['id']);
-            unset($transactionData['id']);
-            $transactionData = [
-                'transaction' => $transactionData
-            ];
-            $transaction->update($transactionData);
+            if (array_key_exists('id', $transactionData)) {
+                $transaction = $this->transaction->find($transactionData['id']);
+                unset($transactionData['id']);
+                $transactionData = [
+                    'transaction' => $transactionData
+                ];
+                $transaction->update($transactionData);
+            } else {
+                $newTransaction = [
+                    'transaction' => $transactionData,
+                    'activity_id' => $transactions['activity_id']
+                ];
+
+                $newTransaction = $this->transaction->newInstance($newTransaction);
+                $newTransaction->save();
+            }
         }
 
         return true;
@@ -99,5 +109,25 @@ class TransactionRepository implements TransactionRepositoryInterface
     public function destroy($transaction)
     {
         return $transaction->delete();
+    }
+
+    /**
+     * Find Transactions by transaction type.
+     * @param $projectId
+     * @param $transactionType
+     * @return array
+     */
+    public function findByType($projectId, $transactionType)
+    {
+        $transactionsForProject = $this->transaction->query()->where('activity_id', '=', $projectId)->get();
+        $requiredTransactions = [];
+
+        foreach ($transactionsForProject as $transaction) {
+            if (getVal($transaction->transaction, ['transaction_type', 0, 'transaction_type_code']) == $transactionType) {
+                $requiredTransactions[] = $transaction;
+            }
+        }
+
+        return $requiredTransactions;
     }
 }

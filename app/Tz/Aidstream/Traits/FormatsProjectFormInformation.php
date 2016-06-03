@@ -164,33 +164,6 @@ trait FormatsProjectFormInformation
             $details['location'][$key]['administrative'] = $location['administrative'];
         }
 
-//        $funding = [];
-//        $implementing = [];
-//
-//        foreach ($projectDetails['funding_organization'] as $key => $fundingOrganization) {
-//            $funding[$key]['organization_role']         = 1;
-//            $funding[$key]['identifier']                = '';
-//            $funding[$key]['organization_type']         = $fundingOrganization['funding_organization_type'];
-//            $funding[$key]['narrative'][0]['narrative'] = $fundingOrganization['funding_organization_name'];
-//        }
-//
-//        foreach ($projectDetails['implementing_organization'] as $key => $implementingOrganization) {
-//            $implementing[$key]['organization_role']         = 4;
-//            $implementing[$key]['identifier']                = '';
-//            $implementing[$key]['organization_type']         = $implementingOrganization['implementing_organization_type'];
-//            $implementing[$key]['narrative'][0]['narrative'] = $implementingOrganization['implementing_organization_name'];
-//        }
-//
-//        $details['participating_organization'] = [];
-//
-//        foreach ($funding as $value) {
-//            $details['participating_organization'][] = $value;
-//        }
-//
-//        foreach ($implementing as $value) {
-//            $details['participating_organization'][] = $value;
-//        }
-
         return $details;
     }
 

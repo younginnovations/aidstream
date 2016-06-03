@@ -251,13 +251,13 @@
                         <div class="activity-element-label">
                             Disbursement
                         </div>
-                        <a href="{{url(sprintf('project/%s/transaction/%s/edit', $project->id,3))}}"
+                        <a href="{{url(sprintf('project/%s/transaction/%s/edit', $project->id, 3))}}"
                            class="edit-element">
                             <span>Edit a Disbursement</span>
                         </a>
                         <div>
-                            {!! Form::open(['route' => ['transaction.destroy', $project->id, 'changethis']]) !!}
-                            {!! Form::submit('Delete', ['class' => 'pull-left delete']) !!}
+                            {!! Form::open(['method' => 'POST', 'route' => ['transaction.destroy', $project->id, 3]]) !!}
+                            {!! Form::submit('Delete', ['class' => 'pull-left delete-transaction']) !!}
                             {!! Form::close() !!}
                         </div>
                         @foreach($disbursement as $data)
@@ -324,15 +324,15 @@
                         <div class="activity-element-label">
                             Expenditure
                         </div>
-                        <a href="{{url(sprintf('project/%s/transaction/%s/edit', $project->id,4))}}"
+                        <a href="{{url(sprintf('project/%s/transaction/%s/edit', $project->id, 4))}}"
                            class="edit-element">
                                 <span>
                                     Edit a Expenditure
                                 </span>
                         </a>
                         <div>
-                            {!! Form::open(['route' => ['transaction.destroy', $project->id, 'changethis']]) !!}
-                            {!! Form::submit('Delete', ['class' => 'pull-left delete']) !!}
+                            {!! Form::open(['method' => 'POST', 'route' => ['transaction.destroy', $project->id, 4]]) !!}
+                            {!! Form::submit('Delete', ['class' => 'pull-left delete-transaction']) !!}
                             {!! Form::close() !!}
                         </div>
                         @foreach($expenditure as $data)
@@ -399,11 +399,11 @@
                         <div class="activity-element-label">
                             Incoming Fund
                         </div>
-                        <a href="{{url(sprintf('project/%s/transaction/%s/edit', $project->id,1))}}"
+                        <a href="{{url(sprintf('project/%s/transaction/%s/edit', $project->id, 1))}}"
                            class="edit-element"><span>Edit a Incoming Fund</span></a>
                         <div>
-                            {!! Form::open(['route' => ['transaction.destroy', $project->id, 'changethis']]) !!}
-                            {!! Form::submit('Delete', ['class' => 'pull-left delete']) !!}
+                            {!! Form::open(['method' => 'POST', 'route' => ['transaction.destroy', $project->id, 1]]) !!}
+                            {!! Form::submit('Delete', ['class' => 'pull-left delete-transaction']) !!}
                             {!! Form::close() !!}
                         </div>
                         @foreach($incomingFund as $data)

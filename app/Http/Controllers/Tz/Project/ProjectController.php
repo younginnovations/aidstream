@@ -35,6 +35,7 @@ class ProjectController extends TanzanianController
      */
     public function __construct(ProjectService $project, TransactionService $transaction)
     {
+        $this->middleware('auth');
         $this->project     = $project;
         $this->transaction = $transaction;
     }

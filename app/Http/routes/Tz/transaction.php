@@ -31,7 +31,7 @@ $router->group(
                 );
 
                 $router->post(
-                    '/project/{projectId}/transaction/{transactionId}/delete',
+                    '/project/{projectId}/transaction/{transactionType}/delete',
                     [
                         'as'   => 'transaction.destroy',
                         'uses' => 'TransactionController@destroy'

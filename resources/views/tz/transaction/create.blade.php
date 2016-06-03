@@ -23,8 +23,6 @@
                 <div class="create-form create-activity-form create-project-form">
                     {!! Form::open(['route' => ['project.transaction.store', $id], 'method' => 'POST']) !!}
                     {!! Form::hidden('transaction[0][transaction_type][0][transaction_type_code]', $transactionType) !!}
-
-
                             <div class="col-sm-6">
                                 {!! Form::label('transaction[0][reference]', 'Transaction Reference', ['class' => 'control-label required']) !!}
                                {!! Form::text('transaction[0][reference]', null, ['class' => 'form-control', 'required' => 'required']) !!}

@@ -48,4 +48,6 @@ interface TransactionRepositoryInterface
      * @return mixed
      */
     public function destroy($transaction);
+
+    public function findByType($projectId, $transactionType);
 }

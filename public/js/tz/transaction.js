@@ -48,6 +48,8 @@ var Transaction = {
             formatDate: 'Y-m-d',
             scrollMonth: false
         });
+
+        $('form select').select2();
     },
     /*
      * Increase the index count.

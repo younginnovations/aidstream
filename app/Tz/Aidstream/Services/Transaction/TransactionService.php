@@ -65,9 +65,9 @@ class TransactionService
         $data = [];
 
         foreach ($transactions as $key => $transaction) {
-            $id                                = $transaction->id;
-            $transaction                       = json_decode($transaction->transaction, true);
-            $data[]                            = $transaction;
+            $id               = $transaction->id;
+            $transaction      = json_decode($transaction->transaction, true);
+            $data[]           = $transaction;
             $data[$key]['id'] = $id;
         }
 
@@ -171,7 +171,8 @@ class TransactionService
             $this->logger->error(
                 sprintf('Transactions could not updated due to %s', $exception->getMessage()),
                 [
-                    'byUser' => auth()->user()->getNameAttribute()
+                    'byUser' => auth()->user()->getNameAttribute(),
+                    'trace'  => $exception->getTraceAsString()
                 ]
             );
 
@@ -205,14 +206,18 @@ class TransactionService
 
     /**
      * Delete specific transaction
-     * @param $transaction
+     * @param $transactions
      * @return bool|null
      */
-    public function destroy($transaction)
+    public function destroy($transactions)
     {
         try {
             $this->databaseManager->beginTransaction();
-            $this->transaction->destroy($transaction);
+
+            foreach ($transactions as $transaction) {
+                $this->transaction->destroy($transaction);
+            }
+
             $this->databaseManager->commit();
             $this->logger->info(
                 'Transactions successfully deleted.',
@@ -247,5 +252,10 @@ class TransactionService
         }
 
         return $transactions;
+    }
+
+    public function findByType($projectId, $transactionType)
+    {
+        return $this->transaction->findByType($projectId, $transactionType);
     }
 }

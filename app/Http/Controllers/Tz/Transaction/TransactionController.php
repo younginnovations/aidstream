@@ -12,7 +12,6 @@ use App\Tz\Aidstream\Services\Transaction\TransactionService;
  */
 class TransactionController extends TanzanianController
 {
-
     /**
      * @var TransactionService
      */
@@ -24,6 +23,7 @@ class TransactionController extends TanzanianController
      */
     public function __construct(TransactionService $transaction)
     {
+        $this->middleware('auth');
         $this->transaction = $transaction;
     }
 
@@ -98,19 +98,19 @@ class TransactionController extends TanzanianController
     /**
      * Delete specific transaction
      * @param $projectId
-     * @param $transactionId
+     * @param $transactionType
      * @return mixed
      */
-    public function destroy($projectId, $transactionId)
+    public function destroy($projectId, $transactionType)
     {
-        $transaction = $this->transaction->find($transactionId);
+        $transactions = $this->transaction->findByType($projectId, $transactionType);
 
-        if ($this->transaction->destroy($transaction)) {
+        if ($this->transaction->destroy($transactions)) {
             $response = ['type' => 'success', 'code' => ['message', ['message' => 'Transaction successfully deleted.']]];
         } else {
             $response = ['type' => 'danger', 'code' => ['message', ['message' => 'Transaction could not be deleted.']]];
         }
 
-        return redirect()->route('project.index')->withResponse($response);
+        return redirect()->route('project.show', $projectId)->withResponse($response);
     }
 }
