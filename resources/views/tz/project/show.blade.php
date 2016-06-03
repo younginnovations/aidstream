@@ -150,6 +150,44 @@
                 @endif
 
                 <div class="activity-element-wrapper">
+                    <div class="activity-element-label">
+                        Location
+                    </div>
+                    <div class="activity-element-list">
+                        <div class="activity-element-label">
+                            Region
+                        </div>
+                        @foreach ($project->location as $location)
+                            @foreach (getVal($location, ['administrative'], []) as $value)
+                                @if ($value['level'] == 1)
+                                    <div class="activity-element-info">
+                                        {{ $value['code'] }}
+                                    </div>
+                                @endif
+                            @endforeach
+                        @endforeach
+                    </div>
+                </div>
+
+                <div class="activity-element-wrapper">
+                    <div class="activity-element-list">
+                        <div class="activity-element-label">
+                            District
+                        </div>
+                        @foreach ($project->location as $location)
+                            @foreach (getVal($location, ['administrative'], []) as $value)
+                                @if ($value['level'] == 2)
+
+                                    <div class="activity-element-info">
+                                        {{ $value['code'] }}
+                                    </div>
+                                @endif
+                            @endforeach
+                        @endforeach
+                    </div>
+                </div>
+
+                <div class="activity-element-wrapper">
                     <div class="title">
                         Participating Organization
                     </div>

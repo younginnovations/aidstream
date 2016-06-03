@@ -69,7 +69,7 @@
                         <div class="col-sm-12">
                             <div class="col-sm-6">
                                 {!! Form::label('recipient_country', 'Project Country', ['class' => 'control-label required']) !!}
-                                {!! Form::select('recipient_country', ['' => 'Select one of the following.'] + $recipientCountries, null, ['class' => 'form-control', 'required' => 'required']) !!}
+                                {!! Form::select('recipient_country', ['' => 'Select one of the following.'] + $recipientCountries, 'TZ', ['class' => 'form-control', 'required' => 'required', 'id' => 'project-country']) !!}
                             </div>
                         </div>
                         @include('tz.project.partials.location')

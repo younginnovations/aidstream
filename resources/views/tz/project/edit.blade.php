@@ -96,6 +96,10 @@
 @stop
 
 @section('script')
+    <script>
+        var countryChosen = "{{ $project['recipient_country'] }}";
+        var currentLocationCount = "{{ count($project['location']) - 1 }}"
+    </script>
     <script src="{{ asset('/js/tz/project.js') }}"></script>
     <script src="{{ asset('/js/tz/editProject.js') }}"></script>
 @stop

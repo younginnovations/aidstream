@@ -483,14 +483,14 @@ trait FormatsProjectFormInformation
             if (getVal($participatingOrganization, ['organization_role']) == 1) {
                 $participatingOrganizationDetails['funding_organization'][] = [
                     'funding_organization_name' => getVal($participatingOrganization, ['narrative', 0, 'narrative']),
-                    'funding_organization_type' => getVal($participatingOrganization, ['organization_role'])
+                    'funding_organization_type' => getVal($participatingOrganization, ['organization_type'])
                 ];
             }
 
             if (getVal($participatingOrganization, ['organization_role']) == 4) {
                 $participatingOrganizationDetails['implementing_organization'][] = [
                     'implementing_organization_name' => getVal($participatingOrganization, ['narrative', 0, 'narrative']),
-                    'implementing_organization_type' => getVal($participatingOrganization, ['organization_role'])
+                    'implementing_organization_type' => getVal($participatingOrganization, ['organization_type'])
                 ];
             }
         }
