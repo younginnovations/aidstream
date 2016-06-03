@@ -80,13 +80,16 @@ class ProjectController extends TanzanianController
      */
     public function store(Request $request, ProjectRequests $projectRequests)
     {
-        if (!$this->project->create($this->process($request->all()), $request->all())) {
-            $response = ['type' => 'danger', 'code' => ['message', ['message' => 'Project could not be saved.']]];
-        } else {
-            $response = ['type' => 'success', 'code' => ['message', ['message' => 'Project successfully saved.']]];
-        }
+        $projectId = $this->project->create($this->process($request->all()), $request->all());
 
-        return redirect()->route('project.index')->withResponse($response);
+        if (!$projectId) {
+            $response = ['type' => 'danger', 'code' => ['message', ['message' => 'Project could not be saved.']]];
+
+            return redirect()->route('project.index')->withResponse($response);
+        }
+        $response = ['type' => 'success', 'code' => ['message', ['message' => 'Project successfully saved.']]];
+
+        return redirect()->route('project.show', $projectId)->withResponse($response);
     }
 
     /**

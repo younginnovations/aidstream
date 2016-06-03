@@ -1,0 +1,33 @@
+<?php
+
+return [
+    'Arusha'          => 'Arusha',
+    'Dar es Salaam'   => 'Dar es Salaam',
+    'Dodoma'          => 'Dodoma',
+    'Geita'           => 'Geita',
+    'Iringa'          => 'Iringa',
+    'Kagera'          => 'Kagera',
+    'Kaskazini Pemba' => 'Kaskazini Pemba',
+    'kaskazini'       => 'kaskazini',
+    'Katavi'          => 'Katavi',
+    'Kilimanjaro'     => 'Kilimanjaro',
+    'Kusini Pemba'    => 'Kusini Pemba',
+    'Kusini'          => 'Kusini',
+    'Lindi'           => 'Lindi',
+    'Manyara'         => 'Manyara',
+    'Mara'            => 'Mara',
+    'Mbeya'           => 'Mbeya',
+    'Mjini Magharibi' => 'Mjini Magharibi',
+    'Morogoro'        => 'Morogoro',
+    'Mtwara'          => 'Mtwara',
+    'Mwanza'          => 'Mwanza',
+    'Njombe'          => 'Njombe',
+    'Pwani'           => 'Pwani',
+    'Rukwa'           => 'Rukwa',
+    'Ruvuma'          => 'Ruvuma',
+    'Shinyanga'       => 'Shinyanga',
+    'Simiyu'          => 'Simiyu',
+    'Singida'         => 'Singida',
+    'Tabora'          => 'Tabora',
+    'Tanga'           => 'Tanga'
+];

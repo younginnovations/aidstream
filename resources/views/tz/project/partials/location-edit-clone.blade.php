@@ -14,4 +14,5 @@
         {!! Form::hidden('location[index][administrative][1][vocabulary]', 'G1') !!}
         {!! Form::hidden('location[index][administrative][1][level]', '2') !!}
     </div>
+    <a href="javascript:void(0)" onclick="removeLocation(this)" class="remove_from_collection">Remove</a>
 </div>

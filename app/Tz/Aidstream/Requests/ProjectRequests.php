@@ -24,9 +24,9 @@ class ProjectRequests extends Request
         $rules['recipient_country'] = 'required';
         $rules                      = array_merge(
             $rules,
-            $this->getRulesForFundingOrganization($this->get('funding_organization')),
-            $this->getRulesForImplementingOrganization($this->get('implementing_organization')),
-            $this->getRulesForDocumentLink($this->get('document_link'))
+//            $this->getRulesForFundingOrganization($this->get('funding_organization')),
+            $this->getRulesForImplementingOrganization($this->get('implementing_organization'))
+//            $this->getRulesForDocumentLink($this->get('document_link'))
         );
 
         return $rules;
@@ -44,12 +44,12 @@ class ProjectRequests extends Request
         $messages['start_date.date']            = 'Start Date must be date';
         $messages['end_date.date']              = 'End date must be date';
         $messages['recipient_country.required'] = 'Recipient Country is required';
-        $messages['recipient_region.required']  = 'Recipient Region is required';
+//        $messages['recipient_region.required']  = 'Recipient Region is required';
         $messages                               = array_merge(
             $messages,
-            $this->getMessagesForFundingOrganization($this->get('funding_organization')),
-            $this->getMessagesForImplementingOrganization($this->get('implementing_organization')),
-            $this->getMessagesForDocumentLink($this->get('document_link'))
+//            $this->getMessagesForFundingOrganization($this->get('funding_organization')),
+            $this->getMessagesForImplementingOrganization($this->get('implementing_organization'))
+//            $this->getMessagesForDocumentLink($this->get('document_link'))
         );
 
         return $messages;
@@ -73,7 +73,7 @@ class ProjectRequests extends Request
 
         foreach ($formFields as $fundingIndex => $funding) {
             $fundingForm                                                              = 'funding_organization.' . $fundingIndex;
-            $messages[sprintf('%s.funding_organization_name.required', $fundingForm)] = 'Organization Name is required';
+            $messages[sprintf('%s.funding_organization_name.required', $fundingForm)] = 'Funding Organization Name is required';
         }
 
         return $messages;
@@ -97,7 +97,7 @@ class ProjectRequests extends Request
 
         foreach ($formFields as $implementingIndex => $implementing) {
             $implementingForm                                                                   = 'implementing_organization.' . $implementingIndex;
-            $messages[sprintf('%s.implementing_organization_name.required', $implementingForm)] = 'Organization Name is required';
+            $messages[sprintf('%s.implementing_organization_name.required', $implementingForm)] = 'Implementing Organization Name is required';
         }
 
         return $messages;

@@ -145,10 +145,14 @@ var Project = {
     },
     addLocation: function (tanzaniaChosen, edit) {
         if (edit) {
+            currentLocationCount = parseInt(currentLocationCount);
             locationCount = currentLocationCount;
         }
 
         locationCount++;
+        if (typeof currentLocationCount != "undefined") {
+            currentLocationCount++;
+        }
         var newLocation;
 
         if (!tanzaniaChosen) {
@@ -168,6 +172,7 @@ var Project = {
         }
 
         $('form select').select2();
+        edit = false;
     },
     resetForm: function (edit) {
         var fields = $('#location-wrap').children();
@@ -177,6 +182,31 @@ var Project = {
                 field.remove();
             }
         });
+    },
+    fillDistricts: function (regionSelector) {
+        var selectedRegion = regionSelector.val();
+
+        var district = regionSelector.parent().next().find('select.district');
+
+        var options = district.find('option');
+
+        options.remove();
+
+        district.append($('<option/>', {
+            value: null,
+            html: 'Select one of the following.'
+        }).attr({
+            selected: 'selected'
+        }));
+
+        $.each(districts[selectedRegion], function (index, value) {
+            district.append($('<option/>', {
+                value: index,
+                html: value
+            }));
+        });
+
+        $('form select').select2();
     }
 };
 
@@ -228,11 +258,13 @@ $('#add-more-location').on('click', function () {
 });
 
 $('#add-more-location-edit').on('click', function () {
-    if (countryChosen == "TZ") {
-        Project.addLocation(true, true);
-    } else if ($('#project-country-edit').val() == 'TZ') {
+    if ($('#project-country-edit').val() == 'TZ') {
         Project.addLocation(true, true);
     } else {
         Project.addLocation(false, true);
     }
+});
+
+$('form').delegate('.region', 'change', function () {
+    Project.fillDistricts($(this));
 });

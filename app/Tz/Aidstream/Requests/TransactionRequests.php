@@ -48,7 +48,7 @@ class TransactionRequests extends Request
             $rules[sprintf('%s.transaction_date.0.date', $transactionForm)]                       = 'required|date';
             $rules[sprintf('%s.value.0.amount', $transactionForm)]                                = 'required|numeric';
             $rules[sprintf('%s.value.0.currency', $transactionForm)]                              = 'required';
-            $rules[sprintf('%s.provider_organization.0.narrative.0.narrative', $transactionForm)] = 'required';
+//            $rules[sprintf('%s.provider_organization.0.narrative.0.narrative', $transactionForm)] = 'required';
         }
 
         return $rules;
@@ -69,7 +69,7 @@ class TransactionRequests extends Request
             $messages[sprintf('%s.value.0.amount.required', $transactionForm)]                                = 'Amount is required';
             $messages[sprintf('%s.value.0.amount.numeric', $transactionForm)]                                  = 'Amount must be numeric';
             $messages[sprintf('%s.value.0.currency.required', $transactionForm)]                              = 'Currency is required';
-            $messages[sprintf('%s.provider_organization.0.narrative.0.narrative.required', $transactionForm)] = 'Receiver Organization is required';
+//            $messages[sprintf('%s.provider_organization.0.narrative.0.narrative.required', $transactionForm)] = 'Receiver Organization is required';
         }
 
         return $messages;

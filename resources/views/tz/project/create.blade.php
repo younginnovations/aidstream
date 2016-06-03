@@ -32,15 +32,15 @@
                             </div>
 
                             <div class="col-sm-6">
-                                {!! Form::label('objectives', 'Objectives', ['class' => 'control-label required']) !!}
-                                {!! Form::text('objectives', null, ['class' => 'form-control', 'required' => 'required']) !!}
+                                {!! Form::label('objectives', 'Objectives', ['class' => 'control-label']) !!}
+                                {!! Form::text('objectives', null, ['class' => 'form-control']) !!}
                             </div>
                         </div>
 
                         <div class="col-sm-12">
                             <div class="col-sm-6">
-                                {!! Form::label('target_groups', 'Target Groups', ['class' => 'control-label required']) !!}
-                                {!! Form::text('target_groups', null, ['class' => 'form-control', 'required' => 'required']) !!}
+                                {!! Form::label('target_groups', 'Target Groups', ['class' => 'control-label']) !!}
+                                {!! Form::text('target_groups', null, ['class' => 'form-control']) !!}
                             </div>
                         </div>
 
@@ -62,8 +62,8 @@
                                 {!! Form::text('start_date', null, ['class' => 'form-control datepicker', 'required' => 'required']) !!}
                             </div>
                             <div class="col-sm-6">
-                                {!! Form::label('end_date', 'End Date', ['class' => 'control-label required']) !!}
-                                {!! Form::text('end_date', null, ['class' => 'form-control datepicker', 'required' => 'required']) !!}
+                                {!! Form::label('end_date', 'End Date', ['class' => 'control-label']) !!}
+                                {!! Form::text('end_date', null, ['class' => 'form-control datepicker']) !!}
                             </div>
                         </div>
                         <div class="col-sm-12">
@@ -76,12 +76,12 @@
                         <div class="col-sm-12 add-wrap" id="funding-wrap">
                             <h2>Funding</h2>
                             <div class="col-sm-6">
-                                {!! Form::label('funding_organization[0][funding_organization_name]', 'Organization Name', ['class' => 'control-label required']) !!}
-                                {!! Form::text('funding_organization[0][funding_organization_name]', null, ['class' => 'form-control', 'required' => 'required']) !!}
+                                {!! Form::label('funding_organization[0][funding_organization_name]', 'Organization Name', ['class' => 'control-label']) !!}
+                                {!! Form::text('funding_organization[0][funding_organization_name]', null, ['class' => 'form-control']) !!}
                             </div>
                             <div class="col-sm-6">
-                                {!! Form::label('funding_organization[0][funding_organization_type]', 'Organization Type', ['class' => 'control-label required']) !!}
-                                {!! Form::select('funding_organization[0][funding_organization_type]', ['' => 'Select one of the following.'] + $organizationType, null, ['class' => 'form-control', 'required' => 'required']) !!}
+                                {!! Form::label('funding_organization[0][funding_organization_type]', 'Organization Type', ['class' => 'control-label']) !!}
+                                {!! Form::select('funding_organization[0][funding_organization_type]', ['' => 'Select one of the following.'] + $organizationType, null, ['class' => 'form-control']) !!}
                             </div>
                             <button type="button" id="add-more-funding-organization" class="add-more">Add More Funding
                                 Organization
@@ -111,12 +111,12 @@
                             {!! Form::hidden('document_link[0][language]', '[]') !!}
 
                             <div class="col-sm-6">
-                                {!! Form::label('result_document_title', 'Title', ['class' => 'control-label required']) !!}
-                                {!! Form::text('document_link[0][title][0][narrative][0][narrative]', null, ['class' => 'form-control', 'required' => 'required']) !!}
+                                {!! Form::label('result_document_title', 'Title', ['class' => 'control-label']) !!}
+                                {!! Form::text('document_link[0][title][0][narrative][0][narrative]', null, ['class' => 'form-control']) !!}
                             </div>
                             <div class="col-sm-6">
-                                {!! Form::label('result_document_url', 'Document URL', ['class' => 'control-label required']) !!}
-                                {!! Form::text('document_link[0][url]', null, ['class' => 'form-control', 'required' => 'required']) !!}
+                                {!! Form::label('result_document_url', 'Document URL', ['class' => 'control-label']) !!}
+                                {!! Form::text('document_link[0][url]', null, ['class' => 'form-control']) !!}
                             </div>
                         </div>
 
@@ -127,13 +127,13 @@
                             {!! Form::hidden('document_link[1][title][0][narrative][0][language]', "") !!}
                             {!! Form::hidden('document_link[1][language]', '[]') !!}
                             <div class="col-sm-6">
-                                {!! Form::label('annual_document_title', 'Title', ['class' => 'control-label required']) !!}
-                                {!! Form::text('document_link[1][title][0][narrative][0][narrative]', null, ['class' => 'form-control', 'required' => 'required']) !!}
+                                {!! Form::label('annual_document_title', 'Title', ['class' => 'control-label']) !!}
+                                {!! Form::text('document_link[1][title][0][narrative][0][narrative]', null, ['class' => 'form-control',]) !!}
                             </div>
 
                             <div class="col-sm-6">
-                                {!! Form::label('annual_document_url', 'Document Url', ['class' => 'control-label required']) !!}
-                                {!! Form::text('document_link[1][url]', null, ['class' => 'form-control', 'required' => 'required']) !!}
+                                {!! Form::label('annual_document_url', 'Document Url', ['class' => 'control-label']) !!}
+                                {!! Form::text('document_link[1][url]', null, ['class' => 'form-control']) !!}
                             </div>
                         </div>
                     </div>
@@ -177,5 +177,8 @@
 @stop
 
 @section('script')
+    <script>
+        var districts = {!! json_encode(config('tz.location.district')) !!};
+    </script>
     <script src="{{ asset('/js/tz/project.js') }}"></script>
 @stop

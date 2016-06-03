@@ -85,7 +85,7 @@ class ProjectService
                 ]
             );
 
-            return true;
+            return $projectId;
         } catch (Exception $exception) {
             $this->logger->error(
                 sprintf('Project could not created due to %s', $exception->getMessage()),
@@ -180,10 +180,6 @@ class ProjectService
     {
         try {
             $this->project->update($id, $projectDetails);
-//            $documents = $this->documentLink->findByProjectId($id);
-//            dd($documents);
-//            $documentLink = $this->updateDocumentLinkJsonFormat($documents, $request['document_link'], $id);
-//            dd($documentLink);
             $this->documentLink->update($id, $request);
             $this->resetWorkflow($this->project->find($id));
 

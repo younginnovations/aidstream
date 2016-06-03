@@ -35,24 +35,24 @@
                             </div>
 
                             <div class="col-sm-6">
-                                {!! Form::label('objectives', 'Objectives', ['class' => 'control-label required']) !!}
-                                {!! Form::text('objectives', null, ['class' => 'form-control', 'required' => 'required']) !!}
+                                {!! Form::label('objectives', 'Objectives', ['class' => 'control-label']) !!}
+                                {!! Form::text('objectives', null, ['class' => 'form-control']) !!}
                             </div>
                         </div>
 
                         <div class="col-sm-12">
                             <div class="col-sm-6">
-                                {!! Form::label('target_groups', 'Target Groups', ['class' => 'control-label required']) !!}
-                                {!! Form::text('target_groups', null, ['class' => 'form-control', 'required' => 'required']) !!}
+                                {!! Form::label('target_groups', 'Target Groups', ['class' => 'control-label']) !!}
+                                {!! Form::text('target_groups', null, ['class' => 'form-control']) !!}
                             </div>
+                        </div>
 
+                        <div class="col-sm-12">
                             <div class="col-sm-6">
                                 {!! Form::label('activity_status', 'Project Status', ['class' => 'control-label required']) !!}
                                 {!! Form::select('activity_status', ['' => 'Select one of the following.'] + $codeList, $project['activity_status'], ['class' => 'form-control', 'required' => 'required']) !!}
                             </div>
-                        </div>
 
-                        <div class="col-sm-12">
                             <div class="col-sm-6">
                                 {!! Form::label('sector', 'Sector', ['class' => 'control-label required']) !!}
                                 {!! Form::select('sector', ['' => 'Select one of the following.'] + $sectors, $project['sector'], ['class' => 'form-control', 'required' => 'required']) !!}
@@ -66,8 +66,8 @@
                             </div>
 
                             <div class="col-sm-6">
-                                {!! Form::label('end_date', 'End Date', ['class' => 'control-label required']) !!}
-                                {!! Form::text('end_date', null, ['class' => 'form-control datepicker', 'required' => 'required']) !!}
+                                {!! Form::label('end_date', 'End Date', ['class' => 'control-label']) !!}
+                                {!! Form::text('end_date', null, ['class' => 'form-control datepicker']) !!}
                             </div>
                         </div>
 
@@ -99,6 +99,7 @@
     <script>
         var countryChosen = "{{ $project['recipient_country'] }}";
         var currentLocationCount = "{{ count($project['location']) - 1 }}"
+        var districts = {!! json_encode(config('tz.location.district')) !!};
     </script>
     <script src="{{ asset('/js/tz/project.js') }}"></script>
     <script src="{{ asset('/js/tz/editProject.js') }}"></script>

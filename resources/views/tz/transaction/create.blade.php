@@ -45,14 +45,14 @@
                             </div>
 
                             <div class="col-sm-6">
-                                {!! Form::label('transaction[0][description][0][narrative][0][narrative]', 'Description', ['class' => 'control-label required']) !!}
-                                {!! Form::text('transaction[0][description][0][narrative][0][narrative]', null, ['class' => 'form-control', 'required' => 'required']) !!}
+                                {!! Form::label('transaction[0][description][0][narrative][0][narrative]', 'Description', ['class' => 'control-label']) !!}
+                                {!! Form::text('transaction[0][description][0][narrative][0][narrative]', null, ['class' => 'form-control']) !!}
                                 {!! Form::hidden('transaction[0][description][0][narrative][0][language]', null) !!}
                             </div>
 
                             <div class="col-sm-6">
-                                {!! Form::label('transaction[0][provider_organization][0][narrative][0][narrative]', 'Receiver Organization', ['class' => 'control-label required']) !!}
-                                {!! Form::text('transaction[0][provider_organization][0][narrative][0][narrative]', null, ['class' => 'form-control', 'required' => 'required']) !!}
+                                {!! Form::label('transaction[0][provider_organization][0][narrative][0][narrative]', 'Receiver Organization', ['class' => 'control-label']) !!}
+                                {!! Form::text('transaction[0][provider_organization][0][narrative][0][narrative]', null, ['class' => 'form-control']) !!}
                                 {!! Form::text('transaction[0][provider_organization][0][narrative][0][language]', null, ['class' => 'hidden']) !!}
                             </div>
                     {!! Form::submit('Save', ['class' => 'pull-left btn-form', 'id' => 'submit-transaction']) !!}
