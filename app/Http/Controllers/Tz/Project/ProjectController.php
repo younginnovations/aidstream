@@ -113,6 +113,8 @@ class ProjectController extends TanzanianController
         $disbursement = $this->transaction->getTransactions($id, 3);
         $expenditure  = $this->transaction->getTransactions($id, 4);
         $transactions = $this->transaction->findByActivityId($id);
+        $fundings      = $this->project->getParticipatingOrganizations($id, 1);
+        $implementings = $this->project->getParticipatingOrganizations($id, 4);
 
         $statusLabel      = ['draft', 'completed', 'verified', 'published'];
         $activityWorkflow = $project->activity_workflow;
@@ -129,7 +131,7 @@ class ProjectController extends TanzanianController
 
         return view(
             'tz.project.show',
-            compact('project', 'transactions', 'activityResult', 'id', 'statusLabel', 'btn_text', 'activityWorkflow', 'nextRoute', 'incomingFund', 'disbursement', 'expenditure')
+            compact('fundings','implementings','project', 'transactions', 'activityResult', 'id', 'statusLabel', 'btn_text', 'activityWorkflow', 'nextRoute', 'incomingFund', 'disbursement', 'expenditure')
         );
     }
 
@@ -310,34 +312,6 @@ class ProjectController extends TanzanianController
                     [0, 'default_language']
                 )
         ];
-    }
-
-    /**
-     * view project
-     * @param $id
-     * @return mixed
-     */
-    public function projectDetails($id)
-    {
-        $project = $this->project->find($id);
-
-        if($project->activity_workflow != 3){
-            return view('tz.unauthorized');
-        }
-
-//        if (Gate::denies('ownership', $project)) {
-//            return redirect()->route('project.index')->withResponse($this->getNoPrivilegesMessage());
-//        }
-
-        $incomingFunds = $this->transaction->getTransactions($id, 1);
-        $disbursements = $this->transaction->getTransactions($id, 3);
-        $expenditures  = $this->transaction->getTransactions($id, 4);
-        $documentLinks = $this->project->findDocumentLinkByProjectId($id);
-        $fundings      = $this->project->getParticipatingOrganizations($id, 1);
-        $implementings = $this->project->getParticipatingOrganizations($id, 4);
-        $orgDetail     = $this->orgManager->getOrganization($project->organization_id);
-
-        return view('tz.projectDetail', compact('orgDetail', 'project', 'incomingFunds', 'disbursements', 'expenditures', 'documentLinks', 'fundings', 'implementings'));
     }
 
     public function projectPublic($orgId)

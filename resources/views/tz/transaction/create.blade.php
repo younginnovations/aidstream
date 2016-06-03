@@ -15,7 +15,7 @@
                     @if($transactionType == 1)
                         Incoming Funds
                     @elseif($transactionType == 3)
-                        Disbursements
+                        Disbursement
                     @elseif($transactionType == 4)
                         Expenditure
                     @endif

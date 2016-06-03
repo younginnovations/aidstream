@@ -14,7 +14,7 @@
                 <div class="create-form create-project-form">
                     {{ Form::model($settings, array('route' => array('settings.update', $settings['id']), 'method' => 'PUT')) }}
                     @include('tz.settings.partials.edit-form')
-                    {!! Form::submit('Edit Settings', ['class' => 'btn btn-primary btn-form pull-left']) !!}
+                    {!! Form::submit('Save', ['class' => 'btn btn-primary btn-form pull-left']) !!}
                     {!! Form::close() !!}
                 </div>
             </div>

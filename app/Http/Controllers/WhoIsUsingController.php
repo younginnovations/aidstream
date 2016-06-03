@@ -15,6 +15,10 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class WhoIsUsingController extends Controller
 {
 
+    protected $activityManager;
+    protected $orgManager;
+    protected $user;
+
     function __construct(ActivityManager $activityManager, OrganizationManager $organizationManager, User $user)
     {
         $this->activityManager = $activityManager;
@@ -29,14 +33,28 @@ class WhoIsUsingController extends Controller
     {
         $organizationCount = $this->initializeOrganizationQueryBuilder()->get()->count();
 
+        if ($this->hasSubdomain($this->getRoutePieces())) {
+            $organizationCount = $this->initializeOrganizationQueryBuilder(false)->get()->count();
+
+            return view('tz.who-is-using-tz', compact('organizationCount'));
+        }
+
         return view('who-is-using', compact('organizationCount'));
     }
 
     /** Returns query builder of organizations having activity or organization file published.
+     * @param bool $publishToIati
      * @return mixed
      */
-    public function initializeOrganizationQueryBuilder()
+    public function initializeOrganizationQueryBuilder($publishToIati = true)
     {
+        if (!$publishToIati) {
+            return Organization::rightJoin('activity_published', 'organizations.id', '=', 'activity_published.organization_id')
+                               ->select('organizations.id', 'organizations.name', 'organizations.logo_url')
+                               ->groupBy('organizations.id')
+                               ->orderBy('organizations.name');
+        }
+
         return Organization::leftJoin('activity_published', 'organizations.id', '=', 'activity_published.organization_id')
                            ->leftJoin('organization_published', 'organizations.id', '=', 'organization_published.organization_id')
                            ->where('activity_published.published_to_register', 1)
@@ -55,6 +73,14 @@ class WhoIsUsingController extends Controller
     public function listOrganization($page = 0, $count = 20)
     {
         $skip                  = $page * $count;
+
+        if ($this->hasSubdomain($this->getRoutePieces())) {
+            $data['next_page']     = $this->initializeOrganizationQueryBuilder(false)->get()->count() > ($skip + $count);
+            $data['organizations'] = $this->initializeOrganizationQueryBuilder(false)->skip($skip)->take($count)->get();
+
+            return $data;
+        }
+
         $data['next_page']     = $this->initializeOrganizationQueryBuilder()->get()->count() > ($skip + $count);
         $data['organizations'] = $this->initializeOrganizationQueryBuilder()->skip($skip)->take($count)->get();
 

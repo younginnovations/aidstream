@@ -20,6 +20,23 @@
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 
+    <style>
+        .navbar-brand,.footer-logo a{
+            width: 152px;
+            position: relative;
+            display: block;
+        }
+
+
+        .tanzania-flag{
+            position: absolute;
+            width: 18px;
+            height: 12px;
+            background: url("{{ asset('/images/ic_tanzania-flag.svg') }}") center center  no-repeat;
+            top: 28px;
+            right: 0;
+        }
+    </style>
     @yield('head')
 
 </head>
@@ -28,7 +45,7 @@
     <div class="container-fluid">
         <div class="navbar-header">
             <div class="navbar-brand">
-                <a href="/" alt="Aidstream">Aidstream</a>
+                <a href="/" alt="Aidstream">Aidstream<span class="tanzania-flag"></span></a>
             </div>
         </div>
         <div class="collapse navbar-collapse navbar-right" id="bs-example-navbar-collapse-1">

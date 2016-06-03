@@ -71,4 +71,28 @@ class HomeController extends Controller
 
         return view('tz.project.jsonProjects', compact('jsonData'));
     }
+
+    /**
+     * view project
+     * @param $id
+     * @return mixed
+     */
+    public function projectDetails($id)
+    {
+        $project = $this->project->find($id);
+
+        if($project->activity_workflow != 3){
+            return view('tz.unauthorized');
+        }
+
+        $incomingFunds = $this->transaction->getTransactions($id, 1);
+        $disbursements = $this->transaction->getTransactions($id, 3);
+        $expenditures  = $this->transaction->getTransactions($id, 4);
+        $documentLinks = $this->project->findDocumentLinkByProjectId($id);
+        $fundings      = $this->project->getParticipatingOrganizations($id, 1);
+        $implementings = $this->project->getParticipatingOrganizations($id, 4);
+        $orgDetail     = $this->orgManager->getOrganization($project->organization_id);
+
+        return view('tz.projectDetail', compact('orgDetail', 'project', 'incomingFunds', 'disbursements', 'expenditures', 'documentLinks', 'fundings', 'implementings'));
+    }
 }

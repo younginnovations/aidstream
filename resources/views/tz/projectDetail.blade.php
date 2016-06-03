@@ -35,9 +35,9 @@
             <div class="col-md-3 vertical-horizontal-center-wrap">
                 <div class="vertical-horizontal-centerize">
                     @if($orgDetail->logo)
-                        <div class="organization-logo"><img src={{$orgDetail->logo}} width="106px" height="100px"></div>
+                        <div class="organization-logo"><img src={{asset($orgDetail->logo)}} width="106px" height="100px"></div>
                     @endif
-                    <div class="organization-name">{{$orgDetail->name}}</div>
+                    <div class="organization-name"><a href="{{route('project.public', $orgDetail->id)}}">{{$orgDetail->name}}</a> </div>
                 </div>
             </div>
 
@@ -98,6 +98,7 @@
                 <dd class="col-md-9">{{$getCode->getOrganizationCodeName('Country', $project->recipient_country[0]['country_code'])}}</dd>
             </dl>
 
+            @if($project->location != null)
             <dl class="clearfix">
                 <dl class="clearfix">
                     <dt class="col-md-3">Location</dt>
@@ -114,6 +115,7 @@
                     </dd>
                 </dl>
             </dl>
+            @endif
 
             @foreach($documentLinks as $documentLink)
                 @foreach($documentLink as $index => $data)
@@ -153,15 +155,10 @@
                                 </dd>
                             </dl>
                     @endif
-
-                    {{--<dl class="clearfix">--}}
-                    {{--<dt class="col-md-3">Sector</dt>--}}
-                    {{--<dd class="col-md-9"><a href="#">i am a link</a></dd>--}}
-                    {{--</dl>--}}
         </div>
         @if(!empty($disbursements))
             <div class="col-md-12">
-                <div class="title">Disbursements</div>
+                <div class="title">Disbursement</div>
                 <table class="table table-striped custom-table" id="data-table">
                     <thead>
                     <tr>
@@ -184,7 +181,7 @@
                 @endif
 
                 @if(!empty($expenditures))
-                    <div class="title">Expenditures</div>
+                    <div class="title">Expenditure</div>
                     <table class="table table-striped custom-table" id="data-table">
                         <thead>
                         <tr>

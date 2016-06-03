@@ -64,14 +64,6 @@ $router->group(
                 );
 
                 $router->get(
-                    'project/{projectId}/details',
-                    [
-                        'as'   => 'project.details',
-                        'uses' => 'ProjectController@projectDetails'
-                    ]
-                );
-
-                $router->get(
                     'public/view/{orgid}',
                     [
                         'as'   => 'project.public',

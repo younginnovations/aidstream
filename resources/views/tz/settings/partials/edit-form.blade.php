@@ -1,5 +1,5 @@
 <div id="basic-info">
-    <div class="col-md-12">Reporting Organisation</div>
+    <div class="col-md-12">Reporting Organisation Information</div>
     <div>
         <div class="col-sm-6">
             {!! Form::label('Organisation Name', 'Organisation Name', ['class' => 'control-label required']) !!}
@@ -22,7 +22,7 @@
         </div>
     </div>
 
-    <div class="col-md-12">Publishing Information</div>
+    <div class="col-md-12">IATI Registry Information</div>
     <div>
         <div class="col-sm-6">
             {!! Form::label('publisher id', 'Publisher Id', ['class' => 'control-label']) !!}
@@ -30,12 +30,12 @@
         </div>
 
         <div class="col-sm-6">
-            {!! Form::label('API Key', 'Api Id', ['class' => 'control-label']) !!}
+            {!! Form::label('API Key', 'Api Key', ['class' => 'control-label']) !!}
             {!! Form::text('api_id', null, ['class' => 'form-control', 'required' => 'required']) !!}
         </div>
 
         <div class="col-sm-11 auto-publish">
-            <label>Automatically Update the IATI Registry when publishing files?</label>
+            <label>Automatically Update to the IATI Registry when publishing files?</label>
             <label class="control-label pull-left">
                 <input type="radio" name="publish_files" value="no" checked="checked"> No
             </label>

@@ -266,7 +266,7 @@ $router->get(
 );
 
 $router->get(
-    'public/{orgId}/page',
+    'public/organization/{orgId}',
     [
         'as'   => 'project.public',
         'uses' => 'HomeController@projectPublicPage'
@@ -278,6 +278,14 @@ $router->get(
     [
         'as'   => 'project.view',
         'uses' => 'HomeController@projectlists'
+    ]
+);
+
+$router->get(
+    'public/project/{projectId}',
+    [
+        'as'   => 'project.details',
+        'uses' => 'HomeController@projectDetails'
     ]
 );
 

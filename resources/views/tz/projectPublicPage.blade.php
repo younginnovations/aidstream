@@ -103,7 +103,7 @@
 </section>
 @include('tz.partials.footer')
 <script>
-    var organizationId = "{{ request()->segment(2) }}";
+    var organizationId = "{{ request()->segment(3) }}";
 </script>
 
 <script src="{{url('/js/jquery.js')}}"></script>
