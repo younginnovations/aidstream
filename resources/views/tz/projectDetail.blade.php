@@ -1,7 +1,26 @@
-@extends('tz.base.app')
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport'/>
+    {{ header("Cache-Control: no-cache, no-store, must-revalidate")}}
+    {{ header("Pragma: no-cache") }}
+    {{ header("Expires: 0 ")}}
+    <title>Aidstream</title>
+    <link rel="shortcut icon" type="image/png" sizes="16*16" href="images/favicon.png"/>
+    <link rel="stylesheet" href="{{ asset('/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('/css/style.min.css') }}">
+    <link href="{{ asset('/js/tz/leaflet/leaflet.css') }}" rel="stylesheet">
+    <link href="{{ asset('/css/tanzania_style/tz.style.css') }}" rel="stylesheet">
+    <link href="{{ asset('/css/jquery.jscrollpane.css') }}" rel="stylesheet">
+</head>
+
+<body>
 @inject('getCode', 'App\Helpers\GetCodeName')
 
-@section('content')
+@include('tz.partials.header')
+
     <section class="main-container">
         <div class="container">
             <div class="title-section">
@@ -11,17 +30,18 @@
             </div>
         </div>
 
-        <div class="container container--shadow">
-            <div class="col-md-12 intro-section clearfix">
-                <div class="col-md-3 vertical-horizontal-center-wrap">
-                    <div class="vertical-horizontal-centerize">
-                        <div class="organization-logo"><img src={{asset("./images/ic_add-international.svg")}} width="106px" height="100px"></div>
-                        <div class="organization-name">Tanzania office</div>
-                    </div>
+    <div class="container container--shadow">
+        <div class="col-md-12 intro-section clearfix">
+            <div class="col-md-3 vertical-horizontal-center-wrap">
+                <div class="vertical-horizontal-centerize">
+                    <div class="organization-logo"><img src= {{asset("./images/ic_add-international.svg")}} width="106px" height="100px"> </div>
+                    <div class="organization-name">Tanzania office</div>
                 </div>
+           </div>
+
                 <div class="col-md-9" style="height: 277px;"></div>
-            </div>
-            <div class="col-md-12 name-value-section">
+        </div>
+        <div class="col-md-12 name-value-section">
                 @foreach($project->description as $description)
                     @if(getVal($description, ['type']) == 1)
                         <dl class="clearfix">
@@ -192,5 +212,17 @@
                 </div>
         </div>
     </section>
-@endsection
+
+@include('tz.partials.footer')
+<script src="{{url('/js/jquery.js')}}"></script>
+<script src="{{url('/js/modernizr.js')}}"></script>
+<script type="text/javascript" src="{{url('/js/bootstrap.min.js')}}"></script>
+<script type="text/javascript" src="{{url('/js/jquery.mousewheel.js')}}"></script>
+<script type="text/javascript" src="{{url('/js/jquery.jscrollpane.min.js')}}"></script>
+<script type="text/javascript" src="{{url('/js/tz/underscore-min.js')}}"></script>
+<script type="text/javascript" src="{{url('/js/tz/backbone-min.js')}}"></script>
+<script type="text/javascript" src="{{url('/js/tz/regions.js')}}"></script>
+<script type="text/javascript" src="{{url('/js/tz/leaflet/leaflet.js')}}"></script>
+<script type="text/javascript" src="{{url('/js/tz/mapping.js')}}"></script>
+</body>
 
