@@ -150,7 +150,7 @@
                 @endif
 
                 <div class="activity-element-wrapper">
-                    <div class="activity-element-label">
+                    <div class="title">
                         Location
                     </div>
                     <div class="activity-element-list">

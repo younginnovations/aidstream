@@ -12,7 +12,7 @@
                 <div>Edit Project</div>
             </div>
             <div class="panel-body">
-                <div class="create-form create-project-form">
+                <div class="create-form create-project-form edit-form">
                     {!! Form::model($project, ['method' => 'patch', 'route' => ['project.update', $project['id']], 'role' => 'form']) !!}
                     <input type="hidden" name="organization_id" value="{{ session('org_id') }}">
                     <div id="basic-info">

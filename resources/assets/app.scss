@@ -3122,9 +3122,23 @@ label.required::after {
   margin-left: 2px;
 }
 
+.added-new-block {
+  overflow: hidden;
+}
+
 .added-new-block, .has_add_more > .form-group + .form-group {
   border-top: 1px dashed #A9C6DE !important;
   padding-bottom: 0 !important;
+}
+
+.edit-form .added-new-block {
+  border: 0!important;
+  padding-top: 0;
+}
+
+.edit-form .added-new-block+.added-new-block,.edit-form div+.added-new-block {
+  border-top: 1px dashed #A9C6DE !important;
+  padding-top: 20px;
 }
 
 .scroll-top {
@@ -3391,24 +3405,33 @@ table.dataTable thead .sorting_desc {
   position: relative;
   display: inline-block;
   width: 100%;
-  .edit-element, .delete {
-    @include position(absolute, 2px 40px auto auto);
-    background: $url_14 no-repeat 0 0;
+  .edit-element, .delete,.edit-element+div {
+    @include position(absolute, 2px 50px auto auto);
+    background: $url_14 no-repeat 6px 5px;
     @include size(10px);
     display: none;
+    text-indent: -9999px;
+    width: 24px;
+    height: 24px;
+    background-color: #aaa;
+    border-radius: 50%;
     &:hover {
-      background-position: 0 -20px;
+      background-color: $color_dodger_blue_approx;
     }
   }
-  .delete {
-    background: $url_14 no-repeat -19px 0;
+  .delete,.edit-element+div {
     right: 20px;
     padding: 0;
+    background: #aaa;
     &:hover {
-      background: $url_14 no-repeat -19px -20px;
+      background-color: $color_dodger_blue_approx;
+    }
+    .delete-transaction {
+      background: $url_14 no-repeat -24px 5px;
+      text-indent: -9999px;
     }
   }
-  &:hover > .edit-element, &:hover .delete {
+  &:hover > .edit-element, &:hover .delete,&:hover .edit-element+div {
     display: block;
   }
 }
@@ -4391,6 +4414,10 @@ table.dataTable thead .sorting_desc {
       left: 290px;
       bottom: 70px;
     }
+  }
+
+  .create-project-form .btn-cancel {
+    bottom: 60px;
   }
 
   .login-container, .register-container {

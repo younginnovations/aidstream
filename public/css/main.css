@@ -5543,9 +5543,20 @@ label.required::after {
   color: #e15454;
   margin-left: 2px; }
 
+.added-new-block {
+  overflow: hidden; }
+
 .added-new-block, .has_add_more > .form-group + .form-group {
   border-top: 1px dashed #A9C6DE !important;
   padding-bottom: 0 !important; }
+
+.edit-form .added-new-block {
+  border: 0 !important;
+  padding-top: 0; }
+
+.edit-form .added-new-block + .added-new-block, .edit-form div + .added-new-block {
+  border-top: 1px dashed #A9C6DE !important;
+  padding-top: 20px; }
 
 .scroll-top {
   position: fixed;
@@ -5755,25 +5766,34 @@ table.dataTable thead .sorting_desc {
   position: relative;
   display: inline-block;
   width: 100%; }
-  .activity-element-wrapper .edit-element, .activity-element-wrapper .delete {
+  .activity-element-wrapper .edit-element, .activity-element-wrapper .delete, .activity-element-wrapper .edit-element + div {
     position: absolute;
     top: 2px;
-    right: 40px;
+    right: 50px;
     bottom: auto;
     left: auto;
-    background: url(../../images/ic-action-sprite.svg) no-repeat 0 0;
+    background: url(../../images/ic-action-sprite.svg) no-repeat 6px 5px;
     height: 10px;
     width: 10px;
-    display: none; }
-    .activity-element-wrapper .edit-element:hover, .activity-element-wrapper .delete:hover {
-      background-position: 0 -20px; }
-  .activity-element-wrapper .delete {
-    background: url(../../images/ic-action-sprite.svg) no-repeat -19px 0;
+    display: none;
+    text-indent: -9999px;
+    width: 24px;
+    height: 24px;
+    background-color: #aaa;
+    -webkit-border-radius: 50%;
+            border-radius: 50%; }
+    .activity-element-wrapper .edit-element:hover, .activity-element-wrapper .delete:hover, .activity-element-wrapper .edit-element + div:hover {
+      background-color: #00A8FF; }
+  .activity-element-wrapper .delete, .activity-element-wrapper .edit-element + div {
     right: 20px;
-    padding: 0; }
-    .activity-element-wrapper .delete:hover {
-      background: url(../../images/ic-action-sprite.svg) no-repeat -19px -20px; }
-  .activity-element-wrapper:hover > .edit-element, .activity-element-wrapper:hover .delete {
+    padding: 0;
+    background: #aaa; }
+    .activity-element-wrapper .delete:hover, .activity-element-wrapper .edit-element + div:hover {
+      background-color: #00A8FF; }
+    .activity-element-wrapper .delete .delete-transaction, .activity-element-wrapper .edit-element + div .delete-transaction {
+      background: url(../../images/ic-action-sprite.svg) no-repeat -24px 5px;
+      text-indent: -9999px; }
+  .activity-element-wrapper:hover > .edit-element, .activity-element-wrapper:hover .delete, .activity-element-wrapper:hover .edit-element + div {
     display: block; }
 
 .activity-element-wrapper .activity-element-label {
@@ -6428,6 +6448,8 @@ table.dataTable thead .sorting_desc {
   .create-form .btn-cancel {
     left: 290px;
     bottom: 70px; }
+  .create-project-form .btn-cancel {
+    bottom: 60px; }
   .login-container, .register-container {
     padding-top: 80px; }
   .publish-btn {
