@@ -20,30 +20,45 @@ $router->get('who-is-using/{page}/{count}', 'WhoIsUsingController@listOrganizati
 $router->get('admin/dashboard', 'SuperAdmin\OrganizationController@adminDashboard');
 $router->resource('settings', 'Complete\SettingsController');
 
-$router->put('update-settings', [
-    'as'   => 'update-settings',
-    'uses' => 'Complete\SettingsController@updateSettings'
-]);
+$router->put(
+    'update-settings',
+    [
+        'as'   => 'update-settings',
+        'uses' => 'Complete\SettingsController@updateSettings'
+    ]
+);
 
-$router->post('change-segmentation', [
-    'as'   => 'change-segmentation',
-    'uses' => 'Complete\SettingsController@changeSegmentation'
-]);
+$router->post(
+    'change-segmentation',
+    [
+        'as'   => 'change-segmentation',
+        'uses' => 'Complete\SettingsController@changeSegmentation'
+    ]
+);
 
-$router->post('activity/{activity}/complete', [
-    'as'   => 'activity.complete',
-    'uses' => 'Complete\WorkflowController@complete'
-]);
+$router->post(
+    'activity/{activity}/complete',
+    [
+        'as'   => 'activity.complete',
+        'uses' => 'Complete\WorkflowController@complete'
+    ]
+);
 
-$router->post('activity/{activity}/verify', [
-    'as'   => 'activity.verify',
-    'uses' => 'Complete\WorkflowController@verify'
-]);
+$router->post(
+    'activity/{activity}/verify',
+    [
+        'as'   => 'activity.verify',
+        'uses' => 'Complete\WorkflowController@verify'
+    ]
+);
 
-$router->post('activity/{activity}/publish', [
-    'as'   => 'activity.publish',
-    'uses' => 'Complete\WorkflowController@publish'
-]);
+$router->post(
+    'activity/{activity}/publish',
+    [
+        'as'   => 'activity.publish',
+        'uses' => 'Complete\WorkflowController@publish'
+    ]
+);
 
 $router->get('who-is-using/{organization_id}', 'WhoIsUsingController@getDataForOrganization');
 
