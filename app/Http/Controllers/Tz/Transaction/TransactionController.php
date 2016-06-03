@@ -59,7 +59,7 @@ class TransactionController extends TanzanianController
             $response = ['type' => 'success', 'code' => ['message', ['message' => 'Transaction successfully saved.']]];
         }
 
-        return redirect()->route('project.index')->withResponse($response);
+        return redirect()->route('project.show', $id)->withResponse($response);
     }
 
     /**
@@ -92,7 +92,7 @@ class TransactionController extends TanzanianController
             $response = ['type' => 'success', 'code' => ['message', ['message' => 'Transaction successfully updated.']]];
         }
 
-        return redirect()->route('project.index')->withResponse($response);
+        return redirect()->route('project.show', $projectId)->withResponse($response);
     }
 
     /**
