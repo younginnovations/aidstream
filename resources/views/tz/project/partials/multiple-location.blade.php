@@ -32,7 +32,7 @@
                 {!! Form::hidden("location[$key][administrative][1][level]", '2') !!}
             </div>
         @endforeach
-        <button type="button" id="add-more-location-edit" class="add-more">Add More Location</button>
+        <button type="button" id="add-more-location-edit" class="add-more">Add Another Location</button>
     </div>
 </div>
 '

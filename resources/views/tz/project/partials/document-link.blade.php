@@ -14,6 +14,7 @@
         <div class="col-sm-6">
             {!! Form::label('result_document_url', 'Document URL', ['class' => 'control-label']) !!}
             {!! Form::text('document_link[0][url]', getVal($documentLinks, ['document_link', 0, 'url']), ['class' => 'form-control']) !!}
+            <span>Example: http://example.com</span>
         </div>
     </div>
 
@@ -32,6 +33,7 @@
         <div class="col-sm-6">
             {!! Form::label('annual_document_url', 'Document Url', ['class' => 'control-label']) !!}
             {!! Form::text('document_link[1][url]', getVal($documentLinks, ['document_link', 1, 'url']), ['class' => 'form-control']) !!}
+            <span>Example: http://example.com</span>
         </div>
 
     </div>
@@ -50,6 +52,7 @@
         <div class="col-sm-6">
             {!! Form::label('result_document_url', 'Document URL', ['class' => 'control-label']) !!}
             {!! Form::text('document_link[0][url]', null, ['class' => 'form-control']) !!}
+            <span>Example: http://example.com</span>
         </div>
     </div>
 
@@ -67,6 +70,7 @@
         <div class="col-sm-6">
             {!! Form::label('annual_document_url', 'Document Url', ['class' => 'control-label']) !!}
             {!! Form::text('document_link[1][url]', null, ['class' => 'form-control']) !!}
+            <span>Example: http://example.com</span>
         </div>
     </div>
 @endif

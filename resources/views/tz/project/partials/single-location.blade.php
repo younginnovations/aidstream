@@ -16,6 +16,6 @@
             {!! Form::hidden('location[0][administrative][1][vocabulary]', 'G1') !!}
             {!! Form::hidden('location[0][administrative][1][level]', '2') !!}
         </div>
-        <button type="button" id="add-more-location" class="add-more">Add More Location</button>
+        <button type="button" id="add-more-location" class="add-more">Add Another Location</button>
     </div>
 </div>

@@ -74,7 +74,7 @@
                         </div>
                         @include('tz.project.partials.location')
                         <div class="col-sm-12 add-wrap" id="funding-wrap">
-                            <h2>Funding</h2>
+                            <h2>Funding Organisation</h2>
                             <div class="col-sm-6">
                                 {!! Form::label('funding_organization[0][funding_organization_name]', 'Organization Name', ['class' => 'control-label']) !!}
                                 {!! Form::text('funding_organization[0][funding_organization_name]', null, ['class' => 'form-control']) !!}
@@ -83,12 +83,12 @@
                                 {!! Form::label('funding_organization[0][funding_organization_type]', 'Organization Type', ['class' => 'control-label']) !!}
                                 {!! Form::select('funding_organization[0][funding_organization_type]', ['' => 'Select one of the following.'] + $organizationType, null, ['class' => 'form-control']) !!}
                             </div>
-                            <button type="button" id="add-more-funding-organization" class="add-more">Add More Funding
+                            <button type="button" id="add-more-funding-organization" class="add-more">Add Another Funding
                                 Organization
                             </button>
                         </div>
                         <div class="col-sm-12 add-wrap" id="implementing-wrap">
-                            <h2>Implementing</h2>
+                            <h2>Implementing Organisation</h2>
                             <div class="col-sm-6">
                                 {!! Form::label('implementing_organization[0][implementing_organization_name]', 'Organization Name', ['class' => 'control-label required']) !!}
                                 {!! Form::text('implementing_organization[0][implementing_organization_name]', null, ['class' => 'form-control', 'required' => 'required']) !!}
@@ -98,7 +98,7 @@
                                 {!! Form::label('implementing_organization[0][implementing_organization_type]', 'Organization Type', ['class' => 'control-label required']) !!}
                                 {!! Form::select('implementing_organization[0][implementing_organization_type]', ['' => 'Select one of the following.'] + $organizationType, null, ['class' => 'form-control', 'required' => 'required']) !!}
                             </div>
-                            <button type="button" id="add-more-implementing-organization" class="add-more">Add More
+                            <button type="button" id="add-more-implementing-organization" class="add-more">Add Another
                                 Implementing Organization
                             </button>
                         </div>
@@ -117,6 +117,7 @@
                             <div class="col-sm-6">
                                 {!! Form::label('result_document_url', 'Document URL', ['class' => 'control-label']) !!}
                                 {!! Form::text('document_link[0][url]', null, ['class' => 'form-control']) !!}
+                                <span>Example: http://example.com</span>
                             </div>
                         </div>
 
@@ -134,6 +135,7 @@
                             <div class="col-sm-6">
                                 {!! Form::label('annual_document_url', 'Document Url', ['class' => 'control-label']) !!}
                                 {!! Form::text('document_link[1][url]', null, ['class' => 'form-control']) !!}
+                                <span>Example: http://example.com</span>
                             </div>
                         </div>
                     </div>
