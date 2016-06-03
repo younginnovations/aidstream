@@ -313,14 +313,6 @@ var MapView = Backbone.View.extend({
             }
         });
     },
-    onEachFeature(feature, layer, self) {
-        // does this feature have a property named popupContent?
-        var projects = self.collection.filterProjects();
-        if (feature.properties && feature.properties.REGNAME) {
-            var regionProjects = projects.filterProjectsByRegion(feature.properties.REGNAME);
-            layer.bindPopup(content);
-        }
-    },    
     render: function() {
         var projects = this.collection.filterProjects();
         projects.each(function(project) {

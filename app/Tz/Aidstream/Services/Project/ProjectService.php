@@ -298,11 +298,6 @@ class ProjectService
         return $this->project->getParticipatingOrganizations($id, $orgType);
     }
 
-    public function searchData($data)
-    {
-        $this->project->searchData($data);
-    }
-
     public function getProjectData($projectId = null)
     {
         return $this->project->getProjectData($projectId);
@@ -340,7 +335,7 @@ class ProjectService
                     }
                 }
 
-                $jsonData[$index] = [
+                $jsonData[] = [
                     'id'         => $data->id,
                     'identifier' => $data->identifier['activity_identifier'],
                     'title'      => $data->title[0]['narrative'],

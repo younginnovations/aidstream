@@ -63,4 +63,12 @@ class HomeController extends Controller
 
         return view('tz.projectPublicPage', compact('projects', 'orgDetails', 'user', 'transactionCount'));
     }
+    
+    public function projectlists($orgId = 0)
+    {
+        $projects= $this->project->getProjectsByOrganisationId($orgId?$orgId:"");
+        $jsonData  = json_encode($this->project->getJsonData($projects), true);
+
+        return view('tz.project.jsonProjects', compact('jsonData'));
+    }
 }

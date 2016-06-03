@@ -111,7 +111,7 @@
         hamburgerMenu();
 
         var projectCollection = new ProjectCollection({
-            url: '/data.json',
+            url: '/api/projects',
         });
         projectCollection.fetch({reset: true});
         var mapView = null;

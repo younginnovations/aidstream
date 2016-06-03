@@ -272,3 +272,13 @@ $router->get(
         'uses' => 'HomeController@projectPublicPage'
     ]
 );
+
+$router->get(
+    'api/projects/{orgId?}',
+    [
+        'as'   => 'project.view',
+        'uses' => 'HomeController@projectlists'
+    ]
+);
+
+

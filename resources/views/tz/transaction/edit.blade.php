@@ -65,7 +65,7 @@
                     @if($transactionType == 1)
                         <button type="button" id="add-more-transaction-edit" class="add-more">Add Another Incoming Funds</button>
                     @elseif($transactionType == 3)
-                        <button type="button" id="add-more-transaction-edit" class="add-more">Add Another Disbursements</button>
+                        <button type="button" id="add-more-transaction-edit" class="add-more">Add More Disbursement</button>
                     @elseif($transactionType == 4)
                         <button type="button" id="add-more-transaction-edit" class="add-more">Add Another Expenditure</button>
                     @endif

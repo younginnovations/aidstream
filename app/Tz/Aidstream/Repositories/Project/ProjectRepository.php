@@ -1,7 +1,6 @@
 <?php namespace App\Tz\Aidstream\Repositories\Project;
 
 use App\Tz\Aidstream\Models\Project;
-use Illuminate\Support\Facades\DB;
 
 
 /**
@@ -94,33 +93,25 @@ class ProjectRepository implements ProjectRepositoryInterface
         return $project->save();
     }
 
-    public function searchData($data)
-    {
-        $value = DB::select("select * from activity_data where title #>> '{0,narrative}' LIKE ?", ['%' . $data . '%']);
-
-        return $value;
-    }
-
     public function getParticipatingOrganizations($id, $orgType)
     {
-        $projects = $this->project->find($id);
+        $projects      = $this->project->find($id);
         $participating = [];
-        foreach($projects->participating_organization as $participatingOrg)
-        {
-            if($participatingOrg['organization_role'] == $orgType){
+        foreach ($projects->participating_organization as $participatingOrg) {
+            if ($participatingOrg['organization_role'] == $orgType) {
                 $participating[] = $participatingOrg;
             }
         }
-        
+
         return $participating;
     }
 
     public function getProjectData($projectId)
     {
-        if($projectId){
+        if ($projectId) {
 //            $project = $this->project->where('activity_workflow', '=', 3)->where('id', '=', $projectId)->first();
             $project = $this->find($projectId);
-        }else{
+        } else {
             $project = $this->project->where('activity_workflow', '=', 3)->get();
         }
 
@@ -129,6 +120,10 @@ class ProjectRepository implements ProjectRepositoryInterface
 
     public function getProjectsByOrganisationId($orgId)
     {
-        return $this->project->where('organization_id', '=', $orgId)->where('activity_workflow', '=', 3)->get();
+        if ($orgId && is_numeric($orgId)) {
+            return $this->project->where('organization_id', '=', $orgId)->where('activity_workflow', '=', 3)->get();
+        }
+
+        return $this->project->where('activity_workflow', '=', 3)->get();
     }
 }

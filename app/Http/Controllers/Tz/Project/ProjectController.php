@@ -2,6 +2,7 @@
 
 use App\Core\Form\BaseForm;
 use App\Http\Controllers\Tz\TanzanianController;
+use App\Services\Organization\OrganizationManager;
 use App\Tz\Aidstream\Requests\ProjectRequests;
 use App\Tz\Aidstream\Services\Project\ProjectService;
 use App\Tz\Aidstream\Services\Transaction\TransactionService;
@@ -27,17 +28,20 @@ class ProjectController extends TanzanianController
      * @var TransactionService
      */
     protected $transaction;
+    protected $orgManager;
 
     /**
      * ProjectController constructor.
-     * @param ProjectService     $project
-     * @param TransactionService $transaction
+     * @param ProjectService      $project
+     * @param TransactionService  $transaction
+     * @param OrganizationManager $organizationManager
      */
-    public function __construct(ProjectService $project, TransactionService $transaction)
+    public function __construct(ProjectService $project, TransactionService $transaction, OrganizationManager $organizationManager)
     {
         $this->middleware('auth');
         $this->project     = $project;
         $this->transaction = $transaction;
+        $this->orgManager  = $organizationManager;
     }
 
     /**
@@ -99,7 +103,6 @@ class ProjectController extends TanzanianController
      */
     public function show($id)
     {
-        $this->project->searchData('test');
         $project = $this->project->find($id);
 
         if (Gate::denies('ownership', $project)) {
@@ -310,13 +313,17 @@ class ProjectController extends TanzanianController
     }
 
     /**
-     * view project 
+     * view project
      * @param $id
      * @return mixed
      */
     public function projectDetails($id)
     {
         $project = $this->project->find($id);
+
+        if($project->activity_workflow != 3){
+            return view('tz.unauthorized');
+        }
 
 //        if (Gate::denies('ownership', $project)) {
 //            return redirect()->route('project.index')->withResponse($this->getNoPrivilegesMessage());
@@ -326,17 +333,18 @@ class ProjectController extends TanzanianController
         $disbursements = $this->transaction->getTransactions($id, 3);
         $expenditures  = $this->transaction->getTransactions($id, 4);
         $documentLinks = $this->project->findDocumentLinkByProjectId($id);
-        $fundings = $this->project->getParticipatingOrganizations($id,1);
-        $implementings = $this->project->getParticipatingOrganizations($id,4);
+        $fundings      = $this->project->getParticipatingOrganizations($id, 1);
+        $implementings = $this->project->getParticipatingOrganizations($id, 4);
+        $orgDetail     = $this->orgManager->getOrganization($project->organization_id);
 
-        return view('tz.projectDetail', compact('project','incomingFunds', 'disbursements', 'expenditures', 'documentLinks', 'fundings', 'implementings'));
+        return view('tz.projectDetail', compact('orgDetail', 'project', 'incomingFunds', 'disbursements', 'expenditures', 'documentLinks', 'fundings', 'implementings'));
     }
 
     public function projectPublic($orgId)
     {
         $projectId = 3115;
-        $projects = $this->project->getProjectData($projectId);
-        $jsonData = $this->project->getJsonData($projects);
+        $projects  = $this->project->getProjectData($projectId);
+        $jsonData  = $this->project->getJsonData($projects);
 
 //        $projects = $this->project->getProjectsByOrganisationId($orgId);
 //        $transactionCount = $this->transaction->getTransactionsSum($projects);

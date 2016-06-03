@@ -19,7 +19,7 @@
                             {!! Form::select('default_language', ['' => 'Select one of following:'] + $language, $project['default_language'],['class' => 'form-control', 'required' => 'required']) !!}
                         </div>
                         <a class="btn btn-cancel" href="{{ route('project.show', $project['id']) }}">Cancel</a>
-                        {!! Form::submit('Save', ['class' => 'btn btn-submit btn-form']) !!}
+                        {!! Form::submit('Override', ['class' => 'btn btn-submit btn-form']) !!}
                         {!! Form::close() !!}
                     </div>
                 </div>
