@@ -224,20 +224,28 @@ trait FormatsProjectFormInformation
      */
     protected function description($projectDetails)
     {
-        return [
+        $details = [
             [
                 'type'      => 1,
                 'narrative' => [['narrative' => $projectDetails['description'], 'language' => '']]
-            ],
-            [
-                'type'      => 2,
-                'narrative' => [['narrative' => $projectDetails['objectives'], 'language' => '']]
-            ],
-            [
-                'type'      => 3,
-                'narrative' => [['narrative' => $projectDetails['target_groups'], 'language' => '']]
             ]
         ];
+
+        if ($projectDetails['objectives']) {
+            $details[] = [
+                'type'      => 2,
+                'narrative' => [['narrative' => $projectDetails['objectives'], 'language' => '']]
+            ];
+        }
+
+        if ($projectDetails['target_groups']) {
+            $details[] = [
+                'type'      => 3,
+                'narrative' => [['narrative' => $projectDetails['target_groups'], 'language' => '']]
+            ];
+        }
+
+        return $details;
     }
 
     /**
@@ -310,22 +318,27 @@ trait FormatsProjectFormInformation
      */
     protected function activityDate($projectDetails)
     {
-        return [
+        $details = [
             [
                 "date"      => $projectDetails['start_date'],
                 "type"      => 2,
                 "narrative" => [
                     [["narrative" => "", "language" => ""]]
                 ]
-            ],
-            [
+            ]
+        ];
+
+        if ($projectDetails['end_date']) {
+            $details[] = [
                 "date"      => $projectDetails['end_date'],
                 "type"      => 4,
                 "narrative" => [
                     [["narrative" => "", "language" => ""]]
                 ]
-            ]
-        ];
+            ];
+        }
+
+        return $details;
     }
 
     /**

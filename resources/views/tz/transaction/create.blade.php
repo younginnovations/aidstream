@@ -41,7 +41,7 @@
 
                             <div class="col-sm-6">
                                 {!! Form::label('transaction[0][value][0][currency]', 'Currency', ['class' => 'control-label required']) !!}
-                                {!! Form::select('transaction[0][value][0][currency]', ['' => 'Select one of the following.'] + $currency, null, ['class' => 'form-control', 'required' => 'required']) !!}
+                                {!! Form::select('transaction[0][value][0][currency]', ['' => 'Select one of the following.'] + $currency, $defaultCurrency, ['class' => 'form-control', 'required' => 'required']) !!}
                             </div>
 
                             <div class="col-sm-6">

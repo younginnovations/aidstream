@@ -18,7 +18,7 @@
                 </ul>
                 <ul>
                     @if(auth()->check())
-                        <li><a href="{{ url((auth()->user()->role_id == 1 || auth()->user()->role_id == 2) ? config('app.admin_dashboard') : config('app.super_admin_dashboard'))}}">Go to Dashboard</a></li>
+                        <li><a href="{{ url((auth()->user()->role_id == 1 || auth()->user()->role_id == 2) ? config('tz.domain.projectList') : config('tz.domain.superAdminDashboard'))}}">Go to Dashboard</a></li>
                     @else
                         <li><a href="{{ url('/auth/login') }}">Login</a></li>
                         <li><a href="{{ url('/auth/register') }}">Register</a></li>

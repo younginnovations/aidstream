@@ -203,7 +203,7 @@
                                             <label class="control-label">Country*</label>
 
                                             <div class="col-xs-12 col-md-12">
-                                                {{Form::select('country', ['' => 'Select Country'] + $countries, null, ['required' => true])}}
+                                                {{Form::select('country', ['' => 'Select Country'] + $countries, 'TZ', ['class' => 'form-control', 'required' => true])}}
                                             </div>
                                         </div>
                                     </div>
@@ -234,6 +234,7 @@
 @else
     <script type="text/javascript" src="{{url('/js/main.min.js')}}"></script>
 @endif
+<script type="text/javascript" src="{{url('/js/select2.min.js')}}"></script>
 <!-- Google Analytics -->
 <script type="text/javascript" src="{{url('/js/ga.js')}}"></script>
 <!-- End Google Analytics -->
@@ -268,6 +269,9 @@
             });
         }
     });
+</script>
+<script>
+    $('form select').select2();
 </script>
 </body>
 </html>

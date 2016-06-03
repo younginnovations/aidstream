@@ -40,12 +40,12 @@ class ProjectRequests extends Request
         $messages['description.required']       = 'General description is required';
         $messages['activity_status.required']   = 'Project Status is required';
         $messages['sector.required']            = 'Sector is required';
-        $messages['start_date.required']        = 'Start Date is required|date';
+        $messages['start_date.required']        = 'Start Date is required.';
         $messages['start_date.date']            = 'Start Date must be date';
         $messages['end_date.date']              = 'End date must be date';
         $messages['recipient_country.required'] = 'Recipient Country is required';
 //        $messages['recipient_region.required']  = 'Recipient Region is required';
-        $messages                               = array_merge(
+        $messages = array_merge(
             $messages,
 //            $this->getMessagesForFundingOrganization($this->get('funding_organization')),
             $this->getMessagesForImplementingOrganization($this->get('implementing_organization'))

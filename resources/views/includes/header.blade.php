@@ -18,7 +18,7 @@
             </ul>
             <div class="action-btn pull-left">
                 @if(auth()->check())
-                    <a href="{{ url((auth()->user()->role_id == 1 || auth()->user()->role_id == 2) ? config('app.admin_dashboard') : config('app.super_admin_dashboard'))}}" class="btn btn-primary">Go
+                    <a href="{{ url((auth()->user()->role_id == 1 || auth()->user()->role_id == 2) ? config('tz.domain.projectList') : config('tz.domain.superAdminDashboard'))}}" class="btn btn-primary">Go
                         to Dashboard</a>
                 @else
                     <a href="{{ url('/auth/login')}}" class="btn btn-primary">Login/Register</a>

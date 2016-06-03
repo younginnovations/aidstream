@@ -4,6 +4,7 @@ use App\Core\Form\BaseForm;
 use App\Http\Controllers\Tz\TanzanianController;
 use App\Http\Requests\Request;
 use App\Tz\Aidstream\Requests\TransactionRequests;
+use App\Tz\Aidstream\Services\Project\ProjectService;
 use App\Tz\Aidstream\Services\Transaction\TransactionService;
 
 /**
@@ -16,15 +17,20 @@ class TransactionController extends TanzanianController
      * @var TransactionService
      */
     protected $transaction;
+    /**
+     * @var ProjectService
+     */
+    protected $project;
 
     /**
      * TransactionController constructor.
      * @param TransactionService $transaction
      */
-    public function __construct(TransactionService $transaction)
+    public function __construct(TransactionService $transaction, ProjectService $project)
     {
         $this->middleware('auth');
         $this->transaction = $transaction;
+        $this->project     = $project;
     }
 
     /**
@@ -35,10 +41,12 @@ class TransactionController extends TanzanianController
      */
     public function createTransaction($id, $transactionType)
     {
-        $baseForm = new BaseForm();
-        $currency = $baseForm->getCodeList('Currency', 'Activity');
+        $baseForm        = new BaseForm();
+        $currency        = $baseForm->getCodeList('Currency', 'Activity');
+        $project         = $this->project->find($id);
+        $defaultCurrency = getVal($project->default_field_values, [0, 'default_currency']);
 
-        return view('tz.transaction.create', compact('currency', 'id', 'transactionType'));
+        return view('tz.transaction.create', compact('currency', 'id', 'transactionType', 'defaultCurrency'));
     }
 
     /**

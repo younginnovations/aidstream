@@ -73,7 +73,8 @@
                     for (var i = 0; i < organizations.length; i++) {
                         var organization = organizations[i];
                         var logo = '';
-                        var link = baseUrl + '/' + organization.id;
+//                        var link = baseUrl + '/' + organization.id;
+                        var link = '{{ url('/') . '/public/'}}' + organization.id + '/page';
                         if (organization.logo_url) {
                             logo = $('.has-image-logo').clone();
                             $('a', logo).attr({href: link}).children('img').attr({src: organization.logo_url, alt: organization.name});
