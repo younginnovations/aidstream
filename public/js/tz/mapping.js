@@ -21,7 +21,7 @@ var ProjectCollection = Backbone.Collection.extend({
         var self = this;
         if(!this.sectors) {
             this.sectors = new SectorCollection();
-            var tmpsects = _.uniq(_.flatten(this.pluck("Sectors")))
+            var tmpsects = _.uniq(_.flatten(this.pluck("sectors")))
             _.each(tmpsects, function(sectorname) {
                 self.sectors.add({sector: sectorname});
             });
@@ -45,7 +45,7 @@ var ProjectCollection = Backbone.Collection.extend({
         if(this.regions.length == 0) {
             var self = this;
             $.ajax({
-                url: "regions.json",
+                url: "/regions.json",
                 dataType: "json",
                 cache: true,
                 success: function(items) {
@@ -79,14 +79,14 @@ var ProjectCollection = Backbone.Collection.extend({
             selectedSectorsCollection = new SectorCollection(selectedSectors);
             selectedRegionsCollection = new RegionCollection(selectedRegions);
             return new ProjectCollection(this.models.filter(function(project) {
-                var projectSectors = project.get('Sectors');
+                var projectSectors = project.get('sectors');
                 var found1 = false;
                 _.each(projectSectors, function(projectSector) {
                     if(_.contains(selectedSectorsCollection.pluck('sector'), projectSector)) {
                         found1 = true;
                     }
                 });
-                var projectRegions = project.get('Project Region');
+                var projectRegions = project.get('regions');
                 var found2 = false;
                 _.each(projectRegions, function(projectRegion) {
                     if(_.contains(selectedRegionsCollection.pluck('region'), projectRegion)) {
@@ -98,20 +98,20 @@ var ProjectCollection = Backbone.Collection.extend({
         }
     },
     groupByRegions: function() {
-        _.flatten(this.pluck("Project Region"))
-        return this.groupBy('Project Region');
+        _.flatten(this.pluck("regions"))
+        return this.groupBy('regions');
     },
     filterProjectsByRegion: function(region) {
         var filteredProjects = this.filterProjects();
         return new ProjectCollection(filteredProjects.models.filter(function(project) {
-            return (_.contains(project.get('Project Region'), region));
+            return (_.contains(project.get('regions'), region));
         })).setup();
     },
     search: function(letters) {
         if(letters == "") return this;
         var pattern = new RegExp(letters,"gi");
         return _(this.filter(function(data) {
-            return pattern.test(data.get("Project Title"));
+            return pattern.test(data.get("title"));
         }));
     }
 });
@@ -240,10 +240,14 @@ var ProjectsListView = Backbone.View.extend({
         if(this.searchtext) {
             projects = projects.search(this.searchtext);
         }
-        this.$("tbody").html("")
-        projects.each(function(project) {
-            self.addOne(project);
-        });
+        if(!projects.length) {
+            this.$("tbody").html("<p>No projects available.</p>");
+        } else {
+            this.$("tbody").html("");
+            projects.each(function(project) {
+                self.addOne(project);
+            });
+        }
     },
     search: function(e) {
         this.searchtext = $("#projects-search").val();

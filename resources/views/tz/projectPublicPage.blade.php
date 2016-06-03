@@ -102,6 +102,10 @@
     </div>
 </section>
 @include('tz.partials.footer')
+<script>
+    var organizationId = "{{ request()->segment(2) }}";
+</script>
+
 <script src="{{url('/js/jquery.js')}}"></script>
 <script src="{{url('/js/modernizr.js')}}"></script>
 <script type="text/javascript" src="{{url('/js/bootstrap.min.js')}}"></script>
@@ -124,7 +128,7 @@
         hamburgerMenu();
 
         var projectCollection = new ProjectCollection({
-            url: '/data.json',
+            url: '/api/projects/' +organizationId,
         });
         projectCollection.fetch({reset: true});
         var mapView = null;
@@ -132,10 +136,6 @@
         projectCollection.on('reset', function () {
             new SectorsListView({
                 collection: projectCollection.getSectorsCollection(),
-                projectsCollection: projectCollection
-            }).render();
-            new RegionListView({
-                collection: projectCollection.getRegionsCollection(),
                 projectsCollection: projectCollection
             }).render();
             new ProjectsListView({
@@ -155,8 +155,8 @@
 {{-- ---------- section for templates -------- --}}
 
 <script type="text/template" id="project-list-item">
-    <td class="bold-col"><%= project["Project Title"] %></td>
-    <td><%= project["Status"] %></td>
+    <td class="bold-col"><%= project["title"] %></td>
+    <td><%= project["identifier"] %></td>
 </script>
 <script type="text/template" id="region-checkbox-item">
   <label>

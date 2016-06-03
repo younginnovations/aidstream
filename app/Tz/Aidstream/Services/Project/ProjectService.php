@@ -1,5 +1,6 @@
 <?php namespace App\Tz\Aidstream\Services\Project;
 
+use App\Helpers\GetCodeName;
 use App\Tz\Aidstream\Models\Project;
 use App\Tz\Aidstream\Repositories\DocumentLink\DocumentLinkRepositoryInterface;
 use App\Tz\Aidstream\Repositories\Project\ProjectRepositoryInterface;
@@ -309,6 +310,7 @@ class ProjectService
         $startDate  = "";
         $endDate    = "";
         $jsonData = [];
+        $getCode = new GetCodeName();
 
         if($projects instanceof Collection){
             foreach ($projects as $index => $data){
@@ -339,7 +341,7 @@ class ProjectService
                     'id'         => $data->id,
                     'identifier' => $data->identifier['activity_identifier'],
                     'title'      => $data->title[0]['narrative'],
-                    'sectors'    => [$data->sector[0]['sector_category_code']],
+                    'sectors'    => [$getCode->getActivityCodeName('SectorCategory', $data->sector[0]['sector_category_code'])],
                     'regions'    => $regionName,
                     'startdate'  => $startDate,
                     'enddate'    => $endDate
@@ -369,7 +371,7 @@ class ProjectService
                 'id'         => $projects->id,
                 'identifier' => $projects->identifier['activity_identifier'],
                 'title'      => $projects->title[0]['narrative'],
-                'sectors'    => [$projects->sector[0]['sector_category_code']],
+                'sectors'    => [$getCode->getActivityCodeName('SectorCategory', $projects->sector[0]['sector_category_code'])],
                 'regions'    => $regionName,
                 'startdate'  => $startDate,
                 'enddate'    => $endDate

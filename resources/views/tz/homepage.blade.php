@@ -142,8 +142,8 @@
 {{-- ---------- section for templates -------- --}}
 
 <script type="text/template" id="project-list-item">
-    <td class="bold-col"><%= project["Project Title"] %></td>
-    <td><%= project["Status"] %></td>
+    <td class="bold-col"><%= project["title"] %></td>
+    <td><%= project["identifier"] %></td>
 </script>
 <script type="text/template" id="region-checkbox-item">
   <label>

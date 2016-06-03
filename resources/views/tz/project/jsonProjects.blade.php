@@ -1,1 +1,1 @@
-{{$jsonData}}
+{!! $jsonData !!}

@@ -56,9 +56,9 @@ class WorkflowController extends Controller
             return redirect()->back()->withResponse(['type' => 'warning', 'code' => ['message', ['message' => $cannotBeCompletedMessage]]]);
         }
 
-        if ($invalidResponse = $this->workFlowManager->validate($activity)) {
-            return redirect()->back()->withResponse(['type' => 'danger', 'messages' => $invalidResponse]);
-        }
+//        if ($invalidResponse = $this->workFlowManager->validate($activity)) {
+//            return redirect()->back()->withResponse(['type' => 'danger', 'messages' => $invalidResponse]);
+//        }
 
         return redirect()->back()
                          ->withResponse(

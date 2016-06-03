@@ -67,7 +67,7 @@ class HomeController extends Controller
     public function projectlists($orgId = 0)
     {
         $projects= $this->project->getProjectsByOrganisationId($orgId?$orgId:"");
-        $jsonData  = json_encode($this->project->getJsonData($projects), true);
+        $jsonData  = json_encode($this->project->getJsonData($projects));
 
         return view('tz.project.jsonProjects', compact('jsonData'));
     }
