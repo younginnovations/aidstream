@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'subdomain'           => 'tz1.',
+    'subdomain'           => 'tz.',
     'domain'              => env('HOST'),
     'projectList'         => '/project',
     'superAdminDashboard' => '/admin/list-organization'
