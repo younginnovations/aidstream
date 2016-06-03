@@ -2,6 +2,10 @@
   margin-bottom: 30px;
 }
 
+.small-container{
+  max-width: 760px;
+}
+
 .name-value-section{
   margin-bottom: 30px;
   dl{
@@ -21,6 +25,12 @@
 
   dd{
     padding-left: 12px;
+
+    span{
+      color: #818181;
+      font-style: italic;
+    }
+
   }
 }
 
@@ -79,6 +89,10 @@
       }
     }
 
+  }
+
+  @media (max-width: 480px){
+    text-align: center;
   }
 
 }

@@ -22,6 +22,18 @@ h1 {
   font-size: 36px;
   line-height: 42px;
   color: rgba(0, 0, 0, 0.7); }
+  @media (max-width: 480px) {
+    h1 {
+      font-size: 24px;
+      line-height: 32px; } }
+
+.introduction-wrapper h1 {
+  line-height: 52px; }
+
+@media (max-width: 480px) {
+  .introduction-wrapper {
+    font-size: 24px;
+    line-height: 38px; } }
 
 .title {
   font-family: Open-Sans-Bold;
@@ -41,6 +53,10 @@ h1 {
     font-size: 11px;
     line-height: 17px;
     color: rgba(0, 0, 0, 0.5); }
+  @media (max-width: 480px) {
+    .title-section {
+      padding: 20px 20px;
+      margin-bottom: 0; } }
 
 .container--shadow {
   background-color: #fff;
@@ -72,7 +88,9 @@ h1 {
 
 .detail-page-map {
   height: 350px;
-  margin-bottom: 55px; }
+  margin-bottom: 55px;
+  -webkit-border-radius: 4px 4px 0 0;
+          border-radius: 4px 4px 0 0; }
   .detail-page-map #map {
     height: 350px; }
   .detail-page-map .select-block-wrap {
@@ -287,6 +305,55 @@ tr, td {
   .custom-table tr .light-col {
     color: rgba(72, 72, 72, 0.5); }
 
+/* Hide table headers (but not display: none;, for accessibility) */
+/*
+  Label the data
+  */
+@media all and (max-width: 767px) {
+  *:not(.xdsoft_calendar) > table {
+    display: block; }
+    *:not(.xdsoft_calendar) > table thead, *:not(.xdsoft_calendar) > table tbody, *:not(.xdsoft_calendar) > table th, *:not(.xdsoft_calendar) > table td, *:not(.xdsoft_calendar) > table tr {
+      display: block; }
+  .custom-table {
+    border: none;
+    -webkit-border-radius: 0;
+            border-radius: 0; }
+  thead tr {
+    position: absolute;
+    top: -9999px;
+    left: -9999px; }
+  tr {
+    border: 1px solid #eee; }
+  .table > tbody > tr > td {
+    border: none;
+    border-bottom: 1px solid #eee;
+    position: relative;
+    padding-left: 50% !important;
+    overflow: hidden;
+    min-height: 48px; }
+    .table > tbody > tr > td:before {
+      position: absolute;
+      top: 15px;
+      left: 6px;
+      width: 45%;
+      padding-right: 10px;
+      white-space: nowrap; }
+  .table > tbody > tr > td.no-data {
+    padding-left: 0 !important;
+    margin-bottom: 0; }
+  .project-data-table td:nth-of-type(1):before {
+    content: "PROJECT TITLE"; }
+  .project-data-table td:nth-of-type(2):before {
+    content: "PROJECT IDENTIFIER"; }
+  .expenditure-table td:nth-of-type(1):before, .incoming-fund-table td:nth-of-type(1):before {
+    content: "DATE"; }
+  .expenditure-table td:nth-of-type(2):before, .incoming-fund-table td:nth-of-type(2):before {
+    content: "AMOUNT"; }
+  .expenditure-table td:nth-of-type(2):before, .incoming-fund-table td:nth-of-type(2):before {
+    content: "RECEIVER"; }
+  .navbar-nav {
+    margin: 0; } }
+
 /* ------- style for header banner ------- */
 .container {
   padding-right: 0;
@@ -344,6 +411,9 @@ footer .footer-logo a img {
 .container--shadow {
   margin-bottom: 30px; }
 
+.small-container {
+  max-width: 760px; }
+
 .name-value-section {
   margin-bottom: 30px; }
   .name-value-section dl {
@@ -356,6 +426,9 @@ footer .footer-logo a img {
     padding-right: 15px; }
   .name-value-section dd {
     padding-left: 12px; }
+    .name-value-section dd span {
+      color: #818181;
+      font-style: italic; }
 
 .list-wrap > div {
   position: relative;
@@ -392,6 +465,9 @@ footer .footer-logo a img {
       font-size: 26px;
       line-height: 32px;
       font-family: Open-Sans-Bold; }
+  @media (max-width: 480px) {
+    .header-name-value {
+      text-align: center; } }
 
 .intro-section {
   margin-bottom: 40px; }
@@ -529,5 +605,67 @@ tr, td {
     font-family: Open-Sans-Bold; }
   .custom-table tr .light-col {
     color: rgba(72, 72, 72, 0.5); }
+
+/* Hide table headers (but not display: none;, for accessibility) */
+/*
+  Label the data
+  */
+@media all and (max-width: 767px) {
+  *:not(.xdsoft_calendar) > table {
+    display: block; }
+    *:not(.xdsoft_calendar) > table thead, *:not(.xdsoft_calendar) > table tbody, *:not(.xdsoft_calendar) > table th, *:not(.xdsoft_calendar) > table td, *:not(.xdsoft_calendar) > table tr {
+      display: block; }
+  .custom-table {
+    border: none;
+    -webkit-border-radius: 0;
+            border-radius: 0; }
+  thead tr {
+    position: absolute;
+    top: -9999px;
+    left: -9999px; }
+  tr {
+    border: 1px solid #eee; }
+  .table > tbody > tr > td {
+    border: none;
+    border-bottom: 1px solid #eee;
+    position: relative;
+    padding-left: 50% !important;
+    overflow: hidden;
+    min-height: 48px; }
+    .table > tbody > tr > td:before {
+      position: absolute;
+      top: 15px;
+      left: 6px;
+      width: 45%;
+      padding-right: 10px;
+      white-space: nowrap; }
+  .table > tbody > tr > td.no-data {
+    padding-left: 0 !important;
+    margin-bottom: 0; }
+  .project-data-table td:nth-of-type(1):before {
+    content: "PROJECT TITLE"; }
+  .project-data-table td:nth-of-type(2):before {
+    content: "PROJECT IDENTIFIER"; }
+  .expenditure-table td:nth-of-type(1):before, .incoming-fund-table td:nth-of-type(1):before {
+    content: "DATE"; }
+  .expenditure-table td:nth-of-type(2):before, .incoming-fund-table td:nth-of-type(2):before {
+    content: "AMOUNT"; }
+  .expenditure-table td:nth-of-type(2):before, .incoming-fund-table td:nth-of-type(2):before {
+    content: "RECEIVER"; }
+  .navbar-nav {
+    margin: 0; } }
+
+@media (max-width: 768px) {
+  .container--shadow {
+    margin: 20px; } }
+
+@media (max-width: 480px) {
+  .container--shadow {
+    -webkit-box-shadow: none;
+            box-shadow: none;
+    margin: 0 0 20px; }
+  .header-name-value .col-xs-6 {
+    width: 100%;
+    float: none; } }
 
 /*# sourceMappingURL=maps/tz.style.css.map */
