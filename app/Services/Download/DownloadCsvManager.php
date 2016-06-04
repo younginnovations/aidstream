@@ -74,11 +74,11 @@ class DownloadCsvManager
      * @param $organizationId
      * @return mixed
      */
-    public function simpleCsvData($organizationId)
+    public function simpleCsvData($organizationId, $tanzania)
     {
         $activities = $this->downloadCsvRepo->simpleCsvData($organizationId);
 
-        return $this->simpleCsvDataFormatter->format($activities);
+        return $this->simpleCsvDataFormatter->format($activities, $tanzania);
     }
 
     /**

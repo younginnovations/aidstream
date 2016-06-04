@@ -8,7 +8,7 @@
                     <li class="activities"><a href="{{ route('project.index') }}">Projects</a></li>
                     <li class="published-files"><a href="{{ route('published-files.list') }}">Published Files</a></li>
                     <li class="users"><a href="{{ route('users.list') }}">Users</a></li>
-                    <li class="downloads"><a href="{{ route('downloads') }}">Downloads</a></li>
+                    <li class="downloads"><a href="{{ route('download.simple', true) }}">Downloads</a></li>
                     @if(auth()->user()->role_id == 1)
                         <li class="settings"><a href="{{ route('settings.index') }}">Settings</a></li>
                         {{--<li class="logs"><a href="{{ route('user-logs') }}">Activity Log</a></li>--}}

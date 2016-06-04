@@ -44,10 +44,12 @@ class DownloadController extends Controller
 
     /**
      * export the simple activity csv
+     * @param bool $tanzania
+     * @return
      */
-    public function exportSimpleCsv()
+    public function exportSimpleCsv($tanzania = false)
     {
-        $csvData = $this->downloadCsvManager->simpleCsvData(Session::get('org_id'));
+        $csvData = $this->downloadCsvManager->simpleCsvData(Session::get('org_id'), $tanzania);
 
         if (false === $csvData) {
             return redirect()->back()->withResponse(['messages' => ["It seems you do not have any Activities."], 'type' => 'warning']);

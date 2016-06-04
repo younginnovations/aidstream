@@ -32,7 +32,7 @@ class SimpleCsvDataFormatter
      */
     public function __construct(GetCodeName $codeNameHelper)
     {
-        $this->headers        = [
+        $this->headers = [
             'iati-identifier',
             'title',
             'description_general',
@@ -63,7 +63,27 @@ class SimpleCsvDataFormatter
             'total-expenditure',
             'total-incoming-funds'
         ];
-        $this->codeNameHelper = $codeNameHelper;
+
+        $this->tanzaniaHeaders = [
+            'iati-identifier',
+            'title',
+            'description_general',
+            'description_objective',
+            'description_target',
+            'activity-status',
+            'start-actual',
+            'end-actual',
+            'funding_organisations',
+            'implementing_organisations',
+            'recipient-country',
+            'recipient-country-codes',
+            'sector-vocabularies',
+            'sector-codes',
+            'total-disbursements',
+            'total-expenditure',
+            'total-incoming-funds'
+        ];
+        $this->codeNameHelper  = $codeNameHelper;
     }
 
     /**
@@ -71,10 +91,39 @@ class SimpleCsvDataFormatter
      * @param Collection $activities
      * @return array
      */
-    public function format(Collection $activities)
+    public function format(Collection $activities, $tanzania)
     {
         if ($activities->isEmpty()) {
             return false;
+        }
+
+        if ($tanzania) {
+            $this->csvData = ['headers' => $this->tanzaniaHeaders];
+            foreach ($activities as $activity) {
+                $this->csvData[] = [
+                    'iati-identifier'            => $activity->identifier['iati_identifier_text'],
+                    'title'                      => !($activity->title) ? '' : $this->formatTitle($activity->title),
+                    'description_general'        => !($activity->description) ? '' : $this->formatDescription($activity->description, '1'),
+                    'description_objective'      => !($activity->description) ? '' : $this->formatDescription($activity->description, '2'),
+                    'description_target'         => !($activity->description) ? '' : $this->formatDescription($activity->description, '3'),
+                    'activity-status'            => (int) $activity->activity_status,
+                    'start-actual'               => !($activity->activity_date) ? '' : $this->formatActivityDate($activity->activity_date, '2'),
+                    'end-actual'                 => !($activity->activity_date) ? '' : $this->formatActivityDate($activity->activity_date, '4'),
+                    'funding_organisations'      => !($activity->participating_organization) ? '' : $this->formatParticipatingOrg($activity->participating_organization, '1'),
+                    'implementing_organisations' => !($activity->participating_organization) ? '' : $this->formatParticipatingOrg($activity->participating_organization, '4'),
+                    'recipient-country'          => !($activity->recipient_country) ? '' : $this->formatRecipientCountry($activity->recipient_country),
+                    'recipient-country-codes'    => !($activity->recipient_country) ? '' : $this->formatRecipientCountryCodes($activity->recipient_country),
+                    'sector-vocabularies'        => !($activity->sector) ? '' : $this->formatSectorVocabularies($activity->sector),
+                    'sector-codes'               => !($activity->sector) ? '' : $this->formatSectorCodes($activity->sector),
+                    'location-region'            => !($activity->location) ? '' : $this->formatLocationRegion($activity->location),
+                    'location-district'          => !($activity->location) ? '' : $this->formatLocationDistrict($activity->location),
+                    'total-incoming-funds'       => (!$activity->transactions) ? '' : $this->formatTransactionValues($activity->transactions, 1),
+                    'total-disbursements'        => (!$activity->transactions) ? '' : $this->formatTransactionValues($activity->transactions, 3),
+                    'total-expenditure'          => (!$activity->transactions) ? '' : $this->formatTransactionValues($activity->transactions, 4)
+                ];
+            }
+
+            return $this->csvData;
         }
 
         $this->csvData = ['headers' => $this->headers];
@@ -368,5 +417,42 @@ class SimpleCsvDataFormatter
         }
 
         return $value;
+    }
+
+    /**
+     * @param $locations
+     * @return mixed
+     */
+    protected function formatLocationRegion($locations)
+    {
+        $locationRegion = [];
+        foreach ($locations as $location) {
+            foreach ($location['administrative'] as $region) {
+                if ($region['level'] == 1) {
+                    $locationRegion[] = $region['code'];
+                }
+
+            }
+        }
+
+        return implode('; ', $locationRegion);
+    }
+
+    /**
+     * @param $locations
+     * @return mixed
+     */
+    protected function formatLocationDistrict($locations)
+    {
+        $locationDistrict = [];
+        foreach ($locations as $location) {
+            foreach ($location['administrative'] as $district) {
+                if ($district['level'] == 2) {
+                    $locationDistrict[] = $district['code'];
+                }
+            }
+        }
+
+        return implode('; ', $locationDistrict);
     }
 }

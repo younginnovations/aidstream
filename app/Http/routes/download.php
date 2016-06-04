@@ -11,7 +11,7 @@ $router->group(
             ]
         );
         $router->get(
-            'download-my-data/simple',
+            'download-my-data/simple/{tanzania?}',
             [
                 'as'   => 'download.simple',
                 'uses' => 'DownloadController@exportSimpleCsv'
