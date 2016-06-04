@@ -297,9 +297,6 @@
                 @include('tz.project.partials.add-budget')
 
                 <div class="activity-element-wrapper">
-                    <div class="title">
-                        Transactions
-                    </div>
                     @if(count($disbursement) > 0)
                         <div class="activity-element-label">
                             Disbursement
@@ -367,6 +364,7 @@
                         @endforeach
                     @else
                         <div class="activity-element-list">
+                            <div class="title">Incoming Fund</div>
                             <a href="{{ url(sprintf('project/%s/transaction/%s/create', $project->id,3)) }}"
                                class="add-more"><span>Add Disbursement</span></a>
                         </div>

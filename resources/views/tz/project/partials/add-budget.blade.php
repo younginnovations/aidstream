@@ -21,7 +21,7 @@
         @endforeach
     @else
         <div class="activity-element-list">
-            <div class="activity-element-label">
+            <div class="title">
                 Budget
             </div>
             <a href="{{ route('project.add-budget', $project->id) }}"
