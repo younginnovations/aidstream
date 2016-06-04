@@ -305,7 +305,7 @@ var MapView = Backbone.View.extend({
         var self = this;
         _.each(this.regionLayers, function(layer) {
             if (layer && layer._layers && layer._layers[layer._leaflet_id-1]) {
-                feature = layer._layers[layer._leaflet_id-1].feature;
+                var feature = layer._layers[layer._leaflet_id-1].feature;
                 var regionProjects = projects.filterProjectsByRegion(feature.properties.REGNAME);
                 var content = "Region: " + feature.properties.REGNAME;
                 content += "<br>No of projects:" + regionProjects.length;
@@ -313,7 +313,16 @@ var MapView = Backbone.View.extend({
                 layer.setStyle({
                     color: self.getColor(regionProjects.length),
                     weight: 2
-                });               
+                });
+                if(!layer.marker) {
+                    layer.marker = L.marker(layer.getBounds().getCenter());
+                }
+                if(regionProjects.length>0) {
+                    layer.marker.bindPopup(content);
+                    self.map.addLayer(layer.marker);
+                } else {
+                    self.map.removeLayer(layer.marker);
+                }
             }
         });
     },

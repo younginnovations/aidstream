@@ -142,7 +142,7 @@
 {{-- ---------- section for templates -------- --}}
 
 <script type="text/template" id="project-list-item">
-    <td class="bold-col"><%= project["title"] %></td>
+    <td class="bold-col"><a href="/public/project/<%= project['id'] %>"><%= project["title"] %></a></td>
     <td><%= project["identifier"] %></td>
 </script>
 <script type="text/template" id="region-checkbox-item">
