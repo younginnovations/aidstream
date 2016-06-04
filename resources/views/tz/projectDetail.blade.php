@@ -37,7 +37,7 @@
                     @if($orgDetail->logo)
                         <div class="organization-logo"><img src={{asset($orgDetail->logo)}} width="106px" height="100px"></div>
                     @endif
-                    <div class="organization-name"><a href="{{route('project.public', $orgDetail->id)}}">{{$orgDetail->name}}</a> </div>
+                    <div class="organization-name"><a href="{{route('project.public', $orgDetail->id)}}">{{$orgDetail->name}}</a></div>
                 </div>
             </div>
 
@@ -76,7 +76,7 @@
 
             <dl class="clearfix">
                 <dt class="col-md-3">Project Status</dt>
-                <dd class="col-md-9">{{ $getCode->getActivityCodeName('ActivityStatus', $project->activity_status) }}</dd>
+                <dd class="col-md-9">{{ $getCode->getCodeListName('Activity','ActivityStatus', $project->activity_status) }}</dd>
             </dl>
 
             @foreach($project->activity_date as $date)
@@ -85,7 +85,8 @@
                         <dt class="col-md-3">Start Date</dt>
                         <dd class="col-md-9">{{ $date['date']}}</dd>
                     </dl>
-                @elseif($date['type'] == 4)
+                @endif
+                @if($date['type'] == 4)
                     <dl class="clearfix">
                         <dt class="col-md-3">End Date</dt>
                         <dd class="col-md-9">{{ $date['date']}}</dd>
@@ -95,26 +96,26 @@
 
             <dl class="clearfix">
                 <dt class="col-md-3">Project Country</dt>
-                <dd class="col-md-9">{{$getCode->getOrganizationCodeName('Country', $project->recipient_country[0]['country_code'])}}</dd>
+                <dd class="col-md-9">{{$getCode->getCodeListName('Organization','Country', $project->recipient_country[0]['country_code'])}}</dd>
             </dl>
 
             @if($project->location != null)
-            <dl class="clearfix">
                 <dl class="clearfix">
-                    <dt class="col-md-3">Location</dt>
-                    <dd class="col-md-9 list-wrap">
-                        @foreach ($project->location as $location)
-                            @foreach (getVal($location, ['administrative'], []) as $value)
-                                @if ($value['level'] == 1)
-                                    <div>
-                                        {{ $value['code'] }}
-                                    </div>
-                                @endif
+                    <dl class="clearfix">
+                        <dt class="col-md-3">Location</dt>
+                        <dd class="col-md-9 list-wrap">
+                            @foreach ($project->location as $location)
+                                @foreach (getVal($location, ['administrative'], []) as $value)
+                                    @if ($value['level'] == 1 && $value['code'] != "")
+                                        <div>
+                                            {{ $value['code'] }}
+                                        </div>
+                                    @endif
+                                @endforeach
                             @endforeach
-                        @endforeach
-                    </dd>
+                        </dd>
+                    </dl>
                 </dl>
-            </dl>
             @endif
 
             @foreach($documentLinks as $documentLink)
@@ -128,7 +129,11 @@
                             @endif
                         </dt>
                         <dd class="col-md-9">
-                            {{$data['url']}}
+                            @if($data['url'] != "")
+                                <a href="{{$data['url']}}" target="_blank">{{$data['url']}}</a>
+                            @else
+                                &nbsp;
+                            @endif
                         </dd>
                         @endforeach
                         @endforeach
@@ -138,7 +143,10 @@
                                 <dt class="col-md-3">Funding Organisation</dt>
                                 <dd class="col-md-9 list-wrap">
                                     @foreach($fundings as $funding)
-                                        <div>{{$funding['narrative'][0]['narrative']}} <span>{{ $getCode->getActivityCodeName('OrganisationType', $funding['organization_type']) }}</span></div>
+                                        @if($funding['narrative'][0]['narrative'] != "")
+                                            <div>{{$funding['narrative'][0]['narrative']}} , <span>{{ $getCode->getCodeListName('Activity','OrganisationType', $funding['organization_type']) }}</span>
+                                            </div>
+                                        @endif
                                     @endforeach
                                 </dd>
                             </dl>
@@ -149,8 +157,11 @@
                                 <dt class="col-md-3">Implemeting Organisation</dt>
                                 <dd class="col-md-9 list-wrap">
                                     @foreach($implementings as $implementing)
-                                        <div>{{$implementing['narrative'][0]['narrative']}} <span>{{ $getCode->getActivityCodeName('OrganisationType', $implementing['organization_type']) }}</span>
-                                        </div>
+                                        @if($implementing['narrative'][0]['narrative'] != "")
+                                            <div>{{$implementing['narrative'][0]['narrative']}} ,
+                                                <span>{{ $getCode->getCodeListName('Activity','OrganisationType', $implementing['organization_type']) }}</span>
+                                            </div>
+                                        @endif
                                     @endforeach
                                 </dd>
                             </dl>

@@ -34,7 +34,8 @@ class WhoIsUsingController extends Controller
         $organizationCount = $this->initializeOrganizationQueryBuilder()->get()->count();
 
         if ($this->hasSubdomain($this->getRoutePieces())) {
-            $organizationCount = $this->initializeOrganizationQueryBuilder(false)->get()->count();
+//            $organizationCount = $this->initializeOrganizationQueryBuilder(false)->get()->count();
+            $organizationCount = $this->initializeOrganizationQuery()->get()->count();
 
             return view('tz.who-is-using-tz', compact('organizationCount'));
         }
@@ -64,6 +65,16 @@ class WhoIsUsingController extends Controller
                            ->orderBy('organizations.name');
     }
 
+
+    /**
+     * @return mixed
+     */
+    public function initializeOrganizationQuery()
+    {
+        return Organization::select('organizations.id', 'organizations.name', 'organizations.logo_url')
+                           ->groupBy('organizations.id')
+                           ->orderBy('organizations.name');
+    }
     /**
      * return organization list
      * @param int $page

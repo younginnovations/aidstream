@@ -7,17 +7,20 @@
             <div class="panel-content-heading">
                 <div>Projects</div>
             </div>
+            {{--{{dd($projects)}}--}}
             <div class="panel-body">
                 <table class="table table-striped" id="data-table">
-                    <thead>
-                    <tr>
-                        <th width="20px" class="no-sort">S.N.</th>
-                        <th width="50%">Project Title</th>
-                        <th class="default-sort">Last Updated</th>
-                        <th class="status">Status</th>
-                        <th class="no-sort">Actions</th>
-                    </tr>
-                    </thead>
+                    @if($projects->count())
+                        <thead>
+                        <tr>
+                            <th width="20px" class="no-sort">S.N.</th>
+                            <th width="50%">Project Title</th>
+                            <th class="default-sort">Last Updated</th>
+                            <th class="status">Status</th>
+                            <th class="no-sort">Actions</th>
+                        </tr>
+                        </thead>
+                    @endif
 
                     <tbody>
                     @forelse($projects as $key => $project)

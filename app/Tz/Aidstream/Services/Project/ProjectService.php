@@ -506,4 +506,52 @@ class ProjectService
         }
 
     }
+
+    public function getPublishedProjects($orgId)
+    {
+        return $this->project->getPublishedProjects($orgId);
+    }
+
+    public function getProjectJsonData($projects)
+    {
+        $regionName = [];
+        $startDate  = "";
+        $endDate    = "";
+        $jsonData = [];
+        $getCode = new GetCodeName();
+
+        foreach ($projects as $project){
+            foreach ($project->activity_date as $activityDate) {
+                if ($activityDate['type'] == 2) {
+                    $startDate = $activityDate['date'];
+                } elseif ($activityDate['type'] == 4) {
+                    $endDate = $activityDate['date'];
+                }
+            }
+
+            $i = 0;
+            foreach ($project->location as $location) {
+                foreach ($location['administrative'] as $index => $administrative) {
+                    if ($index == 0) {
+                        $regionName[$i] = $administrative['code'];
+                        $i ++;
+                    }
+
+                }
+            }
+
+            $jsonData[] = [
+                'id'         => $project->id,
+                'identifier' => $project->identifier['activity_identifier'],
+                'title'      => $project->title[0]['narrative'],
+                'sectors'    => [$getCode->getActivityCodeName('SectorCategory', $project->sector[0]['sector_category_code'])],
+                'regions'    => $regionName,
+                'startdate'  => $startDate,
+                'enddate'    => $endDate
+            ];
+        }
+
+        return $jsonData;
+    }
+    
 }

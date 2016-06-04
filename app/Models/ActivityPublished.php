@@ -54,4 +54,29 @@ class ActivityPublished extends Model
 
         return reset($file);
     }
+
+    /**
+     * get published projects on basis of organization
+     * @param $orgId
+     * @return mixed
+     */
+    public function getPublishedRowsByOrganization($orgId)
+    {
+        return DB::table('activity_published')
+                    ->select('*')
+                    ->where('organization_id', '=', $orgId)
+                    ->get();
+        
+    }
+
+    /**
+     * get all published projects 
+     * @return mixed
+     */
+    public function getPublishedRows()
+    {
+        return DB::table('activity_published')
+                 ->select('*')
+                 ->get();
+    }
 }

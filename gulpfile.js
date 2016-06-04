@@ -77,7 +77,7 @@ gulp.task('watch', function () {
 /*
  * Default task, running just `gulp` will compile the sass,
  */
-gulp.task('default', ['sass',"tz_sass", 'watch']);
+gulp.task('default', ['sass',"tz_sass", 'watch', 'js-main']);
 
 gulp.task('css-main', function () {
     return gulp.src(css_files)

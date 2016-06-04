@@ -13,11 +13,11 @@
             <ul class="nav navbar-nav">
                 <li><a class="{{ Request::is('about') ? 'active' : '' }}" href="{{ url('/about') }}">About</a></li>
                 <li><a class="{{ Request::is('who-is-using') ? 'active' : '' }}" href="{{ url('/who-is-using') }}">Who's Using It?</a></li>
-                <li><a href="https://github.com/younginnovations/aidstream-new/wiki/User-Guide" target="_blank">User Guide</a></li>
+                <li><a href="https://github.com/younginnovations/aidstream-tz/wiki/User-Guide" target="_blank">User Guide</a></li>
             </ul>
             <div class="action-btn pull-left">
                 @if(auth()->check())
-                    <a href="{{ url((auth()->user()->role_id == 1 || auth()->user()->role_id == 2) ? route('project.index') : config('app.super_admin_dashboard'))}}" class="btn btn-primary">Goto Dashboard</a>
+                    <a href="{{ url((auth()->user()->role_id == 1 || auth()->user()->role_id == 2) ? route('project.index') : config('app.super_admin_dashboard'))}}" class="btn btn-primary">Go to Dashboard</a>
                 @else
                     <a href="{{ url('/auth/login')}}" class="btn btn-primary">Login/Register</a>
                 @endif

@@ -53,21 +53,18 @@ class HomeController extends Controller
      */
     public function projectPublicPage($orgId)
     {
-//        $projects = $this->project->getProjectData($projectId);
-//        $jsonData = $this->project->getJsonData($projects);
-
         $projects         = $this->project->getProjectsByOrganisationId($orgId);
         $transactionCount = $this->transaction->getTransactionsSum($projects);
         $orgDetails       = $this->orgManager->getOrganization($orgId);
         $user             = $this->user->getDataByOrgIdAndRoleId($orgId, '1');
 
-        return view('tz.projectPublicPage', compact('projects', 'orgDetails', 'user', 'transactionCount'));
+        return view('tz.projectPublicPage', compact('orgDetails', 'user', 'transactionCount'));
     }
-    
+
     public function projectlists($orgId = 0)
     {
-        $projects= $this->project->getProjectsByOrganisationId($orgId?$orgId:"");
-        $jsonData  = json_encode($this->project->getJsonData($projects));
+        $projects = $this->project->getPublishedProjects($orgId ? $orgId : "");
+        $jsonData = json_encode($this->project->getProjectJsonData($projects));
 
         return view('tz.project.jsonProjects', compact('jsonData'));
     }
@@ -81,7 +78,7 @@ class HomeController extends Controller
     {
         $project = $this->project->find($id);
 
-        if($project->activity_workflow != 3){
+        if ($project->activity_workflow != 3) {
             return view('tz.unauthorized');
         }
 

@@ -60,4 +60,6 @@ interface ProjectRepositoryInterface
     public function getProjectData($projectId);
     
     public function getProjectsByOrganisationId($orgId);
+    
+    public function getPublishedProjects($orgId);
 }

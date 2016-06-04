@@ -1,5 +1,6 @@
 <?php namespace App\Tz\Aidstream\Repositories\Project;
 
+use App\Models\ActivityPublished;
 use App\Tz\Aidstream\Models\Project;
 
 
@@ -13,14 +14,17 @@ class ProjectRepository implements ProjectRepositoryInterface
      * @var Project
      */
     protected $project;
+    protected $published;
 
     /**
      * ProjectRepository constructor.
-     * @param Project $project
+     * @param Project           $project
+     * @param ActivityPublished $activityPublished
      */
-    public function __construct(Project $project)
+    public function __construct(Project $project, ActivityPublished $activityPublished)
     {
-        $this->project = $project;
+        $this->project   = $project;
+        $this->published = $activityPublished;
     }
 
     /**
@@ -125,5 +129,32 @@ class ProjectRepository implements ProjectRepositoryInterface
         }
 
         return $this->project->where('activity_workflow', '=', 3)->get();
+    }
+
+    public function getPublishedProjects($orgId)
+    {
+        if ($orgId && is_numeric($orgId)) {
+            $published = $this->published->getPublishedRowsByOrganization($orgId);
+        } else {
+            $published = $this->published->getPublishedRows();
+        }
+
+        $projects = [];
+        foreach ($published as $publish) {
+            if($publish->published_activities != null){
+                $files = json_decode($publish->published_activities);
+                foreach ($files as $filename) {
+                    $projectId  = array_last(
+                        explode('-', explode('.', $filename)[0]),
+                        function ($value) {
+                            return true;
+                        }
+                    );
+                    $projects[] = $this->find($projectId);
+                }
+            }
+        }
+
+        return $projects;
     }
 }

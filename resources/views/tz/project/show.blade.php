@@ -106,7 +106,7 @@
                             Project Status:
                         </div>
                         <div class="activity-element-info">
-                            {{ $getCode->getActivityCodeName('ActivityStatus', $project->activity_status) }}
+                            {{ $getCode->getCodeListName('Activity','ActivityStatus', $project->activity_status) }}
                         </div>
                     </div>
                 </div>
@@ -117,7 +117,7 @@
                             Sector:
                         </div>
                         <div class="activity-element-info">
-                            {{ $getCode->getActivityCodeName('SectorCategory', getVal($project->sector, [0, 'sector_category_code'])) }}
+                            {{ $getCode->getCodeListName('Activity','SectorCategory', getVal($project->sector, [0, 'sector_category_code'])) }}
                         </div>
                     </div>
                 </div>
@@ -207,7 +207,7 @@
                                         Funding Organization Type:
                                     </div>
                                     <div class="activity-element-info">
-                                        {{$getCode->getActivityCodeName('OrganisationType', getVal($participatingOrganization, ['organization_type']))}}
+                                        {{$getCode->getCodeListName('Activity','OrganisationType', getVal($participatingOrganization, ['organization_type']))}}
                                     </div>
                                 </div>
                             @endif
@@ -226,7 +226,7 @@
                                         Implementing Organization Type:
                                     </div>
                                     <div class="activity-element-info">
-                                        {{$getCode->getActivityCodeName('OrganisationType', getVal($participatingOrganization, ['organization_type']))}}
+                                        {{$getCode->getCodeListName('Activity','OrganisationType', getVal($participatingOrganization, ['organization_type']))}}
                                     </div>
                                 </div>
                             @endif
@@ -240,7 +240,7 @@
                             Recipient Country:
                         </div>
                         <div class="activity-element-info">
-                            {{$getCode->getOrganizationCodeName('Country', $project->recipient_country[0]['country_code'])}}
+                            {{$getCode->getCodeListName('Organization','Country', $project->recipient_country[0]['country_code'])}}
                         </div>
                     </div>
                 </div>
@@ -312,7 +312,7 @@
                         </div>
                         @foreach($disbursement as $data)
                             <div class="activity-element-info">
-                                <li>{{$data['value'][0]['amount']}}, {{ $getCode->getOrganizationCodeName('Currency', $data['value'][0]['currency']) }}</li>
+                                <li>{{$data['value'][0]['amount']}}, {{ $getCode->getCodeListName('Organization','Currency', $data['value'][0]['currency']) }}</li>
                                 <div class="toggle-btn">
                                     <span class="show-more-info">Show more info</span>
                                     <span class="hide-more-info hidden">Hide more info</span>
@@ -388,7 +388,7 @@
                         </div>
                         @foreach($expenditure as $data)
                             <div class="activity-element-info">
-                                <li>{{$data['value'][0]['amount']}}, {{ $getCode->getOrganizationCodeName('Currency', $data['value'][0]['currency']) }}</li>
+                                <li>{{$data['value'][0]['amount']}}, {{ $getCode->getCodeListName('Organization','Currency', $data['value'][0]['currency']) }}</li>
                                 <div class="toggle-btn">
                                     <span class="show-more-info">Show more info</span>
                                     <span class="hide-more-info hidden">Hide more info</span>
@@ -459,7 +459,7 @@
                         </div>
                         @foreach($incomingFund as $data)
                             <div class="activity-element-info">
-                                <li>{{$data['value'][0]['amount']}}, {{ $getCode->getOrganizationCodeName('Currency', $data['value'][0]['currency']) }}</li>
+                                <li>{{$data['value'][0]['amount']}}, {{ $getCode->getCodeListName('Organization','Currency', $data['value'][0]['currency']) }}</li>
                                 <div class="toggle-btn">
                                     <span class="show-more-info">Show more info</span>
                                     <span class="hide-more-info hidden">Hide more info</span>
