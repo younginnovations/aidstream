@@ -64,82 +64,40 @@
                     <div class="title">
                         Description
                     </div>
-                    <div class="activity-element-list">
-                        <div class="activity-element-label">
-                            General Description:
-                        </div>
-                        <div class="activity-element-info">
-                            @if(getVal($project->description, [0, 'type']) == 1)
-                                {{$project->description[0]['narrative'][0]['narrative']}}
-                            @else
-                                &nbsp;
-                            @endif
-                        </div>
-                    </div>
-                </div>
+                    @foreach ($project->description as $description)
+                        @if(getVal($description, ['type']) == 1)
+                            <div class="activity-element-list">
+                                <div class="activity-element-label">
+                                    General Description:
+                                </div>
+                                <div class="activity-element-info">
+                                    {{$description['narrative'][0]['narrative']}}
+                                </div>
+                            </div>
+                        @endif
 
-                @if(getVal($project->description, [0, 'type']) == 2)
-                    <div class="activity-element-wrapper">
-                        <div class="activity-element-list">
-                            <div class="activity-element-label">
-                                Objectives:
+                        @if(getVal($description, ['type']) == 2)
+                            <div class="activity-element-list">
+                                <div class="activity-element-label">
+                                    Objectives:
+                                </div>
+                                <div class="activity-element-info">
+                                    {{$description['narrative'][0]['narrative']}}
+                                </div>
                             </div>
-                            <div class="activity-element-info">
-                                {{$project->description[0]['narrative'][0]['narrative']}}
-                            </div>
-                        </div>
-                    </div>
-                @endif
+                        @endif
 
-                @if(getVal($project->description, [0, 'type']) == 3)
-                    <div class="activity-element-wrapper">
-                        <div class="activity-element-list">
-                            <div class="activity-element-label">
-                                Target Groups:
+                        @if(getVal($description, ['type']) == 3)
+                            <div class="activity-element-list">
+                                <div class="activity-element-label">
+                                    Target Groups:
+                                </div>
+                                <div class="activity-element-info">
+                                    {{$description['narrative'][0]['narrative']}}
+                                </div>
                             </div>
-                            <div class="activity-element-info">
-                                {{$project->description[0]['narrative'][0]['narrative']}}
-                            </div>
-                        </div>
-                    </div>
-                @endif
-
-                <div class="activity-element-wrapper">
-                    <div class="title">
-                        Budget
-                    </div>
-                    <div class="activity-element-list">
-                        <div class="activity-element-label">
-                            Start Date
-                        </div>
-                        <div class="activity-element-info">
-                            {{ getVal($project->budget, [0, 'period_start', 0, 'date']) }}
-                        </div>
-                    </div>
-                    <div class="activity-element-list">
-                        <div class="activity-element-label">
-                            End Date
-                        </div>
-                        <div class="activity-element-info">
-                            {{ getVal($project->budget, [0, 'period_end', 0, 'date']) }}
-                        </div>
-                    </div>
-                    <div class="activity-element-list">
-                        <div class="activity-element-label">
-                            Amount
-                        </div>
-                        <div class="activity-element-info">
-                            {{ getVal($project->budget, [0, 'value', 0, 'amount']) }}
-                        </div>
-                    </div>
-                    <div class="activity-element-list">
-                        <div class="activity-element-label">
-                            Currency
-                        </div>
-                        <div class="activity-element-info">
-                            {{ getVal($project->budget, [0, 'value', 0, 'currency']) }}
-                        </div>
-                    </div>
+                        @endif
+                    @endforeach
                 </div>
 
                 <div class="activity-element-wrapper">
@@ -164,31 +122,33 @@
                     </div>
                 </div>
 
-                @if(getVal($project->activity_date, [0, 'type']) == 2)
-                    <div class="activity-element-wrapper">
-                        <div class="activity-element-list">
-                            <div class="activity-element-label">
-                                Start Date:
-                            </div>
-                            <div class="activity-element-info">
-                                {{$project->activity_date[0]['date']}}
+                @foreach ($project->activity_date as $date)
+                    @if(getVal($date, ['type']) == 2)
+                        <div class="activity-element-wrapper">
+                            <div class="activity-element-list">
+                                <div class="activity-element-label">
+                                    Start Date:
+                                </div>
+                                <div class="activity-element-info">
+                                    {{$date['date']}}
+                                </div>
                             </div>
                         </div>
-                    </div>
-                @endif
+                    @endif
 
-                @if(getVal($project->activity_date, [0, 'type']) == 4)
-                    <div class="activity-element-wrapper">
-                        <div class="activity-element-list">
-                            <div class="activity-element-label">
-                                End Date:
-                            </div>
-                            <div class="activity-element-info">
-                                {{ getVal($project->activity_date, [0, 'date']) }}
+                    @if(getVal($date, ['type']) == 4)
+                        <div class="activity-element-wrapper">
+                            <div class="activity-element-list">
+                                <div class="activity-element-label">
+                                    End Date:
+                                </div>
+                                <div class="activity-element-info">
+                                    {{ getVal($date, ['date']) }}
+                                </div>
                             </div>
                         </div>
-                    </div>
-                @endif
+                    @endif
+                @endforeach
 
                 <div class="activity-element-wrapper">
                     <div class="title">
@@ -227,37 +187,52 @@
                     </div>
                 </div>
 
-                <div class="activity-element-wrapper">
-                    <div class="title">
-                        Participating Organization
-                    </div>
-
-                    @if($fundings != [])
-                    <div class="activity-element-list">
-                        <div class="activity-element-label">
-                            Funding Organization :
+                @if ($project->participating_organization)
+                    <div class="activity-element-wrapper">
+                        <div class="title">
+                            Participating Organization
                         </div>
-                        @foreach($fundings as $funding)
-                                <div class="activity-element-info">
-                                    <li>{{ getVal($funding, ['narrative', 0, 'narrative']) }} , {{$getCode->getActivityCodeName('OrganisationType', getVal($funding, ['organization_type']))}}</li>
+                        @foreach ($project->participating_organization as $participatingOrganization)
+                            @if(getVal($participatingOrganization, ['narrative', 0, 'narrative']) && getVal($participatingOrganization, ['organization_role']) == "1")
+                                <div class="activity-element-list">
+                                    <div class="activity-element-label">
+                                        Funding Organization Name:
+                                    </div>
+                                    <div class="activity-element-info">
+                                        {{ getVal($participatingOrganization, ['narrative', 0, 'narrative']) }}
+                                    </div>
                                 </div>
+                                <div class="activity-element-list">
+                                    <div class="activity-element-label">
+                                        Funding Organization Type:
+                                    </div>
+                                    <div class="activity-element-info">
+                                        {{$getCode->getActivityCodeName('OrganisationType', getVal($participatingOrganization, ['organization_type']))}}
+                                    </div>
+                                </div>
+                            @endif
+
+                            @if(getVal($participatingOrganization, ['narrative', 0, 'narrative']) && getVal($participatingOrganization, ['organization_role']) == 4)
+                                <div class="activity-element-list">
+                                    <div class="activity-element-label">
+                                        Implementing Organization Name:
+                                    </div>
+                                    <div class="activity-element-info">
+                                        {{ getVal($participatingOrganization, ['narrative', 0, 'narrative']) }}
+                                    </div>
+                                </div>
+                                <div class="activity-element-list">
+                                    <div class="activity-element-label">
+                                        Implementing Organization Type:
+                                    </div>
+                                    <div class="activity-element-info">
+                                        {{$getCode->getActivityCodeName('OrganisationType', getVal($participatingOrganization, ['organization_type']))}}
+                                    </div>
+                                </div>
+                            @endif
                         @endforeach
                     </div>
-                    @endif
-
-                    @if($implementings != [])
-                        <div class="activity-element-list">
-                            <div class="activity-element-label">
-                                Implementing Organization :
-                            </div>
-                            @foreach($implementings as $implementing)
-                                <div class="activity-element-info">
-                                    <li>{{ getVal($implementing, ['narrative', 0, 'narrative']) }} , {{$getCode->getActivityCodeName('OrganisationType', getVal($implementing, ['organization_type']))}}</li>
-                                </div>
-                            @endforeach
-                        </div>
-                    @endif
-                </div>
+                @endif
 
                 <div class="activity-element-wrapper">
                     <div class="activity-element-list">
@@ -269,6 +244,57 @@
                         </div>
                     </div>
                 </div>
+
+                @if ($project->resultDocuments())
+                    <div class="activity-element-wrapper">
+                        <div class="title">
+                            Results/Outcomes Documents
+                        </div>
+                        <div class="activity-element-list">
+                            <div class="activity-element-label">
+                                Title:
+                            </div>
+                            <div class="activity-element-info">
+                                {{ getVal($project->resultDocuments(), ['document_link', 'title', 0, 'narrative', 0, 'narrative']) }}
+                            </div>
+                        </div>
+
+                        <div class="activity-element-list">
+                            <div class="activity-element-label">
+                                Url:
+                            </div>
+                            <div class="activity-element-info">
+                                <a href="{{ getVal($project->resultDocuments(), ['document_link', 'url']) }}">{{ getVal($project->resultDocuments(), ['document_link', 'url']) }}</a>
+                            </div>
+                        </div>
+                    </div>
+                @endif
+
+                @if ($project->annualReports())
+                    <div class="activity-element-wrapper">
+                        <div class="title">
+                            Annual Reports
+                        </div>
+                        <div class="activity-element-list">
+                            <div class="activity-element-label">
+                                Title:
+                            </div>
+                            <div class="activity-element-info">
+                                {{ getVal($project->annualReports(), ['document_link', 'title', 0, 'narrative', 0, 'narrative']) }}
+                            </div>
+                        </div>
+                        <div class="activity-element-list">
+                            <div class="activity-element-label">
+                                Url:
+                            </div>
+                            <div class="activity-element-info">
+                                <a href="{{ getVal($project->annualReports(), ['document_link', 'url']) }}">{{ getVal($project->annualReports(), ['document_link', 'url']) }}</a>
+                            </div>
+                        </div>
+                    </div>
+                @endif
+
+                @include('tz.project.partials.add-budget')
 
                 <div class="activity-element-wrapper">
                     <div class="title">

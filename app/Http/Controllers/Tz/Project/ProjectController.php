@@ -3,6 +3,7 @@
 use App\Core\Form\BaseForm;
 use App\Http\Controllers\Tz\TanzanianController;
 use App\Services\Organization\OrganizationManager;
+use App\Tz\Aidstream\Requests\BudgetRequest;
 use App\Tz\Aidstream\Requests\ProjectRequests;
 use App\Tz\Aidstream\Services\Project\ProjectService;
 use App\Tz\Aidstream\Services\Transaction\TransactionService;
@@ -74,7 +75,10 @@ class ProjectController extends TanzanianController
         $currency           = $baseForm->getCodeList('Currency', 'Activity');
         $settings           = $this->project->getCurrentOrganization()->settings->toArray();
 
-        return view('tz.project.create', compact('codeList', 'sectors', 'recipientRegions', 'participatingOrg', 'organizationType', 'recipientCountries', 'fileFormat', 'transactionType', 'currency', 'settings'));
+        return view(
+            'tz.project.create',
+            compact('codeList', 'sectors', 'recipientRegions', 'participatingOrg', 'organizationType', 'recipientCountries', 'fileFormat', 'transactionType', 'currency', 'settings')
+        );
     }
 
     /**
@@ -316,6 +320,34 @@ class ProjectController extends TanzanianController
         ];
     }
 
+    /**
+     * view project
+     * @param $id
+     * @return mixed
+     */
+    public function projectDetails($id)
+    {
+        $project = $this->project->find($id);
+
+        if ($project->activity_workflow != 3) {
+            return view('tz.unauthorized');
+        }
+
+//        if (Gate::denies('ownership', $project)) {
+//            return redirect()->route('project.index')->withResponse($this->getNoPrivilegesMessage());
+//        }
+
+        $incomingFunds = $this->transaction->getTransactions($id, 1);
+        $disbursements = $this->transaction->getTransactions($id, 3);
+        $expenditures  = $this->transaction->getTransactions($id, 4);
+        $documentLinks = $this->project->findDocumentLinkByProjectId($id);
+        $fundings      = $this->project->getParticipatingOrganizations($id, 1);
+        $implementings = $this->project->getParticipatingOrganizations($id, 4);
+        $orgDetail     = $this->orgManager->getOrganization($project->organization_id);
+
+        return view('tz.projectDetail', compact('orgDetail', 'project', 'incomingFunds', 'disbursements', 'expenditures', 'documentLinks', 'fundings', 'implementings'));
+    }
+
     public function projectPublic($orgId)
     {
         $projectId = 3115;
@@ -328,5 +360,84 @@ class ProjectController extends TanzanianController
 //        $user = $this->user->getDataByOrgIdAndRoleId($orgId, '1');
 //
 //        return view('tz.projectPublicPage', compact('projects', 'orgDetails', 'user', 'transactionCount'));
+    }
+
+    /**
+     * Show the form to add budget.
+     * @param $projectId
+     * @return mixed
+     */
+    public function addBudget($projectId)
+    {
+        $baseForm = new BaseForm();
+        $currency = $baseForm->getCodeList('Currency', 'Activity');
+        $settings = $this->project->getCurrentOrganization()->settings->toArray();
+
+        return view('tz.project.partials.budget', compact('projectId', 'currency', 'settings'));
+    }
+
+    /**
+     * Store Project Budget.
+     * @param               $projectId
+     * @param BudgetRequest $request
+     * @return mixed
+     */
+    public function storeBudget($projectId, BudgetRequest $request)
+    {
+        if (!$this->project->addBudget($projectId, $request->except('_token'))) {
+            $response = ['type' => 'danger', 'code' => ['message', ['message' => 'Budget could not be added.']]];
+        } else {
+            $response = ['type' => 'success', 'code' => ['message', ['message' => 'Budget successfully added.']]];
+        }
+
+        return redirect()->route('project.show', $projectId)->withResponse($response);
+    }
+
+    /**
+     * Show the form to edit an existing Project Budget.
+     * @param $projectId
+     * @return mixed
+     */
+    public function editBudget($projectId)
+    {
+        $baseForm = new BaseForm();
+        $project  = $this->project->find($projectId);
+        $currency = $baseForm->getCodeList('Currency', 'Activity');
+        $settings = $this->project->getCurrentOrganization()->settings->toArray();
+
+        return view('tz.project.partials.edit-budget', compact('project', 'projectId', 'currency', 'settings'));
+    }
+
+    /**
+     * Update a Project Budget.
+     * @param               $projectId
+     * @param BudgetRequest $request
+     * @return mixed
+     */
+    public function updateBudget($projectId, BudgetRequest $request)
+    {
+        if (!$this->project->updateBudget($projectId, $request->except('_token'))) {
+            $response = ['type' => 'danger', 'code' => ['message', ['message' => 'Budget could not be updated.']]];
+        } else {
+            $response = ['type' => 'success', 'code' => ['message', ['message' => 'Budget successfully updated.']]];
+        }
+
+        return redirect()->route('project.show', $projectId)->withResponse($response);
+    }
+
+    /**
+     * Delete a Project Budget.
+     * @param $projectId
+     * @return mixed
+     */
+    public function deleteBudget($projectId)
+    {
+        if (!$this->project->deleteBudget($projectId)) {
+            $response = ['type' => 'danger', 'code' => ['message', ['message' => 'Budget could not be deleted.']]];
+        } else {
+            $response = ['type' => 'success', 'code' => ['message', ['message' => 'Budget successfully deleted.']]];
+        }
+
+        return redirect()->route('project.show', $projectId)->withResponse($response);
     }
 }

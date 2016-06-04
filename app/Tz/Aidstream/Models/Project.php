@@ -46,4 +46,48 @@ class Project extends Activity
     {
         return $this->belongsTo(Transaction::class, 'activity_id', 'id');
     }
+
+    /**
+     * A Project has many document links.
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function documentLinks()
+    {
+        return $this->hasMany(DocumentLink::class, 'activity_id', 'id');
+    }
+
+    /**
+     * Get the Result/Outcome Documents for a Project.
+     * @return array
+     */
+    public function resultDocuments()
+    {
+        return $this->filterDocumentLinks('A08');
+    }
+
+    /**
+     * Get the Annual Reports for a Project.
+     * @return array
+     */
+    public function annualReports()
+    {
+        return $this->filterDocumentLinks('B01');
+    }
+
+    /**
+     * Filter Document Links by category code.
+     * @param $code
+     * @return null
+     */
+    protected function filterDocumentLinks($code)
+    {
+        foreach ($this->documentLinks as $documentLink) {
+            if (getVal($documentLink->document_link, ['category', 0, 'code']) == $code) {
+
+                return $documentLink->toArray();
+            }
+        }
+
+        return null;
+    }
 }

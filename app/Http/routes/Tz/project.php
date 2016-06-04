@@ -71,7 +71,42 @@ $router->group(
                     ]
                 );
 
+                $router->get(
+                    '/project/{project}/add-budget',
+                    [
+                        'as'   => 'project.add-budget',
+                        'uses' => 'ProjectController@addBudget'
+                    ]
+                );
+                $router->post(
+                    '/project/{project}/budget/store',
+                    [
+                        'as'   => 'project.budget.store',
+                        'uses' => 'ProjectController@storeBudget'
+                    ]
+                );
 
+                $router->get(
+                    '/project/{project}/edit-budget',
+                    [
+                        'as'   => 'project.edit-budget',
+                        'uses' => 'ProjectController@editBudget'
+                    ]
+                );
+                $router->post(
+                    '/project/{project}/update-budget',
+                    [
+                        'as'   => 'project.budget.update',
+                        'uses' => 'ProjectController@updateBudget'
+                    ]
+                );
+                $router->post(
+                    '/project/{project}/delete-budget',
+                    [
+                        'as'   => 'project.budget.destroy',
+                        'uses' => 'ProjectController@deleteBudget'
+                    ]
+                );
             }
         );
     }

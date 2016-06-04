@@ -1,0 +1,69 @@
+
+@extends('tz.base.sidebar')
+
+@section('title', 'Create Transaction')
+@inject('code', 'App\Helpers\GetCodeName')
+
+@section('content')
+    <div class="col-xs-9 col-md-9 col-lg-9 content-wrapper">
+        @include('includes.response')
+        <div class="panel panel-default panel-create">
+            <div class="panel-content-heading panel-title-heading">
+                <div>Add Budget</div>
+            </div>
+            <div class="panel-body">
+                <div class="col-sm-12 panel-transaction-heading">
+                    Budget
+                </div>
+                <div class="create-form create-activity-form create-project-form edit-form">
+                    {!! Form::open(['route' => ['project.budget.update', $projectId], 'method' => 'POST']) !!}
+
+                    @foreach ($project->budget as $index => $budget)
+                        <div class="added-new-block">
+                            <div class="col-sm-12">
+                                <div class="col-sm-6">
+                                    {!! Form::hidden("budget[$index][budget_type]", 1, ['class' => 'form-control', 'required' => 'required']) !!}
+                                    {!! Form::label("budget[$index][period_start][0][date]", 'Budget Start Date', ['class' => 'control-label required']) !!}
+                                    {!! Form::text("budget[$index][period_start][0][date]", getVal($budget, ['period_start', 0, 'date']), ['class' => 'form-control datepicker', 'required' => 'required']) !!}
+                                </div>
+
+                                <div class="col-sm-6">
+                                    {!! Form::label("budget[$index][period_end][0][date]", 'Budget End Date', ['class' => 'control-label required']) !!}
+                                    {!! Form::text("budget[$index][period_end][0][date]", getVal($budget, ['period_end', 0, 'date']), ['class' => 'form-control datepicker', 'required' => 'required']) !!}
+                                </div>
+                            </div>
+
+                            <div class="col-sm-12">
+                                <div class="col-sm-6">
+                                    {!! Form::label("budget[$index][value][0][amount]", 'Amount', ['class' => 'control-label required']) !!}
+                                    {!! Form::text("budget[$index][value][0][amount]", getVal($budget, ['value', 0, 'amount']), ['class' => 'form-control', 'required' => 'required']) !!}
+                                </div>
+
+                                <div class="col-sm-6">
+                                    {!! Form::label("budget[$index][value][0][currency]", 'Currency', ['class' => 'control-label required']) !!}
+                                    {!! Form::select("budget[$index][value][0][currency]", ['' => 'Select one of the following.'] + $currency, getVal($budget, ['value', 0, 'currency']), ['class' => 'form-control', 'required' => 'required']) !!}
+                                    {!! Form::hidden("budget[$index][value][0][value_date]", getVal($budget, ['value', 0, 'value_date']), ['class' => 'form-control']) !!}
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                    {!! Form::submit('Update', ['class' => 'btn btn-primary btn-form btn-create']) !!}
+
+                    <button type="button" id="add-more-budget-edit" class="add-more">Add Another Budget</button>
+
+                    {!! Form::close() !!}
+
+                    @include('tz.project.partials.budget-clone')
+                </div>
+            </div>
+        </div>
+    </div>
+@stop
+
+@section('script')
+    <script>
+        var currentBudgetCount = "{!! count($project->budget) - 1 !!}";
+    </script>
+    <script src="{{ asset('/js/tz/project.js') }}"></script>
+    <script src="{{ asset('/js/tz/budget.js') }}"></script>
+@stop

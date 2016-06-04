@@ -47,8 +47,6 @@
                             </div>
                         </div>
 
-                        @include('tz.project.partials.budget', ['edit' => true])
-
                         <div class="col-sm-12">
                             <div class="col-sm-6">
                                 {!! Form::label('activity_status', 'Project Status', ['class' => 'control-label required']) !!}
@@ -84,7 +82,7 @@
                         @include('tz.project.partials.participating-organization', ['multiple' => true])
                         @include('tz.project.partials.document-link', ['edit' => true])
                     </div>
-                    {!! Form::submit('Edit Project', ['class' => 'btn btn-primary btn-form']) !!}
+                    {!! Form::submit('Update', ['class' => 'btn btn-primary btn-form']) !!}
                     {!! Form::close() !!}
                     @include('tz.project.partials.funding-clone')
                     @include('tz.project.partials.implementing-clone')

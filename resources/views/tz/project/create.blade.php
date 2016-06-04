@@ -44,8 +44,6 @@
                             </div>
                         </div>
 
-                        @include('tz.project.partials.budget')
-
                         <div class="col-sm-12">
                             <div class="col-sm-6">
                                 {!! Form::label('activity_status', 'Project Status', ['class' => 'control-label required']) !!}
@@ -170,8 +168,7 @@
                     {!! Form::select('implementing_organization[index][implementing_organization_type]', ['' => 'Select one of the following.'] + $organizationType, null, ['class' => 'form-control', 'required' => 'required']) !!}
                 </div>
 
-                <a href="javascript:void(0)" onclick="removeImplementing(this)"
-                   class="remove_from_collection">Remove</a>
+                <a href="javascript:void(0)" onclick="removeImplementing(this)" class="remove_from_collection">Remove</a>
             </div>
 
             @include('tz.project.partials.location-clone')

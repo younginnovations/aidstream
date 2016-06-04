@@ -122,6 +122,15 @@
                                             <input type="text" class="form-control" name="organization_address" value="{{ old('organization_address') }}" required="required">
                                         </div>
                                     </div>
+                                    <div class="col-xs-12 col-md-12">
+                                        <div class="form-group col-xs-12 col-sm-6 col-md-6">
+                                            <label class="control-label">Organization Country*</label>
+
+                                            <div class="col-xs-12 col-md-12">
+                                                {{Form::select('country', ['' => 'Select Country'] + $countries, 'TZ', ['class' => 'form-control', 'required' => true])}}
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="col-xs-12 col-md-12">
                                     <div class="form-group col-xs-12 col-sm-6 col-md-6">
@@ -195,15 +204,6 @@
 
                                             <div class="col-xs-12 col-md-12">
                                                 <input type="email" class="form-control" name="email" value="{{ old('email') }}" required="required">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-12 col-md-12">
-                                        <div class="form-group col-xs-12 col-sm-6 col-md-6">
-                                            <label class="control-label">Country*</label>
-
-                                            <div class="col-xs-12 col-md-12">
-                                                {{Form::select('country', ['' => 'Select Country'] + $countries, 'TZ', ['class' => 'form-control', 'required' => true])}}
                                             </div>
                                         </div>
                                     </div>

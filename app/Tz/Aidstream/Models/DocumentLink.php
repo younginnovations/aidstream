@@ -12,6 +12,6 @@ class DocumentLink extends ActivityDocumentLink
      */
     public function activity()
     {
-        return $this->belongsTo(Project::class, 'project_id', 'activity_id');
+        return $this->belongsTo(Project::class, 'activity_id');
     }
 }

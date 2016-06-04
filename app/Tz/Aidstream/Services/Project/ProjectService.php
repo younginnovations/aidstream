@@ -310,12 +310,12 @@ class ProjectService
         $regionName = [];
         $startDate  = "";
         $endDate    = "";
-        $jsonData = [];
-        $getCode = new GetCodeName();
+        $jsonData   = [];
+        $getCode    = new GetCodeName();
 
-        if($projects instanceof Collection){
-            foreach ($projects as $index => $data){
-                if($data->activity_date != null) {
+        if ($projects instanceof Collection) {
+            foreach ($projects as $index => $data) {
+                if ($data->activity_date != null) {
                     foreach ($data->activity_date as $activityDate) {
                         if ($activityDate['type'] == 2) {
                             $startDate = $activityDate['date'];
@@ -325,7 +325,7 @@ class ProjectService
                     }
                 }
 
-                if($data->location != null) {
+                if ($data->location != null) {
                     $i = 0;
                     foreach ($data->location as $location) {
                         foreach ($location['administrative'] as $index => $administrative) {
@@ -348,7 +348,7 @@ class ProjectService
                     'enddate'    => $endDate
                 ];
             }
-        }else{
+        } else {
             foreach ($projects->activity_date as $activityDate) {
                 if ($activityDate['type'] == 2) {
                     $startDate = $activityDate['date'];
@@ -381,7 +381,7 @@ class ProjectService
 
         return $jsonData;
     }
-    
+
     public function getProjectsByOrganisationId($orgId)
     {
         return $this->project->getProjectsByOrganisationId($orgId);
@@ -390,5 +390,120 @@ class ProjectService
     public function getCurrentOrganization()
     {
         return app()->make(Organization::class)->query()->findOrFail(session('org_id'));
+    }
+
+    /**
+     * Save Project Budget into the database.
+     * @param $projectId
+     * @param $budgetDetails
+     * @return bool|null
+     */
+    public function addBudget($projectId, $budgetDetails)
+    {
+        try {
+            $user    = auth()->user()->getNameAttribute();
+            $project = $this->find($projectId);
+
+            $project->budget = $this->mapBudgetValueDate($budgetDetails);
+            $project->save();
+
+            $this->logger->info(
+                sprintf('Budget successfully saved for project with id: %s', $projectId),
+                [
+                    'byUser' => $user
+                ]
+            );
+
+            return true;
+        } catch (Exception $exception) {
+            $this->logger->error(
+                sprintf('Budget successfully saved for project with id: $projectId'),
+                [
+                    'byUser' => $user,
+                    'trace'  => $exception->getTraceAsString()
+                ]
+            );
+
+            return null;
+        }
+    }
+
+    /**
+     * Map Budget element's value date to its start date.
+     * @param array $budgetDetails
+     * @return array
+     */
+    public function mapBudgetValueDate(array $budgetDetails)
+    {
+        $details = [];
+
+        foreach ($budgetDetails['budget'] as $index => $detail) {
+            $details[]                                      = $detail;
+            $details[$index]['value'][$index]['value_date'] = getVal($budgetDetails, ['budget', $index, 'period_start', $index, 'date']);
+        }
+
+        return $details;
+    }
+
+    /**
+     * Update a Project Budget.
+     * @param $projectId
+     * @param $budgetDetails
+     * @return bool|null
+     */
+    public function updateBudget($projectId, $budgetDetails)
+    {
+        try {
+            $user    = auth()->user()->getNameAttribute();
+            $project = $this->find($projectId);
+
+            $project->update($budgetDetails);
+            $this->resetWorkflow($project);
+
+            $this->logger->info(
+                sprintf('Budget successfully updated for project with id: ', $projectId),
+                [
+                    'byUser' => $user
+                ]
+            );
+
+            return true;
+        } catch (Exception $exception) {
+            $this->logger->error(
+                sprintf('Budget could not be updated for project with id: ', $projectId),
+                [
+                    'byUser' => $user,
+                    'trace'  => $exception->getTraceAsString()
+                ]
+            );
+
+            return null;
+        }
+    }
+
+    public function deleteBudget($projectId)
+    {
+        try {
+            $user    = auth()->user()->getNameAttribute();
+            $project = $this->find($projectId);
+
+            $project->budget = null;
+            $project->save();
+
+            $this->resetWorkflow($project);
+
+            $this->logger->info(sprintf('Budget successfully deleted for project with id: ', $projectId), [
+                'byUser' => $user
+            ]);
+
+            return true;
+        } catch (Exception $exception) {
+            $this->logger->error(sprintf('Budget could not be deleted for project with id: ', $projectId), [
+                'byUser' => $user
+            ]);
+
+            return null;
+        }
+
     }
 }
