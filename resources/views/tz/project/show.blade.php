@@ -105,6 +105,44 @@
                 @endif
 
                 <div class="activity-element-wrapper">
+                    <div class="title">
+                        Budget
+                    </div>
+                    <div class="activity-element-list">
+                        <div class="activity-element-label">
+                            Start Date
+                        </div>
+                        <div class="activity-element-info">
+                            {{ getVal($project->budget, [0, 'period_start', 0, 'date']) }}
+                        </div>
+                    </div>
+                    <div class="activity-element-list">
+                        <div class="activity-element-label">
+                            End Date
+                        </div>
+                        <div class="activity-element-info">
+                            {{ getVal($project->budget, [0, 'period_end', 0, 'date']) }}
+                        </div>
+                    </div>
+                    <div class="activity-element-list">
+                        <div class="activity-element-label">
+                            Amount
+                        </div>
+                        <div class="activity-element-info">
+                            {{ getVal($project->budget, [0, 'value', 0, 'amount']) }}
+                        </div>
+                    </div>
+                    <div class="activity-element-list">
+                        <div class="activity-element-label">
+                            Currency
+                        </div>
+                        <div class="activity-element-info">
+                            {{ getVal($project->budget, [0, 'value', 0, 'currency']) }}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="activity-element-wrapper">
                     <div class="activity-element-list">
                         <div class="activity-element-label">
                             Project Status:
@@ -180,9 +218,8 @@
                         @foreach ($project->location as $location)
                             @foreach (getVal($location, ['administrative'], []) as $value)
                                 @if ($value['level'] == 2)
-
                                     <div class="activity-element-info">
-                                        {{ $value['code'] }}
+                                        {{ getVal($value, ['code']) }}
                                     </div>
                                 @endif
                             @endforeach

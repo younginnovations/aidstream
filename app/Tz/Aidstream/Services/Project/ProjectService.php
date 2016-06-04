@@ -1,6 +1,7 @@
 <?php namespace App\Tz\Aidstream\Services\Project;
 
 use App\Helpers\GetCodeName;
+use App\Tz\Aidstream\Models\Organization;
 use App\Tz\Aidstream\Models\Project;
 use App\Tz\Aidstream\Repositories\DocumentLink\DocumentLinkRepositoryInterface;
 use App\Tz\Aidstream\Repositories\Project\ProjectRepositoryInterface;
@@ -384,5 +385,10 @@ class ProjectService
     public function getProjectsByOrganisationId($orgId)
     {
         return $this->project->getProjectsByOrganisationId($orgId);
+    }
+
+    public function getCurrentOrganization()
+    {
+        return app()->make(Organization::class)->query()->findOrFail(session('org_id'));
     }
 }

@@ -47,6 +47,8 @@
                             </div>
                         </div>
 
+                        @include('tz.project.partials.budget', ['edit' => true])
+
                         <div class="col-sm-12">
                             <div class="col-sm-6">
                                 {!! Form::label('activity_status', 'Project Status', ['class' => 'control-label required']) !!}

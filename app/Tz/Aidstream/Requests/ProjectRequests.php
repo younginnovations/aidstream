@@ -3,14 +3,24 @@
 use App\Http\Requests\Request;
 use Illuminate\Support\Facades\Input;
 
+/**
+ * Class ProjectRequests
+ * @package App\Tz\Aidstream\Requests
+ */
 class ProjectRequests extends Request
 {
 
+    /**
+     * @return bool
+     */
     public function authorize()
     {
         return true;
     }
 
+    /**
+     * @return array
+     */
     public function rules()
     {
         $rules                      = [];
@@ -24,14 +34,18 @@ class ProjectRequests extends Request
         $rules['recipient_country'] = 'required';
         $rules                      = array_merge(
             $rules,
-//            $this->getRulesForFundingOrganization($this->get('funding_organization')),
-            $this->getRulesForImplementingOrganization($this->get('implementing_organization'))
+            $this->getRulesForImplementingOrganization($this->get('implementing_organization')),
+            $this->getRulesForBudget($this->get('budget'))
 //            $this->getRulesForDocumentLink($this->get('document_link'))
+//            $this->getRulesForFundingOrganization($this->get('funding_organization')),
         );
 
         return $rules;
     }
 
+    /**
+     * @return array
+     */
     public function messages()
     {
         $messages                               = [];
@@ -44,17 +58,21 @@ class ProjectRequests extends Request
         $messages['start_date.date']            = 'Start Date must be date';
         $messages['end_date.date']              = 'End date must be date';
         $messages['recipient_country.required'] = 'Recipient Country is required';
-//        $messages['recipient_region.required']  = 'Recipient Region is required';
         $messages = array_merge(
             $messages,
-//            $this->getMessagesForFundingOrganization($this->get('funding_organization')),
-            $this->getMessagesForImplementingOrganization($this->get('implementing_organization'))
+            $this->getMessagesForImplementingOrganization($this->get('implementing_organization')),
+            $this->getMessagesForBudget($this->get('budget'))
 //            $this->getMessagesForDocumentLink($this->get('document_link'))
+//            $this->getMessagesForFundingOrganization($this->get('funding_organization')),
         );
 
         return $messages;
     }
 
+    /**
+     * @param $formFields
+     * @return array
+     */
     protected function getRulesForFundingOrganization($formFields)
     {
         $rules = [];
@@ -67,6 +85,10 @@ class ProjectRequests extends Request
         return $rules;
     }
 
+    /**
+     * @param $formFields
+     * @return array
+     */
     protected function getMessagesForFundingOrganization($formFields)
     {
         $messages = [];
@@ -79,6 +101,10 @@ class ProjectRequests extends Request
         return $messages;
     }
 
+    /**
+     * @param $formFields
+     * @return array
+     */
     protected function getRulesForImplementingOrganization($formFields)
     {
         $rules = [];
@@ -91,6 +117,10 @@ class ProjectRequests extends Request
         return $rules;
     }
 
+    /**
+     * @param $formFields
+     * @return array
+     */
     protected function getMessagesForImplementingOrganization($formFields)
     {
         $messages = [];
@@ -103,6 +133,10 @@ class ProjectRequests extends Request
         return $messages;
     }
 
+    /**
+     * @param $formFields
+     * @return array
+     */
     protected function getRulesForDocumentLink($formFields)
     {
         $rules = [];
@@ -115,6 +149,10 @@ class ProjectRequests extends Request
         return $rules;
     }
 
+    /**
+     * @param $formFields
+     * @return array
+     */
     protected function getMessagesForDocumentLink($formFields)
     {
         $messages = [];
@@ -124,6 +162,43 @@ class ProjectRequests extends Request
             $messages[sprintf('%s.url.required', $documentForm)]                           = 'Document Url is required';
             $messages[sprintf('%s.url.url', $documentForm)]                                = 'Enter valid URL. eg. http://example.com';
             $messages[sprintf('%s.title.0.narrative.0.narrative.required', $documentForm)] = 'Title is required';
+        }
+
+        return $messages;
+    }
+
+    /**
+     * @param $budgetDetails
+     * @return array
+     */
+    protected function getRulesForBudget($budgetDetails)
+    {
+        $rules = [];
+
+        foreach ($budgetDetails as $index => $detail) {
+            $rules[sprintf('budget.%s.period_start.%s.date', $index, $index)] = 'required';
+            $rules[sprintf('budget.%s.period_end.%s.date', $index, $index)]   = 'required';
+            $rules[sprintf('budget.%s.value.%s.amount', $index, $index)]      = 'required|numeric';
+            $rules[sprintf('budget.%s.value.%s.currency', $index, $index)]    = 'required';
+        }
+
+        return $rules;
+    }
+
+    /**
+     * @param $budgetDetails
+     * @return array
+     */
+    protected function getMessagesForBudget($budgetDetails)
+    {
+        $messages = [];
+
+        foreach ($budgetDetails as $index => $detail) {
+            $messages[sprintf('budget.%s.period_start.%s.date.required', $index, $index)] = 'The start date is required.';
+            $messages[sprintf('budget.%s.period_end.%s.date.required', $index, $index)]   = 'The end date is required.';
+            $messages[sprintf('budget.%s.value.%s.amount.required', $index, $index)]      = 'The Budget amount is required.';
+            $messages[sprintf('budget.%s.value.%s.amount.numeric', $index, $index)]      = 'The Budget amount should be numeric.';
+            $messages[sprintf('budget.%s.value.%s.currency.required', $index, $index)]    = 'The Currency is required.';
         }
 
         return $messages;

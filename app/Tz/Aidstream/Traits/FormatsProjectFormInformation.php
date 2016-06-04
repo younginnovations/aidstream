@@ -164,6 +164,8 @@ trait FormatsProjectFormInformation
             $details['location'][$key]['administrative'] = $location['administrative'];
         }
 
+        $details['budget'] = $this->mapBudgetValueDate($projectDetails);
+
         return $details;
     }
 
@@ -294,22 +296,18 @@ trait FormatsProjectFormInformation
         ];
     }
 
-//    /**
-//     * Map Recipient Region.
-//     * @param $projectDetails
-//     * @return array
-//     */
-//    protected function recipientRegion($projectDetails)
-//    {
-//        return [
-//            [
-//                "region_code"       => $projectDetails['recipient_region'],
-//                "region_vocabulary" => "",
-//                "percentage"        => "",
-//                "narrative"         => [["narrative" => "", "language" => ""]]
-//            ]
-//        ];
-//    }
+    /**
+     * Map Budget element's value date to its start date.
+     * @param array $projectDetails
+     * @return array
+     */
+    public function mapBudgetValueDate(array $projectDetails)
+    {
+        $details                              = $projectDetails['budget'];
+        $details[0]['value'][0]['value_date'] = getVal($projectDetails, ['budget', 0, 'period_start', 0, 'date']);
+
+        return $details;
+    }
 
     /**
      * Map Activity Date.
@@ -406,6 +404,7 @@ trait FormatsProjectFormInformation
         $details['id']                = $projectDetails->id;
         $details                      = $this->mapParticipatingOrganization($projectDetails, $details);
         $details['location']          = $projectDetails['location'];
+        $details['budget']            = $projectDetails->budget;
 
         return $details;
     }

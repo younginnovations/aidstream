@@ -30,7 +30,8 @@ class Project extends Activity
         'activity_date',
         'location',
         'sector',
-        'default_field_values'
+        'default_field_values',
+        'budget'
     ];
 
     /**

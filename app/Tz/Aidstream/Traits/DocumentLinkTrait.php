@@ -17,7 +17,7 @@ trait DocumentLinkTrait
         $array = [];
 
         foreach ($request as $data) {
-            if (getVal($data, ['title', 0, 'narrative', 0, 'narrative'])) {
+            if (getVal($data, ['title', 0, 'narrative', 0, 'narrative']) || getVal($data, ['url'])) {
                 $array[] = [
                     'activity_id'   => $projectId,
                     'document_link' => $data

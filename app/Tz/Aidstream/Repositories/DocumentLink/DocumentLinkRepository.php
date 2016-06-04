@@ -59,13 +59,15 @@ class DocumentLinkRepository implements DocumentLinkRepositoryInterface
                 ];
                 $documentLink->update($documentLinkData);
             } else {
-                unset($document['id']);
-                $documentLinkData = [
-                    'activity_id'   => $projectId,
-                    'document_link' => $document
-                ];
-                $newDocument = $this->documentLink->newInstance($documentLinkData);
-                $newDocument->save();
+                if ((getVal($document, ['title', 0, 'narrative', 0, 'narrative']) || getVal($document, ['url']))) {
+                    unset($document['id']);
+                    $documentLinkData = [
+                        'activity_id'   => $projectId,
+                        'document_link' => $document
+                    ];
+                    $newDocument = $this->documentLink->newInstance($documentLinkData);
+                    $newDocument->save();
+                }
             }
         }
 

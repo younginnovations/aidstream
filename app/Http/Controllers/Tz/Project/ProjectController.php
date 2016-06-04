@@ -72,8 +72,9 @@ class ProjectController extends TanzanianController
         $fileFormat         = $baseForm->getCodeList('FileFormat', 'Activity');
         $transactionType    = $baseForm->getCodeList('TransactionType', 'Activity');
         $currency           = $baseForm->getCodeList('Currency', 'Activity');
+        $settings           = $this->project->getCurrentOrganization()->settings->toArray();
 
-        return view('tz.project.create', compact('codeList', 'sectors', 'recipientRegions', 'participatingOrg', 'organizationType', 'recipientCountries', 'fileFormat', 'transactionType', 'currency'));
+        return view('tz.project.create', compact('codeList', 'sectors', 'recipientRegions', 'participatingOrg', 'organizationType', 'recipientCountries', 'fileFormat', 'transactionType', 'currency', 'settings'));
     }
 
     /**
@@ -152,8 +153,9 @@ class ProjectController extends TanzanianController
         $recipientCountries = $baseForm->getCodeList('Country', 'Organization');
         $organizationType   = $baseForm->getCodeList('OrganisationType', 'Activity');
         $fileFormat         = $baseForm->getCodeList('FileFormat', 'Activity');
+        $currency           = $baseForm->getCodeList('Currency', 'Activity');
 
-        return view('tz.project.edit', compact('documentLinks', 'project', 'codeList', 'sectors', 'recipientRegions', 'recipientCountries', 'organizationType', 'fileFormat'));
+        return view('tz.project.edit', compact('documentLinks', 'project', 'codeList', 'sectors', 'recipientRegions', 'recipientCountries', 'organizationType', 'fileFormat', 'currency'));
     }
 
     /**
