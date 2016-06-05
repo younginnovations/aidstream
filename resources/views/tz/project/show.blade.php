@@ -150,11 +150,24 @@
                 <div class="activity-element-wrapper">
                     <div class="activity-element-list">
                         <div class="activity-element-label">
+                            Recipient Country:
+                        </div>
+                        <div class="activity-element-info">
+                            {{$getCode->getCodeListName('Organization','Country', $project->recipient_country[0]['country_code'])}}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="activity-element-wrapper">
+                    <div class="activity-element-list">
+                        <div class="activity-element-label">
                             Location
                         </div>
                         <div class="activity-element-info">
                             @foreach ($project->location as $location)
-                                {{ getVal($location, ['administrative', 0, 'code']) }}, {{ getVal($location, ['administrative', 1, 'code']) }} <br/>
+                                <li>
+                                    {{ getVal($location, ['administrative', 0, 'code']) }}, {{ getVal($location, ['administrative', 1, 'code']) }}
+                                </li>
                             @endforeach
                         </div>
                     </div>
@@ -166,7 +179,7 @@
                             @if(getVal($participatingOrganization, ['narrative', 0, 'narrative']) && getVal($participatingOrganization, ['organization_role']) == "1")
                                 <div class="activity-element-list">
                                     <div class="activity-element-label">
-                                        Funding Organization:
+                                        Funding Organization
                                     </div>
                                     <div class="activity-element-info">
                                         <li>
@@ -179,7 +192,7 @@
                             @if(getVal($participatingOrganization, ['narrative', 0, 'narrative']) && getVal($participatingOrganization, ['organization_role']) == 4)
                                 <div class="activity-element-list">
                                     <div class="activity-element-label">
-                                        Implementing Organization Name:
+                                        Implementing Organization
                                     </div>
                                     <div class="activity-element-info">
                                         <li>
@@ -191,17 +204,6 @@
                         @endforeach
                     </div>
                 @endif
-
-                <div class="activity-element-wrapper">
-                    <div class="activity-element-list">
-                        <div class="activity-element-label">
-                            Recipient Country:
-                        </div>
-                        <div class="activity-element-info">
-                            {{$getCode->getCodeListName('Organization','Country', $project->recipient_country[0]['country_code'])}}
-                        </div>
-                    </div>
-                </div>
 
                 @if ($project->resultDocuments())
                     <div class="activity-element-wrapper">
