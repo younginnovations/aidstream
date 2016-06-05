@@ -3,9 +3,9 @@ server '104.236.75.41',user: 'aidstream', roles: %w{web app db}
 # Directory to deploy
 # ===================
 set :env, 'prod'
-set :deploy_to, '/home/aidstream/app/staging'
-set :shared_path, '/home/aidstream/app/staging/shared'
-set :overlay_path, '/home/aidstream/app/overlay'
+set :deploy_to, '/home/aidstream/tz-aidstream/app/staging'
+set :shared_path, '/home/aidstream/tz-aidstream/app/staging/shared'
+set :overlay_path, '/home/aidstream/tz-aidstream/app/overlay'
 set :tmp_dir, '/home/aidstream/tmp'
 set :app_env, 'production'
 set :app_debug, 'false'

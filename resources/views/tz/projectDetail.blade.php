@@ -44,7 +44,9 @@
                 </div>
             </div>
 
-            <div class="col-md-9" style="height: 277px;"></div>
+            <div class="col-md-9" style="height: 277px;">
+                <div id="map" style="height:300px; width:100%"></div>
+            </div>
         </div>
         <div class="col-md-12 name-value-section">
             @foreach($project->description as $description)
@@ -264,10 +266,63 @@
 <script type="text/javascript" src="{{url('/js/bootstrap.min.js')}}"></script>
 <script type="text/javascript" src="{{url('/js/jquery.mousewheel.js')}}"></script>
 <script type="text/javascript" src="{{url('/js/jquery.jscrollpane.min.js')}}"></script>
-<script type="text/javascript" src="{{url('/js/tz/underscore-min.js')}}"></script>
-<script type="text/javascript" src="{{url('/js/tz/backbone-min.js')}}"></script>
-<script type="text/javascript" src="{{url('/js/tz/regions.js')}}"></script>
 <script type="text/javascript" src="{{url('/js/tz/leaflet/leaflet.js')}}"></script>
-<script type="text/javascript" src="{{url('/js/tz/mapping.js')}}"></script>
+<script>
+    function GetMap() {
+        var map = L.map(document.getElementById("map")).setView([-6.369028, 31.988822], 5);
+        map.scrollWheelZoom.disable();
+        L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+            attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a>; contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
+            maxZoom: 18
+        }).addTo(map);
+        return map;
+    }
+    function ShowProjectInMap(regionname, map) {
+        var tz_regions_center = {
+            "Dodoma": [-5.775, 35.955],
+            "Arusha": [-2.925, 36.11],
+            "Kilimanjaro": [-3.745, 37.650000000000006],
+            "Tanga": [-5.12, 38.144999999999996],
+            "Morogoro": [-7.880000000000001, 36.92],
+            "Pwani": [-7.175, 38.849999999999994],
+            "Dar es Salaam": [-6.875, 39.28],
+            "Lindi": [-9.38, 38.42],
+            "Mtwara": [-10.77, 39.22],
+            "Ruvuma": [-10.469999999999999, 36.235],
+            "Iringa": [-8.72, 35.385],
+            "Mbeya": [-8.290000000000001, 33.535],
+            "Singida": [-5.65, 34.415],
+            "Tabora": [-5.495, 32.665],
+            "Rukwa": [-7.135, 31.37],
+            "Kigoma": [-4.8100000000000005, 30.409999999999997],
+            "Shinyanga": [-3.285, 33.205],
+            "Kagera": [-2.21, 31.575000000000003],
+            "Mwanza": [-2.45, 32.855000000000004],
+            "Mara": [-1.75, 34.045],
+            "Manyara": [-4.725, 36.455],
+            "kaskazini": [-5.88, 39.29],
+            "Kusini": [-6.25, 39.425],
+            "Mjini Magharibi": [-6.205, 39.275],
+            "Kaskazini Pemba": [-5.035, 39.755],
+            "Kusini Pemba": [-5.32, 39.705]
+        };
+
+        if(tz_regions_center[regionname]) {
+            map.setView(tz_regions_center[regionname], 5);
+            L.marker(tz_regions_center[regionname]).addTo(map).bindPopup("Project in " + regionname);
+        }
+    }
+    var map = GetMap();
+</script>
+
+@if($project->location != null)
+    @foreach ($project->location as $location)
+        @foreach (getVal($location, ['administrative'], []) as $value)
+            @if ($value['level'] == 1 && $value['code'] != "")
+                <script>ShowProjectInMap("{{ $value['code'] }}", map);</script>
+            @endif
+        @endforeach
+    @endforeach
+@endif
 </body>
 
