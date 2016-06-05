@@ -3,7 +3,7 @@
         <div class="social-wrapper bottom-line">
             <div class="col-md-12 text-center">
                 <ul>
-                    <li><a href="https://github.com/younginnovations/aidstream-new" class="github" title="Fork us on Github">Fork us on Github</a></li>
+                    <li><a href="https://github.com/younginnovations/aidstream-tz" class="github" title="Fork us on Github">Fork us on Github</a></li>
                     <li><a href="https://twitter.com/aidstream" class="twitter" title="Follow us on Twitter">Follow us on Twitter</a></li>
                 </ul>
             </div>

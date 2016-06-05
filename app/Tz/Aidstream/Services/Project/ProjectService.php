@@ -612,7 +612,9 @@ class ProjectService
             $filename  = explode('.', $publishedActivity)[0];
             $projectId = explode('-', $filename)[1];
 
-            return ($projectId == $id);
+            if ($projectId == $id) {
+                return true;
+            }
         }
     }
 

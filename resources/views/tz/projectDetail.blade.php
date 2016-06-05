@@ -102,75 +102,83 @@
                 <dd class="col-md-9">{{$getCode->getCodeListName('Organization','Country', $project->recipient_country[0]['country_code'])}}</dd>
             </dl>
 
-            @if($project->location != null)
-                <dl class="clearfix">
-                    <dl class="clearfix">
-                        <dt class="col-md-3">Location</dt>
-                        <dd class="col-md-9 list-wrap">
-                            @foreach ($project->location as $location)
-                                @foreach (getVal($location, ['administrative'], []) as $value)
-                                    @if ($value['level'] == 1 && $value['code'] != "")
-                                        <div>
-                                            {{ $value['code'] }}
-                                        </div>
-                                    @endif
-                                @endforeach
+            <dl class="clearfix">
+                <dt class="col-md-3">Location</dt>
+                <dd class="col-md-9 list-wrap">
+                    @if($project->location != null)
+                        @foreach ($project->location as $location)
+                            @foreach (getVal($location, ['administrative'], []) as $value)
+                                @if ($value['level'] == 1 && $value['code'] != "")
+                                    <div>
+                                        {{ $value['code'] }}
+                                    </div>
+                                @endif
                             @endforeach
-                        </dd>
-                    </dl>
+                        @endforeach
+                    @endif
+                </dd>
+            </dl>
+
+            <dl class="clearfix">
+                <dt class="col-md-3">
+                    Results/Outcomes Documents
+                </dt>
+                <dd class="col-md-9 list-wrap">
+                    @foreach($documentLinks as $documentLink)
+                        @foreach($documentLink as $index => $data)
+                            @if($data['url'] != "" && getVal($data, ['category', 0, 'code']) == "A08")
+                                <a href="{{$data['url']}}" target="_blank">{{$data['url']}}</a>
+                            @endif
+                        @endforeach
+                    @endforeach
+                </dd>
+            </dl>
+
+            <dl class="clearfix">
+                <dt class="col-md-3">
+                    Annual Reports
+                </dt>
+                <dd class="col-md-9 list-wrap">
+                    @foreach($documentLinks as $documentLink)
+                        @foreach($documentLink as $index => $data)
+                            @if($data['url'] != "" && getVal($data, ['category', 0, 'code']) == "B01")
+                                <a href="{{$data['url']}}" target="_blank">{{$data['url']}}</a>
+                            @endif
+                        @endforeach
+                    @endforeach
+                </dd>
+            </dl>
+
+            @if(!empty($fundings))
+                <dl class="clearfix">
+                    <dt class="col-md-3">Funding Organisation</dt>
+                    <dd class="col-md-9 list-wrap">
+                        @foreach($fundings as $funding)
+                            @if($funding['narrative'][0]['narrative'] != "")
+                                <div>{{$funding['narrative'][0]['narrative']}} , <span>{{ $getCode->getCodeListName('Activity','OrganisationType', $funding['organization_type']) }}</span>
+                                </div>
+                            @endif
+                        @endforeach
+                    </dd>
                 </dl>
             @endif
 
-            @foreach($documentLinks as $documentLink)
-                @foreach($documentLink as $index => $data)
-                    <dl class="clearfix">
-                        <dt class="col-md-3">
-                            @if($index == 0)
-                                Results/Outcomes Documents
-                            @elseif($index == 1)
-                                Annual Reports
+            @if(!empty($implementings))
+                <dl class="clearfix">
+                    <dt class="col-md-3">Implementing Organisation</dt>
+                    <dd class="col-md-9 list-wrap">
+                        @foreach($implementings as $implementing)
+                            @if($implementing['narrative'][0]['narrative'] != "")
+                                <div>{{$implementing['narrative'][0]['narrative']}} ,
+                                    <span>{{ $getCode->getCodeListName('Activity','OrganisationType', $implementing['organization_type']) }}</span>
+                                </div>
                             @endif
-                        </dt>
-                        <dd class="col-md-9">
-                            @if($data['url'] != "")
-                                <a href="{{$data['url']}}" target="_blank">{{$data['url']}}</a>
-                            @else
-                                &nbsp;
-                            @endif
-                        </dd>
                         @endforeach
-                        @endforeach
-
-                        @if(!empty($fundings))
-                            <dl class="clearfix">
-                                <dt class="col-md-3">Funding Organisation</dt>
-                                <dd class="col-md-9 list-wrap">
-                                    @foreach($fundings as $funding)
-                                        @if($funding['narrative'][0]['narrative'] != "")
-                                            <div>{{$funding['narrative'][0]['narrative']}} , <span>{{ $getCode->getCodeListName('Activity','OrganisationType', $funding['organization_type']) }}</span>
-                                            </div>
-                                        @endif
-                                    @endforeach
-                                </dd>
-                            </dl>
-                        @endif
-
-                        @if(!empty($implementings))
-                            <dl class="clearfix">
-                                <dt class="col-md-3">Implementing Organisation</dt>
-                                <dd class="col-md-9 list-wrap">
-                                    @foreach($implementings as $implementing)
-                                        @if($implementing['narrative'][0]['narrative'] != "")
-                                            <div>{{$implementing['narrative'][0]['narrative']}} ,
-                                                <span>{{ $getCode->getCodeListName('Activity','OrganisationType', $implementing['organization_type']) }}</span>
-                                            </div>
-                                        @endif
-                                    @endforeach
-                                </dd>
-                            </dl>
-                        @endif
-                    </dl>
+                    </dd>
+                </dl>
+            @endif
         </div>
+
         @if(!empty($disbursements))
             <div class="col-md-12 name-value-section">
                 <div class="title">Disbursement</div>
@@ -231,7 +239,7 @@
                     <tr>
                         <th width="40%">Date</th>
                         <th class="">Amount</th>
-                        <th class="">Receiver</th>
+                        <th class="">Provider</th>
                     </tr>
                     </thead>
 

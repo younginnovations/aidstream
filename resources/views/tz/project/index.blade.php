@@ -15,7 +15,7 @@
                     @if($projects->count())
                         <thead>
                         <tr>
-                            <th width="20px" class="no-sort">S.N.</th>
+                            {{--<th width="20px" class="no-sort">S.N.</th>--}}
                             <th width="50%">Project Title</th>
                             <th class="default-sort">Last Updated</th>
                             <th class="status">Status</th>
@@ -27,7 +27,7 @@
                     <tbody>
                     @forelse($projects as $key => $project)
                         <tr class="clickable-row" data-href="{{ route('project.show', [$project->id]) }}">
-                            <td>{{ $key + 1 }}</td>
+                            {{--<td>{{ $key + 1 }}</td>--}}
                             <td class="activity_title">
                                 {{ $project->title ? $project->title[0]['narrative'] : 'No Title' }} <span>{{ $project->identifier['activity_identifier'] }}</span>
                             </td>

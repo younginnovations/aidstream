@@ -26,12 +26,12 @@
                 A platform to display and explore civil society activities across Tanzania.
                 We empower civil society organizations in Tanzania to be more transparent and achieve greater impact by using <a href="http://iatistandard.org/">IATI</a> in their local context.
             </p>
-            <p>Use the filters below to start exploring</p>
-
+            <p style="font-size: 10px;">Use the filters below to start exploring.</p>
             {{--<a href="{{ url('/auth/register') }}" class="btn btn-primary get-started-btn">Get Started</a>--}}
         </div>
     </div>
 </div>
+
 <section class="main-container">
     <div id="container" class="map-section">
         <button id="reset">Reset</button>

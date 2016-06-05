@@ -22,8 +22,10 @@
                 </div>
             @endforeach
         </div>
-
     @else
+        <div class="activity-element-label">
+            Budget
+        </div>
         <div class="activity-element-list">
             <a href="{{ route('project.add-budget', $project->id) }}"
                class="add-more"><span>Add Budget</span>

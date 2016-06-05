@@ -43,7 +43,7 @@
 
                                     <div class="col-sm-6">
                                         {!! Form::label('currency', 'Currency', ['class' => 'control-label required']) !!}
-                                        {!! Form::select("transaction[$key][value][0][currency]", ['' => 'Select one of the following.'] + $currency, $transaction['transaction']['value'][0]['currency'], ['class' => 'form-control', 'required' => 'required']) !!}
+                                        {!! Form::select("transaction[$key][value][0][currency]", ['' => 'Select one of the following.'] + $currency, ($transaction['transaction']['value'][0]['currency']) ? $transaction['transaction']['value'][0]['currency'] : $defaultCurrency, ['class' => 'form-control', 'required' => 'required']) !!}
                                     </div>
 
                                     <div class="col-sm-6">
@@ -52,7 +52,11 @@
                                     </div>
 
                                     <div class="col-sm-6">
-                                        {!! Form::label('provider_org', 'Receiver Organization', ['class' => 'control-label']) !!}
+                                        @if($transactionType == 1)
+                                            {!! Form::label('provider_org', 'Provider Organization', ['class' => 'control-label']) !!}
+                                        @else
+                                            {!! Form::label('provider_org', 'Receiver Organization', ['class' => 'control-label']) !!}
+                                        @endif
                                         {!! Form::text("transaction[$key][provider_organization][0][narrative][0][narrative]", $transaction['transaction']['provider_organization'][0]['narrative'][0]['narrative'], ['class' => 'form-control']) !!}
                                     </div>
                                 </div>

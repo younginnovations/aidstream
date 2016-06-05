@@ -15,9 +15,7 @@
 <section class="main-container">
     <div class="organisation-list-wrapper">
         <div class="col-md-12 text-center">
-            <h1>{{ $organizationCount }} organisations are using AidStream</h1>
-
-            <p>The organisations listed below are using AidStream.</p>
+            <h1>{{ $organizationCount }} {{ ($organizationCount > 1) ? 'organizations are' : 'organization is' }} using AidStream</h1>
 
             <div class="organisations-list width-900">
                 <ul>{{--

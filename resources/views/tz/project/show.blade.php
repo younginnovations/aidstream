@@ -11,7 +11,11 @@
             <div>
                 <span>
                     {{ $project->title ? $project->title[0]['narrative'] : 'No Title' }}
-                    <a href="{{ route('project.edit', $project->id) }}" class="pull-right" style="font-size: 15px;">Edit</a>
+                    <a href="{{ route('project.edit', $project->id) }}" class="pull-right" style="font-size: 12px;">Edit</a>
+                    <br>
+                    <a href="{{ route('change-project-defaults', $id) }}" class="pull-right" style="font-size: 12px;">
+                        Override Default Values
+                    </a>
                 </span>
                 <div class="element-panel-heading-info">
                     <span>{{ $project->identifier['activity_identifier'] }}</span>
@@ -33,9 +37,6 @@
                 @include('tz.project.partials.workflow')
             </div>
 
-            <a href="{{ route('change-project-defaults', $id) }}" class="pull-right">
-                <span class="glyphicon glyphicon-triangle-left"></span>Override Project Default Values
-            </a>
             <div class="panel panel-default panel-element-detail element-show">
 
                 <div class="activity-element-wrapper">
@@ -165,9 +166,11 @@
                         </div>
                         <div class="activity-element-info">
                             @foreach ($project->location as $location)
-                                <li>
-                                    {{ getVal($location, ['administrative', 0, 'code']) }}, {{ getVal($location, ['administrative', 1, 'code']) }}
-                                </li>
+                                @if (getVal($location, ['administrative', 0, 'code']))
+                                    <li>
+                                        {{ getVal($location, ['administrative', 0, 'code']) }}, {{ getVal($location, ['administrative', 1, 'code']) }}
+                                    </li>
+                                @endif
                             @endforeach
                         </div>
                     </div>
@@ -183,7 +186,8 @@
                                     </div>
                                     <div class="activity-element-info">
                                         <li>
-                                            {{ getVal($participatingOrganization, ['narrative', 0, 'narrative']) }}, {{$getCode->getCodeListName('Activity','OrganisationType', getVal($participatingOrganization, ['organization_type']))}}
+                                            {{ getVal($participatingOrganization, ['narrative', 0, 'narrative']) }}
+                                            , {{$getCode->getCodeListName('Activity','OrganisationType', getVal($participatingOrganization, ['organization_type']))}}
                                         </li>
                                     </div>
                                 </div>
@@ -196,7 +200,8 @@
                                     </div>
                                     <div class="activity-element-info">
                                         <li>
-                                            {{ getVal($participatingOrganization, ['narrative', 0, 'narrative']) }}, {{$getCode->getCodeListName('Activity','OrganisationType', getVal($participatingOrganization, ['organization_type']))}}
+                                            {{ getVal($participatingOrganization, ['narrative', 0, 'narrative']) }}
+                                            , {{$getCode->getCodeListName('Activity','OrganisationType', getVal($participatingOrganization, ['organization_type']))}}
                                         </li>
                                     </div>
                                 </div>
@@ -252,7 +257,7 @@
                         </div>
                         @foreach($disbursement as $data)
                             <div class="activity-element-info">
-                                <li>{{ number_format($data['value'][0]['amount']) }} {{ $data['value'][0]['currency'] }}</li>
+                                <li>{{ number_format($data['value'][0]['amount']) }} {{ $data['value'][0]['currency'] }}, {{$data['transaction_date'][0]['date']}}</li>
                                 <div class="toggle-btn">
                                     <span class="show-more-info">Show more info</span>
                                     <span class="hide-more-info hidden">Hide more info</span>
@@ -328,7 +333,7 @@
                         </div>
                         @foreach($expenditure as $data)
                             <div class="activity-element-info">
-                                <li>{{ number_format($data['value'][0]['amount']) }} {{ $data['value'][0]['currency'] }}</li>
+                                <li>{{ number_format($data['value'][0]['amount']) }} {{ $data['value'][0]['currency'] }}, {{$data['transaction_date'][0]['date']}}</li>
                                 <div class="toggle-btn">
                                     <span class="show-more-info">Show more info</span>
                                     <span class="hide-more-info hidden">Hide more info</span>
@@ -399,7 +404,7 @@
                         </div>
                         @foreach($incomingFund as $data)
                             <div class="activity-element-info">
-                                <li>{{ number_format($data['value'][0]['amount']) }} {{ $data['value'][0]['currency'] }}</li>
+                                <li>{{ number_format($data['value'][0]['amount']) }} {{ $data['value'][0]['currency'] }}, {{$data['transaction_date'][0]['date']}}</li>
                                 <div class="toggle-btn">
                                     <span class="show-more-info">Show more info</span>
                                     <span class="hide-more-info hidden">Hide more info</span>

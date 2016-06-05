@@ -48,7 +48,11 @@
                             </div>
 
                             <div class="col-sm-6">
-                                {!! Form::label('transaction[0][provider_organization][0][narrative][0][narrative]', 'Receiver Organization', ['class' => 'control-label']) !!}
+                                @if($transactionType == 1)
+                                    {!! Form::label('transaction[0][provider_organization][0][narrative][0][narrative]', 'Provider Organization', ['class' => 'control-label']) !!}
+                                @else
+                                    {!! Form::label('transaction[0][provider_organization][0][narrative][0][narrative]', 'Receiver Organization', ['class' => 'control-label']) !!}
+                                @endif
                                 {!! Form::text('transaction[0][provider_organization][0][narrative][0][narrative]', null, ['class' => 'form-control']) !!}
                                 {!! Form::text('transaction[0][provider_organization][0][narrative][0][language]', null, ['class' => 'hidden']) !!}
                             </div>
