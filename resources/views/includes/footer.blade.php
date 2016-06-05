@@ -13,7 +13,7 @@
                 <ul>
                     <li><a href="{{ url('/about') }}">About</a></li>
                     <li><a href="{{ url('/who-is-using') }}">Who's Using It?</a></li>
-                    <li><a href="https://github.com/younginnovations/aidstream-new/wiki/User-Guide" target="_blank">User Guide</a></li>
+                    <li><a href="https://github.com/younginnovations/aidstream-tz/wiki/User-Guide" target="_blank">User Guide</a></li>
                     <!--<li><a href="#">Snapshot</a></li>-->
                 </ul>
                 <ul>
@@ -28,7 +28,7 @@
         </div>
         <div class="footer-logo">
             <div class="col-md-12 text-center">
-                <a href="{{ url('/') }}"><img src="/images/logo-aidstream.svg" alt=""></a>
+                <a href="{{ url('/') }}"><img src="/images/logo-aidstream.svg" alt=""> <span class="tanzania-flag"></span></a>
             </div>
         </div>
     </div>

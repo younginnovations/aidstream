@@ -8,6 +8,7 @@
     <link rel="shotcut icon" type="image/png" sizes="32*32" href="{{ asset('/images/favicon.png') }}"/>
     <link href="{{ asset('/css/main.min.css') }}" rel="stylesheet">
     <link href="{{ asset('/css/style.css') }}" rel="stylesheet">
+    <link href="{{ asset('/css/tanzania_style/tz.style.css') }}" rel="stylesheet">
 
     <!-- Fonts -->
     <link href='//fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
@@ -26,7 +27,7 @@
 <header>
     <nav class="navbar navbar-default navbar-static">
         <div class="navbar-header">
-            <a href="{{ url('/') }}" class="navbar-brand">Aidstream</a>
+            <a href="{{ url('/') }}" class="navbar-brand">Aidstream<span class="tanzania-flag"></span></a>
             <button type="button" class="navbar-toggle collapsed">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="bar1"></span>
@@ -38,7 +39,7 @@
             <ul class="nav navbar-nav">
                 <li><a class="{{ Request::is('about') ? 'active' : '' }}" href="{{ url('/about') }}">About</a></li>
                 <li><a class="{{ Request::is('who-is-using') ? 'active' : '' }}" href="{{ url('/who-is-using') }}">Who's Using</a></li>
-                <li><a href="https://github.com/younginnovations/aidstream-new/wiki/User-Guide" target="_blank">User Guide</a></li>
+                <li><a href="https://github.com/younginnovations/aidstream-tz/wiki/User-Guide" target="_blank">User Guide</a></li>
                 <!--<li><a href="#">Snapshot</a></li>-->
             </ul>
             <div class="action-btn pull-left">

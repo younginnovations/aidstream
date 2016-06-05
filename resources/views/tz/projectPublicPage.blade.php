@@ -8,6 +8,7 @@
     {{ header("Pragma: no-cache") }}
     {{ header("Expires: 0 ")}}
     <title>Aidstream</title>
+    <link rel="shotcut icon" type="image/png" sizes="32*32" href="{{ asset('/images/favicon.png') }}"/>
     <link rel="shortcut icon" type="image/png" sizes="16*16" href="images/favicon.png"/>
     <link rel="stylesheet" href="{{ asset('/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('/css/style.min.css') }}">

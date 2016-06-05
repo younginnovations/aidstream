@@ -20,13 +20,15 @@
     @include('tz.partials.header')
     <div class="introduction-wrapper bottom-line">
         <div class="col-md-12 text-center">
-            <h1>Publish your Aid data in <a href="http://iatistandard.org/">IATI format</a> format effortlessly </h1>
+            <h1>Publish your Aid data in <a href="http://iatistandard.org/">IATI format</a> effortlessly </h1>
 
             <p>
-                For organisations based in Tanzania
+                A platform to display and explore civil society activities across Tanzania.
+                We empower civil society organizations in Tanzania to be more transparent and achieve greater impact by using <a href="http://iatistandard.org/">IATI</a> in their local context.
             </p>
+            <p>Use the filters below to start exploring</p>
 
-            <a href="{{ url('/auth/register') }}" class="btn btn-primary get-started-btn">Get Started</a>
+            {{--<a href="{{ url('/auth/register') }}" class="btn btn-primary get-started-btn">Get Started</a>--}}
         </div>
     </div>
 </div>

@@ -8,6 +8,7 @@
     {{ header("Pragma: no-cache") }}
     {{ header("Expires: 0 ")}}
     <title>Aidstream</title>
+    <link rel="shotcut icon" type="image/png" sizes="32*32" href="{{ asset('/images/favicon.png') }}"/>
     <link rel="shortcut icon" type="image/png" sizes="16*16" href="images/favicon.png"/>
     <link rel="stylesheet" href="{{ asset('/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('/css/style.min.css') }}">
@@ -35,9 +36,11 @@
             <div class="col-md-3 vertical-horizontal-center-wrap">
                 <div class="vertical-horizontal-centerize">
                     @if($orgDetail->logo)
-                        <div class="organization-logo"><img src={{asset($orgDetail->logo)}} width="106px" height="100px"></div>
+                        <div class="organization-logo"><img src={{ $orgDetail->logo_url }} width="106px" height="100px"></div>
+                        <div class="organization-name"><a href="{{ route('project.public', $orgDetail->id) }}">{{$orgDetail->name}}</a></div>
+                    @else
+                        <div class="organization-name"><a href="{{ route('project.public', $orgDetail->id) }}">{{$orgDetail->name}}</a></div>
                     @endif
-                    <div class="organization-name"><a href="{{route('project.public', $orgDetail->id)}}">{{$orgDetail->name}}</a></div>
                 </div>
             </div>
 
@@ -154,7 +157,7 @@
 
                         @if(!empty($implementings))
                             <dl class="clearfix">
-                                <dt class="col-md-3">Implemeting Organisation</dt>
+                                <dt class="col-md-3">Implementing Organisation</dt>
                                 <dd class="col-md-9 list-wrap">
                                     @foreach($implementings as $implementing)
                                         @if($implementing['narrative'][0]['narrative'] != "")
@@ -165,10 +168,11 @@
                                     @endforeach
                                 </dd>
                             </dl>
-                    @endif
+                        @endif
+                    </dl>
         </div>
         @if(!empty($disbursements))
-            <div class="col-md-12">
+            <div class="col-md-12 name-value-section">
                 <div class="title">Disbursement</div>
                 <table class="table table-striped custom-table" id="data-table">
                     <thead>
@@ -183,60 +187,66 @@
                     @foreach($disbursements as $disbursement)
                         <tr>
                             <td>{{ formatDate($disbursement['transaction_date'][0]['date']) }}</td>
-                            <td>{{ $disbursement['value'][0]['amount'] }}</td>
+                            <td>{{ number_format($disbursement['value'][0]['amount']) }} {{ $disbursement['value'][0]['currency'] }}</td>
                             <td>{{ $disbursement['provider_organization'][0]['narrative'][0]['narrative'] }}</td>
                         </tr>
                     @endforeach
                     </tbody>
                 </table>
-                @endif
-
-                @if(!empty($expenditures))
-                    <div class="title">Expenditure</div>
-                    <table class="table table-striped custom-table" id="data-table">
-                        <thead>
-                        <tr>
-                            <th width="40%">Date</th>
-                            <th class="">Amount</th>
-                            <th class="">Receiver</th>
-                        </tr>
-                        </thead>
-
-                        <tbody>
-                        @foreach($expenditures as $expenditure)
-                            <tr>
-                                <td>{{ formatDate($expenditure['transaction_date'][0]['date']) }}</td>
-                                <td>{{ $expenditure['value'][0]['amount'] }}</td>
-                                <td>{{ $expenditure['provider_organization'][0]['narrative'][0]['narrative'] }}</td>
-                            </tr>
-                        @endforeach
-                        </tbody>
-                    </table>
-                @endif
-
-                @if(!empty($incomingFunds))
-                    <div class="title">Incoming Funds</div>
-                    <table class="table table-striped custom-table" id="data-table">
-                        <thead>
-                        <tr>
-                            <th width="40%">Date</th>
-                            <th class="">Amount</th>
-                            <th class="">Receiver</th>
-                        </tr>
-                        </thead>
-
-                        <tbody>
-                        @foreach($incomingFunds as $incomingFund)
-                            <tr>
-                                <td>{{ formatDate($incomingFund['transaction_date'][0]['date']) }}</td>
-                                <td>{{ $incomingFund['value'][0]['amount'] }}</td>
-                                <td>{{ $incomingFund['provider_organization'][0]['narrative'][0]['narrative'] }}</td>
-                            </tr>
-                        @endforeach
-                        </tbody>
-                    </table>
-                @endif
             </div>
+        @endif
+
+
+        @if(!empty($expenditures))
+            <div class="col-md-12 name-value-section">
+                <div class="title">Expenditure</div>
+                <table class="table table-striped custom-table" id="data-table">
+                    <thead>
+                    <tr>
+                        <th width="40%">Date</th>
+                        <th class="">Amount</th>
+                        <th class="">Receiver</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    @foreach($expenditures as $expenditure)
+                        <tr>
+                            <td>{{ formatDate($expenditure['transaction_date'][0]['date']) }}</td>
+                            <td>{{ number_format($expenditure['value'][0]['amount']) }} {{ $expenditure['value'][0]['currency'] }}</td>
+                            <td>{{ $expenditure['provider_organization'][0]['narrative'][0]['narrative'] }}</td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+            </div>
+        @endif
+
+        @if(!empty($incomingFunds))
+            <div class="col-md-12 name-value-section">
+
+                <div class="title">Incoming Funds</div>
+                <table class="table table-striped custom-table" id="data-table">
+                    <thead>
+                    <tr>
+                        <th width="40%">Date</th>
+                        <th class="">Amount</th>
+                        <th class="">Receiver</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    @foreach($incomingFunds as $incomingFund)
+                        <tr>
+                            <td>{{ formatDate($incomingFund['transaction_date'][0]['date']) }}</td>
+                            <td>{{ number_format($incomingFund['value'][0]['amount']) }} {{ $incomingFund['value'][0]['currency'] }}</td>
+                            <td>{{ $incomingFund['provider_organization'][0]['narrative'][0]['narrative'] }}</td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+            </div>
+        @endif
     </div>
 </section>
 

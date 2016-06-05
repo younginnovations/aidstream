@@ -13,7 +13,7 @@
                 <ul>
                     <li><a href="{{ url('/about') }}">About</a></li>
                     <li><a href="{{ url('/who-is-using') }}">Who's Using It?</a></li>
-                    <li><a href="https://github.com/younginnovations/aidstream-new/wiki/User-Guide" target="_blank">User Guide</a></li>
+                    <li><a href="https://github.com/younginnovations/aidstream-tz/wiki/User-Guide" target="_blank">User Guide</a></li>
                 </ul>
                 <ul>
                     @if(auth()->check())

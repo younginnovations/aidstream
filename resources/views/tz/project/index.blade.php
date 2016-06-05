@@ -1,5 +1,7 @@
 @extends('tz.base.sidebar')
 
+@section('title', 'Projects')
+
 @section('content')
     <div class="col-xs-9 col-lg-9 content-wrapper activity-wrapper">
         @include('includes.response')

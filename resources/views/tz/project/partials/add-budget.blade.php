@@ -15,7 +15,7 @@
                     Budget
                 </div>
                 <div class="activity-element-info">
-                    {{ getVal($budget, ['value', 0, 'amount']) }} {{ getVal($budget, ['value', 0, 'currency']) }} [{{ getVal($budget, ['period_start', 0, 'date']) }} - {{ getVal($budget, ['period_end', 0, 'date']) }}]
+                    {{ number_format(getVal($budget, ['value', 0, 'amount'])) }} {{ getVal($budget, ['value', 0, 'currency']) }} [{{ getVal($budget, ['period_start', 0, 'date']) }} - {{ getVal($budget, ['period_end', 0, 'date']) }}]
                 </div>
             </div>
         @endforeach

@@ -7,7 +7,7 @@
         @include('includes.response')
         <div class="panel panel-default panel-create">
             <div class="panel-content-heading panel-title-heading">
-                <div>Add a new Project</div>
+                <div>Add Project</div>
             </div>
             <div class="panel-body">
                 <div class="create-form create-project-form">
@@ -28,19 +28,19 @@
                         <div class="col-sm-12">
                             <div class="col-sm-6">
                                 {!! Form::label('description', 'General Description', ['class' => 'control-label required']) !!}
-                                {!! Form::text('description', null, ['class' => 'form-control', 'required' => 'required']) !!}
+                                {!! Form::textarea('description', null, ['class' => 'form-control', 'required' => 'required']) !!}
                             </div>
 
                             <div class="col-sm-6">
                                 {!! Form::label('objectives', 'Objectives', ['class' => 'control-label']) !!}
-                                {!! Form::text('objectives', null, ['class' => 'form-control']) !!}
+                                {!! Form::textarea('objectives', null, ['class' => 'form-control']) !!}
                             </div>
                         </div>
 
                         <div class="col-sm-12">
                             <div class="col-sm-6">
                                 {!! Form::label('target_groups', 'Target Groups', ['class' => 'control-label']) !!}
-                                {!! Form::text('target_groups', null, ['class' => 'form-control']) !!}
+                                {!! Form::textarea('target_groups', null, ['class' => 'form-control']) !!}
                             </div>
                         </div>
 
@@ -133,7 +133,7 @@
                             </div>
 
                             <div class="col-sm-6">
-                                {!! Form::label('annual_document_url', 'Document Url', ['class' => 'control-label']) !!}
+                                {!! Form::label('annual_document_url', 'Document URL', ['class' => 'control-label']) !!}
                                 {!! Form::text('document_link[1][url]', null, ['class' => 'form-control']) !!}
                                 <span>Example: http://example.com</span>
                             </div>

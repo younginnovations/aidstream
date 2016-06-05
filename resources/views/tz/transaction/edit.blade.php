@@ -50,13 +50,13 @@
                                     </div>
 
                                     <div class="col-sm-6">
-                                        {!! Form::label('description', 'Description', ['class' => 'control-label required']) !!}
-                                        {!! Form::text("transaction[$key][description][0][narrative][0][narrative]", $transaction['transaction']['description'][0]['narrative'][0]['narrative'], ['class' => 'form-control', 'required' => 'required']) !!}
+                                        {!! Form::label('description', 'Description', ['class' => 'control-label']) !!}
+                                        {!! Form::text("transaction[$key][description][0][narrative][0][narrative]", $transaction['transaction']['description'][0]['narrative'][0]['narrative'], ['class' => 'form-control']) !!}
                                     </div>
 
                                     <div class="col-sm-6">
-                                        {!! Form::label('provider_org', 'Receiver Organization', ['class' => 'control-label required']) !!}
-                                        {!! Form::text("transaction[$key][provider_organization][0][narrative][0][narrative]", $transaction['transaction']['provider_organization'][0]['narrative'][0]['narrative'], ['class' => 'form-control', 'required' => 'required']) !!}
+                                        {!! Form::label('provider_org', 'Receiver Organization', ['class' => 'control-label']) !!}
+                                        {!! Form::text("transaction[$key][provider_organization][0][narrative][0][narrative]", $transaction['transaction']['provider_organization'][0]['narrative'][0]['narrative'], ['class' => 'form-control']) !!}
                                     </div>
                                 </div>
                             @endforeach
