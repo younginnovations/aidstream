@@ -226,7 +226,7 @@ class UserController extends Controller
         if ($file) {
             $fileUrl  = url('files/logos/' . $this->orgId . '.' . $file->getClientOriginalExtension());
             $fileName = $this->orgId . '.' . $file->getClientOriginalExtension();
-            $image    = Image::make(File::get($file))->resize(150, 150)->encode();
+            $image    = Image::make(File::get($file))->encode();
             Storage::put('logos/' . $fileName, $image);
             $organization->logo_url = $fileUrl;
             $organization->logo     = $fileName;

@@ -22,6 +22,15 @@
 
 @include('tz.partials.header')
 
+<style>
+    .organization-logo  img{
+        max-width: 150px;
+        width: auto;
+        height: auto;
+        max-height: 150px;
+    }
+</style>
+
 <section class="main-container">
     <div class="container">
         <div class="title-section">
@@ -36,7 +45,7 @@
             <div class="col-md-3 col-sm-4 col-xs-4 vertical-horizontal-center-wrap">
                 <div class="vertical-horizontal-centerize">
                     @if($orgDetail->logo)
-                        <div class="organization-logo"><img src={{ $orgDetail->logo_url }} width="106px" height="100px"></div>
+                        <div class="organization-logo"><img src={{ $orgDetail->logo_url }}></div>
                         <div class="organization-name"><a href="{{ route('project.public', $orgDetail->id) }}">{{$orgDetail->name}}</a></div>
                     @else
                         <div class="organization-name"><a href="{{ route('project.public', $orgDetail->id) }}">{{$orgDetail->name}}</a></div>
@@ -88,13 +97,13 @@
                 @if($date['type'] == 2)
                     <dl class="clearfix">
                         <dt class="col-md-3 col-sm-4 col-xs-4">Start Date</dt>
-                        <dd class="col-md-9 col-sm-8 col-xs-8">{{ $date['date']}}</dd>
+                        <dd class="col-md-9 col-sm-8 col-xs-8">{{ formatDate($date['date'], 'Y/M/d') }}</dd>
                     </dl>
                 @endif
                 @if($date['type'] == 4)
                     <dl class="clearfix">
                         <dt class="col-md-3 col-sm-4 col-xs-4">End Date</dt>
-                        <dd class="col-md-9 col-sm-8 col-xs-8">{{ $date['date']}}</dd>
+                        <dd class="col-md-9 col-sm-8 col-xs-8">{{ formatDate($date['date'], 'Y/M/d') }}</dd>
                     </dl>
                 @endif
             @endforeach
@@ -151,13 +160,27 @@
                 </dd>
             </dl>
 
+            <dl class="clearfix">
+                <dt class="col-md-3 col-sm-4 col-xs-4">
+                    Budget
+                </dt>
+                <dd class="col-md-9 col-sm-8 col-xs-8 list-wrap">
+                    @foreach($project->budget as $budget)
+                        <div>
+                            {{ number_format(getVal($budget, ['value', 0, 'amount'])) }} {{ getVal($budget, ['value', 0, 'currency']) }} &nbsp; {{ formatDate(getVal($budget, ['period_start', 0, 'date']), 'Y/M/d') }} - {{ formatDate(getVal($budget, ['period_end', 0, 'date']), 'Y/M/d') }}
+                        </div>
+                    @endforeach
+                </dd>
+            </dl>
+
             @if(!empty($fundings))
                 <dl class="clearfix">
                     <dt class="col-md-3 col-sm-4 col-xs-4">Funding Organisation</dt>
                     <dd class="col-md-9 col-sm-8 col-xs-8 list-wrap">
                         @foreach($fundings as $funding)
                             @if($funding['narrative'][0]['narrative'] != "")
-                                <div>{{$funding['narrative'][0]['narrative']}} , <span>{{ $getCode->getCodeListName('Activity','OrganisationType', $funding['organization_type']) }}</span>
+                                <div>
+                                    {{$funding['narrative'][0]['narrative']}} , <span>{{ $getCode->getCodeListName('Activity','OrganisationType', $funding['organization_type']) }}</span>
                                 </div>
                             @endif
                         @endforeach
