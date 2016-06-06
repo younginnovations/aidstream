@@ -41,17 +41,21 @@
         <div class="col-md-12">
             <div class="row">
                 <div class="header-name-value name-value-section clearfix">
-                    <dl class="col-md-4 col-sm-6 col-xs-6">
+                    <dl class="col-md-3 col-sm-6 col-xs-6">
                         <dt> Total Disbursements</dt>
                         <dd class="amount">${{ $transactionCount['disbursement'] }}</dd>
                     </dl>
-                    <dl class="col-md-4 col-sm-6 col-xs-6">
+                    <dl class="col-md-3 col-sm-6 col-xs-6">
                         <dt>Total Expenditures</dt>
                         <dd class="amount">${{ $transactionCount['expenditure'] }}</dd>
                     </dl>
-                    <dl class="col-md-4 col-sm-6 col-xs-6">
+                    <dl class="col-md-3 col-sm-6 col-xs-6">
                         <dt> Total Incoming Funds</dt>
                         <dd class="amount">${{ $transactionCount['incoming_fund'] }}</dd>
+                    </dl>
+                    <dl class="col-md-3 col-sm-6 col-xs-6">
+                        <dt> Total Budget</dt>
+                        <dd class="amount">${{ $totalBudget }}</dd>
                     </dl>
                 </div>
             </div> {{--  row close--}}

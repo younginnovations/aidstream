@@ -618,4 +618,25 @@ class ProjectService
         }
     }
 
+    /**
+     * Calculate the Total Budget for an Organization.
+     * @param $organization
+     * @return float
+     */
+    public function totalBudget($organization)
+    {
+        $projects    = $organization->projects;
+        $totalBudget = 0.0;
+
+        foreach ($projects as $project) {
+            if ($project->budget) {
+                foreach ($project->budget as $budget) {
+                    $totalBudget += getVal($budget, ['value', 0, 'amount']);
+                }
+            }
+        }
+
+        return $totalBudget;
+    }
+
 }
