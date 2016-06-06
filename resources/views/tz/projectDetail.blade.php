@@ -31,9 +31,9 @@
         </div>
     </div>
 
-    <div class="container container--shadow">
+    <div class="container container--shadow small-container">
         <div class="col-md-12 intro-section clearfix">
-            <div class="col-md-3 vertical-horizontal-center-wrap">
+            <div class="col-md-3 col-sm-4 col-xs-4 vertical-horizontal-center-wrap">
                 <div class="vertical-horizontal-centerize">
                     @if($orgDetail->logo)
                         <div class="organization-logo"><img src={{ $orgDetail->logo_url }} width="106px" height="100px"></div>
@@ -44,7 +44,7 @@
                 </div>
             </div>
 
-            <div class="col-md-9" style="height: 277px;">
+            <div class="col-md-9 col-sm-8 col-xs-8" style="height: 277px;">
                 <div id="map" style="height:300px; width:100%"></div>
             </div>
         </div>
@@ -52,8 +52,8 @@
             @foreach($project->description as $description)
                 @if(getVal($description, ['type']) == 1)
                     <dl class="clearfix">
-                        <dt class="col-md-3">General description</dt>
-                        <dd class="col-md-9">
+                        <dt class="col-md-3 col-sm-4 col-xs-4">General description</dt>
+                        <dd class="col-md-9 col-sm-8 col-xs-8">
                             {{$description['narrative'][0]['narrative']}}
                         </dd>
                     </dl>
@@ -61,8 +61,8 @@
 
                 @if(getVal($description, ['type']) == 2)
                     <dl class="clearfix">
-                        <dt class="col-md-3">Objectives</dt>
-                        <dd class="col-md-9">
+                        <dt class="col-md-3 col-sm-4 col-xs-4">Objectives</dt>
+                        <dd class="col-md-9 col-sm-8 col-xs-8">
                             {{$description['narrative'][0]['narrative']}}
                         </dd>
                     </dl>
@@ -70,8 +70,8 @@
 
                 @if(getVal($description, ['type']) == 3)
                     <dl class="clearfix">
-                        <dt class="col-md-3">Target Groups</dt>
-                        <dd class="col-md-9">
+                        <dt class="col-md-3 col-sm-4 col-xs-4">Target Groups</dt>
+                        <dd class="col-md-9 col-sm-8 col-xs-8">
                             {{$description['narrative'][0]['narrative']}}
                         </dd>
                     </dl>
@@ -80,33 +80,33 @@
 
 
             <dl class="clearfix">
-                <dt class="col-md-3">Project Status</dt>
-                <dd class="col-md-9">{{ $getCode->getCodeListName('Activity','ActivityStatus', $project->activity_status) }}</dd>
+                <dt class="col-md-3 col-sm-4 col-xs-4">Project Status</dt>
+                <dd class="col-md-9 col-sm-8 col-xs-8">{{ $getCode->getCodeListName('Activity','ActivityStatus', $project->activity_status) }}</dd>
             </dl>
 
             @foreach($project->activity_date as $date)
                 @if($date['type'] == 2)
                     <dl class="clearfix">
-                        <dt class="col-md-3">Start Date</dt>
-                        <dd class="col-md-9">{{ $date['date']}}</dd>
+                        <dt class="col-md-3 col-sm-4 col-xs-4">Start Date</dt>
+                        <dd class="col-md-9 col-sm-8 col-xs-8">{{ $date['date']}}</dd>
                     </dl>
                 @endif
                 @if($date['type'] == 4)
                     <dl class="clearfix">
-                        <dt class="col-md-3">End Date</dt>
-                        <dd class="col-md-9">{{ $date['date']}}</dd>
+                        <dt class="col-md-3 col-sm-4 col-xs-4">End Date</dt>
+                        <dd class="col-md-9 col-sm-8 col-xs-8">{{ $date['date']}}</dd>
                     </dl>
                 @endif
             @endforeach
 
             <dl class="clearfix">
-                <dt class="col-md-3">Project Country</dt>
-                <dd class="col-md-9">{{$getCode->getCodeListName('Organization','Country', $project->recipient_country[0]['country_code'])}}</dd>
+                <dt class="col-md-3 col-sm-4 col-xs-4">Project Country</dt>
+                <dd class="col-md-9 col-sm-8 col-xs-8">{{$getCode->getCodeListName('Organization','Country', $project->recipient_country[0]['country_code'])}}</dd>
             </dl>
 
             <dl class="clearfix">
-                <dt class="col-md-3">Location</dt>
-                <dd class="col-md-9 list-wrap">
+                <dt class="col-md-3 col-sm-4 col-xs-4">Location</dt>
+                <dd class="col-md-9 col-sm-8 col-xs-8 list-wrap">
                     @if($project->location != null)
                         @foreach ($project->location as $location)
                             @foreach (getVal($location, ['administrative'], []) as $value)
@@ -122,10 +122,10 @@
             </dl>
 
             <dl class="clearfix">
-                <dt class="col-md-3">
+                <dt class="col-md-3 col-sm-4 col-xs-4">
                     Results/Outcomes Documents
                 </dt>
-                <dd class="col-md-9 list-wrap">
+                <dd class="col-md-9 col-sm-8 col-xs-8 list-wrap">
                     @foreach($documentLinks as $documentLink)
                         @foreach($documentLink as $index => $data)
                             @if($data['url'] != "" && getVal($data, ['category', 0, 'code']) == "A08")
@@ -137,10 +137,10 @@
             </dl>
 
             <dl class="clearfix">
-                <dt class="col-md-3">
+                <dt class="col-md-3 col-sm-4 col-xs-4">
                     Annual Reports
                 </dt>
-                <dd class="col-md-9 list-wrap">
+                <dd class="col-md-9 col-sm-8 col-xs-8 list-wrap">
                     @foreach($documentLinks as $documentLink)
                         @foreach($documentLink as $index => $data)
                             @if($data['url'] != "" && getVal($data, ['category', 0, 'code']) == "B01")
@@ -153,8 +153,8 @@
 
             @if(!empty($fundings))
                 <dl class="clearfix">
-                    <dt class="col-md-3">Funding Organisation</dt>
-                    <dd class="col-md-9 list-wrap">
+                    <dt class="col-md-3 col-sm-4 col-xs-4">Funding Organisation</dt>
+                    <dd class="col-md-9 col-sm-8 col-xs-8 list-wrap">
                         @foreach($fundings as $funding)
                             @if($funding['narrative'][0]['narrative'] != "")
                                 <div>{{$funding['narrative'][0]['narrative']}} , <span>{{ $getCode->getCodeListName('Activity','OrganisationType', $funding['organization_type']) }}</span>
@@ -167,8 +167,8 @@
 
             @if(!empty($implementings))
                 <dl class="clearfix">
-                    <dt class="col-md-3">Implementing Organisation</dt>
-                    <dd class="col-md-9 list-wrap">
+                    <dt class="col-md-3 col-sm-4 col-xs-4">Implementing Organisation</dt>
+                    <dd class="col-md-9 col-sm-8 col-xs-8 list-wrap">
                         @foreach($implementings as $implementing)
                             @if($implementing['narrative'][0]['narrative'] != "")
                                 <div>{{$implementing['narrative'][0]['narrative']}} ,

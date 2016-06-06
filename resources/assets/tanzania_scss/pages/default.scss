@@ -38,6 +38,22 @@ h1{
     font-size: 36px;
     line-height: 42px;
     color: rgba(0,0,0,0.7);
+
+    @media (max-width: 480px) {
+        font-size: 24px;
+        line-height: 32px;
+    }
+}
+
+.introduction-wrapper{
+    h1{
+        line-height: 52px;
+    }
+
+    @media (max-width: 480px) {
+        font-size: 24px;
+        line-height: 38px;
+    }
 }
 
 .title{
@@ -66,6 +82,11 @@ h1{
         font-size: 11px;
         line-height: 17px;
         color: $light-black;
+    }
+
+    @media (max-width: 480px) {
+        padding: 20px 20px;
+        margin-bottom: 0;
     }
 }
 
