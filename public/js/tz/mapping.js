@@ -241,7 +241,7 @@ var ProjectsListView = Backbone.View.extend({
             projects = projects.search(this.searchtext);
         }
         if(!projects.length) {
-            this.$("tbody").html("<p>No projects available.</p>");
+            this.$("tbody").html("<tr><td class='text-center no-data' colspan='100%'>No projects found.</td></tr>");
         } else {
             this.$("tbody").html("");
             projects.each(function(project) {

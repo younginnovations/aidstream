@@ -1357,9 +1357,9 @@ $full-sidebar-wrapper-width: 210px;
   > div {
     display: table-cell;
     vertical-align: middle;
-    &:first-of-type {
+   /* &:first-of-type {
       width: 80%;
-    }
+    }*/
     > span {
       font-size: 20px;
       display: block;
@@ -1387,6 +1387,37 @@ $full-sidebar-wrapper-width: 210px;
     opacity: 0.7;
   }
 }
+
+/*
+.element-panel-heading>div:first-of-type{
+
+}
+
+.element-panel-heading{
+    a{
+      font-size: 12px;
+      line-height: 18px;
+  }
+
+  .edit-btn{
+    border: solid 1px $color_lochmara_approx;
+    border-radius: 12px;
+    padding: 8px 10px;
+    position: relative;
+
+    &:before{
+      position: absolute;
+      height: 27px;
+      width: 17px;
+      top: 8px;
+      left: 10px;
+      background: url(../../images/ic-sprite.svg) -158px -344px no-repeat;
+
+    }
+  }
+}
+*/
+
 
 .panel-level-1 {
   margin-bottom: 0;

@@ -128,7 +128,7 @@
                                     Start Date:
                                 </div>
                                 <div class="activity-element-info">
-                                    {{$date['date']}}
+                                    {{ formatDate($date['date'], 'Y/M/d') }}
                                 </div>
                             </div>
                         </div>
@@ -141,7 +141,7 @@
                                     End Date:
                                 </div>
                                 <div class="activity-element-info">
-                                    {{ getVal($date, ['date']) }}
+                                    {{ formatDate($date['date'], 'Y/M/d') }}
                                 </div>
                             </div>
                         </div>
@@ -257,7 +257,7 @@
                         </div>
                         @foreach($disbursement as $data)
                             <div class="activity-element-info">
-                                <li>{{ number_format($data['value'][0]['amount']) }} {{ $data['value'][0]['currency'] }}, {{$data['transaction_date'][0]['date']}}</li>
+                                <li>{{ number_format($data['value'][0]['amount']) }} {{ $data['value'][0]['currency'] }}, {{ formatDate(getVal($data, ['transaction_date', 0, 'date']), 'Y/M/d') }}</li>
                                 <div class="toggle-btn">
                                     <span class="show-more-info">Show more info</span>
                                     <span class="hide-more-info hidden">Hide more info</span>
@@ -333,7 +333,7 @@
                         </div>
                         @foreach($expenditure as $data)
                             <div class="activity-element-info">
-                                <li>{{ number_format($data['value'][0]['amount']) }} {{ $data['value'][0]['currency'] }}, {{$data['transaction_date'][0]['date']}}</li>
+                                <li>{{ number_format($data['value'][0]['amount']) }} {{ $data['value'][0]['currency'] }}, {{ formatDate(getVal($data, ['transaction_date', 0, 'date']), 'Y/M/d') }}</li>
                                 <div class="toggle-btn">
                                     <span class="show-more-info">Show more info</span>
                                     <span class="hide-more-info hidden">Hide more info</span>
@@ -404,7 +404,7 @@
                         </div>
                         @foreach($incomingFund as $data)
                             <div class="activity-element-info">
-                                <li>{{ number_format($data['value'][0]['amount']) }} {{ $data['value'][0]['currency'] }}, {{$data['transaction_date'][0]['date']}}</li>
+                                <li>{{ number_format($data['value'][0]['amount']) }} {{ $data['value'][0]['currency'] }}, {{ formatDate(getVal($data, ['transaction_date', 0, 'date']), 'Y/M/d') }}</li>
                                 <div class="toggle-btn">
                                     <span class="show-more-info">Show more info</span>
                                     <span class="hide-more-info hidden">Hide more info</span>

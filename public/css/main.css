@@ -4073,9 +4073,10 @@ label {
   font-size: 20px; }
   .element-panel-heading > div {
     display: table-cell;
-    vertical-align: middle; }
-    .element-panel-heading > div:first-of-type {
-      width: 80%; }
+    vertical-align: middle;
+    /* &:first-of-type {
+      width: 80%;
+    }*/ }
     .element-panel-heading > div > span {
       font-size: 20px;
       display: block;
@@ -4095,6 +4096,35 @@ label {
   margin-left: 8px;
   opacity: 0.7; }
 
+/*
+.element-panel-heading>div:first-of-type{
+
+}
+
+.element-panel-heading{
+    a{
+      font-size: 12px;
+      line-height: 18px;
+  }
+
+  .edit-btn{
+    border: solid 1px $color_lochmara_approx;
+    border-radius: 12px;
+    padding: 8px 10px;
+    position: relative;
+
+    &:before{
+      position: absolute;
+      height: 27px;
+      width: 17px;
+      top: 8px;
+      left: 10px;
+      background: url(../../images/ic-sprite.svg) -158px -344px no-repeat;
+
+    }
+  }
+}
+*/
 .panel-level-1 {
   margin-bottom: 0; }
   .panel-level-1 .panel-default .panel-heading {

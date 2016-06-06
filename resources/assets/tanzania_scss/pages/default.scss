@@ -2,6 +2,12 @@ $img-path: "/images";
 $light-black: rgba(0,0,0,0.5);
 $blue-color: #00A2E0;
 $link-color: #00A2E0;
+$color_gravel_approx: #484848;
+$color_dodger_blue_approx: #00A8FF;
+$color-cerulean-approx: #0598e5;
+$url_3: url(../../images/ic-sprite.svg);
+$url_5: url(../../images/ic-no-activity.svg);
+$url_6: url(../../images/ic-no-document.svg);
 
 body{
     background-color: #f4f4f4;
@@ -45,16 +51,42 @@ h1{
     }
 }
 
+h2{
+    font-size: 24px;
+    line-height: 33px;
+    margin-bottom: 20px;
+
+    @media (max-width: 480px) {
+        font-size: 18px;
+        line-height: 24px;
+    }
+}
+
 .introduction-wrapper{
     h1{
         line-height: 52px;
     }
 
     @media (max-width: 480px) {
-        font-size: 24px;
-        line-height: 38px;
+        h1{
+            font-size: 24px;
+            line-height: 38px;
+        }
     }
 }
+
+.introduction-wrapper {
+    padding: 30px 0 75px;
+    h2 {
+        font-size: 20px;
+        line-height: 26px;
+        a {
+            color: #484848;
+            border-bottom: 2px solid #00A8FF;
+        }
+    }
+}
+
 
 .title{
     font-family: Open-Sans-Bold;
@@ -96,3 +128,39 @@ h1{
     border-radius: 4px;
     margin-top: 10px;
 }
+
+
+/* style for empty states */
+
+.no-data {
+    font-size: 16px;
+    font-style: italic;
+    color: rgba($color_gravel_approx, 0.7);
+    padding: 44px 0 50px;
+    background: rgba($color_gravel_approx, 0.06);
+    margin: 36px 30px;
+    .btn {
+        background: $color_dodger_blue_approx $url_3 no-repeat -479px -138px;
+        border: 0;
+        line-height: 67px;
+        padding: 0 34px 0 62px;
+        font-size: 16px;
+        display: table;
+        margin: 25px auto;
+        font-style: normal;
+        &:hover {
+            background-color: $color_cerulean_approx;
+        }
+    }
+}
+
+.no-activity-data {
+    background: rgba($color_gravel_approx, 0.06) $url_5 no-repeat center 79px;
+    padding: 204px 0 20px;
+}
+
+.no-document-data, .no-result-data {
+    background: rgba($color_gravel_approx, 0.06) $url_6 no-repeat center 79px;
+    padding: 204px 0 20px;
+}
+
