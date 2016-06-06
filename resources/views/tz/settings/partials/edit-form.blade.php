@@ -1,6 +1,6 @@
 <div id="basic-info">
     <div class="col-md-12" style="margin-bottom: 10px;">Reporting Organisation Information</div>
-    <div>
+    <div class="clearfix">
         <div class="col-sm-6">
             {!! Form::label('Organisation Name', 'Organisation Name', ['class' => 'control-label required']) !!}
             {!! Form::text('narrative', null, ['class' => 'form-control', 'required' => 'required']) !!}
@@ -23,7 +23,7 @@
     </div>
 
     <div class="col-md-12 added-new-block" style="margin-bottom: 10px;">IATI Registry Information</div>
-    <div>
+    <div class="clearfix">
         <div class="col-sm-6">
             {!! Form::label('publisher id', 'Publisher Id', ['class' => 'control-label']) !!}
             {!! Form::text('publisher_id', null, ['class' => 'form-control', 'required' => 'required']) !!}
@@ -34,19 +34,22 @@
             {!! Form::text('api_id', null, ['class' => 'form-control', 'required' => 'required']) !!}
         </div>
 
-        <div class="col-sm-11 auto-publish">
-            <label>Automatically Update to the IATI Registry when publishing files?</label>
-            <label class="control-label pull-left">
-                <input type="radio" name="publish_files" value="no" checked="checked"> No
-            </label>
-            <label class="control-label pull-left">
-                <input type="radio" name="publish_files" value="yes"> Yes
-            </label>
-        </div>
+    </div>
+
+    <div class="col-md-12 added-new-block">
+        <label>Automatically Update to the IATI Registry when publishing files?</label>
+    </div>
+    <div class="col-md-12 auto-publish">
+        <label class="control-label pull-left">
+            <input type="radio" name="publish_files" value="no" checked="checked"> No
+        </label>
+        <label class="control-label pull-left">
+            <input type="radio" name="publish_files" value="yes"> Yes
+        </label>
     </div>
 
     <div class="col-md-12 added-new-block" style="margin-bottom: 10px;">Default Values</div>
-    <div>
+    <div class="clearfix">
         <div class="col-sm-6">
             {!! Form::label('default currency', 'Default Currency', ['class' => 'control-label required']) !!}
             {!! Form::select('default_currency', ['' => 'Select one of following:'] + $currency, $settings['default_currency'],['class' => 'form-control', 'required' => 'required']) !!}

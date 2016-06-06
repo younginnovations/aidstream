@@ -27,13 +27,31 @@ h1 {
       font-size: 24px;
       line-height: 32px; } }
 
+h2 {
+  font-size: 24px;
+  line-height: 33px;
+  margin-bottom: 20px; }
+  @media (max-width: 480px) {
+    h2 {
+      font-size: 18px;
+      line-height: 24px; } }
+
 .introduction-wrapper h1 {
   line-height: 52px; }
 
 @media (max-width: 480px) {
-  .introduction-wrapper {
+  .introduction-wrapper h1 {
     font-size: 24px;
     line-height: 38px; } }
+
+.introduction-wrapper {
+  padding: 30px 0 75px; }
+  .introduction-wrapper h2 {
+    font-size: 20px;
+    line-height: 26px; }
+    .introduction-wrapper h2 a {
+      color: #484848;
+      border-bottom: 2px solid #00A8FF; }
 
 .title {
   font-family: Open-Sans-Bold;
@@ -66,6 +84,34 @@ h1 {
           border-radius: 4px;
   margin-top: 10px; }
 
+/* style for empty states */
+.no-data {
+  font-size: 16px;
+  font-style: italic;
+  color: rgba(72, 72, 72, 0.7);
+  padding: 44px 0 50px;
+  background: rgba(72, 72, 72, 0.06);
+  margin: 36px 30px; }
+  .no-data .btn {
+    background: #00A8FF url(../../images/ic-sprite.svg) no-repeat -479px -138px;
+    border: 0;
+    line-height: 67px;
+    padding: 0 34px 0 62px;
+    font-size: 16px;
+    display: table;
+    margin: 25px auto;
+    font-style: normal; }
+    .no-data .btn:hover {
+      background-color: #0598e5; }
+
+.no-activity-data {
+  background: rgba(72, 72, 72, 0.06) url(../../images/ic-no-activity.svg) no-repeat center 79px;
+  padding: 204px 0 20px; }
+
+.no-document-data, .no-result-data {
+  background: rgba(72, 72, 72, 0.06) url(../../images/ic-no-document.svg) no-repeat center 79px;
+  padding: 204px 0 20px; }
+
 #map {
   width: 100%;
   height: 550px;
@@ -85,6 +131,13 @@ h1 {
     right: 0; }
   .map-section #reset {
     display: none; }
+  .map-section h3 {
+    margin-top: 0;
+    font-size: 14px;
+    line-height: 20px;
+    color: rgba(72, 72, 72, 0.6);
+    z-index: 999;
+    position: relative; }
 
 .detail-page-map {
   height: 350px;
@@ -132,30 +185,16 @@ h1 {
         display: block; }
 
 .small-card {
-  max-height: 240px;
+  max-height: 224px;
   max-width: 250px;
   margin-bottom: 10px;
   z-index: 99;
   position: relative; }
   .small-card .card-body {
-    height: 195px;
+    height: 179px;
     width: 250px;
     overflow: auto; }
 
-/* Styles specific to this particular page */
-/*.scroll-pane
-{
-  width: 100%;
-  height: 200px;
-  overflow: auto;
-}*/
-/*
-.horizontal-only
-{
-  height: auto;
-  max-height: 200px;
-}
-*/
 /*
 .checkbox {
   padding-left: 20px;
@@ -411,8 +450,17 @@ footer .footer-logo a img {
 .container--shadow {
   margin-bottom: 30px; }
 
+.container--shadow--buffer-top {
+  padding-top: 20px; }
+
 .small-container {
   max-width: 760px; }
+
+.organization-logo img {
+  max-width: 150px;
+  width: auto;
+  height: auto;
+  max-height: 150px; }
 
 .name-value-section {
   margin-bottom: 30px; }

@@ -22,15 +22,6 @@
 
 @include('tz.partials.header')
 
-<style>
-    .organization-logo  img{
-        max-width: 150px;
-        width: auto;
-        height: auto;
-        max-height: 150px;
-    }
-</style>
-
 <section class="main-container">
     <div class="container">
         <div class="title-section">
@@ -40,21 +31,23 @@
         </div>
     </div>
 
-    <div class="container container--shadow small-container">
-        <div class="col-md-12 intro-section clearfix">
-            <div class="col-md-3 col-sm-4 col-xs-4 vertical-horizontal-center-wrap">
-                <div class="vertical-horizontal-centerize">
-                    @if($orgDetail->logo)
-                        <div class="organization-logo"><img src={{ $orgDetail->logo_url }}></div>
-                        <div class="organization-name"><a href="{{ route('project.public', $orgDetail->id) }}">{{$orgDetail->name}}</a></div>
-                    @else
-                        <div class="organization-name"><a href="{{ route('project.public', $orgDetail->id) }}">{{$orgDetail->name}}</a></div>
-                    @endif
+    <div class="container container--shadow container--shadow--buffer-top small-container">
+        <div class="row">
+            <div class="col-md-12 intro-section clearfix">
+                <div class="col-md-3 col-sm-4 col-xs-4 vertical-horizontal-center-wrap">
+                    <div class="vertical-horizontal-centerize">
+                        @if($orgDetail->logo)
+                            <div class="organization-logo"><img src={{ $orgDetail->logo_url }} ></div>
+                            <div class="organization-name"><a href="{{ route('project.public', $orgDetail->id) }}">{{$orgDetail->name}}</a></div>
+                        @else
+                            <div class="organization-name"><a href="{{ route('project.public', $orgDetail->id) }}">{{$orgDetail->name}}</a></div>
+                        @endif
+                    </div>
                 </div>
-            </div>
 
-            <div class="col-md-9 col-sm-8 col-xs-8" style="height: 277px;">
-                <div id="map" style="height:300px; width:100%"></div>
+                <div class="col-md-9 col-sm-8 col-xs-8" style="height: 277px;">
+                    <div id="map" style="height:300px; width:100%"></div>
+                </div>
             </div>
         </div>
         <div class="col-md-12 name-value-section">
@@ -165,11 +158,13 @@
                     Budget
                 </dt>
                 <dd class="col-md-9 col-sm-8 col-xs-8 list-wrap">
-                    @foreach($project->budget as $budget)
-                        <div>
-                            {{ number_format(getVal($budget, ['value', 0, 'amount'])) }} {{ getVal($budget, ['value', 0, 'currency']) }} &nbsp; {{ formatDate(getVal($budget, ['period_start', 0, 'date']), 'Y/M/d') }} - {{ formatDate(getVal($budget, ['period_end', 0, 'date']), 'Y/M/d') }}
-                        </div>
-                    @endforeach
+                    @if ($project->budget)
+                        @foreach($project->budget as $budget)
+                            <div>
+                                {{ number_format(getVal($budget, ['value', 0, 'amount'])) }} {{ getVal($budget, ['value', 0, 'currency']) }} &nbsp; {{ formatDate(getVal($budget, ['period_start', 0, 'date']), 'Y/M/d') }} - {{ formatDate(getVal($budget, ['period_end', 0, 'date']), 'Y/M/d') }}
+                            </div>
+                        @endforeach
+                    @endif
                 </dd>
             </dl>
 

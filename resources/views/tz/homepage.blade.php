@@ -19,15 +19,16 @@
 <div class="header-banner">
     @include('tz.partials.header')
     <div class="introduction-wrapper bottom-line">
+        <div class="container">
         <div class="col-md-12 text-center">
-            <h1>Publish your Aid data in <a href="http://iatistandard.org/">IATI format</a> effortlessly </h1>
+            {{--<h1>Publish your Aid data in <a href="http://iatistandard.org/">IATI format</a> effortlessly </h1>--}}
 
-            <p>
+            <h2>
                 A platform to display and explore civil society activities across Tanzania.
                 We empower civil society organizations in Tanzania to be more transparent and achieve greater impact by using <a href="http://iatistandard.org/">IATI</a> in their local context.
-            </p>
-            <p style="font-size: 10px;">Use the filters below to start exploring.</p>
+            </h2>
             {{--<a href="{{ url('/auth/register') }}" class="btn btn-primary get-started-btn">Get Started</a>--}}
+        </div>
         </div>
     </div>
 </div>
@@ -43,7 +44,9 @@
         <div class="container">
             <div class="col-md-12 select-cards-wrap">
 
-            <div class="sectors-block">
+                <h3>Use the filters below to start exploring.</h3>
+
+                <div class="sectors-block">
                 <div class="card small-card">
                     <div class="card-header title">SECTORS</div>
                     <div class="card-body jspScrollable">
