@@ -85,7 +85,7 @@ class TransactionController extends TanzanianController
         $settings        = $project->organization->settings;
         $defaultCurrency = getVal($settings->toArray(), ['default_field_values', 0, 'default_currency']) ? getVal($settings->toArray(), ['default_field_values', 0, 'default_currency']) : getVal($project->default_field_values, [0, 'default_currency']);
 
-        return view('tz.transaction.edit', compact('currency', 'projectId', 'transactionType', 'transactions', 'defaultCurrency'));
+        return view('tz.transaction.edit', compact('currency', 'projectId', 'transactionType', 'transactions', 'defaultCurrency', 'project'));
     }
 
     /**

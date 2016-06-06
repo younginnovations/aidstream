@@ -407,6 +407,7 @@ class ProjectService
 
             $project->budget = $this->mapBudgetValueDate($budgetDetails);
             $project->save();
+            $this->resetWorkflow($project);
 
             $this->logger->info(
                 sprintf('Budget successfully saved for project with id: %s', $projectId),
@@ -440,7 +441,8 @@ class ProjectService
 
         foreach ($budgetDetails['budget'] as $index => $detail) {
             $details[]                                      = $detail;
-            $details[$index]['value'][$index]['value_date'] = getVal($budgetDetails, ['budget', $index, 'period_start', $index, 'date']);
+
+            $details[$index]['value'][0]['value_date'] = getVal($budgetDetails, ['budget', $index, 'period_start', 0, 'date']);
         }
 
         return $details;
@@ -458,7 +460,7 @@ class ProjectService
             $user    = auth()->user()->getNameAttribute();
             $project = $this->find($projectId);
 
-            $project->update($budgetDetails);
+            $project->update(['budget' => $this->mapBudgetValueDate($budgetDetails)]);
             $this->resetWorkflow($project);
 
             $this->logger->info(
@@ -482,6 +484,11 @@ class ProjectService
         }
     }
 
+    /**
+     * Delete an existing Budget.
+     * @param $projectId
+     * @return bool|null
+     */
     public function deleteBudget($projectId)
     {
         try {
@@ -511,7 +518,6 @@ class ProjectService
 
             return null;
         }
-
     }
 
     public function getPublishedProjects($orgId)
@@ -537,13 +543,14 @@ class ProjectService
             }
 
             $i = 0;
-            foreach ($project->location as $location) {
-                foreach ($location['administrative'] as $index => $administrative) {
-                    if ($index == 0) {
-                        $regionName[$i] = $administrative['code'];
-                        $i ++;
+            if ($project->location) {
+                foreach ($project->location as $location) {
+                    foreach ($location['administrative'] as $index => $administrative) {
+                        if ($index == 0) {
+                            $regionName[$i] = $administrative['code'];
+                            $i++;
+                        }
                     }
-
                 }
             }
 
@@ -640,5 +647,4 @@ class ProjectService
 
         return $totalBudget;
     }
-
 }

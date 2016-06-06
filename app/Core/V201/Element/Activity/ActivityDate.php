@@ -36,10 +36,10 @@ class ActivityDate extends BaseElement
         foreach ($activityDate as $ActivityDate) {
             $activityData[] = [
                 '@attributes' => [
-                    'type'     => $ActivityDate['type'],
-                    'iso-date' => $ActivityDate['date']
+                    'type'     => getVal($ActivityDate, ['type']),
+                    'iso-date' => getVal($ActivityDate, ['date'])
                 ],
-                'narrative'   => $this->buildNarrative($ActivityDate['narrative'])
+                'narrative'   => $this->buildNarrative(getVal($ActivityDate, ['narrative'], []))
             ];
         }
 

@@ -18,10 +18,10 @@
                     <span class="last-updated-date">Last Updated on: {{ changeTimeZone($project['updated_at'], 'M d, Y H:i') }}</span>
                 </div>
             </div>
-             <div class="col-md-3">
-                 <div class="clearfix">
+            <div class="col-md-3">
+                <div class="clearfix">
                     <a href="{{ route('project.edit', $project->id) }}" class="edit-btn">Edit</a>
-                 </div>
+                </div>
                 <a href="{{ route('change-project-defaults', $id) }}" class="override-section">
                     <span class="glyphicon glyphicon-triangle-left"></span>  Override Default Values
                 </a>
@@ -268,9 +268,9 @@
                                             {{ number_format($data['value'][0]['amount']) }} {{ $data['value'][0]['currency'] }}, {{ formatDate(getVal($data, ['transaction_date', 0, 'date'])) }}
                                             <span class="has-delete-wrap">
                                                 <a href="javascript:void(0)" class="delete-transaction delete" data-route="{{ route('single.transaction.destroy', [$data['id']]) }}">Delete</a>
-                                                    {!! Form::open(['method' => 'POST', 'route' => ['single.transaction.destroy', $data['id']],'class' => 'hidden', 'role' => 'form', 'id' => 'transaction-delete-form']) !!}
-                                                    {!! Form::submit('Delete', ['class' => 'pull-left delete-transaction']) !!}
-                                                    {!! Form::close() !!}
+                                                {!! Form::open(['method' => 'POST', 'route' => ['single.transaction.destroy', $data['id']],'class' => 'hidden', 'role' => 'form', 'id' => 'transaction-delete-form']) !!}
+                                                {!! Form::submit('Delete', ['class' => 'pull-left delete-transaction']) !!}
+                                                {!! Form::close() !!}
                                             </span>
                                         </span>
                                     </li>
@@ -421,7 +421,7 @@
                                 <div class="activity-element-info">
                                     <li>
                                         <span>{{ number_format($data['value'][0]['amount']) }} {{ $data['value'][0]['currency'] }}, {{ formatDate(getVal($data, ['transaction_date', 0, 'date'])) }}
-                                        <span class="has-delete-wrap">
+                                            <span class="has-delete-wrap">
                                             <a href="javascript:void(0)" class="delete-transaction delete" data-route="{{ route('single.transaction.destroy', [$data['id']]) }}">Delete</a>
                                                 {!! Form::open(['method' => 'POST', 'route' => ['single.transaction.destroy', $data['id']],'class' => 'hidden', 'role' => 'form', 'id' => 'transaction-delete-form']) !!}
                                                 {!! Form::submit('Delete', ['class' => 'pull-left delete-transaction']) !!}

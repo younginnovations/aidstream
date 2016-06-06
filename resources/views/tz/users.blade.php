@@ -1,5 +1,7 @@
 @extends('tz.base.sidebar')
 
+@section('title', 'Users')
+
 @section('content')
     <div class="col-xs-9 col-lg-9 content-wrapper list-user-wrapper">
         @include('includes.response')

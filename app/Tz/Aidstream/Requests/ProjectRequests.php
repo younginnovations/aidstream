@@ -1,13 +1,14 @@
 <?php namespace App\Tz\Aidstream\Requests;
 
 use App\Http\Requests\Request;
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Input;
 
 /**
  * Class ProjectRequests
  * @package App\Tz\Aidstream\Requests
  */
-class ProjectRequests extends Request
+class ProjectRequests extends FormRequest
 {
 
     /**

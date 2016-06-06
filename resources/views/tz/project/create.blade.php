@@ -146,13 +146,13 @@
 
             <div class="hidden" id="funding-org">
                 <div class="col-sm-6">
-                    {!! Form::label('funding_organization[index][funding_organization_name]', 'Organization Name', ['class' => 'control-label required']) !!}
-                    {!! Form::text('funding_organization[index][funding_organization_name]', null, ['class' => 'form-control', 'required' => 'required']) !!}
+                    {!! Form::label('funding_organization[index][funding_organization_name]', 'Organization Name', ['class' => 'control-label']) !!}
+                    {!! Form::text('funding_organization[index][funding_organization_name]', null, ['class' => 'form-control']) !!}
                 </div>
 
                 <div class="col-sm-6">
-                    {!! Form::label('funding_organization[index][funding_organization_type]', 'Organization Type', ['class' => 'control-label required']) !!}
-                    {!! Form::select('funding_organization[index][funding_organization_type]', ['' => 'Select one of the following.'] + $organizationType, null, ['class' => 'form-control', 'required' => 'required']) !!}
+                    {!! Form::label('funding_organization[index][funding_organization_type]', 'Organization Type', ['class' => 'control-label']) !!}
+                    {!! Form::select('funding_organization[index][funding_organization_type]', ['' => 'Select one of the following.'] + $organizationType, null, ['class' => 'form-control']) !!}
                 </div>
                 <a href="javascript:void(0)" onclick="removeFunding(this)" class="remove_from_collection">Remove</a>
             </div>
@@ -180,6 +180,13 @@
 @section('script')
     <script>
         var districts = {!! json_encode(config('tz.location.district')) !!};
+        var oldLocationCount = 0;
+
+        @if (old('location'))
+            oldLocationCount = "{{ count(old('location')) - 1 }}";
+        @else
+            oldLocationCount = 0;
+        @endif
     </script>
     <script src="{{ asset('/js/tz/project.js') }}"></script>
 @stop

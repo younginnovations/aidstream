@@ -42,9 +42,13 @@ class Project extends Activity
         return $this->hasMany(Result::class, 'activity_id', 'id');
     }
 
+    /**
+     * A Project has many Transactions.
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function transactions()
     {
-        return $this->belongsTo(Transaction::class, 'activity_id', 'id');
+        return $this->hasMany(Transaction::class, 'activity_id', 'id');
     }
 
     /**

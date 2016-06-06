@@ -58,8 +58,8 @@ class ActivityElementValidation
 
         if (!empty($activityData->recipient_country)) {
             foreach ($activityData->recipient_country as $recipientCountry) {
-                if ($recipientCountry['percentage'] !== '') {
-                    $totalPercentage += $recipientCountry['percentage'];
+                if (getVal($recipientCountry, ['percentage']) !== '') {
+                    $totalPercentage += getVal($recipientCountry, ['percentage']);
                     $recipientCountryValue = true;
                 }
                 $activityRecipientCountryValue = true;
@@ -68,8 +68,8 @@ class ActivityElementValidation
 
         if (!empty($activityData->recipient_region)) {
             foreach ($activityData->recipient_region as $recipientRegion) {
-                if ($recipientRegion['percentage'] !== '') {
-                    $totalPercentage += $recipientRegion['percentage'];
+                if (getVal($recipientRegion, ['percentage']) !== '') {
+                    $totalPercentage += getVal($recipientRegion, ['percentage']);
                     $recipientRegionValue = true;
                 }
                 $activityRecipientRegionValue = true;

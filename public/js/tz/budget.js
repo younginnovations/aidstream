@@ -2,6 +2,7 @@ var budgetCount = 0;
 
 var addMoreBudget = function (context) {
     budgetCount++;
+    currentBudgetCount++;
     var clone = Project.clone($('#budget-clone'), budgetCount);
 
     var temp = $('<div/>', {
@@ -20,8 +21,9 @@ var addMoreBudget = function (context) {
     $('form select').select2();
 };
 
-
 $('#add-more-budget').on('click', function () {
+    budgetCount = currentBudgetCount;
+
     addMoreBudget(this);
 });
 

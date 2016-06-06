@@ -35,60 +35,60 @@ class Location extends BaseElement
         $locations    = (array) $activity->location;
         foreach ($locations as $location) {
             $point = [];
-            if (($location['point'][0]['position'][0]['latitude'] != "") && ($location['point'][0]['position'][0]['longitude'] != "")) {
+            if ((getVal($location, ['point', 0, 'position', 0, 'latitude']) != "") && (getVal($location, ['point', 0, 'position', 0, 'longitude']) != "")) {
                 $point = [
                     '@attributes' => [
-                        'srsName' => $location['point'][0]['srs_name']
+                        'srsName' => getVal($location, ['point', 0, 'srs_name'])
                     ],
-                    'pos'         => $location['point'][0]['position'][0]['latitude'] . ' ' . $location['point'][0]['position'][0]['longitude']
+                    'pos'         => getVal($location, ['point' ,0 ,'position' ,0 ,'latitude']) . ' ' . getVal($location, ['point', 0, 'position', 0, 'longitude'])
                 ];
             }
 
             $activityData[] = [
                 '@attributes'          => [
-                    'ref' => $location['reference']
+                    'ref' => getVal($location, ['reference'])
                 ],
                 'location-reach'       => [
                     '@attributes' => [
-                        'code' => $location['location_reach'][0]['code']
+                        'code' => getVal($location, ['location_reach', 0, 'code'])
                     ]
                 ],
                 'location-id'          => [
                     '@attributes' => [
-                        'code'       => $location['location_id'][0]['code'],
-                        'vocabulary' => $location['location_id'][0]['vocabulary']
+                        'code'       => getVal($location, ['location_id', 0, 'code']),
+                        'vocabulary' => getVal($location, ['location_id', 0, 'vocabulary'])
                     ]
                 ],
                 'name'                 => [
-                    'narrative' => $this->buildNarrative($location['name'][0]['narrative'])
+                    'narrative' => $this->buildNarrative(getVal($location, ['name', 0, 'narrative'], []))
                 ],
                 'description'          => [
-                    'narrative' => $this->buildNarrative($location['location_description'][0]['narrative'])
+                    'narrative' => $this->buildNarrative(getVal($location, ['location_description', 0, 'narrative'], []))
                 ],
                 'activity-description' => [
-                    'narrative' => $this->buildNarrative($location['activity_description'][0]['narrative'])
+                    'narrative' => $this->buildNarrative(getVal($location, ['activity_description', 0, 'narrative'], []))
                 ],
                 'administrative'       => [
                     '@attributes' => [
-                        'code'       => $location['administrative'][0]['code'],
-                        'vocabulary' => $location['administrative'][0]['vocabulary'],
-                        'level'      => $location['administrative'][0]['level']
+                        'code'       => getVal($location, ['administrative', 0, 'code']),
+                        'vocabulary' => getVal($location, ['administrative', 0, 'vocabulary']),
+                        'level'      => getVal($location, ['administrative', 0, 'level'])
                     ]
                 ],
                 'point'                => $point,
                 'exactness'            => [
                     '@attributes' => [
-                        'code' => $location['exactness'][0]['code']
+                        'code' => getVal($location, ['exactness', 0, 'code'])
                     ]
                 ],
                 'location-class'       => [
                     '@attributes' => [
-                        'code' => $location['location_class'][0]['code']
+                        'code' => getVal($location, ['location_class', 0, 'code'])
                     ]
                 ],
                 'feature-designation'  => [
                     '@attributes' => [
-                        'code' => $location['feature_designation'][0]['code']
+                        'code' => getVal($location, ['feature_designation', 0, 'code'])
                     ]
                 ]
             ];

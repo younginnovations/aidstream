@@ -17,12 +17,12 @@ class ParticipatingOrganization extends V201ParticipatingOrganization
         foreach ($participatingOrganizations as $participatingOrganization) {
             $activityData[] = [
                 '@attributes' => [
-                    'ref'         => $participatingOrganization['identifier'],
-                    'type'        => $participatingOrganization['organization_type'],
-                    'role'        => $participatingOrganization['organization_role'],
+                    'ref'         => getVal($participatingOrganization, ['identifier']),
+                    'type'        => getVal($participatingOrganization, ['organization_type']),
+                    'role'        => getVal($participatingOrganization, ['organization_role']),
                     'activity-id' => getVal($participatingOrganization, ['activity_id'])
                 ],
-                'narrative'   => $this->buildNarrative($participatingOrganization['narrative'])
+                'narrative'   => $this->buildNarrative(getVal($participatingOrganization, ['narrative'], []))
             ];
         }
 

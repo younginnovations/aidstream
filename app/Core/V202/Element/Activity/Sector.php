@@ -30,11 +30,11 @@ class Sector extends V201Sector
             $activityData[] = [
                 '@attributes' => [
                     'code'           => $sectorValue,
-                    'percentage'     => $sector['percentage'],
+                    'percentage'     => getVal($sector, ['percentage']),
                     'vocabulary'     => $vocabulary,
                     'vocabulary-uri' => getVal($sector, ['vocabulary_uri'])
                 ],
-                'narrative'   => $this->buildNarrative($sector['narrative'])
+                'narrative'   => $this->buildNarrative(getVal($sector, ['narrative'], []))
             ];
         }
 
