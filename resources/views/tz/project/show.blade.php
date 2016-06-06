@@ -309,9 +309,12 @@
                                     </div>
                                 </div>
                                 <div>
-                                    <a href="javascript:void(0)" class="delete-transaction" data-route="{{ route('single.transaction.destroy', [$data['id']]) }}">Delete</a>
+                                   {{-- <a href="javascript:void(0)" class="delete-transaction" data-route="{{ route('single.transaction.destroy', [$data['id']]) }}">Delete</a>
                                     {!! Form::open(['method' => 'POST', 'route' => ['single.transaction.destroy', $data['id']],'class' => 'hidden', 'role' => 'form', 'id' => 'transaction-delete-form']) !!}
-                                    {!! Form::submit('Delete') !!}
+                                    {!! Form::submit('Delete') !!}--}}
+
+                                    {!! Form::open(['method' => 'POST', 'route' => ['single.transaction.destroy', $data['id']]]) !!}
+                                        {!! Form::submit('Delete', ['class' => 'pull-left delete-transaction']) !!}
                                     {!! Form::close() !!}
                                 </div>
                             </div>
@@ -390,9 +393,13 @@
                                     </div>
                                 </div>
                                 <div>
-                                    <a href="javascript:void(0)" class="delete-transaction" data-route="{{ route('single.transaction.destroy', [$data['id']]) }}">Delete</a>
+
+                                   {{-- <a href="javascript:void(0)" class="delete-transaction" data-route="{{ route('single.transaction.destroy', [$data['id']]) }}">Delete</a>
                                     {!! Form::open(['method' => 'POST', 'route' => ['single.transaction.destroy', $data['id']],'class' => 'hidden', 'role' => 'form', 'id' => 'transaction-delete-form']) !!}
-                                    {!! Form::submit('Delete') !!}
+                                    {!! Form::submit('Delete') !!}--}}
+
+                                    {!! Form::open(['method' => 'POST', 'route' => ['single.transaction.destroy', $data['id']]]) !!}
+                                    {!! Form::submit('Delete', ['class' => 'pull-left delete-transaction']) !!}
                                     {!! Form::close() !!}
                                 </div>
                             </div>
@@ -467,9 +474,12 @@
                                     </div>
                                 </div>
                                 <div>
-                                    <a href="javascript:void(0)" class="delete-transaction" data-route="{{ route('single.transaction.destroy', [$data['id']]) }}">Delete</a>
+                                  {{--  <a href="javascript:void(0)" class="delete-transaction" data-route="{{ route('single.transaction.destroy', [$data['id']]) }}">Delete</a>
                                     {!! Form::open(['method' => 'POST', 'route' => ['single.transaction.destroy', $data['id']],'class' => 'hidden', 'role' => 'form', 'id' => 'transaction-delete-form']) !!}
-                                    {!! Form::submit('Delete') !!}
+                                    {!! Form::submit('Delete') !!}--}}
+                                    {!! Form::open(['method' => 'POST', 'route' => ['single.transaction.destroy', $data['id']]]) !!}
+                                    {!! Form::submit('Delete', ['class' => 'pull-left delete-transaction']) !!}
+
                                     {!! Form::close() !!}
                                 </div>
                             </div>
@@ -512,6 +522,18 @@
 @endsection
 
 @section('script')
-    <script src="{{ asset('/js/tz/transaction.js') }}"></script>
-    <script src="{{ asset('/js/tz/transactionDelete.js') }}"></script>
+    {{--<script src="{{ asset('/js/tz/transaction.js') }}"></script>
+    <script src="{{ asset('/js/tz/transactionDelete.js') }}"></script>--}}
+    <script>
+        $(document).ready(function () {
+            $(".delete-transaction").click(function (e) {
+                if (!confirm('Are you sure you want to delete?')) {
+                    e.preventDefault();
+                    return false;
+                }
+                return true;
+            });
+        });
+    </script>
+
 @endsection
