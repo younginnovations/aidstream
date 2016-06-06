@@ -5,7 +5,7 @@ lock '3.4.0'
 set :application,     'aidstream'
 set :branch,          ENV["branch"] || "master"
 set :user,            ENV["user"] || ENV["USER"] || "aidstream"
-set :tmp_dir,         '/home/yipl/tmp'
+set :tmp_dir,         '/home/aidstream/tmp'
 
 # SCM #
 #####################################################################################

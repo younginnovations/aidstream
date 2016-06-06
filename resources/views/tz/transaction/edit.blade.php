@@ -8,18 +8,15 @@
         @include('includes.response')
         <div class="panel panel-default panel-create">
             <div class="panel-content-heading panel-title-heading">
-                <div>Edit Transaction</div>
+                @if($transactionType == 1)
+                    <div>Edit Incoming Funds</div>
+                @elseif($transactionType == 3)
+                    <div>Edit Disbursement</div>
+                @elseif($transactionType == 4)
+                    <div>Edit Expenditure</div>
+                @endif
             </div>
             <div class="panel-body">
-                <div class="col-sm-12 panel-transaction-heading">
-                    @if($transactionType == 1)
-                        Incoming Funds
-                    @elseif($transactionType == 3)
-                        Disbursement
-                    @elseif($transactionType == 4)
-                        Expenditure
-                    @endif
-                </div>
                 <div class="create-form create-activity-form create-project-form edit-form">
                     {!! Form::open(['route' => ['transaction.update', $projectId, $transactionType], 'method' => 'POST']) !!}
                     {!! Form::hidden('activity_id', $projectId) !!}
@@ -46,17 +43,21 @@
 
                                     <div class="col-sm-6">
                                         {!! Form::label('currency', 'Currency', ['class' => 'control-label required']) !!}
-                                        {!! Form::select("transaction[$key][value][0][currency]", ['' => 'Select one of the following.'] + $currency, $transaction['transaction']['value'][0]['currency'], ['class' => 'form-control', 'required' => 'required']) !!}
+                                        {!! Form::select("transaction[$key][value][0][currency]", ['' => 'Select one of the following.'] + $currency, ($transaction['transaction']['value'][0]['currency']) ? $transaction['transaction']['value'][0]['currency'] : $defaultCurrency, ['class' => 'form-control', 'required' => 'required']) !!}
                                     </div>
 
                                     <div class="col-sm-6">
-                                        {!! Form::label('description', 'Description', ['class' => 'control-label required']) !!}
-                                        {!! Form::text("transaction[$key][description][0][narrative][0][narrative]", $transaction['transaction']['description'][0]['narrative'][0]['narrative'], ['class' => 'form-control', 'required' => 'required']) !!}
+                                        {!! Form::label('description', 'Description', ['class' => 'control-label']) !!}
+                                        {!! Form::text("transaction[$key][description][0][narrative][0][narrative]", $transaction['transaction']['description'][0]['narrative'][0]['narrative'], ['class' => 'form-control']) !!}
                                     </div>
 
                                     <div class="col-sm-6">
-                                        {!! Form::label('provider_org', 'Receiver Organization', ['class' => 'control-label required']) !!}
-                                        {!! Form::text("transaction[$key][provider_organization][0][narrative][0][narrative]", $transaction['transaction']['provider_organization'][0]['narrative'][0]['narrative'], ['class' => 'form-control', 'required' => 'required']) !!}
+                                        @if($transactionType == 1)
+                                            {!! Form::label('provider_org', 'Provider Organization', ['class' => 'control-label']) !!}
+                                        @else
+                                            {!! Form::label('provider_org', 'Receiver Organization', ['class' => 'control-label']) !!}
+                                        @endif
+                                        {!! Form::text("transaction[$key][provider_organization][0][narrative][0][narrative]", $transaction['transaction']['provider_organization'][0]['narrative'][0]['narrative'], ['class' => 'form-control']) !!}
                                     </div>
                                 </div>
                             @endforeach

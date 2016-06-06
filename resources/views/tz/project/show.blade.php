@@ -11,7 +11,11 @@
             <div>
                 <span>
                     {{ $project->title ? $project->title[0]['narrative'] : 'No Title' }}
-                    <a href="{{ route('project.edit', $project->id) }}" class="edit pull-right">Edit</a>
+                    <a href="{{ route('project.edit', $project->id) }}" class="pull-right" style="font-size: 12px;">Edit</a>
+                    <br>
+                    <a href="{{ route('change-project-defaults', $id) }}" class="pull-right" style="font-size: 12px;">
+                        Override Default Values
+                    </a>
                 </span>
                 <div class="element-panel-heading-info">
                     <span>{{ $project->identifier['activity_identifier'] }}</span>
@@ -33,9 +37,6 @@
                 @include('tz.project.partials.workflow')
             </div>
 
-            <a href="{{ route('change-project-defaults', $id) }}" class="pull-right">
-                <span class="glyphicon glyphicon-triangle-left"></span>Override Project Default Values
-            </a>
             <div class="panel panel-default panel-element-detail element-show">
 
                 <div class="activity-element-wrapper">
@@ -61,9 +62,6 @@
                 </div>
 
                 <div class="activity-element-wrapper">
-                    <div class="title">
-                        Description
-                    </div>
                     @foreach ($project->description as $description)
                         @if(getVal($description, ['type']) == 1)
                             <div class="activity-element-list">
@@ -151,90 +149,6 @@
                 @endforeach
 
                 <div class="activity-element-wrapper">
-                    <div class="title">
-                        Location
-                    </div>
-                    <div class="activity-element-list">
-                        <div class="activity-element-label">
-                            Region
-                        </div>
-                        @foreach ($project->location as $location)
-                            @foreach (getVal($location, ['administrative'], []) as $value)
-                                @if ($value['level'] == 1)
-                                    <div class="activity-element-info">
-                                        {{ $value['code'] }}
-                                    </div>
-                                @endif
-                            @endforeach
-                        @endforeach
-                    </div>
-                </div>
-
-                <div class="activity-element-wrapper">
-                    <div class="activity-element-list">
-                        <div class="activity-element-label">
-                            District
-                        </div>
-                        @foreach ($project->location as $location)
-                            @foreach (getVal($location, ['administrative'], []) as $value)
-                                @if ($value['level'] == 2)
-                                    <div class="activity-element-info">
-                                        {{ getVal($value, ['code']) }}
-                                    </div>
-                                @endif
-                            @endforeach
-                        @endforeach
-                    </div>
-                </div>
-
-                @if ($project->participating_organization)
-                    <div class="activity-element-wrapper">
-                        <div class="title">
-                            Participating Organization
-                        </div>
-                        @foreach ($project->participating_organization as $participatingOrganization)
-                            @if(getVal($participatingOrganization, ['narrative', 0, 'narrative']) && getVal($participatingOrganization, ['organization_role']) == "1")
-                                <div class="activity-element-list">
-                                    <div class="activity-element-label">
-                                        Funding Organization Name:
-                                    </div>
-                                    <div class="activity-element-info">
-                                        {{ getVal($participatingOrganization, ['narrative', 0, 'narrative']) }}
-                                    </div>
-                                </div>
-                                <div class="activity-element-list">
-                                    <div class="activity-element-label">
-                                        Funding Organization Type:
-                                    </div>
-                                    <div class="activity-element-info">
-                                        {{$getCode->getCodeListName('Activity','OrganisationType', getVal($participatingOrganization, ['organization_type']))}}
-                                    </div>
-                                </div>
-                            @endif
-
-                            @if(getVal($participatingOrganization, ['narrative', 0, 'narrative']) && getVal($participatingOrganization, ['organization_role']) == 4)
-                                <div class="activity-element-list">
-                                    <div class="activity-element-label">
-                                        Implementing Organization Name:
-                                    </div>
-                                    <div class="activity-element-info">
-                                        {{ getVal($participatingOrganization, ['narrative', 0, 'narrative']) }}
-                                    </div>
-                                </div>
-                                <div class="activity-element-list">
-                                    <div class="activity-element-label">
-                                        Implementing Organization Type:
-                                    </div>
-                                    <div class="activity-element-info">
-                                        {{$getCode->getCodeListName('Activity','OrganisationType', getVal($participatingOrganization, ['organization_type']))}}
-                                    </div>
-                                </div>
-                            @endif
-                        @endforeach
-                    </div>
-                @endif
-
-                <div class="activity-element-wrapper">
                     <div class="activity-element-list">
                         <div class="activity-element-label">
                             Recipient Country:
@@ -245,26 +159,68 @@
                     </div>
                 </div>
 
+                <div class="activity-element-wrapper">
+                    <div class="activity-element-list">
+                        <div class="activity-element-label">
+                            Location
+                        </div>
+                        <div class="activity-element-info">
+                            @foreach ($project->location as $location)
+                                @if (getVal($location, ['administrative', 0, 'code']))
+                                    <li>
+                                        {{ getVal($location, ['administrative', 0, 'code']) }}, {{ getVal($location, ['administrative', 1, 'code']) }}
+                                    </li>
+                                @endif
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+
+                @if ($project->participating_organization)
+                    <div class="activity-element-wrapper">
+                        @foreach ($project->participating_organization as $participatingOrganization)
+                            @if(getVal($participatingOrganization, ['narrative', 0, 'narrative']) && getVal($participatingOrganization, ['organization_role']) == "1")
+                                <div class="activity-element-list">
+                                    <div class="activity-element-label">
+                                        Funding Organization
+                                    </div>
+                                    <div class="activity-element-info">
+                                        <li>
+                                            {{ getVal($participatingOrganization, ['narrative', 0, 'narrative']) }}
+                                            , {{$getCode->getCodeListName('Activity','OrganisationType', getVal($participatingOrganization, ['organization_type']))}}
+                                        </li>
+                                    </div>
+                                </div>
+                            @endif
+
+                            @if(getVal($participatingOrganization, ['narrative', 0, 'narrative']) && getVal($participatingOrganization, ['organization_role']) == 4)
+                                <div class="activity-element-list">
+                                    <div class="activity-element-label">
+                                        Implementing Organization
+                                    </div>
+                                    <div class="activity-element-info">
+                                        <li>
+                                            {{ getVal($participatingOrganization, ['narrative', 0, 'narrative']) }}
+                                            , {{$getCode->getCodeListName('Activity','OrganisationType', getVal($participatingOrganization, ['organization_type']))}}
+                                        </li>
+                                    </div>
+                                </div>
+                            @endif
+                        @endforeach
+                    </div>
+                @endif
+
                 @if ($project->resultDocuments())
                     <div class="activity-element-wrapper">
                         <div class="title">
-                            Results/Outcomes Documents
-                        </div>
-                        <div class="activity-element-list">
-                            <div class="activity-element-label">
-                                Title:
-                            </div>
-                            <div class="activity-element-info">
-                                {{ getVal($project->resultDocuments(), ['document_link', 'title', 0, 'narrative', 0, 'narrative']) }}
-                            </div>
-                        </div>
 
+                        </div>
                         <div class="activity-element-list">
                             <div class="activity-element-label">
-                                Url:
+                                Results/Outcomes Documents
                             </div>
                             <div class="activity-element-info">
-                                <a href="{{ getVal($project->resultDocuments(), ['document_link', 'url']) }}">{{ getVal($project->resultDocuments(), ['document_link', 'url']) }}</a>
+                                <a href="{{ getVal($project->resultDocuments(), ['document_link', 'url']) }}">{{ getVal($project->resultDocuments(), ['document_link', 'title', 0, 'narrative', 0, 'narrative']) }}</a>
                             </div>
                         </div>
                     </div>
@@ -272,23 +228,12 @@
 
                 @if ($project->annualReports())
                     <div class="activity-element-wrapper">
-                        <div class="title">
-                            Annual Reports
-                        </div>
                         <div class="activity-element-list">
                             <div class="activity-element-label">
-                                Title:
+                                Annual Reports
                             </div>
                             <div class="activity-element-info">
-                                {{ getVal($project->annualReports(), ['document_link', 'title', 0, 'narrative', 0, 'narrative']) }}
-                            </div>
-                        </div>
-                        <div class="activity-element-list">
-                            <div class="activity-element-label">
-                                Url:
-                            </div>
-                            <div class="activity-element-info">
-                                <a href="{{ getVal($project->annualReports(), ['document_link', 'url']) }}">{{ getVal($project->annualReports(), ['document_link', 'url']) }}</a>
+                                <a href="{{ getVal($project->annualReports(), ['document_link', 'url']) }}">{{ getVal($project->annualReports(), ['document_link', 'title', 0, 'narrative', 0, 'narrative']) }}</a>
                             </div>
                         </div>
                     </div>
@@ -312,7 +257,7 @@
                         </div>
                         @foreach($disbursement as $data)
                             <div class="activity-element-info">
-                                <li>{{$data['value'][0]['amount']}}, {{ $getCode->getCodeListName('Organization','Currency', $data['value'][0]['currency']) }}</li>
+                                <li>{{ number_format($data['value'][0]['amount']) }} {{ $data['value'][0]['currency'] }}, {{$data['transaction_date'][0]['date']}}</li>
                                 <div class="toggle-btn">
                                     <span class="show-more-info">Show more info</span>
                                     <span class="hide-more-info hidden">Hide more info</span>
@@ -331,7 +276,7 @@
                                             Transaction Value:
                                         </div>
                                         <div class="activity-element-info">
-                                            {{$data['value'][0]['amount']}}
+                                            {{ number_format($data['value'][0]['amount']) }} {{ getVal($data, ['value', 0, 'currency']) }}
                                         </div>
                                     </div>
                                     <div class="element-info">
@@ -364,7 +309,7 @@
                         @endforeach
                     @else
                         <div class="activity-element-list">
-                            <div class="title">Incoming Fund</div>
+                            <div class="title">Disbursement</div>
                             <a href="{{ url(sprintf('project/%s/transaction/%s/create', $project->id,3)) }}"
                                class="add-more"><span>Add Disbursement</span></a>
                         </div>
@@ -388,7 +333,7 @@
                         </div>
                         @foreach($expenditure as $data)
                             <div class="activity-element-info">
-                                <li>{{$data['value'][0]['amount']}}, {{ $getCode->getCodeListName('Organization','Currency', $data['value'][0]['currency']) }}</li>
+                                <li>{{ number_format($data['value'][0]['amount']) }} {{ $data['value'][0]['currency'] }}, {{$data['transaction_date'][0]['date']}}</li>
                                 <div class="toggle-btn">
                                     <span class="show-more-info">Show more info</span>
                                     <span class="hide-more-info hidden">Hide more info</span>
@@ -407,7 +352,7 @@
                                             Transaction Value:
                                         </div>
                                         <div class="activity-element-info">
-                                            {{$data['value'][0]['amount']}}
+                                            {{ number_format($data['value'][0]['amount']) }} {{ getVal($data, ['value', 0, 'currency']) }}
                                         </div>
                                     </div>
                                     <div class="element-info">
@@ -459,7 +404,7 @@
                         </div>
                         @foreach($incomingFund as $data)
                             <div class="activity-element-info">
-                                <li>{{$data['value'][0]['amount']}}, {{ $getCode->getCodeListName('Organization','Currency', $data['value'][0]['currency']) }}</li>
+                                <li>{{ number_format($data['value'][0]['amount']) }} {{ $data['value'][0]['currency'] }}, {{$data['transaction_date'][0]['date']}}</li>
                                 <div class="toggle-btn">
                                     <span class="show-more-info">Show more info</span>
                                     <span class="hide-more-info hidden">Hide more info</span>
@@ -478,7 +423,7 @@
                                             Transaction Value:
                                         </div>
                                         <div class="activity-element-info">
-                                            {{$data['value'][0]['amount']}}
+                                            {{ number_format($data['value'][0]['amount']) }} {{ getVal($data, ['value', 0, 'currency']) }}
                                         </div>
                                     </div>
                                     <div class="element-info">
@@ -499,7 +444,7 @@
                                     </div>
                                     <div class="element-info">
                                         <div class="activity-element-label">
-                                            Receiver Organization
+                                            Provider Organization
                                         </div>
                                         <div class="activity-element-info">
                                             {{$data['provider_organization'][0]['narrative'][0]['narrative']}}

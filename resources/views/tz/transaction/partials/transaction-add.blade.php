@@ -18,18 +18,22 @@
 
             <div class="col-sm-6">
                 {!! Form::label('transaction[index][value][0][currency]', 'Currency', ['class' => 'control-label required']) !!}
-                {!! Form::select('transaction[index][value][0][currency]', ['' => 'Select one of the following.'] + $currency, null, ['class' => 'form-control', 'required' => 'required']) !!}
+                {!! Form::select('transaction[index][value][0][currency]', ['' => 'Select one of the following.'] + $currency, $defaultCurrency, ['class' => 'form-control', 'required' => 'required']) !!}
             </div>
 
             <div class="col-sm-6">
-                {!! Form::label('transaction[index][description][0][narrative][0][narrative]', 'Description', ['class' => 'control-label required']) !!}
-                {!! Form::text('transaction[index][description][0][narrative][0][narrative]', null, ['class' => 'form-control', 'required' => 'required']) !!}
+                {!! Form::label('transaction[index][description][0][narrative][0][narrative]', 'Description', ['class' => 'control-label']) !!}
+                {!! Form::text('transaction[index][description][0][narrative][0][narrative]', null, ['class' => 'form-control']) !!}
                 {!! Form::hidden('transaction[index][description][0][narrative][0][language]', null) !!}
             </div>
 
             <div class="col-sm-6">
-                {!! Form::label('transaction[index][provider_organization][0][narrative][0][narrative]', 'Receiver Organization', ['class' => 'control-label required']) !!}
-                {!! Form::text('transaction[index][provider_organization][0][narrative][0][narrative]', null, ['class' => 'form-control', 'required' => 'required']) !!}
+                @if($transactionType == 1)
+                    {!! Form::label('transaction[index][provider_organization][0][narrative][0][narrative]', 'Provider Organization', ['class' => 'control-label']) !!}
+                @else
+                    {!! Form::label('transaction[index][provider_organization][0][narrative][0][narrative]', 'Receiver Organization', ['class' => 'control-label']) !!}
+                @endif
+                {!! Form::text('transaction[index][provider_organization][0][narrative][0][narrative]', null, ['class' => 'form-control']) !!}
                 {!! Form::text('transaction[index][provider_organization][0][narrative][0][language]', null, ['class' => 'hidden']) !!}
             </div>
 

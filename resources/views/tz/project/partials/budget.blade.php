@@ -10,9 +10,6 @@
                 <div>Add Budget</div>
             </div>
             <div class="panel-body">
-                <div class="col-sm-12 panel-transaction-heading">
-                    Budget
-                </div>
                 <div class="create-form create-activity-form create-project-form">
                     {!! Form::open(['route' => ['project.budget.store', $projectId], 'method' => 'POST']) !!}
                     <div class="col-sm-12">

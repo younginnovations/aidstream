@@ -9,12 +9,9 @@
         @include('includes.response')
         <div class="panel panel-default panel-create">
             <div class="panel-content-heading panel-title-heading">
-                <div>Add Budget</div>
+                <div>Edit Budget</div>
             </div>
             <div class="panel-body">
-                <div class="col-sm-12 panel-transaction-heading">
-                    Budget
-                </div>
                 <div class="create-form create-activity-form create-project-form edit-form">
                     {!! Form::open(['route' => ['project.budget.update', $projectId], 'method' => 'POST']) !!}
 

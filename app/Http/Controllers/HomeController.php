@@ -78,7 +78,7 @@ class HomeController extends Controller
     {
         $project = $this->project->find($id);
 
-        if ($project->activity_workflow != 3) {
+        if (!$this->hasBeenPublished($id)) {
             return view('tz.unauthorized');
         }
 
@@ -91,5 +91,10 @@ class HomeController extends Controller
         $orgDetail     = $this->orgManager->getOrganization($project->organization_id);
 
         return view('tz.projectDetail', compact('orgDetail', 'project', 'incomingFunds', 'disbursements', 'expenditures', 'documentLinks', 'fundings', 'implementings'));
+    }
+
+    protected function hasBeenPublished($projectId)
+    {
+        return $this->project->hasBeenPublished($projectId);
     }
 }

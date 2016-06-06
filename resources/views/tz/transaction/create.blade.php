@@ -8,18 +8,15 @@
         @include('includes.response')
         <div class="panel panel-default panel-create">
             <div class="panel-content-heading panel-title-heading">
-                <div>Add Transaction</div>
+                @if($transactionType == 1)
+                    <div>Add Incoming Funds</div>
+                @elseif($transactionType == 3)
+                    <div>Add Disbursement</div>
+                @elseif($transactionType == 4)
+                    <div>Add Expenditure</div>
+                @endif
             </div>
             <div class="panel-body">
-                <div class="col-sm-12 panel-transaction-heading">
-                    @if($transactionType == 1)
-                        Incoming Funds
-                    @elseif($transactionType == 3)
-                        Disbursement
-                    @elseif($transactionType == 4)
-                        Expenditure
-                    @endif
-                </div>
                 <div class="create-form create-activity-form create-project-form">
                     {!! Form::open(['route' => ['project.transaction.store', $id], 'method' => 'POST']) !!}
                     {!! Form::hidden('transaction[0][transaction_type][0][transaction_type_code]', $transactionType) !!}
@@ -51,7 +48,11 @@
                             </div>
 
                             <div class="col-sm-6">
-                                {!! Form::label('transaction[0][provider_organization][0][narrative][0][narrative]', 'Receiver Organization', ['class' => 'control-label']) !!}
+                                @if($transactionType == 1)
+                                    {!! Form::label('transaction[0][provider_organization][0][narrative][0][narrative]', 'Provider Organization', ['class' => 'control-label']) !!}
+                                @else
+                                    {!! Form::label('transaction[0][provider_organization][0][narrative][0][narrative]', 'Receiver Organization', ['class' => 'control-label']) !!}
+                                @endif
                                 {!! Form::text('transaction[0][provider_organization][0][narrative][0][narrative]', null, ['class' => 'form-control']) !!}
                                 {!! Form::text('transaction[0][provider_organization][0][narrative][0][language]', null, ['class' => 'hidden']) !!}
                             </div>

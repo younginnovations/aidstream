@@ -34,8 +34,8 @@ class WhoIsUsingController extends Controller
         $organizationCount = $this->initializeOrganizationQueryBuilder()->get()->count();
 
         if ($this->hasSubdomain($this->getRoutePieces())) {
-//            $organizationCount = $this->initializeOrganizationQueryBuilder(false)->get()->count();
-            $organizationCount = $this->initializeOrganizationQuery()->get()->count();
+            $organizationCount = $this->initializeOrganizationQueryBuilder(false)->get()->count();
+//            $organizationCount = $this->initializeOrganizationQuery()->get()->count();
 
             return view('tz.who-is-using-tz', compact('organizationCount'));
         }

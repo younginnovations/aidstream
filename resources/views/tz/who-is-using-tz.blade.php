@@ -8,15 +8,14 @@
     <link rel="shortcut icon" type="image/png" sizes="16*16" href="images/favicon.png"/>
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/style.min.css">
+    <link href="{{ asset('/css/tanzania_style/tz.style.css') }}" rel="stylesheet">
 </head>
 <body>
 @include('tz.partials.header')
 <section class="main-container">
     <div class="organisation-list-wrapper">
         <div class="col-md-12 text-center">
-            <h1>{{ $organizationCount }} organisations are using AidStream</h1>
-
-            <p>The organisations listed below are using AidStream.</p>
+            <h1>{{ $organizationCount }} {{ ($organizationCount > 1) ? 'organizations are' : 'organization is' }} using AidStream</h1>
 
             <div class="organisations-list width-900">
                 <ul>{{--

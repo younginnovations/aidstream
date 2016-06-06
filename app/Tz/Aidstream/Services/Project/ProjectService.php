@@ -1,6 +1,7 @@
 <?php namespace App\Tz\Aidstream\Services\Project;
 
 use App\Helpers\GetCodeName;
+use App\Models\ActivityPublished;
 use App\Tz\Aidstream\Models\Organization;
 use App\Tz\Aidstream\Models\Project;
 use App\Tz\Aidstream\Repositories\DocumentLink\DocumentLinkRepositoryInterface;
@@ -492,15 +493,21 @@ class ProjectService
 
             $this->resetWorkflow($project);
 
-            $this->logger->info(sprintf('Budget successfully deleted for project with id: ', $projectId), [
-                'byUser' => $user
-            ]);
+            $this->logger->info(
+                sprintf('Budget successfully deleted for project with id: ', $projectId),
+                [
+                    'byUser' => $user
+                ]
+            );
 
             return true;
         } catch (Exception $exception) {
-            $this->logger->error(sprintf('Budget could not be deleted for project with id: ', $projectId), [
-                'byUser' => $user
-            ]);
+            $this->logger->error(
+                sprintf('Budget could not be deleted for project with id: ', $projectId),
+                [
+                    'byUser' => $user
+                ]
+            );
 
             return null;
         }
@@ -517,10 +524,10 @@ class ProjectService
         $regionName = [];
         $startDate  = "";
         $endDate    = "";
-        $jsonData = [];
-        $getCode = new GetCodeName();
+        $jsonData   = [];
+        $getCode    = new GetCodeName();
 
-        foreach ($projects as $project){
+        foreach ($projects as $project) {
             foreach ($project->activity_date as $activityDate) {
                 if ($activityDate['type'] == 2) {
                     $startDate = $activityDate['date'];
@@ -553,5 +560,62 @@ class ProjectService
 
         return $jsonData;
     }
-    
+
+    /**
+     * Check if a Project with specific projectId has been published.
+     * @param $projectId
+     * @return bool
+     */
+    public function hasBeenPublished($projectId)
+    {
+        return $this->projectHasBeenPublished($this->find($projectId));
+    }
+
+    /**
+     * Check if a Project has been published.
+     * @param $project
+     * @return bool
+     */
+    protected function projectHasBeenPublished($project)
+    {
+        $activitiesPublished = app()->make(ActivityPublished::class)->query()->where('organization_id', '=', $project->organization_id)->get();
+
+        if (!$activitiesPublished->isEmpty()) {
+            return $this->checkForProjectAvailability($project->id, $activitiesPublished);
+        }
+
+        return false;
+    }
+
+    /**
+     * Check for the Project's id in an Organization's published Projects.
+     * @param $projectId
+     * @param $activitiesPublished
+     * @return bool
+     */
+    protected function checkForProjectAvailability($projectId, $activitiesPublished)
+    {
+        foreach ($activitiesPublished as $activityPublished) {
+            return $this->projectIsIncluded($activityPublished->published_activities, $projectId);
+        }
+    }
+
+    /**
+     * Check if a Project is included among the published Projects.
+     * @param $publishedActivities
+     * @param $id
+     * @return bool
+     */
+    protected function projectIsIncluded($publishedActivities, $id)
+    {
+        foreach ($publishedActivities as $publishedActivity) {
+            $filename  = explode('.', $publishedActivity)[0];
+            $projectId = explode('-', $filename)[1];
+
+            if ($projectId == $id) {
+                return true;
+            }
+        }
+    }
+
 }

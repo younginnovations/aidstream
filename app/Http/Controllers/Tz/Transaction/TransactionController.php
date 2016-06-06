@@ -44,7 +44,8 @@ class TransactionController extends TanzanianController
         $baseForm        = new BaseForm();
         $currency        = $baseForm->getCodeList('Currency', 'Activity');
         $project         = $this->project->find($id);
-        $defaultCurrency = getVal($project->default_field_values, [0, 'default_currency']);
+        $settings        = $project->organization->settings;
+        $defaultCurrency = getVal($settings->toArray(), ['default_field_values', 0, 'default_currency']) ? getVal($settings->toArray(), ['default_field_values', 0, 'default_currency']) : getVal($project->default_field_values, [0, 'default_currency']);
 
         return view('tz.transaction.create', compact('currency', 'id', 'transactionType', 'defaultCurrency'));
     }
@@ -77,11 +78,14 @@ class TransactionController extends TanzanianController
      */
     public function editTransaction($projectId, $transactionType)
     {
-        $baseForm     = new BaseForm();
-        $currency     = $baseForm->getCodeList('Currency', 'Activity');
-        $transactions = $this->transaction->getTransactionsData($projectId, $transactionType, true);
+        $project         = $this->project->find($projectId);
+        $baseForm        = new BaseForm();
+        $currency        = $baseForm->getCodeList('Currency', 'Activity');
+        $transactions    = $this->transaction->getTransactionsData($projectId, $transactionType, true);
+        $settings        = $project->organization->settings;
+        $defaultCurrency = getVal($settings->toArray(), ['default_field_values', 0, 'default_currency']) ? getVal($settings->toArray(), ['default_field_values', 0, 'default_currency']) : getVal($project->default_field_values, [0, 'default_currency']);
 
-        return view('tz.transaction.edit', compact('currency', 'projectId', 'transactionType', 'transactions'));
+        return view('tz.transaction.edit', compact('currency', 'projectId', 'transactionType', 'transactions', 'defaultCurrency'));
     }
 
     /**

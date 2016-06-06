@@ -1,5 +1,5 @@
 <div id="basic-info">
-    <div class="col-md-12">Reporting Organisation Information</div>
+    <div class="col-md-12" style="margin-bottom: 10px;">Reporting Organisation Information</div>
     <div>
         <div class="col-sm-6">
             {!! Form::label('Organisation Name', 'Organisation Name', ['class' => 'control-label required']) !!}
@@ -22,7 +22,7 @@
         </div>
     </div>
 
-    <div class="col-md-12">IATI Registry Information</div>
+    <div class="col-md-12 added-new-block" style="margin-bottom: 10px;">IATI Registry Information</div>
     <div>
         <div class="col-sm-6">
             {!! Form::label('publisher id', 'Publisher Id', ['class' => 'control-label']) !!}
@@ -45,7 +45,7 @@
         </div>
     </div>
 
-    <div class="col-md-12">Default Values</div>
+    <div class="col-md-12 added-new-block" style="margin-bottom: 10px;">Default Values</div>
     <div>
         <div class="col-sm-6">
             {!! Form::label('default currency', 'Default Currency', ['class' => 'control-label required']) !!}
