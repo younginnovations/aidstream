@@ -100,7 +100,7 @@
                                     class="btn btn-primary check-all-btn">Check All</span></label>
                     </div>
                     <button type="submit" class="btn btn-primary btn-form btn-submit">
-                        Sign Up
+                        Create
                     </button>
                     <a href="{{route('admin.list-users')}}" class="btn btn-cancel">
                         Cancel

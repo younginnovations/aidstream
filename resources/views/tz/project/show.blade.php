@@ -128,7 +128,7 @@
                                     Start Date
                                 </div>
                                 <div class="activity-element-info">
-                                    {{ formatDate($date['date'], 'Y/m/d') }}
+                                    {{ formatDate($date['date']) }}
                                 </div>
                             </div>
                         </div>
@@ -141,7 +141,7 @@
                                     End Date
                                 </div>
                                 <div class="activity-element-info">
-                                    {{ formatDate($date['date'], 'Y/m/d') }}
+                                    {{ formatDate($date['date']) }}
                                 </div>
                             </div>
                         </div>
@@ -261,7 +261,7 @@
                         </div>
                         @foreach($disbursement as $data)
                             <div class="activity-element-info">
-                                <li>{{ number_format($data['value'][0]['amount']) }} {{ $data['value'][0]['currency'] }}, {{ formatDate(getVal($data, ['transaction_date', 0, 'date']), 'Y/m/d') }}</li>
+                                <li>{{ number_format($data['value'][0]['amount']) }} {{ $data['value'][0]['currency'] }}, {{ formatDate(getVal($data, ['transaction_date', 0, 'date'])) }}</li>
                                 <div class="toggle-btn">
                                     <span class="show-more-info">Show more info</span>
                                     <span class="hide-more-info hidden">Hide more info</span>
@@ -308,7 +308,12 @@
                                         </div>
                                     </div>
                                 </div>
-
+                                <div>
+                                    <a href="javascript:void(0)" class="delete-transaction" data-route="{{ route('single.transaction.destroy', [$data['id']]) }}">Delete</a>
+                                    {!! Form::open(['method' => 'POST', 'route' => ['single.transaction.destroy', $data['id']],'class' => 'hidden', 'role' => 'form', 'id' => 'transaction-delete-form']) !!}
+                                    {!! Form::submit('Delete') !!}
+                                    {!! Form::close() !!}
+                                </div>
                             </div>
                         @endforeach
                     @else
@@ -330,14 +335,14 @@
                                     Edit Expenditure
                                 </span>
                         </a>
-                        <div>
-                            {!! Form::open(['method' => 'POST', 'route' => ['transaction.destroy', $project->id, 4]]) !!}
-                            {!! Form::submit('Delete', ['class' => 'pull-left delete-transaction']) !!}
-                            {!! Form::close() !!}
-                        </div>
+                        {{--<div>--}}
+                            {{--{!! Form::open(['method' => 'POST', 'route' => ['transaction.destroy', $project->id, 4]]) !!}--}}
+                            {{--{!! Form::submit('Delete', ['class' => 'pull-left delete-transaction']) !!}--}}
+                            {{--{!! Form::close() !!}--}}
+                        {{--</div>--}}
                         @foreach($expenditure as $data)
                             <div class="activity-element-info">
-                                <li>{{ number_format($data['value'][0]['amount']) }} {{ $data['value'][0]['currency'] }}, {{ formatDate(getVal($data, ['transaction_date', 0, 'date']), 'Y/m/d') }}</li>
+                                <li>{{ number_format($data['value'][0]['amount']) }} {{ $data['value'][0]['currency'] }}, {{ formatDate(getVal($data, ['transaction_date', 0, 'date'])) }}</li>
                                 <div class="toggle-btn">
                                     <span class="show-more-info">Show more info</span>
                                     <span class="hide-more-info hidden">Hide more info</span>
@@ -384,6 +389,12 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div>
+                                    <a href="javascript:void(0)" class="delete-transaction" data-route="{{ route('single.transaction.destroy', [$data['id']]) }}">Delete</a>
+                                    {!! Form::open(['method' => 'POST', 'route' => ['single.transaction.destroy', $data['id']],'class' => 'hidden', 'role' => 'form', 'id' => 'transaction-delete-form']) !!}
+                                    {!! Form::submit('Delete') !!}
+                                    {!! Form::close() !!}
+                                </div>
                             </div>
                         @endforeach
                     @else
@@ -397,10 +408,10 @@
                 <div class="activity-element-wrapper">
                     @if(count($incomingFund) > 0)
                         <div class="activity-element-label">
-                            Incoming Fund
+                            Incoming Funds
                         </div>
                         <a href="{{url(sprintf('project/%s/transaction/%s/edit', $project->id, 1))}}"
-                           class="edit-element"><span>Edit Incoming Fund</span></a>
+                           class="edit-element"><span>Edit Incoming Funds</span></a>
                         <div>
                             {!! Form::open(['method' => 'POST', 'route' => ['transaction.destroy', $project->id, 1]]) !!}
                             {!! Form::submit('Delete', ['class' => 'pull-left delete-transaction']) !!}
@@ -408,7 +419,7 @@
                         </div>
                         @foreach($incomingFund as $data)
                             <div class="activity-element-info">
-                                <li>{{ number_format($data['value'][0]['amount']) }} {{ $data['value'][0]['currency'] }}, {{ formatDate(getVal($data, ['transaction_date', 0, 'date']), 'Y/m/d') }}</li>
+                                <li>{{ number_format($data['value'][0]['amount']) }} {{ $data['value'][0]['currency'] }}, {{ formatDate(getVal($data, ['transaction_date', 0, 'date'])) }}</li>
                                 <div class="toggle-btn">
                                     <span class="show-more-info">Show more info</span>
                                     <span class="hide-more-info hidden">Hide more info</span>
@@ -455,13 +466,19 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div>
+                                    <a href="javascript:void(0)" class="delete-transaction" data-route="{{ route('single.transaction.destroy', [$data['id']]) }}">Delete</a>
+                                    {!! Form::open(['method' => 'POST', 'route' => ['single.transaction.destroy', $data['id']],'class' => 'hidden', 'role' => 'form', 'id' => 'transaction-delete-form']) !!}
+                                    {!! Form::submit('Delete') !!}
+                                    {!! Form::close() !!}
+                                </div>
                             </div>
                         @endforeach
                     @else
                         <div class="activity-element-list">
-                            <div class="title">Incoming Fund</div>
+                            <div class="title">Incoming Funds</div>
                             <a href="{{ url(sprintf('project/%s/transaction/%s/create', $project->id,1)) }}"
-                               class="add-more"><span>Add Incoming Fund</span></a>
+                               class="add-more"><span>Add Incoming Funds</span></a>
                         </div>
                     @endif
 
@@ -472,4 +489,29 @@
             </div>
         </div>
     </div>
+    <div class="hidden">
+        <div class="modal" id="transactionDeleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="z-index: 9999">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="myModalLabel">
+                            Confirm Delete?
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        Are you sure you want to delete this transaction?
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn_del" type="button" id="yes-delete">Yes</button>
+                        <button class="btn btn-default" type="button" data-dismiss="modal">No</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+@endsection
+
+@section('script')
+    <script src="{{ asset('/js/tz/transaction.js') }}"></script>
+    <script src="{{ asset('/js/tz/transactionDelete.js') }}"></script>
 @endsection

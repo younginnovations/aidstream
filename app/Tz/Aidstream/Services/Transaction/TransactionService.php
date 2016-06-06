@@ -241,6 +241,40 @@ class TransactionService
     }
 
     /**
+     * delete single transaction
+     * @param $transactionId
+     * @return bool|null
+     */
+    public function destroyTransaction($transactionId)
+    {
+        try {
+            $this->databaseManager->beginTransaction();
+
+            $this->transaction->destroy($transactionId);
+
+            $this->databaseManager->commit();
+            $this->logger->info(
+                'Transactions successfully deleted.',
+                [
+                    'byUser' => auth()->user()->getNameAttribute()
+                ]
+            );
+
+            return true;
+        } catch (Exception $exception) {
+            $this->databaseManager->rollback();
+            $this->logger->error(
+                sprintf('Transactions could not deleted due to %s', $exception->getMessage()),
+                [
+                    'byUser' => auth()->user()->getNameAttribute()
+                ]
+            );
+
+            return null;
+        }
+    }
+
+    /**
      * Save value date equivalent to transaction date
      * @param $transactions
      * @return mixed

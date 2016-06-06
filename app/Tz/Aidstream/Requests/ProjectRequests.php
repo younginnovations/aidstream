@@ -34,8 +34,8 @@ class ProjectRequests extends Request
         $rules['recipient_country'] = 'required';
         $rules                      = array_merge(
             $rules,
-            $this->getRulesForImplementingOrganization($this->get('implementing_organization'))
-//            $this->getRulesForDocumentLink($this->get('document_link'))
+            $this->getRulesForImplementingOrganization($this->get('implementing_organization')),
+            $this->getRulesForDocumentLink($this->get('document_link'))
 //            $this->getRulesForFundingOrganization($this->get('funding_organization')),
         );
 
@@ -59,8 +59,8 @@ class ProjectRequests extends Request
         $messages['recipient_country.required'] = 'Recipient Country is required';
         $messages = array_merge(
             $messages,
-            $this->getMessagesForImplementingOrganization($this->get('implementing_organization'))
-//            $this->getMessagesForDocumentLink($this->get('document_link'))
+            $this->getMessagesForImplementingOrganization($this->get('implementing_organization')),
+            $this->getMessagesForDocumentLink($this->get('document_link'))
 //            $this->getMessagesForFundingOrganization($this->get('funding_organization')),
         );
 
@@ -140,8 +140,8 @@ class ProjectRequests extends Request
         $rules = [];
         foreach ($formFields as $documentLinkIndex => $documentLink) {
             $documentForm                                                      = 'document_link.' . $documentLinkIndex;
-            $rules[sprintf('%s.url', $documentForm)]                           = 'required|url';
-            $rules[sprintf('%s.title.0.narrative.0.narrative', $documentForm)] = 'required';
+            $rules[sprintf('%s.url', $documentForm)]                           = 'url';
+//            $rules[sprintf('%s.title.0.narrative.0.narrative', $documentForm)] = 'required';
         }
 
         return $rules;
@@ -158,7 +158,7 @@ class ProjectRequests extends Request
         foreach ($formFields as $documentLinkIndex => $documentLink) {
             $documentForm                                                                  = 'document_link.' . $documentLinkIndex;
             $messages[sprintf('%s.url.required', $documentForm)]                           = 'Document Url is required';
-            $messages[sprintf('%s.url.url', $documentForm)]                                = 'Enter valid URL. eg. http://example.com';
+            $messages[sprintf('%s.url.url', $documentForm)]                                = 'Document URL must be of eg. http://example.com';
             $messages[sprintf('%s.title.0.narrative.0.narrative.required', $documentForm)] = 'Title is required';
         }
 

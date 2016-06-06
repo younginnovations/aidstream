@@ -24,7 +24,9 @@
                         </span>
                         <div>
                             <a href="{{route('user.edit-profile', auth()->user()->id)}}" class="edit-profile">Edit Profile</a> |
-                            <a href="{{route('user.change-username', auth()->user()->id)}}">Change Username</a> |
+                            @if(auth()->user()->isAdmin() || auth()->user()->isSuperAdmin())
+                                <a href="{{route('user.change-username', auth()->user()->id)}}">Change Organization User Identifier</a> |
+                            @endif
                             <a href="{{route('user.reset-user-password', auth()->user()->id)}}">Change Password</a>
                         </div>
                     </div>

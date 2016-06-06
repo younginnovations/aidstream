@@ -17,10 +17,37 @@ var Transaction = {
         Transaction.appendFields(clone);
     },
     /*
+     * Show the confirm delete modal window.
+     */
+    confirmDelete: function () {
+        var modal = $('#transactionDeleteModal');
+        var clone = modal.clone();
+
+        clone.modal('show');
+
+        yesDelete = clone.find('button#yes-delete');
+
+        return this;
+    },
+    /*
      * Clone the form fields from the DOCUMENT.
      */
     clone: function () {
         return transactionForm.clone();
+    },
+    /*
+     * Set the form to be submitted.
+     */
+    setForm: function (formParam) {
+        form = formParam;
+
+        return this;
+    },
+    /*
+     * Trigger form submission.
+     */
+    submitForm: function () {
+        form.submit();
     },
     /*
      * Re-index the added form fields according to their counts.
