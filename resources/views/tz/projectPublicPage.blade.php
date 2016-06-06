@@ -80,7 +80,14 @@
                                 </div>
                             </div>
                         </div>
-
+                        <div class="sectors-block">
+                            <div class="card small-card">
+                                <div class="card-header title">Regions</div>
+                                <div class="card-body jspScrollable">
+                                    <div id="regions" class="checkbox checkbox-primary"></div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -94,7 +101,7 @@
                     <thead>
                     <tr>
                         <th width="60%">Project Title</th>
-                        <th class="">Project Identifier</th>
+                        <th class="">Sectors</th>
                     </tr>
                     </thead>
 
@@ -143,6 +150,10 @@
                 collection: projectCollection.getSectorsCollection(),
                 projectsCollection: projectCollection
             }).render();
+            new RegionListView({
+                collection: projectCollection.getRegionsCollection(),
+                projectsCollection: projectCollection
+            }).render();
             new ProjectsListView({
                 collection: projectCollection
             });
@@ -161,7 +172,7 @@
 
 <script type="text/template" id="project-list-item">
     <td class="bold-col"><a href="/public/project/<%= project['id'] %>"><%= project["title"] %></a></td>
-    <td><%= project["identifier"] %></td>
+    <td><%= project["sectors"] %></td>
 </script>
 <script type="text/template" id="region-checkbox-item">
   <label>

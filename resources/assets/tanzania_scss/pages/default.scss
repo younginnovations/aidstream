@@ -47,7 +47,7 @@ h1{
 
     @media (max-width: 480px) {
         font-size: 24px;
-        line-height: 32px;
+        line-height: 30px;
     }
 }
 
@@ -63,14 +63,10 @@ h2{
 }
 
 .introduction-wrapper{
-    h1{
-        line-height: 52px;
-    }
-
     @media (max-width: 480px) {
         h1{
             font-size: 24px;
-            line-height: 38px;
+            line-height: 30px;
         }
     }
 }

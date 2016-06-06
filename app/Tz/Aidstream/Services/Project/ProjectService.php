@@ -554,7 +554,8 @@ class ProjectService
                 'sectors'    => [$getCode->getActivityCodeName('SectorCategory', $project->sector[0]['sector_category_code'])],
                 'regions'    => $regionName,
                 'startdate'  => $startDate,
-                'enddate'    => $endDate
+                'enddate'    => $endDate,
+                'reporting_organisation' => $project->organization->name
             ];
         }
 

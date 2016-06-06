@@ -25,7 +25,7 @@ h1 {
   @media (max-width: 480px) {
     h1 {
       font-size: 24px;
-      line-height: 32px; } }
+      line-height: 30px; } }
 
 h2 {
   font-size: 24px;
@@ -36,13 +36,10 @@ h2 {
       font-size: 18px;
       line-height: 24px; } }
 
-.introduction-wrapper h1 {
-  line-height: 52px; }
-
 @media (max-width: 480px) {
   .introduction-wrapper h1 {
     font-size: 24px;
-    line-height: 38px; } }
+    line-height: 30px; } }
 
 .introduction-wrapper {
   padding: 30px 0 75px; }
@@ -140,15 +137,9 @@ h2 {
     position: relative; }
 
 .detail-page-map {
-  height: 350px;
   margin-bottom: 55px;
   -webkit-border-radius: 4px 4px 0 0;
           border-radius: 4px 4px 0 0; }
-  .detail-page-map #map {
-    height: 350px; }
-  .detail-page-map .select-block-wrap {
-    bottom: -65px;
-    top: auto; }
 
 .select-cards-wrap {
   margin-top: 20px;
@@ -580,6 +571,9 @@ footer .footer-logo a img {
   .organisation-detail-container .tel {
     display: inline-block;
     margin-left: 20px; }
+
+.organisations-list ul li img {
+  width: 100%; }
 
 table {
   border-collapse: inherit;

@@ -21,8 +21,8 @@
     <![endif]-->
 
     <style>
-        .navbar-brand,.footer-logo a{
-            width: 152px;
+        .navbar-brand > a,.footer-logo a{
+            width: 130px;
             position: relative;
             display: block;
         }
@@ -33,7 +33,7 @@
             width: 18px;
             height: 12px;
             background: url("{{ asset('/images/ic_tanzania-flag.svg') }}") center center  no-repeat;
-            top: 28px;
+            top: 13px;
             right: 0;
         }
     </style>
