@@ -16,8 +16,8 @@
             @foreach ($project->budget as $budget)
                 <div class="activity-element-info">
                     <li>
-                        {{ number_format(getVal($budget, ['value', 0, 'amount'])) }} {{ getVal($budget, ['value', 0, 'currency']) }} [{{ formatDate(getVal($budget, ['period_start', 0, 'date']), 'Y/M/d') }}
-                        - {{ formatDate(getVal($budget, ['period_end', 0, 'date']), 'Y/M/d') }}]
+                        {{ number_format(getVal($budget, ['value', 0, 'amount'])) }} {{ getVal($budget, ['value', 0, 'currency']) }} [{{ formatDate(getVal($budget, ['period_start', 0, 'date']), 'Y/m/d') }}
+                        - {{ formatDate(getVal($budget, ['period_end', 0, 'date']), 'Y/m/d') }}]
                     </li>
                 </div>
             @endforeach

@@ -210,4 +210,13 @@ class OrganizationManager
     {
         return $this->repo->getReportingOrganizations($reportOrg);
     }
+
+    /**
+     * @param $id
+     * @return App\Tz\Aidstream\Models\Organization
+     */
+    public function getTanzanianOrganization($id)
+    {
+        return app()->make(App\Tz\Aidstream\Models\Organization::class)->findOrFail($id);
+    }
 }

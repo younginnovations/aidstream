@@ -90,4 +90,13 @@ class Project extends Activity
 
         return null;
     }
+
+    /**
+     * A Project belongs to an Organization.
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function organization()
+    {
+        return $this->belongsTo(Organization::class, 'organization_id', 'id');
+    }
 }

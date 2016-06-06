@@ -57,8 +57,10 @@ class HomeController extends Controller
         $transactionCount = $this->transaction->getTransactionsSum($projects);
         $orgDetails       = $this->orgManager->getOrganization($orgId);
         $user             = $this->user->getDataByOrgIdAndRoleId($orgId, '1');
+        $organization     = $this->orgManager->getTanzanianOrganization($orgId);
+        $totalBudget      = $this->project->totalBudget($organization);
 
-        return view('tz.projectPublicPage', compact('orgDetails', 'user', 'transactionCount'));
+        return view('tz.projectPublicPage', compact('orgDetails', 'user', 'transactionCount', 'totalBudget'));
     }
 
     public function projectlists($orgId = 0)
