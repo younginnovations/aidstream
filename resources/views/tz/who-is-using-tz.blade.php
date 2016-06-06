@@ -9,6 +9,14 @@
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/style.min.css">
     <link href="{{ asset('/css/tanzania_style/tz.style.css') }}" rel="stylesheet">
+    <style>
+        .organisations-list ul li img {
+            max-width: 150px;
+            width: auto;
+            height: auto;
+            max-height: 150px;
+        }
+    </style>
 </head>
 <body>
 @include('tz.partials.header')
