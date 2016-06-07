@@ -37,10 +37,16 @@
                 @endif
             </div>
         </div>
+    </div> {{--  container close--}}
 
+    <div class="container small-container">
         <div class="col-md-12">
             <div class="row">
                 <div class="header-name-value name-value-section clearfix">
+                    <dl class="col-md-3 col-sm-6 col-xs-6">
+                        <dt> Total Budget</dt>
+                        <dd class="amount">${{ $totalBudget }}</dd>
+                    </dl>
                     <dl class="col-md-3 col-sm-6 col-xs-6">
                         <dt> Total Disbursements</dt>
                         <dd class="amount">${{ $transactionCount['disbursement'] }}</dd>
@@ -53,16 +59,12 @@
                         <dt> Total Incoming Funds</dt>
                         <dd class="amount">${{ $transactionCount['incoming_fund'] }}</dd>
                     </dl>
-                    <dl class="col-md-3 col-sm-6 col-xs-6">
-                        <dt> Total Budget</dt>
-                        <dd class="amount">${{ $totalBudget }}</dd>
-                    </dl>
                 </div>
             </div> {{--  row close--}}
         </div>
-    </div> {{--  container close--}}
+    </div>
 
-    <div class="container container--shadow">
+    <div class="container container--shadow small-container">
         <div id="container" class="map-section detail-page-map">
             <button id="reset">Reset</button>
 

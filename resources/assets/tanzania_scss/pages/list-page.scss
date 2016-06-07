@@ -1,0 +1,20 @@
+.transactions-wrap{
+  padding: 0 15px;
+  padding: 0 36px 10px;
+  border-bottom: 1px solid rgba(151,151,151,.2);
+
+  & > .title{
+    font-family: inherit;
+    font-size: 16px;
+    line-height: 24px;
+    margin-bottom: 6px;
+  }
+
+  .activity-element-wrapper{
+    padding: 0 0 10px;
+  }
+
+  & .activity-element-wrapper:nth-last-child(1){
+    border-bottom: 0;
+  }
+}

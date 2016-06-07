@@ -17,6 +17,10 @@ body{
     }
 }
 
+body.country-specific-wrap{
+    background: #fff;
+}
+
 a{
     text-decoration: none;
     color: $link-color;
@@ -72,7 +76,7 @@ h2{
 }
 
 .introduction-wrapper {
-    padding: 30px 0 75px;
+    padding: 30px 0 50px;
     h2 {
         font-size: 20px;
         line-height: 26px;
@@ -83,6 +87,12 @@ h2{
     }
 }
 
+@media (min-width: 768px){
+    .introduction-wrapper h2 {
+        width: 694px;
+        margin: 0 auto 30px;
+    }
+}
 
 .title{
     font-family: Open-Sans-Bold;

@@ -45,8 +45,8 @@
                     </div>
                 </div>
 
-                <div class="col-md-9 col-sm-8 col-xs-8" style="height: 277px;">
-                    <div id="map" style="height:300px; width:100%"></div>
+                <div class="col-md-9 col-sm-8 col-xs-8 right-map-section"">
+                    <div id="map"></div>
                 </div>
             </div>
         </div>

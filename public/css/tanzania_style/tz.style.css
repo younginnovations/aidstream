@@ -3,6 +3,9 @@ body {
   body.front-page {
     background: #fff; }
 
+body.country-specific-wrap {
+  background: #fff; }
+
 a {
   text-decoration: none;
   color: #00A2E0; }
@@ -42,13 +45,18 @@ h2 {
     line-height: 30px; } }
 
 .introduction-wrapper {
-  padding: 30px 0 75px; }
+  padding: 30px 0 50px; }
   .introduction-wrapper h2 {
     font-size: 20px;
     line-height: 26px; }
     .introduction-wrapper h2 a {
       color: #484848;
       border-bottom: 2px solid #00A8FF; }
+
+@media (min-width: 768px) {
+  .introduction-wrapper h2 {
+    width: 694px;
+    margin: 0 auto 30px; } }
 
 .title {
   font-family: Open-Sans-Bold;
@@ -113,6 +121,9 @@ h2 {
   width: 100%;
   height: 550px;
   z-index: 88; }
+
+.right-map-section #map {
+  height: 300px; }
 
 .map-section {
   width: 100%;
@@ -411,6 +422,12 @@ tr, td {
   .header-banner .navbar, .header-banner .navbar-default {
     background: transparent; }
 
+@media (min-width: 768px) {
+  .country-specific-wrap .navbar {
+    padding: 0 !important; }
+  .header-banner .navbar {
+    padding: 40px 30px; } }
+
 /* ------- style for search section ------ */
 .search-wrap {
   margin-top: 15px; }
@@ -445,7 +462,7 @@ footer .footer-logo a img {
   padding-top: 20px; }
 
 .small-container {
-  max-width: 760px; }
+  max-width: 960px; }
 
 .organization-logo img {
   max-width: 150px;
@@ -514,7 +531,7 @@ footer .footer-logo a img {
 .vertical-horizontal-center-wrap {
   display: table;
   vertical-align: middle;
-  min-height: 277px;
+  min-height: 300px;
   height: 100%;
   text-align: center; }
   .vertical-horizontal-center-wrap .vertical-horizontal-centerize {
@@ -554,23 +571,14 @@ footer .footer-logo a img {
   .social-logo a.twitter {
     background: url(/images/ic-twitter.svg) no-repeat left; }
 
-.organisation-detail-container {
-  /* .address {
-    background: $url_6 no-repeat left;
-  }
-  .tel a {
-    margin: 10px 0 0;
-    display: inline-block;
-    padding-left: 20px;
-    background: $url_7 no-repeat left;
-  }*/ }
-  .organisation-detail-container .address {
-    margin: 10px 0 0;
-    display: inline-block;
-    padding-left: 20px; }
-  .organisation-detail-container .tel {
-    display: inline-block;
-    margin-left: 20px; }
+.organisation-detail-container .address {
+  margin: 10px 0 0;
+  display: inline-block;
+  padding-left: 20px; }
+
+.organisation-detail-container .tel {
+  display: inline-block;
+  margin-left: 20px; }
 
 .organisations-list ul li img {
   width: 100%; }
@@ -696,6 +704,30 @@ tr, td {
     content: "RECEIVER"; }
   .navbar-nav {
     margin: 0; } }
+
+.organisations-list ul li:hover {
+  -webkit-box-shadow: 0px 2px 12px 1px rgba(0, 0, 0, 0.2);
+          box-shadow: 0px 2px 12px 1px rgba(0, 0, 0, 0.2); }
+
+.organisations-list ul li img {
+  max-width: 150px;
+  width: auto;
+  height: auto;
+  max-height: 150px; }
+
+.transactions-wrap {
+  padding: 0 15px;
+  padding: 0 36px 10px;
+  border-bottom: 1px solid rgba(151, 151, 151, 0.2); }
+  .transactions-wrap > .title {
+    font-family: inherit;
+    font-size: 16px;
+    line-height: 24px;
+    margin-bottom: 6px; }
+  .transactions-wrap .activity-element-wrapper {
+    padding: 0 0 10px; }
+  .transactions-wrap .activity-element-wrapper:nth-last-child(1) {
+    border-bottom: 0; }
 
 @media (max-width: 768px) {
   .container--shadow {

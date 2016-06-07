@@ -11,9 +11,9 @@
             <div>
                 <span>
                     {{ $project->title ? $project->title[0]['narrative'] : 'No Title' }}
-                    <a href="{{ route('project.edit', $project->id) }}" class="pull-right" style="font-size: 12px;">Edit</a>
+                    <a href="{{ route('project.edit', $project->id) }}" class="pull-right">Edit</a>
                     <br>
-                    <a href="{{ route('change-project-defaults', $id) }}" class="pull-right" style="font-size: 12px;">
+                    <a href="{{ route('change-project-defaults', $id) }}" class="pull-right">
                         Override Default Values
                     </a>
                 </span>
@@ -42,7 +42,7 @@
                 <div class="activity-element-wrapper">
                     <div class="activity-element-list">
                         <div class="activity-element-label">
-                            Project Identifier:
+                            Project Identifier
                         </div>
                         <div class="activity-element-info">
                             {{$project->identifier['iati_identifier_text']}}
@@ -53,7 +53,7 @@
                 <div class="activity-element-wrapper">
                     <div class="activity-element-list">
                         <div class="activity-element-label">
-                            Project Title:
+                            Project Title
                         </div>
                         <div class="activity-element-info">
                             {{$project->title[0]['narrative']}}
@@ -66,7 +66,7 @@
                         @if(getVal($description, ['type']) == 1)
                             <div class="activity-element-list">
                                 <div class="activity-element-label">
-                                    General Description:
+                                    General Description
                                 </div>
                                 <div class="activity-element-info">
                                     {{$description['narrative'][0]['narrative']}}
@@ -77,7 +77,7 @@
                         @if(getVal($description, ['type']) == 2)
                             <div class="activity-element-list">
                                 <div class="activity-element-label">
-                                    Objectives:
+                                    Objectives
                                 </div>
                                 <div class="activity-element-info">
                                     {{$description['narrative'][0]['narrative']}}
@@ -88,7 +88,7 @@
                         @if(getVal($description, ['type']) == 3)
                             <div class="activity-element-list">
                                 <div class="activity-element-label">
-                                    Target Groups:
+                                    Target Groups
                                 </div>
                                 <div class="activity-element-info">
                                     {{$description['narrative'][0]['narrative']}}
@@ -101,7 +101,7 @@
                 <div class="activity-element-wrapper">
                     <div class="activity-element-list">
                         <div class="activity-element-label">
-                            Project Status:
+                            Project Status
                         </div>
                         <div class="activity-element-info">
                             {{ $getCode->getCodeListName('Activity','ActivityStatus', $project->activity_status) }}
@@ -112,7 +112,7 @@
                 <div class="activity-element-wrapper">
                     <div class="activity-element-list">
                         <div class="activity-element-label">
-                            Sector:
+                            Sector
                         </div>
                         <div class="activity-element-info">
                             {{ $getCode->getCodeListName('Activity','SectorCategory', getVal($project->sector, [0, 'sector_category_code'])) }}
@@ -125,7 +125,7 @@
                         <div class="activity-element-wrapper">
                             <div class="activity-element-list">
                                 <div class="activity-element-label">
-                                    Start Date:
+                                    Start Date
                                 </div>
                                 <div class="activity-element-info">
                                     {{ formatDate($date['date'], 'Y/m/d') }}
@@ -138,7 +138,7 @@
                         <div class="activity-element-wrapper">
                             <div class="activity-element-list">
                                 <div class="activity-element-label">
-                                    End Date:
+                                    End Date
                                 </div>
                                 <div class="activity-element-info">
                                     {{ formatDate($date['date'], 'Y/m/d') }}
@@ -151,7 +151,7 @@
                 <div class="activity-element-wrapper">
                     <div class="activity-element-list">
                         <div class="activity-element-label">
-                            Recipient Country:
+                            Recipient Country
                         </div>
                         <div class="activity-element-info">
                             {{$getCode->getCodeListName('Organization','Country', $project->recipient_country[0]['country_code'])}}
@@ -240,6 +240,10 @@
                 @endif
 
                 @include('tz.project.partials.add-budget')
+
+        {{-- -------------  start of transactions --------------- --}}
+                <div class="transactions-wrap">
+                    <div class="title">Transactions</div>
 
                 <div class="activity-element-wrapper">
                     @if(count($disbursement) > 0)
@@ -462,6 +466,9 @@
                     @endif
 
                 </div>
+            </div>
+          {{-- -------------  end of transactions --------------- --}}
+
             </div>
         </div>
     </div>

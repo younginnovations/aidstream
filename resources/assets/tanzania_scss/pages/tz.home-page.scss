@@ -34,6 +34,19 @@
   }
 }
 
+@media (min-width: 768px){
+  .country-specific-wrap .navbar {
+    padding: 0 !important;
+  }
+
+  .header-banner .navbar {
+     padding: 40px 30px;
+  }
+
+
+}
+
+
 /* ------- style for search section ------ */
 .search-wrap{
   margin-top: 15px;

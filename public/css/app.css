@@ -3836,4 +3836,8 @@ table.dataTable thead .sorting_desc {
 .sector_category_select label, .sector_category_select .select2-container {
   margin-left: 15px; }
 
+.element-panel-heading a {
+  font-size: 12px;
+  line-height: 18px; }
+
 /*# sourceMappingURL=maps/app.css.map */

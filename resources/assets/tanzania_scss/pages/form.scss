@@ -1,0 +1,17 @@
+.form-block:not(:nth-last-child(1)){
+  border-bottom: 1px dashed #A9C6DE;
+  margin-bottom: 10px;
+}
+
+.form-block{
+  .title{
+    margin-bottom: 10px;
+    font-family: inherit;
+    font-weight: normal;
+  }
+}
+
+.create-form > form{
+  padding: 25px 0 10px;
+}
+
