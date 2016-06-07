@@ -1,5 +1,7 @@
 @extends('app')
 
+@section('title', 'Change Log')
+
 @section('content')
     <div class="container main-container admin-container">
         <div class="row">
@@ -15,9 +17,9 @@
                             <thead>
                             <span>Your previous activities file(s) are as follows</span>
                             <tr>
-                                <th width="30%">Current File</th>
+                                <th width="50%">Current File</th>
                                 <th class="default-sort">Activities Included</th>
-                                <th class="status">Published Status</th>
+                                {{--<th class="status">Published Status</th>--}}
                             </tr>
                             </thead>
                             <tbody>
@@ -33,9 +35,9 @@
                                                 <span>No Activities Included.</span>
                                             @endforelse
                                         </td>
-                                        <td>
-                                            {{ $change['published_status'] }}
-                                        </td>
+                                        {{--<td>--}}
+                                            {{--{{ $change['published_status'] }}--}}
+                                        {{--</td>--}}
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -44,9 +46,9 @@
                         <table class="table table-striped table-new-activities" id="data-table">
                             <thead>
                             <tr>
-                                <th width="30%">New Files</th>
+                                <th width="50%">New Files</th>
                                 <th width="default-sort">Activities Included</th>
-                                <th class="status">Published Status</th>
+                                {{--<th class="status">Published Status</th>--}}
                             </tr>
                             </thead>
                             <tbody>
@@ -60,18 +62,25 @@
                                             <span>No Activities Included.</span>
                                         @endforelse
                                     </td>
-                                    <td>
-                                        {{ $change['published_status'] }}
-                                    </td>
+                                    {{--<td>--}}
+                                        {{--{{ $change['published_status'] }}--}}
+                                    {{--</td>--}}
                                 </tr>
                             @endforeach
                             </tbody>
                         </table>
-                        <div class="changelog-message">
-                            In your settings page, you have selected “Yes” to ‘Automatically Update to IATI Registry when publishing files’. AidStream will publish you newly generated activities file(s) to the IATI registry.
-                        </div>
+                        @if (getVal($settings, ['registry_info', 0, 'publish_files']) == 'yes')
+                            <div class="changelog-message">
+                                In your settings page, you have selected {{ ucfirst(getVal($settings, ['registry_info', 0, 'publish_files'])) }} to ‘Automatically Update to IATI Registry when publishing files’. AidStream will publish you newly generated activities file(s) to the IATI registry.
+                            </div>
+                        @else
+                            <div class="changelog-message">
+                                In your settings page, you have selected {{ ucfirst(getVal($settings, ['registry_info', 0, 'publish_files'])) }} to ‘Automatically Update to IATI Registry when publishing files’. AidStream will not automatically publish you newly generated activities file(s) to the IATI registry. Please go to the
+                                <a href="{{ route('list-published-files') }}">Published Files</a> page and publish your Activity file(s).
+                            </div>
+                        @endif
                         <form action="{{ route('change-segmentation') }}" method="POST" class="form-group">
-                            <p>Do you want to continue with the change to Unsegmentation Publishing Type ?</p>
+                            <p>Do you want to continue with the change to "{{ ucfirst($changes['segmentation']) }}" Publishing Type ?</p>
                             <input type="hidden" value="{{ csrf_token() }}" name="_token">
                             <input type="hidden" value="{{ $organizationId }}" name="organizationId">
                             <input type="hidden" value="{{ json_encode($changes) }}" name="changes">
