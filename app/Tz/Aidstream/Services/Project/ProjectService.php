@@ -611,7 +611,8 @@ class ProjectService
     {
         foreach ($publishedActivities as $publishedActivity) {
             $filename  = explode('.', $publishedActivity)[0];
-            $projectId = explode('-', $filename)[1];
+            $projectId = explode('-', $filename);
+            $projectId = end($projectId);
 
             if ($projectId == $id) {
                 return true;
