@@ -150,7 +150,7 @@ class ProjectRepository implements ProjectRepositoryInterface
                             return true;
                         }
                     );
-                    $projects[] = $this->find($projectId);
+                    $projects[] = $this->project->where('id', '=', $projectId)->with('organization')->first();
                 }
             }
         }

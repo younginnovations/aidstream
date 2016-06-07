@@ -9,6 +9,7 @@
     <link rel="shotcut icon" type="image/png" sizes="32*32" href="{{ asset('/images/favicon.png') }}"/>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2-rc.1/css/select2.min.css" rel="stylesheet"/>
     <link href="{{ asset('/css/main.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('/css/tanzania_style/tz.style.css') }}" rel="stylesheet">
 
     <!-- Fonts -->
     <link href='//fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
@@ -21,8 +22,8 @@
     <![endif]-->
 
     <style>
-        .navbar-brand,.footer-logo a{
-            width: 152px;
+        .navbar-brand > a,.footer-logo a{
+            width: 130px;
             position: relative;
             display: block;
         }
@@ -33,14 +34,14 @@
             width: 18px;
             height: 12px;
             background: url("{{ asset('/images/ic_tanzania-flag.svg') }}") center center  no-repeat;
-            top: 28px;
+            top: 13px;
             right: 0;
         }
     </style>
     @yield('head')
 
 </head>
-<body>
+<body class="country-specific-wrap">
 <nav class="navbar navbar-default">
     <div class="container-fluid">
         <div class="navbar-header">

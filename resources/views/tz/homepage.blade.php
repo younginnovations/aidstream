@@ -21,10 +21,10 @@
     <div class="introduction-wrapper bottom-line">
         <div class="container">
         <div class="col-md-12 text-center">
-            {{--<h1>Publish your Aid data in <a href="http://iatistandard.org/">IATI format</a> effortlessly </h1>--}}
+            <h1> A platform to display and explore civil society activities across Tanzania. </h1>
 
             <h2>
-                A platform to display and explore civil society activities across Tanzania.
+
                 We empower civil society organizations in Tanzania to be more transparent and achieve greater impact by using <a href="http://iatistandard.org/">IATI</a> in their local context.
             </h2>
             {{--<a href="{{ url('/auth/register') }}" class="btn btn-primary get-started-btn">Get Started</a>--}}
@@ -79,8 +79,9 @@
         <table class="table table-striped custom-table project-data-table" id="data-table">
             <thead>
                 <tr>
-                    <th width="60%">Project Title</th>
-                    <th class="">Project Identifier</th>
+                    <th width="40%">Project Title</th>
+                    <th class="">Reporting Organisation</th>
+                    <th class="">Sectors</th>
                 </tr>
             </thead>
 
@@ -148,7 +149,8 @@
 
 <script type="text/template" id="project-list-item">
     <td class="bold-col"><a href="/public/project/<%= project['id'] %>"><%= project["title"] %></a></td>
-    <td><%= project["identifier"] %></td>
+    <td class="bold-col"><%= project["reporting_organisation"] %></td>
+    <td class="bold-col"><%= project["sectors"] %></td>
 </script>
 <script type="text/template" id="region-checkbox-item">
   <label>

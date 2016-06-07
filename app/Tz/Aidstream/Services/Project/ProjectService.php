@@ -554,7 +554,8 @@ class ProjectService
                 'sectors'    => [$getCode->getActivityCodeName('SectorCategory', $project->sector[0]['sector_category_code'])],
                 'regions'    => $regionName,
                 'startdate'  => $startDate,
-                'enddate'    => $endDate
+                'enddate'    => $endDate,
+                'reporting_organisation' => $project->organization->name
             ];
         }
 
@@ -610,7 +611,8 @@ class ProjectService
     {
         foreach ($publishedActivities as $publishedActivity) {
             $filename  = explode('.', $publishedActivity)[0];
-            $projectId = explode('-', $filename)[1];
+            $projectId = explode('-', $filename);
+            $projectId = end($projectId);
 
             if ($projectId == $id) {
                 return true;

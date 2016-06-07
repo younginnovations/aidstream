@@ -264,7 +264,10 @@ var MapView = Backbone.View.extend({
     initialize: function() {
         this.regionLayers = {}
         this.collection.on('renderAll', this.render, this);
-        this.map = L.map(document.getElementById("map")).setView([-6.369028, 30.888822], 6);
+        this.map = L.map(document.getElementById("map"), {zoomControl: false}).setView([-6.369028, 30.888822], 6);
+        L.control.zoom({
+            position:'topright'
+        }).addTo(this.map);
         this.map.scrollWheelZoom.disable();        
         L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
           attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',

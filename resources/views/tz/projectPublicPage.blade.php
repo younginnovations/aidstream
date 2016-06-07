@@ -37,10 +37,16 @@
                 @endif
             </div>
         </div>
+    </div> {{--  container close--}}
 
+    <div class="container small-container">
         <div class="col-md-12">
             <div class="row">
                 <div class="header-name-value name-value-section clearfix">
+                    <dl class="col-md-3 col-sm-6 col-xs-6">
+                        <dt> Total Budget</dt>
+                        <dd class="amount">${{ $totalBudget }}</dd>
+                    </dl>
                     <dl class="col-md-3 col-sm-6 col-xs-6">
                         <dt> Total Disbursements</dt>
                         <dd class="amount">${{ $transactionCount['disbursement'] }}</dd>
@@ -53,16 +59,12 @@
                         <dt> Total Incoming Funds</dt>
                         <dd class="amount">${{ $transactionCount['incoming_fund'] }}</dd>
                     </dl>
-                    <dl class="col-md-3 col-sm-6 col-xs-6">
-                        <dt> Total Budget</dt>
-                        <dd class="amount">${{ $totalBudget }}</dd>
-                    </dl>
                 </div>
             </div> {{--  row close--}}
         </div>
-    </div> {{--  container close--}}
+    </div>
 
-    <div class="container container--shadow">
+    <div class="container container--shadow small-container">
         <div id="container" class="map-section detail-page-map">
             <button id="reset">Reset</button>
 
@@ -80,7 +82,14 @@
                                 </div>
                             </div>
                         </div>
-
+                        <div class="sectors-block">
+                            <div class="card small-card">
+                                <div class="card-header title">Regions</div>
+                                <div class="card-body jspScrollable">
+                                    <div id="regions" class="checkbox checkbox-primary"></div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -94,7 +103,7 @@
                     <thead>
                     <tr>
                         <th width="60%">Project Title</th>
-                        <th class="">Project Identifier</th>
+                        <th class="">Sectors</th>
                     </tr>
                     </thead>
 
@@ -143,6 +152,10 @@
                 collection: projectCollection.getSectorsCollection(),
                 projectsCollection: projectCollection
             }).render();
+            new RegionListView({
+                collection: projectCollection.getRegionsCollection(),
+                projectsCollection: projectCollection
+            }).render();
             new ProjectsListView({
                 collection: projectCollection
             });
@@ -161,7 +174,7 @@
 
 <script type="text/template" id="project-list-item">
     <td class="bold-col"><a href="/public/project/<%= project['id'] %>"><%= project["title"] %></a></td>
-    <td><%= project["identifier"] %></td>
+    <td><%= project["sectors"] %></td>
 </script>
 <script type="text/template" id="region-checkbox-item">
   <label>

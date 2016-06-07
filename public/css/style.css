@@ -290,7 +290,7 @@ footer {
           .organisations-list ul li span a:hover {
             text-decoration: none; }
       .organisations-list ul li:hover {
-        box-shadow: 0 10px 10px -10px rgba(0, 0, 0, 0.5); }
+        box-shadow: 0px 2px 12px 1px rgba(0,0,0,.2); }
       .organisations-list ul li img {
         line-height: normal;
         text-align: center;
