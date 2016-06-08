@@ -1,6 +1,6 @@
 .transactions-wrap{
   padding: 0 15px;
-  padding: 0 36px 10px;
+  padding: 0 36px 0;
   border-bottom: 1px solid rgba(151,151,151,.2);
 
   & > .title{
@@ -16,5 +16,40 @@
 
   & .activity-element-wrapper:nth-last-child(1){
     border-bottom: 0;
+    padding-bottom: 0;
   }
 }
+
+.element-panel-heading {
+  .col-md-3{
+    float: none;
+  }
+
+  .col-md-9{
+    padding: 0;
+  }
+
+  .edit-btn{
+    padding: 4px 6px;
+    border: solid 1px #00A8FF;
+    border-radius: 15px;
+    width: 60px;
+    float: right;
+    text-align: center;
+
+    &:hover{
+      background-color: #00A8FF;
+      color: #fff;
+    }
+  }
+
+  .override-section{
+    display: block;
+    float: none;
+    text-align: right;
+    font-size: 12px;
+    border: solid 1px transparent;
+    margin-top: 8px;
+  }
+}
+
