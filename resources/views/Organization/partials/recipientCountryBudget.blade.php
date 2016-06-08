@@ -3,6 +3,7 @@
         <div class="panel-heading">
             <div class="activity-element-title">Recipient Country</div>
             <a href="{{ url('/organization/' . $orgId . '/recipient-country-budget') }}" class="edit-element">edit</a>
+            <a href="{{ route('organization.delete-element',[$orgId, 'recipient_country_budget']) }}" class="delete pull-right">delete</a>
         </div>
         <div class="panel-body panel-level-2">
             @foreach($recipient_country_budget as $recipientCountryBudget)

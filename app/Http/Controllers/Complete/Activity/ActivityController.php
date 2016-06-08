@@ -743,7 +743,13 @@ class ActivityController extends Controller
     public function deleteElement($id, $element)
     {
         $activity = $this->activityManager->getActivityData($id);
-        $result   = $this->activityManager->deleteElement($activity, $element);
+
+        if (Gate::denies('ownership', $activity)) {
+            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
+        }
+
+        $result = $this->activityManager->deleteElement($activity, $element);
+
         if ($result) {
             $this->activityManager->resetActivityWorkflow($id);
             $response = ['type' => 'success', 'code' => ['activity_element_removed', ['element' => 'activity']]];

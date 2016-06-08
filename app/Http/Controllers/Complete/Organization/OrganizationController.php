@@ -252,6 +252,32 @@ class OrganizationController extends Controller
     }
 
     /**
+     * deletes the element which has been clicked.
+     * @param $id
+     * @param $element
+     * @return mixed
+     */
+    public function deleteElement($id, $element)
+    {
+        $organization = $this->organizationManager->getOrganizationData($id);
+
+        if (Gate::denies('belongsToOrganization', $organization)) {
+            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
+        }
+
+        $result = $this->organizationManager->deleteElement($organization, $element);
+
+        if ($result) {
+            $this->organizationManager->resetOrganizationWorkflow($organization);
+            $response = ['type' => 'success', 'code' => ['organization_element_removed', ['element' => 'activity']]];
+        } else {
+            $response = ['type' => 'danger', 'code' => ['organization_element_not_removed', ['element' => 'activity']]];
+        }
+
+        return redirect()->back()->withResponse($response);
+    }
+
+    /**
      * View organization xml file
      * @param $orgId
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View

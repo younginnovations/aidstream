@@ -3,6 +3,7 @@
         <div class="panel-heading">
             <div class="activity-element-title">Total Budget</div>
             <a href="{{ route('organization.total-budget.index', $orgId) }}" class="edit-element">edit</a>
+            <a href="{{ route('organization.delete-element', [$orgId, 'total_budget']) }}" class="delete pull-right">delete</a>
         </div>
         <div class="panel-body row panel-level-2">
             @foreach($total_budget as $totalBudget)

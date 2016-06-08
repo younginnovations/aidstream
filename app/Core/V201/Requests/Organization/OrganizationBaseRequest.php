@@ -85,8 +85,9 @@ class OrganizationBaseRequest extends Request
     {
         $rules = [];
         foreach ($formFields as $valueKey => $valueVal) {
-            $valueForm                     = $formBase . '.value.' . $valueKey;
-            $rules[$valueForm . '.amount'] = sprintf('required_with:%s.currency|numeric', $valueForm);
+            $valueForm                         = $formBase . '.value.' . $valueKey;
+            $rules[$valueForm . '.amount']     = sprintf('required|numeric');
+            $rules[$valueForm . '.value_date'] = sprintf('required|date');
         }
 
         return $rules;
@@ -102,9 +103,11 @@ class OrganizationBaseRequest extends Request
     {
         $messages = [];
         foreach ($formFields as $valueKey => $valueVal) {
-            $valueForm                                      = $formBase . '.value.' . $valueKey;
-            $messages[$valueForm . '.amount.required_with'] = 'Amount is Required with Currency.';
-            $messages[$valueForm . '.amount.numeric']       = 'Amount should be numeric.';
+            $valueForm                                     = $formBase . '.value.' . $valueKey;
+            $messages[$valueForm . '.amount.required']     = 'Amount is Required';
+            $messages[$valueForm . '.amount.numeric']      = 'Amount should be numeric.';
+            $messages[$valueForm . '.value_date.required'] = 'Value date is required.';
+            $messages[$valueForm . '.value_date.date']     = 'Please enter valid  date.';
         }
 
         return $messages;
@@ -123,8 +126,8 @@ class OrganizationBaseRequest extends Request
             $budgetLineForm = $formBase . '.budget_line.' . $budgetLineKey;
             $rules          = array_merge(
                 $rules,
-                $this->getRulesForValue($budgetLineVal['value'], $budgetLineForm, $rules),
-                $this->getRulesForNarrative($budgetLineVal['narrative'], $budgetLineForm, $rules)
+                $this->getRulesForBudgetOrExpenseLineValue($budgetLineVal['value'], $budgetLineForm),
+                $this->getRulesForBudgetOrExpenseLineNarrative($budgetLineVal['narrative'], $budgetLineForm)
             );
         }
 
@@ -144,8 +147,8 @@ class OrganizationBaseRequest extends Request
             $budgetLineForm = $formBase . '.budget_line.' . $budgetLineKey;
             $messages       = array_merge(
                 $messages,
-                $this->getMessagesForValue($budgetLineVal['value'], $budgetLineForm, $messages),
-                $this->getMessagesForNarrative($budgetLineVal['narrative'], $budgetLineForm, $messages)
+                $this->getMessagesForBudgetOrExpenseLineValue($budgetLineVal['value'], $budgetLineForm),
+                $this->getMessagesForBudgetOrExpenseLineNarrative($budgetLineVal['narrative'], $budgetLineForm)
             );
         }
 
@@ -214,6 +217,90 @@ class OrganizationBaseRequest extends Request
             $messages[$formBase . '.period_end.' . $periodEndKey . '.date.required'] = 'Period End is required.';
             $messages[$formBase . '.period_end.' . $periodEndKey . '.date.date']     = 'Period End is not a valid date.';
             $messages[$formBase . '.period_end.' . $periodEndKey . '.date.after']    = 'Period End must be a date after Period Start';
+        }
+
+        return $messages;
+    }
+
+    /** returns rules for budget line value or expense line value.
+     * @param $formField
+     * @param $formBase
+     * @return mixed
+     */
+    public function getRulesForBudgetOrExpenseLineValue($formField, $formBase)
+    {
+        foreach ($formField as $budgetLineIndex => $budgetLine) {
+            $rules[$formBase . '.value.' . $budgetLineIndex . '.amount']     = sprintf(
+                'required_with:%s,%s,%s|numeric',
+                $formBase . '.value.' . $budgetLineIndex . '.value_date',
+                $formBase . '.reference',
+                $formBase . '.narrative.0.narrative'
+            );
+            $rules[$formBase . '.value.' . $budgetLineIndex . '.value_date'] = sprintf(
+                'required_with:%s,%s,%s|date',
+                $formBase . '.value.' . $budgetLineIndex . '.amount',
+                $formBase . '.reference',
+                $formBase . '.narrative.0.narrative'
+            );
+        }
+
+        return $rules;
+    }
+
+
+    /** returns messages for budget line value or expense line value .
+     * @param        $formField
+     * @param        $formBase
+     * @param string $type
+     * @return mixed
+     */
+    public function getMessagesForBudgetOrExpenseLineValue($formField, $formBase, $type = 'Budget line')
+    {
+        foreach ($formField as $budgetLineIndex => $budgetLine) {
+            $messages[$formBase . '.value.' . $budgetLineIndex . '.amount' . '.required_with']     = sprintf('Amount is required in %s.', $type);
+            $messages[$formBase . '.value.' . $budgetLineIndex . '.amount' . '.numeric']           = 'Amount should be number';
+            $messages[$formBase . '.value.' . $budgetLineIndex . '.value_date' . '.date']          = 'Please enter a valid date';
+            $messages[$formBase . '.value.' . $budgetLineIndex . '.value_date' . '.required_with'] = sprintf('Value date is required in %s.', $type);
+        }
+
+        return $messages;
+    }
+
+    /** returns rules for narrative form.
+     * @param $formFields
+     * @param $formBase
+     * @return array
+     */
+    public function getRulesForBudgetOrExpenseLineNarrative($formFields, $formBase)
+    {
+        $rules                                     = [];
+        $rules[sprintf('%s.narrative', $formBase)] = 'unique_lang';
+        foreach ($formFields as $narrativeIndex => $narrative) {
+            $rules[sprintf('%s.narrative.%s.narrative', $formBase, $narrativeIndex)] = sprintf(
+                'required_with:%s,%s,%s',
+                $formBase . '.value.0' . '.amount',
+                $formBase . '.value.0' . '.value_date',
+                $formBase . '.reference'
+            );
+        }
+
+        return $rules;
+    }
+
+    /**
+     * returns messages for narrative form
+     * @param        $formFields
+     * @param        $formBase
+     * @param string $type
+     * @return array
+     */
+    public function getMessagesForBudgetOrExpenseLineNarrative($formFields, $formBase, $type = "Budget line")
+    {
+        $messages                                                 = [];
+        $messages[sprintf('%s.narrative.unique_lang', $formBase)] = 'Languages should be unique.';
+
+        foreach ($formFields as $narrativeIndex => $narrative) {
+            $messages[sprintf('%s.narrative.%s.narrative.required_with', $formBase, $narrativeIndex)] = sprintf('Narrative is required in %s', $type);
         }
 
         return $messages;

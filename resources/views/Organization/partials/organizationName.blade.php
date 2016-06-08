@@ -3,6 +3,7 @@
         <div class="panel-heading">
             <div class="activity-element-title">Name</div>
             <a href="{{ url('/organization/' . $orgId . '/name') }}" class="edit-element">edit</a>
+            <a href="{{ route('organization.delete-element', [$orgId, 'name']) }}" class="delete pull-right">delete</a>
         </div>
         <div class="panel-body panel-element-body row">
             @foreach($org_name as $name)
