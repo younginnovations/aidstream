@@ -99,13 +99,57 @@ class UploadTransaction
      */
     protected function formatFormDetailedCsv($transactionRow)
     {
-        $transaction                                                             = $this->readCsv->getTransactionHeaders('Detailed');
+        $transaction      = $this->readCsv->getTransactionHeaders('Detailed');
+        $sectorVocabulary = $transactionRow['sector_vocabulary'];
+        $sectorCode       = $transactionRow['sector_vocabulary'];
+        $sector           = [
+            [
+                "sector_vocabulary"    => $sectorVocabulary,
+                "vocabulary_uri"       => "",
+                "sector_code"          => ($sectorVocabulary == 1 || $sectorVocabulary == '') ? $sectorCode : '',
+                "sector_category_code" => ($sectorVocabulary == 2) ? $sectorCode : '',
+                "sector_text"          => ($sectorVocabulary != 1 && $sectorVocabulary != 2 && $sectorVocabulary != "") ? $sectorCode : '',
+                "narrative"            => [
+                    [
+                        "narrative" => "",
+                        "language"  => ""
+                    ]
+                ]
+            ]
+        ];
+
+        $recipientCountry = [
+            [
+                "country_code" => $transactionRow['recipientcountry_code'],
+                "narrative"    => [
+                    [
+                        "narrative" => "",
+                        "language"  => ""
+                    ]
+                ]
+            ]
+        ];
+
+        $recipientRegion = [
+            [
+                "region_code"    => $transactionRow['recipientregion_code'],
+                "vocabulary"     => $transactionRow['recipientregion_vocabulary'],
+                "vocabulary_uri" => "",
+                "narrative"      => [
+                    [
+                        "narrative" => "",
+                        "language"  => ""
+                    ]
+                ]
+            ]
+        ];
+
         $transaction['reference']                                                = $transactionRow['transaction_ref'];
         $transaction['transaction_type'][0]['transaction_type_code']             = $transactionRow['transactiontype_code'];
         $transaction['transaction_date'][0]['date']                              = date('Y-m-d', strtotime($transactionRow['transactiondate_iso_date']));
         $transaction['value'][0]['date']                                         = date('Y-m-d', strtotime($transactionRow['transactionvalue_value_date']));
         $transaction['value'][0]['amount']                                       = $transactionRow['transactionvalue_text'];
-        $transaction['value'][0]['currency']                                     = '';
+        $transaction['value'][0]['currency']                                     = $transactionRow['transactionvalue_currency'];
         $transaction['description'][0]['narrative'][0]['narrative']              = $transactionRow['description_text'];
         $transaction['provider_organization'][0]['organization_identifier_code'] = $transactionRow['providerorg_ref'];
         $transaction['provider_organization'][0]['provider_activity_id']         = $transactionRow['providerorg_provider_activity_id'];
@@ -114,11 +158,9 @@ class UploadTransaction
         $transaction['receiver_organization'][0]['receiver_activity_id']         = $transactionRow['receiverorg_receiver_activity_id'];
         $transaction['receiver_organization'][0]['narrative'][0]['narrative']    = $transactionRow['receiverorg_narrative_text'];
         $transaction['disbursement_channel'][0]['disbursement_channel_code']     = $transactionRow['disbursementchannel_code'];
-        $transaction['sector'][0]['sector_code']                                 = $transactionRow['sector_code'];
-        $transaction['sector'][0]['sector_vocabulary']                           = $transactionRow['sector_vocabulary'];
-        $transaction['recipient_country'][0]['country_code']                     = $transactionRow['recipientcountry_code'];
-        $transaction['recipient_region'][0]['region_code']                       = $transactionRow['recipientregion_code'];
-        $transaction['recipient_region'][0]['vocabulary']                        = $transactionRow['recipientregion_vocabulary'];
+        $transaction['sector']                                                   = $sector;
+        $transaction['recipient_country']                                        = $recipientCountry;
+        $transaction['recipient_region']                                         = $recipientRegion;
         $transaction['flow_type'][0]['flow_type']                                = $transactionRow['flowtype_code'];
         $transaction['finance_type'][0]['finance_type']                          = $transactionRow['financetype_code'];
         $transaction['aid_type'][0]['aid_type']                                  = $transactionRow['aidtype_code'];

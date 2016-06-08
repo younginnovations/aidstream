@@ -118,7 +118,6 @@ class CsvImportValidator
         $transactionTypeCodes           = implode(',', $this->getCodes('TransactionType', 'Activity'));
         $disbursementChannelCodes       = implode(',', $this->getCodes('DisbursementChannel', 'Activity'));
         $sectorVocabularyCodes          = implode(',', $this->getCodes('SectorVocabulary', 'Activity'));
-        $sectorCodes                    = implode(',', $this->getCodes('Sector', 'Activity'));
         $recipientCountryCodes          = implode(',', $this->getCodes('Country', 'Organization'));
         $recipientRegionCodes           = implode(',', $this->getCodes('Region', 'Activity'));
         $recipientRegionVocabularyCodes = implode(',', $this->getCodes('RegionVocabulary', 'Activity'));
@@ -146,7 +145,6 @@ class CsvImportValidator
                     "$transactionIndex.description_text"            => 'required',
                     "$transactionIndex.disbursementchannel_code"    => 'in:' . $disbursementChannelCodes,
                     "$transactionIndex.sector_vocabulary"           => 'in:' . $sectorVocabularyCodes,
-                    "$transactionIndex.sector_code"                 => 'in:' . $sectorCodes,
                     "$transactionIndex.recipientcountry_code"       => 'in:' . $recipientCountryCodes,
                     "$transactionIndex.recipientregion_code"        => 'in:' . $recipientRegionCodes,
                     "$transactionIndex.recipientregion_vocabulary"  => 'in:' . $recipientRegionVocabularyCodes,
@@ -173,7 +171,6 @@ class CsvImportValidator
                     "$transactionIndex.description_text.required"            => sprintf('At row %s Description-text is required', $transactionIndex + 1),
                     "$transactionIndex.disbursementchannel_code.in"          => sprintf('At row %s DisbursementChannel-code is invalid', $transactionIndex + 1),
                     "$transactionIndex.sector_vocabulary.in"                 => sprintf('At row %s Sector-vocabularye is invalid', $transactionIndex + 1),
-                    "$transactionIndex.sector_code.in"                       => sprintf('At row %s Sector-code is invalid', $transactionIndex + 1),
                     "$transactionIndex.recipientcountry_code.in"             => sprintf('At row %s RecipientCountry-code is invalid', $transactionIndex + 1),
                     "$transactionIndex.recipientregion_code.in"              => sprintf('At row %s RecipientRegion-code is invalid', $transactionIndex + 1),
                     "$transactionIndex.recipientregion_vocabulary.in"        => sprintf('At row %s RecipientRegion-code is invalid', $transactionIndex + 1),
@@ -183,6 +180,17 @@ class CsvImportValidator
                     "$transactionIndex.tiedstatus_code.in"                   => sprintf('At row %s TiedStatus-code is invalid', $transactionIndex + 1),
                 ]
             );
+
+            $sectorVocabulary = $transactionRow['sector_vocabulary'];
+            if ($sectorVocabulary == 1) {
+                $sectorCodes                                  = implode(',', $this->getCodes('Sector', 'Activity'));
+                $rules["$transactionIndex.sector_code"]       = 'in:' . $sectorCodes;
+                $messages["$transactionIndex.sector_code.in"] = sprintf('At row %s 5 digit Sector-code is invalid', $transactionIndex + 1);
+            } elseif ($sectorVocabulary == 2) {
+                $sectorCodes                                  = implode(',', $this->getCodes('SectorCategory', 'Activity'));
+                $rules["$transactionIndex.sector_code"]       = 'in:' . $sectorCodes;
+                $messages["$transactionIndex.sector_code.in"] = sprintf('At row %s 3 digit Sector-code is invalid', $transactionIndex + 1);
+            }
 
         }
 
