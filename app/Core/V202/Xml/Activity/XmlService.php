@@ -15,7 +15,8 @@ class XmlService extends XmlService201
     protected $xmlGenerator;
 
     /**
-     * @param XmlGenerator $xmlGenerator
+     * @param XmlGenerator         $xmlGenerator
+     * @param XmlSchemaErrorParser $xmlSchemaErrorParser
      */
     function __construct(XmlGenerator $xmlGenerator, XmlSchemaErrorParser $xmlSchemaErrorParser)
     {

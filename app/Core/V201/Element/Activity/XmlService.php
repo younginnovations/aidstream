@@ -15,6 +15,7 @@ class XmlService
      * @var XmlGenerator
      */
     protected $xmlGenerator;
+    protected $xmlErrorParser;
 
     /**
      * @param XmlGenerator         $xmlGenerator

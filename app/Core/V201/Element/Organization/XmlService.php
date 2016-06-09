@@ -15,14 +15,16 @@ class XmlService
      * @var XmlGenerator
      */
     protected $xmlGenerator;
+    protected $xmlErrorParser;
 
     /**
-     * @param XmlGenerator $xmlGenerator
+     * @param XmlGenerator         $xmlGenerator
+     * @param XmlSchemaErrorParser $xmlErrorParser
      */
-    function __construct(XmlGenerator $xmlGenerator, XmlSchemaErrorParser $xmlSchemaErrorParser)
+    function __construct(XmlGenerator $xmlGenerator, XmlSchemaErrorParser $xmlErrorParser)
     {
         $this->xmlGenerator   = $xmlGenerator;
-        $this->xmlErrorParser = $xmlSchemaErrorParser;
+        $this->xmlErrorParser = $xmlErrorParser;
     }
 
     /**

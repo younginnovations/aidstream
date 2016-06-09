@@ -281,7 +281,7 @@ class ActivityController extends Controller
             $messages = $xmlService->validateActivitySchema($activityData, $transactionData, $resultData, $settings, $activityElement, $orgElem, $organization);
 
             if ($messages != []) {
-                $response = ['type' => 'danger', 'messages' => $messages, 'schema' => 'true'];
+                $response = ['type' => 'danger', 'messages' => $messages, 'activity' => 'true'];
 
                 return redirect()->back()->withResponse($response);
             }
@@ -762,13 +762,19 @@ class ActivityController extends Controller
      */
     public function viewActivityXml($activityId, $viewErrors = false)
     {
-        $activityDataList    = $this->activityManager->getActivityData($activityId);
-        $activityElement = $this->activityManager->getActivityElement();
-        $xmlService      = $activityElement->getActivityXmlService();
+        $activityDataList = $this->activityManager->getActivityData($activityId);
+        $activityElement  = $this->activityManager->getActivityElement();
+        $xmlService       = $activityElement->getActivityXmlService();
 
-        $xml = $xmlService->generateTemporaryActivityXml($this->activityManager->getActivityData($activityId), $this->activityManager->getTransactionData($activityId),
-            $this->activityManager->getResultData($activityId), $this->settingsManager->getSettings($activityDataList['organization_id']), $activityElement,
-            $this->organizationManager->getOrganizationElement(), $this->organizationManager->getOrganization($activityDataList->organization_id));
+        $xml = $xmlService->generateTemporaryActivityXml(
+            $this->activityManager->getActivityData($activityId),
+            $this->activityManager->getTransactionData($activityId),
+            $this->activityManager->getResultData($activityId),
+            $this->settingsManager->getSettings($activityDataList['organization_id']),
+            $activityElement,
+            $this->organizationManager->getOrganizationElement(),
+            $this->organizationManager->getOrganization($activityDataList->organization_id)
+        );
 
         $xmlLines = $xmlService->getFormattedXml($xml);
         $messages = $xmlService->getSchemaErrors($xml, session('version'));
@@ -787,13 +793,23 @@ class ActivityController extends Controller
         $activityElement = $this->activityManager->getActivityElement();
         $xmlService      = $activityElement->getActivityXmlService();
 
-        $xml = $xmlService->generateTemporaryActivityXml($this->activityManager->getActivityData($activityId), $this->activityManager->getTransactionData($activityId),
-            $this->activityManager->getResultData($activityId), $this->settingsManager->getSettings($activityData['organization_id']), $activityElement,
-            $this->organizationManager->getOrganizationElement(), $this->organizationManager->getOrganization($activityData->organization_id));
+        $xml = $xmlService->generateTemporaryActivityXml(
+            $this->activityManager->getActivityData($activityId),
+            $this->activityManager->getTransactionData($activityId),
+            $this->activityManager->getResultData($activityId),
+            $this->settingsManager->getSettings($activityData['organization_id']),
+            $activityElement,
+            $this->organizationManager->getOrganizationElement(),
+            $this->organizationManager->getOrganization($activityData->organization_id)
+        );
 
-        return response()->make($xml, 200, [
-            'Content-type'        => 'text/xml',
-            'Content-Disposition' => sprintf('attachment; filename=activityXmlFile.xml')
-        ]);
+        return response()->make(
+            $xml,
+            200,
+            [
+                'Content-type'        => 'text/xml',
+                'Content-Disposition' => sprintf('attachment; filename=activityXmlFile.xml')
+            ]
+        );
     }
 }

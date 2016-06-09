@@ -139,7 +139,7 @@ class OrganizationController extends Controller
 
             $messages = $xmlService->validateOrgSchema($organization, $organizationData, $settings, $orgElem);
             if ($messages != []) {
-                $response = ['type' => 'danger', 'messages' => $messages, 'schema' => 'true'];
+                $response = ['type' => 'danger', 'messages' => $messages, 'organization' => 'true'];
 
                 return redirect()->back()->withResponse($response);
             }
@@ -260,8 +260,12 @@ class OrganizationController extends Controller
     {
         $orgElem    = $this->organizationManager->getOrganizationElement();
         $xmlService = $orgElem->getOrgXmlService();
-        $xml        = $xmlService->generateTemporaryOrganizationXml($this->organizationManager->getOrganization($orgId), $this->organizationManager->getOrganizationData($orgId),
-            $this->settingsManager->getSettings($orgId), $orgElem);
+        $xml        = $xmlService->generateTemporaryOrganizationXml(
+            $this->organizationManager->getOrganization($orgId),
+            $this->organizationManager->getOrganizationData($orgId),
+            $this->settingsManager->getSettings($orgId),
+            $orgElem
+        );
 
         $xmlLines = $xmlService->getFormattedXml($xml);
         $messages = $xmlService->getSchemaErrors($xml, session('version'));
@@ -278,12 +282,20 @@ class OrganizationController extends Controller
     {
         $orgElem    = $this->organizationManager->getOrganizationElement();
         $xmlService = $orgElem->getOrgXmlService();
-        $xml        = $xmlService->generateTemporaryOrganizationXml($this->organizationManager->getOrganization($orgId), $this->organizationManager->getOrganizationData($orgId),
-            $this->settingsManager->getSettings($orgId), $orgElem);
+        $xml        = $xmlService->generateTemporaryOrganizationXml(
+            $this->organizationManager->getOrganization($orgId),
+            $this->organizationManager->getOrganizationData($orgId),
+            $this->settingsManager->getSettings($orgId),
+            $orgElem
+        );
 
-        return response()->make($xml, 200, [
-            'Content-type'        => 'text/xml',
-            'Content-Disposition' => sprintf('attachment; filename=orgXmlFile.xml')
-        ]);
+        return response()->make(
+            $xml,
+            200,
+            [
+                'Content-type'        => 'text/xml',
+                'Content-Disposition' => sprintf('attachment; filename=orgXmlFile.xml')
+            ]
+        );
     }
 }
