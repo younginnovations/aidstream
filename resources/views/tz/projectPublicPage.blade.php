@@ -49,15 +49,19 @@
                     </dl>
                     <dl class="col-md-3 col-sm-6 col-xs-6">
                         <dt> Total Disbursements</dt>
-                        <dd class="amount">${{ $transactionCount['disbursement'] }}</dd>
+                        <dd class="amount">${{ number_format($transactionCount['disbursement']) }}</dd>
                     </dl>
                     <dl class="col-md-3 col-sm-6 col-xs-6">
                         <dt>Total Expenditures</dt>
-                        <dd class="amount">${{ $transactionCount['expenditure'] }}</dd>
+                        <dd class="amount">${{ number_format($transactionCount['expenditure']) }}</dd>
                     </dl>
                     <dl class="col-md-3 col-sm-6 col-xs-6">
                         <dt> Total Incoming Funds</dt>
-                        <dd class="amount">${{ $transactionCount['incoming_fund'] }}</dd>
+                        <dd class="amount">${{ number_format($transactionCount['incoming_fund']) }}</dd>
+                    </dl>
+                    <dl class="col-md-3 col-sm-6 col-xs-6">
+                        <dt> Total Budget</dt>
+                        <dd class="amount">${{ number_format($totalBudget) }}</dd>
                     </dl>
                 </div>
             </div> {{--  row close--}}
@@ -142,7 +146,7 @@
         hamburgerMenu();
 
         var projectCollection = new ProjectCollection({
-            url: '/api/projects/' +organizationId,
+            url: '/api/projects/' + organizationId,
         });
         projectCollection.fetch({reset: true});
         var mapView = null;

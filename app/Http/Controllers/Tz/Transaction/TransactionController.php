@@ -125,4 +125,15 @@ class TransactionController extends TanzanianController
 
         return redirect()->route('project.show', $projectId)->withResponse($response);
     }
+
+    public function deleteSingleTransaction($transactionId)
+    {
+        if ($this->transaction->destroyTransaction($transactionId)) {
+            $response = ['type' => 'success', 'code' => ['message', ['message' => 'Transaction successfully deleted.']]];
+        } else {
+            $response = ['type' => 'danger', 'code' => ['message', ['message' => 'Transaction could not be deleted.']]];
+        }
+
+        return redirect()->back()->withResponse($response);
+    }
 }

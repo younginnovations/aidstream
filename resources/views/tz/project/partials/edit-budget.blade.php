@@ -1,4 +1,3 @@
-
 @extends('tz.base.sidebar')
 
 @section('title', 'Create Transaction')
@@ -42,11 +41,12 @@
                                     {!! Form::hidden("budget[$index][value][0][value_date]", getVal($budget, ['value', 0, 'value_date']), ['class' => 'form-control']) !!}
                                 </div>
                             </div>
+                            <a href="javascript:void(0)" onclick="removeBudget(this)" class="remove_from_collection">Remove</a>
                         </div>
                     @endforeach
-                    {!! Form::submit('Update', ['class' => 'btn btn-primary btn-form btn-create']) !!}
 
                     <button type="button" id="add-more-budget-edit" class="add-more">Add Another Budget</button>
+                    {!! Form::submit('Update', ['class' => 'btn btn-primary btn-form btn-create']) !!}
 
                     {!! Form::close() !!}
 

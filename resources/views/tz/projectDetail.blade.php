@@ -27,7 +27,7 @@
         <div class="title-section">
             <h1>{{$project->title[0]['narrative']}}</h1>
             <div>{{$project->identifier['activity_identifier']}}</div>
-            <div class="light-text">Last updated on: {{ formatDate($project['updated_at'], 'Y/m/d') }}</div>
+            <div class="light-text">Last updated on: {{ formatDate($project['updated_at']) }}</div>
         </div>
     </div>
 
@@ -90,13 +90,13 @@
                 @if($date['type'] == 2)
                     <dl class="clearfix">
                         <dt class="col-md-3 col-sm-4 col-xs-4">Start Date</dt>
-                        <dd class="col-md-9 col-sm-8 col-xs-8">{{ formatDate($date['date'], 'Y/m/d') }}</dd>
+                        <dd class="col-md-9 col-sm-8 col-xs-8">{{ formatDate($date['date']) }}</dd>
                     </dl>
                 @endif
                 @if($date['type'] == 4)
                     <dl class="clearfix">
                         <dt class="col-md-3 col-sm-4 col-xs-4">End Date</dt>
-                        <dd class="col-md-9 col-sm-8 col-xs-8">{{ formatDate($date['date'], 'Y/m/d') }}</dd>
+                        <dd class="col-md-9 col-sm-8 col-xs-8">{{ formatDate($date['date']) }}</dd>
                     </dl>
                 @endif
             @endforeach
@@ -161,7 +161,8 @@
                     @if ($project->budget)
                         @foreach($project->budget as $budget)
                             <div>
-                                {{ number_format(getVal($budget, ['value', 0, 'amount'])) }} {{ getVal($budget, ['value', 0, 'currency']) }} &nbsp; {{ formatDate(getVal($budget, ['period_start', 0, 'date']), 'Y/m/d') }} - {{ formatDate(getVal($budget, ['period_end', 0, 'date']), 'Y/m/d') }}
+                                {{ number_format(getVal($budget, ['value', 0, 'amount'])) }} {{ getVal($budget, ['value', 0, 'currency']) }}
+                                &nbsp; {{ formatDate(getVal($budget, ['period_start', 0, 'date'])) }} - {{ formatDate(getVal($budget, ['period_end', 0, 'date'])) }}
                             </div>
                         @endforeach
                     @endif
@@ -325,7 +326,7 @@
             "Kusini Pemba": [-5.32, 39.705]
         };
 
-        if(tz_regions_center[regionname]) {
+        if (tz_regions_center[regionname]) {
             map.setView(tz_regions_center[regionname], 5);
             L.marker(tz_regions_center[regionname]).addTo(map).bindPopup("Project in " + regionname);
         }
@@ -343,4 +344,3 @@
     @endforeach
 @endif
 </body>
-

@@ -45,7 +45,7 @@
         <li><span><a href=""></a></span></li>
     </ul>
     <ul class="has-image-logo">
-        <li><a href=""><img/></a></li>
+        <li><a href=""><img/><span></span></a></li>
     </ul>
 </div>
 <script type="text/javascript" src="{{url('/js/jquery.js')}}"></script>
@@ -77,6 +77,7 @@
                         if (organization.logo_url) {
                             logo = $('.has-image-logo').clone();
                             $('a', logo).attr({href: link}).children('img').attr({src: organization.logo_url, alt: organization.name});
+                            $('span', logo).html(organization.name);
                         } else {
                             logo = $('.no-image-logo').clone();
                             $('span a', logo).attr({href: link}).html(organization.name);

@@ -45,6 +45,7 @@
             <div class="col-md-12 select-cards-wrap">
 
                 <h3>Use the filters below to start exploring.</h3>
+                <h3>Click <a class="zanzibar" href="#">here</a> to see the projects in Zanzibar only. <a class="resetmap" href="#">Reset</a> map.</h3>
 
                 <div class="sectors-block">
                 <div class="card small-card">
@@ -136,8 +137,19 @@
             });
             mapview = new MapView({collection: projectCollection})
             projectCollection.trigger('renderAll');
-            // grid.collection = projectCollection.filterProjects();
-            // $("#projectslist").html(grid.render().el);
+
+            $(".zanzibar").click(function(e) {
+                projectCollection.resetSectors();
+                projectCollection.resetRegions();
+                projectCollection.trigger("zoom-zanzibar");
+                projectCollection.trigger("select-zanzibar");
+                projectCollection.trigger('renderAll');
+            });
+            $(".resetmap").click(function(e) {
+                projectCollection.resetSectors();
+                projectCollection.resetRegions();
+                projectCollection.trigger('renderAll');
+            });
             $(".card-body").jScrollPane();
 
         });

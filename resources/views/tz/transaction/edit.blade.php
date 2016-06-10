@@ -21,52 +21,53 @@
                     {!! Form::open(['route' => ['transaction.update', $projectId, $transactionType], 'method' => 'POST']) !!}
                     {!! Form::hidden('activity_id', $projectId) !!}
 
-                            @foreach($transactions as $key => $transaction)
-                                <div class="added-new-block">
-                                    {!! Form::hidden("transaction[$key][id]", $transactions[$key]['id']) !!}
-                                    {!! Form::hidden("transaction[$key][transaction_type][0][transaction_type_code]", $transactionType) !!}
-                                    <div class="col-sm-6">
-                                        {!! Form::label('reference', 'Transaction Reference', ['class' => 'control-label required']) !!}
-                                        {!! Form::text("transaction[$key][reference]", $transaction['transaction']['reference'], ['class' => 'form-control', 'required' => 'required']) !!}
-                                    </div>
+                    @foreach($transactions as $key => $transaction)
+                        <div class="added-new-block">
+                            {!! Form::hidden("transaction[$key][id]", $transactions[$key]['id']) !!}
+                            {!! Form::hidden("transaction[$key][transaction_type][0][transaction_type_code]", $transactionType) !!}
+                            <div class="col-sm-6">
+                                {!! Form::label('reference', 'Transaction Reference', ['class' => 'control-label required']) !!}
+                                {!! Form::text("transaction[$key][reference]", $transaction['transaction']['reference'], ['class' => 'form-control', 'required' => 'required']) !!}
+                            </div>
 
-                                    <div class="col-sm-6">
-                                        {!! Form::label('transaction_date', 'Transaction Date', ['class' => 'control-label required']) !!}
-                                        {!! Form::text("transaction[$key][transaction_date][0][date]", $transaction['transaction']['transaction_date'][0]['date'], ['class' => 'form-control datepicker', 'required' => 'required']) !!}
-                                    </div>
+                            <div class="col-sm-6">
+                                {!! Form::label('transaction_date', 'Transaction Date', ['class' => 'control-label required']) !!}
+                                {!! Form::text("transaction[$key][transaction_date][0][date]", $transaction['transaction']['transaction_date'][0]['date'], ['class' => 'form-control datepicker', 'required' => 'required']) !!}
+                            </div>
 
-                                    <div class="col-sm-6">
-                                        {!! Form::label('amount', 'Amount', ['class' => 'control-label required']) !!}
-                                        {!! Form::text("transaction[$key][value][0][amount]", $transaction['transaction']['value'][0]['amount'], ['class' => 'form-control', 'required' => 'required']) !!}
-                                        {!! Form::text("transaction[$key][value][0][date]", null, ['class' => 'hidden']) !!}
-                                    </div>
+                            <div class="col-sm-6">
+                                {!! Form::label('amount', 'Amount', ['class' => 'control-label required']) !!}
+                                {!! Form::text("transaction[$key][value][0][amount]", $transaction['transaction']['value'][0]['amount'], ['class' => 'form-control', 'required' => 'required']) !!}
+                                {!! Form::text("transaction[$key][value][0][date]", null, ['class' => 'hidden']) !!}
+                            </div>
 
-                                    <div class="col-sm-6">
-                                        {!! Form::label('currency', 'Currency', ['class' => 'control-label required']) !!}
-                                        {!! Form::select("transaction[$key][value][0][currency]", ['' => 'Select one of the following.'] + $currency, ($transaction['transaction']['value'][0]['currency']) ? $transaction['transaction']['value'][0]['currency'] : $defaultCurrency, ['class' => 'form-control', 'required' => 'required']) !!}
-                                    </div>
+                            <div class="col-sm-6">
+                                {!! Form::label('currency', 'Currency', ['class' => 'control-label required']) !!}
+                                {!! Form::select("transaction[$key][value][0][currency]", ['' => 'Select one of the following.'] + $currency, ($transaction['transaction']['value'][0]['currency']) ? $transaction['transaction']['value'][0]['currency'] : $defaultCurrency, ['class' => 'form-control', 'required' => 'required']) !!}
+                            </div>
 
-                                    <div class="col-sm-6">
-                                        {!! Form::label('description', 'Description', ['class' => 'control-label']) !!}
-                                        {!! Form::text("transaction[$key][description][0][narrative][0][narrative]", $transaction['transaction']['description'][0]['narrative'][0]['narrative'], ['class' => 'form-control']) !!}
-                                    </div>
+                            <div class="col-sm-6">
+                                {!! Form::label('description', 'Description', ['class' => 'control-label']) !!}
+                                {!! Form::text("transaction[$key][description][0][narrative][0][narrative]", $transaction['transaction']['description'][0]['narrative'][0]['narrative'], ['class' => 'form-control']) !!}
+                            </div>
 
-                                    <div class="col-sm-6">
-                                        @if($transactionType == 1)
-                                            {!! Form::label('provider_org', 'Provider Organization', ['class' => 'control-label']) !!}
-                                        @else
-                                            {!! Form::label('provider_org', 'Receiver Organization', ['class' => 'control-label']) !!}
-                                        @endif
-                                        {!! Form::text("transaction[$key][provider_organization][0][narrative][0][narrative]", $transaction['transaction']['provider_organization'][0]['narrative'][0]['narrative'], ['class' => 'form-control']) !!}
-                                    </div>
-                                </div>
-                            @endforeach
+                            <div class="col-sm-6">
+                                @if($transactionType == 1)
+                                    {!! Form::label('provider_org', 'Provider Organization', ['class' => 'control-label']) !!}
+                                @else
+                                    {!! Form::label('provider_org', 'Receiver Organization', ['class' => 'control-label']) !!}
+                                @endif
+                                {!! Form::text("transaction[$key][provider_organization][0][narrative][0][narrative]", $transaction['transaction']['provider_organization'][0]['narrative'][0]['narrative'], ['class' => 'form-control']) !!}
+                            </div>
+                            <a href="javascript:void(0)" onclick="removeBlock(this)" class="remove_from_collection">Remove</a>
+                        </div>
+                    @endforeach
                     {!! Form::submit('Save', ['class' => 'pull-left btn-form', 'id' => 'submit-transaction']) !!}
 
                     @if($transactionType == 1)
                         <button type="button" id="add-more-transaction-edit" class="add-more">Add Another Incoming Funds</button>
                     @elseif($transactionType == 3)
-                        <button type="button" id="add-more-transaction-edit" class="add-more">Add More Disbursement</button>
+                        <button type="button" id="add-more-transaction-edit" class="add-more">Add Another Disbursement</button>
                     @elseif($transactionType == 4)
                         <button type="button" id="add-more-transaction-edit" class="add-more">Add Another Expenditure</button>
                     @endif

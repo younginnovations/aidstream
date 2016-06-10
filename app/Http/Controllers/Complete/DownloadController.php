@@ -51,8 +51,10 @@ class DownloadController extends Controller
     {
         $csvData = $this->downloadCsvManager->simpleCsvData(Session::get('org_id'), $tanzania);
 
+        $message = ($tanzania) ? ["It seems you do not have any Projects."] : ["It seems you do not have any Activities."];
+
         if (false === $csvData) {
-            return redirect()->back()->withResponse(['messages' => ["It seems you do not have any Activities."], 'type' => 'warning']);
+            return redirect()->back()->withResponse(['messages' => $message, 'type' => 'warning']);
         }
 
         $headers = $csvData['headers'];

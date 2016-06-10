@@ -38,6 +38,14 @@ $router->group(
                     ]
                 );
 
+                $router->post(
+                    '/transaction/{transactionId}/delete',
+                    [
+                        'as'   => 'single.transaction.destroy',
+                        'uses' => 'TransactionController@deleteSingleTransaction'
+                    ]
+                );
+
                 $router->resource('project.transaction', 'TransactionController', ['only' => 'store']);
             }
         );

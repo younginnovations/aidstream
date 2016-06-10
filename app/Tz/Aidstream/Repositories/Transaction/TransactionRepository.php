@@ -103,11 +103,12 @@ class TransactionRepository implements TransactionRepositoryInterface
 
     /**
      * Delete specific transaction
-     * @param $transaction
+     * @param $transactionId
      * @return mixed
      */
-    public function destroy($transaction)
+    public function destroy($transactionId)
     {
+        $transaction = $this->find($transactionId);
         return $transaction->delete();
     }
 
