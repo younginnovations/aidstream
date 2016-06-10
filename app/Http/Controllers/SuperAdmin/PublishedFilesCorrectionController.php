@@ -74,13 +74,13 @@ class PublishedFilesCorrectionController extends Controller
         $settings = $this->organizationService->find($organizationId)->settings;
         $file     = $this->organizationService->findPublishedFile($fileId);
 
-        if (!$this->correctionService->unlinkActivityFile($file, $settings)) {
+        if (!$this->correctionService->unlinkFile($file, $settings)) {
             return redirect()->route('superadmin.correct-published-files', $organizationId)->withResponse(
                 ['messages' => ['message' => 'File could not be Unlinked from the IATI Registry.'], 'type' => 'warning']
             );
         }
 
-        if (!$this->organizationService->updateUnPublished($file)) {
+        if (!$this->organizationService->updatePublishedStatus($file)) {
             return redirect()->route('superadmin.correct-published-files', $organizationId)->withResponse(
                 ['messages' => ['message' => 'File could not be updated from the IATI Registry.'], 'type' => 'warning']
             );
@@ -116,7 +116,7 @@ class PublishedFilesCorrectionController extends Controller
      */
     public function deleteOrganizationXmlFile($organizationId, $fileId)
     {
-        $file = $this->organizationService->findOrganizationFile($fileId);
+        $file = $this->organizationService->findPublishedFile($fileId, true);
 
         return $this->deleteFile($file, $organizationId);
     }
@@ -130,15 +130,15 @@ class PublishedFilesCorrectionController extends Controller
     public function unlinkOrganizationXmlFile($organizationId, $fileId)
     {
         $settings = $this->organizationService->find($organizationId)->settings;
-        $file     = $this->organizationService->findOrganizationFile($fileId);
+        $file     = $this->organizationService->findPublishedFile($fileId, true);
 
-        if (!$this->correctionService->unlinkOrganizationFile($file, $settings)) {
+        if (!$this->correctionService->unlinkFile($file, $settings)) {
             return redirect()->route('superadmin.correct-published-files', $organizationId)->withResponse(
                 ['messages' => ['message' => 'File could not be Unlinked from the IATI Registry.'], 'type' => 'warning']
             );
         }
 
-        if (!$this->organizationService->updateOrganizationPublished($file)) {
+        if (!$this->organizationService->updatePublishedStatus($file)) {
             return redirect()->route('superadmin.correct-published-files', $organizationId)->withResponse(
                 ['messages' => ['message' => 'File could not be updated from the IATI Registry.'], 'type' => 'warning']
             );

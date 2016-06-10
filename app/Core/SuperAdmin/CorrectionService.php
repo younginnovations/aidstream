@@ -67,8 +67,8 @@ class CorrectionService
      */
     public function delete($file)
     {
-        $xmlFile       = $file->filename;
-        $currentUser   = auth()->user();
+        $xmlFile     = $file->filename;
+        $currentUser = auth()->user();
 
         try {
             $filePath = $this->getFilePath($xmlFile);
@@ -114,11 +114,12 @@ class CorrectionService
     }
 
     /**
-     * @param ActivityPublished $file
-     * @param Settings          $settings
+     * Unlink file from the IATI registry.
+     * @param          $file
+     * @param Settings $settings
      * @return bool
      */
-    public function unlinkActivityFile(ActivityPublished $file, Settings $settings)
+    public function unlinkFile($file, Settings $settings)
     {
         $publishedFileId = explode('.', $file->filename)[0];
 
@@ -148,8 +149,7 @@ class CorrectionService
         $publisherId = $this->extract('publisher_id', $settings);
 
         try {
-            $registry = $this->initializeRegistry('http://iatiregistry.org/api/', $apiKey);
-
+            $registry           = $this->initializeRegistry(env('REGISTRY_URL'), $apiKey);
             $this->organization = $organization;
 
             $this->publisherMetaData = json_decode($registry->package_search($publisherId));
@@ -273,18 +273,6 @@ class CorrectionService
     }
 
     /**
-     * @param OrganizationPublished $file
-     * @param Settings              $settings
-     * @return bool
-     */
-    public function unlinkOrganizationFile(OrganizationPublished $file, Settings $settings)
-    {
-        $publishedFileId = explode('.', $file->filename)[0];
-
-        return $this->unlinkFromRegistry($publishedFileId, $file, $settings);
-    }
-
-    /**
      * @param $publishedFileId
      * @param $file
      * @param $settings
@@ -294,7 +282,7 @@ class CorrectionService
     {
         try {
             $apiKey   = $this->extract('api_id', $settings->toArray());
-            $registry = $this->initializeRegistry('http://iatiregistry.org/api/', $apiKey);
+            $registry = $this->initializeRegistry(env('REGISTRY_URL'), $apiKey);
 
             $response    = $registry->package_delete($publishedFileId);
             $currentUser = auth()->user();
@@ -328,9 +316,7 @@ class CorrectionService
         if (!is_null($this->publisherMetaData) && !is_null($this->organization)) {
             $organizationFile = $this->getCurrentlyPublishedOrganizationFile();
 
-            $actuallyPublishedOrganizationFile = $this->getOrganizationFileName();
-
-            if ($actuallyPublishedOrganizationFile) {
+            if ($actuallyPublishedOrganizationFile = $this->getOrganizationFileName()) {
                 return $this->syncOrgDatabase($organizationFile, $actuallyPublishedOrganizationFile);
             }
 
@@ -379,11 +365,11 @@ class CorrectionService
         foreach ($organizationFiles as $publishedFile) {
             if ($publishedFile->filename == $actuallyPublishedOrganizationFile) {
                 $publishedFile->published_to_register = 1;
-                $publishedFile->save();
             } else {
                 $publishedFile->published_to_register = 0;
-                $publishedFile->save();
             }
+
+            $publishedFile->save();
         }
 
         return true;

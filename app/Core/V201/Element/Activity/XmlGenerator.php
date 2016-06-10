@@ -216,7 +216,7 @@ class XmlGenerator
 
         foreach ($published as $xml) {
             $addDom = new DOMDocument();
-            $file = sprintf("%s%s", public_path('files') . config('filesystems.xml'), $xml);
+            $file   = sprintf("%s%s", public_path('files') . config('filesystems.xml'), $xml);
             $addDom->load($file);
             if ($addDom->documentElement) {
                 foreach ($addDom->documentElement->childNodes as $node) {
@@ -305,9 +305,9 @@ class XmlGenerator
      */
     protected function saveSegmentedPublishedFiles($filename, Activity $activity, $publishedActivity)
     {
-        $activityXml         = [];
-        $organizationId      = $activity->organization_id;
-        $publishedActivities = $this->activityPublished->where('organization_id', '=', $organizationId)->get();
+        $activityXml                = [];
+        $organizationId             = $activity->organization_id;
+        $publishedActivities        = $this->activityPublished->where('organization_id', '=', $organizationId)->get();
         $activityForSameCountryCode = $this->activityPublished->where('filename', '=', $filename)
                                                               ->where('organization_id', '=', $organizationId)
                                                               ->first();
@@ -346,6 +346,7 @@ class XmlGenerator
     public function generateTemporaryXml(Activity $activity, Collection $transaction, Collection $result, Settings $settings, $activityElement, $orgElem, $organization)
     {
         $xml = $this->getXml($activity, $transaction, $result, $settings, $activityElement, $orgElem, $organization);
+
         return $xml->saveXML();
     }
 
@@ -357,5 +358,33 @@ class XmlGenerator
 
         file_put_contents($filePath, $dom->saveXML());
         chmod($filePath, 00777);
+    }
+
+    /**
+     * @param Activity   $activity
+     * @param Collection $transaction
+     * @param Collection $result
+     * @param Settings   $settings
+     * @param            $activityElement
+     * @param            $orgElem
+     * @param            $organization
+     */
+    public function generateActivityXml(Activity $activity, Collection $transaction, Collection $result, Settings $settings, $activityElement, $orgElem, $organization)
+    {
+        $this->settings    = $settings;
+        $publisherId       = $this->settings->registry_info[0]['publisher_id'];
+        $filename          = sprintf('%s-%s.xml', $publisherId, ($settings->publishing_type == "segmented") ? $this->segmentedXmlFile($activity) : 'activities');
+        $publishedActivity = sprintf('%s-%s.xml', $publisherId, $activity->id);
+        $xml               = $this->getXml($activity, $transaction, $result, $settings, $activityElement, $orgElem, $organization);
+
+        $result = Storage::put(sprintf('%s%s', config('filesystems.xml'), $publishedActivity), $xml->saveXML());
+
+        if ($result) {
+            $publishedFiles = ($settings->publishing_type != "segmented")
+                ? $this->savePublishedFiles($filename, $activity->organization_id, $publishedActivity)
+                : $this->saveSegmentedPublishedFiles($filename, $activity, $publishedActivity);
+
+            $this->getMergeXml($publishedFiles, $filename);
+        }
     }
 }

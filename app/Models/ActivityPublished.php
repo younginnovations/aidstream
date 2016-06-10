@@ -29,4 +29,29 @@ class ActivityPublished extends Model
                  ->where('activity_published.published_to_register', 1)
                  ->get();
     }
+
+    /**
+     * Extract the Activity Ids from the activity-xml filenames included with in the Activity Xml file.
+     * @return array
+     */
+    public function extractActivityId()
+    {
+        $activityIds = [];
+
+        if ($this->published_activities) {
+            foreach ($this->published_activities as $publishedActivity) {
+                $pieces                    = explode('-', $this->getFilename('.', $publishedActivity));
+                $activityIds[end($pieces)] = $publishedActivity;
+            }
+        }
+
+        return $activityIds;
+    }
+
+    protected function getFilename($delimiter, $file)
+    {
+        $file = explode($delimiter, $file);
+
+        return reset($file);
+    }
 }

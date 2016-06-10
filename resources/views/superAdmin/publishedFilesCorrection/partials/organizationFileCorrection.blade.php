@@ -25,12 +25,12 @@
                 @endif
             </td>
             <td>
-                <a href="{{ route('superadmin.unlinkOrganizationXmlFile', [$organization->id, $publishedFile->id]) }}">Unlink</a>
-
                 @if (!$publishedFile->published_to_register)
                     {!! Form::open(['method' =>'DELETE', 'url' => route('superadmin.deleteOrganizationXmlFile', ['organizationId' => $organization->id, 'fileId' => $publishedFile->id])]) !!}
                     {!! Form::submit('Delete') !!}
                     {!! Form::close() !!}
+                @else
+                    <a href="{{ route('superadmin.unlinkOrganizationXmlFile', [$organization->id, $publishedFile->id]) }}">Unlink</a>
                 @endif
             </td>
         </tr>
