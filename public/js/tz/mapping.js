@@ -169,6 +169,16 @@ var RegionListView = Backbone.View.extend({
     initialize: function(options) {
         this.projectsCollection = options.projectsCollection;
         this.collection.bind('regionsReady', this.render, this);
+        this.projectsCollection.bind('select-zanzibar', this.selectZanzibar, this);
+    },
+    selectZanzibar: function() {
+        var zanzibarRegions = ["Mjini Magharibi", "Kusini Unguja", "Kaskazini Unguja", "Kusini Pemba", "Kaskazini Pemba"];
+        this.collection.each(function(model) {
+            if(_.contains(zanzibarRegions, model.get("region"))) {
+                model.set({"checked": true});
+                model.trigger("check-checkbox");
+            }
+        });
     },
     addItem: function(item) {
         return new RegionListItemView({model: item, projectsCollection: this.projectsCollection});
@@ -192,7 +202,11 @@ var RegionListItemView = Backbone.View.extend({
     },
     initialize: function(options) {
         var self = this;
-        this.projectsCollection = options.projectsCollection
+        this.projectsCollection = options.projectsCollection;
+        this.model.bind('check-checkbox', function() {
+            var elem = $(self.el).find(':checkbox');
+            elem.attr("checked", true);
+        });
         this.model.bind('change:checked', function() {
             if(self.model._previousAttributes.checked == true) {
                 var elem = $(self.el).find(':checkbox');
@@ -264,6 +278,7 @@ var MapView = Backbone.View.extend({
     initialize: function() {
         this.regionLayers = {}
         this.collection.on('renderAll', this.render, this);
+        this.collection.on("zoom-zanzibar", this.zoomZanzibar, this);
         this.map = L.map(document.getElementById("map"), {zoomControl: false}).setView([-6.369028, 30.888822], 6);
         L.control.zoom({
             position:'topright'
@@ -275,6 +290,10 @@ var MapView = Backbone.View.extend({
         }).addTo(this.map);
         this.setupRegions();
         this.bindRegions();
+    },
+    zoomZanzibar: function() {
+        this.map.setView([-5.88, 39.29]);
+        this.map.setZoom(8);
     },
     setupRegions: function() {
         var self = this;
@@ -330,6 +349,8 @@ var MapView = Backbone.View.extend({
         });
     },
     render: function() {
+        this.map.setView([-6.369028, 31.988822]);
+        this.map.setZoom(5);
         var projects = this.collection.filterProjects();
         projects.each(function(project) {
             district = project.get('Project Districts');
