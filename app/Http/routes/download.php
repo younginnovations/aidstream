@@ -52,5 +52,12 @@ $router->group(
                 'uses' => 'DownloadController@downloadActivityTemplate'
             ]
         );
+        $router->get(
+            '/download-activity-template2',
+            [
+                'as'   => 'download.activity-template2',
+                'uses' => 'DownloadController@downloadActivityTemplate2'
+            ]
+        );
     }
 );

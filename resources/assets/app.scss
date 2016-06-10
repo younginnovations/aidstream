@@ -35,6 +35,12 @@ $color_romance_approx: #fdfdfd;
 $color_gallery: #efefef;
 $color_mabel_approx: #d9f1fe;
 $color_black_approx: #262626;
+$color_granny_apple_approx: #d5f2e2;
+$color_sugar_cane_approx: #f5fff9;
+$color_rose_white_approx: #fff7f7;
+$color_pippin_approx: #ffe2e2;
+$color_bridal_heath_approx: #fffaf2;
+$color_sandy_beach_approx: #ffebca;
 
 //fonts
 $font_0: Open-Sans-Regular;
@@ -58,6 +64,7 @@ $url_10: url(../../images/ic-line-bg.png);
 $url_11: url(../../images/ic-sort-both.svg);
 $url_12: url(../../images/ic-sort-asc.svg);
 $url_13: url(../../images/ic-sort-desc.svg);
+$url_14: url(../../images/ic-csv-status.svg);
 
 html, body {
   height: 100%;
@@ -268,7 +275,7 @@ button, input[type="button"], input[type="reset"], input[type="submit"], .btn {
 
 .table {
   table-layout: auto;
-  margin-top: 20px!important;
+  margin-top: 20px !important;
   > thead {
     > tr {
       > th {
@@ -2266,6 +2273,9 @@ form > .add_to_collection[data-collection="legacy_data"] {
       padding-right: 20px;
       padding-left: 20px;
     }
+    button {
+      margin-top: 45px;
+    }
   }
   form {
     overflow: hidden;
@@ -2273,10 +2283,15 @@ form > .add_to_collection[data-collection="legacy_data"] {
   .form-group {
     float: left;
   }
-  button {
-    margin: 45px 0 0px 20px;
-    color: $color_white !important;
+  .btn_confirm[disabled], .btn_confirm[disabled]:hover {
+    background: #ddd;
+    color: #aaa;
   }
+}
+
+.panel-upload > .panel-body  p {
+  font-size: 16px;
+  margin-bottom: 20px;
 }
 
 .download-transaction-wrap {
@@ -3092,7 +3107,7 @@ label.required::after {
   margin-left: 2px;
 }
 
-.added-new-block,.has_add_more > .form-group + .form-group {
+.added-new-block, .has_add_more > .form-group + .form-group {
   border-top: 1px dashed #A9C6DE !important;
   padding-bottom: 0 !important;
 }
@@ -3251,7 +3266,7 @@ table.dataTable thead .sorting_desc {
   background: $url_13 no-repeat right;
 }
 
-.logs-container .collection_form .form-group+.form-group {
+.logs-container .collection_form .form-group + .form-group {
   padding-top: 10px;
 }
 
@@ -3263,7 +3278,7 @@ table.dataTable thead .sorting_desc {
     padding-top: 8px;
   }
   .select2-container {
-    width: 415px!important;
+    width: 415px !important;
   }
 }
 
@@ -3277,6 +3292,150 @@ table.dataTable thead .sorting_desc {
 
 .logs-container .create-form {
   padding-bottom: 0;
+}
+
+.activity-title {
+  font-family: $font_1;
+}
+
+.activity-identifier {
+  margin: 3px 0 0 16px;
+  font-size: 12px;
+  color: rgba($color_gravel_approx,0.7);
+}
+
+.activity-errors {
+  margin: 0 0 14px 20px;
+  ol {
+    padding-left: 15px;
+  }
+  p {
+    margin-bottom: 0;
+  }
+}
+
+.csv-upload-wrapper {
+  padding-left: 36px;
+  padding-right: 36px;
+  width: 100%;
+}
+
+.activity-csv-status {
+  > div {
+    border-radius: 4px;
+    p:first-child {
+      font-size: 16px;
+      margin-bottom: 0;
+      padding: 11px 20px 11px 50px;
+      position: relative;
+      &:before {
+        @include position(absolute, 10px auto auto 20px);
+        content: "";
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+      }
+    }
+  }
+  ol {
+    padding-left: 17px;
+    line-height: 22px;
+    margin-bottom: 10px;
+  }
+}
+
+.activity-success {
+  p:first-child {
+    color: $color_emerald_approx;
+    background: $color_sugar_cane_approx;
+    border-bottom: 1px solid $color_granny_apple_approx;;
+    &:before {
+      background: $color_emerald_approx $url_14 no-repeat 5px 7px;
+    }
+  }
+  p:last-child {
+    color: $color_emerald_approx;
+  }
+}
+
+.activity-error {
+  p:first-child {
+    color: $color_mandy_approx;
+    background: $color_rose_white_approx;
+    border-bottom: 1px solid $color_pippin_approx;
+    &:before {
+      background: $color_mandy_approx $url_14 no-repeat 5px -22px;
+    }
+  }
+  p:last-child {
+    color: $color_mandy_approx;
+  }
+}
+
+.activity-warning {
+  p:first-child {
+    color: $color_texas_rose_approx;
+    background: $color_bridal_heath_approx;
+    border-bottom: 1px solid $color_sandy_beach_approx;
+    &:before {
+      background: $color_texas_rose_approx $url_14 no-repeat 5px -52px;
+    }
+  }
+  p:last-child {
+    color: $color_texas_rose_approx;
+    a {
+      text-decoration: underline;
+      font-style: italic;
+      color: inherit;
+      margin-left: 2px;
+    }
+  }
+}
+
+.activity-block {
+  overflow: hidden;
+  margin-bottom: 30px;
+  border-radius: 4px;
+}
+
+.activity-warning-block {
+  border: 1px solid $color_sandy_beach_approx;
+}
+
+.activity-errors-block {
+  border: 1px solid $color_pippin_approx;
+}
+
+.activity-success-block {
+  border: 1px solid $color_granny_apple_approx;
+}
+
+.activity-check-title {
+  padding: 20px;
+  margin-bottom: 10px;
+  font-size: 14px;
+  p {
+    clear: both;
+    font-size: 14px!important;
+    color: $color_emerald_approx;
+    margin: 0 0 0 24px!important;
+  }
+  ol {
+    margin-left: 24px;
+    clear: both;
+  }
+}
+
+.activity-title {
+  font-family: $font_1;
+  margin-bottom: 14px;
+  float: left;
+  margin-left: 6px;
+}
+
+.no-title {
+  color: #9B9B9B;
+  font-style: italic;
 }
 
 @media all and (max-width: 1030px) {
@@ -3342,7 +3501,7 @@ table.dataTable thead .sorting_desc {
     right: 30px;
   }
 
-  .element-content-wrapper {
+  .element-content-wrapper:not(.csv-upload-wrapper) {
     padding-left: 0;
     padding-right: 0;
   }
@@ -3654,7 +3813,7 @@ table.dataTable thead .sorting_desc {
 
   .panel-content-heading, .element-panel-heading, .create-form,
   .panel-add-wizard .panel-heading, .panel-add-wizard h4,
-  .download-transaction-wrap {
+  .download-transaction-wrap, .csv-upload-wrapper {
     padding-left: 14px;
     padding-right: 14px;
   }
@@ -3993,7 +4152,7 @@ table.dataTable thead .sorting_desc {
     }
   }
 
-  .logs-container .collection_form .form-group+.form-group {
+  .logs-container .collection_form .form-group + .form-group {
     padding-top: 25px;
   }
 }
@@ -4219,6 +4378,11 @@ table.dataTable thead .sorting_desc {
       margin-top: 0;
     }
   }
+
+  .activity-block {
+    width: 80%;
+  }
+
 }
 
 .alert {
@@ -4296,13 +4460,12 @@ table.dataTable thead .sorting_desc {
   word-wrap: break-word;
 }
 
-
 .logs-container .settings-wrapper .create-form.activity-log-filter-wrap .select2-container {
-  width: 100%!important;
+  width: 100% !important;
 }
 
 .sector_category_select {
-  label,.select2-container {
+  label, .select2-container {
     margin-left: 15px;
   }
 }

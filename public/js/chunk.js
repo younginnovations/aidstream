@@ -24,6 +24,19 @@ if (typeof(Chunk) == "undefined") var Chunk = {};
             $('#toggle-btn').on('click', function () {
                 $('#json-view').JSONView('toggle');
             });
+        },
+        checkImport: function () {
+            var importCheckboxes = $('#import-activities input[type="checkbox"]:not([disabled="disabled"])');
+            var submitBtn = $('#import-activities .btn_confirm');
+            importCheckboxes.click(function () {
+                submitBtn.attr('disabled', 'disabled');
+                importCheckboxes.each(function () {
+                    if ($(this).prop('checked')) {
+                        submitBtn.removeAttr('disabled');
+                        return true;
+                    }
+                });
+            });
         }
     }
 

@@ -364,4 +364,30 @@ class IatiActivity extends WizardIatiActivity
     {
         return app('App\Core\V201\Requests\ActivityElementValidation');
     }
+
+    public function getImportActivityForm()
+    {
+        return 'App\Core\V201\Forms\Activity\ImportActivity';
+    }
+
+    public function getImportActivityRequest()
+    {
+        return app('App\Core\V201\Requests\Activity\ImportActivity');
+    }
+
+    /**
+     * @return App\Core\V201\Parser\SimpleActivity
+     */
+    public function getSimpleActivityParser()
+    {
+        return app('App\Core\V201\Parser\SimpleActivity');
+    }
+
+    /**
+     * @return App\Core\V201\Parser\SimpleActivityDemo
+     */
+    public function getSimpleActivityDemoParser()
+    {
+        return app('App\Core\V201\Parser\SimpleActivityDemo');
+    }
 }
