@@ -259,13 +259,6 @@
                                         <span>Edit Disbursement</span>
                                     </a>
                                 </span>
-
-
-                                {{--<div style="border: solid 1px red;">
-                                    {!! Form::open(['method' => 'POST', 'route' => ['transaction.destroy', $project->id, 3]]) !!}
-                                    {!! Form::submit('Delete', ['class' => 'pull-left delete-transaction']) !!}
-                                    {!! Form::close() !!}
-                                </div>--}}
                             </div>
 
                             @foreach($disbursement as $data)
@@ -276,7 +269,7 @@
                                             <span class="has-delete-wrap">
                                                 <a href="javascript:void(0)" class="delete-transaction delete" data-route="{{ route('single.transaction.destroy', [$data['id']]) }}">Delete</a>
                                                     {!! Form::open(['method' => 'POST', 'route' => ['single.transaction.destroy', $data['id']],'class' => 'hidden', 'role' => 'form', 'id' => 'transaction-delete-form']) !!}
-                                                    {!! Form::submit('Delete') !!}
+                                                    {!! Form::submit('Delete', ['class' => 'pull-left delete-transaction']) !!}
                                                     {!! Form::close() !!}
                                             </span>
                                         </span>
@@ -346,11 +339,6 @@
                                 </span>
                             </div>
 
-                          {{--  <div>
-                            {!! Form::open(['method' => 'POST', 'route' => ['transaction.destroy', $project->id, 4]]) !!}
-                            {!! Form::submit('Delete', ['class' => 'pull-left delete-transaction']) !!}
-                            {!! Form::close() !!}
-                            </div>--}}
                             @foreach($expenditure as $data)
                                 <div class="activity-element-info">
                                     <li>
@@ -358,7 +346,7 @@
                                             <span class="has-delete-wrap">
                                             <a href="javascript:void(0)" class="delete-transaction delete" data-route="{{ route('single.transaction.destroy', [$data['id']]) }}">Delete</a>
                                                 {!! Form::open(['method' => 'POST', 'route' => ['single.transaction.destroy', $data['id']],'class' => 'hidden', 'role' => 'form', 'id' => 'transaction-delete-form']) !!}
-                                                {!! Form::submit('Delete') !!}
+                                                {!! Form::submit('Delete', ['class' => 'pull-left delete-transaction']) !!}
                                                 {!! Form::close() !!}
                                         </span>
                                         </span>
@@ -429,11 +417,6 @@
                                 </span>
                             </div>
 
-                           {{-- <div>
-                                {!! Form::open(['method' => 'POST', 'route' => ['transaction.destroy', $project->id, 1]]) !!}
-                                {!! Form::submit('Delete', ['class' => 'pull-left delete-transaction']) !!}
-                                {!! Form::close() !!}
-                            </div>--}}
                             @foreach($incomingFund as $data)
                                 <div class="activity-element-info">
                                     <li>
@@ -441,7 +424,7 @@
                                         <span class="has-delete-wrap">
                                             <a href="javascript:void(0)" class="delete-transaction delete" data-route="{{ route('single.transaction.destroy', [$data['id']]) }}">Delete</a>
                                                 {!! Form::open(['method' => 'POST', 'route' => ['single.transaction.destroy', $data['id']],'class' => 'hidden', 'role' => 'form', 'id' => 'transaction-delete-form']) !!}
-                                                {!! Form::submit('Delete') !!}
+                                                {!! Form::submit('Delete', ['class' => 'pull-left delete-transaction']) !!}
                                                 {!! Form::close() !!}
                                         </span>
 
