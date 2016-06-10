@@ -2406,7 +2406,7 @@ $(document).ready(function () {
     });
 
     /* show confirmation box on clicking delete */
-    $('.delete').click(function (e) {
+    $('.delete:not(.has-delete-wrap > .delete)').click(function (e) {
         e.preventDefault();
         var location = this.href;
 
