@@ -72,16 +72,16 @@
                                 </div>
                             </div>
                             <a href="javascript:void(0)" onclick="removeBudget(this)" class="remove_from_collection">Remove</a>
-                        </div>
-                    @endforeach
+                        @endforeach
+                    @endif
 
                     <button type="button" id="add-more-budget-edit" class="add-more">Add Another Budget</button>
                     {!! Form::submit('Update', ['class' => 'btn btn-primary btn-form btn-create']) !!}
 
                     {!! Form::close() !!}
-
-                    @include('tz.project.partials.budget-clone')
                 </div>
+
+                @include('tz.project.partials.budget-clone')
             </div>
         </div>
     </div>

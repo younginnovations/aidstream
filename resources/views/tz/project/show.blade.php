@@ -517,6 +517,17 @@
 @endsection
 
 @section('script')
+    <script>
+        var currentTransactionCount;
+
+        @if(old('transaction'))
+                currentTransactionCount = "{{ count(old('transaction')) - 1 }}";
+        @elseif (isset($transactions))
+                currentTransactionCount = "{{ count($transactions) - 1 }}";
+        @else
+                currentTransactionCount = 0;
+        @endif
+    </script>
     <script src="{{ asset('/js/tz/transaction.js') }}"></script>
     <script src="{{ asset('/js/tz/transactionDelete.js') }}"></script>
 @endsection
