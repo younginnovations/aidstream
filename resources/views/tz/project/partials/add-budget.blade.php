@@ -10,7 +10,7 @@
                      </a>
                     </span>
                 </div>
-                @foreach ($project->budget as $budget)
+                @foreach ($project->budget as $index => $budget)
                     <div class="activity-element-info">
                         <li>
                             <span>
@@ -19,7 +19,7 @@
                                 - {{ formatDate(getVal($budget, ['period_end', 0, 'date'])) }}]
 
                                 <span class="has-delete-wrap">
-                                    {!! Form::open(['method' => 'POST', 'class' => 'delete', 'route' => ['project.budget.destroy', $project->id]]) !!}
+                                    {!! Form::open(['method' => 'POST', 'class' => 'delete', 'route' => ['project.budget.destroy', $project->id, $index]]) !!}
                                     {!! Form::submit('Delete', ['class' => 'pull-left delete-transaction']) !!}
                                     {!! Form::close() !!}
                                  </span>
@@ -29,15 +29,21 @@
                     </div>
                 @endforeach
             </div>
+            <div class="activity-element-list">
+                <a href="{{ route('project.add-budget', $project->id) }}" class="add-more">
+                    <span>Add Another Budget</span>
+                </a>
+            </div>
         @else
             <div class="activity-element-label">
                 Budget
             </div>
             <div class="activity-element-list">
-                <a href="{{ route('project.add-budget', $project->id) }}"
-                   class="add-more"><span>Add Budget</span>
+                <a href="{{ route('project.add-budget', $project->id) }}" class="add-more">
+                    <span>Add Budget</span>
                 </a>
             </div>
+
         @endif
     </div>
 </div>

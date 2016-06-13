@@ -11,7 +11,11 @@
             </div>
             <div class="panel-body">
                 <div class="create-form create-activity-form create-project-form">
-                    {!! Form::open(['route' => ['project.budget.store', $projectId], 'method' => 'POST']) !!}
+                    @if ($project->budget)
+                        {!! Form::open(['route' => ['project.add-another-budget', $projectId], 'method' => 'POST']) !!}
+                    @else
+                        {!! Form::open(['route' => ['project.budget.store', $projectId], 'method' => 'POST']) !!}
+                    @endif
                     @if (old('budget'))
                         @foreach (old('budget') as $index => $budget)
                             <div class="col-sm-12">
@@ -115,7 +119,7 @@
         @if (old('budget'))
                 currentBudgetCount = "{!! count(old('budget')) - 1 !!}";
         @elseif ($project->budget)
-                currentBudgetCount = "{!! count($project->budget) - 1 !!}";
+                currentBudgetCount = "{!! count($project->budget) !!}";
         @else
                 currentBudgetCount = 0;
         @endif

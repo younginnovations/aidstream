@@ -440,7 +440,7 @@ class ProjectService
         $details = [];
 
         foreach ($budgetDetails['budget'] as $index => $detail) {
-            $details[]                                      = $detail;
+            $details[] = $detail;
 
             $details[$index]['value'][0]['value_date'] = getVal($budgetDetails, ['budget', $index, 'period_start', 0, 'date']);
         }
@@ -489,13 +489,17 @@ class ProjectService
      * @param $projectId
      * @return bool|null
      */
-    public function deleteBudget($projectId)
+    public function deleteBudget($projectId, $index)
     {
         try {
             $user    = auth()->user()->getNameAttribute();
             $project = $this->find($projectId);
 
-            $project->budget = null;
+            $budget = $project->budget;
+
+            unset($budget[$index]);
+
+            $project->budget = $budget;
             $project->save();
 
             $this->resetWorkflow($project);
@@ -548,20 +552,20 @@ class ProjectService
                     foreach ($location['administrative'] as $index => $administrative) {
                         if ($index == 0) {
                             $regionName[$i] = $administrative['code'];
-                            $i++;
+                            $i ++;
                         }
                     }
                 }
             }
 
             $jsonData[] = [
-                'id'         => $project->id,
-                'identifier' => $project->identifier['activity_identifier'],
-                'title'      => $project->title[0]['narrative'],
-                'sectors'    => [$getCode->getActivityCodeName('SectorCategory', $project->sector[0]['sector_category_code'])],
-                'regions'    => $regionName,
-                'startdate'  => $startDate,
-                'enddate'    => $endDate,
+                'id'                     => $project->id,
+                'identifier'             => $project->identifier['activity_identifier'],
+                'title'                  => $project->title[0]['narrative'],
+                'sectors'                => [$getCode->getActivityCodeName('SectorCategory', $project->sector[0]['sector_category_code'])],
+                'regions'                => $regionName,
+                'startdate'              => $startDate,
+                'enddate'                => $endDate,
                 'reporting_organisation' => $project->organization->name
             ];
         }
@@ -646,5 +650,41 @@ class ProjectService
         }
 
         return $totalBudget;
+    }
+
+    /**
+     * Add another Budget.
+     * @param $projectId
+     * @param $budgetDetails
+     * @return bool|null
+     */
+    public function addAnotherBudget($projectId, $budgetDetails)
+    {
+        try {
+            $project       = $this->find($projectId);
+            $budgetDetails = array_merge($project->budget, $budgetDetails['budget']);
+
+            $project->budget = $budgetDetails;
+            $project->save();
+
+            $this->logger->info(
+                'Budget successfully added.',
+                [
+                    'byUser' => auth()->user()->getNameAttribute()
+                ]
+            );
+
+            return true;
+        } catch (Exception $exception) {
+            $this->logger->error(
+                sprintf('Budget could not be added due to %s', $exception->getMessage()),
+                [
+                    'byUser' => auth()->user()->getNameAttribute(),
+                    'trace'  => $exception->getTraceAsString()
+                ]
+            );
+
+            return null;
+        }
     }
 }

@@ -445,12 +445,29 @@ class ProjectController extends TanzanianController
      * @param $projectId
      * @return mixed
      */
-    public function deleteBudget($projectId)
+    public function deleteBudget($projectId, $index)
     {
-        if (!$this->project->deleteBudget($projectId)) {
+        if (!$this->project->deleteBudget($projectId, $index)) {
             $response = ['type' => 'danger', 'code' => ['message', ['message' => 'Budget could not be deleted.']]];
         } else {
             $response = ['type' => 'success', 'code' => ['message', ['message' => 'Budget successfully deleted.']]];
+        }
+
+        return redirect()->route('project.show', $projectId)->withResponse($response);
+    }
+
+    /**
+     * Add another Budget.
+     * @param               $projectId
+     * @param BudgetRequest $request
+     * @return mixed
+     */
+    public function addAnotherBudget($projectId, BudgetRequest $request)
+    {
+        if (!$this->project->addAnotherBudget($projectId, $request->all())) {
+            $response = ['type' => 'danger', 'code' => ['message', ['message' => 'Budget could not be added.']]];
+        } else {
+            $response = ['type' => 'success', 'code' => ['message', ['message' => 'Budget successfully added.']]];
         }
 
         return redirect()->route('project.show', $projectId)->withResponse($response);

@@ -323,11 +323,13 @@
                                     </div>
                                 </div>
                             @endforeach
+                            <div class="activity-element-list">
+                                <a href="{{ url(sprintf('project/%s/transaction/%s/create', $project->id,3)) }}" class="add-more"><span>Add Another Disbursement</span></a>
+                            </div>
                         @else
                             <div class="activity-element-list">
-                                <div class="title">Disbursement</div>
-                                <a href="{{ url(sprintf('project/%s/transaction/%s/create', $project->id,3)) }}"
-                                   class="add-more"><span>Add Disbursement</span></a>
+                                <div class="title">Disbursements</div>
+                                <a href="{{ url(sprintf('project/%s/transaction/%s/create', $project->id,3)) }}" class="add-more"><span>Add Disbursement</span></a>
                             </div>
                         @endif
                     </div>
@@ -400,11 +402,13 @@
                                     </div>
                                 </div>
                             @endforeach
+                            <div class="activity-element-list">
+                                <a href="{{ url(sprintf('project/%s/transaction/%s/create', $project->id,4)) }}" class="add-more"><span>Add Another Expenditure</span></a>
+                            </div>
                         @else
                             <div class="activity-element-list">
                                 <div class="title">Expenditure</div>
-                                <a href="{{ url(sprintf('project/%s/transaction/%s/create', $project->id,4)) }}"
-                                   class="add-more"><span>Add Expenditure</span></a>
+                                <a href="{{ url(sprintf('project/%s/transaction/%s/create', $project->id,4)) }}" class="add-more"><span>Add Expenditure</span></a>
                             </div>
                         @endif
                     </div>
@@ -479,11 +483,13 @@
                                     </div>
                                 </div>
                             @endforeach
+                            <div class="activity-element-list">
+                                <a href="{{ url(sprintf('project/%s/transaction/%s/create', $project->id,1)) }}" class="add-more"><span>Add Another Incoming Funds</span></a>
+                            </div>
                         @else
                             <div class="activity-element-list">
                                 <div class="title">Incoming Funds</div>
-                                <a href="{{ url(sprintf('project/%s/transaction/%s/create', $project->id,1)) }}"
-                                   class="add-more"><span>Add Incoming Funds</span></a>
+                                <a href="{{ url(sprintf('project/%s/transaction/%s/create', $project->id,1)) }}" class="add-more"><span>Add Incoming Funds</span></a>
                             </div>
                         @endif
 

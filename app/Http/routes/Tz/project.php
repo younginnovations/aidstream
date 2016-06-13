@@ -101,10 +101,17 @@ $router->group(
                     ]
                 );
                 $router->post(
-                    '/project/{project}/delete-budget',
+                    '/project/{project}/delete-budget/{index}',
                     [
                         'as'   => 'project.budget.destroy',
                         'uses' => 'ProjectController@deleteBudget'
+                    ]
+                );
+                $router->post(
+                    '/project/{project}/add-another-budget',
+                    [
+                        'as'   => 'project.add-another-budget',
+                        'uses' => 'ProjectController@addAnotherBudget'
                     ]
                 );
             }

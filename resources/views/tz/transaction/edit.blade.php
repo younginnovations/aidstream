@@ -105,7 +105,7 @@
                         @endforeach
                     @endif
 
-                    {!! Form::submit('Save', ['class' => 'pull-left btn-form', 'id' => 'submit-transaction']) !!}
+                    {!! Form::submit('Update', ['class' => 'pull-left btn-form', 'id' => 'submit-transaction']) !!}
 
                     @if($transactionType == 1)
                         <button type="button" id="add-more-transaction-edit" class="add-more">Add Another Incoming Funds</button>
