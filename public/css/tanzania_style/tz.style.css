@@ -759,6 +759,42 @@ tr, td {
   border: solid 1px transparent;
   margin-top: 8px; }
 
+.organisations-list ul li {
+  line-height: 20px;
+  height: 220px; }
+  .organisations-list ul li:before {
+    content: "";
+    display: inline-block;
+    vertical-align: middle;
+    height: 100%; }
+  .organisations-list ul li span {
+    display: inline-block;
+    height: auto;
+    width: auto; }
+  .organisations-list ul li a {
+    display: inline-block;
+    vertical-align: middle;
+    padding-top: 0; }
+  .organisations-list ul li a span {
+    margin-top: 10px;
+    font-size: 14px;
+    display: block;
+    line-height: 20px;
+    height: auto;
+    width: auto;
+    vertical-align: inherit;
+    padding: 0 8px; }
+  .organisations-list ul li .img-wrap {
+    height: 150px; }
+    .organisations-list ul li .img-wrap:before {
+      content: "";
+      display: inline-block;
+      vertical-align: middle;
+      height: 100%; }
+    .organisations-list ul li .img-wrap img {
+      display: inline-block;
+      vertical-align: middle; }
+
 .form-block:not(:nth-last-child(1)) {
   border-bottom: 1px dashed #A9C6DE;
   margin-bottom: 10px; }

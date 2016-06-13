@@ -53,3 +53,55 @@
   }
 }
 
+.organisations-list ul{
+  li{
+    line-height: 20px;
+    height: 220px;
+
+    &:before{
+      content: "";
+      display: inline-block;
+      vertical-align: middle;
+      height: 100%;
+    }
+
+    span{
+      display: inline-block;
+      height: auto;
+      width: auto;
+    }
+
+    a{
+      display: inline-block;
+      vertical-align: middle;
+      padding-top: 0;
+    }
+
+
+    a span{
+      margin-top: 10px;
+      font-size: 14px;
+      display: block;
+      line-height: 20px;
+      height: auto;
+      width: auto;
+      vertical-align: inherit;
+      padding: 0 8px;
+    }
+
+    .img-wrap{
+      height: 150px;
+      &:before{
+        content: "";
+        display: inline-block;
+        vertical-align: middle;
+        height: 100%;
+      }
+      img{
+        display: inline-block;
+        vertical-align: middle;
+      }
+    }
+  }
+}
+
