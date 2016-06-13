@@ -795,6 +795,12 @@ tr, td {
       display: inline-block;
       vertical-align: middle; }
 
+.activity-element-list .title {
+  margin-bottom: 0; }
+
+.activity-element-list .add-more {
+  margin-top: 4px; }
+
 .form-block:not(:nth-last-child(1)) {
   border-bottom: 1px dashed #A9C6DE;
   margin-bottom: 10px; }
