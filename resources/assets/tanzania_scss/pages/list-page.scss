@@ -12,6 +12,7 @@
 
   .activity-element-wrapper{
     padding: 0 0 10px;
+    border-bottom: 1px dashed #ededed;
   }
 
   & .activity-element-wrapper:nth-last-child(1){
@@ -75,6 +76,11 @@
       display: inline-block;
       vertical-align: middle;
       padding-top: 0;
+      color: #484848;
+
+        &:hover,&:focus,&:active{
+        color: #00A8FF;
+      }
     }
 
 
