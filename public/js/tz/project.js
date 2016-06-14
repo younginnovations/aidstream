@@ -52,6 +52,7 @@ var Project = {
         }).append(newFundingOrganization);
 
         $('#add-more-funding-organization').before(tempDiv);
+        $('form select').select2();
     },
     /*
      * Add more Implementing Organization.
@@ -65,6 +66,7 @@ var Project = {
         }).append(newImplementingOrganization);
 
         $('#add-more-implementing-organization').before(tempDiv);
+        $('form select').select2();
     },
     /*
      * Clone the form fields from the DOCUMENT.
