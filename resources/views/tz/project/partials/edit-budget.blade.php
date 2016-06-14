@@ -70,13 +70,15 @@
                                         {!! Form::hidden("budget[$index][value][0][value_date]", getVal($budget, ['value', 0, 'value_date']), ['class' => 'form-control']) !!}
                                     </div>
                                 </div>
+                                {{--<a href="javascript:void(0)" onclick="removeBudget(this)" class="remove_from_collection">Remove</a>--}}
+
                             </div>
-                            <a href="javascript:void(0)" onclick="removeBudget(this)" class="remove_from_collection">Remove</a>
                         @endforeach
+
                     @endif
 
                     <button type="button" id="add-more-budget-edit" class="add-more">Add Another Budget</button>
-                    {!! Form::submit('Update', ['class' => 'btn btn-primary btn-form btn-create']) !!}
+                    {!! Form::submit('Update', ['class' => 'btn btn-primary btn-form']) !!}
 
                     {!! Form::close() !!}
                 </div>
