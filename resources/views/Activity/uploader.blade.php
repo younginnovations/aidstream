@@ -29,14 +29,8 @@
                                 <a href="{{route('download.activity-template')}}"
                                    class="btn btn-primary btn-form btn-submit">Download Activity Template</a>
                                 <div>
-                                    This template contains few basic elements that you have to fill to import into AidStream. Please make sure that you follow the structure and format of the template. For more details, please follow <a href="https://github.com/younginnovations/aidstream-new/wiki/Activity-Creation#2-bulk-activity-import" target="_blank">here</a>.
-                                </div>
-                            </div>
-                            <div class="download-transaction-wrap">
-                                <a href="{{route('download.activity-template2')}}"
-                                   class="btn btn-primary btn-form btn-submit">Download Activity Template2</a>
-                                <div>
-                                    This template contains few basic elements that you have to fill to import into AidStream. Please make sure that you follow the structure and format of the template. For more details, please follow <a href="https://github.com/younginnovations/aidstream-new/wiki/Activity-Creation#2-bulk-activity-import" target="_blank">here</a>.
+                                    This template contains few basic elements that you have to fill to import into AidStream. Please make sure that you follow the structure and format of the template.
+                                    For more details, please follow <a href="https://github.com/younginnovations/aidstream-new/wiki/Activity-Creation#2-bulk-activity-import" target="_blank">here</a>.
                                 </div>
                             </div>
                         </div>
