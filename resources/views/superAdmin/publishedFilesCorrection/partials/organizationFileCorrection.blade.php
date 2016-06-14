@@ -1,15 +1,13 @@
-<table>
+<table class="table published-table">
     <thead>
     <tr>
-        <th>S. N.</th>
-        <th>Organization File</th>
-        <th>Actions</th>
+        <th width="120px">S. N.</th>
+        <th width="60%">Organization File</th>
+        <th align="right" width="250px">Actions</th>
     </tr>
     </thead>
-    <div class="pull-right">
-        <strong>
-            <a href="{{ route('superadmin.reSyncOrganizationData', $organization->id) }}">Sync</a>
-        </strong>
+    <div class="pull-right sync">
+        <a href="{{ route('superadmin.reSyncOrganizationData', $organization->id) }}" class="sync-link">Sync</a>
     </div>
     <tbody>
     @forelse ($organizationPublishedFiles as $index => $publishedFile)
@@ -30,7 +28,7 @@
                     {!! Form::submit('Delete') !!}
                     {!! Form::close() !!}
                 @else
-                    <a href="{{ route('superadmin.unlinkOrganizationXmlFile', [$organization->id, $publishedFile->id]) }}">Unlink</a>
+                    <a href="{{ route('superadmin.unlinkOrganizationXmlFile', [$organization->id, $publishedFile->id]) }}" class="btn pull-left">Unlink</a>
                 @endif
             </td>
         </tr>
