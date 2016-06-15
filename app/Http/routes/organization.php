@@ -30,6 +30,13 @@ $router->group(
                 'uses' => 'OrganizationController@orgBulkPublishToRegistry'
             ]
         );
+        $router->get(
+            'organization/{id}/delete-element/{element}',
+            [
+                'as'   => 'organization.delete-element',
+                'uses' => 'OrganizationController@deleteElement'
+            ]
+        );
 
         $router->get(
             'organization/{orgId}/view/xml',

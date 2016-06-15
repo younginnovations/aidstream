@@ -4,6 +4,7 @@
             <div class="activity-element-title">Recipient Organization Budget</div>
             <a href="{{ route('organization.recipient-organization-budget.index', $orgId)}}"
                class="edit-element">edit</a>
+            <a href="{{ route('organization.delete-element', [$orgId,'recipient_organization_budget'])}}" class="delete pull-right">delete</a>
         </div>
         <div class="panel-body panel-level-2">
             @foreach($recipient_organization_budget as $recipientOrgBudget)

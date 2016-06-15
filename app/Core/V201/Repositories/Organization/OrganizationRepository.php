@@ -325,6 +325,32 @@ class OrganizationRepository implements OrganizationRepositoryInterface
     {
         $result = Organization::where('id', '<>', session('org_id'))
                               ->whereRaw("reporting_org #>> '{0, reporting_organization_identifier}' = '" . $reportOrg['reporting_organization_identifier'] . "'");
+
         return $result->first();
+    }
+
+    /**
+     * delete element which has been clicked.
+     * @param OrganizationData $organization
+     * @param                  $element
+     * @return bool
+     */
+    public function deleteElement(OrganizationData $organization, $element)
+    {
+        $organization->$element = null;
+
+        return $organization->save();
+    }
+
+    /**
+     * change the organization data status to draft.
+     * @param OrganizationData $organization
+     * @return bool
+     */
+    public function resetOrganizationWorkflow(OrganizationData $organization)
+    {
+        $organization->status = 0;
+
+        return $organization->save();
     }
 }

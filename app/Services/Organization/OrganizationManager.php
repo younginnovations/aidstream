@@ -6,6 +6,7 @@ use App\Models\Organization\Organization;
 use App\Models\Organization\OrganizationData;
 use App\Models\OrganizationPublished;
 use App\Models\Settings;
+use Exception;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Logging\Log as Logger;
 use App\Services\Twitter\TwitterAPI;
@@ -209,5 +210,47 @@ class OrganizationManager
     public function checkReportingOrganization($reportOrg)
     {
         return $this->repo->getReportingOrganizations($reportOrg);
+    }
+
+    /**
+     * deletes element which has been clicked.
+     * @param $organization
+     * @param $element
+     * @return bool
+     */
+    public function deleteElement($organization, $element)
+    {
+        try {
+            $this->repo->deleteELement($organization, $element);
+            $this->logger->info(
+                sprintf('Organization element %s has been deleted.', $element),
+                ['for ' => $organization->id]
+            );
+            $this->logger->activity(
+                "organization.organization_element_deleted",
+                [
+                    'element'         => $element,
+                    'organization'    => $this->auth->user()->organization->name,
+                    'organization_id' => $this->auth->user()->organization->id,
+                ]
+            );
+
+            return true;
+            
+        } catch (Exception $exception) {
+            $this->logger->error($exception);
+        }
+
+        return false;
+    }
+
+    /**
+     * change the organization data status to draft.
+     * @param $organization
+     * @return mixed
+     */
+    public function resetOrganizationWorkflow($organization)
+    {
+        return $this->repo->resetOrganizationWorkflow($organization);
     }
 }

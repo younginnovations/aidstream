@@ -9,4 +9,5 @@ return [
     'total_expenditure_updated'             => ':name organization Total Expenditure updated',
     'recipient_region_budget_updated'       => ':name organization Recipient Region Budget updated',
     'organization_status_changed'           => ':name organization has been marked as ":status"',
+    'organization_element_deleted'          => 'Element :element has been deleted from Organization data'
 ];

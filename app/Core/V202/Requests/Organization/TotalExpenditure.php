@@ -80,12 +80,11 @@ class TotalExpenditure extends OrganizationBaseRequest
     {
         $rules = [];
         foreach ($formFields as $expenseLineIndex => $expenseLine) {
-            $expenseLineForm                                                              = sprintf('%s.expense_line.%s', $formBase, $expenseLineIndex);
-            $rules[sprintf('%s.expense_line.%s.reference', $formBase, $expenseLineIndex)] = 'required';
-            $rules                                                                        = array_merge(
+            $expenseLineForm = sprintf('%s.expense_line.%s', $formBase, $expenseLineIndex);
+            $rules           = array_merge(
                 $rules,
-                $this->getRulesForValue($expenseLine['value'], $expenseLineForm),
-                $this->getRulesForNarrative($expenseLine['narrative'], $expenseLineForm)
+                $this->getRulesForBudgetOrExpenseLineValue($expenseLine['value'], $expenseLineForm),
+                $this->getRulesForBudgetOrExpenseLineNarrative($expenseLine['narrative'], $expenseLineForm, $expenseLineIndex)
             );
         }
 
@@ -106,8 +105,8 @@ class TotalExpenditure extends OrganizationBaseRequest
             $messages[sprintf('%s.expense_line.%s.reference.required', $formBase, $expenseLineIndex)] = 'Reference is required';
             $messages                                                                                 = array_merge(
                 $messages,
-                $this->getMessagesForValue($expenseLine['value'], $expenseLineForm),
-                $this->getMessagesForNarrative($expenseLine['narrative'], $expenseLineForm)
+                $this->getMessagesForBudgetOrExpenseLineValue($expenseLine['value'], $expenseLineForm, "Expense Line"),
+                $this->getMessagesForBudgetOrExpenseLineNarrative($expenseLine['narrative'], $expenseLineForm, "Expense line")
             );
         }
 
