@@ -26,7 +26,8 @@ trait XmlServiceTrait
                 break;
         }
         $return .= trim($error->message);
-        $return .= "in line no. <b>$error->line</b>";
+        $return .= "in  line no. <a href='#$error->line'><b>$error->line</b></a>";
+
 
         return $return;
     }
@@ -35,9 +36,19 @@ trait XmlServiceTrait
      * return xml validation error messages
      * @return array
      */
+    protected function libxml_fetch_errors()
+    {
+        $errors = libxml_get_errors();
+        return $errors;
+    }
+
+/**
+* return xml validation error messages
+* @return array
+*/
     protected function libxml_display_errors()
     {
-        $errors   = libxml_get_errors();
+        $errors = libxml_get_errors();
         $messages = [];
         foreach ($errors as $error) {
             $messages[$error->line] = $this->libxml_display_error($error);

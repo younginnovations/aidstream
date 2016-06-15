@@ -1,3 +1,4 @@
+@charset "UTF-8";
 html {
   -webkit-box-sizing: border-box;
      -moz-box-sizing: border-box;
@@ -3002,6 +3003,55 @@ table.dataTable thead .sorting_desc {
   font-style: italic;
   margin-bottom: 40px; }
 
+.view-xml-btn {
+  float: right;
+   margin: 8px 8px 0 8px; }
+
+  .back-to-activity, .view-xml-btn a, .back-to-organization {
+   font-size: 14px;
+   margin: 0 8px; }
+
+.xml-info {
+  word-break: break-all; }
+  .xml-info li.error, .xml-info li.success {
+    background: #e15454;
+    color: #fff;
+    padding: 2px 10px; }
+    .xml-info li.error:first-child, .xml-info li.success:first-child {
+      padding-top: 10px; }
+    .xml-info li.error:last-child, .xml-info li.success:last-child {
+      padding-bottom: 10px; }
+    .xml-info li.error a, .xml-info li.success a {
+      color: #fff;
+      text-decoration: underline; }
+  .xml-info  li.success   > div {
+    background: #52cc88;
+     padding: 0 36px; }
+  .xml-info div + .pln {
+    display: none; }
+  .xml-info div > span.pln:first-child {
+    display: none; }
+
+.org-title {
+  margin-top: 5px;
+  float: left; }
+
+.org-xml-btn {
+  margin-top: 4px; }
+
+.panel-xml-btn {
+  float: right; }
+
+pre.prettyprint {
+  border: 0 !important;
+  padding: 10px !important; }
+
+.view-error, .view-error:hover {
+  color: #fff;
+  text-decoration: underline;
+  margin-left: 57px;
+  display: inline-block; }
+
 @media all and (max-width: 1030px) {
   .activity-status {
     padding: 16px 10px 18px 50px; }
@@ -3466,7 +3516,7 @@ table.dataTable thead .sorting_desc {
     margin-right: -2px; }
   .create-form > form > .collection_form > .form-group > .form-group + .form-group:nth-child(even) {
     padding-left: 15px; }
-  .create-wizard-form .col-sm-6 + .col-sm-6:nth-child(even), create-user-form .col-sm-6 + .col-sm-6:nth-child(odd), .reset-user-password .col-sm-6 + .col-sm-6 {
+  .create-wizard-form .col-sm-6 + .col-sm-6:nth-child(even), .create-user-form .col-sm-6 + .col-sm-6:nth-child(odd), .reset-user-password .col-sm-6 + .col-sm-6 {
     padding-left: 0; }
   .create-activity-form .form-group:only-of-type {
     width: 50%; }
@@ -3512,7 +3562,7 @@ table.dataTable thead .sorting_desc {
     float: right; }
   .element-panel-heading-info {
     float: left;
-    width: 80%; }
+    width: 72%; }
   .settings-checkall-wrapper > .collection_form > .form-group > .form-group, .checkall-wrapper .form-group:nth-child(3) > .form-group > .form-group {
     width: 33%;
     margin-top: 35px; }
@@ -3527,6 +3577,9 @@ table.dataTable thead .sorting_desc {
   background: url(../../images/ic-line-bg.png) repeat-y 0; }
   .organization-wrapper + .element-menu-wrapper .element-sidebar-wrapper .jspPane {
     width: 267px !important; }
+
+.panel-xml-btn {
+  margin-top: 8px; }
 
 @media all and (max-width: 1200px) {
   .sidebar-wrapper:not(.full-sidebar-wrapper) .jspVerticalBar .jspArrow, .touch-sidebar-wrapper .jspVerticalBar .jspArrow {

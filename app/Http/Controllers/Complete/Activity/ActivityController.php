@@ -279,8 +279,9 @@ class ActivityController extends Controller
             }
 
             $messages = $xmlService->validateActivitySchema($activityData, $transactionData, $resultData, $settings, $activityElement, $orgElem, $organization);
-            if ($messages) {
-                $response = ['type' => 'danger', 'messages' => $messages];
+
+            if ($messages != []) {
+                $response = ['type' => 'danger', 'messages' => $messages, 'activity' => 'true'];
 
                 return redirect()->back()->withResponse($response);
             }
@@ -751,5 +752,64 @@ class ActivityController extends Controller
         }
 
         return redirect()->back()->withResponse($response);
+    }
+
+    /**
+     * Get data from DB and generate xml
+     * @param           $activityId
+     * @param bool|null $viewErrors
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function viewActivityXml($activityId, $viewErrors = false)
+    {
+        $activityDataList = $this->activityManager->getActivityData($activityId);
+        $activityElement  = $this->activityManager->getActivityElement();
+        $xmlService       = $activityElement->getActivityXmlService();
+
+        $xml = $xmlService->generateTemporaryActivityXml(
+            $this->activityManager->getActivityData($activityId),
+            $this->activityManager->getTransactionData($activityId),
+            $this->activityManager->getResultData($activityId),
+            $this->settingsManager->getSettings($activityDataList['organization_id']),
+            $activityElement,
+            $this->organizationManager->getOrganizationElement(),
+            $this->organizationManager->getOrganization($activityDataList->organization_id)
+        );
+
+        $xmlLines = $xmlService->getFormattedXml($xml);
+        $messages = $xmlService->getSchemaErrors($xml, session('version'));
+
+        return view('Activity.xmlView', compact('xmlLines', 'messages', 'activityDataList', 'activityId', 'viewErrors'));
+    }
+
+    /**
+     * Download of activity xml files
+     * @param $activityId
+     * @return \Illuminate\Http\Response
+     */
+    public function downloadActivityXml($activityId)
+    {
+        $activityData    = $this->activityManager->getActivityData($activityId);
+        $activityElement = $this->activityManager->getActivityElement();
+        $xmlService      = $activityElement->getActivityXmlService();
+
+        $xml = $xmlService->generateTemporaryActivityXml(
+            $this->activityManager->getActivityData($activityId),
+            $this->activityManager->getTransactionData($activityId),
+            $this->activityManager->getResultData($activityId),
+            $this->settingsManager->getSettings($activityData['organization_id']),
+            $activityElement,
+            $this->organizationManager->getOrganizationElement(),
+            $this->organizationManager->getOrganization($activityData->organization_id)
+        );
+
+        return response()->make(
+            $xml,
+            200,
+            [
+                'Content-type'        => 'text/xml',
+                'Content-Disposition' => sprintf('attachment; filename=activityXmlFile.xml')
+            ]
+        );
     }
 }

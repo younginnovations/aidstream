@@ -1,6 +1,7 @@
 <?php namespace App\Core\V202\Xml\Activity;
 
 use App\Core\V201\Element\Activity\XmlService as XmlService201;
+use App\Services\Xml\XmlSchemaErrorParser;
 
 /**
  * Class XmlService
@@ -14,10 +15,12 @@ class XmlService extends XmlService201
     protected $xmlGenerator;
 
     /**
-     * @param XmlGenerator $xmlGenerator
+     * @param XmlGenerator         $xmlGenerator
+     * @param XmlSchemaErrorParser $xmlSchemaErrorParser
      */
-    function __construct(XmlGenerator $xmlGenerator)
+    function __construct(XmlGenerator $xmlGenerator, XmlSchemaErrorParser $xmlSchemaErrorParser)
     {
         $this->xmlGenerator = $xmlGenerator;
+        $this->xmlErrorParser = $xmlSchemaErrorParser;
     }
 }

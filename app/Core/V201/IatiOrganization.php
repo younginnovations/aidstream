@@ -76,4 +76,9 @@ class IatiOrganization
     {
         return app('App\Core\V201\Element\Organization\XmlService');
     }
+
+    public function getOrganizationElementValidator()
+    {
+        return app('App\Core\V201\Requests\OrganizationElementValidation');
+    }
 }
