@@ -63,7 +63,7 @@ namespace :composer do
         on roles(:app) do
             within release_path do
                 execute :composer, "install --no-dev --quiet"
-                execute :composer, "dumpautoload"
+                execute :composer, "dumpautoload -o"
             end
         end
     end

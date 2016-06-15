@@ -85,10 +85,10 @@ class Publisher extends RegistryApiHandler
         if (!$publishedFile) {
             $publishedFile = $organization->publishedFiles()->where('filename', '=', $filename)->first();
 
-            return $this->formatHeaders($filename, $organization, $publishedFile, $key, end($code), $title);
+            return $this->formatHeaders($this->extractPackage($filename), $organization, $publishedFile, $key, end($code), $title);
         }
 
-        return $this->formatHeaders($publishedFile->filename, $organization, $publishedFile, $key, end($code), $title);
+        return $this->formatHeaders($this->extractPackage($filename), $organization, $publishedFile, $key, end($code), $title);
     }
 
     /**
@@ -254,5 +254,17 @@ class Publisher extends RegistryApiHandler
         } else {
             $this->publishToRegistry($organization, $this->file->filename, $publishingType, $this->file->published_to_register);
         }
+    }
+
+    /**
+     * Extract the package name from the published filename.
+     * @param $filename
+     * @return string
+     */
+    protected function extractPackage($filename)
+    {
+        return array_first(explode('.', $filename), function () {
+            return true;
+        });
     }
 }
