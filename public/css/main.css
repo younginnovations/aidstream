@@ -3062,6 +3062,9 @@ select, button {
   select:focus, button:focus {
     outline: none; }
 
+input[type="submit"] {
+  -webkit-font-smoothing: auto; }
+
 input[type="color"], input[type="date"], input[type="datetime"], input[type="datetime-local"], input[type="email"], input[type="month"], input[type="number"], input[type="password"], input[type="search"], input[type="tel"], input[type="text"], input[type="time"], input[type="url"], input[type="week"], input:not([type]), textarea,
 select, .form-control[readonly] {
   font-family: Open-Sans-Regular; }
@@ -5859,6 +5862,55 @@ pre.prettyprint {
   margin-left: 57px;
   display: inline-block; }
 
+.correct-published-files-wrapper {
+  width: 100%; }
+  .correct-published-files-wrapper .element-panel-heading {
+    padding: 20px 20px 16px; }
+  .correct-published-files-wrapper .element-content-wrapper {
+    padding: 0 0 100px 0;
+    width: 100%; }
+
+.correction-heading-wrap {
+  margin-left: 40px; }
+  .correction-heading-wrap h3 {
+    font: 24px Open-Sans-Bold;
+    margin-bottom: 20px; }
+
+.published-files-info {
+  font-size: 14px; }
+  .published-files-info li {
+    overflow: hidden;
+    margin-bottom: 2px; }
+  .published-files-info label {
+    color: #777;
+    text-align: right !important;
+    float: left;
+    width: 112px;
+    margin-right: 20px; }
+
+.sync {
+  margin-top: 30px;
+  margin-bottom: 20px; }
+
+.sync-link {
+  margin-right: 22px;
+  background: url(../../images/ic-sync.svg) no-repeat 0 4px;
+  color: #00A8FF;
+  padding-left: 18px; }
+
+.published-table th, .published-table td {
+  padding: 10px 20px; }
+
+.published-table td a + form {
+  float: left;
+  margin-left: 10px; }
+
+.published-table th:first-child {
+  white-space: nowrap; }
+
+.correct-published-files-wrapper .correction-heading-wrap {
+  width: 75% !important; }
+
 @media all and (max-width: 1030px) {
   .activity-status {
     padding: 16px 10px 18px 50px; }
@@ -5884,16 +5936,17 @@ pre.prettyprint {
     position: relative;
     z-index: 1; }
     .element-sidebar-dropdown .edit-element {
-      width: 42px;
-      height: 42px;
+      width: 28px;
+      height: 28px;
       cursor: pointer;
-      background: transparent url(../../images/ic-sprite.svg) no-repeat -154px -261px; }
-      .element-sidebar-dropdown .edit-element:hover {
-        background-position: -221px -261px; }
+      background: transparent url(../../images/ic-trigger.svg) no-repeat 0 5px; }
+      .element-sidebar-dropdown .edit-element:hover, .element-sidebar-dropdown .edit-element:focus {
+        background-position: 0 -55px; }
       .element-sidebar-dropdown .edit-element .caret {
         float: right;
         color: #484848;
-        margin: 14px 0 0 30px; }
+        margin: 14px 0 0 30px;
+        display: none; }
       .element-sidebar-dropdown .edit-element:hover .caret {
         color: #00A8FF; }
       .element-sidebar-dropdown .edit-element .caret.caret-out {
@@ -6060,6 +6113,19 @@ pre.prettyprint {
     content: "Activities Included"; }
   .table-new-activities td:nth-of-type(3):before {
     content: "Published Status"; }
+  .published-table td:nth-of-type(1):before {
+    content: "S.N."; }
+  .published-table td:nth-of-type(2):before {
+    content: "Activirty File"; }
+  .published-table td:nth-of-type(3):before {
+    content: "Activities included"; }
+  .published-table td:nth-of-type(4):before {
+    content: "Actions"; }
+  .correct-published-files-wrapper .element-content-wrapper {
+    padding-left: 14px;
+    padding-right: 14px; }
+  .published-table {
+    clear: both; }
   td input[type="checkbox"] {
     display: none; }
   .table > tbody > tr > td.no-data {
@@ -6218,7 +6284,10 @@ pre.prettyprint {
     .navbar.navbar-static .navbar-header {
       float: none; }
   .panel-sub-heading + div {
-    clear: both; } }
+    clear: both; }
+  .correct-published-files-wrapper .correction-heading-wrap {
+    width: 100% !important;
+    margin: 20px 0 0 0; } }
 
 .element-panel-heading-info .last-updated-date {
   display: block;
