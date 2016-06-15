@@ -74,7 +74,7 @@ class TransactionUploadController extends Controller
         }
 
         $this->authorize('add_activity', $activity);
-        $file     = $request->file('transaction');
+        $file = $request->file('transaction');
 
         if ($this->uploadTransactionManager->isEmptyCsv($file)) {
             return redirect()->back()

@@ -35,16 +35,50 @@ class Transaction extends BaseElement
 
         foreach ($transactions as $totalTransaction) {
             $transaction = $totalTransaction->transaction;
-            $vocabulary  = $transaction['sector'][0]['sector_vocabulary'];
-            if ($vocabulary == 1) {
-                $sectorValue = $transaction['sector'][0]['sector_code'];
-            } elseif ($vocabulary == 2) {
-                $sectorValue = $transaction['sector'][0]['sector_category_code'];
-            } elseif ($vocabulary == "") {
-                $sectorValue = $transaction['sector'][0]['sector_code'];
-            } else {
-                $sectorValue = $transaction['sector'][0]['sector_text'];
+
+            $sector = [];
+            if (getVal($transaction, ['sector'])) {
+                $vocabulary = $transaction['sector'][0]['sector_vocabulary'];
+                if ($vocabulary == 1) {
+                    $sectorValue = $transaction['sector'][0]['sector_code'];
+                } elseif ($vocabulary == 2) {
+                    $sectorValue = $transaction['sector'][0]['sector_category_code'];
+                } elseif ($vocabulary == "") {
+                    $sectorValue = $transaction['sector'][0]['sector_code'];
+                } else {
+                    $sectorValue = $transaction['sector'][0]['sector_text'];
+                }
+
+                $sector = [
+                    '@attributes' => [
+                        'vocabulary' => $vocabulary,
+                        'code'       => $sectorValue
+                    ],
+                    'narrative'   => $this->buildNarrative(getVal($transaction, ['sector', 0, 'narrative'], []))
+                ];
             }
+
+            $recipientCountry = [];
+            if (getVal($transaction, ['recipient_country'])) {
+                $recipientCountry = [
+                    '@attributes' => [
+                        'code' => $transaction['recipient_country'][0]['country_code']
+                    ],
+                    'narrative'   => $this->buildNarrative(getVal($transaction, ['recipient_country', 0, 'narrative'], []))
+                ];
+            }
+
+            $recipientRegion = [];
+            if (getVal($transaction, ['recipient_region'])) {
+                $recipientRegion = [
+                    '@attributes' => [
+                        'code'       => $transaction['recipient_region'][0]['region_code'],
+                        'vocabulary' => $transaction['recipient_region'][0]['vocabulary'],
+                    ],
+                    'narrative'   => $this->buildNarrative(getVal($transaction, ['recipient_region', 0, 'narrative'], []))
+                ];
+            }
+
             $transactionData[] = [
                 '@attributes'          => [
                     'ref' => $transaction['reference']
@@ -85,47 +119,30 @@ class Transaction extends BaseElement
                 ],
                 'disbursement-channel' => [
                     '@attributes' => [
-                        'code' => $transaction['disbursement_channel'][0]['disbursement_channel_code']
+                        'code' => getVal($transaction, ['disbursement_channel', 0, 'disbursement_channel_code'])
                     ]
                 ],
-                'sector'               => [
-                    '@attributes' => [
-                        'vocabulary' => $vocabulary,
-                        'code'       => $sectorValue
-                    ],
-                    'narrative'   => $this->buildNarrative(getVal($transaction, ['sector', 0, 'narrative'], []))
-                ],
-                'recipient-country'    => [
-                    '@attributes' => [
-                        'code' => getVal($transaction, ['recipient_country', 0, 'country_code'])
-                    ],
-                    'narrative'   => $this->buildNarrative(getVal($transaction, ['recipient_country', 0, 'narrative'], []))
-                ],
-                'recipient-region'     => [
-                    '@attributes' => [
-                        'code' => getVal($transaction, ['recipient_country', 0, 'region_code']),
-                        'vocabulary' => getVal($transaction, ['recipient_region', 0, 'vocabulary']),
-                    ],
-                    'narrative'   => $this->buildNarrative(getVal($transaction, ['recipient_region', 0, 'narrative'], []))
-                ],
+                'sector'               => $sector,
+                'recipient-country'    => $recipientCountry,
+                'recipient-region'     => $recipientRegion,
                 'flow-type'            => [
                     '@attributes' => [
-                        'code' => $transaction['flow_type'][0]['flow_type'],
+                        'code' => getVal($transaction, ['flow_type', 0, 'flow_type']),
                     ]
                 ],
                 'finance-type'         => [
                     '@attributes' => [
-                        'code' => $transaction['finance_type'][0]['finance_type'],
+                        'code' => getVal($transaction, ['finance_type', 0, 'finance_type']),
                     ]
                 ],
                 'aid-type'             => [
                     '@attributes' => [
-                        'code' => $transaction['aid_type'][0]['aid_type'],
+                        'code' => getVal($transaction, ['aid_type', 0, 'aid_type']),
                     ]
                 ],
                 'tied-status'          => [
                     '@attributes' => [
-                        'code' => $transaction['tied_status'][0]['tied_status_code'],
+                        'code' => getVal($transaction, ['tied_status', 0, 'tied_status_code']),
                     ]
                 ]
             ];

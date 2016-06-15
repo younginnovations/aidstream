@@ -137,79 +137,77 @@
                                     <div class="panel-body panel-element-body">
                                         <div class="col-xs-12 col-md-12">
                                             <div class="col-xs-12 col-sm-4">Disbursement Channel Code:</div>
-                                            <div class="col-xs-12 col-sm-8">{{$code->getActivityCodeName('DisbursementChannel', $transactionDetail['disbursement_channel'][0]['disbursement_channel_code'])}}</div>
+                                            <div class="col-xs-12 col-sm-8">{{$code->getActivityCodeName('DisbursementChannel', getVal($transactionDetail, ['disbursement_channel', 0, 'disbursement_channel_code']))}}</div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <div class="activity-element-title">Sector</div>
+                                @if(getVal($transactionDetail, ['sector'], []))
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <div class="activity-element-title">Sector</div>
+                                        </div>
+                                        {{--*/ $sector = $transactionDetail['sector'][0] /*--}}
+                                        <div class="panel-body panel-element-body">
+                                            <div class="col-xs-12 col-md-12">
+                                                <div class="col-xs-12 col-sm-4">Sector Code:</div>
+                                                <div class="col-xs-12 col-sm-8">{{$code->getActivityCodeName('Sector', $sector['sector_code'])}}</div>
+                                            </div>
+                                            <div class="col-xs-12 col-md-12">
+                                                <div class="col-xs-12 col-sm-4">Sector Vocabulary:</div>
+                                                <div class="col-xs-12 col-sm-8">{{$code->getActivityCodeName('SectorVocabulary', $sector['sector_vocabulary'])}}</div>
+                                            </div>
+                                            <div class="col-xs-12 col-md-12">
+                                                <div class="col-xs-12 col-sm-4">Narrative text:</div>
+                                                <div class="col-xs-12 col-sm-8">{{$sector['narrative'][0]['narrative']}}</div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    {{--*/ $sector = $transactionDetail['sector'][0] /*--}}
-                                    <div class="panel-body panel-element-body">
-                                        <div class="col-xs-12 col-md-12">
-                                            <div class="col-xs-12 col-sm-4">Sector Code:</div>
-                                            <div class="col-xs-12 col-sm-8">{{$code->getActivityCodeName('Sector', $sector['sector_code'])}}</div>
-                                        </div>
-                                        <div class="col-xs-12 col-md-12">
-                                            <div class="col-xs-12 col-sm-4">Sector Vocabulary:</div>
-                                            <div class="col-xs-12 col-sm-8">{{$code->getActivityCodeName('SectorVocabulary', $sector['sector_vocabulary'])}}</div>
-                                        </div>
-                                        <div class="col-xs-12 col-md-12">
-                                            <div class="col-xs-12 col-sm-4">Narrative text:</div>
-                                            <div class="col-xs-12 col-sm-8">{{$sector['narrative'][0]['narrative']}}</div>
-                                        </div>
-                                    </div>
-                                </div>
+                                @endif
                                 @if(getVal($transactionDetail, ['recipient_country'], []))
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <div class="activity-element-title">Recipient Country</div>
-                                        <a href="{{ route('activity.transaction.delete-block', [$id, $transactionId, 'recipient_country']) }}" class="delete pull-right">remove</a>
-                                    </div>
-                                    {{--*/ $recipientCountry = $transactionDetail['recipient_country'][0] /*--}}
-                                    <div class="panel-body panel-element-body">
-                                        <div class="col-xs-12 col-md-12">
-                                            <div class="col-xs-12 col-sm-4">Recipient Country Code:</div>
-                                            <div class="col-xs-12 col-sm-8">{{$code->getOrganizationCodeName('Country', $recipientCountry['country_code'])}}</div>
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <div class="activity-element-title">Recipient Country</div>
+                                            <a href="{{ route('activity.transaction.delete-block', [$id, $transactionId, 'recipient_country']) }}" class="delete pull-right">remove</a>
                                         </div>
-                                        <div class="col-xs-12 col-md-12">
-                                            <div class="col-xs-12 col-sm-4">Sector Vocabulary:</div>
-                                            <div class="col-xs-12 col-sm-8">{{$code->getActivityCodeName('SectorVocabulary', $sector['sector_vocabulary'])}}</div>
-                                        </div>
-                                        <div class="col-xs-12 col-md-12">
-                                            <div class="col-xs-12 col-sm-4">Narrative text:</div>
-                                            <div class="col-xs-12 col-sm-8">{{$sector['narrative'][0]['narrative']}}</div>
+                                        {{--*/ $recipientCountry = $transactionDetail['recipient_country'][0] /*--}}
+                                        <div class="panel-body panel-element-body">
+                                            <div class="col-xs-12 col-md-12">
+                                                <div class="col-xs-12 col-sm-4">Recipient Country Code:</div>
+                                                <div class="col-xs-12 col-sm-8">{{$code->getOrganizationCodeName('Country', $recipientCountry['country_code'])}}</div>
+                                            </div>
+                                            <div class="col-xs-12 col-md-12">
+                                                <div class="col-xs-12 col-sm-4">Narrative text:</div>
+                                                <div class="col-xs-12 col-sm-8">{{$recipientCountry['narrative'][0]['narrative']}}</div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
                                 @endif
 
                                 @if(getVal($transactionDetail, ['recipient_region'], []))
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <div class="activity-element-title">Recipient Region</div>
-                                        <a href="{{ route('activity.transaction.delete-block', [$id, $transactionId, 'recipient_region']) }}" class="delete pull-right">remove</a>
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <div class="activity-element-title">Recipient Region</div>
+                                            <a href="{{ route('activity.transaction.delete-block', [$id, $transactionId, 'recipient_region']) }}" class="delete pull-right">remove</a>
+                                        </div>
+                                        {{--*/ $recipientRegion = $transactionDetail['recipient_region'][0] /*--}}
+                                        <div class="panel-body panel-element-body">
+                                            <div class="col-xs-12 col-md-12">
+                                                <div class="col-xs-12 col-sm-4">Recipient Region Code:</div>
+                                                <div class="col-xs-12 col-sm-8">{{$code->getActivityCodeName('Region', $recipientRegion['region_code'])}}</div>
+                                            </div>
+                                            <div class="col-xs-12 col-md-12">
+                                                <div class="col-xs-12 col-sm-4">Recipient Region Vocabulary:</div>
+                                                <div class="col-xs-12 col-sm-8">{{$code->getActivityCodeName('RegionVocabulary', $recipientRegion['vocabulary'])}}</div>
+                                            </div>
+                                            <div class="col-xs-12 col-md-12">
+                                                <div class="col-xs-12 col-sm-4">Narrative text:</div>
+                                                <div class="col-xs-12 col-sm-8">{{$recipientRegion['narrative'][0]['narrative']}}</div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    {{--*/ $recipientRegion = $transactionDetail['recipient_region'][0] /*--}}
-                                    <div class="panel-body panel-element-body">
-                                        <div class="col-xs-12 col-md-12">
-                                            <div class="col-xs-12 col-sm-4">Recipient Region Code:</div>
-                                            <div class="col-xs-12 col-sm-8">{{$code->getActivityCodeName('Region', $recipientRegion['region_code'])}}</div>
-                                        </div>
-                                        <div class="col-xs-12 col-md-12">
-                                            <div class="col-xs-12 col-sm-4">Recipient Region Vocabulary:</div>
-                                            <div class="col-xs-12 col-sm-8">{{$code->getActivityCodeName('RegionVocabulary', $recipientRegion['vocabulary'])}}</div>
-                                        </div>
-                                        <div class="col-xs-12 col-md-12">
-                                            <div class="col-xs-12 col-sm-4">Narrative text:</div>
-                                            <div class="col-xs-12 col-sm-8">{{$recipientRegion['narrative'][0]['narrative']}}</div>
-                                        </div>
-                                    </div>
-                                </div>
                                 @endif
 
-                                @if($transactionDetail['flow_type'][0]['flow_type'])
+                                @if(getVal($transactionDetail, ['flow_type', 0, 'flow_type']))
                                     <div class="panel panel-default">
                                         <div class="panel-heading">
                                             <div class="activity-element-title">Flow Type</div>
@@ -222,7 +220,7 @@
                                         </div>
                                     </div>
                                 @endif
-                                @if($transactionDetail['finance_type'][0]['finance_type'])
+                                @if(getVal($transactionDetail, ['finance_type', 0, 'finance_type'], []))
                                     <div class="panel panel-default">
                                         <div class="panel-heading">
                                             <div class="activity-element-title">Finance Type</div>
@@ -235,7 +233,7 @@
                                         </div>
                                     </div>
                                 @endif
-                                @if($transactionDetail['aid_type'][0]['aid_type'])
+                                @if(getVal($transactionDetail, ['aid_type', 0, 'aid_type'], []))
                                     <div class="panel panel-default">
                                         <div class="panel-heading">
                                             <div class="activity-element-title">Aid Type</div>
@@ -248,7 +246,7 @@
                                         </div>
                                     </div>
                                 @endif
-                                @if($transactionDetail['tied_status'][0]['tied_status_code'])
+                                @if(getVal($transactionDetail, ['tied_status', 0, 'tied_status_code'], []))
                                     <div class="panel panel-default">
                                         <div class="panel-heading">
                                             <div class="activity-element-title">Tied Status</div>
