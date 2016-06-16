@@ -1,141 +1,69 @@
 @if(!emptyOrHasEmptyTemplate($recipient_organization_budget))
-    <div class="panel panel-default expanded">
-        <div class="panel-heading">
-            <div class="activity-element-title">Recipient Organization Budget</div>
-            <a href="{{ route('organization.recipient-organization-budget.index', $orgId)}}"
-               class="edit-element">edit</a>
-            <a href="{{ route('organization.delete-element', [$orgId,'recipient_organization_budget'])}}" class="delete pull-right">delete</a>
-        </div>
-        <div class="panel-body panel-level-2">
-            @foreach($recipient_organization_budget as $recipientOrgBudget)
-                <div class="panel-heading">
-                    <div class="activity-element-title">
-                        Ref : {{ $recipientOrgBudget['recipient_organization'][0]['ref'] }}
-                    </div>
+    <div class="activity-element-wrapper">
+        <div class="title">@lang('activityView.recipient_organization_budget')</div>
+        @foreach(groupBudgetElements($recipient_organization_budget, 'status') as  $key => $recipientOrganizationBudgets)
+            <div class="activity-element-list">
+                <div class="activity-element-label">
+                    @if(session('version') != 'V201')
+                        {{ $getCode->getCodeNameOnly('BudgetStatus', $key) }}
+                    @else
+                        Status Not Available
+                    @endif
                 </div>
-                <div class="panel-body">
-                    <div class="panel panel-default">
-                        <div class="panel-body">
-                            <div class="panel panel-default">
-                                <div class="panel-body panel-element-body row">
-                                    <div class="col-xs-12 col-md-12">
-                                        <div class="col-xs-12 col-xs-4">Ref:</div>
-                                        <div class="col-xs-12 col-xs-8">{{ $recipientOrgBudget['recipient_organization'][0]['ref'] }}</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="panel panel-default">
-                                @foreach($recipientOrgBudget['recipient_organization'][0]['narrative'] as $recipientOrgBudgetNarrative)
-                                    <div class="panel-heading">
-                                        <div class="activity-element-title">Narrative</div>
-                                    </div>
-                                    <div class="panel-element-body">
-                                        <div class="col-xs-12 col-md-12">
-                                            <div class="col-xs-12 col-xs-4">Text:</div>
-                                            <div class="col-xs-12 col-xs-8">{{ $recipientOrgBudgetNarrative['narrative'] . hideEmptyArray('Organization', 'Language', $recipientOrgBudgetNarrative['language']) }}</div>
-                                        </div>
-                                    </div>
-                                @endforeach
-                            </div>
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <div class="activity-element-title">Value</div>
-                                </div>
-                                <div class="panel-element-body">
-                                    <div class="col-xs-12 col-md-12">
-                                        <div class="col-xs-12 col-xs-4">Text:</div>
-                                        <div class="col-xs-12 col-xs-8">{{ $recipientOrgBudget['value'][0]['amount']}}</div>
-                                    </div>
-                                    <div class="col-xs-12 col-md-12">
-                                        <div class="col-xs-12 col-xs-4">Value Date:</div>
-                                        <div class="col-xs-12 col-xs-8">{{ formatDate($recipientOrgBudget['value'][0]['value_date']) }}</div>
-                                    </div>
-                                    <div class="col-xs-12 col-md-12">
-                                        <div class="col-xs-12 col-xs-4">Currency:</div>
-                                        <div class="col-xs-12 col-xs-8">{{ $recipientOrgBudget['value'][0]['currency']}}</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <div class="activity-element-title">Period Start</div>
-                                </div>
-                                <div class="panel-element-body">
-                                    <div class="col-xs-12 col-md-12">
-                                        <div class="col-xs-12 col-xs-4">Iso Date:</div>
-                                        <div class="col-xs-12 col-xs-8">{{ formatDate($recipientOrgBudget['period_start'][0]['date']) }}</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <div class="activity-element-title">Period End</div>
-                                </div>
-                                <div class="panel-element-body">
-                                    <div class="col-xs-12 col-md-12">
-                                        <div class="col-xs-12 col-xs-4">Iso Date:</div>
-                                        <div class="col-xs-12 col-xs-8">{{ formatDate($recipientOrgBudget['period_end'][0]['date']) }}</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="panel-heading">
-                                <div class="activity-element-title">Budget Line</div>
-                            </div>
-                            <div class="panel-body">
-                                @foreach($recipientOrgBudget['budget_line'] as $recipientOrgBudgetLine)
-                                    <div class="panel-heading">
-                                        <div class="activity-element-title">{{ $recipientOrgBudgetLine['reference']}}</div>
-                                    </div>
-                                    <div class="panel-body">
-                                        <div class="panel panel-default">
-                                            <div class="panel-body panel-element-body row">
-                                                <div class="col-xs-12 col-md-12">
-                                                    <div class="col-xs-12 col-xs-4">Reference:</div>
-                                                    <div class="col-xs-12 col-xs-8">{{ $recipientOrgBudgetLine['reference']}}</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="panel panel-default">
-                                            <div class="panel-heading">
-                                                <div class="activity-element-title">Value</div>
-                                            </div>
-                                            <div class="panel-element-body row">
-                                                <div class="col-xs-12 col-md-12">
-                                                    <div class="col-xs-12 col-xs-4">Text:</div>
-                                                    <div class="col-xs-12 col-xs-8">{{ $recipientOrgBudgetLine['value'][0]['amount']}}</div>
-                                                </div>
-                                                <div class="col-xs-12 col-md-12">
-                                                    <div class="col-xs-12 col-xs-4">Value Date:</div>
-                                                    <div class="col-xs-12 col-xs-8">{{ formatDate($recipientOrgBudgetLine['value'][0]['value_date']) }}</div>
-                                                </div>
-                                                <div class="col-xs-12 col-md-12">
-                                                    <div class="col-xs-12 col-xs-4">Currency:</div>
-                                                    <div class="col-xs-12 col-xs-8">{{ $recipientOrgBudgetLine['value'][0]['currency']}}</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="panel panel-default">
-                                            @foreach($recipientOrgBudgetLine['narrative'] as $recipientOrgBudgetLineNarrative)
-                                                <div class="panel-heading">
-                                                    <div class="activity-element-title">Narrative</div>
-                                                </div>
-                                                <div class="panel-element-body row">
-                                                    <div class="col-xs-12 col-md-12">
-                                                        <div class="col-xs-12 col-xs-4">Text:</div>
-                                                        <div class="col-xs-12 col-xs-8">{{ $recipientOrgBudgetLineNarrative['narrative'] . hideEmptyArray('Organization', 'Language', $recipientOrgBudgetLineNarrative['language'])}}</div>
-                                                    </div>
-                                                </div>
-                                            @endforeach
-                                        </div>
-                                    </div>
-                                @endforeach
-
-                            </div>
-
+                <div class="activity-element-info">
+                    @foreach($recipientOrganizationBudgets as $recipientOrganizationBudget)
+                        <li>{!! getBudgetInformation('currency_with_valuedate' , $recipientOrganizationBudget) !!}</li>
+                        <div class="toggle-btn">
+                            <span class="show-more-info">Show more info</span>
+                            <span class="hide-more-info hidden">Hide more info</span>
                         </div>
-                    </div>
+                        <div class="more-info hidden">
+                            <div class="element-info">
+                                <div class="activity-element-label">@lang('activityView.period')</div>
+                                <div class="activity-element-info">{!! checkIfEmpty(getBudgetInformation('period' , $recipientOrganizationBudget)) !!}</div>
+                            </div>
+
+                            <div class="element-info">
+                                <div class="activity-element-label">@lang('activityView.recipient_organization_reference')</div>
+                                <div class="activity-element-info">
+                                    {!! checkIfEmpty($recipientOrganizationBudget['recipient_organization'][0]['ref']) !!}
+                                </div>
+                            </div>
+
+                            <div class="element-info">
+                                <div class="activity-element-label">@lang('activityView.description')</div>
+                                <div class="activity-element-info">
+                                    {!! checkIfEmpty(getFirstNarrative($recipientOrganizationBudget['recipient_organization'][0])) !!}
+                                    @include('Activity.partials.viewInOtherLanguage' ,['otherLanguages' => getOtherLanguages($recipientOrganizationBudget['recipient_organization'][0]['narrative'])])
+                                </div>
+                            </div>
+                            <div class="element-info">
+                                <div class="activity-element-label">@lang('activityView.budget_line')</div>
+                                @foreach($recipientOrganizationBudget['budget_line'] as $budgetLine)
+                                    <div class="activity-element-info">
+                                        <li>{!! getCurrencyValueDate($budgetLine['value'][0] , "planned") !!}</li>
+                                        <div class="expanded">
+                                            <div class="element-info">
+                                                <div class="activity-element-label">@lang('activityView.reference')</div>
+                                                <div class="activity-element-info">{!! checkIfEmpty($budgetLine['reference']) !!}</div>
+                                            </div>
+                                            <div class="element-info">
+                                                <div class="activity-element-label">@lang('activityView.narrative')</div>
+                                                <div class="activity-element-info">{!! checkIfEmpty(getFirstNarrative($budgetLine)) !!}
+                                                    @include('Activity.partials.viewInOtherLanguage' ,['otherLanguages' => getOtherLanguages($budgetLine['narrative'])])</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
+
+                            </div>
+                        </div>
+                    @endforeach
                 </div>
-            @endforeach
-        </div>
+            </div>
+        @endforeach
+        <a href="{{ route('organization.recipient-organization-budget.index', $orgId)}}"
+           class="edit-element">edit</a>
+        <a href="{{ route('organization.delete-element', [$orgId,'recipient_organization_budget'])}}" class="delete pull-right">delete</a>
     </div>
 @endif

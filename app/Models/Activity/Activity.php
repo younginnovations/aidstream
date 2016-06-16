@@ -51,7 +51,7 @@ class Activity extends Model
         'default_field_values',
         'humanitarian_scope',
         'published_to_registry',
-        'activity_workflow'
+        'activity_workflow',
     ];
 
     /**
@@ -85,7 +85,7 @@ class Activity extends Model
         'legacy_data'                => 'json',
         'conditions'                 => 'json',
         'default_field_values'       => 'json',
-        'humanitarian_scope'         => 'json'
+        'humanitarian_scope'         => 'json',
     ];
 
     /**
@@ -97,7 +97,7 @@ class Activity extends Model
         $identifier = $this->identifier['activity_identifier'];
         $title      = $this->title ? $this->title[0]['narrative'] : 'No Title';
 
-        return $identifier . '(' . $title . ')';
+        return $identifier.'('.$title.')';
     }
 
     /**

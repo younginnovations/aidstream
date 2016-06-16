@@ -2,12 +2,12 @@
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Request;
 use App\Services\Activity\ActivityManager;
 use App\Services\RequestManager\OrganizationElementValidator;
 use App\Services\SettingsManager;
 use App\Services\Organization\OrganizationManager;
 use App\Services\FormCreator\Organization\OrgReportingOrgForm;
-use App\Http\Requests\Request;
 use App\Services\Organization\OrgNameManager;
 use Illuminate\Support\Facades\Gate;
 
@@ -259,16 +259,16 @@ class OrganizationController extends Controller
      */
     public function deleteElement($id, $element)
     {
-        $organization = $this->organizationManager->getOrganizationData($id);
+        $organizationData = $this->organizationManager->getOrganizationData($id);
+        $organization     = $this->organizationManager->getOrganization($id);
 
         if (Gate::denies('belongsToOrganization', $organization)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
-
-        $result = $this->organizationManager->deleteElement($organization, $element);
+        $result = $this->organizationManager->deleteElement($organizationData, $element);
 
         if ($result) {
-            $this->organizationManager->resetOrganizationWorkflow($organization);
+            $this->organizationManager->resetOrganizationWorkflow($organizationData);
             $response = ['type' => 'success', 'code' => ['organization_element_removed', ['element' => 'activity']]];
         } else {
             $response = ['type' => 'danger', 'code' => ['organization_element_not_removed', ['element' => 'activity']]];
