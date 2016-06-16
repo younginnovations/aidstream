@@ -51,6 +51,7 @@ class UploadTransactionTest extends AidStreamTestCase
             'transactiondate_iso_date'         => '2016-01-01',
             'transactionvalue_value_date'      => '2016-01-01',
             'transactionvalue_text'            => [],
+            'transactionvalue_currency'        => '',
             'description_text'                 => [],
             'providerorg_ref'                  => [],
             'providerorg_provider_activity_id' => [],

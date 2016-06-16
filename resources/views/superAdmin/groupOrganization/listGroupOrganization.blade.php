@@ -9,6 +9,7 @@
                 <div>Organization Groups</div>
             </div>
             <div class="col-xs-12 col-lg-8 organization-wrapper group-organization-wrapper">
+                @include('includes.response')
                 <div class="panel panel-default">
                     <div class="panel-body">
                         @if(count($organizations) > 0)

@@ -52,11 +52,14 @@ class Publisher extends RegistryApiHandler
     public function unlink($registryInfo, $changeDetails)
     {
         try {
-            $apiKey      = $registryInfo[0]['api_id'];
-            $api         = new CkanClient(env('REGISTRY_URL'), $apiKey);
+            $apiKey = $registryInfo[0]['api_id'];
+            $api    = new CkanClient(env('REGISTRY_URL'), $apiKey);
 
             foreach ($changeDetails['previous'] as $filename => $previous) {
-                $fileId   = explode(".", $filename)[0];
+                $pieces = explode(".", $filename);
+                $fileId = array_first($pieces, function () {
+                    return true;
+                });
 
                 if (getVal($previous, ['published_status'])) {
                     $api->package_delete($fileId);
@@ -266,8 +269,11 @@ class Publisher extends RegistryApiHandler
      */
     protected function extractPackage($filename)
     {
-        return array_first(explode('.', $filename), function () {
-            return true;
-        });
+        return array_first(
+            explode('.', $filename),
+            function () {
+                return true;
+            }
+        );
     }
 }

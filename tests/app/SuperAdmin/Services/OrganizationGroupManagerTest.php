@@ -3,6 +3,9 @@
 use App\Models\Organization\Organization;
 use App\Models\SuperAdmin\UserGroup;
 use App\SuperAdmin\Services\OrganizationGroupManager;
+use App\User;
+use Illuminate\Database\DatabaseManager;
+use Psr\Log\LoggerInterface;
 use Test\AidStreamTestCase;
 use Mockery as m;
 
@@ -12,11 +15,12 @@ use Mockery as m;
  */
 class OrganizationGroupManagerTest extends AidStreamTestCase
 {
-
     protected $orgGroupInterface;
     protected $userGroup;
     protected $organization;
     protected $orgGroupManager;
+    protected $databaseManager;
+    protected $logger;
 
     public function setUp()
     {
@@ -24,7 +28,9 @@ class OrganizationGroupManagerTest extends AidStreamTestCase
         $this->orgGroupInterface = m::mock('App\SuperAdmin\Repositories\SuperAdminInterfaces\OrganizationGroup');
         $this->userGroup         = m::mock(UserGroup::class);
         $this->organization      = m::mock(Organization::class);
-        $this->orgGroupManager   = new OrganizationGroupManager($this->orgGroupInterface, $this->userGroup, $this->organization);
+        $this->databaseManager   = m::mock(DatabaseManager::class);
+        $this->logger            = m::mock(LoggerInterface::class);
+        $this->orgGroupManager   = new OrganizationGroupManager($this->orgGroupInterface, $this->userGroup, $this->organization, $this->databaseManager, $this->logger);
     }
 
     public function testItShouldGetAllOrganizationGroups()
@@ -50,7 +56,7 @@ class OrganizationGroupManagerTest extends AidStreamTestCase
         $a = m::mock(UserGroup::class);
         $this->userGroup->shouldReceive('whereUserId->first')->andReturn($a);
         $a->shouldReceive('getAttribute')->once()->with('assigned_organizations')->andReturn([1]);
-        $this->organization->shouldReceive('whereIn->with->get')->andReturn(m::mock('\Illuminate\Database\Eloquent\Collection'));
+        $this->organization->shouldReceive('whereIn->with->orderBy->get')->andReturn(m::mock('\Illuminate\Database\Eloquent\Collection'));
         $this->assertInstanceOf('\Illuminate\Database\Eloquent\Collection', $this->orgGroupManager->getGroupsByUserId(1));
     }
 
