@@ -1,17 +1,13 @@
 var transactionForm = $('#transaction-form-clone');
 var dom = $('div.create-activity-form');
-var count = 0;
+var count = currentTransactionCount;
 
 var Transaction = {
     /*
      * Add more form fields for current TransactionType.
      */
-    addMoreTransaction: function (existingTransactionCount) {
+    addMoreTransaction: function () {
         var clone = Transaction.clone();
-
-        if (existingTransactionCount) {
-            count = existingTransactionCount;
-        }
 
         Transaction.increaseCount();
         Transaction.appendFields(clone);
@@ -83,23 +79,26 @@ var Transaction = {
      */
     increaseCount: function () {
         count++;
+        currentTransactionCount++;
     }
 };
 
 $('#add-more-transaction').on('click', function () {
+    count = currentTransactionCount;
+
     Transaction.addMoreTransaction();
 });
 
 var removeBlock = function (element) {
+    count = currentTransactionCount;
     count--;
+
     $(element).parent().remove();
 };
 
 $('#add-more-transaction-edit').on('click', function () {
-    Transaction.addMoreTransaction(currentTransactionCount);
+    count = currentTransactionCount;
+
+    Transaction.addMoreTransaction();
 });
 
-
-// $(document).ready(function () {
-//     $('.datepicker').datepicker();
-// });

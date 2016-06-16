@@ -1,6 +1,7 @@
 <?php
 use App\Models\Activity\Activity;
 use App\Models\Settings;
+use App\Tz\Aidstream\Models\Project;
 use Illuminate\Database\DatabaseManager;
 
 /**
@@ -142,4 +143,26 @@ function isSuperAdminRoute() {
     $routePieces = explode('.', $host);
 
     return (count($routePieces) > 1);
+}
+
+/**
+ * Get the Districts for a specific region.
+ * @param $region
+ * @return mixed
+ */
+function getDistrictFor($region)
+{
+    $districts = config('tz.location.district');
+
+    return $districts[$region];
+}
+
+/**
+ * Get the index for the Budgets saved.
+ * @param $budget
+ * @return int
+ */
+function getBudgetIndex($budget)
+{
+    return count($budget);
 }

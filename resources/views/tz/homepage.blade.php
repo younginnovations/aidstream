@@ -33,6 +33,14 @@
     </div>
 </div>
 
+<style>
+    .sector-title{
+        max-height: 224px;
+        max-width: 250px;
+        background: #fff;
+    }
+</style>
+
 <section class="main-container">
     <div id="container" class="map-section">
         <button id="reset">Reset</button>
@@ -43,9 +51,10 @@
     <div class="select-block-wrap">
         <div class="container">
             <div class="col-md-12 select-cards-wrap">
-
-                <h3>Use the filters below to start exploring.</h3>
-                <h3>Click <a class="zanzibar" href="#">here</a> to see the projects in Zanzibar only. <a class="resetmap" href="#">Reset</a> map.</h3>
+                <div class="sector-title">
+                    <h3>Use the filters below to start exploring.</h3>
+                    <h3>Click <a class="zanzibar" href="#">here</a> to see the projects in Zanzibar only. <a class="resetmap" href="#">Reset</a> map.</h3>
+                </div>
 
                 <div class="sectors-block">
                 <div class="card small-card">

@@ -100,6 +100,13 @@
         var countryChosen = "{{ $project['recipient_country'] }}";
         var currentLocationCount = "{{ count($project['location']) - 1 }}"
         var districts = {!! json_encode(config('tz.location.district')) !!};
+        var oldLocationCount = 0;
+
+        @if (old('location'))
+                oldLocationCount = "{{ count(old('location')) - 1 }}";
+        @else
+                oldLocationCount = 0;
+        @endif
     </script>
     <script src="{{ asset('/js/tz/project.js') }}"></script>
     <script src="{{ asset('/js/tz/editProject.js') }}"></script>

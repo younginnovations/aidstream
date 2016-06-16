@@ -8,6 +8,7 @@ use App\Tz\Aidstream\Requests\ProjectRequests;
 use App\Tz\Aidstream\Services\Project\ProjectService;
 use App\Tz\Aidstream\Services\Transaction\TransactionService;
 use App\Tz\Aidstream\Traits\FormatsProjectFormInformation;
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -83,18 +84,17 @@ class ProjectController extends TanzanianController
 
     /**
      * Store a new Project into the database
-     * @param Request         $request
-     * @param ProjectRequests $projectRequests
+     * @param ProjectRequests $request
      * @return RedirectResponse
      */
-    public function store(Request $request, ProjectRequests $projectRequests)
+    public function store(ProjectRequests $request)
     {
         $projectId = $this->project->create($this->process($request->all()), $request->all());
 
         if (!$projectId) {
             $response = ['type' => 'danger', 'code' => ['message', ['message' => 'Project could not be saved.']]];
 
-            return redirect()->route('project.index')->withResponse($response);
+            return redirect()->route('project.index')->withResponse($response)->with('request', $request->all());
         }
         $response = ['type' => 'success', 'code' => ['message', ['message' => 'Project successfully saved.']]];
 
@@ -114,10 +114,10 @@ class ProjectController extends TanzanianController
             return redirect()->route('project.index')->withResponse($this->getNoPrivilegesMessage());
         }
 
-        $incomingFund = $this->transaction->getTransactions($id, 1);
-        $disbursement = $this->transaction->getTransactions($id, 3);
-        $expenditure  = $this->transaction->getTransactions($id, 4);
-        $transactions = $this->transaction->findByActivityId($id);
+        $incomingFund  = $this->transaction->getTransactions($id, 1);
+        $disbursement  = $this->transaction->getTransactions($id, 3);
+        $expenditure   = $this->transaction->getTransactions($id, 4);
+        $transactions  = $this->transaction->findByActivityId($id);
         $fundings      = $this->project->getParticipatingOrganizations($id, 1);
         $implementings = $this->project->getParticipatingOrganizations($id, 4);
 
@@ -136,7 +136,21 @@ class ProjectController extends TanzanianController
 
         return view(
             'tz.project.show',
-            compact('fundings','implementings','project', 'transactions', 'activityResult', 'id', 'statusLabel', 'btn_text', 'activityWorkflow', 'nextRoute', 'incomingFund', 'disbursement', 'expenditure')
+            compact(
+                'fundings',
+                'implementings',
+                'project',
+                'transactions',
+                'activityResult',
+                'id',
+                'statusLabel',
+                'btn_text',
+                'activityWorkflow',
+                'nextRoute',
+                'incomingFund',
+                'disbursement',
+                'expenditure'
+            )
         );
     }
 
@@ -372,8 +386,9 @@ class ProjectController extends TanzanianController
         $baseForm = new BaseForm();
         $currency = $baseForm->getCodeList('Currency', 'Activity');
         $settings = $this->project->getCurrentOrganization()->settings->toArray();
+        $project  = $this->project->find($projectId);
 
-        return view('tz.project.partials.budget', compact('projectId', 'currency', 'settings'));
+        return view('tz.project.partials.budget', compact('projectId', 'currency', 'settings', 'project'));
     }
 
     /**
@@ -430,12 +445,29 @@ class ProjectController extends TanzanianController
      * @param $projectId
      * @return mixed
      */
-    public function deleteBudget($projectId)
+    public function deleteBudget($projectId, $index)
     {
-        if (!$this->project->deleteBudget($projectId)) {
+        if (!$this->project->deleteBudget($projectId, $index)) {
             $response = ['type' => 'danger', 'code' => ['message', ['message' => 'Budget could not be deleted.']]];
         } else {
             $response = ['type' => 'success', 'code' => ['message', ['message' => 'Budget successfully deleted.']]];
+        }
+
+        return redirect()->route('project.show', $projectId)->withResponse($response);
+    }
+
+    /**
+     * Add another Budget.
+     * @param               $projectId
+     * @param BudgetRequest $request
+     * @return mixed
+     */
+    public function addAnotherBudget($projectId, BudgetRequest $request)
+    {
+        if (!$this->project->addAnotherBudget($projectId, $request->all())) {
+            $response = ['type' => 'danger', 'code' => ['message', ['message' => 'Budget could not be added.']]];
+        } else {
+            $response = ['type' => 'success', 'code' => ['message', ['message' => 'Budget successfully added.']]];
         }
 
         return redirect()->route('project.show', $projectId)->withResponse($response);

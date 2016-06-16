@@ -12,6 +12,7 @@
 
   .activity-element-wrapper{
     padding: 0 0 10px;
+    border-bottom: 1px dashed #ededed;
   }
 
   & .activity-element-wrapper:nth-last-child(1){
@@ -50,6 +51,73 @@
     font-size: 12px;
     border: solid 1px transparent;
     margin-top: 8px;
+  }
+}
+
+.organisations-list ul{
+  li{
+    line-height: 20px;
+    height: 220px;
+
+    &:before{
+      content: "";
+      display: inline-block;
+      vertical-align: middle;
+      height: 100%;
+    }
+
+    span{
+      display: inline-block;
+      height: auto;
+      width: auto;
+    }
+
+    a{
+      display: inline-block;
+      vertical-align: middle;
+      padding-top: 0;
+      color: #484848;
+
+        &:hover,&:focus,&:active{
+        color: #00A8FF;
+      }
+    }
+
+
+    a span{
+      margin-top: 10px;
+      font-size: 14px;
+      display: block;
+      line-height: 20px;
+      height: auto;
+      width: auto;
+      vertical-align: inherit;
+      padding: 0 8px;
+    }
+
+    .img-wrap{
+      height: 150px;
+      &:before{
+        content: "";
+        display: inline-block;
+        vertical-align: middle;
+        height: 100%;
+      }
+      img{
+        display: inline-block;
+        vertical-align: middle;
+      }
+    }
+  }
+}
+
+.activity-element-list{
+  .title{
+    margin-bottom: 0;
+  }
+
+  .add-more{
+    margin-top: 4px;
   }
 }
 

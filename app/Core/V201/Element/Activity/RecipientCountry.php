@@ -36,10 +36,10 @@ class RecipientCountry extends BaseElement
         foreach ($recipientCountries as $recipientCountry) {
             $activityData[] = [
                 '@attributes' => [
-                    'code'       => $recipientCountry['country_code'],
-                    'percentage' => $recipientCountry['percentage']
+                    'code'       => getVal($recipientCountry, ['country_code']),
+                    'percentage' => getVal($recipientCountry, ['percentage'])
                 ],
-                'narrative'   => $this->buildNarrative($recipientCountry['narrative'])
+                'narrative'   => $this->buildNarrative(getVal($recipientCountry, ['narrative'], []))
             ];
         }
 

@@ -1,5 +1,7 @@
 @extends('tz.base.sidebar')
 
+@section('title', 'Published Files')
+
 @section('content')
     <div class="col-xs-9 col-lg-9 content-wrapper published-wrapper">
         @include('includes.response')

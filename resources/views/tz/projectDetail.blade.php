@@ -86,6 +86,10 @@
                 <dd class="col-md-9 col-sm-8 col-xs-8">{{ $getCode->getCodeListName('Activity','ActivityStatus', $project->activity_status) }}</dd>
             </dl>
 
+            <dl class="clearfix">
+                <dt class="col-md-3 col-sm-4 col-xs-4">Project Sector</dt>
+                <dd class="col-md-9 col-sm-8 col-xs-8">{{ $getCode->getActivityCodeName('SectorCategory', getVal($project->sector, [0, 'sector_category_code'])) }}</dd>
+            </dl>
             @foreach($project->activity_date as $date)
                 @if($date['type'] == 2)
                     <dl class="clearfix">

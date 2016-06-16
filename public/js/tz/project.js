@@ -52,6 +52,7 @@ var Project = {
         }).append(newFundingOrganization);
 
         $('#add-more-funding-organization').before(tempDiv);
+        $('form select').select2();
     },
     /*
      * Add more Implementing Organization.
@@ -65,6 +66,7 @@ var Project = {
         }).append(newImplementingOrganization);
 
         $('#add-more-implementing-organization').before(tempDiv);
+        $('form select').select2();
     },
     /*
      * Clone the form fields from the DOCUMENT.
@@ -145,11 +147,21 @@ var Project = {
     },
     addLocation: function (tanzaniaChosen, edit) {
         if (edit) {
-            currentLocationCount = parseInt(currentLocationCount);
-            locationCount = currentLocationCount;
+            if (oldLocationCount != 0) {
+                locationCount = parseInt(oldLocationCount);
+                currentBudgetCount = locationCount;
+            } else {
+                currentLocationCount = parseInt(currentLocationCount);
+                locationCount = currentLocationCount;
+            }
+        } else {
+            locationCount = parseInt(oldLocationCount);
+            currentLocationCount = locationCount;
         }
 
         locationCount++;
+        oldLocationCount++;
+
         if (typeof currentLocationCount != "undefined") {
             currentLocationCount++;
         }
@@ -250,7 +262,7 @@ $('#project-country').on('change', function () {
 });
 
 $('#add-more-location').on('click', function () {
-    if (tanzaniaChosen) {
+    if ($('#project-country').val() == 'TZ') {
         Project.addLocation(true);
     } else {
         Project.addLocation(false);

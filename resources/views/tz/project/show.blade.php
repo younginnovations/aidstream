@@ -18,10 +18,10 @@
                     <span class="last-updated-date">Last Updated on: {{ changeTimeZone($project['updated_at'], 'M d, Y H:i') }}</span>
                 </div>
             </div>
-             <div class="col-md-3">
-                 <div class="clearfix">
+            <div class="col-md-3">
+                <div class="clearfix">
                     <a href="{{ route('project.edit', $project->id) }}" class="edit-btn">Edit</a>
-                 </div>
+                </div>
                 <a href="{{ route('change-project-defaults', $id) }}" class="override-section">
                     <span class="glyphicon glyphicon-triangle-left"></span>  Override Default Values
                 </a>
@@ -268,9 +268,9 @@
                                             {{ number_format($data['value'][0]['amount']) }} {{ $data['value'][0]['currency'] }}, {{ formatDate(getVal($data, ['transaction_date', 0, 'date'])) }}
                                             <span class="has-delete-wrap">
                                                 <a href="javascript:void(0)" class="delete-transaction delete" data-route="{{ route('single.transaction.destroy', [$data['id']]) }}">Delete</a>
-                                                    {!! Form::open(['method' => 'POST', 'route' => ['single.transaction.destroy', $data['id']],'class' => 'hidden', 'role' => 'form', 'id' => 'transaction-delete-form']) !!}
-                                                    {!! Form::submit('Delete', ['class' => 'pull-left delete-transaction']) !!}
-                                                    {!! Form::close() !!}
+                                                {!! Form::open(['method' => 'POST', 'route' => ['single.transaction.destroy', $data['id']],'class' => 'hidden', 'role' => 'form', 'id' => 'transaction-delete-form']) !!}
+                                                {!! Form::submit('Delete', ['class' => 'pull-left delete-transaction']) !!}
+                                                {!! Form::close() !!}
                                             </span>
                                         </span>
                                     </li>
@@ -323,11 +323,13 @@
                                     </div>
                                 </div>
                             @endforeach
+                            <div class="activity-element-list">
+                                <a href="{{ url(sprintf('project/%s/transaction/%s/create', $project->id,3)) }}" class="add-more"><span>Add Another Disbursement</span></a>
+                            </div>
                         @else
                             <div class="activity-element-list">
-                                <div class="title">Disbursement</div>
-                                <a href="{{ url(sprintf('project/%s/transaction/%s/create', $project->id,3)) }}"
-                                   class="add-more"><span>Add Disbursement</span></a>
+                                <div class="title">Disbursements</div>
+                                <a href="{{ url(sprintf('project/%s/transaction/%s/create', $project->id,3)) }}" class="add-more"><span>Add Disbursement</span></a>
                             </div>
                         @endif
                     </div>
@@ -400,11 +402,13 @@
                                     </div>
                                 </div>
                             @endforeach
+                            <div class="activity-element-list">
+                                <a href="{{ url(sprintf('project/%s/transaction/%s/create', $project->id,4)) }}" class="add-more"><span>Add Another Expenditure</span></a>
+                            </div>
                         @else
                             <div class="activity-element-list">
                                 <div class="title">Expenditure</div>
-                                <a href="{{ url(sprintf('project/%s/transaction/%s/create', $project->id,4)) }}"
-                                   class="add-more"><span>Add Expenditure</span></a>
+                                <a href="{{ url(sprintf('project/%s/transaction/%s/create', $project->id,4)) }}" class="add-more"><span>Add Expenditure</span></a>
                             </div>
                         @endif
                     </div>
@@ -421,7 +425,7 @@
                                 <div class="activity-element-info">
                                     <li>
                                         <span>{{ number_format($data['value'][0]['amount']) }} {{ $data['value'][0]['currency'] }}, {{ formatDate(getVal($data, ['transaction_date', 0, 'date'])) }}
-                                        <span class="has-delete-wrap">
+                                            <span class="has-delete-wrap">
                                             <a href="javascript:void(0)" class="delete-transaction delete" data-route="{{ route('single.transaction.destroy', [$data['id']]) }}">Delete</a>
                                                 {!! Form::open(['method' => 'POST', 'route' => ['single.transaction.destroy', $data['id']],'class' => 'hidden', 'role' => 'form', 'id' => 'transaction-delete-form']) !!}
                                                 {!! Form::submit('Delete', ['class' => 'pull-left delete-transaction']) !!}
@@ -479,11 +483,13 @@
                                     </div>
                                 </div>
                             @endforeach
+                            <div class="activity-element-list">
+                                <a href="{{ url(sprintf('project/%s/transaction/%s/create', $project->id,1)) }}" class="add-more"><span>Add Another Incoming Funds</span></a>
+                            </div>
                         @else
                             <div class="activity-element-list">
                                 <div class="title">Incoming Funds</div>
-                                <a href="{{ url(sprintf('project/%s/transaction/%s/create', $project->id,1)) }}"
-                                   class="add-more"><span>Add Incoming Funds</span></a>
+                                <a href="{{ url(sprintf('project/%s/transaction/%s/create', $project->id,1)) }}" class="add-more"><span>Add Incoming Funds</span></a>
                             </div>
                         @endif
 
@@ -517,6 +523,17 @@
 @endsection
 
 @section('script')
+    <script>
+        var currentTransactionCount;
+
+        @if(old('transaction'))
+                currentTransactionCount = "{{ count(old('transaction')) - 1 }}";
+        @elseif (isset($transactions))
+                currentTransactionCount = "{{ count($transactions) - 1 }}";
+        @else
+                currentTransactionCount = 0;
+        @endif
+    </script>
     <script src="{{ asset('/js/tz/transaction.js') }}"></script>
     <script src="{{ asset('/js/tz/transactionDelete.js') }}"></script>
 @endsection

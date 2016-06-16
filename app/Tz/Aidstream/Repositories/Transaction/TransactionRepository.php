@@ -70,7 +70,7 @@ class TransactionRepository implements TransactionRepositoryInterface
     public function update($transactions)
     {
         foreach ($transactions['transaction'] as $transactionData) {
-            if (array_key_exists('id', $transactionData)) {
+            if (array_key_exists('id', $transactionData) && boolval($transactionData['id'])) {
                 $transaction = $this->transaction->find($transactionData['id']);
                 unset($transactionData['id']);
                 $transactionData = [

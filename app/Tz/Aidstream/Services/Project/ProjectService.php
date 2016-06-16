@@ -407,6 +407,7 @@ class ProjectService
 
             $project->budget = $this->mapBudgetValueDate($budgetDetails);
             $project->save();
+            $this->resetWorkflow($project);
 
             $this->logger->info(
                 sprintf('Budget successfully saved for project with id: %s', $projectId),
@@ -439,8 +440,9 @@ class ProjectService
         $details = [];
 
         foreach ($budgetDetails['budget'] as $index => $detail) {
-            $details[]                                      = $detail;
-            $details[$index]['value'][$index]['value_date'] = getVal($budgetDetails, ['budget', $index, 'period_start', $index, 'date']);
+            $details[] = $detail;
+
+            $details[$index]['value'][0]['value_date'] = getVal($budgetDetails, ['budget', $index, 'period_start', 0, 'date']);
         }
 
         return $details;
@@ -458,7 +460,7 @@ class ProjectService
             $user    = auth()->user()->getNameAttribute();
             $project = $this->find($projectId);
 
-            $project->update($budgetDetails);
+            $project->update(['budget' => $this->mapBudgetValueDate($budgetDetails)]);
             $this->resetWorkflow($project);
 
             $this->logger->info(
@@ -482,13 +484,22 @@ class ProjectService
         }
     }
 
-    public function deleteBudget($projectId)
+    /**
+     * Delete an existing Budget.
+     * @param $projectId
+     * @return bool|null
+     */
+    public function deleteBudget($projectId, $index)
     {
         try {
             $user    = auth()->user()->getNameAttribute();
             $project = $this->find($projectId);
 
-            $project->budget = null;
+            $budget = $project->budget;
+
+            unset($budget[$index]);
+
+            $project->budget = $budget;
             $project->save();
 
             $this->resetWorkflow($project);
@@ -511,7 +522,6 @@ class ProjectService
 
             return null;
         }
-
     }
 
     public function getPublishedProjects($orgId)
@@ -537,24 +547,25 @@ class ProjectService
             }
 
             $i = 0;
-            foreach ($project->location as $location) {
-                foreach ($location['administrative'] as $index => $administrative) {
-                    if ($index == 0) {
-                        $regionName[$i] = $administrative['code'];
-                        $i ++;
+            if ($project->location) {
+                foreach ($project->location as $location) {
+                    foreach ($location['administrative'] as $index => $administrative) {
+                        if ($index == 0) {
+                            $regionName[$i] = $administrative['code'];
+                            $i ++;
+                        }
                     }
-
                 }
             }
 
             $jsonData[] = [
-                'id'         => $project->id,
-                'identifier' => $project->identifier['activity_identifier'],
-                'title'      => $project->title[0]['narrative'],
-                'sectors'    => [$getCode->getActivityCodeName('SectorCategory', $project->sector[0]['sector_category_code'])],
-                'regions'    => $regionName,
-                'startdate'  => $startDate,
-                'enddate'    => $endDate,
+                'id'                     => $project->id,
+                'identifier'             => $project->identifier['activity_identifier'],
+                'title'                  => $project->title[0]['narrative'],
+                'sectors'                => [$getCode->getActivityCodeName('SectorCategory', $project->sector[0]['sector_category_code'])],
+                'regions'                => $regionName,
+                'startdate'              => $startDate,
+                'enddate'                => $endDate,
                 'reporting_organisation' => $project->organization->name
             ];
         }
@@ -641,4 +652,39 @@ class ProjectService
         return $totalBudget;
     }
 
+    /**
+     * Add another Budget.
+     * @param $projectId
+     * @param $budgetDetails
+     * @return bool|null
+     */
+    public function addAnotherBudget($projectId, $budgetDetails)
+    {
+        try {
+            $project       = $this->find($projectId);
+            $budgetDetails = array_merge($project->budget, $budgetDetails['budget']);
+
+            $project->budget = $budgetDetails;
+            $project->save();
+
+            $this->logger->info(
+                'Budget successfully added.',
+                [
+                    'byUser' => auth()->user()->getNameAttribute()
+                ]
+            );
+
+            return true;
+        } catch (Exception $exception) {
+            $this->logger->error(
+                sprintf('Budget could not be added due to %s', $exception->getMessage()),
+                [
+                    'byUser' => auth()->user()->getNameAttribute(),
+                    'trace'  => $exception->getTraceAsString()
+                ]
+            );
+
+            return null;
+        }
+    }
 }
