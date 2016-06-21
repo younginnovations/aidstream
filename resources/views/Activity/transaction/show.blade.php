@@ -1,269 +1,121 @@
-@extends('app')
+@extends('Activity.activityBaseTemplate')
 
 @section('title', 'Activity Transaction - ' . $activity->IdentifierTitle)
 
-@section('content')
-    @inject('code', 'App\Helpers\GetCodeName')
-    <div class="container main-container">
-        <div class="row">
-            @include('includes.side_bar_menu')
-            <div class="col-xs-9 col-md-9 col-lg-9 content-wrapper transaction-show">
-                @include('includes.response')
-                <div class="element-panel-heading">
-                    <div>
-                        <span>Transaction</span>
-                        <div class="element-panel-heading-info"><span>{{$activity->IdentifierTitle}}</span></div>
-                    </div>
+@section('activity-content')
+    @inject('getCode', 'App\Helpers\GetCodeName')
+    <div class="element-panel-heading">
+        <div>
+            <span>Transaction</span>
+            <div class="element-panel-heading-info"><span>{{$activity->IdentifierTitle}}</span></div>
+        </div>
+    </div>
+    <div class="col-xs-12 col-md-8 col-lg-8 element-content-wrapper">
+        <div class="activity-element-wrapper">
+            <div class="activity-element-list">
+                <div class="activity-element-label">Value</div>
+                <div class="activity-element-info">{!! getCurrencyValueDate(getVal($transactionDetail,['value',0]), "transaction") !!}</div>
+            </div>
+            <div class="activity-element-list">
+                <div class="activity-element-label">@lang('activityView.transaction_type')</div>
+                <div class="activity-element-info">{!! getCodeNameWithCodeValue('TransactionType' , getVal($transactionDetail, ['transaction_type',0,'transaction_type_code']) , -4) !!}</div>
+            </div>
+            <div class="activity-element-list">
+                <div class="activity-element-label">@lang('activityView.transaction_reference')</div>
+                <div class="activity-element-info">{!! checkIfEmpty($transactionDetail['reference']) !!}</div>
+            </div>
+            <div class="activity-element-list">
+                <div class="activity-element-label">@lang('activityView.transaction_date')</div>
+                <div class="activity-element-info">{{ formatDate($transactionDetail['transaction_date'][0]['date']) }}</div>
+            </div>
+            <div class="activity-element-list">
+                <div class="activity-element-label">@lang('activityView.description')</div>
+                <div class="activity-element-info">
+                    {!! getFirstNarrative($transactionDetail['description'][0])!!}
+                    @include('Activity.partials.viewInOtherLanguage', ['otherLanguages' => getOtherLanguages($transactionDetail['description'][0]['narrative'])])
                 </div>
-                <div class="col-xs-12 col-md-8 col-lg-8 element-content-wrapper">
-                    <div class="panel panel-default panel-element-detail element-show">
-                        <div class="pull-right"><a href="{{route('activity.transaction.edit', ['id' => $id, 'transactionid' => $transactionId])}}" class="edit-value"></a></div>
-                        <div class="panel-body">
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <div class="activity-element-title">Element Detail</div>
-                                </div>
-                                <div class="panel panel-body panel-element-body">
-                                    <div class="col-xs-12 col-md-12">
-                                        <div class="col-xs-12 col-sm-4">Reference:</div>
-                                        <div class="col-xs-12 col-sm-8">{{$transactionDetail['reference']}}</div>
-                                    </div>
-                                    <div class="col-xs-12 col-md-12">
-                                        <div class="col-xs-12 col-sm-4">Humanitarian:</div>
-                                        <div class="col-xs-12 col-sm-8">{{ isset($transaction['humanitarian']) && $transaction['humanitarian'] == 1 ? 'True' : 'False' }}</div>
-                                    </div>
-                                </div>
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <div class="activity-element-title">Transaction Type</div>
-                                    </div>
-                                    <div class="panel-body panel-element-body">
-                                        <div class="col-xs-12 col-md-12">
-                                            <div class="col-xs-12 col-sm-4">Code:</div>
-                                            <div class="col-xs-12 col-sm-8">{{$code->getActivityCodeName('TransactionType', $transactionDetail['transaction_type'][0]['transaction_type_code'])}}</div>
-                                        </div>
-                                        <div class="col-xs-12 col-md-12">
-                                            <div class="col-xs-12 col-sm-4">Humanitarian:</div>
-                                            <div class="col-xs-12 col-sm-8">{{ isset($transaction['humanitarian']) && $transaction['humanitarian'] == 1 ? 'True' : 'False' }}</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <div class="activity-element-title">Provider Organization</div>
-                                    </div>
-                                    {{--*/ $providerOrg = $transactionDetail['provider_organization'][0] /*--}}
-                                    <div class="panel-body panel-element-body">
-                                        <div class="col-xs-12 col-md-12">
-                                            <div class="col-xs-12 col-sm-4">Ref:</div>
-                                            <div class="col-xs-12 col-sm-8">{{$providerOrg['organization_identifier_code']}}</div>
-                                        </div>
-                                        <div class="col-xs-12 col-md-12">
-                                            <div class="col-xs-12 col-sm-4">Provider_activity_id:</div>
-                                            <div class="col-xs-12 col-sm-8">{{$providerOrg['provider_activity_id']}}</div>
-                                        </div>
-                                        <div class="col-xs-12 col-md-12">
-                                            <div class="col-xs-12 col-sm-4">Narrative text:</div>
-                                            <div class="col-xs-12 col-sm-8">{{$providerOrg['narrative'][0]['narrative']}}</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <div class="activity-element-title">Value</div>
-                                    </div>
-                                    {{--*/ $value = $transactionDetail['value'][0] /*--}}
-                                    <div class="panel-body panel-element-body">
-                                        <div class="col-xs-12 col-md-12">
-                                            <div class="col-xs-12 col-sm-4">Amount:</div>
-                                            <div class="col-xs-12 col-sm-8">{{$value['amount'] }}</div>
-                                        </div>
-                                        <div class="col-xs-12 col-md-12">
-                                            <div class="col-xs-12 col-sm-4">Value date:</div>
-                                            <div class="col-xs-12 col-sm-8">{{$value['date'] }}</div>
-                                        </div>
-                                        <div class="col-xs-12 col-md-12">
-                                            <div class="col-xs-12 col-sm-4">Currency:</div>
-                                            <div class="col-xs-12 col-sm-8">{{$code->getActivityCodeName('Currency', $value['currency'])}}</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <div class="activity-element-title">Description</div>
-                                    </div>
-                                    <div class="panel-body panel-element-body">
-                                        <div class="col-xs-12 col-md-12">
-                                            <div class="col-xs-12 col-sm-4">Narrative text:</div>
-                                            <div class="col-xs-12 col-sm-8">{{$transactionDetail['description'][0]['narrative'][0]['narrative']}}</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <div class="activity-element-title">Transaction Date</div>
-                                    </div>
-                                    <div class="panel-body panel-element-body">
-                                        <div class="col-xs-12 col-md-12">
-                                            <div class="col-xs-12 col-sm-4">Date:</div>
-                                            <div class="col-xs-12 col-sm-8">{{$transactionDetail['transaction_date'][0]['date']}}</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <div class="activity-element-title">Receiver Organization</div>
-                                    </div>
-                                    {{--*/ $receiverOrg = $transactionDetail['receiver_organization'][0] /*--}}
-                                    <div class="panel-body panel-element-body">
-                                        <div class="col-xs-12 col-md-12">
-                                            <div class="col-xs-12 col-sm-4">Ref:</div>
-                                            <div class="col-xs-12 col-sm-8">{{$receiverOrg['organization_identifier_code']}}</div>
-                                        </div>
-                                        <div class="col-xs-12 col-md-12">
-                                            <div class="col-xs-12 col-sm-4">Provider_activity_id:</div>
-                                            <div class="col-xs-12 col-sm-8">{{$receiverOrg['receiver_activity_id']}}</div>
-                                        </div>
-                                        <div class="col-xs-12 col-md-12">
-                                            <div class="col-xs-12 col-sm-4">Narrative text:</div>
-                                            <div class="col-xs-12 col-sm-8">{{$receiverOrg['narrative'][0]['narrative']}}</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <div class="activity-element-title">Disbursement Channel</div>
-                                    </div>
-                                    <div class="panel-body panel-element-body">
-                                        <div class="col-xs-12 col-md-12">
-                                            <div class="col-xs-12 col-sm-4">Disbursement Channel Code:</div>
-                                            <div class="col-xs-12 col-sm-8">{{$code->getActivityCodeName('DisbursementChannel', getVal($transactionDetail, ['disbursement_channel', 0, 'disbursement_channel_code']))}}</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                @if(getVal($transactionDetail, ['sector'], []))
-                                    <div class="panel panel-default">
-                                        <div class="panel-heading">
-                                            <div class="activity-element-title">Sector</div>
-                                        </div>
-                                        {{--*/ $sector = $transactionDetail['sector'][0] /*--}}
-                                        <div class="panel-body panel-element-body">
-                                            <div class="col-xs-12 col-md-12">
-                                                <div class="col-xs-12 col-sm-4">Sector Code:</div>
-                                                <div class="col-xs-12 col-sm-8">{{$code->getActivityCodeName('Sector', $sector['sector_code'])}}</div>
-                                            </div>
-                                            <div class="col-xs-12 col-md-12">
-                                                <div class="col-xs-12 col-sm-4">Sector Vocabulary:</div>
-                                                <div class="col-xs-12 col-sm-8">{{$code->getActivityCodeName('SectorVocabulary', $sector['sector_vocabulary'])}}</div>
-                                            </div>
-                                            <div class="col-xs-12 col-md-12">
-                                                <div class="col-xs-12 col-sm-4">Narrative text:</div>
-                                                <div class="col-xs-12 col-sm-8">{{$sector['narrative'][0]['narrative']}}</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                @endif
-                                @if(getVal($transactionDetail, ['recipient_country'], []))
-                                    <div class="panel panel-default">
-                                        <div class="panel-heading">
-                                            <div class="activity-element-title">Recipient Country</div>
-                                            <a href="{{ route('activity.transaction.delete-block', [$id, $transactionId, 'recipient_country']) }}" class="delete pull-right">remove</a>
-                                        </div>
-                                        {{--*/ $recipientCountry = $transactionDetail['recipient_country'][0] /*--}}
-                                        <div class="panel-body panel-element-body">
-                                            <div class="col-xs-12 col-md-12">
-                                                <div class="col-xs-12 col-sm-4">Recipient Country Code:</div>
-                                                <div class="col-xs-12 col-sm-8">{{$code->getOrganizationCodeName('Country', $recipientCountry['country_code'])}}</div>
-                                            </div>
-                                            <div class="col-xs-12 col-md-12">
-                                                <div class="col-xs-12 col-sm-4">Narrative text:</div>
-                                                <div class="col-xs-12 col-sm-8">{{$recipientCountry['narrative'][0]['narrative']}}</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                @endif
-
-                                @if(getVal($transactionDetail, ['recipient_region'], []))
-                                    <div class="panel panel-default">
-                                        <div class="panel-heading">
-                                            <div class="activity-element-title">Recipient Region</div>
-                                            <a href="{{ route('activity.transaction.delete-block', [$id, $transactionId, 'recipient_region']) }}" class="delete pull-right">remove</a>
-                                        </div>
-                                        {{--*/ $recipientRegion = $transactionDetail['recipient_region'][0] /*--}}
-                                        <div class="panel-body panel-element-body">
-                                            <div class="col-xs-12 col-md-12">
-                                                <div class="col-xs-12 col-sm-4">Recipient Region Code:</div>
-                                                <div class="col-xs-12 col-sm-8">{{$code->getActivityCodeName('Region', $recipientRegion['region_code'])}}</div>
-                                            </div>
-                                            <div class="col-xs-12 col-md-12">
-                                                <div class="col-xs-12 col-sm-4">Recipient Region Vocabulary:</div>
-                                                <div class="col-xs-12 col-sm-8">{{$code->getActivityCodeName('RegionVocabulary', $recipientRegion['vocabulary'])}}</div>
-                                            </div>
-                                            <div class="col-xs-12 col-md-12">
-                                                <div class="col-xs-12 col-sm-4">Narrative text:</div>
-                                                <div class="col-xs-12 col-sm-8">{{$recipientRegion['narrative'][0]['narrative']}}</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                @endif
-
-                                @if(getVal($transactionDetail, ['flow_type', 0, 'flow_type']))
-                                    <div class="panel panel-default">
-                                        <div class="panel-heading">
-                                            <div class="activity-element-title">Flow Type</div>
-                                        </div>
-                                        <div class="panel-body panel-element-body">
-                                            <div class="col-xs-12 col-md-12">
-                                                <div class="col-xs-12 col-sm-4">Code:</div>
-                                                <div class="col-xs-12 col-sm-8">{{$code->getActivityCodeName('FlowType', $transactionDetail['flow_type'][0]['flow_type'])}}</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                @endif
-                                @if(getVal($transactionDetail, ['finance_type', 0, 'finance_type'], []))
-                                    <div class="panel panel-default">
-                                        <div class="panel-heading">
-                                            <div class="activity-element-title">Finance Type</div>
-                                        </div>
-                                        <div class="panel-body panel-element-body">
-                                            <div class="col-xs-12 col-md-12">
-                                                <div class="col-xs-12 col-sm-4">Code:</div>
-                                                <div class="col-xs-12 col-sm-8">{{$code->getActivityCodeName('FinanceType', $transactionDetail['finance_type'][0]['finance_type'])}}</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                @endif
-                                @if(getVal($transactionDetail, ['aid_type', 0, 'aid_type'], []))
-                                    <div class="panel panel-default">
-                                        <div class="panel-heading">
-                                            <div class="activity-element-title">Aid Type</div>
-                                        </div>
-                                        <div class="panel-body panel-element-body">
-                                            <div class="col-xs-12 col-md-12">
-                                                <div class="col-xs-12 col-sm-4">Code:</div>
-                                                <div class="col-xs-12 col-sm-8">{{$code->getActivityCodeName('AidType', $transactionDetail['aid_type'][0]['aid_type'])}}</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                @endif
-                                @if(getVal($transactionDetail, ['tied_status', 0, 'tied_status_code'], []))
-                                    <div class="panel panel-default">
-                                        <div class="panel-heading">
-                                            <div class="activity-element-title">Tied Status</div>
-                                        </div>
-                                        <div class="panel-body panel-element-body">
-                                            <div class="col-xs-12 col-md-12">
-                                                <div class="col-xs-12 col-sm-4">Code:</div>
-                                                <div class="col-xs-12 col-sm-8">{{$code->getActivityCodeName('TiedStatus', $transactionDetail['tied_status'][0]['tied_status_code'])}}</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                @endif
-                            </div>
-                        </div>
+            </div>
+            @if(session('version') != 'V201')
+                @if(array_key_exists('humanitarian' , $transactionDetail))
+                    <div class="activity-element-list">
+                        <div class="activity-element-label">@lang('activityView.humanitarian')</div>
+                        @if($transactionDetail['humanitarian'] == "")
+                            <div class="activity-element-info"><em>Not Available</em></div>
+                        @elseif($transactionDetail['humanitarian'] == 1)
+                            <div class="activity-element-info">Yes</div>
+                        @elseif($transactionDetail['humanitarian'] == 0)
+                            <div class="activity-element-info">No</div>
+                        @endif
                     </div>
+                @endif
+            @endif
+            <div class="activity-element-list">
+                <div class="activity-element-label">@lang('activityView.provider_organization')</div>
+                <div class="activity-element-info">
+                    {!! getFirstNarrative($transactionDetail['provider_organization'][0]) !!}
+                    @include('Activity.partials.viewInOtherLanguage', ['otherLanguages' => getOtherLanguages(getVal($transactionDetail,['provider_organization',0,'narrative']))])
+                    {!! getTransactionProviderDetails($transactionDetail['provider_organization'][0] , 'provider') !!}
                 </div>
-                @include('includes.activity.element_menu')
+            </div>
+            <div class="activity-element-list">
+                <div class="activity-element-label">@lang('activityView.receiver_organization')</div>
+                <div class="activity-element-info">
+                    {!! getFirstNarrative($transactionDetail['receiver_organization'][0]) !!}
+                    @include('Activity.partials.viewInOtherLanguage', ['otherLanguages' => getOtherLanguages(getVal($transactionDetail,['receiver_organization',0,'narrative']))])
+                    {!! getTransactionProviderDetails($transactionDetail['receiver_organization'][0] , 'receiver') !!}
+                </div>
+            </div>
+            <div class="activity-element-list">
+                <div class="activity-element-label">@lang('activityView.disbursement_channel')</div>
+                <div class="activity-element-info">{!! checkIfEmpty($getCode->getCodeNameOnly('DisbursementChannel' , getVal($transactionDetail, ['disbursement_channel',0,'disbursement_channel_code']))) !!}</div>
+            </div>
+            <div class="activity-element-list">
+                <div class="activity-element-label">@lang('activityView.sector')</div>
+                <div class="activity-element-info">
+                    {!! getSectorInformation(getVal($transactionDetail,['sector',0],[] ), "") !!}
+                    {!! getTransactionSectorDetails(getVal($transactionDetail,['sector',0],[])) !!} <br>
+                    {!! getFirstNarrative(getVal($transactionDetail,['sector',0],[])) !!}
+                    @include('Activity.partials.viewInOtherLanguage', ['otherLanguages' => getOtherLanguages(getVal($transactionDetail,['sector',0,'narrative'],[]))])
+                </div>
+            </div>
+            <div class="activity-element-list">
+                <div class="activity-element-label">@lang('activityView.recipient_country')</div>
+                <div class="activity-element-info">
+                    {!! getCountryNameWithCode(getVal($transactionDetail, ['recipient_country',0,'country_code'])) !!}
+                    <br>
+                    @if(!empty($transactionDetail['recipient_country'][0]['narrative'][0]['narrative']))
+                        {!! getFirstNarrative($transactionDetail['recipient_country'][0]) !!}
+                        @include('Activity.partials.viewInOtherLanguage', ['otherLanguages' => getOtherLanguages($transactionDetail['recipient_country'][0]['narrative'])])
+                    @endif
+                </div>
+            </div>
+            <div class="activity-element-list">
+                <div class="activity-element-label">@lang('activityView.recipient_region')</div>
+                <div class="activity-element-info">
+                    {!! getCodeNameWithCodeValue('Region' , getVal($transactionDetail,['recipient_region',0,'region_code']) , -5) !!}
+                    <br>
+                    {!! getRecipientRegionDetails(getVal($transactionDetail, ['recipient_region', 0],[])) !!} <br> <br>
+                    @if(!empty($transactionDetail['recipient_region'][0]['narrative'][0]['narrative']))
+                        {!! getFirstNarrative($transactionDetail['recipient_region'][0]) !!}
+                        @include('Activity.partials.viewInOtherLanguage', ['otherLanguages' => getOtherLanguages($transactionDetail['recipient_region'][0]['narrative'])])
+                    @endif
+                </div>
+            </div>
+            <div class="activity-element-list">
+                <div class="activity-element-label">@lang('activityView.flow_type')</div>
+                <div class="activity-element-info">{!! getCodeNameWithCodeValue('FlowType' , getVal($transactionDetail, ['flow_type',0,'flow_type']) , -4) !!}</div>
+            </div>
+            <div class="activity-element-list">
+                <div class="activity-element-label">@lang('activityView.finance_type')</div>
+                <div class="activity-element-info">{!! getCodeNameWithCodeValue('FinanceType' , getVal($transactionDetail, ['finance_type',0,'finance_type']) , -5) !!}</div>
+            </div>
+            <div class="activity-element-list">
+                <div class="activity-element-label">@lang('activityView.aid_type')</div>
+                <div class="activity-element-info">{!! getCodeNameWithCodeValue('AidType' , getVal($transactionDetail,['aid_type',0,'aid_type'] ), -5) !!}</div>
+            </div>
+            <div class="activity-element-list">
+                <div class="activity-element-label">@lang('activityView.tied_status')</div>
+                <div class="activity-element-info">{!! getCodeNameWithCodeValue('TiedStatus' , getVal($transactionDetail, ['tied_status', 0, 'tied_status_code']) , -4) !!}</div>
             </div>
         </div>
     </div>
