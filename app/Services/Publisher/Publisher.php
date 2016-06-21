@@ -57,7 +57,10 @@ class Publisher extends RegistryApiHandler
 
             foreach ($changeDetails['previous'] as $filename => $previous) {
                 $fileId   = explode(".", $filename)[0];
-                $api->package_delete($fileId);
+
+                if (getVal($previous, ['published_status'])) {
+                    $api->package_delete($fileId);
+                }
             }
 
             return true;
