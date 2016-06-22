@@ -57,7 +57,7 @@ class WorkflowController extends Controller
         }
 
         if ($invalidResponse = $this->workFlowManager->validate($activity)) {
-            return redirect()->back()->withResponse(['type' => 'danger', 'messages' => $invalidResponse]);
+            return redirect()->back()->withResponse(['type' => 'danger', 'messages' => $invalidResponse, 'activity' => 'true']);
         }
 
         return redirect()->back()
