@@ -3,6 +3,9 @@
 use App\Models\Organization\Organization;
 use App\Models\SuperAdmin\UserGroup;
 use App\SuperAdmin\Repositories\SuperAdminInterfaces\OrganizationGroup as OrganizationGroupInterface;
+use Exception;
+use Illuminate\Database\DatabaseManager;
+use Psr\Log\LoggerInterface;
 
 /**
  * Class OrganizationGroupManager
@@ -24,15 +27,28 @@ class OrganizationGroupManager
     protected $organization;
 
     /**
+     * @var Logger
+     */
+    protected $logger;
+    /**
+     * @var DatabaseManager
+     */
+    protected $databaseManager;
+
+    /**
      * @param OrganizationGroupInterface $organizationGroupInterface
      * @param UserGroup                  $userGroup
      * @param Organization               $organization
+     * @param DatabaseManager            $databaseManager
+     * @param LoggerInterface            $logger
      */
-    function __construct(OrganizationGroupInterface $organizationGroupInterface, UserGroup $userGroup, Organization $organization)
+    function __construct(OrganizationGroupInterface $organizationGroupInterface, UserGroup $userGroup, Organization $organization, DatabaseManager $databaseManager, LoggerInterface $logger)
     {
         $this->organizationGroupInterface = $organizationGroupInterface;
         $this->userGroup                  = $userGroup;
         $this->organization               = $organization;
+        $this->databaseManager            = $databaseManager;
+        $this->logger                     = $logger;
     }
 
     /**
@@ -90,5 +106,53 @@ class OrganizationGroupManager
         $model['group_admin_information'][0]                 = $orgGroupInfo['user'];
 
         return $model;
+    }
+
+    /**
+     * Delete an existing UserGroup.
+     * @param $userGroup
+     * @return bool
+     */
+    public function deleteGroup($userGroup)
+    {
+        try {
+            $userGroupName = $userGroup->group_name;
+            $groupAdmin    = $userGroup->user;
+            $this->databaseManager->beginTransaction();
+            $userGroup->delete();
+            $groupAdmin->delete();
+
+            $this->databaseManager->commit();
+
+            $this->logger->info(
+                "User Group successfully deleted.",
+                [
+                    'group_name'  => $userGroupName,
+                    'super_admin' => auth()->user()->username,
+                ]
+            );
+
+            $this->logger->activity(
+                "activity.group_organization_deleted",
+                [
+                    'group_name'  => $userGroupName,
+                    'super_admin' => auth()->user()->username,
+                ]
+            );
+
+            return true;
+        } catch (Exception $exception) {
+            $this->databaseManager->rollback();
+
+            $this->logger->error(
+                sprintf("User Group could not be deleted due to %s.", $exception->getMessage()),
+                [
+                    'group_name'  => $userGroupName,
+                    'super_admin' => auth()->user()->username,
+                    'trace'       => $exception->getTraceAsString()
+                ]
+            );
+        }
+
     }
 }
