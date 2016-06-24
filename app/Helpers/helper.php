@@ -702,9 +702,9 @@ function getResultsBaseLine($measure, array $baseLine)
 
     $year    = checkIfEmpty($baseLine['year']);
     $measure = ($measure == 2) ? '%' : trans_choice('activityView.units', $baseLine['value']);
-    $value   = ($baseLine['value'] == "") ? '<em> Not Available </em>' : $baseLine['value'] . $measure;
+    $value   = ($baseLine['value'] == "") ? '<em> Not Available </em>' : $baseLine['value'] . ' ' . $measure;
 
-    return sprintf('%s (Year:%s)', $value, $year);
+    return sprintf('%s (Year: %s)', $value, $year);
 }
 
 /**

@@ -88,7 +88,7 @@
                             <div class="element-info">
                                 <div class="activity-element-label">@lang('activityView.recipient_region')</div>
                                 <div class="activity-element-info">
-                                    {!! getCodeNameWithCodeValue('Region' , getVal($transaction,['recipient_region',0,'region_code']) , -4) !!}
+                                    {!! getCodeNameWithCodeValue('Region' , getVal($transaction,['recipient_region',0,'region_code']) , -5) !!}
                                     <br>
                                     {!! getRecipientRegionDetails(getVal($transaction, ['recipient_region', 0],[])) !!} <br> <br>
                                     @if(!empty($transaction['recipient_region'][0]['narrative'][0]['narrative']))

@@ -4,7 +4,7 @@
             <div class="activity-element-label">@lang('activityView.country_budget_items')</div>
             <div class="activity-element-info">
                 @foreach($countryBudgetItems[0]['budget_item'] as $budgetItems)
-                    <li>{{ getCountryBudgetItems($countryBudgetItems[0]['vocabulary'], $budgetItems) }}</li>
+                    <li>{!!  getCountryBudgetItems($countryBudgetItems[0]['vocabulary'], $budgetItems) !!} </li>
                     <div class="toggle-btn">
                         <span class="show-more-info">Show more info</span>
                         <span class="hide-more-info hidden">Hide more info</span>
