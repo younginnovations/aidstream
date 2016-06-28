@@ -1612,7 +1612,7 @@ $element-sidebar-wrapper-width: 283px;
   text-align: center;
   display: inline-block;
   width: 100%;
-  margin-bottom: 48px;
+  margin-bottom: 30px;
   margin-top: -20px;
   ol {
     margin-top: 15px;
@@ -1662,7 +1662,8 @@ $element-sidebar-wrapper-width: 283px;
     }
   }
   & + a {
-    margin-right: 40px;
+    font-size: 12px;
+    margin: 0 24px 10px 0;
   }
 }
 
@@ -3547,6 +3548,7 @@ table.dataTable thead .sorting_desc {
 
 .activity-element-wrapper .activity-element-info em {
   color: rgba(72, 72, 72, 0.7);
+  font-size: 13px;
 }
 
 .activity-element-wrapper dd li, .activity-element-wrapper .activity-element-info li {
@@ -3599,7 +3601,7 @@ table.dataTable thead .sorting_desc {
   position: relative;
   margin: 12px 0 0 -240px;
   &:before {
-    @include position(absolute, -6px auto auto 270px);
+    @include position(absolute, -6px auto auto 290px);
     content: '';
     border-left: 6px solid transparent;
     border-right: 6px solid transparent;
@@ -3639,6 +3641,7 @@ table.dataTable thead .sorting_desc {
 .activity-element-info {
   width: calc(100% - 240px);
   line-height: 22px;
+  padding-right: 30px;
   li {
     padding-left: 10px;
   }
@@ -3931,7 +3934,7 @@ pre.prettyprint {
   background: $url_18 no-repeat 0 -16px;
 }
 
-.activity-status-published .Unlinked {
+.activity-status-published .Unlinked,.activity-status-published .Linked {
   float: left;
   margin: 25px 0 0 20px;
 }

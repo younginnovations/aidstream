@@ -4283,7 +4283,7 @@ label {
   text-align: center;
   display: inline-block;
   width: 100%;
-  margin-bottom: 48px;
+  margin-bottom: 30px;
   margin-top: -20px; }
   .activity-status ol {
     margin-top: 15px;
@@ -4328,7 +4328,8 @@ label {
     .activity-status ol .active:before {
       background: #e15454; }
   .activity-status + a {
-    margin-right: 40px; }
+    font-size: 12px;
+    margin: 0 24px 10px 0; }
 
 .activity-status input[type="submit"], .activity-status input[type="button"] {
   font: normal 13px Open-Sans-Regular;
@@ -5880,7 +5881,8 @@ table.dataTable thead .sorting_desc {
   padding-right: 20px; }
 
 .activity-element-wrapper .activity-element-info em {
-  color: rgba(72, 72, 72, 0.7); }
+  color: rgba(72, 72, 72, 0.7);
+  font-size: 13px; }
 
 .activity-element-wrapper dd li, .activity-element-wrapper .activity-element-info li {
   list-style: none;
@@ -5942,7 +5944,7 @@ table.dataTable thead .sorting_desc {
     top: -6px;
     right: auto;
     bottom: auto;
-    left: 270px;
+    left: 290px;
     content: '';
     border-left: 6px solid transparent;
     border-right: 6px solid transparent;
@@ -5975,7 +5977,8 @@ table.dataTable thead .sorting_desc {
   width: -webkit-calc(100% - 240px);
   width: -moz-calc(100% - 240px);
   width: calc(100% - 240px);
-  line-height: 22px; }
+  line-height: 22px;
+  padding-right: 30px; }
   .activity-element-info li {
     padding-left: 10px; }
   .activity-element-info li {
@@ -6213,7 +6216,7 @@ pre.prettyprint {
 .Unlinked {
   background: url(../../images/ic-activity-link.svg) no-repeat 0 -16px; }
 
-.activity-status-published .Unlinked {
+.activity-status-published .Unlinked, .activity-status-published .Linked {
   float: left;
   margin: 25px 0 0 20px; }
 
