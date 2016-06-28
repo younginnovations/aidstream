@@ -12,12 +12,12 @@
                             <span class="hide-more-info hidden">Hide more info</span>
                         </div>
                         <div class="more-info hidden">
-                            <div class="element-info">
-                                @if(session('version') != 'V201')
+                            @if(session('version') != 'V201')
+                                <div class="element-info">
                                     <div class="activity-element-label">@lang('activityView.vocabulary_uri')</div>
                                     <div class="activity-element-info">{!!  checkIfEmpty(getClickableLink($sector['vocabulary_uri']))  !!}</div>
-                                @endif
-                            </div>
+                                </div>
+                            @endif
                             <div class="element-info">
                                 <div class="activity-element-label">@lang('activityView.description')</div>
                                 <div class="activity-element-info">

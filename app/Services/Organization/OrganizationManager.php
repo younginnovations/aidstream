@@ -253,4 +253,13 @@ class OrganizationManager
     {
         return $this->repo->resetOrganizationWorkflow($organization);
     }
+
+    /** Returns published data of organization
+     * @param $organization_id
+     * @return mixed
+     */
+    public function getPublishedOrganizationData($organization_id)
+    {
+        return $this->repo->getPublishedOrganizationData($organization_id);
+    }
 }

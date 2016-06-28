@@ -71,6 +71,7 @@ $url_14: url(../../images/ic-trigger.svg);
 $url_15: url(../../images/ic-sync.svg);
 $url_16: url(../../images/ic-csv-status.svg);
 $url_17: url(../../images/ic-action-sprite.svg);
+$url_18: url(../../images/ic-activity-link.svg);
 
 html, body {
   height: 100%;
@@ -1216,6 +1217,7 @@ $full-sidebar-wrapper-width: 210px;
 .published {
   @extend %extend_1;
   border-color: $color_emerald_approx;
+  float: left;
   &:before {
     @extend %extend_2;
     background: $color_emerald_approx;
@@ -1608,7 +1610,8 @@ $element-sidebar-wrapper-width: 283px;
   border-bottom: 1px solid $color_concrete;
   padding: 16px 24px 18px;
   text-align: center;
-  overflow: hidden;
+  display: inline-block;
+  width: 100%;
   margin-bottom: 48px;
   margin-top: -20px;
   ol {
@@ -3916,6 +3919,63 @@ pre.prettyprint {
   width: 75%!important;
 }
 
+.Linked,.Unlinked {
+  background: $url_18 no-repeat 0 6px;
+  display: inline-block;
+  width: 20px;
+  height: 15px;
+  text-indent: -9999px;
+}
+
+.Unlinked {
+  background: $url_18 no-repeat 0 -16px;
+}
+
+.activity-status-published .Unlinked {
+  float: left;
+  margin: 25px 0 0 20px;
+}
+
+.link-content-message {
+  float: left;
+  background: $color_white;
+  width: 300px;
+  box-shadow: 0 0 8px rgba($color_black_approx, 0.3);
+  border-radius: 4px;
+  padding: 10px;
+  text-align: left;
+  z-index: 1;
+  @include position(absolute, 50px auto auto -175px);
+  display: none;
+  font-size: 13px;
+  &:before {
+    @include position(absolute, -4px auto auto 66%);
+    content: '';
+    width: 8px;
+    height: 8px;
+    background: $color_white;
+    box-shadow: -2px -2px 5px -1px rgba($color_black_approx, 0.3);
+    transform: rotate(45deg);
+  }
+}
+
+.popup-link-content {
+  float: left;
+  position: relative;
+  padding-bottom: 6px;
+  &:hover .link-content-message {
+    display: block;
+  }
+}
+
+.published+.popup-link-content {
+  margin: 4px 0 0 4px;
+  .link-content-message {
+    top: 30px;
+    left: -205px;
+  }
+}
+
 @media all and (max-width: 1030px) {
   .activity-status {
     padding: 16px 10px 18px 50px;
@@ -4036,7 +4096,6 @@ pre.prettyprint {
     border-bottom: 1px solid #eee;
     position: relative;
     padding-left: 50% !important;
-    overflow: hidden;
     min-height: 48px;
     &:before {
       /* Now like a table header */

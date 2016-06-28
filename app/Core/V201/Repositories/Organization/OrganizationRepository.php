@@ -104,6 +104,15 @@ class OrganizationRepository implements OrganizationRepositoryInterface
         $org->save();
     }
 
+    /** Returns published data of organization
+     * @param $organization_id
+     * @return mixed
+     */
+    public function getPublishedOrganizationData($organization_id)
+    {
+        return $this->orgPublished->where('organization_id', $organization_id)->first();
+    }
+
     /**
      * @param $id
      * @return model

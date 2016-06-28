@@ -26,10 +26,10 @@
                                 <thead>
                                 <tr>
                                     <th width="20px" class="no-sort">S.N.</th>
-                                    <th width="50%">Activity Title</th>
+                                    <th width="45%">Activity Title</th>
                                     <th class="default-sort">Last Updated</th>
                                     <th class="status">Status</th>
-                                    <th class="no-sort">Actions</th>
+                                    <th class="no-sort" style="width:100px!important">Actions</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -46,6 +46,15 @@
                                         <td class="updated-date">{{ changeTimeZone($activity->updated_at) }}</td>
                                         <td>
                                             <span class="{{ $status_label[$activity->activity_workflow] }}">{{ $status_label[$activity->activity_workflow] }}</span>
+                                            @if($activity->activity_workflow == 3)
+                                                <div class="popup-link-content">
+                                                    <a href="#" title="{{ucfirst($activityPublishedStats[$activity->id])}}"
+                                                       class="{{ucfirst($activityPublishedStats[$activity->id])}}">{{ucfirst($activityPublishedStats[$activity->id])}}</a>
+                                                    <div class="link-content-message">
+                                                        {!!$messages[$activity->id]!!}
+                                                    </div>
+                                                </div>
+                                            @endif
                                         </td>
                                         <td>
                                             <a href="{{ route('activity.show', [$activity->id]) }}" class="view"></a>
@@ -69,4 +78,12 @@
             </div>
         </div>
     </div>
+@endsection
+@section('foot')
+    {{--<script>--}}
+        {{--$(document).ready(function () {--}}
+            {{--$('[data-toggle="popover"]').popover({html: true});--}}
+        {{--});--}}
+        {{--g--}}
+    {{--</script>--}}
 @endsection
