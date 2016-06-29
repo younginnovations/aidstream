@@ -11,25 +11,22 @@ class RecipientRegion extends V201RecipientRegion
     /**
      * returns rules for recipient region
      * @param $formFields
+     * @param $recipientCountry
      * @return array|mixed
      */
-    public function getRulesForRecipientRegion($formFields)
+    public function getRulesForRecipientRegion($formFields, $recipientCountry)
     {
         $rules = [];
-        $val   = $this->getRulesForMultipleRecipientRegion($formFields);
 
         foreach ($formFields as $recipientRegionIndex => $recipientRegion) {
             $recipientRegionForm                             = 'recipient_region.' . $recipientRegionIndex;
             $rules[$recipientRegionForm . '.region_code']    = 'required';
             $rules[$recipientRegionForm . '.vocabulary_uri'] = 'url';
             $rules[$recipientRegionForm . '.percentage']     = 'numeric|max:100';
-            if (count($formFields) > 1) {
+            if (count($formFields) > 1 || $recipientCountry != null) {
                 $rules[$recipientRegionForm . '.percentage'] = 'required|numeric|max:100';
             }
-            if (!$val) {
-                $rules[$recipientRegionForm . '.percentage'] = 'required|numeric|max:100|digits:100';
-            }
-            $rules                                           = array_merge($rules, $this->getRulesForNarrative($recipientRegion['narrative'], $recipientRegionForm));
+            $rules = array_merge($rules, $this->getRulesForNarrative($recipientRegion['narrative'], $recipientRegionForm));
         }
 
         return $rules;
@@ -51,7 +48,6 @@ class RecipientRegion extends V201RecipientRegion
             $messages[$recipientRegionForm . '.percentage.numeric']   = 'Percentage should be numeric.';
             $messages[$recipientRegionForm . '.percentage.max']       = 'Percentage should be less than or equal to 100';
             $messages[$recipientRegionForm . '.percentage.required']  = 'Percentage is required.';
-            $messages[$recipientRegionForm . '.percentage.digits']    = 'Total sum of percentage must be 100';
             $messages                                                 = array_merge($messages, $this->getMessagesForNarrative($recipientRegion['narrative'], $recipientRegionForm));
         }
 
