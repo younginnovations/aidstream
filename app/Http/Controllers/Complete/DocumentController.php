@@ -23,6 +23,12 @@ class DocumentController extends Controller
     protected $orgId;
 
     /**
+     * Allowed extensions for documents.
+     * @var array
+     */
+    protected $allowedExtensions = ['doc', 'docx', 'pdf', 'jpeg', 'jpg', 'ppt', 'pptx', 'png', 'xls', 'bmp'];
+
+    /**
      * @param DocumentManager $documentManager
      */
     function __construct(DocumentManager $documentManager)
@@ -52,6 +58,12 @@ class DocumentController extends Controller
     {
         try {
             $file      = $request->file('file');
+            $extension = $file->getClientOriginalExtension();
+
+            if (!in_array($extension, $this->allowedExtensions)) {
+                return ['status' => 'warning', 'message' => 'No such files allowed.'];
+            }
+
             $filename  = str_replace(' ', '-', preg_replace('/\s+/', ' ', $file->getClientOriginalName()));
             $extension = substr($filename, stripos($filename, '.'));
             $filename  = sprintf('%s-%s%s', substr($filename, 0, stripos($filename, '.')), date('Ymdhms'), $extension);

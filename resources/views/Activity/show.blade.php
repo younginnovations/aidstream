@@ -33,8 +33,7 @@
                 @endforeach
             </ol>
             @if($btn_text != "")
-                <form method="POST" id="change_status" class="pull-right"
-                      action="{{ url('/activity/' . $id . '/update-status') }}">
+                <form method="POST" id="change_status" class="pull-right" action="{{ $nextRoute }}">
                     <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
                     <input type="hidden" name="activity_workflow" value="{{ $activity_workflow + 1 }}">
                     @if($activity_workflow == 2)

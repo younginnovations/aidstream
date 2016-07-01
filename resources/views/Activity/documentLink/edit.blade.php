@@ -123,5 +123,9 @@
                 letter-spacing: 16px;
             }
         }
+
+        #document_list td {
+            word-break: break-word;
+        }
     </style>
 @endsection
