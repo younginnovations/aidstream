@@ -1,22 +1,24 @@
 $(document).ready(function () {
     function listDocuments(data) {
-        var documentData = data;
-        var documentList = '';
-        for (var i = 0; i < documentData.length; i++) {
-            var document = documentData[i];
-            var url = '';
-            if (document.url) {
-                url = document.url;
-            } else if (document.filename) {
-                url = location.origin + '/files/documents/' + encodeURI(document.filename);
+        if (data) {
+            var documentData = data;
+            var documentList = '';
+            for (var i = 0; i < documentData.length; i++) {
+                var document = documentData[i];
+                var url = '';
+                if (document.url) {
+                    url = document.url;
+                } else if (document.filename) {
+                    url = location.origin + '/files/documents/' + encodeURI(document.filename);
+                }
+                documentList += '<tr>';
+                documentList += '<td>' + url + '</td>';
+                documentList += '<td><a href="' + url + '" class="use_this">Use this</a></td>';
+                documentList += '<tr>';
             }
-            documentList += '<tr>';
-            documentList += '<td>' + url + '</td>';
-            documentList += '<td><a href="' + url + '" class="use_this">Use this</a></td>';
-            documentList += '<tr>';
+            documentList = documentList !== '' ? documentList : '<td colspan="2">No documents found.</td>';
+            $('#document_list tbody').html(documentList);
         }
-        documentList = documentList !== '' ? documentList : '<td colspan="2">No documents found.</td>';
-        $('#document_list tbody').html(documentList);
     }
 
     $('#upload_document').on('show.bs.modal', function (e) {
