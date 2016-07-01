@@ -104,13 +104,83 @@ class ActivityBaseRequest extends Request
     }
 
     /**
+     * get rules for transaction's sector element
+     * @param $sector
+     * @param $formFields
+     * @param $formBase
+     * @return array
+     */
+    public function getRulesForTransactionSectorNarrative($sector, $formFields, $formBase)
+    {
+        $rules                                       = [];
+        $rules[sprintf('%s.narrative', $formBase)][] = 'unique_lang';
+        $rules[sprintf('%s.narrative', $formBase)][] = 'unique_default_lang';
+        foreach ($formFields as $narrativeIndex => $narrative) {
+            $rules[sprintf('%s.narrative.%s.narrative', $formBase, $narrativeIndex)][] = 'required_with_language';
+            if ($narrative['narrative'] != "") {
+                $rules[sprintf('%s.sector_vocabulary', $formBase)] = 'required_with:' . sprintf('%s.narrative.%s.narrative', $formBase, $narrativeIndex);
+                if ($sector['sector_vocabulary'] == 1 || $sector['sector_vocabulary'] == 2) {
+                    if ($sector['sector_vocabulary'] == 1) {
+                        $rules[sprintf('%s.sector_code', $formBase)] = 'required_with:' . sprintf('%s.narrative.%s.narrative', $formBase, $narrativeIndex);
+                    }
+                    if ($sector['sector_vocabulary'] == 2) {
+                        $rules[sprintf('%s.sector_category_code', $formBase)] = 'required_with:' . sprintf('%s.narrative.%s.narrative', $formBase, $narrativeIndex);
+                    }
+                } else {
+                    $rules[sprintf('%s.sector_text', $formBase)] = 'required_with:' . sprintf('%s.narrative.%s.narrative', $formBase, $narrativeIndex);
+                }
+            }
+        }
+
+        return $rules;
+    }
+
+    /**
+     * Get messages for transaction's sector element
+     * @param $formFields
+     * @param $formBase
+     * @return array
+     */
+    public function getMessagesForTransactionSectorNarrative($sector, $formFields, $formBase)
+    {
+        $messages                                                 = [];
+        $messages[sprintf('%s.narrative.unique_lang', $formBase)] = 'Languages should be unique.';
+        foreach ($formFields as $narrativeIndex => $narrative) {
+            $messages[sprintf(
+                '%s.narrative.%s.narrative.required_with_language',
+                $formBase,
+                $narrativeIndex
+            )] = 'Narrative is required with language.';
+
+            if ($narrative['narrative'] != "") {
+                $messages[sprintf('%s.sector_vocabulary.required_with', $formBase)] = 'Sector Vocabulary is required with Narrative.';
+                if ($sector['sector_vocabulary'] == 1 || $sector['sector_vocabulary'] == 2) {
+                    if ($sector['sector_vocabulary'] == 1) {
+                        $messages[sprintf('%s.sector_code.required_with', $formBase)] = 'Sector Code is required with Narrative.';
+                    }
+                    if ($sector['sector_vocabulary'] == 2) {
+                        $messages[sprintf('%s.sector_category_code.required_with', $formBase)] = 'Sector Code is required with Narrative.';
+                    }
+                } else {
+                    $messages[sprintf('%s.sector_text.required_with', $formBase)] = 'Sector Code is required with Narrative.';
+                }
+            }
+        }
+
+        return $messages;
+    }
+
+    /**
      * returns rules for narrative
      * @param      $formFields
      * @param      $formBase
      * @return array
      */
-    public function getRulesForResultNarrative($formFields, $formBase)
-    {
+    public
+    function getRulesForResultNarrative(
+        $formFields,
+        $formBase
+    ) {
         $rules                                       = [];
         $rules[sprintf('%s.narrative', $formBase)][] = 'unique_lang';
         $rules[sprintf('%s.narrative', $formBase)][] = 'unique_default_lang';
@@ -127,8 +197,11 @@ class ActivityBaseRequest extends Request
      * @param $formBase
      * @return array
      */
-    public function getMessagesForNarrative($formFields, $formBase)
-    {
+    public
+    function getMessagesForNarrative(
+        $formFields,
+        $formBase
+    ) {
         $messages                                                 = [];
         $messages[sprintf('%s.narrative.unique_lang', $formBase)] = 'Languages should be unique.';
         foreach ($formFields as $narrativeIndex => $narrative) {
@@ -148,8 +221,11 @@ class ActivityBaseRequest extends Request
      * @param      $formBase
      * @return array
      */
-    public function getRulesForRequiredNarrative($formFields, $formBase)
-    {
+    public
+    function getRulesForRequiredNarrative(
+        $formFields,
+        $formBase
+    ) {
         $rules                                       = [];
         $rules[sprintf('%s.narrative', $formBase)][] = 'unique_lang';
         $rules[sprintf('%s.narrative', $formBase)][] = 'unique_default_lang';
@@ -175,8 +251,11 @@ class ActivityBaseRequest extends Request
      * @param $formBase
      * @return array
      */
-    public function getMessagesForRequiredNarrative($formFields, $formBase)
-    {
+    public
+    function getMessagesForRequiredNarrative(
+        $formFields,
+        $formBase
+    ) {
         $messages                                                 = [];
         $messages[sprintf('%s.narrative.unique_lang', $formBase)] = 'Languages should be unique';
 
@@ -205,8 +284,11 @@ class ActivityBaseRequest extends Request
      * @param $formBase
      * @return array
      */
-    public function getRulesForPeriodStart($formFields, $formBase)
-    {
+    public
+    function getRulesForPeriodStart(
+        $formFields,
+        $formBase
+    ) {
         $rules = [];
         foreach ($formFields as $periodStartKey => $periodStartVal) {
             $rules[$formBase . '.period_start.' . $periodStartKey . '.date'] = 'required|date';
@@ -221,8 +303,11 @@ class ActivityBaseRequest extends Request
      * @param $formBase
      * @return array
      */
-    public function getMessagesForPeriodStart($formFields, $formBase)
-    {
+    public
+    function getMessagesForPeriodStart(
+        $formFields,
+        $formBase
+    ) {
         $messages = [];
         foreach ($formFields as $periodStartKey => $periodStartVal) {
             $messages[$formBase . '.period_start.' . $periodStartKey . '.date.required'] = 'Period Start is required';
@@ -238,8 +323,11 @@ class ActivityBaseRequest extends Request
      * @param $formBase
      * @return array
      */
-    public function getRulesForPeriodEnd($formFields, $formBase)
-    {
+    public
+    function getRulesForPeriodEnd(
+        $formFields,
+        $formBase
+    ) {
         $rules = [];
 
         foreach ($formFields as $periodEndKey => $periodEndVal) {
@@ -260,9 +348,13 @@ class ActivityBaseRequest extends Request
      * @param $formBase
      * @return array
      */
-    public function getMessagesForPeriodEnd($formFields, $formBase)
-    {
+    public
+    function getMessagesForPeriodEnd(
+        $formFields,
+        $formBase
+    ) {
         $messages = [];
+
         foreach ($formFields as $periodEndKey => $periodEndVal) {
             $messages[$formBase . '.period_end.' . $periodEndKey . '.date.required'] = 'Period End is required.';
             $messages[$formBase . '.period_end.' . $periodEndKey . '.date.date']     = 'Period End is not a valid date.';

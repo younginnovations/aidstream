@@ -218,8 +218,9 @@ class Transaction extends V201Transaction
 //                    $rules[sprintf('%s.vocabulary_uri', $sectorForm)] = 'required_with:' . $sectorForm . '.sector_vocabulary';
 //                }
             }
-            $rules = array_merge($rules, $this->getRulesForNarrative($sector['narrative'], $sectorForm));
+            $rules = array_merge($rules, $this->getRulesForTransactionSectorNarrative($sector, $sector['narrative'], $sectorForm));
         }
+
         return $rules;
     }
 
@@ -263,8 +264,9 @@ class Transaction extends V201Transaction
                     $messages[sprintf('%s.vocabulary_uri.%s', $sectorForm, 'required_with')] = 'Vocabulary URI is required with Sector vocabulary.';
                 }
             }
-            $messages = array_merge($messages, $this->getMessagesForNarrative($sector['narrative'], $sectorForm));
+            $messages = array_merge($messages, $this->getMessagesForTransactionSectorNarrative($sector,$sector['narrative'], $sectorForm));
         }
+
         return $messages;
     }
 
