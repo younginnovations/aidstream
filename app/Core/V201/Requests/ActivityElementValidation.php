@@ -28,8 +28,38 @@ class ActivityElementValidation
             $messages[] = 'Activity Date is required.';
         }
 
+        $transaction = [];
         if (empty($activityData->sector)) {
-            $messages[] = 'Sector is required.';
+            if (!$transactionData->first()) {
+                $messages[] = "Sector must be present either at Activity or in all Transactions level.";
+            } else {
+                foreach ($transactionData as $transactions) {
+                    $transactionDetail = $transactions->transaction;
+                    removeEmptyValues($transactionDetail);
+                    if (empty($transactionDetail['sector'])) {
+                        if ($transaction == []) {
+                            $transaction[] = ['transaction' => 'it contains data'];
+                            $messages[]    = "Sector must be present either at Activity or in all Transactions level.";
+                        } else {
+                            $messages[] = "All Transactions must contain Sector element.";
+                        }
+                    } else {
+                        $transaction[] = ['transaction' => 'it contains data'];
+                    }
+                }
+            }
+        }
+
+        $transaction = [];
+        if (!empty($activityData->sector)) {
+            foreach ($transactionData as $transactions) {
+                $transactionDetail = $transactions->transaction;
+                removeEmptyValues($transactionDetail);
+                if (!empty($transactionDetail['sector']) && $transaction == []) {
+                    $transaction[] = ['transaction' => 'it contains data'];
+                    $messages[]    = "You can only mention Sector either at Activity or in Transaction level. You can't have Sector in both Activity level and Transaction level.";
+                }
+            }
         }
 
         $transactionCountryRegion = false;
@@ -87,7 +117,7 @@ class ActivityElementValidation
         }
 
         if ($transactionCountryRegion == true && ($activityRecipientCountryValue == true || $activityRecipientRegionValue == true)) {
-            $messages[] = 'You can only mention Recipient Country or Region either in Activity Level or in Transaction level. You can\'t have Country/Region in both Activity level and Transaction level.' ;
+            $messages[] = "You can only mention Recipient Country or Region either in Activity Level or in Transaction level. You can't have Country/Region in both Activity level and Transaction level.";
         }
 
         $messageList = '';

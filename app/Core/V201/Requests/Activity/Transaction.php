@@ -291,7 +291,7 @@ class Transaction extends ActivityBaseRequest
                     $rules[sprintf('%s.sector_vocabulary', $sectorForm)] = 'required_with:' . $sectorForm . '.sector_text';
                 }
             }
-            $rules = array_merge($rules, $this->getRulesForNarrative($sector['narrative'], $sectorForm));
+            $rules = array_merge($rules, $this->getRulesForTransactionSectorNarrative($sector['narrative'], $sectorForm));
         }
         return $rules;
     }
@@ -361,7 +361,7 @@ class Transaction extends ActivityBaseRequest
                     $messages[sprintf('%s.vocabulary_uri.%s', $sectorForm, 'required_with')] = 'Vocabulary URI is required with Sector vocabulary.';
                 }
             }
-            $messages = array_merge($messages, $this->getMessagesForNarrative($sector['narrative'], $sectorForm));
+            $messages = array_merge($messages, $this->getMessagesForTransactionSectorNarrative($sector['narrative'], $sectorForm));
         }
         return $messages;
     }
