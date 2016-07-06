@@ -221,12 +221,12 @@ class ActivityController extends Controller
         $activityDataList['results']        = $activityResult;
         $activityDataList['transaction']    = $activityTransaction;
         $activityDataList['document_links'] = $activityDocumentLinks;
-        $activityDataList['reporting_org'] = $activityData->organization->reporting_org;
+        $activityDataList['reporting_org']  = $activityData->organization->reporting_org;
 
         if ($activityDataList['activity_workflow'] == 0) {
-            $nextRoute                          = route('activity.complete', $id);
+            $nextRoute = route('activity.complete', $id);
         } elseif ($activityDataList['activity_workflow'] == 1) {
-            $nextRoute                          = route('activity.verify', $id);
+            $nextRoute = route('activity.verify', $id);
         } else {
             $nextRoute = route('activity.publish', $id);
         }
@@ -398,8 +398,8 @@ class ActivityController extends Controller
             $key = "country";
         }
 
-        $title = ($settings->publishing_type == "segmented") ? $organization->name.' Activity File-'.$code : $organization->name.' Activity File';
-        $name  = ($settings->publishing_type == "segmented") ? $settings['registry_info'][0]['publisher_id'].'-'.$code : $settings['registry_info'][0]['publisher_id'].'-activities';
+        $title = ($settings->publishing_type == "segmented") ? $organization->name . ' Activity File-' . $code : $organization->name . ' Activity File';
+        $name  = ($settings->publishing_type == "segmented") ? $settings['registry_info'][0]['publisher_id'] . '-' . $code : $settings['registry_info'][0]['publisher_id'] . '-activities';
 
         $requiredData = [
             'title'          => $title,
@@ -850,9 +850,9 @@ class ActivityController extends Controller
      */
     public function downloadActivityXml($activityId)
     {
-        $activityData = $this->activityManager->getActivityData($activityId);
+        $activityData    = $this->activityManager->getActivityData($activityId);
         $activityElement = $this->activityManager->getActivityElement();
-        $xmlService = $activityElement->getActivityXmlService();
+        $xmlService      = $activityElement->getActivityXmlService();
 
         $xml = $xmlService->generateTemporaryActivityXml(
             $this->activityManager->getActivityData($activityId),
@@ -868,7 +868,7 @@ class ActivityController extends Controller
             $xml,
             200,
             [
-                'Content-type' => 'text/xml',
+                'Content-type'        => 'text/xml',
                 'Content-Disposition' => sprintf('attachment; filename=activityXmlFile.xml')
             ]
         );
@@ -907,11 +907,14 @@ class ActivityController extends Controller
         $activityPublished   = $this->activityManager->getActivityPublishedData($filename, $organization_id);
         $settings            = $this->settings->where('organization_id', $organization_id)->first();
         $autoPublishSettings = $settings->registry_info[0]['publish_files'];
+        $status              = 'Unlinked';
 
-        if ($activityPublished && $autoPublishSettings == "no") {
-            ($activityPublished->published_to_register == 0) ? $status = "Unlinked" : $status = "Linked";
-        } else {
-            ($activityPublished->published_to_register == 0) ? $status = "unlinked" : $status = "Linked";
+        if ($activityPublished) {
+            if ($autoPublishSettings == "no") {
+                ($activityPublished->published_to_register == 0) ? $status = "Unlinked" : $status = "Linked";
+            } else {
+                ($activityPublished->published_to_register == 0) ? $status = "unlinked" : $status = "Linked";
+            }
         }
 
         return $status;
