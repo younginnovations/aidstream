@@ -184,7 +184,31 @@ class ActivityManager
      */
     public function deletePublishedFile($id)
     {
-        return $this->activityRepo->deletePublishedFile($id);
+        try {
+            $deleted = $this->activityRepo->deletePublishedFile($id);
+
+            $this->logger->info(
+                'Activity Xml File successfully deleted.',
+                [
+                    'byUser'          => auth()->user()->getNameAttribute(),
+                    'organization_id' => session('org_id')
+                ]
+            );
+
+            return $deleted;
+        } catch (Exception $exception) {
+            $this->logger->error(
+                sprintf('Activit Xml File could not be deleted due to %s', $exception->getMessage()),
+                [
+                    [
+                        'byUser'          => auth()->user()->getNameAttribute(),
+                        'organization_id' => session('org_id')
+                    ]
+                ]
+            );
+
+            return null;
+        }
     }
 
     /**
