@@ -263,10 +263,6 @@ class ActivityCsvFieldChecker
         $singleValues = [
             'activity_identifier'      => 'Activity Identifier',
             'activity_title'           => 'Activity Title',
-            'description_general'      => 'General Description',
-            'description_objectives'   => 'Objective',
-            'description_target_group' => 'Target Group',
-            'description_other'        => 'Other Description',
             'activity_status'          => 'Activity Status',
             'actual_start_date'        => 'Actual Start Date',
             'actual_end_date'          => 'Actual End Date',
