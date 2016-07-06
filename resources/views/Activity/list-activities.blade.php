@@ -84,7 +84,7 @@
                                 </div>
                                 <button type="button" class="btn_confirm" disabled="disabled"
                                         data-title="Import Activity Confirmation"
-                                        data-message="Are you sure you want to import selected activities.">Import
+                                        data-message="Are you sure you want to import selected activities ?">Import
                                 </button>
                             </form>
                         </div>
