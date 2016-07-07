@@ -2694,6 +2694,10 @@ $(document).ready(function () {
         $(this).toggleClass('hidden').siblings('span').toggleClass('hidden');
         $(this).parents('.toggle-btn').next('.more-info').toggleClass('hidden');
     });
+
+    $('.print').click(function(){
+       window.print();
+    });
 });
 
 
