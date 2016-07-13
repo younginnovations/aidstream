@@ -149,7 +149,7 @@ class XmlGenerator
             'last-updated-datetime' => gmdate('c', time($activity->updated_at)),
             'xml:lang'              => $activity->default_field_values[0]['default_language'],
             'default-currency'      => $activity->default_field_values[0]['default_currency'],
-            'hierarchy'             => $activity->default_field_values[0]['default_hierarchy'],
+            'hierarchy'             => ($hierarchy = $activity->default_field_values[0]['default_hierarchy']) ? $hierarchy : 1,
             'linked-data-uri'       => $activity->default_field_values[0]['linked_data_uri']
         ];
 
