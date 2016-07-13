@@ -36,7 +36,7 @@ class XmlGenerator extends XmlGenerator201
             'xml:lang'              => $activity->default_field_values[0]['default_language'],
             'default-currency'      => $activity->default_field_values[0]['default_currency'],
             'humanitarian'          => array_key_exists('humanitarian', $activity->default_field_values[0]) ? (int) $activity->default_field_values[0]['humanitarian'] : false,
-            'hierarchy'             => $activity->default_field_values[0]['default_hierarchy'],
+            'hierarchy'             => ($hierarchy = $activity->default_field_values[0]['default_hierarchy']) ? $hierarchy : 1,
             'linked-data-uri'       => $activity->default_field_values[0]['linked_data_uri']
         ];
 
