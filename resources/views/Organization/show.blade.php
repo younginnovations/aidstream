@@ -55,6 +55,7 @@
                             </div>
                         @endif
                     </div>
+                    <a href="" class="pull-right print">Print</a>
                     <div class="panel panel-default panel-element-detail element-show">
                         <div class="panel-body panel-organization-body">
                             @include('Organization.partials.reportingOrganization')

@@ -50,7 +50,8 @@
                 </div>
             @endif
         </div>
-        <a href="{{route('change-activity-default', $id)}}" class="pull-right">
+        <a href="" class="pull-right print">Print</a>
+        <a href="{{route('change-activity-default', $id)}}" class="pull-right override-activity">
             <span class="glyphicon glyphicon-triangle-left"></span> Override Activity Default
         </a>
         @include('Activity.partials.elements')

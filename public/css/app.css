@@ -1520,9 +1520,28 @@ label {
           margin-right: -13px; }
     .activity-status ol .active:before {
       background: #e15454; }
-  .activity-status + a {
-    font-size: 12px;
-    margin: 0 24px 10px 0; }
+
+.print, .override-activity {
+  font-size: 12px;
+  margin: 0 24px 10px 0; }
+
+.print {
+  background: url(../../images/ic-print.svg) no-repeat 16px 8px;
+  -webkit-box-shadow: 0px 0px 0px 1px #aaa;
+          box-shadow: 0px 0px 0px 1px #aaa;
+  -webkit-border-radius: 50px;
+          border-radius: 50px;
+  color: #777;
+  padding: 7px 16px 7px 36px; }
+  .print:hover, .print:focus {
+    color: #000;
+    text-decoration: none;
+    background-position: 16px -31px;
+    -webkit-box-shadow: 0px 0px 0px 1px #555;
+            box-shadow: 0px 0px 0px 1px #555; }
+
+.override-activity {
+  margin: 7px 14px 0 0; }
 
 .activity-status input[type="submit"], .activity-status input[type="button"] {
   font: normal 13px Open-Sans-Regular;
@@ -3045,7 +3064,7 @@ table.dataTable thead .sorting_desc {
   position: relative; }
   .activity-element-wrapper .edit-element, .activity-element-wrapper .delete {
     position: absolute;
-    top: 2px;
+    top: 6px;
     right: 20px;
     bottom: auto;
     left: auto;
@@ -3148,7 +3167,8 @@ table.dataTable thead .sorting_desc {
   padding: 7px 14px;
   margin-bottom: 0;
   display: inline-block;
-  width: 100%; }
+  width: 100%;
+  vertical-align: middle; }
   .more-info > div .activity-element-label {
     width: 225px; }
   .more-info > div:last-of-type {
@@ -3170,10 +3190,10 @@ table.dataTable thead .sorting_desc {
   width: -webkit-calc(100% - 240px);
   width: -moz-calc(100% - 240px);
   width: calc(100% - 240px);
-  line-height: 22px;
-  padding-right: 30px; }
+  line-height: 22px; }
   .activity-element-info li {
-    padding-left: 10px; }
+    padding-left: 10px;
+    padding-right: 30px; }
   .activity-element-info li {
     margin-top: 8px; }
     .activity-element-info li:first-of-type {
@@ -3462,6 +3482,61 @@ pre.prettyprint {
     top: 30px;
     left: -205px; }
 
+.form-group.full-width-wrap {
+  width: 93% !important; }
+
+.loader {
+  position: fixed;
+  left: 0px;
+  right: 0px;
+  top: 0px;
+  bottom: 0px;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 9999;
+  color: #FFFFFF;
+  text-align: center;
+  font-size: 60px;
+  letter-spacing: -16px;
+  -webkit-animation: mymove 1s infinite;
+  /* Chrome, Safari, Opera */
+  -webkit-animation-direction: alternate;
+  -webkit-animation: loading 1s infinite;
+     -moz-animation: loading 1s infinite;
+       -o-animation: loading 1s infinite;
+          animation: loading 1s infinite;
+  -webkit-animation-direction: alternate;
+     -moz-animation-direction: alternate;
+       -o-animation-direction: alternate;
+          animation-direction: alternate; }
+
+/* Chrome, Safari, Opera */
+@-webkit-keyframes loading {
+  from {
+    letter-spacing: -16px; }
+  to {
+    letter-spacing: 16px; } }
+
+@-moz-keyframes loading {
+  from {
+    letter-spacing: -16px; }
+  to {
+    letter-spacing: 16px; } }
+
+@-o-keyframes loading {
+  from {
+    letter-spacing: -16px; }
+  to {
+    letter-spacing: 16px; } }
+
+@keyframes loading {
+  from {
+    letter-spacing: -16px; }
+  to {
+    letter-spacing: 16px; } }
+
+#document_list td {
+  word-break: break-word; }
+
 @media all and (max-width: 1030px) {
   .activity-status {
     padding: 16px 10px 18px 50px; }
@@ -3696,7 +3771,7 @@ pre.prettyprint {
     margin: 30px 14px; }
   .duplicate-activity-description {
     margin: 0 14px; }
-  .activity-status + a {
+  .print, .override-activity {
     margin-right: 14px;
     margin-bottom: 20px; }
   .panel-create > .panel-body {
@@ -4023,7 +4098,7 @@ pre.prettyprint {
       height: 16px;
       left: auto !important; } }
 
-@media all and (min-width: 1200px) {
+@media only screen, not print and (min-width: 1200px) {
   .settings-checkall-wrapper > .collection_form > .form-group > .form-group, .checkall-wrapper .form-group:nth-child(3) > .form-group > .form-group {
     width: 24.8%;
     margin-top: 35px; }
@@ -4172,5 +4247,77 @@ pre.prettyprint {
 
 .sector_category_select label, .sector_category_select .select2-container {
   margin-left: 15px; }
+
+@media print {
+  .navbar, .sidebar-wrapper, .full-sidebar-wrapper, .sidebar-wrapper:not(.touch-sidebar-wrapper), .element-panel-heading, .activity-status, .element-menu-wrapper, .override-activity, .print,
+  .more-info:before {
+    display: none !important;
+    -webkit-transition: none !important;
+       -moz-transition: none !important;
+         -o-transition: none !important;
+            transition: none !important; }
+  .content-wrapper, .sidebar-wrapper + .content-wrapper, .sidebar-wrapper:not(.touch-sidebar-wrapper) + .content-wrapper {
+    margin-left: 0 !important;
+    width: 100% !important;
+    border-left: 0; }
+  .toggle-btn {
+    display: none; }
+  .more-info {
+    display: block !important;
+    border: 1px solid #444; }
+  .activity-element-wrapper {
+    border-bottom: 1px solid #444;
+    padding-bottom: 2px;
+    margin-bottom: 6px; }
+  .view-other-language {
+    display: block;
+    text-indent: -9999px; }
+    .view-other-language li:before {
+      display: none; }
+  .view-language-info {
+    display: block !important;
+    background: none;
+    padding: 0;
+    margin: -20px 0 0 !important;
+    -webkit-box-shadow: none;
+            box-shadow: none;
+    border: 0;
+    position: static;
+    text-indent: initial;
+    width: auto;
+    font-size: 11px !important; }
+    .view-language-info:before {
+      content: "";
+      -webkit-transform: none;
+         -moz-transform: none;
+          -ms-transform: none;
+           -o-transform: none;
+              transform: none;
+      position: static;
+      width: auto;
+      float: left; }
+    .view-language-info ul {
+      margin-bottom: -2px; }
+      .view-language-info ul li {
+        line-height: normal; }
+  .more-info > div {
+    border-bottom: 1px solid #444;
+    padding: 4px 14px; }
+  .activity-element-list {
+    font-size: 11px;
+    line-height: normal !important;
+    margin-bottom: 3px; }
+  html, body {
+    width: 210mm;
+    height: 160mm; }
+  @page {
+    size: A4;
+    margin: 2.5cm 1cm; }
+  @page :first {
+    margin-top: 0.5in; }
+  .activity-element-info li {
+    padding-left: 0; }
+  .activity-element-wrapper .activity-element-info em {
+    font-size: 11px; } }
 
 /*# sourceMappingURL=maps/app.css.map */

@@ -86,46 +86,4 @@
     </div>
 
     <script type="text/javascript" src="{{url('js/upload-document.js')}}"></script>
-    <style type="text/css">
-        .loader {
-            position: fixed;
-            left: 0px;
-            right: 0px;
-            top: 0px;
-            bottom: 0px;
-            background-color: rgba(0, 0, 0, 0.5);
-            z-index: 9999;
-            color: #FFFFFF;
-            text-align: center;
-            font-size: 60px;
-            letter-spacing: -16px;
-            -webkit-animation: mymove 1s infinite; /* Chrome, Safari, Opera */
-            -webkit-animation-direction: alternate;
-            animation: loading 1s infinite;
-            animation-direction: alternate;
-        }
-
-        /* Chrome, Safari, Opera */
-        @-webkit-keyframes loading {
-            from {
-                letter-spacing: -16px;
-            }
-            to {
-                letter-spacing: 16px;
-            }
-        }
-
-        @keyframes loading {
-            from {
-                letter-spacing: -16px;
-            }
-            to {
-                letter-spacing: 16px;
-            }
-        }
-
-        #document_list td {
-            word-break: break-word;
-        }
-    </style>
 @endsection

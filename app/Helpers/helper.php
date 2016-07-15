@@ -769,10 +769,12 @@ function getTargetAdditionalDetails(array $target, $key = null)
 function getLocationRef($type, $target)
 {
     $locationRef = [];
-    foreach ($target[$type] as $location) {
-        $locationRef[] = checkIfEmpty($location['ref']);
+    if (getVal($target, [$type])) {
+        foreach ($target[$type] as $location) {
+            $locationRef[] = checkIfEmpty($location['ref']);
+        }
+        $locationRef = implode(',', $locationRef);
     }
-    $locationRef = implode(',', $locationRef);
 
     return $locationRef;
 }
@@ -781,13 +783,15 @@ function getDimension($target)
 {
     $dimensions = [];
 
-    foreach ($target['dimension'] as $dimension) {
-        $name = $dimension['name'];
-        if (empty($name)) {
-            return $dimension = '<em>Not Available </em>';
-        } else {
-            $value        = $dimension['value'];
-            $dimensions[] = sprintf('%s (%s)', $name, $value);
+    if (getVal($target, ['dimension'])) {
+        foreach ($target['dimension'] as $dimension) {
+            $name = $dimension['name'];
+            if (empty($name)) {
+                return $dimension = '<em>Not Available </em>';
+            } else {
+                $value        = $dimension['value'];
+                $dimensions[] = sprintf('%s (%s)', $name, $value);
+            }
         }
     }
 
