@@ -614,13 +614,13 @@ function getBudgetPeriod(array $budget)
  */
 function getDisbursementOrganizationDetails(array  $disbursement, $type)
 {
-    $organization = $disbursement[$type][0];
-    $ref          = $organization['ref'];
-    $activity_id  = $organization['activity_id'];
-    $type         = $organization['type'];
+    $organization = getVal($disbursement, [$type, 0], []);
+    $ref          = getVal($organization, ['ref']);
+    $activity_id  = getVal($organization, ['activity_id']);
+    $type         = getVal($organization, ['type']);
 
     $details = sprintf(
-        '(<em>Ref: %s , Activity id: %s , Type: %s</em>)',
+            '<em>(Ref: %s , Activity id: %s , Type: %s)</em >;',
         checkIfEmpty($ref),
         checkIfEmpty($activity_id),
         checkIfEmpty($type)
