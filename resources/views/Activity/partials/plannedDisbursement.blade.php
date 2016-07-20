@@ -20,16 +20,16 @@
                                 <div class="element-info">
                                     <div class="activity-element-label">@lang('activityView.provider_organization')</div>
                                     <div class="activity-element-info">
-                                        {!!  getFirstNarrative($disbursement['provider_org'][0])  !!}
-                                        @include('Activity.partials.viewInOtherLanguage', ['otherLanguages' => getOtherLanguages($disbursement['provider_org'][0]['narrative'])])
+                                        {!!  getFirstNarrative(getVal($disbursement, ['provider_org',0],[]))  !!}
+                                        @include('Activity.partials.viewInOtherLanguage', ['otherLanguages' => getOtherLanguages(getVal($disbursement,['provider_org',0,'narrative'],[]))])
                                         {!! getDisbursementOrganizationDetails($disbursement , 'provider_org') !!}
                                     </div>
                                 </div>
                                 <div class="element-info">
                                     <div class="activity-element-label">@lang('activityView.receiver_organization')</div>
                                     <div class="activity-element-info">
-                                        {!!  getFirstNarrative($disbursement['receiver_org'][0])  !!}
-                                        @include('Activity.partials.viewInOtherLanguage', ['otherLanguages' => getOtherLanguages($disbursement['receiver_org'][0]['narrative'])])
+                                        {!!  getFirstNarrative(getVal($disbursement, ['receiver_org', 0],[]))  !!}
+                                        @include('Activity.partials.viewInOtherLanguage', ['otherLanguages' => getOtherLanguages(getVal($disbursement,['receiver_org',0,'narrative'],[]))])
                                         {!! getDisbursementOrganizationDetails($disbursement , 'receiver_org') !!}
                                     </div>
                                 </div>

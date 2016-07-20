@@ -14,7 +14,7 @@
                             <div class="activity-element-label">@lang('activityView.title')</div>
                             <div class="activity-element-info">
                                 {!! getFirstNarrative($documentLink['document_link']['title'][0]) !!}
-                                @include('Activity.partials.viewInOtherLanguage', ['otherLanguages' => getOtherLanguages($documentLink['document_link']['title'][0]['narrative'])])
+                                @include('Activity.partials.viewInOtherLanguage', ['otherLanguages' => getOtherLanguages(getVal($documentLink,['document_link','title',0,'narrative'],[]))])
                             </div>
 
                         </div>
