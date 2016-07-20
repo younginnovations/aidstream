@@ -14,7 +14,6 @@ use Exception;
 use Illuminate\Database\DatabaseManager;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use Kris\LaravelFormBuilder\FormBuilder;
@@ -150,9 +149,11 @@ class SettingsController extends Controller
 
     /**
      * Store settings
-     * @param SettingsRequestManager $request
+     * @param SettingsRequestManager $settingRequest
+     * @return
+     * @internal param TempRequest|SettingsRequestManager $request
      */
-    public function store(SettingsRequestManager $request)
+    public function store(SettingsRequestManager $settingRequest)
     {
         $currentUser = auth()->user();
 
@@ -167,7 +168,7 @@ class SettingsController extends Controller
                 ]
             );
         }
-        $input    = Input::all();
+        $input    = $settingRequest->requestHandler->all();
         $response = ($this->settingsManager->storeSettings($input, $this->organization)) ? ['type' => 'success', 'code' => ['created', ['name' => 'Settings']]] : [
             'type' => 'danger',
             'code' => [
@@ -183,9 +184,11 @@ class SettingsController extends Controller
      * Update settings
      *
      * @param  int                   $id
-     * @param SettingsRequestManager $request
+     * @param SettingsRequestManager $settingRequest
+     * @return
+     * @internal param TempRequest|SettingsRequestManager $request
      */
-    public function update($id, SettingsRequestManager $request)
+    public function update($id,SettingsRequestManager $settingRequest)
     {
         $currentUser = auth()->user();
 
@@ -200,7 +203,7 @@ class SettingsController extends Controller
                 ]
             );
         }
-        $input             = Input::all();
+        $input             = $settingRequest->requestHandler->all();
         $newPublishingType = $input['publishing_type'][0]['publishing'];
         $oldIdentifier     = $this->organization->reporting_org[0]['reporting_organization_identifier'];
         $settings          = $this->settingsManager->getSettings($this->organization->id);
@@ -289,14 +292,15 @@ class SettingsController extends Controller
 
     /**
      * Update Settings with segmentation changes.
-     * @param Request                $request
      * @param SettingsRequestManager $requestManager
      * @return mixed
+     * @internal param TempRequest|Request $request
      */
-    public function updateSettings(Request $request, SettingsRequestManager $requestManager)
+    public function updateSettings(SettingsRequestManager $requestManager)
     {
         $organizationId = session('org_id');
-        $settings       = $request->all();
+
+        $settings       = $requestManager->requestHandler->all();
         $organization   = $this->organization->findOrFail($organizationId);
 
         if (!$organization->publishedFiles->isEmpty()) {
