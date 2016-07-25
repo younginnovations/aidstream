@@ -297,16 +297,19 @@ class SettingsController extends Controller
     {
         $organizationId = session('org_id');
         $settings       = $request->all();
+        $organization   = $this->organization->findOrFail($organizationId);
 
-        if ($this->settingsService->hasSegmentationChanged($organizationId, $settings)) {
-            $changes = $this->settingsService->getChangeLog($organizationId, $settings);
+        if (!$organization->publishedFiles->isEmpty()) {
+            if ($this->settingsService->hasSegmentationChanged($organizationId, $settings)) {
+                $changes = $this->settingsService->getChangeLog($organizationId, $settings);
 
-            if (empty($changes['previous']) && empty($changes['changes'])) {
+                if (empty($changes['previous']) && empty($changes['changes'])) {
 
-                return redirect()->route('settings.index')->withResponse(['type' => 'warning', 'messages' => ['You do not have any files for the segmentation change to take effect on.']]);
+                    return redirect()->route('settings.index')->withResponse(['type' => 'warning', 'messages' => ['You do not have any files for the segmentation change to take effect on.']]);
+                }
+
+                return view('settings.change-log', compact('organizationId', 'changes', 'settings'));
             }
-
-            return view('settings.change-log', compact('organizationId', 'changes', 'settings'));
         }
 
         if (!$this->settingsManager->updateSettings($settings, $this->organization, $this->settings)) {
