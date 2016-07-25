@@ -11,7 +11,7 @@
 
     <!-- Fonts -->
     <link href='//fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2-rc.1/css/select2.min.css" rel="stylesheet"/>
+    <link href="{{ asset('/css/select2.min.css') }}" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -26,12 +26,6 @@
     <script type="text/javascript" src="{{url('/js/jquery.cookie.js')}}"></script>
     <script type="text/javascript" src="{{url('/js/jquery-ui-1.10.4.tooltip.js')}}"></script>
     <script type="text/javascript" src="{{url('/js/main.js')}}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2-rc.1/js/select2.min.js"></script>
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('form select').select2();
-        });
-    </script>
 
     @yield('head')
 </head>
@@ -90,132 +84,27 @@
                         <div class="panel-title">Register</div>
                     </div>
                     <div class="panel-body">
-                        @if (count($errors) > 0)
-                            <div class="alert alert-danger">
-                                <span>
-                                  There were some problems with your input.
-                                  <ul>
-                                      @foreach ($errors->all() as $error)
-                                          <li>{{ $error }}</li>
-                                      @endforeach
-                                  </ul>
-                                </span>
+                        @include('includes.response')
+
+                        {{--*/ $regInfo = (array) (old() ? old() : session('reg_info')); /*--}}
+
+                        {{ Form::model($regInfo, ['url' => route('registration.register'), 'method' => 'post', 'id' => 'from-registration']) }}
+
+                        <ul class="nav nav-tabs hidden" role="tablist">
+                            <li role="presentation" class="active"><a href="#tab-organization" aria-controls="tab-organization" role="tab" data-toggle="tab">Organization</a></li>
+                            <li role="presentation"><a href="#tab-users" aria-controls="tab-users" role="tab" data-toggle="tab">Users</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane clearfix active" id="tab-organization">
+                                @include('auth.organization')
                             </div>
-                        @endif
-
-                        <form class="form-horizontal" role="form" method="POST" action="{{ url('/auth/register') }}">
-                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
-
-                            <div class="input-wrapper">
-                                <div class="col-xs-12 col-md-12">
-                                    <div class="form-group col-xs-12 col-sm-6 col-md-6">
-                                        <label class="control-label">Organization Name*</label>
-
-                                        <div class="col-xs-12 col-md-12">
-                                            <input type="text" class="form-control" name="organization_name" value="{{ old('organization_name') }}" required="required">
-                                        </div>
-                                    </div>
-                                    <div class="form-group col-xs-12 col-sm-6 col-md-6">
-                                        <label class="control-label">Organization Address*</label>
-
-                                        <div class="col-xs-12 col-md-12">
-                                            <input type="text" class="form-control" name="organization_address" value="{{ old('organization_address') }}" required="required">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-xs-12 col-md-12">
-                                    <div class="form-group col-xs-12 col-sm-6 col-md-6">
-                                        <label class="control-label">Organization User Identifier*</label>
-
-                                        <div class="col-xs-12 col-md-12">
-                                            <input type="text" class="form-control noSpace" name="organization_user_identifier" value="{{ old('organization_user_identifier') }}" required="required">
-                                            <span class="availability-check hidden"></span>
-                                            <span class="help-block">Your organisation user identifier will be used as a prefix for all the AidStream users in your organisation. We recommend that you use a short abbreviation that uniquely identifies your organisation. If your organisation is 'Acme Bellus Foundation', your organisation user identifier should be 'abf', depending upon it's availability.</span>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-12 col-sm-6 username_text">
-                                        <label class="control-label">Username</label>
-                                        <em>This will be auto-generated as you fill Organization User Identifier.</em>
-                                    </div>
-                                    <div class="form-group col-xs-12 col-sm-6 col-md-6 username_value hidden">
-                                        <label class="control-label">Username</label>
-
-                                        <div class="col-xs-12 col-md-12">
-                                            <input type="hidden" class="form-control hover_help_text" name="username" value="{{ old('username') }}" readonly="readonly">
-
-                                            <div class="alternate_input">{{ old('username') }}</div>
-                                        <span class="help-text"
-                                              title="AidStream will create a default username with your Organisation User Identifier as prefix. You will not be able to change '_admin' part of the username. This user will have administrative privilege and can create multiple AidStream users with different set of permissions."
-                                              data-toggle="tooltip" data-placement="top">
-                                           AidStream will create a default username with your Organisation User Identifier as prefix. You will not be able to change '_admin' part of the username. This user will have administrative privilege and can create multiple AidStream users with different set of permissions.
-                                        </span>
-                                        </div>
-                                    </div>
-                                </div>
+                            <div role="tabpanel" class="tab-pane clearfix" id="tab-users">
+                                @include('auth.users')
                             </div>
-                            <div class="input-wrapper">
-                                <div class="col-xs-12 col-md-12">
-                                    <div class="form-group col-xs-12 col-sm-6 col-md-6">
-                                        <label class="control-label">Password*</label>
+                        </div>
 
-                                        <div class="col-xs-12 col-md-12">
-                                            <input type="password" class="form-control" name="password" required="required">
-                                        </div>
-                                    </div>
-                                    <div class="form-group col-xs-12 col-sm-6 col-md-6">
-                                        <label class="control-label">Confirm Password</label>
-
-                                        <div class="col-xs-12 col-md-12">
-                                            <input type="password" class="form-control" name="password_confirmation">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="input-wrapper no-border">
-                                    <div class="col-xs-12 col-md-12">
-                                        <div class="form-group col-xs-12 col-sm-6 col-md-6">
-                                            <label class="control-label">First Name*</label>
-
-                                            <div class="col-xs-12 col-md-12">
-                                                <input type="text" class="form-control" name="first_name" value="{{ old('first_name') }}" required="required">
-                                            </div>
-                                        </div>
-                                        <div class="form-group col-xs-12 col-sm-6 col-md-6">
-                                            <label class="control-label">Last Name*</label>
-
-                                            <div class="col-xs-12 col-md-12">
-                                                <input type="text" class="form-control" name="last_name" value="{{ old('last_name') }}" required="required">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-12 col-md-12">
-                                        <div class="form-group col-xs-12 col-sm-6 col-md-6">
-                                            <label class="control-label">E-Mail Address*</label>
-
-                                            <div class="col-xs-12 col-md-12">
-                                                <input type="email" class="form-control" name="email" value="{{ old('email') }}" required="required">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-12 col-md-12">
-                                        <div class="form-group col-xs-12 col-sm-6 col-md-6">
-                                            <label class="control-label">Country*</label>
-
-                                            <div class="col-xs-12 col-md-12">
-                                                {{Form::select('country', ['' => 'Select Country'] + $countries, null, ['required' => true])}}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <button type="submit" class="btn btn-primary btn-submit btn-register">
-                                        Register
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
+                        {{ Form::close() }}
                     </div>
                 </div>
             </div>
@@ -225,6 +114,119 @@
         </div>
     </div>
 </div>
+
+<!-- Registration Agency Modal -->
+<div class="modal fade" id="reg_agency" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Add Agency</h4>
+            </div>
+            {{ Form::open(['url' => route('agency.store'), 'method' => 'post', 'id' => 'reg-agency-form']) }}
+            <div class="modal-body clearfix">
+
+                <div class="messages hidden"></div>
+                <div class="form-container hidden">
+                    {{--*/
+                    $messages = $errors->get('name');
+                    /*--}}
+                    <div class="form-group {{ $messages ? ' has-error' : '' }}">
+                        {{ Form::label('name', null, ['class' => 'control-label required col-xs-12 col-sm-4']) }}
+                        <div class="col-xs-12 col-sm-8">
+                            {{ Form::text('name') }}
+                            @foreach($messages as $message)
+                                <div class="text-danger">{{ $message }}</div>
+                            @endforeach
+                        </div>
+                    </div>
+                    {{--*/
+                    $messages = $errors->get('short_form');
+                    /*--}}
+                    <div class="form-group {{ $messages ? ' has-error' : '' }}">
+                        {{ Form::label('short_form', null, ['class' => 'control-label required col-xs-12 col-sm-4']) }}
+                        <div class="col-xs-12 col-sm-8">
+                            {{ Form::text('short_form') }}
+                            @foreach($messages as $message)
+                                <div class="text-danger">{{ $message }}</div>
+                            @endforeach
+                        </div>
+                    </div>
+                    {{--*/
+                    $messages = $errors->get('website');
+                    /*--}}
+                    <div class="form-group {{ $messages ? ' has-error' : '' }}">
+                        {{ Form::label('website', null, ['class' => 'control-label required col-xs-12 col-sm-4']) }}
+                        <div class="col-xs-12 col-sm-8">
+                            {{ Form::url('website') }}
+                            <p class="help-block">eg: http://www.example.com</p>
+                            @foreach($messages as $message)
+                                <div class="text-danger">{{ $message }}</div>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Add</button>
+            </div>
+            {{ Form::close() }}
+        </div>
+    </div>
+</div>
+
+<!-- Organization Identifier Modal -->
+<div class="modal fade preventClose" id="org-identifier-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body clearfix text-center">
+                <p>
+                    The IATI organisational identifier you entered is being used by another organisation on AidStream. If this is your organisation please select it and continue.
+                </p>
+                <p>Organization: <span class="org-name"></span></p>
+                <button class="btn btn-primary confirm-organization">Yes, this is my organisation</button>
+                <a href="{{ route('contact', ['not-my-organization']) }}" class="btn btn-primary">No, this is not my organisation. Contact Support.</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Organization Identifier confirmation Modal -->
+<div class="modal fade preventClose" id="org-identifier-confirmation-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body clearfix text-center">
+                <p>
+                    You have confirmed that your organisation already has an account on AidStream. Please select an option from below to continue.
+                </p>
+                <button class="btn btn-primary need-new-user">I need a new user account.</button>
+                <a href="/password/email" class="btn btn-primary">I have an account but forgot my login credentials.</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Contact Administrator Modal -->
+<div class="modal fade preventClose" id="contact-admin-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body clearfix text-center">
+                <p>Admin Name: <span class="admin-name"></span></p>
+                <p>
+                    For a new user account, please contact the admin.
+                </p>
+                <a href="{{ route('contact', ['need-new-user']) }}" class="btn btn-primary">Contact Administrator</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="user_template" class="hidden">
+    {{--*/ $userIndex = '_index_'; /*--}}
+    @include('auth.partUsers')
+</div>
+
 @include('includes.footer')
 
 @if(env('APP_ENV') == 'local')
@@ -233,40 +235,37 @@
     <script type="text/javascript" src="{{url('/js/jquery.cookie.js')}}"></script>
 @else
     <script type="text/javascript" src="{{url('/js/main.min.js')}}"></script>
+    <!-- Google Analytics -->
+    <script type="text/javascript" src="{{url('/js/ga.js')}}"></script>
+    <!-- End Google Analytics -->
 @endif
-<!-- Google Analytics -->
-<script type="text/javascript" src="{{url('/js/ga.js')}}"></script>
-<!-- End Google Analytics -->
-<script>
+<script type="text/javascript" src="{{url('/js/select2.min.js')}}"></script>
+<script type="text/javascript" src="{{url('/js/jquery.validate.min.js')}}"></script>
+<script type="text/javascript" src="{{url('/js/additional-methods.js')}}"></script>
+<script type="text/javascript" src="{{url('/js/registration.js')}}"></script>
+<script type="text/javascript">
+    var checkSimilarOrg = true;
+    var checkOrgIdentifier = true;
+    var agencies = JSON.parse($('.agencies').val());
     $(document).ready(function () {
-        function hamburgerMenu() {
-            $('.navbar-toggle.collapsed').click(function () {
-                $('.navbar-collapse').toggleClass('out');
-                $(this).toggleClass('collapsed');
-            });
-        }
-
-        hamburgerMenu();
-
-        $('[name="organization_user_identifier"]').on('change', checkAvailability);
-        $('[name="organization_user_identifier"]').on('keydown', function () {
-            $('.availability-check').html('').addClass('hidden').removeClass('text-success text-danger');
-        });
-        function checkAvailability() {
-            var userIdentifier = $(this).val();
-            if ($.trim(userIdentifier) == "") {
-                return false;
-            }
-            $.ajax({
-                headers: {'X-CSRF-TOKEN': $('[name="_token"]').val()},
-                type: 'POST',
-                url: '{{ route('check-organization-user-identifier') }}',
-                data: {userIdentifier: $(this).val()},
-                success: function (data) {
-                    $('.availability-check').removeClass('hidden').addClass('text-' + data.status).html(data.message);
-                }
-            });
-        }
+//        $('form select').select2();
+        Registration.abbrGenerator();
+        Registration.checkAbbrAvailability();
+        Registration.changeCountry();
+        Registration.regNumber();
+        Registration.addRegAgency();
+        Registration.addUser();
+        Registration.removeUser();
+        Registration.usernameGenerator();
+        Registration.tabs();
+        @if($tab = session('tab'))
+                checkSimilarOrg = false;
+        $('a[href="{{ $tab }}"]').tab('show');
+        @endif
+        //        Registration.similarOrgs();
+        //        Registration.sameIdentifier();
+        //        Registration.disableOrgSubmitButton();
+        //        Registration.disableUsersSubmitButton();
     });
 </script>
 </body>

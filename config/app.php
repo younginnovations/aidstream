@@ -81,6 +81,7 @@ return [
     'super_admin_dashboard' => '/admin/list-organization',
     'admin_dashboard'       => '/activity',
     'default_language'      => 'en',
+    'org_permissions'       => [1, 2, 5, 6],
     /*
     |--------------------------------------------------------------------------
     | Logging Configuration

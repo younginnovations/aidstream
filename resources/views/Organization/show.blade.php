@@ -43,7 +43,7 @@
                                     <input type="button" value="Mark as {{ $btn_text }}" class="btn_confirm"
                                            data-title="Confirmation" data-message="Are you sure you want to Publish?">
                                 @else
-                                    <input type="submit" value="Mark as {{ $btn_text }}"> 
+                                    <input type="submit" value="Mark as {{ $btn_text }}">
                                 @endif
                             </form>
                         @else
@@ -63,7 +63,9 @@
                             @include('Organization.partials.organizationName')
                             @include('Organization.partials.totalBudget')
                             @include('Organization.partials.recipientOrganizationBudget')
-                            @include('Organization.partials.recipientRegionBudget')
+                            @if(session('version') != 'V201')
+                                @include('Organization.partials.recipientRegionBudget')
+                            @endif
                             @include('Organization.partials.recipientCountryBudget')
                             @include('Organization.partials.totalExpenditure')
                             @include('Organization.partials.documentLink')

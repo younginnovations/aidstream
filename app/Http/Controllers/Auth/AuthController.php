@@ -204,6 +204,21 @@ class AuthController extends Controller
                 $redirectPath = ($user->role_id == 1 || $user->role_id == 2) ? config('app.admin_dashboard') : config('app.super_admin_dashboard');
                 $intendedUrl  = Session::get('url.intended');
 
+//                if (isset(Auth::user()->userOnBoarding->has_logged_in_once)) {
+//                    if (Auth::user()->userOnBoarding->has_logged_in_once) {
+//                        $redirectPath = ($user->role_id == 1 || $user->role_id == 2) ? config('app.admin_dashboard') : config('app.super_admin_dashboard');
+//                    } else {
+//                        Session::put('first_login', true);
+//                        $redirectPath = 'welcome';
+//                    }
+//                } elseif ($user->role_id == 3 || $user->role_id == 4) {
+//                    $redirectPath = config('app.super_admin_dashboard');
+//                } else {
+//                    Auth::user()->userOnBoarding()->create(['has_logged_in_once' => false]);
+//                    Session::put('first_login', true);
+//                    $redirectPath = 'welcome';
+//                }
+
                 !(($user->role_id == 3 || $user->role_id == 4) && strpos($intendedUrl, '/admin') === false) ?: $intendedUrl = url('/');
                 !($intendedUrl == url('/')) ?: Session::set('url.intended', $redirectPath);
 
@@ -218,7 +233,9 @@ class AuthController extends Controller
                     ]
                 );
         } catch (\Exception $exception) {
-            return redirect()->back()->withErrors($exception->getMessage());
+            Auth::logout();
+
+            return redirect('/auth/login')->withErrors('unable to login. Please contact us at <a href=\'mailto:support@aidstream.org\'>support@aidstream.org</a>');
         }
     }
 
@@ -271,6 +288,10 @@ class AuthController extends Controller
      */
     public function getLogout()
     {
+//        if (isset(Auth::user()->userOnBoarding->has_logged_in_once)) {
+//            Auth::user()->userOnBoarding->has_logged_in_once = true;
+//            Auth::user()->userOnBoarding->save();
+//        }
         Auth::logout();
         Session::flush();
 
@@ -281,9 +302,12 @@ class AuthController extends Controller
     {
         $userIdentifier = $request->get('userIdentifier');
         if ($this->organization->where('user_identifier', $userIdentifier)->count() == 0) {
-            $response = ['status' => 'success', 'message' => 'The organization user identifier is available.'];
+            $response = ['status' => 'success', 'message' => 'Organization Name Abbreviation is available.'];
         } else {
-            $response = ['status' => 'danger', 'message' => 'The organization user identifier has already been taken.'];
+            $response = ['status' => 'danger', 'message' => 'Organization Name Abbreviation has already been taken.'];
+            if ($request->get('validation')) {
+                return '';
+            }
         }
 
         return $response;

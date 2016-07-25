@@ -20,6 +20,7 @@ use App\Services\Twitter\TwitterAPI;
 use App\User;
 use Illuminate\Session\SessionManager;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Session;
 use Psr\Log\LoggerInterface;
 
 
@@ -181,8 +182,15 @@ class ActivityController extends Controller
         $this->authorize('add_activity', $organization);
         $settings           = $this->settingsManager->getSettings($this->organization_id);
         $defaultFieldValues = $settings->default_field_values;
-        $input              = $request->all();
-        $result             = $this->activityManager->store($input, $this->organization_id, $defaultFieldValues);
+
+        if (!$defaultFieldValues) {
+            $response = ['type' => 'warning', 'code' => ['default_values', ['name' => 'activity']]];
+
+            return redirect('/default-values')->withResponse($response);
+        }
+
+        $input  = $request->all();
+        $result = $this->activityManager->store($input, $this->organization_id, $defaultFieldValues);
 
         if (!$result) {
             $response = ['type' => 'danger', 'code' => ['save_failed', ['name' => 'activity']]];
@@ -586,6 +594,10 @@ class ActivityController extends Controller
             $response = ['type' => 'warning', 'code' => ['settings', ['name' => 'activity']]];
 
             return redirect('/settings')->withResponse($response);
+        } elseif ($settings == null) {
+            $response = ['type' => 'warning', 'code' => ['default_values', ['name' => 'activity']]];
+
+            return redirect('/default-values')->withResponse($response);
         }
 
         $defaultFieldValues    = $settings->default_field_values;

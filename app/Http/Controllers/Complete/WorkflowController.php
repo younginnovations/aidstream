@@ -114,7 +114,7 @@ class WorkflowController extends Controller
         $this->authorize('edit_activity', $activity);
 
         if ($this->hasNoPublisherInfo($activity->organization->settings)) {
-            return redirect()->route('settings.index')->withResponse(['type' => 'warning', 'code' => ['settings_registry_info', ['name' => '']]]);
+            return redirect()->route('publishing-settings')->withResponse(['type' => 'warning', 'code' => ['settings_registry_info', ['name' => '']]]);
         }
 
         $result = $this->workFlowManager->publish($activity, $request->all());

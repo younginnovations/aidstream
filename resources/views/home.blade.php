@@ -123,6 +123,55 @@
         </div>
     </div>
 </section>
+
+@if(session()->has('secondary_contact_name'))
+    <div class="modal fade recovery-modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body clearfix text-center ">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <p>
+                        Your account password reset email has been sent to your organisation's secondary contact holder.
+                    </p>
+                    @if($secContactName = session('secondary_contact_name'))
+                        <p>Secondary Contact Name: {{ $secContactName }}</p>
+                    @endif
+                    <a href="{{ route('contact', ['has-secondary-contact-support']) }}" class="btn btn-primary">Click here to contact AidStream support</a>
+                </div>
+            </div>
+        </div>
+    </div>
+@endif
+
+@if(session('message'))
+    <div class="modal fade message-modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body clearfix">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    {!! session('message') !!}
+                </div>
+            </div>
+        </div>
+    </div>
+@endif
+
+@if(session('verification_message'))
+    <div class="modal fade verification-modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Email Verification</h4>
+                </div>
+                <div class="modal-body clearfix">
+                    {!! session('verification_message') !!}
+                </div>
+            </div>
+        </div>
+    </div>
+@endif
+
 @include('includes.footer')
 <script src="js/jquery.js"></script>
 <script src="js/modernizr.js"></script>
@@ -137,6 +186,24 @@
         }
 
         hamburgerMenu();
+
+        var verificationModel = $('.verification-modal');
+        $('.close', verificationModel).click(function () {
+            verificationModel.next('.modal-backdrop').remove();
+            verificationModel.remove();
+        });
+
+        if ($('.message-modal').length > 0) {
+            $('.message-modal').modal('show')
+        }
+
+        if ($('.verification-modal').length > 0) {
+            $('.verification-modal').modal('show')
+        }
+
+        if ($('.recovery-modal').length > 0) {
+            $('.recovery-modal').modal('show')
+        }
     });
 </script>
 </body>

@@ -10,6 +10,8 @@ return [
     'deleted'                                 => ':name has been deleted successfully.',
     'delete_failed'                           => 'Failed to delete :name.',
     'settings'                                => 'Please fill up Reporting Organization Identifier to add :name.',
+    'default_values'                          => 'Please fill up default values to add :name',
+    'default_field_groups_required'           => 'Please check required fields to add :name',
     'activity_statuses'                       => 'Activity has been :name.',
     'activity_statuses_failed'                => 'Activity cannot be :name.',
     'org_statuses'                            => 'Organization has been :name.',
@@ -37,6 +39,9 @@ return [
     'activity_imported'                       => sprintf('One Activity %s has been imported successfully.', ':activities'),
     'activities_imported'                     => sprintf('Activities %s have been imported successfully.', ':activities'),
     'activities_import_failed'                => 'Failed to import activities.',
+    'failed_registration'                     => 'Failed to complete registration.',
+    'registered'                              => 'Your organization has been registered successfully. Shortly, all the user you have listed will receive verification emails.',
+    'sent'                                    => ':name have been sent',
     'organization_element_removed'            => 'Organization element has been removed successfully',
     'organization_element_not_removed'        => 'Failed to remove organization element',
 ];

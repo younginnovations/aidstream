@@ -81,8 +81,8 @@ class OrganizationController extends Controller
                 $model['default_field_groups'] = $settings->default_field_groups;
                 $model['default_field_values'] = $settings->default_field_values;
             }
-            $model['organization_information'][0] = $organizationInfo;
-            $model['admin_information'][0]        = $organizationInfo['users'][0];
+            $model['organization_information'][0] = $organizationInfo[0];
+            $model['admin_information'][0]        = $organizationInfo[0];
         }
 
         $form = $formBuilder->create(
@@ -208,6 +208,7 @@ class OrganizationController extends Controller
     public function exportOrganizationInfo()
     {
         $organizationDetails = $this->adminManager->getAllOrganizationInfo();
+
         return $this->adminManager->exportDetails($organizationDetails);
     }
 }

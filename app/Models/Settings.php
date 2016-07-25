@@ -16,9 +16,17 @@ class Settings extends Model
         'status'
     ];
     protected $casts = [
-        'registry_info'             => 'json',
-        'default_field_values'      => 'json',
-        'default_field_groups'      => 'json',
+        'registry_info'        => 'json',
+        'default_field_values' => 'json',
+        'default_field_groups' => 'json',
     ];
+
+    /**
+     * settings belongs to organization
+     */
+    protected function organization()
+    {
+        return $this->belongsTo('App\Models\Organization\Organization', 'organization_id');
+    }
 
 }

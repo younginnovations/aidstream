@@ -43,7 +43,7 @@
                                 </div>
                             </div>
                             <br />
-                            <div class="activity-description"><span>Reporting organization information can be updated in <a href="{{ route('settings.index') }}">Settings</a>.</span></div>
+                            <div class="activity-description"><span>Reporting organization information can be updated in <a href="{{ route('settings') }}">Settings</a>.</span></div>
                         </div>
                     </div>
                 </div>

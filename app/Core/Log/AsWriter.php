@@ -16,7 +16,7 @@ class AsWriter extends Writer
      * @param array $data
      * @return
      */
-    public function activity($action, array $param = [], array $data = null)
+    public function activity($action, array $param = [], array $data = [])
     {
         $activity = app(ActivityManager::class);
 

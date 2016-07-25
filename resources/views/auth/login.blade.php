@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport'/>
     <title>Aidstream - Login</title>
     <link rel="shotcut icon" type="image/png" sizes="32*32" href="{{ asset('/images/favicon.png') }}"/>
     <link href="{{ asset('/css/main.min.css') }}" rel="stylesheet">
@@ -129,10 +129,28 @@
                 </div>
             </div>
             <div class="col-md-12 create-account-wrapper">
-                Don’t have an AidStream account? <a href="{{ url('/auth/register') }}">Create an account</a>
+                Don’t have an AidStream account? <a href="{{ route('registration') }}">Create an account</a>
             </div>
         </div>
     </div>
+
+    @if(session('verification_message'))
+        <div class="modal verification-modal" tabindex="-1" role="dialog" style="display: block;">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Email Verification</h4>
+                    </div>
+                    <div class="modal-body clearfix">
+                        {!! session('verification_message') !!}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-backdrop in"></div>
+    @endif
+
 </div>
 @include('includes.footer')
 <!-- Scripts -->
@@ -149,12 +167,19 @@
 <script>
     $(document).ready(function () {
         function hamburgerMenu() {
-            $('.navbar-toggle.collapsed').click(function(){
+            $('.navbar-toggle.collapsed').click(function () {
                 $('.navbar-collapse').toggleClass('out');
                 $(this).toggleClass('collapsed');
             });
         }
+
         hamburgerMenu();
+
+        var verificationModel = $('.verification-modal');
+        $('.close', verificationModel).click(function () {
+            verificationModel.next('.modal-backdrop').remove();
+            verificationModel.remove();
+        });
     });
 </script>
 </body>

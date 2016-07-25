@@ -1,5 +1,7 @@
 <?php namespace App\Http\Controllers\Complete\Organization;
 
+use App\Core\Form\BaseForm;
+use App\Core\V201\Requests\Settings\OrganizationInfoRequest;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Request;
@@ -9,6 +11,8 @@ use App\Services\SettingsManager;
 use App\Services\Organization\OrganizationManager;
 use App\Services\FormCreator\Organization\OrgReportingOrgForm;
 use App\Services\Organization\OrgNameManager;
+use App\Services\UserManager;
+use Illuminate\Contracts\Mail\Mailer;
 use Illuminate\Support\Facades\Gate;
 
 /**
@@ -26,6 +30,12 @@ class OrganizationController extends Controller
      */
     protected $settingsManager;
 
+    protected $baseForm;
+
+    protected $userManager;
+
+    protected $mailer;
+
     /**
      * Create a new controller instance.
      *
@@ -34,7 +44,10 @@ class OrganizationController extends Controller
      * @param OrgReportingOrgForm $orgReportingOrgFormCreator
      * @param OrgNameManager      $nameManager
      * @param Request             $request
+     * @param UserManager         $userManager
      * @param ActivityManager     $activityManager
+     * @param Mailer              $mailer
+     * @param BaseForm            $baseForm
      */
     public function __construct(
         SettingsManager $settingsManager,
@@ -42,7 +55,10 @@ class OrganizationController extends Controller
         OrgReportingOrgForm $orgReportingOrgFormCreator,
         OrgNameManager $nameManager,
         Request $request,
-        ActivityManager $activityManager
+        UserManager $userManager,
+        ActivityManager $activityManager,
+        Mailer $mailer,
+        BaseForm $baseForm
     ) {
         $this->settingsManager            = $settingsManager;
         $this->organizationManager        = $organizationManager;
@@ -50,6 +66,9 @@ class OrganizationController extends Controller
         $this->nameManager                = $nameManager;
         $this->request                    = $request;
         $this->activityManager            = $activityManager;
+        $this->baseForm                   = $baseForm;
+        $this->userManager                = $userManager;
+        $this->mailer                     = $mailer;
         $this->middleware('auth');
     }
 
@@ -258,6 +277,92 @@ class OrganizationController extends Controller
         }
 
         return redirect()->back()->withValue($value);
+    }
+
+    /** Display form to view organization information
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function viewOrganizationInformation()
+    {
+        $organization       = $this->organizationManager->getOrganization(session('org_id'));
+        $organizationTypes  = $this->baseForm->getCodeList('OrganizationType', 'Organization');
+        $countries          = $this->baseForm->getCodeList('Country', 'Organization');
+        $registrationAgency = $this->baseForm->getCodeList('OrganisationRegistrationAgency', 'Organization');
+        $url                = route('organization-information.update');
+        $settings           = $this->settingsManager->getSettings(session('org_id'));
+        $users              = $this->userManager->getAllUsersOfOrganization();
+
+        $formOptions = [
+            'method' => 'PUT',
+            'url'    => $url,
+            'model'  => ['narrative' => $organization->reporting_org[0]['narrative']]
+        ];
+        $form        = $this->organizationManager->viewOrganizationInformation($formOptions);
+
+        return view('settings.organizationInformation', compact('form', 'organizationTypes', 'countries', 'organization', 'registrationAgency', 'settings', 'users'));
+    }
+
+    /** save organization information
+     * @param OrganizationInfoRequest $request
+     * @return mixed
+     */
+    public function saveOrganizationInformation(OrganizationInfoRequest $request)
+    {
+        $organization             = $this->organizationManager->getOrganization(session('org_id'));
+        $organizationInfoResponse = $this->organizationManager->saveOrganizationInformation($request->all(), $organization);
+
+        if ($organizationInfoResponse === "Username updated") {
+            return redirect()->route('settings')->with('status', 'changed');
+        }
+        $response = $this->getResponse($organizationInfoResponse, 'Organization Information');
+
+        return redirect()->back()->withResponse($response);
+
+    }
+
+    /** Returns response according to status while updating information
+     * @param $method
+     * @param $field
+     * @return array
+     */
+    public function getResponse($method, $field)
+    {
+        $response = ($method) ? [
+            'type' => 'success',
+            'code' => ['updated', ['name' => $field]]
+        ] : [
+            'type' => 'danger',
+            'code' => [
+                'save_failed',
+                ['name' => 'Settings']
+            ]
+        ];
+
+        return $response;
+    }
+
+    /** Send email to the user notifying username changed.
+     * @return mixed
+     */
+    public function notifyUser()
+    {
+        $users = $this->userManager->getAllUsersOfOrganization();
+        foreach ($users as $user) {
+            if ($user->role_id != 7) {
+                $view     = 'emails.usernameChanged';
+                $callback = function ($message) use ($user) {
+                    $message->subject('Username Changed');
+                    $message->from(config('mail.from.address'), config('mail.from.name'));
+                    $message->to($user->email);
+                };
+                $data     = $user->toArray();
+                $this->mailer->send($view, $data, $callback);
+            }
+        }
+
+        $response = ['type' => 'success', 'code' => ['sent', ['name' => 'Emails']]];
+
+        return redirect('settings')->withResponse($response);
     }
 
     /**

@@ -25,7 +25,7 @@ class Narrative extends BaseForm
         $this
             ->add(
                 'narrative',
-                'textarea',
+                'text',
                 [
                     'label'      => $this->getData('label'),
                     'help_block' => $this->addHelpText($this->getData('help-text-narrative') ? $this->getData('help-text-narrative') : 'Narrative-text', false),

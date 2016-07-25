@@ -23,6 +23,6 @@
                 </div>
             </div>
         </div>
-        <a href="{{ route('settings.index') }}" class="edit-element"></a>
+        <a href="{{ route('settings') }}" class="edit-element"></a>
     </div>
 @endif

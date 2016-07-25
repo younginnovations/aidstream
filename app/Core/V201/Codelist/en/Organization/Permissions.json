@@ -1,0 +1,24 @@
+{
+  "date-last-modified": "2015-10-16T10:42:20.401002+00:00",
+  "version": "",
+  "name": "Permissions",
+  "xml:lang": "en",
+  "Permissions": [
+    {
+      "code": "view:view",
+      "name": "Viewer"
+    },
+    {
+      "code": "view:view,add:add_activity,edit:edit_activity",
+      "name": "Editor"
+    },
+    {
+      "code": "view:view,add:add_activity,edit:edit_activity,delete:delete_activity,publish:publish_activity",
+      "name": "Publisher"
+    },
+    {
+      "code": "view:view,add:add_activity,edit:edit_activity,delete:delete_activity,publish:publish_activity,settings:modify_settings",
+      "name": "Administrator"
+    }
+  ]
+}

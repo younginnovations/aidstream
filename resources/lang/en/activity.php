@@ -233,6 +233,19 @@ return [
         'Activity with activity id <a href="%s">":activity_id"</a> has been marked as ":status"',
         route('activity.show', ':activity_id')
     ),
+    'publishing_settings_updated'    => sprintf(
+        'Publishing settings has been updated  for <a href="%s">":organization - :organization_id"</a>',
+        route('organization.show', ':organization_id')
+    ),
+    'default_values_settings_updated'    => sprintf(
+        'Default Values settings has been updated  for <a href="%s">":organization - :organization_id"</a>',
+        route('organization.show', ':organization_id')
+    ),
+    'activity_elements_checklist_settings_updated'    => sprintf(
+        'Activity elements checklist settings has been updated  for <a href="%s">":organization - :organization_id"</a>',
+        route('organization.show', ':organization_id')
+    ),
+
     'group_organization_deleted'     => 'Organization Group ":group_name" has been deleted by Super Admin with username ":super_admin"',
     'organization_deleted'           => 'Organization ":org_name" has been deleted by Super Admin with username ":super_admin"',
     'activity_element_deleted'       => sprintf(

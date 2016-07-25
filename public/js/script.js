@@ -440,7 +440,7 @@ $(document).ready(function () {
 
     /* prevent multiple submission on multiple click */
     $('form').submit(function () {
-        $('[type="submit"]', this).attr('disabled', 'disabled');
+        $('[type="submit"]', this).not('.prevent-disable').attr('disabled', 'disabled');
     });
 
     $(".clickable-row").click(function (e) {
@@ -605,7 +605,7 @@ $(document).ready(function () {
     //js for form input check and leave page alert
     $('form').delegate('textarea:not(".ignore_change"), select:not(".ignore_change"), input:not(".ignore_change")', 'change keyup', function (e) {
         var element = $(e.target);
-        if (e.isTrigger !== undefined && (element.is('input') || element.is('textarea'))) {
+        if (e.isTrigger !== undefined && (element.is('input') || element.is('textarea') || element.is('select'))) {
             return false;
         }
         preventNavigation = true;

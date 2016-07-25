@@ -97,21 +97,34 @@
                         <form class="form-horizontal" role="form" method="POST" action="{{ url('/password/email') }}">
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
-                            <div class="form-group">
-                                <label class="control-label">E-Mail Address</label>
+                            <div class="input-wrapper">
+                                <div class="form-group">
+                                    <label class="control-label">E-Mail Address</label>
 
-                                <div class="col-md-12">
-                                    <input type="email" class="form-control" name="email" value="{{ old('email') }}">
+                                    <div class="col-md-12">
+                                        <input type="email" class="form-control" name="email" value="{{ old('email') }}">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <button type="submit" class="btn btn-primary btn-submit">
+                                            Send Password Reset Link
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
-
-                            <div class="form-group">
-                                <div class="col-md-12">
-                                    <button type="submit" class="btn btn-primary btn-submit">
-                                        Send Password Reset Link
-                                    </button>
-                                </div>
-                            </div>
+                            <p>
+                                If you have forgotten your email address, please select your account type to continue.
+                            </p>
+                            <p>
+                                <a href="{{ session('same_identifier_org_id') ? route('submit-similar-organization', 'user') : route('similar-organizations', 'user') }}" class="btn btn-primary btn-submit">
+                                    Organisation user account
+                                </a>
+                                <a href="{{ session('same_identifier_org_id') ? route('submit-similar-organization', 'admin') : route('similar-organizations', 'admin') }}" class="btn btn-primary btn-submit">
+                                    Organisation admin account
+                                </a>
+                            </p>
                         </form>
                     </div>
                 </div>

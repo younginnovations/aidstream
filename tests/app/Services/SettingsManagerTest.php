@@ -12,6 +12,7 @@ use Illuminate\Database\DatabaseManager;
 use Illuminate\Contracts\Auth\Guard;
 use Psr\Log\LoggerInterface;
 use Illuminate\Contracts\Logging\Log;
+use Kris\LaravelFormBuilder\FormBuilder;
 
 class SettingsManagerTest extends AidStreamTestCase
 {
@@ -40,7 +41,17 @@ class SettingsManagerTest extends AidStreamTestCase
         $this->dbLogger            = m::mock(Log::class);
         $this->auth                = m::mock(Guard::class);
         $this->dbManager           = m::mock(DatabaseManager::class);
-        $this->settingManager      = new SettingsManager($this->version, $this->activityManager, $this->organizationManager, $this->dbManager, $this->auth, $this->dbLogger, $this->logger);
+        $this->formBuilder         = m::mock(FormBuilder::class);
+        $this->settingManager      = new SettingsManager(
+            $this->version,
+            $this->activityManager,
+            $this->organizationManager,
+            $this->dbManager,
+            $this->auth,
+            $this->dbLogger,
+            $this->logger,
+            $this->formBuilder
+        );
     }
 
     public function testItShouldReturnSettingsDataWithSpecificOrganizationId()

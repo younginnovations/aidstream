@@ -53,12 +53,12 @@ class SettingsService
 
     /**
      * SettingsService constructor.
-     * @param SegmentationInterface      $segmentationInterface
-     * @param Publisher                  $publisher
-     * @param XmlServiceProvider         $xmlServiceProvider
-     * @param OrganizationDataProvider   $organizationDataProvider
-     * @param DatabaseManager            $databaseManager
-     * @param LoggerInterface            $logger
+     * @param SegmentationInterface    $segmentationInterface
+     * @param Publisher                $publisher
+     * @param XmlServiceProvider       $xmlServiceProvider
+     * @param OrganizationDataProvider $organizationDataProvider
+     * @param DatabaseManager          $databaseManager
+     * @param LoggerInterface          $logger
      */
     public function __construct(
         SegmentationInterface $segmentationInterface,
@@ -68,12 +68,12 @@ class SettingsService
         DatabaseManager $databaseManager,
         LoggerInterface $logger
     ) {
-        $this->segmentationInterface      = $segmentationInterface;
-        $this->publisher                  = $publisher;
-        $this->xmlServiceProvider         = $xmlServiceProvider;
-        $this->organizationDataProvider   = $organizationDataProvider;
-        $this->logger                     = $logger;
-        $this->databaseManager            = $databaseManager;
+        $this->segmentationInterface    = $segmentationInterface;
+        $this->publisher                = $publisher;
+        $this->xmlServiceProvider       = $xmlServiceProvider;
+        $this->organizationDataProvider = $organizationDataProvider;
+        $this->logger                   = $logger;
+        $this->databaseManager          = $databaseManager;
     }
 
     /**
@@ -198,7 +198,7 @@ class SettingsService
     {
         $changes     = json_decode($details['changes'], true);
         $settings    = json_decode($details['settings'], true);
-        $autoPublish = $settings['registry_info'][0]['publish_files'];
+        $autoPublish = $settings['publish_files'];
 
         if ($autoPublish === 'yes') {
             if ($this->previousFileWasAlreadyPublished($changes)) {
