@@ -14,7 +14,7 @@
                 <div class="element-panel-heading">
                     <div>Change Password</div>
                 </div>
-                <div class="col-xs-12 col-md-8 col-lg-8 element-content-wrapper profile-content-wrapper">
+                <div class="col-xs-12 col-md-8 col-lg-8 element-content-wrapper profile-content-wrapper change-password-wrapper">
                     <div class="create-form create-user-form">
                         <form class="form-horizontal" role="form" method="POST"
                               action="{{ route('user.update-user-password', $user->id)}}">

@@ -397,7 +397,7 @@ class SettingsController extends Controller
         $settings      = $this->settings;
         $defaultValues = $this->settingsManager->saveDefaultValues($request->except('_token'), $settings);
 
-        if (!$settings->default_field_groups) {
+        if (!isset($settings->default_field_groups)) {
             $response = ['type' => 'warning', 'code' => ['default_field_groups_required', ['name' => 'activity']]];
 
             return redirect('activity-elements-checklist')->withResponse($response);

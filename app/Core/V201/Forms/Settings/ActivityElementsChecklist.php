@@ -12,8 +12,8 @@ class ActivityElementsChecklist extends BaseForm
                  'save',
                  'submit',
                  [
-                     'label'   => 'Save',
-                     'attr'    => ['class' => 'btn btn-primary'],
+                     'label'   => 'Save Activities Checklist',
+                     'attr'    => ['class' => 'btn btn-primary btn-submit btn-form'],
                      'wrapper' => ['class' => 'form-group']
                  ]
              );

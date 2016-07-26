@@ -9,9 +9,9 @@ class PublishingInfo extends BaseForm
     {
         $this
             ->add('publisher_id', 'text', ['help_block' => $this->addHelpText('activity_defaults-publisher_id', false), 'wrapper' => ['class' => 'form-group col-md-6']])
-            ->add('publisher_id_status', 'text', ['label' => 'Not Verified'])
+            ->add('publisher_id_status', 'text', ['label' => 'Not Verified', 'wrapper' => ['class' => 'hidden']])
             ->add('api_id', 'text', ['help_block' => $this->addHelpText('activity_defaults-api_key', false), 'label' => 'API Key', 'wrapper' => ['class' => 'form-group col-md-6']])
-            ->add('api_id_status', 'text', ['label' => 'Not Verified'])
+            ->add('api_id_status', 'text', ['label' => 'Not Verified', 'wrapper' => ['class' => 'hidden']])
             ->add(
                 'verify',
                 'button',
@@ -20,6 +20,11 @@ class PublishingInfo extends BaseForm
                     'attr'    => [
                         'class' => 'btn btn-primary',
                         'id'    => 'verify'
+                    ],
+                    'help_block' => [
+                        'text' => 'Click to verify your registry information',
+                        'tag' => 'span',
+                        'attr' => ['class' => 'verify-registry']
                     ],
                     'wrapper' => ['class' => 'form-group col-md-6'],
                 ]
@@ -35,7 +40,7 @@ class PublishingInfo extends BaseForm
                     'choice_options' => [
                         'wrapper' => ['class' => 'choice-wrapper']
                     ],
-                    'wrapper'        => ['class' => 'form-group registry-info-wrapper col-md-6'],
+                    'wrapper'        => ['class' => 'form-group registry-info-wrapper'],
                     'help_block'     => $this->addHelpText('activity_defaults-publishing_type', false)
                 ]
             )
@@ -50,7 +55,7 @@ class PublishingInfo extends BaseForm
                     'choice_options' => [
                         'wrapper' => ['class' => 'choice-wrapper']
                     ],
-                    'wrapper'        => ['class' => 'form-group registry-info-wrapper col-md-6'],
+                    'wrapper'        => ['class' => 'form-group registry-info-wrapper'],
                     'help_block'     => $this->addHelpText('activity_defaults-update_registry', false)
                 ]
             )
@@ -58,11 +63,11 @@ class PublishingInfo extends BaseForm
                 'Save',
                 'submit',
                 [
-                    'label'   => 'Save',
+                    'label'   => 'Save Publishing Settings',
                     'attr'    => [
-                        'class' => 'btn btn-primary'
+                        'class' => 'btn btn-primary btn-submit btn-form'
                     ],
-                    'wrapper' => ['class' => 'form-group col-md-6']
+                    'wrapper' => ['class' => 'form-group']
                 ]
             );
     }

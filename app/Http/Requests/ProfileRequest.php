@@ -38,7 +38,7 @@ class ProfileRequest extends Request
         }
 
         return [
-            'login_username'  => $username_rule,
+            'username'        => $username_rule,
             'first_name'      => 'required',
             'last_name'       => 'required',
             'email'           => $email_rule,
@@ -53,8 +53,8 @@ class ProfileRequest extends Request
     {
         $messages = [];
 
-        $messages['login_username.required']  = 'Username is required';
-        $messages['login_username.unique']    = 'Sorry! This username has already been taken';
+        $messages['username.required']        = 'Username is required';
+        $messages['username.unique']          = 'Sorry! This username has already been taken';
         $messages['first_name.required']      = 'First Name is required';
         $messages['last_name.required']       = 'Last Name is required';
         $messages['email.required']           = 'Email is required';

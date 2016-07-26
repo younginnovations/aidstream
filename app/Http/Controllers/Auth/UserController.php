@@ -195,10 +195,7 @@ class UserController extends Controller
         if (Gate::denies('isValidUser', $user)) {
             return redirect()->route('user.profile')->withResponse($this->getNoPrivilegesMessage());
         }
-
-        $organization            = $this->organization->findOrFail($this->orgId);
-        $organization_identifier = $organization->user_identifier;
-        $user                    = $this->userManager->updateUserProfile($input, $organization_identifier);
+        $user                    = $this->userManager->updateUserProfile($input);
 
         $response = ($user) ? ['type' => 'success', 'code' => ['updated', ['name' => 'Profile']]] : [
             'type' => 'danger',

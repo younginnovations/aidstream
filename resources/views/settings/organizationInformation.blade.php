@@ -18,27 +18,40 @@
                 {!! AsForm::select(['name' => 'registration_agency', 'data' => $registrationAgency,'required' => true, 'label' => 'Organisation Registration Agency','parent' => 'col-xs-12 col-sm-6 col-md-6', 'id' => 'registration_agency', 'empty_value' => 'Select an Agency', 'attr' => ['data-agency' => json_encode($registrationAgency)]]) !!}
                 {!! AsForm::text(['name' => 'registration_number', 'required'=> true, 'label' => 'Organisation Registration Number','parent' => 'col-xs-12 col-sm-6 col-md-6']) !!}
             </div>
-            <div class="col-md-12 col-xs-12">
+            <div class="col-md-12 col-xs-12 single-form-wrap">
                 {!! AsForm::text(['name'=>'organization_url' , 'label' => 'Organisation Website URL', 'parent' => 'col-xs-12 col-sm-6 col-md-6']) !!}
-                {!! AsForm::text(['name'=>'twitter' , 'label' => 'Organisation Twitter Handler', 'parent' => 'col-xs-12 col-sm-6 col-md-6']) !!}
             </div>
-            <div class="col-md-12 col-xs-12">
-                {!! AsForm::text(['name' => 'telephone', 'label' => 'Organisation Telephone Number', 'parent' => 'col-xs-12 col-sm-6 col-md-6']) !!}
+            <div class="col-md-12 col-xs-12 single-form-wrap">
+                {!! AsForm::text(['name'=>'twitter' , 'label' => 'Organisation Twitter Handler', 'parent' => 'col-xs-12 col-sm-6 col-md-6']) !!}
                 <div class="description col-xs-12 col-sm-6 col-md-6">Please insert a valid twitter username. Example: '@oxfam ' or 'oxfam'</div>
             </div>
-            <div class="col-md-6 col-xs-12">
+            <div class="col-md-12 col-xs-12 single-form-wrap">
+                {!! AsForm::text(['name' => 'telephone', 'label' => 'Organisation Telephone Number', 'parent' => 'col-xs-12 col-sm-6 col-md-6']) !!}
+            </div>
+            <div class="col-md-6 col-xs-12 upload-logo-block">
                 {{ Form::label(null,'Organisation Logo') }}
-                {{ Form::file('organization_logo',['class'=>'form-control','id' => 'picture']) }}
+                <div class="upload-logo">
+                    {{ Form::file('organization_logo',['class'=>'inputfile form-control','id' => 'picture']) }}
+                    <label for="file-logo">
+                        <div class="uploaded-logo {{ $organization->logo ? 'has-image' : '' }}">
+                        @if($organization->logo)
+                            <img src="{{$organization->logo_url}}" height="150" width="150" alt="{{$organization->logo}}" id="selected_picture"/>
+                        @else
+                            <img src="" height="172" width="172" alt="Uploaded Image" id="selected_picture"/>
+                        @endif
+                            <span class="change-logo">Change Logo</span>
+                        </div>
+                    </label>
+
+                    <span class="upload-label">Upload a logo</span>
+                </div>
+                <div class="description col-xs-12 col-sm-6 col-md-6">Please use jpg/jpeg/png/gif format and 150x150 dimensions image.</div>
             </div>
-            <div class="col-md-6 col-xs-12">
-                @if($organization->logo)
-                    <img src="{{$organization->logo_url}}" height="150" width="150" alt="{{$organization->logo}}" id="selected_picture" style="border:1px solid black"/>
-                @else
-                    <img src="" height="150" width="150" alt="Uploaded Image" id="selected_picture" style="'border:1px solid black'" style="border:1px solid black"/>
-                @endif
-            </div>
-            <div class="col-sm-4 col-xs-6">
-                {{ Form::submit('Save',['class' => 'btn btn-primary form-control']) }}
+            {{--<div class="col-md-6 col-xs-12 uploaded-logo">--}}
+
+            {{--</div>--}}
+            <div class="form-group">
+                {{ Form::submit('Save organisation information',['class' => 'btn btn-primary form-control btn-submit btn-form']) }}
             </div>
         </div>
         {{ Form::close() }}

@@ -28,10 +28,10 @@ class UserManager
         $this->dbLogger       = $dbLogger;
     }
 
-    public function updateUserProfile($input, $organization_identifier)
+    public function updateUserProfile($input)
     {
         try {
-            $this->userRepository->updateUserProfile($input, $organization_identifier);
+            $this->userRepository->updateUserProfile($input);
             $this->logger->info('Profile Updated Successfully.');
             $this->dbLogger->activity(
                 "activity.settings_updated",

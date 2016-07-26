@@ -109,9 +109,9 @@ class DefaultValues extends BaseForm
             'save',
             'submit',
             [
-                'label'   => 'Save',
-                'attr'    => ['class' => 'btn btn-primary'],
-                'wrapper' => ['class' => 'form-group col-md-6']
+                'label'   => 'Save Default Values',
+                'attr'    => ['class' => 'btn btn-primary btn-submit btn-form'],
+                'wrapper' => ['class' => 'form-group']
 
             ]
         );

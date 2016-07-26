@@ -1,4 +1,4 @@
-<div class="user-block clearfix" style="background-color: #EBF8FF; margin-bottom: 10px;">
+<div class="user-block clearfix">
     <a href="#delete" class="delete pull-right">remove</a>
     <div class="col-xs-12 col-md-12">
         {!! AsForm::text(['name' => 'users[user][' . $userIndex . '][username]', 'required' => true, 'parent' => 'col-xs-12 col-sm-6 col-md-6', 'class' => 'username']) !!}

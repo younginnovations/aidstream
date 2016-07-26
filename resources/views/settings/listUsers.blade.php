@@ -1,7 +1,10 @@
 @extends('settings.settings')
 @section('panel-body')
     @if(count($users) > 0)
-        <div class="panel-body">
+        <div class="panel-body panel-users-settings">
+            <div class="add-user-link">
+                <a href="{{ route('admin.register-user') }}">Add a user</a>
+            </div>
             <table class="table table-striped">
                 <thead>
                 <tr>
@@ -42,11 +45,6 @@
                 @endforeach
                 </tbody>
             </table>
-            <div>
-                <a href="{{ route('admin.register-user') }}"
-                   class="btn btn-primary add-new-btn ">Add
-                    a user</a>
-            </div>
             @else
                 <div class="text-center no-data no-user-data">
                     <div>

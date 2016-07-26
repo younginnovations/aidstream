@@ -2698,6 +2698,10 @@ $(document).ready(function () {
     $('.print').click(function(){
        window.print();
     });
+
+    $('.upload-logo-block input[type=file]').click(function(){
+        $('.uploaded-logo').toggleClass('toggle');
+    })
 });
 
 

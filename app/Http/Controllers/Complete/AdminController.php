@@ -121,7 +121,7 @@ class AdminController extends Controller
         $this->user->first_name = $request->get('first_name');
         $this->user->last_name  = $request->get('last_name');
         $this->user->email      = $request->get('email');
-        $this->user->username   = $organizationIdentifier . '_' . $request->get('username');
+        $this->user->username   = $request->get('username');
         $this->user->org_id     = $this->org_id;
         $this->user->role_id    = $request->get('permission');
         $this->user->password   = bcrypt($request->get('password'));

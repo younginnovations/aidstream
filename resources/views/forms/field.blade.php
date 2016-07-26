@@ -6,12 +6,14 @@ $messages = $errors->get($validationName);
         {{ Form::label($name, $label, ['class' => sprintf('control-label %s', ($required ? 'required' : ''))]) }}
     @endif
     <div class="col-xs-12 col-md-12">
-        @include(sprintf('forms.%s', $field))
+        <div>
+            @include(sprintf('forms.%s', $field))
+            <label class="text-danger" for="{{ $name }}">
+                @foreach($messages as $message)
+                    {{ $message }} <br/>
+                @endforeach
+            </label>
+        </div>
         {!! $html !!}
-        <label class="text-danger" for="{{ $name }}">
-            @foreach($messages as $message)
-                {{ $message }} <br/>
-            @endforeach
-        </label>
     </div>
 </div>

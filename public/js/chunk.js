@@ -32,7 +32,7 @@ if (typeof(Chunk) == "undefined") var Chunk = {};
                     var reader = new FileReader();
 
                     reader.onload = function (e) {
-                        $('#selected_picture').attr('src', e.target.result);
+                        $('#selected_picture').attr('src', e.target.result).parent('.uploaded-logo').addClass('has-image');
                     }
 
                     reader.readAsDataURL(input.files[0]);
@@ -45,13 +45,14 @@ if (typeof(Chunk) == "undefined") var Chunk = {};
         },
         usernameGenerator: function () {
             $('.username').on('change keyup', function (e) {
+                var userIdentifier = $('#user-identifier').attr('data-id') + '_';
                 var username = $(this).val();
-                if (userIdentifier.indexOf(username) == 0 && username.length <= userIdentifier.length) {
-                    username = "";
-                } else if (username.indexOf(userIdentifier) != 0) {
-                    username = userIdentifier + username;
+                if (userIdentifier === username && (e.keyCode === 8 || e.keyCode === 46)) {
+                    $(this).val('');
+                } else if (userIdentifier.indexOf(username) === 0) {
+                } else if (username.indexOf(userIdentifier) !== 0) {
+                    $(this).val(userIdentifier + username);
                 }
-                $(this).next('.login_username').val(username);
             });
         }, changeCountry: function () {
             var country = $('#country')
@@ -107,10 +108,10 @@ if (typeof(Chunk) == "undefined") var Chunk = {};
                     data: {publisherId: publisherId, apiKey: apiKey},
                     type: 'POST',
                     beforeSend: function () {
-                        $('#loading-img').show();
+                        $('body').append('<div class="loader">.....</div>');
                     },
                     complete: function () {
-                        $('#loading-img').hide();
+                        $('body > .loader').addClass('hidden').remove();
                     },
                     success: function (data) {
                         var publisher_response = data['publisher_id'];

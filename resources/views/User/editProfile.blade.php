@@ -13,7 +13,7 @@
                     <div>Edit Profile</div>
                 </div>
                 <div class="col-xs-12 col-md-8 col-lg-8 element-content-wrapper profile-wrapper">
-                    <div class="create-form">
+                    <div class="create-form edit-profile-form">
                         {{ Form::model($user,['route' => ['user.update-profile',$user['id']], 'method'=>'POST', 'files'=>true]) }}
                         {{--*/
                             if(old()) {
@@ -31,13 +31,10 @@
                             }
                         /*--}}
                         <div class="input-wrapper">
+                            <span class="hidden" id="user-identifier"
+                                  data-id="{{ $organization->user_identifier }}"></span>
                             <div class="col-md-12 col-xs-12">
-                                <span class="hidden" id="user-identifier" data-id="{{ $organization->user_identifier }}"></span>
-                                @if(Auth::user()->isAdmin())
-                                    {!! AsForm::username(['name' => 'username', 'hiddenName' => 'login_username', 'addOnValue' => $organization->user_identifier, 'value' => substr($user['username'],strlen($organization->user_identifier)+1), 'required' => true, 'parent' => 'col-xs-12 col-sm-6 col-md-6', 'class' => 'username' ,'attr' => ['readonly' => 'readonly']]) !!}
-                                @else
-                                    {!! AsForm::username(['name'=>'username','hiddenName' => 'login_username','addOnValue' => $organization->user_identifier,'value' => substr($user['username'],strlen($organization->user_identifier)+1) ,'parent' => 'col-sm-6 col-md-6 col-xs-12','class' => 'username']) !!}
-                                @endif
+                                {!! AsForm::text(['name' => 'username', 'required' => true, 'value' => $user['username'], 'parent' => 'col-xs-12 col-sm-6 col-md-6', 'class' => 'username', 'attr' => (Auth::user()->isAdmin() ? ['readonly' => 'readonly'] : [])]) !!}
                                 {!! AsForm::text(['name' => 'email','parent' => 'col-md-6 col-xs-12 col-sm-6' , 'required' => true]) !!}
                             </div>
                             <div class="col-md-12 col-xs-12">
@@ -46,37 +43,53 @@
                             </div>
                             <div class="col-md-12 col-xs-12">
                                 {!! AsForm::text(['name' => 'permission', 'value' => $user_permission,'label' => 'Permission Role' ,'parent' => 'col-md-6 col-xs-12 col-sm-6', 'required' => true, 'attr' => ['readonly' => 'readonly']]) !!}
+                            </div>
+                            <div class="col-md-12 col-xs-12">
                                 {!! AsForm::select(['name' => 'time_zone','data'=> $timeZone, 'empty_value' => 'Select Time Zone','value'  => $user['time_zone_id'] . ' : '. $user['time_zone'],'parent' => 'col-md-6 col-xs-12 col-sm-6']) !!}
                             </div>
-                            <div class="form-group">
+                            <div class="col-md-6 col-xs-12 upload-logo-block edit-profile-block edit-profile-form-block">
                                 {{ Form::label(null,'Profile Picture',['control-label']) }}
-                                {{ Form::file('profile_picture',['form-control', 'id' => 'picture']) }}
-                                <div class="description"><span>Please use jpg/jpeg/png/gif format and 150x150 dimensions image.</span>
+                                <div class="upload-logo">
+                                    {{ Form::file('profile_picture',['class'=>'inputfile form-control', 'id' => 'picture']) }}
+                                    <label for="file-logo">
+                                        <div class="uploaded-logo {{ $organization->logo ? 'has-image' : '' }}">
+                                            @if($user['profile_picture'])
+                                                <img src="{{ $user['profile_url'] }}" height="150" width="150"
+                                                     alt="{{ $user['profile_picture'] }}" id="selected_picture">
+                                            @else
+                                                <img src="" height="150" width="150" alt="Uploaded Image" id="selected_picture">
+                                            @endif
+                                            <span class="change-logo">Change Logo</span>
+                                        </div>
+                                    </label>
+                                    <span class="upload-label">Upload a logo</span>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                @if($user['profile_picture'])
-                                    <img src="{{ $user['profile_url'] }}" height="150" width="150" alt="{{ $user['profile_picture'] }}" id="selected_picture" style="border:1px solid black">
-                                @else
-                                    <img src="" height="150" width="150" alt="Uploaded Image" id="selected_picture" style="border:1px solid black" publi>
-                                @endif
-                            </div>
+                                <div class="description"><span>Please use jpg/jpeg/png/gif format and 150x150 dimensions image.</span></div>
+                                </div>
                             <hr/>
                             @if(Auth::user()->isAdmin())
-                                <div>Organisation Secondary Contact</div>
-                                <div class="form-group">
-                                    {{ Form::label(null,'First Name') }}
-                                    {{ Form::text('secondary_first_name',getVal((array)$organization->secondary_contact,['first_name']),['form-control']) }}
-                                </div>
-                                <div class="form-group">
-                                    {{ Form::label(null,'Last Name') }}
-                                    {{ Form::text('secondary_last_name',getVal((array)$organization->secondary_contact,['last_name']),['form-control']) }}
+                                <h2>Organisation Secondary Contact</h2>
+                                <div class="col-md-12 col-xs-12">
+                                    <div class="form-group col-md-6 col-xs-12 col-sm-6">
+                                        {{ Form::label(null,'First Name') }}
+                                        <div class="col-md-12">
+                                            {{ Form::text('secondary_first_name',getVal((array)$organization->secondary_contact,['first_name']),['form-control']) }}
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-6 col-xs-12 col-sm-6">
+                                        {{ Form::label(null,'Last Name') }}
+                                        <div class="col-md-12">
+                                            {{ Form::text('secondary_last_name',getVal((array)$organization->secondary_contact,['last_name']),['form-control']) }}
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="col-xs-12 col-md-12">
                                     {!! AsForm::text(['name' => 'secondary_email', 'label' => 'E-mail Address','value'=>getVal((array)$organization->secondary_contact,['email']),'parent' => 'col-sm-6 col-md-6 col-xs-12', 'required' => true]) !!}
                                 </div>
                             @endif
-                            <button type="submit" class="btn btn-primary btn-form btn-submit">Save</button>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary btn-form btn-submit">Save Profile</button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -85,16 +98,11 @@
             </div>
         </div>
     </div>
-    </div>
-    </div>
 @endsection
 @section('foot')
     <script src="{{url('js/chunk.js')}}"></script>
     <script>
         Chunk.displayPicture();
-        var userIdentifier = '{{ $organization->user_identifier }}_';
-        var username = $('.username').val();
-        $('.login_username').val(userIdentifier + username);
         Chunk.usernameGenerator();
     </script>
 @endsection

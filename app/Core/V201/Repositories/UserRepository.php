@@ -30,14 +30,13 @@ class UserRepository
 
     /** Update profile of the user
      * @param $input
-     * @param $organization_identifier
      */
-    public function updateUserProfile($input, $organization_identifier)
+    public function updateUserProfile($input)
     {
         $user = $this->current_user;
 
         if (!Auth::user()->isAdmin()) {
-            $user->username = $organization_identifier . '_' . $input['username'];
+            $user->username = $input['username'];
         }
 
         $user->first_name   = $input['first_name'];

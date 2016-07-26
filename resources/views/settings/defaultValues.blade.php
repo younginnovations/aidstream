@@ -2,15 +2,17 @@
 @section('panel-body')
     <div class="panel-body">
         <div class="create-form settings-form">
-            <h2>Default Values</h2>
-            <p>These values will be used in the xml files which is published to the IATI Registry. You have the option to override the activities.</p>
-            <hr/>
-            <h2>Default for all data</h2>
+            <div class="settings-checkall-wrapper">
+                <h2>Default Values</h2>
+                <p>These values will be used in the xml files which is published to the IATI Registry. You have the option to override the activities.</p>
+            </div>
             <div id="default_values">
                 {!! form_start($form) !!}
+                <h2>Default for all data</h2>
                 <div class="col-md-12">
                     {!! form_until($form, 'default_language') !!}
                 </div>
+                <h2>Default for Activity data</h2>
                 <div class="col-md-12">
                     {!! form_until($form, 'linked_data_uri') !!}
                 </div>

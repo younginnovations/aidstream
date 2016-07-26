@@ -1,9 +1,9 @@
 @extends('settings.settings')
 @section('panel-body')
     <div class="panel-body">
-        <div class="panel-content-heading">Registry Information</div>
         <div class="create-form settings-form">
             {!! form_start($form) !!}
+            <h2>Registry Information</h2>
             <div id="publishing_info1">
                 <div class="form-group">
                     {!! form_label($form->publisher_id, ['label' => 'Publisher ID']) !!}
