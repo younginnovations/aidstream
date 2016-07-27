@@ -35,3 +35,10 @@
         </div>
     </div>
 @stop
+
+@section('humanitarian-script')
+    <script type="text/javascript">
+        var countryBudgetItems = JSON.parse('{!! json_encode($countryBudgetItem) !!}');
+    </script>
+    <script src="{{ asset('js/humanitarianScope/humanitarianScopeVocabulary.js') }}"></script>
+@stop

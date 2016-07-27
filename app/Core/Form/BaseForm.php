@@ -167,6 +167,7 @@ class BaseForm extends Form
      * @param null  $helpText
      * @param null  $defaultValue
      * @param bool  $required
+     * @param array $attr
      * @return $this
      */
     protected function addSelect(
@@ -175,7 +176,8 @@ class BaseForm extends Form
         $label = null,
         $helpText = null,
         $defaultValue = null,
-        $required = false
+        $required = false,
+        array $attr = []
     ) {
         return $this->add(
             $name,
@@ -187,6 +189,7 @@ class BaseForm extends Form
                 'default_value' => $defaultValue,
                 'help_block'    => $helpText,
                 'required'      => $required,
+                'attr'          => $attr
             ]
         );
     }

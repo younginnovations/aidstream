@@ -32,13 +32,13 @@ class HumanitarianScope
      */
     public function editForm($data, $activityId)
     {
-        $modal['humanitarian_scope'] = $data;
+        $model['humanitarian_scope'] = $data;
 
         return $this->formBuilder->create(
             $this->formPath,
             [
                 'method' => 'PUT',
-                'model'  => $modal,
+                'model'  => $model,
                 'url'    => route('activity.humanitarian-scope.update', [$activityId, 0])
             ]
         )->add('Save', 'submit', ['attr' => ['class' => 'btn btn-submit btn-form']])
