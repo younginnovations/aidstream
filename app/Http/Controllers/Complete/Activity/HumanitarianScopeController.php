@@ -57,7 +57,7 @@ class HumanitarianScopeController extends Controller
         $countryBudgetItem = $this->humanitarianScopeManager->getActivityHumanitarianScopeData($id);
         $form              = $this->humanitarianScopeForm->editForm($countryBudgetItem, $id);
 
-        return view('Activity.humanitarianScope.edit', compact('form', 'activityData', 'id'));
+        return view('Activity.humanitarianScope.edit', compact('form', 'activityData', 'id', 'countryBudgetItem'));
     }
 
     /**

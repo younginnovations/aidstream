@@ -155,6 +155,9 @@
 @else
     <script type="text/javascript" src="{{url('/js/main.min.js')}}"></script>
 @endif
+
+@yield('humanitarian-script')
+
 <script type="text/javascript">
     $(document).ready(function () {
         $('form select').select2();
