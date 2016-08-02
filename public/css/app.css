@@ -28,7 +28,6 @@ button, input[type="button"], input[type="reset"], input[type="submit"] {
   padding: 0.75em 1.5em;
   text-decoration: none;
   -webkit-transition: background-color 150ms ease;
-     -moz-transition: background-color 150ms ease;
        -o-transition: background-color 150ms ease;
           transition: background-color 150ms ease;
   -webkit-user-select: none;
@@ -83,7 +82,6 @@ select, .form-control[readonly], form .select2-container, textarea {
   margin-bottom: 0.75em;
   padding: 0.5em;
   -webkit-transition: border-color 150ms ease;
-     -moz-transition: border-color 150ms ease;
        -o-transition: border-color 150ms ease;
           transition: border-color 150ms ease;
   width: 100%; }
@@ -190,7 +188,6 @@ a {
   color: #477dca;
   text-decoration: none;
   -webkit-transition: color 150ms ease;
-     -moz-transition: color 150ms ease;
        -o-transition: color 150ms ease;
           transition: color 150ms ease; }
   a:active, a:focus, a:hover {
@@ -239,7 +236,6 @@ textarea {
 a, .btn-link {
   color: #00A8FF;
   -webkit-transition: none;
-     -moz-transition: none;
        -o-transition: none;
           transition: none;
   cursor: pointer; }
@@ -392,9 +388,8 @@ button, input[type="button"], input[type="reset"], input[type="submit"], .btn {
   height: 25px;
   -webkit-transform: rotate(45deg);
   -ms-transform: rotate(45deg);
-  -moz-transform: rotate(45deg);
-    -o-transform: rotate(45deg);
-       transform: rotate(45deg); }
+  -o-transform: rotate(45deg);
+     transform: rotate(45deg); }
 
 .arrow.top:after {
   bottom: -20px;
@@ -905,7 +900,6 @@ label {
   float: left;
   overflow: hidden;
   -webkit-transition: width 0.3s ease;
-     -moz-transition: width 0.3s ease;
        -o-transition: width 0.3s ease;
           transition: width 0.3s ease;
   background: #262626;
@@ -1014,7 +1008,6 @@ label {
   width: 210px; }
   .full-sidebar-wrapper + .content-wrapper {
     width: -webkit-calc(100% - 210px);
-    width: -moz-calc(100% - 210px);
     width: calc(100% - 210px);
     margin-left: 210px; }
   .full-sidebar-wrapper .support span {
@@ -1024,7 +1017,6 @@ label {
 
 .touch-sidebar-wrapper + .content-wrapper {
   width: -webkit-calc(100% - 62px);
-  width: -moz-calc(100% - 62px);
   width: calc(100% - 62px);
   margin-left: 62px !important; }
 
@@ -1063,7 +1055,6 @@ label {
   padding: 0;
   position: relative;
   -webkit-transition: left 0.4s;
-     -moz-transition: left 0.4s;
        -o-transition: left 0.4s;
           transition: left 0.4s;
   padding-top: 63px !important; }
@@ -1080,11 +1071,9 @@ label {
   border-left: 1px solid #ededed;
   min-height: 100%;
   width: -webkit-calc(100% - 62px);
-  width: -moz-calc(100% - 62px);
   width: calc(100% - 62px);
   float: left;
   -webkit-transition: margin-left 0.3s ease;
-     -moz-transition: margin-left 0.3s ease;
        -o-transition: margin-left 0.3s ease;
           transition: margin-left 0.3s ease; }
   .content-wrapper .panel {
@@ -1462,7 +1451,6 @@ label {
 .element-content-wrapper {
   padding: 20px 0 0 16px;
   width: -webkit-calc(100% - 283px);
-  width: -moz-calc(100% - 283px);
   width: calc(100% - 283px); }
   .element-content-wrapper .panel-heading {
     background: transparent; }
@@ -2050,7 +2038,6 @@ form > .add_to_collection[data-collection="legacy_data"] {
     width: 260px; }
   .download-transaction-wrap > div {
     width: -webkit-calc(100% - 370px);
-    width: -moz-calc(100% - 370px);
     width: calc(100% - 370px);
     font-size: 12px;
     color: #aaa;
@@ -2146,7 +2133,6 @@ form > .add_to_collection[data-collection="legacy_data"] {
   justify-content: space-between;
   -ms-flex-pack: justify;
   -webkit-transition: all 0.2s ease-in-out;
-     -moz-transition: all 0.2s ease-in-out;
        -o-transition: all 0.2s ease-in-out;
           transition: all 0.2s ease-in-out; }
   .download-block:not(:first-of-type) {
@@ -2156,7 +2142,6 @@ form > .add_to_collection[data-collection="legacy_data"] {
             box-shadow: 0 3px 7px 0 rgba(87, 71, 81, 0.2);
     position: relative;
     -webkit-transform: scale(1.04);
-       -moz-transform: scale(1.04);
         -ms-transform: scale(1.04);
          -o-transform: scale(1.04);
             transform: scale(1.04); }
@@ -2235,7 +2220,6 @@ form > .add_to_collection[data-collection="legacy_data"] {
 
 .organization-detail {
   width: -webkit-calc(100% - 124px - 20px);
-  width: -moz-calc(100% - 124px - 20px);
   width: calc(100% - 124px - 20px);
   float: left; }
   .organization-detail ul {
@@ -2424,7 +2408,6 @@ div[class*="panel-level-"] .panel > .panel-body {
 .activity-element-toggle .activity-element-title:before, .expanded > .panel-heading .activity-element-title:before {
   margin-top: 8px;
   -webkit-transform: rotate(90deg);
-     -moz-transform: rotate(90deg);
       -ms-transform: rotate(90deg);
        -o-transform: rotate(90deg);
           transform: rotate(90deg);
@@ -2582,7 +2565,6 @@ div[class*="panel-level-"] .panel > .panel-body {
     position: absolute;
     bottom: 20px;
     -webkit-transition: opacity 0.3s ease;
-       -moz-transition: opacity 0.3s ease;
          -o-transition: opacity 0.3s ease;
             transition: opacity 0.3s ease; }
   .support p {
@@ -2594,7 +2576,6 @@ div[class*="panel-level-"] .panel > .panel-body {
     height: 48px;
     opacity: 0;
     -webkit-transition: opacity 0.3s ease;
-       -moz-transition: opacity 0.3s ease;
          -o-transition: opacity 0.3s ease;
             transition: opacity 0.3s ease; }
 
@@ -2647,7 +2628,6 @@ div[class*="panel-level-"] .panel > .panel-body {
     left: 0;
     position: absolute;
     -webkit-transform: translateY(-50%);
-    -moz-transform: translateY(-50%);
     -ms-transform: translateY(-50%);
     -o-transform: translateY(-50%);
     transform: translateY(-50%);
@@ -2664,7 +2644,6 @@ div[class*="panel-level-"] .panel > .panel-body {
   border: 2px solid #00A8FF;
   color: #00A8FF;
   -webkit-transition: background 0.1s ease-in-out;
-     -moz-transition: background 0.1s ease-in-out;
        -o-transition: background 0.1s ease-in-out;
           transition: background 0.1s ease-in-out; }
   .btn-cancel:hover {
@@ -2686,7 +2665,6 @@ div[class*="panel-level-"] .panel > .panel-body {
 .organization-wrapper {
   padding: 0 0 70px;
   width: -webkit-calc(100% - 267px);
-  width: -moz-calc(100% - 267px);
   width: calc(100% - 267px); }
 
 .organization_actions a {
@@ -3130,7 +3108,6 @@ table.dataTable thead .sorting_desc {
     height: 6px;
     width: 6px;
     -webkit-transform: rotate(45deg);
-       -moz-transform: rotate(45deg);
         -ms-transform: rotate(45deg);
          -o-transform: rotate(45deg);
             transform: rotate(45deg);
@@ -3139,7 +3116,6 @@ table.dataTable thead .sorting_desc {
 
 .hide-more-info:before {
   -webkit-transform: rotate(225deg);
-     -moz-transform: rotate(225deg);
       -ms-transform: rotate(225deg);
        -o-transform: rotate(225deg);
           transform: rotate(225deg);
@@ -3188,7 +3164,6 @@ table.dataTable thead .sorting_desc {
 
 .activity-element-info {
   width: -webkit-calc(100% - 240px);
-  width: -moz-calc(100% - 240px);
   width: calc(100% - 240px);
   line-height: 22px; }
   .activity-element-info li {
@@ -3250,7 +3225,6 @@ table.dataTable thead .sorting_desc {
     height: 10px;
     background: #fff;
     -webkit-transform: rotate(45deg);
-       -moz-transform: rotate(45deg);
         -ms-transform: rotate(45deg);
          -o-transform: rotate(45deg);
             transform: rotate(45deg);
@@ -3464,7 +3438,6 @@ pre.prettyprint {
     -webkit-box-shadow: -2px -2px 5px -1px rgba(38, 38, 38, 0.3);
             box-shadow: -2px -2px 5px -1px rgba(38, 38, 38, 0.3);
     -webkit-transform: rotate(45deg);
-       -moz-transform: rotate(45deg);
         -ms-transform: rotate(45deg);
          -o-transform: rotate(45deg);
             transform: rotate(45deg); }
@@ -3501,22 +3474,14 @@ pre.prettyprint {
   /* Chrome, Safari, Opera */
   -webkit-animation-direction: alternate;
   -webkit-animation: loading 1s infinite;
-     -moz-animation: loading 1s infinite;
        -o-animation: loading 1s infinite;
           animation: loading 1s infinite;
   -webkit-animation-direction: alternate;
-     -moz-animation-direction: alternate;
        -o-animation-direction: alternate;
           animation-direction: alternate; }
 
 /* Chrome, Safari, Opera */
 @-webkit-keyframes loading {
-  from {
-    letter-spacing: -16px; }
-  to {
-    letter-spacing: 16px; } }
-
-@-moz-keyframes loading {
   from {
     letter-spacing: -16px; }
   to {
@@ -3577,7 +3542,6 @@ pre.prettyprint {
         color: #00A8FF; }
       .element-sidebar-dropdown .edit-element .caret.caret-out {
         -webkit-transform: rotate(180deg);
-           -moz-transform: rotate(180deg);
             -ms-transform: rotate(180deg);
              -o-transform: rotate(180deg);
                 transform: rotate(180deg); }
@@ -3974,8 +3938,7 @@ pre.prettyprint {
 @media all and (min-width: 480px) {
   .error-msg-wrap h2 {
     padding-top: 300px;
-    -o-background-size: 300px;
-       background-size: 300px;
+    background-size: 300px;
     font-size: 32px; }
   .error-msg-wrap p {
     color: rgba(72, 72, 72, 0.7);
@@ -4108,7 +4071,6 @@ pre.prettyprint {
     width: 210px !important; }
     .sidebar-wrapper:not(.touch-sidebar-wrapper) + .content-wrapper {
       width: -webkit-calc(100% - 210px) !important;
-      width: -moz-calc(100% - 210px) !important;
       width: calc(100% - 210px) !important;
       margin-left: 210px; }
   .support span {
@@ -4143,7 +4105,6 @@ pre.prettyprint {
     width: 62px !important; }
   .touch-sidebar-wrapper + .content-wrapper {
     width: -webkit-calc(100% - 62px) !important;
-    width: -moz-calc(100% - 62px) !important;
     width: calc(100% - 62px) !important;
     margin-left: 62px !important; }
   .touch-sidebar-wrapper, .touch-sidebar-wrapper li, .touch-sidebar-wrapper .jspPane {
@@ -4209,6 +4170,10 @@ pre.prettyprint {
     .alert > ul a, .alert > span a {
       color: #fff;
       text-decoration: underline; }
+      .alert > ul a:hover, .alert > span a:hover {
+        background: #fff;
+        color: #00A8FF;
+        text-decoration: none; }
 
 .alert + .alert {
   background-image: none; }
@@ -4253,7 +4218,6 @@ pre.prettyprint {
   .more-info:before {
     display: none !important;
     -webkit-transition: none !important;
-       -moz-transition: none !important;
          -o-transition: none !important;
             transition: none !important; }
   .content-wrapper, .sidebar-wrapper + .content-wrapper, .sidebar-wrapper:not(.touch-sidebar-wrapper) + .content-wrapper {
@@ -4289,7 +4253,6 @@ pre.prettyprint {
     .view-language-info:before {
       content: "";
       -webkit-transform: none;
-         -moz-transform: none;
           -ms-transform: none;
            -o-transform: none;
               transform: none;

@@ -266,4 +266,6 @@ return [
         'Document Link has been deleted with id ":document_link_id" from activity with id <a href="%s">":activity_id"</a>',
         route('activity.show', ':activity_id')
     ),
+    'activity_sector_removed'        => 'Sector has been removed from Activity level',
+    'transaction_sector_removed'     => 'Sector has been removed from Transaction level'
 ];

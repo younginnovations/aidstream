@@ -5077,6 +5077,11 @@ pre.prettyprint {
     a {
       color: $color_white;
       text-decoration: underline;
+      &:hover {
+        background: $color_white;
+        color: $color_dodger_blue_approx;
+        text-decoration: none;
+      }
     }
   }
 }

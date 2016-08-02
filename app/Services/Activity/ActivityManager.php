@@ -655,4 +655,55 @@ class ActivityManager
             }
         }
     }
+
+    /**
+     * Remove sector details from the activity.
+     * @param $activityId
+     * @return bool
+     */
+    public function removeActivitySector($activityId)
+    {
+        try {
+            $this->activityRepo->removeActivitySector($activityId);
+            $this->logger->info(
+                'Sector has been removed from Activity level',
+                ['for ' => $activityId]
+            );
+            $this->logger->activity(
+                "activity.activity_sector_removed"
+            );
+
+            return true;
+        } catch (Exception $exception) {
+            $this->logger->error($exception);
+        }
+
+        return false;
+    }
+
+    /**
+     * Remove all the sector details from every transactions of the activity.
+     * @param $activityId
+     * @return bool
+     */
+    public function removeTransactionSector($activityId)
+    {
+        try {
+            $transactions = $this->transactionRepo->getTransactionData($activityId);
+            $this->activityRepo->removeTransactionSector($transactions);
+            $this->logger->info(
+                'Sector has been removed from Transaction level',
+                ['for ' => $activityId]
+            );
+            $this->logger->activity(
+                "activity.transaction_sector_removed"
+            );
+
+            return true;
+        } catch (Exception $exception) {
+            $this->logger->error($exception);
+        }
+
+        return false;
+    }
 }

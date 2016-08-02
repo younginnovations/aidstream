@@ -940,4 +940,49 @@ class ActivityController extends Controller
 
         return $message;
     }
+
+    /**
+     * Remove sector details from the activity.
+     * @param $activityId
+     */
+    public function removeActivitySector($activityId)
+    {
+        $activity = $this->activityManager->getActivityData($activityId);
+
+        if (Gate::denies('ownership', $activity)) {
+            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
+        }
+
+        $sector = $this->activityManager->removeActivitySector($activityId);
+
+        if ($sector) {
+            $response = ['type' => 'success', 'messages' => ['Sector details has been removed from Activity level.']];
+        } else {
+            $response = ['type' => 'danger', 'messages' => ['Failed to remove Sector details from Activity level.']];
+        }
+
+        return redirect()->back()->withResponse($response);
+    }
+
+    /**
+     * Remove all the sector details from every transactions of the activity.
+     * @param $activityId
+     */
+    public function removeTransactionSector($activityId)
+    {
+        $activity = $this->activityManager->getActivityData($activityId);
+
+        if (Gate::denies('ownership', $activity)) {
+            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
+        }
+        $sector = $this->activityManager->removeTransactionSector($activityId);
+
+        if ($sector) {
+            $response = ['type' => 'success', 'messages' => ['Sector details has been removed from Transaction level.']];
+        } else {
+            $response = ['type' => 'danger', 'messages' => ['Failed to remove Sector details from Transaction level.']];
+        }
+
+        return redirect()->back()->withResponse($response);
+    }
 }
