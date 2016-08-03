@@ -227,4 +227,71 @@ class ActivityRepository
             $activity->update(['published_to_registry' => 1]);
         }
     }
+
+    /**
+     * Remove sector details from the activity.
+     * @param $activityId
+     */
+    public function removeActivitySector($activityId)
+    {
+        $activity         = $this->getActivityData($activityId);
+        $activity->sector = null;
+        $activity->save();
+    }
+
+    /**
+     * Remove all the sector details from every transactions of the activity.
+     * @param $transactions
+     * @internal param $activityId
+     */
+    public function removeTransactionSector($transactions)
+    {
+        foreach ($transactions as $transaction) {
+            $transaction_info           = $transaction->transaction;
+            $transactionSectors         = $transaction_info['sector'];
+            $transaction_info['sector'] = $this->removeSector($transactionSectors);
+            $transaction->transaction   = $transaction_info;
+            $transaction->save();
+        }
+    }
+
+    /**
+     * Remove sector information of the transaction.
+     * @param $transactionSectors
+     * @return array
+     */
+    public function removeSector($transactionSectors)
+    {
+        $sectors = [];
+        foreach ($transactionSectors as $key => $sector) {
+            $sectors[0]['sector_vocabulary']    = '';
+            $sectors[0]['sector_code']          = '';
+            $sectors[0]['sector_category_code'] = '';
+            $sectors[0]['sector_text']          = '';
+            if (session('version') != 'V201') {
+                $sectors[0]['vocabulary_uri'] = '';
+            }
+            $sectors[0]['narrative'] = $this->removeTransactionSectorNarrative($sector);
+        }
+
+        return $sectors;
+    }
+
+    /**
+     * Remove narrative of the sector of the transaction.
+     * @param $sectorNarratives
+     * @return array
+     */
+    public function removeTransactionSectorNarrative($sectorNarratives)
+    {
+        $narratives            = [];
+        $transactionNarratives = $sectorNarratives['narrative'];
+
+        foreach ($transactionNarratives as $narrative) {
+            $narratives[0]['narrative'] = '';
+            $narratives[0]['language']  = '';
+        }
+
+        return $narratives;
+    }
 }

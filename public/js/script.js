@@ -111,17 +111,17 @@ $(document).ready(function () {
 
         if ($('#removeDialog').length === 0) {
             $('body').append('' +
-            '<div class="modal" id="removeDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="z-index: 9999">' +
-            '<div class="modal-dialog">' +
-            '<div class="modal-content">' +
-            '<div class="modal-header">' +
-            '<h4 class="modal-title" id="myModalLabel"></h4>' +
-            '</div>' +
-            '<div class="modal-body"></div>' +
-            '<div class="modal-footer"></div>' +
-            '</div>' +
-            '</div>' +
-            '</div>');
+                '<div class="modal" id="removeDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="z-index: 9999">' +
+                '<div class="modal-dialog">' +
+                '<div class="modal-content">' +
+                '<div class="modal-header">' +
+                '<h4 class="modal-title" id="myModalLabel"></h4>' +
+                '</div>' +
+                '<div class="modal-body"></div>' +
+                '<div class="modal-footer"></div>' +
+                '</div>' +
+                '</div>' +
+                '</div>');
         }
 
         var removeDialog = $('#removeDialog');
@@ -277,17 +277,17 @@ $(document).ready(function () {
 
         if ($('#popDialog').length === 0) {
             $('body').append('' +
-            '<div class="modal" id="popDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="z-index: 9999">' +
-            '<div class="modal-dialog">' +
-            '<div class="modal-content">' +
-            '<div class="modal-header">' +
-            '<h4 class="modal-title" id="myModalLabel"></h4>' +
-            '</div>' +
-            '<div class="modal-body"></div>' +
-            '<div class="modal-footer"></div>' +
-            '</div>' +
-            '</div>' +
-            '</div>');
+                '<div class="modal" id="popDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="z-index: 9999">' +
+                '<div class="modal-dialog">' +
+                '<div class="modal-content">' +
+                '<div class="modal-header">' +
+                '<h4 class="modal-title" id="myModalLabel"></h4>' +
+                '</div>' +
+                '<div class="modal-body"></div>' +
+                '<div class="modal-footer"></div>' +
+                '</div>' +
+                '</div>' +
+                '</div>');
         }
 
         var popElem = $('#popDialog');
@@ -340,23 +340,23 @@ $(document).ready(function () {
     });
 
     /* show confirmation box on clicking delete */
-    $('.delete').click(function (e) {
+    $('.delete, .delete_data').click(function (e) {
         e.preventDefault();
         var location = this.href;
 
         if ($('#delDialog').length === 0) {
             $('body').append('' +
-            '<div class="modal" id="delDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="z-index: 9999">' +
-            '<div class="modal-dialog">' +
-            '<div class="modal-content">' +
-            '<div class="modal-header">' +
-            '<h4 class="modal-title" id="myModalLabel"></h4>' +
-            '</div>' +
-            '<div class="modal-body"></div>' +
-            '<div class="modal-footer"></div>' +
-            '</div>' +
-            '</div>' +
-            '</div>');
+                '<div class="modal" id="delDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="z-index: 9999">' +
+                '<div class="modal-dialog">' +
+                '<div class="modal-content">' +
+                '<div class="modal-header">' +
+                '<h4 class="modal-title" id="myModalLabel"></h4>' +
+                '</div>' +
+                '<div class="modal-body"></div>' +
+                '<div class="modal-footer"></div>' +
+                '</div>' +
+                '</div>' +
+                '</div>');
         }
 
         var delDialog = $('#delDialog');
@@ -627,8 +627,8 @@ $(document).ready(function () {
         $(this).parents('.toggle-btn').next('.more-info').toggleClass('hidden');
     });
 
-    $('.print').click(function(){
-       window.print();
+    $('.print').click(function () {
+        window.print();
     });
 });
 

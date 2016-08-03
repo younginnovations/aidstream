@@ -156,5 +156,21 @@ $router->group(
                 'uses' => 'ActivityController@downloadActivityXml'
             ]
         );
+
+        $router->get(
+            '/activity/{activityId}/removeActivitySector',
+            [
+                'as'   => 'remove.activitySector',
+                'uses' => 'ActivityController@removeActivitySector'
+            ]
+        );
+
+        $router->get(
+            '/activity/{activityId}/removeTransactionSector',
+            [
+                'as'   => 'remove.transactionSector',
+                'uses' => 'ActivityController@removeTransactionSector'
+            ]
+        );
     }
 );

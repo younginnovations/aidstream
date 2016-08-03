@@ -1,11 +1,9 @@
 <?php namespace App\Core\V201\Requests;
 
-
 class ActivityElementValidation
 {
     public function validateActivity($activityData, $transactionData)
     {
-
         $messages = [];
 
         if (empty($activityData->title)) {
@@ -57,7 +55,11 @@ class ActivityElementValidation
                 removeEmptyValues($transactionDetail);
                 if (!empty($transactionDetail['sector']) && $transaction == []) {
                     $transaction[] = ['transaction' => 'it contains data'];
-                    $messages[]    = "You can only mention Sector either at Activity or in Transaction level. You can't have Sector in both Activity level and Transaction level.";
+                    $messages[]    = sprintf(
+                        "You can only mention Sector either at Activity or in Transaction level(should be included in all transactions) but not both. <br/>Please click the link to remove Sector From: <a href='%s' class='delete_data'>Transaction Level</a> OR <a href='%s' class='delete_data'>Activity Level</a> ",
+                        route('remove.transactionSector', $activityData->id),
+                        route('remove.activitySector', $activityData->id)
+                    );
                 }
             }
         }

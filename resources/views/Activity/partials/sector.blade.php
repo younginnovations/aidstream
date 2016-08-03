@@ -15,7 +15,7 @@
                             @if(session('version') != 'V201')
                                 <div class="element-info">
                                     <div class="activity-element-label">@lang('activityView.vocabulary_uri')</div>
-                                    <div class="activity-element-info">{!!  checkIfEmpty(getClickableLink($sector['vocabulary_uri']))  !!}</div>
+                                    <div class="activity-element-info">{!!  checkIfEmpty(getClickableLink(getVal($sector,['vocabulary_uri'])))  !!}</div>
                                 </div>
                             @endif
                             <div class="element-info">
