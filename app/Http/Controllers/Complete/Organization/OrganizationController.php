@@ -316,9 +316,9 @@ class OrganizationController extends Controller
      */
     public function downloadOrganizationXml($orgId)
     {
-        $orgElem = $this->organizationManager->getOrganizationElement();
+        $orgElem    = $this->organizationManager->getOrganizationElement();
         $xmlService = $orgElem->getOrgXmlService();
-        $xml = $xmlService->generateTemporaryOrganizationXml(
+        $xml        = $xmlService->generateTemporaryOrganizationXml(
             $this->organizationManager->getOrganization($orgId),
             $this->organizationManager->getOrganizationData($orgId),
             $this->settingsManager->getSettings($orgId),
@@ -329,7 +329,7 @@ class OrganizationController extends Controller
             $xml,
             200,
             [
-                'Content-type' => 'text/xml',
+                'Content-type'        => 'text/xml',
                 'Content-Disposition' => sprintf('attachment; filename=orgXmlFile.xml')
             ]
         );
@@ -354,11 +354,15 @@ class OrganizationController extends Controller
     {
         $organization_data = $this->organizationManager->getPublishedOrganizationData($organization_id);
         $settings          = $this->settingsManager->getSettings($organization_id);
-        $autoPublishing    = $settings['registry_info'][0]['publish_files'];
-        if ($organization_data && $autoPublishing == "no") {
-            ($organization_data->published_to_register == 1) ? $status = "Linked" : $status = "Unlinked";
-        } else {
-            $status = "unlinked";
+        $autoPublishing    = getVal($settings->toArray(), ['registry_info', 0, 'publish_files'], 'no');
+        $status            = 'unlinked';
+
+        if ($organization_data) {
+            if ($autoPublishing == "no") {
+                $status = ($organization_data->published_to_register == 1) ? "Linked" : "Unlinked";
+            } else {
+                $status = ($organization_data->published_to_register == 1) ? "Linked" : "unlinked";
+            }
         }
 
         return $status;
