@@ -6,7 +6,7 @@ $messages = $errors->get($validationName);
         <label for="{{ $name }}" class="{{ sprintf('control-label %s', ($required ? 'required' : '')) }}">
             {{ $label }}
             @if(isset($help))
-                <span class="help-text" title="{{ help('activity_defaults-default_language') }}" data-toggle="tooltip" data-placement="top"></span>
+                <span class="help-text" title="{{ help($help) }}" data-toggle="tooltip" data-placement="top"></span>
             @endif
         </label>
     @endif

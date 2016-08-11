@@ -32,6 +32,6 @@
 </div>
 
 <div class="col-md-12 text-center">
-    {{ Form::button('Back', ['class' => 'btn btn-primary btn-submit btn-register btn-tab', 'type' => 'button',  'data-tab-trigger' => '#tab-organization']) }}
+    {{ Form::button('Back to Organization Information', ['class' => 'btn btn-primary btn-submit btn-register btn-tab', 'type' => 'button',  'data-tab-trigger' => '#tab-organization']) }}
     {{ Form::button('Complete Registration', ['class' => 'btn btn-primary btn-submit btn-register', 'type' => 'submit']) }}
 </div>

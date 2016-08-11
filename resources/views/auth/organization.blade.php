@@ -25,7 +25,7 @@
     </div>
     <div class="col-xs-12 col-md-12">
         {!! AsForm::text(['name' => 'organization[registration_number]', 'class' => 'registration_number', 'required' => true, 'parent' => 'col-xs-12 col-sm-6 col-md-6']) !!}
-        {!! AsForm::text(['name' => 'organization[organization_identifier]', 'help' => 'activity_defaults-default_language', 'label' => 'IATI Organizational Identifier', 'class' => 'organization_identifier', 'id' => 'organization[organization_identifier]', 'required' => true, 'parent' => 'col-xs-12 col-sm-6 col-md-6', 'attr' => ['readonly' => 'readonly']]) !!}
+        {!! AsForm::text(['name' => 'organization[organization_identifier]', 'help' => 'registration_org_identifier', 'label' => 'IATI Organizational Identifier', 'class' => 'organization_identifier', 'id' => 'organization[organization_identifier]', 'required' => true, 'parent' => 'col-xs-12 col-sm-6 col-md-6', 'attr' => ['readonly' => 'readonly']]) !!}
     </div>
 </div>
 
