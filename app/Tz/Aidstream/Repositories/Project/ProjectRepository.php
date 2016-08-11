@@ -140,17 +140,22 @@ class ProjectRepository implements ProjectRepositoryInterface
         }
 
         $projects = [];
+
         foreach ($published as $publish) {
             if($publish->published_activities != null){
                 $files = json_decode($publish->published_activities);
+
                 foreach ($files as $filename) {
-                    $projectId  = array_last(
+                    $projectId  = (int) array_last(
                         explode('-', explode('.', $filename)[0]),
                         function ($value) {
                             return true;
                         }
                     );
-                    $projects[] = $this->project->where('id', '=', $projectId)->with('organization')->first();
+
+                    if ($projectId && is_int($projectId)) {
+                        $projects[] = $this->project->where('id', '=', $projectId)->with('organization')->first();
+                    }
                 }
             }
         }
