@@ -72,6 +72,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading"></div>
                     <div class="panel-body">
+                        <h2>{{ $contactTitle }}</h2>
                         <div class="text-danger">{{ session('error_message') }}</div>
                         {{ Form::open(['method' => 'post', 'id' => 'form-contact']) }}
                         {!! AsForm::text(['name' => 'full_name', 'required' => true]) !!}

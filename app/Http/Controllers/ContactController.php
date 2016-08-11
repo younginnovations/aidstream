@@ -30,7 +30,9 @@ class ContactController extends Controller
      */
     public function showContactForm($template)
     {
-        return view('auth.contact');
+        $contactTitle = $this->contactManager->getContactTitle($template);
+
+        return view('auth.contact', compact('contactTitle'));
     }
 
     /**

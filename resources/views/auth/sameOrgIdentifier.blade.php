@@ -86,32 +86,32 @@
                     <div class="panel-heading">
                     </div>
                     <div class="panel-body text-center">
-
-                        <div id="org-confirmation" class="section">
-                            <h1>IATI Organisational Identifier Error</h1>
-                            <p>
-                                The IATI organisational identifier you entered is being used by another organisation on AidStream.
-                            </p>
-                            <p>Organization: {{ $orgName }}</p>
-                            <button class="btn btn-primary" data-section="#org-confirmed">Yes, this is my organisation</button>
-                            <p>
-                                No, this is not my organisation. <a href="{{ route('contact', ['not-my-organization']) }}">Contact Support at support@aidstream.org</a>
-                            </p>
-                            <p>
-                                On AidStream, two accounts cannot use the same IATI organisational identifier.
-                            </p>
+                        <h1>IATI Organisational Identifier Error</h1>
+                        <p>
+                            The IATI organisational identifier you entered <strong>"{{ $orgIdentifier }}"</strong> is being used by another organisation on AidStream.
+                        </p>
+                        <h2>{{ $orgName }}</h2>
+                        <div class="col-md-12">
+                            <p>If this is your organisation you may do one of the followings</p>
+                            <div class="col-md-6">
+                                <h2>Administrator Information</h2>
+                                <p>
+                                    The administrator of the organisation name is
+                                </p>
+                                <h2>"{{ $adminName }}"</h2>
+                                <a href="{{ route('contact', ['need-new-user']) }}" class="btn btn-primary">Contact Administrator</a>
+                            </div>
+                            <div class="col-md-6">
+                                <h2>Retrieve Login Credentials</h2>
+                                <p>
+                                    I already have an account but forgotten my login credentials.
+                                </p>
+                                <a href="/password/email" class="btn btn-primary">Retrieve Login Credentials</a>
+                            </div>
                         </div>
-
-                        <div id="org-confirmed" class="section hidden">
-                            <p>
-                                You have confirmed that your organisation already has an account on AidStream. Please select an option from below to continue.
-                            </p>
-                            <a href="{{ route('contact', ['need-new-user']) }}" class="btn btn-primary">Request New User Account</a>
-                            <p>
-                                I already have an account but forgot my login credentials.
-                            </p>
-                            <a href="/password/email" class="btn btn-primary">Retrieve Login Credentials</a>
-                        </div>
+                        <p>
+                            No, this is not my organisation. <a href="{{ route('contact', ['not-my-organization']) }}">Contact Support at support@aidstream.org</a>
+                        </p>
                     </div>
                 </div>
             </div>
@@ -131,13 +131,9 @@
     <script type="text/javascript" src="{{url('/js/select2.min.js')}}"></script>
 @else
     <script type="text/javascript" src="{{url('/js/main.min.js')}}"></script>
+    <!-- Google Analytics -->
+    <script type="text/javascript" src="{{url('/js/ga.js')}}"></script>
+    <!-- End Google Analytics -->
 @endif
-<script type="text/javascript" src="{{url('/js/registration.js')}}"></script>
-<!-- Google Analytics -->
-<script type="text/javascript" src="{{url('/js/ga.js')}}"></script>
-<!-- End Google Analytics -->
-<script>
-    Registration.sameIdentifier();
-</script>
 </body>
 </html>

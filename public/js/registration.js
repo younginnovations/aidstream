@@ -577,12 +577,12 @@ function slash(value) {
         //         $('#contact-admin-modal').modal('show');
         //     });
         // },
-        sameIdentifier: function () {
-            $('[data-section]').click(function () {
-                var sectionId = $(this).attr('data-section');
-                $(sectionId).removeClass('hidden').siblings('.section').addClass('hidden');
-            });
-        },
+        // sameIdentifier: function () {
+        //     $('[data-section]').click(function () {
+        //         var sectionId = $(this).attr('data-section');
+        //         $(sectionId).removeClass('hidden').siblings('.section').addClass('hidden');
+        //     });
+        // },
         // handles similar organizations
         similarOrgs: function () {
             var checkElem = $('.organization_name');

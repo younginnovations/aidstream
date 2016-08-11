@@ -126,7 +126,7 @@ class RegistrationController extends Controller
         $adminName     = $orgInfo['admin_name'];
         session()->put('same_identifier_org_id', $orgInfo['org_id']);
 
-        return view('auth.sameOrgIdentifier', compact('orgName', 'adminName'));
+        return view('auth.sameOrgIdentifier', compact('orgName', 'adminName', 'orgIdentifier'));
     }
 
     /**

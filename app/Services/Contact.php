@@ -34,6 +34,20 @@ class Contact
     ];
 
     /**
+     * @var array
+     */
+    protected $titles = [
+        'not-my-organization'           => 'Contact Support',
+        'need-new-user'                 => 'Contact Administrator',
+        'forgot-user-email'             => 'Contact Administrator',
+        'contact-admin-for-same-org'    => 'Contact Administrator',
+        'contact-support-for-same-org'  => 'Contact Support',
+        'no-secondary-contact-support'  => 'Contact Support',
+        'has-secondary-contact-support' => 'Contact Support'
+
+    ];
+
+    /**
      * Contact constructor.
      * @param Logger $logger
      * @param Mailer $mailer
@@ -42,6 +56,15 @@ class Contact
     {
         $this->logger = $logger;
         $this->mailer = $mailer;
+    }
+
+    /**
+     * @param $template
+     * @return string
+     */
+    public function getContactTitle($template)
+    {
+        return getVal($this->titles, [$template], 'Contact');
     }
 
     /**
