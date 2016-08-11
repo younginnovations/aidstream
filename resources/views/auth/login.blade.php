@@ -176,7 +176,7 @@
         hamburgerMenu();
 
         var verificationModel = $('.verification-modal');
-        $('.close', verificationModel).click(function () {
+        $('[data-dismiss="modal"]', verificationModel).click(function () {
             verificationModel.next('.modal-backdrop').remove();
             verificationModel.remove();
         });

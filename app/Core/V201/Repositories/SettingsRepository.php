@@ -3,6 +3,7 @@
 use App\Core\Repositories\SettingsRepositoryInterface;
 use App\Models\Organization\OrganizationData;
 use App\Models\Settings;
+use App\User;
 use Exception;
 use Illuminate\Database\DatabaseManager;
 use Illuminate\Session\SessionManager;
@@ -28,19 +29,25 @@ class SettingsRepository implements SettingsRepositoryInterface
      * @var Settings
      */
     protected $settings;
+    /**
+     * @var User
+     */
+    protected $user;
 
     /**
      * @param Settings         $settings
      * @param OrganizationData $organizationData
      * @param SessionManager   $sessionManager
      * @param DatabaseManager  $databaseManager
+     * @param User             $user
      */
-    function __construct(Settings $settings, OrganizationData $organizationData, SessionManager $sessionManager, DatabaseManager $databaseManager)
+    function __construct(Settings $settings, OrganizationData $organizationData, SessionManager $sessionManager, DatabaseManager $databaseManager, User $user)
     {
         $this->databaseManager  = $databaseManager;
         $this->organizationData = $organizationData;
         $this->sessionManager   = $sessionManager;
         $this->settings         = $settings;
+        $this->user             = $user;
     }
 
     /**
@@ -51,6 +58,17 @@ class SettingsRepository implements SettingsRepositoryInterface
     {
         return $this->settings->where('organization_id', $organization_id)->first();
     }
+
+    /**
+     * return settings
+     * @param $code
+     * @return mixed
+     */
+    public function getSettingsByCode($code)
+    {
+        return $this->user->where('verification_code', $code)->first()->organization->settings()->firstOrNew([]);
+    }
+
 
     /**
      * @param $input

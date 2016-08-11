@@ -184,21 +184,22 @@ class SettingsManager
 
     /**
      * save publishing information.
-     * @param $publishing_info
-     * @param $settings
+     * @param          $publishing_info
+     * @param Settings $settings
      * @return bool
      */
-    public function savePublishingInfo($publishing_info, $settings)
+    public function savePublishingInfo($publishing_info, Settings $settings)
     {
         try {
             $result = $this->repo->savePublishingInfo($publishing_info, $settings);
-            $this->logger->info('Settings Updated Successfully.');
+            $this->logger->info('Publishing info has been updated successfully.');
             $this->dbLogger->activity(
                 "activity.publishing_settings_updated",
                 [
-                    'organization'    => $this->auth->user()->organization->name,
-                    'organization_id' => $this->auth->user()->organization->id
-                ]
+                    'organization'    => $settings->organization->name,
+                    'organization_id' => $settings->organization->id
+                ],
+                ['user_id' => $settings->organization->users->where('role_id', 1)->first()->id]
             );
 
             return true;
