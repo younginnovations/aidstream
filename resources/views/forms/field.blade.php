@@ -3,7 +3,12 @@ $messages = $errors->get($validationName);
 /*--}}
 <div class="form-group {{ $parent }}{{ $messages ? ' has-error' : '' }}">
     @if($label)
-        {{ Form::label($name, $label, ['class' => sprintf('control-label %s', ($required ? 'required' : ''))]) }}
+        <label for="{{ $name }}" class="{{ sprintf('control-label %s', ($required ? 'required' : '')) }}">
+            {{ $label }}
+            @if(isset($help))
+                <span class="help-text" title="{{ help('activity_defaults-default_language') }}" data-toggle="tooltip" data-placement="top"></span>
+            @endif
+        </label>
     @endif
     <div class="col-xs-12 col-md-12">
         <div>

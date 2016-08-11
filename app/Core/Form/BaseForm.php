@@ -226,7 +226,7 @@ class BaseForm extends Form
 
     /**
      * add help text in the form fields
-     * @param      $helpTexte
+     * @param      $helpText
      * @return array
      */
     protected function addHelpText($helpText, $tooltip = true)

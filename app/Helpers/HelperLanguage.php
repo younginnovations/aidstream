@@ -15,3 +15,14 @@ function message($response)
 
     return trans($code, $result);
 }
+
+function help($code, $tooltip = true)
+{
+    $help = trans(session()->get('version') . "/help");
+    is_array($help) ?: $help = trans(config('app.default_version_name') . '/help');
+    if (!isset($help[$code])) {
+        $code = 'no_help_text';
+    }
+
+    return htmlspecialchars($help[$code]);
+}

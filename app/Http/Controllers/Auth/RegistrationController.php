@@ -75,7 +75,6 @@ class RegistrationController extends Controller
      */
     public function register(Register $request)
     {
-        session()->forget('reg_info');
         $request = request();
         $users   = $request->get('users');
         $orgInfo = $request->get('organization');
@@ -99,12 +98,7 @@ class RegistrationController extends Controller
         $user = $organization->users->where('role_id', 1)->first();
         $this->verificationManager->sendVerificationEmail($user);
 
-        return redirect()->to('/auth/login')->withMessage(
-            sprintf(
-                'A verification email has been sent to %s. Please check your email inbox and click on the link in the email to verify your email address.',
-                $user->email
-            )
-        );
+        return redirect()->route('registration')->withEmail($user->email)->withTab('#tab-verification');
     }
 
     /**

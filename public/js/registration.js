@@ -100,12 +100,8 @@ function slash(value) {
             $('.country, .organization_registration_agency, .registration_number').on('keyup change', function () {
                 var identifier = '';
                 if ($('.country').val() == '' || $('.organization_registration_agency').val() == '' || $('.registration_number').val() == '') {
-                    $('.identifier-text').removeClass('hidden');
-                    $('#org-identifier').addClass('hidden');
                 } else {
                     identifier = $('.organization_registration_agency').val() + '-' + $('.registration_number').val();
-                    $('.identifier-text').addClass('hidden');
-                    $('#org-identifier').removeClass('hidden');
                 }
 
                 $('#org-identifier').html(identifier);
@@ -420,6 +416,7 @@ function slash(value) {
                 alphanumeric: true,
                 messages: {required: 'Registration Number is required.', alphanumeric: 'Only letters and numbers are allowed.'}
             });
+            $(slash('#organization[organization_identifier]'), form).rules('add', {required: true, messages: {required: 'IATI Organizational Identifier is required.'}});
 
             /* users validation rules */
             $(slash('#users[first_name]'), form).rules('add', {required: true, messages: {required: 'First Name is required.'}});
@@ -450,11 +447,12 @@ function slash(value) {
                 $('.organization_name_abbr').trigger('change');
             }
 
-            $('#from-registration input').keyup(function (e) {
+            $('#from-registration input').keydown(function (e) {
                 if (e.keyCode === 13) {
                     var nextTab = $(this).parents('.tab-pane').next('.tab-pane').attr('id');
-                    if (nextTab != undefined) {
+                    if (nextTab != undefined && nextTab != 'tab-verification') {
                         $('a[href="#' + nextTab + '"]').tab('show');
+                        return false;
                     }
                 }
             });
@@ -471,28 +469,37 @@ function slash(value) {
                 $('a[href="' + $(this).attr('data-tab-trigger') + '"]').trigger('click');
             });
             $('[data-toggle="tab"]').click(function () {
-                $(this).tab('show');
+                if (!$(this).is('.disabled')) {
+                    $(this).tab('show');
+                }
                 return false;
             });
             $('a[data-toggle="tab"]').on('hide.bs.tab', function (e) {
-                if ($(e.target).parent('li').index() < $(e.relatedTarget).parent('li').index()) {
-                    $(slash('#organization[organization_name_abbr]'), '#from-registration').rules('add', {
-                        uniqueAbbr: true,
-                        messages: {uniqueAbbr: 'Organization Name Abbreviation has already been taken.'}
-                    });
+                var currentTab = $(e.target);
+                var nextTab = $(e.relatedTarget);
+                if (currentTab.parent('li').index() < nextTab.parent('li').index()) {
+                    try {
+                        $(slash('#organization[organization_name_abbr]'), '#from-registration').rules('add', {
+                            uniqueAbbr: true,
+                            messages: {uniqueAbbr: 'Organization Name Abbreviation has already been taken.'}
+                        });
+                    } catch (e) {
+                    }
                     var isValid = $('input, select', '#from-registration').valid();
                     $(slash('#organization[organization_name_abbr]'), '#from-registration').rules('remove', 'uniqueAbbr');
                     if (!isValid) {
                         validation.focusInvalid();
                         return false;
                     }
-                    if ($(e.target).attr('href') == '#tab-organization') {
+                    if (currentTab.attr('href') == '#tab-organization') {
                         setIdentifier();
                         if (!(Registration.verifyOrgIdentifier() && Registration.verifySimilarOrgs())) {
                             return false;
                         }
                     }
                 }
+                $('.nav-tabs a').removeClass('complete');
+                nextTab.parent('li').prevAll().children('a').addClass('complete');
             });
             function setIdentifier() {
                 $('#username').val($('.organization_name_abbr').val() + '_admin');
@@ -606,6 +613,11 @@ function slash(value) {
                 form.validate().destroy();
                 form.submit();
             });
+        },
+        showValidation: function () {
+            $('[href="#tab-organization"], [href="#tab-users"]').addClass('disabled complete');
+            $('#from-registration').validate().destroy();
+            $('a[href="#tab-verification"]').removeClass('disabled').tab('show');
         }
     }
 

@@ -2408,7 +2408,7 @@ $(document).ready(function () {
     });
 
     /* show confirmation box on clicking delete */
-    $('.delete').click(function (e) {
+    $('.delete, .delete_data').click(function (e) {
         e.preventDefault();
         var location = this.href;
 
@@ -2695,8 +2695,8 @@ $(document).ready(function () {
         $(this).parents('.toggle-btn').next('.more-info').toggleClass('hidden');
     });
 
-    $('.print').click(function(){
-       window.print();
+    $('.print').click(function () {
+        window.print();
     });
 
     $('.upload-logo-block input[type=file]').click(function(){

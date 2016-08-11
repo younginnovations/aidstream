@@ -329,7 +329,6 @@ return [
     'Activity_ContactInfo_JobTitle-xml_lang'                         => 'ISO 2 letter code specifying the language of text in this element.',
     'Activity_ContactInfo-type'                                      => 'Free text describing the type of thing being referenced.',
     'Activity_ContactInfo-xml_lang'                                  => 'ISO 2 letter code specifying the language of text in this element.',
-    'no_help_text'                                                   => 'No help Text Found',
     'Activity_reporting_organization'                                => 'This identifies the reporting organisation.',
     'Activity_iati_identifier'                                       => 'This is a globally unique identifier for this activity.',
     'Activity_other_identifier'                                      => 'An alternative, non-IATI identifier for the activity. This identifier is not guaranteed to be unique or persistent (it depends on the owner organisation’s policies, not IATI’s).',
@@ -359,5 +358,6 @@ return [
     'Activity_related_activity'                                      => 'Where there are other reported activities related to this activity, links should be provided to these.',
     'Activity_condition'                                             => 'This identifies whether there are any policy of performance related conditions for the activity.',
     'Activity_result'                                                => 'A measurable result of aid work.',
-    'Activity_legacy_data'                                           => 'Hold a single name=value pair of legacy data. This element is *not* for adding new data types; instead, it holds the original (non-IATI) value or code for an existing data type.'
+    'Activity_legacy_data'                                           => 'Hold a single name=value pair of legacy data. This element is *not* for adding new data types; instead, it holds the original (non-IATI) value or code for an existing data type.',
+    'registration_admin_username'                                    => 'This was auto-generated using organization name abbreviation you provided earlier.',
 ];
