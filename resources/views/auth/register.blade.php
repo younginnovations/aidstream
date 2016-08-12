@@ -25,7 +25,7 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="{{url('/js/jquery.cookie.js')}}"></script>
     <script type="text/javascript" src="{{url('/js/jquery-ui-1.10.4.tooltip.js')}}"></script>
-    <script type="text/javascript" src="{{url('/js/main.js')}}"></script>
+    <script type="text/javascript" src="{{url('/js/main.min.js')}}"></script>
 
     @yield('head')
 </head>
@@ -241,7 +241,6 @@
     <script type="text/javascript" src="{{url('/js/bootstrap.min.js')}}"></script>
     <script type="text/javascript" src="{{url('/js/jquery.cookie.js')}}"></script>
 @else
-    <script type="text/javascript" src="{{url('/js/main.min.js')}}"></script>
     <!-- Google Analytics -->
     <script type="text/javascript" src="{{url('/js/ga.js')}}"></script>
     <!-- End Google Analytics -->
