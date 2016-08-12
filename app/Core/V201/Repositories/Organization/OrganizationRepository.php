@@ -361,7 +361,7 @@ class OrganizationRepository implements OrganizationRepositoryInterface
 
         $reporting_org                     = [
             0 => [
-                'reporting_organization_identifier' => $organizationInfo['country'] . '-' . $organizationInfo['registration_agency'] . '-' . $organizationInfo['registration_number'],
+                'reporting_organization_identifier' => $organizationInfo['registration_agency'] . '-' . $organizationInfo['registration_number'],
                 'reporting_organization_type'       => $organizationInfo['organization_type'],
                 'narrative'                         => $organizationInfo['narrative']
             ]
@@ -370,6 +370,8 @@ class OrganizationRepository implements OrganizationRepositoryInterface
         $organization->registration_agency = $organizationInfo['registration_agency'];
         $organization->registration_number = $organizationInfo['registration_number'];
         $organization->save();
+
+        $this->orgData->firstOrCreate(['organization_id' => $organization->id, 'status' => 0]);
     }
 
     /**

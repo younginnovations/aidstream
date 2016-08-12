@@ -37,8 +37,8 @@
                             <div class="profile-info-block">
                                 <div class="profile-basic-info">
                                     <span class="profile-username">{{Auth::user()->username}}</span>
-                                <span class="profile-user-email"><a
-                                            href="mailto:{{Auth::user()->email}}">{{Auth::user()->email}}</a></span>
+                                    <span class="profile-user-email"><a
+                                                href="mailto:{{Auth::user()->email}}">{{Auth::user()->email}}</a></span>
                                     {{--<div class=""><a href="{{route('user.edit-profile', Auth::user()->id)}}" class="edit-profile">Edit Profile</a></div>--}}
                                 </div>
                                 <div class="profile-role-info">
@@ -77,7 +77,7 @@
                                         src="{{$organization->logo ? url($organization->logo_url) : url('images/no-logo.png')}}">
                             </div>
                             <div class="organization-detail">
-                                <div class="organization-name">{{getVal($organization->reporting_org,[0,'narrative',0,'narrative'])}}</div>
+                                <div class="organization-name">{{getVal((array)$organization->reporting_org,[0,'narrative',0,'narrative'])}}</div>
                                 <ul>
                                     @if($organization->address)
                                         <li class="address col-xs-6 col-md-4 col-lg-3">
@@ -89,14 +89,14 @@
                                         </li>
                                     @endif
                                     <div class="view-organization-block">
-                                        @if(getVal($organization->reporting_org,[0,'reporting_organization_identifier']))
+                                        @if(getVal((array)$organization->reporting_org,[0,'reporting_organization_identifier']))
                                             <div class="view-organization"><label>IATI Organisational
-                                                    Identifier</label><span>{{getVal($organization->reporting_org,[0,'reporting_organization_identifier'])}}</span>
+                                                    Identifier</label><span>{{getVal((array)$organization->reporting_org,[0,'reporting_organization_identifier'])}}</span>
                                             </div>
                                         @endif
                                         @if($organization['reporting_org'][0]['reporting_organization_type'])
                                             <div class="view-organization"><label>Organisation Type</label>
-                                            <span>
+                                                <span>
                                                 {{substr($getCode->getOrganizationCodeName('OrganizationType',$organization['reporting_org'][0]['reporting_organization_type']),0,-4)}}
                                             </span>
                                             </div>
