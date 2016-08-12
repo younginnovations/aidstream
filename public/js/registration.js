@@ -57,7 +57,7 @@ function slash(value) {
             var checkElem = $('.organization_name_abbr');
             checkElem.on('change', checkAvailability);
             checkElem.on('focus', function () {
-                checkElem.siblings('.availability-check').html('').addClass('hidden').removeClass('text-success text-danger');
+                checkElem.parent().siblings('.availability-check').html('').addClass('hidden').removeClass('text-success text-danger');
             });
             function checkAvailability() {
                 var userIdentifier = $(this).val();
@@ -65,9 +65,9 @@ function slash(value) {
                     return false;
                 }
                 var callback = function (data) {
-                    checkElem.siblings('.availability-check').removeClass('hidden').addClass('text-' + data.status).html(data.message);
+                    checkElem.parent().siblings('.availability-check').removeClass('hidden').addClass('text-' + data.status).html(data.message);
                     checkElem.parents('.has-error').removeClass('has-error');
-                    checkElem.siblings('.availability-check').siblings('.text-danger').remove();
+                    checkElem.parent().siblings('.availability-check').siblings('.text-danger').remove();
                 };
                 Registration.request("/check-organization-user-identifier", {userIdentifier: checkElem.val()}, callback);
             }
@@ -588,7 +588,7 @@ function slash(value) {
             var checkElem = $('.organization_name');
             checkElem.on('change', checkAvailability);
             checkElem.on('keydown', function () {
-                checkElem.siblings('.availability-check').html('').addClass('hidden').removeClass('text-warning');
+                checkElem.parent().siblings('.availability-check').html('').addClass('hidden').removeClass('text-warning');
             });
             function checkAvailability() {
                 var orgName = $(this).val();
@@ -597,9 +597,9 @@ function slash(value) {
                 }
                 var callback = function (data) {
                     if ($.isEmptyObject(data)) {
-                        checkElem.siblings('.availability-check').html('').addClass('hidden').removeClass('text-warning');
+                        checkElem.parent().siblings('.availability-check').html('').addClass('hidden').removeClass('text-warning');
                     } else {
-                        checkElem.siblings('.availability-check').html('It seems there are account(s) on Aidstream with same/similar organisation name. <a href="/find-similar-organizations" class="check_similar_org">Click here</a> to check if your organisation is already there.').removeClass('hidden').addClass('text-warning');
+                        checkElem.parent().siblings('.availability-check').html('It seems there are account(s) on Aidstream with same/similar organisation name. <a href="/find-similar-organizations" class="check_similar_org">Click here</a> to check if your organisation is already there.').removeClass('hidden').addClass('text-warning');
                     }
                 };
                 Registration.request('/similar-organizations/' + orgName, {}, callback, 'GET');
