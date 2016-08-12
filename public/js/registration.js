@@ -491,7 +491,7 @@ function slash(value) {
                         validation.focusInvalid();
                         return false;
                     }
-                    if (currentTab.attr('href') == '#tab-organization') {
+                    if (currentTab.attr('href') == '#tab-organization' && nextTab.attr('href') != '#tab-verification') {
                         setIdentifier();
                         if (!(Registration.verifyOrgIdentifier() && Registration.verifySimilarOrgs())) {
                             return false;
