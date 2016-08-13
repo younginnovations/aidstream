@@ -94,6 +94,9 @@ class AdminController extends Controller
      */
     public function create()
     {
+        if (!auth()->user()->isAdmin()) {
+            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
+        }
         $organization           = $this->organizationManager->getOrganization($this->org_id);
         $organizationIdentifier = $organization->user_identifier;
         $dbRoles                = \DB::table('role')->whereNotNull('permissions')->orderBy('role', 'desc')->get();
@@ -115,6 +118,10 @@ class AdminController extends Controller
      */
     public function store(UserRequest $request)
     {
+        if (!auth()->user()->isAdmin()) {
+            return redirect()->route('settings')->withResponse($this->getNoPrivilegesMessage());
+        }
+
         $organization           = $this->organizationManager->getOrganization(session('org_id'));
         $organizationIdentifier = $organization->user_identifier;
 

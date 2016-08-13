@@ -2,9 +2,11 @@
 @section('panel-body')
     @if(count($users) > 0)
         <div class="panel-body panel-users-settings">
-            <div class="add-user-link">
-                <a href="{{ route('admin.register-user') }}">Add a user</a>
-            </div>
+            @if (auth()->user()->isAdmin())
+                <div class="add-user-link">
+                    <a href="{{ route('admin.register-user') }}">Add a user</a>
+                </div>
+            @endif
             <table class="table table-striped">
                 <thead>
                 <tr>

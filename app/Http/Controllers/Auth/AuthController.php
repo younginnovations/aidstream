@@ -207,7 +207,7 @@ class AuthController extends Controller
                 Session::put('next_version', $next_version);
                 $version = 'V' . str_replace('.', '', $version);
                 Session::put('version', $version);
-                $redirectPath = ($user->role_id == 1 || $user->role_id == 2) ? config('app.admin_dashboard') : config('app.super_admin_dashboard');
+                $redirectPath = ($user->isSuperAdmin() || $user->isGroupAdmin()) ? config('app.super_admin_dashboard') : config('app.admin_dashboard');
                 $intendedUrl  = Session::get('url.intended');
 
 //                if (isset(Auth::user()->userOnBoarding->has_logged_in_once)) {

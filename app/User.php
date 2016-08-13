@@ -8,7 +8,6 @@ use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Illuminate\Foundation\Auth\Access\Authorizable;
-use Illuminate\Support\Facades\Auth;
 use Session;
 
 /**
@@ -17,8 +16,27 @@ use Session;
  */
 class User extends Model implements AuthorizableContract, AuthenticatableContract, CanResetPasswordContract
 {
-
     use Authenticatable, CanResetPassword, Authorizable;
+
+    /**
+     * Admin Role Id.
+     */
+    const ADMIN_ROLE_ID = 1;
+
+    /**
+     * Superadmin Role Id.
+     */
+    const SUPERADMIN_ROLE_ID = 3;
+
+    /**
+     * Groupadmin Role Id.
+     */
+    const GROUPADMIN_ROLE_ID = 4;
+
+    /**
+     * Administrator Role Id.
+     */
+    const ADMINISTRATOR_ROLE_ID = 5;
 
     /**
      * The database table used by the model.
@@ -30,7 +48,7 @@ class User extends Model implements AuthorizableContract, AuthenticatableContrac
     /**
      * The attributes that are mass assignable.
      *
-     * @var array (auth()->user() && auth()->user()->role_id == 3) ? url(config('app.super_admin_dashboard')) : config('app.admin_dashboard')
+     * @var array
      */
     protected $fillable = [
         'first_name',
@@ -51,6 +69,7 @@ class User extends Model implements AuthorizableContract, AuthenticatableContrac
         'verification_created_at',
         'verified'
     ];
+
     /**
      * @var array
      */
@@ -67,7 +86,7 @@ class User extends Model implements AuthorizableContract, AuthenticatableContrac
 
 
     /**
-     * user belongs to organization
+     * User belongs to organization
      */
     protected function organization()
     {
@@ -75,7 +94,7 @@ class User extends Model implements AuthorizableContract, AuthenticatableContrac
     }
 
     /**
-     * get user full name
+     * Get user full name
      * @return string
      */
     public function getNameAttribute()
@@ -84,7 +103,7 @@ class User extends Model implements AuthorizableContract, AuthenticatableContrac
     }
 
     /**
-     * get user detail by organization and role id
+     * Get user detail by organization and role id
      * @return array|static[]
      */
     public function getUserByOrgIdAndRoleId()
@@ -98,25 +117,25 @@ class User extends Model implements AuthorizableContract, AuthenticatableContrac
     }
 
     /**
-     * check if the user is superadmin or not
+     * Check if the user is Superadmin or not
      * @return bool
      */
     public function isSuperAdmin()
     {
-        return 3 === $this->role_id;
+        return self::SUPERADMIN_ROLE_ID === $this->role_id;
     }
 
     /**
-     * check if the user is admin or not
+     * Check if the user is admin or not
      * @return bool
      */
     public function isAdmin()
     {
-        return 1 == $this->role_id;
+        return (self::ADMIN_ROLE_ID == $this->role_id || self::ADMINISTRATOR_ROLE_ID == $this->role_id);
     }
 
     /**
-     * check the user permission
+     * Check the user permission
      * @param $permission
      * @return bool
      */
@@ -130,7 +149,7 @@ class User extends Model implements AuthorizableContract, AuthenticatableContrac
     }
 
     /**
-     * get the user_group associated with user
+     * Get the user_group associated with user
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
     public function group()
@@ -139,16 +158,16 @@ class User extends Model implements AuthorizableContract, AuthenticatableContrac
     }
 
     /**
-     * check if user is groupadmin or not
+     * Check if user is groupadmin or not
      * @return bool
      */
     public function isGroupAdmin()
     {
-        return 4 == $this->role_id;
+        return (self::GROUPADMIN_ROLE_ID == $this->role_id);
     }
 
     /**
-     * get the role id
+     * Get the role id
      * @param $role
      * @return mixed
      */
@@ -158,7 +177,7 @@ class User extends Model implements AuthorizableContract, AuthenticatableContrac
     }
 
     /**
-     * user has many activity log
+     * User has many activity log
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function activityLog()
@@ -218,11 +237,19 @@ class User extends Model implements AuthorizableContract, AuthenticatableContrac
         return ($this->isGroupAdmin() || $this->isSuperAdmin() || $this->verified);
     }
 
+    /**
+     * @return mixed
+     */
     public function getSuperAdmins()
     {
         return $this->where('org_id', null)->get();
     }
 
+    /**
+     * @param $orgId
+     * @param $userId
+     * @return mixed
+     */
     public function getRolesByOrgAndUser($orgId, $userId)
     {
         $roles = DB::table($this->table)
@@ -234,11 +261,18 @@ class User extends Model implements AuthorizableContract, AuthenticatableContrac
         return $roles;
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function role()
     {
         return $this->belongsTo('App\Models\Role', 'role_id');
     }
 
+    /**
+     * A User hasOne OnBoarding.
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
     public function userOnBoarding()
     {
         return $this->hasOne('App\Models\UserOnBoarding', 'user_id');
@@ -259,9 +293,9 @@ class User extends Model implements AuthorizableContract, AuthenticatableContrac
 
         if (!empty($userPermissions)) {
             return in_array($this->extractPermission($permission), $this->breakPermissionsIntoActions($userPermissions));
-        } else {
-            return false;
         }
+
+        return false;
     }
 
     /**
@@ -289,10 +323,13 @@ class User extends Model implements AuthorizableContract, AuthenticatableContrac
      */
     protected function extractPermission($permission)
     {
-        $action    = explode('_', $permission);
+        $action = explode('_', $permission);
 
-        return array_first($action, function () {
-            return true;
-        });
+        return array_first(
+            $action,
+            function () {
+                return true;
+            }
+        );
     }
 }

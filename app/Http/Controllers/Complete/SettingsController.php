@@ -345,6 +345,8 @@ class SettingsController extends Controller
      */
     public function savePublishingInfo(Request $request)
     {
+        $this->authorize('settings', $this->settings);
+
         if ($this->settings) {
             $organizationId = session('org_id');
             $settings       = $request->all();
@@ -394,6 +396,8 @@ class SettingsController extends Controller
      */
     public function saveDefaultValues(DefaultValuesRequest $request)
     {
+        $this->authorize('settings', $this->settings);
+
         $settings      = $this->settings;
         $defaultValues = $this->settingsManager->saveDefaultValues($request->except('_token'), $settings);
 
@@ -434,6 +438,8 @@ class SettingsController extends Controller
      */
     public function saveActivityElementsChecklist(Request $request)
     {
+        $this->authorize('settings', $this->settings);
+
         $default_field_groups      = $request->get('default_field_groups');
         $activityElementsChecklist = $this->settingsManager->saveActivityElementsChecklist($default_field_groups, $this->settings);
         $response                  = $this->getResponse($activityElementsChecklist, 'Activity Elements Checklist');

@@ -279,7 +279,8 @@ class OrganizationController extends Controller
         return redirect()->back()->withValue($value);
     }
 
-    /** Display form to view organization information
+    /**
+     * Display form to view organization information
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function viewOrganizationInformation()
@@ -302,13 +303,15 @@ class OrganizationController extends Controller
         return view('settings.organizationInformation', compact('form', 'organizationTypes', 'countries', 'organization', 'registrationAgency', 'settings', 'users'));
     }
 
-    /** save organization information
+    /**
+     * Save organization information
      * @param OrganizationInfoRequest $request
      * @return mixed
      */
     public function saveOrganizationInformation(OrganizationInfoRequest $request)
     {
         $organization             = $this->organizationManager->getOrganization(session('org_id'));
+        $this->authorize('settings', $organization->settings);
         $organizationInfoResponse = $this->organizationManager->saveOrganizationInformation($request->all(), $organization);
 
         if ($organizationInfoResponse === "Username updated") {
@@ -393,7 +396,8 @@ class OrganizationController extends Controller
 
     /**
      * View organization xml file
-     * @param $orgId
+     * @param      $orgId
+     * @param bool $viewErrors
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function viewOrganizationXml($orgId, $viewErrors = false)

@@ -14,7 +14,7 @@ class AuthServiceProvider extends ServiceProvider
      * Activity permissions
      * @var array
      */
-    protected $permissions = ['add_activity', 'edit_activity', 'delete_activity', 'publish_activity'];
+    protected $permissions = ['add_activity', 'edit_activity', 'delete_activity', 'publish_activity', 'settings'];
 
     /**
      * The policy mappings for the application.

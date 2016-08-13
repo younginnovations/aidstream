@@ -8,9 +8,7 @@
                 {{--<li class="users"><a href="{{route('admin.list-users')}}">Users</a></li>--}}
                 <li class="documents" id="step-4"><a href="{{ route('documents') }}">Documents</a></li>
                 <li class="downloads" id="step-5"><a href="{{route('download.index')}}">Downloads</a></li>
-                @if(Auth::user()->role_id == 1)
-                    <li class="settings" id="step-6"><a href="{{ route('settings') }}">Settings</a></li>
-                @endif
+                <li class="settings" id="step-6"><a href="{{ route('settings') }}">Settings</a></li>
                 @if(Auth::user()->role_id == 1)
                     <li class="logs" id="step-7"><a href="{{ route('user-logs') }}">Activity Log</a></li>
                 @endif
