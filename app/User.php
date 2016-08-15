@@ -122,6 +122,10 @@ class User extends Model implements AuthorizableContract, AuthenticatableContrac
      */
     public function hasPermission($permission)
     {
+        if (!$this->user_permission) {
+            return $this->doesUserHave($permission);
+        }
+
         return in_array($permission, $this->user_permission);
     }
 
@@ -238,6 +242,45 @@ class User extends Model implements AuthorizableContract, AuthenticatableContrac
     public function userOnBoarding()
     {
         return $this->hasOne('App\Models\UserOnBoarding', 'user_id');
+    }
+
+    /**
+     * Check if the User has any specific permission.
+     * @param $permission
+     * @return bool
+     */
+    protected function doesUserHave($permission)
+    {
+        if ($this->isAdmin()) {
+            return true;
+        }
+
+        $userPermissions = json_decode($this->role->permissions, true);
+
+        if (!empty($userPermissions)) {
+            return in_array($permission, $this->breakPermissionsIntoActions($userPermissions));
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Break down user permissions into actions.
+     * @param $userPermissions
+     * @return array
+     */
+    protected function breakPermissionsIntoActions($userPermissions)
+    {
+        $actions = [];
+
+        foreach ($userPermissions as $permission) {
+            $action = explode('_', $permission);
+            $actions[] = array_first($action, function () {
+                return true;
+            });
+        }
+
+        return $actions;
     }
 
 }

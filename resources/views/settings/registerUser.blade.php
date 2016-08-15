@@ -21,7 +21,7 @@
             {!! AsForm::password(['name' => 'password_confirmation', 'parent' => 'col-md-6', 'required' => true]) !!}
         </div>
         <div class="col-md-12 single-form-wrap">
-            {!! AsForm::select(['name' => 'permissions', 'data' => $roles, 'empty_value' => 'Please select a permission',null, 'parent' => 'col-md-6' , 'required' => true]) !!}
+            {!! AsForm::select(['name' => 'permission', 'data' => $roles, 'empty_value' => 'Please select a permission',null, 'parent' => 'col-md-6' , 'required' => true]) !!}
         </div>
         <div class="form-group">
             {{ Form::submit('Create',['class'=>'btn btn-primary btn-form btn-submit']) }}

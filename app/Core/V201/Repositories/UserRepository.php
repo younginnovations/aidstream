@@ -50,10 +50,10 @@ class UserRepository
         $orgId = session('org_id');
 
         if ($file) {
-            $fileUrl  = url('files/logos/' . $orgId . '.' . $file->getClientOriginalExtension());
-            $fileName = $orgId . '.' . $file->getClientOriginalExtension();
+            $fileName = sprintf("%s_%s.%s", $user->username, $user->id, $file->getClientOriginalExtension());
+            $fileUrl  = url(sprintf("%s%s", 'files/users/', $fileName));
             $image    = Image::make(File::get($file))->resize(150, 150)->encode();
-            Storage::put('logos/' . $fileName, $image);
+            Storage::put('users/' . $fileName, $image);
             $user->profile_url     = $fileUrl;
             $user->profile_picture = $fileName;
         }

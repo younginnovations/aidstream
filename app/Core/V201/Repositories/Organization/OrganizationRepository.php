@@ -348,9 +348,13 @@ class OrganizationRepository implements OrganizationRepositoryInterface
         $organization->telephone        = $organizationInfo['telephone'];
         $organization->organization_url = $organizationInfo['organization_url'];
         $organization->user_identifier  = $organizationInfo['user_identifier'];
-        $file                           = Input::file('organization_logo');
+        $file                           = array_key_exists('organization_logo', $organizationInfo) ? $organizationInfo['organization_logo'] : null;
 
         if ($file) {
+            if (!file_exists(public_path('files/users'))) {
+                mkdir(public_path('files/users'));
+            }
+
             $fileUrl  = url('files/logos/' . $organization->id . '.' . $file->getClientOriginalExtension());
             $fileName = $organization->id . '.' . $file->getClientOriginalExtension();
             $image    = Image::make(File::get($file))->resize(150, 150)->encode();

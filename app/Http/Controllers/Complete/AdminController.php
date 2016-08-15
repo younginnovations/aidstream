@@ -125,6 +125,7 @@ class AdminController extends Controller
         $this->user->org_id     = $this->org_id;
         $this->user->role_id    = $request->get('permission');
         $this->user->password   = bcrypt($request->get('password'));
+        $this->user->verified   = true;
 
         $response = ($this->user->save()) ? ['type' => 'success', 'code' => ['created', ['name' => 'User']]] : ['type' => 'danger', 'code' => ['save_failed', ['name' => 'User']]];
 

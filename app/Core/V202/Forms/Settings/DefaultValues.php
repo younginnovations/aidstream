@@ -45,8 +45,9 @@ class DefaultValues extends BaseForm
                  'default_hierarchy',
                  'text',
                  [
-                     'help_block' => $this->addHelpText('activity_defaults-hierarchy', false),
-                     'wrapper'    => ['class' => 'form-group col-md-6']
+                     'help_block'    => $this->addHelpText('activity_defaults-hierarchy', false),
+                     'wrapper'       => ['class' => 'form-group col-md-6'],
+                     'default_value' => 1
                  ]
              )
              ->add('linked_data_uri', 'text', ['label' => 'Linked Data Default', 'wrapper' => ['class' => 'form-group col-md-6']]);
