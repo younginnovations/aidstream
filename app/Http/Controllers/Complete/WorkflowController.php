@@ -141,7 +141,11 @@ class WorkflowController extends Controller
      */
     protected function hasNoPublisherInfo(Settings $settings)
     {
-        return (empty(getVal($settings->registry_info, [0, 'publisher_id'])) || empty(getVal($settings->registry_info, [0, 'api_id'])));
+        if ($settings->registry_info) {
+            return (empty(getVal($settings->registry_info, [0, 'publisher_id'])) || empty(getVal($settings->registry_info, [0, 'api_id'])));
+        }
+
+        return false;
     }
 
     /**

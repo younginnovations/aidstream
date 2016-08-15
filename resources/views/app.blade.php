@@ -26,9 +26,9 @@
 </head>
 <body>
 {{--<div id="google_translate_element"></div><script type="text/javascript">--}}
-    {{--function googleTranslateElementInit() {--}}
-        {{--new google.translate.TranslateElement({pageLanguage: 'en', includedLanguages: 'en,es,fr', layout: google.translate.TranslateElement.InlineLayout.SIMPLE, autoDisplay: false, multilanguagePage: true}, 'google_translate_element');--}}
-    {{--}--}}
+{{--function googleTranslateElementInit() {--}}
+{{--new google.translate.TranslateElement({pageLanguage: 'en', includedLanguages: 'en,es,fr', layout: google.translate.TranslateElement.InlineLayout.SIMPLE, autoDisplay: false, multilanguagePage: true}, 'google_translate_element');--}}
+{{--}--}}
 {{--</script><script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>--}}
 <nav class="navbar navbar-default">
     <div class="container-fluid">
@@ -120,9 +120,9 @@
         <div class="navbar-right version-wrap">
 
             {{--@if(isset(auth()->user()->userOnBoarding->completed_tour) && session('role_id') != 3)--}}
-                {{--@if(!auth()->user()->userOnBoarding->completed_tour)--}}
-                    {{--<a href="{{url('exploreLater')}}" class="btn btn-primary">Continue exploring AidStream</a>--}}
-                {{--@endif--}}
+            {{--@if(!auth()->user()->userOnBoarding->completed_tour)--}}
+            {{--<a href="{{url('exploreLater')}}" class="btn btn-primary">Continue exploring AidStream</a>--}}
+            {{--@endif--}}
             {{--@endif--}}
             @if(auth()->user() && !isSuperAdminRoute())
                 <div class="version pull-right {{ (session('version') == 'V201') ? 'old' : 'new' }}">

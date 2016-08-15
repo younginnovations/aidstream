@@ -30,6 +30,12 @@ class AsForm
 
         $args['html'] = getVal($args, ['html']);
         $args['attr'] = getVal($args, ['attr'], []);
+        if ($id = getVal($args, ['id'])) {
+            $args['attr']['id'] = $id;
+        }
+        if (!getVal($args, ['attr', 'id'])) {
+            $args['attr']['id'] = $name;
+        }
         $args['attr'] += ['class' => sprintf('form-control %s', $args['class'])];
 
         return $args;
