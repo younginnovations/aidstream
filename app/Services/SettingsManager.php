@@ -295,7 +295,7 @@ class SettingsManager
             $api_url = config('filesystems.iati_registry_api_base_url');
 
             if ($publisherId != "") {
-                $apiCall  = new CkanClient($api_url);
+                $apiCall = new CkanClient($api_url);
                 $apiCall->organization_show($publisherId);
 
                 return true;
@@ -316,9 +316,10 @@ class SettingsManager
      */
     public function verifyApiKey($apiKey)
     {
-        $uri      = "http://iatiregistry.org/api/3/action/dashboard_activity_list";
-        $response = json_decode(shell_exec("curl -H 'Authorization:$apiKey' $uri"), true);
-        $status   = $response['success'];
+        $apiKeyVerificationUri = "3/action/dashboard_activity_list";
+        $url                   = sprintf("%s%s", config('filesystems.iati_registry_api_base_url'), $apiKeyVerificationUri);
+        $response              = json_decode(shell_exec("curl -H 'Authorization:$apiKey' $url"), true);
+        $status                = $response['success'];
 
         return $status;
     }
