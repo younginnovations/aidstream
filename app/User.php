@@ -258,7 +258,7 @@ class User extends Model implements AuthorizableContract, AuthenticatableContrac
         $userPermissions = json_decode($this->role->permissions, true);
 
         if (!empty($userPermissions)) {
-            return in_array($permission, $this->breakPermissionsIntoActions($userPermissions));
+            return in_array($this->extractPermission($permission), $this->breakPermissionsIntoActions($userPermissions));
         } else {
             return false;
         }
@@ -273,14 +273,26 @@ class User extends Model implements AuthorizableContract, AuthenticatableContrac
     {
         $actions = [];
 
-        foreach ($userPermissions as $permission) {
-            $action = explode('_', $permission);
-            $actions[] = array_first($action, function () {
-                return true;
-            });
+        if (is_array($userPermissions)) {
+            foreach ($userPermissions as $permission) {
+                $actions[] = $this->extractPermission($permission);
+            }
         }
 
         return $actions;
     }
 
+    /**
+     * Extract action from permission.
+     * @param $permission
+     * @return mixed
+     */
+    protected function extractPermission($permission)
+    {
+        $action    = explode('_', $permission);
+
+        return array_first($action, function () {
+            return true;
+        });
+    }
 }
