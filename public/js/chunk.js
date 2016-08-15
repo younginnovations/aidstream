@@ -116,15 +116,15 @@ if (typeof(Chunk) == "undefined") var Chunk = {};
                     success: function (data) {
                         var publisher_response = data['publisher_id'];
                         var api_key = data['api_key'];
-                        publisher_response = (publisher_response) ? "Verified" : "Not Verified";
-                        api_key = (api_key) ? "Correct" : "Incorrect";
-                        if (source == "publisher") {
-                            $("#publisher_id_status").val(publisher_response);
-                        } else if (source == "api") {
-                            $("#api_id_status").val(api_key);
-                        } else {
-                            $("#publisher_id_status").val(publisher_response);
-                            $("#api_id_status").val(api_key);
+                        var publisherStatus = (publisher_response) ? "Verified" : "Not Verified";
+                        var apiKeyStatus = (api_key) ? "Correct" : "Incorrect";
+                        if (source == "publisher" || source == "both") {
+                            $("#publisher_id_status").val(publisherStatus);
+                            $("#publisher_id_status_display").removeClass('text-danger text-success').addClass(publisher_response ? 'text-success' : 'text-danger').html(publisherStatus);
+                        }
+                        if (source == "api" || source == "both") {
+                            $("#api_id_status").val(apiKeyStatus);
+                            $("#api_id_status_display").removeClass('text-danger text-success').addClass(api_key ? 'text-success' : 'text-danger').html(apiKeyStatus);
                         }
                     }
                 });

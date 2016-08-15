@@ -296,11 +296,12 @@ class SettingsManager
 
             if ($publisherId != "") {
                 $apiCall  = new CkanClient($api_url);
-                $response = json_decode($apiCall->organization_show($publisherId), true);
+                $apiCall->organization_show($publisherId);
 
                 return true;
             }
 
+            return false;
         } catch (Exception $exception) {
 
             return false;
