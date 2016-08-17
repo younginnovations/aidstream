@@ -7,7 +7,7 @@
         <div class="row">
             <div class="panel-content-heading">
                 <div>
-                    <a href="{{url('admin/list-organization')}}">Dashboard</a> > Add Organization
+                    <a href="{{url('admin/list-organization')}}">Dashboard</a> > Add Organisation
                 </div>
             </div>
             <div class="col-xs-12 col-lg-8 organization-wrapper">

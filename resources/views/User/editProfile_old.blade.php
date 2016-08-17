@@ -54,17 +54,17 @@
                                         {{ Form::select('time_zone', ['' => 'Select Time Zone'] + $timeZone, $user->time_zone_id . ' : '. $user->time_zone) }}
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label">Organization Name</label>
+                                        <label class="control-label">Organisation Name</label>
                                         <input type="text" class="form-control" name="organization_name"
                                                value="{{$organization->name}}">
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label">Organization Address</label>
+                                        <label class="control-label">Organisation Address</label>
                                         <input type="text" class="form-control" name="organization_address"
                                                value="{{$organization->address}}">
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label">Organization Country</label>
+                                        <label class="control-label">Organisation Country</label>
                                         <?php $countries = $getCodeList->getCodeList('Country', 'Organization'); ?>
                                         <select name="country">
                                             <option value="">Select any option:</option>
@@ -74,17 +74,17 @@
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label">Organization Url</label>
+                                        <label class="control-label">Organisation Url</label>
                                         <input type="text" class="form-control" name="organization_url"
                                                value="{{ $organization->organization_url }}">
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label">Organization Telephone</label>
+                                        <label class="control-label">Organisation Telephone</label>
                                         <input type="text" class="form-control" name="organization_telephone"
                                                value="{{ $organization->telephone }}">
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label">Organization Twitter</label>
+                                        <label class="control-label">Organisation Twitter</label>
                                         <input type="text" class="form-control" name="organization_twitter"
                                                value="{{$organization->twitter }}">
                                         <div class="description">
@@ -93,7 +93,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label">Upload Organization Logo</label>
+                                        <label class="control-label">Upload Organisation Logo</label>
                                         <input type="file" class="form-control" name="organization_logo">
                                         <div class="description"><span>Please use jpg/jpeg/png/gif format and 150x150 dimensions image.</span>
                                         </div>
@@ -104,7 +104,7 @@
                                     {{--<div>--}}
                                     {{--<input type="checkbox" name="disqus_comments"--}}
                                     {{--{{!$organization->disqus_comments ?: 'checked="checked"'}} value="1">--}}
-                                    {{--<span>Enable/disable comments on your organization page.</span>--}}
+                                    {{--<span>Enable/disable comments on your organisation page.</span>--}}
                                     {{--</div>--}}
                                     {{--</div>--}}
                                     {{--</div>--}}

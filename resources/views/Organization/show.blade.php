@@ -20,7 +20,7 @@
                 $btn_text = $status > 2 ? "" : $btn_status_label[$status];
                 ?>
                 <div class="element-panel-heading">
-                    <div><span class="pull-left">Organization</span></div>
+                    <div><span class="pull-left">Organisation</span></div>
                     <div class="view-xml-btn org-xml-btn"><span class="pull-left"><a href="{{route('view.organizationXml', ['orgId' => $id])}}">View IATI XML file</a></span></div>
                 </div>
                 <div class="col-xs-12 col-md-8 col-lg-8 element-content-wrapper">

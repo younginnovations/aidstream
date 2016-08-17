@@ -359,6 +359,6 @@ return [
     'Activity_condition'                                             => 'This identifies whether there are any policy of performance related conditions for the activity.',
     'Activity_result'                                                => 'A measurable result of aid work.',
     'Activity_legacy_data'                                           => 'Hold a single name=value pair of legacy data. This element is *not* for adding new data types; instead, it holds the original (non-IATI) value or code for an existing data type.',
-    'registration_admin_username'                                    => 'This was auto-generated using organization name abbreviation you provided earlier.',
+    'registration_admin_username'                                    => 'This was auto-generated using organisation name abbreviation you provided earlier.',
     'registration_org_identifier'                                    => 'This will be auto-generated as you fill the fields above.',
 ];

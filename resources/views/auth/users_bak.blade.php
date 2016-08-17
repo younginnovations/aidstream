@@ -97,7 +97,7 @@
                         {{ Form::model($users, ['url' => route('registration.complete'), 'method' => 'post', 'id' => 'users-form']) }}
 
                         <div class="input-wrapper">
-                            <p>Please provide the information below for the administrator of your organization’s account on AidStream.</p>
+                            <p>Please provide the information below for the administrator of your organisation’s account on AidStream.</p>
                         </div>
 
                         <div class="input-wrapper">

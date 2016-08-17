@@ -45,7 +45,7 @@
                         {{--their activities into IATI, it has also been developed as an Open Source product that is--}}
                         {{--available in <a href="https://github.com/younginnovations/aidstream-new">GitHub</a>. Please feel free to fork it and use it for your purpose. All of our future--}}
                         {{--enhancements and developments will continue to remain open source.--}}
-                        AidStream is available to all organizations around the world but because it has been developed as an Open Source product, it is also available in <a href="https://github.com/younginnovations/aidstream-new">GitHub</a>. Please feel free to fork it and adapt it for your own needs if you like. All of AidStream’s future features and upgrades will continue to be developed as open source additions.
+                        AidStream is available to all organisations around the world but because it has been developed as an Open Source product, it is also available in <a href="https://github.com/younginnovations/aidstream-new">GitHub</a>. Please feel free to fork it and adapt it for your own needs if you like. All of AidStream’s future features and upgrades will continue to be developed as open source additions.
 
                     </p>
                     <p>

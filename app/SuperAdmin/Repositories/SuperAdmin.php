@@ -139,7 +139,13 @@ class SuperAdmin implements SuperAdminInterface
     protected function makeOrganizationData(array $orgDetails)
     {
         $orgData = [
-            'name'            => $orgDetails['organization_information'][0]['name'],
+            'reporting_org'   => [
+                [
+                    "reporting_organization_identifier" => "",
+                    "reporting_organization_type"       => "",
+                    "narrative"                         => [["narrative" => $orgDetails['organization_information'][0]['name'], "language" => ""]]
+                ]
+            ],
             'address'         => $orgDetails['organization_information'][0]['address'],
             'user_identifier' => $orgDetails['organization_information'][0]['user_identifier'],
         ];

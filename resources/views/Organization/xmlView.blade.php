@@ -57,10 +57,10 @@
             <div class="col-xs-9 col-md-9 col-lg-9 content-wrapper">
                 <div class="element-panel-heading">
                     <div>
-                        <div class="org-title"><span class="pull-left">Organization</span></div>
+                        <div class="org-title"><span class="pull-left">Organisation</span></div>
                         <div class="panel-action-btn panel-xml-btn">
                     <span><a href="{{ route('organization.show', $orgId) }}" class="back-to-organization">Back to
-                            organization view</a></span>
+                            organisation view</a></span>
                     <span><a href="{{route('download.organizationXml', ['orgId' => $orgId])}}" class="btn btn-primary">Download
                             XML file</a></span>
                         </div>

@@ -6,7 +6,7 @@
     <div class="container main-container admin-container">
         <div class="row">
             <div class="panel-content-heading">
-                <div>Organizations</div>
+                <div>Organisations</div>
             </div>
             <div class="col-xs-12 col-lg-8 organization-wrapper">
                 <div class="panel panel-default">
@@ -16,7 +16,7 @@
                                 <thead>
                                 <tr>
                                     <th width="100px">S.N.</th>
-                                    <th width="30%">Organization Name</th>
+                                    <th width="30%">Organisation Name</th>
                                     <th>Version</th>
                                     <th>Users</th>
                                     <th>Activities</th>
@@ -57,7 +57,7 @@
                                 </tbody>
                             </table>
                         @else
-                            <div class="text-center no-data">No Organization Registered Yet ::</div>
+                            <div class="text-center no-data">No Organisation Registered Yet ::</div>
                         @endif
                     </div>
                 </div>

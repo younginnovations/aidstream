@@ -2,7 +2,7 @@
     <thead>
     <tr>
         <th width="120px">S. N.</th>
-        <th width="60%">Organization File</th>
+        <th width="60%">Organisation File</th>
         <th align="right" width="250px">Actions</th>
     </tr>
     </thead>

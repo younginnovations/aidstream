@@ -34,7 +34,7 @@
                         </div>
                     </div>
                     <div class="panel panel-default panel-associated-organization">
-                        <div class="panel-sub-heading">Associated Organization</div>
+                        <div class="panel-sub-heading">Associated Organisation</div>
                         <div class="panel-body">
                             <div class="organization-logo"><img
                                         src="{{$organization[0]->logo ? url($organization[0]->logo_url) : url('images/no-logo.png')}}">

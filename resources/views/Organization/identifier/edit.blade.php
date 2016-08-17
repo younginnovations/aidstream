@@ -9,9 +9,9 @@
             <div class="col-xs-9 col-md-9 col-lg-9 content-wrapper">
                 @include('includes.response')
                 <div class="panel-content-heading">
-                    <div>Organization Identifier
+                    <div>Organisation Identifier
                     <div class="panel-action-btn">
-                        <a href="{{route('organization.show', $id)}}" class="btn btn-primary">View Organization Data
+                        <a href="{{route('organization.show', $id)}}" class="btn btn-primary">View Organisation Data
                         </a>
                     </div>
                     </div>

@@ -109,14 +109,14 @@
                             <div class="input-wrapper">
                                 <div class="col-xs-12 col-md-12">
                                     <div class="form-group col-xs-12 col-sm-6 col-md-6">
-                                        <label class="control-label">Organization Name*</label>
+                                        <label class="control-label">Organisation Name*</label>
 
                                         <div class="col-xs-12 col-md-12">
                                             <input type="text" class="form-control" name="organization_name" value="{{ old('organization_name') }}" required="required">
                                         </div>
                                     </div>
                                     <div class="form-group col-xs-12 col-sm-6 col-md-6">
-                                        <label class="control-label">Organization Address*</label>
+                                        <label class="control-label">Organisation Address*</label>
 
                                         <div class="col-xs-12 col-md-12">
                                             <input type="text" class="form-control" name="organization_address" value="{{ old('organization_address') }}" required="required">
@@ -125,7 +125,7 @@
                                 </div>
                                 <div class="col-xs-12 col-md-12">
                                     <div class="form-group col-xs-12 col-sm-6 col-md-6">
-                                        <label class="control-label">Organization User Identifier*</label>
+                                        <label class="control-label">Organisation User Identifier*</label>
 
                                         <div class="col-xs-12 col-md-12">
                                             <input type="text" class="form-control noSpace" name="organization_user_identifier" value="{{ old('organization_user_identifier') }}" required="required">
@@ -135,7 +135,7 @@
                                     </div>
                                     <div class="col-xs-12 col-sm-6 username_text">
                                         <label class="control-label">Username</label>
-                                        <em>This will be auto-generated as you fill Organization User Identifier.</em>
+                                        <em>This will be auto-generated as you fill Organisation User Identifier.</em>
                                     </div>
                                     <div class="form-group col-xs-12 col-sm-6 col-md-6 username_value hidden">
                                         <label class="control-label">Username</label>

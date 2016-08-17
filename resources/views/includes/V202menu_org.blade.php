@@ -17,7 +17,7 @@ $orgId = session('org_id');
                         {{--*/ $filled = $orgData['reporting_org']; /*--}}
                         <a href="{{ url('/organization/' . $orgId . '/reportingOrg') }}" class="{{ $filled ? 'active' : '' }}" title="{{ $filled ? 'Edit' : 'Add' }} Reporting Organization">
                             <span class="action-icon {{ $filled ? 'edit-value' : 'add' }}">icon</span>
-                            Reporting Organization
+                            Reporting Organisation
                         </a>
                         <span class="help-text" data-toggle="tooltip" data-placement="top" title="@lang(session()->get('version') . '/help.Organisation_ReportingOrg')">help text</span>
                     </li>
@@ -25,7 +25,7 @@ $orgId = session('org_id');
                         {{--*/ $filled = $orgData['reporting_org']; /*--}}
                         <a href="{{ url('/organization/' . $orgId . '/identifier')  }}" class="{{ $filled ? 'active' : '' }}" title="{{ $filled ? 'Edit' : 'Add' }} Organization Identifier">
                             <span class="action-icon {{ $filled ? 'edit-value' : 'add' }}">icon</span>
-                            Organization Identifier
+                            Organisation Identifier
                         </a>
                         <span class="help-text" data-toggle="tooltip" data-placement="top" title="@lang(session()->get('version') . '/help.Organisation_Identifier')">help text</span>
                     </li>
@@ -57,7 +57,7 @@ $orgId = session('org_id');
                         <a href="{{ route('organization.recipient-organization-budget.index', $orgId)}}" class="{{ $filled ? 'active' : '' }}"
                            title="{{ $filled ? 'Edit' : 'Add' }} Recipient Organization Budget">
                             <span class="action-icon {{ $filled ? 'edit-value' : 'add' }}">icon</span>
-                            Recipient Organization Budget
+                            Recipient Organisation Budget
                         </a>
                         <span class="help-text" data-toggle="tooltip" data-placement="top" title="@lang(session()->get('version') . '/help.Organisation_RecipientOrgBudget')">help text</span>
                     </li>

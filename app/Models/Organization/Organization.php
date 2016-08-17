@@ -136,4 +136,13 @@ class Organization extends Model
     {
         return $this->hasMany(OrganizationPublished::class);
     }
+
+    /**
+     * get organization name
+     * @return string
+     */
+    public function getNameAttribute()
+    {
+        return ($name = getVal((array) $this->reporting_org, [0, 'narrative', 0, 'narrative'])) ? $name : 'No Name';
+    }
 }

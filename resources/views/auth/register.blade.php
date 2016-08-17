@@ -94,7 +94,7 @@
                         {{ Form::model($regInfo, ['url' => route('registration.register'), 'method' => 'post', 'id' => 'from-registration']) }}
 
                         <ul class="nav nav-tabs" role="tablist">
-                            <li role="presentation" class="active"><a href="#tab-organization" aria-controls="tab-organization" role="tab" data-toggle="tab">Organization Information</a></li>
+                            <li role="presentation" class="active"><a href="#tab-organization" aria-controls="tab-organization" role="tab" data-toggle="tab">Organisation Information</a></li>
                             <li role="presentation"><a href="#tab-users" aria-controls="tab-users" role="tab" data-toggle="tab">Admin Information</a></li>
                             <li role="presentation"><a href="#tab-verification" aria-controls="tab-verification" role="tab" data-toggle="tab" class="disabled">Email Verification</a></li>
                         </ul>
@@ -191,7 +191,7 @@
                 <p>
                     The IATI organisational identifier you entered is being used by another organisation on AidStream. If this is your organisation please select it and continue.
                 </p>
-                <p>Organization: <span class="org-name"></span></p>
+                <p>Organisation: <span class="org-name"></span></p>
                 <button class="btn btn-primary confirm-organization">Yes, this is my organisation</button>
                 <a href="{{ route('contact', ['not-my-organization']) }}" class="btn btn-primary">No, this is not my organisation. Contact Support.</a>
             </div>
