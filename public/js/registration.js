@@ -442,6 +442,11 @@ function slash(value) {
         },
         // handles registration tabs
         tabs: function () {
+            $('.preventClose').modal({
+                backdrop: 'static',
+                keyboard: false,
+                show: false
+            });
 
             if ($('.organization_name_abbr').parents('.form-group').eq(0).hasClass('has-error')) {
                 $('.organization_name_abbr').trigger('change');
@@ -498,8 +503,8 @@ function slash(value) {
                         }
                     }
                 }
-                $('.nav-tabs a').removeClass('complete');
-                nextTab.parent('li').prevAll().children('a').addClass('complete');
+                $('.nav-tabs li').removeClass('complete');
+                nextTab.parent('li').prevAll().addClass('complete');
             });
             function setIdentifier() {
                 $('#username').val($('.organization_name_abbr').val() + '_admin');
@@ -508,16 +513,19 @@ function slash(value) {
             setIdentifier();
         },
         verifyOrgIdentifier: function () {
-            if (!$.isEmptyObject(Registration.checkOrgIdentifier())) {
-                var form = $('#from-registration');
-                form.attr('action', '/same-organization-identifier');
-                form.submit();
+            var orgIdentifier = $('.organization_identifier').val();
+            var response = Registration.checkOrgIdentifier(orgIdentifier);
+            if (!$.isEmptyObject(response)) {
+                var modal = $('#org-identifier-modal');
+                $('.org-identifier', modal).html(orgIdentifier);
+                $('.org-name', modal).html(response.org_name);
+                $('.admin-name', modal).html(response.admin_name);
+                modal.modal('show');
                 return false;
             }
             return true;
         },
-        checkOrgIdentifier: function () {
-            var orgIdentifier = $('.organization_identifier').val();
+        checkOrgIdentifier: function (orgIdentifier) {
             if ($.trim(orgIdentifier) == '') {
                 return [];
             }
@@ -615,7 +623,7 @@ function slash(value) {
             });
         },
         showValidation: function () {
-            $('[href="#tab-organization"], [href="#tab-users"]').addClass('disabled complete');
+            $('[href="#tab-organization"], [href="#tab-users"]').addClass('disabled').parent('li').addClass('complete');
             $('#from-registration').validate().destroy();
             $('a[href="#tab-verification"]').removeClass('disabled').tab('show');
         }

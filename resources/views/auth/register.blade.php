@@ -183,47 +183,42 @@
     </div>
 </div>
 
-<!-- Organization Identifier Modal -->
+<!-- Same Organization Identifier Modal -->
 <div class="modal fade preventClose" id="org-identifier-modal" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-body clearfix text-center">
-                <p>
-                    The IATI organisational identifier you entered is being used by another organisation on AidStream. If this is your organisation please select it and continue.
-                </p>
-                <p>Organisation: <span class="org-name"></span></p>
-                <button class="btn btn-primary confirm-organization">Yes, this is my organisation</button>
-                <a href="{{ route('contact', ['not-my-organization']) }}" class="btn btn-primary">No, this is not my organisation. Contact Support.</a>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Organization Identifier confirmation Modal -->
-<div class="modal fade preventClose" id="org-identifier-confirmation-modal" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-body clearfix text-center">
-                <p>
-                    You have confirmed that your organisation already has an account on AidStream. Please select an option from below to continue.
-                </p>
-                <button class="btn btn-primary need-new-user">I need a new user account.</button>
-                <a href="/password/email" class="btn btn-primary">I have an account but forgot my login credentials.</a>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Contact Administrator Modal -->
-<div class="modal fade preventClose" id="contact-admin-modal" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-body clearfix text-center">
-                <p>Admin Name: <span class="admin-name"></span></p>
-                <p>
-                    For a new user account, please contact the admin.
-                </p>
-                <a href="{{ route('contact', ['need-new-user']) }}" class="btn btn-primary">Contact Administrator</a>
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content form-body">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                </div>
+                <div class="panel-body text-center same-identifier">
+                    <img src="http://localhost:8000/images/ic-warning.svg" alt="warning" width="81" height="66">
+                    <h1>IATI Organisational Identifier Error</h1>
+                    <p>
+                        The IATI organisational identifier you entered <strong>"<span class="org-identifier"></span>"</strong> is being used by another organisation on AidStream.
+                    </p>
+                    <h2>"<span class="org-name"></span>"</h2>
+                    <div class="col-md-12 identifier-information">
+                        <p>If this is your organisation you may do one of the followings</p>
+                        <div class="col-sm-6">
+                            <h3>Retrieve Login Credentials</h3>
+                            <p>
+                                I already have an account but forgotten my login credentials.
+                            </p>
+                            <a href="/password/email" class="btn btn-primary">Retrieve Login Credentials</a>
+                        </div>
+                        <div class="col-sm-6">
+                            <h3>Administrator Information</h3>
+                            <p>
+                                The administrator of the organisation name is
+                            </p>
+                            <span class="admin-name"></span>
+                            <a href="{{ route('contact', ['need-new-user']) }}" class="btn btn-primary">Contact Administrator</a>
+                        </div>
+                    </div>
+                    <p>
+                        No, this is not my organisation. <a href="{{ route('contact', ['not-my-organization']) }}">Contact support@aidstream.org</a>
+                    </p>
+                </div>
             </div>
         </div>
     </div>
