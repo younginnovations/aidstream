@@ -89,7 +89,7 @@
 
                         @include('includes.response')
 
-                        {{--*/ $regInfo = (array) (old() ? old() : session('reg_info')); /*--}}
+                       {{--*/ $regInfo = (array) (old() ? old() : session('reg_info')); /*--}}
 
                         {{ Form::model($regInfo, ['url' => route('registration.register'), 'method' => 'post', 'id' => 'from-registration']) }}
 

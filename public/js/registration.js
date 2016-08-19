@@ -293,6 +293,11 @@ function slash(value) {
                 $('[name="similar_organization"]').val($(this).attr('data-value'));
                 $('#similar-org-form').submit();
             });
+
+            $('.clickable-org').delegate('a', 'click', function () {
+                $('[name="similar_organization"]').val($(this).attr('data-value'));
+                $('#similar-org-form').submit();
+            });
         },
         // addition of registration agency
         addRegAgency: function () {

@@ -117,12 +117,12 @@
                                 {{ Form::hidden('similar_organization') }}
                             </div>
                             <div class="col-xs-12 col-md-12">
-                                <ul class="organization-list">
+                                <ul class="organization-list clickable-org">
                                 </ul>
                             </div>
                         </div>
 
-                        <div class="col-md-12 text-center">
+                        <div class="col-md-12 text-center clickable-org">
                             <div class="col-md-6">My organisation is not in the list.</div>
                             <div class="col-md-6 organization-list">
                                 <a data-value="">None of these are my organisation.</a>
