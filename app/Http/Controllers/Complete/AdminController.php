@@ -233,7 +233,7 @@ class AdminController extends Controller
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
-        if (!in_array($request->get('permission'), [1, 3, 4])) {
+        if (in_array($request->get('permission'), [2, 5, 6, 7])) {
             $input = $request->get('permission');
             $user  = $this->user->findOrFail($userId);
 

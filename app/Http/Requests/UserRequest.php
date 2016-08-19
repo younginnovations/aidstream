@@ -22,12 +22,12 @@ class UserRequest extends Request
     public function rules()
     {
         return [
-            'first_name'  => 'required|max:255',
-            'last_name'   => 'required|max:255',
-            'email'       => 'required|email|max:255|unique:users',
-            'username'    => 'required|max:255|unique:users',
-            'password'    => 'required|confirmed|min:6',
-            'permission' => 'required|not_in:1,3,4'
+            'first_name' => 'required|max:255',
+            'last_name'  => 'required|max:255',
+            'email'      => 'required|email|max:255|unique:users',
+            'username'   => 'required|max:255|unique:users',
+            'password'   => 'required|confirmed|min:6',
+            'permission' => 'required|in:2,5,6,7'
         ];
     }
 

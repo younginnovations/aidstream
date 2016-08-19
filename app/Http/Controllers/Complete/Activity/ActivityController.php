@@ -598,6 +598,10 @@ class ActivityController extends Controller
             $response = ['type' => 'warning', 'code' => ['default_values', ['name' => 'activity']]];
 
             return redirect('/default-values')->withResponse($response);
+        }elseif (!$settings->default_field_groups){
+            $response = ['type' => 'warning', 'code' => ['default_field_groups_required', ['name' => 'activity']]];
+
+            return redirect('/activity-elements-checklist')->withResponse($response);
         }
 
         $defaultFieldValues    = $settings->default_field_values;
