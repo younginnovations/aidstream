@@ -21,12 +21,12 @@ function slash(value) {
                 }
             });
         },
-        // auto generates abbreviation from organization name
-        abbrGenerator: function () {
+        // returns first letters from each words
+        getShortForm: function (text) {
             var ignoreList = ['and', 'of', 'the', 'an', 'a'];
 
-            function getWordList(name) {
-                var nameArray = name.split(/\ +/g);
+            function getWordList(text) {
+                var nameArray = text.split(/\ +/g);
                 return nameArray.filter(function (value) {
                     return ($.inArray(value.toLowerCase(), ignoreList) === -1 && value.length > 1);
                 })
@@ -41,11 +41,15 @@ function slash(value) {
                 return abbr.toLowerCase();
             }
 
+            var wordList = getWordList(text);
+            return getAbbr(wordList);
+        },
+        // auto generates abbreviation from organization name
+        abbrGenerator: function () {
             $('.organization_name').change(function () {
                 checkSimilarOrg = true;
                 var name = $(this).val();
-                var wordList = getWordList(name);
-                var abbr = getAbbr(wordList);
+                var abbr = Registration.getShortForm(name);
                 $('.organization_name_abbr').val(abbr).trigger('keydown').trigger('change').valid();
             });
         },
@@ -333,6 +337,12 @@ function slash(value) {
             });
 
             var form = $('#reg-agency-form');
+
+            $('#name', form).change(function () {
+                var abbr = Registration.getShortForm($(this).val());
+                $('#short_form', form).val(abbr.toUpperCase());
+            });
+
             form.validate({
                 submitHandler: function () {
                     var country = $('.country').val();

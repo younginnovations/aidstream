@@ -3,7 +3,7 @@
     <div class="panel-body">
         <div class="create-form settings-form">
             <div class="settings-checkall-wrapper">
-                <h2>Activity elements checklist</h2>
+                <h2>Activity Elements Checklist</h2>
                 <p>Please check the elements you want to add to your activities. The greyed out checkboxes are required to be filled out in AidStream.</p>
                 <div class="form-group">
                     <label><input type="checkbox" class="checkAll"/><span class="check-text">Check All</span></label>
@@ -19,11 +19,11 @@
 @stop
 @section('foot')
     {{--@if(session('first_login'))--}}
-        {{--<script src="/js/userOnBoarding.js"></script>--}}
-        {{--<script>--}}
-            {{--$(window).load(function () {--}}
-                {{--UserOnBoarding.settingsTour();--}}
-            {{--});--}}
-        {{--</script>--}}
+    {{--<script src="/js/userOnBoarding.js"></script>--}}
+    {{--<script>--}}
+    {{--$(window).load(function () {--}}
+    {{--UserOnBoarding.settingsTour();--}}
+    {{--});--}}
+    {{--</script>--}}
     {{--@endif--}}
 @endsection

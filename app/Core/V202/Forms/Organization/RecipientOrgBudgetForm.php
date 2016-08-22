@@ -15,7 +15,7 @@ class RecipientOrgBudgetForm extends BaseForm
     {
         $this
             ->addSelect('status', $this->getCodeList('BudgetStatus', 'Activity'))
-            ->addCollection('recipient_organization', 'Organization\RecipientOrgForm')
+            ->addCollection('recipient_organization', 'Organization\RecipientOrgForm', '', [], 'Recipient Organisation')
             ->addCollection('period_start', 'Organization\PeriodStart')
             ->addCollection('period_end', 'Organization\PeriodEnd')
             ->addCollection('value', 'Organization\ValueForm')

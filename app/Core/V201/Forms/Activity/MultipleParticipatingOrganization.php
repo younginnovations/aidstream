@@ -17,7 +17,9 @@ class MultipleParticipatingOrganization extends BaseForm
             ->addCollection(
                 'participating_organization',
                 'Activity\ParticipatingOrganization',
-                'participating_organization'
+                'participating_organization',
+                [],
+                'Participating Organisation'
             )
             ->addAddMoreButton('add', 'participating_organization');
     }

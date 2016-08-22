@@ -15,7 +15,7 @@ class ContactInfo extends BaseForm
     {
         $this
             ->addSelect('type', $this->getCodeList('ContactType', 'Activity'), 'Contact Type', $this->addHelpText('Activity_ContactInfo-type'))
-            ->addCollection('organization', 'Activity\ContactInfoOrganization')
+            ->addCollection('organization', 'Activity\ContactInfoOrganization', '', [], 'Organisation')
             ->addCollection('department', 'Activity\Department')
             ->addCollection('person_name', 'Activity\PersonName')
             ->addCollection('job_title', 'Activity\JobTitle')

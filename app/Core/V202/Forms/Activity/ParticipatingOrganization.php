@@ -14,11 +14,11 @@ class ParticipatingOrganization extends BaseForm
     public function buildForm()
     {
         $this
-            ->addSelect('organization_role', $this->getCodeList('OrganisationRole', 'Activity'), 'Organization Role', $this->addHelpText('Activity_ParticipatingOrg-role'), null, true)
+            ->addSelect('organization_role', $this->getCodeList('OrganisationRole', 'Activity'), 'Organisation Role', $this->addHelpText('Activity_ParticipatingOrg-role'), null, true)
             ->add('identifier', 'text', ['help_block' => $this->addHelpText('Activity_ParticipatingOrg-ref')])
             ->addSelect('organization_type', $this->getCodeList('OrganisationType', 'Activity'), 'Organisation Type', $this->addHelpText('Activity_ParticipatingOrg-type'))
             ->add('activity_id', 'text')
-            ->addNarrative('narrative', 'Organization Name')
+            ->addNarrative('narrative', 'Organisation Name')
             ->addAddMoreButton('add', 'narrative')
             ->addRemoveThisButton('remove_narrative');
     }

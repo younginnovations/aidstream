@@ -12,7 +12,7 @@
                 </div>
                 {!! form_until($form,'publisher_id_status') !!}
                 <div class="form-group">
-                    {!! form_label($form->api_id, ['label' => 'API ID']) !!}
+                    {!! form_label($form->api_id, ['label' => 'API Key']) !!}
                     {!! form_widget($form->api_id) !!}
                     <div id="api_id_status_display" class="{{ ($status = getVal($form->getModel(), ['api_id_status'])) == 'Correct' ? 'text-success' : 'text-danger' }}">{{ $status }}</div>
                 </div>

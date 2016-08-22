@@ -241,7 +241,7 @@ class AuthController extends Controller
         } catch (\Exception $exception) {
             Auth::logout();
 
-            return redirect('/auth/login')->withErrors('unable to login. Please contact us at <a href=\'mailto:support@aidstream.org\'>support@aidstream.org</a>');
+            return redirect('/auth/login')->withErrors('Unable to login. Please contact us at <a href=\'mailto:support@aidstream.org\'>support@aidstream.org</a>');
         }
     }
 

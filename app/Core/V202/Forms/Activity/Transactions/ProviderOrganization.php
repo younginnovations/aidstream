@@ -14,7 +14,7 @@ class ProviderOrganization extends BaseForm
     public function buildForm()
     {
         $this
-            ->add('organization_identifier_code', 'text')
+            ->add('organization_identifier_code', 'text', ['label' => 'Organisation Identifier Code'])
             ->add('provider_activity_id', 'text')
             ->add('type', 'text')
             ->addNarrative('provider_org_narrative')

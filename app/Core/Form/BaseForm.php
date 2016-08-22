@@ -116,7 +116,7 @@ class BaseForm extends Form
      * @param bool   $label
      * @return $this
      */
-    protected function addCollection($name, $file, $class = "", array $data = [], $label = null)
+    public function addCollection($name, $file, $class = "", array $data = [], $label = null)
     {
         $class .= ($class ? ' has_add_more' : '');
         $defaultVersion = config('app.default_version_name');
