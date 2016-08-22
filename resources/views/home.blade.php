@@ -30,7 +30,7 @@
                 of creating XML.
             </p>
 
-            <a href="{{ url('/auth/register') }}" class="btn btn-primary get-started-btn">Get Started</a>
+            <a href="{{ url('/register') }}" class="btn btn-primary get-started-btn">Get Started</a>
 
             <div class="screenshot">
                 <img src="images/screenshot.png" alt="">
@@ -119,7 +119,7 @@
 
             <p>Did we mention that it’s free!? You can’t go wrong - with AidStream, publishing your data to IATI is a
                 piece of cake!</p>
-            <a href="{{ url('/auth/register') }}" class="btn btn-primary get-started-btn">Get Started</a>
+            <a href="{{ url('/register') }}" class="btn btn-primary get-started-btn">Get Started</a>
         </div>
     </div>
 </section>

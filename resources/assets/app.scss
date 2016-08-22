@@ -146,9 +146,9 @@ select.form-control, form .select2-container {
   margin-bottom: 0.75em;
 }
 
-.select2-container {
-  height: auto !important;
-}
+//.select2-container {
+//  height: auto !important;
+//}
 
 form .select2-container {
   width: 100% !important;
@@ -166,6 +166,10 @@ form .select2-container {
 .select2-container--default .select2-selection--multiple, .select2-container--default.select2-container--focus .select2-selection--multiple {
   border: 0 !important;
   background: none !important;
+}
+
+.select2-container .select2-selection--single .select2-selection__rendered {
+  padding-left: 0!important;
 }
 
 .has-error {
@@ -525,11 +529,9 @@ label {
 }
 
 .register-container {
-<<<<<<< HEAD
   @include outer-container(814px);
   padding-top: 40px;
   clear: both;
-=======
   @include outer-container(720px);
   padding-top: 40px;
   clear: both;
@@ -544,7 +546,6 @@ label {
       margin-bottom: 30px;
     }
   }
->>>>>>> ui fixes
   .username_text {
     padding: 0;
     margin-bottom: 0.75em;
@@ -576,11 +577,10 @@ label {
   .input-wrapper .col-md-12 .col-md-12 {
     padding-right: 0;
   }
-<<<<<<< HEAD
   .input-wrapper > .col-md-12 .form-group:first-child {
     padding-left: 0;
     padding-right: 15px;
-=======
+  }
   .input-wrapper > .col-md-12 .form-group {
     margin-bottom: 20px;
     &:first-child {
@@ -689,7 +689,6 @@ label {
       color: #777;
       margin-bottom: 0;
     }
->>>>>>> ui fixes
   }
   .input-wrapper > .col-md-12 .form-group:last-child, .input-wrapper > .col-md-12 .form-group:last-of-type {
     padding-right: 0;
@@ -737,8 +736,6 @@ label {
   }
 }
 
-<<<<<<< HEAD
-=======
 .register-block {
   padding: 0 5px;
   width: 100%;
@@ -757,7 +754,6 @@ label {
   }
 }
 
->>>>>>> ui fixes
 .has-error {
   label {
     color: rgba(72, 72, 72, .7) !important;
@@ -4488,12 +4484,8 @@ pre.prettyprint {
 }
 
 .add_agency {
-<<<<<<< HEAD
-  margin: 4px 0 0;
-=======
   margin: -12px 0 0;
   padding-left: 0;
->>>>>>> ui fixes
 }
 
 .has-error .add_agency {
@@ -4839,8 +4831,6 @@ body > .skiptranslate iframe {
   clear: both;
 }
 
-<<<<<<< HEAD
-=======
 .same-identifier {
   h1 {
     color: #FF645B;
@@ -5007,8 +4997,33 @@ body > .skiptranslate iframe {
   margin-top: -8px;
 }
 
+.modal-body {
+  padding: 20px 20px 0;
+  .form-control {
+    margin-bottom: 0;
+  }
+  .form-container > .form-group {
+    margin-bottom: 30px;
+    overflow: hidden;
+    label {
+      padding-left: 0;
+    }
+    .col-xs-12 {
+      padding: 0;
+    }
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.modal-header {
+  padding: 20px;
+}
+
 .modal-footer {
   border: 0;
+  padding: 20px;
 }
 
 .verification-modal {
@@ -5069,6 +5084,10 @@ body > .skiptranslate iframe {
       display: block;
       border-radius: 4px;
       background: #f5f5f5;
+      line-height: 22px;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
       &:hover {
         text-decoration: none;
         background: #DEF1FB;
@@ -5110,11 +5129,21 @@ body > .skiptranslate iframe {
     padding: 8px;
   }
   > .tooltip-arrow {
-    border-top-color: #fff;
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 0;
+    bottom: -5px;
+    left: 50%;
+    box-sizing: border-box;
+    border: 6px solid black;
+    border-color: transparent transparent #fff #fff;
+    transform-origin: 0 0;
+    transform: rotate(-45deg);
+    box-shadow: -3px 3px 3px 0 rgba(204,204,204,0.6);
   }
 }
 
->>>>>>> ui fixes
 @media all and (max-width: 1030px) {
   .activity-status {
     padding: 16px 10px 18px 50px;
@@ -5966,6 +5995,16 @@ body > .skiptranslate iframe {
   .publish-btn {
     margin-right: 20px;
   }
+
+  .verification-modal .modal-dialog {
+    width: 700px;
+    .modal-content {
+      padding: 30px 50px;
+    }
+  }
+  .modal-body .form-container>.form-group label {
+    margin: 12px 0;
+  }
 }
 
 @media all and (min-width: 1001px) {
@@ -6307,8 +6346,6 @@ body > .skiptranslate iframe {
   }
 }
 
-<<<<<<< HEAD
-=======
 @media all and (min-width: 600px) {
   .identifier-information > .col-sm-6 {
     float: left;
@@ -6372,5 +6409,4 @@ body > .skiptranslate iframe {
 }
 
 
->>>>>>> ui fixes
 

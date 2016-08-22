@@ -252,7 +252,7 @@ function slash(value) {
                         success: function (data) {
                             var list = '<p>Please click on the organisation name if it is your organisation.</p>';
                             for (var i in data) {
-                                list += '<li><a data-value="' + i + '">' + data[i] + '</a></li>';
+                                list += '<li><a data-value="' + i + '" title="' + data[i] + '">' + data[i] + '</a></li>';
                             }
                             $('ul.organization-list').html(list).removeClass('hidden');
                         },
@@ -365,6 +365,16 @@ function slash(value) {
                     newAgencies = newAgencies == '' ? {} : JSON.parse(newAgencies);
                     newAgencies[agencyCode] = {name: name, short_form: shortForm, website: website};
                     $('.new_agencies').val(JSON.stringify(newAgencies));
+                },
+                errorClass: 'text-danger',
+                highlight: function (element, errorClass, validClass) {
+                    $(element).parents('.form-group').eq(0).addClass('has-error');
+                },
+                unhighlight: function (element, errorClass, validClass) {
+                    $(element).parents('.form-group').eq(0).removeClass('has-error');
+                },
+                invalidHandler: function () {
+                    $('button[type="submit"]', form).removeAttr('disabled');
                 }
             });
             form.submit(function () {

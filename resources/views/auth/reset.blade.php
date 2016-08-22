@@ -104,7 +104,7 @@
                             <input type="hidden" name="token" value="{{ $token }}">
 
                             <div class="form-group">
-                                <label class="control-label">E-Mail Address</label>
+                                <label class="control-label required">E-Mail Address</label>
 
                                 <div class="col-md-12">
                                     <input type="email" class="form-control" name="email" value="{{ old('email') }}">
@@ -112,15 +112,14 @@
                             </div>
 
                             <div class="form-group">
-                                <label class="control-label">New Password</label>
-
+                                <label class="control-label required">New Password</label>
                                 <div class="col-md-12">
                                     <input type="password" class="form-control" name="password">
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label class="control-label">Confirm Password</label>
+                                <label class="control-label required">Confirm Password</label>
 
                                 <div class="col-md-12">
                                     <input type="password" class="form-control" name="password_confirmation">

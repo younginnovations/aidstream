@@ -148,7 +148,7 @@
                     <div class="form-group {{ $messages ? ' has-error' : '' }}">
                         {{ Form::label('name', null, ['class' => 'control-label required col-xs-12 col-sm-4']) }}
                         <div class="col-xs-12 col-sm-8">
-                            {{ Form::text('name') }}
+                            {{ Form::text('name',null,['class' => 'form-control']) }}
                             @foreach($messages as $message)
                                 <div class="text-danger">{{ $message }}</div>
                             @endforeach
@@ -160,7 +160,7 @@
                     <div class="form-group {{ $messages ? ' has-error' : '' }}">
                         {{ Form::label('short_form', null, ['class' => 'control-label required col-xs-12 col-sm-4']) }}
                         <div class="col-xs-12 col-sm-8">
-                            {{ Form::text('short_form') }}
+                            {{ Form::text('short_form',null,['class' => 'form-control']) }}
                             @foreach($messages as $message)
                                 <div class="text-danger">{{ $message }}</div>
                             @endforeach
@@ -172,7 +172,7 @@
                     <div class="form-group {{ $messages ? ' has-error' : '' }}">
                         {{ Form::label('website', null, ['class' => 'control-label required col-xs-12 col-sm-4']) }}
                         <div class="col-xs-12 col-sm-8">
-                            {{ Form::url('website') }}
+                            {{ Form::url('website',null,['class' => 'form-control']) }}
                             <p class="help-block">eg: http://www.example.com</p>
                             @foreach($messages as $message)
                                 <div class="text-danger">{{ $message }}</div>
@@ -256,7 +256,7 @@
     var checkOrgIdentifier = true;
     var agencies = JSON.parse($('.agencies').val());
     $(document).ready(function () {
-//        $('form select').select2();
+        $('form select').select2();
         Registration.abbrGenerator();
         Registration.checkAbbrAvailability();
         Registration.changeCountry();
