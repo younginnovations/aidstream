@@ -253,14 +253,14 @@ function slash(value) {
                             for (var i in data) {
                                 list += '<li><a data-value="' + i + '">' + data[i] + '</a></li>';
                             }
-                            $('ul.organization-list').html(list);
+                            $('ul.organization-list').html(list).removeClass('hidden');
                         },
                         complete: function () {
                             $('body > .loader').addClass('hidden').remove();
                         }
                     });
                 } else {
-                    $('ul.organization-list').html('');
+                    $('ul.organization-list').html('').addClass('hidden');
                 }
             });
 
@@ -287,11 +287,6 @@ function slash(value) {
                     };
                     Registration.request("/check-org-identifier", {org_id: orgId}, callback);
                 }
-            });
-
-            $('.organization-list').delegate('a', 'click', function () {
-                $('[name="similar_organization"]').val($(this).attr('data-value'));
-                $('#similar-org-form').submit();
             });
 
             $('.clickable-org').delegate('a', 'click', function () {

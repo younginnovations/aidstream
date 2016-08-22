@@ -117,21 +117,17 @@
                                 {{ Form::hidden('similar_organization') }}
                             </div>
                             <div class="col-xs-12 col-md-12">
-                                <ul class="organization-list clickable-org">
+                                <ul class="organization-list clickable-org hidden">
                                 </ul>
                             </div>
                         </div>
 
-                        <div class="col-md-12 text-center clickable-org">
-                            <div class="col-md-6">My organisation is not in the list.</div>
-                            <div class="col-md-6 organization-list">
-                                <a data-value="">None of these are my organisation.</a>
+                        <div class="col-md-12 text-center clickable-org org-list-notification">
+                            <p>The name of my organisation is not in the list.</p>
+                                <a data-value="" class="btn btn-continue">Continue with registration</a>
                                 {{ Form::button('Continue', ['class' => 'btn btn-primary btn-submit btn-register prevent-disable hidden', 'type' => 'submit', 'disabled' => 'disabled']) }}
                             </div>
-                        </div>
-
                         {{ Form::close() }}
-
                     </div>
                 </div>
             </div>

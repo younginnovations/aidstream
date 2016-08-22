@@ -180,6 +180,7 @@ class RegistrationController extends Controller
             $orgInfo = $this->registrationManager->getOrganization($orgId);
         } else {
             $orgInfo = $this->registrationManager->checkOrgIdentifier(request('org_identifier'));
+            session()->put('same_identifier_org_id', $orgInfo['org_id']);
         }
         if ($orgInfo && ($adminEmail = getVal($orgInfo, ['admin_email']))) {
             session()->put('admin_email', $adminEmail);

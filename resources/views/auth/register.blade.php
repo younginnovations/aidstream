@@ -76,7 +76,16 @@
         </div>--}}
     <div class="container-fluid register-container">
         <div class="row">
-            <div class="col-lg-4 col-md-8 col-md-offset-2 form-body">
+            <h1 class="text-center">Get Started with AidStream</h1>
+            <p class="text-center">Register your organisation with AidStream to enjoy an effortless data publishing experience.
+                If you want to register for a user account, speak with your organisation's AidStream administrator.
+                To find out more, <a href="#">click here.</a></p>
+            <ul class="nav nav-tabs text-center" role="tablist">
+                <li role="presentation" class="active"><span>1</span><a href="#tab-organization" aria-controls="tab-organization" role="tab" data-toggle="tab">Organisation Information</a></li>
+                <li role="presentation"><span>2</span><a href="#tab-users" aria-controls="tab-users" role="tab" data-toggle="tab">Admin Information</a></li>
+                <li role="presentation"><span>3</span><a href="#tab-verification" aria-controls="tab-verification" role="tab" data-toggle="tab" class="disabled">Email Verification</a></li>
+            </ul>
+            <div class="col-lg-4 col-md-8 register-block">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <img src="{{url('images/logo.svg')}}" alt="">
@@ -132,7 +141,6 @@
             </div>
             {{ Form::open(['url' => route('agency.store'), 'method' => 'post', 'id' => 'reg-agency-form']) }}
             <div class="modal-body clearfix">
-
                 <div class="messages hidden"></div>
                 <div class="form-container hidden">
                     {{--*/
@@ -175,7 +183,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                {{--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>--}}
                 <button type="submit" class="btn btn-primary">Add</button>
             </div>
             {{ Form::close() }}

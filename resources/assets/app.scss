@@ -525,9 +525,26 @@ label {
 }
 
 .register-container {
+<<<<<<< HEAD
   @include outer-container(814px);
   padding-top: 40px;
   clear: both;
+=======
+  @include outer-container(720px);
+  padding-top: 40px;
+  clear: both;
+  .row {
+    > h1 {
+      //font: normal 36px $font_0;
+      font: normal 26px $font_0;
+      margin-bottom: 10px;
+    }
+    p {
+      font-size: 14px;
+      margin-bottom: 30px;
+    }
+  }
+>>>>>>> ui fixes
   .username_text {
     padding: 0;
     margin-bottom: 0.75em;
@@ -559,9 +576,120 @@ label {
   .input-wrapper .col-md-12 .col-md-12 {
     padding-right: 0;
   }
+<<<<<<< HEAD
   .input-wrapper > .col-md-12 .form-group:first-child {
     padding-left: 0;
     padding-right: 15px;
+=======
+  .input-wrapper > .col-md-12 .form-group {
+    margin-bottom: 20px;
+    &:first-child {
+      padding-left: 0;
+      padding-right: 15px;
+    }
+    &:last-child, &:last-of-type {
+      padding-right: 0;
+      padding-left: 15px;
+    }
+    &:only-child {
+      padding-left: 0;
+      padding-right: 15px;
+    }
+    & + .has-error {
+      margin-bottom: 25px;
+    }
+  }
+  > .row {
+    margin: 0;
+  }
+}
+
+.register-container {
+  padding-top: 20px;
+  padding-bottom: 0;
+  .nav-tabs {
+    //margin-bottom: 70px;
+    margin-bottom: 34px;
+    border-bottom: 0;
+    li {
+      float: none;
+      min-width: 212px;
+      text-align: left;
+      display: none;
+      &.active {
+        display: inline-block;
+      }
+      & + li {
+        position: relative;
+        margin-top: 7px;
+        padding-top: 23px;
+        &:before {
+          content: "";
+          position: absolute;
+          left: 50%;
+          top: 0;
+          width: 13px;
+          height: 13px;
+          border-bottom: 2px solid $color_silver_chalice_approx;
+          border-right: 2px solid $color_silver_chalice_approx;
+          transform: rotate(45deg);
+        }
+      }
+      span {
+        background: #ccc;
+        display: inline-block;
+        margin-right: 10px;
+        color: $color_white;
+        width: 32px;
+        line-height: 32px;
+        text-align: center;
+        border-radius: 50%;
+      }
+      a {
+        color: $color_silver_chalice_approx;
+        padding: 0 0 2px;
+        border-bottom: 2px solid transparent;
+        display: inline-block;
+      }
+    }
+  }
+  h1 + p {
+    font-size: 16px !important;
+    line-height: 24px;
+  }
+}
+
+.register-container {
+  .nav-tabs > li.active > a, .nav-tabs > li.active > a:focus, .nav-tabs > li.active > a:hover {
+    border: 0;
+    color: $color_gravel_approx;
+    border-bottom: 2px solid;
+    background: none;
+  }
+
+  .nav-tabs > li > a, .nav-tabs > li > a:hover, .nav-tabs > li > a:focus {
+    background: none;
+    border: 0;
+  }
+
+  .nav-tabs > li.active > span {
+    background: $color_gravel_approx;
+  }
+
+  .text-wrapper {
+    padding-bottom: 16px;
+    border-bottom: 1px solid #f3f3f3;
+    text-align: left;
+    h2 {
+      font: normal 18px $font_0;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    p {
+      color: #777;
+      margin-bottom: 0;
+    }
+>>>>>>> ui fixes
   }
   .input-wrapper > .col-md-12 .form-group:last-child, .input-wrapper > .col-md-12 .form-group:last-of-type {
     padding-right: 0;
@@ -609,6 +737,27 @@ label {
   }
 }
 
+<<<<<<< HEAD
+=======
+.register-block {
+  padding: 0 5px;
+  width: 100%;
+  @include outer-container(700px);
+  margin: 0 auto;
+  float: none;
+  .col-md-12, .form-group .col-md-6 {
+    padding: 0;
+  }
+  .panel-default {
+    border: 0;
+    box-shadow: none;
+  }
+  .panel-body {
+    padding: 0;
+  }
+}
+
+>>>>>>> ui fixes
 .has-error {
   label {
     color: rgba(72, 72, 72, .7) !important;
@@ -4339,7 +4488,16 @@ pre.prettyprint {
 }
 
 .add_agency {
+<<<<<<< HEAD
   margin: 4px 0 0;
+=======
+  margin: -12px 0 0;
+  padding-left: 0;
+>>>>>>> ui fixes
+}
+
+.has-error .add_agency {
+  margin: 0;
 }
 
 .org-identifier {
@@ -4681,6 +4839,282 @@ body > .skiptranslate iframe {
   clear: both;
 }
 
+<<<<<<< HEAD
+=======
+.same-identifier {
+  h1 {
+    color: #FF645B;
+    font: 32px $font_2;
+    margin-top: 10px;
+    & + p {
+      font-size: 16px !important;
+      color: #777;
+      line-height: 24px;
+      margin-bottom: 20px;
+      strong {
+        color: $color_gravel_approx;
+      }
+    }
+  }
+  h2 {
+    font-size: 28px;
+  }
+}
+
+.same-identifier-container {
+  .form-body {
+    padding-bottom: 0;
+  }
+  .panel-default {
+    background: #fff;
+  }
+  .create-account-wrapper {
+    margin-top: 34px;
+  }
+}
+
+.identifier-information {
+  border-radius: 4px;
+  border: 1px solid #BFDFEC;
+  padding: 30px !important;
+  margin-bottom: 30px;
+  overflow: hidden;
+  > p {
+    font-size: 16px !important;
+    line-height: 22px;
+  }
+  h3 {
+    font-size: 20px;
+  }
+  > .col-sm-6 {
+    position: relative;
+    > p {
+      color: #777;
+      line-height: 22px;
+      margin-bottom: 2px;
+    }
+    &:first-of-type {
+      //border-right: 1px solid $color_ziggurat_approx;
+      border-bottom: 1px solid $color_ziggurat_approx;
+      padding-bottom: 20px;
+      margin-bottom: 20px;
+    }
+  }
+  & + p {
+    font-size: 16px !important;
+    line-height: 24px;
+    color: #777;
+  }
+  .btn {
+    background: none;
+    color: $color_dodger_blue_approx;
+    border: 1px solid;
+    border-radius: 4px;
+    font-size: 14px;
+    width: 220px;
+    line-height: 34px;
+    transition: background 0.3s ease;
+    margin-top: 30px;
+    &:hover {
+      color: #fff;
+    }
+  }
+}
+
+.admin-name {
+  display: block;
+  font: 16px $font_1;
+  text-transform: uppercase;
+}
+
+.contact-admin-container {
+  padding-bottom: 80px;
+  h2 {
+    font-size: 36px;
+    line-height: 50px;
+    margin-bottom: 10px;
+  }
+  .col-xs-12 {
+    padding: 0;
+    max-width: 360px;
+    float: none;
+    margin: 0 auto;
+  }
+  .panel-body {
+    padding: 30px 30px 10px;
+  }
+  .form-group {
+    margin-bottom: 25px;
+  }
+}
+
+.verification-wrapper {
+  padding: 30px 45px !important;
+  h1 {
+    font: 48px/65px $font_2;
+    margin-top: 15px;
+  }
+  p {
+    font-size: 16px !important;
+    line-height: 24px;
+    color: #777;
+    strong {
+      color: $color_gravel_approx;
+    }
+  }
+}
+
+.btn-back {
+  background: transparent $url_21 no-repeat 20px 16px !important;
+  margin-top: 30px;
+  height: 46px;
+  color: $color_dodger_blue_approx;
+  border: 1px solid $color_dodger_blue_approx !important;
+  padding-left: 38px;
+  &:hover, &:focus {
+    background: $color_dodger_blue_approx $url_21 no-repeat 20px -39px !important;
+    border: 1px solid $color_dodger_blue_approx !important;
+  }
+}
+
+.organisation-account-wrapper {
+  > p:first-child {
+    margin-bottom: 20px;
+  }
+  p > a {
+    width: 210px !important;
+    margin: 0 auto;
+    display: inherit;
+    line-height: 46px !important;
+    padding: 0 !important;
+    background: transparent;
+    color: $color_dodger_blue_approx;
+    border: 1px solid $color_dodger_blue_approx;
+    &:first-child {
+      margin-bottom: 20px;
+    }
+    &:hover {
+      background: $color_dodger_blue_approx;
+      border: 1px solid $color_dodger_blue_approx;
+    }
+  }
+}
+
+.modal-header .close span {
+  color: $color_dodger_blue_approx;
+  font-size: 40px;
+  display: block;
+  margin-top: -8px;
+}
+
+.modal-footer {
+  border: 0;
+}
+
+.verification-modal {
+  .modal-body p {
+    margin-bottom: 24px;
+    color: #777;
+    line-height: 22px;
+    form > * {
+      padding: 0;
+    }
+    form > .col-md-12 > .form-group {
+      &:first-child {
+        padding-right: 10px;
+      }
+      &:last-child {
+        padding-left: 10px;
+      }
+    }
+  }
+  .modal-header {
+    border-bottom: 0;
+  }
+  .modal-title {
+    font: 32px/43px $font_2;
+    color: #80CA9C;
+  }
+  .modal-header .close span {
+    margin-top: -27px;
+    margin-right: -64px;
+  }
+}
+
+.org-warning img {
+  margin: 0 auto;
+  display: block;
+}
+
+.organization-list {
+  border: 1px solid $color_ziggurat_approx;
+  border-radius: 4px;
+  padding: 30px;
+  overflow: hidden;
+  margin-bottom: 25px;
+  > p {
+    font-size: 16px !important;
+    margin-bottom: 24px !important;
+  }
+  li {
+    width: 100%;
+    float: left;
+    margin-bottom: 5px;
+    &:nth-child(odd) {
+      float: right;
+    }
+    a {
+      color: #777;
+      padding: 9px 15px;
+      display: block;
+      border-radius: 4px;
+      background: #f5f5f5;
+      &:hover {
+        text-decoration: none;
+        background: #DEF1FB;
+      }
+    }
+  }
+}
+
+.btn-continue {
+  background: none !important;
+  line-height: 46px;
+  color: $color_dodger_blue_approx;
+  border: 1px solid $color_dodger_blue_approx !important;
+  padding: 0 12px;
+  &:hover {
+    background: $color_dodger_blue_approx !important;
+    color: #fff;
+    border-color: $color_dodger_blue_approx !important;
+  }
+}
+
+.org-list-notification p {
+  font-size: 16px !important;
+  color: #777;
+  margin-bottom: 25px !important;
+}
+
+.help-text + .tooltip {
+  > .tooltip-inner {
+    background: #fff;
+    border-radius: 4px;
+    font-size: 11px;
+    font-style: italic;
+    color: rgba($color_gravel_approx, 0.7);
+    -webkit-box-shadow: 0 0 10px rgba(204,204,204,0.8);
+    -moz-box-shadow: 0 0 10px rgba(204,204,204,0.8);
+    box-shadow: 0 0 10px rgba(204,204,204,0.8);
+    margin-right: 4px;
+    padding: 8px;
+  }
+  > .tooltip-arrow {
+    border-top-color: #fff;
+  }
+}
+
+>>>>>>> ui fixes
 @media all and (max-width: 1030px) {
   .activity-status {
     padding: 16px 10px 18px 50px;
@@ -5447,6 +5881,10 @@ body > .skiptranslate iframe {
   .logs-container .collection_form .form-group + .form-group {
     padding-top: 25px;
   }
+
+  .organization-list li {
+    width: 49%;
+  }
 }
 
 @media all and (min-width: 768px) {
@@ -5869,4 +6307,70 @@ body > .skiptranslate iframe {
   }
 }
 
+<<<<<<< HEAD
+=======
+@media all and (min-width: 600px) {
+  .identifier-information > .col-sm-6 {
+    float: left;
+    min-height: 200px;
+    width: 50%;
+    padding-right: 0;
+    &:first-of-type {
+      border-bottom: 0;
+      border-right: 1px solid $color_ziggurat_approx;
+      padding: 0 15px 0 0;
+      margin-bottom: 0;
+    }
+  }
+
+  .identifier-information .btn {
+    width: 86%;
+    position: absolute;
+    bottom: -20px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+
+@media all and (min-width: 700px) {
+  .register-container {
+    .nav-tabs li {
+      min-width: inherit;
+      display: inline-block;
+    }
+  }
+
+  .register-container .nav-tabs li + li {
+    margin-left: 30px;
+    padding-left: 20px;
+    &:before {
+      bottom: 9px;
+      left: -20px;
+      top: auto;
+      transform: rotate(-45deg);
+    }
+  }
+
+  .register-block {
+    padding: 0;
+  }
+
+  .identifier-information {
+    .btn {
+      width: 220px;
+    }
+    > .col-sm-6 {
+      min-height: 178px;
+    }
+  }
+}
+
+@media all and (min-width: 730px) {
+  .register-container {
+    padding: 0;
+  }
+}
+
+
+>>>>>>> ui fixes
 
