@@ -134,6 +134,7 @@
         </div>
     </div>
 
+
     @if(session('verification_message'))
         <div class="modal verification-modal" tabindex="-1" role="dialog" style="display: block;">
             <div class="modal-dialog">
@@ -182,5 +183,29 @@
         });
     });
 </script>
+
+
+@if(session('verification_message'))
+    <div class="modal fade verification-modal" tabindex="-1" role="dialog" style="display: block;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                    <img src="{{ url('/images/ic-verified.svg') }}" alt="verified" width="66" height="66">
+                    <h4 class="modal-title text-center">Email Verified</h4>
+                </div>
+                <div class="modal-body clearfix">
+                    {!! session('verification_message') !!}
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.verification-modal').modal('show');
+        });
+    </script>
+@endif
 </body>
 </html>

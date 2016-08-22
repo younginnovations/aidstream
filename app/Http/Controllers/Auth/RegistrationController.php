@@ -53,6 +53,7 @@ class RegistrationController extends Controller
      */
     public function showRegistrationForm()
     {
+        $regInfo = session()->pull('reg_info');
         $orgType      = $this->baseForm->getCodeList('OrganizationType', 'Organization', false);
         $countries    = $this->baseForm->getCodeList('Country', 'Organization', false);
         $orgRegAgency = $this->baseForm->getCodeList('OrganisationRegistrationAgency', 'Organization', false);
@@ -65,7 +66,7 @@ class RegistrationController extends Controller
             $roles[$role->id] = $role->role;
         }
 
-        return view('auth.register', compact('orgType', 'countries', 'orgRegAgency', 'roles'));
+        return view('auth.register', compact('orgType', 'countries', 'orgRegAgency', 'roles', 'regInfo'));
     }
 
     /**

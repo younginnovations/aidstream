@@ -28,7 +28,7 @@ function slash(value) {
             function getWordList(name) {
                 var nameArray = name.split(/\ +/g);
                 return nameArray.filter(function (value) {
-                    return $.inArray(value.toLowerCase(), ignoreList) === -1;
+                    return ($.inArray(value.toLowerCase(), ignoreList) === -1 && value.length > 1);
                 })
             }
 
@@ -43,9 +43,6 @@ function slash(value) {
 
             $('.organization_name').change(function () {
                 checkSimilarOrg = true;
-                if ($.trim($('.organization_name_abbr').val()) != "") {
-                    return false;
-                }
                 var name = $(this).val();
                 var wordList = getWordList(name);
                 var abbr = getAbbr(wordList);
@@ -281,12 +278,19 @@ function slash(value) {
                 if (orgId != '' && (type == '' || type == 'user')) {
                     e.preventDefault();
                     var callback = function (data) {
-                        var modal = $((type == 'user') ? '#contact-admin-modal' : '#contact-modal');
-                        $('.admin-name', modal).html(data.admin_name);
-                        modal.modal('show');
+                        var actionContainer = $('.similar-org-action');
+                        $('.org-name', actionContainer).html(data.org_name);
+                        $('.admin-name', actionContainer).html(data.admin_name);
+                        $('.similar-org-container').addClass('hidden');
+                        actionContainer.removeClass('hidden');
                     };
                     Registration.request("/check-org-identifier", {org_id: orgId}, callback);
                 }
+            });
+
+            $('.btn-back').click(function () {
+                $('.similar-org-container').removeClass('hidden');
+                $('.similar-org-action').addClass('hidden');
             });
 
             $('.clickable-org').delegate('a', 'click', function () {
