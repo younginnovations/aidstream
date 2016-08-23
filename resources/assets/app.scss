@@ -169,7 +169,7 @@ form .select2-container {
 }
 
 .select2-container .select2-selection--single .select2-selection__rendered {
-  padding-left: 0!important;
+  padding-left: 0 !important;
 }
 
 .has-error {
@@ -426,7 +426,49 @@ label {
   clear: both;
   .form-group .btn-link {
     float: right;
-    padding: 6px 0 6px 6px;
+    margin: 5px 0 6px 0;
+  }
+  .col-md-12, .col-md-6 {
+    padding: 0;
+  }
+  .col-md-12 {
+    margin-bottom: 25px;
+    input {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.login-block, .reset-block,.contact-admin-container {
+  width: 100%;
+  padding: 0;
+  .panel-default {
+    border: 0;
+    box-shadow: none;
+  }
+  .panel-body {
+    padding: 0;
+  }
+  .btn-submit {
+    width: 180px;
+  }
+}
+
+.reset-block .btn-submit {
+  margin-top: 0;
+  width: auto;
+  font-size: 14px;
+  line-height: normal;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.reset-container {
+  max-width: 360px;
+  .row > p {
+    font-size: 16px;
+    line-height: 24px;
+    margin-bottom: 20px;
   }
 }
 
@@ -4922,16 +4964,13 @@ body > .skiptranslate iframe {
   h2 {
     font-size: 36px;
     line-height: 50px;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
   }
   .col-xs-12 {
     padding: 0;
     max-width: 360px;
     float: none;
     margin: 0 auto;
-  }
-  .panel-body {
-    padding: 30px 30px 10px;
   }
   .form-group {
     margin-bottom: 25px;
@@ -5061,7 +5100,7 @@ body > .skiptranslate iframe {
   display: block;
 }
 
-.organization-list {
+.organization-list-wrapper {
   border: 1px solid $color_ziggurat_approx;
   border-radius: 4px;
   padding: 30px;
@@ -5096,6 +5135,21 @@ body > .skiptranslate iframe {
   }
 }
 
+.organization-list {
+  width: 100%!important;
+  height: 300px;
+  overflow: hidden;
+}
+
+.register-container .input-wrapper .organization-list-wrapper {
+  padding: 30px!important;
+  p {
+    color: $color_gravel_approx;
+    font-size: 16px;
+    margin-bottom: 30px;
+  }
+}
+
 .btn-continue {
   background: none !important;
   line-height: 46px;
@@ -5109,11 +5163,15 @@ body > .skiptranslate iframe {
   }
 }
 
-.org-list-notification p {
-  font-size: 16px !important;
-  color: #777;
-  margin-bottom: 25px !important;
+.org-list-notification {
+  margin-top: 30px;
+  p {
+    font-size: 16px !important;
+    color: #777;
+    margin-bottom: 25px !important;
+  }
 }
+
 
 .help-text + .tooltip {
   > .tooltip-inner {
@@ -5122,9 +5180,9 @@ body > .skiptranslate iframe {
     font-size: 11px;
     font-style: italic;
     color: rgba($color_gravel_approx, 0.7);
-    -webkit-box-shadow: 0 0 10px rgba(204,204,204,0.8);
-    -moz-box-shadow: 0 0 10px rgba(204,204,204,0.8);
-    box-shadow: 0 0 10px rgba(204,204,204,0.8);
+    -webkit-box-shadow: 0 0 10px rgba(204, 204, 204, 0.8);
+    -moz-box-shadow: 0 0 10px rgba(204, 204, 204, 0.8);
+    box-shadow: 0 0 10px rgba(204, 204, 204, 0.8);
     margin-right: 4px;
     padding: 8px;
   }
@@ -5140,7 +5198,23 @@ body > .skiptranslate iframe {
     border-color: transparent transparent #fff #fff;
     transform-origin: 0 0;
     transform: rotate(-45deg);
-    box-shadow: -3px 3px 3px 0 rgba(204,204,204,0.6);
+    box-shadow: -3px 3px 3px 0 rgba(204, 204, 204, 0.6);
+  }
+}
+
+.similar-org-container {
+  .input-wrapper {
+    margin-bottom: 10px;
+    color: #aaa;
+    font-size: 15px;
+  }
+  > form .form-group {
+    padding: 0 !important;
+  }
+  .btn-search {
+    height: 40px;
+    margin-bottom: 20px;
+    width: 100%;
   }
 }
 
@@ -5873,6 +5947,24 @@ body > .skiptranslate iframe {
       font-size: 16px;
     }
   }
+  .similar-org-container {
+    .form-group, .btn-search {
+      float: left;
+    }
+    .form-group {
+      width: calc(100% - 156px);
+      .form-control {
+        border-bottom-right-radius: 0;
+        border-top-right-radius: 0;
+      }
+    }
+    .btn-search {
+      height: 45px;
+      border-bottom-left-radius: 0;
+      border-top-left-radius: 0;
+      width: auto;
+    }
+  }
 }
 
 @media all and (min-width: 501px) {
@@ -5911,7 +6003,7 @@ body > .skiptranslate iframe {
     padding-top: 25px;
   }
 
-  .organization-list li {
+  .organization-list-wrapper li {
     width: 49%;
   }
 }
@@ -6002,9 +6094,13 @@ body > .skiptranslate iframe {
       padding: 30px 50px;
     }
   }
-  .modal-body .form-container>.form-group label {
+  .modal-body .form-container > .form-group label {
     margin: 12px 0;
   }
+}
+
+.modal-content .panel {
+  border: 0;
 }
 
 @media all and (min-width: 1001px) {
@@ -6407,6 +6503,7 @@ body > .skiptranslate iframe {
     padding: 0;
   }
 }
+
 
 
 

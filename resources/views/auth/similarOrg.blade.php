@@ -104,7 +104,7 @@
                             It seems there are account(s) on AidStream with same/similar organisation name you have entered during registration.
                         </p>
                         <div class="similar-org-container">
-                            <div class="input-wrapper {{ $orgName ? 'hidden' : '' }}">
+                            <div class="input-wrapper text-center {{ $orgName ? 'hidden' : '' }}">
                                 Search for same/similar organisation name on AidStream.
                             </div>
 
@@ -117,7 +117,7 @@
                                     {{ Form::button('Search Organisation', ['class' => 'btn btn-primary btn-search', 'type' => 'button']) }}
                                     {{ Form::hidden('similar_organization') }}
                                 </div>
-                                <div class="col-xs-12 col-md-12">
+                                <div class="col-xs-12 col-md-12 organization-list-wrapper">
                                     <ul class="organization-list clickable-org hidden">
                                     </ul>
                                 </div>
@@ -172,12 +172,14 @@
 @else
     <script type="text/javascript" src="{{url('/js/main.min.js')}}"></script>
 @endif
+<script type="text/javascript" src="{{url('/js/jquery.jscrollpane.min.js')}}"></script>
 <script type="text/javascript" src="{{url('/js/registration.js')}}"></script>
 <!-- Google Analytics -->
 <script type="text/javascript" src="{{url('/js/ga.js')}}"></script>
 <!-- End Google Analytics -->
 <script>
     Registration.filterSimilarOrg();
+    $(".organization-list").jScrollPane();
 </script>
 </body>
 </html>

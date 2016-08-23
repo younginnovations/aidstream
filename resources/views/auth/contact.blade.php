@@ -75,10 +75,12 @@
                         <h2>{{ $contactTitle }}</h2>
                         <div class="text-danger">{{ session('error_message') }}</div>
                         {{ Form::open(['method' => 'post', 'id' => 'form-contact']) }}
-                        {!! AsForm::text(['name' => 'full_name', 'required' => true]) !!}
-                        {!! AsForm::email(['name' => 'email', 'label' => 'E-mail Address', 'required' => true]) !!}
-                        {!! AsForm::textarea(['name' => 'message', 'required' => true]) !!}
-                        {{ Form::button('Send', ['class' => 'btn btn-primary btn-submit', 'type' => 'submit']) }}
+                        <div class="login-form-group">
+                            {!! AsForm::text(['name' => 'full_name', 'label' => 'Your Name','required' => true]) !!}
+                            {!! AsForm::email(['name' => 'email', 'label' => 'Your E-mail Address', 'required' => true]) !!}
+                            {!! AsForm::textarea(['name' => 'message', 'required' => true]) !!}
+                        </div>
+                        {{ Form::button('Submit', ['class' => 'btn btn-primary btn-submit btn-form-default', 'type' => 'submit']) }}
                         {{ Form::close() }}
                     </div>
                 </div>

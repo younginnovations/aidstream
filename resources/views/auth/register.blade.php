@@ -79,7 +79,7 @@
             <h1 class="text-center">Get Started with AidStream</h1>
             <p class="text-center">Register your organisation with AidStream to enjoy an effortless data publishing experience.
                 If you want to register for a user account, speak with your organisation's AidStream administrator.
-                To find out more, <a href="#">click here.</a></p>
+                To find out more, <a href="https://github.com/younginnovations/aidstream/wiki/Users-Management">click here.</a></p>
             <ul class="nav nav-tabs text-center" role="tablist">
                 <li role="presentation" class="active"><span>1</span><a href="#tab-organization" aria-controls="tab-organization" role="tab" data-toggle="tab">Organisation Information</a></li>
                 <li role="presentation"><span>2</span><a href="#tab-users" aria-controls="tab-users" role="tab" data-toggle="tab">Admin Information</a></li>
