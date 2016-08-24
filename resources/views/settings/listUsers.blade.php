@@ -61,6 +61,6 @@
 @section('foot')
     <script src="{{url('/js/chunk.js')}}"></script>
     <script>
-        Chunk.updatePermission(user_id);
+        Chunk.updatePermission();
     </script>
 @endsection

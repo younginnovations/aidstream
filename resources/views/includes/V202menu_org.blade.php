@@ -15,7 +15,7 @@ $orgId = session('org_id');
                 <ul class="nav">
                     <li>
                         {{--*/ $filled = $orgData['reporting_org']; /*--}}
-                        <a href="{{ url('/organization/' . $orgId . '/reportingOrg') }}" class="{{ $filled ? 'active' : '' }}" title="{{ $filled ? 'Edit' : 'Add' }} Reporting Organization">
+                        <a href="{{ url('/organization/' . $orgId . '/reportingOrg') }}" class="{{ $filled ? 'active' : '' }}" title="{{ $filled ? 'Edit' : 'Add' }} Reporting Organisation">
                             <span class="action-icon {{ $filled ? 'edit-value' : 'add' }}">icon</span>
                             Reporting Organisation
                         </a>
@@ -23,7 +23,7 @@ $orgId = session('org_id');
                     </li>
                     <li>
                         {{--*/ $filled = $orgData['reporting_org']; /*--}}
-                        <a href="{{ url('/organization/' . $orgId . '/identifier')  }}" class="{{ $filled ? 'active' : '' }}" title="{{ $filled ? 'Edit' : 'Add' }} Organization Identifier">
+                        <a href="{{ url('/organization/' . $orgId . '/identifier')  }}" class="{{ $filled ? 'active' : '' }}" title="{{ $filled ? 'Edit' : 'Add' }} Organisation Identifier">
                             <span class="action-icon {{ $filled ? 'edit-value' : 'add' }}">icon</span>
                             Organisation Identifier
                         </a>
@@ -55,7 +55,7 @@ $orgId = session('org_id');
                     <li>
                         {{--*/ $filled = $orgData['recipient_organization_budget']; /*--}}
                         <a href="{{ route('organization.recipient-organization-budget.index', $orgId)}}" class="{{ $filled ? 'active' : '' }}"
-                           title="{{ $filled ? 'Edit' : 'Add' }} Recipient Organization Budget">
+                           title="{{ $filled ? 'Edit' : 'Add' }} Recipient Organisation Budget">
                             <span class="action-icon {{ $filled ? 'edit-value' : 'add' }}">icon</span>
                             Recipient Organisation Budget
                         </a>

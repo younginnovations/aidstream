@@ -68,7 +68,7 @@ class OrganizationInfoRequest extends Request
         $rules['organization_type']     = 'required';
         $rules['user_identifier']       = $user_identifier_rule;
         $rules['registration_agency']   = 'required';
-        $rules['registration_number']   = 'required';
+        $rules['registration_number']   = 'required|regex:/^[0-9a-zA-Z-_]+$/';
         $rules['logo']                  = 'image';
         $rules['organization_url']      = 'url';
 
@@ -86,6 +86,7 @@ class OrganizationInfoRequest extends Request
         $messages['user_identifier.unique']         = 'Sorry! this User Identifier is already taken';
         $messages['organization_type.required']     = 'Organisation Type is required';
         $messages['registration_number.required']   = 'Organisation Registration number is required';
+        $messages['registration_number.regex']      = 'Only -, _, letters and numbers are allowed.';
         $messages['registration_agency.required']   = 'Organisation Registration Agency is required';
         $messages['logo.image']                     = 'Please select an image file';
         $messages['organization_url.url']           = 'Please enter valid organization url';

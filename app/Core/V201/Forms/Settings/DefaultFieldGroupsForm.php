@@ -16,7 +16,7 @@ class DefaultFieldGroupsForm extends BaseForm
         $this
             ->addFieldGroup('Identification')
             ->addFieldGroup('Basic Activity Information')
-            ->addFieldGroup('Participating Organizations')
+            ->addFieldGroup('Participating Organizations', 'Participating Organisations')
             ->addFieldGroup('Geopolitical Information')
             ->addFieldGroup('Classifications')
             ->addFieldGroup('Financial')
@@ -27,15 +27,16 @@ class DefaultFieldGroupsForm extends BaseForm
 
     /**
      * return field group
-     * @param $name
+     * @param      $name
+     * @param null $label
      * @return $this
      */
-    private function addFieldGroup($name)
+    private function addFieldGroup($name, $label = null)
     {
         $rawPath        = sprintf('App\Core\%s\Forms\Settings\%s', '%s', str_replace(' ', '', $name));
         $currentVersion = session('version');
         $version        = class_exists(sprintf($rawPath, $currentVersion)) ? $currentVersion : config('app.default_version_name');
 
-        return $this->add($name, 'form', ['class' => sprintf($rawPath, $version)]);
+        return $this->add($name, 'form', ['class' => sprintf($rawPath, $version), 'label' => $label]);
     }
 }

@@ -1,6 +1,6 @@
 @extends('app')
 
-@section('title', 'Reporting Organization')
+@section('title', 'Reporting Organisation')
 @inject('getCode', 'App\Helpers\GetCodeName')
 @section('content')
     <div class="container main-container">

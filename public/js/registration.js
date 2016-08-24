@@ -243,6 +243,7 @@ function slash(value) {
             });
 
             $('.btn-search').click(function () {
+                $(".organization-list").jScrollPane().data().jsp.destroy();
                 var value = $('.search_org').val();
                 if (value != '') {
                     $('body').append('<div class="loader">.....</div>');
@@ -250,37 +251,38 @@ function slash(value) {
                         type: 'get',
                         url: '/similar-organizations/' + value,
                         success: function (data) {
-                            var list = '<p>Please click on the organisation name if it is your organisation.</p>';
+                            var list = '';
                             for (var i in data) {
                                 list += '<li><a data-value="' + i + '" title="' + data[i] + '">' + data[i] + '</a></li>';
                             }
-                            $('ul.organization-list').html(list).removeClass('hidden');
+                            $('.org-list-container').removeClass('hidden').find('ul').html(list);
+                            $(".organization-list").jScrollPane();
                         },
                         complete: function () {
                             $('body > .loader').addClass('hidden').remove();
                         }
                     });
                 } else {
-                    $('ul.organization-list').html('').addClass('hidden');
+                    $('.org-list-container').addClass('hidden').find('ul').html('');
+                    $(".organization-list").jScrollPane();
                 }
             });
 
-            $('form').delegate('[name="similar_organization"]', 'click', function () {
-                $('[name="similar_organization"]').not(this).prop('checked', false);
-                if ($('[name="similar_organization"]:checked').length > 0) {
-                    $('.btn-register').removeAttr('disabled');
-                } else {
-                    $('.btn-register').attr('disabled', 'disabled');
-                }
+            $('#similar-org-modal').on('shown.bs.modal', function () {
+                $('.search_org').val($(slash('#organization[organization_name]')).val());
+                $('.btn-search').trigger('click');
             });
-
-            $('.btn-search').trigger('click');
 
             $('#similar-org-form').submit(function (e) {
+                e.preventDefault();
                 var type = $('[name="type"]', this).val();
                 var orgId = $('[name="similar_organization"]', this).val();
-                if (orgId != '' && (type == '' || type == 'user')) {
-                    e.preventDefault();
+                if (!orgId) {
+                    $('#similar-org-modal').modal('hide');
+                    checkSimilarOrg = false;
+                    $('a[href="#tab-users"]').tab('show');
+                }
+                else if (type == '' || type == 'user') {
                     var callback = function (data) {
                         var actionContainer = $('.similar-org-action');
                         $('.org-name', actionContainer).html(data.org_name);
@@ -343,6 +345,10 @@ function slash(value) {
                 $('#short_form', form).val(abbr.toUpperCase());
             });
 
+            $('#short_form', form).keyup(function () {
+                $(this).val($(this).val().toUpperCase());
+            });
+
             form.validate({
                 submitHandler: function () {
                     var country = $('.country').val();
@@ -399,6 +405,9 @@ function slash(value) {
             $.validator.addMethod("email", function (value, element) {
                 return this.optional(element) || /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+\@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])\.[.a-zA-Z0-9](?:[.a-zA-Z0-9-]{0,61}[a-zA-Z0-9])*$/.test($.trim(value));
             });
+            $.validator.addMethod("regNumber", function (value, element) {
+                return this.optional(element) || /^[0-9a-zA-Z-_]+$/.test($.trim(value));
+            });
             $.validator.addMethod("uniqueAbbr", function (value, element) {
                 var validated = false;
                 var callback = function (data) {
@@ -437,8 +446,8 @@ function slash(value) {
             $(slash('#organization[organization_registration_agency]'), form).rules('add', {required: true, messages: {required: 'Organization Registration Agency is required.'}});
             $(slash('#organization[registration_number]'), form).rules('add', {
                 required: true,
-                alphanumeric: true,
-                messages: {required: 'Registration Number is required.', alphanumeric: 'Only letters and numbers are allowed.'}
+                regNumber: true,
+                messages: {required: 'Registration Number is required.', regNumber: 'Only -, _, letters and numbers are allowed.'}
             });
             $(slash('#organization[organization_identifier]'), form).rules('add', {required: true, messages: {required: 'IATI Organizational Identifier is required.'}});
 
@@ -557,9 +566,7 @@ function slash(value) {
         },
         verifySimilarOrgs: function () {
             if (checkSimilarOrg && !$.isEmptyObject(Registration.checkSimilarOrgs())) {
-                var form = $('#from-registration');
-                form.attr('action', '/find-similar-organizations');
-                form.submit();
+                $('#similar-org-modal').modal('show');
                 return false;
             }
             return true;

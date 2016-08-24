@@ -16,7 +16,7 @@ $orgId = session('org_id');
                     <li>
                         {{--*/ $filled = $orgData['reporting_org']; /*--}}
                         <a href="{{ url('/organization/' . $orgId . '/reportingOrg') }}" class="{{ $filled ? 'active' : '' }}"
-                           title="{{ $filled ? 'Edit' : 'Add' }} Reporting Organization">
+                           title="{{ $filled ? 'Edit' : 'Add' }} Reporting Organisation">
                             <span class="action-icon {{ $filled ? 'edit-value' : 'add' }}">icon</span>
                             Reporting Organisation
                         </a>
@@ -25,7 +25,7 @@ $orgId = session('org_id');
                     <li>
                         {{--*/ $filled = $orgData['reporting_org']; /*--}}
                         <a href="{{ url('/organization/' . $orgId . '/identifier')  }}" class="{{ $filled ? 'active' : '' }}"
-                           title="{{ $filled ? 'Edit' : 'Add' }} Organization Identifier">
+                           title="{{ $filled ? 'Edit' : 'Add' }} Organisation Identifier">
                             <span class="action-icon {{ $filled ? 'edit-value' : 'add' }}">icon</span>
                             Organisation Identifier
                         </a>

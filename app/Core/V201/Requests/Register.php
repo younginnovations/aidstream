@@ -111,7 +111,7 @@ class Register extends Request
         $rules[sprintf('%s.organization_address', $formBase)]             = 'required';
         $rules[sprintf('%s.country', $formBase)]                          = 'required|code_list:Organization,Country';
         $rules[sprintf('%s.organization_registration_agency', $formBase)] = 'required|in:' . $regAgencies;
-        $rules[sprintf('%s.registration_number', $formBase)]              = 'required|alpha_num';
+        $rules[sprintf('%s.registration_number', $formBase)]              = 'required|regex:/^[0-9a-zA-Z-_]+$/';
         $rules[sprintf('%s.organization_identifier', $formBase)]          = 'required|unique_org_identifier';
 
         return $rules;
@@ -137,7 +137,7 @@ class Register extends Request
         $messages[sprintf('%s.organization_registration_agency.required', $formBase)]     = 'Organisation Registration Agency is required.';
         $messages[sprintf('%s.organization_registration_agency.reg_agency', $formBase)]   = 'Organisation Registration Agency is not valid.';
         $messages[sprintf('%s.registration_number.required', $formBase)]                  = 'Registration Number is required.';
-        $messages[sprintf('%s.registration_number.alpha_num', $formBase)]                 = 'Registration Number may only contain letters and numbers.';
+        $messages[sprintf('%s.registration_number.regex', $formBase)]                     = 'Only -, _, letters and numbers are allowed.';
         $messages[sprintf('%s.organization_identifier.required', $formBase)]              = 'IATI Organizational Identifier is required.';
         $messages[sprintf('%s.organization_identifier.unique_org_identifier', $formBase)] = 'IATI Organizational Identifier is has already been taken.';
 

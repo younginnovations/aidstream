@@ -1,6 +1,6 @@
 @extends('app')
 
-@section('title', 'Add Organization')
+@section('title', 'Add Organisation')
 
 @section('content')
     <div class="container main-container admin-container">

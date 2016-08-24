@@ -157,7 +157,7 @@ class BaseForm extends Form
         return $this->add(
             $name,
             'checkbox',
-            ['value' => $value, 'checked' => $checked, 'attr' => ['class' => 'field1', 'readonly' => $readonly]]
+            ['label' => $value, 'value' => $value, 'checked' => $checked, 'attr' => ['class' => 'field1', 'readonly' => $readonly]]
         );
     }
 

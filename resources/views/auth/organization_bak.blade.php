@@ -124,7 +124,7 @@
                                 </p>
                             </div>
                             <div class="text-center">
-                                IATI Organizational Identifier: <span id="org_identifier">[Registration Agency]-[Registration Number]</span>
+                                IATI Organisational Identifier: <span id="org_identifier">[Registration Agency]-[Registration Number]</span>
                                 {{ Form::hidden('organization_identifier', null, ['class' => 'form-control', 'id' => 'organization_identifier']) }}
 
                                 @foreach($errors->get('organization_identifier') as $message)

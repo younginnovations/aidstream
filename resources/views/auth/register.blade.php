@@ -20,13 +20,6 @@
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-    <!-- Scripts -->
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="{{url('/js/jquery.cookie.js')}}"></script>
-    <script type="text/javascript" src="{{url('/js/jquery-ui-1.10.4.tooltip.js')}}"></script>
-    <script type="text/javascript" src="{{url('/js/main.min.js')}}"></script>
-
     @yield('head')
 </head>
 <body>
@@ -192,7 +185,7 @@
 
 <!-- Same Organization Identifier Modal -->
 <div class="modal fade preventClose" id="org-identifier-modal" tabindex="-1" role="dialog">
-    <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-dialog modal-lg register-container" role="document">
         <div class="modal-content form-body">
             <div class="panel panel-default">
                 <div class="panel-heading">
@@ -231,6 +224,89 @@
     </div>
 </div>
 
+<!-- Same Organization Identifier Modal -->
+<div class="modal fade preventClose" id="similar-org-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg register-container" role="document">
+        <div class="modal-content form-body">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                </div>
+                <div class="panel-body same-identifier org-warning">
+                    @if (count($errors) > 0)
+                        <div class="alert alert-danger">
+                                <span>
+                                    <ul>
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </span>
+                        </div>
+                    @endif
+                    <img src="{{ url('/images/ic-warning.svg') }}" alt="warning" width="81" height="66">
+                    <h1 class="text-center">Organisation Name Warning</h1>
+                    <p class="text-center">
+                        It seems there are account(s) on AidStream with same/similar organisation name you have entered during registration.
+                    </p>
+                    <div class="similar-org-container">
+                        <div class="input-wrapper text-center hidden">
+                            Search for same/similar organisation name on AidStream.
+                        </div>
+
+                        {{ Form::open(['url' => route('submit-similar-organization'), 'method' => 'post', 'id' => 'similar-org-form']) }}
+
+                        <div class="input-wrapper">
+                            <div class="col-xs-12 col-md-12 hidden">
+                                {{ Form::hidden('type') }}
+                                {!! AsForm::text(['name' => 'search_org', 'class' => 'search_org ignore_change', 'label' => false]) !!}
+                                {{ Form::button('Search Organisation', ['class' => 'btn btn-primary btn-search', 'type' => 'button']) }}
+                                {{ Form::hidden('similar_organization') }}
+                            </div>
+                            <div class="org-list-container clickable-org hidden">
+                                <div class="col-xs-12 col-md-12 organization-list-wrapper">
+                                    <p class="text-center">Please click on the organisation name if it is your organisation.</p>
+                                    <ul class="organization-list">
+                                    </ul>
+                                </div>
+                                <div class="col-md-12 text-center org-list-notification">
+                                    <p>The name of my organisation is not in the list.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 text-center clickable-org">
+                            <a data-value="" class="btn btn-continue">Continue with registration</a>
+                            {{ Form::button('Continue', ['class' => 'btn btn-primary btn-submit btn-register prevent-disable hidden', 'type' => 'submit', 'disabled' => 'disabled']) }}
+                        </div>
+                        {{ Form::close() }}
+                    </div>
+                    <div class="similar-org-action text-center hidden">
+                        <h2>"<span class="org-name"></span>"</h2>
+                        <div class="col-md-12 identifier-information">
+                            <p>If this is your organisation you may do one of the followings</p>
+                            <div class="col-sm-6">
+                                <h3>Administrator Information</h3>
+                                <p>
+                                    The administrator of the organisation name is
+                                </p>
+                                <span class="admin-name"></span>
+                                <a href="{{ route('contact', ['contact-admin-for-same-org']) }}" class="btn btn-primary">Contact Administrator</a>
+                            </div>
+                            <div class="col-sm-6">
+                                <h3>Retrieve Login Credentials</h3>
+                                <p>
+                                    I already have an account but forgotten my login credentials.
+                                </p>
+                                <a href="{{ route('contact', ['contact-support-for-same-org']) }}" class="btn btn-primary">Contact Support for assistance</a>
+                            </div>
+                        </div>
+                        <button class="btn btn-back">Back to Organisation List</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div id="user_template" class="hidden">
     {{--*/ $userIndex = '_index_'; /*--}}
     @include('auth.partUsers')
@@ -238,19 +314,16 @@
 
 @include('includes.footer')
 
-@if(env('APP_ENV') == 'local')
-    <script type="text/javascript" src="{{url('/js/jquery.js')}}"></script>
-    <script type="text/javascript" src="{{url('/js/bootstrap.min.js')}}"></script>
-    <script type="text/javascript" src="{{url('/js/jquery.cookie.js')}}"></script>
-@else
-    <!-- Google Analytics -->
-    <script type="text/javascript" src="{{url('/js/ga.js')}}"></script>
-    <!-- End Google Analytics -->
-@endif
+<script type="text/javascript" src="{{url('/js/jquery.js')}}"></script>
+<script type="text/javascript" src="{{url('/js/bootstrap.min.js')}}"></script>
+<script type="text/javascript" src="{{url('/js/jquery.cookie.js')}}"></script>
+<script type="text/javascript" src="{{url('/js/jquery-ui-1.10.4.tooltip.js')}}"></script>
+<script type="text/javascript" src="{{url('/js/jquery.jscrollpane.min.js')}}"></script>
 <script type="text/javascript" src="{{url('/js/select2.min.js')}}"></script>
+<script type="text/javascript" src="{{url('/js/main.min.js')}}"></script>
 <script type="text/javascript" src="{{url('/js/jquery.validate.min.js')}}"></script>
-<script type="text/javascript" src="{{url('/js/additional-methods.js')}}"></script>
 <script type="text/javascript" src="{{url('/js/registration.js')}}"></script>
+
 <script type="text/javascript">
     var checkSimilarOrg = true;
     var checkOrgIdentifier = true;
@@ -265,6 +338,7 @@
         Registration.addUser();
         Registration.removeUser();
         Registration.usernameGenerator();
+        Registration.filterSimilarOrg();
         Registration.tabs();
         @if($tab = session('tab'))
                 checkSimilarOrg = false;
@@ -281,5 +355,11 @@
         //        Registration.disableUsersSubmitButton();
     });
 </script>
+
+@if(env('APP_ENV') != 'local')
+    <!-- Google Analytics -->
+    <script type="text/javascript" src="{{url('/js/ga.js')}}"></script>
+    <!-- End Google Analytics -->
+@endif
 </body>
 </html>

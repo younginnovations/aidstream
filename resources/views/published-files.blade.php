@@ -32,7 +32,7 @@
                     <div class="panel-body">
                         @if(count($list) > 0)
                             <form action="{{route('org.bulk-publish')}}" method="POST">
-                                <div class="publish-btn"><input type="submit" value="Publish Organizations To IATI"></div>
+                                <div class="publish-btn"><input type="submit" value="Publish Organisations To IATI"></div>
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                             <table class="table table-striped">
                                 <thead>

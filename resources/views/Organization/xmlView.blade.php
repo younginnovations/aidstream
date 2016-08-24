@@ -1,6 +1,6 @@
 @extends('app')
 
-@section('title', 'Organization Data')
+@section('title', 'Organisation Data')
 
 @section('head')
     <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>

@@ -20,18 +20,6 @@
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-    <!-- Scripts -->
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="{{url('/js/jquery.cookie.js')}}"></script>
-    <script type="text/javascript" src="{{url('/js/jquery-ui-1.10.4.tooltip.js')}}"></script>
-    <script type="text/javascript" src="{{url('/js/main.js')}}"></script>
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('form select').select2();
-        });
-    </script>
-
     @yield('head')
 </head>
 <body>
@@ -117,14 +105,19 @@
                                     {{ Form::button('Search Organisation', ['class' => 'btn btn-primary btn-search', 'type' => 'button']) }}
                                     {{ Form::hidden('similar_organization') }}
                                 </div>
-                                <div class="col-xs-12 col-md-12 organization-list-wrapper">
-                                    <ul class="organization-list clickable-org hidden">
-                                    </ul>
+                                <div class="org-list-container clickable-org hidden">
+                                    <div class="col-xs-12 col-md-12 organization-list-wrapper">
+                                        <p class="text-center">Please click on the organisation name if it is your organisation.</p>
+                                        <ul class="organization-list">
+                                        </ul>
+                                    </div>
+                                    <div class="col-md-12 text-center org-list-notification">
+                                        <p>The name of my organisation is not in the list.</p>
+                                    </div>
                                 </div>
                             </div>
 
                             <div class="col-md-12 text-center clickable-org org-list-notification">
-                                <p>The name of my organisation is not in the list.</p>
                                 <a data-value="" class="btn btn-continue">Continue with registration</a>
                                 {{ Form::button('Continue', ['class' => 'btn btn-primary btn-submit btn-register prevent-disable hidden', 'type' => 'submit', 'disabled' => 'disabled']) }}
                             </div>
@@ -164,22 +157,22 @@
 
 @include('includes.footer')
 
-@if(env('APP_ENV') == 'local')
-    <script type="text/javascript" src="{{url('/js/jquery.js')}}"></script>
-    <script type="text/javascript" src="{{url('/js/bootstrap.min.js')}}"></script>
-    <script type="text/javascript" src="{{url('/js/jquery.cookie.js')}}"></script>
-    <script type="text/javascript" src="{{url('/js/select2.min.js')}}"></script>
-@else
-    <script type="text/javascript" src="{{url('/js/main.min.js')}}"></script>
-@endif
+<script type="text/javascript" src="{{url('/js/jquery.js')}}"></script>
+<script type="text/javascript" src="{{url('/js/select2.min.js')}}"></script>
+<script type="text/javascript" src="{{url('/js/jquery.cookie.js')}}"></script>
+<script type="text/javascript" src="{{url('/js/bootstrap.min.js')}}"></script>
+<script type="text/javascript" src="{{url('/js/jquery-ui-1.10.4.tooltip.js')}}"></script>
 <script type="text/javascript" src="{{url('/js/jquery.jscrollpane.min.js')}}"></script>
+<script type="text/javascript" src="{{url('/js/main.min.js')}}"></script>
 <script type="text/javascript" src="{{url('/js/registration.js')}}"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('form select').select2();
+        Registration.filterSimilarOrg();
+    });
+</script>
 <!-- Google Analytics -->
 <script type="text/javascript" src="{{url('/js/ga.js')}}"></script>
 <!-- End Google Analytics -->
-<script>
-    Registration.filterSimilarOrg();
-    $(".organization-list").jScrollPane();
-</script>
 </body>
 </html>

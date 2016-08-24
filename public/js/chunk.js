@@ -84,6 +84,12 @@ if (typeof(Chunk) == "undefined") var Chunk = {};
                     url: '/organization-user/update-permission/' + user_id,
                     data: {permission: permission},
                     type: 'POST',
+                    beforeSend: function () {
+                        $('body').append('<div class="loader">.....</div>');
+                    },
+                    complete: function () {
+                        $('body > .loader').addClass('hidden').remove();
+                    },
                     success: function (data) {
                         if (data == 'success') {
                             $('.alert-success').addClass('hidden');
