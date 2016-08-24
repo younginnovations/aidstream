@@ -138,6 +138,7 @@ function slash(value) {
                 $(this).html('Add Another User');
                 // Registration.disableUsersSubmitButton();
                 Registration.usersValidationRules(index);
+                bindTooltip();
             });
         },
         // removes user block

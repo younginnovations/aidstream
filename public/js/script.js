@@ -1,5 +1,25 @@
 var preventNavigation = false;
 
+/* Add tooltip */
+function bindTooltip() {
+    $('[data-toggle="tooltip"]').tooltip({
+        position: {
+            my: "center bottom-20",
+            at: "center top",
+            using: function (position, feedback) {
+                $(this).css(position);
+                $("<div>")
+                    .addClass("arrow")
+                    .addClass(feedback.vertical)
+                    .addClass(feedback.horizontal)
+                    .css({left: feedback.target.left - position.left})
+                    .appendTo(this);
+            }
+        },
+        hide: 'hide'
+    });
+}
+
 $(document).ready(function () {
 
     var removedAll = false;
@@ -19,26 +39,6 @@ $(document).ready(function () {
             }
         );
         $('.collection-container').removeAttr('data-prototype').append(result);
-    }
-
-    /* Add tooltip */
-    function bindTooltip() {
-        $('[data-toggle="tooltip"]').tooltip({
-            position: {
-                my: "center bottom-20",
-                at: "center top",
-                using: function (position, feedback) {
-                    $(this).css(position);
-                    $("<div>")
-                        .addClass("arrow")
-                        .addClass(feedback.vertical)
-                        .addClass(feedback.horizontal)
-                        .css({left: feedback.target.left - position.left})
-                        .appendTo(this);
-                }
-            },
-            hide: 'hide'
-        });
     }
 
     bindTooltip();

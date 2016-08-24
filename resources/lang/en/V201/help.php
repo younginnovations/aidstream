@@ -361,4 +361,6 @@ return [
     'Activity_legacy_data'                                           => 'Hold a single name=value pair of legacy data. This element is *not* for adding new data types; instead, it holds the original (non-IATI) value or code for an existing data type.',
     'registration_admin_username'                                    => 'This was auto-generated using organisation name abbreviation you provided earlier.',
     'registration_org_identifier'                                    => 'This will be auto-generated as you fill the fields above.',
+    'registration_org_name_abbr'                                     => "Please create a short, identifying abbreviation for your organisation which can be used as a suffix for additional users. For example, if your organisation name is Acme Bellus Charity, your abbreviation may be 'bc'",
+    'user_permission_role'                                           => "You can set varying permission levels for non-admin users, based on the amount of access you want to give them. Viewers have 'view only' access, while Editors can 'add' and 'edit' project details. Publishers can 'delete' and 'publish' in addition to the 'edit' and 'add' functionalities."
 ];
