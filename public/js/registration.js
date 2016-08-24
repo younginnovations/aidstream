@@ -135,10 +135,11 @@ function slash(value) {
                 var html = template.html();
                 html = html.replace(/_index_/g, index);
                 $('.user-blocks').append(html);
-                $(this).html('Add Another User');
+                $(this).html('Add Another User').prev('span').addClass('hidden');
                 // Registration.disableUsersSubmitButton();
                 Registration.usersValidationRules(index);
                 bindTooltip();
+                $('form select').select2();
             });
         },
         // removes user block
@@ -175,7 +176,7 @@ function slash(value) {
                 $('body').undelegate('.btn_remove', 'click').delegate('.btn_remove', 'click', function () {
                     _this.parent('.user-block').remove();
                     if ($('.user-blocks .user-block').length == 0) {
-                        $('#add-user').html('Add a User');
+                        $('#add-user').html('add additional users now.').prev('span').removeClass('hidden');
                     }
                     removeDialog.modal('hide');
                     Registration.disableUsersSubmitButton();

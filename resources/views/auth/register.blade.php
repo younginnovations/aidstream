@@ -200,25 +200,25 @@
                     </p>
                     <h2>"<span class="org-name"></span>"</h2>
                     <div class="col-md-12 identifier-information">
-                        <p>If this is your organisation you may do one of the followings</p>
+                        <p>If this is your organisation, please select the appropriate action from the options below:</p>
                         <div class="col-sm-6">
-                            <h3>Retrieve Login Credentials</h3>
+                            <h3>Retrieve Existing Account Details</h3>
                             <p>
-                                I already have an account but forgotten my login credentials.
+                                If you already have an AidStream account but you have forgotten your login details, click the button below.
                             </p>
                             <a href="/password/email" class="btn btn-primary">Retrieve Login Credentials</a>
                         </div>
                         <div class="col-sm-6">
-                            <h3>Administrator Information</h3>
+                            <h3>Create a New User Account</h3>
                             <p>
-                                The administrator of the organisation name is
+                                If you don't have a personal AidStream account, you can set one up by contacting the administrator for your organisation.
                             </p>
                             <span class="admin-name"></span>
-                            <a href="{{ route('contact', ['need-new-user']) }}" class="btn btn-primary">Contact Administrator</a>
+                            <a href="{{ route('contact', ['need-new-user']) }}" class="btn btn-primary">Contact Your Administrator</a>
                         </div>
                     </div>
                     <p>
-                        No, this is not my organisation. <a href="{{ route('contact', ['not-my-organization']) }}">Contact support@aidstream.org</a>
+                        No, this is not my organisation. Contact<a href="{{ route('contact', ['not-my-organization']) }}">support@aidstream.org</a>
                     </p>
                 </div>
             </div>
@@ -317,9 +317,7 @@
 @include('includes.footer')
 
 <script type="text/javascript" src="{{url('/js/jquery.js')}}"></script>
-<script type="text/javascript" src="{{url('/js/bootstrap.min.js')}}"></script>
 <script type="text/javascript" src="{{url('/js/jquery.cookie.js')}}"></script>
-<script type="text/javascript" src="{{url('/js/jquery-ui-1.10.4.tooltip.js')}}"></script>
 <script type="text/javascript" src="{{url('/js/jquery.jscrollpane.min.js')}}"></script>
 <script type="text/javascript" src="{{url('/js/select2.min.js')}}"></script>
 <script type="text/javascript" src="{{url('/js/main.min.js')}}"></script>

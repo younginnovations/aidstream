@@ -30,9 +30,7 @@
                         {!! form_until($form, 'humanitarian') !!}
                     </div>
                 @endif
-                <div class="col-md-12">
                     {!!  form_end($form) !!}
-                </div>
             </div>
         </div>
     </div>
