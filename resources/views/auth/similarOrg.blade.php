@@ -86,9 +86,14 @@
                                 </span>
                             </div>
                         @endif
+<<<<<<< HEAD
 
                         <h1 class="text-center">Organisation Name Warning</h1>
                         <p>
+=======
+                        <h1 class="text-center">Find your organization</h1>
+                        <p class="text-center">
+>>>>>>> improvements
                             It seems there are account(s) on AidStream with same/similar organisation name you have entered during registration.
                         </p>
                         <div class="similar-org-container">

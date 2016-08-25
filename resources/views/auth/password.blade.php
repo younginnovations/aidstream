@@ -107,6 +107,7 @@
                                         <input type="email" class="form-control" name="email" value="{{ old('email') }}">
                                     </div>
                                 </div>
+<<<<<<< HEAD
 
                                 <div class="form-group">
                                     <div class="col-md-12">
@@ -114,8 +115,14 @@
                                             Send Password Reset Link
                                         </button>
                                     </div>
-                                </div>
+=======
                             </div>
+                                <div class="form-group text-center">
+                                    <button type="submit" class="btn btn-primary btn-submit">
+                                        Send Password Reset Link
+                                    </button>
+>>>>>>> improvements
+                                </div>
                             <div class="organisation-account-wrapper">
                                 <p class="text-center">
                                     If you have forgotten your email address, please select your account type to continue.

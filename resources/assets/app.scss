@@ -777,9 +777,29 @@ label {
   padding-bottom: 16px;
 }
 
+
 .input-wrapper > .col-md-12 .form-group:only-child {
   padding-left: 0;
   padding-right: 15px;
+}
+
+.reset-input-wrapper {
+  padding-bottom: 30px !important;
+  .form-group {
+    margin: 0;
+  }
+  .col-md-12 {
+    margin-bottom: 0;
+  }
+}
+
+.register-container .input-wrapper .has-error input[readonly] {
+  box-shadow: 0 0 0 1000px #FFF7F7 inset !important;
+}
+
+.availability-check {
+  font-size: 12px;
+  font-style: italic;
 }
 
 .register-container .help-text {
@@ -5071,6 +5091,9 @@ body > .skiptranslate iframe {
 }
 
 .organisation-account-wrapper {
+  border-top: 1px solid #ccc;
+  margin-top: 30px;
+  padding-top: 30px;
   > p:first-child {
     margin-bottom: 20px;
   }
