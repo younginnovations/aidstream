@@ -214,6 +214,10 @@ button, input[type="button"], input[type="reset"], input[type="submit"], .btn {
   }
 }
 
+label[class*="text-"] {
+  margin-bottom: 0!important;
+}
+
 //select2-container
 .select2-container--default .select2-selection--single, .select2-container--default .select2-selection--single:focus {
   background: transparent !important;
@@ -575,6 +579,7 @@ label {
   padding-top: 40px;
   clear: both;
   @include outer-container(720px);
+  width: 100%;
   padding-top: 40px;
   clear: both;
   .row {
@@ -624,7 +629,7 @@ label {
     padding-right: 15px;
   }
   .input-wrapper > .col-md-12 .form-group {
-    margin-bottom: 20px;
+    margin-bottom: 26px;
     &:first-child {
       padding-left: 0;
       padding-right: 15px;
@@ -4591,7 +4596,6 @@ pre.prettyprint {
 }
 
 .add_agency {
-  margin: -12px 0 0;
   padding-left: 0;
 }
 
@@ -5049,6 +5053,10 @@ body > .skiptranslate iframe {
     font: 36px/50px Open-Sans-Regular!important;
     margin-bottom: 20px!important;
   }
+  h2 {
+    font-size: 28px;
+    margin-bottom: 10px;
+  }
   .col-xs-12 {
     padding: 0;
     max-width: 360px;
@@ -5059,20 +5067,23 @@ body > .skiptranslate iframe {
     margin-bottom: 25px;
   }
   p {
-    font-size: 16px!important;
     color: #777;
-    line-height: 26px;
-    max-width: 500px;
+    max-width: 360px;
     margin: 0 auto 10px!important;
+    span {
+      font-family: $font_1;
+    }
   }
 }
 
 .contact-info-container {
   margin-bottom: 30px;
+  p:last-of-type {
+    font-size: 12px;
+  }
 }
 
 .verification-wrapper {
-  padding: 30px 45px !important;
   h1 {
     font: 48px/65px $font_2;
     margin-top: 15px;
@@ -6115,6 +6126,9 @@ body > .skiptranslate iframe {
   .organization-list-wrapper li {
     width: 49%;
   }
+  .verification-wrapper {
+    padding: 30px 45px !important;
+  }
 }
 
 @media all and (min-width: 768px) {
@@ -6557,7 +6571,7 @@ body > .skiptranslate iframe {
 @media all and (min-width: 600px) {
   .identifier-information > .col-sm-6 {
     float: left;
-    min-height: 200px;
+    min-height: 260px;
     width: 50%;
     padding-right: 0;
     &:first-of-type {
@@ -6618,7 +6632,7 @@ body > .skiptranslate iframe {
       width: 220px;
     }
     > .col-sm-6 {
-      min-height: 192px;
+      min-height: 220px;
     }
   }
 }
