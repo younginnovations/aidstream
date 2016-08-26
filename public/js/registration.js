@@ -276,15 +276,16 @@ function slash(value) {
             });
 
             $('#similar-org-form').submit(function (e) {
-                e.preventDefault();
                 var type = $('[name="type"]', this).val();
                 var orgId = $('[name="similar_organization"]', this).val();
                 if (!orgId) {
+                    e.preventDefault();
                     $('#similar-org-modal').modal('hide');
                     checkSimilarOrg = false;
                     $('a[href="#tab-users"]').tab('show');
                 }
                 else if (type == '' || type == 'user') {
+                    e.preventDefault();
                     var callback = function (data) {
                         var actionContainer = $('.similar-org-action');
                         $('.org-name', actionContainer).html(data.org_name);

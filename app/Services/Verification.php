@@ -197,7 +197,7 @@ class Verification
                 "api_id"              => $registryInfo['api_id'],
                 "publish_files"       => "no",
                 "publishing"          => "unsegmented",
-                "publisher_id_status" => "Not Verified",
+                "publisher_id_status" => "Incorrect",
                 "api_id_status"       => "Incorrect"
             ];
         $settings       = $settingsManager->getSettingsByCode($code);

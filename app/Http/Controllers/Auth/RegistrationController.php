@@ -187,6 +187,8 @@ class RegistrationController extends Controller
         }
         if ($orgInfo && ($adminEmail = getVal($orgInfo, ['admin_email']))) {
             session()->put('admin_email', $adminEmail);
+            session()->put('admin_name', getVal($orgInfo, ['admin_name']));
+            session()->put('org_name', getVal($orgInfo, ['org_name']));
         }
 
         return $orgInfo;

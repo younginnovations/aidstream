@@ -1,7 +1,26 @@
-<p>Dear {{ $user->first_name }} {{ $user->last_name }},</p>
-<p>You have requested to reset your account password.You may do so by clicking on the link below or copying and pasting it in your browser:</p>
-<p><a href="{{ url('password/reset/'.$token) }}">{{ url('password/reset/'.$token) }}</a></p>
-<p>Your Aidstream Admin email: <strong>{{ $user->email }}</strong> <br/></p>
-<p>Your Aidstream username: <strong>{{ $user->username }}</strong> <br/></p>
-<p>Thank you.</p>
-<p>------ <br/>AidStream</p>
+{{--*/
+$organization = session()->pull('organization');
+$secondary    = $organization->secondary_contact;
+$admin        = $organization->users->where('role_id', 1)->first();
+
+$secondaryName = sprintf('%s %s', $secondary['first_name'], $secondary['last_name']);
+$orgName       = $organization->name;
+$adminName     = $admin->name;
+$adminEmail    = $admin->email;
+/*--}}
+<p>Ooops!</p>
+
+<p>Dear {{ $secondaryName }},</p>
+
+<p>The AidStream administrator associated with your organisation, {{ $orgName }}, has indicated that they have forgotten or lost their login credentials.</p>
+
+<p>The login credentials associated with your organisation’s AidStream Administrator account are:</p>
+
+<p>Name: {{ $adminName }}<br/>
+    Email address : {{ $adminEmail }}</p>
+
+<p>Please pass this information on to the Administrator and ask them to use it to reset their account password, if necessary. If the registered administrator is no longer with your organisation,
+    please contact us at <a href="support@aidstream.org">support@aidstream.org</a> and we can help you to change the details associated with the administrator account.</p>
+
+<p>Thanks,<br/>
+    The AidStream Team</p>

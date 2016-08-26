@@ -122,7 +122,7 @@ if (typeof(Chunk) == "undefined") var Chunk = {};
                     success: function (data) {
                         var publisher_response = data['publisher_id'];
                         var api_key = data['api_key'];
-                        var publisherStatus = (publisher_response) ? "Verified" : "Not Verified";
+                        var publisherStatus = (publisher_response) ? "Correct" : "Incorrect";
                         var apiKeyStatus = (api_key) ? "Correct" : "Incorrect";
                         if (source == "publisher" || source == "both") {
                             $("#publisher_id_status").val(publisherStatus);

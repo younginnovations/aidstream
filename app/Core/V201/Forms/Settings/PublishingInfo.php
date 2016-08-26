@@ -9,9 +9,9 @@ class PublishingInfo extends BaseForm
     {
         $this
             ->add('publisher_id', 'text', ['help_block' => $this->addHelpText('activity_defaults-publisher_id', false), 'wrapper' => ['class' => 'form-group col-md-6']])
-            ->add('publisher_id_status', 'text', ['label' => 'Not Verified', 'wrapper' => ['class' => 'hidden']])
+            ->add('publisher_id_status', 'text', ['label' => 'Incorrect', 'wrapper' => ['class' => 'hidden']])
             ->add('api_id', 'text', ['help_block' => $this->addHelpText('activity_defaults-api_key', false), 'label' => 'API Key', 'wrapper' => ['class' => 'form-group col-md-6']])
-            ->add('api_id_status', 'text', ['label' => 'Not Verified', 'wrapper' => ['class' => 'hidden']])
+            ->add('api_id_status', 'text', ['label' => 'Incorrect', 'wrapper' => ['class' => 'hidden']])
             ->add(
                 'verify',
                 'button',

@@ -1,6 +1,12 @@
 <p>Hi {{ $first_name }} {{ $last_name }},</p>
-<p>Your username has been changed.</p>
-<p>Your new AidStream username is: <strong>{{ $username }}</strong></p>
-<p>For further queries, please email us at <a href="mailto:support@aidstream.org">support@aidstream.org</a></p>
-<p>------ <br/>AidStream</p>
-</p>
+
+<p>The administrator of the AidStream account associated with your organisation, {{ $orgName }}, has changed the username for your account.</p>
+
+<p>Your new username is {{ $username }}.</p>
+
+<p>Please bear in mind that your old username will no longer work, so any future logins to your AidStream account should be done with your new username.</p>
+
+<p>If you have any questions, you can reach us at <a href="mailto:support@aidstream.org">support@aidstream.org</a></p>
+
+<p>Thanks,<br/>
+    The AidStream Team</p>

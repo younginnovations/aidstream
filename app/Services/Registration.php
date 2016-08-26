@@ -301,12 +301,13 @@ class Registration
         try {
             $organization = $this->orgRepo->getOrganization($orgId);
             $userEmail    = $organization->users->where('role_id', 1)->first()->email;
+            session()->put('organization', $organization);
 
             config(['auth.passwords.users.email' => 'emails.password-secondary']);
             $response = Password::sendResetLink(
                 ['email' => $userEmail],
-                function (Message $message) use ($email) {
-                    $message->subject('Your Password Reset Link');
+                function (Message $message) use ($email, $organization) {
+                    $message->subject(sprintf('Important: Recovery information for %s AidStream account.', $organization->name));
                     $message->to($email);
                 }
             );

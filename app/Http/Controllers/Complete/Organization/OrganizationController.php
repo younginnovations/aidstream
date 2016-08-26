@@ -349,18 +349,18 @@ class OrganizationController extends Controller
      */
     public function notifyUser()
     {
-        $users = $this->userManager->getAllUsersOfOrganization();
+        $users   = $this->userManager->getAllUsersOfOrganization();
+        $orgName = auth()->user()->organization->name;
         foreach ($users as $user) {
-            if ($user->role_id != 7) {
-                $view     = 'emails.usernameChanged';
-                $callback = function ($message) use ($user) {
-                    $message->subject('Username Changed');
-                    $message->from(config('mail.from.address'), config('mail.from.name'));
-                    $message->to($user->email);
-                };
-                $data     = $user->toArray();
-                $this->mailer->send($view, $data, $callback);
-            }
+            $view            = 'emails.usernameChanged';
+            $callback        = function ($message) use ($user) {
+                $message->subject('AidStream Account Username changed');
+                $message->from(config('mail.from.address'), config('mail.from.name'));
+                $message->to($user->email);
+            };
+            $data            = $user->toArray();
+            $data['orgName'] = $orgName;
+            $this->mailer->send($view, $data, $callback);
         }
 
         $response = ['type' => 'success', 'code' => ['sent', ['name' => 'Emails']]];

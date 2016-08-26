@@ -77,6 +77,7 @@ class Contact
     {
         try {
             $this->{$this->methods[$template]}($data);
+            $data['content'] = $data['message'];
             $this->sendEmail($data);
 
             return true;
@@ -95,10 +96,20 @@ class Contact
     {
         $callback = function ($message) use ($data) {
             $message->subject($data['subject']);
-            $message->from($data['email'], $data['full_name']);
+            $fromEmail = $data['email'];
+            $fromName  = $data['full_name'];
+            if (getVal($data, ['fromEmail'])) {
+                $fromEmail = $data['fromEmail'];
+                $fromName  = $data['fromName'];
+            }
+            $message->from($fromEmail, $fromName);
             $message->to($data['emailTo']);
         };
-        $this->mailer->raw($data['message'], $callback);
+        if ($view = getVal($data, ['view'])) {
+            $this->mailer->send($view, $data, $callback);
+        } else {
+            $this->mailer->raw($data['message'], $callback);
+        }
     }
 
     /**
@@ -133,8 +144,13 @@ class Contact
      */
     protected function getSameOrgAdmin(&$data)
     {
-        $data['emailTo'] = session()->pull('admin_email');
-        $data['subject'] = 'Organization name already exists.';
+        $data['fromEmail'] = env('MAIL_ADDRESS');
+        $data['fromName']  = env('MAIL_NAME');
+        $data['emailTo']   = session()->pull('admin_email');
+        $data['adminName'] = session()->pull('admin_name');
+        $data['orgName']   = session()->pull('org_name');
+        $data['subject']   = 'AidStream User Account Details.';
+        $data['view']      = 'emails.user-account-details';
     }
 
     /**
