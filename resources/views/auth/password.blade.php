@@ -69,7 +69,7 @@
     <div class="container-fluid login-container reset-container">
         <div class="row">
             <h1 class="text-center">Reset Password</h1>
-            <p class="text-center">Please enter your email address to reset your account's password.</p>
+            <p class="text-center">Please enter your email address below to reset your password.</p>
             <div class="col-lg-4 col-md-8 reset-block">
                 <div class="panel panel-default">
                     <div class="panel-heading">
@@ -125,16 +125,16 @@
                                 </div>
                             <div class="organisation-account-wrapper">
                                 <p class="text-center">
-                                    If you have forgotten your email address, please select your account type to continue.
+                                    If you have forgotten which email address you used to Register with Aidstream, please select your account type to continue.
                                 </p>
                                 <p>
                                     <a href="{{ session('same_identifier_org_id') ? route('submit-similar-organization', 'user') : route('similar-organizations', 'user') }}"
                                        class="btn btn-primary btn-submit">
-                                        Organisation User Account
+                                        User Account
                                     </a>
                                     <a href="{{ session('same_identifier_org_id') ? route('submit-similar-organization', 'admin') : route('similar-organizations', 'admin') }}"
                                        class="btn btn-primary btn-submit">
-                                        Organisation Admin Account
+                                        Administrator Account
                                     </a>
                                 </p>
                             </div>

@@ -143,6 +143,28 @@
     </div>
 @endif
 
+{{--<div class="modal fade recovery-modal" tabindex="-1" role="dialog">--}}
+    {{--<div class="modal-dialog">--}}
+        {{--<div class="modal-content">--}}
+            {{--<div class="modal-body clearfix text-center ">--}}
+                {{--<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>--}}
+                {{--<div class="col-md-12 text-center verification-wrapper">--}}
+                {{--<img src={{ url('/images/ic-sent-mail.svg') }} alt="mail" width="88" height="94">--}}
+                {{--<h1>Thank You!</h1>--}}
+                {{--<p>--}}
+                {{--An email containing your account details has been sent to the secondary or "backup" contact for your organisation,"xxx-name of contact". Please contact them directly.</p>--}}
+                {{--<p>If you need any help, <a href="{{ route('contact', ['has-secondary-contact-support']) }}">contact the AidStream support team</a>.--}}
+                {{--</p>--}}
+                {{--</div>--}}
+           {{--</div>--}}
+        {{--</div>--}}
+    {{--</div>--}}
+{{--</div>--}}
+
+{{--<script type="text/javascript">--}}
+    {{--$('.recovery-modal').modal('show');--}}
+{{--</script>--}}
+
 @if(session('message'))
     <div class="modal fade message-modal" tabindex="-1" role="dialog">
         <div class="modal-dialog">
@@ -155,6 +177,28 @@
         </div>
     </div>
 @endif
+
+
+{{--<div class="modal fade message-modal" tabindex="-1" role="dialog">--}}
+    {{--<div class="modal-dialog">--}}
+        {{--<div class="modal-content">--}}
+            {{--<div class="modal-body clearfix">--}}
+                {{--<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>--}}
+                {{--<div class="col-md-12 text-center verification-wrapper">--}}
+                    {{--<img src={{ url('/images/ic-sent-mail.svg') }} alt="mail" width="88" height="94">--}}
+                    {{--<h1>Thank You!</h1>--}}
+                    {{--<p>--}}
+                        {{--Your message has been sent to the administrator of your organisation's AidStream account.--}}
+                    {{--</p>--}}
+                {{--</div>--}}
+            {{--</div>--}}
+        {{--</div>--}}
+    {{--</div>--}}
+{{--</div>--}}
+
+{{--<script type="text/javascript">--}}
+    {{--$('.message-modal').modal('show');--}}
+{{--</script>--}}
 
 @if(session('verification_message'))
     <div class="modal fade verification-modal" tabindex="-1" role="dialog">

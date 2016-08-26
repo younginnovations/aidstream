@@ -246,9 +246,9 @@
                         </div>
                     @endif
                     <img src="{{ url('/images/ic-warning.svg') }}" alt="warning" width="81" height="66">
-                    <h1 class="text-center">Organisation Name Warning</h1>
+                    <h1 class="text-center">Organisation Name Error</h1>
                     <p class="text-center">
-                        It seems there are account(s) on AidStream with same/similar organisation name you have entered during registration.
+                        There are other AidStream accounts which share the same or a similar organisation name to the one you have tried to register. These are displayed below.
                     </p>
                     <div class="similar-org-container">
                         <div class="input-wrapper text-center hidden">
@@ -266,17 +266,17 @@
                             </div>
                             <div class="org-list-container clickable-org hidden">
                                 <div class="col-xs-12 col-md-12 organization-list-wrapper">
-                                    <p class="text-center">Please click on the organisation name if it is your organisation.</p>
+                                    <p class="text-center">If you recognise one of the organisations below as yours, please click on it to continue.</p>
                                     <ul class="organization-list">
                                     </ul>
                                 </div>
                                 <div class="col-md-12 text-center org-list-notification">
-                                    <p>The name of my organisation is not in the list.</p>
+                                    <p>None of the results above match my organisation. I would like to <a href="{{ url('/register') }}">continue with registration.</a></p>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-12 text-center clickable-org">
-                            <a data-value="" class="btn btn-continue">Continue with registration</a>
+                            {{--<a data-value="" class="btn btn-continue">Let me continue with registration</a>--}}
                             {{ Form::button('Continue', ['class' => 'btn btn-primary btn-submit btn-register prevent-disable hidden', 'type' => 'submit', 'disabled' => 'disabled']) }}
                         </div>
                         {{ Form::close() }}

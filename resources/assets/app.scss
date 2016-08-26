@@ -675,6 +675,7 @@ label {
           border-bottom: 2px solid $color_silver_chalice_approx;
           border-right: 2px solid $color_silver_chalice_approx;
           transform: rotate(45deg);
+          display: none;
         }
       }
       span {
@@ -4964,7 +4965,6 @@ body > .skiptranslate iframe {
       font-size: 16px;
       color: #777;
       line-height: 26px;
-      max-width: 500px;
       margin: 0 auto 20px;
       strong {
         color: $color_gravel_approx;
@@ -5045,10 +5045,9 @@ body > .skiptranslate iframe {
 
 .contact-admin-container {
   padding-bottom: 80px;
-  h2 {
-    font-size: 36px;
-    line-height: 50px;
-    margin-bottom: 20px;
+  h1 {
+    font: 36px/50px Open-Sans-Regular!important;
+    margin-bottom: 20px!important;
   }
   .col-xs-12 {
     padding: 0;
@@ -5059,6 +5058,17 @@ body > .skiptranslate iframe {
   .form-group {
     margin-bottom: 25px;
   }
+  p {
+    font-size: 16px!important;
+    color: #777;
+    line-height: 26px;
+    max-width: 500px;
+    margin: 0 auto 10px!important;
+  }
+}
+
+.contact-info-container {
+  margin-bottom: 30px;
 }
 
 .verification-wrapper {
@@ -5192,16 +5202,17 @@ body > .skiptranslate iframe {
   border-radius: 4px;
   padding: 30px;
   overflow: hidden;
-  margin-bottom: 25px;
+  margin-bottom: 30px!important;
   > p {
     font-size: 16px !important;
     margin-bottom: 24px !important;
+    line-height: 24px;
   }
   li {
     width: 100%;
     float: left;
     margin-bottom: 5px;
-    &:nth-child(odd) {
+    &:nth-child(even) {
       float: right;
     }
     a {
@@ -5226,8 +5237,11 @@ body > .skiptranslate iframe {
   width: 100% !important;
   max-height: 300px;
   overflow: hidden;
+  .jspContainer {
+    width: 100%!important;
+  }
   .jspPane {
-    width: 96% !important;
+    width: 95%!important;
   }
 }
 
@@ -5254,9 +5268,10 @@ body > .skiptranslate iframe {
 }
 
 .org-list-notification {
-  margin-top: 30px;
+  clear: both;
   p {
     font-size: 16px !important;
+    line-height: 24px;
     color: #777;
     margin-bottom: 25px !important;
   }
@@ -6093,6 +6108,10 @@ body > .skiptranslate iframe {
     padding-top: 25px;
   }
 
+  .organization-list .jspPane {
+    width: 96%!important;
+  }
+
   .organization-list-wrapper li {
     width: 49%;
   }
@@ -6368,6 +6387,9 @@ body > .skiptranslate iframe {
     vertical-align: middle;
     width: 80%;
     margin-top: 6px;
+    &:first-child {
+      margin-top: 2px;
+    }
     > ul {
       padding-top: 4px;
     }
@@ -6583,6 +6605,7 @@ body > .skiptranslate iframe {
       left: -38px;
       top: auto;
       transform: rotate(-45deg);
+      display: block;
     }
   }
 
@@ -6595,7 +6618,7 @@ body > .skiptranslate iframe {
       width: 220px;
     }
     > .col-sm-6 {
-      min-height: 178px;
+      min-height: 192px;
     }
   }
 }

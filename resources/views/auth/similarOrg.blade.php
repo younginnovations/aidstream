@@ -86,20 +86,15 @@
                                 </span>
                             </div>
                         @endif
-<<<<<<< HEAD
-
-                        <h1 class="text-center">Organisation Name Warning</h1>
-                        <p>
-=======
                         <h1 class="text-center">Find your organization</h1>
                         <p class="text-center">
->>>>>>> improvements
                             It seems there are account(s) on AidStream with same/similar organisation name you have entered during registration.
+                            To help us recover your account details,please enter the name of your organisation in the field below.
                         </p>
                         <div class="similar-org-container">
-                            <div class="input-wrapper text-center {{ $orgName ? 'hidden' : '' }}">
-                                Search for same/similar organisation name on AidStream.
-                            </div>
+                            {{--<div class="input-wrapper text-center {{ $orgName ? 'hidden' : '' }}">--}}
+                                {{--Search for same/similar organisation name on AidStream.--}}
+                            {{--</div>--}}
 
                             {{ Form::open(['url' => route('submit-similar-organization'), 'method' => 'post', 'id' => 'similar-org-form']) }}
 
@@ -112,18 +107,18 @@
                                 </div>
                                 <div class="org-list-container clickable-org hidden">
                                     <div class="col-xs-12 col-md-12 organization-list-wrapper">
-                                        <p class="text-center">Please click on the organisation name if it is your organisation.</p>
+                                        <p class="text-center">Our database contains the following organisation/s which match the name of the organisation you entered. If one of them is your organistaion, please click to select it.</p>
                                         <ul class="organization-list">
                                         </ul>
                                     </div>
                                     <div class="col-md-12 text-center org-list-notification">
-                                        <p>The name of my organisation is not in the list.</p>
+                                        <p>None of the results above match my organisation. I would like to <a href="{{ url('/register') }}">register</a>  my organisation for an Aidstream account.</p>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="col-md-12 text-center clickable-org org-list-notification">
-                                <a data-value="" class="btn btn-continue">Continue with registration</a>
+                                {{--<a data-value="" class="btn btn-continue">Continue with registration</a>--}}
                                 {{ Form::button('Continue', ['class' => 'btn btn-primary btn-submit btn-register prevent-disable hidden', 'type' => 'submit', 'disabled' => 'disabled']) }}
                             </div>
                             {{ Form::close() }}

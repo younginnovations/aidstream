@@ -68,7 +68,19 @@
                 </div>--}}
     <div class="container-fluid login-container reset-container">
         <div class="row">
-            <div class="col-lg-4 col-md-8 col-md-offset-2 form-body">
+            {{--this content is only for contact administrator not for support--}}
+            {{--<div class="text-center contact-info-container">--}}
+                {{--<p>You have confirmed that the name of your organisation is:</p>--}}
+                {{--<h2>"<span class="org-name">Mama Cash</span>"</h2>--}}
+                {{--<p>The admin for this organisation is: <span>test</span></p>--}}
+                {{--<p>Fill out the form below and we will send your message to them letting them know to get in touch with you.</p>--}}
+            {{--</div>--}}
+
+            {{--this content is only for contact support not for administrator(no secondary contact)--}}
+            {{--<div class="text-center contact-info-container">--}}
+            {{--<p>To recover an administraror account, please contact aidstream support using the form below:</p>--}}
+            {{--</div>--}}
+            <div class="col-xs-12">
                 <div class="panel panel-default">
                     <div class="panel-heading"></div>
                     <div class="panel-body">
@@ -76,9 +88,9 @@
                         <div class="text-danger">{{ session('error_message') }}</div>
                         {{ Form::open(['method' => 'post', 'id' => 'form-contact']) }}
                         <div class="login-form-group">
-                            {!! AsForm::text(['name' => 'full_name', 'label' => 'Your Name','required' => true]) !!}
+                            {!! AsForm::text(['name' => 'full_name', 'label' => 'Your Full Name','required' => true]) !!}
                             {!! AsForm::email(['name' => 'email', 'label' => 'Your E-mail Address', 'required' => true]) !!}
-                            {!! AsForm::textarea(['name' => 'message', 'required' => true]) !!}
+                            {!! AsForm::textarea(['name' => 'message', 'label' => 'Your Message','required' => true]) !!}
                         </div>
                         {{ Form::button('Submit', ['class' => 'btn btn-primary btn-submit btn-form-default', 'type' => 'submit']) }}
                         {{ Form::close() }}
