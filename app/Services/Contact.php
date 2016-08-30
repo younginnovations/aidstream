@@ -30,7 +30,6 @@ class Contact
         'contact-support-for-same-org'  => 'getSameOrgSupport',
         'no-secondary-contact-support'  => 'getNoSecondaryContact',
         'has-secondary-contact-support' => 'getHasSecondaryContact'
-
     ];
 
     /**
@@ -44,7 +43,19 @@ class Contact
         'contact-support-for-same-org'  => 'Contact Support',
         'no-secondary-contact-support'  => 'Contact Support',
         'has-secondary-contact-support' => 'Contact Support'
+    ];
 
+    /**
+     * @var array
+     */
+    protected $messages = [
+        'not-my-organization'           => 'Your message has been sent to the AidStream Support Team. <br/> They will get back to you soon to help you sort out the problem.',
+        'need-new-user'                 => 'Your message has been sent to the administrator of your organisation\'s AidStream account.',
+        'forgot-user-email'             => 'Your message has been sent to the administrator of your organisation\'s AidStream account.',
+        'contact-admin-for-same-org'    => 'Your message has been sent to the administrator of your organisation\'s AidStream account.',
+        'contact-support-for-same-org'  => 'Your message has been sent to the AidStream Support Team. <br/> They will get back to you soon to help you sort out the problem.',
+        'no-secondary-contact-support'  => 'Your message has been sent to the AidStream Support Team. <br/> They will get back to you soon to help you sort out the problem.',
+        'has-secondary-contact-support' => 'Your message has been sent to the AidStream Support Team. <br/> They will get back to you soon to help you sort out the problem.'
     ];
 
     /**
@@ -80,7 +91,7 @@ class Contact
             $data['content'] = $data['message'];
             $this->sendEmail($data);
 
-            return true;
+            return $this->messages[$template];
         } catch (Exception $exception) {
             $this->logger->error($exception, ['data' => $data]);
         }

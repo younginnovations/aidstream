@@ -184,6 +184,15 @@
                                     <p>None of the results above match my organisation. I would like to <a href="{{ url('/register') }}">register</a> my organisation for an Aidstream account.</p>
                                 </div>
                             </div>
+                            <div class="org-list-container no-org-list hidden">
+                                <div class="col-xs-12 col-md-12 organization-list-wrapper">
+                                    <p class="text-center">
+                                        Our database doesn't contain the name of the organisation you entered.
+                                        <br/>
+                                        Would you like to <a href="{{ url('/register') }}">register</a> your organisation for an AidStream account.
+                                    </p>
+                                </div>
+                            </div>
                         </div>
                         <div class="col-md-12 text-center clickable-org org-list-notification">
                             {{ Form::button('Continue', ['class' => 'btn btn-primary btn-submit btn-register prevent-disable hidden', 'type' => 'submit', 'disabled' => 'disabled']) }}
@@ -207,6 +216,7 @@
 @endif
 <script type="text/javascript" src="{{url('/js/ga.js')}}"></script>
 <!-- End Google Analytics -->
+<script type="text/javascript" src="{{url('/js/jquery.mousewheel.js')}}"></script>
 <script type="text/javascript" src="{{url('/js/jquery.jscrollpane.min.js')}}"></script>
 <script type="text/javascript" src="{{url('/js/registration.js')}}"></script>
 <script type="text/javascript">

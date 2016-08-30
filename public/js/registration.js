@@ -106,7 +106,7 @@ function slash(value) {
                 }
 
                 $('#org-identifier').html(identifier);
-                $('.organization_identifier').val(identifier);
+                $('.organization_identifier').val(identifier).trigger('blur');
             });
             $('.registration_number').trigger('change');
         },
@@ -257,7 +257,13 @@ function slash(value) {
                             for (var i in data) {
                                 list += '<li><a data-value="' + i + '" title="' + data[i] + '">' + data[i] + '</a></li>';
                             }
-                            $('.org-list-container').removeClass('hidden').find('ul').html(list);
+                            if (list == '') {
+                                $('.org-list-container').addClass('hidden').find('ul').html('');
+                                $('.no-org-list').removeClass('hidden');
+                            } else {
+                                $('.org-list-container').removeClass('hidden').find('ul').html(list);
+                                $('.no-org-list').addClass('hidden');
+                            }
                             $(".organization-list").jScrollPane();
                         },
                         complete: function () {

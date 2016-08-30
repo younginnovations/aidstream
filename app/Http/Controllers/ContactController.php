@@ -42,8 +42,8 @@ class ContactController extends Controller
      */
     public function processEmail($template, Contact $request)
     {
-        if ($this->contactManager->processEmail($request->all(), $template)) {
-            return redirect()->to('/')->withMessage('Your query has been submitted.');
+        if ($message = $this->contactManager->processEmail($request->all(), $template)) {
+            return redirect()->to('/')->withMessage($message);
         } else {
             return redirect()->back()->withInput()->withErrorMessage('Failed to submit your query. Please try again.');
         }
