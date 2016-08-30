@@ -175,7 +175,7 @@
                             </div>
                             <div class="org-list-container clickable-org hidden">
                                 <div class="col-xs-12 col-md-12 organization-list-wrapper">
-                                    <p class="text-center">Our database contains the following organisation/s which match the name of the organisation you entered. If one of them is your organistaion,
+                                    <p class="text-center">Our database contains the following organisation/s which match the name of the organisation you entered. If one of them is your organisation,
                                         please click to select it.</p>
                                     <ul class="organization-list">
                                     </ul>

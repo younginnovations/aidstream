@@ -763,7 +763,8 @@ label {
 }
 
 .registration-inner-wrapper .help-text {
-  top: 0;
+  top: auto;
+  bottom: auto;
   float: left;
   right: auto;
   margin-left: 14px;
@@ -3540,8 +3541,34 @@ div[class*="panel-level-"] .panel > .panel-body {
   }
 }
 
-.modal-header .close {
-  background: none !important;
+.modal-header {
+  .close {
+    background: none !important;
+  }
+  img {
+    margin: 0 auto 10px;
+    display: block;
+  }
+}
+
+.verification-modal .modal-header+.modal-body {
+  padding-top: 0;
+}
+
+.verification-modal .col-md-12 {
+  padding: 0;
+  > .form-group {
+    margin-bottom: 20px;
+    padding: 0;
+  }
+}
+
+.verification-modal form > .col-md-12:last-child {
+  button {
+    height: 48px;
+    width: 210px;
+    margin-bottom: 20px;
+  }
 }
 
 .admin-container {
@@ -5007,6 +5034,7 @@ body > .skiptranslate iframe {
     font-size: 20px;
   }
   > .col-sm-6 {
+    padding: 0;
     position: relative;
     > p {
       color: #777;
@@ -5045,10 +5073,11 @@ body > .skiptranslate iframe {
   display: block;
   font: 16px $font_1;
   text-transform: uppercase;
+  margin-top: 7px;
 }
 
 .contact-admin-container {
-  padding-bottom: 80px;
+  padding: 0 15px 80px;
   h1 {
     font: 36px/50px Open-Sans-Regular!important;
     margin-bottom: 20px!important;
@@ -5137,7 +5166,7 @@ body > .skiptranslate iframe {
   }
 }
 
-.modal-header .close span {
+.modal-dialog .close span {
   color: $color_dodger_blue_approx;
   font-size: 40px;
   display: block;
@@ -5190,6 +5219,10 @@ body > .skiptranslate iframe {
       }
     }
   }
+  .modal-body ul {
+    margin-bottom: 24px;
+    color: #777;
+  }
   .modal-header {
     border-bottom: 0;
   }
@@ -5198,9 +5231,19 @@ body > .skiptranslate iframe {
     color: #80CA9C;
   }
   .modal-header .close span {
-    margin-top: -27px;
-    margin-right: -64px;
+    position: absolute;
+    right: 15px;
+    top: 15px;
   }
+}
+
+.save-registry-block {
+  overflow: hidden;
+  margin-bottom: 24px;
+  background: $color_romance_approx;
+  border: 1px solid $color_gallery;
+  border-radius: 4px;
+  padding: 20px;
 }
 
 .org-warning img {
@@ -6219,6 +6262,16 @@ body > .skiptranslate iframe {
   }
   .modal-body .form-container > .form-group label {
     margin: 12px 0;
+  }
+  .verification-modal .col-md-12 {
+    > .form-group {
+      &:first-child {
+        padding-right: 10px;
+      }
+      &:last-child {
+        padding-left: 10px;
+      }
+    }
   }
 }
 

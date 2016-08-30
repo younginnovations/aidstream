@@ -193,7 +193,7 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                                 aria-hidden="true">&times;</span></button>
                     <img src="{{ url('/images/ic-verified.svg') }}" alt="verified" width="66" height="66">
-                    <h4 class="modal-title text-center">Email Verified</h4>
+                    <h4 class="modal-title text-center">Verification Successful</h4>
                 </div>
                 <div class="modal-body clearfix">
                     {!! session('verification_message') !!}
