@@ -226,7 +226,7 @@
     </div>
 </div>
 
-<!-- Same Organization Identifier Modal -->
+<!-- Similar Organisations Modal -->
 <div class="modal fade preventClose" id="similar-org-modal" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-lg register-container" role="document">
         <div class="modal-content form-body">
@@ -250,59 +250,34 @@
                     <p class="text-center">
                         There are other AidStream accounts which share the same or a similar organisation name to the one you have tried to register. These are displayed below.
                     </p>
-                    <div class="similar-org-container">
-                        <div class="input-wrapper text-center hidden">
-                            Search for same/similar organisation name on AidStream.
-                        </div>
-
-                        {{ Form::open(['url' => route('submit-similar-organization'), 'method' => 'post', 'id' => 'similar-org-form']) }}
-
-                        <div class="input-wrapper">
-                            <div class="col-xs-12 col-md-12 hidden">
-                                {{ Form::hidden('type') }}
-                                {!! AsForm::text(['name' => 'search_org', 'class' => 'search_org ignore_change', 'label' => false]) !!}
-                                {{ Form::button('Search Organisation', ['class' => 'btn btn-primary btn-search', 'type' => 'button']) }}
-                                {{ Form::hidden('similar_organization') }}
-                            </div>
-                            <div class="org-list-container clickable-org hidden">
-                                <div class="col-xs-12 col-md-12 organization-list-wrapper">
-                                    <p class="text-center">If you recognise one of the organisations below as yours, please click on it to continue.</p>
-                                    <ul class="organization-list">
-                                    </ul>
-                                </div>
-                                <div class="col-md-12 text-center org-list-notification">
-                                    <p>None of the results above match my organisation. I would like to <a href="{{ url('/register') }}">continue with registration.</a></p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-12 text-center clickable-org">
-                            {{--<a data-value="" class="btn btn-continue">Let me continue with registration</a>--}}
-                            {{ Form::button('Continue', ['class' => 'btn btn-primary btn-submit btn-register prevent-disable hidden', 'type' => 'submit', 'disabled' => 'disabled']) }}
-                        </div>
-                        {{ Form::close() }}
+                    <div class="input-wrapper text-center hidden">
+                        Search for same/similar organisation name on AidStream.
                     </div>
-                    <div class="similar-org-action text-center hidden">
-                        <h2>"<span class="org-name"></span>"</h2>
-                        <div class="col-md-12 identifier-information">
-                            <p>If this is your organisation you may do one of the followings</p>
-                            <div class="col-sm-6">
-                                <h3>Administrator Information</h3>
-                                <p>
-                                    The administrator of the organisation name is
-                                </p>
-                                <span class="admin-name"></span>
-                                <a href="{{ route('contact', ['contact-admin-for-same-org']) }}" class="btn btn-primary">Contact Administrator</a>
+
+                    {{ Form::open(['url' => route('submit-similar-organization'), 'method' => 'post', 'id' => 'similar-org-form']) }}
+
+                    <div class="input-wrapper">
+                        <div class="col-xs-12 col-md-12 hidden">
+                            {{ Form::hidden('type') }}
+                            {!! AsForm::text(['name' => 'search_org', 'class' => 'search_org ignore_change', 'label' => false]) !!}
+                            {{ Form::button('Search Organisation', ['class' => 'btn btn-primary btn-search', 'type' => 'button']) }}
+                            {{ Form::hidden('similar_organization') }}
+                        </div>
+                        <div class="org-list-container clickable-org hidden">
+                            <div class="col-xs-12 col-md-12 organization-list-wrapper">
+                                <p class="text-center">If you recognise one of the organisations below as yours, please click on it to continue.</p>
+                                <ul class="organization-list">
+                                </ul>
                             </div>
-                            <div class="col-sm-6">
-                                <h3>Retrieve Login Credentials</h3>
-                                <p>
-                                    I already have an account but forgotten my login credentials.
-                                </p>
-                                <a href="{{ route('contact', ['contact-support-for-same-org']) }}" class="btn btn-primary">Contact Support for assistance</a>
+                            <div class="col-md-12 text-center org-list-notification clickable-org">
+                                <p>None of the results above match my organisation. I would like to <a data-value="">continue with registration</a>.</p>
                             </div>
                         </div>
-                        <button class="btn btn-back">Back to Organisation List</button>
                     </div>
+                    <div class="col-md-12 text-center">
+                        {{ Form::button('Continue', ['class' => 'btn btn-primary btn-submit btn-register prevent-disable hidden', 'type' => 'submit', 'disabled' => 'disabled']) }}
+                    </div>
+                    {{ Form::close() }}
                 </div>
             </div>
         </div>

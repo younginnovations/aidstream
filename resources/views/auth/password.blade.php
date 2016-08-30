@@ -107,35 +107,29 @@
                                         <input type="email" class="form-control" name="email" value="{{ old('email') }}">
                                     </div>
                                 </div>
-<<<<<<< HEAD
 
-                                <div class="form-group">
-                                    <div class="col-md-12">
-                                        <button type="submit" class="btn btn-primary btn-submit">
-                                            Send Password Reset Link
-                                        </button>
-                                    </div>
-=======
-                            </div>
                                 <div class="form-group text-center">
                                     <button type="submit" class="btn btn-primary btn-submit">
                                         Send Password Reset Link
                                     </button>
->>>>>>> improvements
                                 </div>
+                            <div class="form-group text-center">
+                                <button type="submit" class="btn btn-primary btn-submit">
+                                    Send Password Reset Link
+                                </button>
+                            </div>
                             <div class="organisation-account-wrapper">
                                 <p class="text-center">
-                                    If you have forgotten which email address you used to Register with Aidstream, please select your account type to continue.
+                                    If you have forgotten which email address you used to Register with AidStream, please select your account type to continue.
                                 </p>
                                 <p>
-                                    <a href="{{ session('same_identifier_org_id') ? route('submit-similar-organization', 'user') : route('similar-organizations', 'user') }}"
-                                       class="btn btn-primary btn-submit">
-                                        User Account
-                                    </a>
-                                    <a href="{{ session('same_identifier_org_id') ? route('submit-similar-organization', 'admin') : route('similar-organizations', 'admin') }}"
-                                       class="btn btn-primary btn-submit">
-                                        Administrator Account
-                                    </a>
+                                    @if(session('same_identifier_org_id'))
+                                        <a href="{{ route('submit-similar-organization', 'user') }}" class="btn btn-primary btn-submit">User Account</a>
+                                        <a href="{{ route('submit-similar-organization', 'admin') }}" class="btn btn-primary btn-submit">Administrator Account</a>
+                                    @else
+                                        <a class="btn btn-primary btn-submit btn-type" data-type="user">User Account</a>
+                                        <a class="btn btn-primary btn-submit btn-type" data-type="admin">Administrator Account</a>
+                                    @endif
                                 </p>
                             </div>
                         </form>
@@ -145,6 +139,63 @@
         </div>
     </div>
 </div>
+
+<!-- Similar Organisations Modal -->
+<div class="modal fade preventClose" id="similar-org-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg register-container" role="document">
+        <div class="modal-content form-body">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                </div>
+                <div class="panel-body same-identifier org-warning">
+                    @if (count($errors) > 0)
+                        <div class="alert alert-danger">
+                                <span>
+                                    <ul>
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </span>
+                        </div>
+                    @endif
+                    <h1 class="text-center">Find your organization</h1>
+                    <p class="text-center">
+                        To help us recover your account details,please enter the name of your organisation in the field below.
+                    </p>
+                    <div class="similar-org-container">
+                        {{ Form::open(['url' => route('submit-similar-organization'), 'method' => 'post', 'id' => 'similar-org-form']) }}
+
+                        <div class="input-wrapper">
+                            <div class="col-xs-12 col-md-12">
+                                {{ Form::hidden('type') }}
+                                {!! AsForm::text(['name' => 'search_org', 'class' => 'search_org ignore_change', 'label' => false]) !!}
+                                {{ Form::button('Search Organisation', ['class' => 'btn btn-primary btn-search', 'type' => 'button']) }}
+                                {{ Form::hidden('similar_organization') }}
+                            </div>
+                            <div class="org-list-container clickable-org hidden">
+                                <div class="col-xs-12 col-md-12 organization-list-wrapper">
+                                    <p class="text-center">Our database contains the following organisation/s which match the name of the organisation you entered. If one of them is your organistaion,
+                                        please click to select it.</p>
+                                    <ul class="organization-list">
+                                    </ul>
+                                </div>
+                                <div class="col-md-12 text-center org-list-notification">
+                                    <p>None of the results above match my organisation. I would like to <a href="{{ url('/register') }}">register</a> my organisation for an Aidstream account.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 text-center clickable-org org-list-notification">
+                            {{ Form::button('Continue', ['class' => 'btn btn-primary btn-submit btn-register prevent-disable hidden', 'type' => 'submit', 'disabled' => 'disabled']) }}
+                        </div>
+                        {{ Form::close() }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 @include('includes.footer')
 <!-- Scripts -->
 @if(env('APP_ENV') == 'local')
@@ -156,16 +207,11 @@
 @endif
 <script type="text/javascript" src="{{url('/js/ga.js')}}"></script>
 <!-- End Google Analytics -->
-<script>
+<script type="text/javascript" src="{{url('/js/jquery.jscrollpane.min.js')}}"></script>
+<script type="text/javascript" src="{{url('/js/registration.js')}}"></script>
+<script type="text/javascript">
     $(document).ready(function () {
-        function hamburgerMenu() {
-            $('.navbar-toggle.collapsed').click(function () {
-                $('.navbar-collapse').toggleClass('out');
-                $(this).toggleClass('collapsed');
-            });
-        }
-
-        hamburgerMenu();
+        Registration.filterSimilarOrg();
     });
 </script>
 </body>

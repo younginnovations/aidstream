@@ -41,7 +41,7 @@ class WhoIsUsingController extends Controller
                            ->leftJoin('organization_published', 'organizations.id', '=', 'organization_published.organization_id')
                            ->where('activity_published.published_to_register', 1)
                            ->orWhere('organization_published.published_to_register', 1)
-                           ->select('organizations.id', 'organizations.name', 'organizations.logo_url')
+                           ->select('organizations.id', 'organizations.name', 'organizations.logo_url', 'organizations.reporting_org')
                            ->groupBy('organizations.id')
                            ->orderBy('organizations.name');
     }

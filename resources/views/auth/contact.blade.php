@@ -68,18 +68,24 @@
                 </div>--}}
     <div class="container-fluid login-container reset-container">
         <div class="row">
-            {{--this content is only for contact administrator not for support--}}
-            {{--<div class="text-center contact-info-container">--}}
-                {{--<p>You have confirmed that the name of your organisation is:</p>--}}
-                {{--<h2>"<span class="org-name">Mama Cash</span>"</h2>--}}
-                {{--<p>The admin for this organisation is: <span>test</span></p>--}}
-                {{--<p>Fill out the form below and we will send your message to them letting them know to get in touch with you.</p>--}}
-            {{--</div>--}}
+            <h1 class="text-center">{{ $contactTitle }}</h1>
+            {{--*/
+                $template = request()->route()->template;
+            /*--}}
+            @if($template == 'need-new-user' || $template == 'forgot-user-email' || $template == 'contact-admin-for-same-org')
+                <div class="text-center contact-info-container">
+                    <p>You have confirmed that the name of your organisation is:</p>
+                    <h2>"<span class="org-name">{{ session('org_name') }}</span>"</h2>
+                    <p>The admin for this organisation is: <span>{{ session('admin_name') }}</span></p>
+                    <p>Fill out the form below and we will send your message to them letting them know to get in touch with you.</p>
+                </div>
+            @endif
 
-            {{--this content is only for contact support not for administrator(no secondary contact)--}}
-            {{--<div class="text-center contact-info-container">--}}
-            {{--<p>To recover an administraror account, please contact aidstream support using the form below:</p>--}}
-            {{--</div>--}}
+            @if($template == 'no-secondary-contact-support')
+                <div class="text-center contact-info-container">
+                    <p>To recover an administrator account, please contact AidStream support using the form below:</p>
+                </div>
+            @endif
             <div class="col-xs-12">
                 <div class="panel panel-default">
                     <div class="panel-heading"></div>

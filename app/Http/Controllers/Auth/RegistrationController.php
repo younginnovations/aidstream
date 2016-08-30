@@ -164,6 +164,10 @@ class RegistrationController extends Controller
             } else {
                 return redirect()->route('contact', ['no-secondary-contact-support']);
             }
+        } elseif ($orgId && ($type == '' || $type == 'user')) {
+            $this->checkOrgIdentifier($orgId);
+
+            return redirect()->route('contact', ['contact-admin-for-same-org']);
         } elseif (!request('similar_organization') && ($type == 'admin' || $type == 'user')) {
             return redirect()->route('contact', ['not-my-organization']);
         }
@@ -173,11 +177,12 @@ class RegistrationController extends Controller
 
     /**
      * returns organization by identifier
+     * @param null $orgId
      * @return array
      */
-    public function checkOrgIdentifier()
+    public function checkOrgIdentifier($orgId = null)
     {
-        if ($orgId = (request('org_id'))) {
+        if ($orgId = ($orgId ? $orgId : request('org_id'))) {
             $orgInfo = $this->registrationManager->getOrganization($orgId);
         } else {
             $orgInfo = $this->registrationManager->checkOrgIdentifier(request('org_identifier'));

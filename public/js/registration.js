@@ -66,9 +66,9 @@ function slash(value) {
                     return false;
                 }
                 var callback = function (data) {
-                    checkElem.parent().siblings('.availability-check').removeClass('hidden').addClass('text-' + data.status).html(data.message);
-                    checkElem.parents('.has-error').removeClass('has-error');
                     checkElem.parent().siblings('.availability-check').siblings('.text-danger').remove();
+                    checkElem.parent().siblings('.availability-check').removeClass('hidden text-danger test-success').addClass('text-' + data.status).html(data.message);
+                    checkElem.parents('.has-error').removeClass('has-error');
                 };
                 Registration.request("/check-organization-user-identifier", {userIdentifier: checkElem.val()}, callback);
             }
@@ -284,17 +284,6 @@ function slash(value) {
                     checkSimilarOrg = false;
                     $('a[href="#tab-users"]').tab('show');
                 }
-                else if (type == '' || type == 'user') {
-                    e.preventDefault();
-                    var callback = function (data) {
-                        var actionContainer = $('.similar-org-action');
-                        $('.org-name', actionContainer).html(data.org_name);
-                        $('.admin-name', actionContainer).html(data.admin_name);
-                        $('.similar-org-container').addClass('hidden');
-                        actionContainer.removeClass('hidden');
-                    };
-                    Registration.request("/check-org-identifier", {org_id: orgId}, callback);
-                }
             });
 
             $('.btn-back').click(function () {
@@ -305,6 +294,13 @@ function slash(value) {
             $('.clickable-org').delegate('a', 'click', function () {
                 $('[name="similar_organization"]').val($(this).attr('data-value'));
                 $('#similar-org-form').submit();
+            });
+
+            // forgot password page
+            $('.btn-type').click(function () {
+                var modal = $('#similar-org-modal');
+                $('[name="type"]', modal).val($(this).attr('data-type'));
+                modal.modal('show');
             });
         },
         // addition of registration agency

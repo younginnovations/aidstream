@@ -130,40 +130,20 @@
             <div class="modal-content">
                 <div class="modal-body clearfix text-center ">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <p>
-                        Your account password reset email has been sent to your organisation's secondary contact holder.
-                    </p>
-                    @if($secContactName = session('secondary_contact_name'))
-                        <p>Secondary Contact Name: {{ $secContactName }}</p>
-                    @endif
-                    <a href="{{ route('contact', ['has-secondary-contact-support']) }}" class="btn btn-primary">Click here to contact AidStream support</a>
+                    <div class="col-md-12 text-center verification-wrapper">
+                        <img src={{ url('/images/ic-sent-mail.svg') }} alt="mail" width="88" height="94">
+                        <h1>Thank You!</h1>
+                        <p>
+                            An email containing your account details has been sent to the secondary or "backup" contact for your organisation,"{{ session('secondary_contact_name') }}". Please contact
+                            them directly.</p>
+                        <p>If you need any help, <a href="{{ route('contact', ['has-secondary-contact-support']) }}">contact the AidStream support team</a>.
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 @endif
-
-{{--<div class="modal fade recovery-modal" tabindex="-1" role="dialog">--}}
-    {{--<div class="modal-dialog">--}}
-        {{--<div class="modal-content">--}}
-            {{--<div class="modal-body clearfix text-center ">--}}
-                {{--<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>--}}
-                {{--<div class="col-md-12 text-center verification-wrapper">--}}
-                {{--<img src={{ url('/images/ic-sent-mail.svg') }} alt="mail" width="88" height="94">--}}
-                {{--<h1>Thank You!</h1>--}}
-                {{--<p>--}}
-                {{--An email containing your account details has been sent to the secondary or "backup" contact for your organisation,"xxx-name of contact". Please contact them directly.</p>--}}
-                {{--<p>If you need any help, <a href="{{ route('contact', ['has-secondary-contact-support']) }}">contact the AidStream support team</a>.--}}
-                {{--</p>--}}
-                {{--</div>--}}
-           {{--</div>--}}
-        {{--</div>--}}
-    {{--</div>--}}
-{{--</div>--}}
-
-{{--<script type="text/javascript">--}}
-    {{--$('.recovery-modal').modal('show');--}}
-{{--</script>--}}
 
 @if(session('message'))
     <div class="modal fade message-modal" tabindex="-1" role="dialog">
@@ -171,34 +151,16 @@
             <div class="modal-content">
                 <div class="modal-body clearfix">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    {!! session('message') !!}
+                    <div class="col-md-12 text-center verification-wrapper">
+                        <img src={{ url('/images/ic-sent-mail.svg') }} alt="mail" width="88" height="94">
+                        <h1>Thank You!</h1>
+                        <p>{!! session('message') !!}</p>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 @endif
-
-
-{{--<div class="modal fade message-modal" tabindex="-1" role="dialog">--}}
-    {{--<div class="modal-dialog">--}}
-        {{--<div class="modal-content">--}}
-            {{--<div class="modal-body clearfix">--}}
-                {{--<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>--}}
-                {{--<div class="col-md-12 text-center verification-wrapper">--}}
-                    {{--<img src={{ url('/images/ic-sent-mail.svg') }} alt="mail" width="88" height="94">--}}
-                    {{--<h1>Thank You!</h1>--}}
-                    {{--<p>--}}
-                        {{--Your message has been sent to the administrator of your organisation's AidStream account.--}}
-                    {{--</p>--}}
-                {{--</div>--}}
-            {{--</div>--}}
-        {{--</div>--}}
-    {{--</div>--}}
-{{--</div>--}}
-
-{{--<script type="text/javascript">--}}
-    {{--$('.message-modal').modal('show');--}}
-{{--</script>--}}
 
 @if(session('verification_message'))
     <div class="modal fade verification-modal" tabindex="-1" role="dialog">
@@ -209,7 +171,11 @@
                     <h4 class="modal-title">Email Verification</h4>
                 </div>
                 <div class="modal-body clearfix">
-                    {!! session('verification_message') !!}
+                    <div class="col-md-12 text-center verification-wrapper">
+                        <img src={{ url('/images/ic-sent-mail.svg') }} alt="mail" width="88" height="94">
+                        <h1>Thank You!</h1>
+                        <p>{!! session('verification_message') !!}</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -231,22 +197,8 @@
 
         hamburgerMenu();
 
-        var verificationModel = $('.verification-modal');
-        $('.close', verificationModel).click(function () {
-            verificationModel.next('.modal-backdrop').remove();
-            verificationModel.remove();
-        });
-
-        if ($('.message-modal').length > 0) {
-            $('.message-modal').modal('show')
-        }
-
-        if ($('.verification-modal').length > 0) {
-            $('.verification-modal').modal('show')
-        }
-
-        if ($('.recovery-modal').length > 0) {
-            $('.recovery-modal').modal('show')
+        if ($('.modal').length > 0) {
+            $('.modal').modal('show')
         }
     });
 </script>
