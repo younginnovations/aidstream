@@ -425,7 +425,7 @@ footer {
       img:before {
         content: "";
         font: 16px Open-Sans-Regular;
-        color: rgba(72, 72, 72,0.7);
+        color: rgba(72, 72, 72, 0.7);
         display: block;
         position: absolute;
         z-index: 2;
@@ -433,12 +433,12 @@ footer {
         left: 0;
         width: 100%;
         height: 100%;
-        background:  $color_white $url_7 no-repeat 50% 35%;
+        background: $color_white $url_7 no-repeat 50% 35%;
       }
       img:after {
         content: attr(alt);
         font: 16px Open-Sans-Regular;
-        color: rgba(72, 72, 72,0.7);
+        color: rgba(72, 72, 72, 0.7);
         display: block;
         position: absolute;
         z-index: 2;
@@ -640,6 +640,33 @@ footer {
       max-width: 100% !important;
     }
   }
+}
+
+.verification-wrapper {
+  padding: 30px 0;
+  h1 {
+    font: 48px/65px Open-Sans-Light;
+    margin-top: 15px;
+  }
+  p {
+    font-size: 16px !important;
+    line-height: 24px;
+    color: #777;
+  }
+  strong {
+    color: #484848;
+  }
+}
+
+.modal-dialog .close span {
+  color: $color_dodger_blue_approx;
+  font-size: 40px;
+  display: block;
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  z-index: 1;
+  cursor: pointer;
 }
 
 @media all and (min-width: 480px) {
