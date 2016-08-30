@@ -2708,9 +2708,7 @@ $(document).ready(function () {
     $('.print').click(function () {
         window.print();
     });
-
 });
-
 
 $(document).ready(function () {
     if ($.fn.DataTable != undefined) {

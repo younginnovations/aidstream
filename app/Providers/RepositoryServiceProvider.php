@@ -1,5 +1,7 @@
 <?php namespace App\Providers;
 
+use App\Services\CsvImporter\Queue\Contracts\ProcessorInterface;
+use App\Services\CsvImporter\Queue\Processor;
 use App\Services\Settings\Segmentation\SegmentationInterface;
 use App\Services\Settings\Segmentation\SegmentationService;
 use Illuminate\Support\ServiceProvider;
@@ -35,5 +37,7 @@ class RepositoryServiceProvider extends ServiceProvider
             SegmentationInterface::class,
             SegmentationService::class
         );
+
+        $this->app->bind(ProcessorInterface::class, Processor::class);
     }
 }

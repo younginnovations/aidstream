@@ -9,6 +9,13 @@
             @include('includes.side_bar_menu')
             <div class="col-xs-9 col-md-9 col-lg-9 content-wrapper upload-activity-wrapper">
                 @include('includes.response')
+
+                @if (isset($mismatch))
+                    <div class="alert alert-{{$mismatch['type']}}">
+                        <span>{!! message($mismatch) !!}</span>
+                    </div>
+                @endif
+                <div id="import-status-placeholder"></div>
                 <div class="element-panel-heading">
                     <div>
                         Import Activities
@@ -26,8 +33,16 @@
                                 {!! form($form) !!}
                             </div>
                             <div class="download-transaction-wrap">
-                                <a href="{{route('download.activity-template')}}"
-                                   class="btn btn-primary btn-form btn-submit">Download Activity Template</a>
+                                <div class="dropdown">
+                                    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Download Activity Template
+                                        <span class="caret"></span></button>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="{{route('activity.download-template',['type'=>'basic'])}}">Activity Basics</a></li>
+                                        <li><a href="{{route('activity.download-template',['type'=>'transaction'])}}">Activity with Transactions</a></li>
+                                        <li><a href="{{route('activity.download-template',['type'=>'others'])}}">Activity with Other Fields</a></li>
+                                        <li><a href="{{route('activity.download-template',['type'=>'others-transaction'])}}">Activity with Transactions and Other Fields</a></li>
+                                    </ul>
+                                </div>
                                 <div>
                                     This template contains few basic elements that you have to fill to import into AidStream. Please make sure that you follow the structure and format of the template.
                                     For more details, please follow <a href="https://github.com/younginnovations/aidstream-new/wiki/Activity-Creation#2-bulk-activity-import" target="_blank">here</a>.
@@ -39,4 +54,10 @@
             </div>
         </div>
     </div>
+@stop
+@section('script')
+    <script>
+        var checkSessionRoute = '{{ route('activity.check-session-status')}}';
+    </script>
+    <script src=" {{ asset('js/csvImporter/checkSessionStatus.js') }}"></script>
 @stop

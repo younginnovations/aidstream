@@ -1,6 +1,7 @@
 <?php namespace App\Http\Controllers\Complete\Activity;
 
 use App\Http\Controllers\Controller;
+use App\Models\Organization\Organization;
 use App\Services\Activity\ImportActivity;
 use App\Services\FormCreator\Activity\ImportActivity as FormCreator;
 use App\Services\Organization\OrganizationManager;
@@ -24,6 +25,11 @@ class ImportActivityController extends Controller
      * @var ImportActivity
      */
     protected $importActivityManager;
+
+    /**
+     * @var Organization Id.
+     */
+    protected $organizationId;
 
     /**
      * @param ImportActivity      $importActivityManager

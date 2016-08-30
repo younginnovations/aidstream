@@ -11,8 +11,8 @@ class EventServiceProvider extends ServiceProvider {
 	 * @var array
 	 */
 	protected $listen = [
-		'event.name' => [
-			'EventListener',
+		'App\Services\CsvImporter\Events\ActivityCsvWasUploaded' => [
+			'App\Services\CsvImporter\Listeners\ActivityCsvUpload',
 		],
 	];
 

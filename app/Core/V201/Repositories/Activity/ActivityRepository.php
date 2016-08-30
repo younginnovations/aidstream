@@ -3,6 +3,7 @@
 use App\Models\Activity\Activity;
 use App\Models\Activity\ActivityInRegistry;
 use App\Models\ActivityPublished;
+use App\Models\Settings;
 
 /**
  * Class ActivityRepository
@@ -10,18 +11,28 @@ use App\Models\ActivityPublished;
  */
 class ActivityRepository
 {
+    /**
+     * @var Activity
+     */
     protected $activity;
+    /**
+     * @var Settings
+     */
+    private $settings;
 
     /**
      * @param Activity           $activity
      * @param ActivityPublished  $activityPublished
      * @param ActivityInRegistry $activityInRegistry
+     * @param Settings           $settings
+     * @internal param SettingsManager $settingsManager
      */
-    public function __construct(Activity $activity, ActivityPublished $activityPublished, ActivityInRegistry $activityInRegistry)
+    public function __construct(Activity $activity, ActivityPublished $activityPublished, ActivityInRegistry $activityInRegistry, Settings $settings)
     {
         $this->activity           = $activity;
         $this->activityPublished  = $activityPublished;
         $this->activityInRegistry = $activityInRegistry;
+        $this->settings           = $settings;
     }
 
     /**
@@ -293,5 +304,53 @@ class ActivityRepository
         }
 
         return $narratives;
+    }
+
+    /**
+     * Create Activity from the csv data.
+     * @param $activityData
+     * @return Activity
+     */
+    public function createActivity($activityData)
+    {
+        $defaultFieldValues = $this->setDefaultFieldValues($activityData['default_field_values']);
+
+        return $this->activity->create(
+            [
+                'identifier'                 => $activityData['identifier'],
+                'title'                      => $activityData['title'],
+                'description'                => $activityData['description'],
+                'activity_status'            => $activityData['activity_status'],
+                'activity_date'              => $activityData['activity_date'],
+                'participating_organization' => $activityData['participating_organization'],
+                'recipient_country'          => $activityData['recipient_country'],
+                'recipient_region'           => $activityData['recipient_region'],
+                'sector'                     => $activityData['sector'],
+                'organization_id'            => $activityData['organization_id'],
+                'policy_marker'              => (array_key_exists('policy_marker', $activityData) ? $activityData['policy_marker'] : null),
+                'budget'                     => (array_key_exists('budget', $activityData) ? $activityData['budget'] : null),
+                'activity_scope'             => (array_key_exists('activity_scope', $activityData) ? $activityData['activity_scope'] : null),
+                'default_field_values'       => $defaultFieldValues
+            ]
+        );
+    }
+
+    /**
+     * Set Default values for the imported csv activities.
+     * @param $csvDefaultFieldValues
+     * @return mixed
+     */
+    protected function setDefaultFieldValues($csvDefaultFieldValues)
+    {
+        $settings                                          = $this->settings->where('organization_id', session('org_id'))->first();
+        $settingsDefaultFieldValues                        = $settings->default_field_values;
+        $settingsDefaultFieldValues[0]['default_currency'] = (($currency = getVal((array) $csvDefaultFieldValues, [0, 'default_currency'])) == '')
+            ? getVal((array) $settingsDefaultFieldValues, [0, 'default_currency']) : $currency;
+        $settingsDefaultFieldValues[0]['default_language'] = (($language = getVal((array) $csvDefaultFieldValues, [0, 'default_language'])) == '')
+            ? getVal((array) $settingsDefaultFieldValues, [0, 'default_language']) : $language;
+        $settingsDefaultFieldValues[0]['humanitarian']     = (($humanitarian = getVal((array) $csvDefaultFieldValues, [0, 'humanitarian'])) == '')
+            ? getVal((array) $settingsDefaultFieldValues, [0, 'humanitarian']) : $humanitarian;
+
+        return $settingsDefaultFieldValues;
     }
 }
