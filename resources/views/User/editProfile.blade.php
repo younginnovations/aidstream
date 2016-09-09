@@ -31,6 +31,7 @@
                             }
                         /*--}}
                         <div class="input-wrapper">
+                            <h2>Your Information</h2>
                             <span class="hidden" id="user-identifier"
                                   data-id="{{ $organization->user_identifier }}"></span>
                             <div class="col-md-12 col-xs-12">
@@ -62,7 +63,7 @@
                                             <span class="change-logo">Change Logo</span>
                                         </div>
                                     </label>
-                                    <span class="upload-label">Upload a logo</span>
+                                    <span class="upload-label">Upload your profile picture</span>
                                 </div>
                                 <div class="description"><span>Please use jpg/jpeg/png/gif format and 150x150 dimensions image.</span></div>
                                 </div>

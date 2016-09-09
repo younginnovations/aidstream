@@ -189,7 +189,7 @@
                                     <p class="text-center">
                                         Our database doesn't contain the name of the organisation you entered.
                                         <br/>
-                                        Would you like to <a href="{{ url('/register') }}">register</a> your organisation for an AidStream account.
+                                        Would you like to <a href="{{ url('/register') }}">register</a> your organisation for an AidStream account?
                                     </p>
                                 </div>
                             </div>

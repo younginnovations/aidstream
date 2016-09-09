@@ -26,7 +26,7 @@ class DefaultValues extends BaseForm
             null,
             true,
             [
-                'wrapper' => ['class' => 'form-group col-md-6']
+                'wrapper' => ['class' => 'form-group col-sm-6']
             ]
         )
              ->addSelect(
@@ -37,7 +37,7 @@ class DefaultValues extends BaseForm
                  config('app.default_language'),
                  true,
                  [
-                     'wrapper' => ['class' => 'form-group col-md-6']
+                     'wrapper' => ['class' => 'form-group col-sm-6']
                  ]
 
              )
@@ -46,11 +46,11 @@ class DefaultValues extends BaseForm
                  'text',
                  [
                      'help_block'    => $this->addHelpText('activity_defaults-hierarchy', false),
-                     'wrapper'       => ['class' => 'form-group col-md-6'],
+                     'wrapper'       => ['class' => 'form-group col-sm-6'],
                      'default_value' => 1
                  ]
              )
-             ->add('linked_data_uri', 'text', ['label' => 'Linked Data Default', 'wrapper' => ['class' => 'form-group col-md-6']]);
+             ->add('linked_data_uri', 'text', ['label' => 'Linked Data Default', 'wrapper' => ['class' => 'form-group col-sm-6']]);
         $this->addSelect(
             'default_collaboration_type',
             $this->getCodeList('CollaborationType', 'Organization'),
@@ -59,8 +59,8 @@ class DefaultValues extends BaseForm
             null,
             false,
             getVal($this->defaultFieldGroups, [0, 'Classifications', 'collaboration_type']) == ""
-                ? ['wrapper' => ['class' => 'form-group col-md-6 hidden']]
-                : ['wrapper' => ['class' => 'from-group col-md-6']]
+                ? ['wrapper' => ['class' => 'form-group col-sm-6 hidden']]
+                : ['wrapper' => ['class' => 'form-group col-sm-6']]
         );
         $this->addSelect(
             'default_flow_type',
@@ -70,8 +70,8 @@ class DefaultValues extends BaseForm
             null,
             false,
             (getVal($this->defaultFieldGroups, [0, 'Classifications', 'default_flow_type']) == "")
-                ? ['wrapper' => ['class' => 'form-group col-md-6 hidden']]
-                : ['wrapper' => ['class' => 'form-group col-md-6']]
+                ? ['wrapper' => ['class' => 'form-group col-sm-6 hidden']]
+                : ['wrapper' => ['class' => 'form-group col-sm-6']]
         );
         $this->addSelect(
             'default_finance_type',
@@ -81,8 +81,8 @@ class DefaultValues extends BaseForm
             null,
             false,
             (getVal($this->defaultFieldGroups, [0, 'Classifications', 'default_finance_type']) == "")
-                ? ['wrapper' => ['class' => 'form-group col-md-6 hidden']]
-                : ['wrapper' => ['class' => 'form-group col-md-6']]
+                ? ['wrapper' => ['class' => 'form-group col-sm-6 hidden']]
+                : ['wrapper' => ['class' => 'form-group col-sm-6']]
         );
         $this->addSelect(
             'default_aid_type',
@@ -92,8 +92,8 @@ class DefaultValues extends BaseForm
             null,
             false,
             (getVal($this->defaultFieldGroups, [0, 'Classifications', 'default_aid_type']) == "")
-                ? ['wrapper' => ['class' => 'form-group col-md-6 hidden']]
-                : ['wrapper' => ['class' => 'form-group col-md-6']]
+                ? ['wrapper' => ['class' => 'form-group col-sm-6 hidden']]
+                : ['wrapper' => ['class' => 'form-group col-sm-6']]
         );
         $this->addSelect(
             'default_tied_status',
@@ -103,10 +103,10 @@ class DefaultValues extends BaseForm
             null,
             false,
             (getVal($this->defaultFieldGroups, [0, 'Classifications', 'default_tied_status']) == "")
-                ? ['wrapper' => ['class' => 'form-group col-md-6 hidden']]
-                : ['wrapper' => ['class' => 'form-group col-md-6']]
+                ? ['wrapper' => ['class' => 'form-group col-sm-6 hidden']]
+                : ['wrapper' => ['class' => 'form-group col-sm-6']]
         );
-        $this->addSelect('humanitarian', ['1' => 'Yes', '0' => 'No'], null, null, null, false, ['wrapper' => ['class' => 'form-group col-md-6']])
+        $this->addSelect('humanitarian', ['1' => 'Yes', '0' => 'No'], null, null, null, false, ['wrapper' => ['class' => 'form-group col-sm-6']])
              ->add(
                  'save',
                  'submit',

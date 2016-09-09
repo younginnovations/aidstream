@@ -687,7 +687,7 @@ button.close {
     font-weight: normal;
 }
 
-.modal-dialog .close span {
+.modal-dialog .close span,.modal-dialog .close:hover span,.modal-dialog .close:focus span  {
     color: #00A8FF;
     font-size: 40px;
     display: block;

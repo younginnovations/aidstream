@@ -43,7 +43,7 @@
                         </div>
                     </label>
 
-                    <span class="upload-label">Upload a logo</span>
+                    <span class="upload-label">Upload your organization logo</span>
                 </div>
                 <div class="description col-xs-12 col-sm-6 col-md-6">Please use jpg/jpeg/png/gif format and 150x150 dimensions image.</div>
             </div>

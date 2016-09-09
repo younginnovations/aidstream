@@ -658,7 +658,7 @@ footer {
   }
 }
 
-.modal-dialog .close span {
+.modal-dialog .close span,.modal-dialog .close:hover span,.modal-dialog .close:focus span {
   color: $color_dodger_blue_approx;
   font-size: 40px;
   display: block;
