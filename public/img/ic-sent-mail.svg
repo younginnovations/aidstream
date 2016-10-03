@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="88px" height="94px" viewBox="0 0 88 94" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 40.1 (33804) - http://www.bohemiancoding.com/sketch -->
+    <title>envelop</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Register" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Registration---Email-Verification" transform="translate(-468.000000, -447.000000)">
+            <g id="envelop" transform="translate(468.000000, 447.000000)">
+                <path d="M72.5061099,24.7100762 L88,38.1407129 L88,93.3752345 L0,93.3752345 L0,38.1407129 L44,0 L58.1145218,12.2349528 L44.4098119,24.7822805 L35.0299811,15.3450141 L21.6875862,28.687409 L44.0001772,51 L72.5061099,24.7100762 Z" id="Combined-Shape" fill="#86BCE9"></path>
+                <polygon id="Path" fill="#DBEEFD" points="29.621625 63.4493433 5.5 84.2163152 5.5 44.4139737"></polygon>
+                <polygon id="Path" fill="#FFFFFF" points="54.1191406 59.7867767 44 51.0756023 33.8808594 59.7815985 7.77734375 39.1872345 44 6.9043152 80.2226562 39.1872345"></polygon>
+                <polygon id="Path" fill="#80CA9C" points="44.7891195 32.1534843 36.2844219 23.5905866 30 29.8750085 44.7316994 44.6067079 81.286402 8.28240622 75.0039958 2"></polygon>
+                <polygon id="Path" fill="#DBEEFD" points="82.5 84.2163152 58.378375 63.4493433 82.5 44.4139737"></polygon>
+                <polygon id="Path" fill="#DBEEFD" points="44 58.3467092 78.2729062 87.8517824 9.72709375 87.8517824"></polygon>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -21,23 +21,17 @@
             {!! AsForm::email(['name' => 'users[secondary_contact]', 'class' => 'secondary_contact', 'label' => 'Secondary Contact at Organisation', 'required' => true, 'parent' => 'col-xs-12 col-sm-6 col-md-6', 'html' => '<p class="help-block">Example: example@email.com</p>']) !!}
         </div>
     </div>
-
-    <div class="input-wrapper">
-        <div class="user-blocks">
-            {{--*/ $users = getVal($regInfo, ['users', 'user'], []); /*--}}
-            @foreach($users as $userIndex => $user)
-                @include('auth.partUsers')
-            @endforeach
-        </div>
-        <div class="auth-info-wrapper">
-            <p>AidStream supports <strong>multiple user accounts</strong> for an organisation.</p>
-            <span class="multi-user-info">You can add multiple users once your account is set up, or you can </span><span
-                    id="add-user">add additional users now.</span>
-        </div>
+    <div class="user-blocks">
+        {{--*/ $users = getVal($regInfo, ['users', 'user'], []); /*--}}
+        @foreach($users as $userIndex => $user)
+            @include('auth.partUsers')
+        @endforeach
     </div>
-
-    <div class="col-md-12 text-center">
-        {{ Form::button('Back to Organization Information', ['class' => 'btn btn-primary btn-submit btn-register btn-tab', 'type' => 'button',  'data-tab-trigger' => '#tab-organization']) }}
-        {{ Form::button('Complete Registration', ['class' => 'btn btn-primary btn-submit btn-register', 'type' => 'submit']) }}
+    <div class="auth-info-wrapper">
+        <p>AidStream supports <strong>multiple user accounts</strong> for an organisation.</p>
+        <span class="multi-user-info">You can add multiple users once your account is set up, or you can </span><span
+                id="add-user">add additional users now.</span>
     </div>
 </div>
+{{ Form::button('Back to Organization Information', ['class' => 'btn btn-primary btn-back btn-tab pull-left', 'type' => 'button',  'data-tab-trigger' => '#tab-organization']) }}
+{{ Form::button('Complete Registration', ['class' => 'btn btn-primary btn-submit btn-register pull-right', 'type' => 'submit']) }}

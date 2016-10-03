@@ -80,25 +80,13 @@
             </ul>
             <div class="col-lg-4 col-md-8 register-block">
                 <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <img src="{{url('images/logo.svg')}}" alt="">
-
-                        <div class="panel-title">Get Started with AidStream</div>
-                    </div>
                     <div class="panel-body">
-
-                        <p>Create an AidStream account to make your Aid data publishing experience effortless</p>
 
                         @include('includes.response')
 
                        {{--*/ $regInfo = (array) (old() ? old() : session('reg_info')); /*--}}
                         {{ Form::model($regInfo, ['url' => route('registration.register'), 'method' => 'post', 'id' => 'from-registration']) }}
 
-                        <ul class="nav nav-tabs" role="tablist">
-                            <li role="presentation" class="active"><a href="#tab-organization" aria-controls="tab-organization" role="tab" data-toggle="tab">Organisation Information</a></li>
-                            <li role="presentation"><a href="#tab-users" aria-controls="tab-users" role="tab" data-toggle="tab">Admin Information</a></li>
-                            <li role="presentation"><a href="#tab-verification" aria-controls="tab-verification" role="tab" data-toggle="tab" class="disabled">Email Verification</a></li>
-                        </ul>
 
                         <div class="tab-content">
                             <div role="tabpanel" class="tab-pane clearfix active" id="tab-organization">

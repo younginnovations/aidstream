@@ -72,11 +72,6 @@
             <p class="text-center">Please enter your email address below to reset your password.</p>
             <div class="col-lg-4 col-md-8 reset-block">
                 <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <img src="{{url('images/logo.svg')}}" alt="">
-
-                        <div class="panel-title">Reset password</div>
-                    </div>
                     <div class="panel-body">
                         @if (session('status'))
                             <div class="alert alert-success">
@@ -99,7 +94,7 @@
                         <form class="form-horizontal" role="form" method="POST" action="{{ url('/password/email') }}">
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
-                            <div class="input-wrapper">
+                            <div class="input-wrapper reset-input-wrapper">
                                 <div class="form-group">
                                     <label class="control-label required">Your E-Mail Address</label>
 
@@ -107,12 +102,8 @@
                                         <input type="email" class="form-control" name="email" value="{{ old('email') }}">
                                     </div>
                                 </div>
-
-                                <div class="form-group text-center">
-                                    <button type="submit" class="btn btn-primary btn-submit">
-                                        Send Password Reset Link
-                                    </button>
                                 </div>
+
                             <div class="form-group text-center">
                                 <button type="submit" class="btn btn-primary btn-submit">
                                     Send Password Reset Link
