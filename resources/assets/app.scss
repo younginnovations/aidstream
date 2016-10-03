@@ -76,6 +76,7 @@ $url_19: url(../../images/ic-print.svg);
 $url_20: url(../../images/ic-side-arrow.svg);
 $url_21: url(../../images/ic-left-arrow.svg);
 $url_22: url(../../images/ic-camera.svg);
+$url_23: url(../../images/ic-org-sprite.svg);
 
 html, body {
   height: 100%;
@@ -2615,7 +2616,7 @@ form > .add_to_collection[data-collection="legacy_data"] {
     bottom: -54px;
     left: 36px;
     font-size: 15px;
-    width: 200px;
+    //width: 200px;
   }
   .btn-cancel {
     left: 203px !important;
@@ -3030,7 +3031,7 @@ $organization-logo-width: 124px;
   content: "";
   width: 32px;
   height: 32px;
-  background: $url_3 no-repeat;
+  background: $url_23 no-repeat;
   float: left;
   margin: 2px 10px 10px 0;
 }
@@ -3085,19 +3086,19 @@ $organization-logo-width: 124px;
 
 .profile-role-info {
   border-radius: 4px;
-  width: 364px;
+  padding: 0 12px;
   overflow: hidden;
   margin: 24px auto 26px;
+  width: 270px;
   dl {
     float: left;
-    margin-right: 70px;
+    margin-right: 30px;
     margin-bottom: 0;
     &:last-child {
       margin-right: 0;
     }
     dt {
       color: rgba($color_gravel_approx, 0.7);
-      font-size: 16px;
       margin: 0 0 4px;
     }
     dd {
@@ -3145,12 +3146,14 @@ $organization-logo-width: 124px;
 
 .edit-profile ,.edit-profile:hover,.change-password,.change-password:hover {
   display: inline-block;
-  color: $color_white;
+  color: rgba($color_white,0.7);
   text-decoration: underline;
+  font-size: 12px;
+  margin-bottom: 6px;
 }
 
 .change-password,.change-password:hover {
-  margin-left: 10px;
+  margin-left: 6px;
 }
 
 .secondary-contact-block {
@@ -4967,6 +4970,13 @@ body > .skiptranslate iframe {
   overflow: hidden;
 }
 
+.change-logo-wrap {
+  background: $color_white;
+  padding: 11px 0;
+  margin: -67px 20px 0;
+  border-radius: 50%;
+}
+
 .upload-label, .change-logo {
   display: block;
   margin-top: -86px;
@@ -4986,8 +4996,8 @@ body > .skiptranslate iframe {
   background: #fff;
   position: relative;
   width: 96px;
-  margin: -51px auto 0;
-  padding: 6px;
+  margin: 0 auto;
+  padding: 4px 6px;
   font-size: 12px;
   border-radius: 20px;
 }
@@ -6235,6 +6245,18 @@ body > .skiptranslate iframe {
   }
 }
 
+@media all and (min-width: 400px) {
+  .profile-role-info {
+    width: 364px;
+    dl {
+      margin-right: 70px;
+      dt {
+        font-size: 16px;
+      }
+    }
+  }
+}
+
 @media all and (min-width: 480px) {
   .error-msg-wrap {
     h2 {
@@ -6328,7 +6350,7 @@ body > .skiptranslate iframe {
   .profile-top-wrapper {
     text-align: left;
     .pull-left {
-      width: 60%;
+      width: calc(100% - 210px);
     }
   }
 
@@ -6338,6 +6360,16 @@ body > .skiptranslate iframe {
 
   .secondary-contact-block {
     padding: 0 10px;
+  }
+}
+
+@media all and (min-width: 710px) {
+  .profile-username {
+    display: inline-block;
+  }
+
+  .edit-profile,.edit-profile:hover {
+    margin-left: 6px;
   }
 }
 
@@ -6577,6 +6609,19 @@ body > .skiptranslate iframe {
     &:nth-child(3n) {
       margin-right: 0;
     }
+  }
+}
+
+@media all and (min-width: 960px) {
+  .profile-info-block,.secondary-contact-block {
+    float: left;
+  }
+
+  .profile-info-block {
+    border-bottom: 0!important;
+    border-right: 1px solid rgba(238,238,238,.2);
+    width: 60%;
+    margin-right: 20px;
   }
 }
 

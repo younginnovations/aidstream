@@ -5099,8 +5099,7 @@ form > .add_to_collection[data-collection="legacy_data"] {
   .settings-form .btn-form, .settings-form .btn-cancel {
     bottom: -54px;
     left: 36px;
-    font-size: 15px;
-    width: 200px; }
+    font-size: 15px; }
   .settings-form .btn-cancel {
     left: 203px !important;
     bottom: -51px; }
@@ -5454,7 +5453,7 @@ form > .add_to_collection[data-collection="legacy_data"] {
   content: "";
   width: 32px;
   height: 32px;
-  background: url(../../images/ic-sprite.svg) no-repeat;
+  background: url(../../images/ic-org-sprite.svg) no-repeat;
   float: left;
   margin: 2px 10px 10px 0; }
 
@@ -5490,18 +5489,18 @@ form > .add_to_collection[data-collection="legacy_data"] {
 .profile-role-info {
   -webkit-border-radius: 4px;
           border-radius: 4px;
-  width: 364px;
+  padding: 0 12px;
   overflow: hidden;
-  margin: 24px auto 26px; }
+  margin: 24px auto 26px;
+  width: 270px; }
   .profile-role-info dl {
     float: left;
-    margin-right: 70px;
+    margin-right: 30px;
     margin-bottom: 0; }
     .profile-role-info dl:last-child {
       margin-right: 0; }
     .profile-role-info dl dt {
       color: rgba(72, 72, 72, 0.7);
-      font-size: 16px;
       margin: 0 0 4px; }
     .profile-role-info dl dd {
       font-family: Open-Sans-Bold; }
@@ -5538,11 +5537,13 @@ form > .add_to_collection[data-collection="legacy_data"] {
 
 .edit-profile, .edit-profile:hover, .change-password, .change-password:hover {
   display: inline-block;
-  color: #fff;
-  text-decoration: underline; }
+  color: rgba(255, 255, 255, 0.7);
+  text-decoration: underline;
+  font-size: 12px;
+  margin-bottom: 6px; }
 
 .change-password, .change-password:hover {
-  margin-left: 10px; }
+  margin-left: 6px; }
 
 .secondary-contact-block > span {
   display: block;
@@ -7105,6 +7106,13 @@ body > .skiptranslate iframe {
   display: inline-block;
   overflow: hidden; }
 
+.change-logo-wrap {
+  background: #fff;
+  padding: 11px 0;
+  margin: -67px 20px 0;
+  -webkit-border-radius: 50%;
+          border-radius: 50%; }
+
 .upload-label, .change-logo {
   display: block;
   margin-top: -86px;
@@ -7122,8 +7130,8 @@ body > .skiptranslate iframe {
   background: #fff;
   position: relative;
   width: 96px;
-  margin: -51px auto 0;
-  padding: 6px;
+  margin: 0 auto;
+  padding: 4px 6px;
   font-size: 12px;
   -webkit-border-radius: 20px;
           border-radius: 20px; }
@@ -7971,6 +7979,14 @@ body > .skiptranslate iframe {
     float: left !important;
     clear: both; } }
 
+@media all and (min-width: 400px) {
+  .profile-role-info {
+    width: 364px; }
+    .profile-role-info dl {
+      margin-right: 70px; }
+      .profile-role-info dl dt {
+        font-size: 16px; } }
+
 @media all and (min-width: 480px) {
   .error-msg-wrap h2 {
     padding-top: 300px;
@@ -8038,11 +8054,19 @@ body > .skiptranslate iframe {
   .profile-top-wrapper {
     text-align: left; }
     .profile-top-wrapper .pull-left {
-      width: 60%; }
+      width: -webkit-calc(100% - 210px);
+      width: -moz-calc(100% - 210px);
+      width: calc(100% - 210px); }
   .profile-info-block:not(:only-child) {
     padding: 0 10px 24px; }
   .secondary-contact-block {
     padding: 0 10px; } }
+
+@media all and (min-width: 710px) {
+  .profile-username {
+    display: inline-block; }
+  .edit-profile, .edit-profile:hover {
+    margin-left: 6px; } }
 
 @media all and (min-width: 768px) {
   .create-form > form > .collection_form > .form-group > .collection_form .form-group > .form-group {
@@ -8187,6 +8211,15 @@ body > .skiptranslate iframe {
     margin-right: 50px; }
     #activity-elements-checklist .collection_form > .form-group > .form-group:nth-child(3n) {
       margin-right: 0; } }
+
+@media all and (min-width: 960px) {
+  .profile-info-block, .secondary-contact-block {
+    float: left; }
+  .profile-info-block {
+    border-bottom: 0 !important;
+    border-right: 1px solid rgba(238, 238, 238, 0.2);
+    width: 60%;
+    margin-right: 20px; } }
 
 @media all and (min-width: 1001px) {
   .element-sidebar-wrapper {

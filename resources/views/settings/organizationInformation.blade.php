@@ -39,7 +39,7 @@
                         @else
                             <img src="" height="172" width="172" alt="Uploaded Image" id="selected_picture"/>
                         @endif
-                            <span class="change-logo">Change Logo</span>
+                            <div class="change-logo-wrap"><span class="change-logo">Change Logo</span></div>
                         </div>
                     </label>
 

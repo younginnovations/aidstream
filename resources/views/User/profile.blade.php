@@ -28,13 +28,13 @@
                                         <div class="profile-basic-info">
                                             <div class="auth-name">{{Auth::user()->name}}</div>
                                             <span class="profile-username">{{Auth::user()->username}}</span>
-                                        <span class="profile-user-email"><a
-                                                    href="mailto:{{Auth::user()->email}}">{{Auth::user()->email}}</a></span>
                                             <a href="{{route('user.edit-profile', Auth::user()->id)}}" class="edit-profile">Edit
                                                 Profile</a>
                                             <a href="{{route('user.reset-user-password', Auth::user()->id)}}"
                                                class="change-password">Change
                                                 Password</a>
+                                        <span class="profile-user-email"><a
+                                                    href="mailto:{{Auth::user()->email}}">{{Auth::user()->email}}</a></span>
                                         </div>
                                     </div>
                                     @if((Auth::user()->isAdmin()) && $organization->secondary_contact)
@@ -89,7 +89,7 @@
                                     @endif
 
                                         @if($organization['reporting_org'][0]['reporting_organization_type'])
-                                            <li class="country col-xs-6 col-md-4 col-lg-3"><label>Organisation Type</label>
+                                            <li class="org-type col-xs-6 col-md-4 col-lg-3"><label>Organisation Type</label>
                                                 <span>
                                                 {{substr($getCode->getOrganizationCodeName('OrganizationType',$organization['reporting_org'][0]['reporting_organization_type']),0,-4)}}
                                             </span>
