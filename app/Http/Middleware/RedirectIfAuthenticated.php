@@ -36,8 +36,9 @@ class RedirectIfAuthenticated
     public function handle($request, Closure $next)
     {
         if ($this->auth->check()) {
+            $redirectUrl = (session('first_login')) ? '/welcome' : '/activity';
 
-            return new RedirectResponse(url('/'));
+            return new RedirectResponse(url($redirectUrl));
         }
 
         return $next($request);

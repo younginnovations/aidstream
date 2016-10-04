@@ -112,7 +112,7 @@ class Verification
     {
         $user = $this->user->where('verification_code', $code)->first();
         if (!$user) {
-            $message = 'The verification code is invalid.';
+            $message = 'Your verification process has already been completed.';
         } elseif ($user->update(['verified' => true])) {
             $method = [
                 1 => 'verifyAdmin',
@@ -201,8 +201,8 @@ class Verification
                 "api_id_status"       => "Incorrect"
             ];
         $settings       = $settingsManager->getSettingsByCode($code);
-
-        return $settingsManager->savePublishingInfo($publishingInfo, $settings);
+        $settingsManager->savePublishingInfo($publishingInfo, $settings);
+        $this->login($code);
     }
 
     /**
@@ -240,5 +240,18 @@ class Verification
         foreach ($users as $user) {
             $this->sendVerificationEmail($user);
         }
+    }
+
+    protected function login($code)
+    {
+        $organization            = $this->user->where('verification_code', $code)->first()->organization;
+        $user                    = $this->user->where('verification_code', $code)->first();
+        $user->verification_code = null;
+        $user->save();
+
+        session(['org_id' => $organization->id]);
+        session(['first_login' => true]);
+
+        auth()->loginUsingId($user->id);
     }
 }

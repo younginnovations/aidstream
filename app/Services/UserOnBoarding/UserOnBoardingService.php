@@ -1,12 +1,17 @@
 <?php namespace App\Services\UserOnBoarding;
 
 use App\Models\Organization\Organization;
+use App\Models\UserOnBoarding;
 use Exception;
 use Illuminate\Contracts\Logging\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Psr\Log\LoggerInterface;
 
+/**
+ * Class UserOnBoardingService
+ * @package App\Services\UserOnBoarding
+ */
 class UserOnBoardingService
 {
     /**
@@ -18,20 +23,26 @@ class UserOnBoardingService
      * @var Log
      */
     protected $dbLogger;
+    /**
+     * @var UserOnBoarding
+     */
+    protected $userOnBoarding;
 
     /**
      * UserOnBoardingService constructor.
      * @param LoggerInterface $logger
      * @param Log             $dbLogger
+     * @param UserOnBoarding  $userOnBoarding
      */
-    public function __construct(LoggerInterface $logger, Log $dbLogger)
+    public function __construct(LoggerInterface $logger, Log $dbLogger, UserOnBoarding $userOnBoarding)
     {
-        $this->logger   = $logger;
-        $this->dbLogger = $dbLogger;
+        $this->logger         = $logger;
+        $this->dbLogger       = $dbLogger;
+        $this->userOnBoarding = $userOnBoarding;
     }
 
     /**
-     * store publisher and api key of settings.
+     * Store publisher and api key of settings.
      * @param Organization $organization
      * @param              $publisherId
      * @param              $apiId
@@ -81,7 +92,7 @@ class UserOnBoardingService
     }
 
     /**
-     * store publishing type of settings.
+     * Store publishing type of settings.
      * @param Organization $organization
      * @param              $publishingType
      * @return bool
@@ -117,7 +128,7 @@ class UserOnBoardingService
     }
 
     /**
-     * store automatic publish to registry settings.
+     * Store automatic publish to registry settings.
      * @param Organization $organization
      * @param              $publishFiles
      * @return bool
@@ -167,7 +178,7 @@ class UserOnBoardingService
     }
 
     /**
-     * store activity element checklist.
+     * Store activity element checklist.
      * @param              $default_field_groups
      * @param Organization $organization
      * @return bool
@@ -203,7 +214,7 @@ class UserOnBoardingService
     }
 
     /**
-     * store default values of settings.
+     * Store default values of settings.
      * @param              $default_values_request
      * @param Organization $organization
      * @return bool
@@ -287,7 +298,7 @@ class UserOnBoardingService
     }
 
     /**
-     * end the user onboarding.
+     * End the user On Boarding.
      */
     public function completeTour()
     {
@@ -298,7 +309,7 @@ class UserOnBoardingService
     }
 
     /**
-     * store completed steps of settings user onboarding.
+     * Store completed steps of settings user onboarding.
      * @param $step
      */
     public function storeCompletedSteps($step)
@@ -311,7 +322,7 @@ class UserOnBoardingService
     }
 
     /**
-     * returns if all the steps are completed.
+     * Returns if all the steps are completed.
      * @return bool
      */
     public function isAllStepsCompleted()
@@ -322,5 +333,15 @@ class UserOnBoardingService
         $status = ($completedSteps == 5) ? true : false;
 
         return $status;
+    }
+
+    /**
+     * Create a new On boarding for newly created user.
+     * @param $userId
+     * @return UserOnBoarding
+     */
+    public function create($userId)
+    {
+        return $this->userOnBoarding->create(['has_logged_in_once' => false, 'user_id' => $userId]);
     }
 }

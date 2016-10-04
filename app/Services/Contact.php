@@ -93,6 +93,7 @@ class Contact
 
             return $this->messages[$template];
         } catch (Exception $exception) {
+            dd($exception);
             $this->logger->error($exception, ['data' => $data]);
         }
 
@@ -137,8 +138,13 @@ class Contact
      */
     protected function getNeedNewUser(&$data)
     {
-        $data['emailTo'] = session()->pull('admin_email');
-        $data['subject'] = 'New User Account Needed';
+        $data['fromEmail'] = env('MAIL_ADDRESS');
+        $data['fromName']  = env('MAIL_NAME');
+        $data['emailTo']   = session()->pull('admin_email');
+        $data['adminName'] = session()->pull('admin_name');
+        $data['orgName']   = session()->pull('org_name');
+        $data['subject']   = sprintf("Request for new user account on your %s's AidStream account.", $data['orgName']);
+        $data['view']      = 'emails.need-new-user-account';
     }
 
     /**

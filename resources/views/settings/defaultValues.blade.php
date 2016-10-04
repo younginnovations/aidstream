@@ -30,19 +30,19 @@
                         {!! form_until($form, 'humanitarian') !!}
                     </div>
                 @endif
-                    {!!  form_end($form) !!}
+                {!!  form_end($form) !!}
             </div>
         </div>
     </div>
 @stop
 @section('foot')
-    {{--<script src="/js/userOnBoarding.js"></script>--}}
-    {{--<script>--}}
-        {{--$(window).load(function () {--}}
-            {{--@if(session('first_login'))--}}
-                {{--UserOnBoarding.settingsTour();--}}
-            {{--@endif--}}
-            {{--UserOnBoarding.validateDefaultValues();--}}
-        {{--});--}}
-    {{--</script>--}}
+    <script src="/js/userOnBoarding.js"></script>
+    <script>
+        $(window).load(function () {
+            @if(session('first_login') && auth()->user()->role_id == 1)
+                UserOnBoarding.settingsTour();
+            @endif
+            UserOnBoarding.validateDefaultValues();
+        });
+    </script>
 @endsection

@@ -34,8 +34,7 @@
     <div class="container-fluid">
         <div class="navbar-header">
             <div class="navbar-brand">
-                <a href="{{ ($loggedInUser && $loggedInUser->role_id == 3) ? url(config('app.super_admin_dashboard')) : config('app.admin_dashboard') }}"
-                   alt="Aidstream">Aidstream</a>
+                <a href="{{url('/')}}" alt="Aidstream">Aidstream</a>
             </div>
         </div>
         <div class="collapse navbar-collapse navbar-right" id="bs-example-navbar-collapse-1">
@@ -119,11 +118,11 @@
         </div>
         <div class="navbar-right version-wrap">
 
-            {{--@if(isset(auth()->user()->userOnBoarding->completed_tour) && session('role_id') != 3)--}}
-            {{--@if(!auth()->user()->userOnBoarding->completed_tour)--}}
-            {{--<a href="{{url('exploreLater')}}" class="btn btn-primary">Continue exploring AidStream</a>--}}
-            {{--@endif--}}
-            {{--@endif--}}
+            @if(isset(auth()->user()->userOnBoarding->completed_tour) && session('role_id') != 3)
+                @if(!auth()->user()->userOnBoarding->completed_tour)
+                    <a href="{{url('exploreLater')}}" class="btn btn-primary">Continue exploring AidStream</a>
+                @endif
+            @endif
             @if(auth()->user() && !isSuperAdminRoute())
                 <div class="version pull-right {{ (session('version') == 'V201') ? 'old' : 'new' }}">
                     @if (session('next_version'))

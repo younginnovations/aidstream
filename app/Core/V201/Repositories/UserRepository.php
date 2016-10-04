@@ -52,7 +52,13 @@ class UserRepository
         if ($file) {
             $fileName = sprintf("%s_%s.%s", $user->username, $user->id, $file->getClientOriginalExtension());
             $fileUrl  = url(sprintf("%s%s", 'files/users/', $fileName));
-            $image    = Image::make(File::get($file))->resize(150, 150)->encode();
+            $image    = Image::make(File::get($file))->fit(
+                166,
+                166,
+                function ($constraint) {
+                    $constraint->aspectRatio();
+                }
+            )->encode();
             Storage::put('users/' . $fileName, $image);
             $user->profile_url     = $fileUrl;
             $user->profile_picture = $fileName;

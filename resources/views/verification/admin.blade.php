@@ -3,24 +3,23 @@
 <p>Thank you for verifying your email address. You have successfully created an account for {{ $user->organization->name }} and
     associated the following user accounts with it:</p>
 <ul>
-@foreach($users as $user)
-<li>
-    <strong>{{ title_case($user->role) }} Account:</strong> {{ $user->first_name }} {{ $user->last_name }}
-    {{--(Username: {{ $user->username }}) - {{ $user->email }}--}}
-</li>
-@endforeach
+    @foreach($users as $user)
+        <li>
+            <strong>{{ title_case($user->role) }} Account:</strong> {{ $user->first_name }} {{ $user->last_name }}
+            {{--(Username: {{ $user->username }}) - {{ $user->email }}--}}
+        </li>
+    @endforeach
 </ul>
 
 {{--<ul>--}}
-    {{--<li><strong>Administrator Account:</strong> test</li>--}}
-    {{--<li><strong>Editor Account:</strong> test</li>--}}
+{{--<li><strong>Administrator Account:</strong> test</li>--}}
+{{--<li><strong>Editor Account:</strong> test</li>--}}
 {{--</ul>--}}
 <p>
     For any accounts you have created other than your own, we have sent a verification email to those users. If you
     provided a back up contact for account recovery, we have also sent a verification
     email to that address. Please ask all additional users to check their email inbox and follow the instructions in our
     emails.</p>
-
 {{ Form::open(['url' => route('save-registry-info', [$user->verification_code]), 'method' => 'post']) }}
 <div class="save-registry-block">
     <p>
@@ -37,7 +36,8 @@
 
 <div class="col-md-12 text-center">
     {{ Form::button('Save and Continue', ['class' => 'btn btn-primary', 'type' => 'submit']) }}
-    {{ Form::button('I will add this later', ['class' => 'btn btn-primary', 'type' => 'button', 'data-dismiss' => 'modal']) }}
+    {{--    {{ Form::button('I will add this later', ['class' => 'btn btn-primary', 'type' => 'button', 'data-dismiss' => 'modal']) }}--}}
+    {{ Form::button('I will add this later', ['class' => 'btn btn-primary', 'type' => 'submit']) }}
 </div>
 
 {{ Form::close() }}

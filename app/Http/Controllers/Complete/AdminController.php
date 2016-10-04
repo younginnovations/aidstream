@@ -11,6 +11,7 @@ use App\Models\UserOnBoarding;
 use App\Services\ActivityLog\ActivityManager;
 use App\Services\Organization\OrganizationManager;
 use App\Services\SettingsManager;
+use App\Services\UserOnBoarding\UserOnBoardingService;
 use App\User;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Contracts\Logging\Log as DbLogger;
@@ -46,23 +47,35 @@ class AdminController extends Controller
     protected $userActivityManager;
 
     protected $settingsManager;
+    /**
+     * @var UserOnBoardingService
+     */
+    protected $userOnBoardingManager;
 
     /**
-     * @param User                $user
-     * @param OrganizationManager $organizationManager
-     * @param DbLogger            $dbLogger
-     * @param ActivityManager     $userActivityManager
-     * @param SettingsManager     $settingsManager
+     * @param User                  $user
+     * @param OrganizationManager   $organizationManager
+     * @param DbLogger              $dbLogger
+     * @param ActivityManager       $userActivityManager
+     * @param SettingsManager       $settingsManager
+     * @param UserOnBoardingService $userOnBoardingManager
      */
-    function __construct(User $user, OrganizationManager $organizationManager, DbLogger $dbLogger, ActivityManager $userActivityManager, SettingsManager $settingsManager)
-    {
+    function __construct(
+        User $user,
+        OrganizationManager $organizationManager,
+        DbLogger $dbLogger,
+        ActivityManager $userActivityManager,
+        SettingsManager $settingsManager,
+        UserOnBoardingService $userOnBoardingManager
+    ) {
         $this->middleware('auth');
-        $this->org_id              = session('org_id');
-        $this->user                = $user;
-        $this->organizationManager = $organizationManager;
-        $this->dbLogger            = $dbLogger;
-        $this->userActivityManager = $userActivityManager;
-        $this->settingsManager     = $settingsManager;
+        $this->org_id                = session('org_id');
+        $this->user                  = $user;
+        $this->organizationManager   = $organizationManager;
+        $this->dbLogger              = $dbLogger;
+        $this->userActivityManager   = $userActivityManager;
+        $this->settingsManager       = $settingsManager;
+        $this->userOnBoardingManager = $userOnBoardingManager;
     }
 
     /**
@@ -134,9 +147,9 @@ class AdminController extends Controller
         $this->user->password   = bcrypt($request->get('password'));
         $this->user->verified   = true;
 
-        $response = ($this->user->save()) ? ['type' => 'success', 'code' => ['created', ['name' => 'User']]] : ['type' => 'danger', 'code' => ['save_failed', ['name' => 'User']]];
+        $response = ($this->user->save()) ? ['type' => 'success', 'code' => ['created', ['name' => $this->user->username]]] : ['type' => 'danger', 'code' => ['save_failed', ['name' => 'User']]];
 
-//        UserOnBoarding::create(['has_logged_in_once' => false, 'user_id' => $this->user->id]);
+        $this->userOnBoardingManager->create($this->user->id);
         $this->dbLogger->activity("admin.user_created", ['orgId' => $this->org_id, 'userId' => $this->user->id]);
 
         return redirect()->route('admin.list-users')->withResponse($response);

@@ -12,6 +12,10 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Session;
 
+/**
+ * Class UserOnBoardingController
+ * @package App\Http\Controllers
+ */
 class UserOnBoardingController extends Controller
 {
     /**
@@ -29,7 +33,7 @@ class UserOnBoardingController extends Controller
     }
 
     /**
-     * start welcome page of user onboarding.
+     * Start welcome page of user onboarding.
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
      */
     public function welcome()
@@ -44,7 +48,7 @@ class UserOnBoardingController extends Controller
     }
 
     /**
-     * start dashboard tour.
+     * Start dashboard tour.
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function startDashboardTour()
@@ -53,7 +57,7 @@ class UserOnBoardingController extends Controller
     }
 
     /**
-     * store publisher and api id of settings.
+     * Store publisher and api id of settings.
      */
     public function storePublisherAndApiId()
     {
@@ -67,7 +71,7 @@ class UserOnBoardingController extends Controller
     }
 
     /**
-     * store publishing type settings.
+     * Store publishing type settings.
      */
     public function storePublishingType()
     {
@@ -78,7 +82,7 @@ class UserOnBoardingController extends Controller
     }
 
     /**
-     *store automatic publish to registry to settings.
+     * Store automatic publish to registry to settings.
      */
     public function storePublishFiles()
     {
@@ -89,7 +93,7 @@ class UserOnBoardingController extends Controller
     }
 
     /**
-     * store activity elements checklist of settings
+     * Store activity elements checklist of settings
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
@@ -104,7 +108,7 @@ class UserOnBoardingController extends Controller
     }
 
     /**
-     * store default values of settings
+     * Store default values of settings
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
@@ -118,7 +122,7 @@ class UserOnBoardingController extends Controller
     }
 
     /**
-     * return explore later view.
+     * Return explore later view.
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
      */
     public function exploreLater()
@@ -145,7 +149,7 @@ class UserOnBoardingController extends Controller
     }
 
     /**
-     *  complete user on boarding process
+     *  Complete user on boarding process
      */
     public function completeOnBoarding()
     {
@@ -153,7 +157,7 @@ class UserOnBoardingController extends Controller
     }
 
     /**
-     * returns organization currently in session.
+     * Returns organization currently in session.
      * @return mixed
      */
     public function getOrganization()
@@ -162,5 +166,14 @@ class UserOnBoardingController extends Controller
         $organization = Organization::findorfail($org_id);
 
         return $organization;
+    }
+
+    /**
+     * Create a new On boarding for newly created user.
+     * @param $userId
+     */
+    public function create($userId)
+    {
+        $this->userOnBoardingService->create($userId);
     }
 }

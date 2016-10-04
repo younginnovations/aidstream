@@ -10,24 +10,26 @@
                     <div><a href="activity">Close</a></div>
                     <div><img src="/img/logo.png"/></div>
                     <div>Continue exploring AidStream ?</div>
-                    <div>Set up your account to Start Publishing to the IATI Registry</div>
-                    <ol>
-                        <a href="{{url('publishing-settings#1')}}">
-                            <li>1</li>
-                        </a>
-                        <a href="{{url('publishing-settings#2')}}">
-                            <li>2</li>
-                        </a>
-                        <a href="{{url('publishing-settings#3')}}">
-                            <li>3</li>
-                        </a>
-                        <a href="{{url('activity-elements-checklist#4')}}">
-                            <li>4</li>
-                        </a>
-                        <a href="{{url('default-values#5')}}">
-                            <li>5</li>
-                        </a>
-                    </ol>
+                    @if(auth()->user()->role_id == 1)
+                        <div>Set up your account to Start Publishing to the IATI Registry</div>
+                        <ol>
+                            <a href="{{url('publishing-settings#1')}}">
+                                <li>1</li>
+                            </a>
+                            <a href="{{url('publishing-settings#2')}}">
+                                <li>2</li>
+                            </a>
+                            <a href="{{url('publishing-settings#3')}}">
+                                <li>3</li>
+                            </a>
+                            <a href="{{url('activity-elements-checklist#4')}}">
+                                <li>4</li>
+                            </a>
+                            <a href="{{url('default-values#5')}}">
+                                <li>5</li>
+                            </a>
+                        </ol>
+                    @endif
                     <div>
                         <a href="{{ url('dashboardTour') }}">
                             <button>Get to know your Dashboard</button>

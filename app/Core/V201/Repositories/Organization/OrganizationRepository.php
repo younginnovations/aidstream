@@ -357,7 +357,14 @@ class OrganizationRepository implements OrganizationRepositoryInterface
 
             $fileUrl  = url('files/logos/' . $organization->id . '.' . $file->getClientOriginalExtension());
             $fileName = $organization->id . '.' . $file->getClientOriginalExtension();
-            $image    = Image::make(File::get($file))->resize(150, 150)->encode();
+            $image    = Image::make(File::get($file))->fit(
+                166,
+                166,
+                function ($constraint) {
+                    $constraint->aspectRatio();
+                }
+            )->encode();
+
             Storage::put('logos/' . $fileName, $image);
             $organization->logo_url = $fileUrl;
             $organization->logo     = $fileName;

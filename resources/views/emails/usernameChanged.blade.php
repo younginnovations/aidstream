@@ -8,5 +8,5 @@
 
 <p>If you have any questions, you can reach us at <a href="mailto:support@aidstream.org">support@aidstream.org</a></p>
 
-<p>Thanks,<br/>
-    The AidStream Team</p>
+<p>Thanks,<p/>
+<p>The AidStream Team</p>
