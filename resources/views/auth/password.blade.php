@@ -24,7 +24,7 @@
 </head>
 <body>
 <header>
-    <nav class="navbar navbar-default navbar-static">
+    <nav class="navbar navbar-default navbar-static navbar-fixed">
         <div class="navbar-header">
             <a href="{{ url('/') }}" class="navbar-brand">Aidstream</a>
             <button type="button" class="navbar-toggle collapsed">
@@ -213,6 +213,13 @@
 <script type="text/javascript">
     $(document).ready(function () {
         Registration.filterSimilarOrg();
+        function hamburgerMenu() {
+            $('.navbar-toggle.collapsed').click(function () {
+                $('.navbar-collapse').toggleClass('out');
+                $(this).toggleClass('collapsed');
+            });
+        }
+        hamburgerMenu();
     });
 </script>
 </body>

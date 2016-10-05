@@ -26,7 +26,7 @@
 </head>
 <body>
 <header>
-    <nav class="navbar navbar-default navbar-static">
+    <nav class="navbar navbar-default navbar-static navbar-fixed">
         <div class="navbar-header">
             <a href="{{ url('/') }}" class="navbar-brand">Aidstream</a>
             <button type="button" class="navbar-toggle collapsed">
@@ -122,7 +122,6 @@
                 $(this).toggleClass('collapsed');
             });
         }
-
         hamburgerMenu();
     });
 </script>

@@ -24,7 +24,7 @@
 </head>
 <body>
 <header>
-    <nav class="navbar navbar-default navbar-static">
+    <nav class="navbar navbar-default navbar-static navbar-fixed">
         <div class="navbar-header">
             <a href="{{ url('/') }}" class="navbar-brand">Aidstream</a>
             <button type="button" class="navbar-toggle collapsed">
@@ -181,7 +181,7 @@
                 <div class="panel-heading">
                 </div>
                 <div class="panel-body text-center same-identifier">
-                    <img src="http://localhost:8000/images/ic-warning.svg" alt="warning" width="81" height="66">
+                    <img src="{{ url('/images/ic-warning.svg') }}" alt="warning" width="81" height="66">
                     <h1>IATI Organisational Identifier Error</h1>
                     <p>
                         The IATI organisational identifier you entered <strong>"<span class="org-identifier"></span>"</strong> is being used by another organisation on AidStream.
@@ -206,7 +206,7 @@
                         </div>
                     </div>
                     <p>
-                        No, this is not my organisation. Contact<a href="{{ route('contact', ['not-my-organization']) }}">support@aidstream.org</a>
+                        No, this is not my organisation. Contact<a href="{{ route('contact', ['not-my-organization']) }}"> support@aidstream.org</a>
                     </p>
                 </div>
             </div>

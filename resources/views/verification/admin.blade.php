@@ -35,9 +35,8 @@
 </div>
 
 <div class="col-md-12 text-center">
-    {{ Form::button('Save and Continue', ['class' => 'btn btn-primary', 'type' => 'submit']) }}
-    {{--    {{ Form::button('I will add this later', ['class' => 'btn btn-primary', 'type' => 'button', 'data-dismiss' => 'modal']) }}--}}
-    {{ Form::button('I will add this later', ['class' => 'btn btn-primary', 'type' => 'submit']) }}
+    {{ Form::button('Save and Continue', ['class' => 'btn btn-primary pull-left', 'type' => 'submit']) }}
+    {{ Form::button('I will add this later', ['class' => 'btn btn-primary pull-right', 'type' => 'submit']) }}
 </div>
 
 {{ Form::close() }}

@@ -16,6 +16,7 @@ $url_5: url("../images/ic-twitter.svg");
 $url_6: url("../images/ic-location.svg");
 $url_7: url("../images/ic-tel.svg");
 $url_7: url("../images/ic-img.png");
+$url_8: url("../images/logo-text.svg");
 
 @font-face {
   font-family: Open-Sans-Regular;
@@ -101,6 +102,13 @@ h2 {
   height: 42px;
   display: block;
   text-indent: -9999px;
+}
+
+.navbar-fixed {
+  padding: 9px 30px!important;
+  .navbar-brand {
+    background: $url_8 no-repeat left;
+  }
 }
 
 .navbar-default .navbar-nav > li > a {
@@ -667,6 +675,11 @@ footer {
   right: 15px;
   z-index: 1;
   cursor: pointer;
+}
+
+.close,.close:hover,.close:focus {
+  opacity: 1!important;
+  font-family: Open-Sans-Regular;
 }
 
 @media all and (min-width: 480px) {

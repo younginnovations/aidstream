@@ -83,6 +83,14 @@ h2 {
     text-indent: -9999px;
 }
 
+.navbar-fixed {
+    padding: 9px 30px!important;
+}
+
+.navbar-fixed .navbar-brand {
+    background: url("../images/logo-text.svg") no-repeat left;
+}
+
 .navbar-default .navbar-nav > li > a {
     color: inherit;
     padding: 0;
@@ -682,11 +690,6 @@ footer ul li {
     color: #484848;
 }
 
-button.close {
-    opacity: 1;
-    font-weight: normal;
-}
-
 .modal-dialog .close span,.modal-dialog .close:hover span,.modal-dialog .close:focus span  {
     color: #00A8FF;
     font-size: 40px;
@@ -696,6 +699,11 @@ button.close {
     right: 15px;
     z-index: 1;
     cursor: pointer;
+}
+
+.close,.close:hover,.close:focus {
+    opacity: 1!important;
+    font-family: Open-Sans-Regular;
 }
 
 @media all and (min-width: 480px) {

@@ -60,7 +60,9 @@
                                             @else
                                                 <img src="" height="150" width="150" alt="Uploaded Image" id="selected_picture">
                                             @endif
-                                            <span class="change-logo">Change Logo</span>
+                                            <div class="change-logo-wrap">
+                                                <span class="change-logo">Change Logo</span>
+                                            </div>
                                         </div>
                                     </label>
                                     <span class="upload-label">Upload your profile picture</span>
@@ -89,7 +91,7 @@
                                 </div>
                             @endif
                             <div class="form-group">
-                                <button type="submit" class="btn btn-primary btn-form btn-submit">Save Profile</button>
+                                <button type="submit" class="btn btn-primary btn-form btn-submit">Save your Profile</button>
                             </div>
                         </div>
                     </div>

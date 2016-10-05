@@ -24,7 +24,7 @@
 </head>
 <body>
 <header>
-    <nav class="navbar navbar-default navbar-static">
+    <nav class="navbar navbar-default navbar-static navbar-fixed">
         <div class="navbar-header">
             <a href="{{ url('/') }}" class="navbar-brand">Aidstream</a>
             <button type="button" class="navbar-toggle collapsed">
@@ -53,7 +53,7 @@
     </nav>
 </header>
 
-<div class="login-wrapper">
+<div class="register-wrapper">
     {{--		    <div class="language-select-wrapper">
                     <label for="" class="pull-left">Language</label>
                 <div class="language-selector pull-left">
@@ -66,7 +66,7 @@
                             @endforeach
                         </ul>
                 </div>--}}
-    <div class="container-fluid login-container reset-container">
+    <div class="container-fluid login-container contact-admin-container">
         <div class="row">
             <h1 class="text-center">{{ $contactTitle }}</h1>
             {{--*/
@@ -88,9 +88,7 @@
             @endif
             <div class="col-xs-12">
                 <div class="panel panel-default">
-                    <div class="panel-heading"></div>
                     <div class="panel-body">
-                        <h2>{{ $contactTitle }}</h2>
                         <div class="text-danger">{{ session('error_message') }}</div>
                         {{ Form::open(['method' => 'post', 'id' => 'form-contact']) }}
                         <div class="login-form-group">
@@ -123,6 +121,13 @@
 <script>
     $(document).ready(function () {
         Contact.load();
+        function hamburgerMenu() {
+            $('.navbar-toggle.collapsed').click(function () {
+                $('.navbar-collapse').toggleClass('out');
+                $(this).toggleClass('collapsed');
+            });
+        }
+        hamburgerMenu();
     });
 </script>
 </body>
