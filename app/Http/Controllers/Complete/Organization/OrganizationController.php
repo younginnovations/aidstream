@@ -105,7 +105,6 @@ class OrganizationController extends Controller
                 'status',
                 'recipient_region_budget',
                 'total_expenditure',
-                'filename',
                 'organizationDataStatus',
                 'message'
             )
@@ -343,7 +342,11 @@ class OrganizationController extends Controller
     {
         $organization_data = $this->organizationManager->getPublishedOrganizationData($organization_id);
 
-        return $organization_data->filename;
+        if ($organization_data) {
+            return $organization_data->filename;
+        }
+
+        return null;
     }
 
     /** Returns status of the published data of organization.
