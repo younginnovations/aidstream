@@ -8,27 +8,13 @@
             <div class="modal-content">
                 <div class="modal-body">
                     <div><img src="/img/logo.png"/></div>
-                    @if(!session('completed'))
-                        <div>Welcome {{ ucfirst($firstname )}}</div>
-                        <div>to AidStream</div>
-                        <div> Thank you for choosing AidStream to publish your organisation's data to the IATI Registry.</div>
-                        @if(Auth::user()->isAdmin())
-                            <div><a href="{{url('publishing-settings')}}">Set up your account to Start Publishing to the IATI Registry.</a></div>
-                        @endif
-                    @else
-                        <div>Great going {{ucfirst($firstname)}}</div>
-                        @if(Auth::user()->isAdmin())
-                            <div>
-                                <em>Set up your account to Start Publishing to the IATI Registry.</em>
-                                @if(session('completed') == 'yes')
-                                    'Checked'
-                                @else
-                                    'Unchecked'
-                                @endif
-                            </div>
-                        @endif
-                        <div>You can always go back to Settings page to change your organisation's settings</div>
+                    <div>Welcome {{ ucfirst($firstname )}}</div>
+                    <div>to AidStream</div>
+                    <div> Thank you for choosing AidStream to publish your organisation's data to the IATI Registry.</div>
+                    @if(Auth::user()->isAdmin())
+                        <div><a href="{{url('publishing-settings')}}">Set up your account to Start Publishing to the IATI Registry.</a></div>
                     @endif
+                    <div>You can always go back to Settings page to change your organisation's settings</div>
                     <div><a href="{{ url('dashboardTour') }}">
                             <button>Get to know your Dashboard</button>
                         </a></div>

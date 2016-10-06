@@ -37,7 +37,7 @@
                     </div>
                     <div>You can always learn more on the Learn page.</div>
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                    <div>{{ Form::checkbox('check') }} I have already explored AidStream. Don't show me this again.</div>
+                    <div><label>{{ Form::checkbox('check') }} I have already explored AidStream. Don't show me this again.</label></div>
                     <a data-controls-modal="your_div_id"
                        data-backdrop="static"
                        data-keyboard="false"

@@ -616,10 +616,20 @@ $(document).ready(function () {
     });
 
     window.onbeforeunload = function () {
-        if (preventNavigation) {
-            return 'You have unsaved changes.';
+        var route = getRouteFromUrl();
+        if (route != 'register' && ($('.introjs-overlay').length == 0)) {
+            if (preventNavigation) {
+                return 'You have unsaved changes.';
+            }
         }
     };
+
+    // Returns the word after '/' of url
+    function getRouteFromUrl() {
+        var fullUrl = window.location.href;
+        var positionOfSlash = fullUrl.lastIndexOf('/');
+        return fullUrl.substr(positionOfSlash + 1);
+    }
 
     //activity view
     $('.show-more-info,.hide-more-info').click(function () {

@@ -81,6 +81,9 @@ class AuthController extends Controller
         $this->settings     = $settings;
     }
 
+    /**
+     * @return string
+     */
     public function loginPath()
     {
         return '/auth/login';
@@ -178,52 +181,17 @@ class AuthController extends Controller
 
             if (Auth::attempt($credentials, $request->has('remember'))) {
                 $user = Auth::user();
-                if (!$user->enabled) {
-                    Auth::logout();
+                $this->verify($user)
+                     ->storeDetailsInSession($user)
+                     ->setVersions();
 
-                    return redirect('/auth/login')->withErrors("Your account has been disabled. Please contact us at <a href='mailto:support@aidstream.org'>support@aidstream.org</a> ");
-                } elseif (!$user->verified_status) {
-                    Auth::logout();
+                $redirectPath = ($user->isSuperAdmin() || $user->isGroupAdmin())
+                    ? config('app.super_admin_dashboard')
+                    : config('app.admin_dashboard');
 
-                    return redirect('/auth/login')->withErrors(
-                        "Your account has not be verified yet. Please click connect me link in registration confirmation email. If you are still having problem, please contact us at <a href='mailto:support@aidstream.org'>support@aidstream.org</a> "
-                    );
-                }
-                Session::put('role_id', $user->role_id);
-                Session::put('org_id', $user->org_id);
-                Session::put('admin_id', $user->id);
-                $settings       = Settings::where('organization_id', $user->org_id)->first();
-                $settings_check = isset($settings);
-                $version        = ($settings_check) ? $settings->version : config('app.default_version');
-                Session::put('current_version', $version);
-                $versions_db = $this->database->table('versions')->get();
-                $versions    = [];
-                foreach ($versions_db as $ver) {
-                    $versions[] = $ver->version;
-                }
-                $versionKey   = array_search($version, $versions);
-                $next_version = (end($versions) == $version) ? null : $versions[$versionKey + 1];
+                $intendedUrl = Session::get('url.intended');
 
-                Session::put('next_version', $next_version);
-                $version = 'V' . str_replace('.', '', $version);
-                Session::put('version', $version);
-                $redirectPath = ($user->isSuperAdmin() || $user->isGroupAdmin()) ? config('app.super_admin_dashboard') : config('app.admin_dashboard');
-                $intendedUrl  = Session::get('url.intended');
-
-                if (isset(Auth::user()->userOnBoarding->has_logged_in_once)) {
-                    if (Auth::user()->userOnBoarding->has_logged_in_once) {
-                        $redirectPath = ($user->role_id == 1 || $user->role_id == 2) ? config('app.admin_dashboard') : config('app.super_admin_dashboard');
-                    } else {
-                        Session::put('first_login', true);
-                        $redirectPath = 'welcome';
-                    }
-                } elseif ($user->role_id == 3 || $user->role_id == 4) {
-                    $redirectPath = config('app.super_admin_dashboard');
-                } else {
-                    Auth::user()->userOnBoarding()->create(['has_logged_in_once' => false]);
-                    Session::put('first_login', true);
-                    $redirectPath = 'welcome';
-                }
+                $redirectPath = $this->userOnBoardingRedirectPath($user, $redirectPath);
 
                 !(($user->role_id == 3 || $user->role_id == 4) && strpos($intendedUrl, '/admin') === false) ?: $intendedUrl = url('/');
                 !($intendedUrl == url('/')) ?: Session::set('url.intended', $redirectPath);
@@ -304,6 +272,10 @@ class AuthController extends Controller
         return redirect(property_exists($this, 'redirectAfterLogout') ? $this->redirectAfterLogout : '/');
     }
 
+    /**
+     * @param Request $request
+     * @return array|string
+     */
     public function checkUserIdentifier(Request $request)
     {
         $userIdentifier = $request->get('userIdentifier');
@@ -317,5 +289,91 @@ class AuthController extends Controller
         }
 
         return $response;
+    }
+
+    /**
+     *  Verify the status of the user.
+     * @param $user
+     * @return $this
+     */
+    protected function verify($user)
+    {
+        if (!$user->enabled) {
+            Auth::logout();
+
+            return redirect('/auth/login')->withErrors("Your account has been disabled. Please contact us at <a href='mailto:support@aidstream.org'>support@aidstream.org</a> ");
+        }
+
+        if (!$user->verified_status) {
+            Auth::logout();
+
+            return redirect('/auth/login')->withErrors(
+                "Your account has not be verified yet. Please click connect me link in registration confirmation email. If you are still having problem, please contact us at <a href='mailto:support@aidstream.org'>support@aidstream.org</a> "
+            );
+        }
+
+        return $this;
+    }
+
+    /**
+     *  Store role id, org id, admin id and version in session.
+     * @param $user
+     * @return $this
+     */
+    protected function storeDetailsInSession($user)
+    {
+        Session::put('role_id', $user->role_id);
+        Session::put('org_id', $user->org_id);
+        Session::put('admin_id', $user->id);
+        $settings = Settings::where('organization_id', $user->org_id)->first();
+        $version  = (isset($settings)) ? $settings->version : config('app.default_version');
+        Session::put('current_version', $version);
+
+        return $this;
+    }
+
+    /**
+     * Set Version
+     */
+    protected function setVersions()
+    {
+        $version     = session('current_version');
+        $versions_db = $this->database->table('versions')->get();
+        $versions    = [];
+        foreach ($versions_db as $ver) {
+            $versions[] = $ver->version;
+        }
+        $versionKey   = array_search($version, $versions);
+        $next_version = (end($versions) == $version) ? null : $versions[$versionKey + 1];
+
+        Session::put('next_version', $next_version);
+        $version = 'V' . str_replace('.', '', $version);
+        Session::put('version', $version);
+    }
+
+    /**
+     * Set Redirect path according to the status of the userOnBoarding.
+     * @param $user
+     * @param $redirectPath
+     * @return mixed|string
+     */
+    protected function userOnBoardingRedirectPath($user, $redirectPath)
+    {
+        if (isset($user->userOnBoarding->has_logged_in_once)) {
+            if ($user->userOnBoarding->has_logged_in_once) {
+                $redirectPath = ($user->role_id == 3 || $user->role_id == 4) ? config('app.super_admin_dashboard') : config('app.admin_dashboard');
+            } else {
+                Session::put('first_login', true);
+                $redirectPath = 'welcome';
+            }
+        } elseif ($user->role_id == 3 || $user->role_id == 4) {
+            $redirectPath = config('app.super_admin_dashboard');
+        } else {
+            Auth::user()->userOnBoarding()->create(['has_logged_in_once' => false]);
+            Session::put('first_login', true);
+            $redirectPath = 'welcome';
+        }
+
+        return $redirectPath;
     }
 }

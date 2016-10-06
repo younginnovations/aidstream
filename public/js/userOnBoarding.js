@@ -2,6 +2,7 @@
     UserOnBoarding = {
         dashboardTour: function () {
             var intro = introJs();
+            var step6Text = (roleId == 1) ? 'View Activity log' : 'My Profile';
             intro.setOptions({
                 steps: [
                     {
@@ -49,7 +50,7 @@
                         intro: "" +
                         "Click here to view your organisation's account settings. Users with Administrator level permission can edit settings from here" +
                         "<div><a href='/activity'>Skip</a></div>" +
-                        "<div><a href='#' id='btn6'>Next: View Activity log</a> </div>",
+                        "<div><a href='#' id='btn6'>Next:" + step6Text + " </a> </div> ",
                         position: 'right'
                     },
                     {
@@ -87,7 +88,7 @@
             }).delegate('#btn5', 'click', function () {
                 intro.goToStep(6);
             }).delegate('#btn6', 'click', function () {
-                intro.goToStep(7);
+                (roleId == 1) ? intro.goToStep(7) : intro.goToStep(8);
             }).delegate('#btn7', 'click', function () {
                 intro.goToStep(8);
             }).delegate('#btn8', 'click', function () {

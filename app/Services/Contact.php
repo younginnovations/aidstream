@@ -167,7 +167,7 @@ class Contact
         $data['adminName'] = session()->pull('admin_name');
         $data['orgName']   = session()->pull('org_name');
         $data['subject']   = 'AidStream User Account Details.';
-        $data['view']      = 'emails.user-account-details';
+        $data['view']      = 'emails.need-new-user-account';
     }
 
     /**

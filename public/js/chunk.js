@@ -107,33 +107,47 @@ if (typeof(Chunk) == "undefined") var Chunk = {};
             function verify(source) {
                 var publisherId = $('#publisher_id').val();
                 var apiKey = $('#api_id').val();
+                var publisherIdStatus = $("#publisher_id_status_display");
+                var apiIdStatus = $("#api_id_status_display");
                 $('#error').addClass('hidden');
-                $.ajax({
-                    headers: {'X-CSRF-TOKEN': $('[name="_token"]').val()},
-                    url: '/publishing-settings/verifyPublisherAndApi',
-                    data: {publisherId: publisherId, apiKey: apiKey},
-                    type: 'POST',
-                    beforeSend: function () {
-                        $('body').append('<div class="loader">.....</div>');
-                    },
-                    complete: function () {
-                        $('body > .loader').addClass('hidden').remove();
-                    },
-                    success: function (data) {
-                        var publisher_response = data['publisher_id'];
-                        var api_key = data['api_key'];
-                        var publisherStatus = (publisher_response) ? "Correct" : "Incorrect";
-                        var apiKeyStatus = (api_key) ? "Correct" : "Incorrect";
-                        if (source == "publisher" || source == "both") {
-                            $("#publisher_id_status").val(publisherStatus);
-                            $("#publisher_id_status_display").removeClass('text-danger text-success').addClass(publisher_response ? 'text-success' : 'text-danger').html(publisherStatus);
+                if (shouldCheck(source, publisherId, apiKey, publisherIdStatus, apiIdStatus)) {
+                    $.ajax({
+                        headers: {'X-CSRF-TOKEN': $('[name="_token"]').val()},
+                        url: '/publishing-settings/verifyPublisherAndApi',
+                        data: {publisherId: publisherId, apiKey: apiKey},
+                        type: 'POST',
+                        beforeSend: function () {
+                            $('body').append('<div class="loader">.....</div>');
+                        },
+                        complete: function () {
+                            $('body > .loader').addClass('hidden').remove();
+                        },
+                        success: function (data) {
+                            storeValues(source, data, publisherIdStatus, apiIdStatus);
                         }
-                        if (source == "api" || source == "both") {
-                            $("#api_id_status").val(apiKeyStatus);
-                            $("#api_id_status_display").removeClass('text-danger text-success').addClass(api_key ? 'text-success' : 'text-danger').html(apiKeyStatus);
-                        }
-                    }
-                });
+                    });
+                }
+            }
+
+            function shouldCheck(source, publisherId, apiKey, publisherIdStatus, apiIdStatus) {
+                if ((source == "publisher" && publisherId != "") || (source == "api" && apiKey != "") || (apiIdStatus.html() == "Correct" || publisherIdStatus.html() == "Correct")) {
+                    return true;
+                }
+            }
+
+            function storeValues(source, data, publisherIdStatus, apiIdStatus) {
+                var publisher_response = data['publisher_id'];
+                var api_key = data['api_key'];
+                var publisherStatus = (publisher_response) ? "Correct" : "Incorrect";
+                var apiKeyStatus = (api_key) ? "Correct" : "Incorrect";
+                if (source == "publisher" || source == "both") {
+                    publisherIdStatus.val(publisherStatus);
+                    $("#publisher_id_status_display").removeClass('text-danger text-success').addClass(publisher_response ? 'text-success' : 'text-danger').html(publisherStatus);
+                }
+                if (source == "api" || source == "both") {
+                    apiIdStatus.val(apiKeyStatus);
+                    $("#api_id_status_display").removeClass('text-danger text-success').addClass(api_key ? 'text-success' : 'text-danger').html(apiKeyStatus);
+                }
             }
 
             $('#verify').on('click', function () {

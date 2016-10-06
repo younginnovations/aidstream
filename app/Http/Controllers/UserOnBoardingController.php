@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Organization\Organization;
 use App\Services\UserOnBoarding\UserOnBoardingService;
-use Aws\Common\Facade\Ses;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -39,8 +38,9 @@ class UserOnBoardingController extends Controller
     public function welcome()
     {
         $firstname = Auth::user()->first_name;
+        $lastname  = Auth::user()->last_name;
 
-        if (Auth::user()->userOnBoarding->has_completed_steps) {
+        if (Auth::user()->userOnBoarding->has_completed_steps || (!session('first_login'))) {
             return redirect()->to('/activity');
         }
 
