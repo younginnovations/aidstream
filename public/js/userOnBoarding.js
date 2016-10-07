@@ -97,42 +97,41 @@
         },
         settingsTour: function () {
             var intro = introJs();
-
             intro.setOptions({
                 steps: [
                     {
                         element: '#publishing_info1',
                         intro: '' +
-                        '<div><button id="btnInfo1">Update and go to next step</button></div>' +
-                        '<div><a id="info1">I&rsquo;ll set this up later</a></div>',
+                        '<a id="btnInfo1" class="update-next">Update and go to next step</a>' +
+                        '<a id="info1" class="setup-later">I&rsquo;ll set this up later</a>',
                         position: 'bottom-right-aligned'
                     },
                     {
                         element: '#publishing_info2',
                         intro: '' +
-                        '<div><button id="btnInfo2">Update and go to next step</button></div>' +
-                        '<div><a href="#" id="info2">I&rsquo;ll set this up later</a></div>',
+                        '<a id="btnInfo2" class="update-next">Update and go to next step</a>' +
+                        '<a id="info2" class="setup-later">I&rsquo;ll set this up later</a>',
                         position: 'bottom-right-aligned'
                     },
                     {
                         element: '#publishing_info3',
                         intro: '' +
-                        '<div><button id="btnInfo3">Update and go to next step</button></div>' +
-                        '<div><a href="#" id="info3">I&rsquo;ll set this up later</a></div>',
+                        '<a id="btnInfo3" class="update-next">Update and go to next step</a>' +
+                        '<a id="info3" class="setup-later">I&rsquo;ll set this up later</a>',
                         position: 'bottom-right-aligned'
                     },
                     {
-                        element: '#activity-elements-checklist',
+                        element: '#activity-elements-checklist-wrapper',
                         intro: '' +
-                        '<div><button id="btnInfo4">Update and go to to next step</button></div>' +
-                        '<div><a href="#" id="info4">I&rsquo;ll set this up later</a></div>',
+                        '<a id="btnInfo4" class="update-next">Update and go to to next step</a>' +
+                        '<a id="info4" class="setup-later">I&rsquo;ll set this up later</a>',
                         position: 'bottom-right-aligned'
                     },
                     {
                         element: '#default_values',
                         intro: '' +
-                        '<div><button id="btnInfo5">Finish set up process</button></div>' +
-                        '<div><a href="#" id="info5">I&rsquo;ll set this up later</a></div>',
+                        '<a id="btnInfo5" class="update-next">Finish set up process</a>' +
+                        '<a id="info5" class="setup-later">I&rsquo;ll set this up later</a>',
                         position: 'bottom-right-aligned'
                     }
                 ],
@@ -142,7 +141,9 @@
                 exitOnEsc: false
             });
 
-            intro.start();
+            intro.start().onchange(function (targetElement) {
+                $(targetElement).find('.intro-title').css('display', 'block');
+            });
 
             var links = {
                 '1': '/publishing-settings/#1',
@@ -152,25 +153,31 @@
                 '5': '/default-values/#5'
             };
 
-            var steps = $('.introjs-bullets a').each(function () {
+            var steps = $('.introjs-bullets a').each(function (index) {
                 var stepNumber = $(this).attr('data-stepnumber');
                 $(this).attr('href', links[stepNumber]);
+                $(this).html(index+1);
             });
 
-            var stepNumber = location.hash.replace('#', '')
+            var stepNumber = location.hash.replace('#', '');
             if (stepNumber != '') {
                 intro.goToStep(stepNumber);
             }
 
             $('body').delegate('#info1', 'click', function () {
+                $('#publishing_info1').children().first().css('display', 'none');
                 intro.goToStep(2);
             }).delegate('#info2', 'click', function () {
+                $('#publishing_info2').children().first().css('display', 'none');
                 intro.goToStep(3);
             }).delegate('#info3', 'click', function () {
+                $('#publishing_info3').children().first().css('display', 'none');
                 window.location.href = '/activity-elements-checklist#4';
             }).delegate('#info4', 'click', function () {
+                $('#activity-elements-checklist').children().first().css('display', 'none');
                 window.location.href = '/default-values#5';
             }).delegate('#info5', 'click', function () {
+                $('#default_values').children().first().css('display', 'none');
                 window.location.href = '/continueExploring';
             });
 

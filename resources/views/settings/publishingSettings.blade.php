@@ -3,29 +3,45 @@
     <div class="panel-body">
         <div class="create-form settings-form">
             {!! form_start($form) !!}
-            <h2>Registry Information</h2>
             <div id="publishing_info1">
-                <div class="form-group">
-                    {!! form_label($form->publisher_id, ['label' => 'Publisher ID']) !!}
-                    {!! form_widget($form->publisher_id) !!}
-                    <div id="publisher_id_status_display" class="{{ ($status = getVal($form->getModel(), ['publisher_id_status'])) == 'Verified' ? 'text-success' : 'text-danger' }}">{{ $status }}</div>
+                <div class="info-title">AidStream required your organisation’s Publisher ID and API key to be able to
+                    publish your data to the IATI registry.
                 </div>
-                {!! form_until($form,'publisher_id_status') !!}
-                <div class="form-group">
-                    {!! form_label($form->api_id, ['label' => 'API Key']) !!}
-                    {!! form_widget($form->api_id) !!}
-                    <div id="api_id_status_display" class="{{ ($status = getVal($form->getModel(), ['api_id_status'])) == 'Correct' ? 'text-success' : 'text-danger' }}">{{ $status }}</div>
+                <div class="publishing-wrap">
+                    <h2>Registry Information</h2>
+                    <div class="form-group">
+                        {!! form_label($form->publisher_id, ['label' => 'Publisher ID']) !!}
+                        {!! form_widget($form->publisher_id) !!}
+                        <div id="publisher_id_status_display"
+                             class="{{ ($status = getVal($form->getModel(), ['publisher_id_status'])) == 'Verified' ? 'text-success' : 'text-danger' }}">{{ $status }}</div>
+                    </div>
+                    {!! form_until($form,'publisher_id_status') !!}
+                    <div class="form-group">
+                        {!! form_label($form->api_id, ['label' => 'API Key']) !!}
+                        {!! form_widget($form->api_id) !!}
+                        <div id="api_id_status_display"
+                             class="{{ ($status = getVal($form->getModel(), ['api_id_status'])) == 'Correct' ? 'text-success' : 'text-danger' }}">{{ $status }}</div>
+                    </div>
+                    {!! form_until($form,'verify') !!}
                 </div>
-                {!! form_until($form,'verify') !!}
             </div>
             <div id="publishing_info2">
-                <div class="col-md-12">
-                    {!!  form_until($form,'publishing') !!}
+                <div class="info-title">The publishing type is “Unsegmented” by default.
+                    All the activities will be published in a single file to
+                    the IATI registry.</div>
+                <div class="publishing-wrap">
+                    <div class="col-md-12">
+                        {!!  form_until($form,'publishing') !!}
+                    </div>
                 </div>
             </div>
             <div id="publishing_info3">
-                <div class="col-md-12">
-                    {!! form_until($form,'publish_files') !!}
+                <div class="info-title">By default, when you update your data, the changes are not automatically reflected on the IATI registry.
+                    Select “Yes” to be let AidStream automatically update your data on the registry.</div>
+                <div class="publishing-wrap">
+                    <div class="col-md-12">
+                        {!! form_until($form,'publish_files') !!}
+                    </div>
                 </div>
             </div>
             {!!  form_end($form) !!}

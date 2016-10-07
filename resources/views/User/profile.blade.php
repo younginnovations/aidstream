@@ -19,7 +19,7 @@
                                         <img src="{{Auth::user()->profile_url}}" width="180" height="180"
                                              alt="{{Auth::user()->name}}">
                                     @else
-                                        <img src="{{url('images/avatar-full.png')}}" width="180" height="180"
+                                        <img src="{{url('images/avatar-full.png')}}" width="150" height="158"
                                              alt="{{Auth::user()->name}}">
                                     @endif
                                 </div>

@@ -44,7 +44,7 @@ class UserOnBoardingController extends Controller
             return redirect()->to('/activity');
         }
 
-        return view('onBoarding.welcome', compact('firstname'));
+        return view('onBoarding.welcome', compact('firstname','lastname'));
     }
 
     /**
