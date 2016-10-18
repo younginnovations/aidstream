@@ -29,7 +29,10 @@ class Publisher extends RegistryApiHandler
     {
         $this->init(env('REGISTRY_URL'), getVal($registryInfo, [0, 'api_id'], ''))->setPublisher(getVal($registryInfo, [0, 'publisher_id'], ''));
 
-        if (!$this->checkPublisherValidity($this->client->package_search($this->publisherId))) {
+        /* Depcricated */
+//        $this->client->package_search($this->publisherId)
+
+        if (!$this->checkPublisherValidity($this->searchForPublisher())) {
             throw new PublisherNotFoundException('Publisher not found.');
         }
 
@@ -57,9 +60,12 @@ class Publisher extends RegistryApiHandler
 
             foreach ($changeDetails['previous'] as $filename => $previous) {
                 $pieces = explode(".", $filename);
-                $fileId = array_first($pieces, function () {
-                    return true;
-                });
+                $fileId = array_first(
+                    $pieces,
+                    function () {
+                        return true;
+                    }
+                );
 
                 if (getVal($previous, ['published_status'])) {
                     $api->package_delete($fileId);
@@ -275,5 +281,19 @@ class Publisher extends RegistryApiHandler
                 return true;
             }
         );
+    }
+
+    /**
+     * Search for a publisher with a specific publisherId.
+     * @return string
+     */
+    protected function searchForPublisher()
+    {
+        $apiHost = env('REGISTRY_URL');
+        $uri     = 'action/package_search';
+
+        $url    = sprintf('%s%s?q=%s', $apiHost, $uri, $this->publisherId);
+
+        return file_get_contents($url);
     }
 }
