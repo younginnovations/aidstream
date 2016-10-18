@@ -127,6 +127,10 @@ class WorkflowController extends Controller
             return redirect()->back()->withResponse(['type' => 'success', 'code' => ['publish_registry_publish', ['name' => '']]]);
         }
 
+        if (is_string($result)) {
+            return redirect()->back()->withResponse(['type' => 'warning', 'code' => ['message', ['message' => $result]]]);
+        }
+
         return redirect()->back()->withResponse(['type' => 'warning', 'code' => ['message', ['message' => 'Could not publish to registry. (Publisher not found. <a href="/settings">Please check you publisher Id.</a>)']]]);
     }
 
