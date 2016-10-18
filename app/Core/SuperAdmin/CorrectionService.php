@@ -149,10 +149,10 @@ class CorrectionService
         $publisherId = $this->extract('publisher_id', $settings);
 
         try {
-            $registry           = $this->initializeRegistry(env('REGISTRY_URL'), $apiKey);
+//            $registry           = $this->initializeRegistry(env('REGISTRY_URL'), $apiKey);
             $this->organization = $organization;
 
-            $this->publisherMetaData = json_decode($registry->package_search($publisherId));
+            $this->publisherMetaData = json_decode($this->searchForPublisher($publisherId));
         } catch (\Exception $exception) {
             $this->logger->error(sprintf('Package could not be found'));
         }
@@ -373,5 +373,19 @@ class CorrectionService
         }
 
         return true;
+    }
+
+    /**
+     * Search for a publisher with a specific publisherId.
+     * @param $publisherId
+     * @return string
+     */
+    protected function searchForPublisher($publisherId)
+    {
+        $apiHost = env('REGISTRY_URL');
+        $uri     = 'action/package_search';
+        $url     = sprintf('%s%s?q=%s', $apiHost, $uri, $publisherId);
+
+        return file_get_contents($url);
     }
 }
