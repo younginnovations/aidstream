@@ -299,12 +299,10 @@ class OrganizationRepository implements OrganizationRepositoryInterface
                     'url'      => url(sprintf('files/xml/%s', $publishedFile->filename))
                 ]
             ],
-            'extras'       => [
-                ['key' => 'filetype', 'value' => 'organization'],
-                ['key' => 'data_updated', 'value' => $publishedFile->updated_at->toDateTimeString()],
-                ['key' => 'language', 'value' => config('app.locale')],
-                ['key' => 'verified', 'value' => 'no']
-            ]
+            "filetype"       => "organization",
+            "data_updated"   => $publishedFile->updated_at->toDateTimeString(),
+            "language"       => config('app.locale'),
+            "verified"       => "no"
         ];
 
         return json_encode($data);
