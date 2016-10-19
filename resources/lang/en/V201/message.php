@@ -5,7 +5,7 @@ return [
     'update_failed'                           => 'Failed to update :name.',
     'activity_description'                    => ':name of same type is not allowed to be added.',
     'participating_org'                       => 'There should be at least one :name with the role "Funding" or "Implementing".',
-    'created'                                 => 'The user account with :name, has been created successfully. Please notify the user their username and password to start using their AidStream account.',
+    'created'                                 => ':name has been created successfully.',
     'save_failed'                             => 'Failed to save :name.',
     'deleted'                                 => ':name has been deleted successfully.',
     'delete_failed'                           => 'Failed to delete :name.',
@@ -44,4 +44,5 @@ return [
     'sent'                                    => ':name have been sent',
     'organization_element_removed'            => 'Organisation element has been removed successfully',
     'organization_element_not_removed'        => 'Failed to remove organisation element',
+    'user_created'                            => 'The user account with :name, has been created successfully. Please notify the user their username and password to start using their AidStream account.'
 ];

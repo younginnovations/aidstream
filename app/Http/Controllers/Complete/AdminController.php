@@ -147,7 +147,7 @@ class AdminController extends Controller
         $this->user->password   = bcrypt($request->get('password'));
         $this->user->verified   = true;
 
-        $response = ($this->user->save()) ? ['type' => 'success', 'code' => ['created', ['name' => $this->user->username]]] : ['type' => 'danger', 'code' => ['save_failed', ['name' => 'User']]];
+        $response = ($this->user->save()) ? ['type' => 'success', 'code' => ['user_created', ['name' => $this->user->username]]] : ['type' => 'danger', 'code' => ['save_failed', ['name' => 'User']]];
 
         $this->userOnBoardingManager->create($this->user->id);
         $this->dbLogger->activity("admin.user_created", ['orgId' => $this->org_id, 'userId' => $this->user->id]);
