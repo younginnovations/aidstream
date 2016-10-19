@@ -426,26 +426,24 @@ class ActivityController extends Controller
     {
         return json_encode(
             [
-                'title'        => $data['title'],
-                'name'         => $data['name'],
-                'author_email' => $data['author_email'],
-                'owner_org'    => $data['owner_org'],
-                'license_id'   => 'other-open',
-                'resources'    => [
+                'title'                => $data['title'],
+                'name'                 => $data['name'],
+                'author_email'         => $data['author_email'],
+                'owner_org'            => $data['owner_org'],
+                'license_id'           => 'other-open',
+                'resources'            => [
                     [
                         'format'   => config('xmlFiles.format'),
                         'mimetype' => config('xmlFiles.mimeType'),
                         'url'      => $data['file_url'],
                     ],
                 ],
-                'extras'       => [
-                    ['key' => 'filetype', 'value' => 'activity'],
-                    ['key' => $data['geographicKey'], 'value' => $data['geographicCode']],
-                    ['key' => 'data_updated', 'value' => $data['data_updated']],
-                    ['key' => 'activity_count', 'value' => $data['activity_count']],
-                    ['key' => 'language', 'value' => $data['language']],
-                    ['key' => 'verified', 'value' => 'no'],
-                ],
+                "filetype"             => "activity",
+                $data['geographicKey'] => ($data['geographicCode'] == 'activities') ? '' : $data['geographicCode'],
+                "data_updated"         => $data['data_updated'],
+                "activity_count"       => $data['activity_count'],
+                "language"             => $data['language'],
+                "verified"             => "no"
             ]
         );
     }

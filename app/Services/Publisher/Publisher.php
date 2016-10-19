@@ -133,26 +133,24 @@ class Publisher extends RegistryApiHandler
     {
         return json_encode(
             [
-                'title'        => $title,
-                'name'         => $filename,
-                'author_email' => $organization->getAdminUser()->email,
-                'owner_org'    => $this->publisherId,
-                'license_id'   => 'other-open',
-                'resources'    => [
+                'title'          => $title,
+                'name'           => $filename,
+                'author_email'   => $organization->getAdminUser()->email,
+                'owner_org'      => $this->publisherId,
+                'license_id'     => 'other-open',
+                'resources'      => [
                     [
                         'format'   => config('xmlFiles.format'),
                         'mimetype' => config('xmlFiles.mimeType'),
                         'url'      => url(sprintf('files/xml/%s.xml', $filename))
                     ]
                 ],
-                'extras'       => [
-                    ['key' => 'filetype', 'value' => 'activity'],
-                    ['key' => $key, 'value' => $code],
-                    ['key' => 'data_updated', 'value' => $publishedFile->updated_at->toDateTimeString()],
-                    ['key' => 'activity_count', 'value' => count($publishedFile->published_activities)],
-                    ['key' => 'language', 'value' => config('app.locale')],
-                    ['key' => 'verified', 'value' => 'no']
-                ]
+                "filetype"       => "activity",
+                $key             => ($code == 'activities') ? '' : $code,
+                "data_updated"   => $publishedFile->updated_at->toDateTimeString(),
+                "activity_count" => count($publishedFile->published_activities),
+                "language"       => config('app.locale'),
+                "verified"       => "no"
             ]
         );
     }
