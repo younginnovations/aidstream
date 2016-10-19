@@ -161,9 +161,9 @@ select.form-control, form .select2-container {
   margin-bottom: 0.75em;
 }
 
-//.select2-container {
-//  height: auto !important;
-//}
+.select2-container {
+  z-index: 100000000;
+}
 
 form .select2-container {
   width: 100% !important;
@@ -2572,15 +2572,20 @@ form > .add_to_collection[data-collection="legacy_data"] {
   & + form {
     background: $color_romance_approx;
     border: 1px solid $color_gallery;
+    border-radius: 4px;
     border-top: 0;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
-    padding: 0 20px 20px 20px;
-    margin-bottom: 30px;
+    padding: 0 20px;
+    //margin-bottom: 30px;
     clear: both;
     display: inline-block;
     width: 100%;
   }
+}
+
+#activity-elements-checklist + .form-group > .btn-form {
+  bottom: -84px;
 }
 
 .settings-wrapper {
@@ -4788,7 +4793,7 @@ pre.prettyprint {
 }
 
 #publishing_info1 {
-  margin-bottom: 22px;
+  margin-bottom: 15px;
   display: inline-block;
   width: 100%;
   .form-group {
@@ -5096,6 +5101,10 @@ body > .skiptranslate iframe {
       padding: 0;
       margin-bottom: 30px;
     }
+  }
+  &.introjs-showElement {
+    border-radius: 6px!important;
+    padding-top: 10px!important;
   }
 }
 
@@ -5622,27 +5631,16 @@ body > .skiptranslate iframe {
   display: block;
 }
 
-.info-title {
-  padding: 20px 22px;
-  background: $color_dodger_blue_approx;
-  font-size: 16px;
-  color: #fff;
-  border: 0 !important;
-  display: none;
+.intro-title {
+  font-size: 14px;
+  line-height: 22px;
+  margin-bottom: 20px;
 }
 
 .introjs-showElement {
   background: $color_romance_approx;
-  //margin: -9px -7px 0 -11px!important;
   width: initial !important;
   border-radius: 6px;
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
-  .info-title {
-    display: block;
-    border-top-left-radius: 2px;
-    border-top-right-radius: 2px;
-  }
   .publishing-wrap {
     overflow: hidden;
     padding: 10px 20px;
@@ -5652,21 +5650,22 @@ body > .skiptranslate iframe {
 .introjs-helperLayer {
   background: none !important;
   border: 0 !important;
-  border-bottom-left-radius: 0!important;
-  border-bottom-right-radius: 0!important;
-  box-shadow: none!important;
+  border-bottom-left-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+  box-shadow: none !important;
 }
 
 .introjs-tooltip {
-  width: 99%;
-  background: #f5f5f5 !important;
-  box-shadow: none !important;
-  max-width: inherit !important;
-  min-width: inherit !important;
-  border-top-left-radius: 0 !important;
-  border-top-right-radius: 0 !important;
-  padding: 14px !important;
-  margin: -16px 4px 0 0;
+  max-width: 450px !important;
+  padding: 30px !important;
+  background: $color_romance_approx !important;
+}
+
+.introjs-arrow {
+  border-width: 10px!important;
+  &.top-middle {
+    top: -17px!important;
+  }
 }
 
 .introjs-tooltiptext {
@@ -5676,34 +5675,31 @@ body > .skiptranslate iframe {
   }
 }
 
-.introjs-arrow {
-  display: none!important;
+.introjs-tooltiptext {
+  text-align: center;
 }
 
 .setup-later, .setup-later:hover, .setup-later:focus {
   font-size: 12px;
   color: #9B9B9B;
   text-decoration: underline;
-  float: right;
+  text-align: center;
 }
 
 .introjs-bullets {
-  float: left;
   height: 24px;
-  margin: 4px 0;
+ @include position(absolute,auto auto 109px 40%);
   ul {
-    margin: 0!important;
+    margin: 0 !important;
     li {
-      margin: 0 4px!important;
+      margin: 0 4px !important;
       a {
-        width: 24px !important;
-        height: 24px!important;
-        line-height: 24px;
+        width: 9px !important;
+        height: 9px !important;
         background: #ccc !important;
-        border-radius: 4px !important;
-        color: $color_white !important;
-        &:hover,&.active {
-          background: $color_dodger_blue_approx!important;
+        border-radius: 50% !important;
+        &:hover, &.active {
+          background: $color_dodger_blue_approx !important;
         }
       }
     }
@@ -5712,10 +5708,14 @@ body > .skiptranslate iframe {
 
 .update-next {
   position: relative;
-  padding-right: 22px;
+  width: 240px;
+  line-height: 42px;
+  padding: 0 0 0 20px;
+  margin: 50px auto 12px;
+  text-align: left;
   &:after {
     content: "";
-    @include position(absolute, 0 0 auto auto);
+    @include position(absolute, 11px 18px auto auto);
     background: $url_3 no-repeat -641px -585px;
     @include size(20px 20px);
   }

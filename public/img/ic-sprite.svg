@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <svg width="681px" height="695px" viewBox="0 0 681 695" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <!-- Generator: Sketch 40.1 (33804) - http://www.bohemiancoding.com/sketch -->
+    <!-- Generator: Sketch 40.3 (33839) - http://www.bohemiancoding.com/sketch -->
     <title>ic-sprite</title>
     <desc>Created with Sketch.</desc>
     <defs>
@@ -627,7 +627,7 @@
                     </g>
                 </g>
             </g>
-            <polygon id="Shape" fill="#00A8FF" points="659 606.466707 659 608.104467 671.375305 608.104467 667.036678 612.425818 668.182033 613.571174 674.607509 607.285587 668.182033 601 667.036678 602.145355 671.358501 606.467178"></polygon>
+            <polygon id="Shape" fill="#FFFFFF" points="659 606.466707 659 608.104467 671.375305 608.104467 667.036678 612.425818 668.182033 613.571174 674.607509 607.285587 668.182033 601 667.036678 602.145355 671.358501 606.467178"></polygon>
             <polygon id="Shape" fill="#FFFFFF" points="680.136364 183.829545 677.034091 180.727273 676 181.761364 680.136364 185.897727 689 177.034091 687.965909 176"></polygon>
             <g id="help_text" transform="translate(237.000000, 214.000000)">
                 <circle id="Oval" fill="#777777" cx="7" cy="7" r="7"></circle>

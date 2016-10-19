@@ -3,10 +3,6 @@
     <div class="panel-body">
         <div class="create-form settings-form">
             <div id="activity-elements-checklist-wrapper">
-                <div class="info-title">
-                    On AidStream some of the elements are required for an activity. These elements are <span class="disabled-check-img"></span> checked in the list below
-                    and disabled. You can always <span class="add-check-img"></span> check other elements to add their information in your activities.
-                </div>
                 <div class="settings-checkall-wrapper">
                     <h2>Activity Elements Checklist</h2>
                     <p>Please check the elements you want to add to your activities. The greyed out checkboxes are

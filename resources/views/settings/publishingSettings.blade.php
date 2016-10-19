@@ -4,9 +4,6 @@
         <div class="create-form settings-form">
             {!! form_start($form) !!}
             <div id="publishing_info1">
-                <div class="info-title">AidStream required your organisation’s Publisher ID and API key to be able to
-                    publish your data to the IATI registry.
-                </div>
                 <div class="publishing-wrap">
                     <h2>Registry Information</h2>
                     <div class="form-group">
@@ -26,9 +23,6 @@
                 </div>
             </div>
             <div id="publishing_info2">
-                <div class="info-title">The publishing type is “Unsegmented” by default.
-                    All the activities will be published in a single file to
-                    the IATI registry.</div>
                 <div class="publishing-wrap">
                     <div class="col-md-12">
                         {!!  form_until($form,'publishing') !!}
@@ -36,8 +30,6 @@
                 </div>
             </div>
             <div id="publishing_info3">
-                <div class="info-title">By default, when you update your data, the changes are not automatically reflected on the IATI registry.
-                    Select “Yes” to be let AidStream automatically update your data on the registry.</div>
                 <div class="publishing-wrap">
                     <div class="col-md-12">
                         {!! form_until($form,'publish_files') !!}

@@ -102,37 +102,41 @@
                     {
                         element: '#publishing_info1',
                         intro: '' +
-                        '<a id="btnInfo1" class="update-next">Update and go to next step</a>' +
+                        '<div class="intro-title text-center">AidStream required your organisation&rsquo;s Publisher ID and API key to be able to publish your data to the IATI registry.</div>' +
+                        '<a id="btnInfo1" class="btn update-next">Update and go to next step</a>' +
                         '<a id="info1" class="setup-later">I&rsquo;ll set this up later</a>',
-                        position: 'bottom-right-aligned'
+                        position: 'bottom-middle-aligned'
                     },
                     {
                         element: '#publishing_info2',
                         intro: '' +
-                        '<a id="btnInfo2" class="update-next">Update and go to next step</a>' +
+                        '<div class="intro-title text-center">The publishing type is “Unsegmented” by default.All the activities will be published in a single file to the IATI registry.</div>' +
+                        '<a id="btnInfo2" class="btn update-next">Update and go to next step</a>' +
                         '<a id="info2" class="setup-later">I&rsquo;ll set this up later</a>',
-                        position: 'bottom-right-aligned'
+                        position: 'bottom-middle-aligned'
                     },
                     {
                         element: '#publishing_info3',
                         intro: '' +
-                        '<a id="btnInfo3" class="update-next">Update and go to next step</a>' +
+                        '<div class="intro-title text-center">By default, when you update your data, the changes are not automatically reflected on the IATI registry. Select “Yes” to be let AidStream automatically update your data on the registry.</div>' +
+                        '<a id="btnInfo3" class="btn update-next">Update and go to next step</a>' +
                         '<a id="info3" class="setup-later">I&rsquo;ll set this up later</a>',
-                        position: 'bottom-right-aligned'
+                        position: 'bottom-middle-aligned'
                     },
                     {
                         element: '#activity-elements-checklist-wrapper',
                         intro: '' +
-                        '<a id="btnInfo4" class="update-next">Update and go to to next step</a>' +
+                        '<div class="intro-title">On AidStream some of the elements are required for an activity. These elements are <span class="disabled-check-img"></span> checked in the list below and disabled. You can always <span class="add-check-img"></span> check other elements to add their information in your activities.</div>' +
+                        '<a id="btnInfo4" class="btn update-next">Update and go to next step</a>' +
                         '<a id="info4" class="setup-later">I&rsquo;ll set this up later</a>',
-                        position: 'bottom-right-aligned'
+                        position: 'bottom-middle-aligned'
                     },
                     {
                         element: '#default_values',
                         intro: '' +
-                        '<a id="btnInfo5" class="update-next">Finish set up process</a>' +
+                        '<a id="btnInfo5" class="btn update-next">Finish set up process</a>' +
                         '<a id="info5" class="setup-later">I&rsquo;ll set this up later</a>',
-                        position: 'bottom-right-aligned'
+                        position: 'bottom-middle-aligned'
                     }
                 ],
                 exitOnOverlayClick: false,
@@ -156,7 +160,6 @@
             var steps = $('.introjs-bullets a').each(function (index) {
                 var stepNumber = $(this).attr('data-stepnumber');
                 $(this).attr('href', links[stepNumber]);
-                $(this).html(index+1);
             });
 
             var stepNumber = location.hash.replace('#', '');
