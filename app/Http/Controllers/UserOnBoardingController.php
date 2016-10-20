@@ -44,7 +44,7 @@ class UserOnBoardingController extends Controller
             return redirect()->to('/activity');
         }
 
-        return view('onBoarding.welcome', compact('firstname','lastname'));
+        return view('onBoarding.welcome', compact('firstname', 'lastname'));
     }
 
     /**
@@ -116,9 +116,11 @@ class UserOnBoardingController extends Controller
     {
         $organization = $this->getOrganization();
         $this->userOnBoardingService->storeDefaultValues($request, $organization);
-        $status = $this->userOnBoardingService->isAllStepsCompleted();
+        $completedSteps = $this->userOnBoardingService->getCompletedSteps();
+        $status         = $this->userOnBoardingService->isAllStepsCompleted();
+        $redirectView   = ($status) ? 'continueExploring' : 'exploreLater';
 
-        return redirect()->to('continueExploring')->with('completed', $status);
+        return redirect()->to($redirectView)->with('completedSteps', $completedSteps);
     }
 
     /**
@@ -130,9 +132,11 @@ class UserOnBoardingController extends Controller
         if (Auth::user()->userOnBoarding->completed_tour) {
             return redirect()->back();
         }
+        $completedSteps = $this->userOnBoardingService->getCompletedSteps();
+        $status         = $this->userOnBoardingService->isAllStepsCompleted();
         Session::put('first_login', true);
 
-        return view('onBoarding.exploreLater');
+        return view('onBoarding.exploreLater', compact('completedSteps', 'status'));
     }
 
     /**
@@ -141,11 +145,11 @@ class UserOnBoardingController extends Controller
      */
     public function continueExploring()
     {
-        $firstname = Auth::user()->first_name;
-        $steps     = $this->userOnBoardingService->isAllStepsCompleted();
-        (!$steps) ?: Session::put('steps', $steps);
+        $firstname      = Auth::user()->first_name;
+        $completedSteps = $this->userOnBoardingService->getCompletedSteps();
+        $status         = $this->userOnBoardingService->isAllStepsCompleted();
 
-        return view('onBoarding.continueExploring', compact('firstname'));
+        return view(sprintf('onBoarding.continueExploring'), compact('firstname', 'completedSteps', 'status'));
     }
 
     /**

@@ -12,16 +12,20 @@
                     @if(Auth::user()->isAdmin())
                         <p>
                             <em>Set up your account to Start Publishing to the IATI Registry.</em>
-                            @if(session('completed') == 'yes')
-                                'Checked'
+                            @if($status)
+                                Checked icon
                             @else
-                                'Unchecked'
+                                Unchecked icon
                             @endif
                         </p>
                     @endif
-                    <p>You can always go back to Settings page to change your organisation's settings</p>
-                    <div><a href="{{ url('dashboardTour') }}" class="btn">
-                            Get to know your Dashboard
+                    @if($status)
+                        <div>You can always go back to Settings page to change your organisation's settings</div>
+                    @elseif(isset($completedSteps))
+                        @include('onBoarding.stepsNumber')
+                    @endif
+                    <div><a href="{{ url('dashboardTour') }}">
+                            <button>Get to know your Dashboard</button>
                         </a></div>
                     <span class="explore-later"><a href="{{ url('activity')  }}">Explore Later</a></span>
                 </div>

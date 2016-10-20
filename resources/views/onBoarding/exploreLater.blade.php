@@ -3,6 +3,7 @@
 
 @section('content')
     @include('includes.side_bar_menu')
+    <script type="text/css"></script>
     <div class="modal fade" tabindex="-1" role="dialog" id="myModal">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -11,24 +12,17 @@
                     <div><img src="/img/logo.png"/></div>
                     <div>Continue exploring AidStream ?</div>
                     @if(auth()->user()->role_id == 1)
-                        <div>Set up your account to Start Publishing to the IATI Registry</div>
-                        <ol>
-                            <a href="{{url('publishing-settings#1')}}">
-                                <li>1</li>
-                            </a>
-                            <a href="{{url('publishing-settings#2')}}">
-                                <li>2</li>
-                            </a>
-                            <a href="{{url('publishing-settings#3')}}">
-                                <li>3</li>
-                            </a>
-                            <a href="{{url('activity-elements-checklist#4')}}">
-                                <li>4</li>
-                            </a>
-                            <a href="{{url('default-values#5')}}">
-                                <li>5</li>
-                            </a>
-                        </ol>
+                        <em>Set up your account to Start Publishing to the IATI Registry.</em>
+                        @if($status)
+                            Checked icon
+                        @else
+                            Unchecked icon
+                        @endif
+                    @endif
+                    @if($status)
+                        <div>You can always go back to Settings page to change your organisation's settings</div>
+                    @else
+                        @include('onBoarding.stepsNumber')
                     @endif
                     <div>
                         <a href="{{ url('dashboardTour') }}">

@@ -327,12 +327,22 @@ class UserOnBoardingService
      */
     public function isAllStepsCompleted()
     {
-        $userOnBoarding = Auth::user()->userOnBoarding;
-        $completedSteps = count($userOnBoarding->completed_steps);
-
-        $status = ($completedSteps == 5) ? true : false;
+        $completedSteps = count($this->getCompletedSteps());
+        $status         = ($completedSteps == 5) ? true : false;
 
         return $status;
+    }
+
+
+    /**
+     * Get all the completed steps of the logged in user.
+     * @return array|null
+     */
+    public function getCompletedSteps()
+    {
+        $userOnBoarding = auth()->user()->userOnBoarding;
+
+        return ($userOnBoarding) ? (array) $userOnBoarding->completed_steps : null;
     }
 
     /**

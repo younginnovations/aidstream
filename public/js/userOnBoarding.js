@@ -145,9 +145,7 @@
                 exitOnEsc: false
             });
 
-            intro.start().onchange(function (targetElement) {
-                $(targetElement).find('.intro-title').css('display', 'block');
-            });
+            intro.start();
 
             var links = {
                 '1': '/publishing-settings/#1',
@@ -168,19 +166,14 @@
             }
 
             $('body').delegate('#info1', 'click', function () {
-                $('#publishing_info1').children().first().css('display', 'none');
                 intro.goToStep(2);
             }).delegate('#info2', 'click', function () {
-                $('#publishing_info2').children().first().css('display', 'none');
                 intro.goToStep(3);
             }).delegate('#info3', 'click', function () {
-                $('#publishing_info3').children().first().css('display', 'none');
                 window.location.href = '/activity-elements-checklist#4';
             }).delegate('#info4', 'click', function () {
-                $('#activity-elements-checklist').children().first().css('display', 'none');
                 window.location.href = '/default-values#5';
             }).delegate('#info5', 'click', function () {
-                $('#default_values').children().first().css('display', 'none');
                 window.location.href = '/continueExploring';
             });
 
