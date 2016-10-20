@@ -54,60 +54,67 @@ class Result extends BaseElement
     }
 
     /**
-     * @param $indicator
+     * @param $indicators
      * @return array
      */
-    protected function buildIndicator($indicator)
+    protected function buildIndicator($indicators)
     {
+        $indicatorData = [];
 
-        $indicator = [
-            '@attributes' => [
-                'measure'   => $indicator[0]['measure'],
-                'ascending' => $indicator[0]['ascending']
-            ],
-            'title'       => [
-                'narrative' => $this->buildNarrative($indicator[0]['title'][0]['narrative'])
-            ],
-            'description' => [
-                'narrative' => $this->buildNarrative($indicator[0]['description'][0]['narrative'])
-            ],
-            'baseline'    => [
+        foreach ($indicators as $indicator) {
+            $indicatorData[] = [
                 '@attributes' => [
-                    'year'  => $indicator[0]['baseline'][0]['year'],
-                    'value' => $indicator[0]['baseline'][0]['value']
+                    'measure'   => $indicator['measure'],
+                    'ascending' => $indicator['ascending']
                 ],
-                'comment'     => [
-                    'narrative' => $this->buildNarrative($indicator[0]['baseline'][0]['comment'][0]['narrative'])
-                ]
-            ],
-            'period'      => $this->buildPeriod($indicator[0]['period'])
-        ];
+                'title'       => [
+                    'narrative' => $this->buildNarrative(getVal($indicator, ['title', 0, 'narrative']))
+                ],
+                'description' => [
+                    'narrative' => $this->buildNarrative(getVal($indicator, ['description', 0, 'narrative']))
+                ],
+                'baseline'    => [
+                    '@attributes' => [
+                        'year'  => getVal($indicator, ['baseline', 0, 'year']),
+                        'value' => getVal($indicator, ['baseline', 0, 'value'])
+                    ],
+                    'comment'     => [
+                        'narrative' => $this->buildNarrative(getVal($indicator, ['baseline', 0, 'comment', 0, 'narrative']))
+                    ]
+                ],
+                'period'      => $this->buildPeriod(getVal($indicator, ['period'], []))
+            ];
+        }
 
-        return $indicator;
+        return $indicatorData;
     }
 
     /**
-     * @param $period
+     * @param $periods
      * @return array
      */
-    protected function buildPeriod($period)
+    protected function buildPeriod($periods)
     {
-        $period = [
-            'period-start' => [
-                '@attributes' => [
-                    'iso-date' => $period[0]['period_start'][0]['date']
-                ]
-            ],
-            'period-end'   => [
-                '@attributes' => [
-                    'iso-date' => $period[0]['period_end'][0]['date']
-                ]
-            ],
-            'target'       => $this->buildFunction($period[0]['target']),
-            'actual'       => $this->buildFunction($period[0]['actual'])
-        ];
+        $periodData = [];
 
-        return $period;
+        foreach ($periods as $period) {
+            $periodData[] = [
+                'period-start' => [
+                    '@attributes' => [
+                        'iso-date' => $period['period_start'][0]['date']
+                    ]
+                ],
+                'period-end'   => [
+                    '@attributes' => [
+                        'iso-date' => $period['period_end'][0]['date']
+                    ]
+                ],
+                'target'       => $this->buildFunction($period['target']),
+                'actual'       => $this->buildFunction($period['actual'])
+            ];
+        }
+
+        return $periodData;
     }
 
     /**
