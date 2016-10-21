@@ -8,8 +8,7 @@
         <div class="modal-dialog explore-screen">
             <div class="modal-content text-center">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                                aria-hidden="true">&times;</span></button>
+                    <a href="activity" class="close"><span>&times;</span></a>
                 </div>
                 <div class="modal-body">
                     <img src={{ url('/images/logo-large.svg') }} alt="Aidstream" width="130" height="124">
@@ -23,17 +22,21 @@
                         @endif
                     @endif
                     @if($status)
-                        <div>You can always go back to Settings page to change your organisation's settings</div>
+                        <p>You have successfully setup your account. You can always go back to Settings page to change
+                            your organisation's settings</p>
                     @else
-                        @include('onBoarding.stepsNumber')
+                        <div class="onboarding-steps">
+                            @include('onBoarding.stepsNumber')
+                            <p>Please finish setting up your account to be able to publish your data.</p>
+                        </div>
                     @endif
                     <a href="{{ url('dashboardTour') }}">
                         <button>Get to know your Dashboard</button>
                     </a>
                     <a href="#">You can always learn more on the Learn page.</a>
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                    <div><label>{{ Form::checkbox('check') }} I have already explored AidStream. Don't show me this
-                            again.</label></div>
+                    <label>{{ Form::checkbox('check') }} I have already explored AidStream. Don't show me this
+                        again.</label>
                     <a data-controls-modal="your_div_id"
                        data-backdrop="static"
                        data-keyboard="false"
