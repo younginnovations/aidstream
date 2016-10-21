@@ -60,7 +60,7 @@
                                         <dd>English</dd>
                                     </dl>
                                     <dl>
-                                        <dt>Role</dt>
+                                        <dt>Permission</dt>
                                         <dd>{{Auth::user()->role->role}}</dd>
                                     </dl>
                                 </div>

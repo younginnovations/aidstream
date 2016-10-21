@@ -121,7 +121,7 @@
                         '<div class="intro-title text-center">By default, when you update your data, the changes are not automatically reflected on the IATI registry. Select “Yes” to be let AidStream automatically update your data on the registry.</div>' +
                         '<a id="btnInfo3" class="btn update-next">Update and go to next step</a>' +
                         '<a id="info3" class="setup-later">I&rsquo;ll set this up later</a>',
-                        position: 'bottom-middle-aligned'
+                        position: 'top'
                     },
                     {
                         element: '#activity-elements-checklist-wrapper',
@@ -134,6 +134,7 @@
                     {
                         element: '#default_values',
                         intro: '' +
+                        '<div class="intro-title">These default values are used throughout  the AidStream for your organisation and activities information.</div>' +
                         '<a id="btnInfo5" class="btn update-next">Finish set up process</a>' +
                         '<a id="info5" class="setup-later">I&rsquo;ll set this up later</a>',
                         position: 'bottom-middle-aligned'

@@ -2,7 +2,7 @@
 
 @section('panel-body')
     <div class="panel-body">
-        <div class="create-form settings-form">
+        <div class="create-form settings-form org-info-form">
             {{ Form::model($organization,['method'=>'POST', 'route' => 'organization-information.update','files' => true]) }}
             {!! form_rest($form) !!}
             <div class="col-md-12 col-xs-12">

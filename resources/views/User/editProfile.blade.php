@@ -43,7 +43,7 @@
                                 {!! AsForm::text(['name' => 'last_name','parent' => 'col-md-6 col-xs-12 col-sm-6', 'required' => true]) !!}
                             </div>
                             <div class="col-md-12 col-xs-12">
-                                {!! AsForm::text(['name' => 'permission', 'value' => $user_permission,'label' => 'Permission Role' ,'parent' => 'col-md-6 col-xs-12 col-sm-6', 'required' => true, 'attr' => ['readonly' => 'readonly']]) !!}
+                                {!! AsForm::text(['name' => 'permission', 'value' => $user_permission,'label' => 'Permission' ,'parent' => 'col-md-6 col-xs-12 col-sm-6', 'required' => true, 'attr' => ['readonly' => 'readonly']]) !!}
                             </div>
                             <div class="col-md-12 col-xs-12">
                                 {!! AsForm::select(['name' => 'time_zone','data'=> $timeZone, 'empty_value' => 'Select Time Zone','value'  => $user['time_zone_id'] . ' : '. $user['time_zone'],'parent' => 'col-md-6 col-xs-12 col-sm-6']) !!}

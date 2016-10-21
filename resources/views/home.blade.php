@@ -149,8 +149,10 @@
     <div class="modal fade message-modal" tabindex="-1" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-body clearfix">
+                <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body clearfix">
                     <div class="col-md-12 text-center verification-wrapper">
                         <img src={{ url('/images/ic-sent-mail.svg') }} alt="mail" width="88" height="94">
                         <h1>Thank You!</h1>
