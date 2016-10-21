@@ -10,36 +10,40 @@ use Illuminate\Support\Collection;
 class Result extends V201Result
 {
     /**
-     * @param $indicator
+     * @param $indicators
      * @return array
      */
-    protected function buildIndicator($indicator)
+    protected function buildIndicator($indicators)
     {
-        $indicator = [
-            '@attributes' => [
-                'measure'   => $indicator[0]['measure'],
-                'ascending' => $indicator[0]['ascending']
-            ],
-            'title'       => [
-                'narrative' => $this->buildNarrative($indicator[0]['title'][0]['narrative'])
-            ],
-            'description' => [
-                'narrative' => $this->buildNarrative($indicator[0]['description'][0]['narrative'])
-            ],
-            'reference'   => $this->buildReference(getVal($indicator, [0, 'reference'], [])),
-            'baseline'    => [
+        $indicatorData = [];
+        
+        foreach ($indicators as $indicator) {
+            $indicatorData[] = [
                 '@attributes' => [
-                    'year'  => $indicator[0]['baseline'][0]['year'],
-                    'value' => $indicator[0]['baseline'][0]['value']
+                    'measure'   => $indicator['measure'],
+                    'ascending' => $indicator['ascending']
                 ],
-                'comment'     => [
-                    'narrative' => $this->buildNarrative($indicator[0]['baseline'][0]['comment'][0]['narrative'])
-                ]
-            ],
-            'period'      => $this->buildPeriod($indicator[0]['period'])
-        ];
+                'title'       => [
+                    'narrative' => $this->buildNarrative(getVal($indicator, ['title', 0, 'narrative']))
+                ],
+                'description' => [
+                    'narrative' => $this->buildNarrative(getVal($indicator, ['description', 0, 'narrative']))
+                ],
+                'reference'   => $this->buildReference(getVal($indicator, ['reference'], [])),
+                'baseline'    => [
+                    '@attributes' => [
+                        'year'  => getVal($indicator, ['baseline', 0, 'year']),
+                        'value' => getVal($indicator, ['baseline', 0, 'value'])
+                    ],
+                    'comment'     => [
+                        'narrative' => $this->buildNarrative(getVal($indicator, ['baseline', 0, 'comment', 0, 'narrative']))
+                    ]
+                ],
+                'period'      => $this->buildPeriod(getVal($indicator, ['period'], []))
+            ];
+        }
 
-        return $indicator;
+        return $indicatorData;
     }
 
     /**
