@@ -51,7 +51,7 @@
                                         <td><input type="checkbox" name="org_files[]" value="{{$file->organization_id .':'. $file->filename}}"/></td>
                                         <td><a href="{{ url('/files/xml/' . $file->filename) }}"
                                                target="_blank">{{ $file->filename }}</a></td>
-                                        <td>{{ changeTimeZone($file->updated_at ) }}</td>
+                                        <td>{{ lastPublishedDate($file) }}</td>
                                         <td>{{ $file->published_to_register ? 'Yes' : 'No' }}</td>
                                         <td>
                                             <a href="{{ 'http://tools.aidinfolabs.org/csv/direct_from_registry/?xml=' . url('/files/xml/' . $file->filename) }}"
@@ -97,7 +97,7 @@
                                         <td><input type="checkbox" name="activity_files[]" value="{{$file->organization_id .':'. $file->filename}}"></td>
                                         <td><a href="{{ url('/files/xml/' . $file->filename) }}"
                                                target="_blank">{{ $file->filename }}</a></td>
-                                        <td>{{ changeTimeZone($file->updated_at) }}</td>
+                                        <td>{{ lastPublishedDate($file) }}</td>
                                         <td>{{ $file->published_to_register ? 'Yes' : 'No' }}</td>
                                         <td>
                                             <a href="{{ 'http://tools.aidinfolabs.org/csv/direct_from_registry/?xml=' . url('/files/xml/' . $file->filename) }}"
