@@ -5840,12 +5840,28 @@ body > .skiptranslate iframe {
   background-position: -49px -28px;
 }
 
-.introjs-hint[data-step="1"] {
-  background: red;
+.introjs-hint-dot,.introjs-hint-pulse {
+  box-sizing: content-box;
 }
 
-.introjs-hint[data-step="2"] {
-  background: green;
+.introjs-hint-dot {
+  border-color: rgba(0, 168, 255, 0.4)!important;
+  top: -22px!important;
+  left: -22px!important;
+  width: 40px!important;
+  height: 40px!important;
+}
+
+.introjs-hint-pulse {
+  background: $color_dodger_blue_approx!important;
+  border: 3px solid #D9F2FF!important;
+  opacity: 0.5;
+}
+
+.introjs-hint[data-step="1"] {
+  left: 10px!important;
+  top: 74px!important;
+  z-index: 1;
 }
 
 @media all and (max-width: 1030px) {

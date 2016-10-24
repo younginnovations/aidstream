@@ -5020,6 +5020,28 @@ body > .skiptranslate iframe {
 .unchecked-icon {
   background-position: -49px -28px; }
 
+.introjs-hint-dot, .introjs-hint-pulse {
+  -webkit-box-sizing: content-box;
+     -moz-box-sizing: content-box;
+          box-sizing: content-box; }
+
+.introjs-hint-dot {
+  border-color: rgba(0, 168, 255, 0.4) !important;
+  top: -22px !important;
+  left: -22px !important;
+  width: 40px !important;
+  height: 40px !important; }
+
+.introjs-hint-pulse {
+  background: #00A8FF !important;
+  border: 3px solid #D9F2FF !important;
+  opacity: 0.5; }
+
+.introjs-hint[data-step="1"] {
+  left: 10px !important;
+  top: 74px !important;
+  z-index: 1; }
+
 @media all and (max-width: 1030px) {
   .activity-status {
     padding: 16px 10px 18px 50px; }
