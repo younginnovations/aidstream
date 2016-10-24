@@ -1,30 +1,29 @@
 <?php namespace App\Services\CsvImporter;
 
+use App\Core\V201\Repositories\Activity\Result as ResultRepository;
+use App\Core\V201\Repositories\Organization\OrganizationRepository;
+use App\Services\CsvImporter\Events\ResultCsvWasUploaded;
 use Exception;
+use Illuminate\Filesystem\Filesystem;
+use Illuminate\Session\SessionManager;
+use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\File as FileFacade;
 use Maatwebsite\Excel\Excel;
 use Psr\Log\LoggerInterface;
-use Illuminate\Filesystem\Filesystem;
-use Illuminate\Support\Facades\Event;
-use Illuminate\Session\SessionManager;
-use App\Services\CsvImporter\Queue\Processor;
 use Symfony\Component\HttpFoundation\File\File;
-use Illuminate\Support\Facades\File as FileFacade;
-use App\Core\V201\Repositories\Activity\Transaction;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use App\Core\V201\Repositories\Activity\ActivityRepository;
-use App\Services\CsvImporter\Events\ActivityCsvWasUploaded;
-use App\Core\V201\Repositories\Organization\OrganizationRepository;
+use App\Services\CsvImporter\Queue\ResultProcessor;
 
 /**
- * Class ImportManager
+ * Class ImportResultManager
  * @package App\Services\CsvImporter
  */
-class ImportManager
+class ImportResultManager
 {
     /**
      * Directory where the validated Csv data is written before import.
      */
-    const CSV_DATA_STORAGE_PATH = 'csvImporter/tmp';
+    const CSV_DATA_STORAGE_PATH = 'csvImporter/tmp/result';
 
     /**
      * File in which the valida Csv data is written before import.
@@ -39,7 +38,7 @@ class ImportManager
     /**
      * Directory where the uploaded Csv file is stored temporarily before import.
      */
-    const UPLOADED_CSV_STORAGE_PATH = 'csvImporter/tmp/file';
+    const UPLOADED_CSV_STORAGE_PATH = 'csvImporter/tmp/result/file';
 
     /**
      * @var Excel
@@ -47,7 +46,7 @@ class ImportManager
     protected $excel;
 
     /**
-     * @var Processor
+     * @var ResultProcessor
      */
     protected $processor;
 
@@ -60,17 +59,14 @@ class ImportManager
      * @var SessionManager
      */
     protected $sessionManager;
-
     /**
-     * @var ActivityRepository
+     * @var ResultRepository
      */
-    protected $activityRepo;
-
+    protected $resultRepo;
     /**
      * @var OrganizationRepository
      */
     protected $organizationRepo;
-
     /**
      * @var Transaction
      */
@@ -88,39 +84,36 @@ class ImportManager
     protected $filesystem;
 
     /**
-     * File names for the invalid activities.
+     * File names for the invalid results.
      * @var array
      */
-    protected $invalidActivityFileNames = ['invalid.json', 'invalid-temp.json'];
+    protected $invalidResultFileNames = ['invalid.json', 'invalid-temp.json'];
 
     /**
      * ImportManager constructor.
      * @param Excel                  $excel
-     * @param Processor              $processor
+     * @param ResultProcessor        $processor
      * @param LoggerInterface        $logger
      * @param SessionManager         $sessionManager
-     * @param ActivityRepository     $activityRepo
+     * @param ResultRepository       $resultRepo
      * @param OrganizationRepository $organizationRepo
-     * @param Transaction            $transactionRepo
      * @param Filesystem             $filesystem
      */
     public function __construct(
         Excel $excel,
-        Processor $processor,
+        ResultProcessor $processor,
         LoggerInterface $logger,
         SessionManager $sessionManager,
-        ActivityRepository $activityRepo,
+        ResultRepository $resultRepo,
         OrganizationRepository $organizationRepo,
-        Transaction $transactionRepo,
         Filesystem $filesystem
     ) {
         $this->excel            = $excel;
         $this->processor        = $processor;
         $this->logger           = $logger;
         $this->sessionManager   = $sessionManager;
-        $this->activityRepo     = $activityRepo;
+        $this->resultRepo       = $resultRepo;
         $this->organizationRepo = $organizationRepo;
-        $this->transactionRepo  = $transactionRepo;
         $this->userId           = $this->getUserId();
         $this->filesystem       = $filesystem;
     }
@@ -135,7 +128,11 @@ class ImportManager
         try {
             $file = new File($this->getStoredCsvPath($filename));
 
-            $this->processor->pushIntoQueue($file, $filename);
+            if ($this->processor->pushIntoQueue($file, $filename)) {
+                return true;
+            }
+
+            return false;
         } catch (Exception $exception) {
             $this->logger->error(
                 $exception->getMessage(),
@@ -145,60 +142,36 @@ class ImportManager
                 ]
             );
 
-            return null;
+            dd($exception);
         }
     }
 
     /**
-     * Create Valid activities.
-     * @param $activities
-     */
-    public function create($activities)
-    {
-        $contents               = json_decode(file_get_contents($this->getFilePath(true)), true);
-        $organizationId         = $this->sessionManager->get('org_id');
-        $importedActivities     = [];
-        $organizationIdentifier = getVal(
-            $this->organizationRepo->getOrganization($organizationId)->toArray(),
-            ['reporting_org', 0, 'reporting_organization_identifier']
-        );
-
-        foreach ($activities as $key => $activity) {
-            $activity                                               = $contents[$activity];
-            $activity['data']['organization_id']                    = $organizationId;
-            $importedActivities[$key]                               = $activity['data'];
-            $iati_identifier_text                                   = $organizationIdentifier . '-' . $activity['data']['identifier']['activity_identifier'];
-            $activity['data']['identifier']['iati_identifier_text'] = $iati_identifier_text;
-
-            $createdActivity = $this->activityRepo->createActivity($activity['data']);
-
-            if (array_key_exists('transaction', $activity['data'])) {
-                $this->createTransaction(getVal($activity['data'], ['transaction'], []), $createdActivity->id);
-            }
-        }
-        $this->activityImportStatus($activities);
-    }
-
-    /**
-     * Create Transaction of Valid Activities
-     * @param $transactions
+     * Create Valid results.
      * @param $activityId
+     * @param $results
      */
-    public function createTransaction($transactions, $activityId)
+    public function create($activityId, $results)
     {
-        foreach ($transactions as $transaction) {
-            $this->transactionRepo->createTransaction($transaction, $activityId);
+        $contents        = json_decode(file_get_contents($this->getFilePath(true)), true);
+
+        foreach ($results as $key => $result) {
+            $resultData      = $contents[$result];
+            $importedResults = ['result' => $resultData['data'], 'activity_id' => $activityId];
+            $this->resultRepo->create($importedResults);
         }
+
+        $this->resultImportStatus($results);
     }
 
     /**
-     * Check the status of the csv activities being imported.
-     * @param $activities
+     * Check the status of the csv results being imported.
+     * @param $results
      */
-    protected function activityImportStatus($activities)
+    protected function resultImportStatus($results)
     {
         if (session('importing') && $this->checkStatusFile()) {
-            $this->removeImportedActivity($activities);
+            $this->removeImportedResult($results);
         }
 
         if ($this->checkStatusFile() && is_null(session('importing'))) {
@@ -207,17 +180,17 @@ class ImportManager
     }
 
     /**
-     * Remove the imported activity if the csv is still being processed.
-     * @param $checkedActivities
+     * Remove the imported result if the csv is still being processed.
+     * @param $checkedResults
      */
-    protected function removeImportedActivity($checkedActivities)
+    protected function removeImportedResult($checkedResults)
     {
-        $validActivities = json_decode(file_get_contents($this->getFilePath(true)), true);
-        foreach ($checkedActivities as $key => $activity) {
-            unset($validActivities[$key]);
+        $validResults = json_decode(file_get_contents($this->getFilePath(true)), true);
+        foreach ($checkedResults as $key => $result) {
+            unset($validResults[$key]);
         }
 
-        FileFacade::put($this->getFilePath(true), $validActivities);
+        FileFacade::put($this->getFilePath(true), $validResults);
     }
 
     /**
@@ -234,8 +207,9 @@ class ImportManager
      */
     public function removeImportDirectory()
     {
-        $directoryPath = storage_path(sprintf('%s/%s/%s', self::CSV_DATA_STORAGE_PATH, session('org_id'), $this->userId));
-        $this->filesystem->deleteDirectory($directoryPath);
+        $dir = storage_path(sprintf('%s/%s/%s', self::CSV_DATA_STORAGE_PATH, session('org_id'), $this->userId));
+        $this->filesystem->deleteDirectory($dir);
+
     }
 
     /**
@@ -245,18 +219,19 @@ class ImportManager
      */
     public function startImport($filename)
     {
-        $this->sessionManager->put(['import-status' => 'Processing', 'filename' => $filename]);
+        $this->sessionManager->put(['import-result-status' => 'Processing']);
+        $this->sessionManager->put(['filename' => $filename]);
 
         return $this;
     }
 
     /**
-     * Remove the import-status key from the User's current session.
+     * Remove the import-result-status key from the User's current session.
      */
     public function endImport()
     {
-        session()->forget('import-status');
-        session()->forget('filename');
+        $this->sessionManager->forget('import-result-status');
+        $this->sessionManager->forget('filename');
     }
 
     /**
@@ -285,10 +260,10 @@ class ImportManager
     }
 
     /**
-     * Clear all invalid activities.
+     * Clear all invalid results.
      * @return bool|null
      */
-    public function clearInvalidActivities()
+    public function clearInvalidResults()
     {
         try {
             list($file, $temporaryFile) = [$this->getFilePath(false), $this->getTemporaryFilepath('invalid-temp.json')];
@@ -304,7 +279,7 @@ class ImportManager
             return true;
         } catch (Exception $exception) {
             $this->logger->error(
-                sprintf('Error clearing invalid Activities due to [%s]', $exception->getMessage()),
+                sprintf('Error clearing invalid Results due to [%s]', $exception->getMessage()),
                 [
                     'trace'           => $exception->getTraceAsString(),
                     'user_id'         => $this->userId,
@@ -331,11 +306,11 @@ class ImportManager
     }
 
     /**
-     * Set import-status key when the processing is complete.
+     * Set import-result-status key when the processing is complete.
      */
-    protected function completeImport()
+    public function setProcessCompleteToSession()
     {
-        session()->put(['import-status' => 'Complete']);
+        $this->sessionManager->put(['import-result-status' => 'Complete']);
     }
 
     /**
@@ -344,16 +319,8 @@ class ImportManager
      */
     public function getSessionStatus()
     {
-        if ($this->checkStatusFile()) {
-            $status = file_get_contents($this->getTemporaryFilepath('status.json'));
-
-            if (json_decode($status, true)['status'] == 'Complete') {
-                return 'Complete';
-            }
-        }
-
-        if ($this->sessionManager->has('import-status')) {
-            return $this->sessionManager->get('import-status');
+        if ($this->sessionManager->has('import-result-status')) {
+            return $this->sessionManager->get('import-result-status');
         }
 
         return null;
@@ -368,14 +335,14 @@ class ImportManager
      */
     protected function getDataFrom($filePath, $temporaryFileName, $view)
     {
-        $activities = json_decode(file_get_contents($filePath), true);
-        $path       = $this->getTemporaryFilepath($temporaryFileName);
+        $results = json_decode(file_get_contents($filePath), true);
+        $path    = $this->getTemporaryFilepath($temporaryFileName);
 
         $this->fixStagingPermission($this->getTemporaryFilepath());
 
-        FileFacade::put($path, json_encode($activities));
+        FileFacade::put($path, json_encode($results));
 
-        return view(sprintf('Activity.csvImporter.%s', $view), compact('activities'))->render();
+        return view(sprintf('Activity.csvImporter.result.%s', $view), compact('results'))->render();
     }
 
     /**
@@ -425,7 +392,7 @@ class ImportManager
             return true;
         } catch (Exception $exception) {
             $this->logger->error(
-                sprintf('Error uploading Activity CSV file due to [%s]', $exception->getMessage()),
+                sprintf('Error uploading Result CSV file due to [%s]', $exception->getMessage()),
                 [
                     'trace'   => $exception->getTraceAsString(),
                     'user_id' => $this->userId
@@ -455,7 +422,7 @@ class ImportManager
      */
     public function refreshSessionIfRequired()
     {
-        if ($this->sessionManager->get('import-status') == 'Complete') {
+        if ($this->sessionManager->get('import-result-status') == 'Complete') {
             $this->sessionManager->forget('filename');
         }
     }
@@ -536,7 +503,7 @@ class ImportManager
      */
     public function fireCsvUploadEvent($filename)
     {
-        Event::fire(new ActivityCsvWasUploaded($filename));
+        Event::fire(new ResultCsvWasUploaded($filename));
     }
 
     /**
@@ -548,44 +515,16 @@ class ImportManager
         $filePath = $this->getTemporaryFilepath('status.json');
 
         if (file_exists($filePath)) {
-            $this->fixStagingPermission($filePath);
-
             $jsonContents = file_get_contents($filePath);
             $contents     = json_decode($jsonContents, true);
 
             if ($contents['status'] == 'Complete') {
-                $this->completeImport();
+                $this->setProcessCompleteToSession();
             }
 
             return $jsonContents;
         }
 
         return false;
-    }
-
-    /**
-     * Check if an old import is on going.
-     *
-     * @return bool
-     */
-    protected function hasOldData()
-    {
-        if ($this->sessionManager->has('import-status') || $this->sessionManager->has('filename')) {
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * Clear old import data before another.
-     */
-    public function clearOldImport()
-    {
-        $this->removeImportDirectory();
-
-        if ($this->hasOldData()) {
-            $this->clearSession(['import-status', 'filename']);
-        }
     }
 }

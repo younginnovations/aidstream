@@ -69,12 +69,12 @@
                                 </table>
                             @else
                                 <div class="text-center no-data no-result-data">
-                                    You haven’t added any transactions yet.
+                                    <p>You haven’t added any transactions yet.</p>
                                     <div class="no-data-btn">
                                         <a href="{{ route('activity.transaction.create', $id) }}"
                                            class="btn btn-primary">Add New Transaction</a>
                                         <a href="{{ route('activity.transaction-upload.index', $id) }}"
-                                           class="btn btn-primary upload">Upload Transaction</a>
+                                           class="btn btn-primary btn-upload">Upload Transaction</a>
                                     </div>
                                 </div>
                             @endif
