@@ -13,6 +13,11 @@ class Identifier extends Element
     use DatabaseQueries;
 
     /**
+     * @var
+     */
+    protected $organizationId;
+
+    /**
      * CSV Header of Description with their code
      */
     private $_csvHeader = ['activity_identifier'];
@@ -95,5 +100,14 @@ class Identifier extends Element
             'activity_identifier.required' => 'Activity Identifier is required.',
             'activity_identifier.not_in'   => 'Activity Identifier should be unique.'
         ];
+    }
+
+    /**
+     * Set the organizationId for the current Organization.
+     * @param $organizationId
+     */
+    public function setOrganization($organizationId)
+    {
+        $this->organizationId = $organizationId;
     }
 }

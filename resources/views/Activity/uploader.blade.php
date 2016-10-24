@@ -57,6 +57,13 @@
 @stop
 @section('script')
     <script>
+        @if (isset($importing))
+            var importing = true;
+        @else
+            var importing = false;
+        @endif
+    </script>
+    <script>
         var checkSessionRoute = '{{ route('activity.check-session-status')}}';
     </script>
     <script src=" {{ asset('js/csvImporter/checkSessionStatus.js') }}"></script>

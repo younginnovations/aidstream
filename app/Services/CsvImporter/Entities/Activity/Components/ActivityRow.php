@@ -109,6 +109,7 @@ class ActivityRow extends Row
      * @var array
      */
     protected $otherElements = ['activityScope', 'budget', 'policyMarker'];
+
     /**
      * All Elements for an Activity Row.
      * @var
@@ -222,6 +223,7 @@ class ActivityRow extends Row
     public function init()
     {
         $method = $this->getMethodNameByType();
+
         if (method_exists($this, $method)) {
             $this->$method();
         }
@@ -322,6 +324,11 @@ class ActivityRow extends Row
         foreach ($this->activityElements() as $element) {
             if (class_exists($namespace = $this->getNamespace($element, self::BASE_NAMESPACE))) {
                 $this->$element   = $this->make($namespace, $this->fields());
+
+                if ($element === 'identifier') {
+                    $this->$element->setOrganization($this->organizationId);
+                }
+
                 $this->elements[] = $element;
             }
         }
@@ -349,7 +356,7 @@ class ActivityRow extends Row
     }
 
     /**
-     *
+     * Instantiate the Other Elements classes.
      */
     protected function makeOtherFieldsElements()
     {
@@ -609,7 +616,9 @@ class ActivityRow extends Row
         $references = [];
 
         foreach ($this->getTransactions() as $transaction) {
-            $references[] = getVal($transaction->data(), ['transaction', 'reference']);
+            if (($reference = getVal($transaction->data(), ['transaction', 'reference'])) != '') {
+                $references[] = $reference;
+            }
         }
 
         return $references;
@@ -642,7 +651,13 @@ class ActivityRow extends Row
      */
     protected function containsDuplicateTransactions($references)
     {
-        return (count(array_unique($references)) != count($this->getTransactions()));
+        if ((!empty($references)) && (count(array_unique($references)) != count($this->getTransactions()))) {
+            $this->errors[] = 'There are duplicate Transactions for this Activity in the uploaded Csv File.';
+
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -652,6 +667,12 @@ class ActivityRow extends Row
      */
     protected function containsDuplicateActivities($commonIdentifierCount)
     {
-        return ($commonIdentifierCount > 1);
+        if ($commonIdentifierCount > 1) {
+            $this->errors[] = 'This Activity has been duplicated in the uploaded Csv File.';
+
+            return true;
+        }
+
+        return false;
     }
 }

@@ -19,6 +19,12 @@
                     <div class="panel panel-default panel-upload">
                         <div class="panel-body">
                             <div class="status-show-block">
+                                <div id="checkAll" class="hidden">
+                                    <label>
+                                        <input type="checkbox" class="check-btn">
+                                        <span></span>
+                                    </label>
+                                </div>
                                 <label>Show</label>
                                 <select class="tab-select">
                                     <option data-select="all">All</option>
@@ -28,41 +34,51 @@
                             </div>
                             <form action="{{ route('activity.cancel-import') }}" method="POST" id="cancel-import">
                                 {{ csrf_field() }}
-                                <input type="button" class="btn_confirm hidden" id="cancel-import" data-title="Confirmation" data-message="Are you sure you want to Cancel Activity Import?" value="Cancel">
+                                <input type="button" class="btn_confirm hidden" id="cancel-import" data-title="Confirmation" data-message="Are you sure you want to Cancel Activity Import?"
+                                       value="Cancel">
                             </form>
 
                             <div class="tab-content">
-                                <div role="tabpanel" class="tab-pane active checkall-wrap" id="all">
-                                    <div id="checkAll" class="hidden">
-                                        <label>
-                                            <input type="checkbox" id="check-all">
-                                            <span></span>
-                                        </label>
-                                    </div>
+                                <div role="tabpanel" class="tab-pane active" id="all">
                                     <form action="{{ route('activity.import-validated-activities') }}" method="POST">
                                         {{ csrf_field() }}
-                                        <div class="all-data"></div>
+                                        @if (isset($data))
+                                            <div class="valid-data-all" style='border-left: 6px solid #80CA9C'>
+                                                {!! getVal($data, ['validData', 'render'], '') !!}
+                                            </div>
+                                            <div class="invalid-data-all" style='border-left: 6px solid #e15454'>
+                                                {!! getVal($data, ['invalidData', 'render'], '') !!}
+                                            </div>
+                                        @else
+                                            <div class="all-data"></div>
+                                        @endif
                                         <input type="submit" class="hidden" id="submit-valid-activities" value="Import">
                                     </form>
                                 </div>
 
 
-                                <div role="tabpanel" class="tab-pane checkall-wrap" id="valid">
-                                    <div id="checkAll" class="hidden">
-                                        <label>
-                                            <input type="checkbox" id="check-all">
-                                            <span></span>
-                                        </label>
-                                    </div>
+                                <div role="tabpanel" class="tab-pane" id="valid">
                                     <form action="{{ route('activity.import-validated-activities') }}" method="POST">
                                         {{ csrf_field() }}
-                                        <div class="valid-data"></div>
+                                        @if (isset($data))
+                                            <div class="valid-data">
+                                                {!! getVal($data, ['validData', 'render'], '') !!}
+                                            </div>
+                                        @else
+                                            <div class="valid-data"></div>
+                                        @endif
                                         <input type="submit" class="hidden" id="submit-valid-activities" value="Import">
                                     </form>
                                 </div>
 
                                 <div role="tabpanel" class="tab-pane" id="invalid">
-                                    <div class="invalid-data"></div>
+                                    @if (isset($data))
+                                        <div class="invalid-data">
+                                            {!! getVal($data, ['invalidData', 'render'], '') !!}
+                                        </div>
+                                    @else
+                                        <div class="invalid-data"></div>
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -78,11 +94,14 @@
     </div>
 @stop
 @section('script')
+    <script>
+        @if (isset($data))
+            var alreadyProcessed = true;
+        @else
+            var alreadyProcessed = false;
+        @endif
+    </script>
     <script src="{{ asset('js/csvImporter/accordion.js') }}"></script>
     <script src="{{ asset('js/csvImporter/csvImportStatus.js') }}"></script>
     <script src="{{ asset('js/csvImporter/selectTabs.js') }}"></script>
-    <script>
-        var checkSessionRoute = '{{ route('activity.check-session-status')}}';
-    </script>
-    <script src=" {{ asset('js/csvImporter/checkSessionStatus.js') }}"></script>
 @stop
