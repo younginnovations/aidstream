@@ -5,6 +5,10 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
+/**
+ * Class Job
+ * @package App\Jobs
+ */
 abstract class Job implements ShouldQueue
 {
     /*

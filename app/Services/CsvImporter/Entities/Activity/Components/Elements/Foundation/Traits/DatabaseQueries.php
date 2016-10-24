@@ -30,6 +30,6 @@ trait DatabaseQueries
      */
     protected function activities()
     {
-        return app()->make(Activity::class)->query()->get(['identifier']);
+        return app()->make(Activity::class)->query()->where('organization_id', '=', $this->organizationId)->get(['identifier']);
     }
 }

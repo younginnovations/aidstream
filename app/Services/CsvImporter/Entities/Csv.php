@@ -1,6 +1,6 @@
 <?php namespace App\Services\CsvImporter\Entities;
 
-use Exception;
+use App\Services\CsvImporter\Entities\Activity\Components\ActivityRow;
 
 /**
  * Class Csv
@@ -15,46 +15,39 @@ abstract class Csv
 
     /**
      * Current Organization's id.
+     *
      * @var
      */
     protected $organizationId;
 
     /**
      * Current User's id.
+     *
      * @var
      */
     protected $userId;
 
     /**
      * Rows from the uploaded CSV file.
+     *
      * @var array
      */
     protected $csvRows = [];
 
     /**
-     * Initialize objects for the CSV class with the respective Row objects.
-     * @param $rows
-     * @param $class
+     * Initialize an ActivityRow object.
+     *
+     * @param $row
+     * @return ActivityRow
      */
-    protected function make($rows, $class)
+    protected function initialize($row)
     {
-        array_walk(
-            $rows,
-            function ($row) use ($class) {
-                if (class_exists($class)) {
-                    try {
-                        $this->rows[] = app()->make($class, [$row, $this->organizationId, $this->userId]);
-                    } catch (Exception $exception) {
-                        dd($exception->getMessage());
-                    }
-
-                }
-            }
-        );
+        return app()->make(ActivityRow::class, [$row, $this->organizationId, $this->userId]);
     }
 
     /**
      * Get the rows in the CSV.
+     *
      * @return mixed
      */
     public function rows()

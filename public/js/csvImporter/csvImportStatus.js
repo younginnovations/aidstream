@@ -28,6 +28,9 @@ var CsvImportStatusManager = {
         return parentDiv.is(':empty');
     },
     isTransferComplete: function () {
+        var placeHolder = $('div#import-status-placeholder');
+        placeHolder.empty().append("<a href='/import-activity/import-status'>" + "CSV File Processing." + "</a>");
+
         CsvImportStatusManager.callAsync('/import-activity/check-status', 'GET').success(function (response) {
             var r = JSON.parse(response);
 
@@ -36,14 +39,16 @@ var CsvImportStatusManager = {
 
                 transferComplete = null;
             }
+            // var placeHolder = $('div#import-status-placeholder');
 
             if (r.status == 'Complete') {
                 transferComplete = true;
+                placeHolder.empty().append("<a href='/import-activity/import-status'>" + "CSV File Processing " + r.status + ".</a>");
                 cancelButton.fadeIn('slow').removeClass('hidden');
                 checkAll.fadeIn('slow').removeClass('hidden');
+            } else if (r.status == 'Incomplete' || r.status == 'Processing') {
+                placeHolder.empty().append("<a href='/import-activity/import-status'>" + "CSV File Processing." + "</a>");
             }
-        }).error(function (error) {
-            // TODO: handle error
         });
     },
     getRemainingInvalidData: function () {
@@ -102,27 +107,39 @@ var CsvImportStatusManager = {
 };
 
 $(document).ready(function () {
-    accordionInit();
-    clearInvalidButton.hide();
+    if (!alreadyProcessed) {
+        accordionInit();
+        clearInvalidButton.hide();
+        var placeHolder = $('div#import-status-placeholder');
+        placeHolder.empty().append("<a href='/import-activity/import-status'>" + "CSV File Processing." + "</a>");
 
-    var interval = setInterval(function () {
-        CsvImportStatusManager.isTransferComplete();
+        var interval = setInterval(function () {
+            CsvImportStatusManager.isTransferComplete();
 
-        if (CsvImportStatusManager.ifParentIsEmpty('invalid-data') && CsvImportStatusManager.ifParentIsEmpty('valid-data')) {
-            CsvImportStatusManager.getData();
-        } else {
-            CsvImportStatusManager.getRemainingValidData();
-            CsvImportStatusManager.getRemainingInvalidData();
-        }
+            if (CsvImportStatusManager.ifParentIsEmpty('invalid-data') && CsvImportStatusManager.ifParentIsEmpty('valid-data')) {
+                CsvImportStatusManager.getData();
+            } else {
+                CsvImportStatusManager.getRemainingValidData();
+                CsvImportStatusManager.getRemainingInvalidData();
+            }
 
-        if (null == transferComplete) {
-            window.location = '../import-activity/upload-csv-redirect';
-        }
+            if (null == transferComplete) {
+                window.location = '../import-activity/upload-csv-redirect';
+            }
 
-        if (transferComplete) {
-            accordionInit();
-            clearInterval(interval);
-            CsvImportStatusManager.enableImport();
-        }
-    }, 5000);
+            if (transferComplete) {
+                accordionInit();
+                CsvImportStatusManager.enableImport();
+                clearInterval(interval);
+            }
+        }, 3000);
+    } else {
+        accordionInit();
+
+        placeHolder = $('div#import-status-placeholder');
+        placeHolder.empty().append("<a href='/import-activity/import-status'>" + "CSV File Processing Complete."+"</a>");
+
+        cancelButton.fadeIn('slow').removeClass('hidden');
+        CsvImportStatusManager.enableImport();
+    }
 });

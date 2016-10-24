@@ -1,12 +1,12 @@
 <?php namespace App\Http\Controllers\Complete\Activity\Import;
 
-use App\Core\V201\Requests\Activity\ImportActivity;
-use App\Http\Controllers\Controller;
 use App\Http\Requests\Request;
-use App\Services\CsvImporter\ImportManager;
-use App\Services\FormCreator\Activity\ImportActivity as ImportActivityForm;
-use App\Services\Organization\OrganizationManager;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\File;
+use App\Services\CsvImporter\ImportManager;
+use App\Services\Organization\OrganizationManager;
+use App\Core\V201\Requests\Activity\ImportActivity;
+use App\Services\FormCreator\Activity\ImportActivity as ImportActivityForm;
 
 
 /**
@@ -15,21 +15,6 @@ use Illuminate\Support\Facades\File;
  */
 class ImportController extends Controller
 {
-    /**
-     * Directory where the validated Csv data is written before import.
-     */
-    const CSV_DATA_STORAGE_PATH = 'csvImporter/tmp';
-
-    /**
-     * File in which the valida Csv data is written before import.
-     */
-    const VALID_CSV_FILE = 'valid.json';
-
-    /**
-     * File in which the invalid Csv data is written before import.
-     */
-    const INVALID_CSV_FILE = 'invalid.json';
-
     /**
      * @var ImportActivityForm
      */
@@ -82,8 +67,8 @@ class ImportController extends Controller
         $this->form                = $form;
         $this->organizationManager = $organizationManager;
         $this->importManager       = $importManager;
-        $this->userId              = auth()->user()->id;
         $this->middleware('auth');
+        $this->userId              = $this->getUserId();
     }
 
     /**
@@ -135,9 +120,13 @@ class ImportController extends Controller
             return redirect('/settings')->withResponse($response);
         }
 
+        if (session()->has('import-status') && session()->get('import-status') == 'Complete') {
+            $importing = true;
+        }
+
         $form = $this->form->createForm();
 
-        return view('Activity.uploader', compact('form'));
+        return view('Activity.uploader', compact('form', 'importing'));
     }
 
     /**
@@ -148,6 +137,8 @@ class ImportController extends Controller
     public function activities(ImportActivity $request)
     {
         $file = $request->file('activity');
+
+        $this->importManager->clearOldImport();
 
         if ($this->importManager->storeCsv($file)) {
             $filename = $file->getClientOriginalName();
@@ -189,7 +180,13 @@ class ImportController extends Controller
      */
     public function status()
     {
-        return view('Activity.csvImporter.status');
+        if (session()->has('import-status') && session()->get('import-status') == 'Complete') {
+            $data = $this->importManager->getData();
+        } elseif (!session()->has('import-status')) {
+            return redirect()->route('activity.upload-csv')->withResponse(['type' => 'success', 'code' => ['message', ['message' => 'No on going processes.']]]);
+        }
+
+        return view('Activity.csvImporter.status', compact('data'));
     }
 
     /**
@@ -209,7 +206,7 @@ class ImportController extends Controller
             return response()->json($result);
         }
 
-        return response()->json(json_encode(['status' => 'Incomplete']));
+        return response()->json(json_encode(['status' => 'Processing']));
     }
 
     /**
@@ -219,6 +216,8 @@ class ImportController extends Controller
     public function getRemainingInvalidData()
     {
         $filepath = $this->importManager->getFilePath(false);
+
+        $this->fixStagingPermission($this->importManager->getTemporaryFilepath());
 
         if (file_exists($filepath)) {
             $activities = json_decode(file_get_contents($filepath), true);
@@ -312,7 +311,7 @@ class ImportController extends Controller
     public function cancel()
     {
         $this->importManager->removeImportDirectory();
-        $this->importManager->endImport();
+        $this->importManager->clearSession(['import-status', 'filename']);
 
         return redirect()->route('activity.upload-csv');
     }
@@ -362,5 +361,14 @@ class ImportController extends Controller
     {
         // TODO: Remove this.
         shell_exec(sprintf('chmod 777 -R %s', $path));
+    }
+
+    protected function getUserId()
+    {
+        if (auth()->check()) {
+            return auth()->user()->id;
+        }
+
+        return null;
     }
 }

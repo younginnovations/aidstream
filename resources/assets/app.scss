@@ -2774,6 +2774,7 @@ form > .add_to_collection[data-collection="legacy_data"] {
   }
   form {
     overflow: hidden;
+    clear: both;
   }
   .form-group {
     float: left;
@@ -2819,7 +2820,7 @@ form > .add_to_collection[data-collection="legacy_data"] {
   width: auto;
   margin: 0;
   .dropdown-menu {
-    width: 260px;
+    min-width: 260px;
   }
 }
 
@@ -5933,6 +5934,66 @@ body > .skiptranslate iframe {
 }
 
 .status-wrapper {
+  padding: 0;
+  margin-bottom: 100px;
+  .panel-heading {
+    border-bottom: 1px solid rgba($color_gravel_approx, 0.2);
+    border-radius: 0;
+    padding: 0;
+    .panel-content-heading {
+      padding: 0;
+      background: transparent;
+      height: auto;
+      min-height: inherit;
+      h3 {
+        padding: 0;
+        margin: 0;
+      }
+      .panel-title {
+        font: 14px $font_1;
+        width: 100%;
+        padding-left: 10px;
+      }
+    }
+    label {
+      padding: 14px 32px;
+      margin: 0 !important;
+      &:hover {
+        background: #fafafa  ;
+      }
+    }
+  }
+}
+
+.valid-data .panel-heading label {
+  border-left: 6px solid #80CA9C;
+}
+
+.invalid-data .panel-heading label {
+  border-left: 6px solid #e15454  ;
+}
+
+.data-listing {
+  padding: 12px 0 0 44px;
+  list-style: inherit;
+  display: none;
+  li {
+    padding-bottom: 4px;
+    color: #E15454  ;
+  }
+}
+
+#submit-valid-activities {
+  display: block;
+  position: absolute;
+  right: 20px;
+  top: -45px;
+  z-index: 1;
+  padding: 7px 14px;
+  font-size: 12px;
+}
+
+.status-wrapper {
   input[type="checkbox"] {
     position: absolute;
     left: -9999px;
@@ -5964,10 +6025,13 @@ body > .skiptranslate iframe {
       }
     }
   }
+  input[disabled] + span:before {
+    background: #d8d8d8 !important;
+    border-color: #d8d8d8 !important;
+  }
 }
 
-.status-wrapper .invalid-dat
-a h3 input[type=checkbox] + span:before {
+.status-wrapper .invalid-data h3 input[type=checkbox] + span:before {
   background: #eee;
 }
 
@@ -5999,11 +6063,11 @@ a h3 input[type=checkbox] + span:before {
       top: 12px !important;
     }
   }
-  label {
+  > label {
     display: inline-block;
     font: 12px $font_1;
     color: $color_gravel_approx;
-    padding: 10px 0 0 20px;
+    padding: 8px 0 0 10px;
     vertical-align: top;
   }
   .nav-tabs {
@@ -6013,6 +6077,11 @@ a h3 input[type=checkbox] + span:before {
     border: 1px solid #ccc;
     display: inline-block;
   }
+}
+
+#checkAll {
+  float: left;
+  padding-top: 5px;
 }
 
 .tab-select {
@@ -6043,19 +6112,11 @@ a h3 input[type=checkbox] + span:before {
   font-style: italic;
 }
 
-#checkAll {
-  width: 56px;
-  label {
-    padding-top: 14px;
-    padding-left: 37px;
-    margin-right: 20px;
-  }
-}
-
 #cancel-import input[type="button"] {
-  @include position(absolute, 8px 10px auto auto);
+  @include position(absolute, 8px 20px auto auto);
   z-index: 10000;
-  padding: 8px 16px;
+  padding: 7px 14px;
+  font-size: 12px;
 }
 
 #import-status-placeholder a {
