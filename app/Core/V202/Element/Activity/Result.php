@@ -16,7 +16,7 @@ class Result extends V201Result
     protected function buildIndicator($indicators)
     {
         $indicatorData = [];
-        
+
         foreach ($indicators as $indicator) {
             $indicatorData[] = [
                 '@attributes' => [
@@ -33,7 +33,7 @@ class Result extends V201Result
                 'baseline'    => [
                     '@attributes' => [
                         'year'  => getVal($indicator, ['baseline', 0, 'year']),
-                        'value' => getVal($indicator, ['baseline', 0, 'value'])
+                        'value' => getVal($indicator, ['baseline', 0, 'value'], '0')
                     ],
                     'comment'     => [
                         'narrative' => $this->buildNarrative(getVal($indicator, ['baseline', 0, 'comment', 0, 'narrative']))
