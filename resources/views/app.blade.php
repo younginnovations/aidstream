@@ -40,7 +40,7 @@
         <div class="collapse navbar-collapse navbar-right" id="bs-example-navbar-collapse-1">
             @if(auth()->user() && !isSuperAdminRoute())
                 <ul class="nav navbar-nav pull-left add-new-activity">
-                    <li class="dropdown" id="step-2">
+                    <li class="dropdown" data-hint="To add a new activity ">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
                            aria-expanded="false">Add a New Activity<span
                                     class="caret"></span></a>

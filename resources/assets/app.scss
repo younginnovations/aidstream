@@ -5840,6 +5840,14 @@ body > .skiptranslate iframe {
   background-position: -49px -28px;
 }
 
+.introjs-hint[data-step="1"] {
+  background: red;
+}
+
+.introjs-hint[data-step="2"] {
+  background: green;
+}
+
 @media all and (max-width: 1030px) {
   .activity-status {
     padding: 16px 10px 18px 50px;

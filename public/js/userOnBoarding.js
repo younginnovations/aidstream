@@ -1,99 +1,99 @@
 (function ($) {
     UserOnBoarding = {
         dashboardTour: function () {
-            var intro = introJs();
-            var step6Text = (roleId == 1) ? 'View Activity log' : 'My Profile';
-            intro.setOptions({
-                steps: [
-                    {
-                        element: '#step-1',
-                        intro: "" +
-                        "Click here to view the list of Activities you have added" +
-                        "<div><a href='/activity'>Skip</a></div>" +
-                        "<div><a href='#' id='btn1'>Next: Add an Activity</a></div>",
-                        position: 'right'
-                    },
-                    {
-                        element: '#step-2',
-                        intro: "" +
-                        "Hover over here to get options to add an activity" +
-                        "<div><a href='/activity'>Skip</a></div>" +
-                        "<div><a href='#' id='btn2'>Next: View Organisation data</a></div>",
-                        position: 'bottom'
-                    },
-                    {
-                        element: '#step-3',
-                        intro: "" +
-                        "Click here to view your organisation's which you can publish/update to the IATI Registry" +
-                        "<div><a href='/activity'>Skip</a></div>" +
-                        "<div><a href='#' id='btn3'>Next: View documents</a></div>",
-                        position: 'right'
-                    },
-                    {
-                        element: '#step-4',
-                        intro: "" +
-                        "Click here to view the documents you have added under document link" +
-                        "<div><a href='/activity'>Skip</a></div>" +
-                        "<div><a href='#' id='btn4'>Next: Download your data</a></div>",
-                        position: 'right'
-                    },
-                    {
-                        element: '#step-5',
-                        intro: "" +
-                        "Click here to get options to download your data which is on AidStream" +
-                        "<div><a href='/activity'>Skip</a></div>" +
-                        "<div><a href='#' id='btn5'>Next: View your organisation's settings</a></div>",
-                        position: 'right'
-                    },
-                    {
-                        element: '#step-6',
-                        intro: "" +
-                        "Click here to view your organisation's account settings. Users with Administrator level permission can edit settings from here" +
-                        "<div><a href='/activity'>Skip</a></div>" +
-                        "<div><a href='#' id='btn6'>Next:" + step6Text + " </a> </div> ",
-                        position: 'right'
-                    },
-                    {
-                        element: '#step-7',
-                        intro: "" +
-                        "Click here to view the changes made by users" +
-                        "<div><a href='/activity'>Skip</a></div>" +
-                        "<div><a href='#' id='btn7'>Next: My Profile</a></div>",
-                        position: 'right'
-                    },
-                    {
-                        element: '#step-8',
-                        intro: "" +
-                        "Hover over here and click on “My Profile” to go your profile page" +
-                        "<div><a href='/activity'>Skip</a></div>" +
-                        "<div><a href='#' id='btn8'>Go to dashboard</a></div>",
-                        position: 'bottom'
-                    }
-                ], exitOnOverlayClick: false,
-                showStepNumbers: false,
-                showButtons: false,
-                showBullets: false
+            //     var intro = introJs();
+            //     var step6Text = (roleId == 1) ? 'View Activity log' : 'My Profile';
+            //     intro.setOptions({
+            //         steps: [
+            //             {
+            //                 element: '#step-1',
+            //                 intro: "" +
+            //                 "Click here to view the list of Activities you have added" +
+            //                 "<div><a href='/activity'>Skip</a></div>" +
+            //                 "<div><a href='#' id='btn1'>Next: Add an Activity</a></div>",
+            //                 position: 'right'
+            //             },
+            //             {
+            //                 element: '#step-2',
+            //                 intro: "" +
+            //                 "Hover over here to get options to add an activity" +
+            //                 "<div><a href='/activity'>Skip</a></div>" +
+            //                 "<div><a href='#' id='btn2'>Next: View Organisation data</a></div>",
+            //                 position: 'bottom'
+            //             },
+            //             {
+            //                 element: '#step-3',
+            //                 intro: "" +
+            //                 "Click here to view your organisation's which you can publish/update to the IATI Registry" +
+            //                 "<div><a href='/activity'>Skip</a></div>" +
+            //                 "<div><a href='#' id='btn3'>Next: View documents</a></div>",
+            //                 position: 'right'
+            //             },
+            //             {
+            //                 element: '#step-4',
+            //                 intro: "" +
+            //                 "Click here to view the documents you have added under document link" +
+            //                 "<div><a href='/activity'>Skip</a></div>" +
+            //                 "<div><a href='#' id='btn4'>Next: Download your data</a></div>",
+            //                 position: 'right'
+            //             },
+            //             {
+            //                 element: '#step-5',
+            //                 intro: "" +
+            //                 "Click here to get options to download your data which is on AidStream" +
+            //                 "<div><a href='/activity'>Skip</a></div>" +
+            //                 "<div><a href='#' id='btn5'>Next: View your organisation's settings</a></div>",
+            //                 position: 'right'
+            //             },
+            //             {
+            //                 element: '#step-6',
+            //                 intro: "" +
+            //                 "Click here to view your organisation's account settings. Users with Administrator level permission can edit settings from here" +
+            //                 "<div><a href='/activity'>Skip</a></div>" +
+            //                 "<div><a href='#' id='btn6'>Next:" + step6Text + " </a> </div> ",
+            //                 position: 'right'
+            //             },
+            //             {
+            //                 element: '#step-7',
+            //                 intro: "" +
+            //                 "Click here to view the changes made by users" +
+            //                 "<div><a href='/activity'>Skip</a></div>" +
+            //                 "<div><a href='#' id='btn7'>Next: My Profile</a></div>",
+            //                 position: 'right'
+            //             },
+            //             {
+            //                 element: '#step-8',
+            //                 intro: "" +
+            //                 "Hover over here and click on “My Profile” to go your profile page" +
+            //                 "<div><a href='/activity'>Skip</a></div>" +
+            //                 "<div><a href='#' id='btn8'>Go to dashboard</a></div>",
+            //                 position: 'bottom'
+            //             }
+            //         ], exitOnOverlayClick: false,
+            //         showStepNumbers: false,
+            //         showButtons: false,
+            //         showBullets: false
+            //
+            //     });
+            introJs.addHints();
 
-            });
-            intro.start();
-
-            $('body').delegate('#btn1', 'click', function () {
-                intro.goToStep(2);
-            }).delegate('#btn2', 'click', function () {
-                intro.goToStep(3);
-            }).delegate('#btn3', 'click', function () {
-                intro.goToStep(4);
-            }).delegate('#btn4', 'click', function () {
-                intro.goToStep(5);
-            }).delegate('#btn5', 'click', function () {
-                intro.goToStep(6);
-            }).delegate('#btn6', 'click', function () {
-                (roleId == 1) ? intro.goToStep(7) : intro.goToStep(8);
-            }).delegate('#btn7', 'click', function () {
-                intro.goToStep(8);
-            }).delegate('#btn8', 'click', function () {
-                window.location.href = '/activity'
-            });
+            // $('body').delegate('#btn1', 'click', function () {
+            //     intro.goToStep(2);
+            // }).delegate('#btn2', 'click', function () {
+            //     intro.goToStep(3);
+            // }).delegate('#btn3', 'click', function () {
+            //     intro.goToStep(4);
+            // }).delegate('#btn4', 'click', function () {
+            //     intro.goToStep(5);
+            // }).delegate('#btn5', 'click', function () {
+            //     intro.goToStep(6);
+            // }).delegate('#btn6', 'click', function () {
+            //     (roleId == 1) ? intro.goToStep(7) : intro.goToStep(8);
+            // }).delegate('#btn7', 'click', function () {
+            //     intro.goToStep(8);
+            // }).delegate('#btn8', 'click', function () {
+            //     window.location.href = '/activity'
+            // });
         },
         settingsTour: function () {
             var intro = introJs();

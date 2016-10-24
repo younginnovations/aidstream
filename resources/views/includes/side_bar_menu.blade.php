@@ -2,7 +2,8 @@
     <div class="panel panel-default">
         <div class="panel-body">
             <ul class="nav">
-                <li class="activities" id="step-1"><a href="{{ route('activity.index') }}">Activities</a></li>
+                <li class="activities" data-hint="Click here to view the list of Activities you have added." data-Hintposition="bottom-middle"><a href="{{ route('activity.index') }}">Activities</a>
+                </li>
                 <li class="organization" id="step-3"><a href="{{ route('organization.show', session('org_id')) }}">Organisation</a></li>
                 <li class="published-files"><a href="{{ route('list-published-files') }}">Published Files</a></li>
                 <li class="documents" id="step-4"><a href="{{ route('documents') }}">Documents</a></li>
