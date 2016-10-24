@@ -49,6 +49,7 @@ class RouteServiceProvider extends ServiceProvider
             require app_path('Http/routes/settings.php');
             require app_path('Http/routes/userOnBoarding.php');
             require app_path('Http/routes/import/import.php');
+            require app_path('Http/routes/import/result/importresult.php');
         });
     }
 }

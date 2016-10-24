@@ -1,0 +1,53 @@
+{
+  "attributes": {
+    "category-codelist": null,
+    "name": "IndicatorVocabulary",
+    "complete": "0"
+  },
+  "data": [
+    {
+      "url": "http://apps.who.int/gho/indicatorregistry/App_Main/indicator_registry.aspx",
+      "code": "1",
+      "name": "WHO Registry"
+    },
+    {
+      "url": "http://www.spherehandbook.org",
+      "code": "2",
+      "name": "Sphere Handbook"
+    },
+    {
+      "url": "http://www.state.gov/s/d/rm/rls/dosstrat/2007/html/82981.htm",
+      "code": "3",
+      "name": "US Foreign Assistance Framework"
+    },
+    {
+      "url": "http://data.worldbank.org/data-catalog/world-development-indicators",
+      "code": "4",
+      "name": "World Bank World Development Indicators"
+    },
+    {
+      "url": "http://mdgs.un.org/unsd/mdg/Host.aspx?Content=Indicators/OfficialList.htm",
+      "code": "5",
+      "name": "UN Millennium Development Goals Indicators"
+    },
+    {
+      "url": "https://www.humanitarianresponse.info/applications/ir/indicators",
+      "code": "6",
+      "name": "UNOCHA Humanitarian Response Indicators"
+    },
+    {
+      "url": "http://www.indicatorregistry.org",
+      "code": "7",
+      "name": "HIV/AIDS Indicator Registry"
+    },
+    {
+      "code": "99",
+      "name": "Reporting Organisation"
+    }
+  ],
+  "metadata": {
+    "url": null,
+    "name": "Indicator Vocabulary",
+    "description": "\n                The Indicator Vocabulary codelist defines a range of external codelists which themselves provide codes and descriptions for indicators, for example to specify results.\n            "
+  }
+}

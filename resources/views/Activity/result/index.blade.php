@@ -15,6 +15,7 @@
                     <div class="panel-action-btn">
                         <a href="{{ route('activity.result.create', $id) }}" class="btn btn-primary add-new-btn">Add New
                             Result</a>
+                        <a href="{{ route('activity.result.upload-csv', $id) }}" class="btn btn-primary add-new-btn">Upload Results</a>
                     </div>
                 @endif
                 </div>
@@ -58,8 +59,9 @@
                             </table>
                         @else
                             <div class="text-center no-data no-result-data">
-                                You haven’t added any result yet.
+                                <p>You haven’t added any Results yet.</p>
                                 <a href="{{ route('activity.result.create', $id) }}" class="btn btn-primary">Add New Result</a>
+                                <a href="{{ route('activity.result.upload-csv', $id) }}" class="btn btn-primary btn-upload">Upload Results</a>
                             </div>
                         @endif
                     </div>
