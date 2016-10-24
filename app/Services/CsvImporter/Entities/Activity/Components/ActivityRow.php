@@ -28,7 +28,7 @@ class ActivityRow extends Row
      */
     const TRANSACTION_HEADER_COUNT = 43;
 
-    /**
+    /**a
      * Number of headers for the Activity Csv with Transactions and Other Fields.
      */
     const ACTIVITY_TRANSACTION_OTHERS_HEADER_COUNT = 65;

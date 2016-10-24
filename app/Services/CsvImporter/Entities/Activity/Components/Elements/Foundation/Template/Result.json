@@ -1,0 +1,139 @@
+{
+  "type": "",
+  "aggregation_status": "",
+  "title": [
+    {
+      "narrative": [
+        {
+          "narrative": "",
+          "language": ""
+        }
+      ]
+    }
+  ],
+  "description": [
+    {
+      "narrative": [
+        {
+          "narrative": "",
+          "language": ""
+        }
+      ]
+    }
+  ],
+  "indicator": [
+    {
+      "measure": "",
+      "ascending": "",
+      "title": [
+        {
+          "narrative": [
+            {
+              "narrative": "",
+              "language": ""
+            }
+          ]
+        }
+      ],
+      "description": [
+        {
+          "narrative": [
+            {
+              "narrative": "",
+              "language": ""
+            }
+          ]
+        }
+      ],
+      "reference": [
+        {
+          "vocabulary": "",
+          "code": "",
+          "indicator_uri": ""
+        }
+      ],
+      "baseline": [
+        {
+          "year": "",
+          "value": "",
+          "comment": [
+            {
+              "narrative": [
+                {
+                  "narrative": "",
+                  "language": ""
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "period": [
+        {
+          "period_start": [
+            {
+              "date": ""
+            }
+          ],
+          "period_end": [
+            {
+              "date": ""
+            }
+          ],
+          "target": [
+            {
+              "value": "",
+              "location": [
+                {
+                  "ref": ""
+                }
+              ],
+              "dimension": [
+                {
+                  "name": "",
+                  "value": ""
+                }
+              ],
+              "comment": [
+                {
+                  "narrative": [
+                    {
+                      "narrative": "",
+                      "language": ""
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "actual": [
+            {
+              "value": "",
+              "location": [
+                {
+                  "ref": ""
+                }
+              ],
+              "dimension": [
+                {
+                  "name": "",
+                  "value": ""
+                }
+              ],
+              "comment": [
+                {
+                  "narrative": [
+                    {
+                      "narrative": "",
+                      "language": ""
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

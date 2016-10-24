@@ -29,6 +29,17 @@ class Result
     }
 
     /**
+     * Create a new ActivityResult.
+     *
+     * @param array $resultData
+     * @return ActivityResult
+     */
+    public function create(array $resultData)
+    {
+        return $this->activityResult->create($resultData);
+    }
+
+    /**
      * Store Activity Result
      * @param array          $resultData
      * @param ActivityResult $activityResult
