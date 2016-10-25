@@ -3107,9 +3107,6 @@ select.form-control, form .select2-container {
   border: 1px solid #BFDFEC;
   margin-bottom: 0.75em; }
 
-.select2-container {
-  z-index: 10000000; }
-
 form .select2-container {
   width: 100% !important;
   margin-bottom: 0; }
@@ -3284,7 +3281,9 @@ label {
 
 .login-wrapper {
   padding: 80px 0;
-  min-height: 100%; }
+  min-height: 100%;
+  position: relative;
+  z-index: 1; }
   .login-wrapper .language-select-wrapper {
     float: right;
     padding: 10px 20px 5px; }
@@ -6004,13 +6003,12 @@ div[class*="panel-level-"] .panel > .panel-body {
     background: #038ED6;
     color: #fff; }
 
-.modal-header {
-  border-bottom: 0; }
-  .modal-header .close {
-    background: none !important; }
-  .modal-header img {
-    margin: 0 auto 10px;
-    display: block; }
+.modal-header .close {
+  background: none !important; }
+
+.modal-header img {
+  margin: 0 auto 10px;
+  display: block; }
 
 .verification-modal .modal-header + .modal-body {
   padding-top: 0; }
@@ -7249,6 +7247,9 @@ body > .skiptranslate iframe {
     border: 0 !important;
     background: none !important; }
 
+.select2-container {
+  z-index: 10000000; }
+
 #default_values > form > .col-md-12:nth-last-child(2) > .form-group {
   margin-bottom: 0; }
 
@@ -7452,7 +7453,9 @@ body > .skiptranslate iframe {
       border: 1px solid #00A8FF; }
 
 .close {
-  opacity: 1 !important; }
+  opacity: 1 !important;
+  width: 18px;
+  height: 20px; }
   .close span {
     color: #00A8FF;
     font-size: 40px;
@@ -7504,7 +7507,7 @@ body > .skiptranslate iframe {
 
 .verification-modal .modal-header .close span {
   position: absolute;
-  right: 15px;
+  right: 18px;
   top: 15px; }
 
 .save-registry-block {
@@ -7756,6 +7759,9 @@ body > .skiptranslate iframe {
 .explore-screen .modal-content {
   padding-bottom: 60px; }
 
+.explore-screen .modal-header {
+  border-bottom: 0; }
+
 .explore-screen h1 {
   font-size: 48px;
   margin: 20px 0 34px; }
@@ -7791,10 +7797,12 @@ body > .skiptranslate iframe {
         text-decoration: none; }
     .explore-screen ol li + li {
       margin-left: 10px; }
-    .explore-screen ol li.filled a {
+    .explore-screen ol li.filled a, .explore-screen ol li.skipped a {
       background: #417505;
       border: 1px solid;
       color: #fff; }
+    .explore-screen ol li.skipped a {
+      background: #E15454; }
 
 .explore-screen label {
   text-align: center !important;
@@ -8483,9 +8491,7 @@ body > .skiptranslate iframe {
   .organization-detail ul li {
     display: inline-block;
     vertical-align: top;
-    width: 49%; }
-  .modal-dialog {
-    margin: 10% auto; } }
+    width: 49%; } }
 
 @media all and (min-width: 880px) {
   #activity-elements-checklist .collection_form > .form-group > .form-group {

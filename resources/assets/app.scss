@@ -162,10 +162,6 @@ select.form-control, form .select2-container {
   margin-bottom: 0.75em;
 }
 
-.select2-container {
-  z-index: 10000000;
-}
-
 form .select2-container {
   width: 100% !important;
   margin-bottom: 0;
@@ -391,6 +387,8 @@ label {
   //background: $url_1 no-repeat bottom/cover;
   padding: 80px 0;
   min-height: 100%;
+  position: relative;
+  z-index: 1;
   .language-select-wrapper {
     float: right;
     padding: 10px 20px 5px;
@@ -3672,7 +3670,7 @@ div[class*="panel-level-"] .panel > .panel-body {
 }
 
 .modal-header {
-  border-bottom: 0;
+  //border-bottom: 0;
   .close {
     background: none !important;
   }
@@ -5106,6 +5104,10 @@ body > .skiptranslate iframe {
   }
 }
 
+.select2-container {
+  z-index: 10000000;
+}
+
 
 #default_values > form > .col-md-12:nth-last-child(2) > .form-group {
   margin-bottom: 0;
@@ -5360,6 +5362,8 @@ body > .skiptranslate iframe {
 
 .close {
   opacity: 1 !important;
+  width: 18px;
+  height: 20px;
   span {
     color: $color_dodger_blue_approx;
     font-size: 40px;
@@ -5427,7 +5431,7 @@ body > .skiptranslate iframe {
   }
   .modal-header .close span {
     position: absolute;
-    right: 15px;
+    right: 18px;
     top: 15px;
   }
 }
@@ -5755,6 +5759,9 @@ body > .skiptranslate iframe {
   .modal-content {
     padding-bottom: 60px;
   }
+  .modal-header {
+    border-bottom: 0;
+  }
   h1 {
     font-size: 48px;
     margin: 20px 0 34px;
@@ -5793,10 +5800,13 @@ body > .skiptranslate iframe {
       & + li {
         margin-left: 10px;
       }
-      &.filled a {
+      &.filled a,&.skipped a {
         background: #417505;
         border: 1px solid;
         color: $color_white;
+      }
+      &.skipped a {
+        background: #E15454;
       }
     }
   }
@@ -6911,10 +6921,6 @@ body > .skiptranslate iframe {
     display: inline-block;
     vertical-align: top;
     width: 49%;
-  }
-
-  .modal-dialog {
-    margin: 10% auto;
   }
 }
 
