@@ -48,15 +48,6 @@ class UserOnBoardingController extends Controller
     }
 
     /**
-     * Start dashboard tour.
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function startDashboardTour()
-    {
-        return view('onBoarding.dashboardTour');
-    }
-
-    /**
      * Store publisher and api id of settings.
      */
     public function storePublisherAndApiId()
@@ -116,7 +107,7 @@ class UserOnBoardingController extends Controller
     {
         $organization = $this->getOrganization();
         $this->userOnBoardingService->storeDefaultValues($request, $organization);
-        $completedSteps = $this->userOnBoardingService->getCompletedSteps();
+        $completedSteps = $this->userOnBoardingService->getCompletedSettingsSteps();
         $status         = $this->userOnBoardingService->isAllStepsCompleted();
         $redirectView   = ($status) ? 'continueExploring' : 'exploreLater';
 
@@ -132,7 +123,7 @@ class UserOnBoardingController extends Controller
         if (Auth::user()->userOnBoarding->completed_tour) {
             return redirect()->back();
         }
-        $completedSteps = $this->userOnBoardingService->getCompletedSteps();
+        $completedSteps = $this->userOnBoardingService->getCompletedSettingsSteps();
         $status         = $this->userOnBoardingService->isAllStepsCompleted();
         Session::put('first_login', true);
 
@@ -146,7 +137,7 @@ class UserOnBoardingController extends Controller
     public function continueExploring()
     {
         $firstname      = Auth::user()->first_name;
-        $completedSteps = $this->userOnBoardingService->getCompletedSteps();
+        $completedSteps = $this->userOnBoardingService->getCompletedSettingsSteps();
         $status         = $this->userOnBoardingService->isAllStepsCompleted();
 
         return view(sprintf('onBoarding.continueExploring'), compact('firstname', 'completedSteps', 'status'));
@@ -179,5 +170,17 @@ class UserOnBoardingController extends Controller
     public function create($userId)
     {
         $this->userOnBoardingService->create($userId);
+    }
+
+    /**
+     * Store closed dashboard hints
+     * @return int
+     */
+    public function storeDashboardSteps()
+    {
+        $step = (int) Input::get('step');
+        $this->userOnBoardingService->storeDashboardSteps($step);
+
+        return $step;
     }
 }

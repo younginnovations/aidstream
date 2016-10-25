@@ -72,7 +72,7 @@ class UserOnBoardingService
                 $settings->registry_info = $registry_info;
                 $settings->save();
             }
-            $this->storeCompletedSteps(1);
+            $this->storeCompletedSettingsSteps(1);
 
             $this->logger->info('Publisher id and api key updated successfully.');
             $this->dbLogger->activity(
@@ -109,7 +109,7 @@ class UserOnBoardingService
                 $settings->publishing_type = $publishingType;
                 $settings->save();
             }
-            $this->storeCompletedSteps(2);
+            $this->storeCompletedSettingsSteps(2);
             $this->logger->info('Publishing Type updated successfully.');
             $this->dbLogger->activity(
                 "activity.settings_updated",
@@ -158,7 +158,7 @@ class UserOnBoardingService
                 $settings->registry_info = $registry_info;
                 $settings->save();
             }
-            $this->storeCompletedSteps(3);
+            $this->storeCompletedSettingsSteps(3);
 
             $this->logger->info('Automatic publish to registry settings updated successfully.');
             $this->dbLogger->activity(
@@ -194,7 +194,7 @@ class UserOnBoardingService
                 $settings->save();
             }
 
-            $this->storeCompletedSteps(4);
+            $this->storeCompletedSettingsSteps(4);
 
             $this->logger->info('Activity Elements Checklist updated successfully.');
             $this->dbLogger->activity(
@@ -254,7 +254,7 @@ class UserOnBoardingService
                 $settings->save();
             }
 
-            $this->storeCompletedSteps(5);
+            $this->storeCompletedSettingsSteps(5);
 
             $this->logger->info('Default Values updated successfully.');
             $this->dbLogger->activity(
@@ -302,7 +302,7 @@ class UserOnBoardingService
      */
     public function completeTour()
     {
-        $userOnBoarding                 = Auth::user()->userOnBoarding;
+        $userOnBoarding                 = auth()->user()->userOnBoarding;
         $userOnBoarding->completed_tour = true;
         $userOnBoarding->save();
         Session::forget('first_login');
@@ -312,12 +312,12 @@ class UserOnBoardingService
      * Store completed steps of settings user onboarding.
      * @param $step
      */
-    public function storeCompletedSteps($step)
+    public function storeCompletedSettingsSteps($step)
     {
-        $userOnBoarding                  = Auth::user()->userOnBoarding;
-        $completedSteps                  = $userOnBoarding->completed_steps;
-        $completedSteps[]                = $step;
-        $userOnBoarding->completed_steps = array_unique($completedSteps);
+        $userOnBoarding                           = auth()->user()->userOnBoarding;
+        $completedSteps                           = $userOnBoarding->settings_completed_steps;
+        $completedSteps[]                         = $step;
+        $userOnBoarding->settings_completed_steps = array_unique($completedSteps);
         $userOnBoarding->save();
     }
 
@@ -327,7 +327,7 @@ class UserOnBoardingService
      */
     public function isAllStepsCompleted()
     {
-        $completedSteps = count($this->getCompletedSteps());
+        $completedSteps = count($this->getCompletedSettingsSteps());
         $status         = ($completedSteps == 5) ? true : false;
 
         return $status;
@@ -338,11 +338,11 @@ class UserOnBoardingService
      * Get all the completed steps of the logged in user.
      * @return array|null
      */
-    public function getCompletedSteps()
+    public function getCompletedSettingsSteps()
     {
         $userOnBoarding = auth()->user()->userOnBoarding;
 
-        return ($userOnBoarding) ? (array) $userOnBoarding->completed_steps : null;
+        return ($userOnBoarding) ? (array) $userOnBoarding->settings_completed_steps : null;
     }
 
     /**
@@ -353,5 +353,18 @@ class UserOnBoardingService
     public function create($userId)
     {
         return $this->userOnBoarding->create(['has_logged_in_once' => false, 'user_id' => $userId]);
+    }
+
+    /**
+     * Store the closed dashboard hints.
+     * @param $step
+     */
+    public function storeDashboardSteps($step)
+    {
+        $userOnBoarding                            = auth()->user()->userOnBoarding;
+        $completedSteps                            = $userOnBoarding->dashboard_completed_steps;
+        $completedSteps[]                          = $step;
+        $userOnBoarding->dashboard_completed_steps = array_unique($completedSteps);
+        $userOnBoarding->save();
     }
 }

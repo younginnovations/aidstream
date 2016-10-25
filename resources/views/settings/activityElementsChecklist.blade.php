@@ -26,6 +26,7 @@
         <script src="/js/userOnBoarding.js"></script>
         <script>
             $(window).load(function () {
+                $('.introjs-hints').css('display', 'none');
                 UserOnBoarding.settingsTour();
             });
         </script>

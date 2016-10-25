@@ -19,7 +19,8 @@ class CreateUserOnboarding extends Migration
                 $table->integer('user_id');
                 $table->boolean('has_logged_in_once')->default(0);
                 $table->boolean('completed_tour')->default(0);
-                $table->json('completed_steps')->nullable();
+                $table->json('settings_completed_steps')->nullable();
+                $table->json('dashboard_completed_steps')->nullable();
                 $table->timestamps();
 
                 $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

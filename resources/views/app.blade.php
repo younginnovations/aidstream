@@ -38,9 +38,10 @@
             </div>
         </div>
         <div class="collapse navbar-collapse navbar-right" id="bs-example-navbar-collapse-1">
+            <input type="hidden" name="_token" value="{{csrf_token()}}"/>
             @if(auth()->user() && !isSuperAdminRoute())
                 <ul class="nav navbar-nav pull-left add-new-activity">
-                    <li class="dropdown" data-hint="To add a new activity ">
+                    <li class="dropdown" data-step="2">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
                            aria-expanded="false">Add a New Activity<span
                                     class="caret"></span></a>
@@ -62,7 +63,7 @@
                             <span><a href="{{ route('admin.switch-back') }}" class="pull-left">Switch Back</a></span>
                         @endif
                     </li>
-                    <li class="dropdown" id="step-8">
+                    <li class="dropdown" data-step="9">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
                            aria-expanded="false"><span class="avatar-img">
                                 @if(Auth::user()->profile_url)
@@ -187,6 +188,38 @@
 <!-- End Google Analytics -->
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/intro.js/2.1.0/intro.min.js"></script>
 <script type="text/javascript" src="http://cdn.jsdelivr.net/jquery.validation/1.15.0/jquery.validate.js"></script>
+
+<!-- Script for landing page -->
+<script src="/js/userOnBoarding.js"></script>
+<script>
+    var hideHints = function (step) {
+        var stepNo = step;
+        $.ajax({
+            headers: {'X-CSRF-TOKEN': $('[name="_token"]').val()},
+            url: '/storeDashboardSteps',
+            data: {step: parseInt(stepNo)},
+            type: 'POST',
+            success: function (data) {
+//                introJs().hideHint(data);
+                location.reload();
+            }
+        });
+    };
+    var goNext = function (step) {
+        $("a[data-step=" + step + "]").trigger('click');
+    };
+</script>
+<script>
+    var roleId = "{!! session('role_id') !!}";
+</script>
+<script type="text/javascript">
+    var dashboardSteps = "{!! ($steps = auth()->user()->userOnBoarding->dashboard_completed_steps) ? json_encode($steps) : null !!}";
+    $(document).ready(function () {
+        UserOnBoarding.addHintLabel();
+        UserOnBoarding.dashboardTour();
+    });
+</script>
+<!-- End of script -->
 @yield('script')
 @yield('foot')
 

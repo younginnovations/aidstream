@@ -73,3 +73,10 @@ $router->get(
         'uses' => 'UserOnBoardingController@continueExploring'
     ]
 );
+$router->post(
+    'storeDashboardSteps',
+    [
+        'as'   => 'storeDashboardSteps',
+        'uses' => 'UserOnBoardingController@storeDashboardSteps'
+    ]
+);

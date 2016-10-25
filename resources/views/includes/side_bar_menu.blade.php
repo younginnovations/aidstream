@@ -2,15 +2,15 @@
     <div class="panel panel-default">
         <div class="panel-body">
             <ul class="nav">
-                <li class="activities" data-hint="Click here to view the list of Activities you have added." data-Hintposition="bottom-middle"><a href="{{ route('activity.index') }}">Activities</a>
+                <li class="activities" data-step="1"><a href="{{ route('activity.index') }}">Activities</a>
                 </li>
-                <li class="organization" id="step-3"><a href="{{ route('organization.show', session('org_id')) }}">Organisation</a></li>
-                <li class="published-files"><a href="{{ route('list-published-files') }}">Published Files</a></li>
-                <li class="documents" id="step-4"><a href="{{ route('documents') }}">Documents</a></li>
-                <li class="downloads" id="step-5"><a href="{{route('download.index')}}">Downloads</a></li>
-                <li class="settings" id="step-6"><a href="{{ route('settings') }}">Settings</a></li>
+                <li class="organization" data-step="3"><a href="{{ route('organization.show', session('org_id')) }}">Organisation</a></li>
+                <li class="published-files" data-step="4"><a href="{{ route('list-published-files') }}">Published Files</a></li>
+                <li class="documents" data-step="5"><a href="{{ route('documents') }}">Documents</a></li>
+                <li class="downloads" data-step="6"><a href="{{route('download.index')}}">Downloads</a></li>
+                <li class="settings" data-step="7"><a href="{{ route('settings') }}">Settings</a></li>
                 @if(Auth::user()->role_id == 1)
-                    <li class="logs" id="step-7"><a href="{{ route('user-logs') }}">Activity Log</a></li>
+                    <li class="logs" data-step="8"><a href="{{ route('user-logs') }}">Activity Log</a></li>
                 @endif
             </ul>
             <div class="support">

@@ -40,6 +40,7 @@
     <script>
         $(window).load(function () {
             @if(session('first_login') && auth()->user()->role_id == 1)
+                $('.introjs-hints').css('display', 'none');
                 UserOnBoarding.settingsTour();
             @endif
             UserOnBoarding.validateDefaultValues();

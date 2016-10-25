@@ -81,9 +81,9 @@
 @endsection
 @section('foot')
     {{--<script>--}}
-        {{--$(document).ready(function () {--}}
-            {{--$('[data-toggle="popover"]').popover({html: true});--}}
-        {{--});--}}
-        {{--g--}}
+    {{--$(document).ready(function () {--}}
+    {{--$('[data-toggle="popover"]').popover({html: true});--}}
+    {{--});--}}
+    {{--g--}}
     {{--</script>--}}
 @endsection

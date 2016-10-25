@@ -30,7 +30,7 @@
                             <p>Please finish setting up your account to be able to publish your data.</p>
                         </div>
                     @endif
-                    <a href="{{ url('dashboardTour') }}">
+                    <a href="{{ url('activity') }}">
                         <button>Get to know your Dashboard</button>
                     </a>
                     <a href="#">You can always learn more on the Learn page.</a>
@@ -50,6 +50,7 @@
     <script src="/js/userOnBoarding.js"></script>
     <script>
         $(document).ready(function () {
+            $('.introjs-hints').css('display', 'none');
             $('#myModal').modal({
                 backdrop: 'static',
                 keyboard: false
