@@ -217,6 +217,31 @@
     $(document).ready(function () {
         UserOnBoarding.addHintLabel();
         UserOnBoarding.dashboardTour();
+
+        var introhint = $('a.introjs-hint');
+        introhint.each(function (index, hint) {
+            var offset = $(hint).offset();
+            console.log(offset);
+            if (offset.left > 1024) {
+                $(hint).css('top', offset.top + 40).css('left', offset.left + 50);
+            } else {
+                $(hint).css('top', offset.top + 10).css('left', offset.left + 10);
+            }
+        });
+
+        $(window).resize(function(){
+            var introhint = $('a.introjs-hint');
+            introhint.each(function (index, hint) {
+                var offset = $(hint).offset();
+                console.log(offset);
+                if (offset.left > 1024) {
+                    $(hint).css('top', offset.top + 40).css('left', offset.left + 50);
+                } else {
+                    $(hint).css('top', offset.top + 10).css('left', offset.left + 10);
+                }
+            });
+        });
+
     });
 </script>
 <!-- End of script -->

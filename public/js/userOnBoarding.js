@@ -1,55 +1,55 @@
 var UserOnBoarding = {
     addHintLabel: function () {
         if (dashboardSteps.indexOf(2) == -1) {
-            $("[data-step='1']").attr('data-hint', "<p><a href='#' id='closeHint' onclick='hideHints(2)'>Close</a></p>" +
+            $("[data-step='1']").attr({'data-hint': "<a href='#' id='closeHint' onclick='hideHints(2)' class='close-hints'>x</a>" +
                 "<p>Click here to view the list of Activities you have added</p>" +
-                "<p><button class='nextBtn' onclick='goNext(0)'>Go to Next</button></p>");
+                "<button class='nextBtn' onclick='goNext(0)'>Go to Next</button>",'data-position': 'right'});
         }
 
         if (dashboardSteps.indexOf(0) == -1) {
-            $("[data-step='2']").attr('data-hint', "<p><a href='#' onclick='hideHints(0)' class='closeHint'>Close</a></p>" +
+            $("[data-step='2']").attr('data-hint', "<a href='#' onclick='hideHints(0)' class='close-hints' class='closeHint'>x</a>" +
                 "<p>Hover over here to get options to add an activity</p>" +
-                "<p><button class='nextBtn' onclick='goNext(3)'>Go to Next</button></p>");
+                "<button class='nextBtn' onclick='goNext(3)'>Go to Next</button>");
         }
 
         if (dashboardSteps.indexOf(3) == -1) {
-            $("[data-step='3']").attr('data-hint', "<p><a href='#' onclick='hideHints(3)'>Close</a></p>" +
+            $("[data-step='3']").attr({'data-hint':"<a href='#' onclick='hideHints(3)' class='close-hints'>x</a>" +
                 "<p>Click here to view your organisation's which you can publish/update to the IATI Registry</p>" +
-                "<p><button class='nextBtn' onclick='goNext(4)'>Go to Next</button></p>");
+                "<button class='nextBtn' onclick='goNext(4)'>Go to Next</button>",'data-position': 'right'});
         }
 
         if (dashboardSteps.indexOf(4) == -1) {
-            $("[data-step='4']").attr('data-hint', "<p><a href='#' onclick='hideHints(4)'>Close</a></p>" +
+            $("[data-step='4']").attr({'data-hint':"<a href='#' onclick='hideHints(4)' class='close-hints'>x</a>" +
                 "<p>Click here to view your published activity or organisation files.</p>" +
-                "<p><button class='nextBtn' onclick='goNext(5)'>Go to Next</button></p>");
+                "<button class='nextBtn' onclick='goNext(5)'>Go to Next</button>",'data-position': 'right'});
         }
 
         if (dashboardSteps.indexOf(5) == -1) {
-            $("[data-step='5']").attr('data-hint', "<p><a href='#' onclick='hideHints(5)'>Close</a>" +
+            $("[data-step='5']").attr({'data-hint':"<a href='#' onclick='hideHints(5)' class='close-hints'>x</a>" +
                 "<p>Click here to view the documents you have added under document link</p>" +
-                "<p><button class='nextBtn' onclick='goNext(6)'>Go to Next</button></p>");
+                "<button class='nextBtn' onclick='goNext(6)'>Go to Next</button>",'data-position': 'right'});
         }
 
         if (dashboardSteps.indexOf(6) == -1) {
-            $("[data-step='6']").attr('data-hint', "<p><a href='#' onclick='hideHints(6)'>Close</a>" +
+            $("[data-step='6']").attr({'data-hint': "<a href='#' onclick='hideHints(6)' class='close-hints'>x</a>" +
                 "<p>Click here to get options to download your data which is on AidStream</p>" +
-                "<p><button class='nextBtn' onclick='goNext(7)'>Go to Next</button></p>");
+                "<button class='nextBtn' onclick='goNext(7)'>Go to Next</button>",'data-position': 'right'});
         }
 
         if (dashboardSteps.indexOf(7) == -1) {
-            $("[data-step='7']").attr('data-hint', "<p><a href='#' onclick='hideHints(7)'>Close</a>" +
+            $("[data-step='7']").attr({'data-hint':"<a href='#' onclick='hideHints(7)' class='close-hints'>x</a>" +
                 "<p>Click here to view your organisation's account settings. Users with Administrator level permission can edit settings from here</p>" +
-                "<p><button class='nextBtn' onclick='goNext(8)'>Go to Next</button></p>");
+                "<button class='nextBtn' onclick='goNext(8)'>Go to Next</button>",'data-position': 'right'});
         }
 
         if (dashboardSteps.indexOf(8) == -1 && roleId == 1) {
-            $("[data-step='8']").attr('data-hint', "<p><a href='#' onclick='hideHints(8)'>Close</a>" +
+            $("[data-step='8']").attr({'data-hint': "<a href='#' onclick='hideHints(8)' class='close-hints'>x</a>" +
                 "<p>Click here to view the changes made by users</p>" +
-                "<p><button class='nextBtn' onclick='goNext(1)'>Go to Next</button></p>");
+                "<button class='nextBtn' onclick='goNext(1)'>Go to Next</button>",'data-position': 'right'});
         }
 
         if (dashboardSteps.indexOf(1) == -1) {
-            $("[data-step='9']").attr('data-hint', "<p><a href='#' onclick='hideHints(1)'>Close</a>" +
+            $("[data-step='9']").attr('data-hint', "<p><a href='#' onclick='hideHints(1)' class='close-hints'>x</a>" +
                 "<p>Hover over here and click on “My Profile” to go your profile page</p>");
         }
     },
@@ -57,7 +57,8 @@ var UserOnBoarding = {
         var intro = introJs();
 
         intro.setOptions({
-            hintButtonLabel: ''
+            hintButtonLabel: '',
+            hintPosition: 'top-left'
         });
         intro.addHints();
     },

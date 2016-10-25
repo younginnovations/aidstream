@@ -59,7 +59,7 @@ function lastPublishedDate($file)
         foreach ($included as $id => $filename) {
             $model = $table->find($id);
 
-            if ($model->$column == 3) {
+            if ($model && ($model->$column == 3)) {
                 $activityDate = strtotime($model->updated_at);
 
                 if ($activityDate > $mostRecent) {
