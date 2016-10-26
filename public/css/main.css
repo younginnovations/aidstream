@@ -7572,6 +7572,9 @@ body > .skiptranslate iframe {
 .modal-content .panel {
   border: 0; }
 
+.users-form > form {
+  padding: 20px; }
+
 .users-form > form > .col-md-12 {
   clear: both; }
   .users-form > form > .col-md-12 > .form-group {
