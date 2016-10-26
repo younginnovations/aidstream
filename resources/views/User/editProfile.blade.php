@@ -61,11 +61,11 @@
                                                 <img src="" height="150" width="150" alt="Uploaded Image" id="selected_picture">
                                             @endif
                                             <div class="change-logo-wrap">
-                                                <span class="change-logo">Change Logo</span>
+                                                <span class="change-logo">Change Picture</span>
                                             </div>
                                         </div>
                                     </label>
-                                    <span class="upload-label">Upload your profile picture</span>
+                                    <span class="upload-label">Upload your Profile Picture</span>
                                 </div>
                                 <div class="description"><span>Please use jpg/jpeg/png/gif format and 150x150 dimensions image.</span></div>
                                 </div>
