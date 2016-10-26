@@ -212,23 +212,25 @@
     var roleId = "{!! auth()->user()->role_id!!}";
 </script>
 @if(isset(auth()->user()->userOnBoarding))
-    <script type="text/javascript">
-        var dashboardSteps = "{!! ($steps = auth()->user()->userOnBoarding->dashboard_completed_steps) ? json_encode($steps) : null !!}";
-        $(document).ready(function () {
-            UserOnBoarding.addHintLabel();
-            UserOnBoarding.dashboardTour();
+    @if(!auth()->user()->userOnBoarding->completed_tour)
+        <script type="text/javascript">
+            var dashboardSteps = "{!! ($steps = auth()->user()->userOnBoarding->dashboard_completed_steps) ? json_encode($steps) : null !!}";
+            $(document).ready(function () {
+                UserOnBoarding.addHintLabel();
+                UserOnBoarding.dashboardTour();
 
-            var introhint = $('a.introjs-hint');
-            introhint.each(function (index, hint) {
-                var offset = $(hint).offset();
-                if (-offset.left > 1024) {
-                    $(hint).css('top', offset.top + 40).css('left', offset.left + 50);
-                } else {
-                    $(hint).css('top', offset.top + 10).css('left', offset.left + 10);
-                }
+                var introhint = $('a.introjs-hint');
+                introhint.each(function (index, hint) {
+                    var offset = $(hint).offset();
+                    if (offset.left > 1024) {
+                        $(hint).css('top', offset.top + 40).css('left', offset.left + 50);
+                    } else {
+                        $(hint).css('top', offset.top + 10).css('left', offset.left + 10);
+                    }
+                });
             });
-        });
-    </script>
+        </script>
+    @endif
 @endif
 <!-- End of script -->
 @yield('script')

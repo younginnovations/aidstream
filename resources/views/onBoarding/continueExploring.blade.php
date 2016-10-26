@@ -21,7 +21,7 @@
                     @if($status)
                         <p>You have successfully setup your account. You can always go back to Settings page to change
                             your organisation's settings</p>
-                    @elseif(isset($completedSteps))
+                    @elseif(isset($completedSteps) && auth()->user()->role_id == 1)
                         <div class="onboarding-steps">
                             @include('onBoarding.stepsNumber')
                             <p>Please finish setting up your account to be able to publish your data.</p>
@@ -30,7 +30,7 @@
                     <a href="{{ url('activity') }}">
                         <button>Get to know your Dashboard</button>
                     </a>
-                    <span class="explore-later"><a href="{{ url('activity')  }}">Explore Later</a></span>
+                    {{--<span class="explore-later"><a href="{{ url('activity')  }}">Explore Later</a></span>--}}
                 </div>
             </div>
         </div>

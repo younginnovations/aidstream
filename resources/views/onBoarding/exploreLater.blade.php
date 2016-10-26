@@ -24,9 +24,9 @@
                     @if($status)
                         <div class="successful-setup">
                             <p>You have successfully setup your account. You can always go back to Settings page to change
-                            your organisation's settings</p>
+                                your organisation's settings</p>
                         </div>
-                    @else
+                    @elseif(isset($completedSteps) && auth()->user()->role_id == 1)
                         <div class="onboarding-steps">
                             @include('onBoarding.stepsNumber')
                             <p>Please finish setting up your account to be able to publish your data.</p>
@@ -35,7 +35,7 @@
                     <a href="{{ url('activity') }}">
                         <button>Get to know your Dashboard</button>
                     </a>
-                    <a href="#">You can always learn more on the Learn page.</a>
+                    <a href="https://github.com/younginnovations/aidstream/wiki/User-Guide" target="_blank">You can always learn more on the Learn page.</a>
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     <label>{{ Form::checkbox('check') }} I have already explored AidStream. Don't show me this
                         again.</label>

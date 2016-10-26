@@ -7774,6 +7774,9 @@ body > .skiptranslate iframe {
 .explore-screen h2 {
   font-size: 24px;
   margin: 26px 0 22px; }
+  .explore-screen h2 + a {
+    display: inherit;
+    margin-bottom: 20px; }
   .explore-screen h2 + span {
     color: #9b9b9b;
     font-size: 16px;
