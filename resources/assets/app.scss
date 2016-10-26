@@ -5853,16 +5853,21 @@ body > .skiptranslate iframe {
   }
 }
 
-.onboarding-steps {
+.onboarding-steps,.successful-setup {
   margin: 26px 0 32px;
   p {
     color: #9b9b9b;
     font-size: 13px;
+    padding: 0 10%;
   }
   & + a {
     display: inherit;
     margin-bottom: 24px;
   }
+}
+
+.successful-setup {
+  margin: 22px 0;
 }
 
 .checked-icon, .unchecked-icon {

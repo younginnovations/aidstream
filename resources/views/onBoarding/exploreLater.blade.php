@@ -22,8 +22,10 @@
                         @endif
                     @endif
                     @if($status)
-                        <p>You have successfully setup your account. You can always go back to Settings page to change
+                        <div class="successful-setup">
+                            <p>You have successfully setup your account. You can always go back to Settings page to change
                             your organisation's settings</p>
+                        </div>
                     @else
                         <div class="onboarding-steps">
                             @include('onBoarding.stepsNumber')

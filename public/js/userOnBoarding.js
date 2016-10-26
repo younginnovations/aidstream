@@ -1,51 +1,70 @@
 var UserOnBoarding = {
     addHintLabel: function () {
         if (dashboardSteps.indexOf(2) == -1) {
-            $("[data-step='1']").attr({'data-hint': "<a href='#' id='closeHint' onclick='hideHints(2)' class='close-hints'>x</a>" +
-                "<p>Click here to view the list of Activities you have added</p>" +
-                "<button class='nextBtn' onclick='goNext(0)'>Go to Next</button>",'data-position': 'right'});
+            $("[data-step='1']").attr({
+                'data-hint': "<a href='#' id='closeHint' onclick='hideHints(2)' class='close-hints'>x</a>" +
+                "<p>Click here to view the list of Activities you have added</p>", 'data-position': 'right'
+            });
+            // + "<button class='nextBtn' onclick='goNext(0)'>Go to Next</button>",'data-position': 'right'});
         }
 
         if (dashboardSteps.indexOf(0) == -1) {
             $("[data-step='2']").attr('data-hint', "<a href='#' onclick='hideHints(0)' class='close-hints' class='closeHint'>x</a>" +
-                "<p>Hover over here to get options to add an activity</p>" +
-                "<button class='nextBtn' onclick='goNext(3)'>Go to Next</button>");
+                "<p>Hover over here to get options to add an activity</p>");
+            // "<button class='nextBtn' onclick='goNext(3)'>Go to Next</button>");
         }
 
         if (dashboardSteps.indexOf(3) == -1) {
-            $("[data-step='3']").attr({'data-hint':"<a href='#' onclick='hideHints(3)' class='close-hints'>x</a>" +
-                "<p>Click here to view your organisation's which you can publish/update to the IATI Registry</p>" +
-                "<button class='nextBtn' onclick='goNext(4)'>Go to Next</button>",'data-position': 'right'});
+            $("[data-step='3']").attr({
+                'data-hint': "<a href='#' onclick='hideHints(3)' class='close-hints'>x</a>" +
+                "<p>Click here to view your organisation's which you can publish/update to the IATI Registry</p>", 'data-position': 'right'
+            });
+            // "<button class='nextBtn' onclick='goNext(4)'>Go to Next</button>", 'data-position': 'right'
+            // });
         }
 
         if (dashboardSteps.indexOf(4) == -1) {
-            $("[data-step='4']").attr({'data-hint':"<a href='#' onclick='hideHints(4)' class='close-hints'>x</a>" +
-                "<p>Click here to view your published activity or organisation files.</p>" +
-                "<button class='nextBtn' onclick='goNext(5)'>Go to Next</button>",'data-position': 'right'});
+            $("[data-step='4']").attr({
+                'data-hint': "<a href='#' onclick='hideHints(4)' class='close-hints'>x</a>" +
+                "<p>Click here to view your published activity or organisation files.</p>", 'data-position': 'right'
+            });
+            // "<button class='nextBtn' onclick='goNext(5)'>Go to Next</button>", 'data-position': 'right'
+            // });
         }
 
         if (dashboardSteps.indexOf(5) == -1) {
-            $("[data-step='5']").attr({'data-hint':"<a href='#' onclick='hideHints(5)' class='close-hints'>x</a>" +
-                "<p>Click here to view the documents you have added under document link</p>" +
-                "<button class='nextBtn' onclick='goNext(6)'>Go to Next</button>",'data-position': 'right'});
+            $("[data-step='5']").attr({
+                'data-hint': "<a href='#' onclick='hideHints(5)' class='close-hints'>x</a>" +
+                "<p>Click here to view the documents you have added under document link</p>", 'data-position': 'right'
+            });
+            // "<button class='nextBtn' onclick='goNext(6)'>Go to Next</button>",
         }
 
         if (dashboardSteps.indexOf(6) == -1) {
-            $("[data-step='6']").attr({'data-hint': "<a href='#' onclick='hideHints(6)' class='close-hints'>x</a>" +
-                "<p>Click here to get options to download your data which is on AidStream</p>" +
-                "<button class='nextBtn' onclick='goNext(7)'>Go to Next</button>",'data-position': 'right'});
+            $("[data-step='6']").attr({
+                'data-hint': "<a href='#' onclick='hideHints(6)' class='close-hints'>x</a>" +
+                "<p>Click here to get options to download your data which is on AidStream</p>", 'data-position': 'right'
+            });
+            // "<button class='nextBtn' onclick='goNext(7)'>Go to Next</button>", 'data-position': 'right'
+            // });
         }
 
         if (dashboardSteps.indexOf(7) == -1) {
-            $("[data-step='7']").attr({'data-hint':"<a href='#' onclick='hideHints(7)' class='close-hints'>x</a>" +
-                "<p>Click here to view your organisation's account settings. Users with Administrator level permission can edit settings from here</p>" +
-                "<button class='nextBtn' onclick='goNext(8)'>Go to Next</button>",'data-position': 'right'});
+            $("[data-step='7']").attr({
+                'data-hint': "<a href='#' onclick='hideHints(7)' class='close-hints'>x</a>" +
+                "<p>Click here to view your organisation's account settings. Users with Administrator level permission can edit settings from here</p>", 'data-position': 'right'
+            });
+            // "<button class='nextBtn' onclick='goNext(8)'>Go to Next</button>", 'data-position': 'right'
+            // });
         }
 
         if (dashboardSteps.indexOf(8) == -1 && roleId == 1) {
-            $("[data-step='8']").attr({'data-hint': "<a href='#' onclick='hideHints(8)' class='close-hints'>x</a>" +
-                "<p>Click here to view the changes made by users</p>" +
-                "<button class='nextBtn' onclick='goNext(1)'>Go to Next</button>",'data-position': 'right'});
+            $("[data-step='8']").attr({
+                'data-hint': "<a href='#' onclick='hideHints(8)' class='close-hints'>x</a>" +
+                "<p>Click here to view the changes made by users</p>", 'data-position': 'right'
+            });
+            // "<button class='nextBtn' onclick='goNext(1)'>Go to Next</button>", 'data-position': 'right'
+            // });
         }
 
         if (dashboardSteps.indexOf(1) == -1) {

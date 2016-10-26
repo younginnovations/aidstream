@@ -14,7 +14,7 @@
                     @if(Auth::user()->isAdmin())
                         <a href="{{url('publishing-settings')}}">Set up your account to Start Publishing to the IATI Registry.</a>
                     @endif
-                    <a href="{{ url('dashboardTour') }}" class="btn">Get to know your Dashboard</a>
+                    <a href="/activity" class="btn">Get to know your Dashboard</a>
                     <span class="explore-later"><a href="/activity">Explore Later</a></span>
                 </div>
             </div>

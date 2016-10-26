@@ -40,7 +40,7 @@ class UserOnBoardingController extends Controller
         $firstname = Auth::user()->first_name;
         $lastname  = Auth::user()->last_name;
 
-        if (Auth::user()->userOnBoarding->has_completed_steps || (!session('first_login'))) {
+        if ((!Auth::user()->userOnBoarding) || (!session('first_login'))) {
             return redirect()->to('/activity');
         }
 
@@ -120,6 +120,10 @@ class UserOnBoardingController extends Controller
      */
     public function exploreLater()
     {
+        if (!Auth::user()->userOnBoarding) {
+            return redirect()->to('/activity');
+        }
+
         if (Auth::user()->userOnBoarding->completed_tour) {
             return redirect()->back();
         }
@@ -136,6 +140,10 @@ class UserOnBoardingController extends Controller
      */
     public function continueExploring()
     {
+        if (!Auth::user()->userOnBoarding) {
+            return redirect()->to('/activity');
+        }
+
         $firstname      = Auth::user()->first_name;
         $completedSteps = $this->userOnBoardingService->getCompletedSettingsSteps();
         $status         = $this->userOnBoardingService->isAllStepsCompleted();
