@@ -3,9 +3,9 @@
 <p>Thank you for verifying your email address. You have successfully created an account for {{ $user->organization->name }} and
     associated the following user accounts with it:</p>
 <ul>
-    @foreach($users as $user)
+    @foreach($users as $orgUser)
         <li>
-            <strong>{{ title_case($user->role) }} Account:</strong> {{ $user->first_name }} {{ $user->last_name }}
+            <strong>{{ title_case($orgUser->role) }} Account:</strong> {{ $orgUser->first_name }} {{ $orgUser->last_name }}
             {{--(Username: {{ $user->username }}) - {{ $user->email }}--}}
         </li>
     @endforeach

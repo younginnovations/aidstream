@@ -1,9 +1,12 @@
 <?php namespace App\Services;
 
 use App\Models\Organization\Organization;
+use App\Models\Settings;
 use App\User;
 use Illuminate\Contracts\Mail\Mailer;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 
 /**
  * Class Verification
@@ -242,6 +245,10 @@ class Verification
         }
     }
 
+    /**
+     * Login user after verification code.
+     * @param $code
+     */
     protected function login($code)
     {
         $organization            = $this->user->where('verification_code', $code)->first()->organization;
@@ -251,7 +258,32 @@ class Verification
 
         session(['org_id' => $organization->id]);
         session(['first_login' => true]);
+        session(['role_id' => $user->role_id]);
+        $this->setVersion($user);
 
         auth()->loginUsingId($user->id);
+    }
+
+    /**
+     * Set version of the IATI in session.
+     * @param $user
+     */
+    protected function setVersion($user)
+    {
+        $settings = Settings::where('organization_id', $user->org_id)->first();
+        $version  = (isset($settings)) ? $settings->version : config('app.default_version');
+        Session::put('current_version', $version);
+        $version     = session('current_version');
+        $versions_db = DB::table('versions')->get();
+        $versions    = [];
+        foreach ($versions_db as $ver) {
+            $versions[] = $ver->version;
+        }
+        $versionKey   = array_search($version, $versions);
+        $next_version = (end($versions) == $version) ? null : $versions[$versionKey + 1];
+
+        Session::put('next_version', $next_version);
+        $version = 'V' . str_replace('.', '', $version);
+        Session::put('version', $version);
     }
 }
