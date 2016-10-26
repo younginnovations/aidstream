@@ -47,9 +47,9 @@
         $(window).load(function () {
             Chunk.verifyPublisherAndApi();
             @if(session('first_login') && auth()->user()->role_id == 1)
-            $('.introjs-hints').css('display', 'none');
-            UserOnBoarding.settingsTour();
-            UserOnBoarding.validatePublishingInfo();
+                $('.introjs-hints').css('display', 'none');
+                UserOnBoarding.settingsTour();
+                UserOnBoarding.validatePublishingInfo();
             @endif
         });
     </script>

@@ -187,10 +187,9 @@
 <script type="text/javascript" src="//cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
 <!-- End Google Analytics -->
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/intro.js/2.1.0/intro.min.js"></script>
-<script type="text/javascript" src="http://cdn.jsdelivr.net/jquery.validation/1.15.0/jquery.validate.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery.validation/1.15.0/jquery.validate.js"></script>
 
 <!-- Script for landing page -->
-<script src="/js/userOnBoarding.js"></script>
 <script>
     var hideHints = function (step) {
         var stepNo = step;
@@ -213,6 +212,7 @@
 </script>
 @if(isset(auth()->user()->userOnBoarding))
     @if(!auth()->user()->userOnBoarding->completed_tour)
+        <script src="/js/userOnBoarding.js"></script>
         <script type="text/javascript">
             var dashboardSteps = "{!! ($steps = auth()->user()->userOnBoarding->dashboard_completed_steps) ? json_encode($steps) : null !!}";
             $(document).ready(function () {
