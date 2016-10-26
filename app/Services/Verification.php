@@ -3,6 +3,7 @@
 use App\Models\Organization\Organization;
 use App\Models\Settings;
 use App\User;
+use Exception;
 use Illuminate\Contracts\Mail\Mailer;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
@@ -194,18 +195,24 @@ class Verification
      */
     public function saveRegistryInfo($code, $registryInfo, SettingsManager $settingsManager)
     {
-        $publishingInfo =
-            [
-                "publisher_id"        => $registryInfo['publisher_id'],
-                "api_id"              => $registryInfo['api_id'],
-                "publish_files"       => "no",
-                "publishing"          => "unsegmented",
-                "publisher_id_status" => "Incorrect",
-                "api_id_status"       => "Incorrect"
-            ];
-        $settings       = $settingsManager->getSettingsByCode($code);
-        $settingsManager->savePublishingInfo($publishingInfo, $settings);
-        $this->login($code);
+        try {
+            $publishingInfo =
+                [
+                    "publisher_id"        => $registryInfo['publisher_id'],
+                    "api_id"              => $registryInfo['api_id'],
+                    "publish_files"       => "no",
+                    "publishing"          => "unsegmented",
+                    "publisher_id_status" => "Incorrect",
+                    "api_id_status"       => "Incorrect"
+                ];
+            $settings       = $settingsManager->getSettingsByCode($code);
+            $settingsManager->savePublishingInfo($publishingInfo, $settings);
+            $this->login($code);
+
+            return true;
+        } catch (Exception $exception) {
+            return null;
+        }
     }
 
     /**

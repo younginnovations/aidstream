@@ -181,6 +181,23 @@
             $(document).ready(function () {
                 $('.verification-modal').modal('show');
             });
+
+            $('#add-this-later').on('click', function () {
+                $('.verification-modal').modal('hide');
+
+                var code = $(this).attr('data-code');
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/add-publishing-info-later',
+                    data: {'code': code},
+                    headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'}
+                }).success(function (response) {
+                    if (response.success) {
+                        location.reload();
+                    }
+                });
+            });
         </script>
     @endif
 </body>

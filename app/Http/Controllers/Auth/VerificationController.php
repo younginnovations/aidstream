@@ -60,10 +60,27 @@ class VerificationController extends Controller
     public function saveRegistryInfo($code)
     {
         $registryInfo = request()->all();
+
         if ($this->verificationManager->saveRegistryInfo($code, $registryInfo, $this->settingsManager)) {
             return redirect()->to('/auth/login')->withMessage('Registry Info Saved Successfully.');
         } else {
             return redirect()->to('/auth/login')->withErrors(['Failed to save Registry Info.']);
         }
+    }
+
+    /**
+     * Add publishing info later.
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function addPublishingInfoLater()
+    {
+        $code         = request()->get('code');
+        $registryInfo = ['publisher_id' => '', 'api_id' => ''];
+
+        if ($this->verificationManager->saveRegistryInfo($code, $registryInfo, $this->settingsManager)) {
+            return response()->json(['success' => true]);
+        }
+
+        return response()->json(['success' => false]);
     }
 }
