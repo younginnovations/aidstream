@@ -932,7 +932,7 @@ label {
   position: fixed;
   width: 100%;
   border-radius: 0;
-  z-index: 100;
+  z-index: 100000000;
 }
 
 .navbar-default + .container {
@@ -2455,11 +2455,11 @@ form > .add_to_collection[data-collection="legacy_data"] {
 }
 
 .modal {
-  z-index: 1000000000 !important;
+  z-index: 10000000000!important;
 }
 
 .modal-backdrop {
-  z-index: 10000;
+  z-index: 1000000000;
 }
 
 .full-width-wrap {
@@ -4181,18 +4181,18 @@ table.dataTable thead .sorting_desc {
   position: relative;
   .edit-element, .delete {
     @include position(absolute, 6px 20px auto auto);
-    background: $url_17 no-repeat 0 0;
+    background: $url_17 no-repeat 0 -3px;
     @include size(10px);
     display: none;
     &:hover {
-      background-position: 0 -20px;
+      background-position: 0 -23px;
     }
   }
   .delete {
-    background-position: -19px 0;
+    background-position: -19px -3px;
     right: 0;
     &:hover {
-      background-position: -19px -20px;
+      background-position: -19px -23px;
     }
   }
   &:hover > .edit-element, &:hover > .delete {
@@ -4222,7 +4222,7 @@ table.dataTable thead .sorting_desc {
 }
 
 .activity-element-wrapper dd li:before, .activity-element-wrapper .activity-element-info li:before {
-  content: "â€¢";
+  content: "•";
   color: #00A8FF;
   margin: 0 5px 0 -10px;
 }
@@ -4461,12 +4461,12 @@ table.dataTable thead .sorting_desc {
 
 .view-xml-btn {
   float: right;
-  â€¨margin: 8px 8px 0 8px;
+  margin: 8px 8px 0 8px;
 }
 
-â€¨â€¨.back-to-activity, .view-xml-btn a, .back-to-organization {
-  â€¨font-size: 14px;
-  â€¨margin: 0 8px;
+.back-to-activity, .view-xml-btn a, .back-to-organization {
+  font-size: 14px;
+  margin: 0 8px;
 }
 
 .xml-info {
@@ -4486,10 +4486,10 @@ table.dataTable thead .sorting_desc {
       text-decoration: underline;
     }
   }
-  â€¨li.success {
-    â€¨ > div {
+  li.success {
+     > div {
       background: $color_emerald_approx;
-      â€¨padding: 0 36px;
+      padding: 0 36px;
     }
   }
   div + .pln {
