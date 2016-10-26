@@ -204,12 +204,12 @@
             }
         });
     };
-//    var goNext = function (step) {
+    //    var goNext = function (step) {
     //        $("a[data-step=" + step + "]").trigger('click');
     //    };
 </script>
 <script>
-    var roleId = "{!! session('role_id') !!}";
+    var roleId = "{!! auth()->user()->role_id!!}";
 </script>
 @if(isset(auth()->user()->userOnBoarding))
     <script type="text/javascript">
@@ -221,8 +221,7 @@
             var introhint = $('a.introjs-hint');
             introhint.each(function (index, hint) {
                 var offset = $(hint).offset();
-                console.log(offset);
-                if (offset.left > 1024) {
+                if (-offset.left > 1024) {
                     $(hint).css('top', offset.top + 40).css('left', offset.left + 50);
                 } else {
                     $(hint).css('top', offset.top + 10).css('left', offset.left + 10);

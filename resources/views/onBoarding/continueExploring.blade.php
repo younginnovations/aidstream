@@ -15,7 +15,7 @@
                         @if($status)
                             <span class="checked-icon">Checked icon</span>
                         @else
-                            <span class="checked-icon">Unchecked icon</span>
+                            <span class="unchecked-icon">Unchecked icon</span>
                         @endif
                     @endif
                     @if($status)
