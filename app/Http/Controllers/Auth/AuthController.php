@@ -262,7 +262,7 @@ class AuthController extends Controller
      */
     public function getLogout()
     {
-        if (Auth::user()->userOnBoarding) {
+        if (auth()->check() && Auth::user()->userOnBoarding) {
             Auth::user()->userOnBoarding->has_logged_in_once = true;
             Auth::user()->userOnBoarding->save();
         }

@@ -129,7 +129,8 @@ var UserOnBoarding = {
             exitOnOverlayClick: false,
             showStepNumbers: false,
             showButtons: false,
-            exitOnEsc: false
+            exitOnEsc: false,
+            keyboardNavigation: false
         });
 
         intro.start();

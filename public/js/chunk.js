@@ -130,7 +130,7 @@ if (typeof(Chunk) == "undefined") var Chunk = {};
             }
 
             function shouldCheck(source, publisherId, apiKey, publisherIdStatus, apiIdStatus) {
-                if ((source == "publisher" && publisherId != "") || (source == "api" && apiKey != "") || (apiIdStatus.html() == "Correct" || publisherIdStatus.html() == "Correct")) {
+                if ((source == "publisher" && publisherId != "") || (source == "api" && apiKey != "") || (apiIdStatus.html() == "Incorrect" || publisherIdStatus.html() == "Incorrect")) {
                     return true;
                 }
             }

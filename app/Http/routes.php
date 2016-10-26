@@ -450,3 +450,8 @@ $router->post(
 );
 
 $router->resource('agency', 'AgencyController');
+
+$router->post('/add-publishing-info-later', [
+    'as'   => 'publishing-info.add-later',
+    'uses' => 'Auth\VerificationController@addPublishingInfoLater'
+]);

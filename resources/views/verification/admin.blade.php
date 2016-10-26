@@ -36,7 +36,7 @@
 
 <div class="col-md-12 text-center">
     {{ Form::button('Save and Continue', ['class' => 'btn btn-primary pull-left', 'type' => 'submit']) }}
-    {{ Form::button('I will add this later', ['class' => 'btn btn-primary pull-right', 'type' => 'submit']) }}
+    {{ Form::button('I will add this later', ['class' => 'btn btn-primary pull-right', 'type' => 'button', 'id' => 'add-this-later', 'data-code' => $user->verification_code]) }}
 </div>
 
 {{ Form::close() }}
