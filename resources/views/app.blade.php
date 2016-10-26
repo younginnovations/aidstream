@@ -6,9 +6,10 @@
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport'/>
     <title>AidStream - @yield('title', 'No Title')</title>
     <link rel="stylesheet" href="//cdn.datatables.net/1.10.11/css/jquery.dataTables.min.css"/>
-    <link rel="shotcut icon" type="image/png" sizes="32*32" href="{{ asset('/images/favicon.png') }}"/>
+    <link rel="shortcut icon" type="image/png" sizes="32*32" href="{{ asset('/images/favicon.png') }}"/>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2-rc.1/css/select2.min.css" rel="stylesheet"/>
     <link href="{{ asset('/css/main.min.css') }}" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/intro.js/2.1.0/introjs.min.css" rel="stylesheet"/>
 
     <!-- Fonts -->
     <link href='//fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
@@ -24,18 +25,23 @@
 
 </head>
 <body>
+{{--<div id="google_translate_element"></div><script type="text/javascript">--}}
+{{--function googleTranslateElementInit() {--}}
+{{--new google.translate.TranslateElement({pageLanguage: 'en', includedLanguages: 'en,es,fr', layout: google.translate.TranslateElement.InlineLayout.SIMPLE, autoDisplay: false, multilanguagePage: true}, 'google_translate_element');--}}
+{{--}--}}
+{{--</script><script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>--}}
 <nav class="navbar navbar-default">
     <div class="container-fluid">
         <div class="navbar-header">
             <div class="navbar-brand">
-                <a href="{{ ($loggedInUser && $loggedInUser->role_id == 3) ? url(config('app.super_admin_dashboard')) : config('app.admin_dashboard') }}"
-                   alt="Aidstream">Aidstream</a>
+                <a href="{{url('/')}}" alt="Aidstream">Aidstream</a>
             </div>
         </div>
         <div class="collapse navbar-collapse navbar-right" id="bs-example-navbar-collapse-1">
+            <input type="hidden" name="_token" value="{{csrf_token()}}"/>
             @if(auth()->user() && !isSuperAdminRoute())
                 <ul class="nav navbar-nav pull-left add-new-activity">
-                    <li class="dropdown">
+                    <li class="dropdown" data-step="2">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
                            aria-expanded="false">Add a New Activity<span
                                     class="caret"></span></a>
@@ -57,13 +63,20 @@
                             <span><a href="{{ route('admin.switch-back') }}" class="pull-left">Switch Back</a></span>
                         @endif
                     </li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                            <span class="avatar-img">
-                                <img src="{{url('images/avatar.svg')}}" width="36" height="36" alt="{{$loggedInUser->name}}">
+                    <li class="dropdown" data-step="9">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                           aria-expanded="false"><span class="avatar-img">
+                                @if(Auth::user()->profile_url)
+                                    <img src="{{Auth::user()->profile_url}}"
+                                         width="36" height="36"
+                                         alt="{{Auth::user()->name}}">
+                                @else
+                                    <img src="{{url('images/avatar.svg')}}"
+                                         width="36" height="36"
+                                         alt="{{Auth::user()->name}}">
+                                @endif
                             </span>
-                            <span class="caret"></span>
-                        </a>
+                            <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
                             @if(!isSuperAdminRoute())
                                 <li><a href="{{url('user/profile')}}">@lang('trans.my_profile')</a></li>
@@ -105,6 +118,12 @@
             </ul>
         </div>
         <div class="navbar-right version-wrap">
+
+            @if(isset(auth()->user()->userOnBoarding->completed_tour) && session('role_id') != 3)
+                @if(!auth()->user()->userOnBoarding->completed_tour)
+                    <a href="{{url('exploreLater')}}" class="btn btn-primary">Continue exploring AidStream</a>
+                @endif
+            @endif
             @if(auth()->user() && !isSuperAdminRoute())
                 <div class="version pull-right {{ (session('version') == 'V201') ? 'old' : 'new' }}">
                     @if (session('next_version'))
@@ -167,7 +186,53 @@
 <script type="text/javascript" src="{{url('/js/ga.js')}}"></script>
 <script type="text/javascript" src="//cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
 <!-- End Google Analytics -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/intro.js/2.1.0/intro.min.js"></script>
+<script type="text/javascript" src="http://cdn.jsdelivr.net/jquery.validation/1.15.0/jquery.validate.js"></script>
 
+<!-- Script for landing page -->
+<script src="/js/userOnBoarding.js"></script>
+<script>
+    var hideHints = function (step) {
+        var stepNo = step;
+        $.ajax({
+            headers: {'X-CSRF-TOKEN': $('[name="_token"]').val()},
+            url: '/storeDashboardSteps',
+            data: {step: parseInt(stepNo)},
+            type: 'POST',
+            success: function (data) {
+                location.reload();
+            }
+        });
+    };
+    //    var goNext = function (step) {
+    //        $("a[data-step=" + step + "]").trigger('click');
+    //    };
+</script>
+<script>
+    var roleId = "{!! auth()->user()->role_id!!}";
+</script>
+@if(isset(auth()->user()->userOnBoarding))
+    @if(!auth()->user()->userOnBoarding->completed_tour)
+        <script type="text/javascript">
+            var dashboardSteps = "{!! ($steps = auth()->user()->userOnBoarding->dashboard_completed_steps) ? json_encode($steps) : null !!}";
+            $(document).ready(function () {
+                UserOnBoarding.addHintLabel();
+                UserOnBoarding.dashboardTour();
+
+                var introhint = $('a.introjs-hint');
+                introhint.each(function (index, hint) {
+                    var offset = $(hint).offset();
+                    if (offset.left > 1024) {
+                        $(hint).css('top', offset.top + 40).css('left', offset.left + 50);
+                    } else {
+                        $(hint).css('top', offset.top + 10).css('left', offset.left + 10);
+                    }
+                });
+            });
+        </script>
+    @endif
+@endif
+<!-- End of script -->
 @yield('script')
 @yield('foot')
 

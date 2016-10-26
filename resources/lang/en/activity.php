@@ -10,87 +10,87 @@ return [
         route('organization.show', ':organization_id')
     ),
     'other_identifier_updated'       => sprintf(
-        'Other activity identifier updated  for activity id <a href="%s">":activity_id"</a> and organization <a href="%s">":organization - :organization_id"</a>',
+        'Other activity identifier updated  for activity id <a href="%s">":activity_id"</a> and organisation <a href="%s">":organization - :organization_id"</a>',
         route('activity.show', ':activity_id'),
         route('organization.show', ':organization_id')
     ),
     'title_updated'                  => sprintf(
-        'Activity title updated for activity id <a href="%s">":activity_id"</a> and organization <a href="%s">":organization - :organization_id"</a>',
+        'Activity title updated for activity id <a href="%s">":activity_id"</a> and organisation <a href="%s">":organization - :organization_id"</a>',
         route('activity.show', ':activity_id'),
         route('organization.show', ':organization_id')
     ),
     'planned_disbursement_updated'   => sprintf(
-        'Activity Planned Disbursement updated for activity id <a href="%s">":activity_id"</a> and organization <a href="%s">":organization - :organization_id"</a>',
+        'Activity Planned Disbursement updated for activity id <a href="%s">":activity_id"</a> and organisation <a href="%s">":organization - :organization_id"</a>',
         route('activity.show', ':activity_id'),
         route('organization.show', ':organization_id')
     ),
     'budget_updated'                 => sprintf(
-        'Activity budget updated for activity id <a href="%s">":activity_id"</a> and organization <a href="%s">":organization - :organization_id"</a>',
+        'Activity budget updated for activity id <a href="%s">":activity_id"</a> and organisation <a href="%s">":organization - :organization_id"</a>',
         route('activity.show', ':activity_id'),
         route('organization.show', ':organization_id')
     ),
     'related_activity_updated'       => sprintf(
-        'Activity related activity updated for activity id <a href="%s">":activity_id"</a> and organization <a href="%s">":organization - :organization_id"</a>',
+        'Activity related activity updated for activity id <a href="%s">":activity_id"</a> and organisation <a href="%s">":organization - :organization_id"</a>',
         route('activity.show', ':activity_id'),
         route('organization.show', ':organization_id')
     ),
     'condition_updated'              => sprintf(
-        'Activity condition updated for activity id <a href="%s">":activity_id"</a> and organization <a href="%s">":organization - :organization_id"</a>',
+        'Activity condition updated for activity id <a href="%s">":activity_id"</a> and organisation <a href="%s">":organization - :organization_id"</a>',
         route('activity.show', ':activity_id'),
         route('organization.show', ':organization_id')
     ),
     'legacy_data_updated'            => sprintf(
-        'Activity Legacy data updated for activity id <a href="%s">":activity_id"</a> and organization <a href="%s">":organization - :organization_id"</a>',
+        'Activity Legacy data updated for activity id <a href="%s">":activity_id"</a> and organisation <a href="%s">":organization - :organization_id"</a>',
         route('activity.show', ':activity_id'),
         route('organization.show', ':organization_id')
     ),
     'description_updated'            => sprintf(
-        'Activity description updated for activity id <a href="%s">":activity_id"</a> and organization <a href="%s">":organization - :organization_id"</a>',
+        'Activity description updated for activity id <a href="%s">":activity_id"</a> and organisation <a href="%s">":organization - :organization_id"</a>',
         route('activity.show', ':activity_id'),
         route('organization.show', ':organization_id')
     ),
     'activity_status_updated'        => sprintf(
-        'Activity status updated for activity_id <a href="%s">":activity_id"</a> and organization <a href="%s">":organization - :organization_id"</a>',
+        'Activity status updated for activity_id <a href="%s">":activity_id"</a> and organisation <a href="%s">":organization - :organization_id"</a>',
         route('activity.show', ':activity_id'),
         route('organization.show', ':organization_id')
     ),
     'activity_date_updated'          => sprintf(
-        'Activity activity date updated for activity id <a href="%s">":activity_id"</a>  and organization <a href="%s">":organization - :organization_id"</a>',
+        'Activity activity date updated for activity id <a href="%s">":activity_id"</a>  and organisation <a href="%s">":organization - :organization_id"</a>',
         route('activity.show', ':activity_id'),
         route('organization.show', ':organization_id')
     ),
     'contact_info_updated'           => sprintf(
-        'Activity contact info activity id <a href="%s">":activity_id"</a> and organization updated for <a href="%s">":organization - :organization_id"</a>',
+        'Activity contact info activity id <a href="%s">":activity_id"</a> and organisation updated for <a href="%s">":organization - :organization_id"</a>',
         route('activity.show', ':activity_id'),
         route('organization.show', ':organization_id')
     ),
     'activity_scope_updated'         => sprintf(
-        'Activity scope updated for activity id <a href="%s">":activity_id"</a> and organization <a href="%s">":organization - :organization_id"</a>',
+        'Activity scope updated for activity id <a href="%s">":activity_id"</a> and organisation <a href="%s">":organization - :organization_id"</a>',
         route('activity.show', ':activity_id'),
         route('organization.show', ':organization_id')
     ),
     'participating_organization'     => sprintf(
-        'Activity participating organization updated for for activity id <a href="%s">":activity_id"</a> and organization<a href="%s">":organization - :organization_id"</a>',
+        'Activity participating organisation updated for for activity id <a href="%s">":activity_id"</a> and organisation <a href="%s">":organization - :organization_id"</a>',
         route('activity.show', ':activity_id'),
         route('organization.show', ':organization_id')
     ),
     'sector_updated'                 => sprintf(
-        'Activity sector updated for activity id <a href="%s">":activity_id"</a>  and organization <a href="%s">":organization - :organization_id"</a>',
+        'Activity sector updated for activity id <a href="%s">":activity_id"</a>  and organisation <a href="%s">":organization - :organization_id"</a>',
         route('activity.show', ':activity_id'),
         route('organization.show', ':organization_id')
     ),
     'policy_marker_updated'          => sprintf(
-        'Activity policy marker updated for activity id <a href="%s">":activity_id"</a>  and organization <a href="%s">":organization - :organization_id"</a>',
+        'Activity policy marker updated for activity id <a href="%s">":activity_id"</a>  and organisation <a href="%s">":organization - :organization_id"</a>',
         route('activity.show', ':activity_id'),
         route('organization.show', ':organization_id')
     ),
     'recipient_country_updated'      => sprintf(
-        'Activity country region updated for activity id <a href="%s">":activity_id"</a>  and organization <a href="%s">":organization - :organization_id"</a>',
+        'Activity country region updated for activity id <a href="%s">":activity_id"</a>  and organisation <a href="%s">":organization - :organization_id"</a>',
         route('activity.show', ':activity_id'),
         route('organization.show', ':organization_id')
     ),
     'recipient_region_updated'       => sprintf(
-        'Activity recipient region updated for activity id <a href="%s">":activity_id"</a>  and organization <a href="%s">":organization - :organization_id"</a>',
+        'Activity recipient region updated for activity id <a href="%s">":activity_id"</a>  and organisation <a href="%s">":organization - :organization_id"</a>',
         route('activity.show', ':activity_id'),
         route('organization.show', ':organization_id')
     ),
@@ -109,80 +109,80 @@ return [
         route('organization.show', ':organization_id')
     ),
     'step_two_completed'             => sprintf(
-        'Activity step two "title" and "description" updated for activity id <a href="%s">":activity_id"</a> and organization <a href="%s">":organization - :organization_id"</a>',
+        'Activity step two "title" and "description" updated for activity id <a href="%s">":activity_id"</a> and organisation <a href="%s">":organization - :organization_id"</a>',
         route('activity.show', ':activity_id'),
         route('organization.show', ':organization_id')
     ),
     'step_three_completed'           => sprintf(
-        'Activity step three "activityStatus" and "activityDate" updated for activity id <a href="%s">":activity_id"</a> and organization <a href="%s">":organization - :organization_id"</a>',
+        'Activity step three "activityStatus" and "activityDate" updated for activity id <a href="%s">":activity_id"</a> and organisation <a href="%s">":organization - :organization_id"</a>',
         route('activity.show', ':activity_id'),
         route('organization.show', ':organization_id')
     ),
     'country_budget_items'           => sprintf(
-        'Activity country budget items updated for for activity id <a href="%s">":activity_id"</a>  and organization <a href="%s">":organization - :organization_id"</a>',
+        'Activity country budget items updated for for activity id <a href="%s">":activity_id"</a>  and organisation <a href="%s">":organization - :organization_id"</a>',
         route('activity.show', ':activity_id'),
         route('organization.show', ':organization_id')
     ),
     'location_updated'               => sprintf(
-        'Activity Location updated for activity id <a href="%s">":activity_id"</a>  and organization <a href="%s">":organization - :organization_id"</a>',
+        'Activity Location updated for activity id <a href="%s">":activity_id"</a>  and organisation <a href="%s">":organization - :organization_id"</a>',
         route('activity.show', ':activity_id'),
         route('organization.show', ':organization_id')
     ),
     'document_link_saved'            => sprintf(
-        'Activity Document Link with id ":document_link_id" has been created for activity id <a href="%s">":activity_id"</a>  and organization <a href="%s">":organization - :organization_id"</a>',
+        'Activity Document Link with id ":document_link_id" has been created for activity id <a href="%s">":activity_id"</a>  and organisation <a href="%s">":organization - :organization_id"</a>',
         route('activity.show', ':activity_id'),
         route('organization.show', ':organization_id')
     ),
     'document_link_updated'          => sprintf(
-        'Activity Document Link with id ":document_link_id" has been updated for activity id <a href="%s">":activity_id"</a>  and organization <a href="%s">":organization - :organization_id"</a>',
+        'Activity Document Link with id ":document_link_id" has been updated for activity id <a href="%s">":activity_id"</a>  and organisation <a href="%s">":organization - :organization_id"</a>',
         route('activity.show', ':activity_id'),
         route('organization.show', ':organization_id')
     ),
     'organization_added'             => sprintf(
-        'New organization added with organization id <a href="%s">":organization_id"</a> and user id ":user_id"',
+        'New organisation added with organisation id <a href="%s">":organization_id"</a> and user id ":user_id"',
         route('organization.show', ':organization_id')
     ),
     'organization_updated'           => sprintf(
-        'Organization updated with organization id <a href="%s">":organization_id"</a> and user id ":user_id"',
+        'Organisation updated with organisation id <a href="%s">":organization_id"</a> and user id ":user_id"',
         route('organization.show', ':organization_id')
     ),
     'collaboration_type'             => sprintf(
-        'Activity Collaboration Type updated for activity id <a href="%s">":activity_id"</a>  and organization  <a href="%s">":organization - :organization_id"</a>',
+        'Activity Collaboration Type updated for activity id <a href="%s">":activity_id"</a>  and organisation  <a href="%s">":organization - :organization_id"</a>',
         route('activity.show', ':activity_id'),
         route('organization.show', ':organization_id')
     ),
     'default_flow_type'              => sprintf(
-        'Activity Default Flow Type updated for activity id <a href="%s">":activity_id"</a>  and organization <a href="%s">":organization - :organization_id"</a>',
+        'Activity Default Flow Type updated for activity id <a href="%s">":activity_id"</a>  and organisation <a href="%s">":organization - :organization_id"</a>',
         route('activity.show', ':activity_id'),
         route('organization.show', ':organization_id')
     ),
     'default_finance_type'           => sprintf(
-        'Activity Default Finance Type updated for activity id <a href="%s">":activity_id"</a>  and organization <a href="%s">":organization - :organization_id"</a>',
+        'Activity Default Finance Type updated for activity id <a href="%s">":activity_id"</a>  and organisation <a href="%s">":organization - :organization_id"</a>',
         route('activity.show', ':activity_id'),
         route('organization.show', ':organization_id')
     ),
     'default_aid_type'               => sprintf(
-        'Activity Default Aid Type updated for activity id <a href="%s">":activity_id"</a>  and organization <a href="%s">":organization - :organization_id"</a>',
+        'Activity Default Aid Type updated for activity id <a href="%s">":activity_id"</a>  and organisation <a href="%s">":organization - :organization_id"</a>',
         route('activity.show', ':activity_id'),
         route('organization.show', ':organization_id')
     ),
     'default_tied_status'            => sprintf(
-        'Activity Default Tied Status updated for activity id <a href="%s">":activity_id"</a>  and organization <a href="%s">":organization - :organization_id"</a>',
+        'Activity Default Tied Status updated for activity id <a href="%s">":activity_id"</a>  and organisation <a href="%s">":organization - :organization_id"</a>',
         route('activity.show', ':activity_id'),
         route('organization.show', ':organization_id')
     ),
     'capital_spend'                  => sprintf(
-        'Activity Capital Spend updated for activity id <a href="%s">":activity_id"</a>  and organization <a href="%s">":organization - :organization_id"</a>',
+        'Activity Capital Spend updated for activity id <a href="%s">":activity_id"</a>  and organisation <a href="%s">":organization - :organization_id"</a>',
         route('activity.show', ':activity_id'),
         route('organization.show', ':organization_id')
     ),
     'result_saved'                   => sprintf(
-        'Activity Result saved for Activity id <a href="%s">":activity_id"</a> and organization <a href="%s">":organization - :organization_id"</a>',
+        'Activity Result saved for Activity id <a href="%s">":activity_id"</a> and organisation <a href="%s">":organization - :organization_id"</a>',
         route('activity.show', ':activity_id'),
         route('organization.show', ':organization_id')
     ),
     'result_updated'                 => sprintf(
-        'Activity Result updated for Activity id <a href="%s">":activity_id"</a> and organization <a href="%s">":organization - :organization_id"</a>',
+        'Activity Result updated for Activity id <a href="%s">":activity_id"</a> and organisation <a href="%s">":organization - :organization_id"</a>',
         route('activity.show', ':activity_id'),
         route('organization.show', ':organization_id')
     ),
@@ -208,20 +208,20 @@ return [
         route('activity.show', ':activity_id')
     ),
     'humanitarian_scope_updated'     => sprintf(
-        'Activity humanitarian scope updated for activity id <a href="%s">":activity_id"</a>  and organization <a href="%s">":organization - :organization_id"</a>',
+        'Activity humanitarian scope updated for activity id <a href="%s">":activity_id"</a>  and organisation <a href="%s">":organization - :organization_id"</a>',
         route('activity.show', ':activity_id'),
         route('organization.show', ':organization_id')
     ),
     'version_upgraded'               => sprintf(
-        'Version upgraded to ":version" for organization <a href="%s">":organization - :organization_id"</a>',
+        'Version upgraded to ":version" for organisation <a href="%s">":organization - :organization_id"</a>',
         route('organization.show', ':organization_id')
     ),
     'document_saved'                 => sprintf(
-        'Document saved for organization <a href="%s">":organization - :organization_id"</a>',
+        'Document saved for organisation <a href="%s">":organization - :organization_id"</a>',
         route('organization.show', ':organization_id')
     ),
     'document_updated'               => sprintf(
-        'Document updated for organization <a href="%s">":organization - :organization_id"</a>',
+        'Document updated for organisation <a href="%s">":organization - :organization_id"</a>',
         route('organization.show', ':organization_id')
     ),
     'password_reset_link'            => sprintf('Password reset link has been sent successfully to ":email"'),
@@ -233,19 +233,32 @@ return [
         'Activity with activity id <a href="%s">":activity_id"</a> has been marked as ":status"',
         route('activity.show', ':activity_id')
     ),
-    'group_organization_deleted'     => 'Organization Group ":group_name" has been deleted by Super Admin with username ":super_admin"',
-    'organization_deleted'           => 'Organization ":org_name" has been deleted by Super Admin with username ":super_admin"',
+    'publishing_settings_updated'    => sprintf(
+        'Publishing settings has been updated  for <a href="%s">":organization - :organization_id"</a>',
+        route('organization.show', ':organization_id')
+    ),
+    'default_values_settings_updated'    => sprintf(
+        'Default Values settings has been updated  for <a href="%s">":organization - :organization_id"</a>',
+        route('organization.show', ':organization_id')
+    ),
+    'activity_elements_checklist_settings_updated'    => sprintf(
+        'Activity elements checklist settings has been updated  for <a href="%s">":organization - :organization_id"</a>',
+        route('organization.show', ':organization_id')
+    ),
+
+    'group_organization_deleted'     => 'Organisation Group ":group_name" has been deleted by Super Admin with username ":super_admin"',
+    'organization_deleted'           => 'Organisation ":org_name" has been deleted by Super Admin with username ":super_admin"',
     'activity_element_deleted'       => sprintf(
         'Activity element ":element" has been deleted from activity with activity id ":activity_id" and ":organization - :organization_id"',
         route('activity.show', ':activity_id'),
         route('organization.show', ':organization_id')
     ),
     'group_added'                    => sprintf(
-        'New group organization has been added with id <a href="%s">":group_id"</a>',
+        'New group organisation has been added with id <a href="%s">":group_id"</a>',
         route('admin.edit-group', ':group_id')
     ),
     'group_updated'                  => sprintf(
-        'Group organization has been updated with id <a href="%s">":group_id"</a>',
+        'Group organisation has been updated with id <a href="%s">":group_id"</a>',
         route('admin.edit-group', ':group_id')
     ),
     'activity_result_deleted'        => sprintf(

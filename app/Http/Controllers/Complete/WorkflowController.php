@@ -111,10 +111,10 @@ class WorkflowController extends Controller
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
-        $this->authorize('edit_activity', $activity);
+        $this->authorize('publish_activity', $activity);
 
         if ($this->hasNoPublisherInfo($activity->organization->settings)) {
-            return redirect()->route('settings.index')->withResponse(['type' => 'warning', 'code' => ['settings_registry_info', ['name' => '']]]);
+            return redirect()->route('publishing-settings')->withResponse(['type' => 'warning', 'code' => ['settings_registry_info', ['name' => '']]]);
         }
 
         $result = $this->workFlowManager->publish($activity, $request->all());
@@ -141,7 +141,11 @@ class WorkflowController extends Controller
      */
     protected function hasNoPublisherInfo(Settings $settings)
     {
-        return (empty(getVal($settings->registry_info, [0, 'publisher_id'])) || empty(getVal($settings->registry_info, [0, 'api_id'])));
+        if (!($registryInfo = $settings->registry_info)) {
+            return true;
+        }
+
+        return (empty(getVal($registryInfo, [0, 'publisher_id'])) || empty(getVal($registryInfo, [0, 'api_id'])));
     }
 
     /**

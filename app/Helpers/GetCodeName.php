@@ -9,23 +9,37 @@ class GetCodeName
 
     /**
      * get activity code name
-     * @param $listName
-     * @param $code
+     * @param      $listName
+     * @param      $code
+     * @param bool $displayCode
      * @return mixed
      */
-    public function getActivityCodeName($listName, $code)
+    public function getActivityCodeName($listName, $code, $displayCode = true)
     {
-        return $this->getCodeName('Activity', $listName, $code);
+        return $this->getCodeName('Activity', $listName, $code, $displayCode);
+    }
+
+    /**
+     * get organization code name
+     * @param      $listName
+     * @param      $code
+     * @param bool $displayCode
+     * @return mixed
+     */
+    public function getOrganizationCodeName($listName, $code, $displayCode = true)
+    {
+        return $this->getCodeName('Organization', $listName, $code, $displayCode);
     }
 
     /**
      * get the corresponding code name
-     * @param $listType
-     * @param $listName
-     * @param $code
+     * @param      $listType
+     * @param      $listName
+     * @param      $code
+     * @param bool $displayCode
      * @return mixed
      */
-    public function getCodeName($listType, $listName, $code)
+    public function getCodeName($listType, $listName, $code, $displayCode = true)
     {
         $defaultVersion = config('app.default_version_name');
         $defaultLocale  = config('app.fallback_locale');
@@ -42,7 +56,7 @@ class GetCodeName
 
         foreach ($codeList as $list) {
             if ($list['code'] == $code) {
-                return sprintf('%s [%s]', $list['name'], $list['code']);
+                return $displayCode ? sprintf('%s [%s]', $list['name'], $list['code']) : $list['name'];
             }
         }
     }
@@ -54,22 +68,11 @@ class GetCodeName
      * @param int $default
      * @return string
      */
-    public function getCodeNameOnly($listName, $code, $default = -4)
+    public function getCodeNameOnly($listName, $code, $default = - 4)
     {
         $descriptionWithCode = $this->getCodeName('Activity', $listName, $code);
 
         return sprintf("%s", substr($descriptionWithCode, 0, $default));
-    }
-
-    /**
-     * get organization code name
-     * @param $listName
-     * @param $code
-     * @return mixed
-     */
-    public function getOrganizationCodeName($listName, $code)
-    {
-        return $this->getCodeName('Organization', $listName, $code);
     }
 
     /**

@@ -21,6 +21,6 @@
                 </div>
             </div>
         </div>
-        <a href="{{ url('/organization/' . $orgId . '/reportingOrg') }}" class="edit-element">edit</a>
+        <a href="{{ route('settings') }}" class="edit-element">edit</a>
     </div>
 @endif

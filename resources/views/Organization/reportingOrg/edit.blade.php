@@ -1,6 +1,6 @@
 @extends('app')
 
-@section('title', 'Reporting Organization')
+@section('title', 'Reporting Organisation')
 
 @section('content')
     <div class="container main-container">
@@ -9,9 +9,9 @@
             <div class="col-xs-9 col-md-9 col-lg-9 content-wrapper">
                 @include('includes.response')
                 <div class="panel-content-heading">
-                    <div>Reporting Organization
+                    <div>Reporting Organisation
                     <div class="panel-action-btn">
-                        <a href="{{route('organization.show', $organizationId)}}" class="btn btn-primary">View Organization Data
+                        <a href="{{route('organization.show', $organizationId)}}" class="btn btn-primary">View Organisation Data
                         </a>
                     </div>
                     </div>
@@ -42,7 +42,7 @@
                                 </div>
                             </div>
                             <br />
-                            <div class="activity-description"><span>Reporting organization information can be updated in <a href="{{ route('settings.index') }}">Settings</a>.</span></div>
+                            <div class="activity-description"><span>Reporting organisation information can be updated in <a href="{{ route('settings.index') }}">Settings</a>.</span></div>
                         </div>
                     </div>
                 </div>

@@ -1,5 +1,25 @@
 var preventNavigation = false;
 
+/* Add tooltip */
+function bindTooltip() {
+    $('[data-toggle="tooltip"]').tooltip({
+        position: {
+            my: "center bottom-20",
+            at: "center top",
+            using: function (position, feedback) {
+                $(this).css(position);
+                $("<div>")
+                    .addClass("arrow")
+                    .addClass(feedback.vertical)
+                    .addClass(feedback.horizontal)
+                    .css({left: feedback.target.left - position.left})
+                    .appendTo(this);
+            }
+        },
+        hide: 'hide'
+    });
+}
+
 $(document).ready(function () {
 
     var removedAll = false;
@@ -19,26 +39,6 @@ $(document).ready(function () {
             }
         );
         $('.collection-container').removeAttr('data-prototype').append(result);
-    }
-
-    /* Add tooltip */
-    function bindTooltip() {
-        $('[data-toggle="tooltip"]').tooltip({
-            position: {
-                my: "center bottom-20",
-                at: "center top",
-                using: function (position, feedback) {
-                    $(this).css(position);
-                    $("<div>")
-                        .addClass("arrow")
-                        .addClass(feedback.vertical)
-                        .addClass(feedback.horizontal)
-                        .css({left: feedback.target.left - position.left})
-                        .appendTo(this);
-                }
-            },
-            hide: 'hide'
-        });
     }
 
     bindTooltip();
@@ -440,7 +440,7 @@ $(document).ready(function () {
 
     /* prevent multiple submission on multiple click */
     $('form').submit(function () {
-        $('[type="submit"]', this).attr('disabled', 'disabled');
+        $('[type="submit"]', this).not('.prevent-disable').attr('disabled', 'disabled');
     });
 
     $(".clickable-row").click(function (e) {
@@ -570,11 +570,11 @@ $(document).ready(function () {
         return false;
     });
 
-    if (!Modernizr.svg) {
-        $('img[src*="svg"]').attr('src', function () {
-            return $(this).attr('src').replace('.svg', '.png');
-        });
-    }
+    //if (!Modernizr.svg) {
+    //    $('img[src*="svg"]').attr('src', function () {
+    //        return $(this).attr('src').replace('.svg', '.png');
+    //    });
+    //}
 
     /* initialize calendar to form fields with class datepicker */
     function addDatepicker() {
@@ -605,7 +605,7 @@ $(document).ready(function () {
     //js for form input check and leave page alert
     $('form').delegate('textarea:not(".ignore_change"), select:not(".ignore_change"), input:not(".ignore_change")', 'change keyup', function (e) {
         var element = $(e.target);
-        if (e.isTrigger !== undefined && (element.is('input') || element.is('textarea'))) {
+        if (e.isTrigger !== undefined && (element.is('input') || element.is('textarea') || element.is('select'))) {
             return false;
         }
         preventNavigation = true;
@@ -616,10 +616,20 @@ $(document).ready(function () {
     });
 
     window.onbeforeunload = function () {
-        if (preventNavigation) {
-            return 'You have unsaved changes.';
+        var route = getRouteFromUrl();
+        if (route != 'register' && ($('.introjs-overlay').length == 0)) {
+            if (preventNavigation) {
+                return 'You have unsaved changes.';
+            }
         }
     };
+
+    // Returns the word after '/' of url
+    function getRouteFromUrl() {
+        var fullUrl = window.location.href;
+        var positionOfSlash = fullUrl.lastIndexOf('/');
+        return fullUrl.substr(positionOfSlash + 1);
+    }
 
     //activity view
     $('.show-more-info,.hide-more-info').click(function () {
@@ -630,5 +640,6 @@ $(document).ready(function () {
     $('.print').click(function () {
         window.print();
     });
+
 });
 

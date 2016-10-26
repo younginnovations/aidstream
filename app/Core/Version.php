@@ -108,6 +108,10 @@ class Version
         return $this->formElement;
     }
 
+    /**
+     * returns setting elements
+     * @return App\Core\V201\IatiSettings
+     */
     public function getSettingsElement()
     {
         return $this->settingsElement;

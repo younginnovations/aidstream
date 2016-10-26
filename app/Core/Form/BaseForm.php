@@ -56,17 +56,18 @@ class BaseForm extends Form
 
     /**
      * adds add more button to form
-     * @param $buttonId
-     * @param $formClass
+     * @param        $buttonId
+     * @param        $formClass
+     * @param string $label
      * @return $this
      */
-    protected function addAddMoreButton($buttonId, $formClass)
+    protected function addAddMoreButton($buttonId, $formClass, $label = 'Add More')
     {
         return $this->add(
             $buttonId,
             'button',
             [
-                'label' => 'Add More',
+                'label' => $label,
                 'attr'  => [
                     'class'           => 'add_to_collection',
                     'data-collection' => $formClass,
@@ -115,7 +116,7 @@ class BaseForm extends Form
      * @param bool   $label
      * @return $this
      */
-    protected function addCollection($name, $file, $class = "", array $data = [], $label = null)
+    public function addCollection($name, $file, $class = "", array $data = [], $label = null)
     {
         $class .= ($class ? ' has_add_more' : '');
         $defaultVersion = config('app.default_version_name');
@@ -156,7 +157,7 @@ class BaseForm extends Form
         return $this->add(
             $name,
             'checkbox',
-            ['value' => $value, 'checked' => $checked, 'attr' => ['class' => 'field1', 'readonly' => $readonly]]
+            ['label' => $value, 'value' => $value, 'attr' => ['class' => 'field1', 'readonly' => $readonly, (!$checked) ?: 'checked']]
         );
     }
 
@@ -167,7 +168,7 @@ class BaseForm extends Form
      * @param null  $helpText
      * @param null  $defaultValue
      * @param bool  $required
-     * @param array $attr
+     * @param array $customOptions
      * @return $this
      */
     protected function addSelect(
@@ -177,20 +178,23 @@ class BaseForm extends Form
         $helpText = null,
         $defaultValue = null,
         $required = false,
-        array $attr = []
+        $customOptions = []
     ) {
+        $options = [
+            'choices'       => $choices,
+            'label'         => $label,
+            'empty_value'   => 'Select one of the following options',
+            'default_value' => $defaultValue,
+            'help_block'    => $helpText,
+            'required'      => $required
+        ];
+
+        $options = array_merge($options, $customOptions);
+
         return $this->add(
             $name,
             'select',
-            [
-                'choices'       => $choices,
-                'label'         => $label,
-                'empty_value'   => 'Select one of the following options',
-                'default_value' => $defaultValue,
-                'help_block'    => $helpText,
-                'required'      => $required,
-                'attr'          => $attr
-            ]
+            $options
         );
     }
 
@@ -222,7 +226,7 @@ class BaseForm extends Form
 
     /**
      * add help text in the form fields
-     * @param      $helpTexte
+     * @param      $helpText
      * @return array
      */
     protected function addHelpText($helpText, $tooltip = true)

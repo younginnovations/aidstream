@@ -30,7 +30,7 @@
                 of creating XML.
             </p>
 
-            <a href="{{ url('/auth/register') }}" class="btn btn-primary get-started-btn">Get Started</a>
+            <a href="{{ url('/register') }}" class="btn btn-primary get-started-btn">Get Started</a>
 
             <div class="screenshot">
                 <img src="images/screenshot.png" alt="">
@@ -119,10 +119,71 @@
 
             <p>Did we mention that it’s free!? You can’t go wrong - with AidStream, publishing your data to IATI is a
                 piece of cake!</p>
-            <a href="{{ url('/auth/register') }}" class="btn btn-primary get-started-btn">Get Started</a>
+            <a href="{{ url('/register') }}" class="btn btn-primary get-started-btn">Get Started</a>
         </div>
     </div>
 </section>
+
+@if(session()->has('secondary_contact_name'))
+    <div class="modal fade recovery-modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body clearfix text-center ">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <div class="col-md-12 text-center verification-wrapper">
+                        <img src={{ url('/images/ic-sent-mail.svg') }} alt="mail" width="88" height="94">
+                        <h1>Thank You!</h1>
+                        <p>
+                            An email containing your account details has been sent to the secondary or "backup" contact for your organisation,"{{ session('secondary_contact_name') }}". Please contact
+                            them directly.</p>
+                        <p>If you need any help, <a href="{{ route('contact', ['has-secondary-contact-support']) }}">contact the AidStream support team</a>.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+@endif
+
+@if(session('message'))
+    <div class="modal fade message-modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body clearfix">
+                    <div class="col-md-12 text-center verification-wrapper">
+                        <img src={{ url('/images/ic-sent-mail.svg') }} alt="mail" width="88" height="94">
+                        <h1>Thank You!</h1>
+                        <p>{!! session('message') !!}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+@endif
+
+@if(session('verification_message'))
+    <div class="modal fade verification-modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Email Verification</h4>
+                </div>
+                <div class="modal-body clearfix">
+                    <div class="col-md-12 text-center verification-wrapper">
+                        <img src={{ url('/images/ic-sent-mail.svg') }} alt="mail" width="88" height="94">
+                        <h1>Thank You!</h1>
+                        <p>{!! session('verification_message') !!}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+@endif
+
 @include('includes.footer')
 <script src="js/jquery.js"></script>
 <script src="js/modernizr.js"></script>
@@ -137,6 +198,10 @@
         }
 
         hamburgerMenu();
+
+        if ($('.modal').length > 0) {
+            $('.modal').modal('show')
+        }
     });
 </script>
 </body>

@@ -1,21 +1,23 @@
 <?php namespace App\Http\Controllers\Complete;
 
+use App\Core\Form\BaseForm;
+use App\Core\V201\Requests\Settings\DefaultValuesRequest;
+use App\Core\V201\Requests\Settings\PublishingSettingsRequest;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Request;
 use App\Services\Activity\ActivityManager;
 use App\Services\Activity\OtherIdentifierManager;
-use App\Services\RequestManager\Organization\SettingsRequestManager;
 use App;
+use App\Services\RequestManager\Organization\SettingsRequestManager;
 use App\Services\Settings\SettingsService;
 use App\Services\SettingsManager;
 use App\Services\Organization\OrganizationManager;
-
-use Exception;
 use Illuminate\Database\DatabaseManager;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\URL;
 use Kris\LaravelFormBuilder\FormBuilder;
 use Psr\Log\LoggerInterface;
 
@@ -35,12 +37,10 @@ class SettingsController extends Controller
      * @var SettingsManager
      */
     protected $settingsManager;
-
     /**
      * @var mixed
      */
     protected $settings;
-
     /**
      * @var App\Models\Organization\Organization
      */
@@ -57,6 +57,16 @@ class SettingsController extends Controller
     protected $otherIdentifierManager;
 
     /**
+     * @var FormBuilder
+     */
+    protected $formBuilder;
+
+    /**
+     * @var BaseForm
+     */
+    protected $baseForm;
+
+    /**
      * @var LoggerInterface
      */
     protected $loggerInterface;
@@ -68,12 +78,18 @@ class SettingsController extends Controller
      * @param OtherIdentifierManager $otherIdentifierManager
      * @param SettingsService        $settingsService
      * @param LoggerInterface        $loggerInterface
+     * @param BaseForm               $baseForm
+     * @param FormBuilder            $formBuilder
+     * @internal param FormBuilder $formBuilder
+     * @internal param BaseForm $formBase
      */
     function __construct(
         SettingsManager $settingsManager,
         OrganizationManager $organizationManager,
         ActivityManager $activityManager,
         OtherIdentifierManager $otherIdentifierManager,
+        BaseForm $baseForm,
+        FormBuilder $formBuilder,
         SettingsService $settingsService,
         LoggerInterface $loggerInterface
     ) {
@@ -86,6 +102,8 @@ class SettingsController extends Controller
         $this->otherIdentifierManager = $otherIdentifierManager;
         $this->settingsService        = $settingsService;
         $this->loggerInterface        = $loggerInterface;
+        $this->baseForm               = $baseForm;
+        $this->formBuilder            = $formBuilder;
     }
 
     /**
@@ -188,7 +206,7 @@ class SettingsController extends Controller
      * @return
      * @internal param TempRequest|SettingsRequestManager $request
      */
-    public function update($id,SettingsRequestManager $settingRequest)
+    public function update($id, SettingsRequestManager $settingRequest)
     {
         $currentUser = auth()->user();
 
@@ -291,6 +309,185 @@ class SettingsController extends Controller
     }
 
     /**
+     * Display form to view publishing information
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function viewPublishingInfo()
+    {
+        $settings = $this->settings;
+
+        if ($settings) {
+            $publishingInfo['publishing']          = $settings->publishing_type;
+            $publishingInfo['publisher_id']        = (is_null($settings->registry_info)) ? '' : getVal($settings->registry_info, [0, 'publisher_id']);
+            $publishingInfo['api_id']              = (is_null($settings->registry_info)) ? '' : getVal($settings->registry_info, [0, 'api_id']);
+            $publishingInfo['publish_files']       = (is_null($settings->registry_info)) ? 'no' : getVal($settings->registry_info, [0, 'publish_files']);
+            $publishingInfo['publisher_id_status'] = (is_null($settings->registry_info)) ? '' : getVal($settings->registry_info, [0, 'publisher_id_status']);
+            $publishingInfo['api_id_status']       = (is_null($settings->registry_info)) ? '' : getVal($settings->registry_info, [0, 'api_id_status']);
+        } else {
+            $publishingInfo = [];
+        }
+
+        $url         = route('publishing-settings.update');
+        $formOptions = [
+            'method' => 'POST',
+            'url'    => $url,
+            'model'  => $publishingInfo
+        ];
+        $form        = $this->settingsManager->viewPublishingInfo($formOptions);
+
+        return view('settings.publishingSettings', compact('form', 'settings'));
+    }
+
+    /**
+     * save publishing information.
+     * @param Request $request
+     * @return mixed
+     */
+    public function savePublishingInfo(Request $request)
+    {
+        $this->authorize('settings', $this->settings);
+
+        if ($this->settings) {
+            $organizationId = session('org_id');
+            $settings       = $request->all();
+
+            if ($this->settingsService->hasSegmentationChanged($organizationId, $settings)) {
+                $changes = $this->settingsService->getChangeLog($organizationId, $settings);
+
+                if (empty($changes['previous']) && empty($changes['changes'])) {
+
+                    return redirect()->route('publishing-settings')->withResponse(['type' => 'warning', 'messages' => ['You do not have any files for the segmentation change to take effect on . ']]);
+                }
+
+                return view('settings.change-log', compact('organizationId', 'changes', 'settings'));
+            }
+        }
+
+        $publishing_info = $this->settingsManager->savePublishingInfo($request->all(), $this->settings);
+        $response        = $this->getResponse($publishing_info, 'Publishing Settings');
+
+        return redirect()->back()->withResponse($response);
+    }
+
+    /**
+     * Display form to view default field values.
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function viewDefaultValues()
+    {
+        $settings      = $this->settings;
+        $defaultValues = ($settings) ? $settings->default_field_values[0] : '';
+        $url           = route('default-values.update');
+        $formOptions   = [
+            'method' => 'POST',
+            'url'    => $url,
+            'model'  => $defaultValues
+        ];
+
+        $form = $this->settingsManager->viewDefaultValues($formOptions);
+
+        return view('settings.defaultValues', compact('form', 'settings'));
+    }
+
+    /**
+     * save default field values
+     * @param DefaultValuesRequest $request
+     * @return mixed
+     */
+    public function saveDefaultValues(DefaultValuesRequest $request)
+    {
+        $this->authorize('settings', $this->settings);
+
+        $settings      = $this->settings;
+        $defaultValues = $this->settingsManager->saveDefaultValues($request->except('_token'), $settings);
+
+        if (!isset($settings->default_field_groups)) {
+            $response = ['type' => 'warning', 'code' => ['default_field_groups_required', ['name' => 'activity']]];
+
+            return redirect('activity-elements-checklist')->withResponse($response);
+        }
+        $response = $this->getResponse($defaultValues, 'Default Values ');
+
+        return redirect()->back()->withResponse($response);
+    }
+
+    /**
+     * Displays form of activity elements checklist
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function viewActivityElementsChecklist()
+    {
+        $checkedElements = ($this->settings) ? $this->settings->default_field_groups : '';
+        $url             = route('activity-elements-checklist.update');
+        $settings        = $this->settings;
+
+        $formOptions = [
+            'method' => 'POST',
+            'url'    => $url,
+            'model'  => ['default_field_groups' => $checkedElements]
+        ];
+        $form        = $this->settingsManager->viewActivityElementsChecklist($formOptions);
+
+        return view('settings.activityElementsChecklist', compact('form', 'settings'));
+    }
+
+    /**
+     * Save activity elements checklist
+     * @param Request $request
+     * @return mixed
+     */
+    public function saveActivityElementsChecklist(Request $request)
+    {
+        $this->authorize('settings', $this->settings);
+
+        $default_field_groups      = $request->get('default_field_groups');
+        $activityElementsChecklist = $this->settingsManager->saveActivityElementsChecklist($default_field_groups, $this->settings);
+        $response                  = $this->getResponse($activityElementsChecklist, 'Activity Elements Checklist');
+
+        return redirect()->back()->withResponse($response);
+    }
+
+    /**
+     * Returns response after the data is submitted.
+     * @param $method
+     * @param $field
+     * @return array
+     */
+    public function getResponse($method, $field)
+    {
+        $response = ($method) ? [
+            'type' => 'success',
+            'code' => ['updated', ['name' => $field]]
+        ] : [
+            'type' => 'danger',
+            'code' => [
+                'save_failed',
+                ['name' => 'Settings']
+            ]
+        ];
+
+        return $response;
+    }
+
+    /**
+     *
+     * @param PublishingSettingsRequest|Request $request
+     * @return string
+     */
+    public function verifyPublisherAndApi(Request $request)
+    {
+        $apiKey      = $request->get('apiKey');
+        $publisherId = $request->get('publisherId');
+
+        $apiKeyResponse = $this->settingsManager->verifyApiKey($apiKey);
+        $publisherId    = $this->settingsManager->verifyPublisherId($publisherId);
+
+        $response = ['api_key' => $apiKeyResponse, 'publisher_id' => $publisherId];
+
+        return $response;
+    }
+
+    /**
      * Update Settings with segmentation changes.
      * @param SettingsRequestManager $requestManager
      * @return mixed
@@ -300,8 +497,8 @@ class SettingsController extends Controller
     {
         $organizationId = session('org_id');
 
-        $settings       = $requestManager->requestHandler->all();
-        $organization   = $this->organization->findOrFail($organizationId);
+        $settings     = $requestManager->requestHandler->all();
+        $organization = $this->organization->findOrFail($organizationId);
 
         if (!$organization->publishedFiles->isEmpty()) {
             if ($this->settingsService->hasSegmentationChanged($organizationId, $settings)) {
@@ -339,8 +536,7 @@ class SettingsController extends Controller
 
             return redirect()->to(config('app.admin_dashboard'))->withResponse($response);
         }
-
-        if (!$this->settingsManager->updateSettings(json_decode($request->get('settings'), true), $this->organization, $this->settings)) {
+        if (!$this->settingsManager->savePublishingInfo(json_decode($request->get('settings'), true), $this->settings)) {
             $response = ['type' => 'danger', 'messages' => ['Failed to update Settings']];
 
             return redirect()->to(config('app.admin_dashboard'))->withResponse($response);

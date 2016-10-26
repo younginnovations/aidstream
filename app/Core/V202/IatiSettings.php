@@ -11,4 +11,9 @@ class IatiSettings extends V201
     {
         $this->setType('Settings');
     }
+
+    public function getDefaultValues()
+    {
+        return 'App\Core\V202\Forms\Settings\DefaultValues';
+    }
 }

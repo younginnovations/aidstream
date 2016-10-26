@@ -1,6 +1,6 @@
 @extends('app')
 
-@section('title', 'Recipient Organization Budget')
+@section('title', 'Recipient Organisation Budget')
 
 @section('content')
     <div class="container main-container">
@@ -9,9 +9,9 @@
             <div class="col-xs-9 col-md-9 col-lg-9 content-wrapper">
                 @include('includes.response')
                 <div class="panel-content-heading">
-                    <div>Recipient Organization Budget
+                    <div>Recipient Organisation Budget
                     <div class="panel-action-btn">
-                        <a href="{{route('organization.show', $organizationId)}}" class="btn btn-primary">View Organization Data
+                        <a href="{{route('organization.show', $organizationId)}}" class="btn btn-primary">View Organisation Data
                         </a>
                     </div>
                     </div>

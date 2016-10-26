@@ -37,6 +37,6 @@
     <script type="text/javascript" src="{{url('/js/jquery.jsonview.js')}}"></script>
     <script type="text/javascript" src="{{url('/js/chunk.js')}}"></script>
     <script type="text/javascript">
-        Chunk.toggleData('{!! json_encode($data) !!}');
+        Chunk.toggleData({!! json_encode($data) !!});
     </script>
 @endsection

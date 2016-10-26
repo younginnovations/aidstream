@@ -28,7 +28,7 @@
                                         <option value="all">All</option>
                                         <option value="organization"
                                                 @if($dataSelection == "organization") selected="selected" @endif>
-                                            Organization Data
+                                            Organisation Data
                                         </option>
 
                                         @foreach($activitiesOfOrganization as $activities)

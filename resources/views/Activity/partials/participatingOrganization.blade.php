@@ -4,7 +4,7 @@
         @foreach(groupActivityElements($participatingOrganizations , 'organization_role') as $key => $organizations)
             <div class="activity-element-list">
                 <div class="activity-element-label">
-                    {{ $getCode->getCodeNameOnly('OrganisationRole', $key)}} Organization(s)
+                    {{ $getCode->getCodeNameOnly('OrganisationRole', $key)}} Organisation(s)
                 </div>
                 <div class="activity-element-info">
                     @foreach($organizations as $organization)

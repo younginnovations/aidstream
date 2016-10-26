@@ -14,8 +14,33 @@ use Illuminate\Support\Facades\Session;
 class Organization extends Model
 {
     protected $table = "organizations";
-    protected $fillable = ['name', 'address', 'user_identifier', 'reporting_org', 'status', 'country', 'twitter', 'organization_url', 'logo', 'logo_url', 'disqus_comments', 'published_to_registry'];
-    protected $casts = ['reporting_org' => 'json'];
+    protected $fillable = [
+        'name',
+        'address',
+        'user_identifier',
+        'reporting_org',
+        'status',
+        'country',
+        'twitter',
+        'organization_url',
+        'logo',
+        'logo_url',
+        'disqus_comments',
+        'published_to_registry',
+        'registration_agency',
+        'registration_number',
+        'secondary_contact'
+    ];
+    protected $casts = ['reporting_org' => 'json', 'secondary_contact' => 'json'];
+
+    /**
+     * organization one organization data
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function orgData()
+    {
+        return $this->hasOne('App\Models\Organization\OrganizationData', 'organization_id');
+    }
 
     /**
      * organization has many users
@@ -110,5 +135,14 @@ class Organization extends Model
     public function organizationPublished()
     {
         return $this->hasMany(OrganizationPublished::class);
+    }
+
+    /**
+     * get organization name
+     * @return string
+     */
+    public function getNameAttribute()
+    {
+        return ($name = getVal((array) $this->reporting_org, [0, 'narrative', 0, 'narrative'])) ? $name : 'No Name';
     }
 }

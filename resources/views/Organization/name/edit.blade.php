@@ -11,7 +11,7 @@
                 <div class="panel-content-heading">
                     <div>Name
                         <div class="panel-action-btn">
-                            <a href="{{route('organization.show', $orgId)}}" class="btn btn-primary">View Organization
+                            <a href="{{route('organization.show', $orgId)}}" class="btn btn-primary">View Organisation
                                 Data
                             </a>
                         </div>

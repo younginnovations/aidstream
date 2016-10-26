@@ -28,11 +28,11 @@
                     <div class="element-panel-heading">
                         <div>Published Files</div>
                     </div>
-                    <h2 class="panel-sub-heading">Organizations Published Files</h2>
+                    <h2 class="panel-sub-heading">Organisations Published Files</h2>
                     <div class="panel-body">
                         @if(count($list) > 0)
                             <form action="{{route('org.bulk-publish')}}" method="POST">
-                                <div class="publish-btn"><input type="submit" value="Publish Organizations To IATI"></div>
+                                <div class="publish-btn"><input type="submit" value="Publish Organisations To IATI"></div>
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                             <table class="table table-striped">
                                 <thead>
@@ -69,7 +69,7 @@
                             </form>
                         @else
                             <div class="text-center no-data no-document-data">
-                                You haven't published any organization file yet.
+                                You haven't published any organisation file yet.
                             </div>
                         @endif
                     </div>

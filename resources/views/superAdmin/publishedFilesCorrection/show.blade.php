@@ -6,7 +6,7 @@
             @include('includes.response')
             <div class="col-xs-9 col-md-9 col-lg-9 content-wrapper correct-published-files-wrapper">
                 <div class="element-panel-heading">
-                    <img class="pull-left" src="{{ $organization->logo_url }}" alt="Organization Logo" width="100"
+                    <img class="pull-left" src="{{ $organization->logo_url }}" alt="Organisation Logo" width="100"
                          height="100">
                     <div class="pull-left correction-heading-wrap">
                         <h3>Published Files Correction For <strong>{{ $organization->name }}</strong></h3>

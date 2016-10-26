@@ -11,7 +11,7 @@
 
     <!-- Fonts -->
     <link href='//fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2-rc.1/css/select2.min.css" rel="stylesheet"/>
+    <link href="{{ asset('/css/select2.min.css') }}" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -20,24 +20,11 @@
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-    <!-- Scripts -->
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="{{url('/js/jquery.cookie.js')}}"></script>
-    <script type="text/javascript" src="{{url('/js/jquery-ui-1.10.4.tooltip.js')}}"></script>
-    <script type="text/javascript" src="{{url('/js/main.js')}}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2-rc.1/js/select2.min.js"></script>
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('form select').select2();
-        });
-    </script>
-
     @yield('head')
 </head>
 <body>
 <header>
-    <nav class="navbar navbar-default navbar-static">
+    <nav class="navbar navbar-default navbar-static navbar-fixed">
         <div class="navbar-header">
             <a href="{{ url('/') }}" class="navbar-brand">Aidstream</a>
             <button type="button" class="navbar-toggle collapsed">
@@ -82,192 +69,264 @@
         </div>--}}
     <div class="container-fluid register-container">
         <div class="row">
-            <div class="col-lg-4 col-md-8 col-md-offset-2 form-body">
+            <h1 class="text-center">Get Started with AidStream</h1>
+            <p class="text-center">Register your organisation with AidStream to enjoy an effortless data publishing experience.
+                If you want to register for a user account, speak with your organisation's AidStream administrator.
+                To find out more, <a href="https://github.com/younginnovations/aidstream/wiki/Users-Management">click here.</a></p>
+            <ul class="nav nav-tabs text-center" role="tablist">
+                <li role="presentation" class="active"><span>1</span><a href="#tab-organization" aria-controls="tab-organization" role="tab" data-toggle="tab">Organisation Information</a></li>
+                <li role="presentation"><span>2</span><a href="#tab-users" aria-controls="tab-users" role="tab" data-toggle="tab">Admin Information</a></li>
+                <li role="presentation"><span>3</span><a href="#tab-verification" aria-controls="tab-verification" role="tab" data-toggle="tab" class="disabled">Email Verification</a></li>
+            </ul>
+            <div class="col-lg-4 col-md-8 register-block">
                 <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <img src="{{url('images/logo.svg')}}" alt="">
-
-                        <div class="panel-title">Register</div>
-                    </div>
                     <div class="panel-body">
-                        @if (count($errors) > 0)
-                            <div class="alert alert-danger">
-                                <span>
-                                  There were some problems with your input.
-                                  <ul>
-                                      @foreach ($errors->all() as $error)
-                                          <li>{{ $error }}</li>
-                                      @endforeach
-                                  </ul>
-                                </span>
+
+                        @include('includes.response')
+
+                        {{--*/ $regInfo = (array) (old() ? old() : session('reg_info')); /*--}}
+                        {{ Form::model($regInfo, ['url' => route('registration.register'), 'method' => 'post', 'id' => 'from-registration']) }}
+
+
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane clearfix active" id="tab-organization">
+                                @include('auth.organization')
                             </div>
-                        @endif
-
-                        <form class="form-horizontal" role="form" method="POST" action="{{ url('/auth/register') }}">
-                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
-
-                            <div class="input-wrapper">
-                                <div class="col-xs-12 col-md-12">
-                                    <div class="form-group col-xs-12 col-sm-6 col-md-6">
-                                        <label class="control-label">Organization Name*</label>
-
-                                        <div class="col-xs-12 col-md-12">
-                                            <input type="text" class="form-control" name="organization_name" value="{{ old('organization_name') }}" required="required">
-                                        </div>
-                                    </div>
-                                    <div class="form-group col-xs-12 col-sm-6 col-md-6">
-                                        <label class="control-label">Organization Address*</label>
-
-                                        <div class="col-xs-12 col-md-12">
-                                            <input type="text" class="form-control" name="organization_address" value="{{ old('organization_address') }}" required="required">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-xs-12 col-md-12">
-                                    <div class="form-group col-xs-12 col-sm-6 col-md-6">
-                                        <label class="control-label">Organization User Identifier*</label>
-
-                                        <div class="col-xs-12 col-md-12">
-                                            <input type="text" class="form-control noSpace" name="organization_user_identifier" value="{{ old('organization_user_identifier') }}" required="required">
-                                            <span class="availability-check hidden"></span>
-                                            <span class="help-block">Your organisation user identifier will be used as a prefix for all the AidStream users in your organisation. We recommend that you use a short abbreviation that uniquely identifies your organisation. If your organisation is 'Acme Bellus Foundation', your organisation user identifier should be 'abf', depending upon it's availability.</span>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-12 col-sm-6 username_text">
-                                        <label class="control-label">Username</label>
-                                        <em>This will be auto-generated as you fill Organization User Identifier.</em>
-                                    </div>
-                                    <div class="form-group col-xs-12 col-sm-6 col-md-6 username_value hidden">
-                                        <label class="control-label">Username</label>
-
-                                        <div class="col-xs-12 col-md-12">
-                                            <input type="hidden" class="form-control hover_help_text" name="username" value="{{ old('username') }}" readonly="readonly">
-
-                                            <div class="alternate_input">{{ old('username') }}</div>
-                                        <span class="help-text"
-                                              title="AidStream will create a default username with your Organisation User Identifier as prefix. You will not be able to change '_admin' part of the username. This user will have administrative privilege and can create multiple AidStream users with different set of permissions."
-                                              data-toggle="tooltip" data-placement="top">
-                                           AidStream will create a default username with your Organisation User Identifier as prefix. You will not be able to change '_admin' part of the username. This user will have administrative privilege and can create multiple AidStream users with different set of permissions.
-                                        </span>
-                                        </div>
-                                    </div>
-                                </div>
+                            <div role="tabpanel" class="tab-pane clearfix" id="tab-users">
+                                @include('auth.users')
                             </div>
-                            <div class="input-wrapper">
-                                <div class="col-xs-12 col-md-12">
-                                    <div class="form-group col-xs-12 col-sm-6 col-md-6">
-                                        <label class="control-label">Password*</label>
-
-                                        <div class="col-xs-12 col-md-12">
-                                            <input type="password" class="form-control" name="password" required="required">
-                                        </div>
-                                    </div>
-                                    <div class="form-group col-xs-12 col-sm-6 col-md-6">
-                                        <label class="control-label">Confirm Password</label>
-
-                                        <div class="col-xs-12 col-md-12">
-                                            <input type="password" class="form-control" name="password_confirmation">
-                                        </div>
-                                    </div>
-                                </div>
+                            <div role="tabpanel" class="tab-pane clearfix" id="tab-verification">
+                                @include('auth.verification')
                             </div>
-                            <div class="form-group">
-                                <div class="input-wrapper no-border">
-                                    <div class="col-xs-12 col-md-12">
-                                        <div class="form-group col-xs-12 col-sm-6 col-md-6">
-                                            <label class="control-label">First Name*</label>
+                        </div>
 
-                                            <div class="col-xs-12 col-md-12">
-                                                <input type="text" class="form-control" name="first_name" value="{{ old('first_name') }}" required="required">
-                                            </div>
-                                        </div>
-                                        <div class="form-group col-xs-12 col-sm-6 col-md-6">
-                                            <label class="control-label">Last Name*</label>
-
-                                            <div class="col-xs-12 col-md-12">
-                                                <input type="text" class="form-control" name="last_name" value="{{ old('last_name') }}" required="required">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-12 col-md-12">
-                                        <div class="form-group col-xs-12 col-sm-6 col-md-6">
-                                            <label class="control-label">E-Mail Address*</label>
-
-                                            <div class="col-xs-12 col-md-12">
-                                                <input type="email" class="form-control" name="email" value="{{ old('email') }}" required="required">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-12 col-md-12">
-                                        <div class="form-group col-xs-12 col-sm-6 col-md-6">
-                                            <label class="control-label">Country*</label>
-
-                                            <div class="col-xs-12 col-md-12">
-                                                {{Form::select('country', ['' => 'Select Country'] + $countries, null, ['required' => true])}}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <button type="submit" class="btn btn-primary btn-submit btn-register">
-                                        Register
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
+                        {{ Form::close() }}
                     </div>
                 </div>
             </div>
-            <div class="col-xs-12 col-md-12 create-account-wrapper">
-                <a href="{{ url('/auth/login') }}">I already have an account</a>
+            @if(session('tab') != '#tab-verification')
+                <div class="col-xs-12 col-md-12 create-account-wrapper">
+                    <a href="{{ url('/auth/login') }}">I already have an account</a>
+                </div>
+            @endif
+        </div>
+    </div>
+</div>
+
+<!-- Registration Agency Modal -->
+<div class="modal fade" id="reg_agency" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Add Agency</h4>
+            </div>
+            {{ Form::open(['url' => route('agency.store'), 'method' => 'post', 'id' => 'reg-agency-form']) }}
+            <div class="modal-body clearfix">
+                <div class="messages hidden"></div>
+                <div class="form-container hidden">
+                    {{--*/
+                    $messages = $errors->get('name');
+                    /*--}}
+                    <div class="form-group {{ $messages ? ' has-error' : '' }}">
+                        {{ Form::label('name', null, ['class' => 'control-label required col-xs-12 col-sm-4']) }}
+                        <div class="col-xs-12 col-sm-8">
+                            {{ Form::text('name',null,['class' => 'form-control']) }}
+                            @foreach($messages as $message)
+                                <div class="text-danger">{{ $message }}</div>
+                            @endforeach
+                        </div>
+                    </div>
+                    {{--*/
+                    $messages = $errors->get('short_form');
+                    /*--}}
+                    <div class="form-group {{ $messages ? ' has-error' : '' }}">
+                        {{ Form::label('short_form', null, ['class' => 'control-label required col-xs-12 col-sm-4']) }}
+                        <div class="col-xs-12 col-sm-8">
+                            {{ Form::text('short_form',null,['class' => 'form-control']) }}
+                            @foreach($messages as $message)
+                                <div class="text-danger">{{ $message }}</div>
+                            @endforeach
+                        </div>
+                    </div>
+                    {{--*/
+                    $messages = $errors->get('website');
+                    /*--}}
+                    <div class="form-group {{ $messages ? ' has-error' : '' }}">
+                        {{ Form::label('website', null, ['class' => 'control-label required col-xs-12 col-sm-4']) }}
+                        <div class="col-xs-12 col-sm-8">
+                            {{ Form::url('website',null,['class' => 'form-control']) }}
+                            <p class="help-block">eg: http://www.example.com</p>
+                            @foreach($messages as $message)
+                                <div class="text-danger">{{ $message }}</div>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                {{--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>--}}
+                <button type="submit" class="btn btn-primary">Add</button>
+            </div>
+            {{ Form::close() }}
+        </div>
+    </div>
+</div>
+
+<!-- Same Organization Identifier Modal -->
+<div class="modal fade preventClose" id="org-identifier-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg register-container" role="document">
+        <div class="modal-content form-body">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                </div>
+                <div class="panel-body text-center same-identifier">
+                    <img src="{{ url('/images/ic-warning.svg') }}" alt="warning" width="81" height="66">
+                    <h1>IATI Organisational Identifier Error</h1>
+                    <p>
+                        The IATI organisational identifier you entered <strong>"<span class="org-identifier"></span>"</strong> is being used by another organisation on AidStream.
+                    </p>
+                    <h2>"<span class="org-name"></span>"</h2>
+                    <div class="col-md-12 identifier-information">
+                        <p>If this is your organisation, please select the appropriate action from the options below:</p>
+                        <div class="col-sm-6">
+                            <h3>Retrieve Existing Account Details</h3>
+                            <p>
+                                If you already have an AidStream account but you have forgotten your login details, click the button below.
+                            </p>
+                            <a href="/password/email" class="btn btn-primary">Retrieve Login Credentials</a>
+                        </div>
+                        <div class="col-sm-6">
+                            <h3>Create a New User Account</h3>
+                            <p>
+                                If you don't have a personal AidStream account, you can set one up by contacting the administrator for your organisation.
+                            </p>
+                            <span class="admin-name"></span>
+                            <a href="{{ route('contact', ['need-new-user']) }}" class="btn btn-primary">Contact Your Administrator</a>
+                        </div>
+                    </div>
+                    <p>
+                        No, this is not my organisation. Contact<a href="{{ route('contact', ['not-my-organization']) }}"> support@aidstream.org</a>
+                    </p>
+                </div>
             </div>
         </div>
     </div>
 </div>
+
+<!-- Similar Organisations Modal -->
+<div class="modal fade preventClose" id="similar-org-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg register-container" role="document">
+        <div class="modal-content form-body">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                </div>
+                <div class="panel-body same-identifier org-warning">
+                    @if (count($errors) > 0)
+                        <div class="alert alert-danger">
+                                <span>
+                                    <ul>
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </span>
+                        </div>
+                    @endif
+                    <img src="{{ url('/images/ic-warning.svg') }}" alt="warning" width="81" height="66">
+                    <h1 class="text-center">Organisation Name Error</h1>
+                    <p class="text-center">
+                        There are other AidStream accounts which share the same or a similar organisation name to the one you have tried to register. These are displayed below.
+                    </p>
+                    <div class="input-wrapper text-center hidden">
+                        Search for same/similar organisation name on AidStream.
+                    </div>
+
+                    {{ Form::open(['url' => route('submit-similar-organization'), 'method' => 'post', 'id' => 'similar-org-form']) }}
+
+                    <div class="input-wrapper">
+                        <div class="col-xs-12 col-md-12 hidden">
+                            {{ Form::hidden('type') }}
+                            {!! AsForm::text(['name' => 'search_org', 'class' => 'search_org ignore_change', 'label' => false]) !!}
+                            {{ Form::button('Search Organisation', ['class' => 'btn btn-primary btn-search', 'type' => 'button']) }}
+                            {{ Form::hidden('similar_organization') }}
+                        </div>
+                        <div class="org-list-container clickable-org hidden">
+                            <div class="col-xs-12 col-md-12 organization-list-wrapper">
+                                <p class="text-center">If you recognise one of the organisations below as yours, please click on it to continue.</p>
+                                <ul class="organization-list">
+                                </ul>
+                            </div>
+                            <div class="col-md-12 text-center org-list-notification clickable-org">
+                                <p>None of the results above match my organisation. I would like to <a data-value="">continue with registration</a>.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 text-center">
+                        {{ Form::button('Continue', ['class' => 'btn btn-primary btn-submit btn-register prevent-disable hidden', 'type' => 'submit', 'disabled' => 'disabled']) }}
+                    </div>
+                    {{ Form::close() }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="user_template" class="hidden">
+    {{--*/ $userIndex = '_index_'; /*--}}
+    @include('auth.partUsers')
+</div>
+
 @include('includes.footer')
 
-@if(env('APP_ENV') == 'local')
-    <script type="text/javascript" src="{{url('/js/jquery.js')}}"></script>
-    <script type="text/javascript" src="{{url('/js/bootstrap.min.js')}}"></script>
-    <script type="text/javascript" src="{{url('/js/jquery.cookie.js')}}"></script>
-@else
-    <script type="text/javascript" src="{{url('/js/main.min.js')}}"></script>
-@endif
-<!-- Google Analytics -->
-<script type="text/javascript" src="{{url('/js/ga.js')}}"></script>
-<!-- End Google Analytics -->
-<script>
+<script type="text/javascript" src="{{url('/js/jquery.js')}}"></script>
+<script type="text/javascript" src="{{url('/js/jquery.cookie.js')}}"></script>
+<script type="text/javascript" src="{{url('/js/jquery.jscrollpane.min.js')}}"></script>
+<script type="text/javascript" src="{{url('/js/select2.min.js')}}"></script>
+<script type="text/javascript" src="{{url('/js/main.min.js')}}"></script>
+<script type="text/javascript" src="{{url('/js/jquery.validate.min.js')}}"></script>
+<script type="text/javascript" src="{{url('/js/registration.js')}}"></script>
+
+<script type="text/javascript">
+    var checkSimilarOrg = true;
+    var checkOrgIdentifier = true;
+    var agencies = JSON.parse($('.agencies').val());
     $(document).ready(function () {
-        function hamburgerMenu() {
-            $('.navbar-toggle.collapsed').click(function () {
-                $('.navbar-collapse').toggleClass('out');
-                $(this).toggleClass('collapsed');
-            });
-        }
+        Registration.abbrGenerator();
+        Registration.checkAbbrAvailability();
+        Registration.changeCountry();
+        Registration.regNumber();
+        Registration.addRegAgency();
+        Registration.addUser();
+        Registration.removeUser();
+        Registration.usernameGenerator();
+        Registration.filterSimilarOrg();
+        Registration.tabs();
+        @if($tab = session('tab'))
+            checkSimilarOrg = false;
+            @if($tab == '#tab-verification')
+                Registration.showValidation();
+            @else
+                $('a[href="{{ $tab }}"]').tab('show');
+            @endif
+        @endif
 
-        hamburgerMenu();
-
-        $('[name="organization_user_identifier"]').on('change', checkAvailability);
-        $('[name="organization_user_identifier"]').on('keydown', function () {
-            $('.availability-check').html('').addClass('hidden').removeClass('text-success text-danger');
+    $('form select').select2();
+        $('form select').on('select2:close', function (e) {
+            $(this).valid();
         });
-        function checkAvailability() {
-            var userIdentifier = $(this).val();
-            if ($.trim(userIdentifier) == "") {
-                return false;
-            }
-            $.ajax({
-                headers: {'X-CSRF-TOKEN': $('[name="_token"]').val()},
-                type: 'POST',
-                url: '{{ route('check-organization-user-identifier') }}',
-                data: {userIdentifier: $(this).val()},
-                success: function (data) {
-                    $('.availability-check').removeClass('hidden').addClass('text-' + data.status).html(data.message);
-                }
-            });
-        }
+
+        //        Registration.similarOrgs();
+        //        Registration.sameIdentifier();
+        //        Registration.disableOrgSubmitButton();
+        //        Registration.disableUsersSubmitButton();
     });
 </script>
+
+@if(env('APP_ENV') != 'local')
+    <!-- Google Analytics -->
+    <script type="text/javascript" src="{{url('/js/ga.js')}}"></script>
+    <!-- End Google Analytics -->
+@endif
 </body>
 </html>

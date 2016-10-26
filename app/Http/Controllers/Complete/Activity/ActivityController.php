@@ -20,6 +20,7 @@ use App\Services\Twitter\TwitterAPI;
 use App\User;
 use Illuminate\Session\SessionManager;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Session;
 use Psr\Log\LoggerInterface;
 
 
@@ -166,6 +167,7 @@ class ActivityController extends Controller
                 $messages[$activity->id]               = $message;
             }
         }
+        (!session('first_login')) ?: session()->forget('first_login');
 
         return view('Activity.index', compact('activities', 'filenames', 'activityPublishedStats', 'messages'));
     }
@@ -181,8 +183,15 @@ class ActivityController extends Controller
         $this->authorize('add_activity', $organization);
         $settings           = $this->settingsManager->getSettings($this->organization_id);
         $defaultFieldValues = $settings->default_field_values;
-        $input              = $request->all();
-        $result             = $this->activityManager->store($input, $this->organization_id, $defaultFieldValues);
+
+        if (!$defaultFieldValues) {
+            $response = ['type' => 'warning', 'code' => ['default_values', ['name' => 'activity']]];
+
+            return redirect('/default-values')->withResponse($response);
+        }
+
+        $input  = $request->all();
+        $result = $this->activityManager->store($input, $this->organization_id, $defaultFieldValues);
 
         if (!$result) {
             $response = ['type' => 'danger', 'code' => ['save_failed', ['name' => 'activity']]];
@@ -284,7 +293,7 @@ class ActivityController extends Controller
             if (empty($settings['registry_info'][0]['publisher_id']) && empty($settings['registry_info'][0]['api_id'])) {
                 $response = ['type' => 'warning', 'code' => ['settings_registry_info', ['name' => '']]];
 
-                return redirect()->to('/settings')->withResponse($response);
+                return redirect()->to('/publishing-settings')->withResponse($response);
             }
             $xmlService->generateActivityXml(
                 $activityData,
@@ -586,6 +595,14 @@ class ActivityController extends Controller
             $response = ['type' => 'warning', 'code' => ['settings', ['name' => 'activity']]];
 
             return redirect('/settings')->withResponse($response);
+        } elseif ($settings == null) {
+            $response = ['type' => 'warning', 'code' => ['default_values', ['name' => 'activity']]];
+
+            return redirect('/default-values')->withResponse($response);
+        } elseif (!$settings->default_field_groups) {
+            $response = ['type' => 'warning', 'code' => ['default_field_groups_required', ['name' => 'activity']]];
+
+            return redirect('/activity-elements-checklist')->withResponse($response);
         }
 
         $defaultFieldValues    = $settings->default_field_values;

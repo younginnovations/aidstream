@@ -7,6 +7,11 @@ use App\Models\Organization\OrganizationData;
 use App\Models\OrganizationPublished;
 use App\Models\Settings;
 use App\User;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
+use Illuminate\Database\Eloquent\Collection;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -57,25 +62,20 @@ class OrganizationRepository implements OrganizationRepositoryInterface
     }
 
     /**
-     * write brief description
+     * creates new organization
      * @param array $input
+     * @return Organization
      */
     public function createOrganization(array $input)
     {
-        $org                  = new Organization();
-        $org->name            = json_encode($input['name']);
-        $org->user_identifier = $input['user_identifier'];
-        $org->address         = $input['address'];
-        $org->telephone       = $input['telephone'];
-        $org->reporting_org   = json_encode($input['reporting_org']);
-        $org->save();
+        return $this->org->create($input);
     }
 
     /**
      * @param $select
      * @return \Illuminate\Database\Eloquent\Collection|static[]
      */
-    public function getOrganizations($select)
+    public function getOrganizations($select = '*')
     {
         return $this->org->select($select)->get();
     }
@@ -336,6 +336,65 @@ class OrganizationRepository implements OrganizationRepositoryInterface
         return $result->first();
     }
 
+    /** save organization information
+     * @param $organizationInfo
+     * @param $organization
+     */
+    public function saveOrganizationInformation($organizationInfo, $organization)
+    {
+        $organization->twitter          = $organizationInfo['twitter'];
+        $organization->country          = $organizationInfo['country'];
+        $organization->address          = $organizationInfo['address'];
+        $organization->telephone        = $organizationInfo['telephone'];
+        $organization->organization_url = $organizationInfo['organization_url'];
+        $organization->user_identifier  = $organizationInfo['user_identifier'];
+        $file                           = array_key_exists('organization_logo', $organizationInfo) ? $organizationInfo['organization_logo'] : null;
+
+        if ($file) {
+            if (!file_exists(public_path('files/users'))) {
+                mkdir(public_path('files/users'));
+            }
+
+            $fileUrl  = url('files/logos/' . $organization->id . '.' . $file->getClientOriginalExtension());
+            $fileName = $organization->id . '.' . $file->getClientOriginalExtension();
+            $image    = Image::make(File::get($file))->fit(
+                166,
+                166,
+                function ($constraint) {
+                    $constraint->aspectRatio();
+                }
+            )->encode();
+
+            Storage::put('logos/' . $fileName, $image);
+            $organization->logo_url = $fileUrl;
+            $organization->logo     = $fileName;
+        }
+
+        $reporting_org                     = [
+            0 => [
+                'reporting_organization_identifier' => $organizationInfo['registration_agency'] . '-' . $organizationInfo['registration_number'],
+                'reporting_organization_type'       => $organizationInfo['organization_type'],
+                'narrative'                         => $organizationInfo['narrative']
+            ]
+        ];
+        $organization->reporting_org       = $reporting_org;
+        $organization->registration_agency = $organizationInfo['registration_agency'];
+        $organization->registration_number = $organizationInfo['registration_number'];
+        $organization->save();
+
+        $this->orgData->firstOrCreate(['organization_id' => $organization->id, 'status' => 0]);
+    }
+
+    /**
+     * returns collection of similar organizations
+     * @param $keywords
+     * @return Collection
+     */
+    public function getSimilarOrg($keywords)
+    {
+        return $this->org->whereRaw("lower(reporting_org #>> '{0,narrative,0,narrative}') similar to ?", ['%(' . implode('|', $keywords) . ')%'])->get();
+    }
+
     /**
      * delete element which has been clicked.
      * @param OrganizationData $organization
@@ -359,5 +418,24 @@ class OrganizationRepository implements OrganizationRepositoryInterface
         $organization->status = 0;
 
         return $organization->save();
+    }
+
+    /**
+     * @param $identifier
+     * @return array
+     */
+    public function checkOrgIdentifier($identifier)
+    {
+        $organization = $this->org->whereRaw("reporting_org #>> '{0,reporting_organization_identifier}' = ?", [$identifier])->first();
+        $data         = [];
+        if ($organization) {
+            $data['org_name']    = $organization->reporting_org[0]['narrative'][0]['narrative'];
+            $data['org_id']      = $organization->id;
+            $admin               = $organization->users->where('role_id', 1)->first();
+            $data['admin_name']  = $admin->name;
+            $data['admin_email'] = $admin->email;
+        }
+
+        return $data;
     }
 }

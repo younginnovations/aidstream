@@ -15,7 +15,7 @@ class RecipientRegionBudget extends BaseForm
     {
         $this
             ->addSelect('status', $this->getCodeList('BudgetStatus', 'Activity'))
-            ->addCollection('recipient_region', 'Organization\RecipientRegion', 'recipient_region')
+            ->addCollection('recipient_region', 'Organization\RecipientRegion', 'recipient_region', [], 'Recipient Organisation')
             ->addCollection('period_start', 'Organization\PeriodStart')
             ->addCollection('period_end', 'Organization\PeriodEnd')
             ->addCollection('value', 'Organization\ValueForm')

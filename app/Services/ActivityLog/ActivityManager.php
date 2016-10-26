@@ -63,14 +63,15 @@ class ActivityManager
      * @param array $data
      * @return UserActivity
      */
-    public function save($action, array $param = [], array $data = null)
+    public function save($action, array $param = [], array $data = [])
     {
         $activityData = [
             'action' => $action,
             'param'  => $param,
             'data'   => $data
         ];
-        if (session('role_id') == '3' || session('role_id') == '4') {
+        if ($userId = getVal($data, ['user_id'])) {
+        } elseif (session('role_id') == '3' || session('role_id') == '4') {
             $userId = session('admin_id');
         } else {
             $userId = $this->auth->id();

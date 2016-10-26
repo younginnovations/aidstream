@@ -15,8 +15,8 @@
     "laravelcollective/bus": "5.2",
     "intervention/image": "2.3.5",
     "rap2hpoutre/laravel-log-viewer": "0.5.0",
-    "heybigname/backup-manager":"dev-master",
-    "dropbox/dropbox-sdk":"1.1.*",
+    "heybigname/backup-manager": "dev-master",
+    "dropbox/dropbox-sdk": "1.1.*",
     "backup-manager/laravel": "^1.1",
     "league/flysystem-dropbox": "^1.0",
     "spatie/laravel-backup": "^3.4",
@@ -39,6 +39,7 @@
       "app/Helpers/HelperLanguage.php",
       "app/Helpers/TimeZone.php",
       "app/Helpers/linkHelpers.php",
+      "app/Helpers/AsForm.php",
       "app/Helpers/helper.php",
       "app/Helpers/HideEmptyArray.php"
     ],

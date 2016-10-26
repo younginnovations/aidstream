@@ -4,6 +4,7 @@ use App\Core\V201\Repositories\SettingsRepository;
 use App\Models\Organization\Organization;
 use App\Models\Organization\OrganizationData;
 use App\Models\Settings;
+use App\User;
 use Test\AidStreamTestCase;
 use Illuminate\Session\SessionManager;
 use Illuminate\Database\DatabaseManager;
@@ -26,7 +27,8 @@ class SettingsTest extends AidStreamTestCase
         $this->organization      = m::mock(Organization::class);
         $this->sessionManager    = m::mock(SessionManager::class);
         $this->databaseManager   = m::mock(DatabaseManager::class);
-        $this->settingRepository = new SettingsRepository($this->settings, $this->organizationData, $this->sessionManager, $this->databaseManager);
+        $this->user              = m::mock(User::class);
+        $this->settingRepository = new SettingsRepository($this->settings, $this->organizationData, $this->sessionManager, $this->databaseManager, $this->user);
     }
 
     public function testItShouldReturnSettingsDataWithSpecificOrganizationId()

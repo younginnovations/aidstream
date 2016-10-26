@@ -10,7 +10,9 @@ class MultipleRecipientOrgBudgetForm extends BaseForm
             ->addCollection(
                 'recipient_organization_budget',
                 'Organization\RecipientOrgBudgetForm',
-                'recipient_organization_budget'
+                'recipient_organization_budget',
+                [],
+                'Recipient Organisation Budget'
             )
             ->addAddMoreButton('add_recipient_organization_budget', 'recipient_organization_budget');
     }

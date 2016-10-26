@@ -6,6 +6,7 @@ use App\SuperAdmin\Repositories\SuperAdmin;
 use App\User;
 use Illuminate\Contracts\Logging\Log;
 use Illuminate\Database\DatabaseManager;
+use Illuminate\Database\Eloquent\Collection;
 use Mockery as m;
 use Test\AidStreamTestCase;
 
@@ -60,18 +61,20 @@ class SuperAdminTest extends AidStreamTestCase
 
     public function testItShouldReceiveOrganizationDataAndUserDataWithSpecificId()
     {
-        $this->organization->shouldReceive('with->findOrFail->toArray')->once()->andReturn([]);
+        $this->organization->shouldReceive('join->where->where->select->get->toArray')->andReturn([]);
         $this->assertTrue(is_array($this->superAdmin->getOrganizationUserById(1)));
     }
 
     public function testItShouldSaveOrganizationDetails()
     {
+        $collection = m::mock(Collection::class);
         $this->database->shouldReceive('beginTransaction')->once()->andReturnSelf();
-        $this->organization->shouldReceive('getAttribute')->times(4)->with('id')->andReturn('1');
+        $this->organization->shouldReceive('getAttribute')->times(3)->with('id')->andReturn('1');
         $this->organization->shouldReceive('firstOrNew')->once()->with(['id' => 1])->andReturnSelf();
         $this->organization->shouldReceive('fill->save')->andreturn(true);
         $this->user->shouldReceive('getAttribute')->once()->with('id')->andReturn(1);
-        $this->user->shouldReceive('firstOrNew')->once()->with(['org_id' => 1])->andReturnSelf();
+        $collection->shouldReceive('where->first')->andReturn($this->user);
+        $this->organization->shouldReceive('getAttribute')->with('users')->andReturn($collection);
         $this->user->shouldReceive('fill->save')->andReturn(true);
         $this->settings->shouldReceive('firstOrNew')->once()->with(['organization_id' => 1])->andReturnSelf();
         $this->settings->shouldReceive('fill->save')->andReturn(true);
@@ -101,7 +104,7 @@ class SuperAdminTest extends AidStreamTestCase
             'default_field_values'     => 'defaultFieldValues',
             'default_field_groups'     => 'defaultFieldGroups'
         ];
-        $this->assertNull($this->superAdmin->saveOrganization($data, 1));
+        $this->assertTrue($this->superAdmin->saveOrganization($data, 1));
     }
 
     public function tearDown()

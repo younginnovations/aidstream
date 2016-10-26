@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport'/>
     <title>Aidstream - Login</title>
     <link rel="shotcut icon" type="image/png" sizes="32*32" href="{{ asset('/images/favicon.png') }}"/>
     <link href="{{ asset('/css/main.min.css') }}" rel="stylesheet">
@@ -23,7 +23,7 @@
 </head>
 <body>
 <header>
-    <nav class="navbar navbar-default navbar-static">
+    <nav class="navbar navbar-default navbar-static navbar-fixed">
         <div class="navbar-header">
             <a href="{{ url('/') }}" class="navbar-brand">Aidstream</a>
             <button type="button" class="navbar-toggle collapsed">
@@ -36,13 +36,16 @@
         <div class="navbar-collapse navbar-right">
             <ul class="nav navbar-nav">
                 <li><a class="{{ Request::is('about') ? 'active' : '' }}" href="{{ url('/about') }}">About</a></li>
-                <li><a class="{{ Request::is('who-is-using') ? 'active' : '' }}" href="{{ url('/who-is-using') }}">Who's Using It?</a></li>
-                <li><a href="https://github.com/younginnovations/aidstream-new/wiki/User-Guide" target="_blank">User Guide</a></li>
+                <li><a class="{{ Request::is('who-is-using') ? 'active' : '' }}" href="{{ url('/who-is-using') }}">Who's
+                        Using It?</a></li>
+                <li><a href="https://github.com/younginnovations/aidstream-new/wiki/User-Guide" target="_blank">User
+                        Guide</a></li>
                 <!--<li><a href="#">Snapshot</a></li>-->
             </ul>
             <div class="action-btn pull-left">
                 @if(auth()->check())
-                    <a href="{{ url((auth()->user()->role_id == 1 || auth()->user()->role_id == 2) ? config('app.admin_dashboard') : config('app.super_admin_dashboard'))}}" class="btn btn-primary">Go
+                    <a href="{{ url((auth()->user()->role_id == 1 || auth()->user()->role_id == 2) ? config('app.admin_dashboard') : config('app.super_admin_dashboard'))}}"
+                       class="btn btn-primary">Go
                         to Dashboard</a>
                 @else
                     <a href="{{ url('/auth/login')}}" class="btn btn-primary">Login/Register</a>
@@ -66,11 +69,9 @@
     {{--</div>--}}
     <div class="container-fluid login-container">
         <div class="row">
-            <div class="col-lg-4 col-md-8 col-md-offset-2 form-body">
+            <h1 class="text-center">Login</h1>
+            <div class="col-lg-4 col-md-8 login-block">
                 <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <img src="{{url('images/logo.svg')}}" alt="">
-                    </div>
                     <div class="panel-body">
                         @if (count($errors) > 0)
                             <div class="alert alert-danger">
@@ -90,72 +91,97 @@
                             </div>
                         @endif
 
-                        <form class="form-horizontal" role="form" method="POST" action="{{ url('/auth/login') }}">
+                        <form role="form" method="POST" action="{{ url('/auth/login') }}">
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
-
-                            <div class="form-group">
-                                <label class="control-label">@lang('trans.login_name')</label>
-
-                                <div class="col-md-12">
-                                    <input type="text" class="form-control ignore_change" name="login" value="{{ old('login') }}">
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="control-label">@lang('trans.password')</label>
-
-                                <div class="col-md-12">
-                                    <input type="password" class="form-control ignore_change" name="password">
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <div class="col-md-6 pull-left">
-                                    <div class="checkbox">
-                                        <label>
-                                            <input type="checkbox" name="remember" class="ignore_change"> @lang('trans.remember_me')
-                                        </label>
+                            <div class="login-form-group">
+                                <div class="form-group">
+                                    <label class="control-label">@lang('trans.login_name')</label>
+                                    <div class="col-md-12">
+                                        <input type="text" class="form-control ignore_change" name="login"
+                                               value="{{ old('login') }}">
                                     </div>
                                 </div>
-                                <div class="col-md-6 pull-right">
-                                    <a class="btn-link" href="{{ url('/password/email') }}">@lang('trans.forgot_password')?</a>
+                                <div class="form-group">
+                                    <label class="control-label">@lang('trans.password')</label>
+
+                                    <div class="col-md-12">
+                                        <input type="password" class="form-control ignore_change" name="password">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-6 pull-left">
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox" name="remember"
+                                                       class="ignore_change"> @lang('trans.remember_me')
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 pull-right">
+                                        <a class="btn-link"
+                                           href="{{ url('/password/email') }}">@lang('trans.forgot_password')?</a>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-md-12">
-                                <button type="submit" class="btn btn-primary btn-submit">@lang('trans.login')</button>
-                            </div>
+                            <button type="submit" class="btn btn-primary btn-submit">@lang('trans.login')</button>
                         </form>
                     </div>
                 </div>
             </div>
             <div class="col-md-12 create-account-wrapper">
-                Don’t have an AidStream account? <a href="{{ url('/auth/register') }}">Create an account</a>
+                Don’t have an AidStream account? <a href="{{ route('registration') }}">Create an account</a>
             </div>
         </div>
     </div>
+
 </div>
 @include('includes.footer')
-<!-- Scripts -->
+        <!-- Scripts -->
 @if(env('APP_ENV') == 'local')
     <script type="text/javascript" src="{{url('/js/jquery.js')}}"></script>
     <script type="text/javascript" src="{{url('/js/bootstrap.min.js')}}"></script>
     <script type="text/javascript" src="{{url('/js/jquery.cookie.js')}}"></script>
 @else
     <script type="text/javascript" src="{{url('/js/main.min.js')}}"></script>
-@endif
-<!-- Google Analytics -->
-<script type="text/javascript" src="{{url('/js/ga.js')}}"></script>
-<!-- End Google Analytics -->
-<script>
-    $(document).ready(function () {
-        function hamburgerMenu() {
-            $('.navbar-toggle.collapsed').click(function(){
-                $('.navbar-collapse').toggleClass('out');
-                $(this).toggleClass('collapsed');
+    @endif
+            <!-- Google Analytics -->
+    <script type="text/javascript" src="{{url('/js/ga.js')}}"></script>
+    <!-- End Google Analytics -->
+    <script>
+        $(document).ready(function () {
+            function hamburgerMenu() {
+                $('.navbar-toggle.collapsed').click(function () {
+                    $('.navbar-collapse').toggleClass('out');
+                    $(this).toggleClass('collapsed');
+                });
+            }
+
+            hamburgerMenu();
+        });
+    </script>
+
+
+    @if(session('verification_message'))
+        <div class="modal fade verification-modal" tabindex="-1" role="dialog" style="display: block;">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                    aria-hidden="true">&times;</span></button>
+                        <img src="{{ url('/images/ic-verified.svg') }}" alt="verified" width="66" height="66">
+                        <h4 class="modal-title text-center">Verification Successful</h4>
+                    </div>
+                    <div class="modal-body clearfix">
+                        {!! session('verification_message') !!}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('.verification-modal').modal('show');
             });
-        }
-        hamburgerMenu();
-    });
-</script>
+        </script>
+    @endif
 </body>
 </html>

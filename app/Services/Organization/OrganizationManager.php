@@ -1,5 +1,6 @@
 <?php namespace App\Services\Organization;
 
+use App\Core\V201\Repositories\UserRepository;
 use App\Core\Version;
 use App;
 use App\Models\Organization\Organization;
@@ -10,9 +11,14 @@ use Exception;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Logging\Log as Logger;
 use App\Services\Twitter\TwitterAPI;
+use Illuminate\Contracts\Logging\Log;
+use Kris\LaravelFormBuilder\FormBuilder;
 
 class OrganizationManager
 {
+    /**
+     * @var
+     */
     protected $repo;
     /**
      * @var Logger
@@ -24,15 +30,36 @@ class OrganizationManager
     protected $auth;
 
     /**
+     * @var FormBuilder
+     */
+    protected $formBuilder;
+
+    /**
+     * @var UserRepository
+     */
+    protected $userRepo;
+
+    /**
      * @param Version               $version
      * @param Guard                 $auth
      * @param OrganizationData      $orgData
      * @param OrganizationPublished $orgPublished
      * @param Logger                $logger
+     * @param Log                   $dbLogger
      * @param TwitterAPI            $twitter
+     * @param FormBuilder           $formBuilder
      */
-    public function __construct(Version $version, Guard $auth, OrganizationData $orgData, OrganizationPublished $orgPublished, Logger $logger, TwitterAPI $twitter)
-    {
+    public function __construct(
+        Version $version,
+        Guard $auth,
+        OrganizationData $orgData,
+        OrganizationPublished $orgPublished,
+        UserRepository $userRepo,
+        Logger $logger,
+        Log $dbLogger,
+        TwitterAPI $twitter,
+        FormBuilder $formBuilder
+    ) {
         $this->version      = $version;
         $this->repo         = $version->getOrganizationElement()->getRepository();
         $this->orgElement   = $version->getOrganizationElement();
@@ -41,6 +68,9 @@ class OrganizationManager
         $this->logger       = $logger;
         $this->auth         = $auth;
         $this->twitterApi   = $twitter;
+        $this->formBuilder  = $formBuilder;
+        $this->dbLogger     = $dbLogger;
+        $this->userRepo     = $userRepo;
     }
 
     /**
@@ -212,6 +242,64 @@ class OrganizationManager
         return $this->repo->getReportingOrganizations($reportOrg);
     }
 
+    /** display form to view organization information
+     * @param $formOptions
+     * @return \Kris\LaravelFormBuilder\Form
+     */
+    public function viewOrganizationInformation($formOptions)
+    {
+        return $this->formBuilder->create('App\Core\V201\Forms\Settings\OrganizationInformation', $formOptions);
+
+    }
+
+    /** save organization information
+     * @param $organizationInfo
+     * @param $organization
+     * @return bool
+     */
+    public function saveOrganizationInformation($organizationInfo, $organization)
+    {
+        try {
+            $old_user_identifier = strtolower($organization->user_identifier);
+            $new_user_identifier = strtolower($organizationInfo['user_identifier']);
+
+            ($old_user_identifier === $new_user_identifier) ? $check = true : $check = false;
+            $response = true;
+
+            if (!$check) {
+                $status   = $this->updateUsername($old_user_identifier, $new_user_identifier);
+                $response = "Username updated";
+            }
+            $result = $this->repo->saveOrganizationInformation($organizationInfo, $organization);
+
+            $this->logger->info('Settings Updated Successfully.');
+            $this->dbLogger->activity(
+                "activity.settings_updated",
+                [
+                    'organization'    => $this->auth->user()->organization->name,
+                    'organization_id' => $this->auth->user()->organization->id
+                ]
+            );
+
+            return $response;
+        } catch (Exception $e) {
+            $this->logger->error($e, ['settings' => $organizationInfo]);
+        }
+
+        $response = false;
+
+        return $response;
+    }
+
+    /** update username of all users of the organization.
+     * @param $old_user_identifier
+     * @param $new_user_identifier
+     */
+    public function updateUsername($old_user_identifier, $new_user_identifier)
+    {
+        return $this->userRepo->updateUsername($old_user_identifier, $new_user_identifier);
+    }
+
     /**
      * deletes element which has been clicked.
      * @param $organization
@@ -236,7 +324,7 @@ class OrganizationManager
             );
 
             return true;
-            
+
         } catch (Exception $exception) {
             $this->logger->error($exception);
         }

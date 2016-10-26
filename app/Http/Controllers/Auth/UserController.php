@@ -6,9 +6,12 @@ use App\Http\Requests\ChangePasswordRequest;
 use App\Http\Requests\ProfileRequest;
 use App\Http\Requests\UsernameRequest;
 use App\Models\Organization\Organization;
+use App\Services\Organization\OrganizationManager;
+use App\Services\UserManager;
 use App\User;
 use Illuminate\Database\DatabaseManager;
 use Illuminate\Session\SessionManager;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
@@ -35,18 +38,24 @@ class UserController extends Controller
      */
     protected $sessionManager;
     protected $orgId;
+    protected $userManager;
+    protected $organizationManager;
 
     /**
-     * @param Organization   $organization
-     * @param User           $user
-     * @param SessionManager $sessionManager
+     * @param Organization        $organization
+     * @param User                $user
+     * @param SessionManager      $sessionManager
+     * @param UserManager         $userManager
+     * @param OrganizationManager $organizationManager
      */
-    function __construct(Organization $organization, User $user, SessionManager $sessionManager)
+    function __construct(Organization $organization, User $user, SessionManager $sessionManager, UserManager $userManager, OrganizationManager $organizationManager)
     {
-        $this->organization   = $organization;
-        $this->user           = $user;
-        $this->sessionManager = $sessionManager;
-        $this->orgId          = $this->sessionManager->get('org_id');
+        $this->organization        = $organization;
+        $this->user                = $user;
+        $this->sessionManager      = $sessionManager;
+        $this->orgId               = $this->sessionManager->get('org_id');
+        $this->userManager         = $userManager;
+        $this->organizationManager = $organizationManager;
     }
 
     /**
@@ -55,7 +64,7 @@ class UserController extends Controller
      */
     public function viewProfile()
     {
-        $organization = $this->organization->getOrganization();
+        $organization = $this->organizationManager->getOrganization($this->orgId);
 
         return view('User.profile', compact('user', 'organization'));
     }
@@ -156,17 +165,20 @@ class UserController extends Controller
      */
     public function editProfile($userId)
     {
-        $user = $this->user->findOrFail($userId);
+        $user_details    = $this->userManager->getUser($userId);
+        $user_permission = Auth::user()->role->role;
 
-        if (Gate::denies('isValidUser', $user)) {
+        if (Gate::denies('isValidUser', $user_details)) {
             return redirect()->route('user.profile')->withResponse($this->getNoPrivilegesMessage());
         }
 
-        $organization = $this->organization->findOrFail($this->orgId);
-        $baseForm     = new BaseForm();
-        $timeZone     = $baseForm->getCodeList('TimeZone', 'Activity', false);
+        $organization = $this->organizationManager->getOrganization(session('org_id'));
 
-        return view('User.editProfile', compact('user', 'organization', 'timeZone'));
+        $user     = $this->userManager->getUserDetails($userId);
+        $baseForm = new BaseForm();
+        $timeZone = $baseForm->getCodeList('TimeZone', 'Activity', false);
+
+        return view('User.editProfile', compact('user', 'organization', 'timeZone', 'user_permission'));
     }
 
     /**
@@ -183,10 +195,9 @@ class UserController extends Controller
         if (Gate::denies('isValidUser', $user)) {
             return redirect()->route('user.profile')->withResponse($this->getNoPrivilegesMessage());
         }
+        $user = $this->userManager->updateUserProfile($input);
 
-        $user         = $this->updateUserProfile($input, $userId);
-        $organization = $this->updateOrganizationProfile($input);
-        $response     = ($user && $organization) ? ['type' => 'success', 'code' => ['updated', ['name' => 'Profile']]] : [
+        $response = ($user) ? ['type' => 'success', 'code' => ['updated', ['name' => 'Profile']]] : [
             'type' => 'danger',
             'code' => ['update_failed', ['name' => 'Profile']]
         ];
@@ -194,52 +205,4 @@ class UserController extends Controller
         return redirect('user/profile')->withResponse($response);
     }
 
-    /**
-     * update user profile
-     * @param $input
-     * @param $userId
-     * @return mixed
-     */
-    protected function updateUserProfile($input, $userId)
-    {
-        $user               = $this->user->findOrFail($userId);
-        $user->first_name   = $input['first_name'];
-        $user->last_name    = $input['last_name'];
-        $user->email        = $input['email'];
-        $timeZone           = explode(' : ', $input['time_zone']);
-        $user->time_zone_id = $timeZone[0];
-        $user->time_zone    = $timeZone[1];
-
-        return $user->save();
-    }
-
-    /**
-     * update organization profile
-     * @param $input
-     * @return mixed
-     */
-    protected function updateOrganizationProfile($input)
-    {
-        $organization = $this->organization->findOrFail($this->orgId);
-        $file         = Input::file('organization_logo');
-
-        if ($file) {
-            $fileUrl  = url('files/logos/' . $this->orgId . '.' . $file->getClientOriginalExtension());
-            $fileName = $this->orgId . '.' . $file->getClientOriginalExtension();
-            $image    = Image::make(File::get($file))->resize(150, 150)->encode();
-            Storage::put('logos/' . $fileName, $image);
-            $organization->logo_url = $fileUrl;
-            $organization->logo     = $fileName;
-        }
-
-        $organization->name             = $input['organization_name'];
-        $organization->address          = $input['organization_address'];
-        $organization->country          = $input['country'];
-        $organization->organization_url = $input['organization_url'];
-        $organization->telephone        = $input['organization_telephone'];
-        $organization->twitter          = $input['organization_twitter'];
-        $organization->disqus_comments  = array_key_exists('disqus_comments', $input) ? $input['disqus_comments'] : null;
-
-        return $organization->save();
-    }
 }

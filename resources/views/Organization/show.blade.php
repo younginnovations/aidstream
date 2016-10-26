@@ -1,6 +1,6 @@
 @extends('app')
 
-@section('title', 'Organization - ' . $reporting_org['reporting_organization_identifier'])
+@section('title', 'Organisation - ' . $reporting_org['reporting_organization_identifier'])
 
 @inject('getCode', 'App\Helpers\GetCodeName')
 
@@ -20,7 +20,7 @@
                 $btn_text = $status > 2 ? "" : $btn_status_label[$status];
                 ?>
                 <div class="element-panel-heading">
-                    <div><span class="pull-left">Organization</span></div>
+                    <div><span class="pull-left">Organisation</span></div>
                     <div class="view-xml-btn org-xml-btn"><span class="pull-left"><a href="{{route('view.organizationXml', ['orgId' => $id])}}">View IATI XML file</a></span></div>
                 </div>
                 <div class="col-xs-12 col-md-8 col-lg-8 element-content-wrapper">
@@ -43,7 +43,7 @@
                                     <input type="button" value="Mark as {{ $btn_text }}" class="btn_confirm"
                                            data-title="Confirmation" data-message="Are you sure you want to Publish?">
                                 @else
-                                    <input type="submit" value="Mark as {{ $btn_text }}"> 
+                                    <input type="submit" value="Mark as {{ $btn_text }}">
                                 @endif
                             </form>
                         @else
@@ -63,7 +63,9 @@
                             @include('Organization.partials.organizationName')
                             @include('Organization.partials.totalBudget')
                             @include('Organization.partials.recipientOrganizationBudget')
-                            @include('Organization.partials.recipientRegionBudget')
+                            @if(session('version') != 'V201')
+                                @include('Organization.partials.recipientRegionBudget')
+                            @endif
                             @include('Organization.partials.recipientCountryBudget')
                             @include('Organization.partials.totalExpenditure')
                             @include('Organization.partials.documentLink')

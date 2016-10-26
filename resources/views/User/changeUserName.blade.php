@@ -16,14 +16,14 @@
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     <div class="form-group col-xs-12 col-sm-6 col-md-6">
                         <div class="col-xs-12 col-md-12">
-                            <label class="control-label">Organization User Identifier</label>
+                            <label class="control-label">Organisation User Identifier</label>
                             <input type="text" class="form-control noSpace" name="organization_user_identifier" value="{{ old('organization_user_identifier') }}">
                             <div><span>Your organisation user identifier will be used as a prefix for all the AidStream users in your organisation. We recommend that you use a short abbreviation that uniquely identifies your organisation. If your organisation is 'Acme Bellus Foundation', your organisation user identifier should be 'abf', depending upon it's availability.</span></div>
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-6 username_text">
                         <label class="control-label">Username</label>
-                        <em>This will be auto-generated as you fill Organization User Identifier.</em>
+                        <em>This will be auto-generated as you fill Organisation User Identifier.</em>
                     </div>
                     <div class="col-xs-12 col-sm-6 username_value hidden">
                         <label class="control-label">Username</label>

@@ -1,12 +1,12 @@
 @extends('app')
 
-@section('title', 'Organization Groups')
+@section('title', 'Organisation Groups')
 
 @section('content')
     <div class="container main-container admin-container">
         <div class="row">
             <div class="panel-content-heading">
-                <div>Organization Groups</div>
+                <div>Organisation Groups</div>
             </div>
             <div class="col-xs-12 col-lg-8 organization-wrapper group-organization-wrapper">
                 @include('includes.response')
@@ -18,7 +18,7 @@
                                 <tr>
                                     <th>S.N.</th>
                                     <th>Group Name</th>
-                                    <th>No. of organizations</th>
+                                    <th>No. of Organisations</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
@@ -39,9 +39,9 @@
                                 </tbody>
                             </table>
                         @else
-                            <div class="text-center no-data">No Organization has been grouped Yet ::</div>
+                            <div class="text-center no-data">No Organisation has been grouped Yet ::</div>
                         @endif
-                        <a href="{{ route('admin.create-organization-group') }}" class="btn btn-primary btn-submit btn-form">Create Organization Group</a>
+                        <a href="{{ route('admin.create-organization-group') }}" class="btn btn-primary btn-submit btn-form">Create Organisation Group</a>
                     </div>
                 </div>
             </div>

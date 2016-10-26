@@ -1,12 +1,17 @@
 <?php namespace App\Http\Controllers\Complete;
 
+use App\Core\V201\Requests\UserPermission;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Request;
 use App\Http\Requests\UpdatePasswordRequest;
 use App\Http\Requests\UserRequest;
 use App\Models\Activity\Activity;
 use App\Models\UserActivity;
+use App\Models\UserOnBoarding;
 use App\Services\ActivityLog\ActivityManager;
 use App\Services\Organization\OrganizationManager;
+use App\Services\SettingsManager;
+use App\Services\UserOnBoarding\UserOnBoardingService;
 use App\User;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Contracts\Logging\Log as DbLogger;
@@ -41,24 +46,40 @@ class AdminController extends Controller
      */
     protected $userActivityManager;
 
+    protected $settingsManager;
     /**
-     * @param User                $user
-     * @param OrganizationManager $organizationManager
-     * @param DbLogger            $dbLogger
-     * @param ActivityManager     $userActivityManager
+     * @var UserOnBoardingService
      */
-    function __construct(User $user, OrganizationManager $organizationManager, DbLogger $dbLogger, ActivityManager $userActivityManager)
-    {
+    protected $userOnBoardingManager;
+
+    /**
+     * @param User                  $user
+     * @param OrganizationManager   $organizationManager
+     * @param DbLogger              $dbLogger
+     * @param ActivityManager       $userActivityManager
+     * @param SettingsManager       $settingsManager
+     * @param UserOnBoardingService $userOnBoardingManager
+     */
+    function __construct(
+        User $user,
+        OrganizationManager $organizationManager,
+        DbLogger $dbLogger,
+        ActivityManager $userActivityManager,
+        SettingsManager $settingsManager,
+        UserOnBoardingService $userOnBoardingManager
+    ) {
         $this->middleware('auth');
-        $this->org_id              = session('org_id');
-        $this->user                = $user;
-        $this->organizationManager = $organizationManager;
-        $this->dbLogger            = $dbLogger;
-        $this->userActivityManager = $userActivityManager;
+        $this->org_id                = session('org_id');
+        $this->user                  = $user;
+        $this->organizationManager   = $organizationManager;
+        $this->dbLogger              = $dbLogger;
+        $this->userActivityManager   = $userActivityManager;
+        $this->settingsManager       = $settingsManager;
+        $this->userOnBoardingManager = $userOnBoardingManager;
     }
 
     /**
-     * @param null $orgId
+     * @param null|string $orgId
      * @return \Illuminate\View\View
      */
     public function index($orgId = "all")
@@ -86,10 +107,20 @@ class AdminController extends Controller
      */
     public function create()
     {
+        if (!auth()->user()->isAdmin()) {
+            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
+        }
         $organization           = $this->organizationManager->getOrganization($this->org_id);
         $organizationIdentifier = $organization->user_identifier;
+        $dbRoles                = \DB::table('role')->whereNotNull('permissions')->orderBy('role', 'desc')->get();
+        $roles                  = [];
+        $settings               = $this->settingsManager->getSettings(session('org_id'));
 
-        return view('admin.registerUser', compact('organizationIdentifier'));
+        foreach ($dbRoles as $role) {
+            $roles[$role->id] = $role->role;
+        }
+
+        return view('settings.registerUser', compact('organizationIdentifier', 'roles', 'settings'));
     }
 
 
@@ -100,17 +131,25 @@ class AdminController extends Controller
      */
     public function store(UserRequest $request)
     {
-        $input                       = Input::all();
-        $this->user->first_name      = $input['first_name'];
-        $this->user->last_name       = $input['last_name'];
-        $this->user->email           = $input['email'];
-        $this->user->username        = $input['username'];
-        $this->user->org_id          = $this->org_id;
-        $this->user->role_id         = 2;
-        $this->user->password        = bcrypt($input['password']);
-        $this->user->user_permission = isset($input['user_permission']) ? $input['user_permission'] : [];
+        if (!auth()->user()->isAdmin()) {
+            return redirect()->route('settings')->withResponse($this->getNoPrivilegesMessage());
+        }
 
-        $response = ($this->user->save()) ? ['type' => 'success', 'code' => ['created', ['name' => 'User']]] : ['type' => 'danger', 'code' => ['save_failed', ['name' => 'User']]];
+        $organization           = $this->organizationManager->getOrganization(session('org_id'));
+        $organizationIdentifier = $organization->user_identifier;
+
+        $this->user->first_name = $request->get('first_name');
+        $this->user->last_name  = $request->get('last_name');
+        $this->user->email      = $request->get('email');
+        $this->user->username   = $request->get('username');
+        $this->user->org_id     = $this->org_id;
+        $this->user->role_id    = $request->get('permission');
+        $this->user->password   = bcrypt($request->get('password'));
+        $this->user->verified   = true;
+
+        $response = ($this->user->save()) ? ['type' => 'success', 'code' => ['user_created', ['name' => $this->user->username]]] : ['type' => 'danger', 'code' => ['save_failed', ['name' => 'User']]];
+
+        $this->userOnBoardingManager->create($this->user->id);
         $this->dbLogger->activity("admin.user_created", ['orgId' => $this->org_id, 'userId' => $this->user->id]);
 
         return redirect()->route('admin.list-users')->withResponse($response);
@@ -122,10 +161,16 @@ class AdminController extends Controller
      */
     public function listUsers()
     {
-        $users = $this->user->getUserByOrgIdAndRoleId();
+        $users    = $this->user->where('org_id', session('org_id'))->get();
+        $dbRoles  = \DB::table('role')->whereNotNull('permissions')->orderBy('role', 'desc')->get();
+        $roles    = [];
+        $settings = $this->settingsManager->getSettings(session('org_id'));
 
-        return view('admin.listUsers', compact('users'));
+        foreach ($dbRoles as $role) {
+            $roles[$role->id] = $role->role;
+        }
 
+        return view('settings.listUsers', compact('users', 'roles', 'settings'));
     }
 
     /**
@@ -197,41 +242,27 @@ class AdminController extends Controller
     }
 
     /**
-     * @param $userId
-     * @return \Illuminate\View\View
+     * Update permission of user through ajax
+     * @param Request $request
+     * @param         $userId
+     * @return mixed
      */
-    public function editUserPermission($userId)
-    {
-        $user = $this->user->findOrFail($userId);
-
-        if (!in_array($userId, $this->organizationManager->getOrganizationUsers($this->org_id))) {
-            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
-        }
-
-        return view('admin.editUserPermission', compact('user'));
-    }
-
-    /**
-     * update user permission
-     * @param $userId
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
-     */
-    public function updateUserPermission($userId)
+    public function updateUserPermission(Request $request, $userId)
     {
         if (!in_array($userId, $this->organizationManager->getOrganizationUsers($this->org_id))) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
-        $input                 = Input::all();
-        $user                  = $this->user->findOrFail($userId);
-        $user->user_permission = isset($input['user_permission']) ? $input['user_permission'] : [];
-        $response              = ($user->save()) ? ['type' => 'success', 'code' => ['updated', ['name' => 'User Permission']]] : [
-            'type' => 'danger',
-            'code' => ['update_failed', ['name' => 'User Permission']]
-        ];
-        $this->dbLogger->activity("admin.permission_updated", ['orgId' => $this->org_id, 'userId' => $userId]);
+        if (in_array($request->get('permission'), [2, 5, 6, 7])) {
+            $input = $request->get('permission');
+            $user  = $this->user->findOrFail($userId);
 
-        return redirect()->route('admin.list-users')->withResponse($response);
+            (!$input) ?: $user->role_id = $input;
+            $user->save();
 
+            return 'success';
+        } else {
+            return 'failed';
+        }
     }
 }

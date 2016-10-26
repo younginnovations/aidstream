@@ -74,11 +74,11 @@ class SegmentationService implements SegmentationInterface
      */
     public function extractPublishingType(array $settings)
     {
-        if (is_array($settings['publishing_type'])) {
-            return (array_key_exists(0, $settings['publishing_type'])) ? $settings['publishing_type'][0]['publishing'] : '';
+        if (is_array($settings['publishing'])) {
+            return (array_key_exists(0, $settings['publishing'])) ? $settings['publishing'] : '';
         }
 
-        return $settings['publishing_type'];
+        return $settings['publishing'];
     }
 
     /**

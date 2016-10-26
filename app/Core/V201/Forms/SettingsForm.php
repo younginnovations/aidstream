@@ -29,7 +29,7 @@ class SettingsForm extends BaseForm
         $this
             //This might ne useful later
 //            ->addCollection('version_form', 'Settings\VersionInfoForm', '', ['versions' => $this->versions])
-            ->addCollection('reporting_organization_info', 'Settings\ReportingOrganizationInfoForm')
+            ->addCollection('reporting_organization_info', 'Settings\ReportingOrganizationInfoForm', '', [], 'Reporting Organisation Info')
             ->addCollection('publishing_type', 'Settings\PublishingTypeForm')
             ->addCollection('registry_info', 'Settings\RegistryInfoForm')
             ->addCollection('default_field_values', 'Settings\DefaultFieldValuesForm')
