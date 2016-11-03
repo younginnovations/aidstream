@@ -1,6 +1,6 @@
 @if(!emptyOrHasEmptyTemplate($plannedDisbursements))
     <div class="activity-element-wrapper">
-        <div class="title">@lang('activityView.planned_disbursement')</div>
+        <div class="title">@lang('activityView.planned_disbursement') @if(array_key_exists('Planned Disbursement',$errors)) <i class='imported-from-xml'>icon</i>@endif </div>
         @foreach( groupBudgetElements($plannedDisbursements , 'planned_disbursement_type') as $key => $disbursements)
             <div class="activity-element-list">
                 <div class="activity-element-label">{{ $getCode->getCodeNameOnly('BudgetType' , $key) }}</div>

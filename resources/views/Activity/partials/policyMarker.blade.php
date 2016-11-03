@@ -1,6 +1,6 @@
 @if(!emptyOrHasEmptyTemplate($policyMarkers))
     <div class="activity-element-wrapper">
-        <div class="title">@lang('activityView.policy_marker')</div>
+        <div class="title">@lang('activityView.policy_marker') @if(array_key_exists('Policy Marker',$errors)) <i class='imported-from-xml'>icon</i>@endif </div>
         @foreach(groupPolicyMarkerElement($policyMarkers) as $key => $policyMarkers)
             <div class="activity-element-list">
                 <div class="activity-element-label">{{$key}}</div>

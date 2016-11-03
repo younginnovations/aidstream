@@ -1,6 +1,6 @@
 @if(!emptyOrHasEmptyTemplate($descriptions))
     <div class="activity-element-wrapper">
-        <div class="title">@lang('activityView.description')</div>
+        <div class="title">@lang('activityView.description') @if(array_key_exists('Description',$errors)) <i class='imported-from-xml'>icon</i>@endif </div>
         @foreach($descriptions as $description)
             <div class="activity-element-list">
                 <div class="activity-element-label">

@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<iati-activities generated-datetime="2013-12-18T13:22:38+00:00" version="1.03">
+    <iati-activity xml:lang="en" default-currency="GBP" hierarchy="1" last-updated-datetime="2013-12-18T11:01:56+00:00">
+        <reporting-org ref="GB-CHC-202918" type="21" xml:lang="en">AbleChildAfrica</reporting-org>
+        <iati-identifier>GB-CHC-202918-HECA91</iati-identifier>
+        <other-identifier owner-ref="GB-1" owner-name="DFID">105838-1</other-identifier>
+        <activity-website>http://portfolio.theglobalfund.org/en/Grant/Index/AFG-011-G12-T</activity-website>
+        <title>Grant Performance Report</title>
+        <title xml:lang="es">Grant Informe sobre los resultados</title>
+        <title xml:lang="fr">Rapport sur le rendement de subvention</title>
+        <description type="1" xml:lang="en">
+            Description text
+        </description>
+        <description type="1" xml:lang="">
+            Descasdas dasasdription text Descasdas dasasdription textasdasd
+        </description>
+        <description type="2" xml:lang="en">
+            Description text
+        </description>
+        <activity-status code="3">Completion</activity-status>
+        <activity-date type="start-planned" iso-date="2009-12-31">2006-04-01</activity-date>
+        <activity-date type="start-actual" iso-date="2009-12-31"></activity-date>
+        <activity-date type="end-planned" iso-date="2009-12-31"></activity-date>
+        <activity-date type="end-actual" iso-date="2009-12-31"></activity-date>
+        <contact-info type="1">
+            <job-title>Database Manager</job-title>
+            <job-title xml:lang="en">Database Manager</job-title>
+            <person-name>A Smith</person-name>
+            <organisation>Department for International Development</organisation>
+            <telephone>+44 (0) 1355 84 3132</telephone>
+            <telephone>+44 (0) 1355 84 3132</telephone>
+            <email>enquiry@dfid.gov.uk</email>
+            <mailing-address>
+                Public Enquiry Point, Abercrombie House, Eaglesham Road, East Kilbride, Glasgow G75 8EA
+            </mailing-address>
+            <website>https://www.gov.uk/government/organisations/department-for-international-development</website>
+        </contact-info>
+        <participating-org ref="GB" type="10" role="Funding">UNITED KINGDOM</participating-org>
+        <participating-org ref="GB-1" type="10" role="Extending">Department for International Development</participating-org>
+        <participating-org ref="22000" role="Implementing" xml:lang="en">Donor country-based NGO</participating-org>
+        <activity-scope code="1" xml:lang="en">Global</activity-scope>
+        <recipient-country code="CG" xml:lang="fr">Republique Democratique du Congo</recipient-country>
+        <recipient-country code="AO" percentage="40"/>
+        <recipient-region percentage="60" code="289">South of Sahara, regional</recipient-region>
+        <recipient-region percentage="40" code="189">North of Sahara, regional</recipient-region>
+        <location percentage="85">
+            <name>Herat</name>
+            <name xml:lang="fr">Côte d'Ivoire</name>
+            <description xml:lang="en">This is location description</description>
+            <description>This is location description</description>
+            <coordinates latitude="34.341944400000003000" longitude="62.203055599999971000" precision="2"/>
+            <location-type code="PPL"/>
+            <administrative country="AF" adm1="KAN">Kandahar Province, Afghanistan</administrative>
+        </location>
+        <sector code="13040" percentage="60" xml:lang="en">STD control including HIV/AIDS</sector>
+        <sector vocabulary="DAC" code="BC">Central government administration</sector>
+        <sector vocabulary="" code="BC">Central government administration</sector>
+        <country-budget-items vocabulary="XXX">
+            <budget-item code="XXX" percentage="100">
+                <description xml:lang="en">Narrative</description>
+                <description>Narrative II</description>
+            </budget-item>
+        </country-budget-items>
+        <policy-marker vocabulary="DAC" code="4" significance="2" xml:lang="en">Trade Development</policy-marker>
+        <policy-marker vocabulary="DAC" code="04" significance="2"/>
+        <collaboration-type code="1">Bilateral</collaboration-type>
+        <default-finance-type code="100">Grant</default-finance-type>
+        <default-flow-type code="10" xml:lang="fr">APD</default-flow-type>
+        <default-aid-type code="A02"/>
+        <default-tied-status code="5"/>
+        <budget type="1">
+            <period-start iso-date="2011-01-01"/>
+            <period-end iso-date="2011-12-31"/>
+            <value currency="GBP" value-date="2010-10-01">700000</value>
+        </budget>
+        <planned-disbursement>
+            <period-start iso-date="2011-01-01"/>
+            <period-end iso-date="2011-12-31"/>
+            <value currency="GBP" value-date="2010-10-01">700000</value>
+        </planned-disbursement>
+        <planned-disbursement>
+            <period-start iso-date="2012-01-01"/>
+            <period-end iso-date="2013-12-31"/>
+            <value currency="GBP" value-date="2012-10-01">7000000</value>
+        </planned-disbursement>
+        <capital-spend percentage="88.8"/>
+        <document-link format="application/msword" url="http://www.aidtransparency.net/wp-content/uploads/2009/06/Summary-IATI-Standard-Version-1-Final.doc">
+            <title>Grant Performance Report</title>
+            <title xml:lang="en">Grant Performance Report</title>
+            <category code="A04">Conditions</category>
+            <category code="A05">Conditions saasdasd</category>
+            <language code="fr" xml:lang="en">French</language>
+            <language code="en" xml:lang="fr">Francais</language>
+        </document-link>
+        <related-activity type="1" ref="GB-1-105838" xml:lang="fr">Programme du secteur commercial</related-activity>
+        <conditions attached="1">
+            <condition type="1">Example text here.</condition>
+            <condition type="2" xml:lang="en">Example text here.</condition>
+        </conditions>
+        <legacy-data name="adsadasd" value="1312312" iati-equivalent="asdasdas"/>
+        <legacy-data name="adsadasd" value="1312312" iati-equivalent=""/>
+        <transaction ref="200304678">
+            <aid-type code="A02">Sector Budget Support</aid-type>
+            <description>asdasdasd</description>
+            <description xml:lang="en">Desc II</description>
+            <disbursement-channel code="1" xml:lang="en">Cash to treasury</disbursement-channel>
+            <finance-type code="100" xml:lang="fr">Don</finance-type>
+            <flow-type code="10" xml:lang="fr">APD</flow-type>
+            <provider-org ref="GB-1" provider-activity-id="GB-1-10538" xml:lang="en">DFID</provider-org>
+            <receiver-org receiver-activity-id="CG-3-1440" ref="GB-1" xml:lang="np">DFID</receiver-org>
+            <tied-status code="5">Untied</tied-status>
+            <transaction-date iso-date="2010-05-27"/>
+            <transaction-type code="C" xml:lang="en">Commitment</transaction-type>
+            <value currency="GBP" value-date="2010-10-01">700000</value>
+        </transaction>
+        <result type="output" aggregation-status="false">
+            <title>Grant Performance Report</title>
+            <title xml:lang="es">Grant Informe sobre los resultados</title>
+            <title xml:lang="fr">Rapport sur le rendement de subvention</title>
+            <description type="1" xml:lang="en">
+                Description text
+            </description>
+            <description type="1" xml:lang="en">
+                Description text
+            </description>
+            <indicator measure="NDP" ascending="false">
+                <title>Grant Performance Report</title>
+                <title xml:lang="es">Grant Informe sobre los resultados</title>
+                <title xml:lang="fr">Rapport sur le rendement de subvention</title>
+                <description type="1" xml:lang="en">
+                    Description text
+                </description>
+                <baseline year="2008" value="N=35;P=55">
+                    <comment xml:lang="en">Source:administrative records</comment>
+                    <comment xml:lang="fr">Source:administrative records</comment>
+                </baseline>
+                <period>
+                    <period-start iso-date="2011-01-01"/>
+                    <period-end iso-date="2011-12-31"/>
+                    <target value="N=42;P=57">
+                        <comment xml:lang="en">Source:administrative records</comment>
+                        <comment xml:lang="fr">Source:administrative records</comment>
+                    </target>
+                    <actual value="N=41;P=56">
+                        <comment xml:lang="en">Source:administrative records</comment>
+                        <comment xml:lang="fr">Source:administrative records</comment>
+                    </actual>
+                </period>
+            </indicator>
+        </result>
+    </iati-activity>
+</iati-activities>

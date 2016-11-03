@@ -1,7 +1,7 @@
 @if(!emptyOrHasEmptyTemplate($recipientRegions))
     <div class="activity-element-wrapper">
         <div class="activity-element-list">
-            <div class="activity-element-label">@lang('activityView.recipient_region')</div>
+            <div class="activity-element-label">@lang('activityView.recipient_region') @if(array_key_exists('Recipient Region',$errors)) <i class='imported-from-xml'>icon</i>@endif </div>
             <div class="activity-element-info">
                 @foreach($recipientRegions as $recipientRegion)
                     <li>{!! getRecipientInformation($recipientRegion['region_code'], $recipientRegion['percentage'], 'Region') !!}</li>
