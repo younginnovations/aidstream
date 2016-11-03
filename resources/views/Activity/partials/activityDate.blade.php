@@ -1,6 +1,6 @@
 @if(!emptyOrHasEmptyTemplate($activityDates))
     <div class="activity-element-wrapper">
-        <div class="title">@lang('activityView.activity_date')</div>
+        <div class="title">@lang('activityView.activity_date') @if(array_key_exists('Activity Date',$errors)) <i class='imported-from-xml'>icon</i>@endif </div>
         @foreach(groupActivityElements($activityDates , 'type') as $key => $groupedDates)
             <div class="activity-element-list">
                 <div class="activity-element-label">

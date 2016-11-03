@@ -52,6 +52,7 @@ class Activity extends Model
         'humanitarian_scope',
         'published_to_registry',
         'activity_workflow',
+        'imported_from_xml'
     ];
 
     /**
@@ -97,7 +98,7 @@ class Activity extends Model
         $identifier = $this->identifier['activity_identifier'];
         $title      = $this->title ? $this->title[0]['narrative'] : 'No Title';
 
-        return $identifier.'('.$title.')';
+        return $identifier . '(' . $title . ')';
     }
 
     /**
@@ -194,5 +195,15 @@ class Activity extends Model
                  ->select(DB::raw('count(activity_data.id) as NoOfActivities, max(activity_data.updated_at) as updated_at'))
                  ->where('organizations.id', $orgId)
                  ->get();
+    }
+
+    /**
+     * Check if an Activity has been imported from Xml.
+     *
+     * @return mixed
+     */
+    public function isImportedFromXml()
+    {
+        return $this->imported_from_xml;
     }
 }

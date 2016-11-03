@@ -1,7 +1,7 @@
 @if(!empty($defaultAidType))
     <div class="activity-element-wrapper">
         <div class="activity-element-list">
-            <div class="activity-element-label">@lang('activityView.default_aid_type')</div>
+            <div class="activity-element-label">@lang('activityView.default_aid_type') @if(array_key_exists('Default Aid Type',$errors)) <i class='imported-from-xml'>icon</i>@endif </div>
             <div class="activity-element-info">
                 {{ substr($getCode->getActivityCodeName('AidType', $defaultAidType) , 0 , -5)}}
             </div>

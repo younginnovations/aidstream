@@ -65,4 +65,9 @@ class DocumentLink
     {
         return $activityDocumentLink->delete();
     }
+
+    public function xmlDocumentLink($documentLink, $activityId)
+    {
+        $this->activityDocumentLink->create(['document_link' => $documentLink['document_link'], 'activity_id' => $activityId]);
+    }
 }

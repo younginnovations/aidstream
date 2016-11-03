@@ -1,7 +1,7 @@
 @if(!empty($collaborationType))
     <div class="activity-element-wrapper">
         <div class="activity-element-list">
-            <div class="activity-element-label">@lang('activityView.collaboration_type')</div>
+            <div class="activity-element-label">@lang('activityView.collaboration_type') @if(array_key_exists('Collaboration Type',$errors)) <i class='imported-from-xml'>icon</i>@endif </div>
             <div class="activity-element-info">
                 {{ $getCode->getCodeNameOnly('CollaborationType' , $collaborationType) }}
             </div>
