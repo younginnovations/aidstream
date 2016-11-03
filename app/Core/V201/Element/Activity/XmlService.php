@@ -15,6 +15,9 @@ class XmlService
      * @var XmlGenerator
      */
     protected $xmlGenerator;
+    /**
+     * @var XmlSchemaErrorParser
+     */
     protected $xmlErrorParser;
 
     /**
@@ -42,6 +45,16 @@ class XmlService
         $this->xmlGenerator->generateXml($activity, $transaction, $result, $settings, $activityElement, $orgElem, $organization);
     }
 
+    /**
+     * @param $activity
+     * @param $transaction
+     * @param $result
+     * @param $settings
+     * @param $activityElement
+     * @param $orgElem
+     * @param $organization
+     * @return string
+     */
     public function generateTemporaryActivityXml($activity, $transaction, $result, $settings, $activityElement, $orgElem, $organization)
     {
         return $this->xmlGenerator->generateTemporaryXml($activity, $transaction, $result, $settings, $activityElement, $orgElem, $organization);
@@ -164,6 +177,20 @@ class XmlService
     {
         $xmlString = htmlspecialchars($tempXmlContent);
         $xmlString = str_replace(" ", "&nbsp;&nbsp;", $xmlString);
+        $xmlLines  = explode("\n", $xmlString);
+
+        return $xmlLines;
+    }
+
+    /**
+     *  formats uploaded xml.
+     * @param $tempXmlContent
+     * @return array
+     */
+    public function formatUploadedXml($tempXmlContent)
+    {
+        $xmlString = htmlspecialchars($tempXmlContent);
+        $xmlString = str_replace(" ", "&nbsp;", $xmlString);
         $xmlLines  = explode("\n", $xmlString);
 
         return $xmlLines;

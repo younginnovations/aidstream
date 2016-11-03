@@ -4,6 +4,7 @@ use App\Core\V201\Requests\Activity\IatiIdentifierRequest;
 use App\Http\API\CKAN\CkanClient;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Request;
+use App\Models\Activity\Activity;
 use App\Services\Activity\ActivityManager;
 use App\Models\Settings;
 use App\Services\Activity\ChangeActivityDefaultManager;
@@ -17,6 +18,7 @@ use App\Services\RequestManager\Activity\ChangeActivityDefault as ChangeActivity
 use App\Services\RequestManager\ActivityElementValidator;
 use App\Services\SettingsManager;
 use App\Services\Twitter\TwitterAPI;
+use App\Services\Xml\Validator\XmlValidator;
 use App\User;
 use Illuminate\Session\SessionManager;
 use Illuminate\Support\Facades\Gate;
@@ -100,6 +102,10 @@ class ActivityController extends Controller
      * @var TwitterAPI
      */
     protected $twitter;
+    /**
+     * @var XmlValidator
+     */
+    protected $xmlValidator;
 
     /**
      * @param SettingsManager              $settingsManager
@@ -116,6 +122,7 @@ class ActivityController extends Controller
      * @param Settings                     $settings
      * @param LoggerInterface              $loggerInterface
      * @param TwitterAPI                   $twitterAPI
+     * @param XmlValidator                 $xmlValidator
      */
     function __construct(
         SettingsManager $settingsManager,
@@ -131,7 +138,8 @@ class ActivityController extends Controller
         User $user,
         Settings $settings,
         LoggerInterface $loggerInterface,
-        TwitterAPI $twitterAPI
+        TwitterAPI $twitterAPI,
+        XmlValidator $xmlValidator
     ) {
         $this->middleware('auth');
         $this->settingsManager              = $settingsManager;
@@ -149,6 +157,7 @@ class ActivityController extends Controller
         $this->loggerInterface              = $loggerInterface;
         $this->twitter                      = $twitterAPI;
         $this->documentLinkManager          = $documentLinkManager;
+        $this->xmlValidator                 = $xmlValidator;
     }
 
     /**
@@ -223,14 +232,17 @@ class ActivityController extends Controller
             return redirect()->route('activity.index')->withResponse($this->getNoPrivilegesMessage());
         }
 
-        $activityDataList                   = $activityData->activity_data_list;
-        $activityResult                     = $this->resultManager->getResults($id)->toArray();
-        $activityTransaction                = $this->transactionManager->getTransactions($id)->toArray();
-        $activityDocumentLinks              = $this->documentLinkManager->getDocumentLinks($id)->toArray();
-        $activityDataList['results']        = $activityResult;
-        $activityDataList['transaction']    = $activityTransaction;
-        $activityDataList['document_links'] = $activityDocumentLinks;
-        $activityDataList['reporting_org']  = $activityData->organization->reporting_org;
+        $activityDataList = $this->getActivityAsArray($activityData);
+
+        if ($activityData->isImportedFromXml()) {
+            $activityId = $activityData->id;
+            $errors     = $this->xmlValidator->init($activityDataList)
+                                             ->validateActivity($activityId, true);
+
+            if (empty($errors)) {
+                $activityDataList = $this->getActivityAsArray($this->resetImportedFromXmlFlag($activityData));
+            }
+        }
 
         if ($activityDataList['activity_workflow'] == 0) {
             $nextRoute = route('activity.complete', $id);
@@ -240,7 +252,7 @@ class ActivityController extends Controller
             $nextRoute = route('activity.publish', $id);
         }
 
-        return view('Activity.show', compact('activityDataList', 'id', 'filename', 'activityPublishedStatus', 'message', 'nextRoute'));
+        return view('Activity.show', compact('activityDataList', 'id', 'filename', 'activityPublishedStatus', 'message', 'nextRoute', 'errors'));
     }
 
     /**
@@ -364,7 +376,7 @@ class ActivityController extends Controller
                     $apiCall->package_create($data);
                     $this->activityManager->updatePublishToRegister($publishedFile->id);
                 } elseif ($publishedFile['published_to_register'] == 1) {
-//                    $package = ($settings->publishing_type == "segmented") ? $settings['registry_info'][0]['publisher_id'] . '-' . $code : $settings['registry_info'][0]['publisher_id'] . '-activities';
+//                    $package = ($settings->publishing_type == "segmented") ? $settings['registry_info'][0]['publisher_id'] . '-' . $code : $settings['registry_info'][0]['publisher_id'] . ' - activities';
                     $apiCall->package_update($data);
                 }
 
@@ -407,8 +419,8 @@ class ActivityController extends Controller
             $key = "country";
         }
 
-        $title = ($settings->publishing_type == "segmented") ? $organization->name . ' Activity File-' . $code : $organization->name . ' Activity File';
-        $name  = ($settings->publishing_type == "segmented") ? $settings['registry_info'][0]['publisher_id'] . '-' . $code : $settings['registry_info'][0]['publisher_id'] . '-activities';
+        $title = ($settings->publishing_type == "segmented") ? $organization->name . ' Activity File - ' . $code : $organization->name . ' Activity File';
+        $name  = ($settings->publishing_type == "segmented") ? $settings['registry_info'][0]['publisher_id'] . ' - ' . $code : $settings['registry_info'][0]['publisher_id'] . ' - activities';
 
         $requiredData = [
             'title'          => $title,
@@ -530,11 +542,8 @@ class ActivityController extends Controller
      * @param ChangeActivityDefaultRequest $changeActivityDefaultRequest
      * @return mixed
      */
-    public function updateActivityDefault(
-        $activityId,
-        Request $request,
-        ChangeActivityDefaultRequest $changeActivityDefaultRequest
-    ) {
+    public function updateActivityDefault($activityId, Request $request, ChangeActivityDefaultRequest $changeActivityDefaultRequest)
+    {
         $activityData = $this->activityManager->getActivityData($activityId);
 
         if (Gate::denies('ownership', $activityData)) {
@@ -999,5 +1008,33 @@ class ActivityController extends Controller
         }
 
         return redirect()->back()->withResponse($response);
+    }
+
+    /**
+     * Get all Activity data as an array.
+     *
+     * @param Activity $activityData
+     * @return mixed
+     */
+    protected function getActivityAsArray(Activity $activityData)
+    {
+        $activityDataList                   = $activityData->activity_data_list;
+        $activityResult                     = $this->resultManager->getResults($activityData->id)->toArray();
+        $activityTransaction                = $this->transactionManager->getTransactions($activityData->id)->toArray();
+        $activityDocumentLinks              = $this->documentLinkManager->getDocumentLinks($activityData->id)->toArray();
+        $activityDataList['results']        = $activityResult;
+        $activityDataList['transaction']    = $activityTransaction;
+        $activityDataList['document_links'] = $activityDocumentLinks;
+        $activityDataList['reporting_org']  = $activityData->organization->reporting_org;
+
+        return $activityDataList;
+    }
+
+    protected function resetImportedFromXmlFlag($activityData)
+    {
+        $activityData->imported_from_xml = false;
+        $activityData->save();
+
+        return $activityData;
     }
 }

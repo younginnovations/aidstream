@@ -1,7 +1,7 @@
 @if(!empty($defaultFinanceType))
     <div class="activity-element-wrapper">
         <div class="activity-element-list">
-            <div class="activity-element-label">@lang('activityView.default_finance_type')</div>
+            <div class="activity-element-label">@lang('activityView.default_finance_type') @if(array_key_exists('Default Finance Type',$errors)) <i class='imported-from-xml'>icon</i>@endif </div>
             <div class="activity-element-info">
                 {{ substr($getCode->getActivityCodeName('FinanceType', $defaultFinanceType) , 0 , -5)}}
             </div>

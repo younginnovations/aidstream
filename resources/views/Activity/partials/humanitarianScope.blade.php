@@ -1,6 +1,6 @@
 @if(!empty($humanitarianScopes))
     <div class="activity-element-wrapper">
-        <div class="title">@lang('activityView.humanitarian_scope')</div>
+        <div class="title">@lang('activityView.humanitarian_scope') @if(array_key_exists('Humanitarian Scope',$errors)) <i class='imported-from-xml'>icon</i>@endif </div>
         @foreach(groupActivityElements($humanitarianScopes , 'type' ) as $key => $humanitarianScopes)
             <div class="activity-element-list">
                 <div class="activity-element-label"> {{ $getCode->getCodeNameOnly('HumanitarianScopeType' , $key) }} </div>

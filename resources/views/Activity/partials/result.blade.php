@@ -1,6 +1,6 @@
 @if(!emptyOrHasEmptyTemplate($results))
     <div class="activity-element-wrapper">
-        <div class="title">@lang('activityView.results')</div>
+        <div class="title">@lang('activityView.results') @if(array_key_exists('Results',$errors)) <i class='imported-from-xml'>icon</i>@endif </div>
         @foreach(groupResultElements($results) as $key => $results)
             <div class="activity-element-list">
                 <div class="activity-element-label">{{ $key }}</div>
@@ -87,10 +87,10 @@
                                                 @foreach(getIndicatorPeriod($indicator['measure'] , $indicator['period']) as $period)
                                                     <div class="period-value">
                                                         <span>{!!$period['period'] !!}</span>
-                                                            <span><a href="#" class="show-more-value">{!!  $period['target_value'] !!}
-                                                                    @include('Activity.partials.resultPartials.target' , ['type' => 'target'])</a></span>
-                                                            <span><a href="#" class="show-more-value"> {!!  checkIfEmpty($period['actual_value'])  !!}
-                                                                    @include('Activity.partials.resultPartials.target' , ['type' => 'actual'])</a></span>
+                                                        <span><a href="#" class="show-more-value">{!!  $period['target_value'] !!}
+                                                                @include('Activity.partials.resultPartials.target' , ['type' => 'target'])</a></span>
+                                                        <span><a href="#" class="show-more-value"> {!!  checkIfEmpty($period['actual_value'])  !!}
+                                                                @include('Activity.partials.resultPartials.target' , ['type' => 'actual'])</a></span>
                                                     </div>
                                                 @endforeach
                                             </div>

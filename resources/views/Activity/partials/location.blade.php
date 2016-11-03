@@ -1,6 +1,6 @@
 @if(!emptyOrHasEmptyTemplate($locations))
     <div class="activity-element-wrapper">
-        <div class="title">@lang('activityView.location')</div>
+        <div class="title">@lang('activityView.location') @if(array_key_exists('Location',$errors)) <i class='imported-from-xml'>icon</i>@endif </div>
         @foreach(getLocationReach($locations) as $key => $locations)
             <div class="activity-element-list">
                 <div class="activity-element-label">
