@@ -3,7 +3,7 @@ return [
     'reporting_organization'                => 'Reporting Organisation',
     'activity_identifier'                   => 'Activity Identifier',
     'other_identifier'                      => 'Other Identifier',
-    'rep_org_internal_acitivity_identifier' => 'Reporting Organisation\'s Internal Activity Identifier',
+    'rep_org_internal_activity_identifier' => 'Reporting Organisation\'s Internal Activity Identifier',
     'owner_org_reference'                   => 'Owner Organisation Reference',
     'owner_org_name'                        => 'Owner Organisation Name',
     'activity_title'                        => 'Activity Title',

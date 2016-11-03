@@ -69,9 +69,10 @@ class SuperAdminTest extends AidStreamTestCase
     {
         $collection = m::mock(Collection::class);
         $this->database->shouldReceive('beginTransaction')->once()->andReturnSelf();
-        $this->organization->shouldReceive('getAttribute')->times(3)->with('id')->andReturn('1');
+        $this->organization->shouldReceive('getAttribute')->times(4)->with('id')->andReturn('1');
         $this->organization->shouldReceive('firstOrNew')->once()->with(['id' => 1])->andReturnSelf();
         $this->organization->shouldReceive('fill->save')->andreturn(true);
+        $this->user->shouldReceive('firstOrNew')->once()->with(['org_id' => 1])->andReturnSelf();
         $this->user->shouldReceive('getAttribute')->once()->with('id')->andReturn(1);
         $collection->shouldReceive('where->first')->andReturn($this->user);
         $this->organization->shouldReceive('getAttribute')->with('users')->andReturn($collection);
@@ -104,7 +105,7 @@ class SuperAdminTest extends AidStreamTestCase
             'default_field_values'     => 'defaultFieldValues',
             'default_field_groups'     => 'defaultFieldGroups'
         ];
-        $this->assertTrue($this->superAdmin->saveOrganization($data, 1));
+        $this->assertNull($this->superAdmin->saveOrganization($data, 1));
     }
 
     public function tearDown()

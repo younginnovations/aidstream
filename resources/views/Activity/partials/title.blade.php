@@ -1,7 +1,7 @@
 @if(!emptyOrHasEmptyTemplate($titles))
     <div class="activity-element-wrapper">
         <div class="activity-element-list">
-            <div class="activity-element-label">@lang('activityView.activity_title')</div>
+            <div class="activity-element-label">@lang('activityView.activity_title') @if(array_key_exists('Title',$errors)) <i class='imported-from-xml'>icon</i>@endif </div>
             <div class="activity-element-info">
                 {{ $titles[0]['narrative']}}
                 <em>(language: {{ getLanguage($titles[0]['language']) }})</em>

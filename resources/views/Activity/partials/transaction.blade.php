@@ -1,6 +1,6 @@
 @if(!emptyOrHasEmptyTemplate($transactions))
     <div class="activity-element-wrapper">
-        <div class="title">@lang('activityView.transaction')</div>
+        <div class="title">@lang('activityView.transaction') @if(array_key_exists('Transaction',$errors)) <i class='imported-from-xml'>icon</i>@endif </div>
         @foreach(groupTransactionElements($transactions) as $key => $groupedTransactions)
             <div class="activity-element-list">
                 <div class="activity-element-label">{{$key}}</div>

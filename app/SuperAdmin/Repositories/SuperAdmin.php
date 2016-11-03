@@ -4,6 +4,7 @@ use App\Models\Organization\Organization;
 use App\Models\Settings;
 use App\SuperAdmin\Repositories\SuperAdminInterfaces\SuperAdmin as SuperAdminInterface;
 use App\User;
+use Exception;
 use Illuminate\Contracts\Logging\Log as DbLogger;
 use Psr\Log\LoggerInterface as Logger;
 use Illuminate\Database\DatabaseManager;

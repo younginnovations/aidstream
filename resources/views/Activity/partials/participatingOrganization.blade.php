@@ -1,6 +1,6 @@
 @if(!emptyOrHasEmptyTemplate($participatingOrganizations))
     <div class="activity-element-wrapper">
-        <div class="title">@lang('activityView.participating_organization')</div>
+        <div class="title">@lang('activityView.participating_organization') @if(array_key_exists('Participating Organization',$errors)) <i class='imported-from-xml'>icon</i>@endif </div>
         @foreach(groupActivityElements($participatingOrganizations , 'organization_role') as $key => $organizations)
             <div class="activity-element-list">
                 <div class="activity-element-label">
