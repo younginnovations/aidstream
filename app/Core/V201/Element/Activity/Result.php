@@ -75,8 +75,8 @@ class Result extends BaseElement
                 ],
                 'baseline'    => [
                     '@attributes' => [
-                        'year'  => getVal($indicator, ['baseline', 0, 'year']),
-                        'value' => getVal($indicator, ['baseline', 0, 'value'], '0')
+                        'year'  => $indicator['baseline'][0]['year'],
+                        'value' => $indicator['baseline'][0]['value']
                     ],
                     'comment'     => [
                         'narrative' => $this->buildNarrative(getVal($indicator, ['baseline', 0, 'comment', 0, 'narrative']))
