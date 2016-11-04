@@ -597,7 +597,7 @@ label {
 }
 
 .register-container {
-  @include outer-container(720px);
+  @include outer-container(700px);
   width: 100%;
   padding-top: 40px;
   clear: both;
@@ -677,46 +677,56 @@ label {
     //margin-bottom: 70px;
     margin-bottom: 34px;
     border-bottom: 0;
+    overflow: hidden;
     li {
       float: none;
-      min-width: 212px;
       text-align: left;
       display: none;
+      background: #f8f8f8;
+      color: $color_white;
+      line-height: 50px;
+      margin: 0;
+      padding: 0 30px;
       &.active {
         display: inline-block;
+        background: $color_gravel_approx;
+        border-radius: 4px;
       }
-      & + li {
-        position: relative;
-        margin-top: 7px;
-        padding-top: 23px;
-        &:before {
-          content: "";
-          position: absolute;
-          left: 50%;
-          top: 0;
-          width: 13px;
-          height: 13px;
-          border-bottom: 2px solid $color_silver_chalice_approx;
-          border-right: 2px solid $color_silver_chalice_approx;
-          transform: rotate(45deg);
+      &:first-child {
+        padding-left: 30px;
+      }
+      &:last-child {
+        &:after {
           display: none;
         }
       }
+      position: relative;
+      &:after {
+        content: "";
+        position: absolute;
+        right: -18px;
+        top: 8px;
+        width: 35px;
+        height: 35px;
+        border-bottom: 1px solid #ccc;
+        border-right: 1px solid #ccc;
+        transform: rotate(45deg);
+        z-index: 1;
+        display: none;
+        background: #f8f8f8;
+      }
       span {
-        background: #ccc;
         display: inline-block;
-        margin-right: 10px;
-        color: $color_white;
-        width: 32px;
-        line-height: 32px;
+        margin-right: 8px;
+        color: $color_silver_chalice_approx;
         text-align: center;
-        border-radius: 50%;
       }
       a {
         color: $color_silver_chalice_approx;
         padding: 0 0 2px;
         border-bottom: 2px solid transparent;
         display: inline-block;
+        z-index: 2;
       }
     }
   }
@@ -729,18 +739,16 @@ label {
 .register-container {
   .nav-tabs > li.active > a, .nav-tabs > li.active > a:focus, .nav-tabs > li.active > a:hover {
     border: 0;
-    color: $color_gravel_approx;
-    border-bottom: 2px solid;
-    background: none;
+    color: $color_white;
+  }
+
+  .nav-tabs > li.active span {
+    color: $color_white;
   }
 
   .nav-tabs > li > a, .nav-tabs > li > a:hover, .nav-tabs > li > a:focus {
     background: none;
     border: 0;
-  }
-
-  .nav-tabs > li.active > span {
-    background: $color_gravel_approx;
   }
 
   .text-wrapper {
@@ -2455,7 +2463,7 @@ form > .add_to_collection[data-collection="legacy_data"] {
 }
 
 .modal {
-  z-index: 10000000000!important;
+  z-index: 10000000000 !important;
 }
 
 .modal-backdrop {
@@ -4487,7 +4495,7 @@ table.dataTable thead .sorting_desc {
     }
   }
   li.success {
-     > div {
+    > div {
       background: $color_emerald_approx;
       padding: 0 36px;
     }
@@ -5113,7 +5121,7 @@ body > .skiptranslate iframe {
 }
 
 .introjs-button {
-  display: none!important;
+  display: none !important;
 }
 
 #default_values > form > .col-md-12:nth-last-child(2) > .form-group {
@@ -5676,7 +5684,7 @@ body > .skiptranslate iframe {
 }
 
 .introjs-tooltip {
-  min-width: 270px!important;
+  min-width: 270px !important;
   max-width: 450px !important;
   padding: 30px !important;
   background: #fff !important;
@@ -5700,8 +5708,8 @@ body > .skiptranslate iframe {
   border-radius: 50%;
   float: right;
   font-size: 10px;
-  color: $color_white!important;
-  text-decoration: none!important;
+  color: $color_white !important;
+  text-decoration: none !important;
   margin: -18px -18px 0 0;
 }
 
@@ -5720,7 +5728,7 @@ body > .skiptranslate iframe {
 }
 
 .introjs-arrow.left {
-  left: -18px!important;
+  left: -18px !important;
 }
 
 .introjs-tooltiptext {
@@ -5815,7 +5823,7 @@ body > .skiptranslate iframe {
   h2 {
     font-size: 24px;
     margin: 26px 0 22px;
-    &+a {
+    & + a {
       display: inherit;
       margin-bottom: 20px;
     }
@@ -5845,7 +5853,7 @@ body > .skiptranslate iframe {
       & + li {
         margin-left: 10px;
       }
-      &.filled a,&.skipped a {
+      &.filled a, &.skipped a {
         background: #417505;
         border: 1px solid;
         color: $color_white;
@@ -5861,7 +5869,7 @@ body > .skiptranslate iframe {
   }
 }
 
-.onboarding-steps,.successful-setup {
+.onboarding-steps, .successful-setup {
   margin: 26px 0 32px;
   p {
     color: #9b9b9b;
@@ -6744,35 +6752,65 @@ body > .skiptranslate iframe {
 
 @media all and (min-width: 700px) {
   .register-container {
+    .nav-tabs {      
+      text-align: left;
+      background: #f8f8f8;
+      border-radius: 4px;
+    }
     .nav-tabs li {
-      min-width: inherit;
+      min-width: 228px;
       display: inline-block;
-      text-align: center;
-      line-height: 36px;
+      margin-left: -3px;
+      padding: 0 0 0 42px;
       &.complete {
-        background: $color_dodger_blue_approx $url_3 no-repeat -653px -151px;
+        background: $url_3 no-repeat -640px -144px;
         border-radius: 50px;
-        padding: 0 12px 0 28px;
+        padding: 0 8px 0 44px;
         a {
-          color: $color_white;
+          color: $color_gravel_approx;
+          pointer-events: none;
         }
         span {
           display: none;
         }
       }
+      &:first-child {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+      }
+      &:last-child {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+        &:after {
+          display: none;
+        }
+      }
+      &:last-child {
+        min-width: 203px;
+      }
     }
   }
 
-  .register-container .nav-tabs li + li {
-    margin-left: 50px;
-    &:before {
-      bottom: 9px;
-      left: -38px;
-      top: auto;
+  .register-container .nav-tabs li:nth-child(2).complete {
+    background-position: -625px -144px;
+    padding-left: 59px;
+  }
+
+  .register-container .nav-tabs li {
+    //margin-left: 50px;
+    &:after {
       transform: rotate(-45deg);
       display: block;
     }
   }
+
+  .register-container .nav-tabs li.active{
+    border-radius: 0;
+    &:after {
+    border-color: $color_gravel_approx;
+    background: $color_gravel_approx;
+  }
+}
 
   .register-block {
     padding: 0;
@@ -6799,6 +6837,15 @@ body > .skiptranslate iframe {
 
   .edit-profile, .edit-profile:hover {
     margin-left: 6px;
+  }
+}
+
+@media all and (min-width: 720px) {
+  .register-container .nav-tabs li {
+    min-width: 238px;
+    &:last-child {
+      min-width: 223px;
+    }  
   }
 }
 
