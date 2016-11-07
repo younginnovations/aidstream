@@ -6840,19 +6840,17 @@ body > .skiptranslate iframe {
   }
 }
 
-@media all and (min-width: 720px) {
-  .register-container .nav-tabs li {
-    min-width: 238px;
-    &:last-child {
-      min-width: 223px;
-    }  
-  }
-}
-
 @media all and (min-width: 730px) {
   .register-container {
     padding-left: 0;
     padding-right: 0;
+  }
+
+  .register-container .nav-tabs li {
+    min-width: 238px;
+    &:last-child {
+      min-width: 223px;
+    }
   }
 }
 

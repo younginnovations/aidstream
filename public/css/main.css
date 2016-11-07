@@ -8481,16 +8481,14 @@ body > .skiptranslate iframe {
   .edit-profile, .edit-profile:hover {
     margin-left: 6px; } }
 
-@media all and (min-width: 720px) {
+@media all and (min-width: 730px) {
+  .register-container {
+    padding-left: 0;
+    padding-right: 0; }
   .register-container .nav-tabs li {
     min-width: 238px; }
     .register-container .nav-tabs li:last-child {
       min-width: 223px; } }
-
-@media all and (min-width: 730px) {
-  .register-container {
-    padding-left: 0;
-    padding-right: 0; } }
 
 @media all and (min-width: 768px) {
   .create-form > form > .collection_form > .form-group > .collection_form .form-group > .form-group {
