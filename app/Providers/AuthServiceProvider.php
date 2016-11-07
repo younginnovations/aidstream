@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Models\Activity\Activity;
 use App\Models\ActivityPublished;
+use App\Models\Document;
 use App\Models\Organization\Organization;
 use Illuminate\Contracts\Auth\Access\Gate as GateContract;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
@@ -108,6 +109,14 @@ class AuthServiceProvider extends ServiceProvider
         if ($activity instanceof ActivityPublished) {
             if (!$user->isAdmin()) {
                 return ($user->org_id == $activity->organization_id);
+            } else {
+                return true;
+            }
+        }
+
+        if ($activity instanceof Document) {
+            if (!$user->isAdmin()) {
+                return ($user->org_id == $activity->org_id);
             } else {
                 return true;
             }
