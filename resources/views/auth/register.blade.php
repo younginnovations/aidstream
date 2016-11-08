@@ -75,7 +75,7 @@
                 To find out more, <a href="https://github.com/younginnovations/aidstream/wiki/Users-Management">click here.</a></p>
             <ul class="nav nav-tabs text-center" role="tablist">
                 <li role="presentation" class="active"><span>1</span><a href="#tab-organization" aria-controls="tab-organization" role="tab" data-toggle="tab">Organisation Information</a></li>
-                <li role="presentation"><span>2</span><a href="#tab-users" aria-controls="tab-users" role="tab" data-toggle="tab">Admin Information</a></li>
+                <li role="presentation"><span>2</span><a href="#tab-users" aria-controls="tab-users" role="tab" data-toggle="tab">Administrator Information</a></li>
                 <li role="presentation"><span>3</span><a href="#tab-verification" aria-controls="tab-verification" role="tab" data-toggle="tab" class="disabled">Email Verification</a></li>
             </ul>
             <div class="col-lg-4 col-md-8 register-block">
