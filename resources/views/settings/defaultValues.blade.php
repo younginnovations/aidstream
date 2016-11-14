@@ -39,9 +39,13 @@
     <script src="/js/userOnBoarding.js"></script>
     <script>
         $(window).load(function () {
-            @if(session('first_login') && auth()->user()->role_id == 1)
+                    @if(session('first_login') && auth()->user()->isAdmin())
+            var stepNumber = location.hash.replace('#', '');
+            if (stepNumber == 5) {
+                var completedSteps = [{!! json_encode((array)$completedSteps) !!}];
                 $('.introjs-hints').css('display', 'none');
-                UserOnBoarding.settingsTour();
+                UserOnBoarding.settingsTour(completedSteps);
+            }
             @endif
             UserOnBoarding.validateDefaultValues();
         });

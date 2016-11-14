@@ -29,7 +29,7 @@
                                         <td>{{ $key + 1 }}</td>
                                         <td>{{ $organization->name}}
                                             <div>@foreach($organization->users as $user)
-                                                    @if($user->isAdmin())
+                                                    @if($user->role_id == 1)
                                                         {{$user['email']}}
                                                     @endif
                                                 @endforeach
@@ -73,8 +73,8 @@
         var preventClick = false;
         for (var i = 0; i < masqueradeBtn.length; i++) {
             var button = masqueradeBtn[i];
-            button.onclick = function(event) {
-                if(preventClick) {
+            button.onclick = function (event) {
+                if (preventClick) {
                     event.preventDefault();
                 }
                 preventClick = true;

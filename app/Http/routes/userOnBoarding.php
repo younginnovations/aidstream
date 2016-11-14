@@ -51,32 +51,24 @@ $router->post(
         'uses' => 'UserOnBoardingController@storeDefaultValues'
     ]
 );
-$router->get(
-    'exploreLater',
-    [
-        'as'   => 'exploreLater',
-        'uses' => 'UserOnBoardingController@exploreLater'
-    ]
-);
 $router->post(
-    'completeOnBoarding',
+    'hintStatus',
     [
-        'as'   => 'completeOnBoarding',
-        'uses' => 'UserOnBoardingController@completeOnBoarding'
+        'as'   => 'hintStatus',
+        'uses' => 'UserOnBoardingController@storeHintStatus'
     ]
 );
-
 $router->get(
-    'continueExploring',
+    'incompleteStep',
     [
-        'as'   => 'continueExploring',
-        'uses' => 'UserOnBoardingController@continueExploring'
+        'as'   => 'incompleteStep',
+        'uses' => 'UserOnBoardingController@firstIncompleteStep'
     ]
 );
-$router->post(
-    'storeDashboardSteps',
+$router->get(
+    '/check-onboarding-step',
     [
-        'as'   => 'storeDashboardSteps',
-        'uses' => 'UserOnBoardingController@storeDashboardSteps'
+        'as'   => 'check-onboarding-step',
+        'uses' => 'UserOnBoardingController@checkOnboardingStep'
     ]
 );

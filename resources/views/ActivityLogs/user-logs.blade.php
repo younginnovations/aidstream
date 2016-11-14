@@ -8,6 +8,9 @@
             @include('includes.side_bar_menu')
             <div class="col-xs-9 col-lg-9 content-wrapper settings-wrapper">
                 @include('includes.response')
+                @if($loggedInUser->userOnBoarding)
+                    @include('includes.steps')
+                @endif
                 <div class="panel panel-default">
                     <div class="element-panel-heading">
                         <div>

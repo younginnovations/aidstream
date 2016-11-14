@@ -94,8 +94,18 @@ class UserOnBoardingController extends Controller
         $default_field_groups = $request->get('default_field_groups');
 
         $this->userOnBoardingService->storeActivityElementsChecklist($default_field_groups, $organization);
+        $completedSteps = (array) auth()->user()->userOnBoarding->settings_completed_steps;
 
-        return redirect()->to('/default-values#5');
+        $redirectPath = (in_array(5, $completedSteps)) ? '/activity' : '/default-values#5';
+
+        if (count($completedSteps) == 5) {
+            return redirect()->to($redirectPath)->with(
+                'onboarding_complete_message',
+                "Congratulations. Your organisation's account configuration has been completed successfully. You can now publish your data to the IATI Registry."
+            );
+        }
+
+        return redirect()->to($redirectPath);
     }
 
     /**
@@ -109,54 +119,17 @@ class UserOnBoardingController extends Controller
         $this->userOnBoardingService->storeDefaultValues($request, $organization);
         $completedSteps = $this->userOnBoardingService->getCompletedSettingsSteps();
         $status         = $this->userOnBoardingService->isAllStepsCompleted();
-        $redirectView   = ($status) ? 'continueExploring' : 'exploreLater';
 
-        return redirect()->to($redirectView)->with('completedSteps', $completedSteps);
-    }
+        $redirectPath = (in_array(5, $completedSteps)) ? '/activity' : '/default-values#5';
 
-    /**
-     * Return explore later view.
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
-     */
-    public function exploreLater()
-    {
-        if (!Auth::user()->userOnBoarding) {
-            return redirect()->to('/activity');
+        if (count($completedSteps) == 5) {
+            return redirect()->to($redirectPath)->with(
+                'onboarding_complete_message',
+                "Congratulations. Your organisation's account configuration has been completed successfully. You can now publish your data to the IATI Registry."
+            );
         }
 
-        if (Auth::user()->userOnBoarding->completed_tour) {
-            return redirect()->back();
-        }
-        $completedSteps = $this->userOnBoardingService->getCompletedSettingsSteps();
-        $status         = $this->userOnBoardingService->isAllStepsCompleted();
-        Session::put('first_login', true);
-
-        return view('onBoarding.exploreLater', compact('completedSteps', 'status'));
-    }
-
-    /**
-     * returns continue exploring view.
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function continueExploring()
-    {
-        if (!Auth::user()->userOnBoarding) {
-            return redirect()->to('/activity');
-        }
-
-        $firstname      = Auth::user()->first_name;
-        $completedSteps = $this->userOnBoardingService->getCompletedSettingsSteps();
-        $status         = $this->userOnBoardingService->isAllStepsCompleted();
-
-        return view(sprintf('onBoarding.continueExploring'), compact('firstname', 'completedSteps', 'status'));
-    }
-
-    /**
-     *  Complete user on boarding process
-     */
-    public function completeOnBoarding()
-    {
-        $this->userOnBoardingService->completeTour();
+        return redirect()->to('/activity');
     }
 
     /**
@@ -181,14 +154,61 @@ class UserOnBoardingController extends Controller
     }
 
     /**
-     * Store closed dashboard hints
+     * Store dashboard hints status
      * @return int
      */
-    public function storeDashboardSteps()
+    public function storeHintStatus()
     {
-        $step = (int) Input::get('step');
-        $this->userOnBoardingService->storeDashboardSteps($step);
+        $step        = (int) Input::get('status');
+        $hintsStatus = ($step === 1) ? true : false;
+        $status      = $this->userOnBoardingService->storeHintStatus($hintsStatus);
 
-        return $step;
+        return ($status) ? 'success' : 'failed';
+    }
+
+    /**
+     * Returns the first skipped step.
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function firstIncompleteStep()
+    {
+        $completedSteps = (array) auth()->user()->userOnBoarding->settings_completed_steps;
+        $redirectPath   = '/publishing-settings#1';
+
+        $paths = [
+            1 => '/publishing-settings#1',
+            2 => '/publishing-settings#2',
+            3 => '/publishing-settings#3',
+            4 => '/activity-elements-checklist#4',
+            5 => '/default-values#5'
+        ];
+
+        foreach ($completedSteps as $step) {
+            if (array_key_exists($step, $paths)) {
+                unset($paths[$step]);
+            }
+        }
+        $redirectPath = (count($paths) < 0) ? $redirectPath : array_shift($paths);
+
+        return redirect()->to($redirectPath);
+    }
+
+    /**
+     * Check if the the settings onboarding is completed and redirect with success message.
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function checkOnboardingStep()
+    {
+        $completedSteps = $this->userOnBoardingService->getCompletedSettingsSteps();
+        $redirectPath   = (in_array(5, $completedSteps)) ? '/activity' : '/default-values#5';
+
+        if (count($completedSteps) == 5) {
+            return redirect()->to($redirectPath)->with(
+                'onboarding_complete_message',
+                "Congratulations. Your organisation's account configuration has been completed successfully. You can now publish your data to the IATI Registry."
+            );
+        }
+
+        return redirect()->route('activity.index');
     }
 }

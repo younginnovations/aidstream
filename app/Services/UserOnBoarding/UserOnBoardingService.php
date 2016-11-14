@@ -2,6 +2,7 @@
 
 use App\Models\Organization\Organization;
 use App\Models\UserOnBoarding;
+use App\User;
 use Exception;
 use Illuminate\Contracts\Logging\Log;
 use Illuminate\Support\Facades\Auth;
@@ -27,18 +28,24 @@ class UserOnBoardingService
      * @var UserOnBoarding
      */
     protected $userOnBoarding;
+    /**
+     * @var User
+     */
+    protected $users;
 
     /**
      * UserOnBoardingService constructor.
      * @param LoggerInterface $logger
      * @param Log             $dbLogger
      * @param UserOnBoarding  $userOnBoarding
+     * @param User            $users
      */
-    public function __construct(LoggerInterface $logger, Log $dbLogger, UserOnBoarding $userOnBoarding)
+    public function __construct(LoggerInterface $logger, Log $dbLogger, UserOnBoarding $userOnBoarding, User $users)
     {
         $this->logger         = $logger;
         $this->dbLogger       = $dbLogger;
         $this->userOnBoarding = $userOnBoarding;
+        $this->users          = $users;
     }
 
     /**
@@ -314,7 +321,33 @@ class UserOnBoardingService
      */
     public function storeCompletedSettingsSteps($step)
     {
-        $userOnBoarding                           = auth()->user()->userOnBoarding;
+        $userOnBoarding = auth()->user()->userOnBoarding;
+        $this->storeSteps($step, $userOnBoarding);
+        $this->settingStepsForOtherAdministrator($step);
+    }
+
+    /**
+     * Store steps for the other admin user of same organisation.
+     * @param $step
+     */
+    protected function settingStepsForOtherAdministrator($step)
+    {
+        $users = $this->users->where('org_id', session('org_id'))->get();
+        foreach ($users as $user) {
+            if ($user->id != session('user_id')) {
+                $userOnBoarding = $user->userOnboarding;
+                $this->storeSteps($step, $userOnBoarding);
+            }
+        }
+    }
+
+    /**
+     * Store steps completed.
+     * @param $step
+     * @param $userOnBoarding
+     */
+    protected function storeSteps($step, $userOnBoarding)
+    {
         $completedSteps                           = $userOnBoarding->settings_completed_steps;
         $completedSteps[]                         = $step;
         $userOnBoarding->settings_completed_steps = array_unique($completedSteps);
@@ -348,23 +381,25 @@ class UserOnBoardingService
     /**
      * Create a new On boarding for newly created user.
      * @param $userId
+     * @param $completedSteps
      * @return UserOnBoarding
      */
-    public function create($userId)
+    public function create($userId, $completedSteps)
     {
-        return $this->userOnBoarding->create(['has_logged_in_once' => false, 'user_id' => $userId]);
+        return $this->userOnBoarding->create(['has_logged_in_once' => false, 'settings_completed_steps' => $completedSteps, 'user_id' => $userId]);
     }
 
     /**
      * Store the closed dashboard hints.
-     * @param $step
+     * @param $status
      */
-    public function storeDashboardSteps($step)
+    public function storeHintStatus($status)
     {
-        $userOnBoarding                            = auth()->user()->userOnBoarding;
-        $completedSteps                            = $userOnBoarding->dashboard_completed_steps;
-        $completedSteps[]                          = $step;
-        $userOnBoarding->dashboard_completed_steps = array_unique($completedSteps);
+        $userOnBoarding                 = auth()->user()->userOnBoarding;
+        $userOnBoarding->display_hints  = $status;
+        $userOnBoarding->completed_tour = 1;
         $userOnBoarding->save();
+
+        return $userOnBoarding;
     }
 }

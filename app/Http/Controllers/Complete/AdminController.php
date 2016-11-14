@@ -147,12 +147,38 @@ class AdminController extends Controller
         $this->user->password   = bcrypt($request->get('password'));
         $this->user->verified   = true;
 
-        $response = ($this->user->save()) ? ['type' => 'success', 'code' => ['user_created', ['name' => $this->user->username]]] : ['type' => 'danger', 'code' => ['save_failed', ['name' => 'User']]];
+        $completedSteps = $this->generateCompletedSteps();
+        $response       = ($this->user->save()) ? ['type' => 'success', 'code' => ['user_created', ['name' => $this->user->username]]] : [
+            'type' => 'danger',
+            'code' => ['save_failed', ['name' => 'User']]
+        ];
 
-        $this->userOnBoardingManager->create($this->user->id);
+        $this->userOnBoardingManager->create($this->user->id, $completedSteps);
         $this->dbLogger->activity("admin.user_created", ['orgId' => $this->org_id, 'userId' => $this->user->id]);
 
         return redirect()->route('admin.list-users')->withResponse($response);
+    }
+
+    protected function generateCompletedSteps()
+    {
+        $completed_steps = [];
+        if (auth()->user()->userOnBoarding) {
+            $steps           = auth()->user()->userOnBoarding->settings_completed_steps;
+            $completed_steps = ($steps) ? $steps : [];
+        } else {
+            $settings             = auth()->user()->organization->settings;
+            $publishingType       = $settings['publishing_type'];
+            $registry_info        = $settings['registry_info'];
+            $default_field_values = $settings['default_field_values'];
+            $default_field_groups = $settings['default_field_groups'];
+            $completed_steps      = ($publishingType == "") ? $completed_steps : array_unique(array_merge($completed_steps, [3]));
+            $completed_steps      = ($registry_info == "") ? $completed_steps : array_unique(array_merge($completed_steps, [1, 2]));
+            $completed_steps      = (is_null($default_field_groups)) ? $completed_steps : array_unique(array_merge($completed_steps, [4]));
+            $completed_steps      = (is_null($default_field_values)) ? $completed_steps : array_unique(array_merge($completed_steps, [5]));
+        }
+
+        return $completed_steps;
+
     }
 
     /**

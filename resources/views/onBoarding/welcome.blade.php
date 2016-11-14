@@ -11,16 +11,21 @@
                     <h1>Welcome to AidStream</h1>
                     <span class="welcome-name">{{ ucfirst($firstname )}} {{ ucfirst($lastname )}}</span>
                     <p> Thank you for choosing AidStream to publish your organisation's data to the IATI Registry.</p>
-                    @if(Auth::user()->isAdmin())
-                        <a href="{{url('publishing-settings')}}">Set up your account to Start Publishing to the IATI Registry.</a>
+                    @if($loggedInUser->isAdmin() && count($completedSteps) != 5)
+                        <p>
+                            <span>Please set up your account to get started</span>
+                            <a href="{{url('publishing-settings#1')}}" class="btn">Set up my Account</a>
+                        </p>
+                        <p>
+                            I'll setup this later, <a href="/activity">go to dashboard</a>
+                        </p>
+                    @else
+                        <a href="/activity" class="btn">Go to Dashboard</a>
                     @endif
-                    <a href="/activity" class="btn">Get to know your Dashboard</a>
-                    {{--<span class="explore-later"><a href="/activity">Explore Later</a></span>--}}
                 </div>
             </div>
         </div>
-    </div>
-@endsection
+    </div>@endsection
 @section('foot')
     <script>
         $(document).ready(function () {

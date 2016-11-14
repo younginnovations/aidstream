@@ -2,7 +2,7 @@
     <div class="panel panel-default">
         <div class="panel-body">
             <ul class="nav">
-                <li class="activities" data-step="1"><a href="{{ route('activity.index') }}">Activities</a>
+                <li class="activities" data-step="2"><a href="{{ route('activity.index') }}">Activities</a>
                 </li>
                 <li class="organization" data-step="3"><a href="{{ route('organization.show', session('org_id')) }}">Organisation</a></li>
                 <li class="published-files" data-step="4"><a href="{{ route('list-published-files') }}">Published Files</a></li>

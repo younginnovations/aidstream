@@ -22,7 +22,6 @@
     <![endif]-->
 
     @yield('head')
-
 </head>
 <body>
 {{--<div id="google_translate_element"></div><script type="text/javascript">--}}
@@ -41,7 +40,7 @@
             <input type="hidden" name="_token" value="{{csrf_token()}}"/>
             @if(auth()->user() && !isSuperAdminRoute())
                 <ul class="nav navbar-nav pull-left add-new-activity">
-                    <li class="dropdown" data-step="2">
+                    <li class="dropdown" data-step="0">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
                            aria-expanded="false">Add a New Activity<span
                                     class="caret"></span></a>
@@ -63,7 +62,7 @@
                             <span><a href="{{ route('admin.switch-back') }}" class="pull-left">Switch Back</a></span>
                         @endif
                     </li>
-                    <li class="dropdown" data-step="9">
+                    <li class="dropdown" data-step="1" id="admin-dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
                            aria-expanded="false"><span class="avatar-img">
                                 @if(Auth::user()->profile_url)
@@ -81,7 +80,7 @@
                             @if(!isSuperAdminRoute())
                                 <li><a href="{{url('user/profile')}}">@lang('trans.my_profile')</a></li>
                             @endif
-                            <li><a href="{{ url('/auth/logout') }}">@lang('trans.logout')</a></li>
+                            <li><a href="{{ url('/auth/logout') }}" id="logout">@lang('trans.logout')</a></li>
 
                             @include('unwanted')
 
@@ -118,12 +117,6 @@
             </ul>
         </div>
         <div class="navbar-right version-wrap">
-
-            @if(isset(auth()->user()->userOnBoarding->completed_tour) && session('role_id') != 3)
-                @if(!auth()->user()->userOnBoarding->completed_tour)
-                    <a href="{{url('exploreLater')}}" class="btn btn-primary">Continue exploring AidStream</a>
-                @endif
-            @endif
             @if(auth()->user() && !isSuperAdminRoute())
                 <div class="version pull-right {{ (session('version') == 'V201') ? 'old' : 'new' }}">
                     @if (session('next_version'))
@@ -143,6 +136,7 @@
         </div>
     </div>
 </nav>
+
 
 @yield('content')
 <div class="scroll-top">
@@ -174,7 +168,6 @@
 @else
     <script type="text/javascript" src="{{url('/js/main.min.js')}}"></script>
 @endif
-
 @yield('humanitarian-script')
 
 <script type="text/javascript">
@@ -188,49 +181,71 @@
 <!-- End Google Analytics -->
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/intro.js/2.1.0/intro.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery.validation/1.15.0/jquery.validate.js"></script>
-
-<!-- Script for landing page -->
 <script>
-    var hideHints = function (step) {
-        var stepNo = step;
-        $.ajax({
-            headers: {'X-CSRF-TOKEN': $('[name="_token"]').val()},
-            url: '/storeDashboardSteps',
-            data: {step: parseInt(stepNo)},
-            type: 'POST',
-            success: function (data) {
-                location.reload();
+    var roleId = "{!! $loggedInUser->role_id!!}";
+</script>
+@if($loggedInUser && $loggedInUser->userOnBoarding && (session('role_id')!= 3 && session('role_id')!= 4))
+    <script src="/js/userOnBoarding.js"></script>
+    <script type="text/javascript">
+        var hintStatus = "{!! ($loggedInUser->userOnBoarding->display_hints) ? 1 : 0 !!}";
+        var completedTour = "{!! ($loggedInUser->userOnBoarding->completed_tour) ? 1 : 0 !!}";
+
+        var className = (hintStatus == 1) ? 'pull-right display Yes' : 'pull-right display No';
+
+        $('#logout').before(
+                "<li class='dashboard-tour'>" +
+                "<span>Dashboard tour</span><a href='#' class='" + className + "' id='hints'></a></li>");
+
+        var endTour = function () {
+            introJs().exit();
+            $('.introjs-tooltip').hide();
+            $("[data-step='1']").removeClass('open');
+            $(document).on('click');
+            completedTour = 1;
+        };
+
+        var goNext = function (step) {
+            $("a[data-step=" + step + "]").trigger('click');
+        };
+
+        var skip = function (step) {
+            $(".introjs-tooltip").hide();
+            $('#hints').trigger('click');
+            if (completedTour == 0) {
+                $("[data-step='1']").addClass('open');
+                UserOnBoarding.finalHints();
+                $(document).off('click');
+                $('.introjs-tooltip').css({'right': '270px', 'top': '87px'});
+                $('.introjs-arrow').css({'right': '-18px', 'top': '50px'});
+
+            }
+        };
+
+        $('#hints').on('click', function () {
+            if ($(this).hasClass("Yes")) {
+                $(this).removeClass('Yes');
+                $(this).addClass('No');
+                $('.introjs-hints').css('visibility', 'hidden');
+                UserOnBoarding.storeHintStatus(0);
+            } else if ($(this).hasClass("No")) {
+                $(this).removeClass('No');
+                $(this).addClass('Yes');
+                $('.introjs-hints').css('visibility', 'visible');
+                UserOnBoarding.storeHintStatus(1);
             }
         });
-    };
-    //    var goNext = function (step) {
-    //        $("a[data-step=" + step + "]").trigger('click');
-    //    };
-</script>
-<script>
-    var roleId = "{!! auth()->user()->role_id!!}";
-</script>
-@if(isset(auth()->user()->userOnBoarding))
-    @if(!auth()->user()->userOnBoarding->completed_tour)
-        <script src="/js/userOnBoarding.js"></script>
-        <script type="text/javascript">
-            var dashboardSteps = "{!! ($steps = auth()->user()->userOnBoarding->dashboard_completed_steps) ? json_encode($steps) : null !!}";
-            $(document).ready(function () {
-                UserOnBoarding.addHintLabel();
-                UserOnBoarding.dashboardTour();
 
-                var introhint = $('a.introjs-hint');
-                introhint.each(function (index, hint) {
-                    var offset = $(hint).offset();
-                    if (offset.left > 1024) {
-                        $(hint).css('top', offset.top + 40).css('left', offset.left + 50);
-                    } else {
-                        $(hint).css('top', offset.top + 10).css('left', offset.left + 10);
-                    }
-                });
-            });
-        </script>
-    @endif
+        UserOnBoarding.addHintLabel();
+        UserOnBoarding.dashboardTour();
+
+        if (hintStatus == 0) {
+            $('.introjs-hints').css('visibility', 'hidden');
+        }
+
+        if (completedTour == 0 && hintStatus == 1 && window.location.pathname == '/activity') {
+            $("[data-step='0']").trigger('click');
+        }
+    </script>
 @endif
 <!-- End of script -->
 @yield('script')
