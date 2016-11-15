@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\DB;
 class Transaction
 {
     /**
-     * @var Transaction
+     * @var TransactionModel
      */
     protected $transaction;
 
@@ -121,5 +121,20 @@ class Transaction
     public function deleteTransaction(TransactionModel $transaction)
     {
         return $transaction->delete();
+    }
+
+    /**
+     * @param $transaction
+     * @param $activityId
+     * @return \App\Models\Activity\Transaction
+     */
+    public function createTransaction($transaction, $activityId)
+    {
+        return $this->transaction->create(
+            [
+                'transaction' => $transaction,
+                'activity_id' => $activityId
+            ]
+        );
     }
 }

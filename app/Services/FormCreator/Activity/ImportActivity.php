@@ -34,7 +34,7 @@ class ImportActivity
             $this->formPath,
             [
                 'method' => 'POST',
-                'url'    => route('import-activity.list-activities')
+                'url'    => route('activity.import-csv')
             ]
         )->add('Upload', 'submit', ['attr' => ['class' => 'btn pull-left']]);
     }

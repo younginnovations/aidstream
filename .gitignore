@@ -14,4 +14,5 @@ _ide_helper.php
 /public/css/.sass-cache
 /public/css/style.css.map
 .DS_store
+/storage/csvImporter/tmp
 

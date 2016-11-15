@@ -28,10 +28,8 @@ class ImportActivity extends ActivityBaseRequest
      */
     public function rules()
     {
-        $rules = [];
-        if ($this->file('activity')) {
-            $rules['activity'] = 'required|activity_file';
-        }
+        $rules             = [];
+        $rules['activity'] = 'required|activity_file';
 
         return $rules;
     }
@@ -42,6 +40,7 @@ class ImportActivity extends ActivityBaseRequest
      */
     public function messages()
     {
+        $messages['activity.required']      = 'The Activity file is required';
         $messages['activity.activity_file'] = 'The activity must be a file of type: csv.';
 
         return $messages;
