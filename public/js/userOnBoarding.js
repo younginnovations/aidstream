@@ -42,7 +42,7 @@ var UserOnBoarding = {
             'data-position': 'right'
         });
 
-        var nextStep = (roleId == 1) ? 8 : 0;
+        var nextStep = (roleId == 1) ? 8 : 1;
         $("[data-step='7']").attr({
             'data-hint': "<p>Click here to view the settings of your organisation. Only the users with Administrator level permission can edit settings</p>" +
             "<a href='#' class='pull-left skip-tour' onclick='skip(7)'>Skip Dashboard Tour</a>" +
