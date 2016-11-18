@@ -5173,8 +5173,11 @@ body > .skiptranslate iframe {
 
 .introjs-fixedTooltip[data-step="2"], .introjs-fixedTooltip[data-step="3"], .introjs-fixedTooltip[data-step="4"], .introjs-fixedTooltip[data-step="5"],
 .introjs-fixedTooltip[data-step="6"], .introjs-fixedTooltip[data-step="7"], .introjs-fixedTooltip[data-step="8"] {
+  .introjs-tooltip {
+    left: 54px !important;
+  }
   .introjs-arrow.left {
-    top: 5px!important;
+    top: 5px !important;
   }
 }
 
@@ -6090,7 +6093,7 @@ body > .skiptranslate iframe {
 }
 
 .invalid-data .panel-heading label {
-  border-left: 6px solid #e15454  ;
+  border-left: 6px solid #e15454;
 }
 
 .data-listing {
@@ -6099,7 +6102,7 @@ body > .skiptranslate iframe {
   display: none;
   li {
     padding-bottom: 4px;
-    color: #E15454  ;
+    color: #E15454;
   }
 }
 
@@ -6165,8 +6168,8 @@ body > .skiptranslate iframe {
     transform: scale(1);
   }
   [readonly="readonly"] + span:before {
-    background: #d8d8d8   !important;
-    border: 1px solid #d8d8d8   !important;
+    background: #d8d8d8 !important;
+    border: 1px solid #d8d8d8 !important;
   }
   [type="checkbox"]:checked + span:before {
     background: $color_dodger_blue_approx;
@@ -6228,7 +6231,7 @@ body > .skiptranslate iframe {
 .valid-data p, .invalid-data p {
   color: #777;
   padding: 20px 36px;
-  font-size: 14px!important;
+  font-size: 14px !important;
   font-style: italic;
 }
 
@@ -7679,6 +7682,13 @@ body > .skiptranslate iframe {
   .touch-sidebar-wrapper, .touch-sidebar-wrapper li, .touch-sidebar-wrapper .jspPane {
     width: 62px !important;
     overflow: hidden;
+  }
+
+  .introjs-fixedTooltip[data-step="2"], .introjs-fixedTooltip[data-step="3"], .introjs-fixedTooltip[data-step="4"], .introjs-fixedTooltip[data-step="5"],
+  .introjs-fixedTooltip[data-step="6"], .introjs-fixedTooltip[data-step="7"], .introjs-fixedTooltip[data-step="8"] {
+    .introjs-tooltip {
+      left: 200px !important;
+    }
   }
 }
 
