@@ -108,7 +108,7 @@ class RecipientCountry extends Element
             $this->countries[] = $value;
             $this->countries   = array_unique($this->countries);
 
-            $this->data['recipient_country'][$index]['country_code'] = $value;
+            $this->data['recipient_country'][$index]['country_code'] = strtoupper($value);
         }
     }
 
