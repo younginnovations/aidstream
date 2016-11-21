@@ -11,6 +11,9 @@
             @include('includes.side_bar_menu')
             <div class="col-xs-9 col-lg-9 content-wrapper document-wrapper">
                 @include('includes.response')
+                @if($loggedInUser->userOnBoarding)
+                    @include('includes.steps')
+                @endif
                 @include('includes.breadcrumb')
                 <div class="panel panel-default">
                     <div class="element-panel-heading">

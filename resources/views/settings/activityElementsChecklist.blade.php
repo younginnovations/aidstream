@@ -22,13 +22,17 @@
     </div>
 @stop
 @section('script')
-    @if(session('first_login') && auth()->user()->role_id == 1)
+    @if(session('first_login') && auth()->user()->isAdmin())
         <script src="/js/userOnBoarding.js"></script>
         <script>
-            $(window).load(function () {
-                $('.introjs-hints').css('display', 'none');
-                UserOnBoarding.settingsTour();
-            });
+            var stepNumber = location.hash.replace('#', '');
+            if (stepNumber == 4) {
+                $(window).load(function () {
+                    var completedSteps = [{!! json_encode((array)$completedSteps) !!}];
+                    $('.introjs-hints').css('display', 'none');
+                    UserOnBoarding.settingsTour(completedSteps);
+                });
+            }
         </script>
     @endif
 @endsection

@@ -266,6 +266,7 @@ class AuthController extends Controller
             Auth::user()->userOnBoarding->has_logged_in_once = true;
             Auth::user()->userOnBoarding->save();
         }
+        auth()->user()->last_login = date('m-d-Y H:i:s');
         Auth::logout();
         Session::flush();
 
@@ -359,9 +360,11 @@ class AuthController extends Controller
      */
     protected function userOnBoardingRedirectPath($user, $redirectPath)
     {
-        if (isset($user->userOnBoarding->has_logged_in_once)) {
+        if ($user->userOnBoarding) {
             if ($user->userOnBoarding->has_logged_in_once) {
-                $redirectPath = ($user->role_id == 3 || $user->role_id == 4) ? config('app.super_admin_dashboard') : config('app.admin_dashboard');
+                $redirectPath   = ($user->role_id == 3 || $user->role_id == 4) ? config('app.super_admin_dashboard') : config('app.admin_dashboard');
+                $completedSteps = (array) $user->userOnBoarding->settings_completed_steps;
+                (count($completedSteps) == 5) ?: Session::put('first_login', true);
             } else {
                 Session::put('first_login', true);
                 $redirectPath = 'welcome';
