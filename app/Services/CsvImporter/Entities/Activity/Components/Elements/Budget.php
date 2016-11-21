@@ -186,7 +186,7 @@ class Budget extends Element
      */
     public function rules()
     {
-        $rules = ['budget' => 'size:1|start_before_end_date|diff_one_year'];
+        $rules = ['budget' => 'start_before_end_date|diff_one_year'];
 
         foreach (getVal($this->data(), ['budget'], []) as $key => $value) {
             $rules['budget.' . $key . '.budget_type']         = sprintf('in:%s', $this->budgetCodeListWithValue('BudgetType'));
@@ -268,7 +268,6 @@ class Budget extends Element
     public function messages()
     {
         $messages = [
-            'budget.size'                  => 'Multiple budget is not allowed.',
             'budget.start_before_end_date' => 'Budget Period Start Date should be before Budget Period End Date.',
             'budget.diff_one_year'         => 'The difference of Budget Period Start Date and Budget Period End Date should not exceed 1 year.'
         ];
