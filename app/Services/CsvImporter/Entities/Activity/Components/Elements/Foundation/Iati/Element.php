@@ -79,6 +79,10 @@ abstract class Element
      */
     public function data($popIndex = null)
     {
+        if (!$this->data) {
+            $this->data = [];
+        }
+
         if (!$popIndex) {
             return $this->data;
         }
