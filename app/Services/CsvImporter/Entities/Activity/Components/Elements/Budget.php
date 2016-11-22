@@ -14,7 +14,7 @@ class Budget extends Element
      * Csv Header for Budget element.
      * @var array
      */
-    private $_csvHeaders = ['budget_type', 'budget_status', 'budget_period_start', 'budget_period_end', 'budget_value', 'budget_value_date'];
+    private $_csvHeaders = ['budget_type', 'budget_status', 'budget_period_start', 'budget_period_end', 'budget_value', 'budget_value_date', 'budget_currency'];
 
     /**
      * Index under which the data is stored within the object.
@@ -62,6 +62,7 @@ class Budget extends Element
             $this->setBudgetPeriodStart($key, $value, $index);
             $this->setBudgetPeriodEnd($key, $value, $index);
             $this->setBudgetValue($key, $value, $index);
+            $this->setBudgetCurrency($key, $value, $index);
         }
     }
 
@@ -162,8 +163,16 @@ class Budget extends Element
         }
         if ($key == $this->_csvHeaders[5]) {
             $this->data['budget'][$index]['value'][0]['value_date'] = $value;
-            $this->data['budget'][$index]['value'][0]['currency']   = '';
+//            $this->data['budget'][$index]['value'][0]['currency']   = '';
         }
+    }
+
+    protected function setBudgetCurrency($key, $value, $index)
+    {
+        if ($key == $this->_csvHeaders[6]) {
+            $this->data['budget'][$index]['value'][0]['currency'] = $value;
+        }
+
     }
 
     /**
@@ -178,6 +187,22 @@ class Budget extends Element
         $this->setValidity();
 
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    private function currencyCodeList()
+    {
+        $currencyList = $this->loadCodeList('Currency', 'V201');
+
+        $codes = [];
+        foreach ($currencyList['Currency'] as $code) {
+            $codes[] = $code['code'];
+        }
+
+        return implode(',', $codes);
+
     }
 
     /**
@@ -256,6 +281,7 @@ class Budget extends Element
                 'budget.' . $key . '.value.0.amount',
                 ''
             );
+            $rules['budget.' . $key . '.value.0.currency'] = sprintf('in:%s', $this->currencyCodeList());
         }
 
         return $rules;
@@ -285,6 +311,7 @@ class Budget extends Element
             $messages['budget.' . $key . '.value.0.amount.min']                  = 'Budget Value cannot be negative.';
             $messages['budget.' . $key . '.value.0.value_date.required_unless']  = 'Budget Value Date is required.';
             $messages['budget.' . $key . '.value.0.value_date.date_format']      = 'Please enter Budget Value Date in Y-m-d format.';
+            $messages['budget.' . $key . '.value.0.currency.in']                 = 'Incorrect Budget Currency code';
         }
 
         return $messages;
