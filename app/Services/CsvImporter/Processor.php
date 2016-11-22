@@ -26,7 +26,7 @@ class Processor
     /**
      * Total no. of header present in basic csv.
      */
-    const BASIC_CSV_HEADERS_COUNT = 22;
+    const BASIC_CSV_HEADERS_COUNT = 25;
 
     /**
      * Total no. of header present in basic with transaction csv.

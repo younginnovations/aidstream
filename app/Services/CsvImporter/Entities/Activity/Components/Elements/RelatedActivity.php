@@ -105,6 +105,21 @@ class RelatedActivity extends Element
     }
 
     /**
+     * Provides RelatedActivity Codes
+     * @return string
+     */
+    protected function relatedActivityCode()
+    {
+        $codes = [];
+
+        $relatedActivityType = $this->loadCodeList('RelatedActivityType', 'V201');
+        foreach ($relatedActivityType['RelatedActivityType'] as $type) {
+            $codes[] = $type['code'];
+        }
+        return implode(',', $codes);
+    }
+
+    /**
      * Provides the rules for the IATI Element validation.
      * @return array
      */
@@ -127,20 +142,6 @@ class RelatedActivity extends Element
         }
 
         return $rules;
-    }
-
-    /**
-     * @return string
-     */
-    protected function relatedActivityCode()
-    {
-        $codes = [];
-
-        $relatedActivityType = $this->loadCodeList('RelatedActivityType', 'V201');
-        foreach ($relatedActivityType['RelatedActivityType'] as $type) {
-            $codes[] = $type['code'];
-        }
-        return implode(',', $codes);
     }
 
     /**

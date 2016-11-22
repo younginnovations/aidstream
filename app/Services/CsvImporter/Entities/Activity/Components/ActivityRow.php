@@ -31,12 +31,12 @@ class ActivityRow extends Row
     /**
      * Number of headers for the Activity Csv with Transactions and Other Fields.
      */
-    const ACTIVITY_TRANSACTION_OTHERS_HEADER_COUNT = 56;
+    const ACTIVITY_TRANSACTION_OTHERS_HEADER_COUNT = 65;
 
     /**
      * Number of headers for the Activity Csv with Other Fields.
      */
-    const ACTIVITY_OTHERS_HEADER_COUNT = 38;
+    const ACTIVITY_OTHERS_HEADER_COUNT = 47;
 
     /**
      * Directory where the validated Csv data is written before import.
@@ -67,7 +67,8 @@ class ActivityRow extends Row
         'participatingOrganization',
         'recipientCountry',
         'recipientRegion',
-        'sector'
+        'sector',
+        'contactInfo'
     ];
 
     /**
@@ -214,8 +215,6 @@ class ActivityRow extends Row
         $this->fields         = $fields;
         $this->organizationId = $organizationId;
         $this->userId         = $userId;
-//        dd($this->fields());
-
         $this->init();
     }
 
