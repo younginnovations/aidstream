@@ -79,7 +79,8 @@ class ActivityStatus extends Element
         $rules = [
             $this->csvHeader() => sprintf('required|in:%s', $this->validActivityStatus())
         ];
-        (!is_array($this->data['activity_status'])) ?: $rules[$this->csvHeader()] .= '|size:1';
+
+        (!is_array(getVal($this->data, ['activity_status']))) ?: $rules[$this->csvHeader()] .= '|size:1';
 
         return $rules;
     }
