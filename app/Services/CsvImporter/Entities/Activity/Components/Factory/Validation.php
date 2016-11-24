@@ -165,16 +165,19 @@ class Validation extends Factory
                 $totalPercentage = [];
 
                 if ($value && is_array($value)) {
-                    array_walk($value, function ($element) use (&$totalPercentage) {
-                        $sectorVocabulary = (integer) $element['sector_vocabulary'];
-                        $sectorPercentage = $element['percentage'];
+                    array_walk(
+                        $value,
+                        function ($element) use (&$totalPercentage) {
+                            $sectorVocabulary = (integer) $element['sector_vocabulary'];
+                            $sectorPercentage = $element['percentage'];
 
-                        if (array_key_exists($sectorVocabulary, $totalPercentage)) {
-                            $totalPercentage[$sectorVocabulary] += $sectorPercentage;
-                        } else {
-                            $totalPercentage[$sectorVocabulary] = $sectorPercentage;
+                            if (array_key_exists($sectorVocabulary, $totalPercentage)) {
+                                $totalPercentage[$sectorVocabulary] += $sectorPercentage;
+                            } else {
+                                $totalPercentage[$sectorVocabulary] = $sectorPercentage;
+                            }
                         }
-                    });
+                    );
 
                     foreach ($totalPercentage as $key => $percentage) {
                         if ($percentage != "" && $percentage != 100) {
@@ -282,8 +285,20 @@ class Validation extends Factory
             function ($attribute, $values, $parameters, $validator) {
                 $transactionRecipientCountry = getVal($values, ['recipient_country', 0, 'country_code']);
                 $transactionRecipientRegion  = getVal($values, ['recipient_region', 0, 'region_code']);
-                $activityRecipientCountry    = getVal($values, ['activityRecipientCountry', 0, 'country_code']);
-                $activityRecipientRegion     = getVal($values, ['activityRecipientRegion', 0, 'region_code']);
+                $activityRecipientRegion     = '';
+                $activityRecipientCountry    = '';
+
+                if (is_array(getVal($values, ['activityRecipientCountry']))) {
+                    foreach (getVal($values, ['activityRecipientCountry'], []) as $recipientCountry) {
+                        $activityRecipientCountry = $recipientCountry['country_code'];
+                    }
+                }
+
+                if (is_array(getVal($values, ['activityRecipientRegion']))) {
+                    foreach (getVal($values, ['activityRecipientRegion'], []) as $recipientRegion) {
+                        $activityRecipientRegion = $recipientRegion['region_code'];
+                    }
+                }
 
                 if (($activityRecipientCountry == "" && $activityRecipientRegion == "")
                     && ($transactionRecipientRegion != "" || $transactionRecipientCountry != "")

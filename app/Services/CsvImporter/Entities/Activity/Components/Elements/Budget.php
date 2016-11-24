@@ -56,7 +56,7 @@ class Budget extends Element
      */
     protected function map($key, $value, $index)
     {
-        if (!(is_null($value) || $value == "")) {
+        if (!(is_null($value) || $value === "")) {
             $this->setBudgetType($key, $value, $index);
             $this->setBudgetStatus($key, $value, $index);
             $this->setBudgetPeriodStart($key, $value, $index);

@@ -102,7 +102,7 @@ class Transaction extends Element
     protected function prepare($fields)
     {
         foreach ($fields as $key => $value) {
-            $value = ($value) ? $value : '';
+            $value = (!is_null($value)) ? $value : '';
             $this->setInternalReference($key, $value);
             $this->setHumanitarian();
             $this->setTransactionType($key, $value);
@@ -206,7 +206,7 @@ class Transaction extends Element
             'transaction.transaction_date.*.date.date_format'               => 'Please enter transaction date in Y-m-d format.',
             'transaction.value.*.amount.required'                           => 'Transaction Value is required.',
             'transaction.value.*.amount.numeric'                            => 'Transaction Value should be numeric.',
-            'transaction.value.*.amount. min'                               => 'Transaction Value should be positive.',
+            'transaction.value.*.amount.min'                                => 'Transaction Value cannot be negative.',
             'transaction.value.*.date.required'                             => 'Transaction Value Date is required.',
             'transaction.value.*.date.date_format'                          => 'Please enter transaction value date in Y-m-d format.',
             'transaction.provider_organization.*.type.in'                   => 'Entered provider organisation type is incorrect in Transaction.',
@@ -215,9 +215,9 @@ class Transaction extends Element
             'transaction.receiver_organization.only_one_among'              => 'Receiver Organisation identifier is required if organisation name is not present in Transaction.',
             'transaction.sector.check_sector'                               => 'Sector information must be present either in Transaction level or Activity level but not in both.',
             'transaction.sector.*.sector_vocabulary.in'                     => 'Entered sector vocabulary is incorrect in Transaction.',
-            'transaction.sector.*.sector_vocabulary.required_if'            => 'Sector Vocabulary is required in Transaction.',
-            'transaction.sector.*.sector_code.in'                           => 'Entered sector code for vocabulary 1 is incorrect in Transaction.',
-            'transaction.sector.*.sector_category_code.in'                  => 'Entered sector code for vocabulary 2 is incorrect in Transaction.',
+            'transaction.sector.*.sector_vocabulary.required_if'            => 'Sector Vocabulary is required in Transaction if not present in Activity Level.',
+            'transaction.sector.*.sector_code.in'                           => 'Entered sector code for vocabulary (1) is incorrect in Transaction.',
+            'transaction.sector.*.sector_category_code.in'                  => 'Entered sector code for vocabulary (2) is incorrect in Transaction.',
             'transaction.sector.*.sector_text.required_unless'              => 'Sector code is required in Transaction.',
             'transaction.recipient_country.*.country_code.in'               => 'Entered Recipient country code is incorrect in Transaction.',
             'transaction.recipient_region.*.region_code.in'                 => 'Entered recipient region code is incorrect in Transaction.'
