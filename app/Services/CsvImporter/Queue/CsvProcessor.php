@@ -67,6 +67,7 @@ class CsvProcessor
      */
     public function handle($organizationId, $userId)
     {
+        $this->filterHeader();
         if ($this->isCorrectCsv()) {
             $this->groupValues();
 
@@ -161,5 +162,20 @@ class CsvProcessor
         }
 
         return $this->hasCorrectHeaders();
+    }
+
+    /**
+     * Filter unwanted keys generated while copying and pasting csv headers. For ex 0 index
+     * @return mixed
+     */
+    protected function filterHeader()
+    {
+        foreach ($this->csv as $index => $csvHeaders) {
+            foreach ($csvHeaders as $headerIndex => $header) {
+                if ($headerIndex === 0) {
+                    unset($this->csv[$index][$headerIndex]);
+                }
+            }
+        }
     }
 }
