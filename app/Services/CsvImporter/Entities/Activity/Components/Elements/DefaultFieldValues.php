@@ -222,9 +222,9 @@ class DefaultFieldValues extends Element
             $this->data['default_field_values'][$index]['humanitarian'] = '';
         }
         if ($key == $this->_csvHeaders[2]) {
-            if ($value == 'Yes') {
+            if ((strtolower($value) == 'yes') || (strtolower($value) == 'true')) {
                 $value = '1';
-            } else if ($value == 'No') {
+            } else if ((strtolower($value) == 'no') || (strtolower($value) == 'false')) {
                 $value = '0';
             }
 
@@ -256,7 +256,7 @@ class DefaultFieldValues extends Element
             'default_field_values'                    => 'size:1',
             'default_field_values.*.default_currency' => sprintf('in:%s', $this->defaultValueCodeList('Currency', 'V201')),
             'default_field_values.*.default_language' => sprintf('in:%s', $this->defaultValueCodeList('Language', 'V201')),
-            'default_field_values.*.humanitarian'     => sprintf('in:%s', 'Yes,No,1,0')
+            'default_field_values.*.humanitarian'     => sprintf('in:%s', '1,0')
         ];
     }
 

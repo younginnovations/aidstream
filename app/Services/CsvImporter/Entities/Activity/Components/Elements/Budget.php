@@ -14,7 +14,7 @@ class Budget extends Element
      * Csv Header for Budget element.
      * @var array
      */
-    private $_csvHeaders = ['budget_type', 'budget_status', 'budget_period_start', 'budget_period_end', 'budget_value', 'budget_value_date'];
+    private $_csvHeaders = ['budget_type', 'budget_status', 'budget_period_start', 'budget_period_end', 'budget_value', 'budget_value_date', 'budget_currency'];
 
     /**
      * Index under which the data is stored within the object.
@@ -62,6 +62,7 @@ class Budget extends Element
             $this->setBudgetPeriodStart($key, $value, $index);
             $this->setBudgetPeriodEnd($key, $value, $index);
             $this->setBudgetValue($key, $value, $index);
+            $this->setBudgetCurrency($key, $value, $index);
         }
     }
 
@@ -162,8 +163,24 @@ class Budget extends Element
         }
         if ($key == $this->_csvHeaders[5]) {
             $this->data['budget'][$index]['value'][0]['value_date'] = $value;
-            $this->data['budget'][$index]['value'][0]['currency']   = '';
         }
+    }
+
+    /**
+     * Set Budget currency for Budget Element
+     * @param $key
+     * @param $value
+     * @param $index
+     */
+    protected function setBudgetCurrency($key, $value, $index)
+    {
+        if (!isset($this->data['budget'][$index]['value'][0]['currency'])) {
+            $this->data['budget'][$index]['value'][0]['currency'] = '';
+        }
+        if ($key == $this->_csvHeaders[6]) {
+            $this->data['budget'][$index]['value'][0]['currency'] = strtoupper($value);
+        }
+
     }
 
     /**
@@ -181,12 +198,29 @@ class Budget extends Element
     }
 
     /**
+     * Provides the IATI Currency code list.
+     * @return string
+     */
+    protected function currencyCodeList()
+    {
+        $currencyList = $this->loadCodeList('Currency', 'V201');
+
+        $codes = [];
+        foreach ($currencyList['Currency'] as $code) {
+            $codes[] = $code['code'];
+        }
+
+        return implode(',', $codes);
+
+    }
+
+    /**
      * Provides the rules for the IATI Element validation.
      * @return array
      */
     public function rules()
     {
-        $rules = ['budget' => 'size:1|start_before_end_date|diff_one_year'];
+        $rules = ['budget' => 'start_before_end_date|diff_one_year'];
 
         foreach (getVal($this->data(), ['budget'], []) as $key => $value) {
             $rules['budget.' . $key . '.budget_type']         = sprintf('in:%s', $this->budgetCodeListWithValue('BudgetType'));
@@ -256,6 +290,7 @@ class Budget extends Element
                 'budget.' . $key . '.value.0.amount',
                 ''
             );
+            $rules['budget.' . $key . '.value.0.currency'] = sprintf('in:%s', $this->currencyCodeList());
         }
 
         return $rules;
@@ -268,7 +303,6 @@ class Budget extends Element
     public function messages()
     {
         $messages = [
-            'budget.size'                  => 'Multiple budget is not allowed.',
             'budget.start_before_end_date' => 'Budget Period Start Date should be before Budget Period End Date.',
             'budget.diff_one_year'         => 'The difference of Budget Period Start Date and Budget Period End Date should not exceed 1 year.'
         ];
@@ -286,6 +320,7 @@ class Budget extends Element
             $messages['budget.' . $key . '.value.0.amount.min']                  = 'Budget Value cannot be negative.';
             $messages['budget.' . $key . '.value.0.value_date.required_unless']  = 'Budget Value Date is required.';
             $messages['budget.' . $key . '.value.0.value_date.date_format']      = 'Please enter Budget Value Date in Y-m-d format.';
+            $messages['budget.' . $key . '.value.0.currency.in']                 = 'Incorrect Budget Currency code';
         }
 
         return $messages;

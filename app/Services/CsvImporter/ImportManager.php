@@ -522,7 +522,9 @@ class ImportManager
      */
     public function deleteFile($filename)
     {
-        unlink($this->getTemporaryFilepath($filename));
+        if (file_exists($this->getTemporaryFilepath($filename))) {
+            unlink($this->getTemporaryFilepath($filename));
+        }
 
         return $this;
     }

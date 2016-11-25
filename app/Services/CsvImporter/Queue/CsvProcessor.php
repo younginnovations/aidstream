@@ -44,12 +44,12 @@ class CsvProcessor
     /**
      * Number of headers for the Activity Csv with Transactions and Other Fields.
      */
-    const ACTIVITY_TRANSACTION_OTHERS_HEADER_COUNT = 53;
+    const ACTIVITY_TRANSACTION_OTHERS_HEADER_COUNT = 65;
 
     /**
      * Number of headers for the Activity Csv with Other Fields.
      */
-    const ACTIVITY_OTHERS_HEADER_COUNT = 35;
+    const ACTIVITY_OTHERS_HEADER_COUNT = 47;
 
     /**
      * CsvProcessor constructor.

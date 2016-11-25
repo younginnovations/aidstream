@@ -330,7 +330,8 @@ class ActivityRepository
                 'policy_marker'              => (array_key_exists('policy_marker', $activityData) ? $activityData['policy_marker'] : null),
                 'budget'                     => (array_key_exists('budget', $activityData) ? $activityData['budget'] : null),
                 'activity_scope'             => (array_key_exists('activity_scope', $activityData) ? $activityData['activity_scope'] : null),
-                'default_field_values'       => $defaultFieldValues
+                'default_field_values'       => $defaultFieldValues,
+                'contact_info'               => getVal($activityData, ['contact_info'], null)
             ]
         );
     }
