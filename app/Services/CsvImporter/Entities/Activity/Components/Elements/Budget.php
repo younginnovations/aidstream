@@ -163,12 +163,20 @@ class Budget extends Element
         }
         if ($key == $this->_csvHeaders[5]) {
             $this->data['budget'][$index]['value'][0]['value_date'] = $value;
-//            $this->data['budget'][$index]['value'][0]['currency']   = '';
         }
     }
 
+    /**
+     * Set Budget currency for Budget Element
+     * @param $key
+     * @param $value
+     * @param $index
+     */
     protected function setBudgetCurrency($key, $value, $index)
     {
+        if (!isset($this->data['budget'][$index]['value'][0]['currency'])) {
+            $this->data['budget'][$index]['value'][0]['currency'] = '';
+        }
         if ($key == $this->_csvHeaders[6]) {
             $this->data['budget'][$index]['value'][0]['currency'] = $value;
         }
@@ -190,9 +198,10 @@ class Budget extends Element
     }
 
     /**
+     * Provides the IATI Currency code list.
      * @return string
      */
-    private function currencyCodeList()
+    protected function currencyCodeList()
     {
         $currencyList = $this->loadCodeList('Currency', 'V201');
 

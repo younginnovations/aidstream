@@ -9,6 +9,10 @@ use App\Services\CsvImporter\Entities\Activity\Components\Factory\Validation;
  */
 class ContactInfo extends Element
 {
+
+    /**
+     * Defines constant for Contact Info Template path
+     */
     const TEMPLATE_FILE_PATH = '/Services/CsvImporter/Entities/Activity/Components/Elements/Templates/ContactInfo.json';
 
     /**
@@ -41,7 +45,6 @@ class ContactInfo extends Element
     public function __construct($fields, Validation $factory)
     {
         $this->prepare($fields);
-//        $this->template = $this->loadTemplate();
         $this->factory = $factory;
     }
 
@@ -126,6 +129,12 @@ class ContactInfo extends Element
         }
     }
 
+    /**
+     * Maps Contact Department
+     * @param $key
+     * @param $value
+     * @param $index
+     */
     protected function setContactDepartment($key, $value, $index)
     {
         if (!isset($this->data['contact_info'][$index]['department'][0]['narrative'][0]['narrative'])) {
@@ -139,6 +148,12 @@ class ContactInfo extends Element
         }
     }
 
+    /**
+     * Maps Contact Person's Name
+     * @param $key
+     * @param $value
+     * @param $index
+     */
     protected function setContactPersonName($key, $value, $index)
     {
         if (!isset($this->data['contact_info'][$index]['person_name'][0]['narrative'][0]['narrative'])) {
@@ -152,6 +167,12 @@ class ContactInfo extends Element
         }
     }
 
+    /**
+     * Define Contact Job Title
+     * @param $key
+     * @param $value
+     * @param $index
+     */
     protected function setContactJobTitle($key, $value, $index)
     {
         if (!isset($this->data['contact_info'][$index]['job_title'][0]['narrative'][0]['narrative'])) {
@@ -165,6 +186,12 @@ class ContactInfo extends Element
         }
     }
 
+    /**
+     * Maps Contact Telephone
+     * @param $key
+     * @param $value
+     * @param $index
+     */
     protected function setContactTelephone($key, $value, $index)
     {
         if (!isset($this->data['contact_info'][$index]['telephone'][0]['telephone'])) {
@@ -176,6 +203,12 @@ class ContactInfo extends Element
         }
     }
 
+    /**
+     * Maps Contact Email
+     * @param $key
+     * @param $value
+     * @param $index
+     */
     protected function setContactEmail($key, $value, $index)
     {
         if (!isset($this->data['contact_info'][$index]['email'][0]['email'])) {
@@ -187,6 +220,12 @@ class ContactInfo extends Element
         }
     }
 
+    /**
+     * Maps Contact Website
+     * @param $key
+     * @param $value
+     * @param $index
+     */
     protected function setContactWebsite($key, $value, $index)
     {
         if (!isset($this->data['contact_info'][$index]['website'][0]['website'])) {
@@ -198,6 +237,12 @@ class ContactInfo extends Element
         }
     }
 
+    /**
+     * Maps Contact Mailing Address
+     * @param $key
+     * @param $value
+     * @param $index
+     */
     protected function setContactMailingAddress($key, $value, $index)
     {
         if (!isset($this->data['contact_info'][$index]['mailing_address'][0]['narrative'][0]['narrative'])) {
@@ -238,6 +283,7 @@ class ContactInfo extends Element
         $rules['contact_info.*.type'] = sprintf('in:%s', $this->contactTypeCode());
         $rules['contact_info.*.email.0.email'] = 'email';
         $rules['contact_info.*.website.0.website'] = 'url';
+
         return $rules;
     }
 
@@ -264,8 +310,6 @@ class ContactInfo extends Element
         $this->validator = $this->factory->sign($this->data())
                                          ->with($this->rules(), $this->messages())
                                          ->getValidatorInstance();
-
-
         $this->setValidity();
 
         return $this;
