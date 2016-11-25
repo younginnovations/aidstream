@@ -178,7 +178,7 @@ class Budget extends Element
             $this->data['budget'][$index]['value'][0]['currency'] = '';
         }
         if ($key == $this->_csvHeaders[6]) {
-            $this->data['budget'][$index]['value'][0]['currency'] = $value;
+            $this->data['budget'][$index]['value'][0]['currency'] = strtoupper($value);
         }
 
     }
