@@ -72,6 +72,11 @@ class OrganizationController extends Controller
         $this->middleware('auth');
     }
 
+    public function index()
+    {
+        //
+    }
+
     /**
      * Display the specified resource.
      *

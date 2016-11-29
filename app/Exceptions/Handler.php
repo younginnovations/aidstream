@@ -8,6 +8,7 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Validation\ValidationException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class Handler extends ExceptionHandler
 {
@@ -24,6 +25,7 @@ class Handler extends ExceptionHandler
         ValidationException::class,
         TokenMismatchException::class,
         HttpResponseException::class,
+        NotFoundHttpException::class
     ];
 
     /**
@@ -48,6 +50,17 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $e)
     {
+        if ($e instanceof NotFoundHttpException) {
+            if (auth()->check()) {
+                return redirect()->route('activity.index')->withResponse(['type' => 'warning', 'code' => ['message', ['message' => '<b>404! Not Found</b><br>The requested url cannot be found in our system.']]]);
+            }
+
+            $message = '<b>404! Not Found</b><br><br>The requested url cannot be found in our system. <br><br> Please contact us at <a href="support@aidstream.org" target="_blank">support@aidstream.org</a>';
+
+            return response()->view(sprintf('errors.%s', auth()->check() ? 'errors' : 'noAuthErrors'), compact('message'));
+//            return redirect()->to('/')->withResponse(['type' => 'warning', 'code' => ['message', ['message' => '<b>404! Not Found</b><br>The requested url cannot be found in our system.']]]);
+        }
+
         if ($e instanceof TokenMismatchException) {
             return redirect()->back()->exceptInput('_token')->withResponse(['type' => 'warning', 'code' => ['message', ['message' => 'Token has been expired. Please resubmit the form again.']]]);
         }
