@@ -12,6 +12,20 @@ $router->get(
     }
 );
 
+$router->get('/uploads/files/organization/{file}', function ($file) {
+    $pieces = explode('.', $file);
+
+    if (end($pieces) === 'xml') {
+        return redirect('/files/xml/' . $file);
+    }
+
+    return redirect('/');
+});
+
+$router->get('/auth/register', function () {
+    return redirect('/register');
+});
+
 $router->get('/', 'HomeController@index');
 $router->get('home', 'HomeController@index');
 $router->get('about', 'AboutController@index');

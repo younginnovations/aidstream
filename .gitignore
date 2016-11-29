@@ -15,4 +15,4 @@ _ide_helper.php
 /public/css/style.css.map
 .DS_store
 /storage/csvImporter/tmp
-
+/storage/xmlImporter/

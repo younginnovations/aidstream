@@ -42,7 +42,9 @@
             <div class="col-lg-4 col-md-8 col-md-offset-2 form-body">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <img src="{{url('images/logo.png')}}" alt="">
+                        <a href="/">
+                            <img src="{{url('images/logo.png')}}" alt="">
+                        </a>
                     </div>
                     <div class="panel-body">
                         <div class="alert alert-danger">
