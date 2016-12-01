@@ -1,7 +1,6 @@
 <?php namespace App\Services\CsvImporter\Queue;
 
 use Maatwebsite\Excel\Excel;
-use App\Services\CsvImporter\CsvProcessor;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use App\Services\CsvImporter\Queue\Jobs\ImportActivity;
 
@@ -50,16 +49,9 @@ class Processor
     public function pushIntoQueue($file, $filename)
     {
         $csv = $this->csvReader->load($file)->toArray();
-// TODO: remove this
 
-        $a = new CsvProcessor($csv);
-
-        $a->handle(session('org_id'), auth()->user()->id);
-
-// TODO: remove that
-
-//        $this->dispatch(
-//            new ImportActivity(new CsvProcessor($csv), $filename)
-//        );
+        $this->dispatch(
+            new ImportActivity(new CsvProcessor($csv), $filename)
+        );
     }
 }
