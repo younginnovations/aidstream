@@ -1549,14 +1549,14 @@ label {
   color: rgba(72, 72, 72, 0.7);
   padding: 44px 0 50px;
   background: rgba(72, 72, 72, 0.06);
-  margin: 36px 30px; }
+  margin: 36px 8px 36px 24px; }
   .no-data .btn {
     background: #00A8FF;
     border: 0;
-    line-height: 67px;
-    padding: 0 34px 0 62px;
-    font-size: 16px;
-    display: table;
+    line-height: 50px;
+    padding: 0 24px 0 52px;
+    font-size: 14px;
+    display: inline-block;
     margin: 25px auto;
     font-style: normal;
     position: relative; }
@@ -1566,12 +1566,17 @@ label {
       height: 34px;
       width: 34px;
       position: absolute;
-      top: 14px;
+      top: 5px;
       right: auto;
       bottom: auto;
-      left: 19px; }
+      left: 9px; }
     .no-data .btn:hover {
       background-color: #0598e5; }
+    .no-data .btn + .btn {
+      margin-left: 10px; }
+
+.no-data .btn-upload:before {
+  background-position: -497px -302px; }
 
 .no-activity-data {
   background: rgba(72, 72, 72, 0.06) url(../../images/ic-no-activity.svg) no-repeat center 79px;
@@ -2453,8 +2458,10 @@ form > .add_to_collection[data-collection="legacy_data"] {
     vertical-align: middle;
     float: none;
     font-size: 13px;
+    line-height: 40px;
     width: 260px;
-    height: 40px; }
+    height: 40px;
+    padding: 0; }
     .download-transaction-wrap .btn .caret {
       margin-left: 4px;
       color: #fff; }
@@ -3427,7 +3434,7 @@ label.required::after {
   min-width: 230px; }
 
 .upload-activity-wrapper .element-panel-heading {
-  padding-right: 36px; }
+  padding-right: 16px; }
 
 table.dataTable.no-footer {
   border-bottom: none; }
@@ -6524,7 +6531,7 @@ body > .skiptranslate iframe {
             transform: translate(-50%, -50%); } }
 
 @media all and (min-width: 1500px) {
-  .create-form {
+  .settings-form {
     width: 80%; } }
 
 /*# sourceMappingURL=maps/app.css.map */

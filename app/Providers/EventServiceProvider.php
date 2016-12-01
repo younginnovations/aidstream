@@ -14,6 +14,9 @@ class EventServiceProvider extends ServiceProvider {
 		'App\Services\CsvImporter\Events\ActivityCsvWasUploaded' => [
 			'App\Services\CsvImporter\Listeners\ActivityCsvUpload',
 		],
+        'App\Services\CsvImporter\Events\ResultCsvWasUploaded' => [
+            'App\Services\CsvImporter\Listeners\ResultCsvUpload',
+        ],
 	];
 
 	/**
