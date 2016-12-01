@@ -1,16 +1,18 @@
 <?php namespace App\Http\Controllers\Complete\Activity\Import\Result;
 
 use App\Http\Requests\Request;
-use App\Services\CsvImporter\ImportResultManager as ImportManager;
 use App\Http\Controllers\Controller;
-use App\Core\V201\Requests\Activity\Result\ImportResult;
 use App\Services\Organization\OrganizationManager;
+use App\Core\V201\Requests\Activity\Result\ImportResult;
+use App\Services\CsvImporter\ImportResultManager as ImportManager;
 use App\Services\FormCreator\Activity\Result\ImportResult as ImportResultForm;
-use Illuminate\Support\Facades\File;
 
+/**
+ * Class ImportResultController
+ * @package App\Http\Controllers\Complete\Activity\Import\Result
+ */
 class ImportResultController extends Controller
 {
-
     /**
      * @var ImportResultForm
      */
@@ -58,9 +60,7 @@ class ImportResultController extends Controller
      */
     public function downloadResultTemplate()
     {
-        $path = self::RESULT_TEMPLATE_PATH;
-
-        return response()->download(app_path(sprintf($path, session('version'))));
+        return response()->download(app_path(sprintf(self::RESULT_TEMPLATE_PATH, session('version'))));
     }
 
     /**
@@ -105,7 +105,7 @@ class ImportResultController extends Controller
             $this->importManager->startImport($filename)
                                 ->fireCsvUploadEvent($filename);
 
-            $this->fixStagingPermission(storage_path('csvImporter/tmp'));
+            $this->fixPermission(storage_path('csvImporter/tmp'));
 
             return redirect()->route('activity.result.import-status', $activityId);
         }
@@ -117,6 +117,7 @@ class ImportResultController extends Controller
 
     /**
      * Import validated activities into the database.
+     * @param         $activityId
      * @param Request $request
      * @return mixed
      */
@@ -128,10 +129,10 @@ class ImportResultController extends Controller
             $this->importManager->create($activityId, $results);
             $this->importManager->endImport();
 
-            return redirect()->route('activity.index')->withResponse(['type' => 'success', 'code' => ['message', ['message' => 'Activities successfully imported.']]]);
-        } else {
-            return redirect()->back()->withResponse(['type' => 'warning', 'code' => ['message', ['message' => 'Please select the activities to be imported.']]]);
+            return redirect()->route('activity.show', $activityId)->withResponse(['type' => 'success', 'code' => ['message', ['message' => 'Results successfully imported.']]]);
         }
+
+        return redirect()->back()->withResponse(['type' => 'warning', 'code' => ['message', ['message' => 'Please select the activities to be imported.']]]);
     }
 
     /**
@@ -173,24 +174,7 @@ class ImportResultController extends Controller
         $filepath = $this->importManager->getFilePath(false);
 
         if (file_exists($filepath)) {
-            $results = json_decode(file_get_contents($filepath), true);
-            $tempPath   = $this->importManager->getTemporaryFilepath('invalid-temp.json');
-
-            if (file_exists($tempPath)) {
-                $old   = json_decode(file_get_contents($tempPath), true);
-                $diff  = array_diff_key($results, $old);
-                $total = array_merge($diff, $old);
-
-                File::put($tempPath, json_encode($total));
-
-                $results = $diff;
-
-                $response = ['render' => view('Activity.csvImporter.result.invalid', compact('results'))->render()];
-
-                return response()->json($response);
-            } else {
-                File::put($tempPath, json_encode($results));
-            }
+            $results = $this->importManager->fetchData($filepath, 'invalid-temp.json');
 
             $response = ['render' => view('Activity.csvImporter.result.invalid', compact('results'))->render()];
         } else {
@@ -209,24 +193,7 @@ class ImportResultController extends Controller
         $filepath = $this->importManager->getFilePath(true);
 
         if (file_exists($filepath)) {
-            $results = json_decode(file_get_contents($filepath), true);
-            $tempPath   = $this->importManager->getTemporaryFilepath('valid-temp.json');
-
-            if (file_exists($tempPath)) {
-                $old   = json_decode(file_get_contents($tempPath), true);
-                $diff  = array_diff_key($results, $old);
-                $total = array_merge($diff, $old);
-
-                File::put($tempPath, json_encode($total));
-
-                $results = $diff;
-
-                $response = ['render' => view('Activity.csvImporter.result.valid', compact('results'))->render()];
-
-                return response()->json($response);
-            } else {
-                File::put($tempPath, json_encode($results));
-            }
+            $results = $this->importManager->fetchData($filepath, 'valid-temp.json');
 
             $response = ['render' => view('Activity.csvImporter.result.valid', compact('results'))->render()];
         } else {
@@ -313,9 +280,8 @@ class ImportResultController extends Controller
      * Fix file permission while on staging environment
      * @param $path
      */
-    protected function fixStagingPermission($path)
+    protected function fixPermission($path)
     {
-        // TODO: Remove this.
         shell_exec(sprintf('chmod 777 -R %s', $path));
     }
 }
