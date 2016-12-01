@@ -1,18 +1,18 @@
 <?php namespace App\Services\CsvImporter;
 
-use App\Core\V201\Repositories\Activity\Result as ResultRepository;
-use App\Core\V201\Repositories\Organization\OrganizationRepository;
-use App\Services\CsvImporter\Events\ResultCsvWasUploaded;
 use Exception;
-use Illuminate\Filesystem\Filesystem;
-use Illuminate\Session\SessionManager;
-use Illuminate\Support\Facades\Event;
-use Illuminate\Support\Facades\File as FileFacade;
 use Maatwebsite\Excel\Excel;
 use Psr\Log\LoggerInterface;
+use Illuminate\Filesystem\Filesystem;
+use Illuminate\Support\Facades\Event;
+use Illuminate\Session\SessionManager;
 use Symfony\Component\HttpFoundation\File\File;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Illuminate\Support\Facades\File as FileFacade;
 use App\Services\CsvImporter\Queue\ResultProcessor;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use App\Services\CsvImporter\Events\ResultCsvWasUploaded;
+use App\Core\V201\Repositories\Activity\Result as ResultRepository;
+use App\Core\V201\Repositories\Organization\OrganizationRepository;
 
 /**
  * Class ImportResultManager
@@ -59,18 +59,16 @@ class ImportResultManager
      * @var SessionManager
      */
     protected $sessionManager;
+
     /**
      * @var ResultRepository
      */
     protected $resultRepo;
+
     /**
      * @var OrganizationRepository
      */
     protected $organizationRepo;
-    /**
-     * @var Transaction
-     */
-    protected $transactionRepo;
 
     /**
      * Current User's id.
@@ -142,7 +140,7 @@ class ImportResultManager
                 ]
             );
 
-            dd($exception);
+            return null;
         }
     }
 
@@ -153,7 +151,7 @@ class ImportResultManager
      */
     public function create($activityId, $results)
     {
-        $contents        = json_decode(file_get_contents($this->getFilePath(true)), true);
+        $contents = json_decode(file_get_contents($this->getFilePath(true)), true);
 
         foreach ($results as $key => $result) {
             $resultData      = $contents[$result];
@@ -209,7 +207,6 @@ class ImportResultManager
     {
         $dir = storage_path(sprintf('%s/%s/%s', self::CSV_DATA_STORAGE_PATH, session('org_id'), $this->userId));
         $this->filesystem->deleteDirectory($dir);
-
     }
 
     /**
@@ -338,7 +335,7 @@ class ImportResultManager
         $results = json_decode(file_get_contents($filePath), true);
         $path    = $this->getTemporaryFilepath($temporaryFileName);
 
-        $this->fixStagingPermission($this->getTemporaryFilepath());
+        $this->fixPermission($this->getTemporaryFilepath());
 
         FileFacade::put($path, json_encode($results));
 
@@ -477,9 +474,8 @@ class ImportResultManager
      * Fix file permission while on staging environment
      * @param $path
      */
-    protected function fixStagingPermission($path)
+    protected function fixPermission($path)
     {
-        // TODO: Remove this.
         shell_exec(sprintf('chmod 777 -R %s', $path));
     }
 
@@ -526,5 +522,30 @@ class ImportResultManager
         }
 
         return false;
+    }
+
+    /**
+     * Fetch the processed data.
+     * @param $filepath
+     * @param $temporaryFilename
+     * @return array|mixed
+     */
+    public function fetchData($filepath, $temporaryFilename)
+    {
+        $results  = json_decode(file_get_contents($filepath), true);
+        $tempPath = $this->getTemporaryFilepath($temporaryFilename);
+
+        if (file_exists($tempPath)) {
+            $old   = json_decode(file_get_contents($tempPath), true);
+            $diff  = array_diff_key($results, $old);
+            $total = array_merge($diff, $old);
+
+            FileFacade::put($tempPath, json_encode($total));
+            $results = $diff;
+        } else {
+            FileFacade::put($tempPath, json_encode($results));
+        }
+
+        return $results;
     }
 }
