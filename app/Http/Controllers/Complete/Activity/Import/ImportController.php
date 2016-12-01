@@ -145,7 +145,7 @@ class ImportController extends Controller
             $this->importManager->startImport($filename)
                                 ->fireCsvUploadEvent($filename);
 
-            $this->fixStagingPermission(storage_path('csvImporter/tmp'));
+            $this->fixPermission(storage_path('csvImporter/tmp'));
 
             return redirect()->route('activity.import-status');
         }
@@ -216,28 +216,10 @@ class ImportController extends Controller
     public function getRemainingInvalidData()
     {
         $filepath = $this->importManager->getFilePath(false);
-
-        $this->fixStagingPermission($this->importManager->getTemporaryFilepath());
+        $this->fixPermission($this->importManager->getTemporaryFilepath());
 
         if (file_exists($filepath)) {
-            $activities = json_decode(file_get_contents($filepath), true);
-            $tempPath   = $this->importManager->getTemporaryFilepath('invalid-temp.json');
-
-            if (file_exists($tempPath)) {
-                $old   = json_decode(file_get_contents($tempPath), true);
-                $diff  = array_diff_key($activities, $old);
-                $total = array_merge($diff, $old);
-
-                File::put($tempPath, json_encode($total));
-
-                $activities = $diff;
-
-                $response = ['render' => view('Activity.csvImporter.invalid', compact('activities'))->render()];
-
-                return response()->json($response);
-            } else {
-                File::put($tempPath, json_encode($activities));
-            }
+            $activities = $this->importManager->fetchData($filepath, 'invalid-temp.json');
 
             $response = ['render' => view('Activity.csvImporter.invalid', compact('activities'))->render()];
         } else {
@@ -357,12 +339,15 @@ class ImportController extends Controller
      * Fix file permission while on staging environment
      * @param $path
      */
-    protected function fixStagingPermission($path)
+    protected function fixPermission($path)
     {
-        // TODO: Remove this.
         shell_exec(sprintf('chmod 777 -R %s', $path));
     }
 
+    /**
+     * Get the currently logged in User's Id.
+     * @return null
+     */
     protected function getUserId()
     {
         if (auth()->check()) {

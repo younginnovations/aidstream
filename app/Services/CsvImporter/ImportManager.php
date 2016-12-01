@@ -588,4 +588,31 @@ class ImportManager
             $this->clearSession(['import-status', 'filename']);
         }
     }
+
+    /**
+     * Fetch the processed data.
+     *
+     * @param $filepath
+     * @param $temporaryFilename
+     * @return array|mixed
+     */
+    public function fetchData($filepath, $temporaryFilename)
+    {
+        $activities = json_decode(file_get_contents($filepath), true);
+        $tempPath   = $this->getTemporaryFilepath($temporaryFilename);
+
+        if (file_exists($tempPath)) {
+            $old   = json_decode(file_get_contents($tempPath), true);
+            $diff  = array_diff_key($activities, $old);
+            $total = array_merge($diff, $old);
+
+            File::put($tempPath, json_encode($total));
+
+            $activities = $diff;
+        } else {
+            File::put($tempPath, json_encode($activities));
+        }
+
+        return $activities;
+    }
 }
