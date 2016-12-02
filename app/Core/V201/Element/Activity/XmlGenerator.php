@@ -293,7 +293,13 @@ class XmlGenerator
      */
     protected function isEmpty(array $data, $key)
     {
-        return boolval($data[0][$key]);
+        $isEmpty = false;
+
+        foreach ($data as $index => $item) {
+            $isEmpty = empty(getVal($item, [$key], ''));
+        }
+
+        return $isEmpty;
     }
 
     /**

@@ -193,7 +193,7 @@ class ParticipatingOrganization extends Element
         return [
             'participating_organization'                     => 'required|required_only_one_among:identifier,narrative|funding_implementing_required',
             'participating_organization.*.organization_role' => sprintf('required|in:%s', $this->validOrganizationRoles()),
-            'participating_organization.*.organization_type' => sprintf('required|in:%s', $this->validOrganizationTypes()),
+            'participating_organization.*.organization_type' => sprintf('in:%s', $this->validOrganizationTypes()),
         ];
     }
 
@@ -209,8 +209,7 @@ class ParticipatingOrganization extends Element
             'participating_organization.*.organization_role.required'  => 'Participating Organisation role is required.',
             'participating_organization.required_only_one_among'       => 'Either Participating Organisation Identifier or Participating Organisation Name is required.',
             'participating_organization.*.organization_role.in'        => 'Only valid Organisation Roles are allowed.',
-            'participating_organization.*.organization_type.in'        => 'Only valid Organisation Types are allowed.',
-            'participating_organization.*.organization_type.required'  => 'Participating Organisation Type is required.'
+            'participating_organization.*.organization_type.in'        => 'Only valid Organisation Types are allowed.'
         ];
     }
 
