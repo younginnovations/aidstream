@@ -30,7 +30,9 @@ $router->get('/', 'HomeController@index');
 $router->get('home', 'HomeController@index');
 $router->get('about', 'AboutController@index');
 $router->get('who-is-using', 'WhoIsUsingController@index');
-$router->get('who-is-using/{page}/{count}', 'WhoIsUsingController@listOrganization');
+$router->get('who-is-using/{organization_id}', 'WhoIsUsingController@getDataForOrganization');
+$router->get('who-is-using/page/{page}/count/{count}', 'WhoIsUsingController@listOrganization');
+$router->get('who-is-using/{orgId}/{activityId}', 'WhoIsUsingController@showActivity');
 $router->get('admin/dashboard', 'SuperAdmin\OrganizationController@adminDashboard');
 $router->resource('settings', 'Complete\SettingsController');
 
@@ -73,8 +75,6 @@ $router->post(
         'uses' => 'Complete\WorkflowController@publish'
     ]
 );
-
-$router->get('who-is-using/{organization_id}', 'WhoIsUsingController@getDataForOrganization');
 
 $router->controllers(
     [

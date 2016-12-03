@@ -7,6 +7,7 @@ use App\Services\Workflow\WorkflowManager;
 use App\Services\Xml\Providers\XmlServiceProvider;
 use App\Services\RequestManager\ActivityElementValidator;
 use Illuminate\Support\Facades\Gate;
+use App\Http\Controllers\Complete\Traits\HistoryExchangeRates;
 
 /**
  * Class WorkflowController
@@ -14,6 +15,8 @@ use Illuminate\Support\Facades\Gate;
  */
 class WorkflowController extends Controller
 {
+    use HistoryExchangeRates;
+
     /**
      * @var XmlServiceProvider
      */
@@ -88,6 +91,16 @@ class WorkflowController extends Controller
 
         $this->authorize('edit_activity', $activity);
 
+        if (($response = $this->exchangeRates($activity)) instanceof \Exception) {
+            return redirect()->back()
+                             ->withResponse(
+                                 [
+                                     'type' => 'warning',
+                                     'code' => ['message', ['message' => $response->getMessage()]]
+                                 ]
+                             );
+        }
+
         return redirect()->back()
                          ->withResponse(
                              $this->respondTo(
@@ -131,7 +144,9 @@ class WorkflowController extends Controller
             return redirect()->back()->withResponse(['type' => 'warning', 'code' => ['message', ['message' => $result]]]);
         }
 
-        return redirect()->back()->withResponse(['type' => 'warning', 'code' => ['message', ['message' => 'Could not publish to registry. (Publisher not found. <a href="/settings">Please check you publisher Id.</a>)']]]);
+        return redirect()->back()->withResponse(
+            ['type' => 'warning', 'code' => ['message', ['message' => 'Could not publish to registry. (Publisher not found. <a href="/settings">Please check you publisher Id.</a>)']]]
+        );
     }
 
     /**

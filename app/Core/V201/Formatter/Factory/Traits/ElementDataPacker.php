@@ -182,9 +182,11 @@ trait ElementDataPacker
     protected function fillBudgetData($activityId, array $data, $budget = null)
     {
         if (!is_null($budget)) {
+            $budgetData = array_first($budget, function () { return true; });
+
             $data[$activityId]['Activity_budget_type']                 = $this->concatenateIntoString($budget, 'budget_type');
-            $data[$activityId]['Activity_budget_periodstart_iso_date'] = $this->concatenateIntoString($budget[0]['period_start'], 'date');
-            $data[$activityId]['Activity_budget_periodend_iso_date']   = $this->concatenateIntoString($budget[0]['period_end'], 'date');
+            $data[$activityId]['Activity_budget_periodstart_iso_date'] = $this->concatenateIntoString($budgetData['period_start'], 'date');
+            $data[$activityId]['Activity_budget_periodend_iso_date']   = $this->concatenateIntoString($budgetData['period_end'], 'date');
             $data[$activityId]['Activity_budget_value_currency']       = $this->concatenateIntoString($budget, 'value', true, 'currency');
             $data[$activityId]['Activity_budget_value_value_date']     = $this->concatenateIntoString($budget, 'value', true, 'value_date');
             $data[$activityId]['Activity_budget_value_text']           = $this->concatenateIntoString($budget, 'value', true, 'amount');
