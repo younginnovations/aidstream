@@ -58,6 +58,11 @@ class GetCodeName
             if ($list['code'] == $code) {
                 return $displayCode ? sprintf('%s [%s]', $list['name'], $list['code']) : $list['name'];
             }
+            if (array_key_exists('category', $list)) {
+                if ($list['category'] == $code) {
+                    return $displayCode ? sprintf('%s [%s]', $list['name'], $list['category']) : $list['name'];
+                }
+            }
         }
     }
 
