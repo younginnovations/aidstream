@@ -1,7 +1,7 @@
 @if(!empty($capitalSpend))
     <div class="activity-element-wrapper">
         <div class="activity-element-list">
-            <div class="activity-element-label">@lang('activityView.capital_spend')</div>
+            <div class="activity-element-label">@lang('activityView.capital_spend') @if(array_key_exists('Capital Spend',$errors)) <i class='imported-from-xml'>icon</i>@endif </div>
             <div class="activity-element-info">
                 {{ $capitalSpend.'%' }}
             </div>

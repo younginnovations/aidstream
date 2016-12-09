@@ -1,9 +1,9 @@
 @if(!emptyOrHasEmptyTemplate($otherIdentifiers))
     <div class="activity-element-wrapper">
-        <div class="title">@lang('activityView.other_identifier')</div>
+        <div class="title">@lang('activityView.other_identifier') @if(array_key_exists('Other Identifier',$errors)) <i class='imported-from-xml'>icon</i>@endif </div>
         @foreach(groupActivityElements($otherIdentifiers , 'type') as $key => $groupedIdentifiers)
             <div class="activity-element-list">
-                <div class="activity-element-label">{{$key}} @lang('activityView.rep_org_internal_acitivity_identifier')</div>
+                <div class="activity-element-label">{{$key}} @lang('activityView.rep_org_internal_activity_identifier')</div>
                 <div class="activity-element-info">
                     @foreach($groupedIdentifiers as $identifiers)
                         <li>{{$identifiers['reference']}}</li>
@@ -20,7 +20,7 @@
                             <div class="element-info">
                                 <div class="activity-element-label">@lang('activityView.owner_org_name')</div>
                                 <div class="activity-element-info">{!! checkIfEmpty(getFirstNarrative($identifiers['owner_org'][0])) !!}
-                                @include('Activity.partials.viewInOtherLanguage' ,['otherLanguages' => getOtherLanguages(getOwnerNarrative($identifiers))])
+                                    @include('Activity.partials.viewInOtherLanguage' ,['otherLanguages' => getOtherLanguages(getOwnerNarrative($identifiers))])
                                 </div>
                             </div>
                         </div>

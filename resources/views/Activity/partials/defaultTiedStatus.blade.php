@@ -1,7 +1,7 @@
 @if(!empty($defaultTiedStatus))
     <div class="activity-element-wrapper">
         <div class="activity-element-list">
-            <div class="activity-element-label">@lang('activityView.default_tied_status')</div>
+            <div class="activity-element-label">@lang('activityView.default_tied_status') @if(array_key_exists('Default Tied Status',$errors)) <i class='imported-from-xml'>icon</i>@endif </div>
             <div class="activity-element-info">
                 {{ substr($getCode->getActivityCodeName('TiedStatus', $defaultTiedStatus) , 0 , -4)}}
             </div>

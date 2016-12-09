@@ -1,7 +1,7 @@
 @if(!emptyOrHasEmptyTemplate($countryBudgetItems))
     <div class="activity-element-wrapper">
         <div class="activity-element-list">
-            <div class="activity-element-label">@lang('activityView.country_budget_items')</div>
+            <div class="activity-element-label">@lang('activityView.country_budget_items') @if(array_key_exists('Country Budget Item',$errors)) <i class='imported-from-xml'>icon</i>@endif </div>
             <div class="activity-element-info">
                 @foreach($countryBudgetItems[0]['budget_item'] as $budgetItems)
                     <li>{!!  getCountryBudgetItems($countryBudgetItems[0]['vocabulary'], $budgetItems) !!} </li>

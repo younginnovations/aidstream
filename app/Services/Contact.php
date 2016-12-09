@@ -93,7 +93,6 @@ class Contact
 
             return $this->messages[$template];
         } catch (Exception $exception) {
-            dd($exception);
             $this->logger->error($exception, ['data' => $data]);
         }
 

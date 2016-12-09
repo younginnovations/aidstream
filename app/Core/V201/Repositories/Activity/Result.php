@@ -83,4 +83,9 @@ class Result
     {
         return $activityResult->delete();
     }
+
+    public function xmlResult($result, $activityId)
+    {
+        return $this->activityResult->create(['result' => $result['result'], 'activity_id' => $activityId]);
+    }
 }
