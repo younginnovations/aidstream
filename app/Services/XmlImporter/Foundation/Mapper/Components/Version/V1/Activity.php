@@ -256,18 +256,18 @@ class Activity
 
     public function description($element, $template)
     {
-        $type                             = $this->attributes($element, 'type');
-        $descType                         = ($type == '') ? 1 : $type;
-        $this->description[$type]['type'] = $descType;
+        $type                                 = $this->attributes($element, 'type');
+        $descType                             = ($type == '') ? 1 : $type;
+        $this->description[$descType]['type'] = $descType;
 
-        if (array_key_exists('narrative', $this->description[$type])) {
-            $narrativeIndex = count($this->description[$type]['narrative']);
+        if (array_key_exists('narrative', getVal($this->description, [$descType], []))) {
+            $narrativeIndex = count($this->description[$descType]['narrative']);
             foreach ($this->narrative($element) as $narrative) {
-                $this->description[$type]['narrative'][$narrativeIndex] = $narrative;
+                $this->description[$descType]['narrative'][$narrativeIndex] = $narrative;
                 $narrativeIndex ++;
             }
         } else {
-            $this->description[$type]['narrative'] = $this->narrative($element);
+            $this->description[$descType]['narrative'] = $this->narrative($element);
         }
 
         return $this->description;
