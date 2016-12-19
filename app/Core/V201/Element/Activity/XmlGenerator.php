@@ -245,7 +245,7 @@ class XmlGenerator
             return $recipientRegion[0]['region_code'];
         } elseif (count($recipientCountry) == 1 && $this->isEmpty($recipientCountry, 'country_code')) {
             return strtolower($recipientCountry[0]['country_code']);
-        } elseif (count($recipientCountry) > 1) {
+        } elseif (count($recipientCountry) >= 1) {
             $maxPercentage = 0;
             $code          = strtolower($recipientCountry[0]['country_code']);
             foreach ($recipientCountry as $country) {
