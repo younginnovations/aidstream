@@ -196,13 +196,14 @@ class SettingsService
      */
     protected function publishSegmentationChanges(Organization $organization, array $details)
     {
-        $changes     = json_decode($details['changes'], true);
-        $settings    = json_decode($details['settings'], true);
-        $autoPublish = $settings['publish_files'];
+        $changes              = json_decode($details['changes'], true);
+        $settings             = json_decode($details['settings'], true);
+        $organizationSettings = $organization->settings->toArray();
+        $autoPublish          = $settings['publish_files'];
 
         if ($autoPublish === 'yes') {
             if ($this->previousFileWasAlreadyPublished($changes)) {
-                $this->publisher->unlink($settings['registry_info'], $changes);
+                $this->publisher->unlink(getVal($organizationSettings, ['registry_info']), $changes);
 
                 $this->organizationDataProvider->unsetPublishedFlag($changes);
 
@@ -217,7 +218,7 @@ class SettingsService
             }
 
             $this->publisher->publish(
-                $settings['registry_info'],
+                getVal($organizationSettings, ['registry_info'], []),
                 $organization,
                 $this->segmentationInterface->extractPublishingType($settings),
                 $changes
