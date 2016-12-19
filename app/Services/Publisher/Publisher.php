@@ -247,7 +247,7 @@ class Publisher extends RegistryApiHandler
     {
         $publisherData = json_decode($publisherData);
 
-        return (!empty($publisherData->result->results));
+        return ($publisherData->result->name == $this->publisherId);
     }
 
     /**
@@ -288,8 +288,8 @@ class Publisher extends RegistryApiHandler
     protected function searchForPublisher()
     {
         $apiHost = env('REGISTRY_URL');
-        $uri     = 'action/package_search';
-        $url     = sprintf('%s%s?q=%s', $apiHost, $uri, $this->publisherId);
+        $uri     = 'action/organization_show';
+        $url     = sprintf('%s%s?id=%s', $apiHost, $uri, $this->publisherId);
 
         return file_get_contents($url);
     }
