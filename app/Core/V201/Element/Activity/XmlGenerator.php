@@ -247,7 +247,8 @@ class XmlGenerator
             return strtolower($recipientCountry[0]['country_code']);
         } elseif (count($recipientCountry) >= 1) {
             $maxPercentage = 0;
-            $code          = strtolower($recipientCountry[0]['country_code']);
+            $countryCode = array_first($recipientCountry, function () { return true; });
+            $code          = strtolower($countryCode['country_code']);
             foreach ($recipientCountry as $country) {
                 $percentage = $country['percentage'];
                 if ($percentage > $maxPercentage) {
