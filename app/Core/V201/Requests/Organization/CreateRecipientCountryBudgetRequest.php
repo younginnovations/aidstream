@@ -92,7 +92,7 @@ class CreateRecipientCountryBudgetRequest extends OrganizationBaseRequest
         $messages = [];
         foreach ($formFields as $recipientCountryIndex => $recipientCountry) {
             $recipientCountryForm                                         = sprintf('%s.recipient_country.%s', $formBase, $recipientCountryIndex);
-            $messages[sprintf('%s.code.required', $recipientCountryForm)] = 'Code is required';
+            $messages[sprintf('%s.code.required', $recipientCountryForm)] = trans('validation.required', ['attribute' => trans('elementForm.code')]);
             $messages                                                     = array_merge(
                 $messages,
                 $this->getMessagesForNarrative($recipientCountry['narrative'], $recipientCountryForm)

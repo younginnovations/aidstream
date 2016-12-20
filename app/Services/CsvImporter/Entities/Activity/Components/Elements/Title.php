@@ -116,8 +116,8 @@ class Title extends Element
     public function messages()
     {
         return [
-            'activity_title.size'                 => 'Only one title is allowed.',
-            'activity_title.0.narrative.required' => 'Title is required.'
+            'activity_title.size'                 => trans('validation.csv_size', ['attribute' => trans('element.title')]),
+            'activity_title.0.narrative.required' => trans('validation.required', ['attribute' => trans('element.title')]),
         ];
     }
 

@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport'/>
-    <title>Aidstream - Register</title>
+    <title>@lang('title.aidstream_register')</title>
     <link rel="shotcut icon" type="image/png" sizes="32*32" href="{{ asset('/images/favicon.png') }}"/>
     <link href="{{ asset('/css/main.min.css') }}" rel="stylesheet">
     <link href="{{ asset('/css/style.css') }}" rel="stylesheet">
@@ -35,36 +35,7 @@
     @yield('head')
 </head>
 <body>
-<header>
-    <nav class="navbar navbar-default navbar-static navbar-fixed">
-        <div class="navbar-header">
-            <a href="{{ url('/') }}" class="navbar-brand">Aidstream</a>
-            <button type="button" class="navbar-toggle collapsed">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="bar1"></span>
-                <span class="bar2"></span>
-                <span class="bar3"></span>
-            </button>
-        </div>
-        <div class="navbar-collapse navbar-right">
-            <ul class="nav navbar-nav">
-                <li><a class="{{ Request::is('about') ? 'active' : '' }}" href="{{ url('/about') }}">About</a></li>
-                <li><a class="{{ Request::is('who-is-using') ? 'active' : '' }}" href="{{ url('/who-is-using') }}">Who's Using It?</a></li>
-                <li><a href="https://github.com/younginnovations/aidstream-new/wiki/User-Guide" target="_blank">User Guide</a></li>
-                <!--<li><a href="#">Snapshot</a></li>-->
-            </ul>
-            <div class="action-btn pull-left">
-                @if(auth()->check())
-                    <a href="{{ url((auth()->user()->role_id == 1 || auth()->user()->role_id == 2) ? config('app.admin_dashboard') : config('app.super_admin_dashboard'))}}" class="btn btn-primary">Go
-                        to Dashboard</a>
-                @else
-                    <a href="{{ url('/auth/login')}}" class="btn btn-primary">Login/Register</a>
-                @endif
-            </div>
-        </div>
-    </nav>
-</header>
-
+@include('includes.header_home')
 <div class="login-wrapper">
     {{--    <div class="language-select-wrapper">
             <label for="" class="pull-left">Language</label>
@@ -86,37 +57,37 @@
                     <div class="panel-heading">
                     </div>
                     <div class="panel-body text-center">
-                        <h1>IATI Organisational Identifier Error</h1>
+                        <h1>IATI @lang('organisation.organisational_identifier') @lang('global.error')</h1>
                         <p>
-                            The IATI organisational identifier you entered <strong>"{{ $orgIdentifier }}"</strong> is being used by another organisation on AidStream.
+                            @lang('organisation.organisation_identifier_you_entered') <strong>"{{ $orgIdentifier }}"</strong> @lang('organisation.organisation_identifier_is_being_used')
                         </p>
                         <h2>{{ $orgName }}</h2>
                         <div class="col-md-12">
-                            <p>If this is your organisation you may do one of the followings</p>
+                            <p>@lang('organisation.if_this_is_your_organisation')</p>
                             <div class="col-md-6">
-                                <h2>Administrator Information</h2>
+                                <h2>@lang('global.administrator_information')</h2>
                                 <p>
-                                    The administrator of the organisation name is
+                                    @lang('global.administrator_of_organisation')
                                 </p>
                                 <h2>"{{ $adminName }}"</h2>
-                                <a href="{{ route('contact', ['need-new-user']) }}" class="btn btn-primary">Contact Administrator</a>
+                                <a href="{{ route('contact', ['need-new-user']) }}" class="btn btn-primary">@lang('global.contact_administrator')</a>
                             </div>
                             <div class="col-md-6">
-                                <h2>Retrieve Login Credentials</h2>
+                                <h2>@lang('global.retrieve_login_credentials')</h2>
                                 <p>
-                                    I already have an account but forgotten my login credentials.
+                                    @lang('global.forgotten_login_credentials_text')
                                 </p>
-                                <a href="/password/email" class="btn btn-primary">Retrieve Login Credentials</a>
+                                <a href="/password/email" class="btn btn-primary">@lang('global.retrieve_login_credentials')</a>
                             </div>
                         </div>
                         <p>
-                            No, this is not my organisation. <a href="{{ route('contact', ['not-my-organization']) }}">Contact Support at support@aidstream.org</a>
+                            @lang('global.not_my_organisation') <a href="{{ route('contact', ['not-my-organization']) }}">@lang('global.contact_support_at') support@aidstream.org</a>
                         </p>
                     </div>
                 </div>
             </div>
             <div class="col-xs-12 col-md-12 create-account-wrapper">
-                <a href="{{ url('/auth/login') }}">I already have an account</a>
+                <a href="{{ url('/auth/login') }}">@lang('global.already_have_account')</a>
             </div>
         </div>
     </div>

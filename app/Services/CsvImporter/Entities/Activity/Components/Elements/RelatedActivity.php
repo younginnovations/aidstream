@@ -116,6 +116,7 @@ class RelatedActivity extends Element
         foreach ($relatedActivityType['RelatedActivityType'] as $type) {
             $codes[] = $type['code'];
         }
+
         return implode(',', $codes);
     }
 
@@ -153,9 +154,9 @@ class RelatedActivity extends Element
         $messages = [];
 
         foreach (getVal($this->data(), ['related_activity'], []) as $key => $value) {
-            $messages['related_activity.' . $key . '.activity_identifier.required_unless'] = 'Related Activity Identifier is required.';
-            $messages['related_activity.' . $key . '.relationship_type.required_unless']   = 'Related Activity Relationship Type is required.';
-            $messages['related_activity.' . $key . '.relationship_type.in']                = 'Entered Related Activity Relationship Type is not valid.';
+            $messages['related_activity.' . $key . '.activity_identifier.required_unless'] = trans('validation.required', ['attribute' => trans('elementForm.related_activity_identifier')]);
+            $messages['related_activity.' . $key . '.relationship_type.required_unless']   = trans('validation.required', ['attribute' => trans('elementForm.related_activity_relationship_type')]);
+            $messages['related_activity.' . $key . '.relationship_type.in']                = trans('validation.code_list', ['attribute' => trans('elementForm.related_activity_relationship_type')]);
         }
 
         return $messages;

@@ -1709,7 +1709,7 @@ $full-sidebar-wrapper-width: 210px;
     padding: 0 24px 0 52px;
     font-size: 14px;
     display: inline-block;
-    margin: 25px auto;
+    margin: 10px auto;
     font-style: normal;
     position: relative;
     &:before {
@@ -2822,6 +2822,7 @@ form > .add_to_collection[data-collection="legacy_data"] {
 
 .download-transaction-wrap {
   padding: 0 36px;
+  margin-bottom: 20px;
   .btn {
     display: inline-block;
     vertical-align: middle;
@@ -2831,6 +2832,7 @@ form > .add_to_collection[data-collection="legacy_data"] {
     width: 260px;
     height: 40px;
     padding: 0;
+    margin: 0;
     .caret {
       margin-left: 4px;
       color: #fff;
@@ -3485,6 +3487,7 @@ div[class*="panel-level-"] .panel > .panel-body {
 .add-dropdown {
   background: none !important;
   margin-top: 5px;
+  display: inline-block;
   span.btn {
     .caret {
       margin-left: 4px;
@@ -3496,6 +3499,13 @@ div[class*="panel-level-"] .panel > .panel-body {
   li.dropdown > div {
     padding-bottom: 5px;
   }
+}
+
+.btn-view-it {
+  border-radius: 21px;
+  display: inline-block;
+  font-size: 12px;
+  padding: 9px 20px;
 }
 
 .add-new-btn {
@@ -7122,7 +7132,7 @@ body > .skiptranslate iframe {
   margin-left: 0;
 }
 
-@media all and (max-width: 500px) {
+@media all and (max-width: 520px) {
   .version {
     display: none;
   }
@@ -7682,14 +7692,23 @@ body > .skiptranslate iframe {
     display: block !important;
   }
 
-  .panel-action-btn, .add-dropdown {
-    margin: 0;
+  .btn-action-wrap {
     float: right;
+    margin-top: -14px!important;
+  }
+
+  .panel-action-btn, .add-dropdown {
+    margin-top: 0;
+    float: right;
+  }
+
+  .add-dropdown {
+    margin-left: 10px;
   }
 
   .element-panel-heading-info {
     float: left;
-    width: 72%;
+    width: calc(100% - 320px);
   }
 
   .settings-checkall-wrapper > .collection_form > .form-group > .form-group, .checkall-wrapper .form-group:nth-child(3) > .form-group > .form-group {

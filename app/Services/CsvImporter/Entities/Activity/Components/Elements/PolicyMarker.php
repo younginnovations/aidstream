@@ -190,13 +190,13 @@ class PolicyMarker extends Element
     public function messages()
     {
         $messages = [
-            'policy_marker.*.vocabulary.in'   => 'Entered Policy Marker Vocabulary is not valid.',
-            'policy_marker.*.significance.in' => 'Entered Policy Marker Significance is not valid.',
+            'policy_marker.*.vocabulary.in'   => trans('validation.code_list', ['attribute' => trans('element.policy_marker_vocabulary')]),
+            'policy_marker.*.significance.in' => trans('validation.code_list', ['attribute' => trans('element.significance_code')]),
         ];
 
         foreach (getVal($this->data, ['policy_marker'], []) as $key => $value) {
-            $messages['policy_marker.' . $key . '.policy_marker.required_unless'] = 'Policy Marker Code is required.';
-            $messages['policy_marker.' . $key . '.policy_marker.in']              = 'Entered Policy Marker Code is invalid.';
+            $messages['policy_marker.' . $key . '.policy_marker.required_unless'] = trans('validation.required', ['attribute' => trans('element.policy_marker_code')]);
+            $messages['policy_marker.' . $key . '.policy_marker.in']              = trans('validation.code_list', ['attribute' => trans('element.policy_marker_code')]);
         }
 
         return $messages;

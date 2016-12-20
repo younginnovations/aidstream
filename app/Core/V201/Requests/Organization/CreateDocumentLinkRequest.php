@@ -73,12 +73,12 @@ class CreateDocumentLinkRequest extends OrganizationBaseRequest
                 'document_link.%s',
                 $documentLinkIndex
             );
-            $messages[sprintf('document_link.%s.url.required', $documentLinkIndex)]    = 'Url is required';
+            $messages[sprintf('document_link.%s.url.required', $documentLinkIndex)]    = trans('validation.required', ['attribute' => trans('elementForm.url')]);
             $messages[sprintf(
                 'document_link.%s.url.url',
                 $documentLinkIndex
-            )]                                                                         = 'Enter valid URL. eg. http://example.com';
-            $messages[sprintf('document_link.%s.format.required', $documentLinkIndex)] = 'Format is required';
+            )]                                                                         = trans('validation.url');
+            $messages[sprintf('document_link.%s.format.required', $documentLinkIndex)] = trans('validation.required', ['attribute' => trans('elementForm.format')]);
             $messages                                                                  = array_merge(
                 $messages,
                 $this->getMessagesForNarrative($documentLink['narrative'], $documentLinkForm),
@@ -118,7 +118,7 @@ class CreateDocumentLinkRequest extends OrganizationBaseRequest
                 '%s.category.%s.code.required',
                 $formIndex,
                 $documentCategoryIndex
-            )] = 'Category is required';
+            )] = trans('validation.required', ['attribute' => trans('elementForm.category')]);
         }
 
         return $messages;

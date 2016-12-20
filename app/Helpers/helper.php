@@ -214,10 +214,11 @@ function getFirstNarrative(array $narrative)
 {
     $narrativeElements = getVal($narrative, ['narrative', 0]);
 
-    return (empty($narrativeElements['narrative'])) ? '<em>Not available</em>' :
+    return (empty($narrativeElements['narrative'])) ? sprintf('<em>%s</em>', trans('global.not_available')) :
         sprintf(
-            "%s <em>(language: %s)</em>",
+            "%s <em>(%s: %s)</em>",
             $narrativeElements['narrative'],
+            trans('elementForm.language'),
             getLanguage(getVal($narrativeElements, ['language']))
         );
 }
@@ -239,7 +240,7 @@ function getContactInfo($type, array $contactInformation)
     }
     $stringContactInfo = implode(' , ', $arrayContactInfo);
 
-    return (empty($stringContactInfo)) ? '<em>Not Available</em>' : $stringContactInfo;
+    return (empty($stringContactInfo)) ? sprintf('<em>%s</em>', trans('global.not_available')) : $stringContactInfo;
 }
 
 /**
@@ -272,6 +273,8 @@ function checkIfEmailOrWebSite($type, $information)
  */
 function checkIfEmpty($information, $message = '<em>Not Available</em>')
 {
+    $message = ($message == '<em>Not Available</em>') ? '<em>' . trans('global.not_available') . '</em>' : $message;
+
     return (empty($information)) ? $message : $information;
 }
 
@@ -310,13 +313,12 @@ function getLocationReach(array $locations)
             'GeographicLocationReach',
             $code
         );
-        $code = ($code == "") ? 'Other' : sprintf('%s Location', $code);
+        $code = ($code == "") ? trans('global.other') : sprintf('%s %s', $code, trans('elementForm.location'));
 
         $newLocations[$code][] = $location;
     }
 
     return $newLocations;
-
 }
 
 /**
@@ -347,9 +349,9 @@ function getLocationIdVocabulary(array $locationId)
     $vocabularyValue = getLocationVocabularies($locationId);
 
     if (empty($vocabularyValue)) {
-        return '<em>Not Available</em>';
+        return sprintf('<em>%s</em>', trans('global.not_available'));
     } else {
-        return sprintf('%s - %s (Code:%s)', $locationId['vocabulary'], $vocabularyValue, $locationId['code']);
+        return sprintf('%s - %s (%s:%s)', $locationId['vocabulary'], $vocabularyValue, trans('elementForm.code'), $locationId['code']);
     }
 }
 
@@ -363,13 +365,15 @@ function getAdministrativeVocabulary(array $location)
     $administrativeVocabulary = getLocationVocabularies($location);
 
     if (empty($administrativeVocabulary)) {
-        return '<em>Not Available</em>';
+        return sprintf('<em>%s</em>', trans('global.not_available'));
     } else {
         return sprintf(
-            '%s - %s (Code:%s , level: %s)',
+            '%s - %s (%s:%s , %s: %s)',
             $location['vocabulary'],
             $administrativeVocabulary,
+            trans('elementForm.code'),
             checkIfEmpty($location['code']),
+            trans('elementForm.level'),
             checkIfEmpty($location['level'])
         );
     }
@@ -386,13 +390,13 @@ function getLocationPoint(array $location)
     $latitude  = $location['point'][0]['position'][0]['latitude'];
     $longitude = $location['point'][0]['position'][0]['longitude'];
 
-    $srsLink = (empty($location['point'][0]['srs_name']) ? '<em>Not Available </em>' : getClickableLink(
+    $srsLink = (empty($location['point'][0]['srs_name']) ? sprintf('<em>%s</em>', trans('global.not_available')) : getClickableLink(
         $location['point'][0]['srs_name']
     )
     );
-    $latLong = (empty($latitude && $longitude)) ? '<em>Not Available</em>' : sprintf('%s, %s', $latitude, $longitude);
+    $latLong = (empty($latitude && $longitude)) ? sprintf('<em>%s</em>', trans('global.not_available')) : sprintf('%s, %s', $latitude, $longitude);
 
-    return sprintf('%s (<em>SRS Name: %s </em>)', $latLong, $srsLink);
+    return sprintf('%s (<em>%s: %s </em>)', $latLong, trans('elementForm.srs_name'), $srsLink);
 }
 
 /**
@@ -428,16 +432,16 @@ function getSectorInformation(array $sector, $percentage)
         if (empty($percentage)) {
             return sprintf(
                 '%s - %s',
-                checkIfEmpty($sector['sector_code'], 'Sector Code Not Available'),
+                checkIfEmpty($sector['sector_code'], trans('global.sector_code_not_available')),
                 checkIfEmpty($sectorCodeValue),
-                'Sector Code Value Not Available'
+                trans('global.sector_code_value_not_available')
             );
         }
 
         return sprintf(
             '%s - %s (%s)',
-            checkIfEmpty($sector['sector_code'], 'Sector Code Not Available'),
-            checkIfEmpty($sectorCodeValue, 'Sector Code Value Not Available '),
+            checkIfEmpty($sector['sector_code'], trans('global.sector_code_not_available')),
+            checkIfEmpty($sectorCodeValue, trans('global.sector_code_value_not_available')),
             $percentage . "%"
         );
 
@@ -451,15 +455,15 @@ function getSectorInformation(array $sector, $percentage)
             if (empty($percentage)) {
                 return sprintf(
                     '%s - %s',
-                    checkIfEmpty($sector['sector_category_code'], 'Sector Code Not Available'),
-                    checkIfEmpty($sectorCodeValue, 'Sector Code Value Not Available')
+                    checkIfEmpty($sector['sector_category_code'], trans('global.sector_code_not_available')),
+                    checkIfEmpty($sectorCodeValue, trans('global.sector_code_value_not_available'))
                 );
             }
 
             return sprintf(
                 '%s - %s (%s)',
-                checkIfEmpty($sector['sector_category_code'], 'Sector Code Not Available'),
-                checkIfEmpty($sectorCodeValue, 'Sector Code Value Not Available'),
+                checkIfEmpty($sector['sector_category_code'], trans('global.sector_code_not_available')),
+                checkIfEmpty($sectorCodeValue, trans('global.sector_code_value_not_available')),
                 $percentage . " %"
             );
 
@@ -470,7 +474,7 @@ function getSectorInformation(array $sector, $percentage)
 
             return sprintf(
                 '%s (%s)',
-                checkIfEmpty($sector['sector_text'], 'Sector Text Not Available'),
+                checkIfEmpty($sector['sector_text'], trans('global.sector_text_not_available')),
                 $percentage . "%"
             );
 
@@ -485,7 +489,7 @@ function getSectorInformation(array $sector, $percentage)
  */
 function getClickableLink($url)
 {
-    return ($url == "") ? '<em>Not Available</em>' : sprintf("<a target='_blank' href='%s'> %s</a>", $url, $url);
+    return ($url == "") ? sprintf('<em>%s</em>', trans('global.not_available')) : sprintf("<a target='_blank' href='%s'> %s</a>", $url, $url);
 }
 
 /**
@@ -500,7 +504,7 @@ function getCodeNameWithCodeValue($codeNameType, $codeValue, $lengthToCut)
     $codeName = app('App\Helpers\GetCodeName')->getCodeNameOnly($codeNameType, $codeValue, $lengthToCut);
 
     if ($codeValue == "") {
-        return sprintf('<em>Not Available</em>');
+        return sprintf(sprintf('<em>%s</em>', trans('global.not_available')));
     } else {
         return sprintf('%s - %s', $codeValue, ucfirst($codeName));
     }
@@ -589,16 +593,16 @@ function getCurrencyValueDate($budgetValue, $type)
     $currency = (empty($currency)) ? getDefaultCurrency() : $currency;
 
     if (empty($budgetAmount)) {
-        return sprintf('<em>Amount Not Available</em>');
+        return sprintf('<em>%s</em>', trans('global.amount_not_available'));
     }
 
     return sprintf(
-        '%s %s <em>(Valued at %s)</em>',
+        '%s %s <em>(%s %s)</em>',
         $budgetAmount,
         $currency,
+        trans('global.valued_at'),
         $valueDate
     );
-
 }
 
 /**
@@ -611,7 +615,7 @@ function getBudgetPeriod(array $budget)
     $periodStart = formatDate($budget['period_start'][0]['date']);
     $periodEnd   = formatDate($budget['period_end'][0]['date']);
 
-    return sprintf('%s-%s', $periodStart, $periodEnd);
+    return sprintf('%s - %s', $periodStart, $periodEnd);
 
 }
 
@@ -629,8 +633,10 @@ function getDisbursementOrganizationDetails(array $disbursement, $type)
     $type         = getVal($organization, ['type']);
 
     $details = sprintf(
-        '<em>(Ref: %s , Activity id: %s , Type: %s)</em >;',
+        '<em>(%s: %s , %s: %s , Type: %s)</em >;',
+        trans('elementForm.ref'),
         checkIfEmpty($ref),
+        trans('elementForm.activity_id'),
         checkIfEmpty($activity_id),
         checkIfEmpty($type)
     );
@@ -693,7 +699,7 @@ function getIndicatorReference(array $reference)
 
     $code         = checkIfEmpty($reference['code']);
     $indicatorUri = checkIfEmpty(getVal($reference, ['indicator_uri']));
-    $indicatorUri = (empty($indicatorUri)) ? '<em>Not Available </em>' : getClickableLink($indicatorUri);
+    $indicatorUri = (empty($indicatorUri)) ? sprintf('<em>%s</em>', trans('global.not_available')) : getClickableLink($indicatorUri);
 
 
     return sprintf('%s <br> (Code: %s <br> Indicator URI: %s )', $vocabulary, $code, $indicatorUri);
@@ -711,9 +717,9 @@ function getResultsBaseLine($measure, array $baseLine)
 
     $year    = checkIfEmpty($baseLine['year']);
     $measure = ($measure == 2) ? '%' : trans_choice('activityView.units', $baseLine['value']);
-    $value   = ($baseLine['value'] == "") ? '<em> Not Available </em>' : $baseLine['value'] . ' ' . $measure;
+    $value   = ($baseLine['value'] == "") ? sprintf('<em>%s</em>', trans('global.not_available')) : $baseLine['value'] . ' ' . $measure;
 
-    return sprintf('%s (Year: %s)', $value, $year);
+    return sprintf('%s (%s: %s)', $value, trans('elementForm.year'), $year);
 }
 
 /**
@@ -734,8 +740,8 @@ function getIndicatorPeriod($measure, array $periods)
         $actualValue                  = $period['actual'][0]['value'];
         $periodValue                  = getBudgetPeriod($period);
         $measure                      = ($measure == 2) ? '%' : ' ' . trans_choice('activityView.units', $targetValue);
-        $targetValue                  = ($targetValue == "") ? '<em>Not Available</em>' : $targetValue . $measure;
-        $actualValue                  = ($actualValue == "") ? '<em>Not Available</em>' : $actualValue . $measure;
+        $targetValue                  = ($targetValue == "") ? sprintf('<em>%s</em>', trans('global.not_available')) : $targetValue . $measure;
+        $actualValue                  = ($actualValue == "") ? sprintf('<em>%s</em>', trans('global.not_available')) : $actualValue . $measure;
         $outputPeriod['period']       = $periodValue;
         $outputPeriod['target_value'] = $targetValue;
         $outputPeriod['actual_value'] = $actualValue;
@@ -766,7 +772,7 @@ function getTargetAdditionalDetails(array $target, $key = null)
     }
     $details['first_comment'] = getFirstNarrative($target['comment'][0]);
 
-    return (array_key_exists($key, $details)) ? checkIfEmpty($details[$key]) : '<em>Not Available </em>';
+    return (array_key_exists($key, $details)) ? checkIfEmpty($details[$key]) : sprintf('<em>%s</em>', trans('global.not_available'));
 }
 
 /**
@@ -800,7 +806,7 @@ function getDimension($target)
         foreach ($target['dimension'] as $dimension) {
             $name = $dimension['name'];
             if (empty($name)) {
-                return $dimension = '<em>Not Available </em>';
+                return $dimension = sprintf('<em>%s</em>', trans('global.not_available'));
             } else {
                 $value        = $dimension['value'];
                 $dimensions[] = sprintf('%s (%s)', $name, $value);
@@ -849,17 +855,19 @@ function getTransactionProviderDetails(array $transaction, $type)
     $activityId                 = ($type == 'provider') ? $transaction['provider_activity_id'] : $transaction['receiver_activity_id'];
     $activityId                 = checkIfEmpty($activityId);
     $transactionType            = (session('version') != 'V201') ? checkIfEmpty(
-        getVal($transaction, ['type'], '<em> Not Available </em>')
-    ) : '<em>Not available</em>';
-    $activityIdText             = ($type == 'provider') ? 'Provider activity id' : 'Receiver activity id';
+        getVal($transaction, ['type'], sprintf('<em>%s</em>', trans('global.not_available')))
+    ) : sprintf('<em>%s</em>', trans('global.not_available'));
+    $activityIdText             = ($type == 'provider') ? trans('elementForm.provider_activity_id') : trans('elementForm.receiver_activity_id');
 
     return sprintf(
         '<em>
-        (Organizational identifier code: %s , %s: %s , Type: %s)
+        (%s: %s , %s: %s , %s: %s)
         </em>',
+        trans('elementForm.organisational_identifier_code'),
         $organizationIdentifierCode,
         $activityIdText,
         $activityId,
+        trans('elementForm.type'),
         $transactionType
     );
 }
@@ -876,14 +884,14 @@ function getTransactionSectorDetails(array $sector)
         app('App\Helpers\GetCodeName')->getCodeNameOnly('SectorVocabulary', $sector['sector_vocabulary'])
     );
     if (session('version') != 'V201' && array_key_exists('vocabulary_uri', $sector)) {
-        $vocabularyURI = ($sector['vocabulary_uri'] == "") ? '<em> Not Available </em>' : getClickableLink(
+        $vocabularyURI = ($sector['vocabulary_uri'] == "") ? sprintf('<em> %s </em>', trans('global.not_available')) : getClickableLink(
             $sector['vocabulary_uri']
         );
 
-        return sprintf('<em>(Vocabulary: %s , Vocabulary URI: %s )</em>', $vocabulary, $vocabularyURI);
+        return sprintf('<em>(%s: %s , %s: %s )</em>', trans('elementForm.vocabulary'), $vocabulary, trans('elementForm.vocabulary_uri'), $vocabularyURI);
     } else {
 
-        return sprintf('<em>(Vocabulary: %s)</em>', $vocabulary);
+        return sprintf('<em>(%s: %s)</em>', trans('elementForm.vocabulary'), $vocabulary);
     }
 
 }
@@ -896,7 +904,7 @@ function getTransactionSectorDetails(array $sector)
 function getCountryNameWithCode($countryCode)
 {
     if ($countryCode == "") {
-        return "<em>Not Available</em>";
+        return sprintf('<em>%s</em>', trans('global.not_available'));
     } else {
         $countryName = substr(
             app('App\Helpers\GetCodeName')->getOrganizationCodeName('Country', $countryCode),
@@ -931,14 +939,14 @@ function getRecipientRegionDetails(array $region)
     );
 
     if (session('version') != 'V201' && array_key_exists('vocabulary_uri', $region)) {
-        $vocabularyURI = ($region['vocabulary_uri'] == "") ? '<em> Not Available </em>' : getClickableLink(
+        $vocabularyURI = ($region['vocabulary_uri'] == "") ? sprintf('<em>%s</em>', trans('global.not_available')) : getClickableLink(
             $region['vocabulary_uri']
         );
 
-        return sprintf('<em>(Vocabulary: %s Vocabulary URI: %s )</em>', $vocabulary, $vocabularyURI);
+        return sprintf('<em>(%s: %s %s: %s )</em>', trans('elementForm.vocabulary'), $vocabulary, trans('elementForm.vocabulary_uri'), $vocabularyURI);
     }
 
-    return sprintf('<em>(Vocabulary: %s)</em>', $vocabulary);
+    return sprintf('<em>(%s: %s)</em>', trans('elementForm.vocabulary'), $vocabulary);
 }
 
 /**
@@ -970,7 +978,7 @@ function getFirstOrgName(array $orgName)
     $name     = checkIfEmpty($orgName[0]['narrative']);
     $language = checkIfEmpty(getLanguage($orgName[0]['language']));
 
-    return sprintf('%s <em>(language:  %s)</em>', $name, $language);
+    return sprintf('%s <em>(%s:  %s)</em>', $name, trans('elementForm.language'), $language);
 }
 
 /**

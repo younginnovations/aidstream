@@ -1,5 +1,5 @@
 <p>
-    Thank you for verifying your email address. Please set a password for your account.
+@lang('global.email_verified_set_password')
 </p>
 {{ Form::open(['url' => route('create-password', [$user->verification_code]), 'method' => 'post']) }}
 
@@ -9,7 +9,7 @@
 </div>
 
 <div class="col-md-12 text-center">
-    {{ Form::button('Create Password', ['class' => 'btn btn-primary btn-submit btn-register', 'type' => 'submit']) }}
+    {{ Form::button(trans('global.create_password'), ['class' => 'btn btn-primary btn-submit btn-register', 'type' => 'submit']) }}
 </div>
 
 {{ Form::close() }}

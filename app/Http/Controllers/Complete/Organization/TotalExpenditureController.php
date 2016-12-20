@@ -69,7 +69,7 @@ class TotalExpenditureController extends Controller
         $totalExpenditure = $this->totalExpenditureManager->getOrganizationTotalExpenditureData($orgId);
         $form             = $this->totalExpenditureForm->editForm($totalExpenditure, $orgId);
 
-        return view('Organization.totalExpenditure.edit', compact('form', 'totalExpenditure','orgId'));
+        return view('Organization.totalExpenditure.edit', compact('form', 'totalExpenditure', 'orgId'));
     }
 
     /**
@@ -81,7 +81,7 @@ class TotalExpenditureController extends Controller
      */
     public function update($orgId, Request $request, TotalExpenditureRequestManager $expenditureRequestManager)
     {
-        $organization = $this->organizationManager->getOrganization($orgId);
+        $organization     = $this->organizationManager->getOrganization($orgId);
         $organizationData = $this->totalExpenditureManager->getOrganizationData($orgId);
 
         if (Gate::denies('belongsToOrganization', $organization)) {
@@ -94,11 +94,11 @@ class TotalExpenditureController extends Controller
 
         if ($this->totalExpenditureManager->update($totalExpenditure, $organizationData)) {
             $this->organizationManager->resetStatus($orgId);
-            $response = ['type' => 'success', 'code' => ['updated', ['name' => 'Organization Total Expenditure']]];
+            $response = ['type' => 'success', 'code' => ['updated', ['name' => trans('title.org_total_expenditure')]]];
 
             return redirect()->to(sprintf('/organization/%s', $orgId))->withResponse($response);
         }
-        $response = ['type' => 'danger', 'code' => ['update_failed', ['name' => 'Organization Total Expenditure']]];
+        $response = ['type' => 'danger', 'code' => ['update_failed', ['name' => trans('title.org_total_expenditure')]]];
 
         return redirect()->back()->withInput()->withResponse($response);
     }

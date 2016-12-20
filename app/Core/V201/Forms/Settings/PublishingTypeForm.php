@@ -13,8 +13,8 @@ class PublishingTypeForm extends BaseForm
                 'publishing',
                 'choice',
                 [
-                    'label'          => 'Publishing Type',
-                    'choices'        => ['unsegmented' => 'Unsegmented', 'segmented' => 'Segmented'],
+                    'label'          => trans('setting.publishing_type'),
+                    'choices'        => ['unsegmented' => trans('setting.unsegmented'), 'segmented' => trans('setting.segmented')],
                     'expanded'       => true,
                     'choice_options' => [
                         'wrapper' => ['class' => 'choice-wrapper']

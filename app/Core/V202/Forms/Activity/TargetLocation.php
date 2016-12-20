@@ -14,7 +14,7 @@ class TargetLocation extends BaseForm
     public function buildForm()
     {
         $this
-            ->add('ref', 'text')
+            ->add('ref', 'text', ['label' => trans('elementForm.ref')])
             ->addRemoveThisButton('remove_target_location');
     }
 }

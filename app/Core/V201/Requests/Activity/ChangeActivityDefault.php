@@ -26,11 +26,11 @@ class ChangeActivityDefault extends ActivityBaseRequest
      */
     public function messages()
     {
-        $messages['default_currency.required']  = 'Default Currency is required.';
-        $messages['default_language.required']  = 'Default Language is required.';
-        $messages['default_hierarchy.required'] = 'Default hierarchy is required.';
-        $messages['default_hierarchy.numeric']  = 'Default hierarchy should be numeric.';
-        $messages['linked_data_uri.url']        = 'Linked Data uri is invalid';
+        $messages['default_currency.required']  = trans('validation.required', ['attribute' => trans('elementForm.default_currency')]);
+        $messages['default_language.required']  = trans('validation.required', ['attribute' => trans('elementForm.default_language')]);
+        $messages['default_hierarchy.required'] = trans('validation.required', ['attribute' => trans('elementForm.default_hierarchy')]);
+        $messages['default_hierarchy.numeric']  = trans('validation.numeric', ['attribute' => trans('elementForm.default_hierarchy')]);
+        $messages['linked_data_uri.url']        = trans('validation.url', ['attribute' => trans('elementForm.linked_data_uri')]);
 
         return $messages;
     }

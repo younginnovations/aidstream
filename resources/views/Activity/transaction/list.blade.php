@@ -1,6 +1,6 @@
 @extends('app')
 
-@section('title', 'Activity Transactions - ' . $activity->IdentifierTitle)
+@section('title', trans('title.transactions').' - ' . $activity->IdentifierTitle)
 
 @section('content')
     @inject('code', 'App\Helpers\GetCodeName')
@@ -11,27 +11,27 @@
                 @include('includes.response')
                 <div class="element-panel-heading">
                     <div>
-                        <span>Transactions</span>
+                        <span>@lang('element.transactions')</span>
                         <div class="element-panel-heading-info"><span>{{$activity->IdentifierTitle}}</span></div>
-                    @if(count($activity->getTransactions()) > 0)
-                        <ul class="add-dropdown">
-                            <li class="dropdown">
-                                <div><span class="btn btn-primary dropdown-toggle add-new-btn" data-toggle="dropdown">Add New
-                                    Transaction<span class="caret"></span></span></div>
-                                <ul class="dropdown-menu" role="menu">
-                                    <li>
-                                        <a href="{{ route('activity.transaction.create', $id) }}" class="">Add New
-                                            Transaction</a>
-                                    </li>
-                                    <li>
-                                        <a href="{{ route('activity.transaction-upload.index', $id) }}" class="">Upload
-                                            Transaction</a>
+                        <div class="btn-action-wrap">
+                            @if(count($activity->getTransactions()) > 0)
+                                <ul class="add-dropdown">
+                                    <li class="dropdown">
+                                        <div><span class="btn btn-primary dropdown-toggle add-new-btn" data-toggle="dropdown">@lang('global.add_new_transaction')<span class="caret"></span></span></div>
+                                        <ul class="dropdown-menu" role="menu">
+                                            <li>
+                                                <a href="{{ route('activity.transaction.create', $id) }}" class="">@lang('global.add_new_transaction')</a>
+                                            </li>
+                                            <li>
+                                                <a href="{{ route('activity.transaction-upload.index', $id) }}" class="">@lang('global.upload_transaction')</a>
+                                            </li>
+                                        </ul>
                                     </li>
                                 </ul>
-                            </li>
-                        </ul>
-                    @endif
-
+                            @endif
+                            <a href="{{ route('activity.show', $id) }}" class="btn btn-primary btn-view-it">@lang('global.view_activity')
+                            </a>
+                        </div>
                     </div>
                 </div>
                 <div class="col-xs-12 col-md-8 col-lg-8 element-content-wrapper transaction-wrapper">
@@ -41,11 +41,11 @@
                                 <table class="table table-striped" id="data-table">
                                     <thead>
                                     <tr>
-                                        <th>Internal Ref</th>
-                                        <th>Transaction Type</th>
-                                        <th>Transaction Value</th>
-                                        <th class="default-sort">Transaction Date</th>
-                                        <th class="no-sort">Actions</th>
+                                        <th>@lang('global.internal_ref')</th>
+                                        <th>@lang('global.transaction_type')</th>
+                                        <th>@lang('global.transaction_value')</th>
+                                        <th class="default-sort">@lang('global.transaction_date')</th>
+                                        <th class="no-sort">@lang('global.actions')</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -59,9 +59,9 @@
                                             <td>
                                                 <a class="view" href="{{ route('activity.transaction.show', [$activity->id, $transaction['id']]) }}"></a>
                                                 <a class="edit"
-                                                   href="{{ route('activity.transaction.edit', [$activity->id, $transaction['id']]) }}">Edit</a>
+                                                   href="{{ route('activity.transaction.edit', [$activity->id, $transaction['id']]) }}">@lang('global.edit')</a>
                                                 <a class="delete"
-                                                   href="{{ url(sprintf('activity/%s/transaction/%s/delete', $activity->id, $transaction['id'])) }}">Delete</a>
+                                                   href="{{ url(sprintf('activity/%s/transaction/%s/delete', $activity->id, $transaction['id'])) }}">@lang('global.delete')</a>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -69,12 +69,12 @@
                                 </table>
                             @else
                                 <div class="text-center no-data no-result-data">
-                                    <p>You haven’t added any transactions yet.</p>
+                                    <p>@lang('global.not_added',['type' => 'transactions']).</p>
                                     <div class="no-data-btn">
                                         <a href="{{ route('activity.transaction.create', $id) }}"
-                                           class="btn btn-primary">Add New Transaction</a>
+                                           class="btn btn-primary">@lang('global.add_new_transaction')</a>
                                         <a href="{{ route('activity.transaction-upload.index', $id) }}"
-                                           class="btn btn-primary btn-upload">Upload Transaction</a>
+                                           class="btn btn-primary btn-upload">@lang('global.upload_transaction')</a>
                                     </div>
                                 </div>
                             @endif

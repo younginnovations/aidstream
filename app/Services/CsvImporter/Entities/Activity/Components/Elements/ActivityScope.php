@@ -92,8 +92,8 @@ class ActivityScope extends Element
     public function messages()
     {
         return [
-            $this->csvHeader() . '.size' => 'Multiple Activity Scopes are not allowed.',
-            $this->csvHeader() . '.in'   => 'Entered Activity Scope is invalid.',
+            $this->csvHeader() . '.size' => trans('validation.multiple_values', ['attribute' => trans('element.activity_scope')]),
+            $this->csvHeader() . '.in'   => trans('validation.code_list', ['attribute' => trans('element.activity_scope')]),
         ];
     }
 

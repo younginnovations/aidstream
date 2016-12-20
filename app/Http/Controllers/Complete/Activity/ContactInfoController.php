@@ -50,14 +50,14 @@ class ContactInfoController extends Controller
      */
     public function index($id)
     {
-        $activityData  = $this->activityManager->getActivityData($id);
+        $activityData = $this->activityManager->getActivityData($id);
 
         if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
-        $ContactInfo  = $this->contactInfoManager->getContactInfoData($id);
-        $form         = $this->contactInfoForm->editForm($ContactInfo, $id);
+        $ContactInfo = $this->contactInfoManager->getContactInfoData($id);
+        $form        = $this->contactInfoForm->editForm($ContactInfo, $id);
 
         return view(
             'Activity.contactInfo.edit',
@@ -74,21 +74,21 @@ class ContactInfoController extends Controller
      */
     public function update($id, Request $request, ContactInfoRequestManager $contactInfoRequestManager)
     {
-        $activityData  = $this->activityManager->getActivityData($id);
+        $activityData = $this->activityManager->getActivityData($id);
 
         if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
         $this->authorizeByRequestType($activityData, 'contact_info');
-        $contactInfo  = $request->all();
+        $contactInfo = $request->all();
         if ($this->contactInfoManager->update($contactInfo, $activityData)) {
             $this->activityManager->resetActivityWorkflow($id);
-            $response = ['type' => 'success', 'code' => ['updated', ['name' => 'Activity Contact Info']]];
+            $response = ['type' => 'success', 'code' => ['updated', ['name' => trans('element.contact_info')]]];
 
             return redirect()->to(sprintf('/activity/%s', $id))->withResponse($response);
         }
-        $response = ['type' => 'danger', 'code' => ['update_failed', ['name' => 'Activity Contact Info']]];
+        $response = ['type' => 'danger', 'code' => ['update_failed', ['name' => trans('element.contact_info')]]];
 
         return redirect()->back()->withInput()->withResponse($response);
     }

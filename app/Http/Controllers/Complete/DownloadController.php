@@ -50,7 +50,7 @@ class DownloadController extends Controller
         $csvData = $this->downloadCsvManager->simpleCsvData(Session::get('org_id'));
 
         if (false === $csvData) {
-            return redirect()->back()->withResponse(['messages' => ["It seems you do not have any Activities."], 'type' => 'warning']);
+            return redirect()->back()->withResponse(['messages' => [trans('error.none_activity')], 'type' => 'warning']);
         }
 
         $headers = $csvData['headers'];
@@ -66,11 +66,11 @@ class DownloadController extends Controller
         $csvData = $this->downloadCsvManager->completeCsvData(Session::get('org_id'));
 
         if (is_null($csvData)) {
-            return redirect()->back()->withResponse(['messages' => ["Something doesn't seem to be right."], 'type' => 'danger']);
+            return redirect()->back()->withResponse(['messages' => [trans('error.something_is_not_right')], 'type' => 'danger']);
         }
 
         if (false === $csvData) {
-            return redirect()->back()->withResponse(['messages' => ["It seems you do not have any Activities."], 'type' => 'warning']);
+            return redirect()->back()->withResponse(['messages' => [trans('error.none_activity')], 'type' => 'warning']);
         }
 
         $this->generator->generate('complete', $csvData);
@@ -84,11 +84,11 @@ class DownloadController extends Controller
         $csvData = $this->downloadCsvManager->transactionCsvData(Session::get('org_id'));
 
         if (false === $csvData) {
-            return redirect()->back()->withResponse(['messages' => ["It seems you do not have any Activities."], 'type' => 'warning']);
+            return redirect()->back()->withResponse(['messages' => [trans('error.none_activity')], 'type' => 'warning']);
         }
 
         if (null === $csvData && false !== $csvData) {
-            return redirect()->back()->withResponse(['messages' => ["It seems you do not have any Transactions."], 'type' => 'warning']);
+            return redirect()->back()->withResponse(['messages' => [trans('error.none_transaction')], 'type' => 'warning']);
         }
 
         $headers = $csvData['headers'];

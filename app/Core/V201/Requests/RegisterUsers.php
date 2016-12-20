@@ -79,19 +79,19 @@ class RegisterUsers extends Request
     {
         $messages = [];
 
-        $messages['first_name.required']            = 'First Name is required.';
-        $messages['last_name.required']             = 'Last Name is required.';
-        $messages['email.required']                 = 'Email is required.';
-        $messages['email.email']                    = 'Email is not valid.';
-        $messages['email.unique_email']             = 'Email has already been taken.';
-        $messages['password.required']              = 'Password is required.';
-        $messages['password.min']                   = 'Password must be at least 6 characters.';
-        $messages['confirm_password.required']      = 'Confirm Password is required.';
-        $messages['confirm_password.min']           = 'Confirm Password must be at least 6 characters.';
-        $messages['confirm_password.same']          = 'Passwords doesn\'t match.';
-        $messages['secondary_contact.required']     = 'Secondary Contact is required.';
-        $messages['secondary_contact.email']        = 'Secondary Contact Email is not valid.';
-        $messages['secondary_contact.unique_email'] = 'Secondary Contact Email has already been taken.';
+        $messages['first_name.required']            = trans('validation.required', ['attribute' => trans('user.first_name')]);
+        $messages['last_name.required']             = trans('validation.required', ['attribute' => trans('user.last_name')]);
+        $messages['email.required']                 = trans('validation.required', ['attribute' => trans('user.email')]);
+        $messages['email.email']                    = trans('validation.code_list', ['attribute' => trans('user.email')]);
+        $messages['email.unique_email']             = trans('validation.custom_unique', ['attribute' => trans('user.email')]);
+        $messages['password.required']              = trans('validation.required', ['attribute' => trans('global.password')]);
+        $messages['password.min']                   = trans('validation.min.string', ['attribute' => trans('global.password'), 'min' => 6]);
+        $messages['confirm_password.required']      = trans('validation.required', ['attribute' => trans('user.confirm_password')]);
+        $messages['confirm_password.min']           = trans('validation.min.string', ['attribute' => trans('user.confirm_password'), 'min' => 6]);
+        $messages['confirm_password.same']          = trans('validation.match', ['attribute' => trans('user.password')]);
+        $messages['secondary_contact.required']     = trans('validation.required', ['attribute' => trans('user.secondary_contact')]);
+        $messages['secondary_contact.email']        = trans('validation.code_list', ['attribute' => trans('user.secondary_contact_email')]);
+        $messages['secondary_contact.unique_email'] = trans('validation.custom_unique', ['attribute' => trans('user.secondary_contact_email')]);
 
         $messages = array_merge($messages, $this->getMessagesForUsers($this->get('user')));
 
@@ -138,15 +138,15 @@ class RegisterUsers extends Request
         $messages = [];
 
         foreach ($users as $userIndex => $user) {
-            $messages[sprintf('user.%s.login_username.required', $userIndex)] = 'Username is required.';
-            $messages[sprintf('user.%s.login_username.unique', $userIndex)]   = 'Username has already been taken.';
-            $messages[sprintf('user.%s.email.required', $userIndex)]          = 'Email is required.';
-            $messages[sprintf('user.%s.email.email', $userIndex)]             = 'Email is not valid.';
-            $messages[sprintf('user.%s.email.unique_email', $userIndex)]      = 'Email has already been taken.';
-            $messages[sprintf('user.%s.first_name.required', $userIndex)]     = 'First Name is required.';
-            $messages[sprintf('user.%s.last_name.required', $userIndex)]      = 'Last Name is required.';
-            $messages[sprintf('user.%s.role.required', $userIndex)]           = 'Role is required.';
-            $messages[sprintf('user.%s.role.in', $userIndex)]                 = 'Role is not valid.';
+            $messages[sprintf('user.%s.login_username.required', $userIndex)] = trans('validation.required', ['attribute' => trans('user.username')]);
+            $messages[sprintf('user.%s.login_username.unique', $userIndex)]   = trans('validation.custom_unique', ['attribute' => trans('user.username')]);
+            $messages[sprintf('user.%s.email.required', $userIndex)]          = trans('validation.required', ['attribute' => trans('user.email')]);
+            $messages[sprintf('user.%s.email.email', $userIndex)]             = trans('validation.code_list', ['attribute' => trans('user.email')]);
+            $messages[sprintf('user.%s.email.unique_email', $userIndex)]      = trans('validation.custom_unique', ['attribute' => trans('user.email')]);
+            $messages[sprintf('user.%s.first_name.required', $userIndex)]     = trans('validation.required', ['attribute' => trans('user.first_name')]);
+            $messages[sprintf('user.%s.last_name.required', $userIndex)]      = trans('validation.required', ['attribute' => trans('user.last_name')]);
+            $messages[sprintf('user.%s.role.required', $userIndex)]           = trans('validation.required', ['attribute' => trans('user.role')]);
+            $messages[sprintf('user.%s.role.in', $userIndex)]                 = trans('validation.code_list', ['attribute' => trans('user.role')]);
         }
 
         return $messages;

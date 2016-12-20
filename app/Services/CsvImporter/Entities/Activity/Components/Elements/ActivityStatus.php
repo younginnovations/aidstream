@@ -94,9 +94,9 @@ class ActivityStatus extends Element
         $key = $this->csvHeader();
 
         return [
-            sprintf('%s.required', $key) => 'Activity Status is required.',
-            sprintf('%s.size', $key)     => 'Multiple Activity Statuses are not allowed.',
-            sprintf('%s.in', $key)       => 'Only valid Activity Status codes are allowed.'
+            sprintf('%s.required', $key) => trans('validation.required', ['attribute' => trans('element.activity_scope')]),
+            sprintf('%s.size', $key)     => trans('validation.multiple_values', ['attribute' => trans('element.activity_scope')]),
+            sprintf('%s.in', $key)       => trans('validation.code_list', ['attribute' => trans('element.activity_scope')])
         ];
     }
 

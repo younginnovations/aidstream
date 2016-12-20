@@ -196,17 +196,23 @@ class RecipientCountry extends Element
     public function messages()
     {
         $messages = [
-            'recipient_country.required_if' => 'Recipient Country is required if Recipient Region is not present.',
-            'percentage_sum'                => 'Sum of percentage of Recipient Country must be 100.'
+            'recipient_country.required_if' => trans('validation.required_without', ['attribute' => trans('element.recipient_country'), 'values' => trans('element.recipient_region')]),
+            'percentage_sum'                => trans('validation.sum_of_percentage', ['attribute' => trans('element.recipient_country')])
         ];
 
         foreach (getVal($this->data(), ['recipient_country'], []) as $key => $value) {
-            $messages['recipient_country.' . $key . '.country_code.required_with'] = 'Recipient Country code is required with Percentage.';
-            $messages['recipient_country.' . $key . '.country_code.in']            = 'Entered Recipient Country code is invalid.';
-            $messages['recipient_country.' . $key . '.percentage.required_with']   = 'Percentage is required with Recipient Country Code.';
-            $messages['recipient_country.' . $key . '.percentage.numeric']         = 'Percentage must be numeric.';
-            $messages['recipient_country.' . $key . '.percentage.max']             = 'Percentage cannot be more than 100';
-            $messages['recipient_country.' . $key . '.percentage.min']             = 'Percentage cannot be less than 0';
+            $messages['recipient_country.' . $key . '.country_code.required_with'] = trans(
+                'validation.required_with',
+                ['attribute' => trans('elementForm.recipient_country_code'), 'values' => trans('elementForm.percentage')]
+            );
+            $messages['recipient_country.' . $key . '.country_code.in']            = trans('validation.code_list', ['attribute' => trans('elementForm.recipient_country_code')]);
+            $messages['recipient_country.' . $key . '.percentage.required_with']   = trans(
+                'validation.required_with',
+                ['attribute' => trans('elementForm.percentage'), 'values' => trans('elementForm.recipient_country_code')]
+            );
+            $messages['recipient_country.' . $key . '.percentage.numeric']         = trans('validation.numeric', ['attribute' => trans('elementForm.percentage')]);
+            $messages['recipient_country.' . $key . '.percentage.max']             = trans('validation.max.numeric', ['attribute' => trans('elementForm.percentage'), 'max' => 100]);
+            $messages['recipient_country.' . $key . '.percentage.min']             = trans('validation.min.numeric', ['attribute' => trans('elementForm.percentage'), 'min' => 0]);
         }
 
         return $messages;

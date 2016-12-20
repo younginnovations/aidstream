@@ -12,7 +12,7 @@ trait FinanceType
      */
     public function addFinanceType()
     {
-        return $this->addCollection('finance_type', 'Activity\Transactions\FinanceType');
+        return $this->addCollection('finance_type', 'Activity\Transactions\FinanceType', '', [], trans('elementForm.finance_type'));
     }
 
     /**

@@ -8,33 +8,37 @@ class PublishingInfo extends BaseForm
     public function buildForm()
     {
         $this
-            ->add('publisher_id', 'text', ['help_block' => $this->addHelpText('activity_defaults-publisher_id', false), 'wrapper' => ['class' => 'form-group col-md-6']])
-            ->add('publisher_id_status', 'text', ['label' => 'Incorrect', 'wrapper' => ['class' => 'hidden']])
-            ->add('api_id', 'text', ['help_block' => $this->addHelpText('activity_defaults-api_key', false), 'label' => 'API Key', 'wrapper' => ['class' => 'form-group col-md-6']])
-            ->add('api_id_status', 'text', ['label' => 'Incorrect', 'wrapper' => ['class' => 'hidden']])
+            ->add(
+                'publisher_id',
+                'text',
+                ['help_block' => $this->addHelpText('activity_defaults-publisher_id', false), 'label' => trans('setting.publisher_id'), 'wrapper' => ['class' => 'form-group col-md-6']]
+            )
+            ->add('publisher_id_status', 'text', ['label' => trans('setting.incorrect'), 'wrapper' => ['class' => 'hidden']])
+            ->add('api_id', 'text', ['help_block' => $this->addHelpText('activity_defaults-api_key', false), 'label' => trans('setting.api_key'), 'wrapper' => ['class' => 'form-group col-md-6']])
+            ->add('api_id_status', 'text', ['label' => trans('setting.incorrect'), 'wrapper' => ['class' => 'hidden']])
             ->add(
                 'verify',
                 'button',
                 [
-                    'label'   => 'Verify',
-                    'attr'    => [
+                    'label'      => trans('global.verify'),
+                    'attr'       => [
                         'class' => 'btn btn-primary',
                         'id'    => 'verify'
                     ],
                     'help_block' => [
-                        'text' => 'Click to verify your registry information',
-                        'tag' => 'span',
+                        'text' => trans('setting.verify_help_text'),
+                        'tag'  => 'span',
                         'attr' => ['class' => 'verify-registry']
                     ],
-                    'wrapper' => ['class' => 'form-group col-md-6'],
+                    'wrapper'    => ['class' => 'form-group col-md-6'],
                 ]
             )
             ->add(
                 'publishing',
                 'choice',
                 [
-                    'label'          => 'Publishing Type for Activities',
-                    'choices'        => ['unsegmented' => 'Unsegmented', 'segmented' => 'Segmented'],
+                    'label'          => trans('setting.publishing_type_for_activities'),
+                    'choices'        => ['unsegmented' => trans('setting.unsegmented'), 'segmented' => trans('setting.segmented')],
                     'expanded'       => true,
                     'default_value'  => 'segmented',
                     'choice_options' => [
@@ -48,8 +52,8 @@ class PublishingInfo extends BaseForm
                 'publish_files',
                 'choice',
                 [
-                    'label'          => 'Automatically Update the IATI Registry when publishing files:',
-                    'choices'        => ['no' => 'No', 'yes' => 'Yes'],
+                    'label'          => trans('setting.automatic_update'),
+                    'choices'        => ['no' => trans('elementForm.no'), 'yes' => trans('elementForm.yes')],
                     'expanded'       => true,
                     'default_value'  => 'no',
                     'choice_options' => [
@@ -63,7 +67,7 @@ class PublishingInfo extends BaseForm
                 'Save',
                 'submit',
                 [
-                    'label'   => 'Save Publishing Settings',
+                    'label'   => trans('global.save_publishing_settings'),
                     'attr'    => [
                         'class' => 'btn btn-primary btn-submit btn-form'
                     ],

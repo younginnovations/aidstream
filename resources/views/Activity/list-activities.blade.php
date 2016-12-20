@@ -1,6 +1,6 @@
 @extends('app')
 
-@section('title', 'Upload Activities')
+@section('title', trans('title.upload_activities'))
 
 @section('content')
 
@@ -11,18 +11,18 @@
                 @include('includes.response')
                 <div class="element-panel-heading">
                     <div>
-                        List of Activities
+                        @lang('title.list_of_activities')
                     </div>
                     <div>
                         <a href="{{ route('import-activity.index') }}" class="pull-right back-to-list">
-                            <span class="glyphicon glyphicon-triangle-left"></span>Back to Import Activities
+                            <span class="glyphicon glyphicon-triangle-left"></span>@lang('global.back_to_import_activities')
                         </a>
                     </div>
                 </div>
                 <div class="col-xs-12 col-md-8 col-lg-8 element-content-wrapper csv-upload-wrapper">
                     <div class="panel panel-default panel-upload">
                         <div class="panel-body">
-                            <p>There are {{ count($activities) }} activities in the file uploaded.</p>
+                            <p>@lang('success.activity_count',['number' => count($activities)])</p>
                             <form id="import-activities" method="POST" action="{{ route('import-activity.import') }}">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <div class="imported-activities">
@@ -41,15 +41,15 @@
                                             <div class="activity-csv-status">
                                                 @if($isDuplicate)
                                                     <div class="activity-warning">
-                                                        <p>Duplicate Activity identifier.</p>
+                                                        <p>@lang('global.duplicate_activity_identifier').</p>
                                                         <div class="activity-check-title">
                                                             @include('Activity.activityTitle')
-                                                            <p>(Please fix and upload again.)</p>
+                                                            <p>(@lang('error.fix_and_upload').)</p>
                                                         </div>
                                                     </div>
                                                 @elseif(isset($activity['errors']['duplicate']))
                                                     <div class="activity-warning">
-                                                        <p>Duplicate Activity. </p>
+                                                        <p>@lang('global.duplicate_activity'). </p>
                                                         <div class="activity-check-title">
                                                             @include('Activity.activityTitle')
                                                             <p>{!! $activity['errors']['duplicate'] !!}</p>
@@ -57,7 +57,7 @@
                                                     </div>
                                                 @elseif($activity['errors'])
                                                     <div class="activity-error">
-                                                        <p>Errors Found.</p>
+                                                        <p>@lang('error.errors_found').</p>
                                                         <div class="activity-check-title">
                                                             @include('Activity.activityTitle')
                                                             <ol style="list-style-type: decimal;">
@@ -65,16 +65,15 @@
                                                                     <li>{{ $error }}</li>
                                                                 @endforeach
                                                             </ol>
-                                                            <p>(Please fix these errors and upload this file again to
-                                                                import this activity.)</p>
+                                                            <p>(@lang('global.fix_and_upload_again').)</p>
                                                         </div>
                                                     </div>
                                                 @else
                                                     <div class="activity-success">
-                                                        <p>Errors not Found.</p>
+                                                        <p>@lang('error.error_not_found').</p>
                                                         <div class="activity-check-title">
                                                             @include('Activity.activityTitle')
-                                                            <p>(Please click on the checkbox to import activity.)</p>
+                                                            <p>(@lang('success.click_on_checkbox').)</p>
                                                         </div>
                                                     </div>
                                                 @endif
@@ -84,7 +83,7 @@
                                 </div>
                                 <button type="button" class="btn_confirm" disabled="disabled"
                                         data-title="Import Activity Confirmation"
-                                        data-message="Are you sure you want to import selected activities ?">Import
+                                        data-message="Are you sure you want to import selected activities ?">@lang('global.import')
                                 </button>
                             </form>
                         </div>

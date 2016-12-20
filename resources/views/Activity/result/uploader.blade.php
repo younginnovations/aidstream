@@ -1,6 +1,6 @@
 @extends('app')
 
-@section('title', 'Upload Results')
+@section('title', trans('title.upload_results'))
 
 @section('content')
 
@@ -18,11 +18,10 @@
                 <div id="import-status-placeholder"></div>
                 <div class="element-panel-heading">
                     <div>
-                        Import Results
+                        @lang('title.import_results')
                     </div>
                     <div>
-                        <a href="{{ route('activity.result.index', $activityId) }}" class="pull-right back-to-list">
-                            <span class="glyphicon glyphicon-triangle-left"></span>Back to Result List
+                        <a href="{{ route('activity.result.index', $activityId) }}" class="pull-right btn btn-primary btn-view-it">@lang('global.back_to_result_list')
                         </a>
                     </div>
                 </div>
@@ -34,11 +33,10 @@
                             </div>
                             <div class="download-transaction-wrap">
                                 <a href="{{route('activity.result.download-template', $activityId)}}" class="btn btn-primary">
-                                    Download Result Template
+                                    @lang('global.download_result_template')
                                 </a>
                                 <div>
-                                    This template contains few basic elements that you have to fill to import into AidStream. Please make sure that you follow the structure and format of the template.
-                                    For more details, please follow <a href="https://github.com/younginnovations/aidstream-new/wiki/Activity-Creation#2-bulk-activity-import" target="_blank">here</a>.
+                                    @lang('global.result_template_text')
                                 </div>
                             </div>
                         </div>

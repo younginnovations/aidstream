@@ -204,12 +204,18 @@ class ParticipatingOrganization extends Element
     public function messages()
     {
         return [
-            'participating_organization.required'                      => 'Participating Organisation is required.',
-            'participating_organization.funding_implementing_required' => ' There should be at least one participating organization with the role "Funding"(id:1) or "Implementing"(id:4).',
-            'participating_organization.*.organization_role.required'  => 'Participating Organisation role is required.',
-            'participating_organization.required_only_one_among'       => 'Either Participating Organisation Identifier or Participating Organisation Name is required.',
-            'participating_organization.*.organization_role.in'        => 'Only valid Organisation Roles are allowed.',
-            'participating_organization.*.organization_type.in'        => 'Only valid Organisation Types are allowed.'
+            'participating_organization.required'                      => trans('validation.required', ['attribute' => trans('elementForm.participating_organisation')]),
+            'participating_organization.funding_implementing_required' => trans('validation.funding_implementing_required'),
+            'participating_organization.*.organization_role.required'  => trans('validation.required', ['attribute' => trans('elementForm.participating_organisation_role')]),
+            'participating_organization.required_only_one_among'       => trans(
+                'validation.required_only_one_among',
+                [
+                    'attribute' => trans('elementForm.participating_organisation_identifier'),
+                    'values'    => trans('elementForm.participating_organisation_name')
+                ]
+            ),
+            'participating_organization.*.organization_role.in'        => trans('validation.code_list', ['attribute' => trans('elementForm.participating_organisation_role')]),
+            'participating_organization.*.organization_type.in'        => trans('validation.code_list', ['attribute' => trans('elementForm.participating_organisation_type')])
         ];
     }
 

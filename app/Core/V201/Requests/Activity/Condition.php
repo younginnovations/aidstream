@@ -57,15 +57,21 @@ class Condition extends ActivityBaseRequest
 
         foreach ($formFields as $conditionIndex => $condition) {
             $conditionForm                                                      = sprintf('condition.%s', $conditionIndex);
-            $messages['condition_attached.required']                            = 'Condition Attached is required';
-            $messages[sprintf('%s.condition_type.required_if', $conditionForm)] = 'Condition Type is required if Condition Attached is Yes.';
+            $messages['condition_attached.required']                            = trans('validation.required', ['attribute' => trans('elementForm.condition_attached')]);
+            $messages[sprintf('%s.condition_type.required_if', $conditionForm)] = trans(
+                'validation.required_if',
+                ['attribute' => trans('elementForm.condition_type'), 'values' => trans('elementForm.condition_attached'), 'value' => trans('elementForm.yes')]
+            );
             $messages                                                           = array_merge(
                 $messages,
                 $this->getMessagesForNarrative($condition['narrative'], $conditionForm)
             );
 
             foreach ($condition['narrative'] as $narrativeIndex => $narrative) {
-                $messages[sprintf('%s.narrative.%s.narrative.required_if', $conditionForm, $narrativeIndex)] = 'Narrative is required if Condition Attached is Yes.';
+                $messages[sprintf('%s.narrative.%s.narrative.required_if', $conditionForm, $narrativeIndex)] = trans(
+                    'validation.required_if',
+                    ['attribute' => trans('elementForm.narrative'), 'values' => trans('elementForm.condition_attached'), 'value' => trans('elementForm.yes')]
+                );
             }
         }
 

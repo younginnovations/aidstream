@@ -61,7 +61,7 @@ class DocumentController extends Controller
             $extension = $file->getClientOriginalExtension();
 
             if (!in_array($extension, $this->allowedExtensions)) {
-                return ['status' => 'warning', 'message' => 'No such files allowed.'];
+                return ['status' => 'warning', 'message' => trans('error.file_type_not_allowed')];
             }
 
             $filename  = str_replace(' ', '-', preg_replace('/\s+/', ' ', $file->getClientOriginalName()));
@@ -70,15 +70,15 @@ class DocumentController extends Controller
             $url       = url(sprintf('files/documents/%s', $filename));
             $document  = $this->documentManager->getDocument($this->orgId, $url, $filename);
             if ($document->exists) {
-                return ['status' => 'danger', 'message' => 'Document already exists.'];
+                return ['status' => 'danger', 'message' => trans('error.document_already_exists')];
             }
             Storage::put(sprintf('%s/%s', 'documents', $filename), File::get($file));
             $this->documentManager->store($document);
         } catch (\Exception $e) {
-            return ['status' => 'danger', 'message' => 'Failed to upload Document. Error: ' . $e->getMessage()];
+            return ['status' => 'danger', 'message' => trans('error.failed_to_upload_document') . ' ' . trans('global.error') . ': ' . $e->getMessage()];
         }
 
-        return ['status' => 'success', 'message' => 'Uploaded Successfully.', 'data' => $this->getDocuments()];
+        return ['status' => 'success', 'message' => trans('success.uploaded_successfully'), 'data' => $this->getDocuments()];
     }
 
     /**
@@ -104,9 +104,9 @@ class DocumentController extends Controller
             return redirect()->route('activity.index')->withResponse($this->getNoPrivilegesMessage());
         }
 
-        $response = ($document->delete()) ? ['type' => 'success', 'code' => ['deleted', ['name' => 'Document']]] : [
+        $response = ($document->delete()) ? ['type' => 'success', 'code' => ['deleted', ['name' => trans('global.document')]]] : [
             'type' => 'danger',
-            'code' => ['delete_failed', ['name' => 'Document']]
+            'code' => ['delete_failed', ['name' => trans('global.document')]]
         ];
 
         return redirect()->back()->withResponse($response);

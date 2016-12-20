@@ -1,6 +1,6 @@
 @extends('app')
 
-@section('title', 'Upload Activities')
+@section('title', trans('title.upload_activities'))
 
 @section('content')
 
@@ -11,11 +11,11 @@
                 @include('includes.response')
                 <div class="element-panel-heading">
                     <div>
-                        Import Xml
+                        @lang('title.import_xml')
                     </div>
                     <div>
                         <a href="{{ route('activity.index') }}" class="pull-right back-to-list">
-                            <span class="glyphicon glyphicon-triangle-left"></span>Back to Activity List
+                            <span class="glyphicon glyphicon-triangle-left"></span>@lang('global.back_to_activity_list')
                         </a>
                     </div>
                 </div>
@@ -44,12 +44,12 @@
                                 </form>
                             </div>
                             {{--<div class="download-transaction-wrap">--}}
-                                {{--<a href="{{route('download.activity-template')}}"--}}
-                                   {{--class="btn btn-primary btn-form btn-submit">Download Activity Template</a>--}}
-                                {{--<div>--}}
-                                    {{--This template contains few basic elements that you have to fill to import into AidStream. Please make sure that you follow the structure and format of the template.--}}
-                                    {{--For more details, please follow <a href="https://github.com/younginnovations/aidstream-new/wiki/Activity-Creation#2-bulk-activity-import" target="_blank">here</a>.--}}
-                                {{--</div>--}}
+                            {{--<a href="{{route('download.activity-template')}}"--}}
+                            {{--class="btn btn-primary btn-form btn-submit">Download Activity Template</a>--}}
+                            {{--<div>--}}
+                            {{--This template contains few basic elements that you have to fill to import into AidStream. Please make sure that you follow the structure and format of the template.--}}
+                            {{--For more details, please follow <a href="https://github.com/younginnovations/aidstream-new/wiki/Activity-Creation#2-bulk-activity-import" target="_blank">here</a>.--}}
+                            {{--</div>--}}
                             {{--</div>--}}
                         </div>
                     </div>

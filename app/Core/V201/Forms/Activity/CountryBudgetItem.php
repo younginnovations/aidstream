@@ -18,14 +18,15 @@ class CountryBudgetItem extends BaseForm
                 'vocabulary',
                 'select',
                 [
+                    'label'       => trans('elementForm.vocabulary'),
                     'choices'     => $this->getCodeList('BudgetIdentifierVocabulary', 'Activity'),
-                    'empty_value' => 'Select one of the following option :',
+                    'empty_value' => trans('elementForm.select_text'),
                     'attr'        => ['class' => 'form-control vocabulary'],
                     'help_block'  => $this->addHelpText('Activity_CountryBudgetItems-vocabulary'),
                     'required'    => true
                 ]
             )
-            ->addCollection('budget_item', 'Activity\BudgetItem', 'budget_item')
+            ->addCollection('budget_item', 'Activity\BudgetItem', 'budget_item', [], trans('elementForm.budget_item'))
             ->addAddMoreButton('add_budget_item', 'budget_item');
     }
 }

@@ -49,14 +49,14 @@ class Budget extends V201BudgetRequest
         foreach ($formFields as $budgetIndex => $budget) {
             $budgetForm = sprintf('budget.%s', $budgetIndex);
 
-            $messages[sprintf('%s.status.required', $budgetForm)] = 'Status is required.';
+            $messages[sprintf('%s.status.required', $budgetForm)] = trans('validation.required', ['attribute' => trans('elementForm.status')]);
             $messages                                             = array_merge(
                 $messages,
                 $this->getMessagesForPeriodStart($budget['period_start'], $budgetForm),
                 $this->getMessagesForPeriodEnd($budget['period_end'], $budgetForm),
                 $this->getMessagesForValue($budget['value'], $budgetForm)
             );
-            $messages[$budgetForm . '.period_end.0.date.before']  = 'Period End must not be more than a year from Period Start';
+            $messages[$budgetForm . '.period_end.0.date.before']  = trans('validation.before', ['attribute' => trans('elementForm.period_end'), 'date' => trans('elementForm.period_start')]);
 
         }
 

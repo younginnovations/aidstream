@@ -21,7 +21,7 @@ class DefaultValues extends BaseForm
         $this->addSelect(
             'default_currency',
             $this->getCodeList('Currency', 'Organization'),
-            'Default Currency',
+            trans('elementForm.default_currency'),
             $this->addHelpText('activity_defaults-default_currency', false),
             null,
             true,
@@ -32,7 +32,7 @@ class DefaultValues extends BaseForm
              ->addSelect(
                  'default_language',
                  $this->getCodeList('Language', 'Organization'),
-                 'Default Language',
+                 trans('elementForm.default_language'),
                  $this->addHelpText('activity_defaults-default_language', false),
                  config('app.default_language'),
                  true,
@@ -45,16 +45,17 @@ class DefaultValues extends BaseForm
                  'default_hierarchy',
                  'text',
                  [
+                     'label'         => trans('elementForm.default_hierarchy'),
                      'help_block'    => $this->addHelpText('activity_defaults-hierarchy', false),
                      'wrapper'       => ['class' => 'form-group col-sm-6'],
                      'default_value' => 1
                  ]
              )
-             ->add('linked_data_uri', 'text', ['label' => 'Linked Data Default', 'wrapper' => ['class' => 'form-group col-sm-6']]);
+             ->add('linked_data_uri', 'text', ['label' => trans('elementForm.linked_data_uri'), 'wrapper' => ['class' => 'form-group col-sm-6']]);
         $this->addSelect(
             'default_collaboration_type',
             $this->getCodeList('CollaborationType', 'Organization'),
-            'Default Collaboration Type',
+            trans('elementForm.default_collaboration_type'),
             $this->addHelpText('activity_defaults-default_collaboration_type', false),
             null,
             false,
@@ -65,7 +66,7 @@ class DefaultValues extends BaseForm
         $this->addSelect(
             'default_flow_type',
             $this->getCodeList('FlowType', 'Organization'),
-            'Default Flow Type',
+            trans('elementForm.default_flow_type'),
             $this->addHelpText('activity_defaults-default_flow_type', false),
             null,
             false,
@@ -76,7 +77,7 @@ class DefaultValues extends BaseForm
         $this->addSelect(
             'default_finance_type',
             $this->getCodeList('FinanceType', 'Organization'),
-            'Default Finance Type',
+            trans('elementForm.default_finance_type'),
             $this->addHelpText('activity_defaults-default_finance_type', false),
             null,
             false,
@@ -87,7 +88,7 @@ class DefaultValues extends BaseForm
         $this->addSelect(
             'default_aid_type',
             $this->getCodeList('AidType', 'Organization'),
-            'Default Aid Type',
+            trans('elementForm.default_aid_type'),
             $this->addHelpText('activity_defaults-default_aid_type', false),
             null,
             false,
@@ -98,7 +99,7 @@ class DefaultValues extends BaseForm
         $this->addSelect(
             'default_tied_status',
             $this->getCodeList('TiedStatus', 'Organization'),
-            'Default Tied Status',
+            trans('elementForm.default_tied_status'),
             $this->addHelpText('activity_defaults-default_tied_status', false),
             null,
             false,
@@ -106,12 +107,20 @@ class DefaultValues extends BaseForm
                 ? ['wrapper' => ['class' => 'form-group col-sm-6 hidden']]
                 : ['wrapper' => ['class' => 'form-group col-sm-6']]
         );
-        $this->addSelect('humanitarian', ['1' => 'Yes', '0' => 'No'], null, null, null, false, ['wrapper' => ['class' => 'form-group col-sm-6']])
+        $this->addSelect(
+            'humanitarian',
+            ['1' => trans('elementForm.yes'), '0' => trans('elementForm.no')],
+            trans('elementForm.humanitarian'),
+            null,
+            null,
+            false,
+            ['wrapper' => ['class' => 'form-group col-sm-6']]
+        )
              ->add(
                  'save',
                  'submit',
                  [
-                     'label'   => 'Save Default Values',
+                     'label'   => trans('global.save_default_values'),
                      'attr'    => ['class' => 'btn btn-primary btn-submit btn-form'],
                      'wrapper' => ['class' => 'form-group']
 

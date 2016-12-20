@@ -14,7 +14,7 @@ trait Targets
      */
     public function addTargets()
     {
-        return $this->addCollection('target', 'Activity\Target', '', ['class' => 'indicator_period_target_comment_title_narrative']);
+        return $this->addCollection('target', 'Activity\Target', '', ['class' => 'indicator_period_target_comment_title_narrative'], trans('elementForm.target'));
     }
 
     /**
@@ -23,6 +23,6 @@ trait Targets
      */
     public function addActualTargets()
     {
-        return $this->addCollection('actual', 'Activity\Target', '', ['class' => 'indicator_period_actual_comment_title_narrative']);
+        return $this->addCollection('actual', 'Activity\Target', '', ['class' => 'indicator_period_actual_comment_title_narrative'], trans('elementForm.actual'));
     }
 }

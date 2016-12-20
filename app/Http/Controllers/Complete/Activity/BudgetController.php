@@ -38,14 +38,14 @@ class BudgetController extends Controller
      */
     public function index($id)
     {
-        $activityData  = $this->activityManager->getActivityData($id);
+        $activityData = $this->activityManager->getActivityData($id);
 
         if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
-        $budget       = $this->budgetManager->getbudgetData($id);
-        $form         = $this->budgetForm->editForm($budget, $id);
+        $budget = $this->budgetManager->getbudgetData($id);
+        $form   = $this->budgetForm->editForm($budget, $id);
 
         return view('Activity.budget.edit', compact('form', 'activityData', 'id'));
     }
@@ -58,7 +58,7 @@ class BudgetController extends Controller
      */
     public function update($id, Request $request, BudgetRequestManager $budgetRequestManager)
     {
-        $activityData  = $this->activityManager->getActivityData($id);
+        $activityData = $this->activityManager->getActivityData($id);
 
         if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
@@ -68,11 +68,11 @@ class BudgetController extends Controller
         $budget = $request->all();
         if ($this->budgetManager->update($budget, $activityData)) {
             $this->activityManager->resetActivityWorkflow($id);
-            $response = ['type' => 'success', 'code' => ['updated', ['name' => 'Budget']]];
+            $response = ['type' => 'success', 'code' => ['updated', ['name' => trans('element.budget')]]];
 
             return redirect()->to(sprintf('/activity/%s', $id))->withResponse($response);
         }
-        $response = ['type' => 'danger', 'code' => ['update_failed', ['name' => 'Budget']]];
+        $response = ['type' => 'danger', 'code' => ['update_failed', ['name' => trans('element.budget')]]];
 
         return redirect()->back()->withInput()->withResponse($response);
     }

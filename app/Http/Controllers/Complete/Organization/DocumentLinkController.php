@@ -68,15 +68,15 @@ class DocumentLinkController extends Controller
 
         $organizationData = $this->documentLinkManager->getOrganizationData($orgId);
         $this->authorizeByRequestType($organizationData, 'document_link');
-        $input            = $request->all();
+        $input = $request->all();
 
         if ($this->documentLinkManager->update($input, $organizationData)) {
             $this->organizationManager->resetStatus($orgId);
-            $response = ['type' => 'success', 'code' => ['updated', ['name' => 'Organization Document Link']]];
+            $response = ['type' => 'success', 'code' => ['updated', ['name' => trans('title.org_document_link')]]];
 
             return redirect()->to(sprintf('/organization/%s', $orgId))->withResponse($response);
         }
-        $response = ['type' => 'danger', 'code' => ['update_failed', ['name' => 'Organization Document Link']]];
+        $response = ['type' => 'danger', 'code' => ['update_failed', ['name' => trans('title.org_document_link')]]];
 
         return redirect()->back()->withInput()->withResponse($response);
     }

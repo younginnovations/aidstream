@@ -47,7 +47,7 @@ class ActivityDateController extends Controller
      */
     public function index($id)
     {
-        $activityData  = $this->activityManager->getActivityData($id);
+        $activityData = $this->activityManager->getActivityData($id);
 
         if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
@@ -71,7 +71,7 @@ class ActivityDateController extends Controller
      */
     public function update($id, Request $request, ActivityDateRequestManager $activityDateRequestManager)
     {
-        $activityData  = $this->activityManager->getActivityData($id);
+        $activityData = $this->activityManager->getActivityData($id);
 
         if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
@@ -87,11 +87,11 @@ class ActivityDateController extends Controller
         }
         if ($this->activityDateManager->update($activityDate, $activityData)) {
             $this->activityManager->resetActivityWorkflow($id);
-            $response = ['type' => 'success', 'code' => ['updated', ['name' => 'Activity Date']]];
+            $response = ['type' => 'success', 'code' => ['updated', ['name' => trans('element.activity_date')]]];
 
             return redirect()->to(sprintf('/activity/%s', $id))->withResponse($response);
         }
-        $response = ['type' => 'danger', 'code' => ['update_failed', ['name' => 'Activity Date']]];
+        $response = ['type' => 'danger', 'code' => ['update_failed', ['name' => trans('element.activity_date')]]];
 
         return redirect()->back()->withInput()->withResponse($response);
     }
@@ -110,7 +110,7 @@ class ActivityDateController extends Controller
             $date       = $activityDate['date'];
             $type       = $activityDate['type'];
             if ($type == 2 || $type == 4) {
-                (strtotime($date) <= strtotime(date('Y-m-d'))) ?: $messages[] = sprintf('Actual Start Date and Actual End Date must be Today or past days. (block %s)', $blockIndex);
+                (strtotime($date) <= strtotime(date('Y-m-d'))) ?: $messages[] = trans('error.today_date', ['block' => $blockIndex]);
             }
             if ($type == 1 || $type == 2) {
                 $hasStart = true;
@@ -118,16 +118,16 @@ class ActivityDateController extends Controller
                 $prevData = isset($data[$activityDateIndex - 1]) ? $data[$activityDateIndex - 1] : null;
 
                 if (!$prevData) {
-                    $messages[] = sprintf('Ends should be after respective Starts in Activity Date Type (block %s)', $blockIndex);
+                    $messages[] = trans('error.end_date_after_start_date', ['block' => $blockIndex]);
                 } else {
                     if (strtotime($date) < strtotime($prevData['date'])) {
-                        $messages[] = sprintf('End date must be later than the start date (block %s)', $blockIndex);
+                        $messages[] = trans('error.end_date_later_start_date', ['block' => $blockIndex]);
                     }
                 }
 
-/*
- * Commented in case of further confusions.
- */
+                /*
+                 * Commented in case of further confusions.
+                 */
 //                    (strtotime($prevData['date']) < strtotime($date)) ?: $check = false;
 //                    if ($type == 3) {
 //                        $prevData['type'] == 1 ?: $messages[] = sprintf('Ends should be after respective Starts in Activity Date Type (block %s)', $blockIndex);
@@ -141,7 +141,7 @@ class ActivityDateController extends Controller
         }
 
         if (!$hasStart) {
-            array_unshift($messages, 'Planned Start or Actual Start in Activity Date Type is required.');
+            array_unshift($messages, 'error.planned_actual_start_date_required');
         }
 
         return $messages;

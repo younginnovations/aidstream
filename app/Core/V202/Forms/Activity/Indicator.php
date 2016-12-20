@@ -26,7 +26,7 @@ class Indicator extends BaseForm
             ->addAscendingList()
             ->addTitles(['class' => 'indicator_title_title_narrative', 'narrative_true' => true])
             ->addDescriptions(['class' => 'indicator_description_title_narrative'])
-            ->addCollection('reference', 'Activity\Reference', 'reference')
+            ->addCollection('reference', 'Activity\Reference', 'reference', [], trans('elementForm.reference'))
             ->addAddMoreButton('add_reference', 'reference')
             ->addBaselines()
             ->addPeriods()

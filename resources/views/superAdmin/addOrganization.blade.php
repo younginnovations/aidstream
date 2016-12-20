@@ -52,7 +52,7 @@
                                         <h2>Choose elements to show/ hide</h2>
                                         <div class="form-group">
                                             <label><input type="checkbox" class="checkAll"/><span
-                                                        class="check-text">Check All</span></label>
+                                                        class="check-text">@lang('global.check_all')</span></label>
                                         </div>
                                         {!! form_row($form->default_field_groups) !!}
                                     </div>

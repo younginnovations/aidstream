@@ -1,6 +1,6 @@
 @extends('app')
 
-@section('title', 'Imported XML Error')
+@section('title', trans('title.imported_xml_error'))
 
 @section('head')
     <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
@@ -123,7 +123,7 @@
             @include('includes.side_bar_menu')
             <div class="col-xs-9 col-md-9 col-lg-9 content-wrapper">
                 <div class="steps-wrapper xml-error-wrap">
-                    <p>The Xml you uploaded contains error. Please fix these errors and upload them again.</p>
+                    <p>@lang('error.xml_error')</p>
                 </div>
                 <div class="xml-info">
                     <ul>

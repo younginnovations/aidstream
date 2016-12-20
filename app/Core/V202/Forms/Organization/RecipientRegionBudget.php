@@ -14,12 +14,12 @@ class RecipientRegionBudget extends BaseForm
     public function buildForm()
     {
         $this
-            ->addSelect('status', $this->getCodeList('BudgetStatus', 'Activity'))
-            ->addCollection('recipient_region', 'Organization\RecipientRegion', 'recipient_region', [], 'Recipient Organisation')
-            ->addCollection('period_start', 'Organization\PeriodStart')
-            ->addCollection('period_end', 'Organization\PeriodEnd')
-            ->addCollection('value', 'Organization\ValueForm')
-            ->addCollection('budget_line', 'Organization\BudgetLineForm', 'budget_line')
+            ->addSelect('status', $this->getCodeList('BudgetStatus', 'Activity'), trans('elementForm.status'))
+            ->addCollection('recipient_region', 'Organization\RecipientRegion', 'recipient_region', [], trans('elementForm.recipient_region'))
+            ->addCollection('period_start', 'Organization\PeriodStart', '', [], trans('elementForm.period_start'))
+            ->addCollection('period_end', 'Organization\PeriodEnd', '', [], trans('elementForm.period_end'))
+            ->addCollection('value', 'Organization\ValueForm', '', [], trans('elementForm.value'))
+            ->addCollection('budget_line', 'Organization\BudgetLineForm', 'budget_line', [], trans('elementForm.budget_line'))
             ->addAddMoreButton('add_budget_line', 'budget_line')
             ->addRemoveThisButton('remove_recipient_region_budget');
     }

@@ -17,17 +17,17 @@
                 @include('includes.breadcrumb')
                 <div class="panel panel-default">
                     <div class="element-panel-heading">
-                        <div>Documents</div>
+                        <div>@lang('global.documents')</div>
                     </div>
                     <div class="panel-body">
                         @if(count($documents) > 0)
                             <table class="table table-striped">
                                 <thead>
                                 <tr>
-                                    <th width="30px">S.N.</th>
-                                    <th width="60%">Document Link</th>
-                                    <th width="20%">Activity Identifiers</th>
-                                    <th>Actions</th>
+                                    <th width="30px">@lang('global.sn')</th>
+                                    <th width="60%">@lang('global.document_link')</th>
+                                    <th width="20%">@lang('global.activity_identifiers')</th>
+                                    <th>@lang('global.actions')</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -63,7 +63,7 @@
                             </table>
                         @else
                             <div class="text-center no-data no-document-data">
-                                You haven’t added any document yet.
+                                @lang('global.not_added',['type' =>trans('global.document')])
                             </div>
                         @endif
                     </div>

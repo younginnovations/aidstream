@@ -4,8 +4,8 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport'/>
-    <title>Aidstream - Login</title>
-    <link rel="shotcut icon" type="image/png" sizes="32*32" href="{{ asset('/images/favicon.png') }}"/>
+    <title>@lang('title.aidstream_login')</title>
+    <link rel="shortcut icon" type="image/png" sizes="32*32" href="{{ asset('/images/favicon.png') }}"/>
     <link href="{{ asset('/css/main.min.css') }}" rel="stylesheet">
     <link href="{{ asset('/css/style.css') }}" rel="stylesheet">
 
@@ -19,41 +19,9 @@
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
     @yield('head')
-
 </head>
 <body>
-<header>
-    <nav class="navbar navbar-default navbar-static navbar-fixed">
-        <div class="navbar-header">
-            <a href="{{ url('/') }}" class="navbar-brand">Aidstream</a>
-            <button type="button" class="navbar-toggle collapsed">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="bar1"></span>
-                <span class="bar2"></span>
-                <span class="bar3"></span>
-            </button>
-        </div>
-        <div class="navbar-collapse navbar-right">
-            <ul class="nav navbar-nav">
-                <li><a class="{{ Request::is('about') ? 'active' : '' }}" href="{{ url('/about') }}">About</a></li>
-                <li><a class="{{ Request::is('who-is-using') ? 'active' : '' }}" href="{{ url('/who-is-using') }}">Who's
-                        Using It?</a></li>
-                <li><a href="https://github.com/younginnovations/aidstream-new/wiki/User-Guide" target="_blank">User
-                        Guide</a></li>
-                <!--<li><a href="#">Snapshot</a></li>-->
-            </ul>
-            <div class="action-btn pull-left">
-                @if(auth()->check())
-                    <a href="{{ url((auth()->user()->role_id == 1 || auth()->user()->role_id == 2) ? config('app.admin_dashboard') : config('app.super_admin_dashboard'))}}"
-                       class="btn btn-primary">Go
-                        to Dashboard</a>
-                @else
-                    <a href="{{ url('/auth/login')}}" class="btn btn-primary">Login/Register</a>
-                @endif
-            </div>
-        </div>
-    </nav>
-</header>
+@include('includes.header_home')
 <div class="login-wrapper">
     {{--<div class="language-select-wrapper">--}}
     {{--<label for="" class="pull-left">Language</label>--}}
@@ -69,7 +37,7 @@
     {{--</div>--}}
     <div class="container-fluid login-container">
         <div class="row">
-            <h1 class="text-center">Login</h1>
+            <h1 class="text-center">@lang('global.login')</h1>
             <div class="col-lg-4 col-md-8 login-block">
                 <div class="panel panel-default">
                     <div class="panel-body">
@@ -129,7 +97,7 @@
                 </div>
             </div>
             <div class="col-md-12 create-account-wrapper">
-                Don’t have an AidStream account? <a href="{{ route('registration') }}">Create an account</a>
+                @lang('global.dont_have_account') <a href="{{ route('registration') }}">@lang('global.create_account')</a>
             </div>
         </div>
     </div>
@@ -169,7 +137,7 @@
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                                     aria-hidden="true">&times;</span></button>
                         <img src="{{ url('/images/ic-verified.svg') }}" alt="verified" width="66" height="66">
-                        <h4 class="modal-title text-center">Verification Successful</h4>
+                        <h4 class="modal-title text-center">@lang('global.verification_successful')</h4>
                     </div>
                     <div class="modal-body clearfix">
                         {!! session('verification_message') !!}

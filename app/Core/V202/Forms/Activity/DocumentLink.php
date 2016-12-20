@@ -7,22 +7,22 @@ class DocumentLink extends V201DocumentLink
     public function buildForm()
     {
         $this
-            ->add('url', 'text', ['attr' => ['class' => 'document_link'], 'help_block' => $this->addHelpText('Activity_DocumentLink-url'), 'required' => true])
-            ->addSelect('format', $this->getCodeList('FileFormat', 'Activity'), 'Format', $this->addHelpText('Activity_DocumentLink-format'), null, true)
+            ->add('url', 'text', ['label' => trans('elementForm.url'), 'attr' => ['class' => 'document_link'], 'help_block' => $this->addHelpText('Activity_DocumentLink-url'), 'required' => true])
+            ->addSelect('format', $this->getCodeList('FileFormat', 'Activity'), trans('elementForm.format'), $this->addHelpText('Activity_DocumentLink-format'), null, true)
             ->add(
                 'upload_text',
                 'static',
                 [
                     'tag'           => 'em',
                     'label'         => false,
-                    'default_value' => 'If your document is not uploaded, <a href="#" data-toggle="modal" data-target="#upload_document" data-modal-type="upload">Upload it</a> in AidStream. You can also add from your <a href="#" data-toggle="modal" data-target="#upload_document">existing</a> documents in Aidstream'
+                    'default_value' => trans('elementForm.url_text')
                 ]
             )
-            ->addCollection('title', 'Activity\Title')
-            ->addCollection('category', 'Activity\CategoryCode', 'category')
+            ->addCollection('title', 'Activity\Title', '', [], trans('elementForm.title'))
+            ->addCollection('category', 'Activity\CategoryCode', 'category', [], trans('elementForm.category'))
             ->addAddMoreButton('add_category', 'category')
-            ->addCollection('language', 'Activity\LanguageCode', 'language')
+            ->addCollection('language', 'Activity\LanguageCode', 'language', [], trans('elementForm.language'))
             ->addAddMoreButton('add_language', 'language')
-            ->addCollection('document_date', 'Activity\Date');
+            ->addCollection('document_date', 'Activity\Date', '', [], trans('elementForm.document_date'));
     }
 }

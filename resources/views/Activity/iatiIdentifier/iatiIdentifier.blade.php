@@ -1,6 +1,6 @@
 @extends('app')
 
-@section('title', 'Activity Identifier')
+@section('title', trans('title.identifier'))
 
 @section('content')
     <div class="container main-container">
@@ -10,11 +10,11 @@
                 @include('includes.response')
                 @include('includes.breadcrumb')
                 <div class="panel-content-heading panel-title-heading">
-                    <div>Activity Identifier
-                    <div class="panel-action-btn">
-                        <a href="{{ route('activity.show', $id) }}" class="btn btn-primary">View Activity
-                        </a>
-                    </div>
+                    <div>@lang('element.activity_identifier')
+                        <div class="panel-action-btn">
+                            <a href="{{ route('activity.show', $id) }}" class="btn btn-primary">@lang('global.view_activity')
+                            </a>
+                        </div>
                     </div>
                 </div>
                 <div class="col-xs-12 col-md-8 col-lg-8 element-content-wrapper">

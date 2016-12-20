@@ -1,6 +1,6 @@
 <?php
 return [
-    'reporting_organization'                => 'Reporting Organisation',
+    'reporting_organization'                => trans('title.reporting_organisation'). ' - ',
     'activity_identifier'                   => 'Activity Identifier',
     'other_identifier'                      => 'Other Identifier',
     'rep_org_internal_activity_identifier' => 'Reporting Organisation\'s Internal Activity Identifier',

@@ -16,8 +16,8 @@ class DefaultValuesRequest extends Request
     public function messages()
     {
         $messages                     = [];
-        $messages['default_currency'] = 'Currency is required';
-        $messages['default_language'] = 'Language is required';
+        $messages['default_currency'] = trans('validation.required', ['attribute' => trans('elementForm.currency')]);
+        $messages['default_language'] = trans('validation.required', ['attribute' => trans('elementForm.language')]);
 
         return $messages;
     }

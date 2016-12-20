@@ -224,8 +224,10 @@ class DefaultFieldValues extends Element
         if ($key == $this->_csvHeaders[2]) {
             if ((strtolower($value) == 'yes') || (strtolower($value) == 'true')) {
                 $value = '1';
-            } else if ((strtolower($value) == 'no') || (strtolower($value) == 'false')) {
-                $value = '0';
+            } else {
+                if ((strtolower($value) == 'no') || (strtolower($value) == 'false')) {
+                    $value = '0';
+                }
             }
 
             $this->data['default_field_values'][$index]['humanitarian'] = $value;
@@ -267,10 +269,10 @@ class DefaultFieldValues extends Element
     public function messages()
     {
         return [
-            'default_field_values.size'                  => 'Multiple Default Field Values for an activity is not allowed.',
-            'default_field_values.*.default_currency.in' => 'Entered Default Currency is invalid.',
-            'default_field_values.*.default_language.in' => 'Entered Default Language is invalid.',
-            'default_field_values.*.humanitarian.in'     => 'Entered Humanitarian is invalid.'
+            'default_field_values.size'                  => trans('validation.multiple_values', ['attribute' => trans('elementForm.default_field_values')]),
+            'default_field_values.*.default_currency.in' => trans('validation.code_list', ['attribute' => trans('elementForm.default_currency')]),
+            'default_field_values.*.default_language.in' => trans('validation.code_list', ['attribute' => trans('elementForm.default_language')]),
+            'default_field_values.*.humanitarian.in'     => trans('validation.code_list', ['attribute' => trans('elementForm.humanitarian')]),
         ];
     }
 

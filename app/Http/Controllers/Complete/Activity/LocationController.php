@@ -50,14 +50,14 @@ class LocationController extends Controller
      */
     public function index($id)
     {
-        $activityData  = $this->activityManager->getActivityData($id);
+        $activityData = $this->activityManager->getActivityData($id);
 
         if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
-        $location     = $this->locationManager->getLocation($id);
-        $form         = $this->locationForm->editForm($location, $id);
+        $location = $this->locationManager->getLocation($id);
+        $form     = $this->locationForm->editForm($location, $id);
 
         return view('Activity.location.edit', compact('form', 'activityData', 'id'));
     }
@@ -70,21 +70,21 @@ class LocationController extends Controller
      */
     public function update($id, Request $request, LocationRequestManager $locationRequestManager)
     {
-        $activityData  = $this->activityManager->getActivityData($id);
+        $activityData = $this->activityManager->getActivityData($id);
 
         if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
         $this->authorizeByRequestType($activityData, 'location');
-        $location     = $request->all();
+        $location = $request->all();
         if ($this->locationManager->update($location, $activityData)) {
             $this->activityManager->resetActivityWorkflow($id);
-            $response = ['type' => 'success', 'code' => ['updated', ['name' => 'Location']]];
+            $response = ['type' => 'success', 'code' => ['updated', ['name' => trans('element.location')]]];
 
             return redirect()->to(sprintf('/activity/%s', $id))->withResponse($response);
         }
-        $response = ['type' => 'danger', 'code' => ['update_failed', ['name' => 'Location']]];
+        $response = ['type' => 'danger', 'code' => ['update_failed', ['name' => trans('element.location')]]];
 
         return redirect()->back()->withInput()->withResponse($response);
     }

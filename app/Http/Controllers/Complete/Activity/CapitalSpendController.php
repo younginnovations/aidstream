@@ -45,9 +45,9 @@ class CapitalSpendController extends Controller
      * @param $id
      * @return \Illuminate\View\View
      */
-    public function  index($id)
+    public function index($id)
     {
-        $activityData  = $this->activityManager->getActivityData($id);
+        $activityData = $this->activityManager->getActivityData($id);
 
         if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
@@ -68,7 +68,7 @@ class CapitalSpendController extends Controller
      */
     public function update($id, Request $request, CapitalSpendRequestManager $capitalSpendRequestManager)
     {
-        $activityData  = $this->activityManager->getActivityData($id);
+        $activityData = $this->activityManager->getActivityData($id);
 
         if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
@@ -78,11 +78,11 @@ class CapitalSpendController extends Controller
         $capitalSpend = $request->all();
         if ($this->capitalSpendManager->update($capitalSpend, $activityData)) {
             $this->activityManager->resetActivityWorkflow($id);
-            $response = ['type' => 'success', 'code' => ['updated', ['name' => 'Capital Spend']]];
+            $response = ['type' => 'success', 'code' => ['updated', ['name' => trans('element.capital_spend')]]];
 
             return redirect()->to(sprintf('/activity/%s', $id))->withResponse($response);
         }
-        $response = ['type' => 'danger', 'code' => ['update_failed', ['name' => 'Capital Spend']]];
+        $response = ['type' => 'danger', 'code' => ['update_failed', ['name' => trans('element.capital_spend')]]];
 
         return redirect()->back()->withInput()->withResponse($response);
     }

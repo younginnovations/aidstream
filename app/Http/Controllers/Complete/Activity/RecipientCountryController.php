@@ -61,7 +61,7 @@ class RecipientCountryController extends Controller
      */
     public function index($id)
     {
-        $activityData  = $this->activityManager->getActivityData($id);
+        $activityData = $this->activityManager->getActivityData($id);
 
         if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
@@ -83,7 +83,7 @@ class RecipientCountryController extends Controller
      */
     public function update($id, Request $request, RecipientCountryRequestManager $recipientCountryRequestManager)
     {
-        $activityData  = $this->activityManager->getActivityData($id);
+        $activityData = $this->activityManager->getActivityData($id);
 
         if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
@@ -106,7 +106,7 @@ class RecipientCountryController extends Controller
         if ($count > 0) {
             $response = [
                 'type' => 'warning',
-                'code' => ['message', ['message' => 'You cannot save Recipient Country in activity level because you have already saved recipient country or region in transaction level.']]
+                'code' => ['message', ['message' => trans('error.cannot_save_recipient_country_and_region')]]
             ];
 
             return redirect()->back()->withInput()->withResponse($response);
@@ -115,11 +115,11 @@ class RecipientCountryController extends Controller
         $recipientCountry = $request->all();
         if ($this->recipientCountryManager->update($recipientCountry, $activityData)) {
             $this->activityManager->resetActivityWorkflow($id);
-            $response = ['type' => 'success', 'code' => ['updated', ['name' => 'Recipient Country']]];
+            $response = ['type' => 'success', 'code' => ['updated', ['name' => trans('element.recipient_country')]]];
 
             return redirect()->to(sprintf('/activity/%s', $id))->withResponse($response);
         }
-        $response = ['type' => 'danger', 'code' => ['update_failed', ['name' => 'Recipient Country']]];
+        $response = ['type' => 'danger', 'code' => ['update_failed', ['name' => trans('element.recipient_country')]]];
 
         return redirect()->back()->withInput()->withResponse($response);
     }

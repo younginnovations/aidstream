@@ -42,13 +42,13 @@
                 <ul class="nav navbar-nav pull-left add-new-activity">
                     <li class="dropdown" data-step="0">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                           aria-expanded="false">Add a New Activity<span
+                           aria-expanded="false">@lang('global.add_new_activity')<span
                                     class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
-                            <li><a href="{{route('activity.create') }}">Add Activity Manually</a></li>
+                            <li><a href="{{route('activity.create') }}">@lang('global.add_new_activity')</a></li>
                             {{--<li><a href="{{route('wizard.activity.create') }}">Add Activity using Wizard</a></li>--}}
-                            <li><a href="{{ route('import-activity.index') }}">Upload Activities</a></li>
-                            <li><a href="{{ route('xml-import.index') }}">Import Activity Xml</a></li>
+                            <li><a href="{{ route('import-activity.index') }}">@lang('global.upload_activities')</a></li>
+                            <li><a href="{{ route('xml-import.index') }}">@lang('global.import_activity_xml')</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -96,16 +96,15 @@
                                     @if(!isSuperAdminRoute())
                                         <div class="version pull-right {{ (session('version') == 'V201') ? 'old' : 'new' }}">
                                             @if ((session('version') == 'V201'))
-                                                <a class="version-text" href="{{route('upgrade-version.index')}}">Update
-                                                    available</a>
+                                                <a class="version-text" href="{{route('upgrade-version.index')}}">@lang('global.update_available')</a>
                                                 <span class="old-version">
-                                                 <a href="{{route('upgrade-version.index')}}">Upgrade to IATI version
+                                                 <a href="{{route('upgrade-version.index')}}">@lang('global.upgrade_to_iati_version')
                                                      {{ session('next_version') }}</a>
                                               </span>
                                             @else
-                                                <span class="version-text">IATI version {{session('current_version')}}</span>
+                                                <span class="version-text">@lang('global.iati_version'){{session('current_version')}}</span>
                                                 <span class="new-version">
-                                               You’re using latest IATI version
+                                               @lang('global.using_latest_version')
                                              </span>
                                             @endif
                                         </div>
@@ -121,15 +120,14 @@
             @if(auth()->user() && !isSuperAdminRoute())
                 <div class="version pull-right {{ (session('version') == 'V201') ? 'old' : 'new' }}">
                     @if (session('next_version'))
-                        <a class="version-text" href="{{route('upgrade-version.index')}}">Update available</a>
+                        <a class="version-text" href="{{route('upgrade-version.index')}}">@lang('global.update_available')</a>
                         <span class="old-version">
-                            <a href="{{route('upgrade-version.index')}}">Upgrade to IATI
-                                version {{ session('next_version') }} </a>
+                            <a href="{{route('upgrade-version.index')}}">@lang('global.upgrade_to_iati_version'){{ session('next_version') }} </a>
                       </span>
                     @else
-                        <span class="version-text">IATI version {{ session('current_version') }}</span>
+                        <span class="version-text">@lang('global.iati_version'){{ session('current_version') }}</span>
                         <span class="new-version">
-                   You’re using latest IATI version
+                   @lang('global.using_latest_version')
                  </span>
                     @endif
                 </div>
@@ -236,16 +234,11 @@
             }
         });
 
-        UserOnBoarding.addHintLabel();
-        UserOnBoarding.dashboardTour();
-
-        if (hintStatus == 0) {
-            $('.introjs-hints').css('visibility', 'hidden');
+        if (!UserOnBoarding.loadedLocalisedFile) {
+            UserOnBoarding.getLocalisedText();
         }
 
-        if (completedTour == 0 && hintStatus == 1 && window.location.pathname == '/activity') {
-            $("[data-step='0']").trigger('click');
-        }
+
     </script>
 @endif
 <!-- End of script -->

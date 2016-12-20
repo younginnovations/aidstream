@@ -15,6 +15,6 @@ class ActivityScope extends BaseForm
      */
     public function buildForm()
     {
-        $this->addSelect('activity_scope', $this->getCodeList('ActivityScope', 'Activity'), 'Activity scope', $this->addHelpText('Activity_ActivityScope-code'), null, true);
+        $this->addSelect('activity_scope', $this->getCodeList('ActivityScope', 'Activity'), trans('element.activity_scope'), $this->addHelpText('Activity_ActivityScope-code'), null, true);
     }
 }

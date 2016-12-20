@@ -42,11 +42,11 @@ class RecipientRegion
                 'model'  => $model,
                 'url'    => route('activity.recipient-region.update', [$activityId, 0])
             ]
-        )->add('Save', 'submit', ['attr' => ['class' => 'btn btn-submit btn-form']])
+        )->add('Save', 'submit', ['attr' => ['class' => 'btn btn-submit btn-form'],'label' => trans('global.save')])
             ->add('Cancel', 'static', [
                 'tag'     => 'a',
-                'label'   => false,
-                'value'   => 'Cancel',
+                'label' => false,
+                'value' => trans('global.cancel'),
                 'attr'    => [
                     'class' => 'btn btn-cancel',
                     'href'  => route('activity.show', $activityId)

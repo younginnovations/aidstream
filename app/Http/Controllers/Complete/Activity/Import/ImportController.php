@@ -2,6 +2,7 @@
 
 use App\Http\Requests\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\File;
 use App\Services\CsvImporter\ImportManager;
 use App\Services\Organization\OrganizationManager;
@@ -68,7 +69,7 @@ class ImportController extends Controller
         $this->organizationManager = $organizationManager;
         $this->importManager       = $importManager;
         $this->middleware('auth');
-        $this->userId              = $this->getUserId();
+        $this->userId = $this->getUserId();
     }
 
     /**
@@ -115,7 +116,7 @@ class ImportController extends Controller
         $this->importManager->refreshSessionIfRequired();
 
         if (!isset($organization->reporting_org[0])) {
-            $response = ['type' => 'warning', 'code' => ['settings', ['name' => 'activity']]];
+            $response = ['type' => 'warning', 'code' => ['settings', ['name' => trans('global.activity')]]];
 
             return redirect('/settings')->withResponse($response);
         }
@@ -150,7 +151,7 @@ class ImportController extends Controller
             return redirect()->route('activity.import-status');
         }
 
-        $response = ['type' => 'danger', 'code' => ['csv_header_mismatch', ['message' => 'Something is not right.']]];
+        $response = ['type' => 'danger', 'code' => ['csv_header_mismatch', ['message' => trans('error.something_is_not_right')]]];
 
         return redirect()->to('import-activity')->withResponse($response);
     }
@@ -168,9 +169,9 @@ class ImportController extends Controller
             $this->importManager->create($activities);
             $this->importManager->endImport();
 
-            return redirect()->route('activity.index')->withResponse(['type' => 'success', 'code' => ['message', ['message' => 'Activities successfully imported.']]]);
+            return redirect()->route('activity.index')->withResponse(['type' => 'success', 'code' => ['message', ['message' => trans('error.activities_successfully_imported')]]]);
         } else {
-            return redirect()->back()->withResponse(['type' => 'warning', 'code' => ['message', ['message' => 'Please select the activities to be imported.']]]);
+            return redirect()->back()->withResponse(['type' => 'warning', 'code' => ['message', ['message' => trans('error.select_activities_to_be_imported')]]]);
         }
     }
 
@@ -183,7 +184,7 @@ class ImportController extends Controller
         if (session()->has('import-status') && session()->get('import-status') == 'Complete') {
             $data = $this->importManager->getData();
         } elseif (!session()->has('import-status')) {
-            return redirect()->route('activity.upload-csv')->withResponse(['type' => 'success', 'code' => ['message', ['message' => 'No on going processes.']]]);
+            return redirect()->route('activity.upload-csv')->withResponse(['type' => 'success', 'code' => ['message', ['message' => trans('success.no_on_going_process')]]]);
         }
 
         return view('Activity.csvImporter.status', compact('data'));
@@ -199,7 +200,7 @@ class ImportController extends Controller
             $this->importManager->deleteFile('header_mismatch.json')
                                 ->reportHeaderMismatch();
 
-            return response()->json(json_encode(['status' => 'Error', 'message' => 'The headers in the uploaded Csv file do not match with the provided template.']));
+            return response()->json(json_encode(['status' => 'Error', 'message' => trans('error.header_mismatch')]));
         }
 
         if ($result = $this->importManager->importIsComplete()) {
@@ -223,7 +224,7 @@ class ImportController extends Controller
 
             $response = ['render' => view('Activity.csvImporter.invalid', compact('activities'))->render()];
         } else {
-            $response = ['render' => '<p>No data available.</p>'];
+            $response = ['render' => sprintf('<p>%s</p>', trans('error.data_not_available'))];
         }
 
         return response()->json($response);
@@ -259,7 +260,7 @@ class ImportController extends Controller
 
             $response = ['render' => view('Activity.csvImporter.valid', compact('activities'))->render()];
         } else {
-            $response = ['render' => '<p>No data available.</p>'];
+            $response = ['render' => sprintf('<p>%s</p>', trans('error.data_not_available'))];
         }
 
         return response()->json($response);
@@ -305,7 +306,7 @@ class ImportController extends Controller
     public function getData()
     {
         if (!($response = $this->importManager->getData())) {
-            $response = ['render' => '<p>No data available.</p>'];
+            $response = ['render' => sprintf('<p>%s</p>', trans('error.data_not_available'))];
         }
 
         return response()->json($response);
@@ -325,7 +326,7 @@ class ImportController extends Controller
             $this->importManager->clearSession(['header_mismatch']);
             $this->importManager->deleteFile('status.json');
 
-            $mismatch = ['type' => 'warning', 'code' => ['message', ['message' => 'The headers in the uploaded Csv file do not match with the provided template.']]];
+            $mismatch = ['type' => 'warning', 'code' => ['message', ['message' => trans('error.header_mismatch')]]];
 
             return view('Activity.uploader', compact('form', 'mismatch'));
         }
@@ -355,5 +356,16 @@ class ImportController extends Controller
         }
 
         return null;
+    }
+
+    /**
+     *  Returns texts used in csv importer
+     * @return string
+     */
+    public function getLocalisedCsvFile()
+    {
+        $currentLanguage = ($language = (Cookie::get('language'))) ? $language : 'en';
+
+        return file_get_contents(sprintf(resource_path('lang/%s/csvImporter.json'), $currentLanguage));
     }
 }

@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport'/>
-    <title>Aidstream - Forgot Password</title>
+    <title>@lang('title.aidstream_forgot_password')</title>
     <link rel="shotcut icon" type="image/png" sizes="32*32" href="{{ asset('/images/favicon.png') }}"/>
     <link href="{{ asset('/css/main.min.css') }}" rel="stylesheet">
     <link href="{{ asset('/css/style.css') }}" rel="stylesheet">
@@ -23,36 +23,7 @@
 
 </head>
 <body>
-<header>
-    <nav class="navbar navbar-default navbar-static navbar-fixed">
-        <div class="navbar-header">
-            <a href="{{ url('/') }}" class="navbar-brand">Aidstream</a>
-            <button type="button" class="navbar-toggle collapsed">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="bar1"></span>
-                <span class="bar2"></span>
-                <span class="bar3"></span>
-            </button>
-        </div>
-        <div class="navbar-collapse navbar-right">
-            <ul class="nav navbar-nav">
-                <li><a class="{{ Request::is('about') ? 'active' : '' }}" href="{{ url('/about') }}">About</a></li>
-                <li><a class="{{ Request::is('who-is-using') ? 'active' : '' }}" href="{{ url('/who-is-using') }}">Who's Using</a></li>
-                <li><a href="https://github.com/younginnovations/aidstream-new/wiki/User-Guide" target="_blank">User Guide</a></li>
-                <!--<li><a href="#">Snapshot</a></li>-->
-            </ul>
-            <div class="action-btn pull-left">
-                @if(auth()->check())
-                    <a href="{{ url((auth()->user()->role_id == 1 || auth()->user()->role_id == 2) ? config('app.admin_dashboard') : config('app.super_admin_dashboard'))}}" class="btn btn-primary">Go
-                        to Dashboard</a>
-                @else
-                    <a href="{{ url('/auth/login')}}" class="btn btn-primary">Login/Register</a>
-                @endif
-            </div>
-        </div>
-    </nav>
-</header>
-
+@include('includes.header_home')
 <div class="login-wrapper">
     {{--		    <div class="language-select-wrapper">
                     <label for="" class="pull-left">Language</label>
@@ -68,8 +39,8 @@
                 </div>--}}
     <div class="container-fluid login-container reset-container">
         <div class="row">
-            <h1 class="text-center">Reset Password</h1>
-            <p class="text-center">Please enter your email address below to reset your password.</p>
+            <h1 class="text-center">@lang('global.reset_password')</h1>
+            <p class="text-center">@lang('global.reset_password_text')</p>
             <div class="col-lg-4 col-md-8 reset-block">
                 <div class="panel panel-default">
                     <div class="panel-body">
@@ -96,7 +67,7 @@
 
                             <div class="input-wrapper reset-input-wrapper">
                                 <div class="form-group">
-                                    <label class="control-label required">Your E-Mail Address</label>
+                                    <label class="control-label required">@lang('global.your') @lang('user.email_address')</label>
 
                                     <div class="col-md-12">
                                         <input type="email" class="form-control" name="email" value="{{ old('email') }}">
@@ -106,20 +77,20 @@
 
                             <div class="form-group text-center">
                                 <button type="submit" class="btn btn-primary btn-submit">
-                                    Send Password Reset Link
+                                    @lang('global.send_password_reset_link')
                                 </button>
                             </div>
                             <div class="organisation-account-wrapper">
                                 <p class="text-center">
-                                    If you have forgotten which email address you used to Register with AidStream, please select your account type to continue.
+                                   @lang('registration.email_address_forgotten_text')
                                 </p>
                                 <p>
                                     @if(session('same_identifier_org_id'))
-                                        <a href="{{ route('submit-similar-organization', 'user') }}" class="btn btn-primary btn-submit">User Account</a>
-                                        <a href="{{ route('submit-similar-organization', 'admin') }}" class="btn btn-primary btn-submit">Administrator Account</a>
+                                        <a href="{{ route('submit-similar-organization', 'user') }}" class="btn btn-primary btn-submit">@lang('global.user_account')</a>
+                                        <a href="{{ route('submit-similar-organization', 'admin') }}" class="btn btn-primary btn-submit">@lang('global.administrator_account')</a>
                                     @else
-                                        <a class="btn btn-primary btn-submit btn-type" data-type="user">User Account</a>
-                                        <a class="btn btn-primary btn-submit btn-type" data-type="admin">Administrator Account</a>
+                                        <a class="btn btn-primary btn-submit btn-type" data-type="user">@lang('global.user_account')</a>
+                                        <a class="btn btn-primary btn-submit btn-type" data-type="admin">@lang('global.administrator_account')</a>
                                     @endif
                                 </p>
                             </div>
@@ -150,9 +121,9 @@
                                 </span>
                         </div>
                     @endif
-                    <h1 class="text-center">Find your organization</h1>
+                    <h1 class="text-center">@lang('global.find_your_organisation')</h1>
                     <p class="text-center">
-                        To help us recover your account details,please enter the name of your organisation in the field below.
+                        @lang('global.recover_account_organisation_name')
                     </p>
                     <div class="similar-org-container">
                         {{ Form::open(['url' => route('submit-similar-organization'), 'method' => 'post', 'id' => 'similar-org-form']) }}
@@ -161,26 +132,25 @@
                             <div class="col-xs-12 col-md-12">
                                 {{ Form::hidden('type') }}
                                 {!! AsForm::text(['name' => 'search_org', 'class' => 'search_org ignore_change', 'label' => false]) !!}
-                                {{ Form::button('Search Organisation', ['class' => 'btn btn-primary btn-search', 'type' => 'button']) }}
+                                {{ Form::button(trans('global.search_organisation'), ['class' => 'btn btn-primary btn-search', 'type' => 'button']) }}
                                 {{ Form::hidden('similar_organization') }}
                             </div>
                             <div class="org-list-container clickable-org hidden">
                                 <div class="col-xs-12 col-md-12 organization-list-wrapper">
-                                    <p class="text-center">Our database contains the following organisation/s which match the name of the organisation you entered. If one of them is your organisation,
-                                        please click to select it.</p>
+                                    <p class="text-center">@lang('global.search_organisation_text')</p>
                                     <ul class="organization-list">
                                     </ul>
                                 </div>
                                 <div class="col-md-12 text-center org-list-notification">
-                                    <p>None of the results above match my organisation. I would like to <a href="{{ url('/register') }}">register</a> my organisation for an Aidstream account.</p>
+                                    <p>@lang('global.none_of_the_results_match_organisation_text', ['url' => url('/register')])</p>
                                 </div>
                             </div>
                             <div class="org-list-container no-org-list hidden">
                                 <div class="col-xs-12 col-md-12 organization-list-wrapper">
                                     <p class="text-center">
-                                        Our database doesn't contain the name of the organisation you entered.
+                                        @lang('global.database_doesnt_contain_organisation_text')
                                         <br/>
-                                        Would you like to <a href="{{ url('/register') }}">register</a> your organisation for an AidStream account?
+                                        @lang('global.would_you_like_to_register_text')
                                     </p>
                                 </div>
                             </div>

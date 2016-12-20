@@ -28,23 +28,23 @@
                                 @include('includes.breadcrumb')
                                 <div class="panel panel-default">
                                     <div class="element-panel-heading">
-                                        <div>Published Files</div>
+                                        <div>@lang('global.published_files')</div>
                                     </div>
-                                    <h2 class="panel-sub-heading">Organisations Published Files</h2>
+                                    <h2 class="panel-sub-heading">@lang('global.organisations_published_files')</h2>
                                     <div class="panel-body">
                                         @if(count($list) > 0)
                                             <form action="{{route('org.bulk-publish')}}" method="POST">
-                                                <div class="publish-btn"><input type="submit" value="Publish Organisations To IATI"></div>
+                                                <div class="publish-btn"><input type="submit" value="{{trans('global.publish_organisation_to_iati')}}"></div>
                                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                                 <table class="table table-striped">
                                                     <thead>
                                                     <tr>
                                                         <th width="30px"></th>
-                                                        <th>Filename</th>
-                                                        <th>Published Date</th>
-                                                        <th width="200px">Registered in IATI Registry</th>
-                                                        <th>Preview As</th>
-                                                        <th>Action</th>
+                                                        <th>@lang('global.filename')</th>
+                                                        <th>@lang('global.published_date')</th>
+                                                        <th width="200px">@lang('global.registered_in_iati_registry')</th>
+                                                        <th>@lang('global.preview_as')</th>
+                                                        <th>@lang('global.action')</th>
                                                     </tr>
                                                     </thead>
                                                     <tbody>
@@ -71,26 +71,26 @@
                                             </form>
                                         @else
                                             <div class="text-center no-data no-document-data">
-                                                You haven't published any organisation file yet.
+                                                @lang('global.not_added',['type' => trans('global.organisation_file')])
                                             </div>
                                         @endif
                                     </div>
 
-                                    <h2 class="panel-sub-heading">Activities Published Files</h2>
+                                    <h2 class="panel-sub-heading">@lang('global.activities_published_files')</h2>
                                     <div class="panel-body">
                                         @if(count($activity_list) > 0)
                                             <form action="{{route('activity.bulk-publish')}}" method="POST">
-                                                <div class="publish-btn"><input type="submit" value="Publish Activities To IATI"></div>
+                                                <div class="publish-btn"><input type="submit" value="{{trans('global.publish_activities_to_iati')}}"></div>
                                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                                 <table class="table table-striped">
                                                     <thead>
                                                     <tr>
                                                         <th width="30px"></th>
-                                                        <th>Filename</th>
-                                                        <th>Published Date</th>
-                                                        <th width="200px">Registered in IATI Registry</th>
-                                                        <th>Preview As</th>
-                                                        <th>Action</th>
+                                                        <th>@lang('global.filename')</th>
+                                                        <th>@lang('global.published_date')</th>
+                                                        <th width="200px">@lang('global.registered_in_iati_registry')</th>
+                                                        <th>@lang('global.preview_as')</th>
+                                                        <th>@lang('global.action')</th>
                                                     </tr>
                                                     </thead>
                                                     <tbody>
@@ -117,7 +117,7 @@
                                             </form>
                                         @else
                                             <div class="text-center no-data no-document-data">
-                                                You haven't published any activity file yet.
+                                                @lang('global.not_added',['type' => trans('global.activity_file')])
                                             </div>
                                         @endif
                                     </div>

@@ -14,9 +14,9 @@ class ReceiverOrg extends BaseForm
     public function buildForm()
     {
         $this
-            ->add('ref', 'text')
-            ->add('activity_id', 'text')
-            ->add('type', 'text')
+            ->add('ref', 'text', ['label' => trans('elementForm.ref')])
+            ->add('activity_id', 'text', ['label' => trans('elementForm.activity_id')])
+            ->add('type', 'text', ['label' => trans('elementForm.type')])
             ->addNarrative('receiver_org_narrative')
             ->addAddMoreButton('add_receiver_org_narrative', 'receiver_org_narrative');
     }

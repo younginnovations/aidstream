@@ -42,11 +42,11 @@ class Password extends Request
     {
         $messages = [];
 
-        $messages['password.required']         = 'Password is required.';
-        $messages['password.min']              = 'Password must be at least 6 characters.';
-        $messages['confirm_password.required'] = 'Confirm Password is required.';
-        $messages['confirm_password.min']      = 'Confirm Password must be at least 6 characters.';
-        $messages['confirm_password.same']     = 'Passwords doesn\'t match.';
+        $messages['password.required']         = trans('validation.required', ['attribute' => trans('global.password')]);
+        $messages['password.min']              = trans('validation.min.string', ['attribute' => trans('global.password'), 'min' => 6]);
+        $messages['confirm_password.required'] = trans('validation.required', ['attribute' => trans('user.confirm_password')]);
+        $messages['confirm_password.min']      = trans('validation.min.string', ['attribute' => trans('user.confirm_password'), 'min' => 6]);
+        $messages['confirm_password.same']     = trans('validation.same', ['attribute' => trans('global.password')]);
 
         return $messages;
     }

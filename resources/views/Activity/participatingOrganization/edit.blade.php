@@ -1,6 +1,6 @@
 @extends('app')
 
-@section('title', 'Activity Participating Organization - ' . $activityData->IdentifierTitle)
+@section('title', trans('title.participating_organisation'). ' - ' . $activityData->IdentifierTitle)
 
 @section('content')
 
@@ -12,10 +12,10 @@
                 @include('includes.response')
                 <div class="element-panel-heading">
                     <div>
-                        <span>Participating Organisation</span>
+                        <span>@lang('element.participating_organisation')</span>
                         <div class="element-panel-heading-info"><span>{{$activityData->IdentifierTitle}}</span></div>
                         <div class="panel-action-btn">
-                            <a href="{{ route('activity.show', $id) }}" class="btn btn-primary">View Activity
+                            <a href="{{ route('activity.show', $id) }}" class="btn btn-primary">@lang('global.view_activity')
                             </a>
                         </div>
                     </div>

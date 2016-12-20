@@ -44,7 +44,7 @@ class CreateOrgRecipientOrgBudgetRequest extends OrganizationBaseRequest
         foreach ($this->get('recipient_organization_budget') as $recipientOrganizationBudgetIndex => $recipientOrganizationBudget) {
             $recipientOrganizationBudgetForm = sprintf('recipient_organization_budget.%s', $recipientOrganizationBudgetIndex);
             $narrativeField                  = sprintf('%s.recipient_organization.0.narrative.0.narrative.required_without', $recipientOrganizationBudgetForm);
-            $messages[$narrativeField]       = 'Narrative is required when ref is empty';
+            $messages[$narrativeField]       = trans('validation.required_without', ['attribute' => trans('elementForm.narrative'), 'values' => trans('elementForm.ref')]);
             $messages                        = array_merge(
                 $messages,
                 $this->getMessagesForPeriodStart($recipientOrganizationBudget['period_start'], $recipientOrganizationBudgetForm),

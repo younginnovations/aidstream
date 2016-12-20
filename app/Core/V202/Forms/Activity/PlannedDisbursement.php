@@ -14,12 +14,12 @@ class PlannedDisbursement extends BaseForm
     public function buildForm()
     {
         $this
-            ->addSelect('planned_disbursement_type', $this->getCodeList('BudgetType', 'Activity'), 'Type')
-            ->addCollection('period_start', 'Activity\PeriodStart')
-            ->addCollection('period_end', 'Activity\PeriodEnd')
-            ->addCollection('value', 'Activity\ValueForm')
-            ->addCollection('provider_org', 'Activity\ProviderOrg')
-            ->addCollection('receiver_org', 'Activity\ReceiverOrg')
+            ->addSelect('planned_disbursement_type', $this->getCodeList('BudgetType', 'Activity'), trans('elementForm.type'))
+            ->addCollection('period_start', 'Activity\PeriodStart', '', [], trans('elementForm.period_start'))
+            ->addCollection('period_end', 'Activity\PeriodEnd', '', [], trans('elementForm.period_end'))
+            ->addCollection('value', 'Activity\ValueForm', '', [], trans('elementForm.value'))
+            ->addCollection('provider_org', 'Activity\ProviderOrg', '', [], trans('elementForm.provider_org'))
+            ->addCollection('receiver_org', 'Activity\ReceiverOrg', '', [], trans('elementForm.receiver_org'))
             ->addRemoveThisButton('remove');
     }
 }

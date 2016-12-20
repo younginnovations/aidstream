@@ -1,6 +1,6 @@
 @extends('app')
 
-@section('title', 'Activity Other Identifier - ' . $activityData->IdentifierTitle)
+@section('title', trans('title.other_identifier'). ' - ' . $activityData->IdentifierTitle)
 
 @section('content')
     <div class="container main-container">
@@ -11,11 +11,11 @@
                 @include('includes.breadcrumb')
                 <div class="element-panel-heading">
                     <div>
-                        <span>Other Identifier</span>
+                        <span>@lang('element.other_identifier')</span>
                         <div class="element-panel-heading-info"><span>{{$activityData->IdentifierTitle}}</span></div>
                     </div>
                     <div class="pull-right panel-action-btn">
-                        <a href="{{ route('activity.show', $id) }}" class="btn btn-primary">View Activity
+                        <a href="{{ route('activity.show', $id) }}" class="btn btn-primary">@lang('global.view_activity')
                         </a>
                     </div>
                 </div>

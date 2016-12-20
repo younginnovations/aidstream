@@ -56,8 +56,8 @@ class OtherIdentifierRequest extends ActivityBaseRequest
 
         foreach ($formFields as $otherIdentifierIndex => $otherIdentifier) {
             $otherIdentifierForm                                              = sprintf('other_identifier.%s', $otherIdentifierIndex);
-            $messages[sprintf('%s.reference.required', $otherIdentifierForm)] = 'Reference is required';
-            $messages[sprintf('%s.type.required', $otherIdentifierForm)]      = 'Type is required';
+            $messages[sprintf('%s.reference.required', $otherIdentifierForm)] = trans('validation.required', ['attribute' => trans('elementForm.reference')]);
+            $messages[sprintf('%s.type.required', $otherIdentifierForm)]      = trans('validation.required', ['attribute' => trans('elementForm.type')]);
             $messages                                                         = array_merge(
                 $messages,
                 $this->getMessagesForOwnerOrg($otherIdentifier['owner_org'], $otherIdentifierForm)

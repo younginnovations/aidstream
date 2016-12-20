@@ -14,7 +14,7 @@ trait Period
      */
     public function addPeriods()
     {
-        return $this->addCollection('period', 'Activity\Period', 'period');
+        return $this->addCollection('period', 'Activity\Period', 'period', [], trans('elementForm.period'));
     }
 
     /**
@@ -23,7 +23,7 @@ trait Period
      */
     public function addPeriodStart()
     {
-        return $this->addCollection('period_start', 'Activity\PeriodDate');
+        return $this->addCollection('period_start', 'Activity\PeriodDate', '', [], trans('elementForm.period_start'));
     }
 
     /**
@@ -32,6 +32,6 @@ trait Period
      */
     public function addPeriodEnd()
     {
-        return $this->addCollection('period_end', 'Activity\PeriodDate');
+        return $this->addCollection('period_end', 'Activity\PeriodDate', '', [], trans('elementForm.period_end'));
     }
 }

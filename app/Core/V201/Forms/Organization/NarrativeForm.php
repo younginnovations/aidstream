@@ -9,8 +9,8 @@ class NarrativeForm extends BaseForm
 
     public function buildForm()
     {
-        $this->add('narrative', 'textarea', ['label' => 'Text', 'help_block' => $this->addHelpText('Organisation_Name_Narrative-text'), 'attr' => ['rows' => 4], 'required' => true])
-             ->addSelect('language', $this->getCodeList('Language', 'Organization'), 'Language', $this->addHelpText('Organisation_Name_Narrative-xml_lang'))
+        $this->add('narrative', 'textarea', ['label' => trans('elementForm.text'), 'help_block' => $this->addHelpText('Organisation_Name_Narrative-text'), 'attr' => ['rows' => 4], 'required' => true])
+             ->addSelect('language', $this->getCodeList('Language', 'Organization'), trans('elementForm.language'), $this->addHelpText('Organisation_Name_Narrative-xml_lang'))
              ->addRemoveThisButton('remove');
     }
 }

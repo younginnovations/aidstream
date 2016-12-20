@@ -89,7 +89,7 @@ class ActivityUploadController extends Controller
     {
         $organization = $this->organizationManager->getOrganization($this->organizationId);
         if (!isset($organization->reporting_org[0])) {
-            $response = ['type' => 'warning', 'code' => ['settings', ['name' => 'activity']]];
+            $response = ['type' => 'warning', 'code' => ['settings', ['name' => trans('global.activity')]]];
 
             return redirect('/settings')->withResponse($response);
         }
@@ -108,7 +108,7 @@ class ActivityUploadController extends Controller
      */
     public function store(Request $request, UploadActivityRequest $uploadActivityRequest, CsvImportValidator $csvImportValidator, IatiIdentifierRepository $iatiIdentifierRepository)
     {
-        $organization       = $this->organizationManager->getOrganization($this->organizationId);
+        $organization = $this->organizationManager->getOrganization($this->organizationId);
 
         $this->authorize('add_activity', $organization);
         $settings           = $this->settingsManager->getSettings($this->organizationId);
@@ -116,7 +116,7 @@ class ActivityUploadController extends Controller
         $defaultFieldGroups = $settings->default_field_groups;
 
         if (!isset($organization->reporting_org[0])) {
-            $response = ['type' => 'warning', 'code' => ['settings', ['name' => 'activity']]];
+            $response = ['type' => 'warning', 'code' => ['settings', ['name' => trans('global.activity')]]];
 
             return redirect('/settings')->withResponse($response);
         }
@@ -141,7 +141,7 @@ class ActivityUploadController extends Controller
                                  ->withResponse(
                                      [
                                          'type' => 'danger',
-                                         'code' => ['recipient_region_unselected_in_settings', ['name' => 'Activity']]
+                                         'code' => ['recipient_region_unselected_in_settings', ['name' => trans('global.activity')]]
                                      ]
                                  );
             }
@@ -152,7 +152,7 @@ class ActivityUploadController extends Controller
                              ->withResponse(
                                  [
                                      'type' => 'danger',
-                                     'code' => ['empty_template', ['name' => 'Activity']]
+                                     'code' => ['empty_template', ['name' => trans('global.activity')]]
                                  ]
                              );
         }
@@ -177,7 +177,7 @@ class ActivityUploadController extends Controller
             $validCsvFilePath = storage_path() . '/exports/' . $filename . '.csv';
 
             if (!$this->saveValidatedActivities($validCsvFilePath, $defaultFieldValues)) {
-                return redirect()->back()->withResponse(['type' => 'warning', 'code' => ['save_failed', ['name' => 'Activity']]]);
+                return redirect()->back()->withResponse(['type' => 'warning', 'code' => ['save_failed', ['name' => trans('global.activity')]]]);
             }
 
             return $this->invalidActivities($validator, $validActivityIndices, $failedRows);
@@ -188,7 +188,10 @@ class ActivityUploadController extends Controller
             return $check;
         }
 
-        $response = ($check) ? ['type' => 'success', 'code' => ['updated', ['name' => 'Activities']]] : ['type' => 'danger', 'code' => ['update_failed', ['name' => 'Activities']]];
+        $response = ($check) ? ['type' => 'success', 'code' => ['updated', ['name' => trans('global.activities')]]] : [
+            'type' => 'danger',
+            'code' => ['update_failed', ['name' => trans('global.activities')]]
+        ];
 
         return redirect()->to(sprintf('/activity'))->withResponse($response);
     }
@@ -207,7 +210,7 @@ class ActivityUploadController extends Controller
 
         $activityDetails = $request->get('checkbox');
         $this->uploadActivityManager->update($activityDetails);
-        $response = ['type' => 'success', 'code' => ['updated', ['name' => 'Activities']]];
+        $response = ['type' => 'success', 'code' => ['updated', ['name' => trans('global.activities')]]];
 
         return redirect()->to(sprintf('/activity'))->withResponse($response);
     }

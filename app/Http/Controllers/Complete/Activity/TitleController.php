@@ -50,7 +50,7 @@ class TitleController extends Controller
      */
     public function index($id)
     {
-        $activityData  = $this->activityManager->getActivityData($id);
+        $activityData = $this->activityManager->getActivityData($id);
 
         if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
@@ -83,11 +83,11 @@ class TitleController extends Controller
         $activityTitle = $request->all();
         if ($this->titleManager->update($activityTitle, $activityData)) {
             $this->activityManager->resetActivityWorkflow($id);
-            $response = ['type' => 'success', 'code' => ['updated', ['name' => 'Activity Title']]];
+            $response = ['type' => 'success', 'code' => ['updated', ['name' => trans('title.title')]]];
 
             return redirect()->to(sprintf('/activity/%s', $id))->withResponse($response);
         }
-        $response = ['type' => 'danger', 'code' => ['update_failed', ['name' => 'Activity Title']]];
+        $response = ['type' => 'danger', 'code' => ['update_failed', ['name' => trans('title.title')]]];
 
         return redirect()->back()->withInput()->withResponse($response);
     }

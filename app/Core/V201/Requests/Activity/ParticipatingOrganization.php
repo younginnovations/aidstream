@@ -62,11 +62,17 @@ class ParticipatingOrganization extends ActivityBaseRequest
 
         foreach ($formFields as $participatingOrgIndex => $participatingOrg) {
             $participatingOrgForm                                            = 'participating_organization.' . $participatingOrgIndex;
-            $messages[$participatingOrgForm . '.organization_role.required'] = 'Organization role is required';
+            $messages[$participatingOrgForm . '.organization_role.required'] = trans('validation.required', ['attribute' => trans('elementForm.organisation_role')]);
             $identifier                                                      = $participatingOrgForm . '.identifier';
             $narrative                                                       = sprintf('%s.narrative.0.narrative', $participatingOrgForm);
-            $messages[$identifier . '.required_without']                     = 'Identifier is required when Narrative is not present.';
-            $messages[$narrative . '.required_without']                      = 'Narrative is required when Identifier is not present.';
+            $messages[$identifier . '.required_without']                     = trans(
+                'validation.required_without',
+                ['attribute' => trans('elementForm.identifier'), 'values' => trans('elementForm.narrative')]
+            );
+            $messages[$narrative . '.required_without']                      = trans(
+                'validation.required_without',
+                ['attribute' => trans('elementForm.narrative'), 'values' => trans('elementForm.identifier')]
+            );
             $messages                                                        = array_merge(
                 $messages,
                 $this->getMessagesForNarrative($participatingOrg['narrative'], $participatingOrgForm)

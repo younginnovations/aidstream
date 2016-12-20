@@ -7,29 +7,29 @@ class ActivityElementValidation
         $messages = [];
 
         if (empty($activityData->title)) {
-            $messages[] = 'Title is required.';
+            $messages[] = trans('validation.required', ['attribute' => trans('element.title')]);
         }
 
         if (empty($activityData->description)) {
-            $messages[] = 'Description is required.';
+            $messages[] = trans('validation.required', ['attribute' => trans('element.description')]);
         }
 
         if (empty($activityData->participating_organization)) {
-            $messages[] = 'Participating Organization is required.';
+            $messages[] = trans('validation.required', ['attribute' => trans('element.participating_organisation')]);
         }
 
         if (empty($activityData->activity_status)) {
-            $messages[] = 'Activity Status is required.';
+            $messages[] = trans('validation.required', ['attribute' => trans('element.activity_status')]);
         }
 
         if (empty($activityData->activity_date)) {
-            $messages[] = 'Activity Date is required.';
+            $messages[] = trans('validation.required', ['attribute' => trans('element.activity_date')]);
         }
 
         $transaction = [];
         if (empty($activityData->sector)) {
             if (!$transactionData->first()) {
-                $messages[] = "Sector must be present either at Activity or in all Transactions level.";
+                $messages[] = trans('validation.sector_validation');
             } else {
                 foreach ($transactionData as $transactions) {
                     $transactionDetail = $transactions->transaction;
@@ -37,9 +37,9 @@ class ActivityElementValidation
                     if (empty($transactionDetail['sector'])) {
                         if ($transaction == []) {
                             $transaction[] = ['transaction' => 'it contains data'];
-                            $messages[]    = "Sector must be present either at Activity or in all Transactions level.";
+                            $messages[]    = trans('validation.sector_validation');
                         } else {
-                            $messages[] = "All Transactions must contain Sector element.";
+                            $messages[] = trans('validation.transaction_sector_validation');
                         }
                     } else {
                         $transaction[] = ['transaction' => 'it contains data'];
@@ -56,7 +56,7 @@ class ActivityElementValidation
                 if (!empty($transactionDetail['sector']) && $transaction == []) {
                     $transaction[] = ['transaction' => 'it contains data'];
                     $messages[]    = sprintf(
-                        "You can only mention Sector either at Activity or in Transaction level(should be included in all transactions) but not both. <br/>Please click the link to remove Sector From: <a href='%s' class='delete_data'>Transaction Level</a> OR <a href='%s' class='delete_data'>Activity Level</a> ",
+                        trans('validation.sector_in_activity_and_transaction_remove'),
                         route('remove.transactionSector', $activityData->id),
                         route('remove.activitySector', $activityData->id)
                     );
@@ -74,11 +74,11 @@ class ActivityElementValidation
                     if (!empty($transactionDetail['recipient_country']) || !empty($transactionDetail['recipient_region'])) {
                         $transactionCountryRegion = true;
                     } else {
-                        $messages[] = 'Either Recipient Country or Recipient Region is required';
+                        $messages[] = trans('validation.recipient_country_or_region_required');
                     }
                 }
             } else {
-                $messages[] = 'Either Recipient Country or Recipient Region is required';
+                $messages[] = trans('validation.recipient_country_or_region_required');
             }
         }
 
@@ -110,16 +110,16 @@ class ActivityElementValidation
 
         if ($totalPercentage !== 100 && $totalPercentage !== 0) {
             if ($recipientCountryValue == true && $recipientRegionValue == true) {
-                $messages[] = 'The sum of percentage in Recipient Country and Recipient Region must be 100.';
+                $messages[] = trans('validation.sum_of_percentage', ['attribute' => trans('element.recipient_country') . ' ' . trans('global.and') . ' ' . trans('element.recipient_region')]);
             } elseif ($recipientCountryValue == true) {
-                $messages[] = 'The sum of percentage in Recipient Countries must be 100.';
+                $messages[] = trans('validation.sum_of_percentage', ['attribute' => trans('element.recipient_country')]);
             } elseif ($recipientRegionValue == true) {
-                $messages[] = 'The sum of percentage in Recipient Regions must be 100.';
+                $messages[] = trans('validation.sum_of_percentage', ['attribute' => trans('element.recipient_region')]);
             }
         }
 
         if ($transactionCountryRegion == true && ($activityRecipientCountryValue == true || $activityRecipientRegionValue == true)) {
-            $messages[] = "You can only mention Recipient Country or Region either in Activity Level or in Transaction level. You can't have Country/Region in both Activity level and Transaction level.";
+            $messages[] = trans('validation.sector_in_activity_and_transaction');
         }
 
         $messageList = '';
@@ -130,7 +130,7 @@ class ActivityElementValidation
 
         $messageHtml = '';
         if ($messageList) {
-            $messageHtml .= 'Please make sure you enter the following fields before changing to completed state.';
+            $messageHtml .= trans('validation.validation_before_completed');
             $messageHtml .= sprintf('<ul>%s</ul>', $messageList);
         }
 

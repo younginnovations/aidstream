@@ -81,7 +81,7 @@ class TransactionUploadController extends Controller
                              ->withResponse(
                                  [
                                      'type' => 'danger',
-                                     'code' => ['empty_template', ['name' => 'Transaction']]
+                                     'code' => ['empty_template', ['name' => trans('element.transaction')]]
                                  ]
                              );
         }
@@ -89,7 +89,7 @@ class TransactionUploadController extends Controller
         $validator = $this->validatorForCurrentCsvType($file, $csvImportValidator);
 
         if (null === $validator) {
-            return redirect()->back()->withResponse(['type' => 'danger', 'code' => ['header_mismatch', ['name' => 'Transaction']]]);
+            return redirect()->back()->withResponse(['type' => 'danger', 'code' => ['header_mismatch', ['name' => trans('element.transaction')]]]);
         }
 
         if (null !== $validator && $validator->fails()) {
@@ -100,7 +100,7 @@ class TransactionUploadController extends Controller
 
         $this->uploadTransactionManager->save($file, $activity);
         $this->activityManager->resetActivityWorkflow($id);
-        $response = ['type' => 'success', 'code' => ['updated', ['name' => 'Transactions']]];
+        $response = ['type' => 'success', 'code' => ['updated', ['name' => trans('element.transactions')]]];
 
         return redirect()->to(sprintf('/activity/%s/transaction', $id))->withResponse($response);
     }

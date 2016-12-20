@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Session;
 
@@ -101,7 +102,7 @@ class UserOnBoardingController extends Controller
         if (count($completedSteps) == 5) {
             return redirect()->to($redirectPath)->with(
                 'onboarding_complete_message',
-                "Congratulations. Your organisation's account configuration has been completed successfully. You can now publish your data to the IATI Registry."
+                trans('success.on_boarding_success')
             );
         }
 
@@ -125,7 +126,7 @@ class UserOnBoardingController extends Controller
         if (count($completedSteps) == 5) {
             return redirect()->to($redirectPath)->with(
                 'onboarding_complete_message',
-                "Congratulations. Your organisation's account configuration has been completed successfully. You can now publish your data to the IATI Registry."
+                trans('success.on_boarding_success')
             );
         }
 
@@ -205,10 +206,22 @@ class UserOnBoardingController extends Controller
         if (count($completedSteps) == 5) {
             return redirect()->to($redirectPath)->with(
                 'onboarding_complete_message',
-                "Congratulations. Your organisation's account configuration has been completed successfully. You can now publish your data to the IATI Registry."
+                trans('success.on_boarding_success')
             );
         }
 
         return redirect()->route('activity.index');
+    }
+
+
+    /**
+     * Returns all the texts used for onBoarding.
+     * @return string
+     */
+    public function getLocalisedOnBoardingFile()
+    {
+        $currentLanguage = ($language = (Cookie::get('language'))) ? $language : 'en';
+
+        return file_get_contents(sprintf(resource_path('lang/%s/userOnBoarding.json'), $currentLanguage));
     }
 }

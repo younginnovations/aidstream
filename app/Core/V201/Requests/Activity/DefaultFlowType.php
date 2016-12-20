@@ -29,4 +29,11 @@ class DefaultFlowType extends Request
 
         return $rules;
     }
+
+    public function messages()
+    {
+        $messages['default_flow_type.required'] = trans('validation.required', ['attribute' => trans('element.default_flow_type')]);
+
+        return $messages;
+    }
 }

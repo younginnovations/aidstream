@@ -8,8 +8,11 @@ var clearInvalidButton = $('#clear-invalid');
 var validParentDiv = $('.valid-data');
 var invalidParentDiv = $('.invalid-data');
 var allDataDiv = $('.all-data');
+var csvImporter;
 
 var CsvImportStatusManager = {
+    localisedData: '',
+    localisedDataLoaded: false,
     getParentDiv: function (selector) {
         return $('div.' + selector);
     },
@@ -29,7 +32,7 @@ var CsvImportStatusManager = {
     },
     isTransferComplete: function () {
         var placeHolder = $('div#import-status-placeholder');
-        placeHolder.empty().append("<a href='/import-activity/import-status'>" + "CSV File Processing." + "</a>");
+        placeHolder.empty().append("<a href='/import-activity/import-status'>" + CsvImportStatusManager.localisedData['csv_file_processing'] + "</a>");
 
         CsvImportStatusManager.callAsync('/import-activity/check-status', 'GET').success(function (response) {
             var r = JSON.parse(response);
@@ -43,11 +46,11 @@ var CsvImportStatusManager = {
 
             if (r.status == 'Complete') {
                 transferComplete = true;
-                placeHolder.empty().append("<a href='/import-activity/import-status'>" + "CSV File Processing " + r.status + ".</a>");
+                placeHolder.empty().append("<a href='/import-activity/import-status'>" + CsvImportStatusManager.localisedData['csv_file_processing'] + r.status + ".</a>");
                 cancelButton.fadeIn('slow').removeClass('hidden');
                 checkAll.fadeIn('slow').removeClass('hidden');
             } else if (r.status == 'Incomplete' || r.status == 'Processing') {
-                placeHolder.empty().append("<a href='/import-activity/import-status'>" + "CSV File Processing." + "</a>");
+                placeHolder.empty().append("<a href='/import-activity/import-status'>" + CsvImportStatusManager.localisedData['csv_file_processing'] + "</a>");
             }
         });
     },
@@ -74,8 +77,8 @@ var CsvImportStatusManager = {
             var validParentDiv = CsvImportStatusManager.getParentDiv('valid-data');
             var invalidParentDiv = CsvImportStatusManager.getParentDiv('invalid-data');
 
-            validParentDiv.append('Looks like something went wrong.');
-            invalidParentDiv.append('Looks like something went wrong.');
+            validParentDiv.append(CsvImportStatusManager.localisedData['something_went_wrong']);
+            invalidParentDiv.append(CsvImportStatusManager.localisedData['something_went_wrong']);
         });
     },
     invalidData: function (response) {
@@ -103,43 +106,54 @@ var CsvImportStatusManager = {
             allDataParentDiv.append(validDiv);
             validDiv.append(response.render);
         }
+    },
+    loadLocalisedText: function () {
+        this.callAsync('/import-activity/localisedText', 'get').success(function (data) {
+            CsvImportStatusManager.localisedData = JSON.parse(data);
+            CsvImportStatusManager.localisedDataLoaded = true;
+            csvImporter();
+        });
     }
 };
 
 $(document).ready(function () {
-    if (!alreadyProcessed) {
-        accordionInit();
-        clearInvalidButton.hide();
-        var placeHolder = $('div#import-status-placeholder');
-        placeHolder.empty().append("<a href='/import-activity/import-status'>" + "CSV File Processing." + "</a>");
+    CsvImportStatusManager.loadLocalisedText();
 
-        var interval = setInterval(function () {
-            CsvImportStatusManager.isTransferComplete();
+    csvImporter = function () {
+        if (!alreadyProcessed) {
+            accordionInit();
+            clearInvalidButton.hide();
+            var placeHolder = $('div#import-status-placeholder');
+            placeHolder.empty().append("<a href='/import-activity/import-status'>" + CsvImportStatusManager.localisedData['csv_file_processing'] + "</a>");
 
-            if (CsvImportStatusManager.ifParentIsEmpty('invalid-data') && CsvImportStatusManager.ifParentIsEmpty('valid-data')) {
-                CsvImportStatusManager.getData();
-            } else {
-                CsvImportStatusManager.getRemainingValidData();
-                CsvImportStatusManager.getRemainingInvalidData();
-            }
+            var interval = setInterval(function () {
+                CsvImportStatusManager.isTransferComplete();
 
-            if (null == transferComplete) {
-                window.location = '../import-activity/upload-csv-redirect';
-            }
+                if (CsvImportStatusManager.ifParentIsEmpty('invalid-data') && CsvImportStatusManager.ifParentIsEmpty('valid-data')) {
+                    CsvImportStatusManager.getData();
+                } else {
+                    CsvImportStatusManager.getRemainingValidData();
+                    CsvImportStatusManager.getRemainingInvalidData();
+                }
 
-            if (transferComplete) {
-                accordionInit();
-                CsvImportStatusManager.enableImport();
-                clearInterval(interval);
-            }
-        }, 3000);
-    } else {
-        accordionInit();
+                if (null == transferComplete) {
+                    window.location = '../import-activity/upload-csv-redirect';
+                }
 
-        placeHolder = $('div#import-status-placeholder');
-        placeHolder.empty().append("<a href='/import-activity/import-status'>" + "CSV File Processing Complete."+"</a>");
+                if (transferComplete) {
+                    accordionInit();
+                    CsvImportStatusManager.enableImport();
+                    clearInterval(interval);
+                }
+            }, 3000);
+        } else {
+            accordionInit();
 
-        cancelButton.fadeIn('slow').removeClass('hidden');
-        CsvImportStatusManager.enableImport();
+            placeHolder = $('div#import-status-placeholder');
+            placeHolder.empty().append("<a href='/import-activity/import-status'>" + CsvImportStatusManager.localisedData['csv_file_processing_complete'] + "</a>");
+
+            cancelButton.fadeIn('slow').removeClass('hidden');
+            CsvImportStatusManager.enableImport();
+        }
     }
 });

@@ -25,39 +25,7 @@
 
 </head>
 <body>
-<header>
-    <nav class="navbar navbar-default navbar-static navbar-fixed">
-        <div class="navbar-header">
-            <a href="{{ url('/') }}" class="navbar-brand">Aidstream</a>
-            <button type="button" class="navbar-toggle collapsed">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="bar1"></span>
-                <span class="bar2"></span>
-                <span class="bar3"></span>
-            </button>
-        </div>
-        <div class="navbar-collapse navbar-right">
-            <ul class="nav navbar-nav">
-                <li><a class="{{ Request::is('about') ? 'active' : '' }}" href="{{ url('/about') }}">About</a></li>
-                <li><a class="{{ Request::is('who-is-using') ? 'active' : '' }}" href="{{ url('/who-is-using') }}">Who's
-                        Using</a></li>
-                <li><a href="https://github.com/younginnovations/aidstream-new/wiki/User-Guide" target="_blank">User
-                        Guide</a></li>
-                <!--<li><a href="#">Snapshot</a></li>-->
-            </ul>
-            <div class="action-btn pull-left">
-                @if(auth()->check())
-                    <a href="{{ url((auth()->user()->role_id == 1 || auth()->user()->role_id == 2) ? config('app.admin_dashboard') : config('app.super_admin_dashboard'))}}"
-                       class="btn btn-primary">Go
-                        to Dashboard</a>
-                @else
-                    <a href="{{ url('/auth/login')}}" class="btn btn-primary">Login/Register</a>
-                @endif
-            </div>
-        </div>
-    </nav>
-</header>
-
+@include('includes.header_home')
 <div class="login-wrapper">
     {{--		    <div class="language-select-wrapper">
                     <label for="" class="pull-left">Language</label>
@@ -78,8 +46,8 @@
                     <div class="panel-heading">
                         <img src="{{url('images/logo.png')}}" alt="">
 
-                        <div class="panel-title">Reset password</div>
-                        <p>This will reset your password and log you into AidStream.</p>
+                        <div class="panel-title">@lang('global.reset_password')</div>
+                        <p>@lang('global.this_will_reset_your_password')</p>
                     </div>
                     <div class="panel-body">
                         @if (session('status'))
@@ -104,7 +72,7 @@
                             <input type="hidden" name="token" value="{{ $token }}">
 
                             <div class="form-group">
-                                <label class="control-label required">E-Mail Address</label>
+                                <label class="control-label required">@lang('user.email_address')</label>
 
                                 <div class="col-md-12">
                                     <input type="email" class="form-control" name="email" value="{{ old('email') }}">
@@ -112,14 +80,14 @@
                             </div>
 
                             <div class="form-group">
-                                <label class="control-label required">New Password</label>
+                                <label class="control-label required">@lang('global.new_password')</label>
                                 <div class="col-md-12">
                                     <input type="password" class="form-control" name="password">
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label class="control-label required">Confirm Password</label>
+                                <label class="control-label required">@lang('user.confirm_password')</label>
 
                                 <div class="col-md-12">
                                     <input type="password" class="form-control" name="password_confirmation">
@@ -129,7 +97,7 @@
                             <div class="form-group">
                                 <div class="col-md-12">
                                     <button type="submit" class="btn btn-primary btn-submit">
-                                        Reset Password
+                                        @lang('global.reset_password')
                                     </button>
                                 </div>
                             </div>

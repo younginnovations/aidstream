@@ -2,7 +2,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">The username(s) has been changed.</h4>
+                <h4 class="modal-title">@lang('setting.the_username_has_been_changed')</h4>
             </div>
             <div class="modal-body">
                 <ol>
@@ -15,10 +15,10 @@
             </div>
             <div class="modal-footer">
                 <button class="btn btn-primary">
-                    <a href="{{route('settings')}}" class="btn btn-default">No. I will tell them myself</a>
+                    <a href="{{route('settings')}}" class="btn btn-default">@lang('global.no_will_tell_them_myself')</a>
                 </button>
                 <button class="btn btn-primary">
-                    <a href="{{route('organization-information.notify-user')}}" class="btn btn-default">Notify</a>
+                    <a href="{{route('organization-information.notify-user')}}" class="btn btn-default">@lang('global.notify')</a>
                 </button>
             </div>
         </div>

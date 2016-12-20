@@ -103,12 +103,12 @@ class XmlValidator
         $messages                             = array_merge($messages, $this->messagesForTitle($activity));
         $messages                             = array_merge($messages, $this->messagesForDescription($activity));
         $messages                             = array_merge($messages, $this->messagesForOtherIdentifier($activity));
-        $messages['activity_status.required'] = 'Activity Status is required';
-        $messages['activity_status.in']       = 'Activity Status code is incorrect';
+        $messages['activity_status.required'] = trans('validation.required', ['attribute' => trans('element.activity_status')]);
+        $messages['activity_status.in']       = trans('validation.code_list', ['attribute' => trans('element.activity_status')]);
         $messages                             = array_merge($messages, $this->messagesForActivityDate($activity));
         $messages                             = array_merge($messages, $this->messagesForContactInfo($activity));
-        $messages['activity_scope.required']  = 'Activity Scope is required';
-        $messages['activity_scope.in']        = 'Activity Scope code is incorrect';
+        $messages['activity_scope.required']  = trans('validation.required', ['attribute' => trans('element.activity_scope')]);
+        $messages['activity_scope.in']        = trans('validation.code_list', ['attribute' => trans('element.activity_scope')]);
         $messages                             = array_merge($messages, $this->messagesForParticipatingOrg($activity));
         $messages                             = array_merge($messages, $this->messagesForRecipientCountry($activity));
         $messages                             = array_merge($messages, $this->messagesForRecipientRegion($activity));
@@ -117,16 +117,16 @@ class XmlValidator
         $messages                             = array_merge($messages, $this->messagesForCountryBudgetItems($activity));
         $messages                             = array_merge($messages, $this->messagesForHumanitarianScope($activity));
         $messages                             = array_merge($messages, $this->messagesForPolicyMarker($activity));
-        $messages['collaboration_type.in']    = 'Entered Collaboration type is incorrect';
-        $messages['default_flow_type.in']     = 'Entered Flow type is incorrect';
-        $messages['default_finance_type.in']  = 'Entered Finance type is incorrect';
-        $messages['default_aid_type.in']      = 'Entered Aid type is incorrect';
-        $messages['default_tied_status.in']   = 'Entered Tied Status code is incorrect';
+        $messages['collaboration_type.in']    = trans('validation.code_list', ['attribute' => trans('element.collaboration_type')]);
+        $messages['default_flow_type.in']     = trans('validation.code_list', ['attribute' => trans('element.default_flow_type')]);
+        $messages['default_finance_type.in']  = trans('validation.code_list', ['attribute' => trans('element.default_finance_type')]);
+        $messages['default_aid_type.in']      = trans('validation.code_list', ['attribute' => trans('element.default_aid_type')]);
+        $messages['default_tied_status.in']   = trans('validation.code_list', ['attribute' => trans('element.default_tied_status')]);
         $messages                             = array_merge($messages, $this->messagesForBudget($activity));
         $messages                             = array_merge($messages, $this->rulesForPlannedDisbursement($activity));
-        $messages['capital_spend.numeric']    = 'Please enter data in number';
-        $messages['capital_spend.max']        = 'Capital spend cannot be more than 100';
-        $messages['capital_spend.min']        = 'Capital spend cannot be negative';
+        $messages['capital_spend.numeric']    = trans('validation.numeric', ['attribute' => trans('element.capital_spend')]);
+        $messages['capital_spend.max']        = trans('validation.max.numeric', ['attribute' => trans('element.capital_spend'), 'max' => 100]);
+        $messages['capital_spend.min']        = trans('validation.negative', ['attribute' => trans('element.capital_spend')]);
         $messages                             = array_merge($messages, $this->messagesForDocumentLink($activity));
         $messages                             = array_merge($messages, $this->messagesForRelatedActivity($activity));
         $messages                             = array_merge($messages, $this->messagesForLegacyData($activity));
@@ -162,10 +162,13 @@ class XmlValidator
     protected function messagesForTitle(array $activity)
     {
         $title                         = getVal($activity, ['title'], []);
-        $messages['title.required']    = 'Title is required';
-        $messages['title.unique_lang'] = 'Language should be unique.';
+        $messages['title.required']    = trans('validation.required', ['attribute' => trans('element.title')]);
+        $messages['title.unique_lang'] = trans('validation.unique', ['attribute' => trans('element.language')]);
         foreach ($title as $narrativeIndex => $narrative) {
-            $messages[sprintf('title.%s.narrative.required_with', $narrativeIndex)] = 'Title is required with narrative';
+            $messages[sprintf('title.%s.narrative.required_with', $narrativeIndex)] = trans(
+                'validation.required_with',
+                ['attribute' => trans('element.title'), 'values' => trans('elementForm.narrative')]
+            );
         }
 
         return $messages;
@@ -205,8 +208,8 @@ class XmlValidator
         $descriptions = getVal($activity, ['description']);
 
         foreach ($descriptions as $descriptionIndex => $description) {
-            $messages[sprintf('description.%s.type.required', $descriptionIndex)] = 'Description Type is required';
-            $messages[sprintf('description.%s.type.in', $descriptionIndex)]       = 'Invalid description type';
+            $messages[sprintf('description.%s.type.required', $descriptionIndex)] = trans('validation.required', ['attribute' => trans('elementForm.description_type')]);
+            $messages[sprintf('description.%s.type.in', $descriptionIndex)]       = trans('validation.code_list', ['attribute' => trans('elementForm.description_type')]);
             $messages                                                             = array_merge(
                 $messages,
                 $this->factory->getMessagesForNarrative(getVal($description, ['narrative'], []), sprintf('description.%s', $descriptionIndex))
@@ -253,9 +256,9 @@ class XmlValidator
 
         foreach ($otherIdentifiers as $otherIdentifierIndex => $otherIdentifier) {
             $otherIdentifierBase                                              = sprintf('other_identifier.%s', $otherIdentifierIndex);
-            $messages[sprintf('%s.reference.required', $otherIdentifierBase)] = 'Reference is required';
-            $messages[sprintf('%s.type.required', $otherIdentifierBase)]      = 'Type is required';
-            $messages[sprintf('%s.type.in', $otherIdentifierBase)]            = 'Other Identifier type is incorrect';
+            $messages[sprintf('%s.reference.required', $otherIdentifierBase)] = trans('validation.required', ['attribute' => trans('elementForm.reference')]);
+            $messages[sprintf('%s.type.required', $otherIdentifierBase)]      = trans('validation.required', ['attribute' => trans('elementForm.type')]);
+            $messages[sprintf('%s.type.in', $otherIdentifierBase)]            = trans('validation.code_list', ['attribute' => trans('elementForm.type')]);
             $messages                                                         = array_merge(
                 $messages,
                 $this->messagesForOwnerOrg(getVal($otherIdentifier, ['owner_org'], []), $otherIdentifierBase)
@@ -347,18 +350,27 @@ class XmlValidator
         $activityDates = getVal($activity, ['activity_date'], []);
 
         $messages = [
-            'activity_date.required'            => 'Activity Date is required.',
-            'activity_date.start_date_required' => 'Actual Start Date or Planned Start Date is required.',
-            'activity_date.start_end_date'      => 'Actual Start Date or Planned Start Date should be before Actual End Date or Planned End Date.',
+            'activity_date.required'            => trans('validation.required', ['attribute' => trans('element.activity_date')]),
+            'activity_date.start_date_required' => trans(
+                'validation.required',
+                ['attribute' => trans('elementForm.actual_start_date') . ' ' . trans('global.or') . ' ' . trans('elementForm.planned_start_date')]
+            ),
+            'activity_date.start_end_date'      => trans(
+                'validation.before',
+                [
+                    'attribute' => trans('elementForm.actual_start_date') . ' ' . trans('global.or') . ' ' . trans('elementForm.planned_start_date'),
+                    'date'      => trans('elementForm.actual_end_date') . ' ' . trans('global.or') . ' ' . trans('elementForm.planned_end_date')
+                ]
+            ),
         ];
 
         foreach ($activityDates as $activityDateIndex => $activityDate) {
             $activityDateBase                                            = sprintf('activity_date.%s', $activityDateIndex);
-            $messages[sprintf('%s.date.required', $activityDateBase)]    = 'Date is required';
-            $messages[sprintf('%s.date.actual_date', $activityDateBase)] = 'Actual Start Date And Actual End Date must not exceed present date';
-            $messages[sprintf('%s.date.date', $activityDateBase)]        = 'Please enter valid date in Activity Date.';
-            $messages[sprintf('%s.type.required', $activityDateBase)]    = 'Type is required';
-            $messages[sprintf('%s.type.in', $activityDateBase)]          = 'Invalid Activity Date type';
+            $messages[sprintf('%s.date.required', $activityDateBase)]    = trans('validation.required', ['attribute' => trans('elementForm.date')]);
+            $messages[sprintf('%s.date.actual_date', $activityDateBase)] = trans('validation.actual_date');
+            $messages[sprintf('%s.date.date', $activityDateBase)]        = trans('validation.date', ['attribute' => trans('element.activity_date')]);
+            $messages[sprintf('%s.type.required', $activityDateBase)]    = trans('validation.required', ['attribute' => trans('elementForm.type')]);
+            $messages[sprintf('%s.type.in', $activityDateBase)]          = trans('validation.date', ['attribute' => trans('element.activity_date')]);
             $messages                                                    = array_merge(
                 $messages,
                 $this->factory->getMessagesForNarrative($activityDate['narrative'], $activityDateBase)
@@ -647,7 +659,7 @@ class XmlValidator
         $messages = [];
 
         foreach ($emails as $emailIndex => $email) {
-            $messages[sprintf('%s.email.%s.email.email', $contactBase, $emailIndex)] = 'Email must be a valid email address.';
+            $messages[sprintf('%s.email.%s.email.email', $contactBase, $emailIndex)] = trans('validation.email', ['attribute' => trans('elementForm.email')]);
         }
 
         return $messages;
@@ -683,7 +695,7 @@ class XmlValidator
         $messages = [];
 
         foreach ($websites as $websiteIndex => $website) {
-            $messages[sprintf('%s.website.%s.website.url', $contactBase, $websiteIndex)] = 'Enter valid URL. eg. http://example.com';
+            $messages[sprintf('%s.website.%s.website.url', $contactBase, $websiteIndex)] = trans('validation.url');
         }
 
         return $messages;
@@ -728,13 +740,19 @@ class XmlValidator
 
         foreach ($participatingOrganizations as $participatingOrgIndex => $participatingOrg) {
             $participatingOrgBase                                            = 'participating_organization.' . $participatingOrgIndex;
-            $messages[$participatingOrgBase . '.organization_role.required'] = 'Organization role is required';
-            $messages[$participatingOrgBase . '.organization_role.in']       = 'Organization role is incorrect in Participating Organisation';
-            $messages[$participatingOrgBase . '.organization_type.in']       = 'Organization type is incorrect in Participating Organisation';
+            $messages[$participatingOrgBase . '.organization_role.required'] = trans('validation.required', ['attribute' => trans('elementForm.organisation_role')]);
+            $messages[$participatingOrgBase . '.organization_role.in']       = trans('validation.code_list', ['attribute' => trans('elementForm.organisation_role')]);
+            $messages[$participatingOrgBase . '.organization_type.in']       = trans('validation.code_list', ['attribute' => trans('elementForm.organisation_type')]);
             $identifier                                                      = $participatingOrgBase . '.identifier';
             $narrative                                                       = sprintf('%s.narrative.0.narrative', $participatingOrgBase);
-            $messages[$identifier . '.required_without']                     = 'Identifier is required when Narrative is not present.';
-            $messages[$narrative . '.required_without']                      = 'Narrative is required when Identifier is not present.';
+            $messages[$identifier . '.required_without']                     = trans(
+                'validation.required_without',
+                ['attribute' => trans('elementForm.identifier'), 'values' => trans('elementForm.narrative')]
+            );
+            $messages[$narrative . '.required_without']                      = trans(
+                'validation.required_without',
+                ['attribute' => trans('elementForm.narrative'), 'values' => trans('elementForm.identifier')]
+            );
             $messages                                                        = array_merge(
                 $messages,
                 $this->factory->getMessagesForNarrative($participatingOrg['narrative'], $participatingOrgBase)
@@ -783,11 +801,11 @@ class XmlValidator
 
         foreach ($recipientCountries as $recipientCountryIndex => $recipientCountry) {
             $recipientCountryBase                                       = 'recipient_country.' . $recipientCountryIndex;
-            $messages[$recipientCountryBase . '.country_code.required'] = 'Country code field is required';
-            $messages[$recipientCountryBase . '.country_code.in']       = 'Country code field is incorrect in Recipient Country';
-            $messages[$recipientCountryBase . '.percentage.numeric']    = 'Percentage must be a number';
-            $messages[$recipientCountryBase . '.percentage.max']        = 'Percentage may not be greater than 100';
-            $messages[$recipientCountryBase . '.percentage.required']   = 'Percentage is required';
+            $messages[$recipientCountryBase . '.country_code.required'] = trans('validation.required', ['attribute' => trans('elementForm.country_code')]);
+            $messages[$recipientCountryBase . '.country_code.in']       = trans('validation.code_list', ['attribute' => trans('elementForm.country_code')]);
+            $messages[$recipientCountryBase . '.percentage.numeric']    = trans('validation.numeric', ['attribute' => trans('elementForm.percentage')]);
+            $messages[$recipientCountryBase . '.percentage.max']        = trans('validation.max.numeric', ['attribute' => trans('elementForm.percentage'), 'max' => 100]);
+            $messages[$recipientCountryBase . '.percentage.required']   = trans('validation.required', ['attribute' => trans('elementForm.percentage')]);
             $messages                                                   = array_merge(
                 $messages,
                 $this->factory->getMessagesForNarrative($recipientCountry['narrative'], $recipientCountryBase)
@@ -836,11 +854,11 @@ class XmlValidator
 
         foreach ($recipientRegions as $recipientRegionIndex => $recipientRegion) {
             $recipientRegionBase                                      = 'recipient_region.' . $recipientRegionIndex;
-            $messages[$recipientRegionBase . '.region_code.required'] = 'Recipient region code is required';
-            $messages[$recipientRegionBase . '.region_code.in']       = 'Region code is incorrect in Recipient Region';
-            $messages[$recipientRegionBase . '.percentage.numeric']   = 'Percentage should be numeric.';
-            $messages[$recipientRegionBase . '.percentage.max']       = 'Percentage should be less than or equal to 100';
-            $messages[$recipientRegionBase . '.percentage.required']  = 'Percentage is required.';
+            $messages[$recipientRegionBase . '.region_code.required'] = trans('validation.required', ['attribute' => trans('elementForm.recipient_region_code')]);
+            $messages[$recipientRegionBase . '.region_code.in']       = trans('validation.code_list', ['attribute' => trans('elementForm.region_code')]);
+            $messages[$recipientRegionBase . '.percentage.numeric']   = trans('validation.numeric', ['attribute' => trans('elementForm.percentage')]);
+            $messages[$recipientRegionBase . '.percentage.max']       = trans('validation.max.numeric', ['attribute' => trans('elementForm.percentage'), 'max' => 100]);
+            $messages[$recipientRegionBase . '.percentage.required']  = trans('validation.required', ['attribute' => trans('elementForm.percentage')]);
             $messages                                                 = array_merge(
                 $messages,
                 $this->factory->getMessagesForNarrative(getVal($recipientRegion, ['narrative'], []), $recipientRegionBase)
@@ -894,12 +912,12 @@ class XmlValidator
 
         foreach ($locations as $locationIndex => $location) {
             $locationBase                                                          = 'location.' . $locationIndex;
-            $messages[sprintf('%s.location_reach.*.code.in', $locationBase)]       = 'Location reach code in incorrect in Location';
-            $messages[sprintf('%s.location_id.*.vocabulary.in', $locationBase)]    = 'Location id vocabulary is incorrect in Location';
-            $messages[sprintf('%s.administrative.*.vocabulary.in', $locationBase)] = 'Administrative vocabulary is incorrect in Location';
-            $messages[sprintf('%s.exactness.*.code.in', $locationBase)]            = 'Exactness code is incorrect in Location';
-            $messages[sprintf('%s.location_class.*.code.in', $locationBase)]       = 'Location class is incorrect in Location';
-            $messages[sprintf('%s.feature_designation.*.code.in', $locationBase)]  = 'Feature Designation code is incorrect in Location';
+            $messages[sprintf('%s.location_reach.*.code.in', $locationBase)]       = trans('validation.code_list', ['attribute' => trans('elementForm.location_reach_code')]);
+            $messages[sprintf('%s.location_id.*.vocabulary.in', $locationBase)]    = trans('validation.code_list', ['attribute' => trans('elementForm.location_id_vocabulary')]);
+            $messages[sprintf('%s.administrative.*.vocabulary.in', $locationBase)] = trans('validation.code_list', ['attribute' => trans('elementForm.administrative_vocabulary')]);
+            $messages[sprintf('%s.exactness.*.code.in', $locationBase)]            = trans('validation.code_list', ['attribute' => trans('elementForm.exactness_code')]);
+            $messages[sprintf('%s.location_class.*.code.in', $locationBase)]       = trans('validation.code_list', ['attribute' => trans('elementForm.location_class')]);
+            $messages[sprintf('%s.feature_designation.*.code.in', $locationBase)]  = trans('validation.code_list', ['attribute' => trans('elementForm.feature_designation_code')]);
             $messages                                                              = array_merge(
                 $messages,
                 $this->getMessagesForLocationId(getVal($location, ['location_id'], []), $locationBase),
@@ -948,10 +966,16 @@ class XmlValidator
         foreach ($locationsIds as $locationIdIndex => $locationId) {
             $locationIdBase = sprintf('%s.location_id.%s', $locationBase, $locationIdIndex);
             if ($locationId['code'] != "") {
-                $messages[sprintf('%s.vocabulary.required_with', $locationIdBase)] = 'Vocabulary is required when Code is present';
+                $messages[sprintf('%s.vocabulary.required_with', $locationIdBase)] = trans(
+                    'validation.required_with',
+                    ['attribute' => trans('elementForm.vocabulary'), 'values' => trans('elementForm.code')]
+                );
             }
             if ($locationId['vocabulary'] != "") {
-                $messages[sprintf('%s.code.required_with', $locationIdBase)] = 'Code is required when Vocabulary is present';
+                $messages[sprintf('%s.code.required_with', $locationIdBase)] = trans(
+                    'validation.required_with',
+                    ['attribute' => trans('elementForm.code'), 'values' => trans('elementForm.vocabulary')]
+                );
             }
         }
 
@@ -1088,7 +1112,7 @@ class XmlValidator
         $messages = [];
         foreach ($administrativeData as $administrativeIndex => $administrative) {
             $administrativeBase                                         = sprintf('%s.administrative.%s', $locationBase, $administrativeIndex);
-            $messages[sprintf('%s.level.integer', $administrativeBase)] = 'Level should be a non-negative integer.';
+            $messages[sprintf('%s.level.integer', $administrativeBase)] = trans('validation.integer', ['attribute' => trans('elementForm.level')]);
         }
 
         return $messages;
@@ -1124,12 +1148,12 @@ class XmlValidator
     {
         $messages                                                       = [];
         $pointBase                                                      = sprintf('%s.point.0', $locationBase);
-        $messages[sprintf('%s.srs_name.required', $pointBase)]          = 'SRS name is required.';
+        $messages[sprintf('%s.srs_name.required', $pointBase)]          = trans('validation.required', ['attribute' => trans('elementForm.srs_name')]);
         $positionBase                                                   = sprintf('%s.position.0', $pointBase);
-        $messages[sprintf('%s.latitude.required_with', $positionBase)]  = 'Latitude is required when Longitude is present.';
-        $messages[sprintf('%s.latitude.numeric', $positionBase)]        = 'Latitude should be numeric.';
-        $messages[sprintf('%s.longitude.required_with', $positionBase)] = 'Longitude is required when Latitude is present.';
-        $messages[sprintf('%s.longitude.numeric', $positionBase)]       = 'Longitude should be numeric.';
+        $messages[sprintf('%s.latitude.required_with', $positionBase)]  = trans('validation.required_with', ['attribute' => trans('elementForm.latitude'), 'values' => trans('elementForm.longitude')]);
+        $messages[sprintf('%s.latitude.numeric', $positionBase)]        = trans('validation.numeric', ['attribute' => trans('elementForm.latitude')]);
+        $messages[sprintf('%s.longitude.required_with', $positionBase)] = trans('validation.required_with', ['attribute' => trans('elementForm.longitude'), 'values' => trans('elementForm.latitude')]);
+        $messages[sprintf('%s.longitude.numeric', $positionBase)]       = trans('validation.numeric', ['attribute' => trans('elementForm.longitude')]);
 
         return $messages;
     }
@@ -1224,43 +1248,64 @@ class XmlValidator
 
         foreach ($sectors as $sectorIndex => $sector) {
             $sectorBase                                                      = sprintf('sector.%s', $sectorIndex);
-            $messages[sprintf('%s.vocabulary_uri.url', $sectorBase)]         = 'Enter valid URL. eg. http://example.com';
-            $messages[sprintf('%s.sector_vocabulary.required', $sectorBase)] = 'Sector vocabulary is required';
-            $messages[sprintf('%s.sector_vocabulary.in', $sectorBase)]       = 'Sector vocabulary is incorrect';
-            $messages[sprintf('%s.sector_code.in', $sectorBase)]             = 'Sector code is incorrect for vocabulary 1';
-            $messages[sprintf('%s.sector_category_code.in', $sectorBase)]    = 'Sector code is incorrect for vocabulary 2';
+            $messages[sprintf('%s.vocabulary_uri.url', $sectorBase)]         = trans('validation.url');
+            $messages[sprintf('%s.sector_vocabulary.required', $sectorBase)] = trans('validation.required', ['attribute' => trans('elementForm.sector_vocabulary')]);
+            $messages[sprintf('%s.sector_vocabulary.in', $sectorBase)]       = trans('validation.code_list', ['attribute' => trans('elementForm.sector_vocabulary')]);
+            $messages[sprintf('%s.sector_code.in', $sectorBase)]             = trans('validation.code_list', ['attribute' => trans('elementForm.sector_code')]);
+            $messages[sprintf('%s.sector_category_code.in', $sectorBase)]    = trans('validation.code_list', ['attribute' => trans('elementForm.sector_code')]);
 
             if ($sector['sector_vocabulary'] == 1 || $sector['sector_vocabulary'] == 2) {
                 if ($sector['sector_vocabulary'] == 1) {
-                    $messages[sprintf('%s.sector_code.%s', $sectorBase, 'required_with')] = 'Sector code is required with Sector vocabulary.';
+                    $messages[sprintf('%s.sector_code.%s', $sectorBase, 'required_with')] = trans(
+                        'validation.required_with',
+                        ['attribute' => trans('elementForm.sector_code'), 'values' => trans('sector_vocabulary')]
+                    );
                 }
                 if ($sector['sector_code'] != "") {
-                    $messages[sprintf('%s.sector_vocabulary.%s', $sectorBase, 'required_with')] = 'Sector vocabulary is required with Sector code.';
+                    $messages[sprintf('%s.sector_vocabulary.%s', $sectorBase, 'required_with')] = trans(
+                        'validation.required_with',
+                        ['attribute' => trans('elementForm.sector_vocabulary'), 'values' => trans('sector_code')]
+                    );
                 }
                 if ($sector['sector_vocabulary'] == 2) {
-                    $messages[sprintf('%s.sector_category_code.%s', $sectorBase, 'required_with')] = 'Sector code is required with Sector vocabulary.';
+                    $messages[sprintf('%s.sector_category_code.%s', $sectorBase, 'required_with')] = trans(
+                        'validation.required_with',
+                        ['attribute' => trans('elementForm.sector_code'), 'values' => trans('sector_vocabulary')]
+                    );
                 }
                 if ($sector['sector_category_code'] != "") {
-                    $messages[sprintf('%s.sector_vocabulary.%s', $sectorBase, 'required_with')] = 'Sector vocabulary is required with Sector code.';
+                    $messages[sprintf('%s.sector_vocabulary.%s', $sectorBase, 'required_with')] = trans(
+                        'validation.required_with',
+                        ['attribute' => trans('elementForm.sector_vocabulary'), 'values' => trans('sector_code')]
+                    );
                 }
             } else {
                 if ($sector['sector_vocabulary'] != "") {
-                    $messages[sprintf('%s.sector_text.%s', $sectorBase, 'required_with')] = 'Sector code is required with Sector vocabulary.';
+                    $messages[sprintf('%s.sector_text.%s', $sectorBase, 'required_with')] = trans(
+                        'validation.required_with',
+                        ['attribute' => trans('elementForm.sector_code'), 'values' => trans('sector_vocabulary')]
+                    );
                 }
 
                 if ($sector['sector_text'] != "") {
-                    $messages[sprintf('%s.sector_vocabulary.%s', $sectorBase, 'required_with')] = 'Sector vocabulary is required with Sector code.';
+                    $messages[sprintf('%s.sector_vocabulary.%s', $sectorBase, 'required_with')] = trans(
+                        'validation.required_with',
+                        ['attribute' => trans('elementForm.sector_vocabulary'), 'values' => trans('sector_code')]
+                    );
                 }
 
                 if ($sector['sector_vocabulary'] == "99" || $sector['sector_vocabulary'] == "98") {
-                    $messages[sprintf('%s.vocabulary_uri.%s', $sectorBase, 'required_with')] = 'Vocabulary URI is required with Sector vocabulary.';
+                    $messages[sprintf('%s.vocabulary_uri.%s', $sectorBase, 'required_with')] = trans(
+                        'validation.required_with',
+                        ['attribute' => trans('elementForm.vocabulary_uri'), 'values' => trans('sector_vocabulary')]
+                    );
                 }
             }
 
-            $messages[sprintf('%s.percentage.numeric', $sectorBase)]  = 'Percentage should be numeric.';
-            $messages[sprintf('%s.percentage.max', $sectorBase)]      = 'Percentage should be less than or equal to :max.';
-            $messages[sprintf('%s.percentage.required', $sectorBase)] = 'Percentage is required.';
-            $messages[sprintf('%s.percentage.sum', $sectorBase)]      = 'Total percentage of sectors under the same vocabulary must be equal to 100.';
+            $messages[sprintf('%s.percentage.numeric', $sectorBase)]  = trans('validation.numeric', ['attribute' => trans('elementForm.percentage')]);
+            $messages[sprintf('%s.percentage.max', $sectorBase)]      = trans('validation.max.numeric', ['attribute' => trans('elementForm.percentage'), 'max' => 100]);
+            $messages[sprintf('%s.percentage.required', $sectorBase)] = trans('validation.required', ['attribute' => trans('elementForm.percentage')]);
+            $messages[sprintf('%s.percentage.sum', $sectorBase)]      = trans('validation.sum', ['attribute' => trans('element.sector')]);
             $messages                                                 = array_merge($messages, $this->factory->getMessagesForNarrative($sector['narrative'], $sectorBase));
         }
 
@@ -1337,9 +1382,9 @@ class XmlValidator
         foreach ($countryBudgetItems as $countryBudgetItemIndex => $countryBudgetItem) {
             $countryBudgetItemBase                                                            = sprintf('country_budget_items.%s', $countryBudgetItemIndex);
             $code                                                                             = getVal($countryBudgetItem, ['vocabulary'], '') == 1 ? 'code' : 'code_text';
-            $messages[sprintf('%s.budget_item.0.%s.required', $countryBudgetItemBase, $code)] = 'Code is Required in Country Budget Items';
-            $messages[sprintf('%s.vocabulary.required', $countryBudgetItemBase)]              = 'Vocabulary is required in Country Budget Items';
-            $messages[sprintf('%s.vocabulary.in', $countryBudgetItemBase)]                    = 'Vocabulary is incorrect in Country Budget Items';
+            $messages[sprintf('%s.budget_item.0.%s.required', $countryBudgetItemBase, $code)] = trans('validation.required', ['attribute' => trans('elementForm.code')]);
+            $messages[sprintf('%s.vocabulary.required', $countryBudgetItemBase)]              = trans('validation.required', ['attribute' => trans('elementForm.vocabulary')]);
+            $messages[sprintf('%s.vocabulary.in', $countryBudgetItemBase)]                    = trans('validation.code_list', ['attribute' => trans('elementForm.vocabulary')]);
             $messages                                                                         = array_merge(
                 $messages,
                 $this->getBudgetItemMessages(getVal($countryBudgetItem, ['budget_item'], []), $countryBudgetItemBase, $code)
@@ -1389,13 +1434,19 @@ class XmlValidator
         $messages = [];
         foreach ($budgetItems as $budgetItemIndex => $budgetItem) {
             $budgetItemBase                                                    = sprintf('%s.budget_item.%s', $countryBudgetItemBase, $budgetItemIndex);
-            $messages[sprintf('%s.%s.required', $budgetItemBase, $code)]       = 'Code is required in Budget Item of Country Budget Items';
-            $messages[sprintf('%s.%s.in', $budgetItemBase, $code)]             = 'Budget Item Code is incorrect in Country Budget Items';
-            $messages[sprintf('%s.percentage.%s', $budgetItemBase, 'numeric')] = 'Percentage should be numeric';
-            $messages[sprintf('%s.percentage.%s', $budgetItemBase, 'max')]     = 'Percentage should less than or equal to :max';
-            $messages[sprintf('%s.percentage.sum', $budgetItemBase)]           = 'Total percentage of budget items under the same vocabulary must be equal to 100.';
-            $messages[sprintf('%s.percentage.required', $budgetItemBase)]      = 'Percentage is required when there are multiple codes  .';
-            $messages[sprintf('%s.percentage.total', $budgetItemBase)]         = 'Percentage should be 100 when there is only one budget item.';
+            $messages[sprintf('%s.%s.required', $budgetItemBase, $code)]       = trans('validation.required', ['attribute' => trans('elementForm.budget_item_code')]);
+            $messages[sprintf('%s.%s.in', $budgetItemBase, $code)]             = trans('validation.code_list', ['attribute' => trans('elementForm.budget_item_code')]);
+            $messages[sprintf('%s.percentage.%s', $budgetItemBase, 'numeric')] = trans('validation.numeric', ['attribute' => trans('elementForm.percentage')]);
+            $messages[sprintf('%s.percentage.%s', $budgetItemBase, 'max')]     = trans('validation.numeric.max', ['attribute' => trans('elementForm.percentage'), 'max' => 100]);
+            $messages[sprintf('%s.percentage.sum', $budgetItemBase)]           = trans('validation.sum', ['attribute' => trans('elementForm.budget_items)')]);
+            $messages[sprintf('%s.percentage.required', $budgetItemBase)]      = trans(
+                'validation.required_with',
+                ['attribute' => trans('elementForm.percentage'), 'values' => trans('global.multiple_codes')]
+            );
+            $messages[sprintf('%s.percentage.total', $budgetItemBase)]         = trans(
+                'validation.total',
+                ['attribute' => trans('elementForm.percentage'), 'values' => trans('elementForm.budget_item)')]
+            );
             $messages                                                          = array_merge(
                 $messages,
                 $this->getBudgetItemDescriptionMessages(getVal($budgetItem, ['description'], []), $budgetItemBase)
@@ -1506,13 +1557,13 @@ class XmlValidator
 
         foreach ($humanitarianScopes as $humanitarianScopeIndex => $humanitarianScope) {
             $humanitarianScopeForm                                     = 'humanitarian_scope.' . $humanitarianScopeIndex;
-            $messages[$humanitarianScopeForm . '.type.required']       = 'Humanitarian Scope type is required';
-            $messages[$humanitarianScopeForm . '.type.in']             = 'Humanitarian Scope type is invalid';
-            $messages[$humanitarianScopeForm . '.vocabulary.required'] = 'Humanitarian Scope vocabulary is required';
-            $messages[$humanitarianScopeForm . '.vocabulary.in']       = 'Humanitarian Scope vocabulary is invalid';
-            $messages[$humanitarianScopeForm . '.code.required']       = 'Humanitarian Scope code is required';
-            $messages[$humanitarianScopeForm . '.code.string']         = 'Humanitarian Scope should be string';
-            $messages[$humanitarianScopeForm . '.vocabulary_uri.url']  = 'Enter valid URL. eg. http://example.com';
+            $messages[$humanitarianScopeForm . '.type.required']       = trans('validation.required', ['attribute' => trans('elementForm.humanitarian_scope_type')]);
+            $messages[$humanitarianScopeForm . '.type.in']             = trans('validation.code_list', ['attribute' => trans('elementForm.humanitarian_scope_type')]);
+            $messages[$humanitarianScopeForm . '.vocabulary.required'] = trans('validation.required', ['attribute' => trans('elementForm.humanitarian_scope_vocabulary')]);
+            $messages[$humanitarianScopeForm . '.vocabulary.in']       = trans('validation.code_list', ['attribute' => trans('elementForm.humanitarian_scope_vocabulary')]);
+            $messages[$humanitarianScopeForm . '.code.required']       = trans('validation.required', ['attribute' => trans('elementForm.humanitarian_scope_code')]);
+            $messages[$humanitarianScopeForm . '.code.string']         = trans('validation.string', ['attribute' => trans('element.humanitarian_scope')]);
+            $messages[$humanitarianScopeForm . '.vocabulary_uri.url']  = trans('validation.url');
             $messages                                                  = array_merge(
                 $messages,
                 $this->factory->getMessagesForNarrative(getVal($humanitarianScope, ['narrative'], []), $humanitarianScopeForm)
@@ -1561,11 +1612,11 @@ class XmlValidator
 
         foreach ($policyMarkers as $policyMarkerIndex => $policyMarker) {
             $policyMarkerForm                                                  = sprintf('policy_marker.%s', $policyMarkerIndex);
-            $messages[sprintf('%s.vocabulary.in', $policyMarkerForm)]          = 'Entered vocabulary in Policy Marker is invalid';
-            $messages[sprintf('%s.vocabulary_uri.url', $policyMarkerForm)]     = 'Enter valid URL. eg. http://example.com';
-            $messages[sprintf('%s.policy_marker.required', $policyMarkerForm)] = 'Policy Marker is required';
-            $messages[sprintf('%s.policy_marker.in', $policyMarkerForm)]       = 'Entered code in Policy Marker is invalid';
-            $messages[sprintf('%s.significance.in', $policyMarkerForm)]        = 'Entered significance code in Policy Marker is invalid';
+            $messages[sprintf('%s.vocabulary.in', $policyMarkerForm)]          = trans('validation.code_list', ['attribute' => trans('elementForm.policy_marker_vocabulary')]);
+            $messages[sprintf('%s.vocabulary_uri.url', $policyMarkerForm)]     = trans('validation.url');
+            $messages[sprintf('%s.policy_marker.required', $policyMarkerForm)] = trans('validation.required', ['attribute' => trans('element.policy_maker')]);
+            $messages[sprintf('%s.policy_marker.in', $policyMarkerForm)]       = trans('validation.code_list', ['attribute' => trans('element.policy_maker_code')]);
+            $messages[sprintf('%s.significance.in', $policyMarkerForm)]        = trans('validation.code_list', ['attribute' => trans('element.significance_code')]);
             $messages                                                          = array_merge(
                 $messages,
                 $this->factory->getMessagesForNarrative($policyMarker['narrative'], $policyMarkerForm)
@@ -1622,16 +1673,16 @@ class XmlValidator
         foreach ($budgets as $budgetIndex => $budget) {
             $budgetBase = sprintf('budget.%s', $budgetIndex);
 
-            $messages[sprintf('%s.status.required', $budgetBase)] = 'Budget Status is required.';
-            $messages[sprintf('%s.status.in', $budgetBase)]       = 'Budget Status is invalid.';
-            $messages[sprintf('%s.budget_type.in', $budgetBase)]  = 'Budget Type is invalid.';
+            $messages[sprintf('%s.status.required', $budgetBase)] = trans('validation.required', ['attribute' => trans('elementForm.budget_status')]);
+            $messages[sprintf('%s.status.in', $budgetBase)]       = trans('validation.code_list', ['attribute' => trans('elementForm.budget_status')]);
+            $messages[sprintf('%s.budget_type.in', $budgetBase)]  = trans('validation.code_list', ['attribute' => trans('elementForm.budget_code')]);
             $messages                                             = array_merge(
                 $messages,
                 $this->factory->getMessagesForPeriodStart($budget['period_start'], $budgetBase),
                 $this->factory->getMessagesForPeriodEnd($budget['period_end'], $budgetBase),
                 $this->getMessagesForValue($budget['value'], $budgetBase)
             );
-            $messages[$budgetBase . '.period_end.0.date.before']  = 'Period End must not be more than a year from Period Start';
+            $messages[$budgetBase . '.period_end.0.date.before']  = trans('validation.before', ['attribute' => trans('elementForm.period_end'), 'date' => trans('elementForm.period_start')]);
 
         }
 
@@ -1665,9 +1716,9 @@ class XmlValidator
         $messages = [];
         foreach ($budgetValues as $valueIndex => $value) {
             $valueBase                                               = sprintf('%s.value.%s', $budgetBase, $valueIndex);
-            $messages[sprintf('%s.amount.required', $valueBase)]     = 'Amount is required in Budget';
-            $messages[sprintf('%s.amount.numeric', $valueBase)]      = 'Amount should be numeric in Budget';
-            $messages[sprintf('%s.value_date.required', $valueBase)] = 'Date is required in Budget';
+            $messages[sprintf('%s.amount.required', $valueBase)]     = trans('validation.required', ['attribute' => trans('elementForm.amount')]);
+            $messages[sprintf('%s.amount.numeric', $valueBase)]      = trans('validation.numeric', ['attribute' => trans('elementForm.amount')]);
+            $messages[sprintf('%s.value_date.required', $valueBase)] = trans('validation.required', ['attribute' => trans('elementForm.date')]);
         }
 
         return $messages;
@@ -1710,7 +1761,7 @@ class XmlValidator
 
         foreach ($plannedDisbursements as $plannedDisbursementIndex => $plannedDisbursement) {
             $plannedDisbursementBase                                                     = sprintf('planned_disbursement.%s', $plannedDisbursementIndex);
-            $rules[sprintf('%s.planned_disbursement_type.in', $plannedDisbursementBase)] = 'Planned Disbursement Type is incorrect';
+            $rules[sprintf('%s.planned_disbursement_type.in', $plannedDisbursementBase)] = trans('validation.code_list', ['attribute' => trans('elementForm.planned_disbursement_type')]);
 
             $messages = array_merge(
                 $messages,
@@ -1757,7 +1808,7 @@ class XmlValidator
 
         foreach ($providerOrgData as $providerOrgIndex => $providerOrg) {
             $providerOrgBase                                  = sprintf('%s.provider_org.%s', $plannedDisbursementBase, $providerOrgIndex);
-            $message[sprintf('%s.type.in', $providerOrgBase)] = 'Entered organisation type in provider org is incorrect';
+            $message[sprintf('%s.type.in', $providerOrgBase)] = trans('validation.code_list', ['attribute' => trans('elementForm.organisation_type')]);
             $message                                          = array_merge(
                 $message,
                 $this->factory->getMessagesForNarrative($providerOrg['narrative'], $providerOrgBase)
@@ -1799,7 +1850,7 @@ class XmlValidator
 
         foreach ($receiverOrgData as $receiverOrgIndex => $receiverOrg) {
             $receiverOrgBase                                  = sprintf('%s.receiver_org.%s', $plannedDisbursementBase, $receiverOrgIndex);
-            $message[sprintf('%s.type.in', $receiverOrgBase)] = 'Entered organisation type in receiver org is incorrect';
+            $message[sprintf('%s.type.in', $receiverOrgBase)] = trans('validation.code_list', ['attribute' => trans('elementForm.organisation_type')]);
             $message                                          = array_merge(
                 $message,
                 $this->factory->getMessagesForNarrative($receiverOrg['narrative'], $receiverOrgBase)
@@ -1847,17 +1898,20 @@ class XmlValidator
 
         foreach ($documentLinks as $documentLinkIndex => $documentLink) {
             $documentLinkBase                                                                                = sprintf('document_link.%s', $documentLinkIndex);
-            $messages[sprintf('document_link.%s.url.required', $documentLinkIndex)]                          = 'Url is required';
-            $messages[sprintf('document_link.%s.url.url', $documentLinkIndex)]                               = 'Enter valid URL. eg. http://example.com';
-            $messages[sprintf('document_link.%s.format.required', $documentLinkIndex)]                       = 'Format is required';
-            $messages[sprintf('document_link.%s.format.in', $documentLinkIndex)]                             = 'Enter document format type is incorrect';
-            $messages[sprintf('document_link.%s.language.*.language.in', $documentLinkIndex)]                = 'Enter language code is incorrect';
+            $messages[sprintf('document_link.%s.url.required', $documentLinkIndex)]                          = trans('validation.code_list', ['attribute' => trans('elementForm.url')]);
+            $messages[sprintf('document_link.%s.url.url', $documentLinkIndex)]                               = trans('validation.url');
+            $messages[sprintf('document_link.%s.format.required', $documentLinkIndex)]                       = trans('validation.code_list', ['attribute' => trans('elementForm.format')]);
+            $messages[sprintf('document_link.%s.format.in', $documentLinkIndex)]                             = trans(
+                'validation.code_list',
+                ['attribute' => trans('elementForm.document_format_type')]
+            );
+            $messages[sprintf('document_link.%s.language.*.language.in', $documentLinkIndex)]                = trans('validation.code_list', ['attribute' => trans('elementForm.language')]);
             $messages                                                                                        = array_merge(
                 $messages,
                 $this->factory->getMessagesForNarrative(getVal($documentLink, ['document_link', 'title', 0, 'narrative'], []), sprintf('%s.document_link.title.0', $documentLinkBase)),
                 $this->getMessagesForDocumentCategory(getVal($documentLink, ['document_link', 'category'], []), sprintf('%s.document_link', $documentLinkBase))
             );
-            $messages[sprintf('%s.document_link.title.0.narrative.0.narrative.required', $documentLinkBase)] = 'Narrative is required.';
+            $messages[sprintf('%s.document_link.title.0.narrative.0.narrative.required', $documentLinkBase)] = trans('validation.required', ['attribute' => trans('elementForm.narrative')]);
         }
 
         return $messages;
@@ -1888,8 +1942,8 @@ class XmlValidator
     {
         $messages = [];
         foreach ($categories as $documentCategoryIndex => $documentCategory) {
-            $messages[sprintf('%s.category.%s.code.required', $documentLinkBase, $documentCategoryIndex)] = 'Category is required';
-            $messages[sprintf('%s.category.%s.code.in', $documentLinkBase, $documentCategoryIndex)]       = 'Category is incorrect';
+            $messages[sprintf('%s.category.%s.code.required', $documentLinkBase, $documentCategoryIndex)] = trans('validation.required', ['attribute' => trans('elementForm.category')]);
+            $messages[sprintf('%s.category.%s.code.in', $documentLinkBase, $documentCategoryIndex)]       = trans('validation.code_list', ['attribute' => trans('elementForm.category')]);
         }
 
         return $messages;
@@ -1924,9 +1978,9 @@ class XmlValidator
 
         foreach ($relatedActivities as $relatedActivityIndex => $relatedActivity) {
             $relatedActivityBase                                                        = sprintf('related_activity.%s', $relatedActivityIndex);
-            $messages[sprintf('%s.relationship_type.required', $relatedActivityBase)]   = 'Type of Relationship is required';
-            $messages[sprintf('%s.relationship_type.in', $relatedActivityBase)]         = 'Type of Relationship is incorrect';
-            $messages[sprintf('%s.activity_identifier.required', $relatedActivityBase)] = 'Activity Identifier is required';
+            $messages[sprintf('%s.relationship_type.required', $relatedActivityBase)]   = trans('validation.required', ['attribute' => trans('elementForm.type_of_relationship')]);
+            $messages[sprintf('%s.relationship_type.in', $relatedActivityBase)]         = trans('validation.code_list', ['attribute' => trans('elementForm.type_of_relationship')]);
+            $messages[sprintf('%s.activity_identifier.required', $relatedActivityBase)] = trans('validation.required', ['attribute' => trans('elementForm.activity_identifier')]);
         }
 
         return $messages;
@@ -1961,8 +2015,8 @@ class XmlValidator
 
         foreach ($legacy as $legacyDataIndex => $legacyData) {
             $legacyDataBase                                          = sprintf('legacy_data.%s', $legacyDataIndex);
-            $messages[sprintf('%s.name.required', $legacyDataBase)]  = 'Name is Required';
-            $messages[sprintf('%s.value.required', $legacyDataBase)] = 'Value is Required';
+            $messages[sprintf('%s.name.required', $legacyDataBase)]  = trans('validation.required', ['attribute' => trans('elementForm.name')]);
+            $messages[sprintf('%s.value.required', $legacyDataBase)] = trans('validation.required', ['attribute' => trans('elementForm.value')]);
         }
 
         return $messages;
@@ -2004,20 +2058,34 @@ class XmlValidator
         $messages   = [];
         $conditions = getVal($activity, ['conditions'], []);
 
-        $messages['conditions.condition_attached.required'] = 'Condition Attached is required';
-        $messages['conditions.condition_attached.in']       = 'Condition Attached code is incorrect';
+        $messages['conditions.condition_attached.required'] = trans('validation.required', ['attribute' => trans('elementForm.condition_attached')]);
+        $messages['conditions.condition_attached.in']       = trans('validation.code_list', ['attribute' => trans('elementForm.condition_attached')]);
 
         foreach (getVal($conditions, ['condition'], []) as $conditionIndex => $condition) {
             $conditionBase                                                      = sprintf('conditions.condition.%s', $conditionIndex);
-            $messages[sprintf('%s.condition_type.required_if', $conditionBase)] = 'Condition Type is required if Condition Attached is Yes';
-            $messages[sprintf('%s.condition_type.required_if', $conditionBase)] = 'Condition Type code is incorrect';
+            $messages[sprintf('%s.condition_type.required_if', $conditionBase)] = trans(
+                'validation.required_if',
+                [
+                    'attribute' => trans('elementForm.condition_type'),
+                    'values'    => trans('elementForm.condition_attached'),
+                    'value'     => trans('global.yes')
+                ]
+            );
+            $messages[sprintf('%s.condition_type.required_if', $conditionBase)] = trans('validation.code_list', ['attribute' => trans('elementForm.condition_type')]);
             $messages                                                           = array_merge(
                 $messages,
                 $this->factory->getMessagesForNarrative($condition['narrative'], $conditionBase)
             );
 
             foreach ($condition['narrative'] as $narrativeIndex => $narrative) {
-                $messages[sprintf('%s.narrative.%s.narrative.required_if', $conditionBase, $narrativeIndex)] = 'Narrative is required if Condition Attached is Yes.';
+                $messages[sprintf('%s.narrative.%s.narrative.required_if', $conditionBase, $narrativeIndex)] = trans(
+                    'validation.required_if',
+                    [
+                        'attribute' => trans('elementForm.narrative'),
+                        'values'    => trans('elementForm.condition_attached'),
+                        'value'     => trans('global.yes')
+                    ]
+                );
             }
         }
 
@@ -2083,15 +2151,15 @@ class XmlValidator
 
         foreach ($transactions as $transactionIndex => $transaction) {
             $transactionBase                                                               = sprintf('transaction.%s.transaction', $transactionIndex);
-            $messages[sprintf('%s.reference.not_in', $transactionBase)]                    = 'Reference should be unique';
-            $messages[sprintf('%s.humanitarian.in', $transactionBase)]                     = 'Invalid humanitarian code';
-            $messages[sprintf('%s.recipient_country.0.country_code.in', $transactionBase)] = 'Recipient Country Code is incorrect';
-            $messages[sprintf('%s.recipient_region.0.region_code.in', $transactionBase)]   = 'Recipient Region Code is incorrect';
-            $messages[sprintf('%s.recipient_region.0.vocabulary.in', $transactionBase)]    = 'Recipient Region Vocabulary is incorrect';
-            $messages[sprintf('%s.flow_type.0.flow_type.in', $transactionBase)]            = 'Flow Type is incorrect';
-            $messages[sprintf('%s.finance_type.0.finance_type.in', $transactionBase)]      = 'Finance Type is incorrect';
-            $messages[sprintf('%s.aid_type.0.aid_type.in', $transactionBase)]              = 'Aid Type is incorrect';
-            $messages[sprintf('%s.tied_status.0.tied_status_code.in', $transactionBase)]   = 'Tied Status is incorrect';
+            $messages[sprintf('%s.reference.not_in', $transactionBase)]                    = trans('validation.unique', ['attribute' => trans('elementForm.reference')]);
+            $messages[sprintf('%s.humanitarian.in', $transactionBase)]                     = trans('validation.code_list', ['attribute' => trans('elementForm.humanitarian_code')]);
+            $messages[sprintf('%s.recipient_country.0.country_code.in', $transactionBase)] = trans('validation.code_list', ['attribute' => trans('elementForm.recipient_country_code')]);
+            $messages[sprintf('%s.recipient_region.0.region_code.in', $transactionBase)]   = trans('validation.code_list', ['attribute' => trans('elementForm.recipient_region_code')]);
+            $messages[sprintf('%s.recipient_region.0.vocabulary.in', $transactionBase)]    = trans('validation.code_list', ['attribute' => trans('elementForm.recipient_region_vocabulary')]);
+            $messages[sprintf('%s.flow_type.0.flow_type.in', $transactionBase)]            = trans('validation.code_list', ['attribute' => trans('elementForm.flow_type')]);
+            $messages[sprintf('%s.finance_type.0.finance_type.in', $transactionBase)]      = trans('validation.code_list', ['attribute' => trans('elementForm.finance_type')]);
+            $messages[sprintf('%s.aid_type.0.aid_type.in', $transactionBase)]              = trans('validation.code_list', ['attribute' => trans('elementForm.aid_type')]);
+            $messages[sprintf('%s.tied_status.0.tied_status_code.in', $transactionBase)]   = trans('validation.code_list', ['attribute' => trans('elementForm.tied_status_code')]);
 
             $messages = array_merge(
                 $messages,
@@ -2250,20 +2318,38 @@ class XmlValidator
 
         foreach ($sectors as $sectorIndex => $sector) {
             $sectorBase                                                = sprintf('%s.sector.%s', $transactionBase, $sectorIndex);
-            $messages[sprintf('%s.vocabulary_uri.url', $sectorBase)]   = 'Enter valid URL. eg. http://example.com';
-            $messages[sprintf('%s.vocabulary', $sectorBase)]           = 'Sector vocabulary is incorrect';
-            $messages[sprintf('%s.sector_code', $sectorBase)]          = 'Sector code is incorrect for sector vocabulary 1';
-            $messages[sprintf('%s.sector_category_code', $sectorBase)] = 'Sector code is incorrect for sector vocabulary 2';
+            $messages[sprintf('%s.vocabulary_uri.url', $sectorBase)]   = trans('validation.url');
+            $messages[sprintf('%s.vocabulary', $sectorBase)]           = trans('validation.code_list', ['attribute' => trans('elementForm.sector_vocabulary')]);
+            $messages[sprintf('%s.sector_code', $sectorBase)]          = trans('validation.code_list', ['attribute' => trans('elementForm.sector_code')]);
+            $messages[sprintf('%s.sector_category_code', $sectorBase)] = trans('validation.code_list', ['attribute' => trans('elementForm.sector_code')]);
 
             if ($sector['sector_vocabulary'] == 1) {
-                $messages[sprintf('%s.sector_code.%s', $sectorBase, 'required_with')]       = 'Sector code is required with Sector vocabulary.';
-                $messages[sprintf('%s.sector_vocabulary.%s', $sectorBase, 'required_with')] = 'Sector vocabulary is required with Sector code.';
+                $messages[sprintf('%s.sector_code.%s', $sectorBase, 'required_with')]       = trans(
+                    'validation.required_with',
+                    ['attribute' => trans('elementForm.sector_code'), 'values' => trans('sector_vocabulary')]
+                );
+                $messages[sprintf('%s.sector_vocabulary.%s', $sectorBase, 'required_with')] = trans(
+                    'validation.required_with',
+                    ['attribute' => trans('elementForm.sector_vocabulary'), 'values' => trans('sector_code')]
+                );
             } elseif ($sector['sector_vocabulary'] == 2) {
-                $messages[sprintf('%s.sector_category_code.%s', $sectorBase, 'required_with')] = 'Sector code is required with Sector vocabulary.';
-                $messages[sprintf('%s.sector_vocabulary.%s', $sectorBase, 'required_with')]    = 'Sector vocabulary is required with Sector code.';
+                $messages[sprintf('%s.sector_category_code.%s', $sectorBase, 'required_with')] = trans(
+                    'validation.required_with',
+                    ['attribute' => trans('elementForm.sector_code'), 'values' => trans('sector_vocabulary')]
+                );
+                $messages[sprintf('%s.sector_vocabulary.%s', $sectorBase, 'required_with')]    = trans(
+                    'validation.required_with',
+                    ['attribute' => trans('elementForm.sector_vocabulary'), 'values' => trans('sector_code')]
+                );
             } elseif ($sector['sector_vocabulary'] != "") {
-                $messages[sprintf('%s.sector_text.%s', $sectorBase, 'required_with')]       = 'Sector code is required with Sector vocabulary.';
-                $messages[sprintf('%s.sector_vocabulary.%s', $sectorBase, 'required_with')] = 'Sector vocabulary is required with Sector code.';
+                $messages[sprintf('%s.sector_text.%s', $sectorBase, 'required_with')]       = trans(
+                    'validation.required_with',
+                    ['attribute' => trans('elementForm.sector_code'), 'values' => trans('sector_vocabulary')]
+                );
+                $messages[sprintf('%s.sector_vocabulary.%s', $sectorBase, 'required_with')] = trans(
+                    'validation.required_with',
+                    ['attribute' => trans('elementForm.sector_vocabulary'), 'values' => trans('sector_code')]
+                );
             }
 
         }
@@ -2305,8 +2391,8 @@ class XmlValidator
 
         foreach ($recipientRegions as $recipientRegionIndex => $recipientRegion) {
             $recipientRegionBase                                      = sprintf('%s.recipient_region.%s', $transactionBase, $recipientRegionIndex);
-            $messages[$recipientRegionBase . '.region_code.required'] = 'Recipient region code is required';
-            $messages[$recipientRegionBase . '.vocabulary_uri.url']   = 'Enter valid URL. eg. http://example.com';
+            $messages[$recipientRegionBase . '.region_code.required'] = trans('validation.required', ['attribute' => trans('elementForm.recipient_region_code')]);
+            $messages[$recipientRegionBase . '.vocabulary_uri.url']   = trans('validation.url');
             $messages                                                 = array_merge($messages, $this->factory->getMessagesForNarrative($recipientRegion['narrative'], $recipientRegionBase));
         }
 
@@ -2343,8 +2429,8 @@ class XmlValidator
 
         foreach ($types as $typeIndex => $type) {
             $typeBase                                                          = sprintf('%s.transaction_type.%s', $transactionBase, $typeIndex);
-            $messages[sprintf('%s.transaction_type_code.required', $typeBase)] = 'Transaction type is required';
-            $messages[sprintf('%s.transaction_type_code.in', $typeBase)]       = 'Transaction type is incorrect';
+            $messages[sprintf('%s.transaction_type_code.required', $typeBase)] = trans('validation.required', ['attribute' => trans('elementForm.transaction_type')]);
+            $messages[sprintf('%s.transaction_type_code.in', $typeBase)]       = trans('validation.code_list', ['attribute' => trans('elementForm.transaction_type')]);
         }
 
         return $messages;
@@ -2378,7 +2464,7 @@ class XmlValidator
         $messages = [];
         foreach ($transactionDate as $dateIndex => $date) {
             $dateBase                                         = sprintf('%s.transaction_date.%s', $transactionBase, $dateIndex);
-            $messages[sprintf('%s.date.required', $dateBase)] = 'Date is required';
+            $messages[sprintf('%s.date.required', $dateBase)] = trans('validation.required', ['attribute' => trans('elementForm.date')]);
         }
 
         return $messages;
@@ -2414,9 +2500,9 @@ class XmlValidator
         $messages = [];
         foreach ($transactionValue as $valueIndex => $value) {
             $valueBase                                           = sprintf('%s.value.%s', $transactionBase, $valueIndex);
-            $messages[sprintf('%s.amount.required', $valueBase)] = 'Amount is required';
-            $messages[sprintf('%s.amount.numeric', $valueBase)]  = 'Amount must be numeric';
-            $messages[sprintf('%s.date.required', $valueBase)]   = 'Date is required';
+            $messages[sprintf('%s.amount.required', $valueBase)] = trans('validation.required', ['attribute' => trans('elementForm.amount')]);
+            $messages[sprintf('%s.amount.numeric', $valueBase)]  = trans('validation.numeric', ['attribute' => trans('elementForm.amount')]);
+            $messages[sprintf('%s.date.required', $valueBase)]   = trans('validation.required', ['attribute' => trans('elementForm.date')]);
         }
 
         return $messages;
@@ -2499,8 +2585,8 @@ class XmlValidator
 
         foreach ($results as $resultIndex => $result) {
             $resultBase                                         = sprintf('results.%s.result', $resultIndex);
-            $messages[sprintf('%s.type.required', $resultBase)] = 'Result Type is required.';
-            $messages[sprintf('%s.type.in', $resultBase)]       = 'Result Type is incorrect.';
+            $messages[sprintf('%s.type.required', $resultBase)] = trans('validation.required', ['attribute' => trans('elementForm.result_type')]);
+            $messages[sprintf('%s.type.in', $resultBase)]       = trans('validation.code_list', ['attribute' => trans('elementForm.result_type')]);
 
             $messages = array_merge(
                 $messages,
@@ -2557,7 +2643,7 @@ class XmlValidator
                 $resultBase,
                 $indicatorIndex
             );
-            $messages[sprintf('%s.measure.required', $indicatorBase)] = 'Measure is required.';
+            $messages[sprintf('%s.measure.required', $indicatorBase)] = trans('validation.required', ['attribute' => trans('elementForm.measure')]);
             $messages                                                 = array_merge(
                 $messages,
                 $this->factory->getMessagesForNarrative($indicator['title'], sprintf('%s.title.0', $indicatorBase)),
@@ -2611,8 +2697,8 @@ class XmlValidator
                 $formBase,
                 $referenceIndex
             );
-            $messages[sprintf('%s.indicator_uri.url', $referenceForm)] = 'Enter valid URL. eg. http://example.com';
-            $messages[sprintf('%s.vocabulary.in', $referenceForm)]     = 'Entered vocabulary for Indicator Reference is invalid';
+            $messages[sprintf('%s.indicator_uri.url', $referenceForm)] = trans('validation.url');
+            $messages[sprintf('%s.vocabulary.in', $referenceForm)]     = trans('validation.code_list', ['attribute' => trans('elementForm.indicator_reference_vocabulary')]);
         }
 
         return $messages;
@@ -2654,11 +2740,20 @@ class XmlValidator
 
         foreach ($formFields as $baselineIndex => $baseline) {
             $baselineForm                                                           = sprintf('%s.baseline.%s', $formBase, $baselineIndex);
-            $messages[sprintf('%s.year_value_narrative_validation', $baselineForm)] = 'Year and Value is required if narrative is not empty.';
-            $messages[sprintf('%s.year.required_with', $baselineForm)]              = 'Year is required with value.';
-            $messages[sprintf('%s.year.numeric', $baselineForm)]                    = 'Year should be numeric.';
-            $messages[sprintf('%s.value.required_with', $baselineForm)]             = 'Value is required with year.';
-            $messages[sprintf('%s.value.numeric', $baselineForm)]                   = 'Value should be numeric.';
+            $messages[sprintf('%s.year_value_narrative_validation', $baselineForm)] = trans(
+                'validation.year_value_narrative_validation',
+                ['year' => trans('elementForm.year'), 'value' => trans('elementForm.value'), 'narrative' => trans('elementForm.narrative')]
+            );
+            $messages[sprintf('%s.year.required_with', $baselineForm)]              = trans(
+                'validation.required_with',
+                ['attribute' => trans('elementForm.year'), 'values' => trans('elementForm.value')]
+            );
+            $messages[sprintf('%s.year.numeric', $baselineForm)]                    = trans('validation.numeric', ['attribute' => trans('elementForm.year')]);
+            $messages[sprintf('%s.value.required_with', $baselineForm)]             = trans(
+                'validation.required_with',
+                ['attribute' => trans('elementForm.value'), 'values' => trans('elementForm.year')]
+            );
+            $messages[sprintf('%s.value.numeric', $baselineForm)]                   = trans('validation.numeric', ['attribute' => trans('elementForm.value')]);
             $messages                                                               = array_merge(
                 $messages,
                 $this->factory->getMessagesForNarrative($baseline['comment'][0]['narrative'], sprintf('%s.comment.0', $baselineForm))
@@ -2750,7 +2845,10 @@ class XmlValidator
 
         foreach ($formFields as $targetIndex => $target) {
             $targetForm                                                           = sprintf('%s.%s', $formBase, $targetIndex);
-            $messages[sprintf('%s.year_value_narrative_validation', $targetForm)] = 'Value is required if narrative is not empty.';
+            $messages[sprintf('%s.year_value_narrative_validation', $targetForm)] = trans(
+                'validation.year_narrative_validation',
+                ['year' => trans('elementForm.value'), 'narrative' => trans('elementForm.narrative')]
+            );
             $messages                                                             = array_merge(
                 $messages,
                 $this->factory->getMessagesForNarrative($target['comment'][0]['narrative'], sprintf('%s.comment.0', $targetForm))
@@ -2790,9 +2888,15 @@ class XmlValidator
         $messages = [];
         foreach ($formFields as $periodStartKey => $periodStartVal) {
             if ($periodEnd[$periodStartKey]['date'] != "") {
-                $messages[$formBase . '.period_start.' . $periodStartKey . '.date.required_with'] = 'Period Start is required with Period Date';
+                $messages[$formBase . '.period_start.' . $periodStartKey . '.date.required_with'] = trans(
+                    'validation.required_with',
+                    [
+                        'attribute' => trans('elementForm.period_start'),
+                        'values'    => trans('elementForm.period_end')
+                    ]
+                );
             }
-            $messages[$formBase . '.period_end.' . $periodStartKey . '.date.date'] = 'Period Start is not a valid date.';
+            $messages[$formBase . '.period_end.' . $periodStartKey . '.date.date'] = trans('validation.date', ['attribute' => trans('elementForm.period_start')]);
         }
 
         return $messages;
@@ -2828,10 +2932,16 @@ class XmlValidator
         $messages = [];
         foreach ($formFields as $periodEndKey => $periodEndVal) {
             if ($periodStart[$periodEndKey]['date'] != "") {
-                $messages[$formBase . '.period_end.' . $periodEndKey . '.date.required_with'] = 'Period End is required with Period Start';
+                $messages[$formBase . '.period_end.' . $periodEndKey . '.date.required_with'] = trans(
+                    'validation.required_with',
+                    ['attribute' => trans('elementForm.period_end'), 'values' => trans('elementForm.period_start')]
+                );
             }
-            $messages[$formBase . '.period_end.' . $periodEndKey . '.date.date']  = 'Period End is not a valid date.';
-            $messages[$formBase . '.period_end.' . $periodEndKey . '.date.after'] = 'Period End must be a date after Period Start';
+            $messages[$formBase . '.period_end.' . $periodEndKey . '.date.date']  = trans('validation.date', ['attribute' => trans('elementForm.period_end')]);
+            $messages[$formBase . '.period_end.' . $periodEndKey . '.date.after'] = trans(
+                'validation.after',
+                ['attribute' => trans('elementForm.period_end'), 'date' => trans('elementForm.period_start')]
+            );
         }
 
         return $messages;
@@ -2846,13 +2956,13 @@ class XmlValidator
     protected function getMessagesForResultNarrative($formFields, $formBase)
     {
         $messages                                                 = [];
-        $messages[sprintf('%s.narrative.unique_lang', $formBase)] = 'Languages should be unique.';
+        $messages[sprintf('%s.narrative.unique_lang', $formBase)] = trans('validation.unique', ['attribute' => trans('elementForm.languages')]);
         foreach ($formFields as $narrativeIndex => $narrative) {
             $messages[sprintf(
                 '%s.narrative.%s.narrative.required',
                 $formBase,
                 $narrativeIndex
-            )] = 'Indicator Narrative is required.';
+            )] = trans('validation.required', ['attribute' => trans('elementForm.indicator_vocabulary')]);
         }
 
         return $messages;

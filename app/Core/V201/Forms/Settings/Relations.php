@@ -13,6 +13,6 @@ class Relations extends BaseForm
      */
     public function buildForm()
     {
-        $this->addCheckBox('related_activity', 'Related Activity');
+        $this->addCheckBox('related_activity', trans('element.related_activity'));
     }
 }

@@ -14,9 +14,9 @@ class Reference extends BaseForm
     public function buildForm()
     {
         $this
-            ->addSelect('vocabulary', $this->getCodeList('IndicatorVocabulary', 'Activity'))
-            ->add('code', 'text')
-            ->add('indicator_uri', 'text', ['label' => 'Indicator URI'])
+            ->addSelect('vocabulary', $this->getCodeList('IndicatorVocabulary', 'Activity'), trans('elementForm.vocabulary'))
+            ->add('code', 'text', ['label' => trans('elementForm.code')])
+            ->add('indicator_uri', 'text', ['label' => trans('elementForm.indicator_uri')])
             ->addRemoveThisButton('remove_reference');
     }
 }

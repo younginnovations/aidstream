@@ -50,5 +50,13 @@ $router->group(
                 'uses' => 'XmlImportController@schemaErrors'
             ]
         );
+
+        $router->get(
+            'xml-import/localisedText',
+            [
+                'as'   => 'xml-import.localisedText',
+                'uses' => 'XmlImportController@getLocalisedXmlFile'
+            ]
+        );
     }
 );

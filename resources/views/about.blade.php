@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport'/>
-    <title>Aidstream</title>
+    <title>@lang('title.aidstream')</title>
     <link rel="shortcut icon" type="image/png" sizes="16*16" href="images/favicon.png"/>
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/style.min.css">
@@ -14,9 +14,9 @@
 <section class="main-container">
     <div class="introduction-wrapper about-wrapper">
         <div class="col-md-12 text-center">
-            <h1>About us</h1>
+            <h1>@lang('about.about_us')</h1>
 
-            <p>We built AidStream because we could see how complex IATI was for organisations without dedicated tech support (which is most of you!). We wanted to help achieve IATI’s goals of making aid data open and transparent, and ultimately, improving outcomes and so we decided to make it as easy as possible for aid organisations to publish that very same data. AidStream simplifies the complexity associated with creating an open global standard for aid data, so that you can get on with changing the world.</p>
+            <p>@lang('about.we_built_aidstream')</p>
         </div>
         <div class="screenshot text-center">
             <img src="images/screenshot.png" alt="">
@@ -37,22 +37,20 @@
                         {{--<a href="http://www.aidtransparency.net/governance/secretariat">IATI--}}
                         {{--Secretariat</a> and others who have helped us in various fronts to bring Aidstream to you since--}}
                         {{--2012.--}}
-                        And who are ‘we’? We are <a href="http://www.yipl.com.np">YoungInnovations</a>, a Nepal-based software development firm, focused on providing open data and technology solutions to a range of development issues including transparency, accountability and civic engagement. We are thankful to our partners Development Initiatives, the IATI Secretariat and others who, since 2012, have been supporting our Aidstream efforts.
-
+                        @lang('about.and_who_are_we')
                     </p>
                     <p>
                         {{--Although AidStream as a service is available for any organizations around the world to publish--}}
                         {{--their activities into IATI, it has also been developed as an Open Source product that is--}}
                         {{--available in <a href="https://github.com/younginnovations/aidstream-new">GitHub</a>. Please feel free to fork it and use it for your purpose. All of our future--}}
                         {{--enhancements and developments will continue to remain open source.--}}
-                        AidStream is available to all organisations around the world but because it has been developed as an Open Source product, it is also available in <a href="https://github.com/younginnovations/aidstream-new">GitHub</a>. Please feel free to fork it and adapt it for your own needs if you like. All of AidStream’s future features and upgrades will continue to be developed as open source additions.
-
+                        @lang('about.aidstream_is_available')
                     </p>
                     <p>
-                        If you value our contribution to the development community, we need your support! Please reach out to us at <a href="mailto:info@aidstream.org">info@aidstream.org</a> to see how you can get involved.
+                        @lang('about.if_you_value_our_contribution')
 
-                    {{--If you see the value of our contribution to the community, we need your support! Please reach out to--}}
-                    {{--us at <a href="mailto:info@aidstream.org">info@aidstream.org</a> to see how you can help us.--}}
+                        {{--If you see the value of our contribution to the community, we need your support! Please reach out to--}}
+                        {{--us at <a href="mailto:info@aidstream.org">info@aidstream.org</a> to see how you can help us.--}}
                     </p>
                 </div>
             </div>

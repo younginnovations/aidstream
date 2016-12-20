@@ -40,7 +40,7 @@ class UploadTransaction extends ActivityBaseRequest
      */
     public function messages()
     {
-        $messages['transaction.transaction_file'] = 'The transaction must be a file of type: csv, xls, xlsx.';
+        $messages['transaction.transaction_file'] = trans('validation.mimes', ['attribute' => trans('element.transaction'), 'values' => 'csv, xls, xlsx']);
 
         return $messages;
     }

@@ -9,7 +9,7 @@ class NameForm extends BaseForm
     public function buildForm()
     {
         $this
-            ->addCollection('name', 'Organization\NarrativeForm', 'narrative')
+            ->addCollection('name', 'Organization\NarrativeForm', 'narrative', [], trans('elementForm.name'))
             ->addAddMoreButton('add_name', 'narrative');
     }
 }

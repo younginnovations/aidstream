@@ -83,7 +83,7 @@ class PasswordController extends Controller
         } catch (\Exception $e) {
             $this->logger->error($e, ['email' => $request->email]);
 
-            return redirect()->back()->withErrors(['email' => 'Failed to send email.']);
+            return redirect()->back()->withErrors(['email' => trans('error.failed_to_send_email')]);
         }
     }
 
@@ -111,9 +111,9 @@ class PasswordController extends Controller
         $user           = User::where('verification_code', $code)->first();
         $user->password = bcrypt($password);
         if ($user->save()) {
-            return redirect()->to('/auth/login')->withMessage('Your password has been set. You can now login to your account. Thank you!');
+            return redirect()->to('/auth/login')->withMessage(trans('success.password_has_been_set'));
         } else {
-            return redirect()->to('/auth/login')->withErrors(['Failed to save Password.']);
+            return redirect()->to('/auth/login')->withErrors([trans('error.failed_to_save_password')]);
         }
     }
 

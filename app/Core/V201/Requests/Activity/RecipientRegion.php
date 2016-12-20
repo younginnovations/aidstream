@@ -80,10 +80,10 @@ class RecipientRegion extends ActivityBaseRequest
 
         foreach ($formFields as $recipientRegionIndex => $recipientRegion) {
             $recipientRegionForm                                      = 'recipient_region.' . $recipientRegionIndex;
-            $messages[$recipientRegionForm . '.region_code.required'] = 'Recipient region code is required';
-            $messages[$recipientRegionForm . '.percentage.numeric']   = 'Percentage should be numeric.';
-            $messages[$recipientRegionForm . '.percentage.max']       = 'Percentage should be less than or equal to 100';
-            $messages[$recipientRegionForm . '.percentage.required']  = 'Percentage is required.';
+            $messages[$recipientRegionForm . '.region_code.required'] = trans('validation.required', ['attribute' => trans('elementForm.recipient_region_code')]);
+            $messages[$recipientRegionForm . '.percentage.numeric']   = trans('validation.numeric', ['attribute' => trans('elementForm.percentage')]);
+            $messages[$recipientRegionForm . '.percentage.max']       = trans('validation.max.numeric', ['attribute' => trans('elementForm.percentage')]);
+            $messages[$recipientRegionForm . '.percentage.required']  = trans('validation.required', ['attribute' => trans('elementForm.percentage')]);
             $messages                                                 = array_merge(
                 $messages,
                 $this->getMessagesForNarrative(

@@ -102,7 +102,7 @@ class TotalExpenditure extends OrganizationBaseRequest
         $messages = [];
         foreach ($formFields as $expenseLineIndex => $expenseLine) {
             $expenseLineForm                                                                          = sprintf('%s.expense_line.%s', $formBase, $expenseLineIndex);
-            $messages[sprintf('%s.expense_line.%s.reference.required', $formBase, $expenseLineIndex)] = 'Reference is required';
+            $messages[sprintf('%s.expense_line.%s.reference.required', $formBase, $expenseLineIndex)] = trans('validation.required', ['attribute' => trans('elementForm.reference')]);
             $messages                                                                                 = array_merge(
                 $messages,
                 $this->getMessagesForBudgetOrExpenseLineValue($expenseLine['value'], $expenseLineForm, "Expense Line"),

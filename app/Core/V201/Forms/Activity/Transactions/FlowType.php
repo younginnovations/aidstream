@@ -17,6 +17,6 @@ class FlowType extends BaseForm
      */
     public function buildForm()
     {
-        $this->addSelect('flow_type', $this->getFlowTypeCodeList(), 'Flow Type', $this->addHelpText('Activity_Transaction_FlowType-code'));
+        $this->addSelect('flow_type', $this->getFlowTypeCodeList(), trans('elementForm.flow_type'), $this->addHelpText('Activity_Transaction_FlowType-code'));
     }
 }

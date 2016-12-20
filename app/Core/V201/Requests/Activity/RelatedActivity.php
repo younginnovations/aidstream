@@ -45,8 +45,8 @@ class RelatedActivity extends ActivityBaseRequest
 
         foreach ($formFields as $relatedActivityIndex => $relatedActivity) {
             $relatedActivityForm                                                        = sprintf('related_activity.%s', $relatedActivityIndex);
-            $messages[sprintf('%s.relationship_type.required', $relatedActivityForm)]   = 'Type of Relationship is Required';
-            $messages[sprintf('%s.activity_identifier.required', $relatedActivityForm)] = 'Activity Identifier is Required';
+            $messages[sprintf('%s.relationship_type.required', $relatedActivityForm)]   = trans('validation.required', ['attribute' => trans('elementForm.type_of_relationship')]);
+            $messages[sprintf('%s.activity_identifier.required', $relatedActivityForm)] = trans('validation.required', ['attribute' => trans('elementForm.activity_identifier')]);
         }
 
         return $messages;

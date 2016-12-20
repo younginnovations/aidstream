@@ -14,8 +14,8 @@ class Performance extends BaseForm
     public function buildForm()
     {
         $this
-            ->addCheckBox('condition', 'Condition')
-            ->addCheckBox('result', 'Result')
-            ->addCheckBox('legacy_data', 'Legacy Data');
+            ->addCheckBox('condition', trans('element.condition'))
+            ->addCheckBox('result', trans('element.result'))
+            ->addCheckBox('legacy_data', trans('element.legacy_data'));
     }
 }

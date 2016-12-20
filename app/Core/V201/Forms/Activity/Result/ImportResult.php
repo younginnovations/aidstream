@@ -16,6 +16,6 @@ class ImportResult extends BaseForm
     public function buildForm()
     {
         $this
-            ->add('result', 'file', ['label' => 'Result CSV File', 'wrapper' => ['class' => 'form-group col-xs-6 col-sm-6 activity-file-choose']]);
+            ->add('result', 'file', ['label' => trans('elementForm.result_csv_file'), 'wrapper' => ['class' => 'form-group col-xs-6 col-sm-6 activity-file-choose']]);
     }
 }

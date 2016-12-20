@@ -14,9 +14,9 @@ class LegacyData extends BaseForm
     public function buildForm()
     {
         $this
-            ->add('name', 'text', ['help_block' => $this->addHelpText('Activity_LegacyData-name'), 'required' => true])
-            ->add('value', 'text', ['help_block' => $this->addHelpText('Activity_LegacyData-value'), 'required' => true])
-            ->add('iati_equivalent', 'text', ['help_block' => $this->addHelpText('Activity_LegacyData-iati_equivalent')])
+            ->add('name', 'text', ['label' => trans('elementForm.name'), 'help_block' => $this->addHelpText('Activity_LegacyData-name'), 'required' => true])
+            ->add('value', 'text', ['label' => trans('elementForm.value'), 'help_block' => $this->addHelpText('Activity_LegacyData-value'), 'required' => true])
+            ->add('iati_equivalent', 'text', ['label' => trans('elementForm.iati_equivalent'), 'help_block' => $this->addHelpText('Activity_LegacyData-iati_equivalent')])
             ->addRemoveThisButton('remove');
     }
 }

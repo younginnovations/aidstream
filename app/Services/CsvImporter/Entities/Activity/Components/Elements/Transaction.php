@@ -199,28 +199,40 @@ class Transaction extends Element
     public function messages()
     {
         $message = [
-            'transaction.check_recipient_region_country'                    => 'Recipient Region or Recipient Country must be present either in Activity level or Transaction level but not in both.',
-            'transaction.transaction_type.*.transaction_type_code.required' => 'Transaction type is required.',
-            'transaction.transaction_type.*.transaction_type_code.in'       => 'Entered transaction type is incorrect.',
-            'transaction.transaction_date.*.date.required'                  => 'Transaction date is required.',
-            'transaction.transaction_date.*.date.date_format'               => 'Please enter transaction date in Y-m-d format.',
-            'transaction.value.*.amount.required'                           => 'Transaction Value is required.',
-            'transaction.value.*.amount.numeric'                            => 'Transaction Value should be numeric.',
-            'transaction.value.*.amount.min'                                => 'Transaction Value cannot be negative.',
-            'transaction.value.*.date.required'                             => 'Transaction Value Date is required.',
-            'transaction.value.*.date.date_format'                          => 'Please enter transaction value date in Y-m-d format.',
-            'transaction.provider_organization.*.type.in'                   => 'Entered provider organisation type is incorrect in Transaction.',
-            'transaction.provider_organization.only_one_among'              => 'Provider Organisation identifier is required if organisation name is not present in Transaction.',
-            'transaction.receiver_organization.*.type.in'                   => 'Entered receiver organisation type is incorrect in Transaction.',
-            'transaction.receiver_organization.only_one_among'              => 'Receiver Organisation identifier is required if organisation name is not present in Transaction.',
-            'transaction.sector.check_sector'                               => 'Sector information must be present either in Transaction level or Activity level but not in both.',
-            'transaction.sector.*.sector_vocabulary.in'                     => 'Entered sector vocabulary is incorrect in Transaction.',
-            'transaction.sector.*.sector_vocabulary.required_if'            => 'Sector Vocabulary is required in Transaction if not present in Activity Level.',
-            'transaction.sector.*.sector_code.in'                           => 'Entered sector code for vocabulary (1) is incorrect in Transaction.',
-            'transaction.sector.*.sector_category_code.in'                  => 'Entered sector code for vocabulary (2) is incorrect in Transaction.',
-            'transaction.sector.*.sector_text.required_unless'              => 'Sector code is required in Transaction.',
-            'transaction.recipient_country.*.country_code.in'               => 'Entered Recipient country code is incorrect in Transaction.',
-            'transaction.recipient_region.*.region_code.in'                 => 'Entered recipient region code is incorrect in Transaction.'
+            'transaction.check_recipient_region_country'                    => trans('validation.sector_in_activity_and_transaction'),
+            'transaction.transaction_type.*.transaction_type_code.required' => trans('validation.required', ['attribute' => trans('elementForm.transaction_type')]),
+            'transaction.transaction_type.*.transaction_type_code.in'       => trans('validation.code_list', ['attribute' => trans('elementForm.transaction_type')]),
+            'transaction.transaction_date.*.date.required'                  => trans('validation.required', ['attribute' => trans('elementForm.transaction_date')]),
+            'transaction.transaction_date.*.date.date_format'               => trans('validation.csv_date', ['attribute' => trans('elementForm.transaction_date')]),
+            'transaction.value.*.amount.required'                           => trans('validation.required', ['attribute' => trans('elementForm.transaction_value')]),
+            'transaction.value.*.amount.numeric'                            => trans('validation.numeric', ['attribute' => trans('elementForm.transaction_value')]),
+            'transaction.value.*.amount.min'                                => trans('validation.negative', ['attribute' => trans('elementForm.transaction_value')]),
+            'transaction.value.*.date.required'                             => trans('validation.required', ['attribute' => trans('elementForm.transaction_value_date')]),
+            'transaction.value.*.date.date_format'                          => trans('validation.csv_date', ['attribute' => trans('elementForm.transaction_value_date')]),
+            'transaction.provider_organization.*.type.in'                   => trans('validation.invalid_in_transaction', ['attribute' => trans('elementForm.provider_organisation_type')]),
+            'transaction.provider_organization.only_one_among'              => trans(
+                'validation.required_if',
+                [
+                    'attribute' => trans('elementForm.provider_organisation_identifier'),
+                    'values'    => trans('elementForm.organisation_name')
+                ]
+            ),
+            'transaction.receiver_organization.*.type.in'                   => trans('validation.invalid_in_transaction', ['attribute' => trans('elementForm.receiver_organisation_type')]),
+            'transaction.receiver_organization.only_one_among'              => trans(
+                'validation.required_if_in_transaction',
+                [
+                    'attribute' => trans('elementForm.receiver_organisation_identifier'),
+                    'values'    => trans('elementForm.organisation_name')
+                ]
+            ),
+            'transaction.sector.check_sector'                               => trans('validation.sector_validation'),
+            'transaction.sector.*.sector_vocabulary.in'                     => trans('validation.invalid_in_transaction', ['attribute' => trans('elementForm.sector_vocabulary')]),
+            'transaction.sector.*.sector_vocabulary.required_if'            => trans('validation.sector_vocabulary_required'),
+            'transaction.sector.*.sector_code.in'                           => trans('validation.invalid_in_transaction', ['attribute' => trans('elementForm.sector_code')]),
+            'transaction.sector.*.sector_category_code.in'                  => trans('validation.invalid_in_transaction', ['attribute' => trans('elementForm.sector_code')]),
+            'transaction.sector.*.sector_text.required_unless'              => trans('validation.required_in_transaction', ['attribute' => trans('elementForm.sector_code')]),
+            'transaction.recipient_country.*.country_code.in'               => trans('validation.invalid_in_transaction', ['attribute' => trans('elementForm.recipient_country_code')]),
+            'transaction.recipient_region.*.region_code.in'                 => trans('validation.invalid_in_transaction', ['attribute' => trans('elementForm.recipient_region_code')]),
         ];
 
         return $message;

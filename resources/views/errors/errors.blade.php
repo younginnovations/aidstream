@@ -1,6 +1,6 @@
 @extends('app')
 
-@section('title', 'Non Accessible Content')
+@section('title', trans('title.non_accessible_content'))
 
 @section('content')
     <div class="container main-container">

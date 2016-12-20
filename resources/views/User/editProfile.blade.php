@@ -1,6 +1,6 @@
 @extends('app')
 
-@section('title', 'Edit Profile - ' . $user['first_name'])
+@section('title', trans('title.edit_profile'). ' - ' . $user['first_name'])
 
 @section('content')
     @inject('getCodeList', 'App\Core\Form\BaseForm')
@@ -10,7 +10,7 @@
             <div class="col-xs-9 col-md-9 col-lg-9 content-wrapper">
                 @include('includes.errors')
                 <div class="element-panel-heading">
-                    <div>Edit Profile</div>
+                    <div>@lang('title.edit_profile')</div>
                 </div>
                 <div class="col-xs-12 col-md-8 col-lg-8 element-content-wrapper profile-wrapper">
                     <div class="create-form edit-profile-form">
@@ -31,7 +31,7 @@
                             }
                         /*--}}
                         <div class="input-wrapper">
-                            <h2>Your Information</h2>
+                            <h2>@lang('user.your_information')</h2>
                             <span class="hidden" id="user-identifier"
                                   data-id="{{ $organization->user_identifier }}"></span>
                             <div class="col-md-12 col-xs-12">
@@ -61,37 +61,37 @@
                                                 <img src="" height="150" width="150" alt="Uploaded Image" id="selected_picture">
                                             @endif
                                             <div class="change-logo-wrap">
-                                                <span class="change-logo">Change Picture</span>
+                                                <span class="change-logo">@lang('user.change_picture')</span>
                                             </div>
                                         </div>
                                     </label>
-                                    <span class="upload-label">Upload your Profile Picture</span>
+                                    <span class="upload-label">@lang('user.upload_your_profile_picture')</span>
                                 </div>
-                                <div class="description"><span>Please use jpg/jpeg/png/gif format and 150x150 dimensions image.</span></div>
-                                </div>
+                                <div class="description"><span>@lang('global.image_criteria')</span></div>
+                            </div>
                             <hr/>
                             @if(Auth::user()->isAdmin())
-                                <h2>Organisation Secondary Contact</h2>
+                                <h2>@lang('user.organisation_secondary_contact')</h2>
                                 <div class="col-md-12 col-xs-12">
                                     <div class="form-group col-md-6 col-xs-12 col-sm-6">
-                                        {{ Form::label(null,'First Name') }}
+                                        {{ Form::label(null, trans('user.first_name')) }}
                                         <div class="col-md-12">
                                             {{ Form::text('secondary_first_name',getVal((array)$organization->secondary_contact,['first_name']),['form-control']) }}
                                         </div>
                                     </div>
                                     <div class="form-group col-md-6 col-xs-12 col-sm-6">
-                                        {{ Form::label(null,'Last Name') }}
+                                        {{ Form::label(null, trans('user.last_name')) }}
                                         <div class="col-md-12">
                                             {{ Form::text('secondary_last_name',getVal((array)$organization->secondary_contact,['last_name']),['form-control']) }}
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-md-12">
-                                    {!! AsForm::text(['name' => 'secondary_email', 'label' => 'E-mail Address','value'=>getVal((array)$organization->secondary_contact,['email']),'parent' => 'col-sm-6 col-md-6 col-xs-12', 'required' => true]) !!}
+                                    {!! AsForm::text(['name' => 'secondary_email', 'label' => trans('user.email_address'),'value'=>getVal((array)$organization->secondary_contact,['email']),'parent' => 'col-sm-6 col-md-6 col-xs-12', 'required' => true]) !!}
                                 </div>
                             @endif
                             <div class="form-group">
-                                <button type="submit" class="btn btn-primary btn-form btn-submit">Save your Profile</button>
+                                <button type="submit" class="btn btn-primary btn-form btn-submit">@lang('global.save_your_profile')</button>
                             </div>
                         </div>
                     </div>

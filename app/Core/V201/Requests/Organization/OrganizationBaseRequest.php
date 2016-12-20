@@ -66,7 +66,7 @@ class OrganizationBaseRequest extends Request
     public function getMessagesForNarrative($formFields, $formBase)
     {
         $messages                                                 = [];
-        $messages[sprintf('%s.narrative.unique_lang', $formBase)] = 'Languages should be unique.';
+        $messages[sprintf('%s.narrative.unique_lang', $formBase)] = trans('validation.unique', ['attribute' => trans('elementForm.languages')]);
 
         foreach ($formFields as $narrativeIndex => $narrative) {
             $messages[sprintf('%s.narrative.%s.narrative.required_with_language', $formBase, $narrativeIndex)] = 'Narrative is required with language.';
@@ -104,10 +104,10 @@ class OrganizationBaseRequest extends Request
         $messages = [];
         foreach ($formFields as $valueKey => $valueVal) {
             $valueForm                                     = $formBase . '.value.' . $valueKey;
-            $messages[$valueForm . '.amount.required']     = 'Amount is Required';
-            $messages[$valueForm . '.amount.numeric']      = 'Amount should be numeric.';
-            $messages[$valueForm . '.value_date.required'] = 'Value date is required.';
-            $messages[$valueForm . '.value_date.date']     = 'Please enter valid  date.';
+            $messages[$valueForm . '.amount.required']     = trans('validation.required', ['attribute' => trans('elementForm.amount')]);
+            $messages[$valueForm . '.amount.numeric']      = trans('validation.numeric', ['attribute' => trans('elementForm.amount')]);
+            $messages[$valueForm . '.value_date.required'] = trans('validation.required', ['attribute' => trans('elementForm.value_date')]);
+            $messages[$valueForm . '.value_date.date']     = trans('validation.date', ['attribute' => trans('elementForm.value_date')]);
         }
 
         return $messages;
@@ -181,8 +181,8 @@ class OrganizationBaseRequest extends Request
     {
         $messages = [];
         foreach ($formFields as $periodStartKey => $periodStartVal) {
-            $messages[$formBase . '.period_start.' . $periodStartKey . '.date.required'] = 'Period Start is required';
-            $messages[$formBase . '.period_end.' . $periodStartKey . '.date.date']       = 'Period Start is not a valid date.';
+            $messages[$formBase . '.period_start.' . $periodStartKey . '.date.required'] = trans('validation.required', ['attribute' => trans('elementForm.period_start')]);
+            $messages[$formBase . '.period_end.' . $periodStartKey . '.date.date']       = trans('validation.date', ['attribute' => trans('elementForm.period_start')]);
         }
 
         return $messages;
@@ -214,9 +214,12 @@ class OrganizationBaseRequest extends Request
     {
         $messages = [];
         foreach ($formFields as $periodEndKey => $periodEndVal) {
-            $messages[$formBase . '.period_end.' . $periodEndKey . '.date.required'] = 'Period End is required.';
-            $messages[$formBase . '.period_end.' . $periodEndKey . '.date.date']     = 'Period End is not a valid date.';
-            $messages[$formBase . '.period_end.' . $periodEndKey . '.date.after']    = 'Period End must be a date after Period Start';
+            $messages[$formBase . '.period_end.' . $periodEndKey . '.date.required'] = trans('validation.required', ['attribute' => trans('elementForm.period_end')]);
+            $messages[$formBase . '.period_end.' . $periodEndKey . '.date.date']     = trans('validation.date', ['attribute' => trans('elementForm.period_end')]);
+            $messages[$formBase . '.period_end.' . $periodEndKey . '.date.after']    = trans(
+                'validation.after',
+                ['attribute' => trans('elementForm.period_end'), 'date' => trans('elementForm.period_start')]
+            );
         }
 
         return $messages;
@@ -257,10 +260,10 @@ class OrganizationBaseRequest extends Request
     public function getMessagesForBudgetOrExpenseLineValue($formField, $formBase, $type = 'Budget line')
     {
         foreach ($formField as $budgetLineIndex => $budgetLine) {
-            $messages[$formBase . '.value.' . $budgetLineIndex . '.amount' . '.required_with']     = sprintf('Amount is required in %s.', $type);
-            $messages[$formBase . '.value.' . $budgetLineIndex . '.amount' . '.numeric']           = 'Amount should be number';
-            $messages[$formBase . '.value.' . $budgetLineIndex . '.value_date' . '.date']          = 'Please enter a valid date';
-            $messages[$formBase . '.value.' . $budgetLineIndex . '.value_date' . '.required_with'] = sprintf('Value date is required in %s.', $type);
+            $messages[$formBase . '.value.' . $budgetLineIndex . '.amount' . '.required_with']     = trans('validation.required', ['attribute' => trans('elementForm.amount')]);
+            $messages[$formBase . '.value.' . $budgetLineIndex . '.amount' . '.numeric']           = trans('validation.numeric', ['attribute' => trans('elementForm.amount')]);
+            $messages[$formBase . '.value.' . $budgetLineIndex . '.value_date' . '.date']          = trans('validation.date', ['attribute' => trans('elementForm.value_date')]);
+            $messages[$formBase . '.value.' . $budgetLineIndex . '.value_date' . '.required_with'] = trans('validation.required', ['attribute' => trans('elementForm.value_date')]);
         }
 
         return $messages;
@@ -297,10 +300,10 @@ class OrganizationBaseRequest extends Request
     public function getMessagesForBudgetOrExpenseLineNarrative($formFields, $formBase, $type = "Budget line")
     {
         $messages                                                 = [];
-        $messages[sprintf('%s.narrative.unique_lang', $formBase)] = 'Languages should be unique.';
+        $messages[sprintf('%s.narrative.unique_lang', $formBase)] = trans('validation.unique', ['attribute' => trans('elementForm.languages')]);
 
         foreach ($formFields as $narrativeIndex => $narrative) {
-            $messages[sprintf('%s.narrative.%s.narrative.required_with', $formBase, $narrativeIndex)] = sprintf('Narrative is required in %s', $type);
+            $messages[sprintf('%s.narrative.%s.narrative.required_with', $formBase, $narrativeIndex)] = trans('validation.required', ['attribute' => trans('elementForm.narrative')]);
         }
 
         return $messages;

@@ -80,7 +80,7 @@ class ImportResultController extends Controller
         $this->importManager->refreshSessionIfRequired();
 
         if (!isset($organization->reporting_org[0])) {
-            $response = ['type' => 'warning', 'code' => ['settings', ['name' => 'activity']]];
+            $response = ['type' => 'warning', 'code' => ['settings', ['name' => trans('global.activity')]]];
 
             return redirect('/settings')->withResponse($response);
         }
@@ -110,7 +110,7 @@ class ImportResultController extends Controller
             return redirect()->route('activity.result.import-status', $activityId);
         }
 
-        $response = ['type' => 'danger', 'code' => ['csv_header_mismatch', ['message' => 'Something is not right.']]];
+        $response = ['type' => 'danger', 'code' => ['csv_header_mismatch', ['message' => trans('error.something_is_not_right')]]];
 
         return redirect()->to('activity.result.upload-csv')->withResponse($response);
     }
@@ -129,10 +129,10 @@ class ImportResultController extends Controller
             $this->importManager->create($activityId, $results);
             $this->importManager->endImport();
 
-            return redirect()->route('activity.show', $activityId)->withResponse(['type' => 'success', 'code' => ['message', ['message' => 'Results successfully imported.']]]);
+            return redirect()->route('activity.show', $activityId)->withResponse(['type' => 'success', 'code' => ['message', ['message' => trans('success.results_imported')]]]);
         }
 
-        return redirect()->back()->withResponse(['type' => 'warning', 'code' => ['message', ['message' => 'Please select the activities to be imported.']]]);
+        return redirect()->back()->withResponse(['type' => 'warning', 'code' => ['message', ['message' => trans('success.select_activities_to_be_imported')]]]);
     }
 
     /**
@@ -155,7 +155,7 @@ class ImportResultController extends Controller
             $this->importManager->deleteFile('header_mismatch.json')
                                 ->reportHeaderMismatch();
 
-            return response()->json(json_encode(['status' => 'Error', 'message' => 'The headers in the uploaded Csv file do not match with the provided template.']));
+            return response()->json(json_encode(['status' => 'Error', 'message' => trans('error.header_mismatch')]));
         }
 
         if ($result = $this->importManager->importIsComplete()) {
@@ -178,7 +178,7 @@ class ImportResultController extends Controller
 
             $response = ['render' => view('Activity.csvImporter.result.invalid', compact('results'))->render()];
         } else {
-            $response = ['render' => '<p>No data available.</p>'];
+            $response = ['render' => sprintf('<p>%s</p>', trans('error.data_not_available'))];
         }
 
         return response()->json($response);
@@ -197,7 +197,7 @@ class ImportResultController extends Controller
 
             $response = ['render' => view('Activity.csvImporter.result.valid', compact('results'))->render()];
         } else {
-            $response = ['render' => '<p>No data available.</p>'];
+            $response = ['render' => sprintf('<p>%s</p>', trans('error.data_not_available'))];
         }
 
         return response()->json($response);
@@ -245,7 +245,7 @@ class ImportResultController extends Controller
     public function getData()
     {
         if (!($response = $this->importManager->getData())) {
-            $response = ['render' => '<p>No data available.</p>'];
+            $response = ['render' => sprintf('<p>%s</p>', trans('error.data_not_available'))];
         }
 
         return response()->json($response);
@@ -266,7 +266,7 @@ class ImportResultController extends Controller
             $this->importManager->clearSession(['header_mismatch']);
             $this->importManager->deleteFile('status.json');
 
-            $mismatch = ['type' => 'warning', 'code' => ['message', ['message' => 'The headers in the uploaded Csv file do not match with the provided template.']]];
+            $mismatch = ['type' => 'warning', 'code' => ['message', ['message' => trans('error.header_mismatch')]]];
 
             return view('Activity.result.uploader', compact('form', 'mismatch', 'activityId'));
         }

@@ -12,19 +12,25 @@ $router->get(
     }
 );
 
-$router->get('/uploads/files/organization/{file}', function ($file) {
-    $pieces = explode('.', $file);
+$router->get(
+    '/uploads/files/organization/{file}',
+    function ($file) {
+        $pieces = explode('.', $file);
 
-    if (end($pieces) === 'xml') {
-        return redirect('/files/xml/' . $file);
+        if (end($pieces) === 'xml') {
+            return redirect('/files/xml/' . $file);
+        }
+
+        return redirect('/');
     }
+);
 
-    return redirect('/');
-});
-
-$router->get('/auth/register', function () {
-    return redirect('/register');
-});
+$router->get(
+    '/auth/register',
+    function () {
+        return redirect('/register');
+    }
+);
 
 $router->get('/', 'HomeController@index');
 $router->get('home', 'HomeController@index');
@@ -465,7 +471,26 @@ $router->post(
 
 $router->resource('agency', 'AgencyController');
 
-$router->post('/add-publishing-info-later', [
-    'as'   => 'publishing-info.add-later',
-    'uses' => 'Auth\VerificationController@addPublishingInfoLater'
-]);
+$router->post(
+    '/add-publishing-info-later',
+    [
+        'as'   => 'publishing-info.add-later',
+        'uses' => 'Auth\VerificationController@addPublishingInfoLater'
+    ]
+);
+
+$router->get(
+    'switch-language/{language}',
+    [
+        'as'   => 'switch-language',
+        'uses' => 'LanguageController@switchLanguage'
+    ]
+);
+
+$router->get(
+    '/localisedFormText',
+    [
+        'as'   => 'localisedFormText',
+        'uses' => 'LanguageController@localisedFormText'
+    ]
+);

@@ -1557,7 +1557,7 @@ label {
     padding: 0 24px 0 52px;
     font-size: 14px;
     display: inline-block;
-    margin: 25px auto;
+    margin: 10px auto;
     font-style: normal;
     position: relative; }
     .no-data .btn:before {
@@ -2452,7 +2452,8 @@ form > .add_to_collection[data-collection="legacy_data"] {
   margin-bottom: 20px; }
 
 .download-transaction-wrap {
-  padding: 0 36px; }
+  padding: 0 36px;
+  margin-bottom: 20px; }
   .download-transaction-wrap .btn {
     display: inline-block;
     vertical-align: middle;
@@ -2461,7 +2462,8 @@ form > .add_to_collection[data-collection="legacy_data"] {
     line-height: 40px;
     width: 260px;
     height: 40px;
-    padding: 0; }
+    padding: 0;
+    margin: 0; }
     .download-transaction-wrap .btn .caret {
       margin-left: 4px;
       color: #fff; }
@@ -3027,7 +3029,8 @@ div[class*="panel-level-"] .panel > .panel-body {
 
 .add-dropdown {
   background: none !important;
-  margin-top: 5px; }
+  margin-top: 5px;
+  display: inline-block; }
   .add-dropdown span.btn .caret {
     margin-left: 4px;
     color: rgba(255, 255, 255, 0.4);
@@ -3035,6 +3038,13 @@ div[class*="panel-level-"] .panel > .panel-body {
     height: 5px; }
   .add-dropdown li.dropdown > div {
     padding-bottom: 5px; }
+
+.btn-view-it {
+  -webkit-border-radius: 21px;
+          border-radius: 21px;
+  display: inline-block;
+  font-size: 12px;
+  padding: 9px 20px; }
 
 .add-new-btn {
   -webkit-border-radius: 21px;
@@ -5998,7 +6008,7 @@ body > .skiptranslate iframe {
   display: block;
   margin-left: 0; }
 
-@media all and (max-width: 500px) {
+@media all and (max-width: 520px) {
   .version {
     display: none; }
   .navbar-admin-dropdown .dropdown-menu li span.width-490 a {
@@ -6353,12 +6363,19 @@ body > .skiptranslate iframe {
 @media all and (min-width: 1001px) {
   .element-sidebar-wrapper {
     display: block !important; }
+  .btn-action-wrap {
+    float: right;
+    margin-top: -14px !important; }
   .panel-action-btn, .add-dropdown {
-    margin: 0;
+    margin-top: 0;
     float: right; }
+  .add-dropdown {
+    margin-left: 10px; }
   .element-panel-heading-info {
     float: left;
-    width: 72%; }
+    width: -webkit-calc(100% - 320px);
+    width: -moz-calc(100% - 320px);
+    width: calc(100% - 320px); }
   .settings-checkall-wrapper > .collection_form > .form-group > .form-group, .checkall-wrapper .form-group:nth-child(3) > .form-group > .form-group {
     width: 33%;
     margin-top: 35px; }

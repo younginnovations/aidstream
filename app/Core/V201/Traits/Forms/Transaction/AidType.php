@@ -12,7 +12,7 @@ trait AidType
      */
     public function addAidType()
     {
-        return $this->addCollection('aid_type', 'Activity\Transactions\AidType');
+        return $this->addCollection('aid_type', 'Activity\Transactions\AidType', '', [], trans('elementForm.aid_type'));
     }
 
     /**

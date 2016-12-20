@@ -1,13 +1,38 @@
 var Registration = Registration || {};
 
+
 function slash(value) {
     return value.replace(/([\[\]])/g, '\\$1');
 }
 
 (function ($) {
-
+    var localisedData;
     Registration = {
         // ajax request handler
+        callAsync: function (url, requestType) {
+            return $.ajax({
+                url: url,
+                type: requestType
+            })
+        },
+        localised: function () {
+            this.callAsync('/localisedFormText', 'get').success(function (data) {
+                localisedData = JSON.parse(data);
+                Registration.startProcesses();
+            });
+        },
+        startProcesses: function () {
+            Registration.abbrGenerator();
+            Registration.checkAbbrAvailability();
+            Registration.changeCountry();
+            Registration.regNumber();
+            Registration.addRegAgency();
+            Registration.addUser();
+            Registration.removeUser();
+            Registration.usernameGenerator();
+            Registration.filterSimilarOrg();
+            Registration.tabs();
+        },
         request: function (url, data, callback, type) {
             type = type || 'POST';
             return $.ajax({
@@ -84,7 +109,7 @@ function slash(value) {
         },
         // filters registration agencies
         filterAgency: function (country) {
-            var filteredAgencies = '<option value="" selected="selected">Select an Agency</option>';
+            var filteredAgencies = '<option value="" selected="selected">' + localisedData['select_an_agency'] + '</option>';
             var selected = '';
             for (var i in agencies) {
                 if (i.indexOf(country) == 0 || i.indexOf('XI') == 0 || i.indexOf('XM') == 0) {
@@ -135,7 +160,7 @@ function slash(value) {
                 var html = template.html();
                 html = html.replace(/_index_/g, index);
                 $('.user-blocks').append(html);
-                $(this).html('Add Another User').prev('span').addClass('hidden');
+                $(this).html(localisedData['add_another_user']).prev('span').addClass('hidden');
                 // Registration.disableUsersSubmitButton();
                 Registration.usersValidationRules(index);
                 bindTooltip();
@@ -166,17 +191,17 @@ function slash(value) {
                 var removeDialog = $('#removeDialog');
 
                 var buttons = '' +
-                    '<button class="btn btn-primary btn_remove" type="button">Yes</button>' +
-                    '<button class="btn btn-default" type="button"  data-dismiss="modal">No</button>';
+                    '<button class="btn btn-primary btn_remove" type="button">' + localisedData['yes'] + '</button>' +
+                    '<button class="btn btn-default" type="button"  data-dismiss="modal">' + localisedData['no'] + '</button>';
 
-                $('.modal-header .modal-title', removeDialog).html('Remove Confirmation');
-                $('.modal-body', removeDialog).html('Are you sure you want to remove this block?');
+                $('.modal-header .modal-title', removeDialog).html(localisedData['remove_confirmation']);
+                $('.modal-body', removeDialog).html(localisedData['remove_block']);
                 $('.modal-footer', removeDialog).html(buttons);
 
                 $('body').undelegate('.btn_remove', 'click').delegate('.btn_remove', 'click', function () {
                     _this.parent('.user-block').remove();
                     if ($('.user-blocks .user-block').length == 0) {
-                        $('#add-user').html('add additional users now.').prev('span').removeClass('hidden');
+                        $('#add-user').html(localisedData['add_additional_users']).prev('span').removeClass('hidden');
                     }
                     removeDialog.modal('hide');
                     Registration.disableUsersSubmitButton();
@@ -319,8 +344,8 @@ function slash(value) {
             modal.on('show.bs.modal', function () {
                 var country = $('.country').val();
                 if (country == "") {
-                    $('.messages', modal).removeClass('hidden').html('Please select a Country to add Registration Agency.');
                     $('button[type="submit"]', this).addClass('hidden');
+                    $('.messages', modal).removeClass('hidden').html(localisedData['select_a_country']);
                 } else {
                     $('.form-container', modal).removeClass('hidden');
                     $('button[type="submit"]', this).removeClass('hidden');
@@ -391,18 +416,22 @@ function slash(value) {
             form.submit(function () {
                 $('button[type="submit"]', this).removeAttr('disabled');
             });
-            $('#name', form).rules('add', {required: true, messages: {required: 'Name is required.'}});
+            $('#name', form).rules('add', {required: true, messages: {required: localisedData['name_required']}});
             $('#short_form', form).rules('add', {
                 required: true,
                 abbr: true,
                 abbr_exists: true,
                 messages: {
-                    required: 'Short Form is required.',
-                    abbr: 'Short Form should be alphabetic uppercase characters.',
-                    abbr_exists: 'Registration Agency with this short form already exists.'
+                    required: localisedData['short_form_required'],
+                    abbr: localisedData['short_form_alphabetic'],
+                    abbr_exists: localisedData['registration_agency_exists']
                 }
             });
-            $('#website', form).rules('add', {required: true, url: true, messages: {required: 'Website is required.', url: 'Website is not a valid URL.'}});
+            $('#website', form).rules('add', {
+                required: true, url: true, messages: {
+                    required: localisedData['website_required'], url: localisedData['website_not_url']
+                }
+            });
 
         },
         // validations for registration form
@@ -443,26 +472,26 @@ function slash(value) {
             });
 
             /* organization validation rules */
-            $(slash('#organization[organization_name]'), form).rules('add', {required: true, messages: {required: 'Organization Name is required.'}});
-            $(slash('#organization[organization_name_abbr]'), form).rules('add', {required: true, messages: {required: 'Organization Name Abbreviation is required.'}});
-            $(slash('#organization[organization_type]'), form).rules('add', {required: true, messages: {required: 'Organization Type is required.'}});
-            $(slash('#organization[organization_address]'), form).rules('add', {required: true, messages: {required: 'Address is required.'}});
-            $(slash('#organization[country]'), form).rules('add', {required: true, messages: {required: 'Country is required.'}});
-            $(slash('#organization[organization_registration_agency]'), form).rules('add', {required: true, messages: {required: 'Organization Registration Agency is required.'}});
+            $(slash('#organization[organization_name]'), form).rules('add', {required: true, messages: {required: localisedData['org_name_required']}});
+            $(slash('#organization[organization_name_abbr]'), form).rules('add', {required: true, messages: {required: localisedData['org_name_abbrev_required']}});
+            $(slash('#organization[organization_type]'), form).rules('add', {required: true, messages: {required: localisedData['org_type_required']}});
+            $(slash('#organization[organization_address]'), form).rules('add', {required: true, messages: {required: localisedData['address_required']}});
+            $(slash('#organization[country]'), form).rules('add', {required: true, messages: {required: localisedData['country_required']}});
+            $(slash('#organization[organization_registration_agency]'), form).rules('add', {required: true, messages: {required: localisedData['org_registration_agency_required']}});
             $(slash('#organization[registration_number]'), form).rules('add', {
                 required: true,
                 regNumber: true,
-                messages: {required: 'Registration Number is required.', regNumber: 'Only -, _, letters and numbers are allowed.'}
+                messages: {required: localisedData['registration_number_required'], regNumber: localisedData['letters_and_numbers_allowed']}
             });
-            $(slash('#organization[organization_identifier]'), form).rules('add', {required: true, messages: {required: 'IATI Organizational Identifier is required.'}});
+            $(slash('#organization[organization_identifier]'), form).rules('add', {required: true, messages: {required: localisedData['iati_organisational_identifier_required']}});
 
             /* users validation rules */
-            $(slash('#users[first_name]'), form).rules('add', {required: true, messages: {required: 'First Name is required.'}});
-            $(slash('#users[last_name]'), form).rules('add', {required: true, messages: {required: 'Last Name is required.'}});
-            $(slash('#users[email]'), form).rules('add', {required: true, email: true, messages: {required: 'Email is required.'}});
-            $(slash('#users[password]'), form).rules('add', {required: true, minlength: 6, messages: {required: 'Password is required.'}});
-            $(slash('#users[confirm_password]'), form).rules('add', {required: true, equalTo: $(slash('#users[password]'), form), messages: {required: 'Confirm Password is required.'}});
-            $(slash('#users[secondary_contact]'), form).rules('add', {required: true, email: true, messages: {required: 'Secondary Contact is required.'}});
+            $(slash('#users[first_name]'), form).rules('add', {required: true, messages: {required: localisedData['first_name_required']}});
+            $(slash('#users[last_name]'), form).rules('add', {required: true, messages: {required: localisedData['last_name_required']}});
+            $(slash('#users[email]'), form).rules('add', {required: true, email: true, messages: {required: localisedData['email_required']}});
+            $(slash('#users[password]'), form).rules('add', {required: true, minlength: 6, messages: {required: localisedData['password_required']}});
+            $(slash('#users[confirm_password]'), form).rules('add', {required: true, equalTo: $(slash('#users[password]'), form), messages: {required: localisedData['confirm_password_required']}});
+            $(slash('#users[secondary_contact]'), form).rules('add', {required: true, email: true, messages: {required: localisedData['secondary_contact_required']}});
             $('.user-blocks .user-block').each(function () {
                 Registration.usersValidationRules($(this).index());
             });
@@ -472,11 +501,11 @@ function slash(value) {
         // user validations
         usersValidationRules: function (index) {
             var form = $('#from-registration');
-            $(slash('#users[user][' + index + '][username]'), form).rules('add', {required: true, messages: {required: 'Username is required.'}});
-            $(slash('#users[user][' + index + '][email]'), form).rules('add', {required: true, email: true, messages: {required: 'E-mail Address is required.'}});
-            $(slash('#users[user][' + index + '][first_name]'), form).rules('add', {required: true, messages: {required: 'First Name is required.'}});
-            $(slash('#users[user][' + index + '][last_name]'), form).rules('add', {required: true, messages: {required: 'Last Name is required.'}});
-            $(slash('#users[user][' + index + '][role]'), form).rules('add', {required: true, messages: {required: 'Permission Role is required.'}});
+            $(slash('#users[user][' + index + '][username]'), form).rules('add', {required: true, messages: {required: localisedData['username_required']}});
+            $(slash('#users[user][' + index + '][email]'), form).rules('add', {required: true, email: true, messages: {required: localisedData['email_address_required']}});
+            $(slash('#users[user][' + index + '][first_name]'), form).rules('add', {required: true, messages: {required: localisedData['first_name_required']}});
+            $(slash('#users[user][' + index + '][last_name]'), form).rules('add', {required: true, messages: {required: localisedData['last_name_required']}});
+            $(slash('#users[user][' + index + '][role]'), form).rules('add', {required: true, messages: {required: localisedData['permission_role_required']}});
         },
         // handles registration tabs
         tabs: function () {
@@ -524,7 +553,7 @@ function slash(value) {
                     try {
                         $(slash('#organization[organization_name_abbr]'), '#from-registration').rules('add', {
                             uniqueAbbr: true,
-                            messages: {uniqueAbbr: 'Organization Name Abbreviation has already been taken.'}
+                            messages: {uniqueAbbr: localisedData['org_name_abbrev_taken']}
                         });
                     } catch (e) {
                     }
@@ -643,7 +672,7 @@ function slash(value) {
                     if ($.isEmptyObject(data)) {
                         checkElem.parent().siblings('.availability-check').html('').addClass('hidden').removeClass('text-warning');
                     } else {
-                        checkElem.parent().siblings('.availability-check').html('It seems there are account(s) on Aidstream with same/similar organisation name. <a href="/find-similar-organizations" class="check_similar_org">Click here</a> to check if your organisation is already there.').removeClass('hidden').addClass('text-warning');
+                        checkElem.parent().siblings('.availability-check').html(localisedData['account_with_similar_name']).removeClass('hidden').addClass('text-warning');
                     }
                 };
                 Registration.request('/similar-organizations/' + orgName, {}, callback, 'GET');

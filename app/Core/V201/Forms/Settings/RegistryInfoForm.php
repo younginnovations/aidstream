@@ -15,8 +15,8 @@ class RegistryInfoForm extends BaseForm
                 'publish_files',
                 'choice',
                 [
-                    'label'          => 'Automatically Update the IATI Registry when publishing files:',
-                    'choices'        => ['no' => 'No', 'yes' => 'Yes'],
+                    'label'          => trans('setting.automatic_update'),
+                    'choices'        => ['no' => trans('elementForm.no'), 'yes' => trans('elementForm.yes')],
                     'expanded'       => true,
                     'default_value'  => 'no',
                     'choice_options' => [

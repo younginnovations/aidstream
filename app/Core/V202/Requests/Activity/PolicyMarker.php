@@ -39,8 +39,8 @@ class PolicyMarker extends V201PolicyMarker
 
         foreach ($formFields as $policyMarkerIndex => $policyMarker) {
             $policyMarkerForm                                                  = sprintf('policy_marker.%s', $policyMarkerIndex);
-            $messages[sprintf('%s.vocabulary_uri.url', $policyMarkerForm)]     = 'Enter valid URL. eg. http://example.com';
-            $messages[sprintf('%s.policy_marker.required', $policyMarkerForm)] = 'Policy Marker is required';
+            $messages[sprintf('%s.vocabulary_uri.url', $policyMarkerForm)]     = trans('validation.url');
+            $messages[sprintf('%s.policy_marker.required', $policyMarkerForm)] = trans('validation.required', ['attribute' => trans('element.policy_marker')]);
             $messages                                                          = array_merge(
                 $messages,
                 $this->getMessagesForNarrative($policyMarker['narrative'], $policyMarkerForm)

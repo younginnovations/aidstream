@@ -29,4 +29,11 @@ class DefaultAidType extends Request
 
         return $rules;
     }
+
+    public function messages()
+    {
+        $messages['default_aid_type.required'] = trans('validation.required', ['attribute' => trans('element.default_aid_type')]);
+
+        return $messages;
+    }
 }

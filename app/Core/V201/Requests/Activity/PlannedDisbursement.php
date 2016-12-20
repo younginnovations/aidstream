@@ -93,9 +93,9 @@ class PlannedDisbursement extends ActivityBaseRequest
         $messages = [];
         foreach ($formFields as $valueIndex => $value) {
             $valueForm                                               = sprintf('%s.value.%s', $formBase, $valueIndex);
-            $messages[sprintf('%s.amount.required', $valueForm)]     = 'Amount is Required';
-            $messages[sprintf('%s.amount.numeric', $valueForm)]      = 'Amount should be numeric';
-            $messages[sprintf('%s.value_date.required', $valueForm)] = 'Date is Required';
+            $messages[sprintf('%s.amount.required', $valueForm)]     = trans('validation.required', ['attribute' => trans('elementForm.amount')]);
+            $messages[sprintf('%s.amount.numeric', $valueForm)]      = trans('validation.numeric', ['attribute' => trans('elementForm.amount')]);
+            $messages[sprintf('%s.value_date.required', $valueForm)] = trans('validation.required', ['attribute' => trans('elementForm.date')]);
         }
 
         return $messages;

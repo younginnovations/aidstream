@@ -79,10 +79,10 @@ class RecipientCountry extends ActivityBaseRequest
 
         foreach ($formFields as $recipientCountryIndex => $recipientCountry) {
             $recipientCountryForm                                       = 'recipient_country.' . $recipientCountryIndex;
-            $messages[$recipientCountryForm . '.country_code.required'] = 'Country code field is required';
-            $messages[$recipientCountryForm . '.percentage.numeric']    = 'Percentage must be a number';
-            $messages[$recipientCountryForm . '.percentage.max']        = 'Percentage may not be greater than 100';
-            $messages[$recipientCountryForm . '.percentage.required']   = 'Percentage is required';
+            $messages[$recipientCountryForm . '.country_code.required'] = trans('validation.required', ['attribute' => trans('elementForm.country_code')]);
+            $messages[$recipientCountryForm . '.percentage.numeric']    = trans('validation.numeric', ['attribute' => trans('elementForm.percentage')]);
+            $messages[$recipientCountryForm . '.percentage.max']        = trans('validation.max.numeric', ['attribute' => trans('elementForm.percentage')]);
+            $messages[$recipientCountryForm . '.percentage.required']   = trans('validation.required', ['attribute' => trans('elementForm.percentage')]);
             $messages                                                   = array_merge(
                 $messages,
                 $this->getMessagesForNarrative(

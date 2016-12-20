@@ -7,7 +7,7 @@
     {{ header("Cache-Control: no-cache, no-store, must-revalidate")}}
     {{ header("Pragma: no-cache") }}
     {{ header("Expires: 0 ")}}
-    <title>Aidstream</title>
+    <title>@lang('title.aidstream')</title>
     <link rel="shortcut icon" type="image/png" sizes="16*16" href="images/favicon.png"/>
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/style.min.css">
@@ -19,18 +19,16 @@
         <div class="col-md-12 text-center">
             {{--<h1>Publish your Aid data in <a href="http://iatistandard.org/">IATI format</a> effortlessly</h1>--}}
 
-            <h1>Effortlessly publish your Aid data in <a href="http://iatistandard.org/">IATI format</a></h1>
+            <h1>@lang('home.effortlessly_publish_your_aid_data',['route' => 'http://iatistandard.org/'])</h1>
 
             {{--<p>AidStream is an online platform for organisations that wish to publish aid data in the International Aid--}}
             {{--Transparency Initiative(IATI) format without getting into complexities of IATI. </p>--}}
 
             <p>
-                AidStream is an online platform for organisations that wish to publish aid data in accordance with the
-                International Aid Transparency Initiative(IATI) format but want to avoid dealing with the complexities
-                of creating XML.
+                @lang('home.aidstream_is_online_platform')
             </p>
 
-            <a href="{{ url('/register') }}" class="btn btn-primary get-started-btn">Get Started</a>
+            <a href="{{ url('/register') }}" class="btn btn-primary get-started-btn">@lang('global.get_started')</a>
 
             <div class="screenshot">
                 <img src="images/screenshot.png" alt="">
@@ -48,18 +46,16 @@
                 <li><img src="images/ic-org-apt.png" alt=""></li>
             </ul>
             {{--<p>387 organisations have published their aid data. <a href="{{ url('/who-are-using') }}">{{ $organizationCount }}</a> have done it through AidStream</p>--}}
-            <p><a href="{{ url('/who-is-using') }}">{{ $organizationCount }}</a> organisations are using AidStream.</p>
+            <p><a href="{{ url('/who-is-using') }}">{{ $organizationCount }}</a> @lang('home.organisations_are_using_aidstream')</p>
         </div>
     </div>
     <div class="information-wrapper bottom-line">
         <div class="information-section">
             <div class="col-md-12 width-900">
                 <div class="left-wrapper">
-                    <h2>Less IATI XML complexities</h2>
+                    <h2>@lang('home.less_iati_xml_complexities')</h2>
 
-                    <p>Entering data in AidStream is as easy as filling out a simple form. Unsure what XML is, or how to
-                        create it? No problem! AidStream hides all the complexities and technicalities of the final XML
-                        file so that you can focus on inputting clear data in the right place.</p>
+                    <p>@lang('home.entering_data_in_aidstream')</p>
                 </div>
                 <div class="right-wrapper">
                     <img src="images/img-1.png" alt="">
@@ -69,13 +65,10 @@
         <div class="information-section">
             <div class="col-md-12 width-900">
                 <div class="left-wrapper">
-                    <h2>Easy-to-use interface</h2>
+                    <h2>@lang('home.easy_to_use_interface')</h2>
 
                     <p>
-                        AidStream has a clear, clean and easy-to-use interface which allows you to quickly add and edit
-                        activities, as well as offering you the option of importing activities in bulk. Using AidStream
-                        guarantees that your data will always be logged correctly in the right section, with no messy
-                        XML causing you to make mistakes!
+                        @lang('home.aidstream_as_a_clear')
                     </p>
                 </div>
                 <div class="right-wrapper">
@@ -86,12 +79,10 @@
         <div class="information-section">
             <div class="col-md-12 width-900">
                 <div class="left-wrapper">
-                    <h2>Publish data easily!</h2>
+                    <h2>@lang('home.publish_data_easily')</h2>
 
                     <p>
-                        AidStream uses the form you fill out to generate the necessary XML files and sends your data
-                        direct to the IATI Registry - all with a single click! All you have to do is sit back and relax
-                        - AidStream takes care of everything else.
+                        @lang('home.aidstream_uses_the_form')
                     </p>
                 </div>
                 <div class="right-wrapper">
@@ -115,11 +106,10 @@
     {{--</div>--}}
     <div class="convince-wrapper">
         <div class="col-md-12 text-center width-900">
-            <h2>Still not convinced?</h2>
+            <h2>@lang('home.still_not_convinced')</h2>
 
-            <p>Did we mention that it’s free!? You can’t go wrong - with AidStream, publishing your data to IATI is a
-                piece of cake!</p>
-            <a href="{{ url('/register') }}" class="btn btn-primary get-started-btn">Get Started</a>
+            <p>@lang('home.did_we_mention_that_free')</p>
+            <a href="{{ url('/register') }}" class="btn btn-primary get-started-btn">@lang('global.get_started')</a>
         </div>
     </div>
 </section>
@@ -132,11 +122,12 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <div class="col-md-12 text-center verification-wrapper">
                         <img src={{ url('/images/ic-sent-mail.svg') }} alt="mail" width="88" height="94">
-                        <h1>Thank You!</h1>
+                        <h1>@lang('global.thank_you')!</h1>
                         <p>
-                            An email containing your account details has been sent to the secondary or "backup" contact for your organisation,"{{ session('secondary_contact_name') }}". Please contact
-                            them directly.</p>
-                        <p>If you need any help, <a href="{{ route('contact', ['has-secondary-contact-support']) }}">contact the AidStream support team</a>.
+                            @lang('home.an_email_containing_your_account')
+                        </p>
+                        <p>
+                            @lang('home.if_you_need_any_help',['route' => route('contact', ['has-secondary-contact-support'])])
                         </p>
                     </div>
                 </div>
@@ -155,7 +146,7 @@
                 <div class="modal-body clearfix">
                     <div class="col-md-12 text-center verification-wrapper">
                         <img src={{ url('/images/ic-sent-mail.svg') }} alt="mail" width="88" height="94">
-                        <h1>Thank You!</h1>
+                        <h1>@lang('global.thank_you')!</h1>
                         <p>{!! session('message') !!}</p>
                     </div>
                 </div>
@@ -170,12 +161,12 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Email Verification</h4>
+                    <h4 class="modal-title">@lang('registration.email_verification')</h4>
                 </div>
                 <div class="modal-body clearfix">
                     <div class="col-md-12 text-center verification-wrapper">
                         <img src={{ url('/images/ic-sent-mail.svg') }} alt="mail" width="88" height="94">
-                        <h1>Thank You!</h1>
+                        <h1>@lang('global.thank_you')!</h1>
                         <p>{!! session('verification_message') !!}</p>
                     </div>
                 </div>
@@ -202,6 +193,10 @@
         if ($('.modal').length > 0) {
             $('.modal').modal('show')
         }
+
+        $('#languages').change(function () {
+            window.location.href = '/switch-language/' + $(this).val();
+        });
     });
 </script>
 </body>

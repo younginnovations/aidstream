@@ -16,7 +16,7 @@ class RecipientCountry extends BaseForm
     public function buildForm()
     {
         $this
-            ->addSelect('country_code', $this->getCodeList('Country', 'Organization'), 'Country Code', $this->addHelpText('Activity_RecipientCountry-code'), null, true)
+            ->addSelect('country_code', $this->getCodeList('Country', 'Organization'), trans('elementForm.country_code'), $this->addHelpText('Activity_RecipientCountry-code'), null, true)
             ->addPercentage($this->addHelpText('Activity_RecipientCountry-percentage'))
             ->addNarrative('narrative')
             ->addAddMoreButton('add_narrative', 'narrative')

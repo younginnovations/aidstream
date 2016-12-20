@@ -158,16 +158,19 @@ class ActivityDate extends Element
     public function messages()
     {
         $messages = [
-            'activity_date.required'               => 'Activity Date is required.',
-            'activity_date.multiple_activity_date' => 'Multiple Activity dates are not allowed.',
-            'activity_date.start_date_required'    => 'Actual Start Date or Planned Start Date is required.',
-            'activity_date.start_end_date'         => 'Actual Start Date or Planned Start Date should be before Actual End Date or Planned End Date.',
+            'activity_date.required'               => trans('validation.required', ['attribute' => trans('element.activity_date')]),
+            'activity_date.multiple_activity_date' => trans('validation.multiple_activity_date'),
+            'activity_date.start_date_required'    => trans(
+                'validation.required',
+                ['attribute' => trans('elementForm.actual_start_date') . ' ' . trans('global.or') . ' ' . trans('elementForm.actual_end_date')]
+            ),
+            'activity_date.start_end_date'         => trans('validation.start_end_date'),
         ];
 
         foreach ($this->actualDates as $index => $date) {
             foreach ($date as $key => $value) {
-                $messages['activity_date.' . $index . '.actual_date']                   = 'Actual Start Date And Actual End Date cannot exceed present date.';
-                $messages['activity_date.' . $index . '.' . $key . '.date.date_format'] = 'Activity Date must be of format Y-m-d.';
+                $messages['activity_date.' . $index . '.actual_date']                   = trans('validation.actual_date');
+                $messages['activity_date.' . $index . '.' . $key . '.date.date_format'] = trans('validation.csv_date', ['attribute' => trans('elementForm.activity_date')]);
             }
         }
 

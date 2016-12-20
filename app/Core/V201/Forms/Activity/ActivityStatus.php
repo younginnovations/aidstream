@@ -15,6 +15,6 @@ class ActivityStatus extends BaseForm
      */
     public function buildForm()
     {
-        $this->addSelect('activity_status', $this->getCodeList('ActivityStatus', 'Activity'), 'Activity Status', $this->addHelpText('Activity_ActivityStatus-code'), null, true);
+        $this->addSelect('activity_status', $this->getCodeList('ActivityStatus', 'Activity'), trans('elementForm.activity_status'), $this->addHelpText('Activity_ActivityStatus-code'), null, true);
     }
 }

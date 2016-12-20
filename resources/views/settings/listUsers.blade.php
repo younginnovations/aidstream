@@ -4,15 +4,15 @@
         <div class="panel-body panel-users-settings">
             @if (auth()->user()->isAdmin())
                 <div class="add-user-link">
-                    <a href="{{ route('admin.register-user') }}">Add a user</a>
+                    <a href="{{ route('admin.register-user') }}">@lang('global.add_a_user')</a>
                 </div>
             @endif
             <table class="table table-striped">
                 <thead>
                 <tr>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Permission</th>
+                    <th>@lang('user.name')</th>
+                    <th>@lang('user.email')</th>
+                    <th>@lang('user.permission')</th>
                     <th></th>
                 </tr>
                 </thead>
@@ -39,7 +39,7 @@
                         <td>
                             @if (auth()->user()->isAdmin() || auth()->user()->role_id == 5)
                                 @if($value->role_id != 1)
-                                    <a href="{{ url(sprintf('organization-user/%s/delete', $value->id)) }}" class="delete">Delete</a>
+                                    <a href="{{ url(sprintf('organization-user/%s/delete', $value->id)) }}" class="delete">@lang('global.delete')</a>
                                 @endif
                             @endif
                         </td>
@@ -50,9 +50,8 @@
             @else
                 <div class="text-center no-data no-user-data">
                     <div>
-                        You haven’t added any user yet.
-                        <a href="{{ route('admin.register-user') }}" class="btn btn-primary">Add a
-                            user</a>
+                        @lang('setting.you_havent_added_any_user_yet')
+                        <a href="{{ route('admin.register-user') }}" class="btn btn-primary">@lang('global.add_a_user')</a>
                     </div>
                 </div>
             @endif

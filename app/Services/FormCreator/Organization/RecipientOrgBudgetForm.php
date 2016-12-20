@@ -30,11 +30,11 @@ class RecipientOrgBudgetForm
                 'model'  => $modal,
                 'url'    => URL::route('organization.recipient-organization-budget.update', [$organizationId, '0'])
             ]
-        )->add('Update', 'submit', ['attr' => ['class' => 'btn btn-submit btn-form']])
+        )->add('Update', 'submit', ['label' => trans('global.update'), 'attr' => ['class' => 'btn btn-submit btn-form']])
             ->add('Cancel', 'static', [
                 'tag'     => 'a',
                 'label'   => false,
-                'value'   => 'Cancel',
+                'value'   =>  trans('global.cancel'),
                 'attr'    => [
                     'class' => 'btn btn-cancel',
                     'href'  => route('organization.show', $organizationId)

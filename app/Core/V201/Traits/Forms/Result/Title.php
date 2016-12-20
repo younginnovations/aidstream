@@ -15,6 +15,6 @@ trait Title
      */
     public function addTitles(array $data = [])
     {
-        return $this->addCollection('title', 'Activity\Title', '', $data);
+        return $this->addCollection('title', 'Activity\Title', '', $data, trans('elementForm.title'));
     }
 }

@@ -165,10 +165,16 @@ class Validation extends Factory
     public function getMessagesForNarrative($elementNarrative, $elementName)
     {
         $messages                                                    = [];
-        $messages[sprintf('%s.narrative.unique_lang', $elementName)] = 'Languages should be unique.';
+        $messages[sprintf('%s.narrative.unique_lang', $elementName)] = trans('validation.unique', ['attribute' => trans('elementForm.language')]);
 
         foreach ($elementNarrative as $narrativeIndex => $narrative) {
-            $messages[sprintf('%s.narrative.%s.narrative.required_with_language', $elementName, $narrativeIndex)] = 'Narrative is required with language.';
+            $messages[sprintf('%s.narrative.%s.narrative.required_with_language', $elementName, $narrativeIndex)] = trans(
+                'validation.required_with',
+                [
+                    'attribute' => trans('elementForm.narrative'),
+                    'values'    => trans('elementForm.language')
+                ]
+            );
         }
 
         return $messages;
@@ -212,7 +218,7 @@ class Validation extends Factory
     public function getMessagesForRequiredNarrative($elementNarrative, $elementName)
     {
         $messages                                                    = [];
-        $messages[sprintf('%s.narrative.unique_lang', $elementName)] = 'Languages should be unique';
+        $messages[sprintf('%s.narrative.unique_lang', $elementName)] = trans('validation.unique', ['attribute' => trans('elementForm.language')]);
 
         foreach ($elementNarrative as $narrativeIndex => $narrative) {
             if (boolval($narrative['language'])) {
@@ -220,13 +226,13 @@ class Validation extends Factory
                     '%s.narrative.%s.narrative.required_with',
                     $elementName,
                     $narrativeIndex
-                )] = 'Narrative is required with language';
+                )] = trans('validation.required_with', ['attribute' => trans('elementForm.narrative'), 'values' => trans('elementForm.language')]);
             } else {
                 $messages[sprintf(
                     '%s.narrative.%s.narrative.required',
                     $elementName,
                     $narrativeIndex
-                )] = 'Narrative is required';
+                )] = trans('validation.required', ['attribute' => trans('elementForm.narrative')]);
             }
         }
 
@@ -277,25 +283,37 @@ class Validation extends Factory
     public function getMessagesForTransactionSectorNarrative($sector, $formFields, $formBase)
     {
         $messages                                                 = [];
-        $messages[sprintf('%s.narrative.unique_lang', $formBase)] = 'Languages should be unique.';
+        $messages[sprintf('%s.narrative.unique_lang', $formBase)] = trans('validation.unique', ['attribute' => trans('elementForm.language')]);
         foreach ($formFields as $narrativeIndex => $narrative) {
             $messages[sprintf(
                 '%s.narrative.%s.narrative.required_with_language',
                 $formBase,
                 $narrativeIndex
-            )] = 'Narrative is required with language.';
+            )] = trans('validation.required_with', ['attribute' => trans('elementForm.narrative'), 'values' => trans('elementForm.language')]);
 
             if ($narrative['narrative'] != "") {
-                $messages[sprintf('%s.sector_vocabulary.required_with', $formBase)] = 'Sector Vocabulary is required with Narrative.';
+                $messages[sprintf('%s.sector_vocabulary.required_with', $formBase)] = trans(
+                    'validation.required_with',
+                    ['attribute' => trans('elementForm.sector_vocabulary'), 'values' => trans('elementForm.narrative')]
+                );
                 if ($sector['sector_vocabulary'] == 1 || $sector['sector_vocabulary'] == 2) {
                     if ($sector['sector_vocabulary'] == 1) {
-                        $messages[sprintf('%s.sector_code.required_with', $formBase)] = 'Sector Code is required with Narrative.';
+                        $messages[sprintf('%s.sector_code.required_with', $formBase)] = trans(
+                            'validation.required_with',
+                            ['attribute' => trans('elementForm.sector_code'), 'values' => trans('elementForm.narrative')]
+                        );
                     }
                     if ($sector['sector_vocabulary'] == 2) {
-                        $messages[sprintf('%s.sector_category_code.required_with', $formBase)] = 'Sector Code is required with Narrative.';
+                        $messages[sprintf('%s.sector_category_code.required_with', $formBase)] = trans(
+                            'validation.required_with',
+                            ['attribute' => trans('elementForm.sector_code'), 'values' => trans('elementForm.narrative')]
+                        );
                     }
                 } else {
-                    $messages[sprintf('%s.sector_text.required_with', $formBase)] = 'Sector Code is required with Narrative.';
+                    $messages[sprintf('%s.sector_text.required_with', $formBase)] = trans(
+                        'elementForm.required_with',
+                        ['attribute' => trans('elementForm.sector_code'), 'values' => trans('elementForm.narrative')]
+                    );
                 }
             }
         }
@@ -350,8 +368,8 @@ class Validation extends Factory
     {
         $messages = [];
         foreach ($formFields as $periodStartKey => $periodStartVal) {
-            $messages[$formBase . '.period_start.' . $periodStartKey . '.date.required'] = 'Period Start is required';
-            $messages[$formBase . '.period_end.' . $periodStartKey . '.date.date']       = 'Period Start is not a valid date.';
+            $messages[$formBase . '.period_start.' . $periodStartKey . '.date.required'] = trans('validation.required', trans('elementForm.period_start'));
+            $messages[$formBase . '.period_end.' . $periodStartKey . '.date.date']       = trans('validation.date', trans('elementForm.period_start'));
         }
 
         return $messages;
@@ -392,9 +410,12 @@ class Validation extends Factory
         $messages = [];
 
         foreach ($formFields as $periodEndKey => $periodEndVal) {
-            $messages[$formBase . '.period_end.' . $periodEndKey . '.date.required'] = 'Period End is required.';
-            $messages[$formBase . '.period_end.' . $periodEndKey . '.date.date']     = 'Period End is not a valid date.';
-            $messages[$formBase . '.period_end.' . $periodEndKey . '.date.after']    = 'Period End must be a date after Period Start';
+            $messages[$formBase . '.period_end.' . $periodEndKey . '.date.required'] = trans('validation.required', ['attribute' => trans('elementForm.period_end')]);
+            $messages[$formBase . '.period_end.' . $periodEndKey . '.date.date']     = trans('validation.date', ['attribute' => trans('elementForm.period_end')]);
+            $messages[$formBase . '.period_end.' . $periodEndKey . '.date.after']    = trans(
+                'validation.after',
+                ['attribute' => trans('elementForm.period_end'), 'date' => trans('elementForm.period_start')]
+            );
         }
 
         return $messages;
@@ -402,7 +423,6 @@ class Validation extends Factory
 
     /**
      * Get distinct errors from a list of errors.
-     *
      * @param $errors
      * @return mixed
      */

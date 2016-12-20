@@ -1,6 +1,6 @@
 @extends('app')
 
-@section('title', 'Document Link')
+@section('title', trans('title.document_link'))
 
 @section('content')
     <div class="container main-container">
@@ -9,11 +9,11 @@
             <div class="col-xs-9 col-md-9 col-lg-9 content-wrapper">
                 @include('includes.response')
                 <div class="panel-content-heading">
-                    <div><span>Document Link</span>
-                    <div class="panel-action-btn">
-                        <a href="{{route('organization.show', $orgId)}}" class="btn btn-primary">View Organisation Data
-                        </a>
-                    </div>
+                    <div><span>@lang('element.document_link')</span>
+                        <div class="panel-action-btn">
+                            <a href="{{route('organization.show', $orgId)}}" class="btn btn-primary">@lang('global.view_organisation_data')
+                            </a>
+                        </div>
                     </div>
                 </div>
                 <div class="col-xs-12 col-md-8 col-lg-8 element-content-wrapper">

@@ -226,7 +226,10 @@ class AdminController extends Controller
         }
 
         $user     = $this->user->findOrFail($userId);
-        $response = ($user->delete($user)) ? ['type' => 'success', 'code' => ['deleted', ['name' => 'User']]] : ['type' => 'danger', 'code' => ['delete_failed', ['name' => 'user']]];
+        $response = ($user->delete($user)) ? ['type' => 'success', 'code' => ['deleted', ['name' => trans('global.user')]]] : [
+            'type' => 'danger',
+            'code' => ['delete_failed', ['name' => trans('global.user')]]
+        ];
         $this->dbLogger->activity("admin.user_deleted", ['orgId' => $this->org_id, 'userId' => $userId]);
 
         return redirect()->back()->withResponse($response);
@@ -262,7 +265,10 @@ class AdminController extends Controller
         $input          = Input::all();
         $user           = $this->user->findOrFail($userId);
         $user->password = bcrypt($input['password']);
-        $response       = ($user->save()) ? ['type' => 'success', 'code' => ['updated', ['name' => 'Password']]] : ['type' => 'danger', 'code' => ['update_failed', ['name' => 'Password']]];
+        $response       = ($user->save()) ? ['type' => 'success', 'code' => ['updated', ['name' => trans('global.password')]]] : [
+            'type' => 'danger',
+            'code' => ['update_failed', ['name' => trans('global.password')]]
+        ];
 
         return redirect()->route('admin.list-users')->withResponse($response);
     }

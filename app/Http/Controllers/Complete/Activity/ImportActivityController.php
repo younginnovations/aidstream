@@ -53,7 +53,7 @@ class ImportActivityController extends Controller
         session()->forget('activities');
         $organization = $this->organizationManager->getOrganization($this->organizationId);
         if (!isset($organization->reporting_org[0])) {
-            $response = ['type' => 'warning', 'code' => ['settings', ['name' => 'activity']]];
+            $response = ['type' => 'warning', 'code' => ['settings', ['name' => trans('global.activity')]]];
 
             return redirect('/settings')->withResponse($response);
         }
@@ -73,7 +73,7 @@ class ImportActivityController extends Controller
         $this->authorize('add_activity', $organization);
 
         if (!isset($organization->reporting_org[0])) {
-            $response = ['type' => 'warning', 'code' => ['settings', ['name' => 'activity']]];
+            $response = ['type' => 'warning', 'code' => ['settings', ['name' => trans('global.activity')]]];
 
             return redirect('/settings')->withResponse($response);
         }
@@ -83,10 +83,10 @@ class ImportActivityController extends Controller
 
         if ($activities === false) {
             return redirect()->route('import-activity.index')->withResponse(
-                ['type' => 'warning', 'code' => ['message', ['message' => 'Uploaded csv file doesn\'t match with any template listed below.']]]
+                ['type' => 'warning', 'code' => ['message', ['message' => trans('error.header_mismatch')]]]
             );
         } elseif (!$activities) {
-            return redirect()->route('import-activity.index')->withResponse(['type' => 'warning', 'code' => ['message', ['message' => 'Couldn\'t find activities to be imported.']]]);
+            return redirect()->route('import-activity.index')->withResponse(['type' => 'warning', 'code' => ['message', ['message' => trans('error.activities_not_found')]]]);
         }
         $duplicateIdentifiers = array_pop($activities);
 
@@ -102,7 +102,7 @@ class ImportActivityController extends Controller
         $activities = request()->get('activities');
 
         if (!$activities) {
-            $response = ['type' => 'warning', 'code' => ['message', ['message' => 'Please select at least one activity.']]];
+            $response = ['type' => 'warning', 'code' => ['message', ['message' => trans('success.select_one_activity')]]];
 
             return redirect()->back()->withResponse($response);
         } elseif (!$this->importActivityManager->importActivities($activities)) {

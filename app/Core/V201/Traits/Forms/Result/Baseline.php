@@ -14,6 +14,6 @@ trait Baseline
      */
     public function addBaselines()
     {
-        return $this->addCollection('baseline', 'Activity\Baseline');
+        return $this->addCollection('baseline', 'Activity\Baseline', '', [], trans('elementForm.baseline'));
     }
 }

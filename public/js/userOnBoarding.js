@@ -1,67 +1,83 @@
 var UserOnBoarding = {
+    callAsync: function (url, methodType) {
+        return $.ajax({
+            url: url,
+            type: methodType
+        });
+    },
+    localisedFile: '',
+    loadedLocalisedFile: false,
+    getLocalisedText: function () {
+        this.callAsync('/onBoarding/localisedText', 'get').success(function (data) {
+            UserOnBoarding.localisedFile = JSON.parse(data);
+            UserOnBoarding.loadedLocalisedFile = true;
+            UserOnBoarding.addHintLabel();
+            UserOnBoarding.dashboardTour();
+        });
+    },
     addHintLabel: function () {
         $("[data-step='2']").attr({
-            'data-hint': "<p>Click here to view the list of Activities you have added</p>" +
-            "<a href='#' class='pull-left skip-tour' onclick='skip(2)'>Skip Dashboard Tour</a>" +
-            "<button class='pull-right nextBtn' onclick='goNext(3)'>Next</button>",
+            'data-hint': "<p>" + this.localisedFile["step2"] + "</p>" +
+            "<a href='#' class='pull-left skip-tour' onclick='skip(2)'>" + this.localisedFile["skip"] + "</a>" +
+            "<button class='pull-right nextBtn' onclick='goNext(3)'>" + this.localisedFile["next"] + "</button>",
             'data-position': 'right'
         });
 
         $("[data-step='0']").attr({
-            'data-hint': "<p>Hover over here to get options to add an activity</p>" +
-            "<a href='#' class='pull-left skip-tour' onclick='skip(0)'>Skip Dashboard Tour</a>" +
-            "<button class='pull-right nextBtn' onclick='goNext(2)'>Next</button>",
+            'data-hint': "<p>" + this.localisedFile["step0"] + "</p>" +
+            "<a href='#' class='pull-left skip-tour' onclick='skip(0)'>" + this.localisedFile["skip"] + "</a>" +
+            "<button class='pull-right nextBtn' onclick='goNext(2)'>" + this.localisedFile["next"] + "</button>",
             'data-position': 'top-left'
         });
 
         $("[data-step='3']").attr({
-            'data-hint': "<p>Click here to view your organisation's data which you can publish/update to the IATI Registry</p>" +
-            "<a href='#' class='pull-left skip-tour' onclick='skip(3)'>Skip Dashboard Tour</a>" +
-            "<button class='pull-right nextBtn' onclick='goNext(4)'>Next</button>",
+            'data-hint': "<p>" + this.localisedFile["step3"] + "</p>" +
+            "<a href='#' class='pull-left skip-tour' onclick='skip(3)'>" + this.localisedFile["skip"] + "</a>" +
+            "<button class='pull-right nextBtn' onclick='goNext(4)'>" + this.localisedFile["next"] + "</button>",
             'data-position': 'right'
         });
 
         $("[data-step='4']").attr({
-            'data-hint': "<p>Click here to view your published activity and organisation data files.</p>" +
-            "<a href='#' class='pull-left skip-tour' onclick='skip(4)'>Skip Dashboard Tour</a>" +
-            "<button class='pull-right nextBtn' onclick='goNext(5)'>Next</button>",
+            'data-hint': "<p>" + this.localisedFile["step4"] + "</p>" +
+            "<a href='#' class='pull-left skip-tour' onclick='skip(4)'>" + this.localisedFile["skip"] + "</a>" +
+            "<button class='pull-right nextBtn' onclick='goNext(5)'>" + this.localisedFile["next"] + "</button>",
             'data-position': 'right'
         });
 
         $("[data-step='5']").attr({
-            'data-hint': "<p>Click here to view all the documents you have uploaded from document link in the activities</p>" +
-            "<a href='#' class='pull-left skip-tour' onclick='skip(5)'>Skip Dashboard Tour</a>" +
-            "<button class='pull-right nextBtn' onclick='goNext(6)'>Next</button>",
+            'data-hint': "<p>" + this.localisedFile["step5"] + "</p>" +
+            "<a href='#' class='pull-left skip-tour' onclick='skip(5)'>" + this.localisedFile["skip"] + "</a>" +
+            "<button class='pull-right nextBtn' onclick='goNext(6)'>" + this.localisedFile["next"] + "</button>",
             'data-position': 'right'
         });
 
         $("[data-step='6']").attr({
-            'data-hint': "<p>Click here to get download options for your data on AidStream</p>" +
-            "<a href='#' class='pull-left skip-tour' onclick='skip(6)'>Skip Dashboard Tour</a>" +
-            "<button class='pull-right nextBtn' onclick='goNext(7)'>Next</button>",
+            'data-hint': "<p>" + this.localisedFile["step6"] + "</p>" +
+            "<a href='#' class='pull-left skip-tour' onclick='skip(6)'>" + this.localisedFile["skip"] + "</a>" +
+            "<button class='pull-right nextBtn' onclick='goNext(7)'>" + this.localisedFile["next"] + "</button>",
             'data-position': 'right'
         });
 
         var nextStep = (roleId == 1) ? 8 : 1;
         $("[data-step='7']").attr({
-            'data-hint': "<p>Click here to view the settings of your organisation. Only the users with Administrator level permission can edit settings</p>" +
-            "<a href='#' class='pull-left skip-tour' onclick='skip(7)'>Skip Dashboard Tour</a>" +
-            "<button class='pull-right nextBtn' onclick='goNext(" + nextStep + ")'>Next</button>",
+            'data-hint': "<p>" + this.localisedFile["step7"] + "</p>" +
+            "<a href='#' class='pull-left skip-tour' onclick='skip(7)'>" + this.localisedFile["skip"] + "</a>" +
+            "<button class='pull-right nextBtn' onclick='goNext(" + nextStep + ")'>" + this.localisedFile["next"] + "</button>",
             'data-position': 'right'
         });
 
         if (roleId == 1) {
             $("[data-step='8']").attr({
-                'data-hint': "<p>Click here to view the changes made by users</p>" +
-                "<a href='#' class='pull-left skip-tour' onclick='skip(8)'>Skip Dashboard Tour</a>" +
-                "<button class='pull-right nextBtn' onclick='goNext(1)'>Next</button>",
+                'data-hint': "<p>" + this.localisedFile["step8"] + "</p>" +
+                "<a href='#' class='pull-left skip-tour' onclick='skip(8)'>" + this.localisedFile["skip"] + "</a>" +
+                "<button class='pull-right nextBtn' onclick='goNext(1)'>" + this.localisedFile["next"] + "</button>",
                 'data-position': 'right'
             });
         }
 
         $("[data-step='1']").attr({
-            'data-hint': "<p>Hover over here and click on “My Profile” to go your profile page</p>" +
-            "<button class='pull-left nextBtn closeBtn' onclick='skip()'>Complete tour</button>",
+            'data-hint': "<p>" + this.localisedFile["step1"] + "</p>" +
+            "<button class='pull-left nextBtn closeBtn' onclick='skip()'>" + this.localisedFile["complete"] + "</button>",
             'data-position': 'bottom-right'
         });
     },
@@ -77,12 +93,18 @@ var UserOnBoarding = {
     },
     dashboardTour: function () {
         var intro = introJs();
-
         intro.setOptions({
             hintButtonLabel: '',
             hintPosition: 'top-left'
         });
         intro.addHints();
+        if (hintStatus == 0) {
+            $('.introjs-hints').css('visibility', 'hidden');
+        }
+
+        if (completedTour == 0 && hintStatus == 1 && window.location.pathname == '/activity') {
+            $("[data-step='0']").trigger('click');
+        }
     },
     finalHints: function () {
         var intro = introJs();
@@ -91,7 +113,7 @@ var UserOnBoarding = {
                 {
                     element: '#admin-dropdown',
                     intro: "<div>" +
-                    "<p>You can always start the Dashboard tour again by turning this toggle on</p>" +
+                    "<p>" + this.localisedFile["final"] + "</p>" +
                     "<button class='pull-left nextBtn closeBtn' onclick='endTour()'>Close</button> </div>",
                     position: 'left'
                 }
@@ -113,41 +135,41 @@ var UserOnBoarding = {
                 {
                     element: '#publishing_info1',
                     intro: '' +
-                    '<div class="intro-title text-center">AidStream required your organisation&rsquo;s Publisher ID and API key to be able to publish your data to the IATI registry.</div>' +
-                    '<a id="btnInfo1" class="btn update-next">Update and go to next step</a>' +
-                    '<a id="info1" class="setup-later">I&rsquo;ll set this up later</a>',
+                    '<div class="intro-title text-center">' + this.localisedFile['publishingInfo1'] + '</div>' +
+                    '<a id="btnInfo1" class="btn update-next">' + this.localisedFile['updateAndGo'] + '</a>' +
+                    '<a id="info1" class="setup-later">' + this.localisedFile['setUpLater'] + '</a>',
                     position: 'bottom-middle-aligned'
                 },
                 {
                     element: '#publishing_info2',
                     intro: '' +
-                    '<div class="intro-title text-center">The publishing type is “Unsegmented” by default.All the activities will be published in a single file to the IATI registry.</div>' +
-                    '<a id="btnInfo2" class="btn update-next">Update and go to next step</a>' +
-                    '<a id="info2" class="setup-later">I&rsquo;ll set this up later</a>',
+                    '<div class="intro-title text-center">' + this.localisedFile['publishingInfo2'] + '</div>' +
+                    '<a id="btnInfo2" class="btn update-next">' + this.localisedFile['updateAndGo'] + '</a>' +
+                    '<a id="info2" class="setup-later">' + this.localisedFile['setUpLater'] + '</a>',
                     position: 'bottom-middle-aligned'
                 },
                 {
                     element: '#publishing_info3',
                     intro: '' +
-                    '<div class="intro-title text-center">By default, when you update your data, the changes are not automatically reflected on the IATI registry. Select “Yes” to be let AidStream automatically update your data on the registry.</div>' +
-                    '<a id="btnInfo3" class="btn update-next">Update and go to next step</a>' +
-                    '<a id="info3" class="setup-later">I&rsquo;ll set this up later</a>',
+                    '<div class="intro-title text-center">' + this.localisedFile['publishingInfo3'] + '</div>' +
+                    '<a id="btnInfo3" class="btn update-next">' + this.localisedFile['updateAndGo'] + '</a>' +
+                    '<a id="info3" class="setup-later">' + this.localisedFile['setUpLater'] + '</a>',
                     position: 'top'
                 },
                 {
                     element: '#activity-elements-checklist-wrapper',
                     intro: '' +
-                    '<div class="intro-title">On AidStream some of the elements are required for an activity. These elements are <span class="disabled-check-img"></span> checked in the list below and disabled. You can always <span class="add-check-img"></span> check other elements to add their information in your activities.</div>' +
-                    '<a id="btnInfo4" class="btn update-next">Update and go to next step</a>' +
-                    '<a id="info4" class="setup-later">I&rsquo;ll set this up later</a>',
+                    '<div class="intro-title">' + this.localisedFile['activityElementsChecklist'] + '</div>' +
+                    '<a id="btnInfo4" class="btn update-next">' + this.localisedFile['updateAndGo'] + '</a>' +
+                    '<a id="info4" class="setup-later">' + this.localisedFile['setUpLater'] + '</a>',
                     position: 'bottom-middle-aligned'
                 },
                 {
                     element: '#default_values',
                     intro: '' +
-                    '<div class="intro-title">These default values are used throughout  the AidStream for your organisation and activities information.</div>' +
+                    '<div class="intro-title">' + this.localisedFile['defaultValues'] + '</div>' +
                     '<a id="btnInfo5" class="btn update-next">Finish set up process</a>' +
-                    '<a id="info5" class="setup-later">I&rsquo;ll set this up later</a>',
+                    '<a id="info5" class="setup-later">' + this.localisedFile['setUpLater'] + '</a>',
                     position: 'bottom-middle-aligned'
                 }
             ],
@@ -301,8 +323,8 @@ var UserOnBoarding = {
             }
         });
 
-        $('#default_currency', form).rules('add', {required: true, messages: {required: 'Default Currency is required.'}});
-        $('#default_language', form).rules('add', {required: true, messages: {required: 'Default Language is required.'}});
+        $('#default_currency', form).rules('add', {required: true, messages: {required: this.localisedFile['defaultCurrency']}});
+        $('#default_language', form).rules('add', {required: true, messages: {required: this.localisedFile['defaultLanguage']}});
     },
     validatePublishingInfo: function () {
         var form = $('form');
@@ -319,7 +341,7 @@ var UserOnBoarding = {
             }
         });
 
-        $('#publisher_id', form).rules('add', {required: true, messages: {required: 'Publisher id is required.'}});
-        $('#api_id', form).rules('add', {required: true, messages: {required: 'Api Id is required.'}});
+        $('#publisher_id', form).rules('add', {required: true, messages: {required: this.localisedFile['publisherId']}});
+        $('#api_id', form).rules('add', {required: true, messages: {required: this.localisedFile['apiId']}});
     }
 };

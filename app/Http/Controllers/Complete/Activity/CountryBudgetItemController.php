@@ -50,7 +50,7 @@ class CountryBudgetItemController extends Controller
      */
     public function index($id)
     {
-        $activityData  = $this->activityManager->getActivityData($id);
+        $activityData = $this->activityManager->getActivityData($id);
 
         if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
@@ -71,7 +71,7 @@ class CountryBudgetItemController extends Controller
      */
     public function update($id, Request $request, CountryBudgetItemRequestManager $countryBudgetItemRequestManager)
     {
-        $activityData  = $this->activityManager->getActivityData($id);
+        $activityData = $this->activityManager->getActivityData($id);
 
         if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
@@ -85,11 +85,11 @@ class CountryBudgetItemController extends Controller
         }
         if ($this->countryBudgetItemManager->update($countryBudgetItems, $activityData)) {
             $this->activityManager->resetActivityWorkflow($id);
-            $response = ['type' => 'success', 'code' => ['updated', ['name' => 'Country Budget Item']]];
+            $response = ['type' => 'success', 'code' => ['updated', ['name' => trans('element.country_budget_items')]]];
 
             return redirect()->to(sprintf('/activity/%s', $id))->withResponse($response);
         }
-        $response = ['type' => 'danger', 'code' => ['update_failed', ['name' => 'Country Budget Item']]];
+        $response = ['type' => 'danger', 'code' => ['update_failed', ['name' => trans('element.country_budget_items')]]];
 
         return redirect()->back()->withInput()->withResponse($response);
     }
