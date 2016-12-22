@@ -331,7 +331,8 @@ class ActivityRepository
                 'budget'                     => (array_key_exists('budget', $activityData) ? $activityData['budget'] : null),
                 'activity_scope'             => (array_key_exists('activity_scope', $activityData) ? $activityData['activity_scope'] : null),
                 'default_field_values'       => $defaultFieldValues,
-                'contact_info'               => getVal($activityData, ['contact_info'], null)
+                'contact_info'               => getVal($activityData, ['contact_info'], null),
+                'related_activity'           => getVal($activityData, ['related_activity'], null)
             ]
         );
     }
@@ -344,8 +345,8 @@ class ActivityRepository
      */
     protected function setDefaultFieldValues($defaultFieldValues, $organizationId)
     {
-        $settings                                          = $this->settings->where('organization_id', $organizationId)->first();
-        $settingsDefaultFieldValues                        = $settings->default_field_values;
+        $settings                   = $this->settings->where('organization_id', $organizationId)->first();
+        $settingsDefaultFieldValues = $settings->default_field_values;
 
         foreach ($defaultFieldValues as $index => $value) {
             $settingsDefaultFieldValues[0]['default_currency'] = (($currency = getVal((array) $defaultFieldValues, [$index, 'default_currency'])) == '')
