@@ -621,7 +621,7 @@ function getBudgetPeriod(array $budget)
  * @param       $type
  * @return string
  */
-function getDisbursementOrganizationDetails(array  $disbursement, $type)
+function getDisbursementOrganizationDetails(array $disbursement, $type)
 {
     $organization = getVal($disbursement, [$type, 0], []);
     $ref          = getVal($organization, ['ref']);
@@ -788,6 +788,10 @@ function getLocationRef($type, $target)
     return $locationRef;
 }
 
+/**
+ * @param $target
+ * @return array|string
+ */
 function getDimension($target)
 {
     $dimensions = [];
@@ -961,7 +965,7 @@ function getDocumentLinkLanguages(array $languages)
  * @param array $orgName
  * @return string
  */
-function getFirstOrgName(array  $orgName)
+function getFirstOrgName(array $orgName)
 {
     $name     = checkIfEmpty($orgName[0]['narrative']);
     $language = checkIfEmpty(getLanguage($orgName[0]['language']));
@@ -1072,6 +1076,10 @@ function getSectorStructure($sector)
     ];
 }
 
+
+/**
+ * @return bool
+ */
 function xmlImportIsStarted()
 {
     $filePath = storage_path('xmlImporter/tmp/file/' . session('org_id') . '/' . auth()->user()->id . '/status.json');
@@ -1081,5 +1089,55 @@ function xmlImportIsStarted()
     }
 
     return false;
+}
+
+
+/**
+ * Provides sector name
+ *
+ * @param array $sector
+ * @return mixed
+ */
+function getSectorName(array $sector)
+{
+    $codeNameHelper = app()->make('App\Helpers\GetCodeName');
+
+    if ($sector['sector_vocabulary'] == 1) {
+        return $codeNameHelper->getCodeNameOnly('Sector', getVal($sector, ['sector_code'], ''), -8);
+    } elseif ($sector['sector_vocabulary'] == 2) {
+        return $codeNameHelper->getCodeNameOnly('Sector', getVal($sector, ['sector_category_code'], ''), -5);
+    }
+
+    return $codeNameHelper->getCodeNameOnly('SectorVocabulary', getVal($sector, ['sector_vocabulary']));
+}
+
+/**
+ * Provides Sector codes
+ *
+ * @param array $sector
+ * @return string
+ */
+function getSectorCode(array $sector)
+{
+    if ($sector['sector_vocabulary'] == 1) {
+        return getVal($sector, ['sector_code'], '');
+    } elseif ($sector['sector_vocabulary'] == 2) {
+        return getVal($sector, ['sector_category_code'], '');
+    }
+
+    return getVal($sector, ['sector_text'], '');
+
+}
+
+/**
+ * Returns formatted date
+ *
+ * @param $format
+ * @param $date
+ * @return false|string
+ */
+function dateFormat($format = 'M d, Y', $date)
+{
+    return date($format, strtotime($date));
 }
 

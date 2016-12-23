@@ -23,7 +23,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $organizationCount = $this->organizationCount->initializeOrganizationQueryBuilder()->get()->count();
+        $organizationCount = $this->organizationCount->organizationQueryBuilder()->get()->count();
 
         return view('home', compact('organizationCount'));
     }

@@ -1,5 +1,6 @@
 <?php namespace App\Services\Workflow;
 
+use App\Services\PerfectViewer\PerfectViewerManager;
 use Exception;
 use Psr\Log\LoggerInterface;
 use App\Models\Activity\Activity;
@@ -52,6 +53,11 @@ class WorkflowManager
     protected $twitter;
 
     /**
+     * @var PerfectViewerManager
+     */
+    protected $perfectActivity;
+
+    /**
      * WorkflowManager constructor.
      * @param OrganizationManager      $organizationManager
      * @param ActivityManager          $activityManager
@@ -60,6 +66,7 @@ class WorkflowManager
      * @param Publisher                $publisher
      * @param LoggerInterface          $logger
      * @param TwitterAPI               $twitter
+     * @param PerfectViewerManager     $perfectActivityViewerManager
      */
     public function __construct(
         OrganizationManager $organizationManager,
@@ -68,7 +75,8 @@ class WorkflowManager
         OrganizationDataProvider $organizationDataProvider,
         Publisher $publisher,
         LoggerInterface $logger,
-        TwitterAPI $twitter
+        TwitterAPI $twitter,
+        PerfectViewerManager $perfectActivityViewerManager
     ) {
         $this->organizationManager      = $organizationManager;
         $this->activityManager          = $activityManager;
@@ -77,6 +85,7 @@ class WorkflowManager
         $this->publisher                = $publisher;
         $this->logger                   = $logger;
         $this->twitter                  = $twitter;
+        $this->perfectActivity          = $perfectActivityViewerManager;
     }
 
     /**
@@ -123,6 +132,7 @@ class WorkflowManager
      */
     public function publish($activity, array $details)
     {
+
         try {
             $organization = $activity->organization;
             $settings     = $organization->settings;
@@ -145,6 +155,8 @@ class WorkflowManager
                 $this->activityManager->activityInRegistry($activity);
                 $this->twitter->post($organization->settings, $organization);
             }
+
+            $this->perfectActivity->createSnapshot($activity);
 
             $this->update($details, $activity);
 
