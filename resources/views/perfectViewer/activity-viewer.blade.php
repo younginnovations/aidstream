@@ -71,7 +71,7 @@
                     <div class="activity-iati-info">
                         <div class="pull-left iati-identifier-wrapper">IATI Identifier:
                             <span class="iati-identifier">
-                                {{ getVal($activity, [0, 'published_data', 'identifier', 'activity_identifier'], '') }}
+                                {{ getVal($activity, [0, 'published_data', 'identifier', 'iati_identifier_text'], '') }}
                                     </span>
                         </div>
                         <div class="pull-right activity-publish-state">
@@ -206,7 +206,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach(getVal($activity, [0, 'published_data', 'transactions'], []) as $index => $transaction)
+                        @foreach($transactions as $index => $transaction)
                             <tr>
                                 <td>
                                     <span class="transaction-value">
@@ -249,7 +249,7 @@
                     <div class="budget-content">
                         <div class="pull-left total-budget">
                             <strong>
-                                {{ round(getVal($activity, [0, 'published_data', 'totalBudget', 'value'], 0), 3) }}
+                                {{ number_format(round(getVal($activity, [0, 'published_data', 'totalBudget', 'value'], 0), 2)) }}
                             </strong>
                             <span class="currency">
                                 USD
