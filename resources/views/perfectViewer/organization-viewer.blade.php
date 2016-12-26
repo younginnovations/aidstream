@@ -76,25 +76,25 @@
                         <li>
                             <h4>Total Commitments</h4>
                             <span>
-                                ${{round(getVal($organizations, ['transaction_totals', 'total_commitments'], 0),3)}}
+                                ${{number_format(round(getVal($organizations, ['transaction_totals', 'total_commitments'], 0),2))}}
                             </span>
                         </li>
                         <li>
                             <h4>Total Disbursements</h4>
                             <span>
-                                ${{round(getVal($organizations, ['transaction_totals', 'total_disbursements'], 0),3)}}
+                                ${{number_format(round(getVal($organizations, ['transaction_totals', 'total_disbursements'], 0),2))}}
                             </span>
                         </li>
                         <li>
                             <h4>Total Expenditures</h4>
                             <span>
-                                ${{round(getVal($organizations, ['transaction_totals', 'total_expenditures'], 0),3)}}
+                                ${{number_format(round(getVal($organizations, ['transaction_totals', 'total_expenditures'], 0),2))}}
                             </span>
                         </li>
                         <li>
                             <h4>Total Incoming Funds</h4>
                             <span>
-                                ${{round(getVal($organizations, ['transaction_totals', 'total_incoming_funds'], 0),3)}}
+                                ${{number_format(round(getVal($organizations, ['transaction_totals', 'total_incoming_funds'], 0),2))}}
                             </span>
                         </li>
                     </ul>
@@ -109,23 +109,14 @@
                                 <div class="col-xs-12 col-sm-9 col-md-9 pull-left activity-info-wrapper">
                                     <h3 class="activity-name">
                                         {{getVal($activity, ['published_data', 'title', 0, 'narrative'], 'Not Available')}}
-                                    </h3>
-                                    <div class="activity-publish-state">
                                         @if(getVal($activity, ['activity_in_registry'], null))
-                                            <span class="pull-left published-in-iati">
-                                        Registered in IATI
-                                    </span>
-                                        @else
-                                            <span class="pull-left unpublished-in-iati">
-                                        Not Published in IATI
-                                    </span>
+                                            <img src="{{asset('images/ic-iati-logo.png')}}" alt="IATI" width="20" height="19">
                                         @endif
-                                        <img src="{{asset('images/ic-iati-logo.png')}}" alt="IATI" width="20" height="19">
-                                    </div>
+                                    </h3>
                                     @if(getVal($activity, ['published_data', 'identifier', 'activity_identifier'], null))
                                         <div class="iati-identifier-wrapper">IATI Identifier:
                                             <span class="iati-identifier">
-                                                {{getVal($activity, ['published_data', 'identifier', 'activity_identifier'], '')}}
+                                                {{getVal($activity, ['published_data', 'identifier', 'iati_identifier_text'], '')}}
                                         </span>
                                         </div>
                                     @endif
@@ -169,9 +160,9 @@
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-sm-3 col-md-3 pull-right total-budget-wrapper">
-                                        <span>Total Budget</span>
-                                        <span class="total-budget-amount">{{round(getVal($activity, ['published_data', 'totalBudget', 'value'], 0), 3)}}</span>
-                                        <span class="currency">USD</span>
+                                    <span>Total Budget</span>
+                                    <span class="total-budget-amount">{{number_format(round(getVal($activity, ['published_data', 'totalBudget', 'value'], 0), 2))}}</span>
+                                    <span class="currency">USD</span>
                                 </div>
                             </a>
                         </li>

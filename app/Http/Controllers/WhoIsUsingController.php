@@ -104,7 +104,11 @@ class WhoIsUsingController extends Controller
 
         $activity = $this->filterDescription($activity);
 
-        return view('perfectViewer.activity-viewer', compact('organization', 'activity', 'user', 'recipientCountries', 'defaultFieldValues'));
+        $transactions = array_reverse(array_sort(getVal($activity, [0, 'published_data', 'transactions'], []), function($value) {
+            return getVal($value, ['transaction', 'transaction_date', 0, 'date'], '');
+        }));
+
+        return view('perfectViewer.activity-viewer', compact('organization', 'activity', 'user', 'recipientCountries', 'defaultFieldValues', 'transactions'));
     }
 
     /**

@@ -337,7 +337,11 @@ footer {
         width: 100%;
         height: 100%; }
 
-.org_list label {
+.org_list a label {
+  color: rgba(72, 72, 72, 0.7);
+  font-weight: normal;
+  line-height: normal; }
+.org_list a img + label {
   display: none; }
 
 .about-wrapper .screenshot {
@@ -1174,7 +1178,8 @@ footer {
 
 .activity-description p {
   line-height: 22px;
-  overflow: hidden; }
+  overflow: hidden;
+  max-height: 64px; }
 .activity-description .show-more {
   background: #f5f5f5;
   border: 1px solid #e5e5e5;
