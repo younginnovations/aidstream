@@ -339,7 +339,8 @@ footer {
 
 .org_list a label {
   color: rgba(72, 72, 72, 0.7);
-  font-weight: normal; }
+  font-weight: normal;
+  line-height: normal; }
 .org_list a img + label {
   display: none; }
 
@@ -1177,7 +1178,8 @@ footer {
 
 .activity-description p {
   line-height: 22px;
-  overflow: hidden; }
+  overflow: hidden;
+  max-height: 64px; }
 .activity-description .show-more {
   background: #f5f5f5;
   border: 1px solid #e5e5e5;

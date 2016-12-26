@@ -373,7 +373,7 @@
 
         $('.activity-description .show-more').click(function () {
             $(this).siblings('p').animate({
-                'max-height': '1000px',
+                'max-height': '5000px',
                 'height': '100%'
             });
             $(this).hide();

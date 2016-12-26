@@ -477,6 +477,7 @@ footer {
   label {
     color: rgba($color_gravel_approx, 0.7);
     font-weight: normal;
+    line-height: normal;
   }
   img + label {
     display: none;
@@ -1574,6 +1575,7 @@ footer {
   p {
     line-height: 22px;
     overflow: hidden;
+    max-height: 64px;
   }
   .show-more {
     background: #f5f5f5;
