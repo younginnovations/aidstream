@@ -28,8 +28,12 @@
                     @foreach($organizations as $index => $organization)
                         <li>
                         <a href="{{ url('/who-is-using/'.$organization->org_slug)}}">
-                            <label for="org_logo">{{ $organization->name }}</label>
-                            <img id="org_logo" src="{{ $organization->logo_url }}" alt="{{ $organization->name }}">
+                            @if($organization->logo_url)
+                                <img id="org_logo" src="{{ $organization->logo_url }}" alt="{{ $organization->name }}">
+                                <label for="org_logo">{{ $organization->name }}</label>
+                            @else
+                                <label for="org_logo">{{ $organization->name }}</label>
+                            @endif
                         </a>
                         </li>
                     @endforeach

@@ -473,8 +473,14 @@ footer {
   }
 }
 
-.org_list label {
-  display: none;
+.org_list a {
+  label {
+    color: rgba($color_gravel_approx, 0.7);
+    font-weight: normal;
+  }
+  img + label {
+    display: none;
+  }
 }
 
 //about
@@ -1966,7 +1972,7 @@ footer {
   }
 }
 
-@media all and (min-width: 640px) and (max-width: 767px){
+@media all and (min-width: 640px) and (max-width: 767px) {
 
   .activities-listing a > .col-xs-12:first-of-type {
     width: 68%;

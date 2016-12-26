@@ -337,7 +337,10 @@ footer {
         width: 100%;
         height: 100%; }
 
-.org_list label {
+.org_list a label {
+  color: rgba(72, 72, 72, 0.7);
+  font-weight: normal; }
+.org_list a img + label {
   display: none; }
 
 .about-wrapper .screenshot {
