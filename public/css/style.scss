@@ -478,6 +478,7 @@ footer {
     color: rgba($color_gravel_approx, 0.7);
     font-weight: normal;
     line-height: normal;
+    padding: 0 10px;
   }
   img + label {
     display: none;
@@ -1279,6 +1280,7 @@ section {
   font-size: 12px;
   position: relative;
   box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+  z-index: 1;
   &:before {
     border-top: 6px solid transparent;
     border-bottom: 6px solid transparent;
@@ -1368,11 +1370,6 @@ address {
     border-bottom: 1px solid rgba(151, 151, 151, 0.2);
     transition: all 0.2s ease-in-out;
     position: relative;
-    &:first-child {
-      a {
-        padding-top: 0;
-      }
-    }
     &:last-child {
       border-bottom: 0;
       padding-bottom: 0;
@@ -1385,7 +1382,7 @@ address {
       color: $color_gravel_approx;
       display: inline-block;
       width: 100%;
-      padding: 20px 30px;
+      padding: 50px 30px 20px;
     }
   }
 }
@@ -1456,7 +1453,7 @@ address {
   padding: 0;
   width: 100%;
   position: absolute;
-  bottom: 120px;
+  bottom: 76%;
   span {
     display: inline-block;
     vertical-align: top;
@@ -1935,7 +1932,7 @@ footer {
   border: 1px solid #e5e5e5;
   border-radius: 19px;
   height: 38px;
-  margin-bottom: 40px;
+  margin: 0 auto 40px;
   padding: 8px 12px 12px;
   width: 270px;
   label {
@@ -2004,6 +2001,7 @@ footer {
     position: absolute;
     bottom: 0;
     left: 0;
+    margin-left: 0;
   }
 
   .org-activity-wrapper, .activity-detail-wrapper {
@@ -2032,6 +2030,18 @@ footer {
 
   .activity-other-info {
     padding: 0;
+  }
+
+  .activities-listing >li a {
+    padding-top: 20px;
+  }
+
+  .activities-listing>li:first-child a {
+    padding-top: 0;
+  }
+
+  .activity-info-wrapper {
+    width: 80%;
   }
 }
 

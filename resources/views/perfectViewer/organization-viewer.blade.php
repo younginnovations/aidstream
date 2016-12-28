@@ -46,7 +46,7 @@
     <div id="map"></div>
     <section class="col-md-12 org-map-wrapper pull-left">
         <div class="width-940">
-            <div class="col-md-4 organisation-info">
+            <div class="organisation-info">
                 <a href="#" class="organisation-logo">
                     @if($organizations['logo'])
                         <div class="logo">

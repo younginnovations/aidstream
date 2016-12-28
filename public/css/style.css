@@ -340,7 +340,8 @@ footer {
 .org_list a label {
   color: rgba(72, 72, 72, 0.7);
   font-weight: normal;
-  line-height: normal; }
+  line-height: normal;
+  padding: 0 10px; }
 .org_list a img + label {
   display: none; }
 
@@ -947,7 +948,8 @@ section {
   border-radius: 4px;
   font-size: 12px;
   position: relative;
-  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3); }
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+  z-index: 1; }
   #tooltip:before {
     border-top: 6px solid transparent;
     border-bottom: 6px solid transparent;
@@ -1021,8 +1023,6 @@ address {
     border-bottom: 1px solid rgba(151, 151, 151, 0.2);
     transition: all 0.2s ease-in-out;
     position: relative; }
-    .activities-listing > li:first-child a {
-      padding-top: 0; }
     .activities-listing > li:last-child {
       border-bottom: 0;
       padding-bottom: 0;
@@ -1033,7 +1033,7 @@ address {
       color: #484848;
       display: inline-block;
       width: 100%;
-      padding: 20px 30px; }
+      padding: 50px 30px 20px; }
 
 .activity-info > ul {
   font-size: 13px;
@@ -1087,7 +1087,7 @@ address {
   padding: 0;
   width: 100%;
   position: absolute;
-  bottom: 120px; }
+  bottom: 76%; }
   .total-budget-wrapper span {
     display: inline-block;
     vertical-align: top;
@@ -1454,7 +1454,7 @@ footer {
   border: 1px solid #e5e5e5;
   border-radius: 19px;
   height: 38px;
-  margin-bottom: 40px;
+  margin: 0 auto 40px;
   padding: 8px 12px 12px;
   width: 270px; }
   .search-org label {
@@ -1505,7 +1505,8 @@ footer {
   .organisation-more-info {
     position: absolute;
     bottom: 0;
-    left: 0; }
+    left: 0;
+    margin-left: 0; }
 
   .org-activity-wrapper, .activity-detail-wrapper {
     box-shadow: 0 1px 20px 0 rgba(0, 0, 0, 0.2); }
@@ -1526,7 +1527,16 @@ footer {
     padding: 40px; }
 
   .activity-other-info {
-    padding: 0; } }
+    padding: 0; }
+
+  .activities-listing > li a {
+    padding-top: 20px; }
+
+  .activities-listing > li:first-child a {
+    padding-top: 0; }
+
+  .activity-info-wrapper {
+    width: 80%; } }
 @media all and (min-width: 1000px) {
   .width-940 {
     width: 940px;

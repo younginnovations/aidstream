@@ -50,7 +50,7 @@ d3.json("/data/countries.geo.json", function (countries) {
                         return "none";
                 })
                 .style("left", absoluteMousePos[0] + 11 + "px")
-                .style("top", absoluteMousePos[1] + 130 + "px")
+                .style("top", absoluteMousePos[1] + 90 + "px")
                 .style("background","#fff")
                 .style("padding","10px")
                 .style("position", "absolute")
