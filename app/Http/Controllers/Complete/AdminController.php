@@ -69,6 +69,7 @@ class AdminController extends Controller
         UserOnBoardingService $userOnBoardingManager
     ) {
         $this->middleware('auth');
+        $this->middleware('auth.systemVersion');
         $this->org_id                = session('org_id');
         $this->user                  = $user;
         $this->organizationManager   = $organizationManager;

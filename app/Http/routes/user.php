@@ -1,7 +1,7 @@
 <?php
 
 $router->group(
-    ['namespace' => 'Auth'],
+    ['namespace' => 'Auth', 'middleware' => 'auth.systemVersion'],
     function ($router) {
         $router->get('user/profile', [
             'as'   => 'user.profile',

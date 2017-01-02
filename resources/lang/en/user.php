@@ -37,5 +37,6 @@ return [
     'role'                              => 'Role',
     'secondary_contact_email'           => 'Secondary Contact Email',
     'profile'                           => 'Profile',
-    'name'                              => 'Name'
+    'name'                              => 'Name',
+    'upload_picture'                    => 'Upload Picture',
 ];

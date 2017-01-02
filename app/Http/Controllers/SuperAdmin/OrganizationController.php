@@ -7,6 +7,7 @@ use App\SuperAdmin\Services\OrganizationGroupManager;
 use App\SuperAdmin\Services\SuperAdminManager;
 use Auth;
 use Illuminate\Contracts\Logging\Log;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Kris\LaravelFormBuilder\FormBuilder;
 use Illuminate\Database\DatabaseManager;
@@ -17,6 +18,9 @@ use Illuminate\Database\DatabaseManager;
  */
 class OrganizationController extends Controller
 {
+    const CORE_VERSION_ID = 1;
+
+    const LITE_VERSION_ID = 2;
     /**
      * @var SuperAdminManager
      */
@@ -62,6 +66,17 @@ class OrganizationController extends Controller
         $organizations = (session('role_id') == 3) ? $this->adminManager->getOrganizations() : $this->groupManager->getGroupsByUserId(Auth::user()->id);
 
         return view('superAdmin.listOrganization', compact('organizations'));
+    }
+
+    /**
+     * get all organizations
+     * @return \Illuminate\View\View
+     */
+    public function oldListOrganizations()
+    {
+        $organizations = (session('role_id') == 3) ? $this->adminManager->getOrganizations() : $this->groupManager->getGroupsByUserId(Auth::user()->id);
+
+        return view('superAdmin.oldListOrganization', compact('organizations'));
     }
 
     /**
@@ -157,7 +172,7 @@ class OrganizationController extends Controller
         $database = app(DatabaseManager::class);
         $settings = $this->settingsManager->getSettings($orgId);
         Session::put('org_id', $orgId);
-
+        Session::put('system_version', $settings->organization->system_version_id);
         $current_version = (isset($settings)) ? $settings->version : config('app.default_version');
         Session::put('current_version', $current_version);
         $versions_db = $database->table('versions')->get();
@@ -172,8 +187,13 @@ class OrganizationController extends Controller
         Session::put('next_version', $next_version);
         Session::put('version', 'V' . str_replace('.', '', $current_version));
         Auth::loginUsingId($userId);
+        $organization = $settings->organization;
 
-        return redirect()->to(config('app.admin_dashboard'));
+        if ($organization->system_version_id == self::CORE_VERSION_ID) {
+            return redirect()->to(config('app.admin_dashboard'));
+        }
+
+        return redirect()->route('lite.activity.index');
     }
 
     /**
@@ -210,5 +230,21 @@ class OrganizationController extends Controller
         $organizationDetails = $this->adminManager->getAllOrganizationInfo();
 
         return $this->adminManager->exportDetails($organizationDetails);
+    }
+
+    /**
+     * Changes system version
+     *
+     * @param         $orgId
+     * @param Request $request
+     */
+    public function changeSystemVersion($orgId, Request $request){
+        $system_version = $request->except('_token');
+
+        if($this->groupManager->updateSystemVersion($orgId, $system_version)){
+            return redirect()->back()->withResponse(['type' => 'success', 'code' => ['updated', ['name' => trans('global.system_version')]]]);
+        }
+
+        return redirect()->back()->withResponse(['type' => 'danger', 'code' => ['update_failed', ['name' => trans('global.system_version')]]]);
     }
 }

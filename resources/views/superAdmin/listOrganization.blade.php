@@ -21,6 +21,7 @@
                                     <th>Users</th>
                                     <th>Activities</th>
                                     <th width="180px">Action</th>
+                                    <th>Lite</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -54,6 +55,17 @@
                                                        class="masquerade" title="Masquerade">Masquerade</a>
                                                 @endif
                                             </div>
+                                        </td>
+                                        <td>
+                                            @if($organization->settings->version >= 2.02)
+                                                @if($organization->system_version_id == 1)
+                                                    <input type="checkbox" data-href="{{ route('admin.change.system_version', $organization->id) }}"
+                                                           data-message="Are you sure to switch to lite version?">
+                                                @else
+                                                    <input type="checkbox" checked data-href="{{ route('admin.change.system_version', $organization->id) }}"
+                                                           data-message="Are you sure to switch to core version?">
+                                                @endif
+                                            @endif
                                         </td>
                                     </tr>
                                 @endforeach
@@ -96,6 +108,7 @@
         var masqueradeBtn = document.querySelectorAll('.masquerade');
 
         var preventClick = false;
+
         for (var i = 0; i < masqueradeBtn.length; i++) {
             var button = masqueradeBtn[i];
             button.onclick = function (event) {
@@ -105,5 +118,25 @@
                 preventClick = true;
             }
         }
+
+        var modal = $('#myModal');
+
+        $('input[type="checkbox"]').click(function (e) {
+            e.preventDefault();
+            if (e.target.checked) {
+                $('#modal-form').attr('action', $(this).attr('data-href'));
+                $('#index').attr('value', 2);
+                $('#modal-message').html($(this).attr('data-message'));
+                modal.modal("show");
+            }
+
+            if (!e.target.checked) {
+                $('#modal-form').attr('action', $(this).attr('data-href'));
+                $('#index').attr('value', 1);
+                $('#modal-message').html($(this).attr('data-message'));
+                modal.modal("show");
+            }
+        });
+
     </script>
 @stop

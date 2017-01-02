@@ -1,5 +1,6 @@
 <?php namespace App\Http\Controllers\Complete;
 
+use App\Http\Controllers\Complete\Traits\WorkflowResponses;
 use App\Models\Settings;
 use App\Http\Requests\Request;
 use App\Http\Controllers\Controller;
@@ -15,12 +16,13 @@ use App\Http\Controllers\Complete\Traits\HistoryExchangeRates;
  */
 class WorkflowController extends Controller
 {
-    use HistoryExchangeRates;
+    use HistoryExchangeRates, WorkflowResponses;
 
     /**
      * @var XmlServiceProvider
      */
     protected $xmlServiceProvider;
+
     /**
      * @var WorkFlowManager
      */
@@ -33,6 +35,7 @@ class WorkflowController extends Controller
     public function __construct(WorkflowManager $workFlowManager)
     {
         $this->middleware('auth');
+        $this->middleware('auth.systemVersion');
         $this->workFlowManager = $workFlowManager;
     }
 
@@ -75,7 +78,7 @@ class WorkflowController extends Controller
     /**
      * Verify an Activity.
      *
-     * Changes the ActivityWorkflow status of an Activity to 'Complete'.
+     * Changes the ActivityWorkflow status of an Activity to 'Verified'.
      *
      * @param         $id
      * @param Request $request
@@ -136,17 +139,15 @@ class WorkflowController extends Controller
             return redirect()->back()->withResponse(['type' => 'warning', 'code' => ['message', ['message' => trans('error.something_is_not_right')]]]);
         }
 
-        if (true === $result) {
-            return redirect()->back()->withResponse(['type' => 'success', 'code' => ['publish_registry_publish', ['name' => '']]]);
+        if (false == $result) {
+            return redirect()->back()->withResponse(['type' => 'warning', 'code' => ['message', ['message' => trans('error.publisher_not_found')]]]);
         }
 
-        if (is_string($result)) {
-            return redirect()->back()->withResponse(['type' => 'warning', 'code' => ['message', ['message' => $result]]]);
+        if (is_string($result) && $result == 'Not Authorized') {
+            return redirect()->back()->withResponse(['type' => 'warning', 'code' => ['message', ['message' => trans('error.not_authorized')]]]);
         }
 
-        return redirect()->back()->withResponse(
-            ['type' => 'warning', 'code' => ['message', ['message' => trans('error.publisher_not_found')]]]
-        );
+        return redirect()->back()->withResponse(['type' => 'success', 'code' => ['publish_registry_publish', ['name' => '']]]);
     }
 
     /**
@@ -161,23 +162,5 @@ class WorkflowController extends Controller
         }
 
         return (empty(getVal($registryInfo, [0, 'publisher_id'])) || empty(getVal($registryInfo, [0, 'api_id'])));
-    }
-
-    /**
-     * Respond to the Activity Workflow for different stages in the workflow.
-     * @param      $updated
-     * @param      $activityWorkflow
-     * @return array
-     */
-    protected function respondTo($updated, $activityWorkflow)
-    {
-        $statusLabel   = ['Completed', 'Verified', 'Published'];
-        $currentStatus = $activityWorkflow - 1;
-
-        if ($updated) {
-            return ['type' => 'success', 'code' => ['activity_statuses', ['name' => $statusLabel[$currentStatus]]]];
-        }
-
-        return ['type' => 'danger', 'code' => ['activity_statuses_failed', ['name' => $statusLabel[$currentStatus]]]];
     }
 }

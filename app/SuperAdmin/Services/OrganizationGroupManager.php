@@ -1,5 +1,6 @@
 <?php namespace App\SuperAdmin\Services;
 
+use App\Core\V201\Repositories\Organization\OrganizationRepository;
 use App\Models\Organization\Organization;
 use App\Models\SuperAdmin\UserGroup;
 use App\SuperAdmin\Repositories\SuperAdminInterfaces\OrganizationGroup as OrganizationGroupInterface;
@@ -34,6 +35,10 @@ class OrganizationGroupManager
      * @var DatabaseManager
      */
     protected $databaseManager;
+    /**
+     * @var OrganizationRepository
+     */
+    private $organizationRepository;
 
     /**
      * @param OrganizationGroupInterface $organizationGroupInterface
@@ -41,14 +46,22 @@ class OrganizationGroupManager
      * @param Organization               $organization
      * @param DatabaseManager            $databaseManager
      * @param LoggerInterface            $logger
+     * @param OrganizationRepository     $organizationRepository
      */
-    function __construct(OrganizationGroupInterface $organizationGroupInterface, UserGroup $userGroup, Organization $organization, DatabaseManager $databaseManager, LoggerInterface $logger)
-    {
+    function __construct(
+        OrganizationGroupInterface $organizationGroupInterface,
+        UserGroup $userGroup,
+        Organization $organization,
+        DatabaseManager $databaseManager,
+        LoggerInterface $logger,
+        OrganizationRepository $organizationRepository
+    ) {
         $this->organizationGroupInterface = $organizationGroupInterface;
         $this->userGroup                  = $userGroup;
         $this->organization               = $organization;
         $this->databaseManager            = $databaseManager;
         $this->logger                     = $logger;
+        $this->organizationRepository     = $organizationRepository;
     }
 
     /**
@@ -154,5 +167,17 @@ class OrganizationGroupManager
             );
         }
 
+    }
+
+    /**
+     * Updates system version of an organisation
+     *
+     * @param $orgId
+     * @param $system_version
+     * @return mixed
+     */
+    public function updateSystemVersion($orgId, $system_version)
+    {
+        return $this->organizationRepository->updateSystemVersion($orgId, $system_version);
     }
 }

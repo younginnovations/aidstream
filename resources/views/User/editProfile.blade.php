@@ -65,7 +65,7 @@
                                             </div>
                                         </div>
                                     </label>
-                                    <span class="upload-label">@lang('user.upload_your_profile_picture')</span>
+                                    <span class="upload-label">@lang('user.upload_picture')</span>
                                 </div>
                                 <div class="description"><span>@lang('global.image_criteria')</span></div>
                             </div>

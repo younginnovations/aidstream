@@ -3,6 +3,7 @@
 use App\Core\Form\BaseForm;
 use App\Core\V201\Requests\Settings\DefaultValuesRequest;
 use App\Core\V201\Requests\Settings\PublishingSettingsRequest;
+use App\Http\Controllers\Lite\LiteController;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Request;
@@ -26,7 +27,7 @@ use Psr\Log\LoggerInterface;
  * Class SettingsController
  * @package App\Http\Controllers\Complete
  */
-class SettingsController extends Controller
+class SettingsController extends LiteController
 {
     /**
      * @var SettingsService
@@ -94,6 +95,7 @@ class SettingsController extends Controller
         LoggerInterface $loggerInterface
     ) {
         $this->middleware('auth');
+        $this->middleware('auth.systemVersion');
         $this->settingsManager        = $settingsManager;
         $org_id                       = Session::get('org_id');
         $this->settings               = $settingsManager->getSettings($org_id);

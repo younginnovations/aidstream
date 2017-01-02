@@ -2,6 +2,7 @@
 
 use App\Core\EmailQueue;
 use App\Core\Form\BaseForm;
+use App\Http\Controllers\Auth\Traits\RedirectsUsersToCorrectVersion;
 use App\Http\Controllers\Auth\Traits\ResetsOldPassword;
 use App\Http\Controllers\Controller;
 use App\Models\Settings;
@@ -33,7 +34,7 @@ class AuthController extends Controller
     |
     */
 
-    use AuthenticatesAndRegistersUsers, ResetsOldPassword;
+    use AuthenticatesAndRegistersUsers, ResetsOldPassword, RedirectsUsersToCorrectVersion;
 
     /**
      * @var DatabaseManager
@@ -185,6 +186,10 @@ class AuthController extends Controller
                      ->storeDetailsInSession($user)
                      ->setVersions();
 
+                if ($this->userIsRegisteredForLite($user)) {
+                    return $this->redirectToLite();
+                }
+
                 $redirectPath = ($user->isSuperAdmin() || $user->isGroupAdmin())
                     ? config('app.super_admin_dashboard')
                     : config('app.admin_dashboard');
@@ -329,6 +334,8 @@ class AuthController extends Controller
         $settings = Settings::where('organization_id', $user->org_id)->first();
         $version  = (isset($settings)) ? $settings->version : config('app.default_version');
         Session::put('current_version', $version);
+        $id = ($settings) ? $settings->organization->system_version_id : false;
+        (!$id) ?: Session::put('system_version', $id);
 
         return $this;
     }
@@ -371,10 +378,6 @@ class AuthController extends Controller
             }
         } elseif ($user->role_id == 3 || $user->role_id == 4) {
             $redirectPath = config('app.super_admin_dashboard');
-        } else {
-//            Auth::user()->userOnBoarding()->create(['has_logged_in_once' => false]);
-//            Session::put('first_login', true);
-//            $redirectPath = 'welcome';
         }
 
         return $redirectPath;

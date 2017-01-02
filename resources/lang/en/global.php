@@ -265,10 +265,11 @@ return [
     'false'                                        => 'False',
     'cancel_csv_import'                            => 'Are you sure you want to cancel :type Import?',
     'result'                                       => 'Result',
-    'dont_overwrite'                               => 'Don\'t overwrite',
+    'dont_overwrite'                               => "Don't overwrite",
     'yes'                                          => 'Yes',
     'no'                                           => 'No',
     'existing'                                     => 'Existing',
     'new'                                          => 'New',
     'template_updated'                             => 'The template for Transaction import has been updated. Please make sure you are using the latest template.',
+    'system_version'                               => 'System Version',
 ];

@@ -1,7 +1,7 @@
 <?php
 
 $router->group(
-    ['namespace' => 'Complete'],
+    ['namespace' => 'Complete', 'middleware' => 'auth.systemVersion'],
     function ($router) {
         $router->get(
             'download-my-data',

@@ -2,6 +2,7 @@
 
 use App\Http\Requests\Request;
 use App\Models\Organization\Organization;
+use App\Models\SystemVersion;
 use App\User;
 use Illuminate\Support\Facades\Validator;
 use App\Core\V201\Traits\GetCodes;
@@ -71,8 +72,10 @@ class Register extends Request
      */
     public function rules()
     {
-        $rules = [];
+        $rules          = [];
+        $systemVersions = implode(",", SystemVersion::lists('id')->toArray());
 
+        $rules     = ['systemVersion' => sprintf('required|in:%s', $systemVersions)];
         $orgRules  = $this->getRulesForOrg($this->get('organization'));
         $userRules = $this->getRulesForUsers($this->get('users'));
         $rules     = array_merge($rules, $orgRules, $userRules);
@@ -88,9 +91,11 @@ class Register extends Request
     {
         $messages = [];
 
-        $orgMessages  = $this->getMessagesForOrg($this->get('organization'));
-        $userMessages = $this->getMessagesForUsers($this->get('users'));
-        $messages     = array_merge($messages, $orgMessages, $userMessages);
+        $messages['systemVersion.required'] = 'Please select system version';
+        $messages['systemVersion.in']       = 'Selected system version is invalid';
+        $orgMessages                        = $this->getMessagesForOrg($this->get('organization'));
+        $userMessages                       = $this->getMessagesForUsers($this->get('users'));
+        $messages                           = array_merge($messages, $orgMessages, $userMessages);
 
         return $messages;
     }

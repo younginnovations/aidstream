@@ -1193,3 +1193,13 @@ function trimReportingOrg(array $reportingOrg)
 
     return $reportingOrg;
 }
+
+/**
+ * Check if a SuperAdmin user has logged in.
+ *
+ * @return bool
+ */
+function superAdminIsLoggedIn()
+{
+    return (session('role_id') == 3);
+}

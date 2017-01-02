@@ -8,7 +8,7 @@ function initMap(elem, latlng) {
     }
     var map = new L.Map(elem, {
         center: center,
-        zoom: 3
+        zoom: 6
     }).addLayer(new L.TileLayer(
             'http://api.tiles.mapbox.com/v3/younginnovations.ijg2d43b/{z}/{x}/{y}.png', {
                 attribution: "<a href='https://www.mapbox.com/about/maps/' target='_blank'>&copy; Mapbox &copy; OpenStreetMap</a> | " +
@@ -74,3 +74,9 @@ function changeMap(lat_id, lng_id, elem, map){
         L.marker([lat, lng]).addTo(map);
     }
 }
+
+function flyTo(map, latLong) {
+    map.panTo(latLong);
+    map.invalidateSize();
+}
+

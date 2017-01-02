@@ -86,7 +86,7 @@
                             <input type="hidden" value="{{ json_encode($changes) }}" name="changes">
                             <input type="hidden" value="{{ json_encode($settings) }}" name="settings">
 
-                            <input type="submit" value="Yes" class="btn">
+                            <input type="submit" value="{{ trans('global.yes') }}" class="btn">
                             <a href="{{ route('publishing-settings') }}" class="btn btn-danger">@lang('global.no')</a>
                         </form>
                     </div>

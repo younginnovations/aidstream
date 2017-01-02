@@ -15,7 +15,7 @@ class ViewComposerServiceProvider extends ServiceProvider
     {
         view()->composer(
             [
-                'app',
+                '*', 'app'
             ],
             function ($view) {
                 $view->with('currentUser', auth()->user());

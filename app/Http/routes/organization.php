@@ -1,7 +1,7 @@
 <?php
 
 $router->group(
-    ['namespace' => 'Complete\Organization'],
+    ['namespace' => 'Complete\Organization', 'middleware' => 'auth.systemVersion'],
     function ($router) {
         $router->get('organization/{id}/identifier', 'OrganizationController@showIdentifier');
         $router->resource('organization', 'OrganizationController');

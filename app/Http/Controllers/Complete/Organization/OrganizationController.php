@@ -60,6 +60,8 @@ class OrganizationController extends Controller
         Mailer $mailer,
         BaseForm $baseForm
     ) {
+        $this->middleware('auth');
+        $this->middleware('auth.systemVersion');
         $this->settingsManager            = $settingsManager;
         $this->organizationManager        = $organizationManager;
         $this->orgReportingOrgFormCreator = $orgReportingOrgFormCreator;
@@ -69,7 +71,6 @@ class OrganizationController extends Controller
         $this->baseForm                   = $baseForm;
         $this->userManager                = $userManager;
         $this->mailer                     = $mailer;
-        $this->middleware('auth');
     }
 
     public function index()

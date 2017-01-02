@@ -1,5 +1,6 @@
 <?php namespace App\Models;
 
+use App\Models\Organization\Organization;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
@@ -53,5 +54,15 @@ class ActivityPublished extends Model
         $file = explode($delimiter, $file);
 
         return reset($file);
+    }
+
+    /**
+     * An ActivityPublished record belongs to an Organization.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function organization()
+    {
+        return $this->belongsTo(Organization::class, 'organization_id');
     }
 }

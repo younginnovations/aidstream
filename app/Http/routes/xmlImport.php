@@ -1,7 +1,7 @@
 <?php
 
 $router->group(
-    ['namespace' => 'Complete\Xml'],
+    ['namespace' => 'Complete\Xml', 'middleware' => 'auth.systemVersion'],
     function ($router) {
         $router->get(
             '/xml-import',

@@ -2,6 +2,8 @@
 
 use Exception;
 use App\Http\API\CKAN\CkanClient;
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ClientException;
 use Illuminate\Database\Eloquent\Collection;
 use App\Services\Workflow\Registry\RegistryApiHandler;
 use App\Exceptions\Aidstream\Workflow\PublisherNotFoundException;
@@ -27,21 +29,25 @@ class Publisher extends RegistryApiHandler
      */
     public function publish($registryInfo, $organization, $publishingType, array $changes = [])
     {
-        $this->init(env('REGISTRY_URL'), getVal($registryInfo, [0, 'api_id'], ''))->setPublisher(getVal($registryInfo, [0, 'publisher_id'], ''));
+        try {
+            $this->init(env('REGISTRY_URL'), getVal($registryInfo, [0, 'api_id'], ''))->setPublisher(getVal($registryInfo, [0, 'publisher_id'], ''));
 
-        /* Depcricated */
+            /* Depcricated */
 //        $this->client->package_search($this->publisherId)
 
-        if (!$this->checkPublisherValidity($this->searchForPublisher())) {
-            throw new PublisherNotFoundException('Publisher not found.');
-        }
-
-        if ($changes) {
-            $this->publishSegmentationChanges($changes, $organization, $publishingType);
-        } else {
-            if ($this->file) {
-                $this->publishIntoRegistry($organization, $publishingType);
+            if (!$this->checkPublisherValidity($this->searchForPublisher())) {
+                throw new PublisherNotFoundException('Publisher not found.');
             }
+
+            if ($changes) {
+                $this->publishSegmentationChanges($changes, $organization, $publishingType);
+            } else {
+                if ($this->file) {
+                    $this->publishIntoRegistry($organization, $publishingType);
+                }
+            }
+        } catch (ClientException $exception) {
+            throw $exception;
         }
     }
 
@@ -247,7 +253,7 @@ class Publisher extends RegistryApiHandler
     {
         $publisherData = json_decode($publisherData);
 
-        return ($publisherData->result->name == $this->publisherId);
+        return $publisherData ? ($publisherData->result->name == $this->publisherId) : false;
     }
 
     /**
@@ -290,7 +296,19 @@ class Publisher extends RegistryApiHandler
         $apiHost = env('REGISTRY_URL');
         $uri     = 'action/organization_show';
         $url     = sprintf('%s%s?id=%s', $apiHost, $uri, $this->publisherId);
+        $client  = $this->initGuzzleClient();
 
-        return file_get_contents($url);
+        return $client->get($url)
+                      ->getBody()
+                      ->getContents();
+    }
+
+    /**
+     * Initialize the GuzzleHttp\Client instance
+     * @return mixed
+     */
+    protected function initGuzzleClient()
+    {
+        return app()->make(Client::class);
     }
 }

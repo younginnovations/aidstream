@@ -67,7 +67,7 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
                            aria-expanded="false"><span class="avatar-img">
                                 @if(Auth::user()->profile_url)
-                                    <img src="{{Auth::user()->profile_url}}"
+                                    <img src="{{ url(Auth::user()->profile_url) }}"
                                          width="36" height="36"
                                          alt="{{Auth::user()->name}}">
                                 @else
@@ -82,7 +82,11 @@
                                 <li><a href="{{url('user/profile')}}">@lang('trans.my_profile')</a></li>
                             @endif
                             <li><a href="{{ url('/auth/logout') }}" id="logout">@lang('trans.logout')</a></li>
-
+                            @if (superAdminIsLoggedIn())
+                                <li>
+                                    <a href="{{ route('lite.activity.index') }}">Lite</a>
+                                </li>
+                            @endif
                             @include('unwanted')
 
                             <li class="pull-left width-491">
