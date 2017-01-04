@@ -244,14 +244,16 @@ class PerfectViewerManager
 
 
     /**
-     * Provides data for given date
+     * Provides data for given date or previous available date
      *
      * @param $date
      * @return array
      */
     protected function getDate($date)
     {
-        return json_decode($this->exchangeRatesBuilder->where('date', $date)->first(), true) ?: [];
+        $dbDate = json_decode($this->exchangeRatesBuilder->where('date', '<=', $date)->orderBy('date', 'desc')->first(), true) ?: [];
+
+        return $dbDate;
     }
 
     /**
@@ -272,10 +274,6 @@ class PerfectViewerManager
         $amount = (float) getVal($data, ['value', 0, 'amount'], 0);
 
         $dbDate = $this->getDate($date);
-
-        if (empty($dbDate)) {
-            $dbDate = json_decode($this->exchangeRatesBuilder->where('date', '<', $date)->orderBy('date', 'desc')->first(), true) ?: [];
-        }
 
         if ($currency != 'USD') {
             if ($currency == '') {
