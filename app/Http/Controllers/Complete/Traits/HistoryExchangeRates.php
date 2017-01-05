@@ -85,7 +85,9 @@ trait HistoryExchangeRates
     {
         $exchangeRates = [];
         foreach ($newDates as $index => $newDate) {
-            $exchangeRates[] = $this->clean(json_decode($this->curl($newDate), true), $newDate);
+            if ($newDate < date('Y-m-d')) {
+                $exchangeRates[] = $this->clean(json_decode($this->curl($newDate), true), $newDate);
+            }
         }
 
         return $this->storeExchangeRates($exchangeRates);

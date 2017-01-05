@@ -75,7 +75,7 @@ return [
     */
 
     'key'                   => env('APP_KEY', 'SomeRandomString'),
-    'cipher'                => MCRYPT_RIJNDAEL_128,
+    'cipher'                => 'AES-256-CBC',
     'default_version'       => '2.01',
     'default_version_name'  => 'V201',
     'super_admin_dashboard' => '/admin/list-organization',
