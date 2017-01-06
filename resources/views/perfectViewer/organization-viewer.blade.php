@@ -39,21 +39,24 @@
 </style>
 
 <body>
-@include('includes.header')
+<body>
+<div class="org-header-wrapper">
+    @include('includes.header')
+</div>
 <div class="wrapper">
     @include('includes.response')
-    <div id="tooltip" class="tooltips"></div>
     <div id="map"></div>
+    <div id="tooltip" class="tooltips"></div>
     <section class="col-md-12 org-map-wrapper pull-left">
         <div class="width-940">
-            <div class="organisation-info">
-                <a href="#" class="organisation-logo">
+            <div class="col-sm-6 col-md-5 organisation-info">
+                <div class="logo">
                     @if($organizations['logo'])
-                        <div class="logo">
+                        <a href="#" class="organisation-logo">
                             <img src="{{ $organizations['logo_url'] }}" alt="{{ $organizations['name'] }}" width="auto" height="68">
-                        </div>
+                        </a>
                     @endif
-                </a>
+                </div>
                 <div class="organisation-more-info">
                 <span class="organisation-name">
         <a href="#" title="AbleChildAfrica">

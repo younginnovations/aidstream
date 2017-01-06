@@ -39,17 +39,21 @@
     <title>Activity Viewer</title>
 </head>
 <body>
-@include('includes.header')
+<div class="activity-header-wrapper">
+    @include('includes.header')
+</div>
 <div class="wrapper">
     <div id="tooltip" class="tooltips"></div>
     <div id="map"></div>
     <section class="col-md-12 org-map-wrapper pull-left">
         <div class="width-940">
-            <div class="organisation-info">
-                <a href="#" class="organisation-logo">
-                    <img src="{{ $organization[0]['logo_url'] }}" alt="{{ $organization[0]['name'] }}" width="auto"
-                         height="68">
-                </a>
+            <div class="col-sm-6 col-md-5 organisation-info">
+                <div class="logo">
+                    <a href="#" class="organisation-logo">
+                        <img src="{{ $organization[0]['logo_url'] }}" alt="{{ $organization[0]['name'] }}" width="auto"
+                             height="68">
+                    </a>
+                </div>
                 <div class="organisation-more-info">
                 <span class="organisation-name">
                     <a href="#" title="AbleChildAfrica">
