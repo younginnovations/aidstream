@@ -800,10 +800,12 @@ section {
 .organisation-more-info {
   display: inline-block;
   vertical-align: top;
+  width: 100%;
 }
 
 .organisation-logo {
-  margin-bottom: 20px;
+  display: block;
+  margin-bottom: 16px;
 }
 
 .organisation-name {

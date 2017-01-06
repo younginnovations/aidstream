@@ -50,17 +50,16 @@
             <div class="col-sm-6 col-md-5 organisation-info">
                 <div class="logo">
                     <a href="#" class="organisation-logo">
-                        <img src="{{ $organization[0]['logo_url'] }}" alt="{{ $organization[0]['name'] }}" width="auto"
-                             height="68">
+                        <img src="{{ getVal($organization, [0, 'logo_url']) }}" alt="{{ getVal($organization, [0, 'name']) }}" width="auto" height="68">
                     </a>
                 </div>
                 <div class="organisation-more-info">
                 <span class="organisation-name">
-                    <a href="#" title="AbleChildAfrica">
+                    <a href="#" title="{{ getVal($organization, [0, 'name'], '')}}">
                         {{ getVal($organization, [0, 'name'], '')}}
                     </a>
                 </span>
-                    @if($organization[0]['address'])
+                    @if(getVal($organization, [0, 'address'], null))
                         <address><i class="pull-left material-icons">room</i>{{getVal($organization, [0, 'address'])}}
                         </address>
                     @endif
@@ -99,7 +98,7 @@
                     </div>
                     <div class="activity-info activity-more-info">
                         <ul class="pull-left">
-                            @if($activity[0]['published_data']['activity_date'])
+                            @if(getVal($activity, [0, 'published_data', 'activity_date']))
                                 <li><i class="pull-left material-icons">date_range</i>
                                     @foreach(getVal($activity, [0, 'published_data', 'activity_date'], []) as $index => $date)
                                         <span>
@@ -375,23 +374,9 @@
 <script src="/js/jquery.js"></script>
 <script src="/js/d3.min.js"></script>
 <script type="text/javascript" src="/js/worldMap.js"></script>
+<script type="text/javascript" src="/js/publicPages.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
-        window.addEventListener('click', function (e) {
-            if (!$.contains(document.getElementById('map'), e.target)) {
-                $('#tooltip').css('display', 'none');
-            }
-        });
-
-        function hamburgerMenu() {
-            $('.navbar-toggle.collapsed').click(function () {
-                $('.navbar-collapse').toggleClass('out');
-                $(this).toggleClass('collapsed');
-            });
-        }
-
-        hamburgerMenu();
-
         if ($('.activity-description p').height() < 64) {
             $('.show-more').hide();
         }
