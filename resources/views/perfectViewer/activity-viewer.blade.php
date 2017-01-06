@@ -158,27 +158,31 @@
                     </div>
                     <div class="activity-sectors">
                         @if(getVal($activity, [0, 'published_data', 'sector'], null))
-                            <span class="pull-left">Sectors:</span>
+                            @if (checkAllVocabularies(getVal($activity, [0, 'published_data', 'sector'], [])))
+                                <span class="pull-left">Sectors:</span>
+                            @endif
                             <ul class="pull-left">
                                 @foreach(getVal($activity, [0, 'published_data', 'sector'], []) as $index => $sector)
-                                    <li>
-                                        {{ getSectorName($sector) }}
-                                        <i class="pull-right material-icons">error</i>
-                                        <div class="sector-more-info">
-                                            <dl>
-                                                <div class="sector-list">
-                                                    <dt class="pull-left">Sector code:</dt>
-                                                    <dd class="pull-left">{{ getSectorCode($sector) }}
-                                                        - {{ getSectorName($sector) }} </dd>
-                                                </div>
-                                                <div class="sector-list">
-                                                    <dt class="pull-left">Sector vocabulary</dt>
-                                                    <dd class="pull-left">{{getVal($sector, ['sector_vocabulary'], '')}}
-                                                        - {{ $codeListHelper->getCodeNameOnly('SectorVocabulary', getVal($sector, ['sector_vocabulary'], '')) }}</dd>
-                                                </div>
-                                            </dl>
-                                        </div>
-                                    </li>
+                                    @if (!hasEmptySectorVocabulary($sector))
+                                        <li>
+                                            {{ getSectorName($sector) }}
+                                            <i class="pull-right material-icons">error</i>
+                                            <div class="sector-more-info">
+                                                <dl>
+                                                    <div class="sector-list">
+                                                        <dt class="pull-left">Sector code:</dt>
+                                                        <dd class="pull-left">{{ getSectorCode($sector) }}
+                                                            - {{ getSectorName($sector) }} </dd>
+                                                    </div>
+                                                    <div class="sector-list">
+                                                        <dt class="pull-left">Sector vocabulary</dt>
+                                                        <dd class="pull-left">{{getVal($sector, ['sector_vocabulary'], '')}}
+                                                            - {{ $codeListHelper->getCodeNameOnly('SectorVocabulary', getVal($sector, ['sector_vocabulary'], '')) }}</dd>
+                                                    </div>
+                                                </dl>
+                                            </div>
+                                        </li>
+                                    @endif
                                 @endforeach
                             </ul>
                         @endif
