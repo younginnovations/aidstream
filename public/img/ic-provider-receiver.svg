@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="28px" height="8px" viewBox="0 0 28 8" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 41.2 (35397) - http://www.bohemiancoding.com/sketch -->
+    <title>ic_pro-rec</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Activity-Viewer" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Activity-Viewer---Sector-hover" transform="translate(-413.000000, -1178.000000)">
+            <g id="Group-13" transform="translate(42.000000, 1056.000000)">
+                <g id="Group-21" transform="translate(307.000000, 114.000000)">
+                    <g id="Group-20" transform="translate(63.000000, 8.000000)">
+                        <g id="ic_pro-rec" transform="translate(15.000000, 4.000000) rotate(-90.000000) translate(-15.000000, -4.000000) translate(11.000000, -11.000000)">
+                            <g id="Group-20" transform="translate(4.000000, 15.000000) rotate(-270.000000) translate(-4.000000, -15.000000) translate(-10.000000, 11.000000)">
+                                <polygon id="Combined-Shape" fill="#F6A623" transform="translate(9.500000, 4.000000) rotate(-90.000000) translate(-9.500000, -4.000000) " points="8.5 -1.5 8.5 9.5 10.5 9.5 10.5 -1.5"></polygon>
+                                <polygon id="Path-4" fill="#F6A623" transform="translate(14.250000, 4.000000) rotate(-90.000000) translate(-14.250000, -4.000000) " points="11.1642857 1.75 10.3928571 2.5 14.25 6.25 18.1071429 2.5 17.3357143 1.75 14.25 4.75"></polygon>
+                                <circle id="Oval-Copy" fill="#00A8FF" cx="25" cy="4" r="3"></circle>
+                                <circle id="Oval" fill="#F6A623" cx="3" cy="4" r="3"></circle>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
