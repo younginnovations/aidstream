@@ -141,8 +141,7 @@
                             <li>
                                 <a href="#"><i class="pull-left material-icons">share</i>Share</a>
                                 <ul class="share-links">
-                                    <li class="facebook-share"><a href="javascript:shareThisPage()" target="_blank"
-                                                                  alt="Share on Facebook">Facebook</a></li>
+                                    <li class="facebook-share"><a href="javascript:shareThisPage()" target="_blank" alt="Share on Facebook">Facebook</a></li>
                                     <li class="twitter-share"><a id="twitter-button" href="javascript:void(0)">Tweet</a>
                                     </li>
                                 </ul>
@@ -378,6 +377,12 @@
 <script type="text/javascript" src="/js/worldMap.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
+        window.addEventListener('click', function (e) {
+            if (!$.contains(document.getElementById('map'), e.target)) {
+                $('#tooltip').css('display', 'none');
+            }
+        });
+
         function hamburgerMenu() {
             $('.navbar-toggle.collapsed').click(function () {
                 $('.navbar-collapse').toggleClass('out');
