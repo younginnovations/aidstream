@@ -25,7 +25,8 @@
     <meta name="og:url" content="{{ url()->current() }}"/>
 
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Activity Viewer - {{ getVal($activity, [0, 'published_data', 'title', 0, 'narrative'], '') }}">
+    <meta name="twitter:title"
+          content="Activity Viewer - {{ getVal($activity, [0, 'published_data', 'title', 0, 'narrative'], '') }}">
     <meta name="twitter:description" content="{{ getVal($activity, [0, 'published_data', 'description']) }}">
     <meta name="twitter:image:src" content="{{ url('images/aidstream_logo.png') }}"/>
     <meta name="twitter:url" content="{{ url()->current() }}"/>
@@ -38,26 +39,34 @@
     <title>Activity Viewer</title>
 </head>
 <body>
-@include('includes.header')
+<div class="activity-header-wrapper">
+    @include('includes.header')
+</div>
 <div class="wrapper">
     <div id="tooltip" class="tooltips"></div>
     <div id="map"></div>
-    <section class="col-md-12 org-map-wrapper">
+    <section class="col-md-12 org-map-wrapper pull-left">
         <div class="width-940">
-            <div class="col-md-4 organisation-info">
-                <a href="#" class="organisation-logo">
-                    <img src="{{ $organization[0]['logo_url'] }}" alt="{{ $organization[0]['name'] }}" width="auto" height="68">
-                </a>
+            <div class="col-sm-6 col-md-5 organisation-info">
+                <div class="logo">
+                    <a href="#" class="organisation-logo">
+                        <img src="{{ getVal($organization, [0, 'logo_url']) }}" alt="{{ getVal($organization, [0, 'name']) }}" width="auto" height="68">
+                    </a>
+                </div>
+                <div class="organisation-more-info">
                 <span class="organisation-name">
-                    <a href="#" title="AbleChildAfrica">
+                    <a href="#" title="{{ getVal($organization, [0, 'name'], '')}}">
                         {{ getVal($organization, [0, 'name'], '')}}
                     </a>
                 </span>
-                @if($organization[0]['address'])
-                    <address><i class="pull-left material-icons">room</i>{{getVal($organization, [0, 'address'])}}</address>
-                @endif
-                <a href="{{url('/who-is-using/'.getVal($organization, [0, 'org_slug'], ''))}}" class="see-all-activities"><i class="pull-left material-icons">arrow_back</i>See all
-                    Activities</a>
+                    @if(getVal($organization, [0, 'address'], null))
+                        <address><i class="pull-left material-icons">room</i>{{getVal($organization, [0, 'address'])}}
+                        </address>
+                    @endif
+                    <a href="{{url('/who-is-using/'.getVal($organization, [0, 'org_slug'], ''))}}"
+                       class="see-all-activities"><i class="pull-left material-icons">arrow_back</i>See all
+                        Activities</a>
+                </div>
             </div>
         </div>
     </section>
@@ -89,7 +98,7 @@
                     </div>
                     <div class="activity-info activity-more-info">
                         <ul class="pull-left">
-                            @if($activity[0]['published_data']['activity_date'])
+                            @if(getVal($activity, [0, 'published_data', 'activity_date']))
                                 <li><i class="pull-left material-icons">date_range</i>
                                     @foreach(getVal($activity, [0, 'published_data', 'activity_date'], []) as $index => $date)
                                         <span>
@@ -126,12 +135,14 @@
                             </li>
                         </ul>
                         <ul class="pull-right links">
-                            <li><a href="mailto:{{$user->email}}"><i class="pull-left material-icons">mail</i>Contact</a></li>
+                            <li><a href="mailto:{{$user->email}}"><i
+                                            class="pull-left material-icons">mail</i>Contact</a></li>
                             <li>
                                 <a href="#"><i class="pull-left material-icons">share</i>Share</a>
                                 <ul class="share-links">
                                     <li class="facebook-share"><a href="javascript:shareThisPage()" target="_blank" alt="Share on Facebook">Facebook</a></li>
-                                    <li class="twitter-share"><a id="twitter-button" href="javascript:void(0)">Tweet</a></li>
+                                    <li class="twitter-share"><a id="twitter-button" href="javascript:void(0)">Tweet</a>
+                                    </li>
                                 </ul>
                             </li>
                         </ul>
@@ -147,27 +158,31 @@
                     </div>
                     <div class="activity-sectors">
                         @if(getVal($activity, [0, 'published_data', 'sector'], null))
-                            <span class="pull-left">Sectors:</span>
+                            @if (checkAllVocabularies(getVal($activity, [0, 'published_data', 'sector'], [])))
+                                <span class="pull-left">Sectors:</span>
+                            @endif
                             <ul class="pull-left">
                                 @foreach(getVal($activity, [0, 'published_data', 'sector'], []) as $index => $sector)
-                                    <li>
-                                        {{ getSectorName($sector) }}
-                                        <i class="pull-right material-icons">error</i>
-                                        <div class="sector-more-info">
-                                            <dl>
-                                                <div class="sector-list">
-                                                    <dt class="pull-left">Sector code:</dt>
-                                                    <dd class="pull-left">{{ getSectorCode($sector) }}
-                                                        - {{ getSectorName($sector) }} </dd>
-                                                </div>
-                                                <div class="sector-list">
-                                                    <dt class="pull-left">Sector vocabulary</dt>
-                                                    <dd class="pull-left">{{getVal($sector, ['sector_vocabulary'], '')}}
-                                                        - {{ $codeListHelper->getCodeNameOnly('SectorVocabulary', getVal($sector, ['sector_vocabulary'], '')) }}</dd>
-                                                </div>
-                                            </dl>
-                                        </div>
-                                    </li>
+                                    @if (!hasEmptySectorVocabulary($sector))
+                                        <li>
+                                            {{ getSectorName($sector) }}
+                                            <i class="pull-right material-icons">error</i>
+                                            <div class="sector-more-info">
+                                                <dl>
+                                                    <div class="sector-list">
+                                                        <dt class="pull-left">Sector code:</dt>
+                                                        <dd class="pull-left">{{ getSectorCode($sector) }}
+                                                            - {{ getSectorName($sector) }} </dd>
+                                                    </div>
+                                                    <div class="sector-list">
+                                                        <dt class="pull-left">Sector vocabulary</dt>
+                                                        <dd class="pull-left">{{getVal($sector, ['sector_vocabulary'], '')}}
+                                                            - {{ $codeListHelper->getCodeNameOnly('SectorVocabulary', getVal($sector, ['sector_vocabulary'], '')) }}</dd>
+                                                    </div>
+                                                </dl>
+                                            </div>
+                                        </li>
+                                    @endif
                                 @endforeach
                             </ul>
                         @endif
@@ -200,7 +215,9 @@
                         <thead>
                         <tr>
                             <th width="30%">Transaction Value</th>
-                            <th width="30%">Provider <img src="/images/ic-provider-receiver.png" alt="" width="28" height="8"> Receiver</th>
+                            <th width="30%">Provider <img src="/images/ic-provider-receiver.svg" alt="" width="28"
+                                                          height="8"> Receiver
+                            </th>
                             <th width="20%">Type</th>
                             <th width="20%">Date</th>
                         </tr>
@@ -220,7 +237,9 @@
                                         @endif
                                         @if(getVal($transaction, ['transaction', 'value', 0, 'date'], null))
                                             <i>
-                                                (Valued at {{dateFormat('M d, Y', getVal($transaction, ['transaction', 'value', 0, 'date'], ''))}})
+                                                (Valued
+                                                at {{dateFormat('M d, Y', getVal($transaction, ['transaction', 'value', 0, 'date'], ''))}}
+                                                )
                                             </i>
                                         @endif
                                     @endif
@@ -272,7 +291,9 @@
                                                     @endif
                                                 </span>
                                             <i>
-                                                (Valued at {{dateFormat('M d, Y', getVal($budget, ['value', 0, 'value_date'], ''))}})
+                                                (Valued
+                                                at {{dateFormat('M d, Y', getVal($budget, ['value', 0, 'value_date'], ''))}}
+                                                )
                                             </i>
                                             @endif
 
@@ -299,7 +320,8 @@
                     </span>
                     </div>
                 @endif
-                <a href="{{'/files/xml/'.getVal($activity, [0, 'filename'], '#')}}" target="_blank" class="view-xml-file">View XML file here</a>
+                <a href="{{'/files/xml/'.getVal($activity, [0, 'filename'], '#')}}" target="_blank"
+                   class="view-xml-file">View XML file here</a>
             </div>
         </div>
     </section>
@@ -356,17 +378,9 @@
 <script src="/js/jquery.js"></script>
 <script src="/js/d3.min.js"></script>
 <script type="text/javascript" src="/js/worldMap.js"></script>
+<script type="text/javascript" src="/js/publicPages.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
-        function hamburgerMenu() {
-            $('.navbar-toggle.collapsed').click(function () {
-                $('.navbar-collapse').toggleClass('out');
-                $(this).toggleClass('collapsed');
-            });
-        }
-
-        hamburgerMenu();
-
         if ($('.activity-description p').height() < 64) {
             $('.show-more').hide();
         }
@@ -385,7 +399,7 @@
         var url = "{!! urlencode(url()->current()) !!}";
 
         window.open("https://www.facebook.com/sharer/sharer.php?u=" + url + "&t=" + document.title, '',
-            'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');
+                'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');
         return false;
     };
 

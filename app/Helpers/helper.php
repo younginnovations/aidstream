@@ -1141,3 +1141,30 @@ function dateFormat($format = 'M d, Y', $date)
     return date($format, strtotime($date));
 }
 
+/**
+ * Check if the vocabulary of a Sector is empty.
+ *
+ * @param $sectorData
+ * @return bool
+ */
+function hasEmptySectorVocabulary($sectorData)
+{
+    return (!boolval(getVal($sectorData, ['sector_vocabulary'], [])));
+}
+
+/**
+ * Check if the vocabularies of all Sectors in a Sector array is empty.
+ *
+ * @param $sectors
+ * @return bool
+ */
+function checkAllVocabularies($sectors)
+{
+    foreach ($sectors as $sector) {
+        if (hasEmptySectorVocabulary($sector)) {
+            return false;
+        }
+    }
+
+    return true;
+}

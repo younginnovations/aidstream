@@ -27,14 +27,13 @@ d3.json("/data/countries.geo.json", function (countries) {
         var plotMap = group.append("path")
             .attr("d", geoPath)
             .style("fill", function (d) {
-                if (countryNames[d.id2] != undefined)
+                if (countryNames[d.id2] != undefined) {
                     return "#00A8FF";
-                else
+                } else {
                     return "#D9E5EB";
-
+                }
             })
             .attr("stroke", "#fff")
-
             .attr("stroke-width", "0.5px")
             .attr("countries", function (d) {
                 return d.id2;
@@ -43,16 +42,17 @@ d3.json("/data/countries.geo.json", function (countries) {
         plotMap.on('click', function (d) {
             var absoluteMousePos = d3.mouse(divNode);
             d3.select("#tooltip")
-                .style("display", function() {
-                    if (countryNames[d.id2] != undefined)
+                .style("display", function () {
+                    if (countryNames[d.id2] != undefined) {
                         return "block";
-                    else
+                    } else {
                         return "none";
+                    }
                 })
                 .style("left", absoluteMousePos[0] + 11 + "px")
-                .style("top", absoluteMousePos[1] + 130 + "px")
-                .style("background","#fff")
-                .style("padding","10px")
+                .style("top", absoluteMousePos[1] + 70 + "px")
+                .style("background", "#fff")
+                .style("padding", "10px")
                 .style("position", "absolute")
                 .attr("text-anchor", "middle")
                 .attr("font-size", "14px")

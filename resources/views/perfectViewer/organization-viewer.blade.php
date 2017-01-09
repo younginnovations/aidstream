@@ -39,31 +39,35 @@
 </style>
 
 <body>
-@include('includes.header')
+<body>
+<div class="org-header-wrapper">
+    @include('includes.header')
+</div>
 <div class="wrapper">
     @include('includes.response')
-    <div id="tooltip" class="tooltips"></div>
     <div id="map"></div>
+    <div id="tooltip" class="tooltips"></div>
     <section class="col-md-12 org-map-wrapper pull-left">
         <div class="width-940">
-            <div class="col-md-4 organisation-info">
-                <a href="#" class="organisation-logo">
+            <div class="col-sm-6 col-md-5 organisation-info">
+                <div class="logo">
                     @if($organizations['logo'])
-                        <div class="logo">
+                        <a href="#" class="organisation-logo">
                             <img src="{{ $organizations['logo_url'] }}" alt="{{ $organizations['name'] }}" width="auto" height="68">
-                        </div>
+                        </a>
                     @endif
-                </a>
+                </div>
                 <div class="organisation-more-info">
                 <span class="organisation-name">
-        <a href="#" title="AbleChildAfrica">
-            {{$organizations['name']}}
-        </a>
-    </span>
-                    @if($organizations['address'])
-                        <address><i class="pull-left material-icons">room</i>{{$organizations['address']}}</address>
-                    @endif
-                    <a href="{{url('/who-is-using')}}" class="see-all-activities"><i class="pull-left material-icons">arrow_back</i>See all Organisations</a>
+                    <a href="#" title="{{ getVal($organizations, ['name'], '')}}">
+                        {{ getVal($organizations, ['name'], '')}}
+                        {{--{{$organizations['name']}}--}}
+                    </a>
+                </span>
+                @if($organizations['address'])
+                    <address><i class="pull-left material-icons">room</i>{{$organizations['address']}}</address>
+                @endif
+                <a href="{{url('/who-is-using')}}" class="see-all-activities"><i class="pull-left material-icons">arrow_back</i>See all Organisations</a>
                 </div>
             </div>
         </div>
@@ -122,7 +126,7 @@
                                     @endif
                                     <div class="activity-info">
                                         <ul class="pull-left">
-                                            @if($activity['published_data']['activity_date'])
+                                            @if(getVal($activity, ['published_data', 'activity_date']))
                                                 <li><i class="pull-left material-icons">date_range</i>
                                                     @foreach(getVal($activity, ['published_data', 'activity_date'], []) as $index => $date)
                                                         <span>
@@ -152,8 +156,9 @@
                                                 <li>
                                                     <i class="pull-left material-icons">autorenew</i>
                                                     <span>
-                                    {{ $codeListHelper->getCodeNameOnly('ActivityStatus', getVal($activity, ['published_data', 'activity_status'], '')) }}
-                                                        <i>(Status)</i></span>
+                                                        {{ $codeListHelper->getCodeNameOnly('ActivityStatus', getVal($activity, ['published_data', 'activity_status'], '')) }}
+                                                        <i>(Status)</i>
+                                                    </span>
                                                 </li>
                                             @endif
                                         </ul>
@@ -193,8 +198,8 @@
                     <ul>
                         @if(auth()->check())
                             <li>
-                                <a href="{{ url((auth()->user()->role_id == 1 || auth()->user()->role_id == 2) ? config('app.admin_dashboard') : config('app.super_admin_dashboard'))}}">Go
-                                    to Dashboard</a>
+                                <a href="{{ url((auth()->user()->role_id == 1 || auth()->user()->role_id == 2) ? config('app.admin_dashboard') : config('app.super_admin_dashboard'))}}">Go to
+                                    Dashboard</a>
                             </li>
                         @else
                             <li><a href="{{ url('/auth/login') }}">Login</a></li>
@@ -211,8 +216,7 @@
         </div>
         <div class="width-900 text-center">
             <div class="col-md-12 support-desc">
-                For queries, suggestions, shoot us an email at <a href="mailto:support@aidstream.org">support@aidstream
-                    .org</a>
+                For queries, suggestions, shoot us an email at <a href="mailto:support@aidstream.org">support@aidstream.org</a>
             </div>
         </div>
     </footer>
@@ -222,18 +226,10 @@
 <script src="/js/jquery-stickykit.js"></script>
 <script src="/js/d3.min.js"></script>
 <script type="text/javascript" src="/js/worldMap.js"></script>
+<script type="text/javascript" src="/js/publicPages.js"></script>
 <script>
     var recipientCountries = {!!json_encode(array_flip($recipientCountries))!!};
     $(document).ready(function () {
-        function hamburgerMenu() {
-            $('.navbar-toggle.collapsed').click(function () {
-                $('.navbar-collapse').toggleClass('out');
-                $(this).toggleClass('collapsed');
-            });
-        }
-
-        hamburgerMenu();
-
         function sidebarStick() {
             if ($(window).width() > 768) {
                 var contentHeight = $('.org-activity-wrapper').height();
