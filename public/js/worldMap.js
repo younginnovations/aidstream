@@ -49,7 +49,7 @@ d3.json("/data/countries.geo.json", function (countries) {
                         return "none";
                     }
                 })
-                .style("left", absoluteMousePos[0] + 11 + "px")
+                .style("left", absoluteMousePos[0] - 124 + "px")
                 .style("top", absoluteMousePos[1] + 70 + "px")
                 .style("background", "#fff")
                 .style("padding", "10px")

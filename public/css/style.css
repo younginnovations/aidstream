@@ -554,14 +554,16 @@ section {
   font-size: 12px;
   position: relative;
   box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
-  z-index: 1; }
-  #tooltip:before {
+  z-index: 1;
+  width: 120px; }
+  #tooltip:after {
     border-top: 6px solid transparent;
     border-bottom: 6px solid transparent;
-    border-right: 5px solid #fff;
+    border-left: 5px solid #fff;
     content: "";
-    left: -5px;
-    position: absolute; }
+    position: absolute;
+    right: -5px;
+    top: 8px; }
   #tooltip label {
     color: rgba(72, 72, 72, 0.7);
     display: block;
@@ -1388,7 +1390,7 @@ footer {
 
   #map svg {
     width: 940px;
-    margin-top: -230px !important; }
+    margin: -230px -100px 0 0 !important; }
 
   .organisation-name a {
     font-size: 26px;
