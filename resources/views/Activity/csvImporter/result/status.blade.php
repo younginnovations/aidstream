@@ -28,7 +28,7 @@
                             </div>
                             <form action="{{ route('activity.result.cancel-import', $activityId) }}" method="POST" id="cancel-import">
                                 {{ csrf_field() }}
-                                <input type="button" class="btn_confirm hidden" id="cancel-import" data-title="Confirmation" data-message="Are you sure you want to Cancel Activity Import?" value="Cancel">
+                                <input type="button" class="btn_confirm hidden" id="cancel-import" data-title="Confirmation" data-message="{{ trans('global.cancel_csv_import', ['type' => trans('global.result')]) }}" value="Cancel">
                             </form>
 
                             <div class="tab-content">

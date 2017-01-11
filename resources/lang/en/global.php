@@ -62,8 +62,8 @@ return [
     'preview_as'                                   => 'Preview As',
     'action'                                       => 'Action',
     'activities_published_files'                   => 'Activities Published Files',
-    'publish_organisation_to_iati'                 => 'Published Organisation to IATI',
-    'publish_activities_to_iati'                   => 'Published Activities to IATI',
+    'publish_organisation_to_iati'                 => 'Publish Organisation to IATI',
+    'publish_activities_to_iati'                   => 'Publish Activities to IATI',
     'document_link'                                => 'Document Link',
     'activity_identifiers'                         => 'Activity Identifiers',
     'download_data'                                => 'Download Data',
@@ -262,6 +262,8 @@ return [
     'upload'                                       => 'Upload',
     'organisation_file'                            => 'Organisation File',
     'activity_file'                                => 'Activity File',
-    'false'                                        => 'False'
+    'false'                                        => 'False',
+    'cancel_csv_import'                            => 'Are you sure you want to cancel :type Import?',
+    'result'                                       => 'Result',
 ];
 

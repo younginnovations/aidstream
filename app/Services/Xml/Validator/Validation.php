@@ -368,8 +368,8 @@ class Validation extends Factory
     {
         $messages = [];
         foreach ($formFields as $periodStartKey => $periodStartVal) {
-            $messages[$formBase . '.period_start.' . $periodStartKey . '.date.required'] = trans('validation.required', trans('elementForm.period_start'));
-            $messages[$formBase . '.period_end.' . $periodStartKey . '.date.date']       = trans('validation.date', trans('elementForm.period_start'));
+            $messages[$formBase . '.period_start.' . $periodStartKey . '.date.required'] = trans('validation.required', ['attribute' => trans('elementForm.period_start')]);
+            $messages[$formBase . '.period_end.' . $periodStartKey . '.date.date']       = trans('validation.date', ['attribute' => trans('elementForm.period_start')]);
         }
 
         return $messages;

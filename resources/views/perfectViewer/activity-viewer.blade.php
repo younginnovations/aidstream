@@ -173,7 +173,7 @@
                                                             - {{ getSectorName($sector) }} </dd>
                                                     </div>
                                                     <div class="sector-list">
-                                                        <dt class="pull-left">@lang('perfectViewer.sector_vocabulary')</dt>
+                                                        <dt class="pull-left">@lang('perfectViewer.sector_vocabulary'):</dt>
                                                         <dd class="pull-left">{{getVal($sector, ['sector_vocabulary'], '')}}
                                                             - {{ $codeListHelper->getCodeNameOnly('SectorVocabulary', getVal($sector, ['sector_vocabulary'], '')) }}</dd>
                                                     </div>
@@ -213,7 +213,7 @@
                         <thead>
                         <tr>
                             <th width="30%">@lang('global.transaction_value')</th>
-                            <th width="30%">@lang('perfectViewer.provider') <img src="/images/ic-provider-receiver.png" alt="" width="28" height="8"> @lang('perfectViewer.receiver')</th>
+                            <th width="30%">@lang('perfectViewer.provider') <img src="/images/ic-provider-receiver.svg" alt="" width="28" height="8"> @lang('perfectViewer.receiver')</th>
                             <th width="20%">@lang('global.type')</th>
                             <th width="20%">@lang('global.date')</th>
                         </tr>

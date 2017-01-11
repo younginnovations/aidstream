@@ -29,8 +29,7 @@
                                     </li>
                                 </ul>
                             @endif
-                            <a href="{{ route('activity.show', $id) }}" class="btn btn-primary btn-view-it">@lang('global.view_activity')
-                            </a>
+                            <a href="{{ route('activity.show', $id) }}" class="btn btn-primary btn-view-it">@lang('global.view_activity')</a>
                         </div>
                     </div>
                 </div>

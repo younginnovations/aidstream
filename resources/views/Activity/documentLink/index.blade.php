@@ -12,13 +12,11 @@
                 <div class="element-panel-heading">
                     <div>@lang('title.document_links')
                         <div class="panel-action-btn">
+                            @if(count($documentLinks) > 0)
+                                <a href="{{ route('activity.document-link.create', $id) }}" class="btn btn-primary add-new-btn">@lang('global.add_new_document_link')</a>
+                            @endif
                             <a href="{{route('activity.show',$id)}}" class="btn btn-primary btn-view-it">@lang('global.view_activity')</a>
                         </div>
-                        @if(count($documentLinks) > 0)
-                            <div class="panel-action-btn">
-                                <a href="{{ route('activity.document-link.create', $id) }}" class="btn btn-primary add-new-btn">@lang('global.add_new document_link')</a>
-                            </div>
-                        @endif
                     </div>
                 </div>
                 <div class="col-xs-12 col-md-8 col-lg-8 element-content-wrapper result-content-wrapper">

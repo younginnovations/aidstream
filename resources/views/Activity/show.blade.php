@@ -39,7 +39,7 @@
                         <input type="hidden" name="activity_workflow" value="{{ $activity_workflow + 1 }}">
                         @if($activity_workflow == 2)
                             <input type="button" value="{{trans('global.mark_as')}} {{ trans(sprintf('global.%s',strtolower($btn_text))) }}" class="btn_confirm"
-                                   data-title="Confirmation" data-message={{trans('global.are_you_sure_to_publish')}}>
+                                   data-title="Confirmation" data-message="{{ trans('global.are_you_sure_to_publish') }}">
                         @else
                             <input type="submit" value="{{trans('global.mark_as')}} {{ trans(sprintf('global.%s',strtolower($btn_text )))}}">
                         @endif

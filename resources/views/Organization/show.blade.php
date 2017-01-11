@@ -40,12 +40,12 @@
                         </ol>
                         @if($btn_text != "")
                             <form method="POST" id="change_status" class="pull-right"
-                                  action="{{ url('/organization/' . Auth::user()->org_id . '/update-status') }}">
+                                  action="{{ url('/organization/' . auth()->user()->org_id . '/update-status') }}">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
                                 <input type="hidden" name="status" value="{{ $status + 1 }}">
                                 @if($status == 2)
                                     <input type="button" value="{{trans('global.mark_as')}} {{ trans(sprintf('global.%s',strtolower($btn_text))) }}" class="btn_confirm"
-                                           data-title="Confirmation" data-message={{trans('global.are_you_sure_to_publish')}}>
+                                           data-title="Confirmation" data-message="{{ trans('global.are_you_sure_to_publish') }}">
                                 @else
                                     <input type="submit" value="{{trans('global.mark_as')}} {{ trans(sprintf('global.%s',strtolower($btn_text )))}}">
                                 @endif
