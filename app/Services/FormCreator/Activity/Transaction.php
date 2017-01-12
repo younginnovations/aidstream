@@ -41,11 +41,11 @@ class Transaction
                 'model'  => $model,
                 'url'    => $url
             ]
-        )->add((null !== $data) ? 'Update' : 'Create', 'submit', ['attr' => ['class' => 'btn btn-submit btn-form']])
+        )->add('Save', 'submit', ['label' => trans('global.save') ,'attr' => ['class' => 'btn btn-submit btn-form']])
             ->add('Cancel', 'static', [
                 'tag'     => 'a',
-                'label'   => false,
-                'value'   => 'Cancel',
+                'label' => false,
+                'value' => trans('global.cancel'),
                 'attr'    => [
                     'class' => 'btn btn-cancel',
                     'href'  => route('activity.transaction.index',$activityId)

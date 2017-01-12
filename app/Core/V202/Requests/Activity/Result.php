@@ -97,13 +97,13 @@ class Result extends V201Result
     protected function getMessagesForResultNarrative($formFields, $formBase)
     {
         $messages                                                 = [];
-        $messages[sprintf('%s.narrative.unique_lang', $formBase)] = 'Languages should be unique.';
+        $messages[sprintf('%s.narrative.unique_lang', $formBase)] = trans('validation.unique', ['attribute' => trans('elementForm.language')]);
         foreach ($formFields as $narrativeIndex => $narrative) {
             $messages[sprintf(
                 '%s.narrative.%s.narrative.required',
                 $formBase,
                 $narrativeIndex
-            )] = 'Indicator Narrative is required.';
+            )] = trans('validation.required', ['attribute' => trans('elementForm.indicator_narrative')]);
         }
 
         return $messages;
@@ -126,7 +126,7 @@ class Result extends V201Result
                 $formBase,
                 $referenceIndex
             );
-            $messages[sprintf('%s.indicator_uri.url', $referenceForm)] = 'Enter valid URL. eg. http://example.com';
+            $messages[sprintf('%s.indicator_uri.url', $referenceForm)] = trans('validation.url');
         }
 
         return $messages;

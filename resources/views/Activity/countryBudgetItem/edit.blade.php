@@ -1,6 +1,6 @@
 @extends('app')
 
-@section('title', 'Activity Country Budget Item - ' . $activityData->IdentifierTitle)
+@section('title', trans('title.country_budget_item').' - ' . $activityData->IdentifierTitle)
 
 @section('content')
     <div class="container main-container">
@@ -10,10 +10,10 @@
                 @include('includes.response')
                 <div class="element-panel-heading">
                     <div>
-                        <span>Country Budget Item</span>
+                        <span>@lang('element.country_budget_items')</span>
                         <div class="element-panel-heading-info"><span>{{$activityData->IdentifierTitle}}</span></div>
                         <div class="panel-action-btn">
-                            <a href="{{ route('activity.show', $id) }}" class="btn btn-primary">View Activity
+                            <a href="{{ route('activity.show', $id) }}" class="btn btn-primary">@lang('global.view_activity')
                             </a>
                         </div>
                     </div>

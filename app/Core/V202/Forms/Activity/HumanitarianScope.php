@@ -14,18 +14,18 @@ class HumanitarianScope extends BaseForm
     public function buildForm()
     {
         $this
-            ->addSelect('type', $this->getCodeList('HumanitarianScopeType', 'Activity'), null, null, null, true, ['attr' => ['class' => 'humanitarian-type form-control']])
+            ->addSelect('type', $this->getCodeList('HumanitarianScopeType', 'Activity'), trans('elementForm.type'), null, null, true, ['attr' => ['class' => 'humanitarian-type form-control']])
             ->addSelect(
                 'vocabulary',
                 $this->getCodeList('HumanitarianScopeVocabulary', 'Activity'),
-                null,
+                trans('elementForm.vocabulary'),
                 null,
                 null,
                 true,
                 ['attr' => ['class' => 'humanitarian-vocabulary form-control', 'disabled' => 'disabled']]
             )
-            ->add('vocabulary_uri', 'text')
-            ->add('code', 'text', ['required' => true])
+            ->add('vocabulary_uri', 'text', ['label' => trans('elementForm.vocabulary_uri')])
+            ->add('code', 'text', ['label' => trans('elementForm.code'), 'required' => true])
             ->addNarrative('humanitarian_narrative')
             ->addAddMoreButton('add', 'humanitarian_narrative')
             ->addRemoveThisButton('remove');

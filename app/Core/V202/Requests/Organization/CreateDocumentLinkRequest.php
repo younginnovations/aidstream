@@ -42,18 +42,18 @@ class CreateDocumentLinkRequest extends V201CreateDocumentLinkRequest
     {
         $messages = [];
         foreach ($formFields as $documentLinkIndex => $documentLink) {
-            $documentLinkForm                                                                        = sprintf(
+            $documentLinkForm                                                                    = sprintf(
                 'document_link.%s',
                 $documentLinkIndex
             );
-            $messages[sprintf('document_link.%s.url.required', $documentLinkIndex)]                  = 'Url is required';
+            $messages[sprintf('document_link.%s.url.required', $documentLinkIndex)]              = trans('validation.required', ['attribute' => trans('elementForm.url')]);
             $messages[sprintf(
                 'document_link.%s.url.url',
                 $documentLinkIndex
-            )]                                                                                       = 'Enter valid URL. eg. http://example.com';
-            $messages[sprintf('document_link.%s.format.required', $documentLinkIndex)]               = 'Format is required';
-            $messages[sprintf('document_link.%s.document_date.0.date.date', $documentLinkIndex)]     = 'Please enter a valid date.';
-            $messages                                                                                = array_merge(
+            )]                                                                                   = trans('validation.url');
+            $messages[sprintf('document_link.%s.format.required', $documentLinkIndex)]           = trans('validation.required', ['attribute' => trans('elementForm.format')]);
+            $messages[sprintf('document_link.%s.document_date.0.date.date', $documentLinkIndex)] = trans('validation.date', ['attribute' => trans('elementForm.date')]);
+            $messages                                                                            = array_merge(
                 $messages,
                 $this->getMessagesForNarrative($documentLink['narrative'], $documentLinkForm),
                 $this->getMessagesForDocumentCategory($documentLink['category'], $documentLinkForm),

@@ -45,9 +45,9 @@ class DefaultFlowTypeController extends Controller
      * @param $id
      * @return \Illuminate\View\View
      */
-    public function  index($id)
+    public function index($id)
     {
-        $activityData  = $this->activityManager->getActivityData($id);
+        $activityData = $this->activityManager->getActivityData($id);
 
         if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
@@ -68,7 +68,7 @@ class DefaultFlowTypeController extends Controller
      */
     public function update($id, Request $request, DefaultFlowTypeRequestManager $defaultFlowTypeRequestManager)
     {
-        $activityData  = $this->activityManager->getActivityData($id);
+        $activityData = $this->activityManager->getActivityData($id);
 
         if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
@@ -78,11 +78,11 @@ class DefaultFlowTypeController extends Controller
         $defaultFlowType = $request->all();
         if ($this->defaultFlowTypeManager->update($defaultFlowType, $activityData)) {
             $this->activityManager->resetActivityWorkflow($id);
-            $response = ['type' => 'success', 'code' => ['updated', ['name' => 'Default Flow Type']]];
+            $response = ['type' => 'success', 'code' => ['updated', ['name' => trans('element.default_flow_type')]]];
 
             return redirect()->to(sprintf('/activity/%s', $id))->withResponse($response);
         }
-        $response = ['type' => 'danger', 'code' => ['update_failed', ['name' => 'Default Flow Type']]];
+        $response = ['type' => 'danger', 'code' => ['update_failed', ['name' => trans('element.default_flow_type')]]];
 
         return redirect()->back()->withInput()->withResponse($response);
     }

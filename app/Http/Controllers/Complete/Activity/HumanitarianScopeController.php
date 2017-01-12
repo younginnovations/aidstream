@@ -48,7 +48,7 @@ class HumanitarianScopeController extends Controller
      */
     public function index($id)
     {
-        $activityData  = $this->activityManager->getActivityData($id);
+        $activityData = $this->activityManager->getActivityData($id);
 
         if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
@@ -69,7 +69,7 @@ class HumanitarianScopeController extends Controller
      */
     public function update($id, Request $request, HumanitarianScopeRequest $humanitarianScopeRequest)
     {
-        $activityData  = $this->activityManager->getActivityData($id);
+        $activityData = $this->activityManager->getActivityData($id);
 
         if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
@@ -79,11 +79,11 @@ class HumanitarianScopeController extends Controller
         $humanitarianScope = $request->all();
         if ($this->humanitarianScopeManager->update($humanitarianScope, $activityData)) {
             $this->activityManager->resetActivityWorkflow($id);
-            $response = ['type' => 'success', 'code' => ['updated', ['name' => 'Humanitarian Scope']]];
+            $response = ['type' => 'success', 'code' => ['updated', ['name' => trans('element.humanitarian_scope')]]];
 
             return redirect()->to(sprintf('/activity/%s', $id))->withResponse($response);
         }
-        $response = ['type' => 'danger', 'code' => ['update_failed', ['name' => 'Humanitarian Scope']]];
+        $response = ['type' => 'danger', 'code' => ['update_failed', ['name' => trans('element.humanitarian_scope')]]];
 
         return redirect()->back()->withInput()->withResponse($response);
     }

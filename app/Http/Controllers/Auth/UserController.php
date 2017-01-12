@@ -107,9 +107,9 @@ class UserController extends Controller
         $organization->save();
         $database->commit();
 
-        $response = ($user->save() && $organization->save()) ? ['type' => 'success', 'code' => ['updated', ['name' => 'Username']]] : [
+        $response = ($user->save() && $organization->save()) ? ['type' => 'success', 'code' => ['updated', ['name' => trans('user.username')]]] : [
             'type' => 'danger',
-            'code' => ['update_failed', ['name' => 'Username']]
+            'code' => ['update_failed', ['name' => trans('user.username')]]
         ];
 
         return redirect('user/profile')->withResponse($response);
@@ -146,13 +146,16 @@ class UserController extends Controller
         }
 
         if (!Hash::check($input['old_password'], $user->password)) {
-            $response = ['type' => 'danger', 'code' => ['password_mismatch', ['name' => 'Password']]];
+            $response = ['type' => 'danger', 'code' => ['password_mismatch', ['name' => trans('user.password')]]];
 
             return redirect()->back()->withResponse($response);
         }
 
         $user->password = bcrypt($input['password']);
-        $response       = ($user->save()) ? ['type' => 'success', 'code' => ['updated', ['name' => 'Password']]] : ['type' => 'danger', 'code' => ['update_failed', ['name' => 'Password']]];
+        $response       = ($user->save()) ? ['type' => 'success', 'code' => ['updated', ['name' => trans('user.password')]]] : [
+            'type' => 'danger',
+            'code' => ['update_failed', ['name' => trans('user.password')]]
+        ];
 
         return redirect('user/profile')->withResponse($response);
     }
@@ -197,7 +200,7 @@ class UserController extends Controller
         }
         $user = $this->userManager->updateUserProfile($input);
 
-        $response = ($user) ? ['type' => 'success', 'code' => ['updated', ['name' => 'Profile']]] : [
+        $response = ($user) ? ['type' => 'success', 'code' => ['updated', ['name' => trans('user.profile')]]] : [
             'type' => 'danger',
             'code' => ['update_failed', ['name' => 'Profile']]
         ];

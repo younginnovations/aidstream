@@ -18,7 +18,7 @@ class BudgetItem extends BaseForm
                 'code_text',
                 'text',
                 [
-                    'label'      => 'Code',
+                    'label'      => trans('elementForm.code'),
                     'wrapper'    => ['class' => 'form-group code_text codes'],
                     'help_block' => $this->addHelpText('Activity_CountryBudgetItems_BudgetItem-non_iati'),
                     'required'   => true
@@ -28,15 +28,16 @@ class BudgetItem extends BaseForm
                 'code',
                 'select',
                 [
+                    'label'       => trans('elementForm.code'),
                     'choices'     => $this->getCodeList('BudgetIdentifier', 'Activity'),
-                    'empty_value' => 'Select one of the following option :',
+                    'empty_value' => trans('elementForm.select_text'),
                     'wrapper'     => ['class' => 'form-group code codes hidden'],
                     'help_block'  => $this->addHelpText('Activity_CountryBudgetItems_BudgetItem-non_iati'),
-                    'required'   => true
+                    'required'    => true
                 ]
             )
             ->addPercentage($this->addHelpText('Activity_CountryBudgetItems_BudgetItem-percentage'))
-            ->addCollection('description', 'Activity\BudgetItemDescription', 'description')
+            ->addCollection('description', 'Activity\BudgetItemDescription', 'description', [], trans('elementForm.description'))
             ->addRemoveThisButton('remove_budget_item');
     }
 }

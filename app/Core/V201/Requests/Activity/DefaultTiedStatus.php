@@ -30,4 +30,11 @@ class DefaultTiedStatus extends Request
         return $rules;
     }
 
+    public function messages()
+    {
+        $messages['default_tied_status.required'] = trans('validation.required', ['attribute' => trans('element.default_tied_status')]);
+
+        return $messages;
+    }
+
 }

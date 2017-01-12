@@ -155,11 +155,11 @@ class DocumentLinkController extends Controller
         $this->authorizeByRequestType($activityDocumentLink, 'document_link', true);
         if ($this->documentLinkManager->update($documentLinkData, $activityDocumentLink)) {
             $this->activityManager->resetActivityWorkflow($id);
-            $response = ['type' => 'success', 'code' => [($documentLinkId) ? 'updated' : 'created', ['name' => 'Activity Document Link']]];
+            $response = ['type' => 'success', 'code' => [($documentLinkId) ? 'updated' : 'created', ['name' => trans('title.activity_document_link')]]];
 
             return redirect()->to(route('activity.document-link.index', $id))->withResponse($response);
         }
-        $response = ['type' => 'danger', 'code' => [($documentLinkId) ? 'update_failed' : 'save_failed', ['name' => 'Activity Document Link']]];
+        $response = ['type' => 'danger', 'code' => [($documentLinkId) ? 'update_failed' : 'save_failed', ['name' => trans('title.activity_document_link')]]];
 
         return redirect()->back()->withInput()->withResponse($response);
     }
@@ -182,9 +182,9 @@ class DocumentLinkController extends Controller
         $activityDocumentLink = $this->documentLinkManager->getDocumentLink($documentLinkId, $id);
         if ($this->documentLinkManager->delete($activityDocumentLink)) {
             $this->activityManager->resetActivityWorkflow($id);
-            $response = ['type' => 'success', 'code' => ['deleted', ['name' => 'Document Link']]];
+            $response = ['type' => 'success', 'code' => ['deleted', ['name' => trans('element.document_link')]]];
         } else {
-            $response = ['type' => 'danger', 'code' => ['delete_failed', ['name' => 'Document Link']]];
+            $response = ['type' => 'danger', 'code' => ['delete_failed', ['name' => trans('element.document_link')]]];
         }
 
         return redirect()->back()->withResponse($response);

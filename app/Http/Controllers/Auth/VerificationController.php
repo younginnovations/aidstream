@@ -62,9 +62,9 @@ class VerificationController extends Controller
         $registryInfo = request()->all();
 
         if ($this->verificationManager->saveRegistryInfo($code, $registryInfo, $this->settingsManager)) {
-            return redirect()->to('/auth/login')->withMessage('Registry Info Saved Successfully.');
+            return redirect()->to('/auth/login')->withMessage(trans('success.registry_info_saved'));
         } else {
-            return redirect()->to('/auth/login')->withErrors(['Failed to save Registry Info.']);
+            return redirect()->to('/auth/login')->withErrors([trans('error.failed_to_save_registry_info')]);
         }
     }
 

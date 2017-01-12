@@ -41,7 +41,7 @@ class ActivityScope extends Request
     public function messages()
     {
         $messages                                 = [];
-        $messages['activity_scope' . '.required'] = 'Activity scope is required.';
+        $messages['activity_scope' . '.required'] = trans('validation.required', ['attribute' => trans('element.activity_scope')]);
 
         return $messages;
     }

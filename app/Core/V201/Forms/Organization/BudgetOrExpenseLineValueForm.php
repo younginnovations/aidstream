@@ -7,8 +7,8 @@ class BudgetOrExpenseLineValueForm extends BaseForm
     public function buildForm()
     {
         $this
-            ->add('amount', 'text', ['help_block' => $this->addHelpText('Organisation_TotalBudget_Value-text')])
-            ->addSelect('currency', $this->getCodeList('Currency', 'Organization'), 'Currency', $this->addHelpText('Organisation_TotalBudget_Value-currency'))
-            ->add('value_date', 'date', ['help_block' => $this->addHelpText('Organisation_TotalBudget_Value-value_date')]);
+            ->add('amount', 'text', ['label' => trans('elementForm.amount'), 'help_block' => $this->addHelpText('Organisation_TotalBudget_Value-text')])
+            ->addSelect('currency', $this->getCodeList('Currency', 'Organization'), trans('elementForm.currency'), $this->addHelpText('Organisation_TotalBudget_Value-currency'))
+            ->add('value_date', 'date', ['label' => trans('elementForm.value_date'), 'help_block' => $this->addHelpText('Organisation_TotalBudget_Value-value_date')]);
     }
 }

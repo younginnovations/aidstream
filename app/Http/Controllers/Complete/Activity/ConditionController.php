@@ -29,35 +29,35 @@ class ConditionController extends Controller
 
     public function index($id)
     {
-        $activityData  = $this->activityManager->getActivityData($id);
+        $activityData = $this->activityManager->getActivityData($id);
 
         if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
-        $condition    = $this->conditionManager->getConditionData($id);
-        $form         = $this->conditionForm->editForm($condition, $id);
+        $condition = $this->conditionManager->getConditionData($id);
+        $form      = $this->conditionForm->editForm($condition, $id);
 
         return view('Activity.condition.edit', compact('form', 'activityData', 'id'));
     }
 
     public function update($id, Request $request, ConditionRequestManager $conditionRequestManager)
     {
-        $activityData  = $this->activityManager->getActivityData($id);
+        $activityData = $this->activityManager->getActivityData($id);
 
         if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
         $this->authorizeByRequestType($activityData, 'conditions');
-        $condition    = $request->except(['_token', '_method']);
+        $condition = $request->except(['_token', '_method']);
         if ($this->conditionManager->update($condition, $activityData)) {
             $this->activityManager->resetActivityWorkflow($id);
-            $response = ['type' => 'success', 'code' => ['updated', ['name' => 'Conditions']]];
+            $response = ['type' => 'success', 'code' => ['updated', ['name' => trans('element.condition')]]];
 
             return redirect()->to(sprintf('/activity/%s', $id))->withResponse($response);
         }
-        $response = ['type' => 'danger', 'code' => ['update_failed', ['name' => 'Related Activity']]];
+        $response = ['type' => 'danger', 'code' => ['update_failed', ['name' => trans('element.condition')]]];
 
         return redirect()->back()->withInput()->withResponse($response);
     }

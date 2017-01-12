@@ -1,4 +1,17 @@
 $(document).ready(function () {
+    var localisedData;
+
+    var callAsync = function (url, requestType) {
+        return $.ajax({
+            url: url,
+            type: requestType
+        })
+    };
+
+    callAsync('/localisedFormText', 'get').success(function (data) {
+        localisedData = JSON.parse(data);
+    });
+
     function listDocuments(data) {
         if (data) {
             var documentData = data;
@@ -13,10 +26,10 @@ $(document).ready(function () {
                 }
                 documentList += '<tr>';
                 documentList += '<td>' + url + '</td>';
-                documentList += '<td><a href="' + url + '" class="use_this">Use this</a></td>';
+                documentList += '<td><a href="' + url + '" class="use_this">' + localisedData['use_this'] + '</a></td>';
                 documentList += '<tr>';
             }
-            documentList = documentList !== '' ? documentList : '<td colspan="2">No documents found.</td>';
+            documentList = documentList !== '' ? documentList : '<td colspan="2">' + localisedData['no_documents_found'] + '</td>';
             $('#document_list tbody').html(documentList);
         }
     }

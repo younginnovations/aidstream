@@ -16,6 +16,6 @@ class UploadActivity extends BaseForm
     public function buildForm()
     {
         $this
-            ->add('activity', 'file', ['label' => 'Activity CSV File','wrapper' => ['class' => 'form-group col-xs-6 col-sm-6 activity-file-choose']]);
+            ->add('activity', 'file', ['label' => trans('elementForm.activity_csv_file'),'wrapper' => ['class' => 'form-group col-xs-6 col-sm-6 activity-file-choose']]);
     }
 }

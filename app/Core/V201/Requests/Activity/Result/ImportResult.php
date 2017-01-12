@@ -29,7 +29,7 @@ class ImportResult extends Result
      */
     public function rules()
     {
-        $rules             = [];
+        $rules           = [];
         $rules['result'] = 'required|result_file';
 
         return $rules;
@@ -41,8 +41,8 @@ class ImportResult extends Result
      */
     public function messages()
     {
-        $messages['result.required']      = 'The result file is required';
-        $messages['result.activity_file'] = 'The result must be a file of type: csv.';
+        $messages['result.required']      = trans('validation.required', ['attribute' => 'result file']);
+        $messages['result.activity_file'] = trans('validation.mimes', ['attribute' => 'result', ':values' => 'csv']);
 
         return $messages;
     }

@@ -194,7 +194,7 @@ class ActivityController extends Controller
         $defaultFieldValues = $settings->default_field_values;
 
         if (!$defaultFieldValues) {
-            $response = ['type' => 'warning', 'code' => ['default_values', ['name' => 'activity']]];
+            $response = ['type' => 'warning', 'code' => ['default_values', ['name' => trans('global.activity')]]];
 
             return redirect('/default-values')->withResponse($response);
         }
@@ -203,12 +203,12 @@ class ActivityController extends Controller
         $result = $this->activityManager->store($input, $this->organization_id, $defaultFieldValues);
 
         if (!$result) {
-            $response = ['type' => 'danger', 'code' => ['save_failed', ['name' => 'activity']]];
+            $response = ['type' => 'danger', 'code' => ['save_failed', ['name' => trans('global.activity')]]];
 
             return redirect()->back()->withResponse($response);
         }
 
-        $response = ['type' => 'success', 'code' => ['created', ['name' => 'Activity']]];
+        $response = ['type' => 'success', 'code' => ['created', ['name' => trans('global.activity')]]];
 
         return redirect()->route('activity.show', [$result->id])->withResponse($response);
     }
@@ -485,10 +485,10 @@ class ActivityController extends Controller
 
         $response = ($this->activityManager->destroy($activity)) ? [
             'type' => 'success',
-            'code' => ['deleted', ['name' => 'Activity']],
+            'code' => ['deleted', ['name' => trans('global.activity')]],
         ] : [
             'type' => 'danger',
-            'code' => ['delete_failed', ['name' => 'Activity']],
+            'code' => ['delete_failed', ['name' => trans('global.activity')]],
         ];
 
         return redirect()->back()->withResponse($response);
@@ -601,15 +601,15 @@ class ActivityController extends Controller
         $settings = $this->settingsManager->getSettings($this->organization_id);
 
         if ($organization->reporting_org == null || $organization->reporting_org[0]['reporting_organization_identifier'] == "" || $organization->reporting_org[0]['reporting_organization_type'] == "") {
-            $response = ['type' => 'warning', 'code' => ['settings', ['name' => 'activity']]];
+            $response = ['type' => 'warning', 'code' => ['settings', ['name' => trans('global.activity')]]];
 
             return redirect('/settings')->withResponse($response);
         } elseif ($settings == null) {
-            $response = ['type' => 'warning', 'code' => ['default_values', ['name' => 'activity']]];
+            $response = ['type' => 'warning', 'code' => ['default_values', ['name' => trans('global.activity')]]];
 
             return redirect('/default-values')->withResponse($response);
         } elseif (!$settings->default_field_groups) {
-            $response = ['type' => 'warning', 'code' => ['default_field_groups_required', ['name' => 'activity']]];
+            $response = ['type' => 'warning', 'code' => ['default_field_groups_required', ['name' => trans('global.activity')]]];
 
             return redirect('/activity-elements-checklist')->withResponse($response);
         }
@@ -669,7 +669,7 @@ class ActivityController extends Controller
         if (is_null($files)) {
             $response = [
                 'type' => 'warning',
-                'code' => ['message', ['message' => 'Please select activity XML files to be published.']],
+                'code' => ['message', ['message' => trans('error.select_activity_xml_files_to_be_published')]],
             ];
 
             return redirect()->back()->withResponse($response);
@@ -693,12 +693,12 @@ class ActivityController extends Controller
         }
 
         if ($unpubFiles) {
-            $value['unpublished'] = sprintf("The files %s could not be published to registry. Please try again.", implode(',', $unpubFiles));
+            $value['unpublished'] = trans('error.failed_to_publish_to_registry', ['filename' => implode(',', $unpubFiles)]);
         }
 
         if ($pubFiles) {
             $this->twitter->post($settings, $organization);
-            $value['published'] = sprintf("The files %s have been published to registry", implode(',', $pubFiles));
+            $value['published'] = trans('success.published_to_registry', implode(',', $pubFiles));
         }
 
         return redirect()->back()->with('value', $value);
@@ -814,9 +814,9 @@ class ActivityController extends Controller
 
         if ($result) {
             $this->activityManager->resetActivityWorkflow($id);
-            $response = ['type' => 'success', 'code' => ['activity_element_removed', ['element' => 'activity']]];
+            $response = ['type' => 'success', 'code' => ['activity_element_removed', ['element' => trans('global.activity')]]];
         } else {
-            $response = ['type' => 'danger', 'code' => ['activity_element_not_removed', ['element' => 'activity']]];
+            $response = ['type' => 'danger', 'code' => ['activity_element_not_removed', ['element' => trans('global.activity')]]];
         }
 
         return redirect()->back()->withResponse($response);
@@ -952,14 +952,11 @@ class ActivityController extends Controller
     protected function getMessageForPublishedActivity($status, $filename)
     {
         if ($status == "Unlinked") {
-            $message = "This activity has not been published to the IATI registry. Please go to Published files to manually publish your file to the registry. If you need help please
-                                    contact us at <a href='mailto:support@aidstream.org'>support@aidstream.org</a>.";
+            $message = trans('error.activity_not_published_to_registry');
         } elseif ($status == "Linked") {
-            $message = " This activity has been published to the IATI registry. It is included in the file
-                                    <a href='/files/xml/$filename'>$filename</a>";
+            $message = trans('success.activity_published_to_registry') . ' ' . "<a href='/files/xml/$filename'>$filename</a>";
         } else {
-            $message = "This activity has not been published to the IATI registry. Please re-publish this activity again. If you need help please
-                                    contact us at <a href='mailto:support@aidstream.org'>support@aidstream.org</a>.";
+            $message = trans('error.republish_activity');
         }
 
         return $message;
@@ -980,9 +977,9 @@ class ActivityController extends Controller
         $sector = $this->activityManager->removeActivitySector($activityId);
 
         if ($sector) {
-            $response = ['type' => 'success', 'messages' => ['Sector details has been removed from Activity level.']];
+            $response = ['type' => 'success', 'messages' => [trans('success.sector_details_removed_from_activity_level')]];
         } else {
-            $response = ['type' => 'danger', 'messages' => ['Failed to remove Sector details from Activity level.']];
+            $response = ['type' => 'danger', 'messages' => [trans('error.failed_to_remove_sector_details_from_activity_level')]];
         }
 
         return redirect()->back()->withResponse($response);
@@ -1002,9 +999,9 @@ class ActivityController extends Controller
         $sector = $this->activityManager->removeTransactionSector($activityId);
 
         if ($sector) {
-            $response = ['type' => 'success', 'messages' => ['Sector details has been removed from Transaction level.']];
+            $response = ['type' => 'success', 'messages' => [trans('success.sector_details_removed_from_transaction_level')]];
         } else {
-            $response = ['type' => 'danger', 'messages' => ['Failed to remove Sector details from Transaction level.']];
+            $response = ['type' => 'danger', 'messages' => [trans('error.failed_to_remove_sector_details_from_transaction_level')]];
         }
 
         return redirect()->back()->withResponse($response);

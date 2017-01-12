@@ -14,8 +14,8 @@ class TargetDimension extends BaseForm
     public function buildForm()
     {
         $this
-            ->add('name', 'text')
-            ->add('value', 'text')
+            ->add('name', 'text', ['label' => trans('elementForm.name')])
+            ->add('value', 'text', ['label' => trans('elementForm.value')])
             ->addRemoveThisButton('remove_target_dimension');
     }
 }

@@ -56,15 +56,15 @@ class DocumentLink extends ActivityBaseRequest
         $messages = [];
         foreach ($formFields as $documentLinkIndex => $documentLink) {
             $documentLinkForm                                                                  = sprintf('document_link.%s', $documentLinkIndex);
-            $messages[sprintf('document_link.%s.url.required', $documentLinkIndex)]            = 'Url is required';
-            $messages[sprintf('document_link.%s.url.url', $documentLinkIndex)]                 = 'Enter valid URL. eg. http://example.com';
-            $messages[sprintf('document_link.%s.format.required', $documentLinkIndex)]         = 'Format is required';
+            $messages[sprintf('document_link.%s.url.required', $documentLinkIndex)]            = trans('validation.required', ['attribute' => trans('elementForm.url')]);
+            $messages[sprintf('document_link.%s.url.url', $documentLinkIndex)]                 = trans('validation.url');
+            $messages[sprintf('document_link.%s.format.required', $documentLinkIndex)]         = trans('validation.required', ['attribute' => trans('elementForm.format')]);
             $messages                                                                          = array_merge(
                 $messages,
                 $this->getMessagesForNarrative(getVal($documentLink, ['title', 0, 'narrative']), sprintf('%s.title.0', $documentLinkForm)),
                 $this->getMessagesForDocumentCategory(getVal($documentLink, ['category'], []), $documentLinkForm)
             );
-            $messages[sprintf('%s.title.0.narrative.0.narrative.required', $documentLinkForm)] = 'Narrative is required.';
+            $messages[sprintf('%s.title.0.narrative.0.narrative.required', $documentLinkForm)] = trans('validation.required', ['attribute' => trans('elementForm.narrative')]);
         }
 
         return $messages;
@@ -95,7 +95,7 @@ class DocumentLink extends ActivityBaseRequest
     {
         $messages = [];
         foreach ($formFields as $documentCategoryIndex => $documentCategory) {
-            $messages[sprintf('%s.category.%s.code.required', $formIndex, $documentCategoryIndex)] = 'Category is required';
+            $messages[sprintf('%s.category.%s.code.required', $formIndex, $documentCategoryIndex)] = trans('validation.required', ['attribute' => trans('elementForm.category')]);
         }
 
         return $messages;

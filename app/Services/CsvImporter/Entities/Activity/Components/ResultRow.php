@@ -1012,41 +1012,50 @@ class ResultRow extends Row
     {
         $messages = [];
 
-        $messages['type.required']                                                   = 'Result Type is required.';
-        $messages['type.in']                                                         = 'Invalid Result Type.';
-        $messages['aggregation_status.boolean']                                      = 'Aggregation Status type should be true or false.';
-        $messages['title.*.narrative.0.narrative.required']                          = 'Title is required.';
-        $messages['title.*.narrative.0.language.in']                                 = 'Invalid Title Language.';
-        $messages['title.unique_lang']                                               = 'Repeated Title in the same language is not allowed.';
-        $messages['description.unique_lang']                                         = 'Repeated Description in the same language is not allowed.';
-        $messages['indicator.*.title.unique_lang']                                   = 'Repeated Indicator Title in the same language is not allowed.';
-        $messages['indicator.*.description.unique_lang']                             = 'Repeated Indicator Description in the same language is not allowed.';
-        $messages['indicator.*.baseline.0.comment.unique_lang']                      = 'Repeated Baseline Comment in the same language is not allowed.';
-        $messages['indicator.*.period.*.target.0.comment.unique_lang']               = 'Repeated Period Target Comment in the same language is not allowed.';
-        $messages['indicator.*.period.*.actual.0.comment.unique_lang']               = 'Repeated Period Actual Comment in the same language is not allowed.';
-        $messages['description.*.narrative.0.language.in']                           = 'Invalid Description Language.';
-        $messages['indicator.*.measure.required']                                    = 'Indicator Measure is required.';
-        $messages['indicator.*.measure.in']                                          = 'Invalid Indicator Measure.';
-        $messages['indicator.*.ascending.boolean']                                   = 'Indicator Ascending should be true/false, 0/1 or Yes/No.';
-        $messages['indicator.*.title.*.narrative.0.narrative.required']              = 'Indicator Title is required.';
-        $messages['indicator.*.title.*.narrative.0.language.in']                     = 'Invalid Indicator Title language.';
-        $messages['indicator.*.description.*.narrative.0.language.in']               = 'Invalid Indicator Description language.';
-        $messages['indicator.*.reference.*.vocabulary.in']                           = 'Invalid Reference vocabulary.';
-        $messages['indicator.*.reference.*.indicator_uri.url']                       = 'Invalid Reference URL.';
-        $messages['indicator.*.baseline.0.year.integer']                             = 'Indicator Baseline Year should be an integer.';
-        $messages['indicator.*.baseline.0.value.string']                             = 'Indicator Baseline Value should be string.';
-        $messages['indicator.*.baseline.size']                                       = 'Indicator Baseline Year or Value should occur once and no more than once within an Indicator.';
-        $messages['indicator.*.baseline.0.comment.*.narrative.0.narrative.required'] = 'Baseline Comment Narrative is required.';
-        $messages['indicator.*.baseline.0.comment.*.narrative.0.language.in']        = 'Baseline Comment Language is invalid.';
-        $messages['indicator.*.period.*.period_start.0.date.required']               = 'Period Start Date is required.';
-        $messages['indicator.*.period.*.target.size']                                = 'Period Target Value should occur once and no more than once within Period.';
-        $messages['indicator.*.period.*.actual.size']                                = 'Period Actual Value should occur once and no more than once within Period.';
-        $messages['indicator.*.period.*.period_start.0.date.date_format']            = 'Invalid Period Start Date, required format is Y-m-d.';
-        $messages['indicator.*.period.*.period_end.0.date.required']                 = 'Period End Date is required.';
-        $messages['indicator.*.period.*.period_end.0.date.date_format']              = 'Invalid Period End Date, required format is Y-m-d.';
-        $messages['indicator.*.period.*.period_end.0.date.after']                    = 'Period End Date should be after Start Date.';
-        $messages['indicator.*.period.*.target.0.comment.*.narrative.0.language.in'] = 'Invalid Target Comment Language.';
-        $messages['indicator.*.period.*.actual.0.comment.*.narrative.0.language.in'] = 'Invalid Actual Comment Language.';
+        $messages['type.required']                                                   = trans('validation.required', ['attribute' => trans('elementForm.result_type')]);
+        $messages['type.in']                                                         = trans('validation.code_list', ['attribute' => trans('elementForm.result_type')]);
+        $messages['aggregation_status.boolean']                                      = trans('validation.boolean', ['attribute' => trans('elementForm.aggregation_status')]);
+        $messages['title.*.narrative.0.narrative.required']                          = trans('validation.required', ['attribute' => trans('elementForm.title')]);
+        $messages['title.*.narrative.0.language.in']                                 = trans('validation.invalid_language', ['attribute' => trans('elementForm.title')]);
+        $messages['title.unique_lang']                                               = trans('validation.unique_lang', ['attribute' => trans('elementForm.title')]);
+        $messages['description.unique_lang']                                         = trans('validation.unique_lang', ['attribute' => trans('elementForm.description')]);
+        $messages['indicator.*.title.unique_lang']                                   = trans('validation.unique_lang', ['attribute' => trans('elementForm.indicator_title')]);
+        $messages['indicator.*.description.unique_lang']                             = trans('validation.unique_lang', ['attribute' => trans('elementForm.indicator_description')]);
+        $messages['indicator.*.baseline.0.comment.unique_lang']                      = trans('validation.unique_lang', ['attribute' => trans('elementForm.baseline_comment')]);
+        $messages['indicator.*.period.*.target.0.comment.unique_lang']               = trans('validation.unique_lang', ['attribute' => trans('elementForm.period_target_comment')]);
+        $messages['indicator.*.period.*.actual.0.comment.unique_lang']               = trans('validation.unique_lang', ['attribute' => trans('elementForm.period_actual_comment')]);
+        $messages['description.*.narrative.0.language.in']                           = trans('validation.invalid_language', ['attribute' => trans('elementForm.description')]);
+        $messages['indicator.*.measure.required']                                    = trans('validation.required', ['attribute' => trans('elementForm.indicator_measure')]);
+        $messages['indicator.*.measure.in']                                          = trans('validation.code_list', ['attribute' => trans('elementForm.indicator_measure')]);
+        $messages['indicator.*.ascending.boolean']                                   = trans('validation.indicator_ascending');
+        $messages['indicator.*.title.*.narrative.0.narrative.required']              = trans('validation.required', ['attribute' => trans('elementForm.indicator_title')]);
+        $messages['indicator.*.title.*.narrative.0.language.in']                     = trans('validation.invalid_language', ['attribute' => trans('elementForm.indicator_title')]);
+        $messages['indicator.*.description.*.narrative.0.language.in']               = trans('validation.invalid_language', ['attribute' => trans('elementForm.indicator_description')]);
+        $messages['indicator.*.reference.*.vocabulary.in']                           = trans('validation.code_list', ['attribute' => trans('elementForm.indicator_reference_vocabulary')]);
+        $messages['indicator.*.reference.*.indicator_uri.url']                       = trans('validation.code_list', ['attribute' => trans('elementForm.reference_url')]);
+        $messages['indicator.*.baseline.0.year.integer']                             = trans('validation.integer', ['attribute' => trans('elementForm.indicator_baseline_year')]);
+        $messages['indicator.*.baseline.0.value.string']                             = trans('validation.string', ['attribute' => trans('elementForm.indicator_baseline_value')]);
+        $messages['indicator.*.baseline.size']                                       = trans('validation.indicator_size');
+        $messages['indicator.*.baseline.0.comment.*.narrative.0.narrative.required'] = trans('validation.narrative_required', ['attribute' => trans('elementForm.baseline_comment')]);
+        $messages['indicator.*.baseline.0.comment.*.narrative.0.language.in']        = trans('validation.invalid_language', ['attribute' => trans('elementForm.baseline_comment')]);
+        $messages['indicator.*.period.*.period_start.0.date.required']               = trans('validation.required', ['attribute' => trans('elementForm.period_start_date')]);
+        $messages['indicator.*.period.*.target.size']                                = trans(
+            'validation.no_more_than_once',
+            ['attribute' => trans('elementForm.period_target_value'), 'values' => trans('elementForm.period')]
+        );
+        $messages['indicator.*.period.*.actual.size']                                = trans(
+            'validation.no_more_than_once',
+            ['attribute' => trans('elementForm.period_actual_value'), 'values' => trans('elementForm.period')]
+        );
+        $messages['indicator.*.period.*.period_start.0.date.date_format']            = trans('validation.csv_date', ['attribute' => trans('elementForm.period_start_date')]);
+        $messages['indicator.*.period.*.period_end.0.date.required']                 = trans('validation.required', ['attribute' => trans('elementForm.period_end_date')]);
+        $messages['indicator.*.period.*.period_end.0.date.date_format']              = trans('validation.csv_date', ['attribute' => trans('elementForm.period_start_date')]);
+        $messages['indicator.*.period.*.period_end.0.date.after']                    = trans(
+            'validation.after',
+            ['attribute' => trans('elementForm.period_end_date'), 'date' => trans('elementForm.period_start_date')]
+        );
+        $messages['indicator.*.period.*.target.0.comment.*.narrative.0.language.in'] = trans('validation.invalid_language', ['attribute' => trans('elementForm.period_target_comment')]);
+        $messages['indicator.*.period.*.actual.0.comment.*.narrative.0.language.in'] = trans('validation.invalid_language', ['attribute' => trans('elementForm.period_actual_comment')]);
 
         return $messages;
     }

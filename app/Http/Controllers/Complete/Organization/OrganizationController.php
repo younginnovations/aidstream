@@ -92,7 +92,7 @@ class OrganizationController extends Controller
         }
 
         if (!isset($organization->reporting_org[0])) {
-            $response = ['type' => 'warning', 'code' => ['settings', ['name' => 'organization']]];
+            $response = ['type' => 'warning', 'code' => ['settings', ['name' => 'elementForm.organisation']]];
 
             return redirect('/settings')->withResponse($response);
         }
@@ -233,7 +233,7 @@ class OrganizationController extends Controller
 
         if ($action == 'delete') {
             $result   = $this->organizationManager->deletePublishedFile($id);
-            $message  = $result ? 'File deleted successfully' : 'File couldn\'t be deleted.';
+            $message  = $result ? trans('success.file_deleted') : trans('error.file_not_deleted');
             $type     = $result ? 'success' : 'danger';
             $response = ['type' => $type, 'code' => ['transfer_message', ['name' => $message]]];
 
@@ -257,7 +257,7 @@ class OrganizationController extends Controller
         $value      = [];
 
         if (is_null($data)) {
-            $response = ['type' => 'warning', 'code' => ['message', ['message' => 'Please select organization XML files to be published.']]];
+            $response = ['type' => 'warning', 'code' => ['message', ['message' => trans('success.select_org_xml_file')]]];
 
             return redirect()->back()->withResponse($response);
         }
@@ -276,9 +276,9 @@ class OrganizationController extends Controller
         }
 
         if ($unpubFiles) {
-            $value['unpublished'] = sprintf("The files %s could not be published to registry. Please try again.", implode(',', $unpubFiles));
+            $value['unpublished'] = trans('error.failed_to_publish_to_registry', ['filename' => implode(',', $unpubFiles)]);
         } elseif ($pubFiles) {
-            $value['published'] = sprintf("The files %s have been published to registry", implode(',', $pubFiles));
+            $value['published'] = trans('success.published_to_registry', ['filename' => implode(',', $pubFiles)]);
         }
 
         return redirect()->back()->withValue($value);
@@ -315,14 +315,14 @@ class OrganizationController extends Controller
      */
     public function saveOrganizationInformation(OrganizationInfoRequest $request)
     {
-        $organization             = $this->organizationManager->getOrganization(session('org_id'));
+        $organization = $this->organizationManager->getOrganization(session('org_id'));
         $this->authorize('settings', $organization->settings);
         $organizationInfoResponse = $this->organizationManager->saveOrganizationInformation($request->all(), $organization);
 
         if ($organizationInfoResponse === "Username updated") {
             return redirect()->route('settings')->with('status', 'changed');
         }
-        $response = $this->getResponse($organizationInfoResponse, 'Organization Information');
+        $response = $this->getResponse($organizationInfoResponse, trans('organisation.organisation_information'));
 
         return redirect()->back()->withResponse($response);
 
@@ -342,7 +342,7 @@ class OrganizationController extends Controller
             'type' => 'danger',
             'code' => [
                 'save_failed',
-                ['name' => 'Settings']
+                ['name' => trans('global.settings')]
             ]
         ];
 
@@ -391,9 +391,9 @@ class OrganizationController extends Controller
 
         if ($result) {
             $this->organizationManager->resetOrganizationWorkflow($organizationData);
-            $response = ['type' => 'success', 'code' => ['organization_element_removed', ['element' => 'activity']]];
+            $response = ['type' => 'success', 'code' => ['organization_element_removed', ['element' => trans('global.activity')]]];
         } else {
-            $response = ['type' => 'danger', 'code' => ['organization_element_not_removed', ['element' => 'activity']]];
+            $response = ['type' => 'danger', 'code' => ['organization_element_not_removed', ['element' => trans('global.activity')]]];
         }
 
         return redirect()->back()->withResponse($response);
@@ -493,14 +493,11 @@ class OrganizationController extends Controller
     protected function getMessageForOrganizationData($status, $filename)
     {
         if ($status == "Linked") {
-            $message = "Your organization data has been published to the IATI registry. It is included in the file
-                                    <a href='/files/xml/$filename'>$filename</a>";
+            $message = trans('success.organisation_data_published_to_registry') . ' ' . "<a href='/files/xml/$filename'>$filename</a>";
         } elseif ($status == "Unlinked") {
-            $message = "Your organization data has not been published to the IATI registry. Please go to Published files to manually publish your file to the registry. If you need help please
-                                    contact us at <a href='mailto:support@aidstream.org'>support@aidstream.org</a>.";
+            $message = trans('error.org_data_not_published_to_registry');
         } else {
-            $message = "Your organization data has not been published to the IATI registry. Please re-publish this activity again. If you need help please
-                                    contact us at <a href='mailto:support@aidstream.org'>support@aidstream.org</a>.";
+            $message = trans('error.republish_org_data');
         }
 
         return $message;

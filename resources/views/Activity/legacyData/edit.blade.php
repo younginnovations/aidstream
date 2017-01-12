@@ -1,6 +1,6 @@
 @extends('app')
 
-@section('title', 'Activity Legacy Data - ' . $activityData->IdentifierTitle)
+@section('title', trans('title.legacy_data'). ' - ' . $activityData->IdentifierTitle)
 
 @section('content')
     <div class="container main-container">
@@ -10,10 +10,10 @@
                 @include('includes.response')
                 <div class="element-panel-heading">
                     <div>
-                        <span>Legacy Data</span>
+                        <span>@lang('element.legacy_data')</span>
                         <div class="element-panel-heading-info"><span>{{$activityData->IdentifierTitle}}</span></div>
                         <div class="panel-action-btn">
-                            <a href="{{ route('activity.show', $id) }}" class="btn btn-primary pull-right">View Activity
+                            <a href="{{ route('activity.show', $id) }}" class="btn btn-primary pull-right">@lang('global.view_activity')
                             </a>
                         </div>
                     </div>

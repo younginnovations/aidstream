@@ -27,8 +27,8 @@ class Title extends ActivityBaseRequest
      */
     public function messages()
     {
-        $messages['narrative.*.narrative.required'] = 'Title is required';
-        $messages['narrative.unique_lang']          = 'Language should be unique.';
+        $messages['narrative.*.narrative.required'] = trans('validation.required', ['attribute' => trans('element.title')]);
+        $messages['narrative.unique_lang']          = trans('validation.unique', ['attribute' => trans('elementForm.language')]);
 
         return $messages;
     }

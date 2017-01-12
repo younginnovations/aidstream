@@ -13,6 +13,6 @@ class CapitalSpend extends BaseForm
      */
     public function buildForm()
     {
-        $this->add('capital_spend', 'text', ['help_block' => $this->addHelpText('Activity_CapitalSpend-percentage'), 'required' => true]);
+        $this->add('capital_spend', 'text', ['label' => trans('elementForm.capital_spend'), 'help_block' => $this->addHelpText('Activity_CapitalSpend-percentage'), 'required' => true]);
     }
 }

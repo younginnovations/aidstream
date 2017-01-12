@@ -30,4 +30,11 @@ class CollaborationType extends Request
         return $rules;
     }
 
+    public function messages()
+    {
+        $messages['collaboration_type.required'] = trans('validation.required', ['attribute' => trans('element.collaboration_type')]);
+
+        return $messages;
+    }
+
 }

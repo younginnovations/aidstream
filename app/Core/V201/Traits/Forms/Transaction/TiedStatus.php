@@ -12,7 +12,7 @@ trait TiedStatus
      */
     public function addTiedStatus()
     {
-        return $this->addCollection('tied_status', 'Activity\Transactions\TiedStatus');
+        return $this->addCollection('tied_status', 'Activity\Transactions\TiedStatus', '', [], trans('elementForm.tied_status'));
     }
 
     /**

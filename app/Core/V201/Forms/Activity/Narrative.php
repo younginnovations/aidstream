@@ -34,7 +34,7 @@ class Narrative extends BaseForm
             ->addSelect(
                 'language',
                 $this->getCodeList('Language', 'Activity'),
-                null,
+                trans('elementForm.language'),
                 $this->addHelpText($this->getData('help-text-language') ? $this->getData('help-text-language') : 'activity-xml_lang')
             )
             ->addRemoveThisButton('remove_from_collection');

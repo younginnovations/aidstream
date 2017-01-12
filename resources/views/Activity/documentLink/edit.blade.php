@@ -1,6 +1,6 @@
 @extends('app')
 
-@section('title', 'Activity Document Link - ' . $activityData->IdentifierTitle)
+@section('title', trans('title.document_link').' - ' . $activityData->IdentifierTitle)
 
 @section('content')
     <div class="container main-container">
@@ -10,10 +10,10 @@
                 @include('includes.response')
                 <div class="element-panel-heading">
                     <div>
-                        <span>Document Link</span>
+                        <span>@lang('element.document_link')</span>
                         <div class="element-panel-heading-info"><span>{{$activityData->IdentifierTitle}}</span></div>
-                        <div class="panel-action-btn">
-                            <a href="{{route('activity.document-link.show',[$id, $documentLinkId])}}" class="btn btn-primary">View Document Link</a>
+                        <div class="panel-action-btn btn-action-wrap">
+                            <a href="{{route('activity.document-link.show',[$id, $documentLinkId])}}" class="btn btn-primary btn-view-it">@lang('global.view_document_link')</a>
                         </div>
                     </div>
                 </div>
@@ -42,13 +42,12 @@
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                                 aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">Add Document Link</h4>
+                    <h4 class="modal-title" id="myModalLabel">@lang('title.add_document_link')</h4>
                 </div>
                 <div class="modal-body">
                     <div class="upload_form hidden">
                         <div class="alert alert-info">
-                            <span>You can upload your document here. Once your document is uploaded,
-                            a link will be provided. You can then select the link to use it.</span>
+                            <span>@lang('global.upload_document_text')</span>
                         </div>
                         <div id="upload_message"></div>
                         <form class="form-horizontal" role="form" id="upload_file" method="POST"
@@ -57,13 +56,13 @@
 
                             <div class="form-group">
                                 <div class="col-md-8">
-                                    <label class="control-label">Please choose your document: </label>
+                                    <label class="control-label">@lang('global.choose_your_document'): </label>
                                     <input type="file" class="form-control" name="file" id="file"
                                            value="{{ old('file') }}" required="required">
                                 </div>
                                 <div class="col-md-4">
                                     <button type="submit" class="btn btn-primary">
-                                        Upload
+                                        @lang('global.upload')
                                     </button>
                                 </div>
                             </div>
@@ -73,8 +72,8 @@
                         <table class="table table-striped">
                             <thead>
                             <tr>
-                                <th>URL</th>
-                                <th width="70px">Action</th>
+                                <th>@lang('global.url')</th>
+                                <th width="70px">@lang('global.action')</th>
                             </tr>
                             </thead>
                             <tbody></tbody>

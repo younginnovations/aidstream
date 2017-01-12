@@ -13,7 +13,7 @@ class OrganizationElementValidation
         $messages = [];
 
         if (empty($organization->name)) {
-            $messages[] = 'Name is required.';
+            $messages[] = trans('validation.required', ['attribute' => trans('elementForm.name')]);
         }
 
         $messageList = '';
@@ -24,7 +24,7 @@ class OrganizationElementValidation
 
         $messageHtml = '';
         if ($messageList) {
-            $messageHtml .= 'Please make sure you enter the following fields before changing to completed state.';
+            $messageHtml .= trans('validation.validation_before_completed');
             $messageHtml .= sprintf('<ul>%s</ul>', $messageList);
         }
 

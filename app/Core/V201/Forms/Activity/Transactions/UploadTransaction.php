@@ -16,6 +16,6 @@ class UploadTransaction extends BaseForm
     public function buildForm()
     {
         $this
-            ->add('transaction', 'file', ['label' => 'Transaction Csv File']);
+            ->add('transaction', 'file', ['label' => trans('elementForm.transaction_csv_file')]);
     }
 }

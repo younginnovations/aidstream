@@ -159,7 +159,7 @@ class RegistrationController extends Controller
                 if ($this->registrationManager->sendRecoveryEmail($orgId, $secondaryContact['email'])) {
                     return redirect()->to('/')->withSecondaryContactName(trim($secondaryContact['first_name'] . ' ' . $secondaryContact['last_name']));
                 } else {
-                    return redirect()->back()->withErrors(['email' => 'Failed to send email.']);
+                    return redirect()->back()->withErrors(['email' => trans('error.failed_to_send_email')]);
                 }
             } else {
                 return redirect()->route('contact', ['no-secondary-contact-support']);

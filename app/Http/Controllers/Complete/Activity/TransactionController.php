@@ -115,7 +115,7 @@ class TransactionController extends Controller
         $this->filterSector($data);
         $this->transactionManager->save($data, $activityData);
         $this->activityManager->resetActivityWorkflow($activityId);
-        $response = ['type' => 'success', 'code' => ['created', ['name' => 'Transaction']]];
+        $response = ['type' => 'success', 'code' => ['created', ['name' => trans('element.transaction')]]];
 
         return redirect()->to(sprintf('/activity/%s/transaction', $activityId))->withResponse($response);
     }
@@ -211,7 +211,7 @@ class TransactionController extends Controller
         $this->filterSector($transactionDetails);
         $this->transactionManager->save($transactionDetails, $activity, $transactionId);
         $this->activityManager->resetActivityWorkflow($id);
-        $response = ['type' => 'success', 'code' => ['updated', ['name' => 'Transactions']]];
+        $response = ['type' => 'success', 'code' => ['updated', ['name' => trans('element.transactions')]]];
 
         return redirect()->to(sprintf('/activity/%s/transaction', $id))->withResponse($response);
     }
@@ -262,7 +262,7 @@ class TransactionController extends Controller
 
         if ($this->transactionManager->deleteTransaction($transaction)) {
             $this->activityManager->resetActivityWorkflow($id);
-            $response = ['type' => 'success', 'code' => ['deleted', ['name' => 'Transaction']]];
+            $response = ['type' => 'success', 'code' => ['deleted', ['name' => trans('element.transaction')]]];
         } else {
             $response = ['type' => 'danger', 'code' => ['delete_failed', ['name' => 'transaction']]];
         }
@@ -281,9 +281,9 @@ class TransactionController extends Controller
         $result = $this->transactionManager->deleteBlock($transactionId, $jsonPath);
         if ($result) {
             $this->activityManager->resetActivityWorkflow($id);
-            $response = ['type' => 'success', 'code' => ['transaction_block_removed', ['element' => 'activity']]];
+            $response = ['type' => 'success', 'code' => ['transaction_block_removed', ['element' => trans('global.activity')]]];
         } else {
-            $response = ['type' => 'danger', 'code' => ['transaction_block_not_removed', ['element' => 'activity']]];
+            $response = ['type' => 'danger', 'code' => ['transaction_block_not_removed', ['element' => trans('global.activity')]]];
         }
 
         return redirect()->back()->withResponse($response);

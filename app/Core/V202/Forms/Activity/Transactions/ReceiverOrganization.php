@@ -14,9 +14,9 @@ class ReceiverOrganization extends BaseForm
     public function buildForm()
     {
         $this
-            ->add('organization_identifier_code', 'text', ['label' => 'Organisation Identifier Code'])
-            ->add('receiver_activity_id', 'text')
-            ->add('type', 'text')
+            ->add('organization_identifier_code', 'text', ['label' => trans('elementForm.organisation_identifier_code')])
+            ->add('receiver_activity_id', 'text', ['label' => trans('elementForm.receiver_activity_id')])
+            ->add('type', 'text', ['label' => trans('elementForm.type')])
             ->addNarrative('receiver_org_narrative')
             ->addAddMoreButton('add_receiver_org_narrative', 'receiver_org_narrative');
     }

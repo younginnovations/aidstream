@@ -20,7 +20,7 @@ class Narrative extends BaseForm
      */
     public function buildForm()
     {
-        $defaultLanguage    = config('app.default_language');
+        $defaultLanguage = config('app.default_language');
 
         $this
             ->add(
@@ -29,13 +29,13 @@ class Narrative extends BaseForm
                 [
                     'label'      => $this->getData('label'),
                     'help_block' => $this->addHelpText($this->getData('help-text-narrative') ? $this->getData('help-text-narrative') : 'Narrative-text', false),
-                    'required'   => true
+                    'required'   => true,
                 ]
             )
             ->addSelect(
                 'language',
                 $this->getCodeList('Language', 'Activity'),
-                null,
+                trans('elementForm.language'),
                 $this->addHelpText($this->getData('help-text-language') ? $this->getData('help-text-language') : 'activity-xml_lang', false),
                 $defaultLanguage
             )

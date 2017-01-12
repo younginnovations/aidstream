@@ -12,7 +12,7 @@ trait RecipientRegion
      */
     public function addRecipientRegion()
     {
-        return $this->addCollection('recipient_region', 'Activity\Transactions\RecipientRegion');
+        return $this->addCollection('recipient_region', 'Activity\Transactions\RecipientRegion', '', [], trans('elementForm.recipient_region'));
     }
 
     /**

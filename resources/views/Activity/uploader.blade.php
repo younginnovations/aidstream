@@ -1,6 +1,6 @@
 @extends('app')
 
-@section('title', 'Upload Activities')
+@section('title', trans('title.upload_activities'))
 
 @section('content')
 
@@ -18,11 +18,11 @@
                 <div id="import-status-placeholder"></div>
                 <div class="element-panel-heading">
                     <div>
-                        Import Activities
+                        @lang('title.import_activities')
                     </div>
                     <div>
                         <a href="{{ route('activity.index') }}" class="pull-right back-to-list">
-                            <span class="glyphicon glyphicon-triangle-left"></span>Back to Activity List
+                            <span class="glyphicon glyphicon-triangle-left"></span>@lang('global.back_to_activity_list')
                         </a>
                     </div>
                 </div>
@@ -34,18 +34,17 @@
                             </div>
                             <div class="download-transaction-wrap">
                                 <div class="dropdown">
-                                    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Download Activity Template
+                                    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">@lang('global.download_activity_template')
                                         <span class="caret"></span></button>
                                     <ul class="dropdown-menu">
-                                        <li><a href="{{route('activity.download-template',['type'=>'basic'])}}">Activity Basics</a></li>
-                                        <li><a href="{{route('activity.download-template',['type'=>'transaction'])}}">Activity with Transactions</a></li>
-                                        <li><a href="{{route('activity.download-template',['type'=>'others'])}}">Activity with Other Fields</a></li>
-                                        <li><a href="{{route('activity.download-template',['type'=>'others-transaction'])}}">Activity with Transactions and Other Fields</a></li>
+                                        <li><a href="{{route('activity.download-template',['type'=>'basic'])}}">@lang('global.activity_basics')</a></li>
+                                        <li><a href="{{route('activity.download-template',['type'=>'transaction'])}}">@lang('global.activity_with_transactions')</a></li>
+                                        <li><a href="{{route('activity.download-template',['type'=>'others'])}}">@lang('global.activity_other_fields')</a></li>
+                                        <li><a href="{{route('activity.download-template',['type'=>'others-transaction'])}}">@lang('global.activity_with_transaction_other_fields')</a></li>
                                     </ul>
                                 </div>
                                 <div>
-                                    This template contains few basic elements that you have to fill to import into AidStream. Please make sure that you follow the structure and format of the template.
-                                    For more details, please follow <a href="https://github.com/younginnovations/aidstream-new/wiki/Activity-Creation#2-bulk-activity-import" target="_blank">here</a>.
+                                    @lang('global.activity_csv_template_text').
                                 </div>
                             </div>
                         </div>
@@ -57,10 +56,10 @@
 @stop
 @section('script')
     <script>
-        @if (isset($importing))
-            var importing = true;
-        @else
-            var importing = false;
+                @if (isset($importing))
+        var importing = true;
+                @else
+        var importing = false;
         @endif
     </script>
     <script>

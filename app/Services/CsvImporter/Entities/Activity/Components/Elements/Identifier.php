@@ -97,8 +97,8 @@ class Identifier extends Element
     public function messages()
     {
         return [
-            'activity_identifier.required' => 'Activity Identifier is required.',
-            'activity_identifier.not_in'   => 'Activity Identifier should be unique.'
+            'activity_identifier.required' => trans('validation.required', ['attribute' => trans('elementForm.activity_identifier')]),
+            'activity_identifier.not_in'   => trans('validation.unique', ['attribute' => trans('elementForm.activity_identifier')])
         ];
     }
 

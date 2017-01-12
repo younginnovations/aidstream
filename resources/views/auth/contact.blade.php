@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport'/>
-    <title>Aidstream - Forgot Password</title>
+    <title>@lang('title.aidstream_forgot_password')</title>
     <link rel="shotcut icon" type="image/png" sizes="32*32" href="{{ asset('/images/favicon.png') }}"/>
     <link href="{{ asset('/css/main.min.css') }}" rel="stylesheet">
     <link href="{{ asset('/css/style.css') }}" rel="stylesheet">
@@ -23,36 +23,7 @@
 
 </head>
 <body>
-<header>
-    <nav class="navbar navbar-default navbar-static navbar-fixed">
-        <div class="navbar-header">
-            <a href="{{ url('/') }}" class="navbar-brand">Aidstream</a>
-            <button type="button" class="navbar-toggle collapsed">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="bar1"></span>
-                <span class="bar2"></span>
-                <span class="bar3"></span>
-            </button>
-        </div>
-        <div class="navbar-collapse navbar-right">
-            <ul class="nav navbar-nav">
-                <li><a class="{{ Request::is('about') ? 'active' : '' }}" href="{{ url('/about') }}">About</a></li>
-                <li><a class="{{ Request::is('who-is-using') ? 'active' : '' }}" href="{{ url('/who-is-using') }}">Who's Using</a></li>
-                <li><a href="https://github.com/younginnovations/aidstream-new/wiki/User-Guide" target="_blank">User Guide</a></li>
-                <!--<li><a href="#">Snapshot</a></li>-->
-            </ul>
-            <div class="action-btn pull-left">
-                @if(auth()->check())
-                    <a href="{{ url((auth()->user()->role_id == 1 || auth()->user()->role_id == 2) ? config('app.admin_dashboard') : config('app.super_admin_dashboard'))}}" class="btn btn-primary">Go
-                        to Dashboard</a>
-                @else
-                    <a href="{{ url('/auth/login')}}" class="btn btn-primary">Login/Register</a>
-                @endif
-            </div>
-        </div>
-    </nav>
-</header>
-
+@include('includes.header_home')
 <div class="register-wrapper">
     {{--		    <div class="language-select-wrapper">
                     <label for="" class="pull-left">Language</label>
@@ -74,16 +45,16 @@
             /*--}}
             @if($template == 'need-new-user' || $template == 'forgot-user-email' || $template == 'contact-admin-for-same-org')
                 <div class="text-center contact-info-container">
-                    <p>You have confirmed that the name of your organisation is:</p>
+                    <p>@lang('global.you_have_confirmed_name_organisation')</p>
                     <h2>"<span class="org-name">{{ session('org_name') }}</span>"</h2>
-                    <p>The admin for this organisation is: <span>{{ session('admin_name') }}</span></p>
-                    <p>Fill out the form below and we will send your message to them letting them know to get in touch with you.</p>
+                    <p>@lang('global.admin_for_organisation') <span>{{ session('admin_name') }}</span></p>
+                    <p>@lang('global.fill_out_form_below_will_send_message')</p>
                 </div>
             @endif
 
             @if($template == 'no-secondary-contact-support')
                 <div class="text-center contact-info-container">
-                    <p>To recover an administrator account, please contact AidStream support using the form below:</p>
+                    <p>@lang('global.recover_administrator_account')</p>
                 </div>
             @endif
             <div class="col-xs-12">
@@ -92,9 +63,9 @@
                         <div class="text-danger">{{ session('error_message') }}</div>
                         {{ Form::open(['method' => 'post', 'id' => 'form-contact']) }}
                         <div class="login-form-group">
-                            {!! AsForm::text(['name' => 'full_name', 'label' => 'Your Full Name','required' => true]) !!}
-                            {!! AsForm::email(['name' => 'email', 'label' => 'Your E-mail Address', 'required' => true]) !!}
-                            {!! AsForm::textarea(['name' => 'message', 'label' => 'Your Message','required' => true]) !!}
+                            {!! AsForm::text(['name' => 'full_name', 'label' => trans('registration.your_full_name'),'required' => true]) !!}
+                            {!! AsForm::email(['name' => 'email', 'label' => trans('registration.your_email_address'), 'required' => true]) !!}
+                            {!! AsForm::textarea(['name' => 'message', 'label' => trans('registration.your_message'),'required' => true]) !!}
                         </div>
                         {{ Form::button('Submit', ['class' => 'btn btn-primary btn-submit btn-form-default', 'type' => 'submit']) }}
                         {{ Form::close() }}

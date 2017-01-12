@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport'/>
-    <title>AidStream - Create Password</title>
+    <title>@lang('title.aidstream_create_password')</title>
     <link rel="shortcut icon" type="image/png" sizes="32*32" href="{{ asset('/images/favicon.png') }}"/>
     <link href="{{ asset('/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('/css/flag-icon.css') }}" rel="stylesheet">
@@ -25,39 +25,7 @@
 
 </head>
 <body>
-<header>
-    <nav class="navbar navbar-default navbar-static navbar-fixed">
-        <div class="navbar-header">
-            <a href="{{ url('/') }}" class="navbar-brand">Aidstream</a>
-            <button type="button" class="navbar-toggle collapsed">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="bar1"></span>
-                <span class="bar2"></span>
-                <span class="bar3"></span>
-            </button>
-        </div>
-        <div class="navbar-collapse navbar-right">
-            <ul class="nav navbar-nav">
-                <li><a class="{{ Request::is('about') ? 'active' : '' }}" href="{{ url('/about') }}">About</a></li>
-                <li><a class="{{ Request::is('who-is-using') ? 'active' : '' }}" href="{{ url('/who-is-using') }}">Who's
-                        Using</a></li>
-                <li><a href="https://github.com/younginnovations/aidstream-new/wiki/User-Guide" target="_blank">User
-                        Guide</a></li>
-                <!--<li><a href="#">Snapshot</a></li>-->
-            </ul>
-            <div class="action-btn pull-left">
-                @if(auth()->check())
-                    <a href="{{ url((auth()->user()->role_id == 1 || auth()->user()->role_id == 2) ? config('app.admin_dashboard') : config('app.super_admin_dashboard'))}}"
-                       class="btn btn-primary">Go
-                        to Dashboard</a>
-                @else
-                    <a href="{{ url('/auth/login')}}" class="btn btn-primary">Login/Register</a>
-                @endif
-            </div>
-        </div>
-    </nav>
-</header>
-
+@include('includes.header_home')
 <div class="login-wrapper">
     {{--		    <div class="language-select-wrapper">
                     <label for="" class="pull-left">Language</label>
@@ -78,8 +46,8 @@
                     <div class="panel-heading">
                         <img src="{{url('images/logo.png')}}" alt="">
 
-                        <div class="panel-title">Create password</div>
-                        <p>Thank you for verifying your email address. Please set a password for your account.</p>
+                        <div class="panel-title">@lang('global.create_password')</div>
+                        <p>@lang('global.email_verified_set_password')</p>
                     </div>
                     <div class="panel-body">
                         @if (session('status'))
@@ -90,11 +58,11 @@
 
                         {{ Form::open(['url' => route('create-password', [$verification_code]), 'method' => 'post']) }}
 
-                        {!! AsForm::password(['name' => 'password', 'required' => true]) !!}
-                        {!! AsForm::password(['name' => 'confirm_password', 'required' => true]) !!}
+                        {!! AsForm::password(['name' => 'password', 'required' => true, 'label' => trans('user.password')]) !!}
+                        {!! AsForm::password(['name' => 'confirm_password', 'required' => true, 'label' => trans('user.confirm_password')]) !!}
 
                         <div class="col-md-12 text-center">
-                            {{ Form::button('Create Password', ['class' => 'btn btn-primary btn-submit btn-register', 'type' => 'submit']) }}
+                            {{ Form::button(trans('global.create_password'), ['class' => 'btn btn-primary btn-submit btn-register', 'type' => 'submit']) }}
                         </div>
 
                         {{ Form::close() }}
@@ -106,7 +74,7 @@
     </div>
 </div>
 @include('includes.footer')
-        <!-- Scripts -->
+<!-- Scripts -->
 @if(env('APP_ENV') == 'local')
     <script type="text/javascript" src="{{url('/js/jquery.js')}}"></script>
     <script type="text/javascript" src="{{url('/js/bootstrap.min.js')}}"></script>
@@ -122,6 +90,7 @@
                 $(this).toggleClass('collapsed');
             });
         }
+
         hamburgerMenu();
     });
 </script>

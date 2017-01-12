@@ -49,8 +49,8 @@ class LegacyData extends ActivityBaseRequest
 
         foreach ($formFields as $legacyDataIndex => $legacyData) {
             $legacyDataForm                                          = sprintf('legacy_data.%s', $legacyDataIndex);
-            $messages[sprintf('%s.name.required', $legacyDataForm)]  = 'Name is Required';
-            $messages[sprintf('%s.value.required', $legacyDataForm)] = 'Value is Required';
+            $messages[sprintf('%s.name.required', $legacyDataForm)]  = trans('validation.required', ['attribute' => trans('elementForm.name')]);
+            $messages[sprintf('%s.value.required', $legacyDataForm)] = trans('validation.required', ['attribute' => trans('elementForm.value')]);
         }
 
         return $messages;

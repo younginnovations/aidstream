@@ -8,6 +8,6 @@ class VersionInfoForm extends BaseForm
 
     public function buildForm()
     {
-        $this->addSelect('version', $this->getData('versions'), 'Select Version');
+        $this->addSelect('version', $this->getData('versions'), trans('setting.select_version'));
     }
 }

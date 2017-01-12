@@ -13,6 +13,6 @@ class ParticipatingOrganizations extends BaseForm
      */
     public function buildForm()
     {
-        $this->addCheckBox('participating_organization', 'Participating Organisation', true, 'readonly');
+        $this->addCheckBox('participating_organization', trans('element.participating_organisation'), true, 'readonly');
     }
 }

@@ -296,21 +296,27 @@ class Sector extends Element
     public function messages()
     {
         $messages = [
-            'sector.required'                     => 'At least one Sector is required.',
-            'sector.sector_percentage_sum'        => 'Sum of percentage under same Sector vocabulary must be 100',
-            'sector.*.sector_vocabulary.required' => 'Sector Vocabulary is required.',
-            'sector.*.sector_vocabulary.in'       => 'Entered Sector vocabulary is invalid.',
-            'sector.*.percentage'                 => 'Sector Percentage is required.'
+            'sector.required'                     => trans('validation.size', ['attribute' => trans('element.sector')]),
+            'sector.sector_percentage_sum'        => trans('validation.total', ['attribute' => trans('elementForm.sector_vocabulary')]),
+            'sector.*.sector_vocabulary.required' => trans('validation.required', ['attribute' => trans('elementForm.sector_vocabulary')]),
+            'sector.*.sector_vocabulary.in'       => trans('validation.code_list', ['attribute' => trans('elementForm.sector_vocabulary')]),
+            'sector.*.percentage'                 => trans('validation.required', ['attribute' => trans('elementForm.sector_percentage')]),
         ];
 
         foreach (getVal($this->data(), ['sector']) as $key => $value) {
-            $messages['sector.' . $key . '.sector_code.required_if']          = "Sector code is required when Sector vocabulary is 1";
-            $messages['sector.' . $key . '.sector_code.in']                   = "Entered sector code for Sector vocabulary 1 is invalid";
-            $messages['sector.' . $key . '.sector_category_code.required_if'] = "Sector code is required when Sector category code is 2";
-            $messages['sector.' . $key . '.sector_category_code.in']          = "Entered sector code for Sector vocabulary 2 is invalid";
-            $messages['sector.' . $key . '.sector_text.required_unless']      = "Sector code is required.";
-            $messages['sector.' . $key . '.percentage.min']                   = "Sector Percentage cannot be less than 0.";
-            $messages['sector.' . $key . '.percentage.max']                   = "Sector Percentage cannot be more than 100";
+            $messages['sector.' . $key . '.sector_code.required_if']          = trans(
+                'validation.required_if',
+                ['attribute' => trans('elementForm.sector_code'), 'values' => trans('elementForm.sector_vocabulary'), 'value' => 1]
+            );
+            $messages['sector.' . $key . '.sector_code.in']                   = trans('validation.code_list', ['attribute' => trans('elementForm.sector_code')]);
+            $messages['sector.' . $key . '.sector_category_code.required_if'] = trans(
+                'validation.required_if',
+                ['attribute' => trans('elementForm.sector_code'), 'values' => trans('elementForm.sector_vocabulary'), 'value' => 2]
+            );
+            $messages['sector.' . $key . '.sector_category_code.in']          = trans('validation.code_list', ['attribute' => trans('elementForm.sector_code')]);
+            $messages['sector.' . $key . '.sector_text.required_unless']      = trans('validation.required', ['attribute' => trans('elementForm.sector_code')]);
+            $messages['sector.' . $key . '.percentage.min']                   = trans('validation.max.numeric', ['attribute' => trans('elementForm.sector_percentage'), 'max' => 100]);
+            $messages['sector.' . $key . '.percentage.max']                   = trans('validation.min.numeric', ['attribute' => trans('elementForm.sector_percentage'), 'min' => 100]);
         }
 
         return $messages;

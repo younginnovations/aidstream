@@ -94,7 +94,7 @@ class IatiIdentifierController extends Controller
      */
     public function update($activityId, IatiIdentifierRequestManager $iatiIdentifierRequestManager, Request $request)
     {
-        $activityData     = $this->activityManager->getActivityData($activityId);
+        $activityData = $this->activityManager->getActivityData($activityId);
 
         if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
@@ -102,15 +102,15 @@ class IatiIdentifierController extends Controller
 
         $iatiIdentifierData = $this->iatiIdentifierManager->getActivityData($activityId);
         $this->authorizeByRequestType($iatiIdentifierData, 'identifier');
-        $input              = $request->all();
+        $input = $request->all();
 
         if ($this->iatiIdentifierManager->update($input, $iatiIdentifierData)) {
             $this->activityManager->resetActivityWorkflow($activityId);
-            $response = ['type' => 'success', 'code' => ['updated', ['name' => 'Activity Iati Identifier']]];
+            $response = ['type' => 'success', 'code' => ['updated', ['name' => trans('title.activity_iati_identifier')]]];
 
             return redirect()->to(sprintf('/activity/%s', $activityId))->withResponse($response);
         }
-        $response = ['type' => 'danger', 'code' => ['update_failed', ['name' => 'Activity Iati Identifier']]];
+        $response = ['type' => 'danger', 'code' => ['update_failed', ['name' => trans('title.activity_iati_identifier')]]];
 
         return redirect()->route('activity.iati-identifier.index', $activityId)->withInput()->withResponse($response);
     }

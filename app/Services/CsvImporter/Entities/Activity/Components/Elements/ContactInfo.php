@@ -280,8 +280,8 @@ class ContactInfo extends Element
     {
         $rules = [];
 
-        $rules['contact_info.*.type'] = sprintf('in:%s', $this->contactTypeCode());
-        $rules['contact_info.*.email.0.email'] = 'email';
+        $rules['contact_info.*.type']              = sprintf('in:%s', $this->contactTypeCode());
+        $rules['contact_info.*.email.0.email']     = 'email';
         $rules['contact_info.*.website.0.website'] = 'url';
 
         return $rules;
@@ -295,9 +295,9 @@ class ContactInfo extends Element
     {
         $messages = [];
 
-        $messages['contact_info.*.type.in'] = 'Entered Contact Type is not valid.';
-        $messages['contact_info.*.email.0.email.email'] = 'Incorrect email address.';
-        $messages['contact_info.*.website.0.website.url'] = 'Incorrect website url.';
+        $messages['contact_info.*.type.in']               = trans('validation.code_list', ['attribute' => trans('elementForm.contact_type')]);
+        $messages['contact_info.*.email.0.email.email']   = trans('validation.email', ['attribute' => trans('elementForm.email')]);
+        $messages['contact_info.*.website.0.website.url'] = trans('validation.url', ['attribute' => trans('elementForm.website')]);
 
         return $messages;
     }

@@ -33,9 +33,9 @@ class Description extends ActivityBaseRequest
         $rules = [];
 
         foreach ($formFields as $descriptionIndex => $description) {
-            $descriptionForm = sprintf('description.%s', $descriptionIndex);
+            $descriptionForm                             = sprintf('description.%s', $descriptionIndex);
             $rules[sprintf('%s.type', $descriptionForm)] = 'required';
-            $rules           = array_merge(
+            $rules                                       = array_merge(
                 $rules,
                 $this->getRulesForRequiredNarrative($description['narrative'], $descriptionForm)
             );
@@ -53,9 +53,9 @@ class Description extends ActivityBaseRequest
         $messages = [];
 
         foreach ($formFields as $descriptionIndex => $description) {
-            $descriptionForm = sprintf('description.%s', $descriptionIndex);
-            $messages[sprintf('%s.type.required', $descriptionForm)] = 'Description Type is required.';
-            $messages        = array_merge(
+            $descriptionForm                                         = sprintf('description.%s', $descriptionIndex);
+            $messages[sprintf('%s.type.required', $descriptionForm)] = trans('validation.required', ['attribute' => trans('element.description')]);
+            $messages                                                = array_merge(
                 $messages,
                 $this->getMessagesForRequiredNarrative($description['narrative'], $descriptionForm)
             );

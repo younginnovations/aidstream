@@ -13,6 +13,7 @@ class Identifier extends BaseForm
                 'activity_identifier',
                 'text',
                 [
+                    'label'       => trans('elementForm.activity_identifier'),
                     'wrapper'    => ['class' => 'col-xs-12 col-sm-6'],
                     'attr'       => ['class' => 'noSpace'],
                     'required'   => true,
@@ -24,9 +25,9 @@ class Identifier extends BaseForm
                 'static',
                 [
                     'tag'           => 'em',
-                    'label'         => 'IATI Identifier',
+                    'label'         => trans('elementForm.iati_identifier'),
                     'wrapper'       => ['class' => 'col-xs-12 col-sm-6 identifier_text'],
-                    'default_value' => 'This will be auto-generated as you fill Activity Identifier.'
+                    'default_value' => trans('elementForm.auto_generated_identifier')
                 ]
             )
             ->add(
@@ -34,7 +35,7 @@ class Identifier extends BaseForm
                 'static',
                 [
                     'tag'        => 'div',
-                    'label'      => 'IATI Identifier',
+                    'label'      => trans('elementForm.iati_identifier'),
                     'attr'       => ['class' => 'hover_help_text alternate_input'],
                     'wrapper'    => ['class' => 'col-xs-12 col-sm-6 hidden iati_identifier_text'],
                     'help_block' => $this->addHelpText('Activity_IatiIdentifier-text')
@@ -44,7 +45,7 @@ class Identifier extends BaseForm
                 'iati_identifier_text',
                 'text',
                 [
-                    'label'      => 'IATI Identifier',
+                    'label'      => trans('elementForm.iati_identifier'),
                     'rules'      => 'required',
                     'attr'       => ['readonly' => 'readonly', 'class' => 'form-control hover_help_text'],
                     'wrapper'    => ['class' => 'col-xs-12 col-sm-6 hidden'],

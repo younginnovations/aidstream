@@ -1,6 +1,6 @@
 @extends('app')
 
-@section('title', 'Activity Log')
+@section('title', trans('title.activity_log'))
 
 @section('head')
     <link href="{{ asset('/css/jquery.jsonview.css') }}" rel="stylesheet">
@@ -10,9 +10,9 @@
     <div class="container main-container admin-container">
         <div class="row">
             <div class="panel-content-heading">
-                <div>Deleted Data</div>
+                <div>@lang('global.deleted_data')</div>
                 <div class="panel-action-btn">
-                    <button type="button" class="btn btn-primary" id="toggle-btn">Toggle View</button>
+                    <button type="button" class="btn btn-primary" id="toggle-btn">@lang('global.toggle_view')</button>
                 </div>
             </div>
             <div class="col-xs-12 col-lg-8 organization-wrapper">

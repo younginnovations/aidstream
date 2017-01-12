@@ -1,6 +1,6 @@
 @extends('app')
 
-@section('title', 'Activity Location - ' . $activityData->IdentifierTitle)
+@section('title', trans('title.location'). ' - ' . $activityData->IdentifierTitle)
 
 @section('head')
     <link rel="stylesheet" href="{{url('/css/leaflet.css')}}"/>
@@ -14,10 +14,10 @@
                 @include('includes.response')
                 <div class="element-panel-heading">
                     <div>
-                        <span>Location</span>
+                        <span>@lang('element.location')</span>
                         <div class="element-panel-heading-info"><span>{{$activityData->IdentifierTitle}}</span></div>
                         <div class="pull-right panel-action-btn">
-                            <a href="{{ route('activity.show', $id) }}" class="btn btn-primary">View Activity
+                            <a href="{{ route('activity.show', $id) }}" class="btn btn-primary">@lang('global.view_activity')
                             </a>
                         </div>
                     </div>

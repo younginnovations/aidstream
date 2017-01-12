@@ -27,9 +27,9 @@ class CreateNameRequest extends OrganizationBaseRequest
     public function messages()
     {
         $messages                     = [];
-        $messages['name.unique_lang'] = 'Languages should be unique.';
+        $messages['name.unique_lang'] = trans('validation.unique',['attribute'=>trans('elementForm.languages')]);
         foreach ($this->get('name') as $nameIndex => $name) {
-            $messages[sprintf('name.%s.narrative.required', $nameIndex)] = 'Text is required.';
+            $messages[sprintf('name.%s.narrative.required', $nameIndex)] = trans('validation.required', ['attribute' => trans('elementForm.text')]);
         }
 
         return $messages;

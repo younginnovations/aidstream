@@ -1,4 +1,17 @@
 var preventNavigation = false;
+var localisedData;
+
+var callAsync = function (url, requestType) {
+    return $.ajax({
+        url: url,
+        type: requestType
+    })
+};
+
+callAsync('/localisedFormText', 'get').success(function (data) {
+    localisedData = JSON.parse(data);
+});
+
 
 /* Add tooltip */
 function bindTooltip() {
@@ -127,11 +140,11 @@ $(document).ready(function () {
         var removeDialog = $('#removeDialog');
 
         var buttons = '' +
-            '<button class="btn btn-primary btn_remove" type="button">Yes</button>' +
-            '<button class="btn btn-default" type="button"  data-dismiss="modal">No</button>';
+            '<button class="btn btn-primary btn_remove" type="button">' + localisedData['yes'] + '</button>' +
+            '<button class="btn btn-default" type="button"  data-dismiss="modal">' + localisedData['no'] + '</button>';
 
-        $('.modal-header .modal-title', removeDialog).html('Remove Confirmation');
-        $('.modal-body', removeDialog).html('Are you sure you want to remove this block?');
+        $('.modal-header .modal-title', removeDialog).html(localisedData['remove_confirmation']);
+        $('.modal-body', removeDialog).html(localisedData['remove_block']);
         $('.modal-footer', removeDialog).html(buttons);
 
         $('body').undelegate('.btn_remove', 'click').delegate('.btn_remove', 'click', function () {
@@ -362,11 +375,11 @@ $(document).ready(function () {
         var delDialog = $('#delDialog');
 
         var buttons = '' +
-            '<button class="btn btn_del" type="button">Yes</button>' +
-            '<button class="btn btn-default" type="button"  data-dismiss="modal">No</button>';
+            '<button class="btn btn_del" type="button">' + localisedData['yes'] + '</button>' +
+            '<button class="btn btn-default" type="button"  data-dismiss="modal">' + localisedData['no'] + '</button>';
 
-        $('.modal-header .modal-title', delDialog).html('Delete Confirmation');
-        $('.modal-body', delDialog).html('Are you sure you want to delete?');
+        $('.modal-header .modal-title', delDialog).html(localisedData['delete_confirmation']);
+        $('.modal-body', delDialog).html(localisedData['delete_sure']);
         $('.modal-footer', delDialog).html(buttons);
 
         $('body').undelegate('.btn_del', 'click').delegate('.btn_del', 'click', function () {
@@ -619,7 +632,7 @@ $(document).ready(function () {
         var route = getRouteFromUrl();
         if (route != 'register' && ($('.introjs-overlay').length == 0)) {
             if (preventNavigation) {
-                return 'You have unsaved changes.';
+                return localisedData['unsaved_changes'];
             }
         }
     };
@@ -677,9 +690,9 @@ $(document).ready(function () {
         });
         $(this).toggleClass('hide-error-link');
         if ($(this).text() == "Show error(s)")
-            $(this).text("Hide error(s)");
+            $(this).text(localisedData['hide_errors']);
         else
-            $(this).text("Show error(s)");
+            $(this).text(localisedData['show_errors']);
     });
 
     $(window).load(function () {

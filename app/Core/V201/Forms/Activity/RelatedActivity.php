@@ -14,8 +14,15 @@ class RelatedActivity extends BaseForm
     public function buildForm()
     {
         $this
-            ->addSelect('relationship_type', $this->getCodeList('RelatedActivityType', 'Activity'), 'Type of Relationship', $this->addHelpText('Activity_RelatedActivity-type'), null, true)
-            ->add('activity_identifier', 'text', ['help_block' => $this->addHelpText('Activity_RelatedActivity-ref'), 'required' => true])
+            ->addSelect(
+                'relationship_type',
+                $this->getCodeList('RelatedActivityType', 'Activity'),
+                trans('elementForm.type_of_relationship'),
+                $this->addHelpText('Activity_RelatedActivity-type'),
+                null,
+                true
+            )
+            ->add('activity_identifier', 'text', ['label' => trans('elementForm.activity_identifier'), 'help_block' => $this->addHelpText('Activity_RelatedActivity-ref'), 'required' => true])
             ->addRemoveThisButton('remove');
     }
 }

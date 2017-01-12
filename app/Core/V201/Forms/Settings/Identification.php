@@ -13,6 +13,6 @@ class Identification extends BaseForm
      */
     public function buildForm()
     {
-        $this->addCheckBox('other_identifier', 'Other Identifier');
+        $this->addCheckBox('other_identifier', trans('element.other_identifier'));
     }
 }

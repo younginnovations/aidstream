@@ -79,17 +79,17 @@ class OrganizationInfoRequest extends Request
     {
         $messages = [];
 
-        $messages['narrative.unique_lang']          = 'Language should be unique';
-        $messages['narrative.*.narrative.required'] = 'At least one organisation name is required';
-        $messages['country.required']               = 'Country is required';
-        $messages['user_identifier.required']       = 'User Identifier is required';
-        $messages['user_identifier.unique']         = 'Sorry! this User Identifier is already taken';
-        $messages['organization_type.required']     = 'Organisation Type is required';
-        $messages['registration_number.required']   = 'Organisation Registration number is required';
-        $messages['registration_number.regex']      = 'Only -, _, letters and numbers are allowed.';
-        $messages['registration_agency.required']   = 'Organisation Registration Agency is required';
-        $messages['logo.image']                     = 'Please select an image file';
-        $messages['organization_url.url']           = 'Please enter valid organization url';
+        $messages['narrative.unique_lang']          = trans('validation.unique', ['attribute' => trans('elementForm.language')]);
+        $messages['narrative.*.narrative.required'] = trans('validation.org_required');
+        $messages['country.required']               = trans('validation.required', ['attribute' => trans('elementForm.country')]);
+        $messages['user_identifier.required']       = trans('validation.required', ['attribute' => trans('elementForm.user_identifier')]);
+        $messages['user_identifier.unique']         = trans('validation.user_identifier_taken');
+        $messages['organization_type.required']     = trans('validation.required', ['attribute' => trans('elementForm.organisation_type')]);
+        $messages['registration_number.required']   = trans('validation.required', ['attribute' => trans('organisation.organisation_registration_number')]);
+        $messages['registration_number.regex']      = trans('validation.regex', ['attribute' => '-' . ',' . '_']);
+        $messages['registration_agency.required']   = trans('validation.required', ['attribute' => trans('organisation.organisation_registration_agency')]);
+        $messages['logo.image']                     = trans('validation.image');
+        $messages['organization_url.url']           = trans('validation.enter_valid', ['attribute' => trans('organisation.organisation_url')]);
 
         return $messages;
     }

@@ -12,7 +12,7 @@ trait Sector
      */
     public function addSector()
     {
-        return $this->addCollection('sector', 'Activity\Transactions\Sector');
+        return $this->addCollection('sector', 'Activity\Transactions\Sector', '', [], trans('elementForm.sector'));
     }
 
     /**

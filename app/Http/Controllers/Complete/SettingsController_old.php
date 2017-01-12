@@ -95,7 +95,7 @@ class SettingsController_old extends Controller
                     'type' => 'warning',
                     'code' => [
                         'message',
-                        ['message' => 'You do not have the correct privileges to view this page.']
+                        ['message' => trans('error.no_correct_privilege')]
                     ]
                 ]
             );
@@ -151,17 +151,17 @@ class SettingsController_old extends Controller
                     'type' => 'warning',
                     'code' => [
                         'message',
-                        ['message' => 'You do not have the correct privileges to view this page.']
+                        ['message' => trans('error.no_correct_privilege')]
                     ]
                 ]
             );
         }
         $input    = Input::all();
-        $response = ($this->settingsManager->storeSettings($input, $this->organization)) ? ['type' => 'success', 'code' => ['created', ['name' => 'Settings']]] : [
+        $response = ($this->settingsManager->storeSettings($input, $this->organization)) ? ['type' => 'success', 'code' => ['created', ['name' => trans('global.settings')]]] : [
             'type' => 'danger',
             'code' => [
                 'save_failed',
-                ['name' => 'Settings']
+                ['name' => trans('global.settings')]
             ]
         ];
 
@@ -184,7 +184,7 @@ class SettingsController_old extends Controller
                     'type' => 'warning',
                     'code' => [
                         'message',
-                        ['message' => 'You do not have the correct privileges to view this page.']
+                        ['message' => trans('error.no_correct_privilege')]
                     ]
                 ]
             );
@@ -212,11 +212,11 @@ class SettingsController_old extends Controller
         }
         $result = $this->settingsManager->updateSettings($input, $this->organization, $this->settings);
         if (!$result) {
-            $response = ['type' => 'danger', 'code' => ['update_failed', ['name' => 'Settings']]];
+            $response = ['type' => 'danger', 'code' => ['update_failed', ['name' => trans('global.settings')]]];
 
             return redirect()->back()->withResponse($response);
         }
-        $response = ['type' => 'success', 'code' => ['updated', ['name' => 'Settings']]];
+        $response = ['type' => 'success', 'code' => ['updated', ['name' => trans('global.settings')]]];
 
         return redirect()->to(config('app.admin_dashboard'))->withResponse($response);
     }
@@ -383,7 +383,7 @@ class SettingsController_old extends Controller
             'type' => 'danger',
             'code' => [
                 'save_failed',
-                ['name' => 'Settings']
+                ['name' => trans('global.settings')]
             ]
         ];
 

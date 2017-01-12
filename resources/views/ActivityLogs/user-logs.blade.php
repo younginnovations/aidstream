@@ -1,6 +1,6 @@
 @extends('app')
 
-@section('title', 'User Logs')
+@section('title', trans('title.user_logs'))
 
 @section('content')
     <div class="container main-container logs-container">
@@ -14,7 +14,7 @@
                 <div class="panel panel-default">
                     <div class="element-panel-heading">
                         <div>
-                            Activity Log
+                            @lang('global.activity_log')
                         </div>
                     </div>
                 </div>
@@ -23,15 +23,15 @@
                         <form method="POST" id="form-filter" action="{{ route('user-logs.filter') }}">
                             <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
                             <div class="collection_form">
-                                <label>Filter By</label>
+                                <label>@lang('global.filter_by')</label>
                                 <div class="clearfix"></div>
                                 <div class="form-group">
-                                    <label>Data</label>
+                                    <label>@lang('global.data')</label>
                                     <select class="form-control" name="dataSelection">
-                                        <option value="all">All</option>
+                                        <option value="all">@lang('global.all')</option>
                                         <option value="organization"
                                                 @if($dataSelection == "organization") selected="selected" @endif>
-                                            Organisation Data
+                                            @lang('global.organisation_data')
                                         </option>
 
                                         @foreach($activitiesOfOrganization as $activities)
@@ -41,10 +41,10 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label>User</label>
+                                    <label>@lang('global.user')</label>
 
                                     <select class="form-control" name="userSelection">
-                                        <option value="all">All users</option>
+                                        <option value="all">@lang('global.all_users')</option>
 
                                         @foreach($usersOfOrganization as $users)
                                             <option value="{{ $users->id }}"
@@ -52,15 +52,15 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                <button id="btnSearch" name="btnSearch">Filter</button>
+                                <button id="btnSearch" name="btnSearch">@lang('global.filter')</button>
                             </div>
                         </form>
                     </div>
                     <table class="table table-striped">
                         <thead>
-                        <th>Date</th>
-                        <th>Action</th>
-                        <th>User</th>
+                        <th>@lang('global.date')</th>
+                        <th>@lang('global.action')</th>
+                        <th>@lang('global.user')</th>
                         </thead>
 
                         <tbody>
@@ -71,13 +71,13 @@
                                     @if($logs->data)
                                         :
                                         <a href="{{ route('user-logs.viewDeletedData', $logs->user_activity_id) }}"
-                                           target="_blank">View Data</a>
+                                           target="_blank">@lang('global.view_data')</a>
                                     @endif
                                 </td>
-                                <td> {{$logs->user ? $logs->user->first_name." ".$logs->user->last_name: 'The user has been deleted.'}} </td>
+                                <td> {{$logs->user ? $logs->user->first_name." ".$logs->user->last_name: trans('success.user_deleted')}} </td>
                             </tr>
                         @empty
-                            <td class="text-center no-data" colspan="4">No Activity Log Yet::</td>
+                            <td class="text-center no-data" colspan="4">@lang('global.no_activity_log')::</td>
                         @endforelse
                         </tbody>
                     </table>

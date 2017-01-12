@@ -39,7 +39,7 @@ class UploadActivity extends ActivityBaseRequest
      */
     public function messages()
     {
-        $messages['activity.activity_file'] = 'The activity must be a file of type: csv, xls, xlsx.';
+        $messages['activity.activity_file'] = trans('validation.mimes', ['attribute' => trans('global.activity'), 'values' => 'csv, xls, xlsx']);
 
         return $messages;
     }

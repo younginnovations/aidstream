@@ -21,20 +21,21 @@ class Sector extends BaseForm
                 'sector_vocabulary',
                 'select',
                 [
-                    'choices'     => $this->getSectorVocabularyCodeList(),
-                    'empty_value' => 'Select one of the following option :',
+                    'choices'       => $this->getSectorVocabularyCodeList(),
+                    'empty_value'   => trans('elementForm.select_text'),
                     'default_value' => '1',
-                    'attr'        => ['class' => 'form-control sector_vocabulary']
+                    'attr'          => ['class' => 'form-control sector_vocabulary'],
+                    'label'         => trans('elementForm.sector_vocabulary')
                 ]
             )
-            ->add('vocabulary_uri', 'text', ['label' => 'Vocabulary URI'])
+            ->add('vocabulary_uri', 'text', ['label' => trans('elementForm.vocabulary_uri')])
             ->add(
                 'sector_code',
                 'select',
                 [
                     'choices'     => $this->getSectorCodeList(),
-                    'empty_value' => 'Select one of the following option :',
-                    'label'       => 'Sector Code',
+                    'empty_value' => trans('elementForm.select_text'),
+                    'label'       => trans('elementForm.sector_code'),
                     'wrapper'     => ['class' => 'form-group sector_types sector_select'],
                     'required'    => true
                 ]
@@ -44,8 +45,8 @@ class Sector extends BaseForm
                 'select',
                 [
                     'choices'     => $this->getSectorCategoryCodeList(),
-                    'empty_value' => 'Select one of the following option :',
-                    'label'       => 'Sector Code',
+                    'empty_value' => trans('elementForm.select_text'),
+                    'label'       => trans('elementForm.sector_code'),
                     'wrapper'     => ['class' => 'form-group hidden sector_types sector_category_select'],
                     'required'    => true
                 ]
@@ -54,7 +55,7 @@ class Sector extends BaseForm
                 'sector_text',
                 'text',
                 [
-                    'label'    => 'Sector Code',
+                    'label'    => trans('elementForm.sector_code'),
                     'wrapper'  => ['class' => 'form-group hidden sector_types sector_text'],
                     'required' => true
                 ]

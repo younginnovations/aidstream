@@ -48,7 +48,7 @@ class DescriptionController extends Controller
      */
     public function index($id)
     {
-        $activityData  = $this->activityManager->getActivityData($id);
+        $activityData = $this->activityManager->getActivityData($id);
 
         if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
@@ -72,7 +72,7 @@ class DescriptionController extends Controller
      */
     public function update($id, Request $request, DescriptionRequestManager $descriptionRequestManager)
     {
-        $activityData  = $this->activityManager->getActivityData($id);
+        $activityData = $this->activityManager->getActivityData($id);
 
         if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
@@ -88,11 +88,11 @@ class DescriptionController extends Controller
         if ($this->descriptionManager->update($activityDescription, $activityData)) {
             $this->activityManager->resetActivityWorkflow($id);
 
-            $response = ['type' => 'success', 'code' => ['updated', ['name' => 'Activity Description']]];
+            $response = ['type' => 'success', 'code' => ['updated', ['name' => trans('title.description')]]];
 
             return redirect()->to(sprintf('/activity/%s', $id))->withResponse($response);
         }
-        $response = ['type' => 'danger', 'code' => ['update_failed', ['name' => 'Activity Description']]];
+        $response = ['type' => 'danger', 'code' => ['update_failed', ['name' => trans('title.description')]]];
 
         return redirect()->back()->withInput()->withResponse($response);
     }

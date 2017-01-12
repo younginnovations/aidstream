@@ -1,11 +1,10 @@
 @inject('code', 'App\Helpers\GetCodeName')
 
-<p>Thank you for verifying your email address. You have successfully created an account for {{ $user->organization->name }} and
-    associated the following user accounts with it:</p>
+<p>@lang('registration.thank_you_for_verifying_your_email',['organisation_name' => $user->organization->name])</p>
 <ul>
     @foreach($users as $orgUser)
         <li>
-            <strong>{{ title_case($orgUser->role) }} Account:</strong> {{ $orgUser->first_name }} {{ $orgUser->last_name }}
+            <strong>{{ title_case($orgUser->role) }} @lang('user.account'):</strong> {{ $orgUser->first_name }} {{ $orgUser->last_name }}
             {{--(Username: {{ $user->username }}) - {{ $user->email }}--}}
         </li>
     @endforeach
@@ -16,35 +15,29 @@
 {{--<li><strong>Editor Account:</strong> test</li>--}}
 {{--</ul>--}}
 <p>
-    For any accounts you have created other than your own, we have sent a verification email to those users. If you
-    provided a back up contact for account recovery, we have also sent a verification
-    email to that address. Please ask all additional users to check their email inbox and follow the instructions in our
-    emails.</p>
+    @lang('registration.thank_you_for_verifying_your_email',['organisation_name' => $user->organization->name])</p>
 {{ Form::open(['url' => route('save-registry-info', [$user->verification_code]), 'method' => 'post']) }}
 <div class="save-registry-block">
     <p>
-        Now that your AidStream account is live, add the Publisher ID and API Key which the IATI Registry provided when
-        you
-        registered with them and you can instantly start publishing your data through AidStream.
+        @lang('registration.add_the_publisher_id')
     </p>
 
     <div class="col-xs-12 col-md-12">
         {!! AsForm::text(['name' => 'publisher_id', 'parent' => 'col-xs-12 col-sm-6 col-md-6']) !!}
-        {!! AsForm::text(['name' => 'api_id', 'label' => 'API Key', 'parent' => 'col-xs-12 col-sm-6 col-md-6']) !!}
+        {!! AsForm::text(['name' => 'api_id', 'label' => trans('user.api_key'), 'parent' => 'col-xs-12 col-sm-6 col-md-6']) !!}
     </div>
 </div>
 
 <div class="col-md-12 text-center">
-    {{ Form::button('Save and Continue', ['class' => 'btn btn-primary pull-left', 'type' => 'submit']) }}
-    {{ Form::button('I will add this later', ['class' => 'btn btn-primary pull-right', 'type' => 'button', 'id' => 'add-this-later', 'data-code' => $user->verification_code]) }}
+    {{ Form::button(trans('global.save_and_continue'), ['class' => 'btn btn-primary pull-left', 'type' => 'submit']) }}
+    {{ Form::button(trans('global.i_will_add_this_later'), ['class' => 'btn btn-primary pull-right', 'type' => 'button', 'id' => 'add-this-later', 'data-code' => $user->verification_code]) }}
 </div>
 
 {{ Form::close() }}
 
 <p>
-    You can also add this information via your Settings page, after you have logged in.
+    @lang('user.you_can_also_add_this_information')
 </p>
 <p>
-    Thank you for choosing AidStream as your IATI data publishing tool. We're always happy to help; simply drop us an email at
-    <a href="mailto:support@aidstream">support@aidstream.org</a> and we'll get back to you. To learn more about how to use AidStream, simply log in to your new account.
+    @lang('global.thank_you_for_choosing_aidstream_long_text')
 </p>

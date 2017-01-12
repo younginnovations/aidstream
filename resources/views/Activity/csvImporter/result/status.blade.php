@@ -1,6 +1,6 @@
 @extends('app')
 
-@section('title', 'Import Status')
+@section('title', trans('title.import_status'))
 
 @section('content')
 
@@ -12,23 +12,23 @@
                 <div id="import-status-placeholder" class="status-nolink"></div>
                 <div class="element-panel-heading">
                     <div>
-                        Import Results
+                        @lang('title.import_results')
                     </div>
                 </div>
                 <div class="col-xs-12 col-md-8 col-lg-8 element-content-wrapper element-upload-wrapper status-wrapper">
                     <div class="panel panel-default panel-upload">
                         <div class="panel-body">
                             <div class="status-show-block">
-                                <label>Show</label>
+                                <label>@lang('global.show')</label>
                                 <select class="tab-select">
-                                    <option data-select="all">All</option>
-                                    <option data-select="valid">Valid</option>
-                                    <option data-select="invalid">Invalid</option>
+                                    <option data-select="all">@lang('global.all')</option>
+                                    <option data-select="valid">@lang('global.valid')</option>
+                                    <option data-select="invalid">@lang('global.invalid')</option>
                                 </select>
                             </div>
                             <form action="{{ route('activity.result.cancel-import', $activityId) }}" method="POST" id="cancel-import">
                                 {{ csrf_field() }}
-                                <input type="button" class="btn_confirm hidden" id="cancel-import" data-title="Confirmation" data-message="Are you sure you want to Cancel Activity Import?" value="Cancel">
+                                <input type="button" class="btn_confirm hidden" id="cancel-import" data-title="Confirmation" data-message="{{ trans('global.cancel_csv_import', ['type' => trans('global.result')]) }}" value="Cancel">
                             </form>
 
                             <div class="tab-content">

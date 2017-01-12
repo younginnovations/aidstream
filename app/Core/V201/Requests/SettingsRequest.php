@@ -130,12 +130,12 @@ class SettingsRequest extends Request
             $messages["reporting_organization_info.0.$key.required"] = sprintf("The %s is required.", str_replace('_', ' ', $key));
         }
 
-        $messages["reporting_organization_info.0.narrative.0.narrative.required"] = 'At least one Organization Name is required.';
-        $messages["reporting_organization_info.0.narrative.unique_lang"]          = "Language should be unique";
-        $messages["default_field_values.0.linked_data_uri.url"]                   = "Linked data uri is invalid.";
-        $messages["default_field_values.0.default_currency.required"]             = 'Default Currency is required';
-        $messages["default_field_values.0.default_language.required"]             = 'Default Language is required';
-        $messages["default_field_values.0.default_hierarchy.numeric"]             = 'Hierarchy should be numeric';
+        $messages["reporting_organization_info.0.narrative.0.narrative.required"] = trans('validation.org_required', ['attribute' => trans('organisation.organisation_name')]);
+        $messages["reporting_organization_info.0.narrative.unique_lang"]          = trans('validation.unique', ['attribute' => trans('elementForm.language')]);
+        $messages["default_field_values.0.linked_data_uri.url"]                   = trans('validation.code_list', ['attribute' => trans('elementForm.linked_data_uri')]);
+        $messages["default_field_values.0.default_currency.required"]             = trans('validation.required', ['attribute' => trans('elementForm.default_currency')]);
+        $messages["default_field_values.0.default_language.required"]             = trans('validation.required', ['attribute' => trans('elementForm.default_language')]);
+        $messages["default_field_values.0.default_hierarchy.numeric"]             = trans('validation.numeric', ['attribute' => trans('elementForm.hierarchy')]);
         $messages                                                                 = array_merge($messages, $this->getMessagesForReportingOrganization($this->reporting_organization_info));
 
         return $messages;
@@ -152,7 +152,7 @@ class SettingsRequest extends Request
         $result   = $this->organizationManager->checkReportingOrganization($reportOrg);
 
         if (!(is_null($result))) {
-            $messages["reporting_organization_info.0.reporting_organization_identifier.diff"] = 'This reporting organization identifier is being used by ' . $result->name . '. This identifier has to be unique. Please contact us at support@aidstream.org';
+            $messages["reporting_organization_info.0.reporting_organization_identifier.diff"] = trans('validation.reporting_org_identifier_unique', ['orgName' => $result->name]);
         }
 
         return $messages;

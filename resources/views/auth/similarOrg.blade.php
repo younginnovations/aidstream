@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport'/>
-    <title>Aidstream - Register</title>
+    <title>@lang('title.aidstream_register')</title>
     <link rel="shotcut icon" type="image/png" sizes="32*32" href="{{ asset('/images/favicon.png') }}"/>
     <link href="{{ asset('/css/main.min.css') }}" rel="stylesheet">
     <link href="{{ asset('/css/style.css') }}" rel="stylesheet">
@@ -23,36 +23,7 @@
     @yield('head')
 </head>
 <body>
-<header>
-    <nav class="navbar navbar-default navbar-static navbar-fixed">
-        <div class="navbar-header">
-            <a href="{{ url('/') }}" class="navbar-brand">Aidstream</a>
-            <button type="button" class="navbar-toggle collapsed">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="bar1"></span>
-                <span class="bar2"></span>
-                <span class="bar3"></span>
-            </button>
-        </div>
-        <div class="navbar-collapse navbar-right">
-            <ul class="nav navbar-nav">
-                <li><a class="{{ Request::is('about') ? 'active' : '' }}" href="{{ url('/about') }}">About</a></li>
-                <li><a class="{{ Request::is('who-is-using') ? 'active' : '' }}" href="{{ url('/who-is-using') }}">Who's Using It?</a></li>
-                <li><a href="https://github.com/younginnovations/aidstream-new/wiki/User-Guide" target="_blank">User Guide</a></li>
-                <!--<li><a href="#">Snapshot</a></li>-->
-            </ul>
-            <div class="action-btn pull-left">
-                @if(auth()->check())
-                    <a href="{{ url((auth()->user()->role_id == 1 || auth()->user()->role_id == 2) ? config('app.admin_dashboard') : config('app.super_admin_dashboard'))}}" class="btn btn-primary">Go
-                        to Dashboard</a>
-                @else
-                    <a href="{{ url('/auth/login')}}" class="btn btn-primary">Login/Register</a>
-                @endif
-            </div>
-        </div>
-    </nav>
-</header>
-
+@include('includes.header_home')
 <div class="login-wrapper">
     {{--    <div class="language-select-wrapper">
             <label for="" class="pull-left">Language</label>
@@ -86,14 +57,13 @@
                                 </span>
                             </div>
                         @endif
-                        <h1 class="text-center">Find your organization</h1>
+                        <h1 class="text-center">@lang('global.find_your_organisation')</h1>
                         <p class="text-center">
-                            It seems there are account(s) on AidStream with same/similar organisation name you have entered during registration.
-                            To help us recover your account details,please enter the name of your organisation in the field below.
+                            @lang('global.seems_there_are_similar_organisations')
                         </p>
                         <div class="similar-org-container">
                             {{--<div class="input-wrapper text-center {{ $orgName ? 'hidden' : '' }}">--}}
-                                {{--Search for same/similar organisation name on AidStream.--}}
+                            {{--Search for same/similar organisation name on AidStream.--}}
                             {{--</div>--}}
 
                             {{ Form::open(['url' => route('submit-similar-organization'), 'method' => 'post', 'id' => 'similar-org-form']) }}
@@ -102,54 +72,54 @@
                                 <div class="col-xs-12 col-md-12 {{ $orgName ? 'hidden' : '' }}">
                                     {{ Form::hidden('type', $type) }}
                                     {!! AsForm::text(['name' => 'search_org', 'class' => 'search_org ignore_change', 'value' => $orgName, 'label' => false]) !!}
-                                    {{ Form::button('Search Organisation', ['class' => 'btn btn-primary btn-search', 'type' => 'button']) }}
+                                    {{ Form::button(trans('search_organisation'), ['class' => 'btn btn-primary btn-search', 'type' => 'button']) }}
                                     {{ Form::hidden('similar_organization') }}
                                 </div>
                                 <div class="org-list-container clickable-org hidden">
                                     <div class="col-xs-12 col-md-12 organization-list-wrapper">
-                                        <p class="text-center">Our database contains the following organisation/s which match the name of the organisation you entered. If one of them is your organistaion, please click to select it.</p>
+                                        <p class="text-center">@lang('global.search_organisation_text')</p>
                                         <ul class="organization-list">
                                         </ul>
                                     </div>
                                     <div class="col-md-12 text-center org-list-notification">
-                                        <p>None of the results above match my organisation. I would like to <a href="{{ url('/register') }}">register</a>  my organisation for an Aidstream account.</p>
+                                        <p>@lang('global.none_of_the_results_match_organisation_text', ['url' => url('/register')])</p>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="col-md-12 text-center clickable-org org-list-notification">
                                 {{--<a data-value="" class="btn btn-continue">Continue with registration</a>--}}
-                                {{ Form::button('Continue', ['class' => 'btn btn-primary btn-submit btn-register prevent-disable hidden', 'type' => 'submit', 'disabled' => 'disabled']) }}
+                                {{ Form::button(trans('global.continue'), ['class' => 'btn btn-primary btn-submit btn-register prevent-disable hidden', 'type' => 'submit', 'disabled' => 'disabled']) }}
                             </div>
                             {{ Form::close() }}
                         </div>
                         <div class="similar-org-action text-center hidden">
                             <h2>"<span class="org-name"></span>"</h2>
                             <div class="col-md-12 identifier-information">
-                                <p>If this is your organisation you may do one of the followings</p>
+                                <p>@lang('organisation.if_this_is_your_organisation')</p>
                                 <div class="col-sm-6">
-                                    <h3>Administrator Information</h3>
+                                    <h3>@lang('global.administrator_information')</h3>
                                     <p>
-                                        The administrator of the organisation name is
+                                        @lang('global.administrator_of_organisation')
                                     </p>
                                     <span class="admin-name"></span>
-                                    <a href="{{ route('contact', ['contact-admin-for-same-org']) }}" class="btn btn-primary">Contact Administrator</a>
+                                    <a href="{{ route('contact', ['contact-admin-for-same-org']) }}" class="btn btn-primary">@lang('global.contact_administrator')</a>
                                 </div>
                                 <div class="col-sm-6">
-                                    <h3>Retrieve Login Credentials</h3>
+                                    <h3>@lang('global.retrieve_login_credentials')</h3>
                                     <p>
-                                        I already have an account but forgotten my login credentials.
+                                        @lang('global.forgotten_login_credentials_text')
                                     </p>
-                                    <a href="{{ route('contact', ['contact-support-for-same-org']) }}" class="btn btn-primary">Contact Support for assistance</a>
+                                    <a href="{{ route('contact', ['contact-support-for-same-org']) }}" class="btn btn-primary">@lang('global.contact_support_for')</a>
                                 </div>
                             </div>
-                            <button class="btn btn-back">Back to Organisation List</button>
+                            <button class="btn btn-back">@lang('global.back_to_organisation_list')</button>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-xs-12 col-md-12 create-account-wrapper">
-                <a href="{{ url('/auth/login') }}">I already have an account</a>
+                <a href="{{ url('/auth/login') }}">@lang('global.already_have_account')</a>
             </div>
         </div>
     </div>

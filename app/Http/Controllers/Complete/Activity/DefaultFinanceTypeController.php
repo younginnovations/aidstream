@@ -45,9 +45,9 @@ class DefaultFinanceTypeController extends Controller
      * @param $id
      * @return \Illuminate\View\View
      */
-    public function  index($id)
+    public function index($id)
     {
-        $activityData  = $this->activityManager->getActivityData($id);
+        $activityData = $this->activityManager->getActivityData($id);
 
         if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
@@ -68,7 +68,7 @@ class DefaultFinanceTypeController extends Controller
      */
     public function update($id, Request $request, DefaultFinanceTypeRequestManager $defaultFinanceTypeRequestManager)
     {
-        $activityData  = $this->activityManager->getActivityData($id);
+        $activityData = $this->activityManager->getActivityData($id);
 
         if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
@@ -78,11 +78,11 @@ class DefaultFinanceTypeController extends Controller
         $defaultFinanceType = $request->all();
         if ($this->defaultFinanceTypeManager->update($defaultFinanceType, $activityData)) {
             $this->activityManager->resetActivityWorkflow($id);
-            $response = ['type' => 'success', 'code' => ['updated', ['name' => 'Default Finance Type']]];
+            $response = ['type' => 'success', 'code' => ['updated', ['name' => trans('element.default_finance_type')]]];
 
             return redirect()->to(sprintf('/activity/%s', $id))->withResponse($response);
         }
-        $response = ['type' => 'danger', 'code' => ['update_failed', ['name' => 'Default Finance Type']]];
+        $response = ['type' => 'danger', 'code' => ['update_failed', ['name' => trans('element.default_finance_type')]]];
 
         return redirect()->back()->withInput()->withResponse($response);
     }

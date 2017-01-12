@@ -34,22 +34,22 @@ class UserRequest extends Request
     public function messages()
     {
         return [
-            'first_name.required' => 'First name is required',
-            'first_name.max'      => 'First name cannot exceed more than 255 characters',
-            'last_name.required'  => 'Last name is required',
-            'last_name.max'       => 'Last name cannot exceed more than 255 characters',
-            'email.required'      => 'Email address is required',
-            'email.email'         => 'Please enter valid email address',
-            'email.max'           => 'Email cannot exceed more than 255 characters',
-            'email.unique'        => 'Sorry entered email address is already taken',
-            'username.required'   => 'Username is required',
-            'username.max'        => 'Username cannot exceed more than 255 characters',
-            'username.unique'     => 'Sorry entered username is already taken',
-            'password.required'   => 'Password is required',
-            'password.confirmed'  => "Sorry password didn't matched with confirmed one",
-            'password.min'        => 'Password must be minimum of 6 characters',
-            'permission.required' => 'Permission is required ',
-            'permissions.not_in'  => 'Please select valid permissions'
+            'first_name.required' => trans('validation.required', ['attribute' => trans('user.first_name')]),
+            'first_name.max'      => trans('validation.max.string', ['attribute' => trans('user.first_name'), 'max' => 255]),
+            'last_name.required'  => trans('validation.required', ['attribute' => trans('user.last_name')]),
+            'last_name.max'       => trans('validation.max.string', ['attribute' => trans('user.last_name'), 'max' => 255]),
+            'email.required'      => trans('validation.required', ['attribute' => trans('user.email_address')]),
+            'email.email'         => trans('validation.email', ['attribute' => trans('user.email_address')]),
+            'email.max'           => trans('validation.max.string', ['attribute' => trans('user.email'), 'max' => 255]),
+            'email.unique'        => trans('validation.custom_unique', ['attribute' => trans('user.email')]),
+            'username.required'   => trans('validation.required', ['attribute' => trans('user.username')]),
+            'username.max'        => trans('validation.max.string', ['attribute' => trans('user.username'), 'max' => 255]),
+            'username.unique'     => trans('validation.custom_unique', ['attribute' => trans('user.username')]),
+            'password.required'   => trans('validation.required', ['attribute' => trans('user.password')]),
+            'password.confirmed'  => trans('validation.confirmed', ['attribute' => trans('user.password')]),
+            'password.min'        => trans('validation.min.string', ['attribute' => trans('user.password')]),
+            'permission.required' => trans('validation.required', ['attribute' => trans('user.permission')]),
+            'permissions.not_in'  => trans('validation.not_in', ['attribute' => trans('user.permission')])
         ];
     }
 }

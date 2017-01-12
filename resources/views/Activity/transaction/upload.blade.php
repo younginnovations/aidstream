@@ -1,6 +1,6 @@
 @extends('app')
 
-@section('title', 'Upload Activity Transaction - ' . $activity->IdentifierTitle)
+@section('title', trans('title.upload_transaction').' - ' . $activity->IdentifierTitle)
 
 @section('content')
     <div class="container main-container">
@@ -10,13 +10,13 @@
                 @include('includes.response')
                 <div class="element-panel-heading">
                     <div>
-                        <span>Upload Transaction</span>
+                        <span>@lang('global.upload_transaction')</span>
                         <div class="element-panel-heading-info">
                             <span>{{$activity->IdentifierTitle}}</span>
                         </div>
-                        <div class="panel-action-btn">
+                        <div class="panel-action-btn btn-action-wrap">
                             <a href="{{ route('activity.transaction.index', $id) }}"
-                               class="btn btn-primary back-to-transaction">Back to Transaction List</a>
+                               class="btn btn-primary back-to-transaction btn-view-it">@lang('global.back_to_transaction_list')</a>
                         </div>
                     </div>
                 </div>
@@ -27,21 +27,13 @@
                                 {!! form($form) !!}
                             </div>
                             <div class="download-transaction-wrap">
-                                <a href="/download-simple-transaction" class="btn btn-primary btn-form btn-submit">Download
-                                    Simple Transaction Template</a>
-                                <div>Contains very less information. Ideal if you are filling the information by hand.
-                                    It doesn't contain many transaction elements for simplicity.
+                                <a href="/download-simple-transaction" class="btn btn-primary btn-form btn-submit">@lang('global.download_simple_transaction_template')</a>
+                                <div>@lang('global.simple_transaction_text')
                                 </div>
                             </div>
                             <div class="download-transaction-wrap">
-                                <a href="/download-detailed-transaction" class="btn btn-primary btn-form btn-submit">Download
-                                    Detailed Transaction Template</a>
-                                <div>Contains all information about transaction. Ideal if you download your existing
-                                    transaction from Download My Data page and want to update the transactions in bulk.
-                                    Manual filling can be difficult as you have to ensure you use proper code values
-                                    while filling certain fields. The first three fields (Activity_Identifier,
-                                    Activity_Title, Default_currency) are ignored during uploading. This is done to make
-                                    it consistent with transaction download via Download My Data.
+                                <a href="/download-detailed-transaction" class="btn btn-primary btn-form btn-submit">@lang('global.download_detailed_transaction_template')</a>
+                                <div>@lang('global.detailed_transaction_text')
                                 </div>
                             </div>
                         </div>

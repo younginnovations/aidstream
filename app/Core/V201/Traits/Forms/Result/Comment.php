@@ -15,6 +15,6 @@ trait Comment
      */
     public function addComments(array $data = [])
     {
-        return $this->addCollection('comment', 'Activity\Title', '', $data);
+        return $this->addCollection('comment', 'Activity\Title', '', $data, trans('elementForm.comment'));
     }
 }

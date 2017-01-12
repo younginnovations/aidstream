@@ -39,7 +39,6 @@
 </style>
 
 <body>
-<body>
 <div class="org-header-wrapper">
     @include('includes.header')
 </div>
@@ -58,16 +57,16 @@
                     @endif
                 </div>
                 <div class="organisation-more-info">
-                <span class="organisation-name">
-                    <a href="#" title="{{ getVal($organizations, ['name'], '')}}">
-                        {{ getVal($organizations, ['name'], '')}}
-                        {{--{{$organizations['name']}}--}}
-                    </a>
-                </span>
-                @if($organizations['address'])
-                    <address><i class="pull-left material-icons">room</i>{{$organizations['address']}}</address>
-                @endif
-                <a href="{{url('/who-is-using')}}" class="see-all-activities"><i class="pull-left material-icons">arrow_back</i>See all Organisations</a>
+                    <span class="organisation-name">
+                        <a href="#" title="{{ getVal($organizations, ['name'], '')}}">
+                            {{ getVal($organizations, ['name'], '')}}
+                            {{--{{$organizations['name']}}--}}
+                        </a>
+                    </span>
+                    @if($organizations['address'])
+                        <address><i class="pull-left material-icons">room</i>{{$organizations['address']}}</address>
+                    @endif
+                    <a href="{{url('/who-is-using')}}" class="see-all-activities"><i class="pull-left material-icons">arrow_back</i>@lang('perfectViewer.see_all_organisations')</a>
                 </div>
             </div>
         </div>
@@ -78,25 +77,25 @@
                 <div class="org-transaction-wrapper">
                     <ul>
                         <li>
-                            <h4>Total Commitments</h4>
+                            <h4>@lang('perfectViewer.total_commitments')</h4>
                             <span>
                                 ${{number_format(round(getVal($organizations, ['transaction_totals', 'total_commitments'], 0),2))}}
                             </span>
                         </li>
                         <li>
-                            <h4>Total Disbursements</h4>
+                            <h4>@lang('perfectViewer.total_disbursements')</h4>
                             <span>
                                 ${{number_format(round(getVal($organizations, ['transaction_totals', 'total_disbursements'], 0),2))}}
                             </span>
                         </li>
                         <li>
-                            <h4>Total Expenditures</h4>
+                            <h4>@lang('perfectViewer.total_expenditures')</h4>
                             <span>
                                 ${{number_format(round(getVal($organizations, ['transaction_totals', 'total_expenditures'], 0),2))}}
                             </span>
                         </li>
                         <li>
-                            <h4>Total Incoming Funds</h4>
+                            <h4>@lang('perfectViewer.total_incoming_funds')</h4>
                             <span>
                                 ${{number_format(round(getVal($organizations, ['transaction_totals', 'total_incoming_funds'], 0),2))}}
                             </span>
@@ -105,7 +104,7 @@
                 </div>
             </div>
             <div class="col-xs-12 col-sm-8 col-md-8 org-activity-wrapper pull-left" data-sticky_column>
-                @if(count($activities) <= 0)<h2>Activities <span class="activity-count">({{count($activities)}})</span></h2>@endif
+                @if(count($activities) <= 0)<h2>@lang('global.activities') <span class="activity-count">({{count($activities)}})</span></h2>@endif
                 <ul class="activities-listing">
                     @foreach($activities as $index => $activity)
                         <li>
@@ -118,7 +117,7 @@
                                         @endif
                                     </h3>
                                     @if(getVal($activity, ['published_data', 'identifier', 'activity_identifier'], null))
-                                        <div class="iati-identifier-wrapper">IATI Identifier:
+                                        <div class="iati-identifier-wrapper">@lang('perfectViewer.iati_identifier'):
                                             <span class="iati-identifier">
                                                 {{getVal($activity, ['published_data', 'identifier', 'iati_identifier_text'], '')}}
                                         </span>
@@ -157,7 +156,7 @@
                                                     <i class="pull-left material-icons">autorenew</i>
                                                     <span>
                                                         {{ $codeListHelper->getCodeNameOnly('ActivityStatus', getVal($activity, ['published_data', 'activity_status'], '')) }}
-                                                        <i>(Status)</i>
+                                                        <i>(@lang('perfectViewer.status'))</i>
                                                     </span>
                                                 </li>
                                             @endif
@@ -165,7 +164,7 @@
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-sm-3 col-md-3 pull-right total-budget-wrapper">
-                                    <span>Total Budget</span>
+                                    <span>@lang('perfectViewer.total_budget')</span>
                                     <span class="total-budget-amount">{{number_format(round(getVal($activity, ['published_data', 'totalBudget', 'value'], 0), 2))}}</span>
                                     <span class="currency">USD</span>
                                 </div>
@@ -176,50 +175,7 @@
             </div>
         </div>
     </section>
-    <footer>
-        <div class="width-900">
-            <div class="social-wrapper bottom-line">
-                <div class="col-md-12 text-center">
-                    <ul>
-                        <li><a href="https://github.com/younginnovations/aidstream-new" class="github"
-                               title="Fork us on Github">Fork us on Github</a></li>
-                        <li><a href="https://twitter.com/aidstream" class="twitter" title="Follow us on Twitter">Follow
-                                us
-                                on Twitter</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="footer-nav bottom-line">
-                <div class="col-md-12">
-                    <ul>
-                        <li><a href="{{ url('/about') }}">About</a></li>
-                        <li><a href="{{ url('/who-is-using') }}">Who's using</a></li>
-                    </ul>
-                    <ul>
-                        @if(auth()->check())
-                            <li>
-                                <a href="{{ url((auth()->user()->role_id == 1 || auth()->user()->role_id == 2) ? config('app.admin_dashboard') : config('app.super_admin_dashboard'))}}">Go to
-                                    Dashboard</a>
-                            </li>
-                        @else
-                            <li><a href="{{ url('/auth/login') }}">Login</a></li>
-                            <li><a href="{{ url('/auth/register') }}">Register</a></li>
-                        @endif
-                    </ul>
-                </div>
-            </div>
-            <div class="footer-logo">
-                <div class="col-md-12 text-center">
-                    <a href="{{ url('/') }}"><img src="/images/logo-text.png" alt=""></a>
-                </div>
-            </div>
-        </div>
-        <div class="width-900 text-center">
-            <div class="col-md-12 support-desc">
-                For queries, suggestions, shoot us an email at <a href="mailto:support@aidstream.org">support@aidstream.org</a>
-            </div>
-        </div>
-    </footer>
+    @include('includes.footer')
 </div>
 </body>
 <script src="/js/jquery.js"></script>

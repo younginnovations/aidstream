@@ -11,6 +11,6 @@ trait TransactionDate
      */
     public function addTransactionDate()
     {
-        return $this->addCollection('transaction_date', 'Activity\Transactions\Date');
+        return $this->addCollection('transaction_date', 'Activity\Transactions\Date', '', [], trans('elementForm.transaction_date'));
     }
 }

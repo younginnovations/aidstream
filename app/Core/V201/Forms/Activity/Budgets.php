@@ -11,7 +11,7 @@ class Budgets extends BaseForm
     public function buildForm()
     {
         $this
-            ->addCollection('budget', 'Activity\Budget', 'budget')
+            ->addCollection('budget', 'Activity\Budget', 'budget', [], trans('elementForm.budget'))
             ->addAddMoreButton('add_budget', 'budget');
     }
 }

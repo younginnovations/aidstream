@@ -18,10 +18,10 @@ class Target extends BaseForm
     public function buildForm()
     {
         $this
-            ->add('value', 'text')
-            ->addCollection('location', 'Activity\TargetLocation', 'target_location')
+            ->add('value', 'text', ['label' => trans('elementForm.value')])
+            ->addCollection('location', 'Activity\TargetLocation', 'target_location', [], trans('elementForm.location'))
             ->addAddMoreButton('add_target_location', 'target_location')
-            ->addCollection('dimension', 'Activity\TargetDimension', 'target_dimension')
+            ->addCollection('dimension', 'Activity\TargetDimension', 'target_dimension', [], trans('elementForm.dimension'))
             ->addAddMoreButton('add_target_dimension', 'target_dimension')
             ->addComments();
     }

@@ -1,5 +1,5 @@
 @extends('app')
-@section('title', 'Total Expenditure')
+@section('title', trans('title.org_total_expenditure'))
 @section('content')
     <div class="container main-container">
         <div class="row">
@@ -7,11 +7,11 @@
             <div class="col-xs-9 col-md-9 col-lg-9 content-wrapper">
                 @include('includes.response')
                 <div class="panel-content-heading panel-title-heading">
-                    <div>Total Expenditure
-                    <div class="panel-action-btn">
-                        <a href="{{route('organization.show', $orgId)}}" class="btn btn-primary">View Organisation Data
-                        </a>
-                    </div>
+                    <div>@lang('element.total_expenditure')
+                        <div class="panel-action-btn">
+                            <a href="{{route('organization.show', $orgId)}}" class="btn btn-primary">@lang('global.view_organisation_data')
+                            </a>
+                        </div>
                     </div>
                 </div>
                 <div class="col-xs-8 col-md-8 col-lg-8 element-content-wrapper">

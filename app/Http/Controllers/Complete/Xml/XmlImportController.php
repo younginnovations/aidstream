@@ -3,6 +3,7 @@
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Xml\XmlUploadRequest;
 use App\Services\XmlImporter\XmlImportManager;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Session;
 
 /**
@@ -141,5 +142,12 @@ class XmlImportController extends Controller
         }
 
         return view('xmlImport.schemaError');
+    }
+
+    public function getLocalisedXmlFile()
+    {
+        $currentLanguage = ($language = (Cookie::get('language'))) ? $language : 'en';
+
+        return file_get_contents(sprintf(resource_path('lang/%s/xmlImporter.json'), $currentLanguage));
     }
 }

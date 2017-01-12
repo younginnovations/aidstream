@@ -5,37 +5,20 @@
                 <ul class="nav">
                     <li @if(request()->path() == 'settings') class="active" @endif>
                         <a href="{{route('settings')}}">
-                            Organisation Information
+                            @lang('setting.organisation_information')
                         </a>
                     </li>
                     <li @if(request()->path() == 'publishing-settings') class="active"@endif >
-                        {{--@if(!$settings)--}}
-                            {{--<i class="glyphicon glyphicon-alert" style="color:orange"></i>--}}
-                        {{--@elseif(is_null($settings->registry_info))--}}
-                            {{--<i class="glyphicon glyphicon-alert" style="color:orange"></i>--}}
-                        {{--@endif--}}
-                        <a href="{{route('publishing-settings')}}">Publishing Settings</a>
+                        <a href="{{route('publishing-settings')}}">@lang('setting.publishing_settings')</a>
                     </li>
                     <li @if(request()->path() == 'activity-elements-checklist') class="active" @endif>
-                        {{--@if(!$settings)--}}
-                            {{--<i class="glyphicon glyphicon-alert" style="color:orange"></i>--}}
-                        {{--@elseif(is_null($settings->default_field_groups))--}}
-                            {{--<i class="glyphicon glyphicon-alert" style="color:orange"></i>--}}
-                        {{--@endif--}}
-                        <a href="{{route('activity-elements-checklist')}}">Activity Elements Checklist</a>
+                        <a href="{{route('activity-elements-checklist')}}">@lang('setting.activity_elements_checklist')</a>
                     </li>
                     <li @if(request()->path() == 'default-values') class="active" @endif>
-                        {{--@if(!$settings)--}}
-                            {{--<i class="glyphicon glyphicon-alert" style="color:orange"></i>--}}
-                        {{--@elseif(is_null($settings->default_field_values))--}}
-                            {{--<i class="glyphicon glyphicon-alert" style="color:orange"></i>--}}
-                        {{--@endif--}}
-                        <a href="{{route('default-values')}}">Default Values
-                        </a>
+                        <a href="{{route('default-values')}}">@lang('setting.default_values')</a>
                     </li>
                     <li @if(request()->path() == 'organization-user' || request()->path() == 'organization-user/register') class="active" @endif>
-                        <a href="{{route('admin.list-users')}}">Users
-                        </a>
+                        <a href="{{route('admin.list-users')}}">@lang('setting.users')</a>
                     </li>
                 </ul>
             </div>

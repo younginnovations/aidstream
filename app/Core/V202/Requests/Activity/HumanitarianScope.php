@@ -50,11 +50,11 @@ class HumanitarianScope extends ActivityBaseRequest
 
         foreach ($formFields as $humanitarianScopeIndex => $humanitarianScope) {
             $humanitarianScopeForm                                     = 'humanitarian_scope.' . $humanitarianScopeIndex;
-            $messages[$humanitarianScopeForm . '.type.required']       = 'Humanitarian Scope type is required';
-            $messages[$humanitarianScopeForm . '.vocabulary.required'] = 'Humanitarian Scope vocabulary is required';
-            $messages[$humanitarianScopeForm . '.code.required']       = 'Humanitarian Scope code is required';
-            $messages[$humanitarianScopeForm . '.code.string']         = 'Humanitarian Scope should be string';
-            $messages[$humanitarianScopeForm . '.vocabulary_uri.url']  = 'Enter valid URL. eg. http://example.com';
+            $messages[$humanitarianScopeForm . '.type.required']       = trans('validation.required', ['attribute' => trans('elementForm.humanitarian_scope_type')]);
+            $messages[$humanitarianScopeForm . '.vocabulary.required'] = trans('validation.required', ['attribute' => trans('elementForm.humanitarian_scope_vocabulary')]);
+            $messages[$humanitarianScopeForm . '.code.required']       = trans('validation.required', ['attribute' => trans('elementForm.humanitarian_scope_code')]);
+            $messages[$humanitarianScopeForm . '.code.string']         = trans('validation.string', ['attribute' => trans('element.humanitarian_scope')]);
+            $messages[$humanitarianScopeForm . '.vocabulary_uri.url']  = trans('validation.url');
             $messages                                                  = array_merge($messages, $this->getMessagesForNarrative($humanitarianScope['narrative'], $humanitarianScopeForm));
         }
 

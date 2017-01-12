@@ -21,8 +21,9 @@ class Sector extends BaseForm
                 'sector_vocabulary',
                 'select',
                 [
+                    'label'       => trans('elementForm.sector_vocabulary'),
                     'choices'     => $this->getSectorVocabularyCodeList(),
-                    'empty_value' => 'Select one of the following option :',
+                    'empty_value' => trans('elementForm.select_text'),
                     'attr'        => ['class' => 'form-control sector_vocabulary'],
                     'help_block'  => $this->addHelpText('Activity_Transaction_Sector-vocabulary')
                 ]
@@ -32,8 +33,8 @@ class Sector extends BaseForm
                 'select',
                 [
                     'choices'     => $this->getSectorCodeList(),
-                    'empty_value' => 'Select one of the following options',
-                    'label'       => 'Sector Code',
+                    'empty_value' => trans('elementForm.select_text'),
+                    'label'       => trans('elementForm.sector_code'),
                     'wrapper'     => ['class' => 'form-group hidden sector_types sector_select'],
                     'help_block'  => $this->addHelpText('Activity_Sector-code')
                 ]
@@ -43,8 +44,8 @@ class Sector extends BaseForm
                 'select',
                 [
                     'choices'     => $this->getSectorCategoryCodeList(),
-                    'empty_value' => 'Select one of the following options',
-                    'label'       => 'Sector Code',
+                    'empty_value' => trans('elementForm.select_text'),
+                    'label'       => trans('elementForm.sector_code'),
                     'wrapper'     => ['class' => 'form-group hidden sector_types sector_category_select'],
                     'help_block'  => $this->addHelpText('Activity_Sector-dac_three_code')
                 ]
@@ -53,7 +54,7 @@ class Sector extends BaseForm
                 'sector_text',
                 'text',
                 [
-                    'label'      => 'Sector Code',
+                    'label'      => trans('elementForm.sector_code'),
                     'wrapper'    => ['class' => 'form-group sector_types sector_text'],
                     'help_block' => $this->addHelpText('Activity_Sector-non_dac_code')
                 ]

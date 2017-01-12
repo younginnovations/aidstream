@@ -158,26 +158,86 @@ class CsvImportValidator
             $messages = array_merge(
                 $messages,
                 [
-                    "$transactionIndex.transaction_ref.required"             => sprintf('At row %s Transaction-ref is required', $transactionIndex + 1),
-                    "$transactionIndex.transaction_ref.unique_validation"    => sprintf('At row %s Transaction-ref should be unique', $transactionIndex + 1),
-                    "$transactionIndex.transactiontype_code.required"        => sprintf('At row %s TransactionType-code is required', $transactionIndex + 1),
-                    "$transactionIndex.transactiontype_code.in"              => sprintf('At row %s TransactionType-code is invalid', $transactionIndex + 1),
-                    "$transactionIndex.transactiondate_iso_date.required"    => sprintf('At row %s TransactionDate-iso_date is required', $transactionIndex + 1),
-                    "$transactionIndex.transactiondate_iso_date.date"        => sprintf('At row %s TransactionDate-iso_date is invalid', $transactionIndex + 1),
-                    "$transactionIndex.transactionvalue_value_date.required" => sprintf('At row %s TransactionValue-value_date is required', $transactionIndex + 1),
-                    "$transactionIndex.transactionvalue_value_date.date"     => sprintf('At row %s TransactionValue-value_date is invalid', $transactionIndex + 1),
-                    "$transactionIndex.transactionvalue_text.required"       => sprintf('At row %s TransactionValue-text is required', $transactionIndex + 1),
-                    "$transactionIndex.transactionvalue_text.numeric"        => sprintf('At row %s TransactionValue-text should ne numeric', $transactionIndex + 1),
-                    "$transactionIndex.description_text.required"            => sprintf('At row %s Description-text is required', $transactionIndex + 1),
-                    "$transactionIndex.disbursementchannel_code.in"          => sprintf('At row %s DisbursementChannel-code is invalid', $transactionIndex + 1),
-                    "$transactionIndex.sector_vocabulary.in"                 => sprintf('At row %s Sector-vocabularye is invalid', $transactionIndex + 1),
-                    "$transactionIndex.recipientcountry_code.in"             => sprintf('At row %s RecipientCountry-code is invalid', $transactionIndex + 1),
-                    "$transactionIndex.recipientregion_code.in"              => sprintf('At row %s RecipientRegion-code is invalid', $transactionIndex + 1),
-                    "$transactionIndex.recipientregion_vocabulary.in"        => sprintf('At row %s RecipientRegion-code is invalid', $transactionIndex + 1),
-                    "$transactionIndex.flowtype_code.in"                     => sprintf('At row %s FlowType-code is invalid', $transactionIndex + 1),
-                    "$transactionIndex.financetype_code.in"                  => sprintf('At row %s FinanceType-code is invalid', $transactionIndex + 1),
-                    "$transactionIndex.aidtype_code.in"                      => sprintf('At row %s AidType-code is invalid', $transactionIndex + 1),
-                    "$transactionIndex.tiedstatus_code.in"                   => sprintf('At row %s TiedStatus-code is invalid', $transactionIndex + 1),
+                    "$transactionIndex.transaction_ref.required"             => trans(
+                        'validation.csv_required',
+                        ['number' => $transactionIndex + 1, 'attribute' => trans('element.transaction') . '-' . trans('elementForm.ref')]
+                    ),
+                    "$transactionIndex.transaction_ref.unique_validation"    => trans(
+                        'validation.csv_unique',
+                        ['number' => $transactionIndex + 1, 'attribute' => trans('element.transaction') . '-' . trans('elementForm.ref')]
+                    ),
+                    "$transactionIndex.transactiontype_code.required"        => trans(
+                        'validation.csv_required',
+                        ['number' => $transactionIndex + 1, 'attribute' => trans('elementForm.transaction_type') . '-' . trans('elementForm.code')]
+                    ),
+                    "$transactionIndex.transactiontype_code.in"              => trans(
+                        'validation.csv_invalid',
+                        ['number' => $transactionIndex + 1, 'attribute' => trans('elementForm.transaction_type') . '-' . trans('elementForm.code')]
+                    ),
+                    "$transactionIndex.transactiondate_iso_date.required"    => trans(
+                        'validation.csv_required',
+                        ['number' => $transactionIndex + 1, 'attribute' => trans('elementForm.transaction_date') . '-' . trans('elementForm.iso_date')]
+                    ),
+                    "$transactionIndex.transactiondate_iso_date.date"        => trans(
+                        'validation.csv_invalid',
+                        ['number' => $transactionIndex + 1, 'attribute' => trans('elementForm.transaction_value') . '-' . trans('elementForm.value_date')]
+                    ),
+                    "$transactionIndex.transactionvalue_value_date.required" => trans(
+                        'validation.csv_required',
+                        ['number' => $transactionIndex + 1, 'attribute' => trans('elementForm.transaction_value') . '-' . trans('elementForm.value_date')]
+                    ),
+                    "$transactionIndex.transactionvalue_value_date.date"     => trans(
+                        'validation.csv_invalid',
+                        ['number' => $transactionIndex + 1, 'attribute' => trans('elementForm.transaction_value') . '-' . trans('elementForm.value_date')]
+                    ),
+                    "$transactionIndex.transactionvalue_text.required"       => trans(
+                        'validation.csv_required',
+                        ['number' => $transactionIndex + 1, 'attribute' => trans('elementForm.transaction_value') . '-' . trans('elementForm.text')]
+                    ),
+                    "$transactionIndex.transactionvalue_text.numeric"        => trans(
+                        'validation.csv_numeric',
+                        ['number' => $transactionIndex + 1, 'attribute' => trans('elementForm.transaction_value') . '-' . trans('elementForm.text')]
+                    ),
+                    "$transactionIndex.description_text.required"            => trans(
+                        'validation.csv_required',
+                        ['number' => $transactionIndex + 1, 'attribute' => trans('element.description') . '-' . trans('elementForm.text')]
+                    ),
+                    "$transactionIndex.disbursementchannel_code.in"          => trans(
+                        'validation.csv_invalid',
+                        ['number' => $transactionIndex + 1, 'attribute' => trans('elementForm.disbursement_channel') . '-' . trans('elementForm.code')]
+                    ),
+                    "$transactionIndex.sector_vocabulary.in"                 => trans(
+                        'validation.csv_invalid',
+                        ['number' => $transactionIndex + 1, 'attribute' => trans('element.sector') . '-' . trans('elementForm.vocabulary')]
+                    ),
+                    "$transactionIndex.recipientcountry_code.in"             => trans(
+                        'validation.csv_invalid',
+                        ['number' => $transactionIndex + 1, 'attribute' => trans('element.recipient_country') . '-' . trans('elementForm.code')]
+                    ),
+                    "$transactionIndex.recipientregion_code.in"              => trans(
+                        'validation.csv_invalid',
+                        ['number' => $transactionIndex + 1, 'attribute' => trans('element.recipient_region') . '-' . trans('elementForm.code')]
+                    ),
+                    "$transactionIndex.recipientregion_vocabulary.in"        => trans(
+                        'validation.csv_invalid',
+                        ['number' => $transactionIndex + 1, 'attribute' => trans('element.recipient_region') . '-' . trans('elementForm.vocabulary')]
+                    ),
+                    "$transactionIndex.flowtype_code.in"                     => trans(
+                        'validation.csv_invalid',
+                        ['number' => $transactionIndex + 1, 'attribute' => trans('elementForm.flow_type') . '-' . trans('elementForm.code')]
+                    ),
+                    "$transactionIndex.financetype_code.in"                  => trans(
+                        'validation.csv_invalid',
+                        ['number' => $transactionIndex + 1, 'attribute' => trans('elementForm.finance_type') . '-' . trans('elementForm.code')]
+                    ),
+                    "$transactionIndex.aidtype_code.in"                      => trans(
+                        'validation.csv_invalid',
+                        ['number' => $transactionIndex + 1, 'attribute' => trans('elementForm.aid_type') . '-' . trans('elementForm.code')]
+                    ),
+                    "$transactionIndex.tiedstatus_code.in"                   => trans(
+                        'validation.csv_invalid',
+                        ['number' => $transactionIndex + 1, 'attribute' => trans('elementForm.tied_status') . '-' . trans('elementForm.code')]
+                    )
                 ]
             );
 
@@ -185,11 +245,17 @@ class CsvImportValidator
             if ($sectorVocabulary == 1) {
                 $sectorCodes                                  = implode(',', $this->getCodes('Sector', 'Activity'));
                 $rules["$transactionIndex.sector_code"]       = 'in:' . $sectorCodes;
-                $messages["$transactionIndex.sector_code.in"] = sprintf('At row %s 5 digit Sector-code is invalid', $transactionIndex + 1);
+                $messages["$transactionIndex.sector_code.in"] = trans(
+                    'validation.csv_invalid',
+                    ['number' => $transactionIndex + 1, 'attribute' => trans('element.sector') . '-' . trans('elementForm.code')]
+                );
             } elseif ($sectorVocabulary == 2) {
                 $sectorCodes                                  = implode(',', $this->getCodes('SectorCategory', 'Activity'));
                 $rules["$transactionIndex.sector_code"]       = 'in:' . $sectorCodes;
-                $messages["$transactionIndex.sector_code.in"] = sprintf('At row %s 3 digit Sector-code is invalid', $transactionIndex + 1);
+                $messages["$transactionIndex.sector_code.in"] = trans(
+                    'validation.csv_invalid',
+                    ['number' => $transactionIndex + 1, 'attribute' => trans('element.sector') . '-' . trans('elementForm.code')]
+                );
             }
 
         }
@@ -266,34 +332,104 @@ class CsvImportValidator
                 $messages = array_merge(
                     $messages,
                     [
-                        "$activityIndex.sector_dac_5digit.multiple_value_in"             => sprintf('At row %s Sector_DAC_5Digit category code is invalid.', $activityIndex + 1),
-                        "$activityIndex.sector_dac_5digit.required"                      => sprintf('At row %s Sector_DAC_5Digit category code is required.', $activityIndex + 1),
-                        "$activityIndex.recipient_country.multiple_value_in"             => sprintf('At row %s Recipient_Country is invalid.', $activityIndex + 1),
-                        "$activityIndex.recipient_country.required_without"              => sprintf('At row %s either Recipient_Country or Recipient_Region is required.', $activityIndex + 1),
-                        "$activityIndex.recipient_region.multiple_value_in"              => sprintf('At row %s Recipient_Region is invalid.', $activityIndex + 1),
-                        "$activityIndex.recipient_region.required_without"               => sprintf('At row %s either Recipient_Country or Recipient_Region is required.', $activityIndex + 1),
-                        "$activityIndex.activity_status.in"                              => sprintf('At row %s Activity_Status is invalid.', $activityIndex + 1),
-                        "$activityIndex.activity_status.required"                        => sprintf('At row %s Activity_Status is required.', $activityIndex + 1),
-                        "$activityIndex.activity_identifier.required"                    => sprintf('At row %s Activity_Identifier is required.', $activityIndex + 1),
-                        "$activityIndex.activity_identifier.not_in"                      => sprintf('At row %s Activity_Identifier already exists.', $activityIndex + 1),
-                        "$activityIndex.activity_identifier.unique_validation"           => sprintf('At row %s Activity_Identifier is invalid and must be unique.', $activityIndex + 1),
-                        "$activityIndex.activity_title.required"                         => sprintf('At row %s Activity_Title is required.', $activityIndex + 1),
-                        "$activityIndex.actual_start_date.date"                          => sprintf('At row %s Actual_start_date is invalid.', $activityIndex + 1),
-                        "$activityIndex.actual_end_date.date"                            => sprintf('At row %s Actual_end_date is invalid.', $activityIndex + 1),
-                        "$activityIndex.planned_start_date.date"                         => sprintf('At row %s Planned_start_date is invalid.', $activityIndex + 1),
-                        "$activityIndex.planned_end_date.date"                           => sprintf('At row %s Planned_end_date is invalid.', $activityIndex + 1),
-                        "$activityIndex.actual_start_date.required_any"                  => sprintf(
-                            'At row %s date among Actual_start_date/Actual_end_date/Planned_start_date/Planned_end_date is required.',
-                            $activityIndex + 1
+                        "$activityIndex.sector_dac_5digit.multiple_value_in"   => trans(
+                            'validation.csv_invalid',
+                            ['number' => $activityIndex + 1, 'attribute' => trans('elementForm.sector_5_digit') . '-' . trans('elementForm.category_code')]
                         ),
-                        "$activityIndex.description_general.required_any"                => sprintf(
-                            'At row %s at least one description among description_general/description_objectives/description_target_group is required.',
-                            $activityIndex + 1
+                        "$activityIndex.sector_dac_5digit.required"            => trans(
+                            'validation.csv_required',
+                            ['number' => $activityIndex + 1, 'attribute' => trans('elementForm.sector_5_digit') . '-' . trans('elementForm.category_code')]
                         ),
-                        "$activityIndex.funding_participating_organization.required_any" => sprintf(
-                            'At row %s at least one participating_organization among funding/implementing is required.',
-                            $activityIndex + 1
+                        "$activityIndex.recipient_country.multiple_value_in"   => trans(
+                            'validation.csv_invalid',
+                            ['number' => $activityIndex + 1, 'attribute' => trans('elementForm.recipient_country')]
                         ),
+                        "$activityIndex.recipient_country.required_without"    => trans(
+                            'validation.csv_required',
+                            [
+                                'number'    => $activityIndex + 1,
+                                'attribute' => trans('global.either') . ' ' . trans('elementForm.recipient_country') . ' ' . trans('global.or') . ' ' . trans('elementForm.recipientRegion')
+                            ]
+                        ),
+                        "$activityIndex.recipient_region.multiple_value_in"    => trans(
+                            'validation.csv_invalid',
+                            ['number' => $activityIndex + 1, 'attribute' => trans('elementForm.recipient_region')]
+                        ),
+                        "$activityIndex.recipient_region.required_without"     => trans(
+                            'validation.csv_required',
+                            [
+                                'number'    => $activityIndex + 1,
+                                'attribute' => trans('global.either') . ' ' . trans('elementForm.recipient_country') . ' ' . trans('global.or') . ' ' . trans('elementForm.recipientRegion')
+                            ]
+                        ),
+                        "$activityIndex.activity_status.in"                    => trans(
+                            'validation.csv_invalid',
+                            ['number' => $activityIndex + 1, 'attribute' => trans('element.activity_status')]
+                        ),
+                        "$activityIndex.activity_status.required"              => trans(
+                            'validation.csv_required',
+                            ['number' => $activityIndex + 1, 'attribute' => trans('elementForm.activity_status')]
+                        ),
+                        "$activityIndex.activity_identifier.required"          => trans(
+                            'validation.csv_required',
+                            ['number' => $activityIndex + 1, 'attribute' => trans('elementForm.activity_identifier')]
+                        ),
+                        "$activityIndex.activity_identifier.not_in"            => trans(
+                            'validation.csv_unique',
+                            ['number' => $activityIndex + 1, 'attribute' => trans('elementForm.activity_identifier')]
+                        ),
+                        "$activityIndex.activity_identifier.unique_validation" => trans(
+                            'validation.csv_unique_validation',
+                            ['number' => $activityIndex + 1, 'attribute' => trans('elementForm.activity_identifier')]
+                        ),
+                        "$activityIndex.activity_title.required"               => trans(
+                            'validation.csv_required',
+                            ['number' => $activityIndex + 1, 'attribute' => trans('element.title')]
+                        ),
+                        "$activityIndex.actual_start_date.date"                => trans(
+                            'validation.csv_invalid',
+                            ['number' => $activityIndex + 1, 'attribute' => trans('elementForm.actual_start_date')]
+                        ),
+                        "$activityIndex.actual_end_date.date"                  => trans(
+                            'validation.csv_invalid',
+                            ['number' => $activityIndex + 1, 'attribute' => trans('elementForm.actual_end_date')]
+                        ),
+                        "$activityIndex.planned_start_date.date"               => trans(
+                            'validation.csv_invalid',
+                            ['number' => $activityIndex + 1, 'attribute' => trans('elementForm.planned_start_date')]
+                        ),
+                        "$activityIndex.planned_end_date.date"                 => trans(
+                            'validation.csv_invalid',
+                            ['number' => $activityIndex + 1, 'attribute' => trans('elementForm.planned_end_date')]
+                        ),
+                        "$activityIndex.actual_start_date.required_any"        => trans(
+                            'validation.csv_required',
+                            [
+                                'number'    => $activityIndex + 1,
+                                'attribute' => trans('global.among') . ' ' . trans('elementForm.actual_start_date') . '/' . trans('elementForm.actual_end_date') . '/' . trans(
+                                        'elementForm.planned_start_date'
+                                    ) . '/' . trans(
+                                        'elementForm.planned_end_date'
+                                    )
+                            ]
+                        ),
+
+                        "$activityIndex.description_general.required_any"                => trans(
+                            'validation.csv_among',
+                            [
+                                'number'    => $activityIndex + 1,
+                                'type'      => trans('elementForm.type'),
+                                'attribute' => trans('elementForm.description_general') . '/' . trans('elementForm.description_objectives') . '/' . trans('elementForm.description_target_group')
+                            ]
+                        ),
+                        "$activityIndex.funding_participating_organization.required_any" => trans(
+                            'validation.csv_among',
+                            [
+                                'number'    => $activityIndex + 1,
+                                'type'      => trans('element.participating_organisation'),
+                                'attribute' => trans('elementForm.funding') . '/' . trans('elementForm.implementing')
+                            ]
+                        )
                     ]
                 );
 
@@ -357,23 +493,87 @@ class CsvImportValidator
             $messages = array_merge(
                 $messages,
                 [
-                    "$transactionIndex.internal_reference.required"          => sprintf('At row %s Internal Reference is required', $transactionIndex + 1),
-                    "$transactionIndex.internal_reference.unique_validation" => sprintf('At row %s Internal Reference should be unique.', $transactionIndex + 1),
-                    "$transactionIndex.incoming_fund.numeric"                => sprintf('At row %s Incoming Fund should be numeric', $transactionIndex + 1),
-                    "$transactionIndex.incoming_fund.required_only_one"      => sprintf(
-                        'At row %s only one among Incoming Fund ,expenditure, disbursement and commitment is required.',
-                        $transactionIndex + 1
+                    "$transactionIndex.internal_reference.required"          => trans(
+                        'validation.csv_required',
+                        [
+                            'number'    => $transactionIndex + 1,
+                            'attribute' => trans('elementForm.internal_reference')
+                        ]
                     ),
-                    "$transactionIndex.expenditure.numeric"                  => sprintf('At row %s Expenditure should be numeric', $transactionIndex + 1),
-                    "$transactionIndex.disbursement.numeric"                 => sprintf('At row %s Disbursement should be numeric', $transactionIndex + 1),
-                    "$transactionIndex.commitment.numeric"                   => sprintf('At row %s Commitment should be numeric', $transactionIndex + 1),
-                    "$transactionIndex.transaction_date.required"            => sprintf('At row %s Transaction Date is required', $transactionIndex + 1),
-                    "$transactionIndex.transaction_date.date"                => sprintf('At row %s Transaction Date is invalid', $transactionIndex + 1),
-                    "$transactionIndex.transaction_currency.in"              => sprintf('At row %s Transaction Currency is invalid', $transactionIndex + 1),
-                    "$transactionIndex.description.required"                 => sprintf('At row %s Description is required', $transactionIndex + 1),
+                    "$transactionIndex.internal_reference.unique_validation" => trans(
+                        'validation.csv_unique',
+                        [
+                            'number'    => $transactionIndex + 1,
+                            'attribute' => trans('elementForm.internal_reference')
+                        ]
+                    ),
+                    "$transactionIndex.incoming_fund.numeric"                => trans(
+                        'validation.csv_numeric',
+                        [
+                            'number'    => $transactionIndex + 1,
+                            'attribute' => trans('elementForm.incoming_fund')
+                        ]
+                    ),
+                    "$transactionIndex.incoming_fund.required_only_one"      => trans(
+                        'validation.csv_only_one',
+                        [
+                            'number'    => $transactionIndex + 1,
+                            'attribute' => trans('elementForm.incoming_fund') . ', ' . trans('elementForm.expenditure') . ', ' . trans('elementForm.disbursement') . ', ' . trans(
+                                    'elementForm.commitment'
+                                )
+                        ]
+                    ),
+                    "$transactionIndex.expenditure.numeric"                  => trans(
+                        'validation.csv_numeric',
+                        [
+                            'number'    => $transactionIndex + 1,
+                            'attribute' => trans('elementForm.expenditure')
+                        ]
+                    ),
+                    "$transactionIndex.disbursement.numeric"                 => trans(
+                        'validation.csv_numeric',
+                        [
+                            'number'    => $transactionIndex + 1,
+                            'attribute' => trans('elementForm.disbursement')
+                        ]
+                    ),
+                    "$transactionIndex.commitment.numeric"                   => trans(
+                        'validation.csv_numeric',
+                        [
+                            'number'    => $transactionIndex + 1,
+                            'attribute' => trans('elementForm.commitment')
+                        ]
+                    ),
+                    "$transactionIndex.transaction_date.required"            => trans(
+                        'validation.csv_required',
+                        [
+                            'number'    => $transactionIndex + 1,
+                            'attribute' => trans('elementForm.transaction_date')
+                        ]
+                    ),
+                    "$transactionIndex.transaction_date.date"                => trans(
+                        'validation.csv_invalid',
+                        [
+                            'number'    => $transactionIndex + 1,
+                            'attribute' => trans('elementForm.transaction_date')
+                        ]
+                    ),
+                    "$transactionIndex.transaction_currency.in"              => trans(
+                        'validation.csv_invalid',
+                        [
+                            'number'    => $transactionIndex + 1,
+                            'attribute' => trans('elementForm.transaction_currency')
+                        ]
+                    ),
+                    "$transactionIndex.description.required"                 => trans(
+                        'validation.csv_required',
+                        [
+                            'number'    => $transactionIndex + 1,
+                            'attribute' => trans('element.description')
+                        ]
+                    ),
                 ]
             );
-
         }
 
         return Validator::make($transactions, $rules, $messages);

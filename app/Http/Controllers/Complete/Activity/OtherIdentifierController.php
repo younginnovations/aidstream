@@ -48,7 +48,7 @@ class OtherIdentifierController extends Controller
      */
     public function index($id)
     {
-        $activityData    = $this->activityManager->getActivityData($id);
+        $activityData = $this->activityManager->getActivityData($id);
 
         if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
@@ -82,11 +82,11 @@ class OtherIdentifierController extends Controller
         $input = $request->all();
         if ($this->otherIdentifierManager->update($input, $activityData)) {
             $this->activityManager->resetActivityWorkflow($id);
-            $response = ['type' => 'success', 'code' => ['updated', ['name' => 'Other Activity Identifier']]];
+            $response = ['type' => 'success', 'code' => ['updated', ['name' => trans('element.other_identifier')]]];
 
             return redirect()->to(sprintf('/activity/%s', $id))->withResponse($response);
         }
-        $response = ['type' => 'danger', 'code' => ['update_failed', ['name' => 'Other Activity Identifier']]];
+        $response = ['type' => 'danger', 'code' => ['update_failed', ['name' => trans('element.other_identifier')]]];
 
         return redirect()->back()->withInput()->withResponse($response);
     }

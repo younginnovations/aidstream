@@ -43,7 +43,7 @@
                                                 @if(session('role_id') == 3)
                                                     <a href="{{ route('admin.hide-organization', [$organization->id,($organization->display) ? 0 : 1 ]) }}" title="{{($organization->display) ? 'Hide' : 'Show'}}" class="display {{($organization->display) ? 'Yes' : 'No'}}">{{($organization->display) ? 'Yes' : 'No'}}</a>
                                                     <a href="{{ route('admin.edit-organization', $organization->id)}}"
-                                                       class="edit" title="Edit">Edit</a>
+                                                       class="edit" title="Edit">@lang('global.edit')</a>
                                                     <a href="{{ route('admin.change-organization-status', [$organization->id, ($organization->status) ? 0 : 1]) }}" class="check-status {{($organization->status) ? 'Disable' : 'Enable'}}" title="{{($organization->status) ? 'Disable' : 'Enable'}}">{{($organization->status == 1) ? 'Disable' : 'Enable'}}</a>
                                                     <a href="{{ route('admin.delete-organization', $organization->id) }}" class="delete" title="delete">Delete</a>
                                                 @endif

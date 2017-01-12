@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Aidstream - Non Accessible Content</title>
+    <title>Aidstream - @lang('title.non_accessible_content')</title>
 
     <link href="{{ asset('/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('/css/flag-icon.css') }}" rel="stylesheet">
@@ -26,16 +26,16 @@
 <body>
 <div class="login-wrapper">
     {{--<div class="language-select-wrapper">--}}
-        {{--<label for="" class="pull-left">Language</label>--}}
-        {{--<div class="language-selector pull-left">--}}
-            {{--<span class="flag-wrapper"><span class="img-thumbnail flag flag-icon-background flag-icon-{{ config('app.locale') }}"></span></span>--}}
-            {{--<span class="caret pull-right"></span>--}}
-        {{--</div>--}}
-        {{--<ul class="language-select-wrap language-flag-wrap">--}}
-            {{--@foreach(config('app.locales') as $key => $val)--}}
-                {{--<li class="flag-wrapper" data-lang="{{ $key }}"><span class="img-thumbnail flag flag-icon-background flag-icon-{{ $key }}"></span><span class="language">{{ $val }}</span></li>--}}
-            {{--@endforeach--}}
-        {{--</ul>--}}
+    {{--<label for="" class="pull-left">Language</label>--}}
+    {{--<div class="language-selector pull-left">--}}
+    {{--<span class="flag-wrapper"><span class="img-thumbnail flag flag-icon-background flag-icon-{{ config('app.locale') }}"></span></span>--}}
+    {{--<span class="caret pull-right"></span>--}}
+    {{--</div>--}}
+    {{--<ul class="language-select-wrap language-flag-wrap">--}}
+    {{--@foreach(config('app.locales') as $key => $val)--}}
+    {{--<li class="flag-wrapper" data-lang="{{ $key }}"><span class="img-thumbnail flag flag-icon-background flag-icon-{{ $key }}"></span><span class="language">{{ $val }}</span></li>--}}
+    {{--@endforeach--}}
+    {{--</ul>--}}
     {{--</div>--}}
     <div class="container-fluid login-container">
         <div class="row">
@@ -59,11 +59,11 @@
                 </div>
             </div>
             <div class="col-md-12 create-account-wrapper">
-                Don’t have an AidStream account? <a href="{{ url('/auth/register') }}">Create an account</a>
+                @lang('global.dont_have_account')<a href="{{ url('/auth/register') }}">@lang('global.create_account')</a>
             </div>
             <div class="col-md-12 logo-text">Aidstream</div>
             <div class="col-md-12 support-desc">
-                For queries, suggestions, shoot us an email at <a href="mailto:support@aidstream.org">support@aidstream.org</a>
+                @lang('for_queries')<a href="mailto:support@aidstream.org">support@aidstream.org</a>
             </div>
         </div>
     </div>

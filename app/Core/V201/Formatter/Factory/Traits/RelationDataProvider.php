@@ -154,16 +154,16 @@ trait RelationDataProvider
         );
         $transactionDataHolder['sector']['vocabulary'][]                       = $this->concatenateRelation($transaction, 'transaction', 'sector', true, 'sector_vocabulary');
         $transactionDataHolder['sector']['code'][]                             = $this->concatenateRelation($transaction, 'transaction', 'sector', true, 'sector_code');
-        $transactionDataHolder['sector']['narrative']['language'][]            = $this->concatenateIntoString($transaction->transaction['sector'], 'narrative', true, 'language');
-        $transactionDataHolder['sector']['narrative']['narrative'][]           = $this->concatenateIntoString($transaction->transaction['sector'], 'narrative', true, 'narrative');
+        $transactionDataHolder['sector']['narrative']['language'][]            = $this->concatenateIntoString(getVal($transaction->transaction, ['sector'], []), 'narrative', true, 'language');
+        $transactionDataHolder['sector']['narrative']['narrative'][]           = $this->concatenateIntoString(getVal($transaction->transaction, ['sector'], []), 'narrative', true, 'narrative');
         $transactionDataHolder['recipientCountry']['code'][]                   = $this->concatenateRelation($transaction, 'transaction', 'recipient_country', true, 'country_code');
-        $transactionDataHolder['recipientCountry']['narrative']['language'][]  = $this->concatenateIntoString($transaction->transaction['recipient_country'], 'narrative', true, 'language');
-        $transactionDataHolder['recipientCountry']['narrative']['narrative'][] = $this->concatenateIntoString($transaction->transaction['recipient_country'], 'narrative', true, 'narrative');
+        $transactionDataHolder['recipientCountry']['narrative']['language'][]  = $this->concatenateIntoString(getVal($transaction->transaction, ['recipient_country'], []), 'narrative', true, 'language');
+        $transactionDataHolder['recipientCountry']['narrative']['narrative'][] = $this->concatenateIntoString(getVal($transaction->transaction, ['recipient_country'], []), 'narrative', true, 'narrative');
         $transactionDataHolder['recipientRegion']['code'][]                    = $this->concatenateRelation($transaction, 'transaction', 'recipient_region', true, 'region_code');
         $transactionDataHolder['recipientRegion']['vocabulary'][]              = $this->concatenateRelation($transaction, 'transaction', 'recipient_region', true, 'vocabulary');
-        $transactionDataHolder['recipientRegion']['narrative']['language'][]   = $this->concatenateIntoString($transaction->transaction['recipient_region'], 'narrative', true, 'language');
-        $transactionDataHolder['recipientRegion']['narrative']['language'][]   = $this->concatenateIntoString($transaction->transaction['recipient_region'], 'narrative', true, 'language');
-        $transactionDataHolder['recipientRegion']['narrative']['narrative'][]  = $this->concatenateIntoString($transaction->transaction['recipient_region'], 'narrative', true, 'narrative');
+        $transactionDataHolder['recipientRegion']['narrative']['language'][]   = $this->concatenateIntoString(getVal($transaction->transaction, ['recipient_region'], []), 'narrative', true, 'language');
+        $transactionDataHolder['recipientRegion']['narrative']['language'][]   = $this->concatenateIntoString(getVal($transaction->transaction, ['recipient_region'], []), 'narrative', true, 'language');
+        $transactionDataHolder['recipientRegion']['narrative']['narrative'][]  = $this->concatenateIntoString(getVal($transaction->transaction, ['recipient_region'], []), 'narrative', true, 'narrative');
 
         return $transactionDataHolder;
     }

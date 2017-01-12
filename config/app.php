@@ -50,7 +50,7 @@ return [
     */
 
     'locale'  => 'en',
-    'locales' => ['en' => 'English', 'fr' => 'French'],
+    'locales' => ['en' => 'English', 'fr' => 'French', 'esp' => 'Spanish'],
     /*
     |--------------------------------------------------------------------------
     | Application Fallback Locale

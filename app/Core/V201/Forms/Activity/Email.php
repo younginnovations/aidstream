@@ -14,7 +14,7 @@ class Email extends BaseForm
     public function buildForm()
     {
         $this
-            ->add('email', 'text', ['help_block' => $this->addHelpText('Activity_ContactInfo_Email-text')])
+            ->add('email', 'text', ['label' => trans('elementForm.email'), 'help_block' => $this->addHelpText('Activity_ContactInfo_Email-text')])
             ->addRemoveThisButton('remove_email');
     }
 }

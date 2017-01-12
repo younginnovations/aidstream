@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport'/>
-    <title>Aidstream</title>
+    <title>@lang('title.aidstream')</title>
     <link rel="shortcut icon" type="image/png" sizes="16*16" href="images/favicon.png"/>
     <link rel="stylesheet" href="{{asset('/css/bootstrap.min.css')}}">
     <link rel="stylesheet" href="{{asset('css/style.min.css')}}">
@@ -15,12 +15,11 @@
     <div class="organisation-list-wrapper">
         <div class="col-md-12 text-center">
             @include('includes.response')
-            <h2><strong>{{ count($organizations) }} organisations</strong> have published their activities through <strong>AidStream</strong></h2>
-            <p>The organisations listed below are using AidStream.</p>
+            <h2><strong>{{ count($organizations) }} @lang('global.organisations_have_published_their')
             <div class="width-900">
                 <div class="search-org">
-                    <label for="search" class="pull-left">Search:</label>
-                    <input id="search" type="text" placeholder="Search Organisations" class="pull-left">
+                    <label for="search" class="pull-left">@lang('perfectViewer.search'):</label>
+                    <input id="search" type="text" placeholder="@lang('perfectViewer.search_organisations')" class="pull-left">
                 </div>
             </div>
             <div class="organisations-list width-900">

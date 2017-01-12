@@ -14,6 +14,6 @@ trait Description
      */
     public function addDescriptions(array $data = [])
     {
-        return $this->addCollection('description', 'Activity\Title', '', $data);
+        return $this->addCollection('description', 'Activity\Title', '', $data, trans('elementForm.description'));
     }
 }

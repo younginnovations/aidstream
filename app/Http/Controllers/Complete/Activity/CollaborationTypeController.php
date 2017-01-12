@@ -45,9 +45,9 @@ class CollaborationTypeController extends Controller
      * @param $id
      * @return \Illuminate\View\View
      */
-    public function  index($id)
+    public function index($id)
     {
-        $activityData  = $this->activityManager->getActivityData($id);
+        $activityData = $this->activityManager->getActivityData($id);
 
         if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
@@ -68,7 +68,7 @@ class CollaborationTypeController extends Controller
      */
     public function update($id, Request $request, CollaborationTypeRequestManager $collaborationTypeRequestManager)
     {
-        $activityData  = $this->activityManager->getActivityData($id);
+        $activityData = $this->activityManager->getActivityData($id);
 
         if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
@@ -78,11 +78,11 @@ class CollaborationTypeController extends Controller
         $collaborationType = $request->all();
         if ($this->collaborationTypeManager->update($collaborationType, $activityData)) {
             $this->activityManager->resetActivityWorkflow($id);
-            $response = ['type' => 'success', 'code' => ['updated', ['name' => 'Collaboration Type']]];
+            $response = ['type' => 'success', 'code' => ['updated', ['name' => trans('element.collaboration_type')]]];
 
             return redirect()->to(sprintf('/activity/%s', $id))->withResponse($response);
         }
-        $response = ['type' => 'danger', 'code' => ['update_failed', ['name' => 'Collaboration Type']]];
+        $response = ['type' => 'danger', 'code' => ['update_failed', ['name' => trans('element.collaboration_type')]]];
 
         return redirect()->back()->withInput()->withResponse($response);
     }

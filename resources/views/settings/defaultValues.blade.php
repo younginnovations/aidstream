@@ -3,16 +3,16 @@
     <div class="panel-body">
         <div class="create-form settings-form">
             <div class="settings-checkall-wrapper">
-                <h2>Default Values</h2>
-                <p>These values will be used in the xml files which is published to the IATI Registry. You have the option to override the activities.</p>
+                <h2>@lang('setting.default_values')</h2>
+                <p>@lang('setting.these_values_will_be_published')</p>
             </div>
             <div id="default_values">
                 {!! form_start($form) !!}
-                <h2>Default for all data</h2>
+                <h2>@lang('setting.default_for_all_data')</h2>
                 <div class="col-md-12">
                     {!! form_until($form, 'default_language') !!}
                 </div>
-                <h2>Default for Activity data</h2>
+                <h2>@lang('setting.default_for_activity_data')</h2>
                 <div class="col-md-12">
                     {!! form_until($form, 'linked_data_uri') !!}
                 </div>

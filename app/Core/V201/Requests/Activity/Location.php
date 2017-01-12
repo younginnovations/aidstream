@@ -92,6 +92,7 @@ class Location extends ActivityBaseRequest
                 $rules[sprintf('%s.code', $locationIdForm)] = 'required_with:' . sprintf('%s.vocabulary', $locationIdForm);
             }
         }
+
         return $rules;
     }
 
@@ -107,12 +108,19 @@ class Location extends ActivityBaseRequest
         foreach ($formFields as $locationIdIndex => $locationId) {
             $locationIdForm = sprintf('%s.location_id.%s', $formBase, $locationIdIndex);
             if ($locationId['code'] != "") {
-                $messages[sprintf('%s.vocabulary.required_with', $locationIdForm)] = 'Vocabulary is required when Code is present';
+                $messages[sprintf('%s.vocabulary.required_with', $locationIdForm)] = trans(
+                    'validation.required_with',
+                    ['attribute' => trans('elementForm.vocabulary'), 'values' => trans('elementForm.code')]
+                );
             }
             if ($locationId['vocabulary'] != "") {
-                $messages[sprintf('%s.code.required_with', $locationIdForm)] = 'Code is required when Vocabulary is present';
+                $messages[sprintf('%s.code.required_with', $locationIdForm)] = trans(
+                    'validation.required_with',
+                    ['attribute' => trans('elementForm.code'), 'values' => trans('elementForm.vocabulary')]
+                );
             }
         }
+
         return $messages;
     }
 
@@ -246,7 +254,7 @@ class Location extends ActivityBaseRequest
         $messages = [];
         foreach ($formFields as $administrativeIndex => $administrative) {
             $administrativeForm                                         = sprintf('%s.administrative.%s', $formBase, $administrativeIndex);
-            $messages[sprintf('%s.level.integer', $administrativeForm)] = 'Level should be a non-negative integer.';
+            $messages[sprintf('%s.level.integer', $administrativeForm)] = trans('validation.integer', ['attribute' => trans('elementForm.level')]);
         }
 
         return $messages;
@@ -282,12 +290,15 @@ class Location extends ActivityBaseRequest
     {
         $messages                                                       = [];
         $pointForm                                                      = sprintf('%s.point.0', $formBase);
-        $messages[sprintf('%s.srs_name.required', $pointForm)]          = 'SRS name is required.';
+        $messages[sprintf('%s.srs_name.required', $pointForm)]          = trans('validation.required', ['attribute' => trans('elementForm.srs_name')]);
         $positionForm                                                   = sprintf('%s.position.0', $pointForm);
-        $messages[sprintf('%s.latitude.required_with', $positionForm)]  = 'Latitude is required when Longitude is present.';
-        $messages[sprintf('%s.latitude.numeric', $positionForm)]        = 'Latitude should be numeric.';
-        $messages[sprintf('%s.longitude.required_with', $positionForm)] = 'Longitude is required when Latitude is present.';
-        $messages[sprintf('%s.longitude.numeric', $positionForm)]       = 'Longitude should be numeric.';
+        $messages[sprintf('%s.latitude.required_with', $positionForm)]  = trans('validation.required_with', ['attribute' => trans('elementForm.latitude'), 'values' => trans('elementForm.longitude')]);
+        $messages[sprintf('%s.latitude.numeric', $positionForm)]        = trans('validation.numeric', ['attribute' => trans('elementForm.latitude')]);
+        $messages[sprintf('%s.longitude.required_with', $positionForm)] = trans(
+            'validation.required_with',
+            ['attribute' => trans('elementForm.longitude'), 'values' => trans('elementForm.latitude')]
+        );
+        $messages[sprintf('%s.longitude.numeric', $positionForm)]       = trans('validation.numeric', ['attribute' => trans('elementForm.longitude')]);
 
         return $messages;
     }

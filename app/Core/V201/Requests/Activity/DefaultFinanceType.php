@@ -30,4 +30,11 @@ class DefaultFinanceType extends Request
         return $rules;
     }
 
+    public function messages()
+    {
+        $messages['default_finance_type.required'] = trans('validation.required', ['attribute' => trans('element.default_finance_type')]);
+
+        return $messages;
+    }
+
 }

@@ -219,17 +219,23 @@ class RecipientRegion extends Element
     public function messages()
     {
         $messages = [
-            'recipient_region.required_if'                             => 'Recipient Region is required if Recipient Country is not present.',
-            'recipient_region_total_percentage.percentage_sum'         => 'Sum of percentage of Recipient Regions must be equal to 100.',
-            'total_percentage.recipient_country_region_percentage_sum' => 'Sum of percentage of Recipient Country and Recipient Region must be equal to 100.'
+            'recipient_region.required_if'                             => trans(
+                'validation.required_without',
+                ['attribute' => trans('element.recipient_region'), 'values' => trans('element.recipient_country')]
+            ),
+            'recipient_region_total_percentage.percentage_sum'         => trans('validation.sum_of_percentage', ['attribute' => trans('element.recipient_region')]),
+            'total_percentage.recipient_country_region_percentage_sum' => trans('validation.recipient_country_region_percentage_sum')
         ];
 
         foreach (getVal($this->data(), ['recipient_region'], []) as $key => $value) {
-            $messages['recipient_region.' . $key . '.region_code.required_with'] = 'Recipient region code is required with Percentage.';
-            $messages['recipient_region.' . $key . '.region_code.in']            = 'Entered Recipient region code is invalid.';
-            $messages['recipient_region.' . $key . '.percentage.numeric']        = 'Percentage must be numeric.';
-            $messages['recipient_region.' . $key . '.percentage.max']            = 'Percentage cannot be more than 100.';
-            $messages['recipient_region.' . $key . '.percentage.min']            = 'Percentage cannot be less than 0.';
+            $messages['recipient_region.' . $key . '.region_code.required_with'] = trans(
+                'validation.required_with',
+                ['attribute' => trans('elementForm.recipient_country_code'), 'values' => trans('elementForm.percentage')]
+            );
+            $messages['recipient_region.' . $key . '.region_code.in']            = trans('validation.code_list', ['attribute' => trans('elementForm.recipient_region_code')]);
+            $messages['recipient_region.' . $key . '.percentage.numeric']        = trans('validation.numeric', ['attribute' => trans('elementForm.percentage')]);
+            $messages['recipient_region.' . $key . '.percentage.max']            = trans('validation.max.numeric', ['attribute' => trans('elementForm.percentage'), 'max' => 100]);
+            $messages['recipient_region.' . $key . '.percentage.min']            = trans('validation.min.numeric', ['attribute' => trans('elementForm.percentage'), 'min' => 0]);
         }
 
         return $messages;

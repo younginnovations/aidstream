@@ -45,9 +45,9 @@ class DefaultAidTypeController extends Controller
      * @param $id
      * @return \Illuminate\View\View
      */
-    public function  index($id)
+    public function index($id)
     {
-        $activityData  = $this->activityManager->getActivityData($id);
+        $activityData = $this->activityManager->getActivityData($id);
 
         if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
@@ -68,7 +68,7 @@ class DefaultAidTypeController extends Controller
      */
     public function update($id, Request $request, DefaultAidTypeRequestManager $defaultAidTypeRequestManager)
     {
-        $activityData  = $this->activityManager->getActivityData($id);
+        $activityData = $this->activityManager->getActivityData($id);
 
         if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
@@ -78,11 +78,11 @@ class DefaultAidTypeController extends Controller
         $defaultAidType = $request->all();
         if ($this->defaultAidTypeManager->update($defaultAidType, $activityData)) {
             $this->activityManager->resetActivityWorkflow($id);
-            $response = ['type' => 'success', 'code' => ['updated', ['name' => 'Default Aid Type']]];
+            $response = ['type' => 'success', 'code' => ['updated', ['name' => trans('element.default_aid_type')]]];
 
             return redirect()->to(sprintf('/activity/%s', $id))->withResponse($response);
         }
-        $response = ['type' => 'danger', 'code' => ['update_failed', ['name' => 'Default Aid Type']]];
+        $response = ['type' => 'danger', 'code' => ['update_failed', ['name' => trans('element.default_aid_type')]]];
 
         return redirect()->back()->withInput()->withResponse($response);
     }

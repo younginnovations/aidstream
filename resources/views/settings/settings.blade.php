@@ -1,6 +1,6 @@
 @extends('app')
 
-@section('title', 'Settings')
+@section('title', trans('title.settings'))
 
 @section('content')
     <div class="container main-container">
@@ -16,7 +16,7 @@
                 <div class="panel panel-default">
                     <div class="element-panel-heading">
                         <div>
-                            Settings
+                            @lang('global.settings')
                         </div>
                     </div>
                     @include('includes.settings_menu')

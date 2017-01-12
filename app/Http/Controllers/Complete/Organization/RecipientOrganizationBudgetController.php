@@ -53,7 +53,7 @@ class RecipientOrganizationBudgetController extends Controller
             $organizationId
         );
 
-        return view('Organization.recipientOrgBudget.edit', compact('form', 'recipientCountryBudget','organizationId'));
+        return view('Organization.recipientOrgBudget.edit', compact('form', 'recipientCountryBudget', 'organizationId'));
     }
 
 
@@ -74,15 +74,15 @@ class RecipientOrganizationBudgetController extends Controller
 
         $organizationData = $this->recipientOrgBudgetManager->getOrganizationData($orgId);
         $this->authorizeByRequestType($organizationData, 'recipient_organization_budget');
-        $input            = $request->all();
+        $input = $request->all();
 
         if ($this->recipientOrgBudgetManager->update($input, $organizationData)) {
             $this->organizationManager->resetStatus($orgId);
-            $response = ['type' => 'success', 'code' => ['updated', ['name' => 'Organization Recipient Organization Budget']]];
+            $response = ['type' => 'success', 'code' => ['updated', ['name' => trans('title.org_recipient_organisation_budget')]]];
 
             return redirect()->to(sprintf('/organization/%s', $orgId))->withResponse($response);
         }
-        $response = ['type' => 'danger', 'code' => ['update_failed', ['name' => 'Organization Recipient Organization Budget']]];
+        $response = ['type' => 'danger', 'code' => ['update_failed', ['name' => trans('title.org_recipient_organisation_budget')]]];
 
         return redirect()->back()->withInput()->withResponse($response);
     }

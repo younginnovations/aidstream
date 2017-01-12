@@ -1,0 +1,6 @@
+{
+  "success": "Success",
+  "failed": "Failed",
+  "activities_processed": "Activity Processed",
+  "xml_file_incorrect": "Sorry the xml file you uploaded is incorrect"
+}

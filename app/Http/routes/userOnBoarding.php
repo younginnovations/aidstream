@@ -72,3 +72,11 @@ $router->get(
         'uses' => 'UserOnBoardingController@checkOnboardingStep'
     ]
 );
+
+$router->get(
+    '/onBoarding/localisedText',
+    [
+        'as'   => 'onBoarding.localisedText',
+        'uses' => 'UserOnBoardingController@getLocalisedOnBoardingFile'
+    ]
+);

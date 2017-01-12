@@ -12,7 +12,7 @@ trait RecipientCountry
      */
     public function addRecipientCountry()
     {
-        return $this->addCollection('recipient_country', 'Activity\Transactions\RecipientCountry');
+        return $this->addCollection('recipient_country', 'Activity\Transactions\RecipientCountry', '', [], trans('elementForm.recipient_country'));
     }
 
     /**

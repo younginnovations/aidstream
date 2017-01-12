@@ -97,7 +97,7 @@ class Sector extends ActivityBaseRequest
      */
     protected function getRulesForPercentage($sectors)
     {
-        $array     = [];
+        $array           = [];
         $totalPercentage = 0;
 
         if (count($sectors) > 1) {
@@ -107,8 +107,8 @@ class Sector extends ActivityBaseRequest
                 $sectorVocabulary = $sector['sector_vocabulary'];
 
                 if (array_key_exists($sectorVocabulary, $array)) {
-                    $totalPercentage = $array[$sectorVocabulary] + $percentage;
-                    $array[$sectorVocabulary] = $totalPercentage;
+                    $totalPercentage                              = $array[$sectorVocabulary] + $percentage;
+                    $array[$sectorVocabulary]                     = $totalPercentage;
                     $array[sprintf('%s.percentage', $sectorForm)] = $sectorVocabulary;
 
                 } else {
@@ -118,6 +118,7 @@ class Sector extends ActivityBaseRequest
                 }
             }
         }
+
         return $array;
     }
 
@@ -133,35 +134,68 @@ class Sector extends ActivityBaseRequest
 
         foreach ($formFields as $sectorIndex => $sector) {
             $sectorForm                                                      = sprintf('sector.%s', $sectorIndex);
-            $messages[sprintf('%s.sector_vocabulary.required', $sectorForm)] = 'Sector vocabulary is required';
+            $messages[sprintf('%s.sector_vocabulary.required', $sectorForm)] = trans('validation.required', ['attribute' => trans('elementForm.sector_vocabulary')]);
 
             if ($sector['sector_vocabulary'] == 1 || $sector['sector_vocabulary'] == 2) {
                 if ($sector['sector_vocabulary'] == 1) {
-                    $messages[sprintf('%s.sector_code.%s', $sectorForm, 'required_with')] = 'Sector code is required with Sector vocabulary.';
+                    $messages[sprintf('%s.sector_code.%s', $sectorForm, 'required_with')] = trans(
+                        'validation.required_with',
+                        ['attribute' => trans('elementForm.sector_code'), 'values' => trans('elementForm.sector_vocabulary')]
+                    );
                 }
                 if ($sector['sector_code'] != "") {
-                    $messages[sprintf('%s.sector_vocabulary.%s', $sectorForm, 'required_with')] = 'Sector vocabulary is required with Sector code.';
+                    $messages[sprintf('%s.sector_vocabulary.%s', $sectorForm, 'required_with')] = trans(
+                        'validation.required_with',
+                        [
+                            'attribute' => trans('elementForm.sector_vocabulary'),
+                            'values'    => trans('elementForm.sector_code')
+                        ]
+                    );
                 }
                 if ($sector['sector_vocabulary'] == 2) {
-                    $messages[sprintf('%s.sector_category_code.%s', $sectorForm, 'required_with')] = 'Sector code is required with Sector vocabulary.';
+                    $messages[sprintf('%s.sector_category_code.%s', $sectorForm, 'required_with')] = trans(
+                        'validation.required_with',
+                        [
+                            'attribute' => trans('elementForm.sector_code'),
+                            'values'    => trans('elementForm.sector_vocabulary')
+                        ]
+                    );
                 }
                 if ($sector['sector_category_code'] != "") {
-                    $messages[sprintf('%s.sector_vocabulary.%s', $sectorForm, 'required_with')] = 'Sector vocabulary is required with Sector code.';
+                    $messages[sprintf('%s.sector_vocabulary.%s', $sectorForm, 'required_with')] = trans(
+                        'validation.required_with',
+                        [
+                            'attribute' => trans('elementForm.sector_vocabulary'),
+                            'values'    => trans('elementForm.sector_code')
+                        ]
+                    );
                 }
             } else {
                 if ($sector['sector_vocabulary'] != "") {
-                    $messages[sprintf('%s.sector_text.%s', $sectorForm, 'required_with')] = 'Sector code is required with Sector vocabulary.';
+                    $messages[sprintf('%s.sector_text.%s', $sectorForm, 'required_with')] = trans(
+                        'validation.required_with',
+                        ['attribute' => trans('elementForm.sector_code'), 'values' => trans('elementForm.sector_vocabulary')]
+                    );
                 }
 
                 if ($sector['sector_text'] != "") {
-                    $messages[sprintf('%s.sector_vocabulary.%s', $sectorForm, 'required_with')] = 'Sector vocabulary is required with Sector code.';
+                    $messages[sprintf('%s.sector_vocabulary.%s', $sectorForm, 'required_with')] = trans(
+                        'validation.required_with',
+                        [
+                            'attribute' => trans('elementForm.sector_vocabulary'),
+                            'values'    => trans('elementForm.sector_code')
+                        ]
+                    );
                 }
             }
 
-            $messages[sprintf('%s.percentage.numeric', $sectorForm)]  = 'Percentage should be numeric.';
-            $messages[sprintf('%s.percentage.max', $sectorForm)]      = 'Percentage should be less than or equal to :max.';
-            $messages[sprintf('%s.percentage.required', $sectorForm)] = 'Percentage is required.';
-            $messages[sprintf('%s.percentage.sum', $sectorForm)]      = 'Total percentage of sectors under the same vocabulary must be equal to 100.';
+            $messages[sprintf('%s.percentage.numeric', $sectorForm)]  = trans('validation.numeric', ['attribute' => trans('elementForm.percentage')]);
+            $messages[sprintf('%s.percentage.max', $sectorForm)]      = trans(
+                'validation.max.numeric',
+                ['attribute' => trans('elementForm.percentage')]
+            );
+            $messages[sprintf('%s.percentage.required', $sectorForm)] = trans('validation.required', ['attribute' => trans('elementForm.percentage')]);
+            $messages[sprintf('%s.percentage.sum', $sectorForm)]      = trans('validation.sum', ['attribute' => trans('element.sector')]);
 
             $messages = array_merge($messages, $this->getMessagesForNarrative($sector['narrative'], $sectorForm));
         }

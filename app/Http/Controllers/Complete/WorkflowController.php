@@ -133,7 +133,7 @@ class WorkflowController extends Controller
         $result = $this->workFlowManager->publish($activity, $request->all());
 
         if (null === $result) {
-            return redirect()->back()->withResponse(['type' => 'warning', 'code' => ['message', ['message' => 'Something does not seem to be right.']]]);
+            return redirect()->back()->withResponse(['type' => 'warning', 'code' => ['message', ['message' => trans('error.something_is_not_right')]]]);
         }
 
         if (true === $result) {
@@ -145,7 +145,7 @@ class WorkflowController extends Controller
         }
 
         return redirect()->back()->withResponse(
-            ['type' => 'warning', 'code' => ['message', ['message' => 'Could not publish to registry. (Publisher not found. <a href="/settings">Please check you publisher Id.</a>)']]]
+            ['type' => 'warning', 'code' => ['message', ['message' => trans('error.publisher_not_found')]]]
         );
     }
 

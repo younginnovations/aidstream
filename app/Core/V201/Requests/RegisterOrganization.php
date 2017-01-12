@@ -84,20 +84,20 @@ class RegisterOrganization extends Request
     {
         $messages = [];
 
-        $messages['organization_name.required']                    = 'Organization Name is required.';
-        $messages['organization_name_abbr.required']               = 'Organization Name Abbreviation is required.';
-        $messages['organization_name_abbr.unique']                 = 'Organization Name Abbreviation has already been taken.';
-        $messages['organization_type.required']                    = 'Organization Type is required.';
-        $messages['organization_type.code_list']                   = 'Organization Type is not valid.';
-        $messages['organization_address.required']                 = 'Address is required.';
-        $messages['country.required']                              = 'Country is required.';
-        $messages['country.code_list']                             = 'Country is not valid.';
-        $messages['organization_registration_agency.required']     = 'Organisation Registration Agency is required.';
-        $messages['organization_registration_agency.reg_agency']   = 'Organisation Registration Agency is not valid.';
-        $messages['registration_number.required']                  = 'Registration Number is required.';
-        $messages['registration_number.alpha_num']                 = 'Registration Number may only contain letters and numbers.';
-        $messages['organization_identifier.required']              = 'IATI Organizational Identifier is required.';
-        $messages['organization_identifier.unique_org_identifier'] = 'IATI Organizational Identifier is has already been taken.';
+        $messages['organization_name.required']                    = trans('validation.required', ['attribute' => trans('organisation.organisation_name')]);
+        $messages['organization_name_abbr.required']               = trans('validation.required', ['attribute' => trans('organisation.organisation_name_abbreviation')]);
+        $messages['organization_name_abbr.unique']                 = trans('validation.custom_unique', ['attribute' => trans('organisation.organisation_name_abbreviation')]);
+        $messages['organization_type.required']                    = trans('validation.required', ['attribute' => trans('elementForm.organisation_type')]);
+        $messages['organization_type.code_list']                   = trans('validation.code_list', ['attribute' => trans('elementForm.organisation_type')]);
+        $messages['organization_address.required']                 = trans('validation.required', ['attribute' => trans('elementForm.address')]);
+        $messages['country.required']                              = trans('validation.required', ['attribute' => trans('elementForm.country')]);
+        $messages['country.code_list']                             = trans('validation.code_list', ['attribute' => trans('elementForm.country')]);
+        $messages['organization_registration_agency.required']     = trans('validation.required', ['attribute' => trans('organisation.organisation_registration_agency')]);
+        $messages['organization_registration_agency.reg_agency']   = trans('validation.code_list', ['attribute' => trans('organisation.organisation_registration_agency')]);
+        $messages['registration_number.required']                  = trans('validation.required', ['attribute' => trans('organisation.registration_number')]);
+        $messages['registration_number.alpha_num']                 = trans('validation.alpha_num', ['attribute' => trans('organisation.registration_number')]);
+        $messages['organization_identifier.required']              = trans('validation.required', ['attribute' => trans('organisation.organisational_iati_identifier')]);
+        $messages['organization_identifier.unique_org_identifier'] = trans('validation.custom_unique', ['attribute' => trans('organisation.organisational_iati_identifier')]);
 
         return $messages;
     }

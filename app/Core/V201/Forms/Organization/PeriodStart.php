@@ -6,6 +6,15 @@ class PeriodStart extends BaseForm
 {
     public function buildForm()
     {
-        $this->add('date', 'date', ['help_block' => $this->addHelpText('Organisation_TotalBudget_PeriodStart-iso_date'), 'required' => true, 'attr' => ['placeholder' => 'YYYY-MM-DD']]);
+        $this->add(
+            'date',
+            'date',
+            [
+                'label' => trans('elementForm.date'),
+                'help_block' => $this->addHelpText('Organisation_TotalBudget_PeriodStart-iso_date'),
+                'required' => true,
+                'attr' => ['placeholder' => 'YYYY-MM-DD']
+            ]
+        );
     }
 }

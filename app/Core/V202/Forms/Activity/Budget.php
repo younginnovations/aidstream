@@ -14,11 +14,11 @@ class Budget extends BaseForm
     public function buildForm()
     {
         $this
-            ->addSelect('budget_type', $this->getCodeList('BudgetType', 'Activity'))
-            ->addSelect('status', $this->getCodeList('BudgetStatus', 'Activity'), null, null, null, true)
-            ->addCollection('period_start', 'Activity\PeriodStart')
-            ->addCollection('period_end', 'Activity\PeriodEnd')
-            ->addCollection('value', 'Activity\ValueForm')
+            ->addSelect('budget_type', $this->getCodeList('BudgetType', 'Activity'), trans('elementForm.budget_type'))
+            ->addSelect('status', $this->getCodeList('BudgetStatus', 'Activity'), trans('elementForm.status'), null, null, true)
+            ->addCollection('period_start', 'Activity\PeriodStart', '', [], trans('elementForm.period_start'))
+            ->addCollection('period_end', 'Activity\PeriodEnd', '', [], trans('elementForm.period_end'))
+            ->addCollection('value', 'Activity\ValueForm', '', [], trans('elementForm.value'))
             ->addRemoveThisButton('remove');
     }
 }

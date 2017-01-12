@@ -54,8 +54,8 @@ class PolicyMarker extends ActivityBaseRequest
 
         foreach ($formFields as $policyMarkerIndex => $policyMarker) {
             $policyMarkerForm                                                  = sprintf('policy_marker.%s', $policyMarkerIndex);
-            $messages[sprintf('%s.significance.required', $policyMarkerForm)]  = 'Significance is required';
-            $messages[sprintf('%s.policy_marker.required', $policyMarkerForm)] = 'Policy Marker is required';
+            $messages[sprintf('%s.significance.required', $policyMarkerForm)]  = trans('validation.required', ['attribute' => trans('elementForm.significance')]);
+            $messages[sprintf('%s.policy_marker.required', $policyMarkerForm)] = trans('validation.required', ['attribute' => trans('elementForm.policy_marker')]);
             $messages                                                          = array_merge(
                 $messages,
                 $this->getMessagesForNarrative($policyMarker['narrative'], $policyMarkerForm)

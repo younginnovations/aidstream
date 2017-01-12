@@ -1,6 +1,6 @@
 @extends('app')
 
-@section('title', 'Edit Activity Transaction - ' . $activity->IdentifierTitle)
+@section('title', trans('title.edit_transaction').' - ' . $activity->IdentifierTitle)
 
 @section('content')
     <div class="container main-container">
@@ -10,10 +10,10 @@
                 @include('includes.response')
                 <div class="element-panel-heading">
                     <div>
-                        <span>Edit Transaction</span>
+                        <span>@lang('global.edit_transaction')</span>
                         <div class="element-panel-heading-info"><span>{{$activity->IdentifierTitle}}</span></div>
                         <div class="panel-action-btn">
-                            <a href="{{route('activity.transaction.index',$id)}}" class="btn btn-primary">View Transaction
+                            <a href="{{route('activity.transaction.index',$id)}}" class="btn btn-primary">@lang('global.view_transaction')
                             </a>
                         </div>
                     </div>

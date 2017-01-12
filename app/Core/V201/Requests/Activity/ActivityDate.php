@@ -54,8 +54,8 @@ class ActivityDate extends ActivityBaseRequest
 
         foreach ($formFields as $activityDateIndex => $activityDate) {
             $activityDateForm                                         = sprintf('activity_date.%s', $activityDateIndex);
-            $messages[sprintf('%s.date.required', $activityDateForm)] = 'Date is required';
-            $messages[sprintf('%s.type.required', $activityDateForm)] = 'Type is required';
+            $messages[sprintf('%s.date.required', $activityDateForm)] = trans('validation.required', ['attribute' => trans('elementForm.date')]);
+            $messages[sprintf('%s.type.required', $activityDateForm)] = trans('validation.required', ['attribute' => trans('elementForm.type')]);
             $messages                                                 = array_merge(
                 $messages,
                 $this->getMessagesForNarrative($activityDate['narrative'], $activityDateForm)

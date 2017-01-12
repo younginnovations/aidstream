@@ -1,6 +1,7 @@
 var xmlImportCompleted = false;
 
 var XmlImporter = {
+    localisedData: '',
     callAsync: function (url, methodType) {
         return $.ajax({
             url: url,
@@ -15,8 +16,8 @@ var XmlImporter = {
             } else {
                 $('#xml-import-status-placeholder').html(
                     "<div class='alert alert-success'>"
-                    + data.currentActivityCount + " out of " + data.totalActivities + " activities processed. "
-                    + "Failed: " + data.failed + " Success: " + data.success
+                    + data.currentActivityCount + "/" + data.totalActivities + " activities processed. "
+                    + XmlImporter.localisedData['failed'] + ": " + data.failed + " " + XmlImporter.localisedData['success'] + " : " + data.success
                     + "</div>");
             }
         });
@@ -30,7 +31,7 @@ var XmlImporter = {
             if (data.status == 'file not found') {
                 $('#xml-import-status-placeholder').html(
                     "<div class='alert alert-danger'>"
-                    + "Sorry the xml file you uploaded is incorrect"
+                    + XmlImporter.localisedData['xml_file_incorrect']
                     + "</div>"
                 );
                 xmlImportCompleted = true;
@@ -42,10 +43,16 @@ var XmlImporter = {
     },
     reloadPage: function () {
         location.reload();
+    },
+    getLocalisedText: function () {
+        this.callAsync('/xml-import/localisedText', 'get').success(function (data) {
+            XmlImporter.localisedData = JSON.parse(data);
+        });
     }
 };
 
 $('document').ready(function () {
+    XmlImporter.getLocalisedText();
     var interval = setInterval(function () {
         if (xmlImportCompleted) {
             XmlImporter.complete();

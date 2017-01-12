@@ -30,7 +30,7 @@ class RelatedActivityController extends Controller
 
     public function index($id)
     {
-        $activityData  = $this->activityManager->getActivityData($id);
+        $activityData = $this->activityManager->getActivityData($id);
 
         if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
@@ -45,7 +45,7 @@ class RelatedActivityController extends Controller
 
     public function update($id, Request $request, RelatedActivityRequestManager $relatedActivityRequestManager)
     {
-        $activityData  = $this->activityManager->getActivityData($id);
+        $activityData = $this->activityManager->getActivityData($id);
 
         if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
@@ -55,11 +55,11 @@ class RelatedActivityController extends Controller
         $relatedActivity = $request->all();
         if ($this->relatedActivityManager->update($relatedActivity, $activityData)) {
             $this->activityManager->resetActivityWorkflow($id);
-            $response = ['type' => 'success', 'code' => ['updated', ['name' => 'Related Activity']]];
+            $response = ['type' => 'success', 'code' => ['updated', ['name' => trans('element.related_activity')]]];
 
             return redirect()->to(sprintf('/activity/%s', $id))->withResponse($response);
         }
-        $response = ['type' => 'danger', 'code' => ['update_failed', ['name' => 'Related Activity']]];
+        $response = ['type' => 'danger', 'code' => ['update_failed', ['name' => trans('element.related_activity')]]];
 
         return redirect()->back()->withInput()->withResponse($response);
     }

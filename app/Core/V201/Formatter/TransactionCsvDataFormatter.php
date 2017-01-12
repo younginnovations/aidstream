@@ -91,43 +91,43 @@ class TransactionCsvDataFormatter
         foreach ($activity->transactions as $transaction) {
             $transaction       = $transaction->transaction;
             $transactionData[] = [
-                'Activity_Identifier'              => $activity->identifier['iati_identifier_text'],
+                'Activity_Identifier'              => getVal($activity->identifier, ['iati_identifier_text'], ''),
                 'Activity_Title'                   => !($activity->title) ? '' : $this->csvDataFormatter->formatTitle($activity->title),
-                'Transaction-ref'                  => !($transaction['reference']) ? '' : $transaction['reference'],
-                'TransactionType-code'             => !($transaction['transaction_type'][0]['transaction_type_code']) ? '' : (int) $transaction['transaction_type'][0]['transaction_type_code'],
-                'TransactionDate-iso_date'         => !($transaction['transaction_date'][0]['date']) ? '' : $transaction['transaction_date'][0]['date'],
-                'TransactionValue-currency'        => !($transaction['value'][0]['currency']) ? '' : $transaction['value'][0]['currency'],
-                'TransactionValue-value_date'      => !($transaction['value'][0]['date']) ? '' : $transaction['value'][0]['date'],
-                'TransactionValue-text'            => !($transaction['value'][0]['amount']) ? '' : $transaction['value'][0]['amount'],
-                'Description_text'                 => !($transaction['description'][0]['narrative']) ? '' : $this->concatenateIntoString($transaction['description'], 'narrative', true, 'narrative'),
-                'ProviderOrg-ref'                  => !($transaction['provider_organization'][0]['organization_identifier_code']) ? '' : $transaction['provider_organization'][0]['organization_identifier_code'],
-                'ProviderOrg-provider_activity_id' => !($transaction['provider_organization'][0]['provider_activity_id']) ? '' : $transaction['provider_organization'][0]['provider_activity_id'],
-                'ProviderOrg-Narrative_text'       => !($transaction['provider_organization'][0]['narrative']) ? '' : $this->concatenateIntoString(
+                'Transaction-ref'                  => getVal($transaction, ['reference'], ''),
+                'TransactionType-code'             => getVal($transaction, ['transaction_type', 0, 'transaction_type_code'], null),
+                'TransactionDate-iso_date'         => getVal($transaction, ['transaction_date', 0, 'date'], null),
+                'TransactionValue-currency'        => getVal($transaction, ['value', 0, 'currency'], null),
+                'TransactionValue-value_date'      => getVal($transaction, ['value', 0, 'date'], null),
+                'TransactionValue-text'            => getVal($transaction, ['value', 0, 'amount'], null),
+                'Description_text'                 => !(getVal($transaction, ['description', 0, 'narrative'], null)) ? '' : $this->concatenateIntoString($transaction['description'], 'narrative', true, 'narrative'),
+                'ProviderOrg-ref'                  => getVal($transaction, ['provider_organization', 0, 'organization_identifier_code'], ''),
+                'ProviderOrg-provider_activity_id' => getVal($transaction, ['provider_organization', 0, 'provider_activity_id'], ''),
+                'ProviderOrg-Narrative_text'       => !(getVal($transaction, ['provider_organization', 0, 'narrative'], null)) ? '' : $this->concatenateIntoString(
                     $transaction['provider_organization'],
                     'narrative',
                     true,
                     'narrative'
                 ),
-                'ReceiverOrg-ref'                  => !($transaction['receiver_organization'][0]['organization_identifier_code']) ? '' : $transaction['receiver_organization'][0]['organization_identifier_code'],
-                'ReceiverOrg-receiver_activity_id' => !($transaction['receiver_organization'][0]['receiver_activity_id']) ? '' : $transaction['receiver_organization'][0]['receiver_activity_id'],
-                'ReceiverOrg-Narrative_text'       => !($transaction['receiver_organization'][0]['narrative']) ? '' : $this->concatenateIntoString(
+                'ReceiverOrg-ref'                  => (getVal($transaction, ['receiver_organization', 0, 'organization_identifier_code'], '')),
+                'ReceiverOrg-receiver_activity_id' => (getVal($transaction, ['receiver_organization', 0, 'receiver_activity_id'], '')),
+                'ReceiverOrg-Narrative_text'       => (getVal($transaction, ['receiver_organization', 0, 'narrative'], '')) ? '' : $this->concatenateIntoString(
                     $transaction['receiver_organization'],
                     'narrative',
                     true,
                     'narrative'
                 ),
-                'DisbursementChannel-code'         => !($transaction['disbursement_channel'][0]['disbursement_channel_code']) ? '' : $transaction['disbursement_channel'][0]['disbursement_channel_code'],
-                'Sector-vocabulary'                => !($transaction['sector'][0]['sector_vocabulary']) ? '' : $transaction['sector'][0]['sector_vocabulary'],
-                'Sector-code'                      => (!($transaction['sector'][0]['sector_code']) && !($transaction['sector'][0]['sector_category_code']) && !($transaction['sector'][0]['sector_text'])) ? '' : $this->formatSector(
+                'DisbursementChannel-code'         => getVal($transaction, ['disbursement_channel', 0, 'disbursement_channel_code'], ''),
+                'Sector-vocabulary'                => getVal($transaction, ['sector', 0, 'sector_vocabulary'], ''),
+                'Sector-code'                      => (!(getVal($transaction, ['sector', 0, 'sector_code'], '')) && !(getVal($transaction, ['sector', 0, 'sector_category_code'], '')) && !(getVal($transaction, ['sector', 0, 'sector_text'], ''))) ? '' : $this->formatSector(
                     $transaction['sector'][0]
                 ),
-                'RecipientCountry-code'            => !($transaction['recipient_country'][0]['country_code']) ? '' : $transaction['recipient_country'][0]['country_code'],
-                'RecipientRegion-vocabulary'       => !($transaction['recipient_region'][0]['vocabulary']) ? '' : $transaction['recipient_region'][0]['vocabulary'],
-                'RecipientRegion-code'             => !($transaction['recipient_region'][0]['region_code']) ? '' : $transaction['recipient_region'][0]['region_code'],
-                'FlowType-code'                    => !($transaction['flow_type'][0]['flow_type']) ? '' : $transaction['flow_type'][0]['flow_type'],
-                'FinanceType-code'                 => !($transaction['finance_type'][0]['finance_type']) ? '' : $transaction['finance_type'][0]['finance_type'],
-                'AidType-code'                     => !($transaction['aid_type'][0]['aid_type']) ? '' : $transaction['aid_type'][0]['aid_type'],
-                'TiedStatus-code'                  => !($transaction['tied_status'][0]['tied_status_code']) ? '' : $transaction['tied_status'][0]['tied_status_code']
+                'RecipientCountry-code'            => getVal($transaction, ['recipient_country', 0, 'country_code'], ''),
+                'RecipientRegion-vocabulary'       => getVal($transaction, ['recipient_region', 0, 'vocabulary'], ''),
+                'RecipientRegion-code'             => getVal($transaction, ['recipient_region', 0, 'region_code'], ''),
+                'FlowType-code'                    => getVal($transaction, ['flow_type', 0, 'flow_type'], ''),
+                'FinanceType-code'                 => getVal($transaction, ['finance_type', 0, 'finance_type'], ''),
+                'AidType-code'                     => getVal($transaction, ['aid_type', 0, 'aid_type'], ''),
+                'TiedStatus-code'                  => getVal($transaction, ['tied_status', 0, 'tied_status_code'], '')
             ];
         }
 

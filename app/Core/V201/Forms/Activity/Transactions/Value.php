@@ -19,18 +19,23 @@ class Value extends BaseForm
     public function buildForm()
     {
         $this
-            ->add('amount', 'text', ['help_block' => $this->addHelpText('Activity_Transaction_Value-text'), 'required' => true])
+            ->add(
+                'amount',
+                'text',
+                ['label' => trans('elementForm.amount'), 'label' => trans('elementForm.amount'), 'help_block' => $this->addHelpText('Activity_Transaction_Value-text'), 'required' => true]
+            )
             ->add(
                 'date',
                 'date',
-                ['label' => 'Value Date', 'help_block' => $this->addHelpText('Activity_Transaction_Value-value_date'), 'required' => true, 'attr' => ['placeholder' => 'YYYY-MM-DD']]
+                ['label' => trans('elementForm.value_date'), 'help_block' => $this->addHelpText('Activity_Transaction_Value-value_date'), 'required' => true, 'attr' => ['placeholder' => 'YYYY-MM-DD']]
             )
             ->add(
                 'currency',
                 'select',
                 [
+                    'label'       => trans('elementForm.currency'),
                     'choices'     => $this->getCurrencyCodeList(),
-                    'empty_value' => 'Select one of the following option :',
+                    'empty_value' => trans('elementForm.select_text'),
                     'attr'        => ['class' => 'form-control currency'],
                 ]
             );

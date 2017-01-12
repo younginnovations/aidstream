@@ -75,11 +75,11 @@ class NameController extends Controller
         if ($this->nameManager->update($input, $organizationData)) {
 
             $this->organizationManager->resetStatus($orgId);
-            $response = ['type' => 'success', 'code' => ['updated', ['name' => 'Organization Name']]];
+            $response = ['type' => 'success', 'code' => ['updated', ['name' => trans('title.org_name')]]];
 
             return redirect()->to(sprintf('/organization/%s', $orgId))->withResponse($response);
         }
-        $response = ['type' => 'danger', 'code' => ['update_failed', ['name' => 'Organization Name']]];
+        $response = ['type' => 'danger', 'code' => ['update_failed', ['name' => trans('title.org_name')]]];
 
         return redirect()->route('organization.name.index', $orgId)->withInput()->withResponse($response);
     }

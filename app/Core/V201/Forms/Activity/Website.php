@@ -14,7 +14,7 @@ class Website extends BaseForm
     public function buildForm()
     {
         $this
-            ->add('website', 'text', ['help_block' => $this->addHelpText('Activity_ContactInfo_Website-text')])
+            ->add('website', 'text', ['label' => trans('elementForm.website'), 'help_block' => $this->addHelpText('Activity_ContactInfo_Website-text')])
             ->addRemoveThisButton('remove_website');
     }
 }

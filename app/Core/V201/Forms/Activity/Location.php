@@ -16,19 +16,19 @@ class Location extends BaseForm
     public function buildForm()
     {
         $this
-            ->add('reference', 'text', ['help_block' => $this->addHelpText('Activity_Location-ref')])
-            ->addCollection('location_reach', 'Activity\LocationReach')
-            ->addCollection('location_id', 'Activity\LocationId', 'location_id')
+            ->add('reference', 'text', ['label' => trans('elementForm.reference'),'label' => trans('elementForm.reference'), 'help_block' => $this->addHelpText('Activity_Location-ref')])
+            ->addCollection('location_reach', 'Activity\LocationReach', '', [], trans('elementForm.location_reach'))
+            ->addCollection('location_id', 'Activity\LocationId', 'location_id', [], trans('elementForm.location_id'))
             ->addAddMoreButton('add', 'location_id')
-            ->addCollection('name', 'Activity\Name')
-            ->addCollection('location_description', 'Activity\LocationDescription')
-            ->addCollection('activity_description', 'Activity\ActivityDescription')
-            ->addCollection('administrative', 'Activity\Administrative', 'administrative')
+            ->addCollection('name', 'Activity\Name', '', [], trans('elementForm.name'))
+            ->addCollection('location_description', 'Activity\LocationDescription', '', [], trans('elementForm.location_description'))
+            ->addCollection('activity_description', 'Activity\ActivityDescription', '', [], trans('elementForm.activity_description'))
+            ->addCollection('administrative', 'Activity\Administrative', 'administrative', [], trans('elementForm.administrative'))
             ->addAddMoreButton('add_administrative', 'administrative')
-            ->addCollection('point', 'Activity\Point')
-            ->addCollection('exactness', 'Activity\Exactness')
-            ->addCollection('location_class', 'Activity\LocationClass')
-            ->addCollection('feature_designation', 'Activity\FeatureDesignation')
+            ->addCollection('point', 'Activity\Point', '', [], trans('elementForm.point'))
+            ->addCollection('exactness', 'Activity\Exactness', '', [], trans('elementForm.exactness'))
+            ->addCollection('location_class', 'Activity\LocationClass', '', [], trans('elementForm.location_class'))
+            ->addCollection('feature_designation', 'Activity\FeatureDesignation', '', [], trans('elementForm.feature_designation'))
             ->addRemoveThisButton('remove');
     }
 }

@@ -1,6 +1,6 @@
 @extends('app')
 
-@section('title', 'Name')
+@section('title', trans('title.name'))
 
 @section('content')
     <div class="container main-container">
@@ -9,10 +9,9 @@
             <div class="col-xs-9 col-md-9 col-lg-9 content-wrapper">
                 @include('includes.response')
                 <div class="panel-content-heading">
-                    <div>Name
+                    <div>@lang('element.name')
                         <div class="panel-action-btn">
-                            <a href="{{route('organization.show', $orgId)}}" class="btn btn-primary">View Organisation
-                                Data
+                            <a href="{{route('organization.show', $orgId)}}" class="btn btn-primary">@lang('global.view_organisation_data')
                             </a>
                         </div>
                     </div>

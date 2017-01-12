@@ -73,8 +73,8 @@ class CountryBudgetItem extends ActivityBaseRequest
         foreach ($formFields as $countryBudgetItemIndex => $countryBudgetItem) {
             $countryBudgetItemForm                                                            = sprintf('country_budget_item.%s', $countryBudgetItemIndex);
             $code                                                                             = $countryBudgetItem['vocabulary'] == 1 ? 'code' : 'code_text';
-            $messages[sprintf('%s.budget_item.0.%s.required', $countryBudgetItemForm, $code)] = 'Code is Required';
-            $messages[sprintf('%s.vocabulary.required', $countryBudgetItemForm)]              = 'Vocabulary is required.';
+            $messages[sprintf('%s.budget_item.0.%s.required', $countryBudgetItemForm, $code)] = trans('validation.required', ['attribute' => trans('elementForm.code')]);
+            $messages[sprintf('%s.vocabulary.required', $countryBudgetItemForm)]              = trans('validation.required', ['attribute' => trans('elementForm.vocabulary')]);
             $messages                                                                         = array_merge(
                 $messages,
                 $this->getBudgetItemMessages($countryBudgetItem['budget_item'], $countryBudgetItemForm, $code)
@@ -121,12 +121,21 @@ class CountryBudgetItem extends ActivityBaseRequest
         $messages = [];
         foreach ($formFields as $budgetItemIndex => $budgetItem) {
             $budgetItemForm                                                    = sprintf('%s.budget_item.%s', $formBase, $budgetItemIndex);
-            $messages[sprintf('%s.%s.required', $budgetItemForm, $code)]       = 'Code is required';
-            $messages[sprintf('%s.percentage.%s', $budgetItemForm, 'numeric')] = 'Percentage should be numeric';
-            $messages[sprintf('%s.percentage.%s', $budgetItemForm, 'max')]     = 'Percentage should less than or equal to :max';
-            $messages[sprintf('%s.percentage.sum', $budgetItemForm)]           = 'Total percentage of budget items under the same vocabulary must be equal to 100.';
-            $messages[sprintf('%s.percentage.required', $budgetItemForm)]      = 'Percentage is required when there are multiple codes  .';
-            $messages[sprintf('%s.percentage.total', $budgetItemForm)]         = 'Percentage should be 100 when there is only one budget item.';
+            $messages[sprintf('%s.%s.required', $budgetItemForm, $code)]       = trans('validation.required', ['attribute' => trans('elementForm.code')]);
+            $messages[sprintf('%s.percentage.%s', $budgetItemForm, 'numeric')] = trans('validation.numeric', ['attribute' => trans('elementForm.percentage')]);
+            $messages[sprintf('%s.percentage.%s', $budgetItemForm, 'max')]     = trans('validation.max.numeric', ['attribute' => trans('elementForm.percentage'), 'max' => 100]);
+            $messages[sprintf('%s.percentage.sum', $budgetItemForm)]           = trans(
+                'validation.sum',
+                ['attribute' => trans('elementForm.budget_items')]
+            );
+            $messages[sprintf('%s.percentage.required', $budgetItemForm)]      = trans(
+                'validation.required_custom',
+                ['attribute' => trans('elementForm.percentage')]
+            );
+            $messages[sprintf('%s.percentage.total', $budgetItemForm)]         = trans(
+                'validation.total',
+                ['attribute' => trans('elementForm.percentage'), 'values' => trans('elementForm.budget_item')]
+            );
             $messages                                                          = array_merge(
                 $messages,
                 $this->getBudgetItemDescriptionMessages($budgetItem['description'], $budgetItemForm)

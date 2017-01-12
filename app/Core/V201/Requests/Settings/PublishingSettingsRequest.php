@@ -29,7 +29,7 @@ class PublishingSettingsRequest extends Request
     public function messages()
     {
         $messages                                   = [];
-        $messages['publisher_id.include_operators'] = 'Please enter valid publisher id';
+        $messages['publisher_id.include_operators'] = trans('validation.enter_valid', ['attribute' => trans('settings.publisher_id')]);
 
         return $messages;
     }

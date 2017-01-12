@@ -14,8 +14,8 @@ class ExpenseLine extends BaseForm
     public function buildForm()
     {
         $this
-            ->add('reference', 'text')
-            ->addCollection('value', 'Organization\BudgetOrExpenseLineValueForm')
+            ->add('reference', 'text', ['label' => trans('elementForm.reference')])
+            ->addCollection('value', 'Organization\BudgetOrExpenseLineValueForm', '', [], trans('elementForm.value'))
             ->addNarrative('expense_line_narrative')
             ->addAddMoreButton('add', 'expense_line_narrative')
             ->addRemoveThisButton('remove');

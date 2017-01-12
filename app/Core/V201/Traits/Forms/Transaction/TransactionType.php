@@ -11,7 +11,7 @@ trait TransactionType
      */
     public function addTransactionType()
     {
-        return $this->addCollection('transaction_type', 'Activity\Transactions\Type');
+        return $this->addCollection('transaction_type', 'Activity\Transactions\Type', '', [], trans('elementForm.transaction_type'));
     }
 
     /**

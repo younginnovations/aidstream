@@ -123,7 +123,7 @@ class SettingsController extends Controller
                     'type' => 'warning',
                     'code' => [
                         'message',
-                        ['message' => 'You do not have the correct privileges to view this page.']
+                        ['message' => trans('error.no_correct_privilege')]
                     ]
                 ]
             );
@@ -181,17 +181,17 @@ class SettingsController extends Controller
                     'type' => 'warning',
                     'code' => [
                         'message',
-                        ['message' => 'You do not have the correct privileges to view this page.']
+                        ['message' => trans('error.no_correct_privilege')]
                     ]
                 ]
             );
         }
         $input    = $settingRequest->requestHandler->all();
-        $response = ($this->settingsManager->storeSettings($input, $this->organization)) ? ['type' => 'success', 'code' => ['created', ['name' => 'Settings']]] : [
+        $response = ($this->settingsManager->storeSettings($input, $this->organization)) ? ['type' => 'success', 'code' => ['created', ['name' => trans('global.settings')]]] : [
             'type' => 'danger',
             'code' => [
                 'save_failed',
-                ['name' => 'Settings']
+                ['name' => trans('global.settings')]
             ]
         ];
 
@@ -216,7 +216,7 @@ class SettingsController extends Controller
                     'type' => 'warning',
                     'code' => [
                         'message',
-                        ['message' => 'You do not have the correct privileges to view this page.']
+                        ['message' => trans('error.no_correct_privilege')]
                     ]
                 ]
             );
@@ -244,11 +244,11 @@ class SettingsController extends Controller
         }
         $result = $this->settingsManager->updateSettings($input, $this->organization, $this->settings);
         if (!$result) {
-            $response = ['type' => 'danger', 'code' => ['update_failed', ['name' => 'Settings']]];
+            $response = ['type' => 'danger', 'code' => ['update_failed', ['name' => trans('global.settings')]]];
 
             return redirect()->back()->withResponse($response);
         }
-        $response = ['type' => 'success', 'code' => ['updated', ['name' => 'Settings']]];
+        $response = ['type' => 'success', 'code' => ['updated', ['name' => trans('global.settings')]]];
 
         return redirect()->to(config('app.admin_dashboard'))->withResponse($response);
     }
@@ -402,7 +402,7 @@ class SettingsController extends Controller
         $defaultValues = $this->settingsManager->saveDefaultValues($request->except('_token'), $settings);
 
         if (!isset($settings->default_field_groups)) {
-            $response = ['type' => 'warning', 'code' => ['default_field_groups_required', ['name' => 'activity']]];
+            $response = ['type' => 'warning', 'code' => ['default_field_groups_required', ['name' => trans('global.activity')]]];
 
             return redirect('activity-elements-checklist')->withResponse($response);
         }
@@ -462,7 +462,7 @@ class SettingsController extends Controller
             'type' => 'danger',
             'code' => [
                 'save_failed',
-                ['name' => 'Settings']
+                ['name' => trans('global.settings')]
             ]
         ];
 
@@ -514,9 +514,9 @@ class SettingsController extends Controller
         }
 
         if (!$this->settingsManager->updateSettings($settings, $this->organization, $this->settings)) {
-            $response = ['type' => 'danger', 'code' => ['update_failed', ['name' => 'Settings']]];
+            $response = ['type' => 'danger', 'code' => ['update_failed', ['name' => trans('global.settings')]]];
         } else {
-            $response = ['type' => 'success', 'code' => ['updated', ['name' => 'Settings']]];
+            $response = ['type' => 'success', 'code' => ['updated', ['name' => trans('global.settings')]]];
         }
 
         return redirect()->to(config('app.admin_dashboard'))->withResponse($response);
@@ -537,11 +537,11 @@ class SettingsController extends Controller
             return redirect()->to(config('app.admin_dashboard'))->withResponse($response);
         }
         if (!$this->settingsManager->savePublishingInfo(json_decode($request->get('settings'), true), $this->settings)) {
-            $response = ['type' => 'danger', 'messages' => ['Failed to update Settings']];
+            $response = ['type' => 'danger', 'messages' => [trans('error.failed_to_update_settings')]];
 
             return redirect()->to(config('app.admin_dashboard'))->withResponse($response);
         }
-        $response = ['type' => 'success', 'messages' => ['Settings updated successfully.']];
+        $response = ['type' => 'success', 'messages' => [trans('success.settings_updated_successfully')]];
 
         return redirect()->to(config('app.admin_dashboard'))->withResponse($response);
     }
@@ -554,11 +554,11 @@ class SettingsController extends Controller
     protected function getMessageFor($segmentationChange)
     {
         if (null === $segmentationChange) {
-            return ['Could not change segmentation.'];
+            return [trans('error.could_not_change_segmentation')];
         }
 
         if (false === $segmentationChange) {
-            return ['Could not publish to registry.'];
+            return [trans('error.could_not_publish_to_registry')];
         }
     }
 }

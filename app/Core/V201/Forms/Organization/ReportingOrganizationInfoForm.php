@@ -15,7 +15,7 @@ class ReportingOrganizationInfoForm extends Baseform
                 [
                     'attr'       => ['readonly' => 'readonly'],
                     'help_block' => $this->addHelpText('Organisation_Identifier-text'),
-                    'label'      => 'Reporting Organisation Identifier'
+                    'label'      => trans('elementForm.reporting_organisation_identifier')
                 ]
             )
             ->add(
@@ -23,10 +23,10 @@ class ReportingOrganizationInfoForm extends Baseform
                 'select',
                 [
                     'choices'     => $this->getCodeList('OrganizationType', 'Organization'),
-                    'empty_value' => 'Select one of the following option :',
+                    'empty_value' => trans('elementForm.select_text'),
                     'attr'        => ['readonly' => 'readonly'],
                     'help_block'  => $this->addHelpText('Organisation_ReportingOrg-type'),
-                    'label'      => 'Reporting Organisation Type'
+                    'label'       => trans('elementForm.reporting_organisation_type')
                 ]
             )
             ->addNarrative('narrative')

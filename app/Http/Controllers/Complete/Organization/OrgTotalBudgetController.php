@@ -49,7 +49,7 @@ class OrgTotalBudgetController extends Controller
         $totalBudget = $this->totalBudgetManager->getOrganizationTotalBudgetData($orgId);
         $form        = $this->totalBudgetForm->editForm($totalBudget, $orgId);
 
-        return view('Organization.totalBudget.totalBudget', compact('form', 'totalBudget','orgId'));
+        return view('Organization.totalBudget.totalBudget', compact('form', 'totalBudget', 'orgId'));
     }
 
     /**
@@ -68,15 +68,15 @@ class OrgTotalBudgetController extends Controller
 
         $organizationData = $this->totalBudgetManager->getOrganizationData($orgId);
         $this->authorizeByRequestType($organizationData, 'total_budget');
-        $input            = $request->all();
+        $input = $request->all();
 
         if ($this->totalBudgetManager->update($input, $organizationData)) {
             $this->organizationManager->resetStatus($orgId);
-            $response = ['type' => 'success', 'code' => ['updated', ['name' => 'Organization Total Budget']]];
+            $response = ['type' => 'success', 'code' => ['updated', ['name' => trans('title.org_total_budget')]]];
 
             return redirect()->to(sprintf('/organization/%s', $orgId))->withResponse($response);
         }
-        $response = ['type' => 'danger', 'code' => ['update_failed', ['name' => 'Organization Total Budget']]];
+        $response = ['type' => 'danger', 'code' => ['update_failed', ['name' => trans('title.org_total_budget')]]];
 
         return redirect()->back()->withInput()->withResponse($response);
     }

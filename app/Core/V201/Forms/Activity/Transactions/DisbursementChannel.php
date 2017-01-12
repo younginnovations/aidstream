@@ -20,7 +20,7 @@ class DisbursementChannel extends BaseForm
         $this->addSelect(
             'disbursement_channel_code',
             $this->getDisbursementChannelCodeList(),
-            'Disbursement Channel Code',
+            trans('elementForm.disbursement_channel_code'),
             $this->addHelpText('Activity_Transaction_DisbursementChannel-code'),
             ['attr' => ['class' => 'form-control disbursement_channel']]
         );

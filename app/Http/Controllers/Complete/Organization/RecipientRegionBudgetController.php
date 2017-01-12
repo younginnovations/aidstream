@@ -55,7 +55,7 @@ class RecipientRegionBudgetController extends Controller
         $recipientRegionBudget = $this->recipientRegionBudgetManager->getRecipientRegionBudgetData($orgId);
         $form                  = $this->recipientRegionBudget->editForm($recipientRegionBudget, $orgId);
 
-        return view('Organization.recipientRegionBudget.edit', compact('form', 'recipientRegionBudget','orgId'));
+        return view('Organization.recipientRegionBudget.edit', compact('form', 'recipientRegionBudget', 'orgId'));
     }
 
     /**
@@ -66,7 +66,7 @@ class RecipientRegionBudgetController extends Controller
      */
     public function update($orgId, RecipientRegionBudgetRequest $recipientRegionBudgetRequest, Request $request)
     {
-        $organization = $this->organizationManager->getOrganization($orgId);
+        $organization     = $this->organizationManager->getOrganization($orgId);
         $organizationData = $this->recipientRegionBudgetManager->getOrganizationData($orgId);
 
         if (Gate::denies('belongsToOrganization', $organization)) {
@@ -74,15 +74,15 @@ class RecipientRegionBudgetController extends Controller
         }
 
         $this->authorizeByRequestType($organizationData, 'recipient_region_budget');
-        $input            = $request->all();
+        $input = $request->all();
 
         if ($this->recipientRegionBudgetManager->update($input, $organizationData)) {
             $this->organizationManager->resetStatus($orgId);
-            $response = ['type' => 'success', 'code' => ['updated', ['name' => 'Organization Recipient Region Budget']]];
+            $response = ['type' => 'success', 'code' => ['updated', ['name' => trans('title.org_recipient_region_budget')]]];
 
             return redirect()->to(sprintf('/organization/%s', $orgId))->withResponse($response);
         }
-        $response = ['type' => 'danger', 'code' => ['update_failed', ['name' => 'Organization Recipient Region Budget']]];
+        $response = ['type' => 'danger', 'code' => ['update_failed', ['name' => trans('title.org_recipient_region_budget')]]];
 
         return redirect()->back()->withInput()->withResponse($response);
     }

@@ -21,7 +21,7 @@ class Type extends BaseForm
             ->addSelect(
                 'transaction_type_code',
                 $this->getTransactionTypeCodeList(),
-                'Transaction Type Code',
+                trans('elementForm.transaction_type_code'),
                 $this->addHelpText('Activity_Transaction_TransactionType-code'),
                 ['attr' => ['class' => 'form-control transaction_type']],
                 true

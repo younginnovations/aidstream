@@ -274,7 +274,10 @@ class ContactInfo extends ActivityBaseRequest
         $messages = [];
 
         foreach ($formFields as $telephoneIndex => $telephone) {
-            $messages[sprintf('%s.telephone.%s.telephone.numeric', $formBase, $telephoneIndex)] = 'Telephone must be a number';
+            $messages[sprintf('%s.telephone.%s.telephone.numeric', $formBase, $telephoneIndex)] = trans(
+                'validation.number',
+                ['attribute' => trans('elementForm.telephone')]
+            );
         }
 
         return $messages;
@@ -306,7 +309,10 @@ class ContactInfo extends ActivityBaseRequest
         $messages = [];
 
         foreach ($formFields as $emailIndex => $email) {
-            $messages[sprintf('%s.email.%s.email.email', $formBase, $emailIndex)] = 'Email must be a valid email address.';
+            $messages[sprintf('%s.email.%s.email.email', $formBase, $emailIndex)] = trans(
+                'validation.email',
+                ['attribute' => trans('elementForm.email')]
+            );
         }
 
         return $messages;
@@ -339,7 +345,9 @@ class ContactInfo extends ActivityBaseRequest
         $messages = [];
 
         foreach ($formFields as $websiteIndex => $website) {
-            $messages[sprintf('%s.website.%s.website.url', $formBase, $websiteIndex)] = 'Enter valid URL. eg. http://example.com';
+            $messages[sprintf('%s.website.%s.website.url', $formBase, $websiteIndex)] = trans(
+                'validation.url'
+            );
         }
 
         return $messages;

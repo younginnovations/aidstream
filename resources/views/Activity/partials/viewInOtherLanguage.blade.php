@@ -2,7 +2,7 @@
     <span class="view-other-language">
         @if(count($otherLanguages) == 1 && empty($otherLanguages[0]['narrative']))
         @else
-            @lang('activityView.view_in_other_languages')
+            @lang('global.view_in_other_languages')
         @endif
 
         <div class="view-language-info hidden">

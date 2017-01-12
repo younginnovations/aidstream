@@ -14,15 +14,15 @@ class DefaultFieldGroupsForm extends BaseForm
     public function buildForm()
     {
         $this
-            ->addFieldGroup('Identification')
-            ->addFieldGroup('Basic Activity Information')
-            ->addFieldGroup('Participating Organizations', 'Participating Organisations')
-            ->addFieldGroup('Geopolitical Information')
-            ->addFieldGroup('Classifications')
-            ->addFieldGroup('Financial')
-            ->addFieldGroup('Related Documents')
-            ->addFieldGroup('Relations')
-            ->addFieldGroup('Performance');
+            ->addFieldGroup('Identification', trans('element.identification'))
+            ->addFieldGroup('Basic Activity Information', trans('element.basic_activity_information'))
+            ->addFieldGroup('Participating Organizations', trans('element.participating_organisations'))
+            ->addFieldGroup('Geopolitical Information' , trans('element.geopolitical_information'))
+            ->addFieldGroup('Classifications', trans('element.classifications'))
+            ->addFieldGroup('Financial', trans('element.financial'))
+            ->addFieldGroup('Related Documents', trans('element.related_documents'))
+            ->addFieldGroup('Relations', trans('element.relations'))
+            ->addFieldGroup('Performance', trans('element.performance'));
     }
 
     /**

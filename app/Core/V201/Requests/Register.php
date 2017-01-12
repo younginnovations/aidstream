@@ -126,20 +126,20 @@ class Register extends Request
         $formBase = 'organization';
         $messages = [];
 
-        $messages[sprintf('%s.organization_name.required', $formBase)]                    = 'Organization Name is required.';
-        $messages[sprintf('%s.organization_name_abbr.required', $formBase)]               = 'Organization Name Abbreviation is required.';
-        $messages[sprintf('%s.organization_name_abbr.unique', $formBase)]                 = 'Organization Name Abbreviation has already been taken.';
-        $messages[sprintf('%s.organization_type.required', $formBase)]                    = 'Organization Type is required.';
-        $messages[sprintf('%s.organization_type.code_list', $formBase)]                   = 'Organization Type is not valid.';
-        $messages[sprintf('%s.organization_address.required', $formBase)]                 = 'Address is required.';
-        $messages[sprintf('%s.country.required', $formBase)]                              = 'Country is required.';
-        $messages[sprintf('%s.country.code_list', $formBase)]                             = 'Country is not valid.';
-        $messages[sprintf('%s.organization_registration_agency.required', $formBase)]     = 'Organisation Registration Agency is required.';
-        $messages[sprintf('%s.organization_registration_agency.reg_agency', $formBase)]   = 'Organisation Registration Agency is not valid.';
-        $messages[sprintf('%s.registration_number.required', $formBase)]                  = 'Registration Number is required.';
-        $messages[sprintf('%s.registration_number.regex', $formBase)]                     = 'Only -, _, letters and numbers are allowed.';
-        $messages[sprintf('%s.organization_identifier.required', $formBase)]              = 'IATI Organizational Identifier is required.';
-        $messages[sprintf('%s.organization_identifier.unique_org_identifier', $formBase)] = 'IATI Organizational Identifier is has already been taken.';
+        $messages[sprintf('%s.organization_name.required', $formBase)]                    = trans('validation.required', ['attribute' => trans('organisation.organisation_name')]);
+        $messages[sprintf('%s.organization_name_abbr.required', $formBase)]               = trans('validation.required', ['attribute' => trans('organisation.organisation_name_abbreviation')]);
+        $messages[sprintf('%s.organization_name_abbr.unique', $formBase)]                 = trans('validation.custom_unique', ['attribute' => trans('organisation.organisation_name_abbreviation')]);
+        $messages[sprintf('%s.organization_type.required', $formBase)]                    = trans('validation.required', ['attribute' => trans('elementForm.organisation_type')]);
+        $messages[sprintf('%s.organization_type.code_list', $formBase)]                   = trans('validation.code_list', ['attribute' => trans('elementForm.organisation_type')]);
+        $messages[sprintf('%s.organization_address.required', $formBase)]                 = trans('validation.required', ['attribute' => trans('elementForm.address')]);
+        $messages[sprintf('%s.country.required', $formBase)]                              = trans('validation.required', ['attribute' => trans('elementForm.country')]);
+        $messages[sprintf('%s.country.code_list', $formBase)]                             = trans('validation.code_list', ['attribute' => trans('elementForm.country')]);
+        $messages[sprintf('%s.organization_registration_agency.required', $formBase)]     = trans('validation.required', ['attribute' => trans('organisation.organisation_registration_agency')]);
+        $messages[sprintf('%s.organization_registration_agency.reg_agency', $formBase)]   = trans('validation.code_list', ['attribute' => trans('organisation.organisation_registration_agency')]);
+        $messages[sprintf('%s.registration_number.required', $formBase)]                  = trans('validation.required', ['attribute' => trans('organisation.registration_number')]);
+        $messages[sprintf('%s.registration_number.regex', $formBase)]                     = trans('validation.alpha_num', ['attribute' => '-' . ',' . '_' . ',']);
+        $messages[sprintf('%s.organization_identifier.required', $formBase)]              = trans('validation.required', ['attribute' => trans('organisation.organisational_iati_identifier')]);
+        $messages[sprintf('%s.organization_identifier.unique_org_identifier', $formBase)] = trans('validation.custom_unique', ['attribute' => trans('organisation.organisational_iati_identifier')]);
 
         return $messages;
     }
@@ -175,21 +175,21 @@ class Register extends Request
         $formBase = 'users';
         $messages = [];
 
-        $messages[sprintf('%s.username.required', $formBase)]              = 'Username is required.';
-        $messages[sprintf('%s.username.unique', $formBase)]                = 'Username has already been taken.';
-        $messages[sprintf('%s.first_name.required', $formBase)]            = 'First Name is required.';
-        $messages[sprintf('%s.last_name.required', $formBase)]             = 'Last Name is required.';
-        $messages[sprintf('%s.email.required', $formBase)]                 = 'Email is required.';
-        $messages[sprintf('%s.email.email', $formBase)]                    = 'Email is not valid.';
-        $messages[sprintf('%s.email.unique_email', $formBase)]             = 'Email has already been taken.';
-        $messages[sprintf('%s.password.required', $formBase)]              = 'Password is required.';
-        $messages[sprintf('%s.password.min', $formBase)]                   = 'Password must be at least 6 characters.';
-        $messages[sprintf('%s.confirm_password.required', $formBase)]      = 'Confirm Password is required.';
-        $messages[sprintf('%s.confirm_password.min', $formBase)]           = 'Confirm Password must be at least 6 characters.';
-        $messages[sprintf('%s.confirm_password.same', $formBase)]          = 'Passwords doesn\'t match.';
-        $messages[sprintf('%s.secondary_contact.required', $formBase)]     = 'Secondary Contact is required.';
-        $messages[sprintf('%s.secondary_contact.email', $formBase)]        = 'Secondary Contact Email is not valid.';
-        $messages[sprintf('%s.secondary_contact.unique_email', $formBase)] = 'Secondary Contact Email has already been taken.';
+        $messages[sprintf('%s.username.required', $formBase)]              = trans('validation.required', ['attribute' => trans('user.username')]);
+        $messages[sprintf('%s.username.unique', $formBase)]                = trans('validation.custom_unique', ['attribute' => trans('user.username')]);
+        $messages[sprintf('%s.first_name.required', $formBase)]            = trans('validation.required', ['attribute' => trans('user.first_name')]);
+        $messages[sprintf('%s.last_name.required', $formBase)]             = trans('validation.required', ['attribute' => trans('user.last_name')]);
+        $messages[sprintf('%s.email.required', $formBase)]                 = trans('validation.required', ['attribute' => trans('user.email')]);
+        $messages[sprintf('%s.email.email', $formBase)]                    = trans('validation.code_list', ['attribute' => trans('user.email')]);
+        $messages[sprintf('%s.email.unique_email', $formBase)]             = trans('validation.custom_unique', ['attribute' => trans('user.email')]);
+        $messages[sprintf('%s.password.required', $formBase)]              = trans('validation.required', ['attribute' => trans('global.password')]);
+        $messages[sprintf('%s.password.min', $formBase)]                   = trans('validation.min.string', ['attribute' => trans('global.password'), 'min' => 6]);
+        $messages[sprintf('%s.confirm_password.required', $formBase)]      = trans('validation.required', ['attribute' => trans('user.confirm_password')]);
+        $messages[sprintf('%s.confirm_password.min', $formBase)]           = trans('validation.min.string', ['attribute' => trans('user.confirm_password'), 'min' => 6]);
+        $messages[sprintf('%s.confirm_password.same', $formBase)]          = trans('validation.match', ['attribute' => trans('user.password')]);
+        $messages[sprintf('%s.secondary_contact.required', $formBase)]     = trans('validation.required', ['attribute' => trans('user.secondary_contact')]);
+        $messages[sprintf('%s.secondary_contact.email', $formBase)]        = trans('validation.code_list', ['attribute' => trans('user.secondary_contact_email')]);
+        $messages[sprintf('%s.secondary_contact.unique_email', $formBase)] = trans('validation.custom_unique', ['attribute' => trans('user.secondary_contact_email')]);
 
         $messages = array_merge($messages, $this->getMessagesForOrgUsers(getVal($users, ['user'], [])));
 
@@ -235,15 +235,15 @@ class Register extends Request
 
         foreach ($users as $userIndex => $user) {
             $formBase                                               = sprintf('users.user.%s', $userIndex);
-            $messages[sprintf('%s.username.required', $formBase)]   = 'Username is required.';
-            $messages[sprintf('%s.username.unique', $formBase)]     = 'Username has already been taken.';
-            $messages[sprintf('%s.email.required', $formBase)]      = 'Email is required.';
-            $messages[sprintf('%s.email.email', $formBase)]         = 'Email is not valid.';
-            $messages[sprintf('%s.email.unique_email', $formBase)]  = 'Email has already been taken.';
-            $messages[sprintf('%s.first_name.required', $formBase)] = 'First Name is required.';
-            $messages[sprintf('%s.last_name.required', $formBase)]  = 'Last Name is required.';
-            $messages[sprintf('%s.role.required', $formBase)]       = 'Role is required.';
-            $messages[sprintf('%s.role.in', $formBase)]             = 'Role is not valid.';
+            $messages[sprintf('%s.username.required', $formBase)]   = trans('validation.required', ['attribute' => trans('user.username')]);
+            $messages[sprintf('%s.username.unique', $formBase)]     = trans('validation.custom_unique', ['attribute' => trans('user.username')]);
+            $messages[sprintf('%s.email.required', $formBase)]      = trans('validation.required', ['attribute' => trans('user.email')]);
+            $messages[sprintf('%s.email.email', $formBase)]         = trans('validation.code_list', ['attribute' => trans('user.email')]);
+            $messages[sprintf('%s.email.unique_email', $formBase)]  = trans('validation.custom_unique', ['attribute' => trans('user.email')]);
+            $messages[sprintf('%s.first_name.required', $formBase)] = trans('validation.required', ['attribute' => trans('user.first_name')]);
+            $messages[sprintf('%s.last_name.required', $formBase)]  = trans('validation.required', ['attribute' => trans('user.last_name')]);
+            $messages[sprintf('%s.role.required', $formBase)]       = trans('validation.required', ['attribute' => trans('user.role')]);
+            $messages[sprintf('%s.role.in', $formBase)]             = trans('validation.code_list', ['attribute' => trans('user.role')]);
         }
 
         return $messages;

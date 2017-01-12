@@ -89,7 +89,7 @@ class Budget extends ActivityBaseRequest
                 $this->getMessagesForValue($budget['value'], $budgetForm)
             );
 
-            $messages[$budgetForm . '.period_end.0.date.before'] = 'Period End must not be more than a year from Period Start';
+            $messages[$budgetForm . '.period_end.0.date.before'] = trans('validation.before', ['attribute' => trans('elementForm.period_end'), 'date' => trans('elementForm.period_start')]);
         }
 
         return $messages;
@@ -105,9 +105,9 @@ class Budget extends ActivityBaseRequest
         $messages = [];
         foreach ($formFields as $valueIndex => $value) {
             $valueForm                                               = sprintf('%s.value.%s', $formBase, $valueIndex);
-            $messages[sprintf('%s.amount.required', $valueForm)]     = 'Amount is required';
-            $messages[sprintf('%s.amount.numeric', $valueForm)]      = 'Amount should be numeric';
-            $messages[sprintf('%s.value_date.required', $valueForm)] = 'Date is required';
+            $messages[sprintf('%s.amount.required', $valueForm)]     = trans('validation.required', ['attribute' => trans('elementForm.amount')]);
+            $messages[sprintf('%s.amount.numeric', $valueForm)]      = trans('validation.number', ['attribute' => trans('elementForm.amount')]);
+            $messages[sprintf('%s.value_date.required', $valueForm)] = trans('validation.required', ['attribute' => trans('elementForm.date')]);
         }
 
         return $messages;

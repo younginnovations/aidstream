@@ -130,11 +130,11 @@ class Description extends Element
     public function messages()
     {
         $messages = [
-            'description.size' => 'At least one type of description is required.'
+            'description.size' => trans('validation.csv_size', ['attribute' => trans('element.description')])
         ];
 
         foreach (getVal($this->data(), ['description'], []) as $key => $value) {
-            $messages['description.' . $key . '.narrative.size'] = 'Multiple narratives for Description with the same type is not allowed.';
+            $messages['description.' . $key . '.narrative.size'] = trans('validation.multiple_narratives', ['attribute' => trans('element.description')]);
         }
 
         return $messages;

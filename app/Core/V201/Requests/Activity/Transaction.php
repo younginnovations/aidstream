@@ -93,8 +93,11 @@ class Transaction extends ActivityBaseRequest
 
         foreach ($formFields as $transactionIndex => $transaction) {
             $transactionForm                                                                                     = sprintf('transaction.%s', $transactionIndex);
-            $messages[sprintf('%s.reference.not_in', $transactionForm)]                                          = 'Reference should be unique';
-            $messages[sprintf('%s.disbursement_channel.0.disbursement_channel_code.required', $transactionForm)] = 'Disbursement Channel Code is required.';
+            $messages[sprintf('%s.reference.not_in', $transactionForm)]                                          = trans('validation.unique', ['attribute' => trans('elementForm.reference')]);
+            $messages[sprintf('%s.disbursement_channel.0.disbursement_channel_code.required', $transactionForm)] = trans(
+                'validation.required',
+                ['attribute' => trans('elementForm.disbursement_channel_code')]
+            );
 
             $messages = array_merge(
                 $messages,
@@ -139,7 +142,7 @@ class Transaction extends ActivityBaseRequest
         $messages = [];
         foreach ($formFields as $typeIndex => $type) {
             $typeForm                                                          = sprintf('%s.transaction_type.%s', $formBase, $typeIndex);
-            $messages[sprintf('%s.transaction_type_code.required', $typeForm)] = 'Transaction type is required';
+            $messages[sprintf('%s.transaction_type_code.required', $typeForm)] = trans('validation.required', ['attribute' => trans('elementForm.transaction_type')]);
         }
 
         return $messages;
@@ -173,7 +176,7 @@ class Transaction extends ActivityBaseRequest
         $messages = [];
         foreach ($formFields as $dateIndex => $date) {
             $dateForm                                         = sprintf('%s.transaction_date.%s', $formBase, $dateIndex);
-            $messages[sprintf('%s.date.required', $dateForm)] = 'Date is required';
+            $messages[sprintf('%s.date.required', $dateForm)] = trans('validation.required', ['attribute' => trans('elementForm.date')]);
         }
 
         return $messages;
@@ -208,9 +211,9 @@ class Transaction extends ActivityBaseRequest
         $messages = [];
         foreach ($formFields as $valueIndex => $value) {
             $valueForm                                           = sprintf('%s.value.%s', $formBase, $valueIndex);
-            $messages[sprintf('%s.amount.required', $valueForm)] = 'Amount is required';
-            $messages[sprintf('%s.amount.numeric', $valueForm)]  = 'Amount must be numeric';
-            $messages[sprintf('%s.date.required', $valueForm)]   = 'Date is required';
+            $messages[sprintf('%s.amount.required', $valueForm)] = trans('validation.required', ['attribute' => trans('elementForm.amount')]);
+            $messages[sprintf('%s.amount.numeric', $valueForm)]  = trans('validation.numeric', ['attribute' => trans('elementForm.amount')]);
+            $messages[sprintf('%s.date.required', $valueForm)]   = trans('validation.required', ['attribute' => trans('elementForm.date')]);
         }
 
         return $messages;
@@ -297,21 +300,57 @@ class Transaction extends ActivityBaseRequest
 
         foreach ($formFields as $sectorIndex => $sector) {
             $sectorForm                                              = sprintf('%s.sector.%s', $formBase, $sectorIndex);
-            $messages[sprintf('%s.vocabulary_uri.url', $sectorForm)] = 'Enter valid URL. eg. http://example.com';
+            $messages[sprintf('%s.vocabulary_uri.url', $sectorForm)] = trans('validation.url');
 
             if ($sector['sector_vocabulary'] == 1) {
-                $messages[sprintf('%s.sector_code.%s', $sectorForm, 'required_with')]       = 'Sector code is required with Sector vocabulary.';
-                $messages[sprintf('%s.sector_vocabulary.%s', $sectorForm, 'required_with')] = 'Sector vocabulary is required with Sector code.';
+                $messages[sprintf('%s.sector_code.%s', $sectorForm, 'required_with')]       = trans(
+                    'validation.required_with',
+                    ['attribute' => trans('elementForm.sector_code'), 'values' => trans('elementForm.sector_vocabulary')]
+                );
+                $messages[sprintf('%s.sector_vocabulary.%s', $sectorForm, 'required_with')] = trans(
+                    'validation.required_with',
+                    [
+                        'attribute' => trans('elementForm.sector_vocabulary'),
+                        'values'    => trans('elementForm.sector_code')
+                    ]
+                );
             } elseif ($sector['sector_vocabulary'] == 2) {
-                $messages[sprintf('%s.sector_category_code.%s', $sectorForm, 'required_with')] = 'Sector code is required with Sector vocabulary.';
-                $messages[sprintf('%s.sector_vocabulary.%s', $sectorForm, 'required_with')]    = 'Sector vocabulary is required with Sector code.';
+                $messages[sprintf('%s.sector_category_code.%s', $sectorForm, 'required_with')] = trans(
+                    'validation.required_with',
+                    [
+                        'attribute' => trans('elementForm.sector_code'),
+                        'values'    => trans('elementForm.sector_vocabulary')
+                    ]
+                );
+                $messages[sprintf('%s.sector_vocabulary.%s', $sectorForm, 'required_with')]    = trans(
+                    'validation.required_with',
+                    [
+                        'attribute' => trans('elementForm.sector_vocabulary'),
+                        'values'    => trans('elementForm.sector_code')
+                    ]
+                );
             } elseif ($sector['sector_vocabulary'] != "") {
-                $messages[sprintf('%s.sector_text.%s', $sectorForm, 'required_with')]       = 'Sector code is required with Sector vocabulary.';
-                $messages[sprintf('%s.sector_vocabulary.%s', $sectorForm, 'required_with')] = 'Sector vocabulary is required with Sector code.';
+                $messages[sprintf('%s.sector_text.%s', $sectorForm, 'required_with')]       = trans(
+                    'validation.required_with',
+                    ['attribute' => trans('elementForm.sector_code'), 'values' => trans('elementForm.sector_vocabulary')]
+                );
+                $messages[sprintf('%s.sector_vocabulary.%s', $sectorForm, 'required_with')] = trans(
+                    'validation.required_with',
+                    [
+                        'attribute' => trans('elementForm.sector_vocabulary'),
+                        'values'    => trans('elementForm.sector_code')
+                    ]
+                );
             }
 
             if ($sector['sector_vocabulary'] == "99" || $sector['sector_vocabulary'] == "98") {
-                $messages[sprintf('%s.vocabulary_uri.%s', $sectorForm, 'required_with')] = 'Vocabulary URI is required with Sector vocabulary.';
+                $messages[sprintf('%s.vocabulary_uri.%s', $sectorForm, 'required_with')] = trans(
+                    'validation.required_with',
+                    [
+                        'attribute' => trans('elementForm.vocabulary_uri'),
+                        'values'    => trans('elementForm.sector_vocabulary')
+                    ]
+                );
             }
         }
 
@@ -319,7 +358,7 @@ class Transaction extends ActivityBaseRequest
 
         return $messages;
     }
-  
+
     /**
      * returns rules for sector
      * @param $formFields
@@ -398,7 +437,7 @@ class Transaction extends ActivityBaseRequest
 
         foreach ($formFields as $recipientRegionIndex => $recipientRegion) {
             $recipientRegionForm                                      = sprintf('%s.recipient_region.%s', $formBase, $recipientRegionIndex);
-            $messages[$recipientRegionForm . '.region_code.required'] = 'Recipient region code is required';
+            $messages[$recipientRegionForm . '.region_code.required'] = trans('validation.required', ['attribute' => trans('element.recipient_region')]);
             $messages                                                 = array_merge($messages, $this->getMessagesForNarrative($recipientRegion['narrative'], $recipientRegionForm));
         }
 

@@ -29,7 +29,7 @@ class SettingsForm extends BaseForm
         $this
             //This might ne useful later
 //            ->addCollection('version_form', 'Settings\VersionInfoForm', '', ['versions' => $this->versions])
-            ->addCollection('reporting_organization_info', 'Settings\ReportingOrganizationInfoForm', '', [], 'Reporting Organisation Info')
+            ->addCollection('reporting_organization_info', 'Settings\ReportingOrganizationInfoForm', '', [], trans('setting.reporting_organisation_info'))
             ->addCollection('publishing_type', 'Settings\PublishingTypeForm')
             ->addCollection('registry_info', 'Settings\RegistryInfoForm')
             ->addCollection('default_field_values', 'Settings\DefaultFieldValuesForm')
@@ -40,16 +40,20 @@ class SettingsForm extends BaseForm
                 [
                     'attr' => ['class' => 'btn btn-submit btn-form']
                 ]
-            ) ->add('Cancel', 'static', [
-                'tag'     => 'a',
-                'label'   => false,
-                'value'   => 'Cancel',
-                'attr'    => [
-                    'class' => 'btn btn-cancel',
-                    'href'  => route('activity.index')
-                ],
-                'wrapper' => false
-            ]);
+            )->add(
+                'Cancel',
+                'static',
+                [
+                    'tag'     => 'a',
+                    'label'   => false,
+                    'value'   => 'Cancel',
+                    'attr'    => [
+                        'class' => 'btn btn-cancel',
+                        'href'  => route('activity.index')
+                    ],
+                    'wrapper' => false
+                ]
+            );
 
     }
 }

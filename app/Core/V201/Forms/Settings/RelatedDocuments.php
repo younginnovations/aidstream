@@ -13,6 +13,6 @@ class RelatedDocuments extends BaseForm
      */
     public function buildForm()
     {
-        $this->addCheckBox('document_link', 'Document Link');
+        $this->addCheckBox('document_link', trans('element.document_link'));
     }
 }

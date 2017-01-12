@@ -35,6 +35,6 @@ class ReportingOrganization extends Controller
             return view('Activity.ReportingOrganization.edit', compact('reportingOrganization', 'id'));
         }
 
-        return redirect()->route('activity.index')->withResponse(['messages' => ['Activity with id' . $id . ' not found.'], 'type' => 'danger']);
+        return redirect()->route('activity.index')->withResponse(['messages' => [trans('error.activity_not_found'), ['id' => $id]], 'type' => 'danger']);
     }
 }

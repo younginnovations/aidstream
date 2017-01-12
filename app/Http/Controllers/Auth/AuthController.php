@@ -209,7 +209,7 @@ class AuthController extends Controller
         } catch (\Exception $exception) {
             Auth::logout();
 
-            return redirect('/auth/login')->withErrors('Unable to login. Please contact us at <a href=\'mailto:support@aidstream.org\'>support@aidstream.org</a>');
+            return redirect('/auth/login')->withErrors(trans('error.unable_to_login'));
         }
     }
 
@@ -252,7 +252,7 @@ class AuthController extends Controller
             $emailQueue->sendRegistrationMail($input);
         }
 
-        return redirect($this->loginPath())->withMessage('Thank you for registering. You will receive an email shortly.');
+        return redirect($this->loginPath())->withMessage(trans('success.thank_you_for_registering'));
     }
 
     /**
@@ -281,9 +281,9 @@ class AuthController extends Controller
     {
         $userIdentifier = $request->get('userIdentifier');
         if ($this->organization->where('user_identifier', $userIdentifier)->count() == 0) {
-            $response = ['status' => 'success', 'message' => 'Organization Name Abbreviation is available.'];
+            $response = ['status' => 'success', 'message' => trans('success.organisation_name_abbreviation')];
         } else {
-            $response = ['status' => 'danger', 'message' => 'Organization Name Abbreviation has already been taken.'];
+            $response = ['status' => 'danger', 'message' => trans('error.organisation_name_abbreviation_taken')];
             if ($request->get('validation')) {
                 return '';
             }
@@ -302,14 +302,14 @@ class AuthController extends Controller
         if (!$user->enabled) {
             Auth::logout();
 
-            return redirect('/auth/login')->withErrors("Your account has been disabled. Please contact us at <a href='mailto:support@aidstream.org'>support@aidstream.org</a> ");
+            return redirect('/auth/login')->withErrors(trans('error.account_disabled'));
         }
 
         if (!$user->verified_status) {
             Auth::logout();
 
             return redirect('/auth/login')->withErrors(
-                "Your account has not be verified yet. Please click connect me link in registration confirmation email. If you are still having problem, please contact us at <a href='mailto:support@aidstream.org'>support@aidstream.org</a> "
+                trans('error.account_not_verified')
             );
         }
 

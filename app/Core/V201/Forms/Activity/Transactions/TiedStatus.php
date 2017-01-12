@@ -17,6 +17,6 @@ class TiedStatus extends BaseForm
      */
     public function buildForm()
     {
-        $this->addSelect('tied_status_code', $this->getTiedStatusCodeList(), 'Tied Status Code', $this->addHelpText('Activity_Transaction_TiedStatus-code'));
+        $this->addSelect('tied_status_code', $this->getTiedStatusCodeList(), trans('elementForm.tied_status_code'), $this->addHelpText('Activity_Transaction_TiedStatus-code'));
     }
 }

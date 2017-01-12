@@ -56,8 +56,8 @@ class LegacyDataController extends Controller
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
-        $legacyData   = $this->legacyDataManager->getLegacyData($id);
-        $form         = $this->legacyDataForm->editForm($legacyData, $id);
+        $legacyData = $this->legacyDataManager->getLegacyData($id);
+        $form       = $this->legacyDataForm->editForm($legacyData, $id);
 
         return view('Activity.legacyData.edit', compact('form', 'activityData', 'id'));
     }
@@ -77,14 +77,14 @@ class LegacyDataController extends Controller
         }
 
         $this->authorizeByRequestType($activityData, 'legacy_data');
-        $legacyData   = $request->all();
+        $legacyData = $request->all();
         if ($this->legacyDataManager->update($legacyData, $activityData)) {
             $this->activityManager->resetActivityWorkflow($id);
-            $response = ['type' => 'success', 'code' => ['updated', ['name' => 'Legacy Data']]];
+            $response = ['type' => 'success', 'code' => ['updated', ['name' => trans('element.legacy_data')]]];
 
             return redirect()->to(sprintf('/activity/%s', $id))->withResponse($response);
         }
-        $response = ['type' => 'danger', 'code' => ['update_failed', ['name' => 'Legacy Data']]];
+        $response = ['type' => 'danger', 'code' => ['update_failed', ['name' => trans('element.legacy_data')]]];
 
         return redirect()->back()->withInput()->withResponse($response);
     }

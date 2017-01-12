@@ -56,10 +56,10 @@ trait StringConcatenator
         $relatedModel = $relatedModel->$relatedColumn;
 
         if (!$nested && !$nestedKey) {
-            return $relatedModel[$key];
+            return getVal($relatedModel, [$key]);
         }
 
-        return $relatedModel[$key][0][$nestedKey];
+        return getVal($relatedModel, [$key, 0, $nestedKey], '');
     }
 
     /**
@@ -79,15 +79,15 @@ trait StringConcatenator
         if (!$fourth && !$fifth) {
             if (!$third) {
                 foreach ($indicators as $indicator) {
-                    $temp[] = $indicator[$first][0][$second];
+                    $temp[] = getVal($indicator, [$first, 0, $second], '');
                 }
 
                 return implode(';', $temp);
             }
 
             foreach ($indicators as $indicator) {
-                foreach ($indicator[$first][0][$second] as $nest) {
-                    $temp[] = $nest[$third];
+                foreach (getVal($indicator, [$first, 0, $second], []) as $nest) {
+                    $temp[] = getVal($nest, [$third], '');
                 }
             }
 
@@ -95,13 +95,13 @@ trait StringConcatenator
         }
 
         foreach ($indicators as $indicator) {
-            foreach ($indicator[$first][0][$second] as $superNest) {
-                foreach ($superNest[$third] as $nest) {
+            foreach (getVal($indicator, [$first, 0, $second], []) as $superNest) {
+                foreach (getVal($superNest, [$third], []) as $nest) {
                     if (!$fifth) {
-                        $temp[] = $nest[$fourth];
+                        $temp[] = getVal($nest, [$fourth], '');
                     } else {
-                        foreach ($nest[$fourth] as $n) {
-                            $temp[] = $n[$fifth];
+                        foreach (getVal($nest, [$fourth], []) as $n) {
+                            $temp[] = getVal($n, [$fifth], '');
                         }
                     }
                 }
