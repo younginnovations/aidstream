@@ -269,6 +269,7 @@ label[class*="text-"] {
   text-align: left;
   color: $color_white;
   margin-right: 6px;
+  z-index: 100000000;
 }
 
 .arrow:after {

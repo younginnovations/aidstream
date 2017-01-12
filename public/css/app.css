@@ -380,7 +380,8 @@ label[class*="text-"] {
           box-shadow: none !important;
   text-align: left;
   color: #fff;
-  margin-right: 6px; }
+  margin-right: 6px;
+  z-index: 100000000; }
 
 .arrow:after {
   background: #52cc88; }
