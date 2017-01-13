@@ -331,6 +331,11 @@ class ActivityRepository
                 'budget'                     => (array_key_exists('budget', $activityData) ? $activityData['budget'] : null),
                 'activity_scope'             => (array_key_exists('activity_scope', $activityData) ? $activityData['activity_scope'] : null),
                 'default_field_values'       => $defaultFieldValues,
+                'collaboration_type'         => (($collaborationType = getVal($defaultFieldValues, [0, 'default_collaboration_type'])) == "" ? null : $collaborationType),
+                'default_flow_type'          => (($defaultFlowType = getVal($defaultFieldValues, [0, 'default_flow_type'])) == "" ? null : $defaultFlowType),
+                'default_finance_type'       => (($defaultFinanceType = getVal($defaultFieldValues, [0, 'default_finance_type'])) == "" ? null : $defaultFinanceType),
+                'default_aid_type'           => (($defaultAidType = getVal($defaultFieldValues, [0, 'default_aid_type'])) == "" ? null : $defaultAidType),
+                'default_tied_status'        => (($defaultTiedStatus = getVal($defaultFieldValues, [0, 'default_tied_status'])) == "" ? null : $defaultTiedStatus),
                 'contact_info'               => getVal($activityData, ['contact_info'], null),
                 'related_activity'           => getVal($activityData, ['related_activity'], null)
             ]
@@ -362,7 +367,7 @@ class ActivityRepository
 
     /**
      * @param array $mappedActivity
-     * @param $organizationId
+     * @param       $organizationId
      * @return static
      */
     public function importXmlActivities(array $mappedActivity, $organizationId)
