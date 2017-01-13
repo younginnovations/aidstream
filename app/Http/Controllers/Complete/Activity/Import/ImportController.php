@@ -169,7 +169,7 @@ class ImportController extends Controller
             $this->importManager->create($activities);
             $this->importManager->endImport();
 
-            return redirect()->route('activity.index')->withResponse(['type' => 'success', 'code' => ['message', ['message' => trans('error.activities_successfully_imported')]]]);
+            return redirect()->route('activity.index')->withResponse(['type' => 'success', 'code' => ['message', ['message' => trans('success.activities_successfully_imported')]]]);
         } else {
             return redirect()->back()->withResponse(['type' => 'warning', 'code' => ['message', ['message' => trans('error.select_activities_to_be_imported')]]]);
         }
