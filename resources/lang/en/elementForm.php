@@ -205,6 +205,7 @@ return [
     'budget_currency_code'                       => 'Budget Currency code',
     'default_field_values'                       => 'Default Field Values',
     'participating_organisation_role'            => 'Participating Organisation Role',
+    'participating_organisation_type'            => 'Participating Organisation Type',
     'participating_organisation_name'            => 'Participating Organisation Name',
     'related_activity_identifier'                => 'Related Activity Identifier',
     'related_activity_relationship_type'         => 'Related Activity Relationship Type',

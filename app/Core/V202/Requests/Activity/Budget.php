@@ -56,7 +56,7 @@ class Budget extends V201BudgetRequest
                 $this->getMessagesForPeriodEnd($budget['period_end'], $budgetForm),
                 $this->getMessagesForValue($budget['value'], $budgetForm)
             );
-            $messages[$budgetForm . '.period_end.0.date.before']  = trans('validation.before', ['attribute' => trans('elementForm.period_end'), 'date' => trans('elementForm.period_start')]);
+            $messages[$budgetForm . '.period_end.0.date.before']  = trans('validation.within_a_year', ['attribute' => trans('elementForm.period_end'), 'date' => trans('elementForm.period_start')]);
 
         }
 
