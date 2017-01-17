@@ -46,7 +46,7 @@
                                         <td class="activity_title">
                                             {{ $activity->title ? $activity->title[0]['narrative'] : 'No Title' }}
                                             <i class="{{ $activity->isImportedFromXml() ? 'imported-from-xml' : '' }}">icon</i>
-                                            <span>{{ $activity->identifier['activity_identifier'] }}</span>
+                                            <span>{{ getVal($activity->identifier, ['activity_identifier'], '') }}</span>
                                         </td>
                                         <td class="updated-date">{{ changeTimeZone($activity->updated_at) }}</td>
                                         <td>
