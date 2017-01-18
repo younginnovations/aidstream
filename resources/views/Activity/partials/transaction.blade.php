@@ -6,7 +6,7 @@
                 <div class="activity-element-label">{{$key}}</div>
                 <div class="activity-element-info">
                     @foreach($groupedTransactions as $transaction)
-                        <li>{!! getCurrencyValueDate($transaction['value'][0] , "transaction") !!}</li>
+                        <li>{!! getCurrencyValueDate(getVal($transaction, ['value', 0]) , "transaction") !!}</li>
                         <div class="toggle-btn">
                             <span class="show-more-info">@lang('global.show_more_info')</span>
                             <span class="hide-more-info hidden">@lang('global.hide_more_info')</span>
@@ -14,13 +14,13 @@
                         <div class="more-info hidden">
                             <div class="element-info">
                                 <div class="activity-element-label">@lang('elementForm.transaction_reference')</div>
-                                <div class="activity-element-info">{!! checkIfEmpty($transaction['reference']) !!}</div>
+                                <div class="activity-element-info">{!! checkIfEmpty(getVal($transaction, ['reference'])) !!}</div>
                             </div>
                             <div class="element-info">
                                 <div class="activity-element-label">@lang('elementForm.description')</div>
                                 <div class="activity-element-info">
-                                    {!! getFirstNarrative($transaction['description'][0]) !!}
-                                    @include('Activity.partials.viewInOtherLanguage', ['otherLanguages' => getOtherLanguages($transaction['description'][0]['narrative'])])
+                                    {!! getFirstNarrative(getVal($transaction, ['description', 0], [])) !!}
+                                    @include('Activity.partials.viewInOtherLanguage', ['otherLanguages' => getOtherLanguages(getVal($transaction, ['description', 0, 'narrative'], []))])
                                 </div>
                             </div>
                             @if(session('version') != 'V201')
@@ -39,25 +39,25 @@
                             @endif
                             <div class="element-info">
                                 <div class="activity-element-label">@lang('elementForm.transaction_type')</div>
-                                <div class="activity-element-info">{!! getCodeNameWithCodeValue('TransactionType' , $transaction['transaction_type'][0]['transaction_type_code'] , -4) !!}</div>
+                                <div class="activity-element-info">{!! getCodeNameWithCodeValue('TransactionType' , getVal($transaction, ['transaction_type', 0, 'transaction_type_code']) , -4) !!}</div>
                             </div>
                             <div class="element-info">
                                 <div class="activity-element-label">@lang('elementForm.transaction_date')</div>
-                                <div class="activity-element-info">{{ formatDate($transaction['transaction_date'][0]['date']) }}</div>
+                                <div class="activity-element-info">{{ formatDate(getVal($transaction, ['transaction_date', 0, 'date'])) }}</div>
                             </div>
                             <div class="element-info">
                                 <div class="activity-element-label">@lang('elementForm.provider_organisation')</div>
                                 <div class="activity-element-info">
-                                    {!! getFirstNarrative($transaction['provider_organization'][0]) !!}
-                                    @include('Activity.partials.viewInOtherLanguage', ['otherLanguages' => getOtherLanguages($transaction['provider_organization'][0]['narrative'])])
-                                    {!! getTransactionProviderDetails($transaction['provider_organization'][0] , 'provider') !!}
+                                    {!! getFirstNarrative(getVal($transaction, ['provider_organization', 0], [])) !!}
+                                    @include('Activity.partials.viewInOtherLanguage', ['otherLanguages' => getOtherLanguages(getVal($transaction, ['provider_organization', 0, 'narrative'], []))])
+                                    {!! getTransactionProviderDetails(getVal($transaction, ['provider_organization', 0], []), 'provider') !!}
                                 </div>
                             </div>
                             <div class="element-info">
                                 <div class="activity-element-label">@lang('elementForm.receiver_organisation')</div>
                                 <div class="activity-element-info">
-                                    {!! getFirstNarrative($transaction['receiver_organization'][0]) !!}
-                                    @include('Activity.partials.viewInOtherLanguage', ['otherLanguages' => getOtherLanguages($transaction['receiver_organization'][0]['narrative'])])
+                                    {!! getFirstNarrative(getVal($transaction, ['receiver_organization', 0], [])) !!}
+                                    @include('Activity.partials.viewInOtherLanguage', ['otherLanguages' => getOtherLanguages(getVal($transaction, ['receiver_organization', 0, 'narrative'], []))])
                                     {!! getTransactionProviderDetails($transaction['receiver_organization'][0] , 'receiver') !!}
                                 </div>
                             </div>
@@ -80,8 +80,8 @@
                                     {!! getCountryNameWithCode(getVal($transaction, ['recipient_country',0,'country_code'])) !!}
                                     <br>
                                     @if(!empty($transaction['recipient_country'][0]['narrative'][0]['narrative']))
-                                        {!! getFirstNarrative($transaction['recipient_country'][0]) !!}
-                                        @include('Activity.partials.viewInOtherLanguage', ['otherLanguages' => getOtherLanguages($transaction['recipient_country'][0]['narrative'])])
+                                        {!! getFirstNarrative(getVal($transaction, ['recipient_country', 0], [])) !!}
+                                        @include('Activity.partials.viewInOtherLanguage', ['otherLanguages' => getOtherLanguages(getVal($transaction, ['recipient_country', 0, 'narrative'], []))])
                                     @endif
                                 </div>
                             </div>
@@ -91,9 +91,9 @@
                                     {!! getCodeNameWithCodeValue('Region' , getVal($transaction,['recipient_region',0,'region_code']) , -5) !!}
                                     <br>
                                     {!! getRecipientRegionDetails(getVal($transaction, ['recipient_region', 0],[])) !!} <br> <br>
-                                    @if(!empty($transaction['recipient_region'][0]['narrative'][0]['narrative']))
-                                        {!! getFirstNarrative($transaction['recipient_region'][0]) !!}
-                                        @include('Activity.partials.viewInOtherLanguage', ['otherLanguages' => getOtherLanguages($transaction['recipient_region'][0]['narrative'])])
+                                    @if(!empty(getVal($transaction, ['recipient_region', 0, 'narrative', 0, 'narrative'])))
+                                        {!! getFirstNarrative(getVal($transaction, ['recipient_region', 0])) !!}
+                                        @include('Activity.partials.viewInOtherLanguage', ['otherLanguages' => getOtherLanguages(getVal($transaction, ['recipient_region', 0, 'narrative'], []))])
                                     @endif
                                 </div>
                             </div>

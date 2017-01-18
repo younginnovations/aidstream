@@ -6,7 +6,7 @@
                 <div class="activity-element-label">{{$key}} @lang('elementForm.reporting_org_internal_activity_identifier')</div>
                 <div class="activity-element-info">
                     @foreach($groupedIdentifiers as $identifiers)
-                        <li>{{$identifiers['reference']}}</li>
+                        <li>{{ getVal($identifiers, ['reference']) }}</li>
                         <div class="toggle-btn">
                             <span class="show-more-info">@lang('global.show_more_info')</span>
                             <span class="hide-more-info hidden">@lang('global.hide_more_info')</span>
@@ -14,12 +14,12 @@
                         <div class="more-info hidden">
                             <div class="element-info">
                                 <div class="activity-element-label">@lang('elementForm.owner_org_reference')</div>
-                                <div class="activity-element-info">{!! checkIfEmpty($identifiers['owner_org'][0]['reference']) !!}</div>
+                                <div class="activity-element-info">{!! checkIfEmpty(getVal($identifiers, ['owner_org', 0, 'reference'])) !!}</div>
                             </div>
 
                             <div class="element-info">
                                 <div class="activity-element-label">@lang('elementForm.owner_org_name')</div>
-                                <div class="activity-element-info">{!! checkIfEmpty(getFirstNarrative($identifiers['owner_org'][0])) !!}
+                                <div class="activity-element-info">{!! checkIfEmpty(getFirstNarrative(getVal($identifiers, ['owner_org', 0]))) !!}
                                     @include('Activity.partials.viewInOtherLanguage' ,['otherLanguages' => getOtherLanguages(getOwnerNarrative($identifiers))])
                                 </div>
                             </div>

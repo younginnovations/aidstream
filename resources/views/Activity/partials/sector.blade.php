@@ -6,7 +6,7 @@
                 <div class="activity-element-label">{{$key}}</div>
                 <div class="activity-element-info">
                     @foreach($sectors as $sector)
-                        <li>{!! checkIfEmpty(getSectorInformation($sector , $sector['percentage']))  !!}</li>
+                        <li>{!! checkIfEmpty(getSectorInformation($sector , getVal($sector, ['percentage'])))  !!}</li>
                         <div class="toggle-btn">
                             <span class="show-more-info">@lang('global.show_more_info')</span>
                             <span class="hide-more-info hidden">@lang('global.hide_more_info')</span>

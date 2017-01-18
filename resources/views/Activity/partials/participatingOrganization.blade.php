@@ -10,7 +10,7 @@
                     @foreach($organizations as $organization)
                         <li>
                             {!!  getFirstNarrative($organization)  !!}
-                            @include('Activity.partials.viewInOtherLanguage', ['otherLanguages' => getOtherLanguages($organization['narrative'])])
+                            @include('Activity.partials.viewInOtherLanguage', ['otherLanguages' => getOtherLanguages(getVal($organization, ['narrative'], []))])
                         </li>
                         <div class="toggle-btn">
                             <span class="show-more-info">@lang('global.show_more_info')</span>
@@ -19,13 +19,13 @@
                         <div class="more-info hidden">
                             <div class="element-info">
                                 <div class="activity-element-label">@lang('elementForm.identifier')</div>
-                                <div class="activity-element-info">{!! checkIfEmpty($organization['identifier']) !!}</div>
+                                <div class="activity-element-info">{!! checkIfEmpty(getVal($organization, ['identifier'], [])) !!}</div>
                             </div>
                             <div class="element-info">
                                 <div class="activity-element-label">@lang('elementForm.organisation_type')</div>
                                 <div class="activity-element-info">
-                                    @if(!empty($organization['organization_type']))
-                                        {{$organization['organization_type'] . ' - ' . $getCode->getCodeNameOnly("OrganisationType",$organization['organization_type']) }}
+                                    @if(!empty(getVal($organization, ['organization_type'])))
+                                        {{getVal($organization, ['organization_type']) . ' - ' . $getCode->getCodeNameOnly("OrganisationType",getVal($organization, ['organization_type'])) }}
                                     @else
                                         <em>Not Available</em>
                                     @endif
@@ -33,7 +33,7 @@
                             </div>
                             <div class="element-info">
                                 <div class="activity-element-label">@lang('elementForm.organisation_role')</div>
-                                <div class="activity-element-info">{{$organization['organization_role'] . ' - ' . $getCode->getCodeNameOnly("OrganisationRole",$organization['organization_role']) }}</div>
+                                <div class="activity-element-info">{{getVal($organization, ['organization_role']) . ' - ' . $getCode->getCodeNameOnly("OrganisationRole",getVal($organization, ['organization_role'])) }}</div>
                             </div>
                             @if(session('version') != 'V201')
                                 @if(array_key_exists('activity_id' , $organization))

@@ -6,7 +6,7 @@
                 <div class="activity-element-label">{!! $getCode->getCodeNameOnly('RelatedActivityType' , $key) !!}</div>
                 <div class="activity-element-info">
                     @foreach($relatedActivities as $relatedActivity)
-                        {{ $relatedActivity['activity_identifier'] }}
+                        {{ getVal($relatedActivity, ['activity_identifier']) }}
                     @endforeach
                 </div>
             </div>

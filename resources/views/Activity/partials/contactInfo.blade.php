@@ -3,14 +3,14 @@
         <div class="title">@lang('element.contact_info') @if(array_key_exists('Contact Info',$errors)) <i class='imported-from-xml'>icon</i>@endif </div>
         @foreach(groupContactInformation($contactInfo) as $key => $contactInformation)
             <div class="activity-element-list">
-                <div class="activity-element-label">{{ checkIfEmpty($getCode->getCodeNameOnly('ContactType' , $contactInformation[0]['type']), "General Enquiries") }}</div>
+                <div class="activity-element-label">{{ checkIfEmpty($getCode->getCodeNameOnly('ContactType' , getVal($contactInformation, [0, 'type'], '')), "General Enquiries") }}</div>
                 <div class="activity-element-info">
                     @foreach($contactInformation as $information)
                         <li>
-                            {!! getFirstNarrative($information['person_name'][0]) !!}
-                            @include('Activity.partials.viewInOtherLanguage', ['otherLanguages' => getOtherLanguages($information['person_name'][0]['narrative'])])
-                            ,{!! getFirstNarrative($information['organization'][0]) !!}
-                            @include('Activity.partials.viewInOtherLanguage', ['otherLanguages' => getOtherLanguages($information['organization'][0]['narrative'])])
+                            {!! getFirstNarrative(getVal($information, ['person_name', 0], [])) !!}
+                            @include('Activity.partials.viewInOtherLanguage', ['otherLanguages' => getOtherLanguages(getVal($information, ['person_name', 0, 'narrative'], []))])
+                            ,{!! getFirstNarrative(getVal($information, ['organization', 0]), []) !!}
+                            @include('Activity.partials.viewInOtherLanguage', ['otherLanguages' => getOtherLanguages(getVal($information, ['organization', 0, 'narrative'], []))])
                         </li>
 
                         <div class="toggle-btn">
@@ -21,36 +21,36 @@
                             <div class="element-info">
                                 <div class="activity-element-label">@lang('elementForm.department')</div>
                                 <div class="activity-element-info">
-                                    {!!  getFirstNarrative($information['department'][0])  !!}
-                                    @include('Activity.partials.viewInOtherLanguage', ['otherLanguages' => getOtherLanguages($information['department'][0]['narrative'])])
+                                    {!!  getFirstNarrative(getVal($information, ['department', 0], []))  !!}
+                                    @include('Activity.partials.viewInOtherLanguage', ['otherLanguages' => getOtherLanguages(getVal($information, ['department', 0, 'narrative'], []))])
                                 </div>
 
                             </div>
                             <div class="element-info">
                                 <div class="activity-element-label">@lang('elementForm.job_title')</div>
                                 <div class="activity-element-info">
-                                    {!! getFirstNarrative($information['job_title'][0]) !!}
-                                    @include('Activity.partials.viewInOtherLanguage', ['otherLanguages' => getOtherLanguages($information['job_title'][0]['narrative'])])
+                                    {!! getFirstNarrative(getVal($information, ['job_title', 0]), []) !!}
+                                    @include('Activity.partials.viewInOtherLanguage', ['otherLanguages' => getOtherLanguages(getVal($information, ['job_title', 0, 'narrative'], []))])
                                 </div>
 
                             </div>
                             <div class="element-info">
                                 <div class="activity-element-label">@lang('elementForm.telephone')</div>
-                                <div class="activity-element-info">{!! getContactInfo('telephone', $information['telephone'])  !!}</div>
+                                <div class="activity-element-info">{!! getContactInfo('telephone', getVal($information, ['telephone'], [])) !!}</div>
                             </div>
                             <div class="element-info">
                                 <div class="activity-element-label">@lang('elementForm.email')</div>
-                                <div class="activity-element-info">{!! getContactInfo('email', $information['email']) !!}</div>
+                                <div class="activity-element-info">{!! getContactInfo('email', getVal($information, ['email'], [])) !!}</div>
                             </div>
                             <div class="element-info">
                                 <div class="activity-element-label">@lang('elementForm.website')</div>
-                                <div class="activity-element-info">{!! getContactInfo('website' , $information['website']) !!}</div>
+                                <div class="activity-element-info">{!! getContactInfo('website' , getVal($information, ['website'], [])) !!}</div>
                             </div>
                             <div class="element-info">
                                 <div class="activity-element-label">@lang('elementForm.mailing_address')</div>
                                 <div class="activity-element-info">
-                                    {!!  getFirstNarrative($information['mailing_address'][0])  !!}
-                                    @include('Activity.partials.viewInOtherLanguage' ,['otherLanguages' => getOtherLanguages($information['mailing_address'][0]['narrative'])])
+                                    {!!  getFirstNarrative(getVal($information, ['mailing_address', 0], []))  !!}
+                                    @include('Activity.partials.viewInOtherLanguage' ,['otherLanguages' => getOtherLanguages(getVal($information, ['mailing_address', 0, 'narrative'], []))])
                                 </div>
                             </div>
                         </div>

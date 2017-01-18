@@ -2,6 +2,7 @@
 use App\Models\Activity\Activity;
 use App\Models\Settings;
 use App\User;
+use Illuminate\Database\Eloquent\Collection;
 
 /**
  * removes empty values
@@ -63,7 +64,7 @@ function getDefaultCurrency()
         }
     }
 
-    $defaultCurrency = $defaultFieldValues ? $defaultFieldValues[0]['default_currency'] : null;
+    $defaultCurrency = $defaultFieldValues ? getVal($defaultFieldValues, [0, 'default_currency']) : null;
 
     return $defaultCurrency;
 }
@@ -95,7 +96,7 @@ function getDefaultLanguage()
  * @param        $arr
  * @param        $arguments
  * @param string $default
- * @return string
+ * @return string|array
  */
 function getVal(array $arr, array $arguments, $default = "")
 {
@@ -188,7 +189,7 @@ function getOtherLanguages(array $language)
  *
  * @param array $elements
  * @param       $type
- * @return collection
+ * @return Collection
  */
 function groupActivityElements(array $elements, $type = "")
 {
@@ -308,7 +309,7 @@ function getLocationReach(array $locations)
 {
     $newLocations = [];
     foreach ($locations as $location) {
-        $code = $location['location_reach'][0]['code'];
+        $code = getVal($location, ['location_reach', 0, 'code']);
         $code = app('App\Helpers\GetCodeName')->getCodeNameOnly(
             'GeographicLocationReach',
             $code
@@ -387,11 +388,11 @@ function getAdministrativeVocabulary(array $location)
  */
 function getLocationPoint(array $location)
 {
-    $latitude  = $location['point'][0]['position'][0]['latitude'];
-    $longitude = $location['point'][0]['position'][0]['longitude'];
+    $latitude  = getVal($location, ['point', 0, 'position', 0, 'latitude']);
+    $longitude = getVal($location, ['point', 0, 'position', 0, 'longitude']);
 
-    $srsLink = (empty($location['point'][0]['srs_name']) ? sprintf('<em>%s</em>', trans('global.not_available')) : getClickableLink(
-        $location['point'][0]['srs_name']
+    $srsLink = (empty(getVal($location, ['point', 0, 'srs_name'])) ? sprintf('<em>%s</em>', trans('global.not_available')) : getClickableLink(
+        getVal($location, ['point', 0, 'srs_name'])
     )
     );
     $latLong = (empty($latitude && $longitude)) ? sprintf('<em>%s</em>', trans('global.not_available')) : sprintf('%s, %s', $latitude, $longitude);
@@ -409,7 +410,7 @@ function getLocationPoint(array $location)
  */
 function getLocationPropertiesValues(array $location, $codeType, $codeNameType, $lengthToCut = - 4)
 {
-    $codeValue         = $location[$codeType][0]['code'];
+    $codeValue         = getVal($location, [$codeType, 0, 'code']);
     $codeNameWithValue = getCodeNameWithCodeValue($codeNameType, $codeValue, $lengthToCut);
 
     return $codeNameWithValue;
@@ -541,7 +542,7 @@ function getCountryBudgetItems($vocabularyType, array $countryBudgetItem)
 function getBudgetInformation($key = null, array $budget)
 {
     $budgetInformation                            = [];
-    $budgetValue                                  = $budget['value'][0];
+    $budgetValue                                  = getVal($budget, ['value', 0]);
     $currencyDate                                 = getCurrencyValueDate($budgetValue, "planned");
     $period                                       = getBudgetPeriod($budget);
     $budgetInformation['currency_with_valuedate'] = $currencyDate;
@@ -612,8 +613,8 @@ function getCurrencyValueDate($budgetValue, $type)
  */
 function getBudgetPeriod(array $budget)
 {
-    $periodStart = formatDate($budget['period_start'][0]['date']);
-    $periodEnd   = formatDate($budget['period_end'][0]['date']);
+    $periodStart = formatDate(getVal($budget, ['period_start', 0, 'date']));
+    $periodEnd   = formatDate(getVal($budget, ['period_end', 0, 'date']));
 
     return sprintf('%s - %s', $periodStart, $periodEnd);
 
@@ -672,7 +673,7 @@ function groupResultElements(array $results)
 
     foreach ($results as $result) {
 
-        $resultType                     = $result['result']['type'];
+        $resultType                     = getVal($result, ['result', 'type']);
         $resultTypeValue                = app('App\Helpers\GetCodeName')->getCodeNameOnly(
             'ResultType',
             $resultType,
@@ -736,8 +737,8 @@ function getIndicatorPeriod($measure, array $periods)
 
     foreach ($periods as $period) {
 
-        $targetValue                  = $period['target'][0]['value'];
-        $actualValue                  = $period['actual'][0]['value'];
+        $targetValue                  = getVal($period, ['target', 0, 'value']);
+        $actualValue                  = getVal($period, ['actual', 0, 'value']);
         $periodValue                  = getBudgetPeriod($period);
         $measure                      = ($measure == 2) ? '%' : ' ' . trans_choice('activityView.units', $targetValue);
         $targetValue                  = ($targetValue == "") ? sprintf('<em>%s</em>', trans('global.not_available')) : $targetValue . $measure;
@@ -745,8 +746,8 @@ function getIndicatorPeriod($measure, array $periods)
         $outputPeriod['period']       = $periodValue;
         $outputPeriod['target_value'] = $targetValue;
         $outputPeriod['actual_value'] = $actualValue;
-        $outputPeriod['target']       = $period['target'][0];
-        $outputPeriod['actual']       = $period['actual'][0];
+        $outputPeriod['target']       = getVal($period, ['target', 0]);
+        $outputPeriod['actual']       = getVal($period, ['actual', 0]);
 
         $finalOutputPeriod[] = $outputPeriod;
 
@@ -770,7 +771,7 @@ function getTargetAdditionalDetails(array $target, $key = null)
         $details['locationRef'] = getLocationRef('location', $target);
         $details['dimension']   = getDimension($target);
     }
-    $details['first_comment'] = getFirstNarrative($target['comment'][0]);
+    $details['first_comment'] = getFirstNarrative(getVal($target, ['comment', 0], []));
 
     return (array_key_exists($key, $details)) ? checkIfEmpty($details[$key]) : sprintf('<em>%s</em>', trans('global.not_available'));
 }
@@ -828,9 +829,9 @@ function groupTransactionElements(array $transactions)
 {
     $newTransactions = [];
     foreach ($transactions as $transaction) {
-        $transaction = $transaction['transaction'];
+        $transaction = getVal($transaction, ['transaction']);
 
-        $transactionTypeCode = $transaction['transaction_type'][0]['transaction_type_code'];
+        $transactionTypeCode = getVal($transaction, ['transaction_type', 0, 'transaction_type_code']);
         $transactionType     = app('App\Helpers\GetCodeName')->getCodeNameOnly(
             'TransactionType',
             $transactionTypeCode
@@ -850,8 +851,7 @@ function groupTransactionElements(array $transactions)
  */
 function getTransactionProviderDetails(array $transaction, $type)
 {
-
-    $organizationIdentifierCode = checkIfEmpty($transaction['organization_identifier_code']);
+    $organizationIdentifierCode = checkIfEmpty(getVal($transaction, ['organization_identifier_code']));
     $activityId                 = ($type == 'provider') ? $transaction['provider_activity_id'] : $transaction['receiver_activity_id'];
     $activityId                 = checkIfEmpty($activityId);
     $transactionType            = (session('version') != 'V201') ? checkIfEmpty(
@@ -975,8 +975,8 @@ function getDocumentLinkLanguages(array $languages)
  */
 function getFirstOrgName(array $orgName)
 {
-    $name     = checkIfEmpty($orgName[0]['narrative']);
-    $language = checkIfEmpty(getLanguage($orgName[0]['language']));
+    $name     = checkIfEmpty(getVal($orgName, [0, 'narrative']));
+    $language = checkIfEmpty(getLanguage(getVal($orgName, [0, 'language'])));
 
     return sprintf('%s <em>(%s:  %s)</em>', $name, trans('elementForm.language'), $language);
 }
@@ -991,7 +991,7 @@ function groupByCountry(array $countryBudgets)
     $newCountryBudget = [];
 
     foreach ($countryBudgets as $countryBudget) {
-        $countryCode                      = $countryBudget['recipient_country'][0]['code'];
+        $countryCode                      = getVal($countryBudget, ['recipient_country', 0, 'code']);
         $countryName                      = getCountryNameWithCode($countryCode);
         $newCountryBudget[$countryName][] = $countryBudget;
     }
