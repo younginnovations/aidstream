@@ -185,6 +185,8 @@ class XmlValidator
         $rules        = [];
         $descriptions = getVal($activity, ['description']);
 
+        $rules['description'] = 'required';
+
         foreach ($descriptions as $descriptionIndex => $description) {
             $rules[sprintf('description.%s.type', $descriptionIndex)] = sprintf('required|in:%s', $this->validCodeList('DescriptionType', 'V201'));
             $rules                                                    = array_merge(
@@ -206,6 +208,8 @@ class XmlValidator
     {
         $messages     = [];
         $descriptions = getVal($activity, ['description']);
+
+        $messages['description.required'] = trans('validation.required', ['attribute' => trans('element.description')]);
 
         foreach ($descriptions as $descriptionIndex => $description) {
             $messages[sprintf('description.%s.type.required', $descriptionIndex)] = trans('validation.required', ['attribute' => trans('elementForm.description_type')]);
@@ -711,6 +715,8 @@ class XmlValidator
         $rules                      = [];
         $participatingOrganizations = getVal($activity, ['participating_organization'], []);
 
+        $rules['participating_organization'] = 'required';
+
         foreach ($participatingOrganizations as $participatingOrgIndex => $participatingOrg) {
             $participatingOrgBase                                = 'participating_organization.' . $participatingOrgIndex;
             $rules[$participatingOrgBase . '.organization_role'] = sprintf('required|in:%s', $this->validCodeList('OrganisationRole', 'V201'));
@@ -737,6 +743,8 @@ class XmlValidator
     {
         $messages                   = [];
         $participatingOrganizations = getVal($activity, ['participating_organization'], []);
+
+        $messages['participating_organization.required'] = trans('validation.required', ['attribute' => trans('element.participating_organisation')]);
 
         foreach ($participatingOrganizations as $participatingOrgIndex => $participatingOrg) {
             $participatingOrgBase                                            = 'participating_organization.' . $participatingOrgIndex;
