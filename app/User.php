@@ -145,7 +145,11 @@ class User extends Model implements AuthorizableContract, AuthenticatableContrac
             return $this->doesUserHave($permission);
         }
 
-        return in_array($permission, $this->user_permission);
+        if (!$this->role) {
+            return true;
+        }
+
+        return in_array($permission, json_decode($this->role->permissions, true));
     }
 
     /**
