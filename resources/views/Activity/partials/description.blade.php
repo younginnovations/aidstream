@@ -4,11 +4,11 @@
         @foreach($descriptions as $description)
             <div class="activity-element-list">
                 <div class="activity-element-label">
-                    {{$getCode->getCodeNameOnly('DescriptionType', $description['type'])}} @lang('elementForm.description')
+                    {{$getCode->getCodeNameOnly('DescriptionType', getVal($description, ['type'], ''))}} @lang('elementForm.description')
                 </div>
                 <div class="activity-element-info">
                     {!! getFirstNarrative($description) !!}
-                    @include('Activity.partials.viewInOtherLanguage' , ['otherLanguages' => getOtherLanguages($description['narrative']) ])
+                    @include('Activity.partials.viewInOtherLanguage' , ['otherLanguages' => getOtherLanguages(getVal($description, ['narrative'], [])) ])
                 </div>
             </div>
         @endforeach

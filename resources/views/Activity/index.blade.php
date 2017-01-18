@@ -44,9 +44,9 @@
                                     <tr class="clickable-row" data-href="{{ route('activity.show', [$activity->id]) }}">
                                         <td>{{ $key + 1 }}</td>
                                         <td class="activity_title">
-                                            {{ $activity->title ? $activity->title[0]['narrative'] : 'No Title' }}
+                                            {{ getVal($activity->toArray(), ['title', 0, 'narrative'], 'No Title') }}
                                             <i class="{{ $activity->isImportedFromXml() ? 'imported-from-xml' : '' }}">icon</i>
-                                            <span>{{ getVal($activity->identifier, ['activity_identifier'], '') }}</span>
+                                            <span>{{ getVal($activity->toArray(), ['identifier', 'activity_identifier'], '') }}</span>
                                         </td>
                                         <td class="updated-date">{{ changeTimeZone($activity->updated_at) }}</td>
                                         <td>
@@ -84,14 +84,9 @@
         </div>
     </div>
 @endsection
+
 @section('foot')
     @if(xmlImportIsStarted())
         <script type="text/javascript" src="{{asset('js/xmlImporter/xmlImporter.js')}}"></script>
     @endif
-    {{--<script>--}}
-    {{--$(document).ready(function () {--}}
-    {{--$('[data-toggle="popover"]').popover({html: true});--}}
-    {{--});--}}
-    {{--g--}}
-    {{--</script>--}}
 @endsection

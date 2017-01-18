@@ -95,8 +95,8 @@ class Activity extends Model
      */
     public function getIdentifierTitleAttribute()
     {
-        $identifier = $this->identifier['activity_identifier'];
-        $title      = $this->title ? $this->title[0]['narrative'] : 'No Title';
+        $identifier = getVal($this->toArray(), ['identifier', 'activity_identifier']);
+        $title      = $this->title ? getVal($this->title, [0, 'narrative']) : 'No Title';
 
         return $identifier . '(' . $title . ')';
     }

@@ -9,8 +9,8 @@
                 <div class="activity-element-info">
                     @foreach($locations as $location)
                         <li>
-                            {!!  getFirstNarrative($location['name'][0]) !!}
-                            @include('Activity.partials.viewInOtherLanguage' ,['otherLanguages' => getOtherLanguages($location['name'][0]['narrative'])])
+                            {!!  getFirstNarrative(getVal($location, ['name', 0], [])) !!}
+                            @include('Activity.partials.viewInOtherLanguage' ,['otherLanguages' => getOtherLanguages(getVal($location, ['name', 0, 'narrative'], []))])
                         </li>
                         <div class="toggle-btn">
                             <span class="show-more-info">@lang('global.show_more_info')</span>
@@ -19,12 +19,12 @@
                         <div class="more-info hidden">
                             <div class="element-info">
                                 <div class="activity-element-label">@lang('elementForm.location_reference')</div>
-                                <div class="activity-element-info">{!! checkIfEmpty($location['reference']) !!}</div>
+                                <div class="activity-element-info">{!! checkIfEmpty(getVal($location, ['reference'])) !!}</div>
                             </div>
                             <div class="element-info">
                                 <div class="activity-element-label">@lang('elementForm.location_id_vocabulary')</div>
                                 <div class="activity-element-info">
-                                    @foreach($location['location_id'] as $locationId)
+                                    @foreach(getVal($location, ['location_id'], []) as $locationId)
                                         <li>{!!  getLocationIdVocabulary($locationId)  !!}</li>
                                     @endforeach
                                 </div>
@@ -32,23 +32,23 @@
                             <div class="element-info">
                                 <div class="activity-element-label">@lang('elementForm.location_description')</div>
                                 <div class="activity-element-info">
-                                    {!! getFirstNarrative($location['location_description'][0]) !!}
-                                    @include('Activity.partials.viewInOtherLanguage' ,['otherLanguages' => getOtherLanguages($location['location_description'][0]['narrative'])])
+                                    {!! getFirstNarrative(getVal($location, ['location_description', 0], [])) !!}
+                                    @include('Activity.partials.viewInOtherLanguage' ,['otherLanguages' => getOtherLanguages(getVal($location, ['location_description', 0, 'narrative'], []))])
                                 </div>
 
                             </div>
                             <div class="element-info">
                                 <div class="activity-element-label">@lang('elementForm.activity_description')</div>
                                 <div class="activity-element-info">
-                                    {!! getFirstNarrative($location['activity_description'][0]) !!}
-                                    @include('Activity.partials.viewInOtherLanguage' ,['otherLanguages' => getOtherLanguages($location['activity_description'][0]['narrative'])])
+                                    {!! getFirstNarrative(getVal($location, ['activity_description', 0], [])) !!}
+                                    @include('Activity.partials.viewInOtherLanguage' ,['otherLanguages' => getOtherLanguages(getVal($location, ['activity_description', 0, 'narrative'], []))])
                                 </div>
 
                             </div>
                             <div class="element-info">
                                 <div class="activity-element-label"> @lang('elementForm.administrative_vocabulary')</div>
                                 <div class="activity-element-info">
-                                    @foreach($location['administrative'] as $locationAdministrative)
+                                    @foreach(getVal($location, ['administrative'], []) as $locationAdministrative)
                                         <li>{!! getAdministrativeVocabulary($locationAdministrative) !!}</li>
                                     @endforeach
                                 </div>

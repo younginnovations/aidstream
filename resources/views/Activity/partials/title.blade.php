@@ -4,7 +4,7 @@
             <div class="activity-element-label">@lang('element.title') @if(array_key_exists('Title',$errors)) <i class='imported-from-xml'>icon</i>@endif </div>
             <div class="activity-element-info">
                 {{ $titles[0]['narrative']}}
-                <em>(language: {{ getLanguage($titles[0]['language']) }})</em>
+                <em>(language: {{ getLanguage(getVal($titles, [0, 'language'], '')) }})</em>
                 @include('Activity.partials.viewInOtherLanguage', ['otherLanguages' => $titlesExceptFirstElement])
             </div>
         </div>

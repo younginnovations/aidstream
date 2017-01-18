@@ -232,7 +232,7 @@ class XmlQueueProcessor
     protected function isIatiIdentifierDifferent($activities, $xmlIdentifier)
     {
         foreach ($activities as $activity) {
-            if ($xmlIdentifier == getVal($activity->identifier, ['iati_identifier_text'])) {
+            if (($xmlIdentifier == getVal($activity->identifier, ['iati_identifier_text'])) || $xmlIdentifier == "") {
                 return false;
             }
         }

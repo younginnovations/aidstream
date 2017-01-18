@@ -8,7 +8,7 @@
                     @foreach($humanitarianScopes as $humanitarianScope)
                         <li>
                             {!! checkIfEmpty(getFirstNarrative($humanitarianScope)) !!}
-                            @include('Activity.partials.viewInOtherLanguage', ['otherLanguages' => getOtherLanguages($humanitarianScope['narrative'])])
+                            @include('Activity.partials.viewInOtherLanguage', ['otherLanguages' => getOtherLanguages(getVal($humanitarianScope, ['narrative'], []))])
                         </li>
                         <div class="toggle-btn">
                             <span class="show-more-info">@lang('global.show_more_info')</span>
@@ -17,15 +17,15 @@
                         <div class="more-info hidden">
                             <div class="element-info">
                                 <div class="activity-element-label">@lang('elementForm.vocabulary')</div>
-                                <div class="activity-element-info">{{ getCodeNameWithCodeValue('HumanitarianScopeVocabulary' , $humanitarianScope['vocabulary'] , -5) }}</div>
+                                <div class="activity-element-info">{{ getCodeNameWithCodeValue('HumanitarianScopeVocabulary' , getVal($humanitarianScope, ['vocabulary']) , -5) }}</div>
                             </div>
                             <div class="element-info">
                                 <div class="activity-element-label">@lang('elementForm.vocabulary_uri')</div>
-                                <div class="activity-element-info">{!! getClickableLink($humanitarianScope['vocabulary_uri']) !!}</div>
+                                <div class="activity-element-info">{!! getClickableLink(getVal($humanitarianScope, ['vocabulary_uri'])) !!}</div>
                             </div>
                             <div class="element-info">
                                 <div class="activity-element-label">@lang('elementForm.code')</div>
-                                <div class="activity-element-info">{{ checkIfEmpty($humanitarianScope['code']) }}</div>
+                                <div class="activity-element-info">{{ checkIfEmpty(getVal($humanitarianScope, ['code'])) }}</div>
                             </div>
                         </div>
                     @endforeach

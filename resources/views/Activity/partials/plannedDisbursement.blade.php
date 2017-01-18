@@ -6,7 +6,7 @@
                 <div class="activity-element-label">{{ $getCode->getCodeNameOnly('BudgetType' , $key) }}</div>
                 <div class="activity-element-info">
                     @foreach($disbursements as $disbursement)
-                        <li>{!! getCurrencyValueDate($disbursement['value'][0] , "planned") !!}</li>
+                        <li>{!! getCurrencyValueDate(getVal($disbursement, ['value', 0]) , "planned") !!}</li>
                         <div class="toggle-btn">
                             <span class="show-more-info">@lang('global.show_more_info')</span>
                             <span class="hide-more-info hidden">@lang('global.hide_more_info')</span>

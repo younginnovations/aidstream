@@ -6,7 +6,7 @@
                 <div class="activity-element-label">{{$key}}</div>
                 <div class="activity-element-info">
                     @foreach($policyMarkers as $policyMarker)
-                        <li>{{ $policyMarker['policy_marker'] .' - '. $getCode->getCodeNameOnly('PolicyMarker' , $policyMarker['policy_marker']) }}</li>
+                        <li>{{ getVal($policyMarker, ['policy_marker']) .' - '. $getCode->getCodeNameOnly('PolicyMarker' , getVal($policyMarker, ['policy_marker'])) }}</li>
                         <div class="toggle-btn">
                             <span class="show-more-info">@lang('global.show_more_info')</span>
                             <span class="hide-more-info hidden">@lang('global.hide_more_info')</span>
@@ -20,13 +20,13 @@
                             @endif
                             <div class="element-info">
                                 <div class="activity-element-label">@lang('elementForm.significance')</div>
-                                <div class="activity-element-info">{!! getCodeNameWithCodeValue('PolicySignificance' , $policyMarker['significance'] , -4) !!}</div>
+                                <div class="activity-element-info">{!! getCodeNameWithCodeValue('PolicySignificance' , getVal($policyMarker, ['significance']) , -4) !!}</div>
                             </div>
                             <div class="element-info">
                                 <div class="activity-element-label">@lang('elementForm.description')</div>
                                 <div class="activity-element-info">
                                     {!! getFirstNarrative($policyMarker) !!}
-                                    @include('Activity.partials.viewInOtherLanguage', ['otherLanguages' => getOtherLanguages($policyMarker['narrative'])])
+                                    @include('Activity.partials.viewInOtherLanguage', ['otherLanguages' => getOtherLanguages(getVal($policyMarker, ['narrative'], []))])
                                 </div>
                             </div>
                         </div>

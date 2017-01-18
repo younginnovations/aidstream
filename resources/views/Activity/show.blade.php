@@ -13,9 +13,9 @@
     ?>
     <div class="element-panel-heading">
         <div>
-            <span>{{ $activityDataList['title'] ? $activityDataList['title'][0]['narrative'] : 'No Title' }}</span>
+            <span>{{ getVal($activityDataList, ['title', 0, 'narrative'], 'No Title') }}</span>
             <div class="element-panel-heading-info">
-                <span>{{$activityDataList['identifier']['iati_identifier_text']}}</span>
+                <span>{{ getVal($activityDataList, ['identifier', 'iati_identifier_text'], '') }}</span>
                 <span class="last-updated-date">@lang('global.last_updated_on'): {{changeTimeZone($activityDataList['updated_at'], 'M d, Y H:i')}}</span>
             </div>
             <div class="view-xml-btn"><a href="{{route('view.activityXml', ['activityId' => $id])}}">@lang('global.view_iati_xml_file')</a></div>

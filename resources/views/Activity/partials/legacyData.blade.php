@@ -4,9 +4,9 @@
             <div class="activity-element-label">@lang('element.legacy_data') @if(array_key_exists('Legacy Data',$errors)) <i class='imported-from-xml'>icon</i>@endif </div>
             <div class="activity-element-info">
                 @foreach($legacyDatas as $legacyData)
-                    <li>{{ $legacyData['name'] . ': '. $legacyData['value'] }}
+                    <li>{{ getVal($legacyData, ['name']) . ': '. getVal($legacyData, ['value']) }}
                         <em>@lang('elementForm.iati_equivalent')
-                            : {!!   checkIfEmpty($legacyData['iati_equivalent']) !!}</em>
+                            : {!!   checkIfEmpty(getVal($legacyData, ['iati_equivalent'])) !!}</em>
                     </li>
                 @endforeach
             </div>

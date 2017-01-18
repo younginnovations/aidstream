@@ -4,7 +4,7 @@
             <div class="activity-element-label">@lang('element.recipient_country') @if(array_key_exists('Recipient Country',$errors)) <i class='imported-from-xml'>icon</i>@endif </div>
             <div class="activity-element-info">
                 @foreach($recipientCountries as $recipientCountry)
-                    <li>{!! getRecipientInformation($recipientCountry['country_code'], $recipientCountry['percentage'], 'Country') !!}</li>
+                    <li>{!! getRecipientInformation(getVal($recipientCountry, ['country_code']), getVal($recipientCountry, ['percentage']), 'Country') !!}</li>
                     <div class="toggle-btn">
                         <span class="show-more-info">@lang('global.show_more_info')</span>
                         <span class="hide-more-info hidden">@lang('global.hide_more_info')</span>
@@ -14,7 +14,7 @@
                             <div class="activity-element-label">@lang('elementForm.description')</div>
                             <div class="activity-element-info document-info">
                                 {!! checkIfEmpty(getFirstNarrative($recipientCountry)) !!}
-                                @include('Activity.partials.viewInOtherLanguage', ['otherLanguages' => getOtherLanguages($recipientCountry['narrative'])])
+                                @include('Activity.partials.viewInOtherLanguage', ['otherLanguages' => getOtherLanguages(getVal($recipientCountry, ['narrative'], []))])
                             </div>
                         </div>
                     </div>
