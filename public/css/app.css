@@ -4612,7 +4612,8 @@ body > .skiptranslate iframe {
     .identifier-information > .col-sm-6 > p {
       color: #777;
       line-height: 22px;
-      margin-bottom: 2px; }
+      margin-bottom: 2px;
+      padding: 0 10px; }
     .identifier-information > .col-sm-6:first-of-type {
       border-bottom: 1px solid #BFDFEC;
       padding-bottom: 20px;

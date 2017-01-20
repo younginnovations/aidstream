@@ -30,5 +30,6 @@ return [
     'organisation_url'                               => 'Organisation Url',
     'select_an_agency'                               => 'Select an Agency',
     'address'                                        => 'Address',
-    'country'                                        => 'Country'
+    'country'                                        => 'Country',
+    'organisation_identifier_already_used'           => 'The IATI organisational identifier you entered <strong>"<span class="org-identifier"></span>"</strong> is being used by another organisation on AidStream.'
 ];

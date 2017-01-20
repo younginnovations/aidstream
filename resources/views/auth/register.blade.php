@@ -170,7 +170,7 @@
                         <div class="col-sm-6">
                             <h3>@lang('registration.create_new_account')</h3>
                             <p>
-                                @lang('no_personal_account_contact_admin_text')
+                                @lang('registration.no_personal_account_contact_admin_text')
                             </p>
                             <span class="admin-name"></span>
                             <a href="{{ route('contact', ['need-new-user']) }}" class="btn btn-primary">@lang('registration.contact_your_administrator')</a>
