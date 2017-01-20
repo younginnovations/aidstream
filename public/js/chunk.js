@@ -140,6 +140,9 @@ if (typeof(Chunk) == "undefined") var Chunk = {};
                 var api_key = data['api_key'];
                 var publisherStatus = (publisher_response) ? "Correct" : "Incorrect";
                 var apiKeyStatus = (api_key) ? "Correct" : "Incorrect";
+                $("[name = 'publisher_id_status']").val(publisherStatus);
+                $("[name = 'api_id_status']").val(apiKeyStatus);
+
                 if (source == "publisher" || source == "both") {
                     publisherIdStatus.val(publisherStatus);
                     $("#publisher_id_status_display").removeClass('text-danger text-success').addClass(publisher_response ? 'text-success' : 'text-danger').html(publisherStatus);

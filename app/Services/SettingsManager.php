@@ -7,6 +7,7 @@ use App\Models\Activity\Activity;
 use App\Models\Settings;
 use App\Services\Activity\ActivityManager;
 use App\Services\Organization\OrganizationManager;
+use App\Services\UserOnBoarding\UserOnBoardingService;
 use Exception;
 use Illuminate\Database\DatabaseManager;
 use Illuminate\Contracts\Auth\Guard;
@@ -50,23 +51,40 @@ class SettingsManager
      */
     protected $auth;
 
+    /**
+     * @var FormBuilder
+     */
     protected $formBuilder;
 
+    /**
+     * @var App\Core\V201\IatiSettings
+     */
     protected $formPath;
 
+    /**
+     * @var Version
+     */
     protected $version;
 
+    /**
+     * @var
+     */
     protected $ckanClient;
+    /**
+     * @var UserOnBoardingService
+     */
+    protected $userOnBoardingService;
 
     /**
-     * @param Version             $version
-     * @param ActivityManager     $activityManager
-     * @param OrganizationManager $organizationManager
-     * @param DatabaseManager     $dbManager
-     * @param Guard               $auth
-     * @param Log                 $dbLogger
-     * @param LoggerInterface     $logger
-     * @param FormBuilder         $formBuilder
+     * @param Version               $version
+     * @param ActivityManager       $activityManager
+     * @param OrganizationManager   $organizationManager
+     * @param DatabaseManager       $dbManager
+     * @param Guard                 $auth
+     * @param Log                   $dbLogger
+     * @param LoggerInterface       $logger
+     * @param FormBuilder           $formBuilder
+     * @param UserOnBoardingService $userOnBoardingService
      */
     function __construct(
         Version $version,
@@ -76,7 +94,8 @@ class SettingsManager
         Guard $auth,
         Log $dbLogger,
         LoggerInterface $logger,
-        FormBuilder $formBuilder
+        FormBuilder $formBuilder,
+        UserOnBoardingService $userOnBoardingService
     ) {
         $this->repo                = $version->getSettingsElement()->getRepository();
         $this->activityManager     = $activityManager;
@@ -89,6 +108,7 @@ class SettingsManager
         $this->version             = $version;
         $this->formPath            = $this->version->getSettingsElement();
 
+        $this->userOnBoardingService = $userOnBoardingService;
     }
 
     /**
@@ -192,6 +212,7 @@ class SettingsManager
     {
         try {
             $result = $this->repo->savePublishingInfo($publishing_info, $settings);
+            $this->storeStepsInOnBoarding([1, 2, 3]);
             $this->logger->info('Publishing info has been updated successfully.');
             $this->dbLogger->activity(
                 "activity.publishing_settings_updated",
@@ -230,6 +251,7 @@ class SettingsManager
     {
         try {
             $result = $this->repo->saveDefaultValues($default_values, $settings);
+            $this->storeStepsInOnBoarding(5);
             $this->logger->info('Settings Updated Successfully.');
             $this->dbLogger->activity(
                 "activity.default_values_settings_updated",
@@ -267,6 +289,7 @@ class SettingsManager
     {
         try {
             $this->repo->saveActivityElementsChecklist($default_field_groups, $settings);
+            $this->storeStepsInOnBoarding(4);
             $this->logger->info('Settings Updated Successfully.');
             $this->dbLogger->activity(
                 "activity.activity_elements_checklist_settings_updated",
@@ -322,5 +345,23 @@ class SettingsManager
         $status                = $response['success'];
 
         return $status;
+    }
+
+    /**
+     * Store completed steps of the settings in user onBoarding table.
+     *
+     * @param $step
+     */
+    protected function storeStepsInOnBoarding($step)
+    {
+        if ($this->auth->user()->userOnBoarding) {
+            if (is_array($step)) {
+                foreach ($step as $index => $value) {
+                    $this->userOnBoardingService->storeCompletedSettingsSteps($value);
+                }
+            } else {
+                $this->userOnBoardingService->storeCompletedSettingsSteps($step);
+            }
+        }
     }
 }
