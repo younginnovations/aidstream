@@ -4,7 +4,6 @@ use App\Models\PerfectViewer\ActivitySnapshot;
 use App\Services\Activity\ActivityManager;
 use App\Services\PerfectViewer\PerfectViewerManager;
 use App\User;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * Class WhoIsUsingController
