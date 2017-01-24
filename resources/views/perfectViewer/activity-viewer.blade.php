@@ -49,14 +49,16 @@
         <div class="width-940">
             <div class="col-sm-6 col-md-5 organisation-info">
                 <div class="logo">
-                    <a href="#" class="organisation-logo">
-                        <img src="{{ getVal($organization, [0, 'logo_url']) }}" alt="{{ getVal($organization, [0, 'name']) }}" width="auto" height="68">
-                    </a>
+                    @if($organization[0]['logo'])
+                        <a href="#" class="organisation-logo">
+                            <img src="{{ getVal($organization, [0, 'logo_url']) }}" alt="{{ getVal($organization, [0, 'name']) }}" width="auto" height="68">
+                        </a>
+                    @endif
                 </div>
                 <div class="organisation-more-info">
                 <span class="organisation-name">
-                    <a href="#" title="{{ getVal($organization, [0, 'name'], '')}}">
-                        {{ getVal($organization, [0, 'name'], '')}}
+                    <a href="#" title="{{ getVal($organization, [0, 'reporting_org', 0, 'narrative', 0, 'narrative'], '')}}">
+                        {{ getVal(json_decode(getVal($organization, [0, 'reporting_org'], []), true), [0, 'narrative', 0, 'narrative'], '')}}
                     </a>
                 </span>
                     @if(getVal($organization, [0, 'address'], null))
