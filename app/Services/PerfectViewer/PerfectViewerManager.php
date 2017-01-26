@@ -338,10 +338,12 @@ class PerfectViewerManager
      */
     public function makePerfectOrg($organization, $totalTransaction)
     {
+        $org_slug = getVal($organization, [0, 'reporting_org', 0, 'reporting_organization_identifier'], '');
+
         return [
             'org_id'                => getVal($organization, [0, 'id'], ''),
             'published_to_registry' => getVal($organization, [0, 'published_to_registry'], false),
-            'org_slug'              => getVal($organization, [0, 'reporting_org', 0, 'reporting_organization_identifier'], ''),
+            'org_slug'              => str_replace('/', '-', $org_slug),
             'transaction_totals'    => $totalTransaction
         ];
     }
