@@ -42,6 +42,8 @@ class PasswordController extends Controller
      */
     protected $dbLogger;
 
+    public $redirectTo = '/auth/logout';
+
     /**
      * Create a new password controller instance.
      * @param Logger   $logger
