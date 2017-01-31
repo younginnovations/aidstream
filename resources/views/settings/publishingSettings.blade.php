@@ -42,16 +42,14 @@
 @endsection
 @section('foot')
     <script src="{{url('js/chunk.js')}}"></script>
-    <script src="{{url('js/userOnBoarding.js')}}"></script>
     <script>
         $(window).load(function () {
             Chunk.verifyPublisherAndApi();
                     @if(session('first_login') && (auth()->user()->isAdmin()))
             var stepNumber = location.hash.replace('#', '');
             if (stepNumber == 1 || stepNumber == 2 || stepNumber == 3) {
-                $('.introjs-hints').css('display', 'none');
                 var completedSteps = [{!! json_encode((array)$completedSteps) !!}];
-                UserOnBoarding.settingsTour(completedSteps);
+                UserOnBoarding.getLocalisedSettingsText(completedSteps);
                 UserOnBoarding.validatePublishingInfo();
             }
             @endif

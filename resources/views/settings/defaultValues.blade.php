@@ -36,16 +36,14 @@
     </div>
 @stop
 @section('foot')
-    <script src="/js/userOnBoarding.js"></script>
     <script>
         $(window).load(function () {
-                    @if(session('first_login') && auth()->user()->isAdmin())
-            var stepNumber = location.hash.replace('#', '');
-            if (stepNumber == 5) {
-                var completedSteps = [{!! json_encode((array)$completedSteps) !!}];
-                $('.introjs-hints').css('display', 'none');
-                UserOnBoarding.settingsTour(completedSteps);
-            }
+            @if(session('first_login') && auth()->user()->isAdmin())
+                var stepNumber = location.hash.replace('#', '');
+                if (stepNumber == 5) {
+                    var completedSteps = [{!! json_encode((array)$completedSteps) !!}];
+                    UserOnBoarding.getLocalisedSettingsText(completedSteps);
+                }
             @endif
             UserOnBoarding.validateDefaultValues();
         });
