@@ -50,5 +50,6 @@ return [
     'could_not_change_segmentation'                          => 'Could not change segmentation.',
     'could_not_publish_to_registry'                          => 'Could not publish to registry.',
     'publisher_not_found'                                    => 'Could not publish to registry. (Publisher not found. <a href="/settings">Please check you publisher Id.</a>)',
-    'failed_to_submit_query'                                 => 'Failed to submit your query. Please try again.'
+    'failed_to_submit_query'                                 => 'Failed to submit your query. Please try again.',
+    'select_activities_to_be_imported'                       => 'Select activities to be imported',
 ];
