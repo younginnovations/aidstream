@@ -1,4 +1,4 @@
-server '104.236.75.41',user: 'aidstream', roles: %w{web app db}
+server 'aidstream.org',user: 'aidstream', roles: %w{web app db}
 
 # Directory to deploy
 # ===================
