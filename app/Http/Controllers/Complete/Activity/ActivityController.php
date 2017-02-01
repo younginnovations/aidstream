@@ -419,8 +419,8 @@ class ActivityController extends Controller
             $key = "country";
         }
 
-        $title = ($settings->publishing_type == "segmented") ? $organization->name . ' Activity File - ' . $code : $organization->name . ' Activity File';
-        $name  = ($settings->publishing_type == "segmented") ? $settings['registry_info'][0]['publisher_id'] . ' - ' . $code : $settings['registry_info'][0]['publisher_id'] . ' - activities';
+        $title = ($settings->publishing_type == "segmented") ? $organization->name . ' Activity File-' . $code : $organization->name . ' Activity File';
+        $name  = ($settings->publishing_type == "segmented") ? $settings['registry_info'][0]['publisher_id'] . '-' . $code : $settings['registry_info'][0]['publisher_id'] . '-activities';
 
         $requiredData = [
             'title'          => $title,
@@ -698,7 +698,7 @@ class ActivityController extends Controller
 
         if ($pubFiles) {
             $this->twitter->post($settings, $organization);
-            $value['published'] = trans('success.published_to_registry', implode(',', $pubFiles));
+            $value['published'] = trans('success.published_to_registry', ['filename' => implode(',', $pubFiles)]);
         }
 
         return redirect()->back()->with('value', $value);
