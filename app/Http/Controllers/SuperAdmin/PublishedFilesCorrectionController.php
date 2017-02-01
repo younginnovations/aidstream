@@ -29,7 +29,6 @@ class PublishedFilesCorrectionController extends Controller
      */
     public function __construct(OrganizationService $organizationService, CorrectionService $correctionService)
     {
-        $this->middleware('auth');
         $this->middleware('auth.superAdmin');
         $this->organizationService = $organizationService;
         $this->correctionService   = $correctionService;
