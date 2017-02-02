@@ -36,6 +36,6 @@ class ImportActivity
                 'method' => 'POST',
                 'url'    => route('activity.import-csv')
             ]
-        )->add('Upload', 'submit', ['attr' => ['class' => 'btn pull-left']]);
+        )->add('Upload', 'submit', ['attr' => ['class' => 'btn']]);
     }
 }
