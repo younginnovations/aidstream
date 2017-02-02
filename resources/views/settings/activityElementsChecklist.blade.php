@@ -22,14 +22,12 @@
 @stop
 @section('script')
     @if(session('first_login') && auth()->user()->isAdmin())
-        <script src="/js/userOnBoarding.js"></script>
         <script>
             var stepNumber = location.hash.replace('#', '');
             if (stepNumber == 4) {
                 $(window).load(function () {
                     var completedSteps = [{!! json_encode((array)$completedSteps) !!}];
-                    $('.introjs-hints').css('display', 'none');
-                    UserOnBoarding.settingsTour(completedSteps);
+                    UserOnBoarding.getLocalisedSettingsText(completedSteps);
                 });
             }
         </script>

@@ -28,7 +28,7 @@
     </div>@endsection
 @section('foot')
     <script>
-        $(document).ready(function () {
+        $(window).load(function () {
             $('.introjs-hints').css('display', 'none');
             $('#myModal').modal({
                 backdrop: 'static',

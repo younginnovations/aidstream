@@ -1266,46 +1266,46 @@ class XmlValidator
                 if ($sector['sector_vocabulary'] == 1) {
                     $messages[sprintf('%s.sector_code.%s', $sectorBase, 'required_with')] = trans(
                         'validation.required_with',
-                        ['attribute' => trans('elementForm.sector_code'), 'values' => trans('sector_vocabulary')]
+                        ['attribute' => trans('elementForm.sector_code'), 'values' => trans('elementForm.sector_vocabulary')]
                     );
                 }
                 if ($sector['sector_code'] != "") {
                     $messages[sprintf('%s.sector_vocabulary.%s', $sectorBase, 'required_with')] = trans(
                         'validation.required_with',
-                        ['attribute' => trans('elementForm.sector_vocabulary'), 'values' => trans('sector_code')]
+                        ['attribute' => trans('elementForm.sector_vocabulary'), 'values' => trans('elementForm.sector_code')]
                     );
                 }
                 if ($sector['sector_vocabulary'] == 2) {
                     $messages[sprintf('%s.sector_category_code.%s', $sectorBase, 'required_with')] = trans(
                         'validation.required_with',
-                        ['attribute' => trans('elementForm.sector_code'), 'values' => trans('sector_vocabulary')]
+                        ['attribute' => trans('elementForm.sector_code'), 'values' => trans('elementForm.sector_vocabulary')]
                     );
                 }
                 if ($sector['sector_category_code'] != "") {
                     $messages[sprintf('%s.sector_vocabulary.%s', $sectorBase, 'required_with')] = trans(
                         'validation.required_with',
-                        ['attribute' => trans('elementForm.sector_vocabulary'), 'values' => trans('sector_code')]
+                        ['attribute' => trans('elementForm.sector_vocabulary'), 'values' => trans('elementForm.sector_code')]
                     );
                 }
             } else {
                 if ($sector['sector_vocabulary'] != "") {
                     $messages[sprintf('%s.sector_text.%s', $sectorBase, 'required_with')] = trans(
                         'validation.required_with',
-                        ['attribute' => trans('elementForm.sector_code'), 'values' => trans('sector_vocabulary')]
+                        ['attribute' => trans('elementForm.sector_code'), 'values' => trans('elementForm.sector_vocabulary')]
                     );
                 }
 
                 if ($sector['sector_text'] != "") {
                     $messages[sprintf('%s.sector_vocabulary.%s', $sectorBase, 'required_with')] = trans(
                         'validation.required_with',
-                        ['attribute' => trans('elementForm.sector_vocabulary'), 'values' => trans('sector_code')]
+                        ['attribute' => trans('elementForm.sector_vocabulary'), 'values' => trans('elementForm.sector_code')]
                     );
                 }
 
                 if ($sector['sector_vocabulary'] == "99" || $sector['sector_vocabulary'] == "98") {
                     $messages[sprintf('%s.vocabulary_uri.%s', $sectorBase, 'required_with')] = trans(
                         'validation.required_with',
-                        ['attribute' => trans('elementForm.vocabulary_uri'), 'values' => trans('sector_vocabulary')]
+                        ['attribute' => trans('elementForm.vocabulary_uri'), 'values' => trans('elementForm.sector_vocabulary')]
                     );
                 }
             }

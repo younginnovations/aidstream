@@ -1,0 +1,15 @@
+{
+  "step2": "Click here to view the list of Activities you have added",
+  "step0": "Hover over here to get options to add an activity",
+  "step3": "Click here to view your organisation's data which you can publish/update to the IATI Registry",
+  "step4": "Click here to view your published activity and organisation data files.",
+  "step5": "Click here to view all the documents you have uploaded from document link in the activities",
+  "step6": "Click here to get download options for your data on AidStream",
+  "step7": "Click here to view the settings of your organisation. Only the users with Administrator level permission can edit settings",
+  "step8": "Click here to view the changes made by users",
+  "step1": "Hover over here and click on “My Profile” to go your profile page",
+  "final": "You can always start the Dashboard tour again by turning this toggle on",
+  "skip": "Skip Dashboard Tour",
+  "next": "Next",
+  "complete": "Complete tour"
+}

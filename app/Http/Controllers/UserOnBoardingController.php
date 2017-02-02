@@ -215,13 +215,24 @@ class UserOnBoardingController extends Controller
 
 
     /**
-     * Returns all the texts used for onBoarding.
+     * Returns all the hints texts used for onBoarding.
      * @return string
      */
-    public function getLocalisedOnBoardingFile()
+    public function getLocalisedHintText()
     {
         $currentLanguage = ($language = (Cookie::get('language'))) ? $language : 'en';
 
-        return file_get_contents(sprintf(resource_path('lang/%s/userOnBoarding.json'), $currentLanguage));
+        return file_get_contents(sprintf(resource_path('lang/%s/onBoardingHints.json'), $currentLanguage));
+    }
+
+    /**
+     * Returns all the settings texts used for onBoarding.
+     * @return string
+     */
+    public function getLocalisedSettingsText()
+    {
+        $currentLanguage = ($language = (Cookie::get('language'))) ? $language : 'en';
+
+        return file_get_contents(sprintf(resource_path('lang/%s/onBoardingSettings.json'), $currentLanguage));
     }
 }

@@ -135,6 +135,7 @@ return [
     'indicator_size'                            => 'Indicator Baseline Year or Value should occur once and no more than once within an Indicator.',
     'narrative_required'                        => ':attribute Narrative is required.',
     'no_more_than_once'                         => ':attribute should occur once and no more than once within :values.',
+    'budget_period_end_date'                    => 'Budget Period End Date',
     'custom'                                    => [
         'attribute-name' => [
             'rule-name' => 'custom-message',
@@ -151,6 +152,6 @@ return [
     |
     */
 
-    'attributes' => [],
-    'within_a_year' => "The :attribute must be within a year after :date."
+    'attributes'    => [],
+    'within_a_year' => "The :attribute must be within a year after :date.",
 ];

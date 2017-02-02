@@ -7,12 +7,20 @@ var UserOnBoarding = {
     },
     localisedFile: '',
     loadedLocalisedFile: false,
-    getLocalisedText: function () {
-        this.callAsync('/onBoarding/localisedText', 'get').success(function (data) {
+    getLocalisedHintText: function () {
+        this.callAsync('/onBoarding/localisedHintText', 'get').success(function (data) {
             UserOnBoarding.localisedFile = JSON.parse(data);
             UserOnBoarding.loadedLocalisedFile = true;
             UserOnBoarding.addHintLabel();
             UserOnBoarding.dashboardTour();
+        });
+    },
+    getLocalisedSettingsText: function (completedSteps) {
+        this.callAsync('/onBoarding/localisedSettingsText', 'get').success(function (data) {
+            UserOnBoarding.localisedFile = JSON.parse(data);
+            UserOnBoarding.loadedLocalisedFile = true;
+            $('.introjs-hints').css('display', 'none');
+            UserOnBoarding.settingsTour(completedSteps);
         });
     },
     addHintLabel: function () {
@@ -207,13 +215,10 @@ var UserOnBoarding = {
             calculateNextStep(3);
         }).delegate('#info3', 'click', function () {
             calculateNextStep(4);
-            // window.location.href = '/activity-elements-checklist#4';
         }).delegate('#info4', 'click', function () {
             calculateNextStep(5);
-            // window.location.href = '/default-values#5';
         }).delegate('#info5', 'click', function () {
             calculateNextStep(6);
-            // window.location.href = '/activity';
         });
         //
 
@@ -231,7 +236,6 @@ var UserOnBoarding = {
                     type: 'POST',
                     success: function (data) {
                         calculateNextStep(2);
-                        // intro.goToStep(2);
                     }
                 });
             }
@@ -278,10 +282,7 @@ var UserOnBoarding = {
         });
 
         function calculateNextStep(step) {
-            console.log(step, completedSteps);
-
             var completedStep = completedSteps[0].sort();
-            console.log(completedStep);
             for (var i = 0; i < completedStep.length; i++) {
                 if (step == completedStep[i]) {
                     step = step + 1;

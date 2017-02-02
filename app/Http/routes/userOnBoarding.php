@@ -74,9 +74,17 @@ $router->get(
 );
 
 $router->get(
-    '/onBoarding/localisedText',
+    '/onBoarding/localisedHintText',
     [
         'as'   => 'onBoarding.localisedText',
-        'uses' => 'UserOnBoardingController@getLocalisedOnBoardingFile'
+        'uses' => 'UserOnBoardingController@getLocalisedHintText'
+    ]
+);
+
+$router->get(
+    '/onBoarding/localisedSettingsText',
+    [
+        'as'   => 'onBoarding.localisedText',
+        'uses' => 'UserOnBoardingController@getLocalisedSettingsText'
     ]
 );

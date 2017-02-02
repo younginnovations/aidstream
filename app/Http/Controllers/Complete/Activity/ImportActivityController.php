@@ -50,6 +50,15 @@ class ImportActivityController extends Controller
      */
     public function index()
     {
+        $settings           = auth()->user()->organization->settings;
+        $defaultFieldValues = $settings->default_field_values;
+
+        if (!$defaultFieldValues) {
+            $response = ['type' => 'warning', 'code' => ['default_values', ['name' => trans('global.activity')]]];
+
+            return redirect('/default-values')->withResponse($response);
+        }
+        
         session()->forget('activities');
         $organization = $this->organizationManager->getOrganization($this->organizationId);
         if (!isset($organization->reporting_org[0])) {
