@@ -2,6 +2,7 @@
 
 use App\Core\Version;
 use App\Models\Activity\Activity;
+use App\Services\PerfectViewer\PerfectViewerManager;
 use Exception;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Logging\Log as Logger;
@@ -14,30 +15,40 @@ use Illuminate\Database\DatabaseManager;
 class ActivityManager
 {
     protected $activityRepo;
+
     /**
      * @var Guard
      */
     protected $auth;
+
     /**
      * @var Logger
      */
     protected $logger;
+
     /**
      * @var Version
      */
     protected $version;
+
     /**
      * @var DatabaseManager
      */
-    private $database;
+    protected $database;
 
     /**
-     * @param Version         $version
-     * @param Guard           $auth
-     * @param Logger          $logger
-     * @param DatabaseManager $database
+     * @var PerfectViewerManager
      */
-    public function __construct(Version $version, Guard $auth, Logger $logger, DatabaseManager $database)
+    protected $perfectViewerManager;
+
+    /**
+     * @param Version              $version
+     * @param Guard                $auth
+     * @param Logger               $logger
+     * @param DatabaseManager      $database
+     * @param PerfectViewerManager $perfectViewerManager
+     */
+    public function __construct(Version $version, Guard $auth, Logger $logger, DatabaseManager $database, PerfectViewerManager $perfectViewerManager)
     {
         $this->auth            = $auth;
         $this->logger          = $logger;
@@ -47,6 +58,7 @@ class ActivityManager
         $this->transactionRepo = $this->activityElement->getTransactionRepository();
         $this->resultRepo      = $this->activityElement->getResultRepository();
         $this->database        = $database;
+        $this->perfectViewerManager = $perfectViewerManager;
     }
 
     /**
@@ -705,5 +717,22 @@ class ActivityManager
         }
 
         return false;
+    }
+
+    public function setAsPublished($activityId)
+    {
+        try {
+            $this->database->beginTransaction();
+            $activity = $this->getActivityData($activityId);
+            $activity->published_to_registry = 1;
+            $activity->save();
+
+            $this->activityInRegistry($activity);
+            $this->perfectViewerManager->createSnapshot($activity);
+
+            $this->database->commit();
+        } catch (Exception $exception) {
+            $this->database->rollback();
+        }
     }
 }
