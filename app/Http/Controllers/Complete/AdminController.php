@@ -85,7 +85,7 @@ class AdminController extends Controller
     public function index($orgId = "all")
     {
         $activity      = $this->userActivityManager->getUserActivities($orgId);
-        $organizations = $this->organizationManager->getOrganizations(['name', 'id']);
+        $organizations = $this->organizationManager->getOrganizations();
 
         return view('admin.activityLog', compact('activity', 'organizations', 'orgId'));
     }

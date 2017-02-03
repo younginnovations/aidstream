@@ -110,15 +110,14 @@ class SuperAdmin implements SuperAdminInterface
             $this->database->beginTransaction();
 
             $orgData      = $this->makeOrganizationData($orgDetails);
-            $organization = $this->organization->firstOrNew(['id' => $orgId]);
-            $organization->fill($orgData)->save();
+            $organization = $this->organization->findOrFail($orgId);
+            $organization->update($orgData);
 
             $adminData = $this->makeAdminData($orgDetails, $organization->id);
             $adminUser = $this->user->where('org_id', '=', $organization->id)
                                     ->where('role_id', '=', 1)
                                     ->first();
-
-            $adminUser->fill($adminData)->save();
+            $adminUser->update($adminData);
 
             $settingsData = $this->makeSettingsData($orgDetails, $organization->id);
             $settings     = $this->settings->firstOrNew(['organization_id' => $organization->id]);
