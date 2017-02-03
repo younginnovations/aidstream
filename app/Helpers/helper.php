@@ -599,7 +599,7 @@ function getCurrencyValueDate($budgetValue, $type)
 
     return sprintf(
         '%s %s <em>(%s %s)</em>',
-        $budgetAmount,
+        number_format(round($budgetAmount, 2)),
         $currency,
         trans('global.valued_at'),
         $valueDate
