@@ -11,7 +11,7 @@
                 <div class="panel-content-heading">
                     <div>@lang('element.recipient_country_budget')
                         <div class="panel-action-btn">
-                            <a href="{{route('organization.show', $orgId)}}" class="btn btn-primary">@lang('global.view_organisation_data')
+                            <a href="{{route('organization.show', $orgId)}}" class="btn btn-primary btn-view-it">@lang('global.view_organisation_data')
                             </a>
                         </div>
                     </div>

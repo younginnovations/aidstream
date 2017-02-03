@@ -22,7 +22,6 @@ use App\Services\Xml\Validator\XmlValidator;
 use App\User;
 use Illuminate\Session\SessionManager;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Session;
 use Psr\Log\LoggerInterface;
 
 
@@ -102,6 +101,7 @@ class ActivityController extends Controller
      * @var TwitterAPI
      */
     protected $twitter;
+
     /**
      * @var XmlValidator
      */
@@ -753,47 +753,7 @@ class ActivityController extends Controller
                 }
             );
 
-            $transaction      = [];
-            $recipientCountry = [];
-            $recipientRegion  = [];
-            $title            = [];
-
-            $filePath = sprintf('%s%s%s', public_path('files'), config('filesystems.xml'), $xmlFile);
-            if (file_exists($filePath)) {
-                $xml = simplexml_load_string(file_get_contents($filePath));
-                $xml = json_decode(json_encode($xml), true);
-                if (isset($xml['iati-activity']['transaction'])) {
-                    $xmlTransaction = $xml['iati-activity']['transaction'];
-                    $transaction    = $this->activityManager->getTransactionForBulk($xmlTransaction);
-                }
-
-                if (isset($xml['iati-activity']['recipient-country'])) {
-                    $xmlRecipientCountry = $xml['iati-activity']['recipient-country'];
-                    $recipientCountry    = $this->activityManager->getRecipientCountryForBulk($xmlRecipientCountry);
-                }
-
-                $activityStatus = '';
-
-                if (is_array($xml['iati-activity']['activity-status'])) {
-                    $activityStatus = $xml['iati-activity']['activity-status']['@attributes']['code'];
-                }
-
-                $identifier = $xml['iati-activity']['iati-identifier'];
-
-                if (is_array($xml['iati-activity']['title'])) {
-                    if (count($xml['iati-activity']['title']['narrative']) == 1) {
-                        $title = $xml['iati-activity']['title']['narrative'];
-                    } elseif (count($xml['iati-activity']['title']['narrative']) > 1) {
-                        $title = $xml['iati-activity']['title']['narrative'][0];
-                    }
-                }
-
-                $xmlSector = is_array($xml['iati-activity']['sector']) ? $xml['iati-activity']['sector'] : [];
-                $sector    = $this->activityManager->getSectorForBulk($xmlSector);
-
-                $jsonData = $this->activityManager->convertIntoJson($transaction, $activityStatus, $recipientRegion, $recipientCountry, $sector, $title, $identifier);
-                $this->activityManager->saveBulkPublishDataInActivityRegistry($activityId, $jsonData);
-            }
+            $this->activityManager->setAsPublished($activityId);
         }
     }
 

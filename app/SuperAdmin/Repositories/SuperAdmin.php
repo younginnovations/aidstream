@@ -114,8 +114,11 @@ class SuperAdmin implements SuperAdminInterface
             $organization->fill($orgData)->save();
 
             $adminData = $this->makeAdminData($orgDetails, $organization->id);
-            $user      = $this->user->firstOrNew(['org_id' => $organization->id]);
-            $user->fill($adminData)->save();
+            $adminUser = $this->user->where('org_id', '=', $organization->id)
+                                    ->where('role_id', '=', 1)
+                                    ->first();
+
+            $adminUser->fill($adminData)->save();
 
             $settingsData = $this->makeSettingsData($orgDetails, $organization->id);
             $settings     = $this->settings->firstOrNew(['organization_id' => $organization->id]);
@@ -127,7 +130,7 @@ class SuperAdmin implements SuperAdminInterface
             $this->dbLogger->activity(
                 ($orgId) ? "activity.organization_updated" : "activity.organization_added",
                 [
-                    'user_id'         => $user->id,
+                    'user_id'         => $adminUser->id,
                     'organization_id' => $orgId
                 ]
             );
