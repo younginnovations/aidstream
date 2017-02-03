@@ -139,6 +139,12 @@ class ImportController extends Controller
     {
         $file = $request->file('activity');
 
+        if ($this->importManager->isCsvFileEmpty($file)) {
+            $response = ['type' => 'danger', 'code' => ['message', ['message' => trans('error.no_data_available')]]];
+
+            return redirect()->to('import-activity')->withResponse($response);
+        }
+
         $this->importManager->clearOldImport();
 
         if ($this->importManager->storeCsv($file)) {

@@ -94,5 +94,6 @@ return [
     'add_document_link'                 => 'Add Document Link',
     'activity_document_link'            => 'Activity Document Link',
     'activity_viewer'                   => 'Activity Viewer',
-
+    'import_transactions'               => 'Import Transactions'
 ];
+

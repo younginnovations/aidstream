@@ -52,4 +52,8 @@ return [
     'publisher_not_found'                                    => 'Could not publish to registry. (Publisher not found. <a href="/settings">Please check you publisher Id.</a>)',
     'failed_to_submit_query'                                 => 'Failed to submit your query. Please try again.',
     'select_activities_to_be_imported'                       => 'Select activities to be imported',
+    'select_transactions_to_be_imported'                     => 'Select transactions to be imported',
+    'no_ongoing_processes'                                   => 'Please upload CSV file to process.',
+    'no_data_available'                                      => 'It seems you have uploaded an empty file. Please fill the values in the file and try uploading once again.',
 ];
+

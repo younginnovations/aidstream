@@ -1,0 +1,118 @@
+{
+  "reference": "",
+  "transaction_type": [
+    {
+      "transaction_type_code": ""
+    }
+  ],
+  "transaction_date": [
+    {
+      "date": ""
+    }
+  ],
+  "value": [
+    {
+      "amount": "",
+      "date": "",
+      "currency": ""
+    }
+  ],
+  "description": [
+    {
+      "narrative": [
+        {
+          "narrative": "",
+          "language": ""
+        }
+      ]
+    }
+  ],
+  "provider_organization": [
+    {
+      "organization_identifier_code": "",
+      "provider_activity_id": "",
+      "narrative": [
+        {
+          "narrative": "",
+          "language": ""
+        }
+      ]
+    }
+  ],
+  "receiver_organization": [
+    {
+      "organization_identifier_code": "",
+      "receiver_activity_id": "",
+      "narrative": [
+        {
+          "narrative": "",
+          "language": ""
+        }
+      ]
+    }
+  ],
+  "disbursement_channel": [
+    {
+      "disbursement_channel_code": ""
+    }
+  ],
+  "sector": [
+    {
+      "sector_vocabulary": "",
+      "sector_code": "",
+      "sector_category_code": "",
+      "sector_text": "",
+      "vocabulary_uri": "",
+      "narrative": [
+        {
+          "narrative": "",
+          "language": ""
+        }
+      ]
+    }
+  ],
+  "recipient_country": [
+    {
+      "country_code": "",
+      "narrative": [
+        {
+          "narrative": "",
+          "language": ""
+        }
+      ]
+    }
+  ],
+  "recipient_region": [
+    {
+      "region_code": "",
+      "vocabulary": "",
+      "vocabulary_uri": "",
+      "narrative": [
+        {
+          "narrative": "",
+          "language": ""
+        }
+      ]
+    }
+  ],
+  "flow_type": [
+    {
+      "flow_type": ""
+    }
+  ],
+  "finance_type": [
+    {
+      "finance_type": ""
+    }
+  ],
+  "aid_type": [
+    {
+      "aid_type": ""
+    }
+  ],
+  "tied_status": [
+    {
+      "tied_status_code": ""
+    }
+  ]
+}

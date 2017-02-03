@@ -1,5 +1,7 @@
 <?php namespace App\Providers;
 
+use App\Services\CsvImporter\Events\TransactionCsvWasUploaded;
+use App\Services\CsvImporter\Listeners\TransactionCsvUpload;
 use App\Services\XmlImporter\Events\XmlWasUploaded;
 use App\Services\XmlImporter\Listeners\XmlUpload;
 use Illuminate\Contracts\Events\Dispatcher as DispatcherContract;
@@ -17,11 +19,14 @@ class EventServiceProvider extends ServiceProvider
         'App\Services\CsvImporter\Events\ActivityCsvWasUploaded' => [
             'App\Services\CsvImporter\Listeners\ActivityCsvUpload',
         ],
-        'App\Services\CsvImporter\Events\ResultCsvWasUploaded' => [
+        'App\Services\CsvImporter\Events\ResultCsvWasUploaded'   => [
             'App\Services\CsvImporter\Listeners\ResultCsvUpload',
         ],
-        XmlWasUploaded::class => [
+        XmlWasUploaded::class                                    => [
             XmlUpload::class
+        ],
+        TransactionCsvWasUploaded::class                         => [
+            TransactionCsvUpload::class
         ]
     ];
 

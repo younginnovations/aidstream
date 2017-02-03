@@ -2795,6 +2795,7 @@ form > .add_to_collection[data-collection="legacy_data"] {
   .create-form {
     border: 0;
     padding-bottom: 0;
+    padding-left: 20px;
     > form > .form-group {
       padding-right: 20px;
       padding-left: 20px;
@@ -2822,7 +2823,7 @@ form > .add_to_collection[data-collection="legacy_data"] {
 }
 
 .download-transaction-wrap {
-  padding: 0 36px;
+  padding: 0 36px 0 20px;
   margin-bottom: 20px;
   .btn {
     display: inline-block;
@@ -6093,6 +6094,7 @@ body > .skiptranslate iframe {
     .panel-content-heading {
       padding: 0;
       background: transparent;
+      font-size: 0;
       height: auto;
       min-height: inherit;
       h3 {
@@ -6113,6 +6115,23 @@ body > .skiptranslate iframe {
       }
     }
   }
+}
+
+.status-wrapper input[type=checkbox].overwrite-btn + span {
+  display: inline-block;
+  font-size: 12px;
+  margin-top: 5px;
+  &:before {
+    top: 2px;
+  }
+  &:after {
+    top: 4px;
+  }
+}
+
+#dontOverwrite {
+  float: right;
+  margin-right: 136px;
 }
 
 .complete-message {
@@ -6155,9 +6174,7 @@ body > .skiptranslate iframe {
 
 #submit-valid-activities {
   display: block;
-  position: absolute;
-  right: 20px;
-  top: -45px;
+  @include position(absolute,8px 95px auto auto);
   z-index: 1;
   padding: 7px 14px;
   font-size: 12px;
@@ -6172,6 +6189,7 @@ body > .skiptranslate iframe {
       padding-left: 20px;
       cursor: pointer;
       font-size: initial;
+      top: 2px;
       &:before {
         content: '';
         position: absolute;
@@ -6188,7 +6206,7 @@ body > .skiptranslate iframe {
         position: absolute;
         top: 6px;
         left: 2px;
-        font-size: 10px;
+        font-size: 12px;
         line-height: 0.8;
         color: #fff;
         transition: all .2s;
@@ -6251,7 +6269,7 @@ body > .skiptranslate iframe {
 
 #checkAll {
   float: left;
-  padding-top: 5px;
+  padding-top: 4px;
 }
 
 .tab-select {
@@ -6261,9 +6279,9 @@ body > .skiptranslate iframe {
   background: #fff !important;
   box-shadow: none;
   display: inline-block;
-  height: 30px;
+  height: 31px;
   font-size: 12px;
-  margin: 2px 0 0;
+  margin: 0;
   position: relative;
   z-index: 1;
 }
@@ -6531,6 +6549,24 @@ body > .skiptranslate iframe {
 
 .xdsoft_datetimepicker {
   z-index: 10000000;
+}
+
+.panel-title .badge {
+  background-color: #999!important;
+  font-size: 10px;
+  font-weight: 100;
+  text-transform: none;
+}
+
+.update-transaction {
+  color: #888;
+  font-size: 12px!important;
+  padding: 16px 20px 0;
+  float: right;
+  width: 41%;
+  margin-top: -124px;
+  margin-bottom: 0!important;
+  position: relative;
 }
 
 @media all and (max-width: 1030px) {
@@ -7711,7 +7747,7 @@ body > .skiptranslate iframe {
 
   .btn-action-wrap {
     float: right;
-    margin-top: -14px!important;
+    margin-top: -14px !important;
   }
 
   .panel-action-btn {
@@ -8096,3 +8132,4 @@ body > .skiptranslate iframe {
     width: 80%;
   }
 }
+

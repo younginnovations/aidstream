@@ -17,13 +17,14 @@
                             @if(count($activity->getTransactions()) > 0)
                                 <ul class="add-dropdown">
                                     <li class="dropdown">
-                                        <div><span class="btn btn-primary dropdown-toggle add-new-btn" data-toggle="dropdown">@lang('global.add_new_transaction')<span class="caret"></span></span></div>
+                                        <div><span class="btn btn-primary dropdown-toggle add-new-btn" data-toggle="dropdown">@lang('global.add_new_transaction')<span class="caret"></span></span>
+                                        </div>
                                         <ul class="dropdown-menu" role="menu">
                                             <li>
                                                 <a href="{{ route('activity.transaction.create', $id) }}" class="">@lang('global.add_new_transaction')</a>
                                             </li>
                                             <li>
-                                                <a href="{{ route('activity.transaction-upload.index', $id) }}" class="">@lang('global.upload_transaction')</a>
+                                                <a href="{{ route('activity.transaction.upload-csv', $id) }}" class="">@lang('global.upload_transaction')</a>
                                             </li>
                                         </ul>
                                     </li>
@@ -72,7 +73,7 @@
                                     <div class="no-data-btn">
                                         <a href="{{ route('activity.transaction.create', $id) }}"
                                            class="btn btn-primary">@lang('global.add_new_transaction')</a>
-                                        <a href="{{ route('activity.transaction-upload.index', $id) }}"
+                                        <a href="{{ route('activity.transaction.upload-csv', $id) }}"
                                            class="btn btn-primary btn-upload">@lang('global.upload_transaction')</a>
                                     </div>
                                 </div>

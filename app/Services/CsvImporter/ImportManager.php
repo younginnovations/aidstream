@@ -615,4 +615,15 @@ class ImportManager
 
         return $activities;
     }
+
+    /**
+     * Checks if the file is empty or not
+     * @param $file
+     * @return bool
+     */
+    public function isCsvFileEmpty($file)
+    {
+        return (($this->excel->load($file)->get()->count()) > 0) ? true : false;
+    }
 }
+

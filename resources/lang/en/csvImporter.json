@@ -1,6 +1,7 @@
 {
-  "csv_file_processing": "CSV File Processing.",
+  "csv_file_processing": "CSV File Processing",
   "something_went_wrong": "Looks like something went wrong.",
   "data_not_available": "No data available.",
-  "csv_file_processing_complete": "CSV File Processing Complete."
+  "csv_file_processing_completed": "CSV File Processing Completed.",
+  "error_processing_csv": "Failed to process csv. Please make sure everything is correct and try again."
 }
