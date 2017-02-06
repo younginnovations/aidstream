@@ -67,8 +67,9 @@ class TransactionUploadController extends Controller
      */
     public function store(Request $request, $id, UploadTransactionRequest $uploadTransactionRequest, CsvImportValidator $csvImportValidator)
     {
-        $activity = $this->activityManager->getActivityData($id);
+        ini_set('max_execution_time', 0);
 
+        $activity = $this->activityManager->getActivityData($id);
         if (Gate::denies('ownership', $activity)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
@@ -101,6 +102,7 @@ class TransactionUploadController extends Controller
         $this->uploadTransactionManager->save($file, $activity);
         $this->activityManager->resetActivityWorkflow($id);
         $response = ['type' => 'success', 'code' => ['updated', ['name' => trans('element.transactions')]]];
+
 
         return redirect()->to(sprintf('/activity/%s/transaction', $id))->withResponse($response);
     }
