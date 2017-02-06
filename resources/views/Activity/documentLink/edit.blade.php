@@ -1,7 +1,15 @@
 @extends('app')
 
 @section('title', trans('title.document_link').' - ' . $activityData->IdentifierTitle)
-
+<style>
+    .or {
+        font-size: 14px;
+    }
+    #document_list {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+</style>
 @section('content')
     <div class="container main-container">
         <div class="row">
@@ -43,12 +51,11 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                                 aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title" id="myModalLabel">@lang('title.add_document_link')</h4>
+                    <br>
+                    <em><span>@lang('global.upload_document_text')</span></em>
                 </div>
                 <div class="modal-body">
                     <div class="upload_form hidden">
-                        <div class="alert alert-info">
-                            <span>@lang('global.upload_document_text')</span>
-                        </div>
                         <div id="upload_message"></div>
                         <form class="form-horizontal" role="form" id="upload_file" method="POST"
                               enctype="multipart/form-data" action="{{ route('document.upload') }}">
@@ -59,14 +66,16 @@
                                     <label class="control-label">@lang('global.choose_your_document'): </label>
                                     <input type="file" class="form-control" name="file" id="file"
                                            value="{{ old('file') }}" required="required">
+                                    <em><p id="message"></p></em>
                                 </div>
                                 <div class="col-md-4">
-                                    <button type="submit" class="btn btn-primary">
+                                    <button type="submit" class="btn btn-primary disabled">
                                         @lang('global.upload')
                                     </button>
                                 </div>
                             </div>
                         </form>
+                        <div class="or"><strong><em>Or, you can use below listed documents.</em></strong></div>
                     </div>
                     <div id="document_list">
                         <table class="table table-striped">
@@ -83,6 +92,6 @@
             </div>
         </div>
     </div>
-
+    
     <script type="text/javascript" src="{{url('js/upload-document.js')}}"></script>
 @endsection

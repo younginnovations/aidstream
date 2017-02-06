@@ -152,6 +152,9 @@ class WorkflowManager
                     $organization->settings->publishing_type
                 );
 
+                $activity->published_to_registry = 1;
+                $activity->save();
+
                 $this->activityManager->activityInRegistry($activity);
                 $this->twitter->post($organization->settings, $organization);
             }
