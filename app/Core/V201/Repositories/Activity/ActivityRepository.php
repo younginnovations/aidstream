@@ -4,6 +4,7 @@ use App\Models\Activity\Activity;
 use App\Models\Activity\ActivityInRegistry;
 use App\Models\ActivityPublished;
 use App\Models\Settings;
+use Illuminate\Support\Facades\DB;
 
 /**
  * Class ActivityRepository
@@ -382,5 +383,112 @@ class ActivityRepository
         unset($mappedActivity['document_link']);
 
         return $this->activity->create($mappedActivity);
+    }
+
+    /**
+     * Provides activity identifiers
+     *
+     * @param $orgId
+     * @return mixed
+     */
+    public function getActivityIdentifiers($orgId)
+    {
+        return $this->activity->selectRaw("identifier ->> 'activity_identifier'")->where('organization_id', $orgId)->get();
+    }
+
+    /**
+     * Updates activity with Identifier
+     *
+     * @param       $oldActivity
+     * @param array $value
+     * @return mixed
+     */
+    public function updateActivityWithIdentifier($oldActivity, array $value)
+    {
+        $activity = $this->emptyExisting($oldActivity);
+        $activity = $this->fillActivity($activity, $value);
+
+        $activity->activity_workflow = 0;
+        $activity->update();
+
+        return $activity;
+    }
+
+    /**
+     * Empty all values for an Activity.
+     * @param $activity
+     * @return mixed
+     */
+    protected function emptyExisting($activity)
+    {
+        foreach ($activity->getAttributes() as $column => $data) {
+            if ($this->isNullable($column)) {
+                $activity->{$column} = null;
+            }
+        }
+
+        return $activity;
+    }
+
+    /**
+     * Fill in default activity attributes
+     *
+     * @param $activity
+     * @param $activityData
+     * @return array
+     */
+    protected function fillActivity($activity, $activityData)
+    {
+        $defaultFieldValues = $this->setDefaultFieldValues($activityData['default_field_values'], $activityData['organization_id']);
+
+        $activity->identifier                 = $activityData['identifier'];
+        $activity->title                      = $activityData['title'];
+        $activity->description                = $activityData['description'];
+        $activity->activity_status            = $activityData['activity_status'];
+        $activity->activity_date              = $activityData['activity_date'];
+        $activity->participating_organization = $activityData['participating_organization'];
+        $activity->recipient_country          = $activityData['recipient_country'];
+        $activity->recipient_region           = $activityData['recipient_region'];
+        $activity->sector                     = $activityData['sector'];
+        $activity->organization_id            = $activityData['organization_id'];
+        $activity->policy_marker              = (array_key_exists('policy_marker', $activityData) ? $activityData['policy_marker'] : null);
+        $activity->budget                     = (array_key_exists('budget', $activityData) ? $activityData['budget'] : null);
+        $activity->activity_scope             = (array_key_exists('activity_scope', $activityData) ? $activityData['activity_scope'] : null);
+        $activity->default_field_values       = $defaultFieldValues;
+        $activity->collaboration_type         = (($collaborationType = getVal($defaultFieldValues, [0, 'default_collaboration_type'])) == "" ? null : $collaborationType);
+        $activity->default_flow_type          = (($defaultFlowType = getVal($defaultFieldValues, [0, 'default_flow_type'])) == "" ? null : $defaultFlowType);
+        $activity->default_finance_type       = (($defaultFinanceType = getVal($defaultFieldValues, [0, 'default_finance_type'])) == "" ? null : $defaultFinanceType);
+        $activity->default_aid_type           = (($defaultAidType = getVal($defaultFieldValues, [0, 'default_aid_type'])) == "" ? null : $defaultAidType);
+        $activity->default_tied_status        = (($defaultTiedStatus = getVal($defaultFieldValues, [0, 'default_tied_status'])) == "" ? null : $defaultTiedStatus);
+        $activity->contact_info               = getVal($activityData, ['contact_info'], null);
+        $activity->related_activity           = getVal($activityData, ['related_activity'], null);
+
+        return $activity;
+    }
+
+    /**
+     * Check if the column is nullabe.
+     *
+     * @param $column
+     * @return bool
+     */
+    protected function isNullable($column)
+    {
+        $defaultValues = ['created_at', 'default_field_values', 'activity_workflow', 'published_to_registry', 'id', 'organization_id'];
+
+        return !array_key_exists($column, array_flip($defaultValues));
+    }
+
+    /**
+     * Provides Activity from its Identifier
+     *
+     * @param $identifier
+     * @return mixed
+     */
+    public function getActivityFromIdentifier($identifier, $organizationId)
+    {
+        return $this->activity->whereRaw(sprintf("identifier #>> '{activity_identifier}' = '%s'", $identifier))
+                              ->where('organization_id', '=', $organizationId)
+                              ->first();
     }
 }

@@ -135,7 +135,9 @@ class ImportManager
         try {
             $file = new File($this->getStoredCsvPath($filename));
 
-            $this->processor->pushIntoQueue($file, $filename);
+            $activityIdentifiers = $this->getIdentifiers();
+
+            $this->processor->pushIntoQueue($file, $filename, $activityIdentifiers);
         } catch (Exception $exception) {
             $this->logger->error(
                 $exception->getMessage(),
@@ -155,22 +157,27 @@ class ImportManager
      */
     public function create($activities)
     {
-        $contents               = json_decode(file_get_contents($this->getFilePath(true)), true);
-        $organizationId         = $this->sessionManager->get('org_id');
-        $importedActivities     = [];
+        $contents       = json_decode(file_get_contents($this->getFilePath(true)), true);
+        $organizationId = $this->sessionManager->get('org_id');
+
         $organizationIdentifier = getVal(
             $this->organizationRepo->getOrganization($organizationId)->toArray(),
             ['reporting_org', 0, 'reporting_organization_identifier']
         );
 
-        foreach ($activities as $key => $activity) {
-            $activity                                               = $contents[$activity];
+        foreach ($activities as $key => $value) {
+            $activity                                               = $contents[$value];
             $activity['data']['organization_id']                    = $organizationId;
-            $importedActivities[$key]                               = $activity['data'];
-            $iati_identifier_text                                   = $organizationIdentifier . '-' . $activity['data']['identifier']['activity_identifier'];
+            $iati_identifier_text                                   = $organizationIdentifier . '-' . getVal($activity, ['data', 'identifier', 'activity_identifier']);
             $activity['data']['identifier']['iati_identifier_text'] = $iati_identifier_text;
 
-            $createdActivity = $this->activityRepo->createActivity($activity['data']);
+            if ($this->isOldActivity($activity)) {
+                $oldActivity = $this->activityRepo->getActivityFromIdentifier(getVal($activity, ['data', 'identifier', 'activity_identifier']), $organizationId);
+                $oldActivity->transactions()->delete();
+                $createdActivity = $this->activityRepo->updateActivityWithIdentifier($oldActivity, getVal($activity, ['data']));
+            } else {
+                $createdActivity = $this->activityRepo->createActivity(getVal($activity, ['data']));
+            }
 
             if (array_key_exists('transaction', $activity['data'])) {
                 $this->createTransaction(getVal($activity['data'], ['transaction'], []), $createdActivity->id);
@@ -618,12 +625,34 @@ class ImportManager
 
     /**
      * Checks if the file is empty or not
+     *
      * @param $file
      * @return bool
      */
     public function isCsvFileEmpty($file)
     {
-        return (($this->excel->load($file)->get()->count()) > 0) ? true : false;
+        return (($this->excel->load($file)->get()->count()) > 0) ? false : true;
+    }
+
+    /**
+     * Provides all the activity identifiers
+     *
+     * @return array
+     */
+    protected function getIdentifiers()
+    {
+        return array_flatten($this->activityRepo->getActivityIdentifiers($this->sessionManager->get('org_id'))->toArray());
+    }
+
+    /**
+     * Check if the uploaded Activity data is of an exsiting Activity.
+     *
+     * @param $activity
+     * @return bool
+     */
+    protected function isOldActivity($activity)
+    {
+        return (getVal($activity, ['existence']) === true);
     }
 }
 

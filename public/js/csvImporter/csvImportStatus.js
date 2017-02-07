@@ -18,6 +18,7 @@ var CsvImportStatusManager = {
     },
     enableImport: function () {
         submitButton.fadeIn("slow").removeClass('hidden');
+        $('#dontOverwrite').fadeIn("slow").removeClass('hidden');
     },
     callAsync: function (url, methodType) {
         return $.ajax({
@@ -148,12 +149,29 @@ $(document).ready(function () {
             }, 3000);
         } else {
             accordionInit();
-
             placeHolder = $('div#import-status-placeholder');
-            placeHolder.empty().append("<a href='/import-activity/import-status'>" + CsvImportStatusManager.localisedData['csv_file_processing_complete'] + "</a>");
+            placeHolder.empty().append("<a href='/import-activity/import-status'>" + CsvImportStatusManager.localisedData['csv_file_processing_completed'] + "</a>");
 
             cancelButton.fadeIn('slow').removeClass('hidden');
             CsvImportStatusManager.enableImport();
+            checkAll.fadeIn('slow').removeClass('hidden');
         }
     }
 });
+
+Importer = {
+    status: function () {
+        $('.override').on('change', function (e) {
+            if (e.target.checked) {
+                $('input[type="checkbox"].existence').attr('disabled', true);
+            }
+            if (!e.target.checked) {
+                $('input[type="checkbox"].existence').attr('disabled', false);
+            }
+        });
+
+        $('.override').trigger('change');
+    }
+};
+
+Importer.status();

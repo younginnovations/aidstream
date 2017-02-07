@@ -9,5 +9,5 @@ var accordionInit = function () {
 };
 
 $('.check-btn').on('change', function () {
-    $("input[type=checkbox]:not(:disabled)").prop('checked', $(this).prop('checked'));
+    $("input[type=checkbox]:not(:disabled):not('.override')").prop('checked', $(this).prop('checked'));
 });

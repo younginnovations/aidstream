@@ -272,4 +272,3 @@ return [
     'new'                                          => 'New',
     'template_updated'                             => 'The template for Transaction import has been updated. Please make sure you are using the latest template.',
 ];
-

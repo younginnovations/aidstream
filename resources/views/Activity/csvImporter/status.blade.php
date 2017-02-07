@@ -21,8 +21,14 @@
                             <div class="status-show-block">
                                 <div id="checkAll" class="hidden">
                                     <label>
-                                        <input type="checkbox" class="check-btn">
+                                        <input type="checkbox" checked class="check-btn">
                                         <span></span>
+                                    </label>
+                                </div>
+                                <div id="dontOverwrite" class="hidden">
+                                    <label>
+                                        <input type="checkbox" class="overwrite-btn override">
+                                        <span>@lang('global.dont_overwrite')</span>
                                     </label>
                                 </div>
                                 <label>@lang('global.show')</label>
@@ -30,11 +36,14 @@
                                     <option data-select="all">@lang('global.all')</option>
                                     <option data-select="valid">@lang('global.valid')</option>
                                     <option data-select="invalid">@lang('global.invalid')</option>
+                                    <option data-select="new">@lang('global.new')</option>
+                                    <option data-select="existing">@lang('global.existing')</option>
                                 </select>
                             </div>
                             <form action="{{ route('activity.cancel-import') }}" method="POST" id="cancel-import">
                                 {{ csrf_field() }}
-                                <input type="button" class="btn_confirm hidden" id="cancel-import" data-title="Confirmation" data-message="{{ trans('global.cancel_csv_import', ['type' => trans('global.activity')]) }}"
+                                <input type="button" class="btn_confirm hidden" id="cancel-import" data-title="Confirmation"
+                                       data-message="{{ trans('global.cancel_csv_import', ['type' => trans('global.activity')]) }}"
                                        value="Cancel">
                             </form>
 
@@ -55,7 +64,6 @@
                                         <input type="submit" class="hidden" id="submit-valid-activities" value="Import">
                                     </form>
                                 </div>
-
 
                                 <div role="tabpanel" class="tab-pane" id="valid">
                                     <form action="{{ route('activity.import-validated-activities') }}" method="POST">
@@ -79,6 +87,20 @@
                                     @else
                                         <div class="invalid-data"></div>
                                     @endif
+                                </div>
+
+                                <div role="tabpanel" class="tab-pane" id="new">
+                                    <form action="{{ route('activity.import-validated-activities') }}" method="POST">
+                                        {{ csrf_field() }}
+                                        <input type="submit" class="hidden" id="submit-valid-activities" value="Import">
+                                    </form>
+                                </div>
+
+                                <div role="tabpanel" class="tab-pane" id="existing">
+                                    <form action="{{ route('activity.import-validated-activities') }}" method="POST">
+                                        {{ csrf_field() }}
+                                        <input type="submit" class="hidden" id="submit-valid-activities" value="Import">
+                                    </form>
                                 </div>
                             </div>
                         </div>

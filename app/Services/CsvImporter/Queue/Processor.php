@@ -45,13 +45,14 @@ class Processor
      * Push a CSV file's data for processing into Queue.
      * @param $file
      * @param $filename
+     * @param $activityIdentifiers
      */
-    public function pushIntoQueue($file, $filename)
+    public function pushIntoQueue($file, $filename, $activityIdentifiers)
     {
         $csv = $this->csvReader->load($file)->toArray();
 
         $this->dispatch(
-            new ImportActivity(new CsvProcessor($csv), $filename)
+            new ImportActivity(new CsvProcessor($csv), $filename, $activityIdentifiers)
         );
     }
 }
