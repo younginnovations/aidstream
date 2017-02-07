@@ -25,7 +25,7 @@ $(document).ready(function () {
                     url = location.origin + '/files/documents/' + encodeURI(document.filename);
                 }
                 documentList += '<tr>';
-                documentList += '<td>' + url + '</td>';
+                documentList += '<td>' + encodeURI(document.filename) + '</td>';
                 documentList += '<td><a href="' + url + '" class="use_this">' + localisedData['use_this'] + '</a></td>';
                 documentList += '<tr>';
             }
@@ -52,6 +52,17 @@ $(document).ready(function () {
             $('.upload_form', this).removeClass('hidden');
         } else {
             $('.upload_form', this).addClass('hidden');
+        }
+    });
+
+    $('#file').change(function () {
+        if (this.files[0].size > 5000000) {
+            $('#message').css('color', 'red').html('File size must be less then 5 MB.');
+            $('#upload_document button[type="submit"]').addClass('disabled');
+        }
+        if(this.files[0].size <= 5000000) {
+            $('#upload_document button[type="submit"]').removeClass('disabled');
+            $('#message').html('');
         }
     });
 

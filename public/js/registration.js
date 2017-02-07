@@ -473,6 +473,7 @@ function slash(value) {
 
             /* organization validation rules */
             $(slash('#organization[organization_name]'), form).rules('add', {required: true, messages: {required: localisedData['org_name_required']}});
+            $(slash('#organization[organization_name]'), form).rules('add', {maxlength: 100, messages: {maxlength: localisedData['org_name_maxlength']}});
             $(slash('#organization[organization_name_abbr]'), form).rules('add', {required: true, messages: {required: localisedData['org_name_abbrev_required']}});
             $(slash('#organization[organization_type]'), form).rules('add', {required: true, messages: {required: localisedData['org_type_required']}});
             $(slash('#organization[organization_address]'), form).rules('add', {required: true, messages: {required: localisedData['address_required']}});
