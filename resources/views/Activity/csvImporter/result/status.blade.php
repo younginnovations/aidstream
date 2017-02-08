@@ -19,6 +19,12 @@
                     <div class="panel panel-default panel-upload">
                         <div class="panel-body">
                             <div class="status-show-block">
+                                <div id="checkAll" class="hidden">
+                                    <label>
+                                        <input type="checkbox" class="check-btn">
+                                        <span></span>
+                                    </label>
+                                </div>
                                 <label>@lang('global.show')</label>
                                 <select class="tab-select">
                                     <option data-select="all">@lang('global.all')</option>

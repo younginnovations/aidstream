@@ -47,11 +47,11 @@ class ImportResultController extends Controller
      */
     public function __construct(ImportResultForm $form, OrganizationManager $organizationManager, ImportManager $importManager)
     {
+        $this->middleware('auth');
         $this->form                = $form;
         $this->organizationManager = $organizationManager;
         $this->importManager       = $importManager;
         $this->userId              = auth()->user()->id;
-        $this->middleware('auth');
     }
 
     /**

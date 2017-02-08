@@ -13,15 +13,16 @@ $(document).ready(function () {
                     return;
                 }
 
-                if (response.status == 'Complete') {
-                    placeHolder.empty().append("<a href='/activity/'" + activity + "'/import-activity/import-status'>" + "Csv File Processing " + response.status + "</a>");
+                placeHolder.empty().append($('<a/>', {
+                    href: '/activity/' + activity + '/import-result/import-status',
+                    text: "Csv File Processing " + response.status
+                }));
 
+                if (response.status == 'Complete') {
                     return;
                 }
 
                 if (response.status == 'Processing') {
-                    placeHolder.empty().append("<a href='/activity/'" + activity + "'/import-activity/import-status'>" + "Csv File " + response.status + "</a>");
-
                     checkResultSessionStatus();
                 }
             });
