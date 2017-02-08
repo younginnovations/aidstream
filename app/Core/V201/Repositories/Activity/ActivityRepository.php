@@ -221,6 +221,12 @@ class ActivityRepository
      */
     public function deleteElement(Activity $activity, $element)
     {
+        if ($element === 'result') {
+            $activity->results()->delete();
+
+            return $activity->save();
+        }
+
         $activity->$element = null;
 
         return $activity->save();

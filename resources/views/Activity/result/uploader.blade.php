@@ -49,6 +49,7 @@
 @section('script')
     <script>
         var checkSessionRoute = '{{ route('activity.result.check-session-status')}}';
+        var activity = "{!! $activityId !!}";
     </script>
     <script src="{{ asset('js/csvImporter/result/checkSessionStatus.js') }}"></script>
 @stop
