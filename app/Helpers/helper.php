@@ -1176,3 +1176,16 @@ function checkAllVocabularies($sectors)
 
     return true;
 }
+
+/**
+ * Returns only upto 100 character of long reporting organization name
+ *
+ * @param array $reportingOrg
+ * @return array $reportingOrg
+ */
+function trimReportingOrg(array $reportingOrg)
+{
+    $reportingOrg[0]['narrative'][0]['narrative'] = substr(getVal($reportingOrg, [0, 'narrative', 0, 'narrative']), 0, 100);
+
+    return $reportingOrg;
+}
