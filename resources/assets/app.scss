@@ -4664,20 +4664,25 @@ pre.prettyprint {
 }
 
 .Linked, .Unlinked {
-  background: $url_18 no-repeat 0 6px;
+  background: $url_18 no-repeat 0 0;
   display: inline-block;
   width: 20px;
   height: 15px;
   text-indent: -9999px;
+  position: relative;
 }
 
 .Unlinked {
-  background: $url_18 no-repeat 0 -16px;
+  background: $url_18 no-repeat 0 -19px;
 }
 
 .activity-status-published .Unlinked, .activity-status-published .Linked {
   float: left;
-  margin: 25px 0 0 20px;
+  margin: 31px 0 0 20px;
+}
+
+.activity-status-published .Unlinked {
+  margin-top: 28px;
 }
 
 .link-content-message {
@@ -4688,17 +4693,25 @@ pre.prettyprint {
   border-radius: 4px;
   padding: 10px;
   text-align: left;
+  text-indent: 1px;
   z-index: 1;
-  @include position(absolute, 50px auto auto -175px);
+  @include position(absolute, 20px auto auto -154px);
   display: none;
   font-size: 13px;
   &:before {
-    @include position(absolute, -4px auto auto 66%);
-    content: '';
-    width: 8px;
-    height: 8px;
+    content: " ";
+    display: block;
+    height: 20px;
+    @include position(absolute, -20px auto auto 0);
+    width: 100%;
+  }
+  &:after {
     background: $color_white;
+    bottom: -10px;
     box-shadow: -2px -2px 5px -1px rgba($color_black_approx, 0.3);
+    content: " ";
+    @include position(absolute, -5px auto auto 53%);
+    @include size(10px);
     transform: rotate(45deg);
   }
 }
@@ -4706,17 +4719,19 @@ pre.prettyprint {
 .popup-link-content {
   float: left;
   position: relative;
-  padding-bottom: 6px;
   &:hover .link-content-message {
     display: block;
   }
 }
 
 .published + .popup-link-content {
-  margin: 4px 0 0 4px;
+  margin: 10px 0 0 4px;
+  &.Unlinked {
+    margin-top: 8px;
+  }
   .link-content-message {
-    top: 30px;
-    left: -205px;
+    top: 22px;
+    left: -164px;
   }
 }
 

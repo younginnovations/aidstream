@@ -52,9 +52,8 @@
                                         <td>
                                             <span class="{{ $status_label[$activity->activity_workflow] }}">{{ trans(sprintf('global.%s', $status_label[$activity->activity_workflow]))}}</span>
                                             @if($activity->activity_workflow == 3)
-                                                <div class="popup-link-content">
-                                                    <a href="#" title="{{ucfirst($activityPublishedStats[$activity->id])}}"
-                                                       class="{{ucfirst($activityPublishedStats[$activity->id])}}">{{ucfirst($activityPublishedStats[$activity->id])}}</a>
+                                                <div class="popup-link-content {{ucfirst($activityPublishedStats[$activity->id])}}">
+                                                    {{ucfirst($activityPublishedStats[$activity->id])}}
                                                     <div class="link-content-message">
                                                         {!!$messages[$activity->id]!!}
                                                     </div>

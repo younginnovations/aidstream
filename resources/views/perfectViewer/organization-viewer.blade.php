@@ -59,7 +59,7 @@
                 <div class="organisation-more-info">
                     <span class="organisation-name">
                         <a href="#" title="{{ getVal($organizations, ['name'], '')}}">
-                            {{ getVal(json_decode(getVal($organizations, ['reporting_org'], []), true), [0, 'narrative', 0, 'narrative'], '')}}
+                            {{ getVal($organizations, ['reporting_org', 0, 'narrative', 0, 'narrative'], '')}}
                             {{--{{$organizations['name']}}--}}
                         </a>
                     </span>

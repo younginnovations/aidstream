@@ -173,7 +173,7 @@ class ActivityController extends Controller
                 $filenames[$activity->id]              = $filename;
                 $activityPublishedStatus               = $this->getPublishedActivityStatus($filename, $this->organization_id);
                 $activityPublishedStats[$activity->id] = $activityPublishedStatus;
-                $message                               = $this->getMessageForPublishedActivity($activityPublishedStatus, $filename);
+                $message                               = $this->getMessageForPublishedActivity($activityPublishedStatus, $filename, $activity->organization);
                 $messages[$activity->id]               = $message;
             }
         }
@@ -225,7 +225,7 @@ class ActivityController extends Controller
         if ($activityData->activity_workflow == 3) {
             $filename                = $this->getPublishedActivityFilename($this->organization_id, $activityData);
             $activityPublishedStatus = $this->getPublishedActivityStatus($filename, $this->organization_id);
-            $message                 = $this->getMessageForPublishedActivity($activityPublishedStatus, $filename);
+            $message                 = $this->getMessageForPublishedActivity($activityPublishedStatus, $filename, $activityData->organization);
         }
 
         if (Gate::denies('ownership', $activityData)) {
@@ -909,12 +909,15 @@ class ActivityController extends Controller
      * @param $filename
      * @return string
      */
-    protected function getMessageForPublishedActivity($status, $filename)
+    protected function getMessageForPublishedActivity($status, $filename, $organization)
     {
+        $publisherId = getVal($organization->settings->toArray(), ['registry_info', 0, 'publisher_id'], null);
+        $link        = $publisherId ? "<a href='https://iatiregistry.org/publisher/" . $publisherId . "' target='_blank'>IATI registry</a>" : "IATI Registry";
+
         if ($status == "Unlinked") {
             $message = trans('error.activity_not_published_to_registry');
         } elseif ($status == "Linked") {
-            $message = trans('success.activity_published_to_registry') . ' ' . "<a href='/files/xml/$filename'>$filename</a>";
+            $message = trans('success.activity_published_to_registry', ['link' => $link]) . ' ' . "<a href='/files/xml/$filename'>$filename</a>";
         } else {
             $message = trans('error.republish_activity');
         }

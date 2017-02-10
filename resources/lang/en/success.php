@@ -14,7 +14,7 @@ return [
     'activities_successfully_imported'              => 'Activities successfully imported.',
     'no_on_going_process'                           => 'No on going processes.',
     'published_to_registry'                         => 'The files :filename have been published to registry.',
-    'activity_published_to_registry'                => 'This activity has been published to the IATI registry. It is included in the file',
+    'activity_published_to_registry'                => "This activity has been published to the :link. It is included in the file",
     'sector_details_removed_from_activity_level'    => 'Sector details has been removed from Activity level.',
     'sector_details_removed_from_transaction_level' => 'Sector details has been removed from Transaction level.',
     'select_one_activity'                           => 'Please select at least one activity.',
