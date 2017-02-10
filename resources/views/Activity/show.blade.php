@@ -45,9 +45,8 @@
                         @endif
                     </form>
                 @else
-                    <div class="popup-link-content">
-                        <a href="#" title="{{ucfirst($activityPublishedStatus)}}"
-                           class="{{ucfirst($activityPublishedStatus)}}">{{ucfirst($activityPublishedStatus)}}</a>
+                    <div class="popup-link-content {{ucfirst($activityPublishedStatus)}}">
+                        {{ucfirst($activityPublishedStatus)}}
                         <div class="link-content-message">{!!$message!!}</div>
                     </div>
                 @endif
