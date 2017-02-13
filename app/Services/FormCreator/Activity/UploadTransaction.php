@@ -26,7 +26,7 @@ class UploadTransaction
             $this->formPath,
             [
                 'method' => 'POST',
-                'url'    => route('activity.transaction-upload.store', [$activityId])
+                'url'    => route('activity.transaction.import-csv', [$activityId])
             ]
         )->add('Upload', 'submit', ['attr' => ['class' => 'btn pull-left']]);
     }

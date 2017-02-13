@@ -93,3 +93,4 @@ trait ChecksCsvHeaders
         return false;
     }
 }
+

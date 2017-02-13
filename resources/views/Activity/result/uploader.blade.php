@@ -47,9 +47,11 @@
     </div>
 @stop
 @section('script')
-    <script>
-        var checkSessionRoute = '{{ route('activity.result.check-session-status')}}';
-        var activity = "{!! $activityId !!}";
-    </script>
-    <script src="{{ asset('js/csvImporter/result/checkSessionStatus.js') }}"></script>
+    @if(session()->has('import-status'))
+        <script>
+            var checkSessionRoute = '{{ route('activity.result.check-session-status')}}';
+            var activity = "{!! $activityId !!}";
+        </script>
+        <script src="{{ asset('js/csvImporter/result/checkSessionStatus.js') }}"></script>
+    @endif
 @stop

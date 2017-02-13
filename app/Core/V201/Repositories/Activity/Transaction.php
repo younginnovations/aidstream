@@ -44,7 +44,7 @@ class Transaction
     {
         $transactionDetails        = $this->checkSectorVocabulary($transactionDetails);
         $transactions              = $this->getTransaction($transactionId);
-        $transactions->transaction = $transactionDetails['transaction'][0];
+        $transactions->transaction = getVal($transactionDetails, ['transaction', 0], []);
         $transactions->save();
     }
 
