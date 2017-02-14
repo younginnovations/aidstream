@@ -135,9 +135,6 @@ class AdminController extends Controller
             return redirect()->route('settings')->withResponse($this->getNoPrivilegesMessage());
         }
 
-        $organization           = $this->organizationManager->getOrganization(session('org_id'));
-        $organizationIdentifier = $organization->user_identifier;
-
         $this->user->first_name = $request->get('first_name');
         $this->user->last_name  = $request->get('last_name');
         $this->user->email      = $request->get('email');

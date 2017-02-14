@@ -175,6 +175,37 @@ if (typeof(Chunk) == "undefined") var Chunk = {};
                     }
                 });
             });
+        },
+        abbrGenerator: function () {
+            // auto generates abbreviation from organization name
+            var organisationName = $('.organisation_name').find('input').first();
+
+            organisationName.on('change', function () {
+                var name = $(this).val();
+                var abbr = Chunk.getShortForm(name);
+                $('.organization_name_abbr').val(abbr);
+            });
+        }, getShortForm: function (text) {
+            var ignoreList = ['and', 'of', 'the', 'an', 'a'];
+
+            function getWordList(text) {
+                var nameArray = text.split(/\ +/g);
+                return nameArray.filter(function (value) {
+                    return ($.inArray(value.toLowerCase(), ignoreList) === -1 && value.length > 1);
+                })
+            }
+
+            function getAbbr(wordList) {
+                var abbr = '';
+                for (var i in wordList) {
+                    var word = wordList[i];
+                    abbr += word.substr(0, 1);
+                }
+                return abbr.toLowerCase();
+            }
+
+            var wordList = getWordList(text);
+            return getAbbr(wordList);
         }
     }
 })

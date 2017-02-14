@@ -260,16 +260,17 @@ class OrganizationManager
     public function saveOrganizationInformation($organizationInfo, $organization)
     {
         try {
-            $old_user_identifier = strtolower($organization->user_identifier);
-            $new_user_identifier = strtolower($organizationInfo['user_identifier']);
+            $oldUserIdentifier = strtolower($organization->user_identifier);
+            $newUserIdentifier = strtolower(getVal($organizationInfo, ['user_identifier']));
 
-            ($old_user_identifier === $new_user_identifier) ? $check = true : $check = false;
-            $response = true;
+            $isSameIdentifier = ($oldUserIdentifier === $newUserIdentifier) ? true : false;
+            $response         = true;
 
-            if (!$check) {
-                $status   = $this->updateUsername($old_user_identifier, $new_user_identifier);
-                $response = "Username updated";
+            if (!$isSameIdentifier) {
+                $status   = $this->updateUsername($oldUserIdentifier, $newUserIdentifier);
+                $response = 'Username updated';
             }
+
             $result = $this->repo->saveOrganizationInformation($organizationInfo, $organization);
 
             $this->logger->info('Settings Updated Successfully.');
@@ -291,13 +292,27 @@ class OrganizationManager
         return $response;
     }
 
-    /** update username of all users of the organization.
-     * @param $old_user_identifier
-     * @param $new_user_identifier
+    /**
+     * Update username of all users of the organization.
+     * @param $oldUserIdentifier
+     * @param $newUserIdentifier
+     * @return bool
      */
-    public function updateUsername($old_user_identifier, $new_user_identifier)
+    public function updateUsername($oldUserIdentifier, $newUserIdentifier)
     {
-        return $this->userRepo->updateUsername($old_user_identifier, $new_user_identifier);
+        try {
+            $this->userRepo->updateUsername($oldUserIdentifier, $newUserIdentifier);
+            $this->logger->info(
+                'Username has been updated.',
+                ['for ' => session('org_id')]
+            );
+
+            return true;
+        } catch (Exception $exception) {
+            $this->logger->error($exception);
+        }
+
+        return false;
     }
 
     /**
@@ -351,3 +366,4 @@ class OrganizationManager
         return $this->repo->getPublishedOrganizationData($organization_id);
     }
 }
+

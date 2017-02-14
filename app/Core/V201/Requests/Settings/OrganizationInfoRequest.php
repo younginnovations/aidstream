@@ -52,6 +52,17 @@ class OrganizationInfoRequest extends Request
                 return $check;
             }
         );
+
+        Validator::extend(
+            'no_spaces',
+            function ($attribute, $value, $parameters, $validator) {
+                if (preg_match('/\s/', $value)) {
+                    return false;
+                }
+
+                return true;
+            }
+        );
     }
 
     public function rules()
@@ -59,9 +70,8 @@ class OrganizationInfoRequest extends Request
         $rules = [];
 
         $org_id               = session('org_id');
-        $user_identifier_rule = sprintf('required|unique:organizations,user_identifier,%s', $org_id);
+        $user_identifier_rule = sprintf('required|no_spaces|unique:organizations,user_identifier,%s', $org_id);
 
-        $narratives                     = $this->get('narrative');
         $rules['narrative.*.narrative'] = 'required';
         $rules['narrative']             = 'unique_lang|unique_default_lang';
         $rules['country']               = 'required';
@@ -84,6 +94,7 @@ class OrganizationInfoRequest extends Request
         $messages['country.required']               = trans('validation.required', ['attribute' => trans('elementForm.country')]);
         $messages['user_identifier.required']       = trans('validation.required', ['attribute' => trans('elementForm.user_identifier')]);
         $messages['user_identifier.unique']         = trans('validation.user_identifier_taken');
+        $messages['user_identifier.no_spaces']      = trans('validation.spaces_not_allowed');
         $messages['organization_type.required']     = trans('validation.required', ['attribute' => trans('elementForm.organisation_type')]);
         $messages['registration_number.required']   = trans('validation.required', ['attribute' => trans('organisation.organisation_registration_number')]);
         $messages['registration_number.regex']      = trans('validation.regex', ['attribute' => '-' . ',' . '_']);

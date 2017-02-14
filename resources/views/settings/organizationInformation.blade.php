@@ -6,7 +6,7 @@
             {{ Form::model($organization,['method'=>'POST', 'route' => 'organization-information.update','files' => true]) }}
             {!! form_rest($form) !!}
             <div class="col-md-12 col-xs-12">
-                {!! AsForm::text(['name'=>'user_identifier', 'required' => true,'label'=>trans('organisation.organisation_name_abbreviation'), 'parent'=>'col-xs-12 col-sm-6 col-md-6']) !!}
+                {!! AsForm::text(['name'=>'user_identifier', 'class' => 'organization_name_abbr','required' => true,'label'=>trans('organisation.organisation_name_abbreviation'), 'parent'=>'col-xs-12 col-sm-6 col-md-6']) !!}
                 {!! AsForm::select(['name'=>'organization_type','label' => trans('organisation.organisation_type'),'data' => $organizationTypes, 'value' => getVal((array) $organization->reporting_org, [ 0 ,'reporting_organization_type']),'empty_value' => trans('global.select_one_of_the_following_options') ,'required' => true,'parent'=>'col-xs-12 col-sm-6 col-md-6']) !!}
             </div>
             <div class="col-md-12 col-xs-12">
@@ -70,6 +70,7 @@
         $('document').ready(function () {
             Chunk.displayPicture();
             Chunk.changeCountry();
+            Chunk.abbrGenerator();
             @if(session('status'))
                  $('#usernameChanged').modal({
                 backdrop: 'static',

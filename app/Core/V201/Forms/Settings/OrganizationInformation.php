@@ -7,7 +7,7 @@ class OrganizationInformation extends BaseForm
 {
     public function buildForm()
     {
-        $this->addCollection('narrative', 'Settings\Narrative', 'narrative', ['label' => trans('elementForm.organisation_name')], false)
+        $this->addCollection('narrative', 'Settings\Narrative', 'organisation_name narrative', ['label' => trans('elementForm.organisation_name')], false)
              ->addAddMoreButton('add_narrative', 'narrative', trans('global.add_organisation'));
     }
 }

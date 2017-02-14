@@ -121,18 +121,36 @@ class UserRepository
         return $this->user->where('org_id', session('org_id'))->get();
     }
 
-    /** updates username of the organization.
-     * @param $old_user_identifier
-     * @param $new_user_identifier
+    /**
+     * Updates username of the organization.
+     * @param $oldUserIdentifier
+     * @param $newUserIdentifier
      */
-    public function updateUsername($old_user_identifier, $new_user_identifier)
+    public function updateUsername($oldUserIdentifier, $newUserIdentifier)
     {
         $users = $this->getAllUsersOfOrganization();
+
         foreach ($users as $user) {
             $old_username   = $user->username;
-            $nameOnly       = substr($old_username, strlen($old_user_identifier) + 1);
-            $user->username = $new_user_identifier . '_' . $nameOnly;
+            $nameOnly       = substr($old_username, strlen($this->removeUnderScoreIfPresent($oldUserIdentifier)) + 1);
+            $user->username = $newUserIdentifier . '_' . $this->removeUnderScoreIfPresent($nameOnly);
             $user->save();
         }
     }
+
+    /**
+     *  Removes underscore from the string if present.
+     *
+     * @param $name
+     * @return mixed
+     */
+    public function removeUnderScoreIfPresent($name)
+    {
+        if (preg_match('/\_/', $name)) {
+            return preg_replace('/\_/', '', $name, 1);
+        };
+
+        return $name;
+    }
 }
+

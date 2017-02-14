@@ -136,6 +136,7 @@ return [
     'narrative_required'                        => ':attribute Narrative is required.',
     'no_more_than_once'                         => ':attribute should occur once and no more than once within :values.',
     'budget_period_end_date'                    => 'Budget Period End Date',
+    'spaces_not_allowed'                        => 'You cannot enter spaces in organization name abbreviation.',
     'custom'                                    => [
         'attribute-name' => [
             'rule-name' => 'custom-message',
