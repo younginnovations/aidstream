@@ -85,11 +85,29 @@ function slash(value) {
             checkElem.on('focus', function () {
                 checkElem.parent().siblings('.availability-check').html('').addClass('hidden').removeClass('text-success text-danger');
             });
+
+            checkElem.on('keydown', function () {
+                checkElem.parent().siblings('.availability-check').html('').addClass('hidden').removeClass('text-success text-danger');
+            });
+
+
             function checkAvailability() {
                 var userIdentifier = $(this).val();
+
                 if ($.trim(userIdentifier) == "") {
                     return false;
                 }
+
+                var containsSpaces = /\s/.test(userIdentifier);
+
+                if (containsSpaces) {
+                    checkElem.val("");
+                    checkElem.next().html(localisedData['spaces_not_allowed']).css('display', 'block');
+                    checkElem.parent().addClass('has-error');
+
+                    return false;
+                }
+
                 var callback = function (data) {
                     checkElem.parent().siblings('.availability-check').siblings('.text-danger').remove();
                     checkElem.parent().siblings('.availability-check').removeClass('hidden text-danger test-success').addClass('text-' + data.status).html(data.message);

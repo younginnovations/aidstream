@@ -7,7 +7,7 @@
             <div class="modal-body">
                 <ol>
                     @foreach($users as $user)
-                        @if($user->role_id != 7)
+                        @if($user->id != auth()->user()->id)
                             <li>{{$user->first_name}} {{ $user->last_name }} {{$user->username}}</li>
                         @endif
                     @endforeach

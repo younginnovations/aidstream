@@ -318,7 +318,7 @@ class OrganizationController extends Controller
         $organization = $this->organizationManager->getOrganization(session('org_id'));
         $this->authorize('settings', $organization->settings);
         $organizationInfoResponse = $this->organizationManager->saveOrganizationInformation($request->all(), $organization);
-
+        
         if ($organizationInfoResponse === "Username updated") {
             return redirect()->route('settings')->with('status', 'changed');
         }

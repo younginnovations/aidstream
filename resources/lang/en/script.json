@@ -40,5 +40,6 @@
   "select_an_agency": "Select an Agency",
   "add_additional_users": "add additional users now.",
   "use_this": "Use this",
-  "no_documents_found": "No documents found."
+  "no_documents_found": "No documents found.",
+  "spaces_not_allowed": "You cannot enter spaces in organization name abbreviation."
 }
