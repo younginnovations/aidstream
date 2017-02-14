@@ -9,17 +9,24 @@ use App\Services\CsvImporter\Entities\Csv;
 class Activity extends Csv
 {
     /**
+     * @var
+     */
+    protected $activityIdentifiers;
+
+    /**
      * Activity constructor.
      * @param $rows
      * @param $organizationId
      * @param $userId
+     * @param $activityIdentifiers
      */
-    public function __construct($rows, $organizationId, $userId)
+    public function __construct($rows, $organizationId, $userId, $activityIdentifiers)
     {
-        $this->csvRows        = $rows;
-        $this->organizationId = $organizationId;
-        $this->userId         = $userId;
-        $this->rows           = $rows;
+        $this->csvRows             = $rows;
+        $this->organizationId      = $organizationId;
+        $this->userId              = $userId;
+        $this->rows                = $rows;
+        $this->activityIdentifiers = $activityIdentifiers;
     }
 
     /**
@@ -30,10 +37,11 @@ class Activity extends Csv
     public function process()
     {
         foreach ($this->rows() as $row) {
-            $this->initialize($row)
+            $this->initialize($row, $this->activityIdentifiers)
                  ->process()
                  ->validate()
                  ->validateUnique($this->csvRows)
+                 ->checkExistence($row)
                  ->keep();
         }
 

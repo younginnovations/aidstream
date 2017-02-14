@@ -64,14 +64,15 @@ class CsvProcessor
      * Handle the import functionality.
      * @param $organizationId
      * @param $userId
+     * @param $activityIdentifiers
      */
-    public function handle($organizationId, $userId)
+    public function handle($organizationId, $userId, $activityIdentifiers)
     {
         $this->filterHeader();
         if ($this->isCorrectCsv()) {
             $this->groupValues();
 
-            $this->initActivity(['organization_id' => $organizationId, 'user_id' => $userId]);
+            $this->initActivity(['organization_id' => $organizationId, 'user_id' => $userId, 'activity_identifiers' => $activityIdentifiers]);
 
             $this->activity->process();
         } else {
@@ -94,7 +95,7 @@ class CsvProcessor
     protected function initActivity(array $options = [])
     {
         if (class_exists(Activity::class)) {
-            $this->activity = app()->make(Activity::class, [$this->data, getVal($options, ['organization_id']), getVal($options, ['user_id'])]);
+            $this->activity = app()->make(Activity::class, [$this->data, getVal($options, ['organization_id']), getVal($options, ['user_id']), getVal($options, ['activity_identifiers'])]);
         }
     }
 

@@ -86,7 +86,8 @@ class Identifier extends Element
     public function rules()
     {
         return [
-            'activity_identifier' => sprintf('required|not_in:%s', implode(',', $this->activityIdentifiers()))
+            'activity_identifier' => 'required'
+//            'activity_identifier' => sprintf('required|not_in:%s', implode(',', $this->activityIdentifiers()))
         ];
     }
 
@@ -98,7 +99,7 @@ class Identifier extends Element
     {
         return [
             'activity_identifier.required' => trans('validation.required', ['attribute' => trans('elementForm.activity_identifier')]),
-            'activity_identifier.not_in'   => trans('validation.unique', ['attribute' => trans('elementForm.activity_identifier')])
+//            'activity_identifier.not_in'   => trans('validation.unique', ['attribute' => trans('elementForm.activity_identifier')])
         ];
     }
 

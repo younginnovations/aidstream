@@ -36,19 +36,25 @@ class ImportActivity extends Job implements ShouldQueue
      * @var
      */
     protected $filename;
+    /**
+     * @var
+     */
+    private $activityIdentifiers;
 
     /**
      * Create a new job instance.
      *
      * @param CsvProcessor $csvProcessor
      * @param              $filename
+     * @param              $activityIdentifiers
      */
-    public function __construct(CsvProcessor $csvProcessor, $filename)
+    public function __construct(CsvProcessor $csvProcessor, $filename, $activityIdentifiers)
     {
         $this->csvProcessor   = $csvProcessor;
         $this->organizationId = session('org_id');
         $this->userId         = $this->getUserId();
         $this->filename       = $filename;
+        $this->activityIdentifiers = $activityIdentifiers;
     }
 
     /**
@@ -58,7 +64,7 @@ class ImportActivity extends Job implements ShouldQueue
      */
     public function handle()
     {
-        $this->csvProcessor->handle($this->organizationId, $this->userId);
+        $this->csvProcessor->handle($this->organizationId, $this->userId, $this->activityIdentifiers);
         $directoryPath = storage_path(sprintf('%s/%s/%s', 'csvImporter/tmp/', $this->organizationId, $this->userId));
         shell_exec(sprintf('chmod 777 -R %s', $directoryPath));
 

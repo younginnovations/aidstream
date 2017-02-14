@@ -118,6 +118,13 @@ class ActivityRow extends Row
     protected $elements;
 
     /**
+     * Flag for existence of the identifier
+     *
+     * @var
+     */
+    protected $existence = false;
+
+    /**
      * @var
      */
     protected $identifier;
@@ -203,19 +210,25 @@ class ActivityRow extends Row
      * @var
      */
     protected $userId;
+    /**
+     * @var
+     */
+    protected $activityIdentifiers;
 
     /**
      * ActivityRow constructor.
      * @param $fields
      * @param $organizationId
      * @param $userId
+     * @param $activityIdentifiers
      */
-    public function __construct($fields, $organizationId, $userId)
+    public function __construct($fields, $organizationId, $userId, $activityIdentifiers)
     {
         $this->fields         = $fields;
         $this->organizationId = $organizationId;
         $this->userId         = $userId;
         $this->init();
+        $this->activityIdentifiers = $activityIdentifiers;
     }
 
     /**
@@ -325,7 +338,7 @@ class ActivityRow extends Row
     {
         foreach ($this->activityElements() as $element) {
             if (class_exists($namespace = $this->getNamespace($element, self::BASE_NAMESPACE))) {
-                $this->$element   = $this->make($namespace, $this->fields());
+                $this->$element = $this->make($namespace, $this->fields());
 
                 if ($element === 'identifier') {
                     $this->$element->setOrganization($this->organizationId);
@@ -545,7 +558,7 @@ class ActivityRow extends Row
     protected function appendDataIntoFile($destinationFilePath)
     {
         if ($currentContents = json_decode(file_get_contents($destinationFilePath), true)) {
-            $currentContents[] = ['data' => $this->data(), 'errors' => $this->errors(), 'status' => 'processed'];
+            $currentContents[] = ['data' => $this->data(), 'errors' => $this->errors(), 'status' => 'processed', 'existence' => $this->existence];
 
             file_put_contents($destinationFilePath, json_encode($currentContents));
         } else {
@@ -559,7 +572,7 @@ class ActivityRow extends Row
      */
     protected function createNewFile($destinationFilePath)
     {
-        file_put_contents($destinationFilePath, json_encode([['data' => $this->data(), 'errors' => $this->errors(), 'status' => 'processed']]));
+        file_put_contents($destinationFilePath, json_encode([['data' => $this->data(), 'errors' => $this->errors(), 'status' => 'processed', 'existence' => $this->existence]]));
         shell_exec(sprintf('chmod 777 -R %s', $destinationFilePath));
     }
 
@@ -595,6 +608,21 @@ class ActivityRow extends Row
 
         if ($this->containsDuplicateActivities($commonIdentifierCount) || $this->containsDuplicateTransactions($references)) {
             $this->isValid = false;
+        }
+
+        return $this;
+    }
+
+    /**
+     * Checks if the activityIdentifiers already exists or not.
+     * 
+     * @param $row
+     * @return $this
+     */
+    public function checkExistence($row)
+    {
+        if (array_intersect($this->activityIdentifiers, getVal($row, ['activity_identifier'], []))) {
+            $this->existence = true;
         }
 
         return $this;
