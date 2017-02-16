@@ -226,7 +226,7 @@ class TransactionRow
 
         if ($humanitarian != "" && $humanitarian != 1 && $humanitarian !== 0) {
             if (array_key_exists(strtolower($humanitarian), $this->allowedHumanitarianValues)) {
-                $this->transactionRow['transaction']['humanitarian'] = $this->allowedHumanitarianValues[$humanitarian];
+                $this->transactionRow['transaction']['humanitarian'] = $this->allowedHumanitarianValues[strtolower($humanitarian)];
             }
         }
 
