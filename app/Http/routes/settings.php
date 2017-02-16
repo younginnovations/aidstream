@@ -139,7 +139,7 @@ $router->get(
     ]
 );
 
-$router->get(
+$router->post(
     'organization-information/notify-user',
     [
         'as'   => 'organization-information.notify-user',
