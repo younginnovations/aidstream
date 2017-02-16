@@ -30,7 +30,7 @@
                                 <thead>
                                 <tr>
                                     <th width="20px" class="no-sort">@lang('global.sn')</th>
-                                    <th width="45%">@lang('global.activity_title')</th>
+                                    <th width="40%">@lang('global.activity_title')</th>
                                     <th class="default-sort">@lang('global.last_updated')</th>
                                     <th class="status">@lang('global.status')</th>
                                     <th class="no-sort" style="width:100px!important">@lang('global.actions')</th>
