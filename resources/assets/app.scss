@@ -4667,23 +4667,23 @@ pre.prettyprint {
 .Linked, .Unlinked {
   background: $url_18 no-repeat 0 0;
   display: inline-block;
-  width: 20px;
-  height: 15px;
+  @include size(20px);
   text-indent: -9999px;
   position: relative;
 }
 
+.Linked {
+  background: url(../images/ic-iati-logo.png) no-repeat 0 0/20px;
+}
+
 .Unlinked {
-  background: $url_18 no-repeat 0 -19px;
+  //background: $url_18 no-repeat 0 -19px;
+  background: url(../images/not-published.png) no-repeat 0 0/20px;
 }
 
 .activity-status-published .Unlinked, .activity-status-published .Linked {
   float: left;
-  margin: 31px 0 0 20px;
-}
-
-.activity-status-published .Unlinked {
-  margin-top: 28px;
+  margin: 23px 0 0 20px;
 }
 
 .link-content-message {
@@ -4696,7 +4696,7 @@ pre.prettyprint {
   text-align: left;
   text-indent: 1px;
   z-index: 1;
-  @include position(absolute, 20px auto auto -154px);
+  @include position(absolute, 28px auto auto -154px);
   display: none;
   font-size: 13px;
   &:before {
@@ -4726,12 +4726,9 @@ pre.prettyprint {
 }
 
 .published + .popup-link-content {
-  margin: 10px 0 0 4px;
-  &.Unlinked {
-    margin-top: 8px;
-  }
+  margin: 4px 0 0 4px;
   .link-content-message {
-    top: 22px;
+    top: 28px;
     left: -164px;
   }
 }
@@ -6174,7 +6171,7 @@ body > .skiptranslate iframe {
 
 #submit-valid-activities {
   display: block;
-  @include position(absolute,8px 95px auto auto);
+  @include position(absolute, 8px 95px auto auto);
   z-index: 1;
   padding: 7px 14px;
   font-size: 12px;
@@ -6552,7 +6549,7 @@ body > .skiptranslate iframe {
 }
 
 .panel-title .badge {
-  background-color: #999!important;
+  background-color: #999 !important;
   font-size: 10px;
   font-weight: 100;
   text-transform: none;
@@ -6560,12 +6557,12 @@ body > .skiptranslate iframe {
 
 .update-transaction {
   color: #888;
-  font-size: 12px!important;
+  font-size: 12px !important;
   padding: 16px 20px 0;
   float: right;
   width: 41%;
   margin-top: -124px;
-  margin-bottom: 0!important;
+  margin-bottom: 0 !important;
   position: relative;
 }
 
