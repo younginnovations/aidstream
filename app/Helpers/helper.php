@@ -136,9 +136,13 @@ function getVal(array $arr, array $arguments, $default = "")
  */
 function isSuperAdminRoute()
 {
-    $routeAction = request()->route()->getAction();
+    if (request()->route()) {
+        $routeAction = request()->route()->getAction();
 
-    return isset($routeAction['SuperAdmin']);
+        return isset($routeAction['SuperAdmin']);
+    }
+
+    return false;
 }
 
 /**

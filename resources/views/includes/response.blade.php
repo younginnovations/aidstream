@@ -23,7 +23,6 @@
     @endif
 @endif
 
-{{--{{ dd(session('onboarding_complete_message')) }}--}}
 @if(session('onboarding_complete_message'))
     <div class='complete-message'>
         <p>
