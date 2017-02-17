@@ -19,7 +19,7 @@ return [
     'yes'                              => 'Yes',
     'no'                               => 'No',
     'save'                             => 'Save',
-    'version_upgrade'                  => 'Upgrade',
+    'version_upgrade'                  => 'Upgrade AidStream',
     'version_upgrade_tooltip'          => 'Upgrade your AidStream to the Core version to use it to the fullest.',
     'go_back'                          => 'Back to Lite',
     'confirm_upgrade'                  => 'Are you sure you want to upgrade AidStream ?',

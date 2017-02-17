@@ -91,4 +91,47 @@ class LiteBaseForm extends BaseForm
     {
         return $this->add($name, 'password', ['label' => $label, 'required' => $required, 'wrapper' => ['class' => $wrapperClass]]);
     }
+
+    public function loadCodeList($systemVersion, $name)
+    {
+        return config(sprintf('%s.%s', $systemVersion, $name));
+    }
+
+    /**
+     * @param       $name
+     * @param array $choices
+     * @param null  $label
+     * @param null  $helpText
+     * @param null  $defaultValue
+     * @param bool  $required
+     * @param array $customOptions
+     * @return $this
+     */
+    protected function addSelect(
+        $name,
+        array $choices,
+        $label = null,
+        $helpText = null,
+        $defaultValue = null,
+        $required = false,
+        $customOptions = []
+    ) {
+        $options = [
+            'choices'       => $choices,
+            'label'         => $label,
+            'empty_value'   => trans('elementForm.select_text'),
+            'default_value' => $defaultValue,
+            'help_block'    => $helpText,
+            'required'      => $required
+        ];
+
+        $options = array_merge($options, $customOptions);
+
+        return $this->add(
+            $name,
+            'select',
+            $options
+        );
+    }
 }
+

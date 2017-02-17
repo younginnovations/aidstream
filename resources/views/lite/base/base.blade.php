@@ -6,9 +6,16 @@
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport'/>
     <title>AidStream - @yield('title', 'No Title')</title>
     <link rel="stylesheet" href="//cdn.datatables.net/1.10.11/css/jquery.dataTables.min.css"/>
-    <link rel="shortcut icon" type="image/png" sizes="32*32" href="{{ asset('/images/favicon.png') }}"/>
+    @if(isRegisteredForTz())
+        <link rel="shortcut icon" type="image/png" sizes="32*32" href="{{ asset('/images/favicon-tz.png') }}"/>
+    @else
+        <link rel="shortcut icon" type="image/png" sizes="32*32" href="{{ asset('/images/favicon.png') }}"/>
+    @endif
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2-rc.1/css/select2.min.css" rel="stylesheet"/>
     <link href="{{ asset('/css/main.min.css') }}" rel="stylesheet">
+    @if(isRegisteredForTz())
+        <link rel="stylesheet" href="{{ asset('/tz/css/tanzania_style/tz.style.css') }}">
+    @endif
     <link href="https://cdnjs.cloudflare.com/ajax/libs/intro.js/2.1.0/introjs.min.css" rel="stylesheet"/>
 
     <!-- Fonts -->
@@ -29,14 +36,25 @@
     <div class="container-fluid">
         <div class="navbar-header">
             <div class="navbar-brand">
-                <div class="pull-left logo">
-                    <a href="{{url('/')}}" title="AidStream Lite">
-                        <img src="{{url('images/header_logo.svg')}}" alt="AidStream">
-                    </a>
-                </div>
-                <a href="{{url('/')}}" title="AidStream Lite">
-                    <span class="logo-name">AidStream <span>Lite</span></span>
-                </a>
+                    @if(isRegisteredForTz())
+                        <div class="pull-left logo">
+                            <a href="{{url('/')}}" title="AidStream Tanzania">
+                                <img src="{{url('images/ic_tz-logo.svg')}}" alt="AidStream">
+                            </a>
+                        </div>
+                        <a href="{{url('/')}}" title="AidStream Tanzania">
+                            <span class="logo-name">AidStream Tanzania</span>
+                        </a>
+                    @else
+                        <div class="pull-left logo">
+                            <a href="{{url('/')}}" title="AidStream Lite">
+                                <img src="{{url('images/header_logo.svg')}}" alt="AidStream">
+                            </a>
+                        </div>
+                        <a href="{{url('/')}}" title="AidStream Lite">
+                            <span class="logo-name">AidStream <span>Lite</span></span>
+                        </a>
+                    @endif
             </div>
         </div>
         <div class="collapse navbar-collapse navbar-right" id="bs-example-navbar-collapse-1">

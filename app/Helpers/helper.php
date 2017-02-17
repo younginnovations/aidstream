@@ -1232,3 +1232,25 @@ function moneySuffix($money)
 
     return number_format(round($money));
 }
+
+function isRegisteredForTz()
+{
+    if (auth()->check()) {
+        if (auth()->user()->organization->system_version_id === 3) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+function isTzSubDomain()
+{
+    if ($host = request()->getHost()) {
+        if (in_array('tz', explode('.', strtolower($host)))) {
+            return true;
+        }
+    }
+
+    return false;
+}

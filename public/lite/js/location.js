@@ -12,7 +12,6 @@ var Location = {
                 }
             });
         });
-
         return coordinates;
     },
     loadMap: function (countryDetails) {

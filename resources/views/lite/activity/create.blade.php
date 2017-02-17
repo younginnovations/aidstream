@@ -44,7 +44,17 @@
                         <div class="col-md-9">
                             <h2>@lang('lite/global.location')</h2>
                             <div class="row">
-                                {!! form_until($form,'location') !!}
+                                @if(isRegisteredForTz())
+                                    {!! form_until($form,'location') !!}
+                                    <div class="option-to-add-more form-group">
+                                        <span class="pull-left">
+                                            @lang('lite/global.add_more_country_than_tanzania')
+                                        </span>
+                                        <a href='#' class='pull-left display No' id='displayAddMore'><span class="pull-right">switch</span></a>
+                                    </div>
+                                @else
+                                    {!! form_until($form,'location') !!}
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -76,6 +86,14 @@
                     <div class="implementing_organisations-container hidden"
                          data-prototype="{{ form_row($form->implementing_organisations->prototype()) }}">
                     </div>
+                    @if(isRegisteredForTz())
+                        <div class="administrative-container hidden">
+                            @include('tz.partials.administrative')
+                        </div>
+                        <div class="location-container hidden">
+                            @include('tz.partials.location')
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>
@@ -87,21 +105,53 @@
     <script type="text/javascript" src="{{url('/lite/js/progressBar.js')}}"></script>
     <script type="text/javascript" src="{{url('/js/leaflet.js')}}"></script>
     <script type="text/javascript" src="{{url('/js/map.js')}}"></script>
+    @if(isRegisteredForTz())
+        <script type="text/javascript" src="{{ url('/tz/js/location.js') }}"></script>
+        <script type="text/javascript" src="{{ url('/tz/js/activity.js') }}"></script>
+    @endif
     <script type="text/javascript" src="{{ url('/lite/js/location.js') }}"></script>
+
     <script type="text/javascript">
         $(document).ready(function () {
             var countryDetails = [{!! $countryDetails !!}];
-            Location.loadMap(countryDetails);
+            @if(isRegisteredForTz())
+            //                TzLocation.loadMap(countryDetails);
+            TzLocation.closeOpenedMap(countryDetails);
+            TzLocation.onCountryChanged();
+//                TzLocation.onLatAndLongChange();
+            @else
+                Location.loadMap(countryDetails);
             Location.onCountryChange();
+            @endif
         })
     </script>
     <script type="text/javascript">
         var completedText = "{{strtolower(trans('lite/global.completed'))}}";
-        ProgressBar.calculateProgressBar(completedText);
-        ProgressBar.calculate();
-        ProgressBar.onMapClicked();
         CreateActivity.editTextArea({!! empty(!$form->getModel()) !!});
         CreateActivity.addToCollection();
         CreateActivity.scroll();
+
+                @if(isRegisteredForTz())
+        var districts = [{!! json_encode(config('tz.district')) !!}];
+        Activity.changeRegionAndDistrict();
+        Activity.removeCountriesExceptTz();
+        Activity.addMoreAdministrative();
+
+        var district = [];
+        @foreach(getVal($form->getModel(),['location'],[]) as $index => $location )
+                @foreach(getVal($location,['administrative'],[]) as $key => $administrative)
+                district["{!! getVal($administrative,['region'],'') !!}"] = "{!! getVal($administrative,['district'],'') !!}";
+        @endforeach
+@endforeach
+Activity.loadDistrictIfRegionIsPresent(district);
+        Activity.displayAddMoreCountry();
+        ProgressBar.setTotalFields(22);
+        ProgressBar.setLocationFields(5);
+        ProgressBar.addFilledFieldsForTz();
+        @endif
+
+        ProgressBar.calculateProgressBar(completedText);
+        ProgressBar.calculate();
+        ProgressBar.onMapClicked();
     </script>
 @stop

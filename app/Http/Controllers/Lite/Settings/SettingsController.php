@@ -5,6 +5,7 @@ use App\Http\Requests\Request;
 use App\Lite\Services\Settings\SettingsService;
 use App\Lite\Services\Users\UserService;
 use App\Lite\Services\Validation\ValidationService;
+use Illuminate\Contracts\Auth\Guard;
 use Kris\LaravelFormBuilder\FormBuilder;
 
 /**
@@ -33,6 +34,13 @@ class SettingsController extends LiteController
     protected $userService;
 
     /**
+     * @var Guard
+     */
+    protected $auth;
+
+    const TZ_VERSION_ID = 3;
+
+    /**
      * SettingsController constructor.
      *
      * @param FormBuilder       $formBuilder
@@ -40,7 +48,7 @@ class SettingsController extends LiteController
      * @param UserService       $userService
      * @param ValidationService $validationService
      */
-    public function __construct(FormBuilder $formBuilder, SettingsService $settingsService, UserService $userService, ValidationService $validationService)
+    public function __construct(FormBuilder $formBuilder, SettingsService $settingsService, UserService $userService, ValidationService $validationService, Guard $auth)
     {
         $this->middleware('auth');
         $this->middleware('auth.admin', ['only' => ['upgradeVersion']]);
@@ -48,6 +56,7 @@ class SettingsController extends LiteController
         $this->settingsService   = $settingsService;
         $this->validationService = $validationService;
         $this->userService       = $userService;
+        $this->auth              = $auth;
     }
 
     /**
@@ -136,6 +145,8 @@ class SettingsController extends LiteController
     {
         $organizationId = session()->get('org_id');
         $this->authorize('settings', auth()->user());
+        $organization    = $this->settingsService->getOrganization($organizationId);
+        $systemVersionId = $organization->system_version_id;
 
         if (!$this->settingsService->upgradeSystemVersion($organizationId)) {
             return redirect()->back()->withResponse(['type' => 'danger', 'messages' => [trans('error.upgrade_not_completed')]]);
@@ -143,7 +154,23 @@ class SettingsController extends LiteController
 
         session('first_login', true);
 
+        if ($this->hasBeenUpgradedFromTz($systemVersionId)) {
+            $this->auth->logOut();
+            return redirect()->route('main.home');
+        }
+
         return redirect()->route('welcome')->withResponse(['type' => 'success', 'messages' => [trans('success.aidstream_upgraded')]]);
+    }
+
+    /**
+     * Check if the upgrade has been triggered from TZ version.
+     *
+     * @param $systemVersionId
+     * @return bool
+     */
+    protected function hasBeenUpgradedFromTz($systemVersionId)
+    {
+        return ($systemVersionId == self::TZ_VERSION_ID);
     }
 }
 

@@ -10,9 +10,9 @@ var ProgressBar = {
         'general_description': false,
         'objectives': false,
         'target_groups': false,
-        'country': false,
-        'location[0][latitude]': false,
-        'location[0][longitude]': false,
+        'location[0][country]': false,
+        'location[0][administrative][0][point][0][latitude]': false,
+        'location[0][administrative][0][point][0][longitude]': false,
         'funding_organisations[0][organisation_name]': false,
         'funding_organisations[0][organisation_type]': false,
         'implementing_organisations[0][organisation_name]': false,
@@ -215,15 +215,24 @@ var ProgressBar = {
     },
     onMapClicked: function () {
         $('.map_container').on('click', function () {
-            var name = 'location[0][latitude]';
+            var name = 'location[0][administrative][0][point][0][latitude]';
             for (var i = 0; i < 2; i++) {
                 ProgressBar.changeStatusOfField(name, true);
-                name = 'location[0][longitude]';
+                name = 'location[0][administrative][0][point][0][longitude]';
             }
             ProgressBar.updateFilledFields();
             ProgressBar.updatePercentage();
             ProgressBar.updateWidthOfRectangle("bar");
         });
+    },
+    setTotalFields: function (value) {
+        this.totalFields = value;
+    },
+    setLocationFields: function (value) {
+        this.totalLocationField = value;
+    },
+    addFilledFieldsForTz: function () {
+        this.filledFields['location[0][administrative][0][region]'] = false;
+        this.filledFields['location[0][administrative][0][district]'] = false;
     }
-
 };

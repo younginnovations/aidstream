@@ -458,4 +458,20 @@ class ActivityService
     {
         return $this->transformReverse($this->getMapping($rawData, 'Activity', $version));
     }
+
+    public function location($activity)
+    {
+        $locations = getVal($activity, ['location'], []);
+        $data      = [];
+
+        foreach ($locations as $index => $location) {
+            $administrative = getVal($location, ['administrative'], []);
+            $region         = getVal($administrative, [0, 'code'], '');
+            $district       = getVal($administrative, [1, 'code']);
+            ($region == "") ?: $data[$index]['region'] = $region;
+            ($district == "") ?: $data[$index]['district'] = $district;
+        }
+
+        return $data;
+    }
 }

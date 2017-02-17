@@ -86,9 +86,8 @@ class ActivityController extends LiteController
      */
     public function index()
     {
-        $organisation = auth()->user()->organization;
-        $orgId        = session('org_id');
-
+        $organisation  = auth()->user()->organization;
+        $orgId         = $organisation->id;
         $orgIdentifier = getVal($organisation->reporting_org, [0, 'reporting_organization_identifier']);
 
         if (Gate::denies('belongsToOrganization', $organisation)) {
@@ -180,6 +179,7 @@ class ActivityController extends LiteController
         $documentLinks    = $this->activityService->documentLinks($activityId, $version);
         $transaction      = $activity->transactions->toArray();
         $transactions     = $this->transactionService->getFilteredTransactions($transaction);
+        $location         = $this->activityService->location($activity->toArray());
         $disbursement     = getVal($transactions, ['disbursement'], '');
         $expenditure      = getVal($transactions, ['expenditure'], '');
         $incoming         = getVal($transactions, ['incoming'], '');
@@ -205,7 +205,7 @@ class ActivityController extends LiteController
 
         return view(
             'lite.activity.show',
-            compact('activity', 'statusLabel', 'activityWorkflow', 'btn_text', 'nextRoute', 'disbursement', 'expenditure', 'incoming', 'defaultCurrency', 'documentLinks', 'count')
+            compact('activity', 'statusLabel', 'activityWorkflow', 'btn_text', 'nextRoute', 'disbursement', 'expenditure', 'incoming', 'defaultCurrency', 'documentLinks', 'count', 'location')
         );
     }
 

@@ -44,6 +44,7 @@ return [
     'add_another_expenditure'               => 'Add another Expenditure',
     'add_another_incoming_funds'            => 'Add another Incoming funds',
     'add_this_transaction'                  => 'Add this transaction',
+    'add_another_location'                  => 'Add another location in Tanzania',
     'edit_budget'                           => 'Edit Budget',
     'add_budget'                            => 'Add Budget',
     'edit_disbursement'                     => 'Edit Disbursement',
@@ -54,5 +55,11 @@ return [
     'add_incoming_funds'                    => 'Add Incoming Funds',
     'duplicate_this_activity'               => 'Duplicate this activity',
     'budget'                                => 'Budget',
-    'remove'                                => 'Remove'
+    'remove'                                => 'Remove',
+    'region'                                => 'Region',
+    'district'                              => 'District',
+    'map'                                   => 'Use map',
+    'latitude'                              => 'Latitude',
+    'longitude'                             => 'Longitude',
+    'location'                              => 'Location'
 ];

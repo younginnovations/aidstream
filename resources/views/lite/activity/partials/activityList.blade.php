@@ -73,17 +73,38 @@
         </div>
     @endif
 
+    @if(isRegisteredForTz())
+        @if($location)
+            <div class="activity__detail">
+                <div class="activity__element__list">
+                    <h3>
+                        @lang('lite/elementForm.location')
+                    </h3>
+                    @foreach($location as $index => $value)
+                        <div class="activity__element--info">
+                            <li>
+                                {{ getVal($value, ['district']) }}
+                                , {{ getVal($value,['region']) }}
+                            </li>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        @endif
+    @endif
     @if((array) $activity->recipient_country)
         <div class="activity__detail">
             <div class="activity__element__list">
                 <h3>
                     @lang('lite/elementForm.recipient_country')
                 </h3>
-                <div class="activity__element--info">
-                    @foreach((array)$activity->recipient_country as $index=> $country)
-                        {{$getCode->getCodeNameOnly('Country', $country['country_code'],-4,'Organization')}}
-                    @endforeach
-                </div>
+                @foreach((array) $activity->recipient_country as $index => $recipientCountry)
+                    <div class="activity__element--info">
+                        <li>
+                            {{$getCode->getCodeNameOnly('Country', getVal($recipientCountry,['country_code']),-4,'Organization')}}
+                        </li>
+                    </div>
+                @endforeach
             </div>
         </div>
     @endif

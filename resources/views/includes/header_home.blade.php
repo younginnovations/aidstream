@@ -1,7 +1,11 @@
 <header>
     <nav class="navbar navbar-default navbar-static navbar-fixed">
         <div class="navbar-header">
-            <a href="{{ url('/') }}" class="navbar-brand">@lang('title.aidstream')</a>
+            @if(isTzSubDomain())
+                <a href="{{ url('/') }}" class="navbar-brand" title="AidStream Tanzania"><img src="/images/ic_logo-aidstream-tz.svg" alt="AidStream Tanzania"></span></a>
+            @else
+                <a href="{{ url('/') }}" class="navbar-brand">@lang('title.aidstream')</a>
+            @endif
             <button type="button" class="navbar-toggle collapsed">
                 <span class="sr-only">@lang('global.toggle_navigation')</span>
                 <span class="bar1"></span>

@@ -58,13 +58,17 @@
                                         </td>
                                         <td>
                                             @if($organization->settings->version >= 2.02)
-                                                @if($organization->system_version_id == 1)
-                                                    <input type="checkbox" data-href="{{ route('admin.change.system_version', $organization->id) }}"
-                                                           data-message="Are you sure to switch to lite version?">
-                                                @else
-                                                    <input type="checkbox" checked data-href="{{ route('admin.change.system_version', $organization->id) }}"
-                                                           data-message="Are you sure to switch to core version?">
-                                                @endif
+                                                <select class="systemVersion">
+                                                    <option {{ ($organization->system_version_id == 1) ? 'selected' : '' }} data-href="{{ route('admin.change.system_version', $organization->id) }}"
+                                                            data-message="Are you sure to switch to Main version?" value="1">Main
+                                                    </option>
+                                                    <option {{ ($organization->system_version_id == 2) ? 'selected' : '' }} data-href="{{ route('admin.change.system_version', $organization->id) }}"
+                                                            data-message="Are you sure to switch to Lite version?" value="2">Lite
+                                                    </option>
+                                                    <option {{ ($organization->system_version_id == 3) ? 'selected' : '' }} data-href="{{ route('admin.change.system_version', $organization->id) }}"
+                                                            data-message="Are you sure to switch to Tanzania version?" value="3">Tanzania
+                                                    </option>
+                                                </select>
                                             @endif
                                         </td>
                                     </tr>
@@ -105,38 +109,31 @@
 
 @section('script')
     <script type="text/javascript">
-        var masqueradeBtn = document.querySelectorAll('.masquerade');
+      var masqueradeBtn = document.querySelectorAll('.masquerade');
 
-        var preventClick = false;
+      var preventClick = false;
 
-        for (var i = 0; i < masqueradeBtn.length; i++) {
-            var button = masqueradeBtn[i];
-            button.onclick = function (event) {
-                if (preventClick) {
-                    event.preventDefault();
-                }
-                preventClick = true;
-            }
+      for (var i = 0; i < masqueradeBtn.length; i++) {
+        var button = masqueradeBtn[i];
+        button.onclick = function (event) {
+          if (preventClick) {
+            event.preventDefault();
+          }
+          preventClick = true;
         }
+      }
 
-        var modal = $('#myModal');
+      var modal = $('#myModal');
 
-        $('input[type="checkbox"]').click(function (e) {
-            e.preventDefault();
-            if (e.target.checked) {
-                $('#modal-form').attr('action', $(this).attr('data-href'));
-                $('#index').attr('value', 2);
-                $('#modal-message').html($(this).attr('data-message'));
-                modal.modal("show");
-            }
+      var select = $('.systemVersion');
 
-            if (!e.target.checked) {
-                $('#modal-form').attr('action', $(this).attr('data-href'));
-                $('#index').attr('value', 1);
-                $('#modal-message').html($(this).attr('data-message'));
-                modal.modal("show");
-            }
-        });
+      select.on('change', function () {
+        var option = $(this).find(':selected');
+        $('#modal-form').attr('action', option.data('href'));
+        $('#index').attr('value', this.value);
+        $('#modal-message').html(option.data('message'));
+        modal.modal("show");
+      });
 
     </script>
 @stop

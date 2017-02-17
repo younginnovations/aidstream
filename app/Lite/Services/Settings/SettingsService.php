@@ -259,5 +259,18 @@ class SettingsService
 
         return false;
     }
+
+    /**
+     * Get the Organization with the specific organizationId.
+     *
+     * @param $organizationId
+     * @return \App\Models\Organization\Organization
+     */
+    public function getOrganization($organizationId)
+    {
+        return $this->organisationRepository->find($organizationId);
+    }
+
+
 }
 

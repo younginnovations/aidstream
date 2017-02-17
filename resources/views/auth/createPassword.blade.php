@@ -10,7 +10,9 @@
     <link href="{{ asset('/css/flag-icon.css') }}" rel="stylesheet">
     <link href="{{ asset('/css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('/css/style.css') }}" rel="stylesheet">
-
+    @if(isTzSubDomain())
+        <link rel="stylesheet" href="{{ asset('/tz/css/tanzania_style/tz.style.css') }}">
+    @endif
     <!-- Fonts -->
     <link href='//fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
 

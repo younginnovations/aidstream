@@ -10,7 +10,7 @@
         <div id="xml-import-status-placeholder"></div>
         <div class="panel panel-default">
             <div class="panel__heading">
-                <h1>@lang('lite/title.change_password')</h1>
+                <div class="panel__title">@lang('lite/title.change_password')</div>
             </div>
             <div class="panel__body">
                 <div class="create-form user-form">

@@ -86,7 +86,7 @@ class RegistrationController extends Controller
     {
         $request = request();
 
-        $systemVersion = ($request->has('systemVersion')) ? $request->get('systemVersion') : 1;
+        $systemVersion = isTzSubDomain() ? 3 : 1;
         $users         = $request->get('users');
         $orgInfo       = $request->get('organization');
 

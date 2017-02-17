@@ -32,7 +32,16 @@ $router->get(
     }
 );
 
-$router->get('/', 'HomeController@index');
+Route::group(['domain' => env('CORE_DOMAIN')], function() {
+    Route::get(
+        '/',
+        [
+            'as'   => 'main.home',
+            'uses' => 'HomeController@index'
+        ]
+    );
+});
+
 $router->get('home', 'HomeController@index');
 $router->get('about', 'AboutController@index');
 $router->get('who-is-using', 'WhoIsUsingController@index');

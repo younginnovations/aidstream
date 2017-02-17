@@ -51,11 +51,23 @@ gulp.task('sass', function () {
         .pipe(gulp.dest('./public/css'));
 });
 
+gulp.task('tz_sass', function () {
+
+    var tz_style = gulp.src('./resources/assets/tanzania_scss/tz.style.scss')
+        .pipe(sourcemaps.init())
+        .pipe(sass())
+        .pipe(postcss([autoprefixer({browsers: ['last 30 versions', '> 1%', 'ie 8', 'ie 7']})]))
+        .pipe(sourcemaps.write('./maps'))
+        .pipe(gulp.dest('./public/tz/css/tanzania_style/'));
+});
+
+
 /*
  * Watch scss files for changes & recompile
  */
 gulp.task('watch', function () {
     gulp.watch('./resources/assets/app.scss', ['sass']);
+    gulp.watch('./resources/assets/tanzania_scss/**/*.scss',['tz_sass']);
     gulp.watch(css_files, ['css-main']);
     gulp.watch(css_style, ['css-style']);
     gulp.watch(js_files, ['js-main']);
@@ -65,7 +77,7 @@ gulp.task('watch', function () {
 /*
  * Default task, running just `gulp` will compile the sass,
  */
-gulp.task('default', ['sass', 'watch']);
+gulp.task('default', ['sass',"tz_sass", 'watch']);
 
 gulp.task('css-main', function () {
     return gulp.src(css_files)
@@ -104,3 +116,9 @@ gulp.task('image-min', function() {
         }))
         .pipe(gulp.dest('./public/images'));
 });
+
+
+
+
+
+
