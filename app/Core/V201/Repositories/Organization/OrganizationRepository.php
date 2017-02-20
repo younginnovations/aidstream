@@ -299,10 +299,10 @@ class OrganizationRepository implements OrganizationRepositoryInterface
                     'url'      => url(sprintf('files/xml/%s', $publishedFile->filename))
                 ]
             ],
-            "filetype"       => "organization",
-            "data_updated"   => $publishedFile->updated_at->toDateTimeString(),
-            "language"       => config('app.locale'),
-            "verified"       => "no"
+            "filetype"     => "organization",
+            "data_updated" => $publishedFile->updated_at->toDateTimeString(),
+            "language"     => config('app.locale'),
+            "verified"     => "no"
         ];
 
         return json_encode($data);
@@ -437,5 +437,20 @@ class OrganizationRepository implements OrganizationRepositoryInterface
         }
 
         return $data;
+    }
+
+    /**
+     * Updates organization system version
+     *
+     * @param $orgId
+     * @param $system_version
+     * @return bool|int
+     */
+    public function updateSystemVersion($orgId, $system_version)
+    {
+        $organisation                    = $this->org->findOrFail($orgId);
+        $organisation->system_version_id = getVal($system_version, ['index'], 1);
+
+        return $organisation->save();
     }
 }

@@ -45,5 +45,6 @@ return [
     'organization_element_removed'            => 'Organisation element has been removed successfully',
     'organization_element_not_removed'        => 'Failed to remove organisation element',
     'user_created'                            => 'The user account with :name, has been created successfully. Please notify the user their username and password to start using their AidStream account.',
-    'csv_header_mismatch'                     => ':message'
+    'csv_header_mismatch'                     => ':message',
+    'settings_incomplete'                     => 'Please fill up all the required fields before creating an activity.'
 ];

@@ -65,10 +65,11 @@ class ImportController extends Controller
      */
     public function __construct(ImportActivityForm $form, OrganizationManager $organizationManager, ImportManager $importManager)
     {
+        $this->middleware('auth');
+        $this->middleware('auth.systemVersion');
         $this->form                = $form;
         $this->organizationManager = $organizationManager;
         $this->importManager       = $importManager;
-        $this->middleware('auth');
         $this->userId = $this->getUserId();
     }
 

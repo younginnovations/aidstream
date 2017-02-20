@@ -32,6 +32,8 @@ class Registration
      */
     protected $regAgencies;
 
+    protected $onBoardingDisabledSystemVersions = [2];
+
     /**
      * @param Logger                 $logger
      * @param DatabaseManager        $database
@@ -50,17 +52,21 @@ class Registration
      * registers organization info and users
      * @param $orgInfo
      * @param $users
+     * @param $systemVersion
      * @return array|bool
      */
-    public function register($orgInfo, $users)
+    public function register($orgInfo, $users, $systemVersion)
     {
         try {
             $this->database->beginTransaction();
             $orgInfo['secondary_contact'] = $users['secondary_contact'];
-            $organization                 = $this->saveOrganization($orgInfo);
+            $organization                 = $this->saveOrganization($orgInfo, $systemVersion);
             $users                        = $this->saveUsers($users, $organization);
-            foreach ($users as $user) {
-                ($user->userOnBoarding()->create(['has_logged_in_once' => false]));
+
+            if (!in_array($systemVersion, $this->onBoardingDisabledSystemVersions)) {
+                foreach ($users as $user) {
+                    ($user->userOnBoarding()->create(['has_logged_in_once' => false]));
+                }
             }
 
             $orgInfo['id'] = $organization->id;
@@ -79,11 +85,12 @@ class Registration
     /**
      * saves organization and return organization model
      * @param $orgInfo
+     * @param $systemVersion
      * @return Organization
      */
-    protected function saveOrganization($orgInfo)
+    protected function saveOrganization($orgInfo, $systemVersion)
     {
-        $orgData      = $this->prepareOrganization($orgInfo);
+        $orgData      = $this->prepareOrganization($orgInfo, $systemVersion);
         $organization = $this->orgRepo->createOrganization($orgData);
         $organization->orgData()->create(['name' => [["narrative" => $orgInfo['organization_name'], "language" => ""]]]);
         $organization->settings()->create(['version' => '2.02']);
@@ -94,9 +101,10 @@ class Registration
     /**
      * returns mapped organization data
      * @param $orgInfo
+     * @param $systemVersion
      * @return array
      */
-    protected function prepareOrganization($orgInfo)
+    protected function prepareOrganization($orgInfo, $systemVersion)
     {
         $orgData = [];
 
@@ -123,6 +131,7 @@ class Registration
             'last_name'  => '',
             'email'      => $orgInfo['secondary_contact']
         ];
+        $orgData['system_version_id']   = $systemVersion;
 
         return $orgData;
     }

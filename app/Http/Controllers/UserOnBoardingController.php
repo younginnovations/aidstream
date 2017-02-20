@@ -40,12 +40,13 @@ class UserOnBoardingController extends Controller
     {
         $firstname = Auth::user()->first_name;
         $lastname  = Auth::user()->last_name;
+        $response  = getVal(request()->getSession()->all(), ['response']);
 
         if ((!Auth::user()->userOnBoarding) || (!session('first_login'))) {
-            return redirect()->to('/activity');
+            return redirect()->to('/activity')->withResponse($response);
         }
 
-        return view('onBoarding.welcome', compact('firstname', 'lastname'));
+        return view('onBoarding.welcome', compact('firstname', 'lastname'))->withResponse($response);
     }
 
     /**

@@ -1,13 +1,19 @@
-<div class="panel panel-default error-page">
-    <div class="error-msg-wrap">
-        <div>
-            <h2>
-                We’re sorry we cannot find the page for you.
-            </h2>
-            <p>
-                The page you’re looking for doesn’t exist. Please check if you have mistyped the address.
-            </p>
-            <a href="/">Take me back to Homepage</a>
+@if($message)
+    <div class="panel panel-default error-page">
+        <div class="error-msg-wrap">
+            <div>
+                <h2>
+                    {{getVal($message,['heading'])}}
+                </h2>
+                <p>
+                    {!! getVal($message,['message']) !!}
+                </p>
+                @if(auth()->check())
+                    <a href="{{route($route)}}">Take me back to Dashboard</a>
+                @else
+                    <a href="/">Take me back to Homepage</a>
+                @endif
+            </div>
         </div>
     </div>
-</div>
+@endif

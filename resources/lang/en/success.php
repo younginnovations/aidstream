@@ -23,5 +23,11 @@ return [
     'organisation_data_published_to_registry'       => 'Your organization data has been published to the IATI registry. It is included in the file',
     'uploaded_successfully'                         => 'Uploaded Successfully.',
     'settings_updated_successfully'                 => 'Settings updated successfully.',
-    'on_boarding_success'                           => 'Congratulations. Your organisation\'s account configuration has been completed successfully. You can now publish your data to the IATI Registry.'
+    'on_boarding_success'                           => 'Congratulations. Your organisation\'s account configuration has been completed successfully. You can now publish your data to the IATI Registry.',
+    'budget_success_created'                        => 'Budget successfully created.',
+    'budget_success_deleted'                        => 'Budget successfully deleted.',
+    'transaction_success_created'                   => 'Transaction successfully created.',
+    'transaction_success_deleted'                   => 'Transaction successfully deleted.',
+    'transaction_success_updated'                   => 'Transaction successfully updated',
+    'aidstream_upgraded'                            => 'Congratulations! You have upgraded AidStream!'
 ];

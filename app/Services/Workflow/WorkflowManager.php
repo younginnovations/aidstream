@@ -1,7 +1,9 @@
 <?php namespace App\Services\Workflow;
 
+use App\Exceptions\Aidstream\Workflow\PublisherNotFoundException;
 use App\Services\PerfectViewer\PerfectViewerManager;
 use Exception;
+use GuzzleHttp\Exception\ClientException;
 use Psr\Log\LoggerInterface;
 use App\Models\Activity\Activity;
 use App\Services\Twitter\TwitterAPI;
@@ -10,6 +12,7 @@ use App\Services\Activity\ActivityManager;
 use App\Services\Organization\OrganizationManager;
 use App\Services\Xml\Providers\XmlServiceProvider;
 use App\Services\Workflow\DataProvider\OrganizationDataProvider;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * Class WorkflowManager
@@ -17,6 +20,11 @@ use App\Services\Workflow\DataProvider\OrganizationDataProvider;
  */
 class WorkflowManager
 {
+    /**
+     * Status code for Not Authorized Exception.
+     */
+    const NOT_AUTHORIZED_ERROR_CODE = 403;
+
     /**
      * @var OrganizationManager
      */
@@ -132,7 +140,6 @@ class WorkflowManager
      */
     public function publish($activity, array $details)
     {
-
         try {
             $organization = $activity->organization;
             $settings     = $organization->settings;
@@ -164,16 +171,29 @@ class WorkflowManager
             $this->update($details, $activity);
 
             return true;
-        } catch (\ErrorException $exception) {
-            $this->logger->error($exception);
+        } catch (Exception $exception) {
+            $this->logger->error($exception, ['trace' => $exception->getTraceAsString()]);
+
+            if ($exception instanceof PublisherNotFoundException || $exception instanceof ClientException) {
+                return false;
+            }
+
+            if ($message = $this->isForbidden($exception)) {
+                return 'Not Authorized';
+            }
 
             return null;
-        } catch (Exception $exception) {
-            $this->logger->error($exception);
-
-            return array_first(explode("\n", $exception->getMessage()), function () {
-                return true;
-            });
         }
+    }
+
+    /**
+     * @param Exception $exception
+     * @return bool
+     */
+    protected function isForbidden(Exception $exception)
+    {
+        $message = explode(':', explode("\n", $exception->getMessage())[0]);
+
+        return ($message[0] == self::NOT_AUTHORIZED_ERROR_CODE);
     }
 }

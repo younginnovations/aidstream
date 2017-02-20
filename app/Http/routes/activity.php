@@ -1,7 +1,7 @@
 <?php
 
 $router->group(
-    ['namespace' => 'Complete\Activity'],
+    ['namespace' => 'Complete\Activity', 'middleware' => 'auth.systemVersion'],
     function ($router) {
         $router->resource('activity', 'ActivityController');
         $router->resource('activity.delete', 'ActivityController@destroy');

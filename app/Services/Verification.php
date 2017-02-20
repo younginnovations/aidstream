@@ -258,8 +258,8 @@ class Verification
      */
     protected function login($code)
     {
-        $organization            = $this->user->where('verification_code', $code)->first()->organization;
         $user                    = $this->user->where('verification_code', $code)->first();
+        $organization            = $user->organization;
         $user->verification_code = null;
         $user->save();
 
@@ -280,6 +280,7 @@ class Verification
         $settings = Settings::where('organization_id', $user->org_id)->first();
         $version  = (isset($settings)) ? $settings->version : config('app.default_version');
         Session::put('current_version', $version);
+        Session::put('system_version', $settings->organization->system_version_id);
         $version     = session('current_version');
         $versions_db = DB::table('versions')->get();
         $versions    = [];

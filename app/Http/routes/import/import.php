@@ -1,7 +1,7 @@
 <?php
 
 $router->group(
-    ['namespace' => 'Complete\Activity\Import'],
+    ['namespace' => 'Complete\Activity\Import', 'middleware' => 'auth.systemVersion'],
     function ($router) {
         $router->get(
             '/import-activity/upload-csv',

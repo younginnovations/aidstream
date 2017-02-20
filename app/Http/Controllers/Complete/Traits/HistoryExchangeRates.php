@@ -179,7 +179,6 @@ trait HistoryExchangeRates
     protected function storeExchangeRates($newExchangeRates)
     {
         $exchangeRatesModel = app()->make(HistoricalExchangeRate::class);
-
         foreach ($newExchangeRates as $index => $rates) {
             if (!empty($rates)) {
                 $exchangeRatesModel->create($this->transformExchangeRates($rates));

@@ -2,6 +2,7 @@
 
 use App\Core\Form\BaseForm;
 use App\Http\Controllers\Controller;
+use App\Models\SystemVersion;
 use App\Services\Registration;
 use App\Services\RegistrationAgencies;
 use App\Services\RequestManager\RegisterOrganization;
@@ -30,21 +31,27 @@ class RegistrationController extends Controller
     /**
      * @var RegistrationAgencies
      */
-    private $regAgencyManager;
+    protected $regAgencyManager;
+    /**
+     * @var SystemVersion
+     */
+    protected $systemVersion;
 
     /**
      * @param BaseForm             $baseForm
      * @param Registration         $registrationManager
      * @param Verification         $verificationManager
      * @param RegistrationAgencies $regAgencyManager
+     * @param SystemVersion        $systemVersion
      */
-    public function __construct(BaseForm $baseForm, Registration $registrationManager, Verification $verificationManager, RegistrationAgencies $regAgencyManager)
+    public function __construct(BaseForm $baseForm, Registration $registrationManager, Verification $verificationManager, RegistrationAgencies $regAgencyManager, SystemVersion $systemVersion)
     {
         $this->middleware('guest', ['except' => 'getLogout']);
         $this->baseForm            = $baseForm;
         $this->registrationManager = $registrationManager;
         $this->verificationManager = $verificationManager;
         $this->regAgencyManager    = $regAgencyManager;
+        $this->systemVersion       = $systemVersion;
     }
 
     /**
@@ -53,12 +60,13 @@ class RegistrationController extends Controller
      */
     public function showRegistrationForm()
     {
-        $regInfo      = session()->pull('reg_info');
-        $orgType      = $this->baseForm->getCodeList('OrganizationType', 'Organization', false);
-        $countries    = $this->baseForm->getCodeList('Country', 'Organization', false);
-        $orgRegAgency = $this->baseForm->getCodeList('OrganisationRegistrationAgency', 'Organization', false);
-        $dbRegAgency  = $this->regAgencyManager->getRegAgenciesCode();
-        $orgRegAgency = array_merge($orgRegAgency, $dbRegAgency);
+        $regInfo        = session()->pull('reg_info');
+        $orgType        = $this->baseForm->getCodeList('OrganizationType', 'Organization', false);
+        $countries      = $this->baseForm->getCodeList('Country', 'Organization', false);
+        $orgRegAgency   = $this->baseForm->getCodeList('OrganisationRegistrationAgency', 'Organization', false);
+        $dbRegAgency    = $this->regAgencyManager->getRegAgenciesCode();
+        $orgRegAgency   = array_merge($orgRegAgency, $dbRegAgency);
+        $systemVersions = $this->systemVersion->lists('system_version', 'id')->toArray();
 
         $dbRoles = \DB::table('role')->whereNotNull('permissions')->orderBy('role', 'desc')->get();
         $roles   = [];
@@ -66,7 +74,7 @@ class RegistrationController extends Controller
             $roles[$role->id] = $role->role;
         }
 
-        return view('auth.register', compact('orgType', 'countries', 'orgRegAgency', 'roles', 'regInfo'));
+        return view('auth.register', compact('orgType', 'countries', 'orgRegAgency', 'roles', 'regInfo', 'systemVersions'));
     }
 
     /**
@@ -77,10 +85,12 @@ class RegistrationController extends Controller
     public function register(Register $request)
     {
         $request = request();
-        $users   = $request->get('users');
-        $orgInfo = $request->get('organization');
 
-        if ($organization = $this->registrationManager->register($orgInfo, $users)) {
+        $systemVersion = ($request->has('systemVersion')) ? $request->get('systemVersion') : 1;
+        $users         = $request->get('users');
+        $orgInfo       = $request->get('organization');
+
+        if ($organization = $this->registrationManager->register($orgInfo, $users, $systemVersion)) {
             return $this->postRegistration($organization);
         } else {
             $response = ['type' => 'danger', 'code' => ['failed_registration']];

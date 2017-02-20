@@ -55,5 +55,13 @@ return [
     'select_transactions_to_be_imported'                     => 'Select transactions to be imported',
     'no_ongoing_processes'                                   => 'Please upload CSV file to process.',
     'no_data_available'                                      => 'It seems you have uploaded an empty file. Please fill the values in the file and try uploading once again.',
+    'not_authorized'                                         => 'Not Authorized',
+    'error_budget_create'                                    => 'Error occurred during creation of budget',
+    'error_transaction_update'                               => 'Error updating transaction',
+    'error_transaction_create'                               => 'Error creating transaction',
+    'error_transaction_delete'                               => 'Error deleting transaction',
+    '404_not_found'                                          => '<span><b>404! Not Found</b><br>The requested url cannot be found in our system.</span>',
+    'not_available_for_v201'                                 => 'Sorry this feature is not available for V201. Please upgrade to latest version to download.',
+    'upgrade_not_completed'                                  => 'Upgrade could not be completed.'
 ];
 

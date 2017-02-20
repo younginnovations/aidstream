@@ -336,4 +336,14 @@ class User extends Model implements AuthorizableContract, AuthenticatableContrac
             }
         );
     }
+
+    /**
+     * Get the current Users system version id.
+     *
+     * @return int
+     */
+    public function getSystemVersion()
+    {
+        return $this->organization ? $this->organization->system_version_id : 1;
+    }
 }
