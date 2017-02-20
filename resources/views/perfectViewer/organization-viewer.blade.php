@@ -79,25 +79,25 @@
                         <li>
                             <h4>@lang('perfectViewer.total_commitments')</h4>
                             <span>
-                                ${{number_format(round(getVal($organizations, ['transaction_totals', 'total_commitments'], 0),2))}}
+                                ${{moneySuffix(getVal($organizations, ['transaction_totals', 'total_commitments'], 0))}}
                             </span>
                         </li>
                         <li>
                             <h4>@lang('perfectViewer.total_disbursements')</h4>
                             <span>
-                                ${{number_format(round(getVal($organizations, ['transaction_totals', 'total_disbursements'], 0),2))}}
+                                ${{moneySuffix(getVal($organizations, ['transaction_totals', 'total_disbursements'], 0))}}
                             </span>
                         </li>
                         <li>
                             <h4>@lang('perfectViewer.total_expenditures')</h4>
                             <span>
-                                ${{number_format(round(getVal($organizations, ['transaction_totals', 'total_expenditures'], 0),2))}}
+                                ${{moneySuffix(getVal($organizations, ['transaction_totals', 'total_expenditures'], 0))}}
                             </span>
                         </li>
                         <li>
                             <h4>@lang('perfectViewer.total_incoming_funds')</h4>
                             <span>
-                                ${{number_format(round(getVal($organizations, ['transaction_totals', 'total_incoming_funds'], 0),2))}}
+                                ${{moneySuffix(getVal($organizations, ['transaction_totals', 'total_incoming_funds'], 0))}}
                             </span>
                         </li>
                     </ul>
