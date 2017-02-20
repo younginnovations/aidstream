@@ -4,9 +4,9 @@
         @foreach(groupActivityElements(getVal($activityDataList, ['related_activity'], []) , 'relationship_type') as $key => $relatedActivities)
             <div class="activity-element-list">
                 <div class="activity-element-label">{!! $getCode->getCodeNameOnly('RelatedActivityType' , $key) !!}</div>
-                <div class="activity-element-info">
+                <div class="activity-element-info related-activity">
                     @foreach($relatedActivities as $relatedActivity)
-                        {{ getVal($relatedActivity, ['activity_identifier']) }}
+                        <li>{{ getVal($relatedActivity, ['activity_identifier']) }}</li>
                     @endforeach
                 </div>
             </div>

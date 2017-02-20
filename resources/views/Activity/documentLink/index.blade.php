@@ -38,7 +38,7 @@
                                             {{--*/
                                                 $documentLinkData = $documentLink->document_link;
                                             /*--}}
-                                            <td class="activity_title" style="word-break: break-all;">
+                                            <td style="word-break: break-all;">
                                                 @if(!$documentLinkData['title'][0]['narrative'])
                                                     {{--*/
                                                     $documentLinkData['title'][0]['narrative'] = [['narrative' => '', 'language' => '']];

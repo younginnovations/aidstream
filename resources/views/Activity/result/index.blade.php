@@ -14,7 +14,7 @@
                         @if(count($results) > 0)
                             <div class="panel-action-btn">
                                 <a href="{{ route('activity.result.create', $id) }}" class="btn btn-primary add-new-btn">@lang('global.add_new_result')</a>
-                                <a href="{{ route('activity.result.upload-csv', $id) }}" class="btn btn-primary add-new-btn">@lang('global.upload_results')</a>
+                                <a href="{{ route('activity.result.upload-csv', $id) }}" class="btn btn-primary add-new-btn">@lang('global.import_results')</a>
                                 <a href="{{ route('activity.show', $id) }}" class="btn btn-primary btn-view-it">@lang('global.view_activity')</a>
                             </div>
                         @else
@@ -65,7 +65,7 @@
                                 <div class="text-center no-data no-result-data">
                                     <p>@lang('global.not_added',['type' => 'Results']).</p>
                                     <a href="{{ route('activity.result.create', $id) }}" class="btn btn-primary">@lang('global.add_new_result')</a>
-                                    <a href="{{ route('activity.result.upload-csv', $id) }}" class="btn btn-primary btn-upload">@lang('global.upload_results')</a>
+                                    <a href="{{ route('activity.result.upload-csv', $id) }}" class="btn btn-primary btn-upload">@lang('global.import_results')</a>
                                 </div>
                             @endif
                         </div>
