@@ -1,7 +1,7 @@
-@if(!emptyOrHasEmptyTemplate($descriptions))
+@if(!emptyOrHasEmptyTemplate(getVal($activityDataList, ['description'], [])))
     <div class="activity-element-wrapper">
         <div class="title">@lang('element.description') @if(array_key_exists('Description',$errors)) <i class='imported-from-xml'>icon</i>@endif </div>
-        @foreach($descriptions as $description)
+        @foreach(getVal($activityDataList, ['description'], []) as $description)
             <div class="activity-element-list">
                 <div class="activity-element-label">
                     {{$getCode->getCodeNameOnly('DescriptionType', getVal($description, ['type'], ''))}} @lang('elementForm.description')

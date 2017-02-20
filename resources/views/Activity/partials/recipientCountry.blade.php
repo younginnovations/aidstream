@@ -1,9 +1,9 @@
-@if(!emptyOrHasEmptyTemplate($recipientCountries))
+@if(!emptyOrHasEmptyTemplate(getVal($activityDataList, ['recipient_country'], [])))
     <div class="activity-element-wrapper">
         <div class="activity-element-list">
             <div class="activity-element-label">@lang('element.recipient_country') @if(array_key_exists('Recipient Country',$errors)) <i class='imported-from-xml'>icon</i>@endif </div>
             <div class="activity-element-info">
-                @foreach($recipientCountries as $recipientCountry)
+                @foreach(getVal($activityDataList, ['recipient_country'], []) as $recipientCountry)
                     <li>{!! getRecipientInformation(getVal($recipientCountry, ['country_code']), getVal($recipientCountry, ['percentage']), 'Country') !!}</li>
                     <div class="toggle-btn">
                         <span class="show-more-info">@lang('global.show_more_info')</span>

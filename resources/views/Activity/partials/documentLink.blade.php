@@ -1,9 +1,9 @@
-@if(!emptyOrHasEmptyTemplate($documentLinks))
+@if(!emptyOrHasEmptyTemplate(getVal($activityDataList, ['document_links'], [])))
     <div class="activity-element-wrapper">
         <div class="activity-element-list">
             <div class="activity-element-label">@lang('element.document_link') @if(array_key_exists('Document Link',$errors)) <i class='imported-from-xml'>icon</i>@endif </div>
             <div class="activity-element-info">
-                @foreach($documentLinks as $documentLink)
+                @foreach(getVal($activityDataList, ['document_links'], []) as $documentLink)
                     <li>{!! getClickableLink(getVal($documentLink, ['document_link', 'url'])) !!}</li>
                     <div class="toggle-btn">
                         <span class="show-more-info">@lang('global.show_more_info')</span>

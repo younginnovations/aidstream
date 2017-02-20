@@ -1,7 +1,7 @@
-@if(!emptyOrHasEmptyTemplate($contactInfo))
+@if(!emptyOrHasEmptyTemplate(getVal($activityDataList, ['contact_info'], [])))
     <div class="activity-element-wrapper">
         <div class="title">@lang('element.contact_info') @if(array_key_exists('Contact Info',$errors)) <i class='imported-from-xml'>icon</i>@endif </div>
-        @foreach(groupContactInformation($contactInfo) as $key => $contactInformation)
+        @foreach(groupContactInformation(getVal($activityDataList, ['contact_info'], [])) as $key => $contactInformation)
             <div class="activity-element-list">
                 <div class="activity-element-label">{{ checkIfEmpty($getCode->getCodeNameOnly('ContactType' , getVal($contactInformation, [0, 'type'], '')), "General Enquiries") }}</div>
                 <div class="activity-element-info">

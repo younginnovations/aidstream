@@ -1,7 +1,7 @@
-@if(!emptyOrHasEmptyTemplate($sectors))
+@if(!emptyOrHasEmptyTemplate(getVal($activityDataList, ['sector'], [])))
     <div class="activity-element-wrapper">
         <div class="title">@lang('element.sector') @if(array_key_exists('Sector',$errors)) <i class='imported-from-xml'>icon</i>@endif </div>
-        @foreach(groupSectorElements($sectors) as $key => $sectors)
+        @foreach(groupSectorElements(getVal($activityDataList, ['sector'], [])) as $key => $sectors)
             <div class="activity-element-list">
                 <div class="activity-element-label">{{$key}}</div>
                 <div class="activity-element-info">

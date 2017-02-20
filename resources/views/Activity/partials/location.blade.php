@@ -1,7 +1,7 @@
-@if(!emptyOrHasEmptyTemplate($locations))
+@if(!emptyOrHasEmptyTemplate(getVal($activityDataList, ['location'], [])))
     <div class="activity-element-wrapper">
         <div class="title">@lang('element.location') @if(array_key_exists('Location',$errors)) <i class='imported-from-xml'>icon</i>@endif </div>
-        @foreach(getLocationReach($locations) as $key => $locations)
+        @foreach(getLocationReach(getVal($activityDataList, ['location'], [])) as $key => $locations)
             <div class="activity-element-list">
                 <div class="activity-element-label">
                     {{ $key }}
