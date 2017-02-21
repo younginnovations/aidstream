@@ -1,7 +1,7 @@
-@if(!emptyOrHasEmptyTemplate($transactions))
+@if(!emptyOrHasEmptyTemplate(getVal($activityDataList, ['transaction'], [])))
     <div class="activity-element-wrapper">
         <div class="title">@lang('element.transaction') @if(array_key_exists('Transaction',$errors)) <i class='imported-from-xml'>icon</i>@endif </div>
-        @foreach(groupTransactionElements($transactions) as $key => $groupedTransactions)
+        @foreach(groupTransactionElements(getVal($activityDataList, ['transaction'], [])) as $key => $groupedTransactions)
             <div class="activity-element-list">
                 <div class="activity-element-label">{{$key}}</div>
                 <div class="activity-element-info">

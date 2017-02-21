@@ -1,7 +1,7 @@
-@if(!emptyOrHasEmptyTemplate($participatingOrganizations))
+@if(!emptyOrHasEmptyTemplate(getVal($activityDataList, ['participating_organization'], [])))
     <div class="activity-element-wrapper">
         <div class="title">@lang('element.participating_organisation') @if(array_key_exists('Participating Organization',$errors)) <i class='imported-from-xml'>icon</i>@endif </div>
-        @foreach(groupActivityElements($participatingOrganizations , 'organization_role') as $key => $organizations)
+        @foreach(groupActivityElements(getVal($activityDataList, ['participating_organization'], []) , 'organization_role') as $key => $organizations)
             <div class="activity-element-list">
                 <div class="activity-element-label">
                     {{ $getCode->getCodeNameOnly('OrganisationRole', $key)}} Organisation(s)

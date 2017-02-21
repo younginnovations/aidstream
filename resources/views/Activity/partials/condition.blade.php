@@ -1,12 +1,12 @@
-@if(!empty($conditions))
+@if(!empty(getVal($activityDataList, ['conditions'], [])))
     <div class="activity-element-wrapper">
         <div class="title">@lang('element.conditions') @if(array_key_exists('Conditions',$errors)) <i class='imported-from-xml'>icon</i>@endif </div>
-        @if($conditions['condition_attached'] == 0)
+        @if(getVal($activityDataList, ['conditions', 'condition_attached']) == 0)
             <div class="activity-element-list">
                 <div class="activity-element-label">@lang('elementForm.condition_not_attached')</div>
             </div>
         @else
-            @foreach(groupActivityElements(getVal($conditions, ['condition'], []), 'condition_type') as $key => $condition)
+            @foreach(groupActivityElements(getVal($activityDataList, ['conditions', 'condition', 'condition_type'])) as $key => $condition)
                 <div class="activity-element-list">
                     <div class="activity-element-label">
                         {{ $getCode->getCodeNameOnly('ConditionType',$key) }}

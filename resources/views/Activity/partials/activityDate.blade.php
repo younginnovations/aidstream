@@ -1,7 +1,7 @@
-@if(!emptyOrHasEmptyTemplate($activityDates))
+@if(!emptyOrHasEmptyTemplate(getVal($activityDataList, ['activity_date'], [])))
     <div class="activity-element-wrapper">
         <div class="title">@lang('element.activity_date') @if(array_key_exists('Activity Date',$errors)) <i class='imported-from-xml'>icon</i>@endif </div>
-        @foreach(groupActivityElements($activityDates , 'type') as $key => $groupedDates)
+        @foreach(groupActivityElements(getVal($activityDataList, ['activity_date'], []) , 'type') as $key => $groupedDates)
             <div class="activity-element-list">
                 <div class="activity-element-label">
                     {{ $getCode->getCodeNameOnly('ActivityDateType', $key) }} @lang('elementForm.date')

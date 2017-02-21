@@ -1,7 +1,7 @@
-@if(!emptyOrHasEmptyTemplate($budgets))
+@if(!emptyOrHasEmptyTemplate(getVal($activityDataList, ['budget'], [])))
     <div class="activity-element-wrapper">
         <div class="title">@lang('element.budget')</div>
-        @foreach( groupBudgetElements($budgets , 'budget_type') as $key => $budgets)
+        @foreach( groupBudgetElements(getVal($activityDataList, ['budget'], []) , 'budget_type') as $key => $budgets)
             <div class="activity-element-list">
                 <div class="activity-element-label">{{ $getCode->getCodeNameOnly('BudgetType' , $key) }}</div>
                 <div class="activity-element-info">
