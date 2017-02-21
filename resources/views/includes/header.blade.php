@@ -18,7 +18,7 @@
             </ul>
             <div class="action-btn pull-left">
                 @if(auth()->check())
-                    <a href="{{ (auth()->user()->isSuperAdmin() || auth()->user()->isGroupAdmin()) ? url(config('app.super_admin_dashboard')) : url(config('app.admin_dashboard')) }}"
+                    <a href="{{ (auth()->user()->isSuperAdmin() || auth()->user()->isGroupAdmin()) ? url(config('app.super_admin_dashboard')) : (auth()->user()->getSystemVersion() == 2) ? url(config('app.admin_lite_dashboard')) : url(config('app.admin_dashboard')) }}"
                        class="btn btn-primary">
                         @lang('global.go_to_dashboard')
                     </a>
