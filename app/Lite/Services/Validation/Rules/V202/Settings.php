@@ -2,6 +2,7 @@
 
 use App\Core\V201\Traits\GetCodes;
 use App\Models\Organization\Organization;
+use Illuminate\Support\Facades\Validator;
 
 /**
  * Class Settings
@@ -37,6 +38,17 @@ class Settings
      * @var array
      */
     protected $settingsMessages = [];
+
+    public function __construct()
+    {
+        Validator::extendImplicit(
+            'include_operators',
+            function ($attribute, $value, $parameters, $validator) {
+
+                return preg_match('/^[a-zA-Z0-9\-_]+$/', $value);
+            }
+        );
+    }
 
     /**
      * @return array
@@ -292,5 +304,27 @@ class Settings
         $this->settingsMessages['defaultLanguage.required'] = trans('validation.required', ['attribute' => trans('lite/settings.default_language')]);
 
         return $this;
+    }
+
+    /**
+     * Rules for publisher id
+     */
+    protected function rulesForPublisherId()
+    {
+        $ids          = \App\Models\Settings::select('registry_info')->where('organization_id', '<>', session('org_id'))->get()->toArray();
+        $publisherIds = [];
+        foreach ($ids as $id) {
+            $publisherIds[] = getVal($id, ['registry_info', 0, 'publisher_id']);
+        }
+        $this->settingsRules['publisherId'] = sprintf('include_operators|not_in:%s', implode(",", $publisherIds));
+    }
+
+    /**
+     * Messages for publisher id must be unique
+     */
+    protected function messagesForPublisherId()
+    {
+        $this->settingsMessages['publisherId.not_in'] = trans('validation.unique_validation', ['attribute' => trans('lite/settings.publisher_id')]);
+        $this->settingsMessages['publisherId.include_operators'] = trans('validation.alpha_dash', ['attribute' => trans('lite/settings.publisher_id')]);
     }
 }

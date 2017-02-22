@@ -36,7 +36,7 @@
                                     @lang('global.download_result_template')
                                 </a>
                                 <div>
-                                    @lang('global.result_template_text')
+                                    @lang('global.result_template_text')<a href="https://github.com/younginnovations/aidstream/wiki/How-to-use-the-mass-import-option-for-uploading-results" target="_blank">@lang('global.here')</a>.
                                 </div>
                             </div>
                         </div>
