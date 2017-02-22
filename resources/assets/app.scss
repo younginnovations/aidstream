@@ -2710,8 +2710,7 @@ form > .collection_form > .form-group > .collection_form {
 }
 
 .registry-info-wrapper {
-  padding: 0!important;
-  margin: 0!important;
+  padding: 0 15px;
   .choice-wrapper {
     display: inline-block;
     margin-right: 20px;
@@ -5950,8 +5949,11 @@ body > .skiptranslate iframe {
 }
 
 .publishing-wrap {
-  padding: 14px 0;
+  padding: 15px 0;
   overflow: hidden;
+  h2 {
+    padding: 6px 15px 0;
+  }
 }
 
 .introjs-helperLayer {
@@ -7788,12 +7790,23 @@ body > .skiptranslate iframe {
   }
 
   #publishing_info1 {
-    .form-group {
+    .publishing-wrap > .form-group {
+      margin-left: 0;
+      padding: 0 15px;
       width: 50%;
+      .form-group {
+        margin-left: 0;
+        padding: 0;
+        width: 100%;
+      }
     }
     .hidden + .form-group {
       padding-left: 15px;
     }
+
+    //.hidden + .form-group {
+    //  padding-left: 26px;
+    //}
     .hidden + .col-md-6 {
       margin-bottom: 0;
     }

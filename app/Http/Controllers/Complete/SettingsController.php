@@ -342,10 +342,10 @@ class SettingsController extends LiteController
 
     /**
      * save publishing information.
-     * @param Request $request
+     * @param PublishingSettingsRequest $request
      * @return mixed
      */
-    public function savePublishingInfo(Request $request)
+    public function savePublishingInfo(PublishingSettingsRequest $request)
     {
         $this->authorize('settings', $this->settings);
 

@@ -169,7 +169,7 @@ return [
     'back_to_result_list'                          => 'Back to Result List',
     'download_result_template'                     => 'Download Result Template',
     'result_template_text'                         => 'This template contains few basic elements that you have to fill to import into AidStream. Please make sure that you follow the structure and format of the template.
-                                    For more details, please follow <a href="https://github.com/younginnovations/aidstream-new/wiki/Activity-Creation#2-bulk-activity-import" target="_blank">here</a>.',
+                                    For more details, please follow ',
     'add_transaction'                              => 'Add Transaction',
     'edit_transaction'                             => 'Edit Transaction',
     'back_to_transaction_list'                     => 'Back to Transaction List',
@@ -272,4 +272,5 @@ return [
     'new'                                          => 'New',
     'template_updated'                             => 'The template for Transaction import has been updated. Please make sure you are using the latest template.',
     'system_version'                               => 'System Version',
+    'here'                                         => 'here',
 ];
