@@ -73,9 +73,9 @@ class Register extends Request
     public function rules()
     {
         $rules          = [];
-        $systemVersions = implode(",", SystemVersion::lists('id')->toArray());
+//        $systemVersions = implode(",", SystemVersion::lists('id')->toArray());
 
-        $rules     = ['systemVersion' => sprintf('required|in:%s', $systemVersions)];
+//        $rules     = ['systemVersion' => sprintf('required|in:%s', $systemVersions)];
         $orgRules  = $this->getRulesForOrg($this->get('organization'));
         $userRules = $this->getRulesForUsers($this->get('users'));
         $rules     = array_merge($rules, $orgRules, $userRules);
