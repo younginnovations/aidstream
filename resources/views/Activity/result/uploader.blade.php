@@ -25,7 +25,7 @@
                         </a>
                     </div>
                 </div>
-                <div class="col-xs-12 col-md-8 col-lg-8 element-content-wrapper element-upload-wrapper">
+                <div class="col-xs-12 col-md-8 col-lg-8 element-content-wrapper element-import-wrapper">
                     <div class="panel panel-default panel-upload">
                         <div class="panel-body">
                             <div class="create-form">

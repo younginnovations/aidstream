@@ -10,7 +10,6 @@
                     <li class="published-files"><a href="{{ route('lite.published-files.index') }}">@lang('lite/global.published_files')</a></li>
                     <li class="users"><a href="{{route('lite.users.index')}}">@lang('lite/global.users')</a></li>
                     {{--<li class="documents" data-step="5"><a href="{{ route('documents') }}">Documents</a></li>--}}
-                    <li class="downloads" data-step="6"><a href="{{route('lite.csv.download')}}">@lang('lite/global.download_as_csv')</a></li>
                     <li class="settings" data-step="7">
                         <a href="{{ $loggedInUser->organization->settings ? route('lite.settings.edit') : route('lite.settings.index') }}">@lang('lite/global.settings')</a></li>
                     {{--@if(Auth::user()->role_id == 1)--}}

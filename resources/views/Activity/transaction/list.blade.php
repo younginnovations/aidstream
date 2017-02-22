@@ -24,7 +24,7 @@
                                                 <a href="{{ route('activity.transaction.create', $id) }}" class="">@lang('global.add_new_transaction')</a>
                                             </li>
                                             <li>
-                                                <a href="{{ route('activity.transaction.upload-csv', $id) }}" class="">@lang('global.upload_transaction')</a>
+                                                <a href="{{ route('activity.transaction.upload-csv', $id) }}" class="">@lang('global.import_transaction')</a>
                                             </li>
                                         </ul>
                                     </li>
@@ -74,7 +74,7 @@
                                         <a href="{{ route('activity.transaction.create', $id) }}"
                                            class="btn btn-primary">@lang('global.add_new_transaction')</a>
                                         <a href="{{ route('activity.transaction.upload-csv', $id) }}"
-                                           class="btn btn-primary btn-upload">@lang('global.upload_transaction')</a>
+                                           class="btn btn-primary btn-upload">@lang('global.import_transaction')</a>
                                     </div>
                                 </div>
                             @endif

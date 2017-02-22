@@ -45,7 +45,7 @@
                            aria-expanded="false">@lang('global.add_new_activity')<span
                                     class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
-                            <li><a href="{{route('activity.create') }}">@lang('global.add_new_activity')</a></li>
+                            <li><a href="{{route('activity.create') }}">@lang('global.add_new_activity_manually')</a></li>
                             {{--<li><a href="{{route('wizard.activity.create') }}">Add Activity using Wizard</a></li>--}}
                             <li><a href="{{ route('import-activity.index') }}">@lang('global.import_activities')</a></li>
                             <li><a href="{{ route('xml-import.index') }}">@lang('global.import_activity_xml')</a></li>

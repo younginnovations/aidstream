@@ -19,5 +19,6 @@ return [
     'delete_this_activity'               => 'Delete this activity',
     'title'                              => 'Title',
     'date'                               => 'Date',
-    'status'                             => 'Status'
+    'status'                             => 'Status',
+    'activities'                         => 'Activities'
 ];

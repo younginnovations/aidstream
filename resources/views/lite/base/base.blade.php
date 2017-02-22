@@ -43,14 +43,15 @@
             <input type="hidden" name="_token" value="{{csrf_token()}}"/>
             @if(auth()->user() && !isSuperAdminRoute())
                 <ul class="nav navbar-nav pull-left add-new-activity">
-                    <li class="dropdown" data-step="0">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                           aria-expanded="false">Add a New Activity<span
-                                    class="caret"></span></a>
-                        <ul class="dropdown-menu" role="menu">
-                            <li><a href="{{route('lite.activity.create') }}">Add Activity</a></li>
-                        </ul>
-                    </li>
+                    <li class="dropdown"><a href="{{route('lite.activity.create') }}">Add a New Activity</a></li>
+                    {{--<li class="dropdown" data-step="0">--}}
+                        {{--<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"--}}
+                           {{--aria-expanded="false">Add a New Activity<span--}}
+                                    {{--class="caret"></span></a>--}}
+                        {{--<ul class="dropdown-menu" role="menu">--}}
+                            {{--<li><a href="{{route('lite.activity.create') }}">Add Activity</a></li>--}}
+                        {{--</ul>--}}
+                    {{--</li>--}}
                 </ul>
             @endif
             <ul class="nav navbar-nav navbar-right navbar-admin-dropdown">
@@ -120,6 +121,7 @@
                 @endif
             </ul>
         </div>
+        <div class="downloads pull-right" data-step="6"><a href="{{route('lite.csv.download')}}">@lang('lite/global.download_as_csv')</a></div>
         <div class="navbar-right version-wrap">
             @if($loggedInUser && !isSuperAdminRoute())
                 <div class="version pull-right {{ (session('version') == 'V201') ? 'old' : 'new' }}">

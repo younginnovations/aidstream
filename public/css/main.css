@@ -3768,6 +3768,30 @@ label {
   z-index: 100000000; }
   .navbar-default + div {
     padding-top: 63px !important; }
+  .navbar-default .downloads {
+    border-left: 1px solid #ededed; }
+    .navbar-default .downloads a {
+      color: #484848;
+      display: block;
+      font-size: 13px;
+      padding: 22px 14px 22px 34px;
+      position: relative; }
+      .navbar-default .downloads a:before {
+        background: url(../../images/ic-sprite.svg) no-repeat -661px -468px;
+        content: "";
+        height: 20px;
+        width: 20px;
+        position: absolute;
+        top: 21px;
+        right: auto;
+        bottom: auto;
+        left: 6px; }
+      .navbar-default .downloads a:hover {
+        background-color: #f6f6f6;
+        text-decoration: none; }
+
+#bs-example-navbar-collapse-1 {
+  padding-left: 0; }
 
 .navbar-default + .container {
   padding-top: 100px; }
@@ -4022,6 +4046,8 @@ label {
     .add-new-activity li.dropdown > a .caret {
       float: right;
       margin: 9px 0 0 9px; }
+  .add-new-activity li.dropdown:hover > a {
+    background-color: #f6f6f6; }
 
 .caret {
   color: #c0c0c0; }
@@ -5322,7 +5348,8 @@ form > .collection_form > .form-group > .collection_form > .form-group > .collec
     min-width: 260px; }
 
 .change-activity-form {
-  border: 0; }
+  border: 0;
+  padding: 0 21px; }
   .change-activity-form > form {
     padding-right: 20px; }
     .change-activity-form > form > .form-group {
@@ -5333,7 +5360,15 @@ form > .collection_form > .form-group > .collection_form > .form-group > .collec
       position: relative;
       margin-bottom: 0; }
       .change-activity-form > form > .form-group .help-text {
-        top: 56px; }
+        top: 33px; }
+      .change-activity-form > form > .form-group:last-of-type {
+        float: left; }
+    .change-activity-form > form .btn {
+      margin-left: 15px;
+      position: static;
+      width: -webkit-calc(100% - 15px);
+      width: -moz-calc(100% - 15px);
+      width: calc(100% - 15px); }
 
 .panel-change-activity-heading {
   margin-bottom: 20px; }
@@ -5771,7 +5806,7 @@ form > .collection_form > .form-group > .collection_form > .form-group > .collec
   margin: 0 36px; }
 
 .version-wrap {
-  margin: 15px 14px 8px 0; }
+  margin: 15px 14px 8px 0 !important; }
 
 .element-show {
   clear: both; }
@@ -8532,11 +8567,8 @@ body > .skiptranslate iframe {
 .update-transaction {
   color: #888;
   font-size: 12px !important;
-  padding: 16px 20px 0;
-  float: right;
-  width: 41%;
-  margin-top: -124px;
-  margin-bottom: 0 !important;
+  padding: 16px 0 0;
+  margin: -61px 0 40px !important;
   position: relative; }
 
 .activity-file-choose {
@@ -8887,7 +8919,11 @@ body > .skiptranslate iframe {
   .version {
     margin-left: 10px; }
   .version-wrap {
-    margin-right: 10px; } }
+    margin-right: 10px; }
+  .change-activity-form {
+    padding: 0; }
+    .change-activity-form .form-group {
+      margin-bottom: 15px !important; } }
 
 @media all and (max-width: 640px) {
   .create-form > form > .collection_form > .form-group {
@@ -9152,6 +9188,9 @@ body > .skiptranslate iframe {
   .change-activity-form > form > .form-group {
     width: 50%;
     margin-right: -2px; }
+  .change-activity-form > form > .form-group {
+    width: 50% !important;
+    margin-bottom: 15px; }
   .create-wizard-form .col-sm-6 + .col-sm-6:nth-child(even), .create-user-form .col-sm-6 + .col-sm-6:nth-child(odd), .reset-user-password .col-sm-6 + .col-sm-6 {
     padding-left: 0; }
   .create-activity-form .form-group:only-of-type {
@@ -9292,7 +9331,13 @@ body > .skiptranslate iframe {
   .download-transaction-wrap > div {
     width: 50%; }
   .create-activity-form .btn-create {
-    margin-left: 15px; } }
+    margin-left: 15px; }
+  .change-activity-form > form .btn {
+    width: initial !important; }
+  .element-import-wrapper {
+    padding-left: 0; }
+  .update-transaction {
+    margin-left: 32px !important; } }
 
 @media all and (min-width: 880px) {
   #activity-elements-checklist .collection_form > .form-group > .form-group {
@@ -9756,6 +9801,8 @@ body > .skiptranslate iframe {
           font-size: 10px;
           margin-left: 2px;
           text-transform: none; }
+        .lite .create-form form .form-group label ~ label:after {
+          display: none; }
         .lite .create-form form .form-group label.required:after {
           display: none; }
     .lite .create-form form .collection_form > .form-group {
