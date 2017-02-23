@@ -986,6 +986,30 @@ label {
   & + div {
     padding-top: 63px !important;
   }
+  .downloads {
+    border-left: 1px solid #ededed;
+    a {
+      color: $color_gravel_approx;
+      display: block;
+      font-size: 13px;
+      padding: 22px 14px 22px 34px;
+      position: relative;
+      &:before {
+        background: $url_3 no-repeat -661px -468px;
+        content: "";
+        @include size(20px);
+        @include position(absolute, 21px auto auto 6px);
+      }
+      &:hover {
+        background-color: #f6f6f6;
+        text-decoration: none;
+      }
+    }
+  }
+}
+
+#bs-example-navbar-collapse-1 {
+  padding-left: 0;
 }
 
 .navbar-default + .container {
@@ -1287,6 +1311,9 @@ label {
         float: right;
         margin: 9px 0 0 9px;
       }
+    }
+    &:hover > a {
+      background-color: #f6f6f6;
     }
   }
 }
@@ -2775,11 +2802,11 @@ form > .collection_form > .form-group > .collection_form {
     bottom: -51px;
   }
   .single-form-wrap {
-    >.form-group {
-      padding: 0 15px!important;
+    > .form-group {
+      padding: 0 15px !important;
     }
     .description {
-     margin: -14px 15px 15px;
+      margin: -14px 15px 15px;
     }
   }
 }
@@ -2896,7 +2923,7 @@ form > .collection_form > .form-group > .collection_form {
     > form > .form-group {
       //padding-right: 20px;
       //padding-left: 20px;
-      padding: 0!important;
+      padding: 0 !important;
     }
     button {
       margin-top: 45px;
@@ -2960,6 +2987,7 @@ form > .collection_form > .form-group > .collection_form {
 
 .change-activity-form {
   border: 0;
+  padding: 0 21px;
   > form {
     padding-right: 20px;
     > .form-group {
@@ -2971,8 +2999,16 @@ form > .collection_form > .form-group > .collection_form {
       position: relative;
       margin-bottom: 0;
       .help-text {
-        top: 56px;
+        top: 33px;
       }
+      &:last-of-type {
+        float: left;
+      }
+    }
+    .btn {
+      margin-left: 15px;
+      position: static;
+      width: calc(100% - 15px);
     }
   }
 }
@@ -3475,7 +3511,7 @@ $organization-logo-width: 124px;
 }
 
 .version-wrap {
-  margin: 15px 14px 8px 0;
+  margin: 15px 14px 8px 0!important;
 }
 
 .element-show {
@@ -5046,7 +5082,7 @@ body > .skiptranslate iframe {
   }
 }
 
-#activity-elements-checklist+.form-group>.btn-form {
+#activity-elements-checklist + .form-group > .btn-form {
   bottom: -84px;
 }
 
@@ -6685,14 +6721,10 @@ body > .skiptranslate iframe {
 .update-transaction {
   color: #888;
   font-size: 12px !important;
-  padding: 16px 20px 0;
-  float: right;
-  width: 41%;
-  margin-top: -124px;
-  margin-bottom: 0 !important;
+  padding: 16px 0 0;
+  margin: -61px 0 40px !important;
   position: relative;
 }
-
 
 .activity-file-choose {
   width: 100%;
@@ -7268,6 +7300,13 @@ body > .skiptranslate iframe {
   .version-wrap {
     margin-right: 10px;
   }
+
+  .change-activity-form {
+    padding: 0;
+    .form-group {
+      margin-bottom: 15px !important;
+    }
+  }
 }
 
 @media all and (max-width: 640px) {
@@ -7669,6 +7708,11 @@ body > .skiptranslate iframe {
     margin-right: -2px;
   }
 
+  .change-activity-form > form > .form-group {
+    width: 50% !important;
+    margin-bottom: 15px;
+  }
+
   .create-wizard-form .col-sm-6 + .col-sm-6:nth-child(even), .create-user-form .col-sm-6 + .col-sm-6:nth-child(odd), .reset-user-password .col-sm-6 + .col-sm-6 {
     padding-left: 0;
   }
@@ -7785,7 +7829,7 @@ body > .skiptranslate iframe {
     width: 310px;
   }
 
-  .settings-form>form .col-md-12>.form-group {
+  .settings-form > form .col-md-12 > .form-group {
     width: 50%;
   }
 
@@ -7893,7 +7937,7 @@ body > .skiptranslate iframe {
     }
   }
 
-  .change-password-wrapper .create-form>form {
+  .change-password-wrapper .create-form > form {
     padding: 20px;
     .form-group {
       padding: 0 16px;
@@ -7905,8 +7949,8 @@ body > .skiptranslate iframe {
   }
 
   .panel-upload .create-form {
-    >form>.form-group {
-      padding: 0 0 0 36px!important;
+    > form > .form-group {
+      padding: 0 0 0 36px !important;
       width: 48%;
     }
     button {
@@ -7920,6 +7964,18 @@ body > .skiptranslate iframe {
 
   .create-activity-form .btn-create {
     margin-left: 15px;
+  }
+
+  .change-activity-form>form .btn {
+    width: initial !important;
+  }
+
+  .element-import-wrapper {
+    padding-left: 0;
+  }
+
+  .update-transaction {
+    margin-left: 32px!important;
   }
 }
 
@@ -8504,6 +8560,9 @@ body > .skiptranslate iframe {
             font-size: 10px;
             margin-left: 2px;
             text-transform: none;
+          }
+          ~ label:after {
+            display: none;
           }
           &.required:after {
             display: none;

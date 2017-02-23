@@ -273,4 +273,6 @@ return [
     'template_updated'                             => 'The template for Transaction import has been updated. Please make sure you are using the latest template.',
     'system_version'                               => 'System Version',
     'here'                                         => 'here',
+    'add_new_activity_manually'                    => 'Add a New Activity Manually',
+    'import_transaction'                           => 'Import Transaction',
 ];

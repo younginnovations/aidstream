@@ -38,8 +38,8 @@
                                 <div class="secondary-contact-block">
                                     <span>@lang('user.secondary_contact')</span>
                                     <div>
-                                        <span class="profile-name">{{ getVal((array)$organisation->secondary_contact, [0, 'first_name']) }} {{getVal((array)$organisation->secondary_contact, [0, 'last_name'])}}</span>
-                                        <a href="mailto:{{ getVal((array)$organisation->secondary_contact, [0, 'email']) }}"> {{getVal((array)$organisation->secondary_contact, [0, 'email'])}} </a>
+                                        <span class="profile-name">{{ getVal((array)$organisation->secondary_contact, ['first_name']) }} {{getVal((array)$organisation->secondary_contact, ['last_name'])}}</span>
+                                        <a href="mailto:{{ getVal((array)$organisation->secondary_contact, ['email']) }}"> {{getVal((array)$organisation->secondary_contact, ['email'])}} </a>
                                     </div>
                                 </div>
                             @endif

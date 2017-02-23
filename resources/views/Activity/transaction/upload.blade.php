@@ -10,7 +10,7 @@
                 @include('includes.response')
                 <div class="element-panel-heading">
                     <div>
-                        <span>@lang('global.upload_transaction')</span>
+                        <span>@lang('global.import_transaction')</span>
                         <div class="element-panel-heading-info">
                             <span>{{$activity->IdentifierTitle}}</span>
                         </div>
@@ -20,7 +20,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-xs-12 col-md-8 col-lg-8 element-content-wrapper">
+                <div class="col-xs-12 col-md-8 col-lg-8 element-content-wrapper element-upload-wrapper">
                     <div class="panel panel-default panel-upload">
                         <div class="panel-body">
                             <div class="create-form">

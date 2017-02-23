@@ -19,7 +19,7 @@
                 <ul>
                     @if(auth()->check())
                         <li>
-                            <a href="{{ url((auth()->user()->role_id == 1 || auth()->user()->role_id == 2) ? config('app.admin_dashboard') : config('app.super_admin_dashboard'))}}">@lang('global.go_to_dashboard')</a>
+                            <a href="{{ (auth()->user()->isSuperAdmin() || auth()->user()->isGroupAdmin()) ? url(config('app.super_admin_dashboard')) : (auth()->user()->getSystemVersion() == 2) ? url(config('app.admin_lite_dashboard')) : url(config('app.admin_dashboard'))}}">@lang('global.go_to_dashboard')</a>
                         </li>
                     @else
                         <li><a href="{{ url('/auth/login') }}">@lang('global.login')</a></li>

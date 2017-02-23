@@ -10,8 +10,8 @@
         <div id="xml-import-status-placeholder"></div>
         <div class="panel panel-default">
             <div class="panel__heading dashboard-panel__heading">
-                <div class="pull-left">
-                    <div class="panel__title">@lang('lite/activityDashboard.dashboard')</div>
+                <div>
+                    <div class="panel__title">@lang('lite/activityDashboard.activities')</div>
                     <i>
                         @if($lastPublishedToIATI)
                             @lang('lite/activityDashboard.last_published_to_iati')
@@ -21,9 +21,6 @@
                     <p>
                         @lang('lite/activityDashboard.find_activities_and_stats')
                     </p>
-                </div>
-                <div class="pull-right">
-                    <div class="downloads" data-step="6"><a href="{{route('lite.csv.download')}}">@lang('lite/global.download_as_csv')</a></div>
                 </div>
             </div>
             <div class="panel__body">
