@@ -78,6 +78,7 @@ class TransactionRow
      */
     protected $allowedHumanitarianValues = ['yes' => '1', 'no' => '0', 'true' => '1', 'false' => '0'];
     protected $allowedBothCasesField = ['country_code', 'currency', 'aid_type'];
+    protected $allowedDoubleValue = ['amount'];
 
     /**
      * TransactionRow constructor.
@@ -176,19 +177,21 @@ class TransactionRow
      * Filter the value of the field.
      *
      * @param      $value
-     * @param null $field
+     * @param      $field
      * @return int
      */
-    protected function filterValue($value, $field = null)
+    protected function filterValue($value, $field)
     {
+        if (in_array($field, $this->allowedDoubleValue)) {
+            return $value;
+        }
+
         if (gettype($value) == 'double') {
             return (int) $value;
         }
 
-        if ($field) {
-            if (in_array($field, $this->allowedBothCasesField)) {
-                return strtoupper($value);
-            }
+        if (in_array($field, $this->allowedBothCasesField)) {
+            return strtoupper($value);
         }
 
         return $value;
