@@ -84,12 +84,12 @@ class Result
      */
     protected function baseline($indicator, $indicatorTemplate)
     {
-        $baseline                               = getVal($indicatorTemplate, [0, 'baseline']);
-        $baselineAttributes                     = $this->filterAttributes($indicator, 'baseline', ['year', 'value']);
-        $baseline[0]['year']                    = getVal($baselineAttributes, [0, 'year'], '');
-        $baseline[0]['value']                   = getVal($baselineAttributes, [0, 'value'], '');
-        $baselineValues                         = getVal($this->filterValues($indicator, 'baseline'), [0, 'baseline']);
-        $baseline[0]['comment'][0]['narrative'] = $this->groupNarrative($baselineValues, 'comment');
+        $baseline             = getVal($indicatorTemplate, [0, 'baseline']);
+        $baselineAttributes   = $this->filterAttributes($indicator, 'baseline', ['year', 'value']);
+        $baseline[0]['year']  = getVal($baselineAttributes, [0, 'year'], '');
+        $baseline[0]['value'] = getVal($baselineAttributes, [0, 'value'], '');
+        $baselineValues       = getVal($this->filterValues($indicator, 'baseline'), [0, 'baseline']);
+        (!$baselineValues) ?: $baseline[0]['comment'][0]['narrative'] = $this->groupNarrative($baselineValues, 'comment');
 
         return $baseline;
     }
@@ -172,6 +172,14 @@ class Result
                 return '3';
             case 'other':
                 return '9';
+            case '1':
+                return '1';
+            case '2':
+                return '2';
+            case '3':
+                return '3';
+            case '9':
+                return '9';
             default:
                 return '';
         }
@@ -184,6 +192,10 @@ class Result
                 return '1';
             case 'false':
                 return '0';
+            case '1':
+                return '1';
+            case '0':
+                return '0';
             default :
                 return '';
         }
@@ -195,6 +207,10 @@ class Result
             case 'unit':
                 return '1';
             case 'percentage':
+                return '2';
+            case '1' :
+                return '1';
+            case '2':
                 return '2';
             default :
                 return '';

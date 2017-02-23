@@ -123,7 +123,7 @@ class XmlValidator
         $messages['default_aid_type.in']      = trans('validation.code_list', ['attribute' => trans('element.default_aid_type')]);
         $messages['default_tied_status.in']   = trans('validation.code_list', ['attribute' => trans('element.default_tied_status')]);
         $messages                             = array_merge($messages, $this->messagesForBudget($activity));
-        $messages                             = array_merge($messages, $this->rulesForPlannedDisbursement($activity));
+        $messages                             = array_merge($messages, $this->messagesForPlannedDisbursement($activity));
         $messages['capital_spend.numeric']    = trans('validation.numeric', ['attribute' => trans('element.capital_spend')]);
         $messages['capital_spend.max']        = trans('validation.max.numeric', ['attribute' => trans('element.capital_spend'), 'max' => 100]);
         $messages['capital_spend.min']        = trans('validation.negative', ['attribute' => trans('element.capital_spend')]);
@@ -1416,12 +1416,13 @@ class XmlValidator
         foreach ($budgetItems as $budgetItemIndex => $budgetItem) {
             $budgetItemBase                                   = sprintf('%s.budget_item.%s', $countryBudgetItemBase, $budgetItemIndex);
             $rules[sprintf('%s.percentage', $budgetItemBase)] = 'numeric|max:100';
-            $rules[sprintf('%s.%s', $budgetItemBase, $code)]  = sprintf('required|in:%s', $this->validCodeList('BudgetIdentifier', 'V201'));
-            $rules                                            = array_merge(
+            $rules[sprintf('%s.%s', $budgetItemBase, $code)]  = 'required';
+            ($code != 'code') ?: $rules[sprintf('%s.%s', $budgetItemBase, $code)] = sprintf('in:%s', $this->validCodeList('BudgetIdentifier', 'V201'));
+            $rules = array_merge(
                 $rules,
                 $this->getBudgetItemDescriptionRules(getVal($budgetItem, ['description'], []), $budgetItemBase)
             );
-            $rules                                            = array_merge(
+            $rules = array_merge(
                 $rules,
                 $this->getRulesForBudgetPercentage($countryBudgetItems)
             );

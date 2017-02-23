@@ -6,7 +6,7 @@
                 <div class="activity-element-label">@lang('elementForm.condition_not_attached')</div>
             </div>
         @else
-            @foreach(groupActivityElements(getVal($activityDataList, ['conditions', 'condition', 'condition_type'])) as $key => $condition)
+            @foreach(groupActivityElements(getVal($activityDataList, ['conditions', 'condition'],[]),   'condition_type') as $key => $condition)
                 <div class="activity-element-list">
                     <div class="activity-element-label">
                         {{ $getCode->getCodeNameOnly('ConditionType',$key) }}

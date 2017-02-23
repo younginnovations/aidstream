@@ -549,7 +549,7 @@ class Activity
 
     protected function getOrganisationRole($type)
     {
-        switch ($type) {
+        switch (ucwords($type)) {
             case 'Funding':
                 return '1';
             case 'Accountable':

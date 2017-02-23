@@ -2,6 +2,13 @@ var xmlImportCompleted = false;
 
 var XmlImporter = {
     localisedData: '',
+    statusCode: {
+        incomplete: 101,
+        file_not_found: 102,
+        complete: 103,
+        schema_error: 104,
+        version_error: 105
+    },
     callAsync: function (url, methodType) {
         return $.ajax({
             url: url,
@@ -10,10 +17,11 @@ var XmlImporter = {
     },
     status: function () {
         this.callAsync('/xml-import/import-status', 'get').success(function (data) {
-
-            if (data.error) {
+            if (data == XmlImporter.statusCode['schema_error']) {
                 window.location.href = 'xml-import/schemaErrors';
-            } else {
+            }
+
+            if (data.currentActivityCount && data.totalActivities) {
                 $('#xml-import-status-placeholder').html(
                     "<div class='alert alert-success'>"
                     + data.currentActivityCount + "/" + data.totalActivities + " activities processed. "
@@ -23,20 +31,31 @@ var XmlImporter = {
         });
     },
     checkCompletion: function () {
-        this.callAsync('/xml-import/isCompleted', 'get').success(function (data) {
-            if (data.status == 'completed') {
-                xmlImportCompleted = true;
-            }
+        if (!xmlImportCompleted) {
+            this.callAsync('/xml-import/isCompleted', 'get').success(function (data) {
+                if (data.status == XmlImporter.statusCode['version_error']) {
+                    $('#xml-import-status-placeholder').html(
+                        "<div class='alert alert-danger'>"
+                        + XmlImporter.localisedData['invalid_xml_version']
+                        + "</div>"
+                    );
+                    xmlImportCompleted = true;
+                }
 
-            if (data.status == 'file not found') {
-                $('#xml-import-status-placeholder').html(
-                    "<div class='alert alert-danger'>"
-                    + XmlImporter.localisedData['xml_file_incorrect']
-                    + "</div>"
-                );
-                xmlImportCompleted = true;
-            }
-        })
+                if (data.status == XmlImporter.statusCode['complete']) {
+                    xmlImportCompleted = true;
+                }
+
+                if (data.status == XmlImporter.statusCode['file_not_found']) {
+                    $('#xml-import-status-placeholder').html(
+                        "<div class='alert alert-danger'>"
+                        + XmlImporter.localisedData['xml_file_incorrect']
+                        + "</div>"
+                    );
+                    xmlImportCompleted = true;
+                }
+            });
+        }
     },
     complete: function () {
         return this.callAsync('/xml-import/complete', 'get');

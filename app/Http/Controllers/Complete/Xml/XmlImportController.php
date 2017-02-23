@@ -76,20 +76,21 @@ class XmlImportController extends Controller
         $completedActivity = $this->xmlImportManager->loadJsonFile('xml_completed_status.json');
         $schemaError       = $this->xmlImportManager->loadJsonFile('schema_error.json');
 
-        list($totalActivities, $currentActivityCount, $failed, $success, $response) = [0, 0, 0, 0, ''];
+
+        list($totalActivities, $currentActivityCount, $failed, $success, $status) = [0, 0, 0, 0, ''];
 
         if ($schemaError) {
-            $response = ['error' => 'true'];
+            $status = [config('status-code.xml.schema_error')];
         } elseif ($completedActivity) {
             $totalActivities      = getVal($completedActivity, ['total_activities']);
             $currentActivityCount = getVal($completedActivity, ['current_activity_count']);
             $failed               = getVal($completedActivity, ['failed']);
             $success              = getVal($completedActivity, ['success']);
 
-            $response = ['totalActivities' => $totalActivities, 'currentActivityCount' => $currentActivityCount, 'failed' => $failed, 'success' => $success];
+            $status = ['totalActivities' => $totalActivities, 'currentActivityCount' => $currentActivityCount, 'failed' => $failed, 'success' => $success];
         }
 
-        return response()->json($response);
+        return response()->json($status);
     }
 
     /**
@@ -100,14 +101,19 @@ class XmlImportController extends Controller
     public function isCompleted()
     {
         $completedActivity = $this->xmlImportManager->loadJsonFile('xml_completed_status.json');
+        $invalid           = $this->xmlImportManager->loadJsonFile('error.json');
 
-        $status = ($completedActivity) ? 'incomplete' : 'file not found';
+        if ($invalid) {
+            $status = config('status-code.xml.version_error');
+        } else {
+            $status = ($completedActivity) ? config('status-code.xml.incomplete') : config('status-code.xml.file_not_found');
+        }
 
         if ($completedActivity) {
             $totalActivities      = getVal($completedActivity, ['total_activities']);
             $currentActivityCount = getVal($completedActivity, ['current_activity_count']);
             if ($currentActivityCount === $totalActivities) {
-                $status = 'completed';
+                $status = config('status-code.xml.completed');
             }
         }
 
