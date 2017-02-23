@@ -392,8 +392,10 @@ class Validation extends Factory
             'only_one_among',
             function ($attribute, $values, $parameters, $validator) {
                 foreach ($values as $value) {
-                    if (($value['organization_identifier_code'] == "") && ($value['type'] == "")
-                        && (getVal($value, ['provider_activity_id']) == "") && (getVal($value, ['narrative', 0, 'narrative']) == "")
+                    if ((getVal($value, ['organization_identifier_code'], '') == "")
+                        && (getVal($value, ['type'], '') == "")
+                        && (getVal($value, ['provider_activity_id']) == "")
+                        && (getVal($value, ['narrative', 0, 'narrative']) == "")
                     ) {
                         return true;
                     }
