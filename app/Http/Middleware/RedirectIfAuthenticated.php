@@ -40,11 +40,16 @@ class RedirectIfAuthenticated
     public function handle($request, Closure $next)
     {
         if ($this->auth->check()) {
-            if (($redirectUrl = $this->redirectPaths[$this->auth->user()->organization->system_version_id]) == '/activity') {
-                $redirectUrl = (session('first_login')) ? '/welcome' : $redirectUrl;
-            }
+            $user = $this->auth->user();
+            if ($organization = $user->organization) {
+                if (($redirectUrl = $this->redirectPaths[$organization->system_version_id]) == '/activity') {
+                    $redirectUrl = (session('first_login')) ? '/welcome' : $redirectUrl;
+                }
 
-            return new RedirectResponse(url($redirectUrl));
+                return redirect(url($redirectUrl));
+            } else {
+                return redirect(url('/'));
+            }
         }
 
         return $next($request);
