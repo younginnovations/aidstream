@@ -2,6 +2,7 @@
 
 use App\Models\ActivityPublished;
 use App\Models\OrganizationPublished;
+use App\Models\PerfectViewer\OrganizationSnapshot;
 use App\Models\SystemVersion;
 use App\User;
 use Illuminate\Database\Eloquent\Model;
@@ -156,5 +157,10 @@ class Organization extends Model
     public function systemVersion()
     {
         return $this->belongsTo(SystemVersion::class, 'system_version_id');
+    }
+
+    public function organizationSnapshot()
+    {
+       return $this->hasOne(OrganizationSnapshot::class, 'org_id');
     }
 }
