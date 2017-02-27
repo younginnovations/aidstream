@@ -384,7 +384,7 @@ class CorrectionService
     {
         $apiHost = env('REGISTRY_URL');
         $uri     = 'action/package_search';
-        $url     = sprintf('%s%s?q=%s', $apiHost, $uri, $publisherId);
+        $url     = sprintf('%s%s?q=&fq=organization:%s', $apiHost, $uri, $publisherId);
 
         return file_get_contents($url);
     }
