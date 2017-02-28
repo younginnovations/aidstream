@@ -182,9 +182,16 @@ class AuthController extends Controller
 
             if (Auth::attempt($credentials, $request->has('remember'))) {
                 $user = Auth::user();
-                $this->verify($user)
-                     ->storeDetailsInSession($user)
+
+                if (($response = getVal($this->verify($user), ['status'])) !== true) {
+                    Auth::logout();
+
+                    return redirect()->to('auth/login')->withErrors($response);
+                }
+
+                $this->storeDetailsInSession($user)
                      ->setVersions();
+
 
                 if ($this->userIsRegisteredForLite($user)) {
                     return $this->redirectToLite();
@@ -300,25 +307,19 @@ class AuthController extends Controller
     /**
      *  Verify the status of the user.
      * @param $user
-     * @return $this
+     * @return array
      */
     protected function verify($user)
     {
         if (!$user->enabled) {
-            Auth::logout();
-
-            return redirect('/auth/login')->withErrors(trans('error.account_disabled'));
+            return ['status' => trans('error.account_disabled')];
         }
 
         if (!$user->verified_status) {
-            Auth::logout();
-
-            return redirect('/auth/login')->withErrors(
-                trans('error.account_not_verified')
-            );
+            return ['status' => trans('error.account_not_verified')];
         }
 
-        return $this;
+        return ['status' => true];
     }
 
     /**
