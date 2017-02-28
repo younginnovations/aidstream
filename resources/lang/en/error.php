@@ -13,7 +13,7 @@ return [
     'unable_to_login'                                        => 'Unable to login. Please contact us at <a href=\'mailto:support@aidstream.org\'>support@aidstream.org</a>',
     'organisation_name_abbreviation_taken'                   => 'Organisation Name Abbreviation has already been taken.',
     'account_disabled'                                       => 'Your account has been disabled. Please contact us at <a href=\'mailto:support@aidstream.org\'>support@aidstream.org</a> ',
-    'account_not_verified'                                   => 'Your account has not be verified yet. Please click connect me link in registration confirmation email. If you are still having problem, please contact us at <a href=\'mailto:support@aidstream.org\'>support@aidstream.org</a> ',
+    'account_not_verified'                                   => 'Your account has not be verified yet. A verification email was sent to you. Please check your email and verify your account to login. If you are still having problem, please contact us at <a href=\'mailto:support@aidstream.org\'>support@aidstream.org</a> ',
     'failed_to_send_email'                                   => 'Failed to send email.',
     'failed_to_save_password'                                => 'Failed to save Password.',
     'failed_to_save_registry_info'                           => 'Failed to save Registry Info.',
