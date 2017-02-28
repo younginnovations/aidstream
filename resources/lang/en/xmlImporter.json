@@ -2,5 +2,6 @@
   "success": "Success",
   "failed": "Failed",
   "activities_processed": "Activity Processed",
-  "xml_file_incorrect": "Sorry the xml file you uploaded is incorrect"
+  "xml_file_incorrect": "Sorry the xml file you uploaded is incorrect",
+  "invalid_xml_version": "Sorry! the version of xml you uploaded is currently not supported."
 }

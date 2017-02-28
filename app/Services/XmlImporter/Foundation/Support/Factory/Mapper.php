@@ -1,6 +1,7 @@
 <?php namespace App\Services\XmlImporter\Foundation\Support\Factory;
 
 use App\Services\XmlImporter\Foundation\Mapper\Components\Version\V1\Activity as V1Activity;
+use App\Services\XmlImporter\Foundation\Mapper\Components\Version\V1\V105\Activity as V105Activity;
 use App\Services\XmlImporter\Foundation\Mapper\Components\Version\V2\Activity as V2Activity;
 use App\Services\XmlImporter\Foundation\Mapper\Components\Version\V1\Elements\Result as V1Result;
 use App\Services\XmlImporter\Foundation\Mapper\Components\Version\V2\Elements\Result as V2Result;
@@ -20,6 +21,7 @@ trait Mapper
      */
     protected $bindings = [
         '1.03' => [V1Activity::class, V1Transaction::class, V1Result::class],
+        '1.05' => [V105Activity::class, V1Transaction::class, V1Result::class],
         '2.01' => [V2Activity::class, V2Transaction::class, V2Result::class],
         '2.02' => [V2Activity::class, V2Transaction::class, V2Result::class]
     ];

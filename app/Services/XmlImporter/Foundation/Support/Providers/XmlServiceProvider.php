@@ -19,6 +19,13 @@ class XmlServiceProvider
     protected $xmlErrorServiceProvider;
 
     /**
+     * Xml versions that can be imported.
+     *
+     * @var array
+     */
+    protected $allowedXmlVersion = ['V103', 'V105', 'V201', 'V202'];
+
+    /**
      * Xml constructor.
      * @param Service                 $xmlService
      * @param XmlErrorServiceProvider $xmlErrorServiceProvider
@@ -82,4 +89,18 @@ class XmlServiceProvider
     {
         return app_path(sprintf('Core/%s/XmlSchema/iati-activities-schema.xsd', $version));
     }
+
+    /**
+     * Checks if the uploaded xml is allowed.
+     *
+     * @param $contents
+     * @return bool
+     */
+    public function allowedVersionOfXml($contents)
+    {
+        $version = $this->version($contents, true);
+
+        return (in_array($version, $this->allowedXmlVersion)) ? true : false;
+    }
 }
+

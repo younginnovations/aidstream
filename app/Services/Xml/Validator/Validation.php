@@ -479,7 +479,7 @@ class Validation extends Factory
 
         $index = 0;
         foreach ($elementErrors as $elementIndex => $error) {
-            $elementName               = strtolower($this->parseErrors($elementIndex));
+            $elementName               = snake_case(camel_case(strtolower($this->parseErrors($elementIndex))));
             $errorIndex                = (int) getVal(explode('.', $elementIndex), [1]);
             $id                        = getVal($this->validator->getData(), [$elementName, $errorIndex, 'id']);
             $errors[$index]['link']    = route($this->elementLinks[$element], [$activityId, $id]);

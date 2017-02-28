@@ -103,6 +103,18 @@ class XmlQueueProcessor
         $file           = $this->temporaryXmlStorage($filename);
 
         $contents = file_get_contents($file);
+
+        if (!$this->xmlServiceProvider->allowedVersionOfXml($contents)) {
+            $this->storeInJsonFile(
+                'error.json',
+                [
+                    'message' => 'Uploaded xml version is not supported'
+                ]
+            );
+
+            return false;
+        }
+
         if ($this->xmlServiceProvider->isValidAgainstSchema($contents)) {
             $version          = $this->xmlServiceProvider->version($contents);
             $xmlData          = $this->xmlServiceProvider->load($contents);
