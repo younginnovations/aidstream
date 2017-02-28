@@ -28,7 +28,7 @@
                                 @foreach($organizations as $key=>$organization)
                                     <tr>
                                         <td>{{ $key + 1 }}</td>
-                                        <td>{{ $organization->name}}
+                                        <td>{{ substr($organization->name, 0, 100) }}
                                             <div>{{getVal($organization->users->toArray(), [0, 'email'])}}</div>
                                         </td>
                                         <td>{{ $organization->settings ? $organization->settings->version : '' }}</td>

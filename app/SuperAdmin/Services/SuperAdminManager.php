@@ -113,21 +113,45 @@ class SuperAdminManager
      */
     public function getAllOrganizationInfo()
     {
-        $organizations       = Organization::all();
-        $organizationDetails = [];
+        $organizations = Organization::with(
+            [
+                'activities' => function ($query) {
+                    return $query->orderBy('updated_at', 'desc');
+                },
+                'settings',
+                'organizationPublished',
+                'organizationSnapshot',
+                'users'      => function ($query) {
+                    return $query->where('role_id', 1);
+                }
+            ]
+        )->get();
+
+        $noOfPublishedActivities = $this->getNumberOfPublishedActivitiesForOrg($organizations);
+        $organizationDetails     = [];
 
         $organizations->each(
-            function ($organization) use (&$organizationDetails) {
-                $organizationId                                                    = $organization->id;
-                $organizationDetails[$organizationId]['name']                      = $organization->name;
-                $organizationDetails[$organizationId]['admin_email']               = $this->getEmailOfOrganizationAdmin($organizationId);
-                $activities                                                        = $this->getActivitiesData($organizationId);
-                $organizationDetails[$organizationId]['noOfActivities']            = $activities ? $activities[0]->noofactivities : ' ';
-                $organizationDetails[$organizationId]['activityLastUpdatedAt']     = $activities ? $activities[0]->updated_at : ' ';
-                $organizationDetails[$organizationId]['noOfActivitiesPublished']   = $this->getNoOfActivitiesPublished($organizationId)[0]->noofpublishedactivities;
-                $organizationDetails[$organizationId]['organizationDataPublished'] = $this->statusOfOrganizationDataPublished($organizationId)[0]->organizationdatapublished;
-                $organizationUpdatedAt                                             = OrganizationData::where('organization_id', $organizationId)->select('updated_at')->first();
-                $organizationDetails[$organizationId]['organizationLastUpdatedAt'] = $organizationUpdatedAt ? $organizationUpdatedAt->updated_at : ' ';
+            function ($organization) use (&$organizationDetails, $noOfPublishedActivities) {
+                $organizationId                                                       = $organization->id;
+                $organizationDetails[$organizationId]['Name']                         = $organization->name;
+                $organizationDetails[$organizationId]['Admin Email']                  = getVal($organization->users->toArray(), [0, 'email'], '');
+                $organizationDetails[$organizationId]['No. of Activities']            = count($organization->activities);
+                $organizationDetails[$organizationId]['Activity Last Updated At']     = getVal($organization->activities->toArray(), [0, 'updated_at'], '');
+                $organizationDetails[$organizationId]['No. of Activities Published']  = getVal($noOfPublishedActivities, [$organizationId], 0);
+                $organizationDetails[$organizationId]['Organisation Data Published']  = $organization->published_to_registry;
+                $organizationDetails[$organizationId]['Organisation Last Updated At'] = $organization->updated_at ? $organization->updated_at->format('Y-m-d h:m:s') : '';
+                $organizationDetails[$organizationId]['Country']                      = $organization->country;
+                $organizationDetails[$organizationId]['Organisation Identifier']      = ($organization->registration_agency && $organization->registration_number) ? $organization->registration_agency . '-' . $organization->registration_number : '';
+                $organizationDetails[$organizationId]['Publisher Id']                 = $organization->settings->registry_info ? getVal(
+                    $organization->settings->registry_info,
+                    [0, 'publisher_id'],
+                    ''
+                ) : '';
+                $organizationDetails[$organizationId]['Registration Date']             = $organization->created_at->format('Y-m-d h:m:s');
+                $organizationDetails[$organizationId]['IATI Version']                  = $organization->settings->version;
+                $organizationDetails[$organizationId]['Organisation Data']             = (count($organization->organizationPublished) > 0) ? 1 : 0;
+                $organizationDetails[$organizationId]['Visible in Who\'s Using It?']          = (count($organization->organizationSnapshot) > 0) ? 1 : 0;
+
             }
         );
 
@@ -147,7 +171,14 @@ class SuperAdminManager
             'Activity Last Updated At',
             'No. of Published activities',
             'Organization Data Published',
-            'Organization Data Last Updated At'
+            'Organization Data Last Updated At',
+            'Country',
+            'Organization Identifier',
+            'Publisher Id',
+            'Registration Date',
+            'IATI Version',
+            'Organization Data',
+            "Visible in who's using?"
         ];
 
         $this->generator->generateWithHeaders("Organization details", $organizationDetails, $headers);
@@ -191,5 +222,20 @@ class SuperAdminManager
         $userDetails = $this->user->getDataByOrgIdAndRoleId($orgId, 1);
 
         return $userDetails ? $userDetails->email : '';
+    }
+
+    protected function getNumberOfPublishedActivitiesForOrg($organizations)
+    {
+        $noOfPublishedActivities = [];
+        foreach ($organizations as $index => $organization) {
+            $noOfPublishedActivities[$organization->id] = 0;
+            foreach ($organization->activities as $i => $activity) {
+                if ($organization->activities[$i]->published_to_registry) {
+                    $noOfPublishedActivities[$organization->id] ++;
+                }
+            }
+        }
+
+        return $noOfPublishedActivities;
     }
 }
