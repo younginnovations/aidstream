@@ -40,15 +40,18 @@ class XmlProcessor
      *
      * @param array $xml
      * @param       $version
-     * @return array|bool
+     * @param       $userId
+     * @param       $orgId
+     * @param       $dbIatiIdentifiers
+     * @return      bool
      */
-    public function process(array $xml, $version)
+    public function process(array $xml, $version, $userId, $orgId, $dbIatiIdentifiers)
     {
         if ($this->xmlMapper->isValidActivityFile($xml)) {
             $this->xmlMapper->assign($version)
-                            ->map($xml, $this->templateServiceProvider->load());
+                            ->map($xml, $this->templateServiceProvider->load(), $userId, $orgId, $dbIatiIdentifiers);
 
-            return $this->xmlMapper->data();
+            return true;
         }
 
         return false;

@@ -2,6 +2,7 @@
 
 use App\Services\XmlImporter\Foundation\Support\Factory\Mapper as MapperFactory;
 use App\Services\XmlImporter\Foundation\Support\Helpers\Traits\XmlHelper;
+use App\Services\XmlImporter\Foundation\XmlQueueWriter;
 
 /**
  * Class XmlMapper
@@ -110,19 +111,26 @@ class XmlMapper
      *
      * @param array $activities
      * @param       $template
-     * @return $this|bool
+     * @param       $userId
+     * @param       $orgId
+     * @param       $dbIatiIdentifiers
+     * @return $this
      */
-    public function map(array $activities, $template)
+    public function map(array $activities, $template, $userId, $orgId, $dbIatiIdentifiers)
     {
-        $mappedData = [];
+        $xmlQueueWriter  = app()->make(XmlQueueWriter::class, [$userId, $orgId, $dbIatiIdentifiers]);
+        $totalActivities = count($activities);
+        $mappedData      = [];
+
         foreach ($activities as $index => $activity) {
             $this->initComponents();
             $mappedData[$index]                         = $this->activity->map($this->filter($activity, 'iatiActivity'), $template);
             $mappedData[$index]['default_field_values'] = $this->defaultFieldValues($activity, $template);
             $mappedData[$index]['transactions']         = $this->transactionElement->map($this->filter($activity, 'transaction'), $template);
             $mappedData[$index]['result']               = $this->resultElement->map($this->filter($activity, 'result'), $template);
+
+            $xmlQueueWriter->save($mappedData[$index], $totalActivities, $index);
         }
-        $this->data = $mappedData;
 
         return $this;
     }
@@ -188,6 +196,7 @@ class XmlMapper
      */
     protected function filter($xmlData, $elementName)
     {
+        list($this->transaction, $this->result) = [[], []];
         foreach ($this->value($xmlData) as $subElement) {
             if ($elementName == 'transaction') {
                 $this->filterForTransactions($subElement, $elementName);
