@@ -305,23 +305,23 @@
                     <button class="form-group view_map" type="button">Use map</button>
                 </div>
                 <div class="collection_form point">
-                <label for="location[locationCount][administrative][administrativeCount][point]" class="control-label"></label>
-                <div class="form-group">
-                    <div class="col-sm-6 hidden">
-                        <label for="location[locationCount][administrative][administrativeCount][point][0][latitude]" class="control-label">Latitude</label>
-                        <input class="latitude" name="location[locationCount][administrative][administrativeCount][point][0][latitude]" type="text" id="location[locationCount][administrative][administrativeCount][point][0][latitude]">
-                    </div>
-                    <div class="col-sm-6 hidden">
-                        <label for="location[locationCount][administrative][administrativeCount][point][0][longitude]" class="control-label">Longitude</label>
-                        <input class="longitude" name="location[locationCount][administrative][administrativeCount][point][0][longitude]" type="text" id="location[locationCount][administrative][administrativeCount][point][0][longitude]">
-                    </div>
-                    <div class="form-group full-width-wrap">
-                        <div class="map_container" id="location[locationCount][administrative][administrativeCount][point][0][map]" style="height: 400px; display:none"></div>
+                    <label for="location[locationCount][administrative][administrativeCount][point]" class="control-label"></label>
+                    <div class="form-group">
+                        <div class="col-sm-6 hidden">
+                            <label for="location[locationCount][administrative][administrativeCount][point][0][latitude]" class="control-label">Latitude</label>
+                            <input class="latitude" name="location[locationCount][administrative][administrativeCount][point][0][latitude]" type="text" id="location[locationCount][administrative][administrativeCount][point][0][latitude]">
+                        </div>
+                        <div class="col-sm-6 hidden">
+                            <label for="location[locationCount][administrative][administrativeCount][point][0][longitude]" class="control-label">Longitude</label>
+                            <input class="longitude" name="location[locationCount][administrative][administrativeCount][point][0][longitude]" type="text" id="location[locationCount][administrative][administrativeCount][point][0][longitude]">
+                        </div>
+                        <div class="form-group full-width-wrap">
+                            <div class="map_container" id="location[locationCount][administrative][administrativeCount][point][0][map]" style="height: 400px; display:none"></div>
+                        </div>
                     </div>
                 </div>
             </div>
-            </div>
-            <button class="remove_from_collection" type="button">Remove This</button>
+            <button class="remove_location" type="button">Remove This</button>
         </div>
     </div>
 </div>

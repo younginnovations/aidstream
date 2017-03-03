@@ -2183,7 +2183,7 @@ form > .collection_form > .form-group > .collection_form > .form-group > .collec
   margin-left: -22px;
   margin-bottom: 0; }
 
-.remove_from_collection, .remove_from_collection:focus {
+.remove_location, .remove_from_collection, .remove_from_collection:focus {
   background: transparent url(../../images/ic-sprite.svg) no-repeat -393px 0;
   border: none;
   text-indent: -9999px;
@@ -2193,7 +2193,7 @@ form > .collection_form > .form-group > .collection_form > .form-group > .collec
   width: 22px;
   height: 22px;
   padding: 0; }
-  .remove_from_collection:hover, .remove_from_collection:focus:hover {
+  .remove_location:hover, .remove_from_collection:hover, .remove_from_collection:focus:hover {
     background: transparent url(../../images/ic-sprite.svg) no-repeat -393px -197px; }
 
 .fill-border {

@@ -74,7 +74,7 @@
                     </div>
                 </div>
             </div>
-        </div>k
+        </div>
     </div>
 
     <div class="container" id="projects-container">

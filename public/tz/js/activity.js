@@ -74,6 +74,8 @@ var Activity = {
             if ($(this).hasClass("Yes")) {
                 $(this).removeClass('Yes');
                 $(this).addClass('No');
+                $('.new-location-block').remove();
+                $('.add-location').remove();
             } else if ($(this).hasClass("No")) {
                 $(this).removeClass('No');
                 $(this).addClass('Yes');
@@ -83,7 +85,7 @@ var Activity = {
         $('.option-to-add-more').nextAll('.form-group').addClass('added-new-block new-location-block');
     },
     addLocation: function (source) {
-        var locationContainer = $(source).parent().parent();
+        var locationContainer = $(source).closest('.location');
         var collection = $('.location-container');
         var locationCount = locationContainer.find('.country').length;
 
@@ -122,6 +124,13 @@ var Activity = {
             administrativeContainer.append(proto);
 
             $('form select').select2();
+        });
+    },
+    deleteCountryOnClick: function () {
+        $('.collection_form').on('click', '.remove_location', function () {
+            if ($('.new-location-block').length > 1) {
+                $(this).closest('.new-location-block').remove();
+            }
         });
     }
 };

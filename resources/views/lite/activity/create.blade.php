@@ -115,10 +115,8 @@
         $(document).ready(function () {
             var countryDetails = [{!! $countryDetails !!}];
             @if(isRegisteredForTz())
-            //                TzLocation.loadMap(countryDetails);
             TzLocation.closeOpenedMap(countryDetails);
             TzLocation.onCountryChanged();
-//                TzLocation.onLatAndLongChange();
             @else
                 Location.loadMap(countryDetails);
             Location.onCountryChange();
@@ -136,14 +134,14 @@
         Activity.changeRegionAndDistrict();
         Activity.removeCountriesExceptTz();
         Activity.addMoreAdministrative();
-
+        Activity.deleteCountryOnClick();
         var district = [];
         @foreach(getVal($form->getModel(),['location'],[]) as $index => $location )
                 @foreach(getVal($location,['administrative'],[]) as $key => $administrative)
                 district["{!! getVal($administrative,['region'],'') !!}"] = "{!! getVal($administrative,['district'],'') !!}";
         @endforeach
-@endforeach
-Activity.loadDistrictIfRegionIsPresent(district);
+    @endforeach
+    Activity.loadDistrictIfRegionIsPresent(district);
         Activity.displayAddMoreCountry();
         ProgressBar.setTotalFields(22);
         ProgressBar.setLocationFields(5);
