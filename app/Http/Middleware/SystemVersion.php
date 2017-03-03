@@ -31,6 +31,11 @@ class SystemVersion
     const TZ_ROUTE_CODE = 802;
 
     /**
+     * Code to redirect to the same AidStream
+     */
+    const INTERNAL_REDIRECT_CODE = 803;
+
+    /**
      * SystemVersion constructor.
      * @param Guard $auth
      */
@@ -64,22 +69,22 @@ class SystemVersion
             if (superAdminIsLoggedIn()) {
                 return $next($request);
             } else {
-                $permission = $this->userIsAllowed($user, $request);
+                $responseCode    = $this->userIsAllowed($user, $request);
+                $versionMetaData = $this->parseVersion($user);
 
-                if (self::MAIN_ROUTE_CODE === $permission) {
+                if (self::MAIN_ROUTE_CODE === $responseCode) {
                     $this->auth->logOut();
 
                     return redirect()->route('main.home');
-                } elseif (self::TZ_ROUTE_CODE === $permission) {
+                } elseif (self::TZ_ROUTE_CODE === $responseCode) {
                     $this->auth->logOut();
 
                     return redirect()->route('tz.home');
-                } elseif (true === $permission) {
+                } elseif (self::INTERNAL_REDIRECT_CODE === $responseCode) {
+                    return redirect()->route($versionMetaData['route']);
+                } elseif (true === $responseCode) {
                     return $next($request);
                 }
-                $versionMetaData = $this->parseVersion($user);
-
-                return redirect()->route($versionMetaData['route']);
             }
         }
     }
@@ -99,13 +104,24 @@ class SystemVersion
             } else {
                 $currentVersion    = $this->getCurrentVersion($request);
                 $registeredVersion = $user->getSystemVersion();
+                $segments          = $request->segments();
 
-                if (($currentVersion == 'Tz') && $registeredVersion != 'Tz') {
-                    return 801;
-                } else {
-                    if ($currentVersion == 'Main' && ($registeredVersion != 'Lite' || $registeredVersion != 'Core')) {
-                        return 802;
+                if (($currentVersion == 'Tz')) {
+                    if ($registeredVersion == 'Tz') {
+                        return in_array('lite', $segments) ? true : 803;
                     }
+
+                    return 801;
+                } elseif ($currentVersion == 'Main') {
+                    if ($registeredVersion == 'Lite') {
+                        return in_array('lite', $segments) ? true : 803;
+                    } elseif ($registeredVersion == 'Core') {
+                        return in_array('lite', $segments) ? 803 : true;
+                    }
+
+                    return 802;
+                } else {
+
                 }
             }
 
