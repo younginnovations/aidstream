@@ -44,6 +44,9 @@ class Activity implements MapperInterface
      */
     const GENERAL_DESCRIPTION = 1;
 
+    /**
+     *
+     */
     const LOCATION_SRS_NAME_VALUE = 'http://www.opengis.net/def/crs/EPSG/0/4326';
 
     /**
@@ -56,6 +59,9 @@ class Activity implements MapperInterface
      */
     const BUDGET_STATUS = 2;
 
+    /**
+     *
+     */
     const DEFAULT_RECIPIENT_COUNTRY_PERCENTAGE = 100;
 
     /**
@@ -87,6 +93,19 @@ class Activity implements MapperInterface
      * Path to template.
      */
     const BASE_TEMPLATE_PATH = 'Services/XmlImporter/Foundation/Support/Templates/V202.json';
+
+    /**
+     *
+     */
+    const LOCATION_ADMINISTRATIVE_VOCABULARY = 'G1';
+    /**
+     *
+     */
+    const LOCATION_DISTRICT_LEVEL = '2';
+    /**
+     *
+     */
+    const LOCATION_REGION_LEVEL = '1';
 
     /**
      * @var array
@@ -308,46 +327,62 @@ class Activity implements MapperInterface
         }
     }
 
+    /**
+     * @param $key
+     * @param $value
+     * @param $template
+     */
     protected function location($key, $value, $template)
     {
         $administrativeTemplate = getVal($template, ['administrative'], []);
         $percentage             = $this->calculatePercentageForCountry(count($value));
 
         foreach ($value as $index => $location) {
-            $this->recipient_country('recipient_country', getVal($location, ['country'], ''), $this->getTemplateOf('country'), $index, $percentage);
+            $countryCode = getVal($location, ['country'], '');
+            $this->recipient_country('recipient_country', $countryCode, $this->getTemplateOf('country'), $index, $percentage);
 
             foreach (getVal($location, ['administrative'], []) as $administrativeIndex => $administrative) {
-                $this->mappedData[$key][$this->index]                            = $template;
-                $this->mappedData[$key][$this->index]['administrative']          = $this->administrative($administrative, $administrativeTemplate);
-                $this->mappedData[$key][$this->index]['point'][0]['srs_name']    = self::LOCATION_SRS_NAME_VALUE;
-                $this->mappedData[$key][$this->index]['country_code']            = getVal($location, ['country']);
-                $this->mappedData[$key][$this->index]['point'][0]['position'][0] = [
-                    'latitude'  => getVal($administrative, ['point', 0, 'latitude']),
-                    'longitude' => getVal($administrative, ['point', 0, 'longitude'])
-                ];
+                $this->mappedData[$key][$this->index] = $template;
+                $region                               = getVal($administrative, ['region']);
+                $district                             = getVal($administrative, ['district']);
+                $latitude                             = getVal($administrative, ['point', 0, 'latitude']);
+                $longitude                            = getVal($administrative, ['point', 0, 'latitude']);
+
+                $this->mappedData[$key][$this->index]['country_code'] = getVal($location, ['country']);
+
+                if ($latitude != "" || $latitude != "") {
+                    $this->mappedData[$key][$this->index]['point'][0]['srs_name']    = self::LOCATION_SRS_NAME_VALUE;
+                    $this->mappedData[$key][$this->index]['point'][0]['position'][0] = [
+                        'latitude'  => $latitude,
+                        'longitude' => $longitude
+                    ];
+                }
+
+                if ($region != "" && $countryCode == "TZ") {
+                    $this->mappedData[$key][$this->index]['administrative'] = $this->administrative($region, $district, $administrativeTemplate);
+                }
                 $this->index ++;
             }
         }
     }
 
-    protected function administrative($values, $template)
+    /**
+     * @param $region
+     * @param $district
+     * @param $template
+     * @return mixed
+     */
+    protected function administrative($region, $district, $template)
     {
         $administrative = $template;
 
-        $region   = getVal($values, ['region']);
-        $district = getVal($values, ['district']);
+        $administrative[0]['vocabulary'] = self::LOCATION_ADMINISTRATIVE_VOCABULARY;
+        $administrative[0]['code']       = $region;
+        $administrative[0]['level']      = self::LOCATION_REGION_LEVEL;
 
-        if ($region != "") {
-            $administrative[0]['vocabulary'] = 'G1';
-            $administrative[0]['code']       = $region;
-            $administrative[0]['level']      = '1';
-        }
-
-        if ($district != "") {
-            $administrative[1]['vocabulary'] = 'G1';
-            $administrative[1]['code']       = $district;
-            $administrative[1]['level']      = '2';
-        }
+        $administrative[1]['vocabulary'] = self::LOCATION_ADMINISTRATIVE_VOCABULARY;
+        $administrative[1]['code']       = $district;
+        $administrative[1]['level']      = self::LOCATION_DISTRICT_LEVEL;
 
         return $administrative;
     }
@@ -366,7 +401,6 @@ class Activity implements MapperInterface
                 $description                        = getVal($descriptions, ['narrative', 0, 'narrative']);
                 $this->mappedData[$descriptionType] = $description;
             }
-
         }
 
         return $this;
@@ -386,7 +420,6 @@ class Activity implements MapperInterface
                 $date                                = getVal($activityDate, ['date']);
                 $this->mappedData[$activityDateType] = $date;
             }
-
         }
 
         return $this;
@@ -431,38 +464,60 @@ class Activity implements MapperInterface
         return $this;
     }
 
+    /**
+     * @return array
+     */
     protected function reverseMapLocation()
     {
         $countryArray        = [];
-        $locationIndex       = - 1;
         $administrativeIndex = 0;
 
         foreach (getVal($this->rawData, ['location'], []) as $index => $location) {
             if (array_key_exists('country_code', $location)) {
-                $countryCode = getVal($location, ['country_code']);
+                $countryCode   = getVal($location, ['country_code']);
+                $locationIndex = $this->getLocationIndex($countryCode);
 
                 if (in_array($countryCode, $countryArray)) {
                     $administrativeIndex ++;
                 } else {
                     $administrativeIndex = 0;
-                    $locationIndex ++;
-                    $countryArray[] = $countryCode;
+                    $countryArray[]      = $countryCode;
                 }
-
 
                 $this->mappedData['location'][$locationIndex]['country'] = $countryCode;
 
                 foreach (getVal($location, ['point'], []) as $pointIndex => $point) {
-                    $this->mappedData['location'][$locationIndex]['administrative'][$administrativeIndex]['point'][0]['longitude'] = getVal($point, ['position', 0, 'longitude']);
-                    $this->mappedData['location'][$locationIndex]['administrative'][$administrativeIndex]['point'][0]['latitude']  = getVal($point, ['position', 0, 'latitude']);
+                    $longitude = getVal($point, ['position', 0, 'longitude']);
+                    $latitude  = getVal($point, ['position', 0, 'latitude']);
+
+                    if ($longitude != "" || $latitude != "") {
+                        $this->mappedData['location'][$locationIndex]['administrative'][$administrativeIndex]['point'][0]['longitude'] = $longitude;
+                        $this->mappedData['location'][$locationIndex]['administrative'][$administrativeIndex]['point'][0]['latitude']  = $latitude;
+                    }
                 }
 
-                $this->mappedData['location'][$locationIndex]['administrative'][$administrativeIndex]['region']   = getVal($location, ['administrative', 0, 'code']);
-                $this->mappedData['location'][$locationIndex]['administrative'][$administrativeIndex]['district'] = getVal($location, ['administrative', 1, 'code']);
+                if (($region = getVal($location, ['administrative', 0, 'code'])) != "") {
+                    $this->mappedData['location'][$locationIndex]['administrative'][$administrativeIndex]['region']   = getVal($location, ['administrative', 0, 'code']);
+                    $this->mappedData['location'][$locationIndex]['administrative'][$administrativeIndex]['district'] = getVal($location, ['administrative', 1, 'code']);
+                }
             }
         }
 
         return $this->mappedData;
+    }
+
+    /**
+     * Returns index of the country.
+     * @param $countryCode
+     * @return int|string
+     */
+    protected function getLocationIndex($countryCode)
+    {
+        foreach (getVal($this->rawData, ['recipient_country'], []) as $locationIndex => $country) {
+            if ($countryCode == getVal($country, ['country_code'])) {
+                return $locationIndex;
+            }
+        }
     }
 
     /**
@@ -554,6 +609,12 @@ class Activity implements MapperInterface
         return json_decode(file_get_contents(app_path(self::BASE_TEMPLATE_PATH)), true);
     }
 
+    /**
+     * Calculates the percentage for recipient country.
+     *
+     * @param $noOfCountry
+     * @return array
+     */
     protected function calculatePercentageForCountry($noOfCountry)
     {
         $percentage      = (100 % $noOfCountry == 0) ? (100 / $noOfCountry) : round(100 / $noOfCountry, 2);

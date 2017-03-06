@@ -136,12 +136,17 @@
         Activity.addMoreAdministrative();
         Activity.deleteCountryOnClick();
         var district = [];
+        var counter = 0;
         @foreach(getVal($form->getModel(),['location'],[]) as $index => $location )
-                @foreach(getVal($location,['administrative'],[]) as $key => $administrative)
-                district["{!! getVal($administrative,['region'],'') !!}"] = "{!! getVal($administrative,['district'],'') !!}";
+            @foreach(getVal($location,['administrative'],[]) as $key => $administrative)
+                @if(getVal($administrative,['region'],'') != "")
+                    district[counter] = [];
+                    district[counter]["{!! getVal($administrative,['region'],'') !!}"]= "{!! getVal($administrative,['district'],'') !!}";
+                    counter++;
+                @endif
+            @endforeach
         @endforeach
-    @endforeach
-    Activity.loadDistrictIfRegionIsPresent(district);
+        Activity.loadDistrictIfRegionIsPresent(district);
         Activity.displayAddMoreCountry();
         ProgressBar.setTotalFields(22);
         ProgressBar.setLocationFields(5);
