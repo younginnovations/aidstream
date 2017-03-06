@@ -98,25 +98,6 @@ h2 {
   margin-top: 10px; }
 
 /* style for empty states */
-.no-data {
-  font-size: 16px;
-  font-style: italic;
-  color: rgba(72, 72, 72, 0.7);
-  padding: 44px 0 50px;
-  background: rgba(72, 72, 72, 0.06);
-  margin: 36px 30px; }
-  .no-data .btn {
-    background: #00A8FF url(../../../images/ic-sprite.svg) no-repeat -479px -138px;
-    border: 0;
-    line-height: 67px;
-    padding: 0 34px 0 62px;
-    font-size: 16px;
-    display: table;
-    margin: 25px auto;
-    font-style: normal; }
-    .no-data .btn:hover {
-      background-color: #0598e5; }
-
 .no-activity-data {
   background: rgba(72, 72, 72, 0.06) url(../../../images/ic-no-activity.svg) no-repeat center 79px;
   padding: 204px 0 20px; }
@@ -349,9 +330,15 @@ tr, td {
     padding-left: 0 !important;
     margin-bottom: 0; }
   .project-data-table td:nth-of-type(1):before {
-    content: "PROJECT TITLE"; }
+    content: "Project Title"; }
   .project-data-table td:nth-of-type(2):before {
-    content: "PROJECT IDENTIFIER"; }
+    content: "Reporting Organisation"; }
+  .project-data-table td:nth-of-type(3):before {
+    content: "Sectors"; }
+  .project-data-table .no-data {
+    margin: 0; }
+    .project-data-table .no-data:before {
+      display: none; }
   .expenditure-table td:nth-of-type(1):before, .incoming-fund-table td:nth-of-type(1):before {
     content: "DATE"; }
   .expenditure-table td:nth-of-type(2):before, .incoming-fund-table td:nth-of-type(2):before {
@@ -720,9 +707,15 @@ tr, td {
     padding-left: 0 !important;
     margin-bottom: 0; }
   .project-data-table td:nth-of-type(1):before {
-    content: "PROJECT TITLE"; }
+    content: "Project Title"; }
   .project-data-table td:nth-of-type(2):before {
-    content: "PROJECT IDENTIFIER"; }
+    content: "Reporting Organisation"; }
+  .project-data-table td:nth-of-type(3):before {
+    content: "Sectors"; }
+  .project-data-table .no-data {
+    margin: 0; }
+    .project-data-table .no-data:before {
+      display: none; }
   .expenditure-table td:nth-of-type(1):before, .incoming-fund-table td:nth-of-type(1):before {
     content: "DATE"; }
   .expenditure-table td:nth-of-type(2):before, .incoming-fund-table td:nth-of-type(2):before {
@@ -1027,7 +1020,7 @@ tr, td {
     margin: 0 0 10px !important;
     padding-top: 15px !important; }
     #location .administrative .added-new-block .point {
-      top: 71px; }
+      top: 61px; }
 
 #location .view_map {
   background: transparent url(../../../images/ic_map-use.svg) no-repeat left;
@@ -1103,7 +1096,7 @@ tr, td {
   display: none;
   padding: 20px 5px;
   position: absolute;
-  right: -130px;
+  right: -100px;
   top: 56px;
   width: 490px !important;
   z-index: 100000000000; }
@@ -1211,8 +1204,7 @@ tr, td {
   border: 0 !important; }
 
 .form-group.col-sm-6.country {
-  margin: 0 !important;
-  padding: 0 !important; }
+  margin: 0 !important; }
 
 .added-new-block {
   border-top: 1px dashed #D5F5DC !important; }
@@ -1223,5 +1215,72 @@ tr, td {
   .location-wrap .point {
     right: -220px;
     top: 38px; }
+
+.organization-list-wrapper li a:hover {
+  background: #e3fbe8; }
+
+.auth-info-wrapper #add-user {
+  color: #1AAB3C; }
+  .auth-info-wrapper #add-user:hover {
+    color: #0F942E;
+    text-decoration: underline; }
+
+.btn-back {
+  background: transparent !important;
+  border: 1px solid #1AAB3C !important;
+  color: #1AAB3C; }
+  .btn-back:before {
+    background: url(../../../images/ic-left-arrow-green.svg) no-repeat !important; }
+  .btn-back:hover {
+    background: #1AAB3C !important;
+    border: 1px solid #1AAB3C !important;
+    color: #fff; }
+    .btn-back:hover:before {
+      background: url(../../../images/ic-side-arrow.svg) no-repeat !important; }
+
+.add-user-link a {
+  color: #1AAB3C; }
+  .add-user-link a:before, .add-user-link a:after {
+    background: #1AAB3C; }
+  .add-user-link a:hover {
+    color: #0F942E; }
+
+.lite .panel__table thead tr th {
+  border-bottom: 1px solid #d9f3de; }
+
+.lite .panel__table tr {
+  background: #F3FDF5 !important; }
+  .lite .panel__table tr:first-of-type {
+    border-color: #d9f3de !important; }
+  .lite .panel__table tr:first-child td {
+    border-color: #d9f3de !important; }
+  .lite .panel__table tr:hover, .lite .panel__table tr:nth-child(even):hover {
+    background: #e4f7e8 !important; }
+  .lite .panel__table tr td {
+    border-color: #d9f3de !important; }
+
+.lite .panel__table tr td .view-more:hover > a {
+  color: #1AAB3C; }
+
+.scrollup {
+  background-color: rgba(26, 171, 60, 0.5); }
+  .scrollup:hover {
+    background-color: #1AAB3C; }
+
+.panel__status {
+  border-bottom: 1px solid #d6f9de; }
+  .panel__status .col-sm-4 {
+    background-image: -webkit-radial-gradient(50% 0, circle, #f3fdf5, #f0fdf2);
+    background-image: -o-radial-gradient(50% 0, circle, #f3fdf5, #f0fdf2);
+    background-image: radial-gradient(circle at 50% 0, #f3fdf5, #f0fdf2);
+    border-right: 1px solid #d6f9de; }
+    .panel__status .col-sm-4:nth-child(even) {
+      background-image: -webkit-radial-gradient(50% 0, circle, #f2fbf4, #dffde6);
+      background-image: -o-radial-gradient(50% 0, circle, #f2fbf4, #dffde6);
+      background-image: radial-gradient(circle at 50% 0, #f2fbf4, #dffde6); }
+
+@media (min-width: 700px) {
+  .register-container .nav-tabs li.complete {
+    background-image: url(../../../images/ic-sprite.svg); } }
 
 /*# sourceMappingURL=maps/tz.style.css.map */
