@@ -273,13 +273,13 @@ var ProjectsListView = Backbone.View.extend({
 });
 
 var MapView = Backbone.View.extend({
-    el: '#map',
+    el: '#tzmap',
     className:'',
     initialize: function() {
         this.regionLayers = {}
         this.collection.on('renderAll', this.render, this);
         this.collection.on("zoom-zanzibar", this.zoomZanzibar, this);
-        this.map = L.map(document.getElementById("map"), {zoomControl: false}).setView([-6.369028, 30.888822], 6);
+        this.map = L.map(document.getElementById("tzmap"), {zoomControl: false}).setView([-6.369028, 30.888822], 6);
         L.control.zoom({
             position:'topright'
         }).addTo(this.map);

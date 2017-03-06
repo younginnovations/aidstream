@@ -144,14 +144,14 @@ input:-webkit-autofill, input:-webkit-autofill:focus, select:-webkit-autofill, s
   -webkit-box-shadow: 0 0 0 1000px #f4fdf7 inset !important;
   box-shadow: 0 0 0 1000px #f4fdf7 inset !important; }
 
-#map {
+#tzmap {
   background: none;
   border-bottom: 1px solid #ACD2E1;
   height: 580px;
   width: 100%;
   z-index: 88; }
 
-.right-map-section #map {
+.right-map-section #tzmap {
   height: 300px; }
 
 .map-section {

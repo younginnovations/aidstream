@@ -51,8 +51,8 @@
     <div id="container" class="map-section">
         <button id="reset">Reset</button>
 
-        <div id="map"></div>
-
+        {{--<div id="tzmap" style="height: ; width: ;"></div>--}}
+        <div id="tzmap"></div>
         {{--  select blocks over the map--}}
         <div class="select-block-wrap">
             <div class="container">
