@@ -11,7 +11,8 @@
     <link rel="shortcut icon" type="image/png" sizes="16*16" href="images/favicon.png"/>
     <link rel="stylesheet" href="{{ asset('/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('/css/style.min.css') }}">
-    <link href="{{ asset('/js/tz/leaflet/leaflet.css') }}" rel="stylesheet">
+    <link href="http://cdn.leafletjs.com/leaflet-0.7/leaflet.css" rel="stylesheet">
+    {{--<link href="{{ asset('/js/tz/leaflet/leaflet.css') }}" rel="stylesheet">--}}
     <link href="{{ asset('tz/css/tanzania_style/tz.style.css') }}" rel="stylesheet">
     <link href="{{ asset('/css/jquery.jscrollpane.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="//cdn.datatables.net/1.10.11/css/jquery.dataTables.min.css"/>

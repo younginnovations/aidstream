@@ -62,7 +62,8 @@ trait ProvidesDataForTz
                     'id'                     => $activity->id,
                     'identifier'             => $activity->identifier['activity_identifier'],
                     'title'                  => $activity->title[0]['narrative'],
-                    'sectors'                => [$getCode->getActivityCodeName('Sector', $activity->sector[0]['sector_code'])],
+                    'sectors'                => $activity->sector ? [$getCode->getActivityCodeName('Sector', $activity->sector[0]['sector_category_code'])] : null,
+//                    'sectors'                => $activity->sector ? [$getCode->getActivityCodeName('Sector', $activity->sector[0]['sector_code'])] : null,
                     'regions'                => $regionName,
                     'startdate'              => $startDate,
                     'enddate'                => $endDate,
@@ -83,25 +84,46 @@ trait ProvidesDataForTz
      */
     protected function getActivityDataForTz()
     {
-        $publishedActivities = $this->activityPublished->join('organizations', 'organizations.id', '=', 'activity_published.organization_id')
-                                                       ->where('activity_published.published_to_register', '=', 1)
-                                                       ->where('organizations.system_version_id', '=', self::TZ_VERSION_ID)
-                                                       ->get(['activity_published.*']);
+        return $this->temporarySolution();
 
-        $activities = [];
+//        $publishedActivities = $this->activityPublished->join('organizations', 'organizations.id', '=', 'activity_published.organization_id')
+//                                                       ->where('activity_published.published_to_register', '=', 0)
+//                                                       ->where('organizations.system_version_id', '=', self::TZ_VERSION_ID)
+//                                                       ->get(['activity_published.*']);
 
-        foreach ($publishedActivities as $publishedActivity) {
-            $includedActivities = $publishedActivity->published_activities ? $publishedActivity->published_activities : [];
+//        foreach ($publishedActivities as $publishedActivity) {
+//            $includedActivities = $publishedActivity->published_activities ? $publishedActivity->published_activities : [];
+//            foreach ($includedActivities as $includedActivity) {
+//                $activityId = (int) array_last(
+//                    explode('-', explode('.', $includedActivity)[0]),
+//                    function ($value) {
+//                        return true;
+//                    }
+//                );
+//
+//                $activities[] = $this->activity->where('id', '=', $activityId)->with('organization')->first();
+//            }
+//        }
+//
+//        return $activities;
+    }
 
-            foreach ($includedActivities as $includedActivity) {
-                $activityId = (int) array_last(
-                    explode('-', explode('.', $includedActivity)[0]),
-                    function ($value) {
-                        return true;
-                    }
-                );
+    /**
+     * @return array
+     */
+    protected function temporarySolution()
+    {
+        // TODO: remove this
+        $activities    = [];
+        $organizations = $this->organization->where('system_version_id', '=', 3)->get();
+        foreach ($organizations as $organization) {
+            foreach ($organization->activities as $activity) {
+                if ($activity->activity_workflow == 3) {
+//                    $activityIds[] = $activity->id;
 
-                $activities[] = $this->activity->where('id', '=', $activityId)->with('organization')->first();
+//                    $activities[] = $this->activity->where('id', '=', $activityId)->with('organization')->first();
+                    $activities[] = $activity;
+                }
             }
         }
 
