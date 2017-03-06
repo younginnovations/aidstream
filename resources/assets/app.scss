@@ -992,7 +992,7 @@ label {
       color: $color_gravel_approx;
       display: block;
       font-size: 13px;
-      padding: 22px 14px 22px 34px;
+      padding: 23px 14px 23px 34px;
       position: relative;
       &:before {
         background: $url_3 no-repeat -661px -468px;
@@ -1305,7 +1305,7 @@ label {
       background: $url_3 no-repeat -143px 20px;
       font-size: 13px;
       color: $color_gravel_approx;
-      padding: 21px 12px 21px 30px;
+      padding: 22px 12px 22px 30px;
       display: block;
       .caret {
         float: right;
@@ -1314,6 +1314,10 @@ label {
     }
     &:hover > a {
       background-color: #f6f6f6;
+      color: $color_gravel_approx!important;
+    }
+    a:hover,a:focus {
+      color: $color_gravel_approx!important;
     }
   }
 }
@@ -5639,15 +5643,25 @@ body > .skiptranslate iframe {
 }
 
 .btn-back {
-  background: transparent $url_21 no-repeat 20px 16px !important;
-  margin-top: 30px;
+  margin-top: 24px;
   height: 46px;
   color: $color_dodger_blue_approx;
   border: 1px solid $color_dodger_blue_approx !important;
   padding-left: 38px;
+  position: relative;
+  &:before {
+    background: transparent $url_21 no-repeat 20px 16px !important;
+    content: '';
+    @include position(absolute, 16px auto auto 20px);
+    @include size(10px 13px);
+  }
   &:hover, &:focus {
-    background: $color_dodger_blue_approx $url_21 no-repeat 20px -39px !important;
+    background: $color_dodger_blue_approx;
     border: 1px solid $color_dodger_blue_approx !important;
+    &:before {
+      background: url(../../images/ic-side-arrow.svg) no-repeat!important;
+      transform: rotate(180deg);
+    }
   }
 }
 
@@ -7593,7 +7607,7 @@ body > .skiptranslate iframe {
       border-radius: 4px;
     }
     .nav-tabs li {
-      min-width: 228px;
+      min-width: 227px;
       display: inline-block;
       margin-left: -3px;
       padding: 0 0 0 42px;
@@ -7682,7 +7696,7 @@ body > .skiptranslate iframe {
   }
 
   .register-container .nav-tabs li {
-    min-width: 238px;
+    min-width: 237px;
     &:last-child {
       min-width: 223px;
     }
@@ -8540,6 +8554,7 @@ body > .skiptranslate iframe {
     form {
       background: none;
       border: none;
+      padding-top: 0;
       .datepicker {
         background: $url_26 no-repeat 97%;
       }

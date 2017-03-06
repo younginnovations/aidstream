@@ -8,7 +8,7 @@
     {{ header("Pragma: no-cache") }}
     {{ header("Expires: 0 ")}}
     <title>Aidstream</title>
-    <link rel="shortcut icon" type="image/png" sizes="16*16" href="images/favicon.png"/>
+    <link rel="shortcut icon" type="image/png" sizes="32*32" href="{{ asset('/images/favicon-tz.png') }}"/>
     <link rel="stylesheet" href="{{ asset('/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('/css/style.min.css') }}">
     <link href="http://cdn.leafletjs.com/leaflet-0.7/leaflet.css" rel="stylesheet">
@@ -86,12 +86,11 @@
             <table class="table table-striped custom-table project-data-table" id="data-table">
                 <thead>
                 <tr>
-                    <th width="40%">Project Title</th>
-                    <th class="">Reporting Organisation</th>
-                    <th class="">Sectors</th>
+                    <th width="35%">Project Title</th>
+                    <th width="32%">Reporting Organisation</th>
+                    <th width="33%">Sectors</th>
                 </tr>
                 </thead>
-
                 <tbody>
                 </tbody>
             </table>
@@ -153,9 +152,9 @@
 </script>
 
 <script type="text/template" id="project-list-item">
-    <td class="bold-col"><a href="<%= project['activity_url'] %>"><%= project["title"] %></a></td>
-<td class="bold-col"><a href="<%= project['organization_url']%>"><%= project["reporting_organisation"] %></a></td>
-<td class="bold-col"><%= project["sectors"] %></td>
+    <td><a href="<%= project['activity_url'] %>"><%= project["title"] %></a></td>
+<td><a href="<%= project['organization_url']%>"><%= project["reporting_organisation"] %></a></td>
+<td><%= project["sectors"] %></td>
 </script>
 <script type="text/template" id="region-checkbox-item">
 <label>

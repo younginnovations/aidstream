@@ -153,28 +153,6 @@ h2{
 
 /* style for empty states */
 
-.no-data {
-    font-size: 16px;
-    font-style: italic;
-    color: rgba($color_gravel_approx, 0.7);
-    padding: 44px 0 50px;
-    background: rgba($color_gravel_approx, 0.06);
-    margin: 36px 30px;
-    .btn {
-        background: $color_dodger_blue_approx $url_3 no-repeat -479px -138px;
-        border: 0;
-        line-height: 67px;
-        padding: 0 34px 0 62px;
-        font-size: 16px;
-        display: table;
-        margin: 25px auto;
-        font-style: normal;
-        &:hover {
-            background-color: $color_cerulean_approx;
-        }
-    }
-}
-
 .no-activity-data {
     background: rgba($color_gravel_approx, 0.06) $url_5 no-repeat center 79px;
     padding: 204px 0 20px;

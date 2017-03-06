@@ -115,7 +115,7 @@
       margin: 0 0 10px !important;
       padding-top: 15px !important;
       .point {
-        top: 71px;
+        top: 61px;
       }
     }
   }
@@ -200,7 +200,7 @@
   display: none;
   padding: 20px 5px;
   position: absolute;
-  right: -130px;
+  right: -100px;
   top: 56px;
   width: 490px !important;
   z-index: 100000000000;
@@ -330,7 +330,7 @@
 
 .form-group.col-sm-6.country {
   margin: 0 !important;
-  padding: 0 !important;
+  //padding: 0 !important;
 }
 
 .added-new-block {
@@ -345,3 +345,93 @@
     top: 38px;
   }
 }
+
+.organization-list-wrapper li a:hover {
+  background: #e3fbe8;
+}
+
+.auth-info-wrapper #add-user {
+  color: $primary-color;
+  &:hover {
+    color: $color-link-hover;
+    text-decoration: underline;
+  }
+}
+
+.btn-back {
+  background: transparent !important;
+  border: 1px solid $primary-color !important;
+  color: $primary-color;
+  &:before {
+    background: url(../../../images/ic-left-arrow-green.svg) no-repeat !important;
+  }
+  &:hover {
+    background: $primary-color !important;
+    border: 1px solid $primary-color !important;
+    color: #fff;
+    &:before {
+      background: url(../../../images/ic-side-arrow.svg) no-repeat !important;
+    }
+  }
+}
+
+.add-user-link a {
+  color: $primary-color;
+  &:before, &:after {
+    background: $primary-color;
+  }
+  &:hover {
+    color: $color-link-hover;
+  }
+}
+
+.lite .panel__table {
+  thead tr th {
+    border-bottom: 1px solid #d9f3de;
+  }
+  tr {
+    background: #F3FDF5 !important;
+    &:first-of-type {
+      border-color: #d9f3de !important;
+    }
+    &:first-child td {
+      border-color: #d9f3de !important;
+    }
+    &:hover, &:nth-child(even):hover {
+      background: #e4f7e8 !important;
+    }
+    td {
+      border-color: #d9f3de !important;
+    }
+  }
+}
+
+.lite .panel__table tr td .view-more:hover > a {
+  color: $primary-color;
+}
+
+.scrollup {
+  background-color: rgba($primary-color, 0.5);
+  &:hover {
+    background-color: $primary-color;
+  }
+}
+
+.panel__status {
+  border-bottom: 1px solid #d6f9de;
+  .col-sm-4 {
+    background-image: radial-gradient(circle at 50% 0, #f3fdf5, #f0fdf2);
+    border-right: 1px solid #d6f9de;
+    &:nth-child(even) {
+      background-image: radial-gradient(circle at 50% 0, #f2fbf4, #dffde6);
+    }
+  }
+}
+
+@media (min-width: 700px) {
+  .register-container .nav-tabs li.complete {
+    background-image: $url_3;
+  }
+}
+
+
