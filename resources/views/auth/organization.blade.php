@@ -3,7 +3,6 @@
         <h2>@lang('organisation.organisation_information')</h2>
         <p>@lang('organisation.organisation_information_text')</p>
     </div>
-
     <div class="input-wrapper">
         <div class="col-xs-12 col-md-12">
             {!! AsForm::text(['name' => 'organization[organization_name]', 'label' => trans('organisation.organisation_name'), 'class' => 'organization_name', 'required' => true, 'parent' => 'col-xs-12 col-sm-6 col-md-6', 'html' => '<span class="availability-check hidden"></span>']) !!}
@@ -11,7 +10,11 @@
         </div>
         <div class="col-xs-12 col-md-12">
             {!! AsForm::select(['name' => 'organization[organization_type]', 'label' => trans('organisation.organisation_type'), 'class' => 'organization_type', 'data' => $orgType, 'required' => true , 'parent' => 'col-xs-12 col-sm-6 col-md-6', 'empty_value' => trans('global.select_a_type')]) !!}
-            {!! AsForm::select(['name' => 'organization[country]', 'label' => trans('organisation.organisation_country'), 'class' => 'country', 'data' => $countries, 'required' => true , 'parent' => 'col-xs-12 col-sm-6 col-md-6', 'empty_value' => trans('global.select_a_country')]) !!}
+            @if(isTzSubDomain())
+                {!! AsForm::select(['name' => 'organization[country]', 'value' => 'TZ','label' => trans('organisation.organisation_country'), 'class' => 'country', 'data' => ['TZ' => getVal($countries,['TZ'])], 'required' => true , 'parent' => 'col-xs-12 col-sm-6 col-md-6', 'empty_value' => trans('global.select_a_country')]) !!}
+            @else
+                {!! AsForm::select(['name' => 'organization[country]', 'label' => trans('organisation.organisation_country'), 'class' => 'country', 'data' => $countries, 'required' => true , 'parent' => 'col-xs-12 col-sm-6 col-md-6', 'empty_value' => trans('global.select_a_country')]) !!}
+            @endif
         </div>
         <div class="col-xs-12 col-md-12">
             {!! AsForm::text(['name' => 'organization[organization_address]', 'label' => trans('organisation.organisation_address'), 'class' => 'organization_address', 'required' => true, 'parent' => 'col-xs-12 col-sm-6 col-md-6']) !!}

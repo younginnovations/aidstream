@@ -152,7 +152,6 @@ class Activity implements MapperInterface
 
         $this->reverseMapDescription()
              ->reverseMapActivityDate()
-             ->reverseMapRecipientCountry()
              ->reverseMapParticipatingOrganisation()
              ->reverseMapLocation();
 
@@ -272,12 +271,14 @@ class Activity implements MapperInterface
      * @param $key
      * @param $value
      * @param $template
+     * @param $index
+     * @param $percentage
      */
-    protected function recipient_country($key, $value, $template)
+    protected function recipient_country($key, $value, $template, $index, $percentage)
     {
-        $this->mappedData['recipient_country'][$this->index]                 = $template;
-        $this->mappedData['recipient_country'][$this->index]['country_code'] = $value;
-        $this->mappedData['recipient_country'][$this->index]['percentage']   = self::DEFAULT_RECIPIENT_COUNTRY_PERCENTAGE;
+        $this->mappedData['recipient_country'][$index]                 = $template;
+        $this->mappedData['recipient_country'][$index]['country_code'] = $value;
+        $this->mappedData['recipient_country'][$index]['percentage']   = getVal($percentage, [$index]);
     }
 
     /**
@@ -309,9 +310,46 @@ class Activity implements MapperInterface
 
     protected function location($key, $value, $template)
     {
-        $this->mappedData[$key][$this->index]                         = $template;
-        $this->mappedData[$key][$this->index]['point'][0]['srs_name'] = self::LOCATION_SRS_NAME_VALUE;
-        $this->mappedData[$key][$this->index]['point'][0]['position'] = $value;
+        $administrativeTemplate = getVal($template, ['administrative'], []);
+        $percentage             = $this->calculatePercentageForCountry(count($value));
+
+        foreach ($value as $index => $location) {
+            $this->recipient_country('recipient_country', getVal($location, ['country'], ''), $this->getTemplateOf('country'), $index, $percentage);
+
+            foreach (getVal($location, ['administrative'], []) as $administrativeIndex => $administrative) {
+                $this->mappedData[$key][$this->index]                            = $template;
+                $this->mappedData[$key][$this->index]['administrative']          = $this->administrative($administrative, $administrativeTemplate);
+                $this->mappedData[$key][$this->index]['point'][0]['srs_name']    = self::LOCATION_SRS_NAME_VALUE;
+                $this->mappedData[$key][$this->index]['country_code']            = getVal($location, ['country']);
+                $this->mappedData[$key][$this->index]['point'][0]['position'][0] = [
+                    'latitude'  => getVal($administrative, ['point', 0, 'latitude']),
+                    'longitude' => getVal($administrative, ['point', 0, 'longitude'])
+                ];
+                $this->index ++;
+            }
+        }
+    }
+
+    protected function administrative($values, $template)
+    {
+        $administrative = $template;
+
+        $region   = getVal($values, ['region']);
+        $district = getVal($values, ['district']);
+
+        if ($region != "") {
+            $administrative[0]['vocabulary'] = 'G1';
+            $administrative[0]['code']       = $region;
+            $administrative[0]['level']      = '1';
+        }
+
+        if ($district != "") {
+            $administrative[1]['vocabulary'] = 'G1';
+            $administrative[1]['code']       = $district;
+            $administrative[1]['level']      = '2';
+        }
+
+        return $administrative;
     }
 
     /**
@@ -362,7 +400,7 @@ class Activity implements MapperInterface
     protected function reverseMapRecipientCountry()
     {
         foreach (getVal($this->rawData, ['recipient_country'], []) as $index => $country) {
-            $this->mappedData['country'] = getVal($country, ['country_code']);
+            $this->mappedData['location'][$index]['country'] = getVal($country, ['country_code']);
         }
 
         return $this;
@@ -395,10 +433,36 @@ class Activity implements MapperInterface
 
     protected function reverseMapLocation()
     {
+        $countryArray        = [];
+        $locationIndex       = - 1;
+        $administrativeIndex = 0;
+
         foreach (getVal($this->rawData, ['location'], []) as $index => $location) {
-            $this->mappedData['location'] = getVal($location, ['point', 0, 'position']);
+            if (array_key_exists('country_code', $location)) {
+                $countryCode = getVal($location, ['country_code']);
+
+                if (in_array($countryCode, $countryArray)) {
+                    $administrativeIndex ++;
+                } else {
+                    $administrativeIndex = 0;
+                    $locationIndex ++;
+                    $countryArray[] = $countryCode;
+                }
+
+
+                $this->mappedData['location'][$locationIndex]['country'] = $countryCode;
+
+                foreach (getVal($location, ['point'], []) as $pointIndex => $point) {
+                    $this->mappedData['location'][$locationIndex]['administrative'][$administrativeIndex]['point'][0]['longitude'] = getVal($point, ['position', 0, 'longitude']);
+                    $this->mappedData['location'][$locationIndex]['administrative'][$administrativeIndex]['point'][0]['latitude']  = getVal($point, ['position', 0, 'latitude']);
+                }
+
+                $this->mappedData['location'][$locationIndex]['administrative'][$administrativeIndex]['region']   = getVal($location, ['administrative', 0, 'code']);
+                $this->mappedData['location'][$locationIndex]['administrative'][$administrativeIndex]['district'] = getVal($location, ['administrative', 1, 'code']);
+            }
         }
 
+        return $this->mappedData;
     }
 
     /**
@@ -488,6 +552,29 @@ class Activity implements MapperInterface
     public function loadTemplate()
     {
         return json_decode(file_get_contents(app_path(self::BASE_TEMPLATE_PATH)), true);
+    }
+
+    protected function calculatePercentageForCountry($noOfCountry)
+    {
+        $percentage      = (100 % $noOfCountry == 0) ? (100 / $noOfCountry) : round(100 / $noOfCountry, 2);
+        $percentageArray = [];
+
+        for ($i = 0; $i < $noOfCountry; $i ++) {
+            $percentageArray[] = $percentage;
+        }
+        $percentageSum = array_sum($percentageArray);
+
+        if ($percentageSum > 100) {
+            $diff               = $percentageSum - 100;
+            $percentageArray[0] = $percentageArray[0] - $diff;
+        }
+
+        if ($percentageSum < 100) {
+            $diff               = 100 - $percentageSum;
+            $percentageArray[0] = $percentageArray[0] + $diff;
+        }
+
+        return $percentageArray;
     }
 }
 

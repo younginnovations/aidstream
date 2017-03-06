@@ -159,8 +159,12 @@ class Organization extends Model
         return $this->belongsTo(SystemVersion::class, 'system_version_id');
     }
 
+    /**
+     * An Organization has one OrganizationSnapshot
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
     public function organizationSnapshot()
     {
-       return $this->hasOne(OrganizationSnapshot::class, 'org_id');
+        return $this->hasOne(OrganizationSnapshot::class, 'org_id');
     }
 }

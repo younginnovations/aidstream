@@ -29,6 +29,7 @@ class UserOnBoardingController extends Controller
      */
     public function __construct(UserOnBoardingService $userOnBoardingService)
     {
+        $this->middleware('auth.systemVersion');
         $this->userOnBoardingService = $userOnBoardingService;
     }
 

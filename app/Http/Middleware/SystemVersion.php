@@ -1,5 +1,6 @@
 <?php namespace App\Http\Middleware;
 
+use App\User;
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
 
@@ -15,14 +16,24 @@ class SystemVersion
     protected $auth;
 
     /**
-     * 'Core' System version id.
+     * @var array
      */
-    const CORE_VERSION_ID = 1;
+    protected $allowedSubdomains = ['tz'];
 
     /**
-     * 'Lite' System version id.
+     * Code to redirect to main AidStream
      */
-    const LITE_VERSION_ID = 2;
+    const MAIN_ROUTE_CODE = 801;
+
+    /**
+     * Code to redirect to Tz AidStream
+     */
+    const TZ_ROUTE_CODE = 802;
+
+    /**
+     * Code to redirect to the same AidStream
+     */
+    const INTERNAL_REDIRECT_CODE = 803;
 
     /**
      * SystemVersion constructor.
@@ -46,55 +57,135 @@ class SystemVersion
             if ($request->ajax()) {
                 return response('Unauthorized.', 401);
             } else {
-                return redirect()->guest('auth/login');
-            }
-        } elseif ($user = $this->auth->user()) {
-            if ($user->getSystemVersion() == $this->parseVersion($request) || superAdminIsLoggedIn()) {
-                return $next($request);
+                if (isTzSubDomain()) {
+                    return redirect()->route('tz.home');
+                }
+
+                return redirect()->route('main.home');
             }
         }
 
-//        $response = ['type' => 'warning', 'code' => ['message', ['message' => "You haven't registered for that version."]]];
+        if ($user = $this->auth->user()) {
+            if (superAdminIsLoggedIn()) {
+                return $next($request);
+            } else {
+                $responseCode    = $this->userIsAllowed($user, $request);
+                $versionMetaData = $this->parseVersion($user);
 
-        return redirect()->route($this->getRoute($user->getSystemVersion()));
+                if (self::MAIN_ROUTE_CODE === $responseCode) {
+                    $this->auth->logOut();
+
+                    return redirect()->route('main.home');
+                } elseif (self::TZ_ROUTE_CODE === $responseCode) {
+                    $this->auth->logOut();
+
+                    return redirect()->route('tz.home');
+                } elseif (self::INTERNAL_REDIRECT_CODE === $responseCode) {
+                    return redirect()->route($versionMetaData['route']);
+                } elseif (true === $responseCode) {
+                    return $next($request);
+                }
+            }
+        }
+    }
+
+    /**
+     * Check if the user is allowed to make the request.
+     *
+     * @param User $user
+     * @param      $request
+     * @return bool|int
+     */
+    protected function userIsAllowed(User $user, $request)
+    {
+        if ($versionMetaData = $this->parseVersion($user)) {
+            if ($this->isRegisteredForRoute($request, $user)) {
+                return true;
+            } else {
+                $currentVersion    = $this->getCurrentVersion($request);
+                $registeredVersion = $user->getSystemVersion();
+                $segments          = $request->segments();
+
+                if (($currentVersion == 'Tz')) {
+                    if ($registeredVersion == 'Tz') {
+                        return in_array('lite', $segments) ? true : 803;
+                    }
+
+                    return 801;
+                } elseif ($currentVersion == 'Main') {
+                    if ($registeredVersion == 'Lite') {
+                        return in_array('lite', $segments) ? true : 803;
+                    } elseif ($registeredVersion == 'Core') {
+                        return in_array('lite', $segments) ? 803 : true;
+                    }
+
+                    return 802;
+                } else {
+
+                }
+            }
+
+            return false;
+        }
+
+        return false;
+    }
+
+    /**
+     * @param User $user
+     * @return mixed
+     */
+    protected function parseVersion(User $user)
+    {
+        return config(sprintf('system-version.%s', $user->getSystemVersion()));
+    }
+
+    /**
+     * Check if the request is hosted with a Subdomain.
+     *
+     * @param      $request
+     * @param User $user
+     * @return bool
+     */
+    protected function isRegisteredForRoute($request, User $user)
+    {
+        $host          = $request->getHost();
+        $uriPieces     = explode('/', $request->getPathInfo());
+        $pieces        = explode('.', $host);
+        $systemVersion = $user->getSystemVersion();
+
+        if ($systemVersion == 'Tz') {
+            if (array_intersect($this->allowedSubdomains, $pieces) && in_array('lite', $uriPieces)) {
+                return true;
+            } else {
+                return false;
+            }
+        } elseif ($systemVersion == 'Lite') {
+            if (!(array_intersect($this->allowedSubdomains, $pieces)) && in_array('lite', $uriPieces)) {
+                return true;
+            } else {
+                return false;
+            }
+        } elseif ($systemVersion == 'Core') {
+            if (!(array_intersect($this->allowedSubdomains, $pieces)) && !(in_array('lite', $uriPieces))) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        return false;
     }
 
     /**
      * @param $request
-     * @return int
-     */
-    protected function parseVersion($request)
-    {
-        if (array_key_exists('lite', array_flip($request->segments()))) {
-            return self::LITE_VERSION_ID;
-        }
-
-        return self::CORE_VERSION_ID;
-    }
-
-    /**
-     * @param $versionId
      * @return string
      */
-    protected function versionName($versionId)
+    protected function getCurrentVersion($request)
     {
-        if ($versionId == self::LITE_VERSION_ID) {
-            return 'Lite';
-        }
+        $host   = $request->getHost();
+        $pieces = explode('.', $host);
 
-        return 'Core';
-    }
-
-    /**
-     * @param $versionId
-     * @return string
-     */
-    protected function getRoute($versionId)
-    {
-        if ($versionId == self::LITE_VERSION_ID) {
-            return 'lite.activity.index';
-        }
-
-        return 'activity.index';
+        return in_array('tz', $pieces) ? 'Tz' : 'Main';
     }
 }

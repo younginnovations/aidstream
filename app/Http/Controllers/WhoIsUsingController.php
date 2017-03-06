@@ -50,7 +50,11 @@ class WhoIsUsingController extends Controller
      */
     public function index()
     {
-        $organizations = $this->organizationQueryBuilder()->get();
+        if (isTzSubDomain()) {
+            $organizations = $this->organizationQueryBuilder()->where('system_version_id', 3)->get();
+        } else {
+            $organizations = $this->organizationQueryBuilder()->get();
+        }
 
         return view('who-is-using', compact('organizations'));
     }

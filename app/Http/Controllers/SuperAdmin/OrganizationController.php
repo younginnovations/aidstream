@@ -193,7 +193,7 @@ class OrganizationController extends Controller
             return redirect()->to(config('app.admin_dashboard'));
         }
 
-        return redirect()->route('lite.activity.index');
+        return redirect()->route(config('system-version.' . $organization->system_version_id)['route']);
     }
 
     /**

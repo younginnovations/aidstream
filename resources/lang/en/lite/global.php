@@ -58,6 +58,7 @@ return [
     'iati_identifier'                 => 'IATI Identifier',
     'budget'                          => 'Budget',
     'transactions'                    => 'Transactions',
-    'activity_status'                 => 'Activity Status'
+    'activity_status'                 => 'Activity Status',
+    'add_more_country_than_tanzania'  => 'Does this activity have a recipient country other than Tanzania?'
 ];
 

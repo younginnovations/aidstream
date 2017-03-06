@@ -52,7 +52,7 @@
                 @else
                     <div class="text-center no-data no-document-data">
                         @lang('global.not_added',['type' => trans('global.activity_file')])
-                    </div>e
+                    </div>
                 @endif
             </div>
         </div>

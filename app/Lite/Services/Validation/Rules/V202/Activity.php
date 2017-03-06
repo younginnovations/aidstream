@@ -31,10 +31,10 @@ class Activity
         'Sector',
         'StartDate',
         'EndDate',
-        'Country',
         'OrganisationName',
         'OrganisationType',
-        'DocumentUrl'
+        'DocumentUrl',
+        'Location'
     ];
 
     /**
@@ -261,14 +261,29 @@ class Activity
 
     protected function rulesForDocumentUrl()
     {
-        $this->activityRules['outcomes_document_url'] = 'url';
-        $this->activityRules['annual_report_url']     = 'url';
+        $this->activityRules['outcomes_document.*.document_url'] = 'url';
+        $this->activityRules['annual_report.*.document_url']     = 'url';
     }
 
     protected function messagesForDocumentUrl()
     {
-        $this->activityRules['outcomes_document_url.url'] = trans('validation.url', ['attribute' => trans('lite/elementForm.outcomes_document_url')]);
-        $this->activityRules['annual_report_url.url']     = trans('validation.url', ['attribute' => trans('lite/elementForm.annual_report_url')]);
+        $this->activityRules['outcomes_document_url.*.document_url.url'] = trans('validation.url', ['attribute' => trans('lite/elementForm.outcomes_document_url')]);
+        $this->activityRules['annual_report_url.*.document_url.url']     = trans('validation.url', ['attribute' => trans('lite/elementForm.annual_report_url')]);
+    }
+
+    protected function rulesForLocation()
+    {
+        $this->activityRules['location.*.administrative.*.point.latitude']  = 'numeric';
+        $this->activityRules['location.*.administrative.*.point.longitude'] = 'numeric';
+        $this->activityRules['location.*.country']                          = sprintf('required|in:%s', $this->getStringFormatCode('Country', 'Organization'));
+    }
+
+    protected function messagesForLocation()
+    {
+        $this->activityMessages['location.*.country.required']                        = trans('validation.required', ['attribute' => trans('lite/elementForm.country')]);
+        $this->activityMessages['location.*.country.in']                              = trans('validation.code_list', ['attribute' => trans('lite/elementForm.country')]);
+        $this->activityMessages['location.*.administrative.*.point.latitude.numeric'] = trans('validation.numeric', ['attribute' => trans('lite/elementForm.latitude')]);
+        $this->activityMessages['location.*.administrative.*.point.longitude']        = trans('validation.numeric', ['attribute' => trans('lite/elementForm.longitude')]);
     }
 
     /**

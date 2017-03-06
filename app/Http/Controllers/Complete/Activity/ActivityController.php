@@ -233,7 +233,7 @@ class ActivityController extends Controller
         }
 
         $activityDataList = $this->getActivityAsArray($activityData);
-
+        
         if ($activityData->isImportedFromXml()) {
             $activityId = $activityData->id;
             $errors     = $this->xmlValidator->init($activityDataList)

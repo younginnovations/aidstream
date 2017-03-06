@@ -1,165 +1,196 @@
 <?php
 
-$router->group(
-    ['namespace' => 'Lite', 'middleware' => 'auth.systemVersion'],
-    function ($router) {
-        $router->group(
-            ['namespace' => 'Activity'],
-            function ($router) {
-                $router->get(
-                    '/lite/activity',
-                    [
-                        'as'   => 'lite.activity.index',
-                        'uses' => 'ActivityController@index'
-                    ]
-                );
-                $router->get(
-                    '/lite/activity/create',
-                    [
-                        'as'   => 'lite.activity.create',
-                        'uses' => 'ActivityController@create'
-                    ]
-                );
-                $router->post(
-                    '/lite/activity/store',
-                    [
-                        'as'   => 'lite.activity.store',
-                        'uses' => 'ActivityController@store'
-                    ]
-                );
-                $router->get(
-                    '/lite/activity/{activity}',
-                    [
-                        'as'   => 'lite.activity.show',
-                        'uses' => 'ActivityController@show'
-                    ]
-                );
-                $router->get(
-                    '/lite/activity/{activity}/edit',
-                    [
-                        'as'   => 'lite.activity.edit',
-                        'uses' => 'ActivityController@edit'
-                    ]
-                );
-                $router->get(
-                    '/lite/activity/duplicate/{activity}/edit',
-                    [
-                        'as'   => 'lite.activity.duplicate.edit',
-                        'uses' => 'ActivityController@createDuplicate'
-                    ]
-                );
-                $router->post(
-                    '/lite/activity/duplicate',
-                    [
-                        'as'   => 'lite.activity.duplicate',
-                        'uses' => 'ActivityController@duplicate'
-                    ]
-                );
-                $router->post(
-                    '/lite/activity/delete',
-                    [
-                        'as'   => 'lite.activity.delete',
-                        'uses' => 'ActivityController@destroy'
-                    ]
-                );
+use Illuminate\Support\Facades\Route;
 
-                $router->post(
-                    '/lite/activity/{activity}/update',
-                    [
-                        'as'   => 'lite.activity.update',
-                        'uses' => 'ActivityController@update'
-                    ]
-                );
+$subdomainRoutes = function () {
+    Route::group(
+        ['namespace' => 'Lite'],
+        function () {
+            Route::group(
+                ['namespace' => 'Activity'],
+                function () {
+                    Route::get(
+                        '/lite/activity',
+                        [
+                            'as'   => 'lite.activity.index',
+                            'uses' => 'ActivityController@index'
+                        ]
+                    );
+                    Route::get(
+                        '/lite/activity/create',
+                        [
+                            'as'   => 'lite.activity.create',
+                            'uses' => 'ActivityController@create'
+                        ]
+                    );
+                    Route::post(
+                        '/lite/activity/store',
+                        [
+                            'as'   => 'lite.activity.store',
+                            'uses' => 'ActivityController@store'
+                        ]
+                    );
+                    Route::get(
+                        '/lite/activity/{activity}',
+                        [
+                            'as'   => 'lite.activity.show',
+                            'uses' => 'ActivityController@show'
+                        ]
+                    );
+                    Route::get(
+                        '/lite/activity/{activity}/edit',
+                        [
+                            'as'   => 'lite.activity.edit',
+                            'uses' => 'ActivityController@edit'
+                        ]
+                    );
+                    Route::get(
+                        '/lite/activity/duplicate/{activity}/edit',
+                        [
+                            'as'   => 'lite.activity.duplicate.edit',
+                            'uses' => 'ActivityController@createDuplicate'
+                        ]
+                    );
+                    Route::post(
+                        '/lite/activity/duplicate',
+                        [
+                            'as'   => 'lite.activity.duplicate',
+                            'uses' => 'ActivityController@duplicate'
+                        ]
+                    );
+                    Route::post(
+                        '/lite/activity/delete',
+                        [
+                            'as'   => 'lite.activity.delete',
+                            'uses' => 'ActivityController@destroy'
+                        ]
+                    );
 
-                $router->get(
-                    '/lite/budgetDetails',
-                    [
-                        'as'   => 'lite.activity.budgetDetails',
-                        'uses' => 'ActivityController@budgetDetails'
-                    ]
-                );
+                    Route::post(
+                        '/lite/activity/{activity}/update',
+                        [
+                            'as'   => 'lite.activity.update',
+                            'uses' => 'ActivityController@update'
+                        ]
+                    );
 
-                $router->get(
-                    '/lite/activity/{activity}/budget/create',
-                    [
-                        'as'   => 'lite.activity.budget.create',
-                        'uses' => 'ActivityController@createBudget'
-                    ]
-                );
+                    Route::get(
+                        '/lite/budgetDetails',
+                        [
+                            'as'   => 'lite.activity.budgetDetails',
+                            'uses' => 'ActivityController@budgetDetails'
+                        ]
+                    );
 
-                $router->get(
-                    '/lite/activity/{activity}/budget/edit',
-                    [
-                        'as'   => 'lite.activity.budget.edit',
-                        'uses' => 'ActivityController@editBudget'
-                    ]
-                );
+                    Route::get(
+                        '/lite/activity/{activity}/budget/create',
+                        [
+                            'as'   => 'lite.activity.budget.create',
+                            'uses' => 'ActivityController@createBudget'
+                        ]
+                    );
 
-                $router->post(
-                    '/lite/activity/{activity}/budget/store',
-                    [
-                        'as'   => 'lite.activity.budget.store',
-                        'uses' => 'ActivityController@storeBudget'
-                    ]
-                );
+                    Route::get(
+                        '/lite/activity/{activity}/budget/edit',
+                        [
+                            'as'   => 'lite.activity.budget.edit',
+                            'uses' => 'ActivityController@editBudget'
+                        ]
+                    );
 
-                $router->post(
-                    '/lite/activity/{activity}/budget/update',
-                    [
-                        'as'   => 'lite.activity.budget.update',
-                        'uses' => 'ActivityController@updateBudget'
-                    ]
-                );
+                    Route::post(
+                        '/lite/activity/{activity}/budget/store',
+                        [
+                            'as'   => 'lite.activity.budget.store',
+                            'uses' => 'ActivityController@storeBudget'
+                        ]
+                    );
 
-                $router->post(
-                    '/lite/activity/{activity}/budget/delete',
-                    [
-                        'as'   => 'lite.activity.budget.delete',
-                        'uses' => 'ActivityController@deleteBudget'
-                    ]
-                );
+                    Route::post(
+                        '/lite/activity/{activity}/budget/update',
+                        [
+                            'as'   => 'lite.activity.budget.update',
+                            'uses' => 'ActivityController@updateBudget'
+                        ]
+                    );
 
-                $router->get(
-                    '/lite/activity/{activity}/transaction/{type}/create',
-                    [
-                        'as'   => 'lite.activity.transaction.create',
-                        'uses' => 'ActivityController@createTransaction'
-                    ]
-                );
+                    Route::post(
+                        '/lite/activity/{activity}/budget/delete',
+                        [
+                            'as'   => 'lite.activity.budget.delete',
+                            'uses' => 'ActivityController@deleteBudget'
+                        ]
+                    );
 
-                $router->get(
-                    '/lite/activity/{activity}/transaction/{type}/edit',
-                    [
-                        'as'   => 'lite.activity.transaction.edit',
-                        'uses' => 'ActivityController@editTransaction'
-                    ]
-                );
+                    Route::get(
+                        '/lite/activity/{activity}/transaction/{type}/create',
+                        [
+                            'as'   => 'lite.activity.transaction.create',
+                            'uses' => 'ActivityController@createTransaction'
+                        ]
+                    );
 
-                $router->post(
-                    '/lite/activity/{activity}/transaction/{type}/store',
-                    [
-                        'as'   => 'lite.activity.transaction.store',
-                        'uses' => 'ActivityController@storeTransaction'
-                    ]
-                );
+                    Route::get(
+                        '/lite/activity/{activity}/transaction/{type}/edit',
+                        [
+                            'as'   => 'lite.activity.transaction.edit',
+                            'uses' => 'ActivityController@editTransaction'
+                        ]
+                    );
 
-                $router->post(
-                    '/lite/activity/{activity}/transaction/{type}/update',
-                    [
-                        'as'   => 'lite.activity.transaction.update',
-                        'uses' => 'ActivityController@updateTransaction'
-                    ]
-                );
+                    Route::post(
+                        '/lite/activity/{activity}/transaction/{type}/store',
+                        [
+                            'as'   => 'lite.activity.transaction.store',
+                            'uses' => 'ActivityController@storeTransaction'
+                        ]
+                    );
 
-                $router->post(
-                    '/lite/activity/{activity}/transaction/delete',
-                    [
-                        'as'   => 'lite.activity.transaction.delete',
-                        'uses' => 'ActivityController@deleteTransaction'
-                    ]
-                );
+                    Route::post(
+                        '/lite/activity/{activity}/transaction/{type}/update',
+                        [
+                            'as'   => 'lite.activity.transaction.update',
+                            'uses' => 'ActivityController@updateTransaction'
+                        ]
+                    );
 
-            }
+                    Route::post(
+                        '/lite/activity/{activity}/transaction/delete',
+                        [
+                            'as'   => 'lite.activity.transaction.delete',
+                            'uses' => 'ActivityController@deleteTransaction'
+                        ]
+                    );
+
+                }
+            );
+        }
+    );
+};
+
+Route::group(
+    ['namespace' => 'Tz', 'domain' => env('TZ_DOMAIN')],
+    function () {
+        Route::get(
+            '/',
+            [
+                'as'   => 'tz.home',
+                'uses' => 'TzController@index'
+            ]
         );
+
+        Route::get('/api/activities', 'TzController@activities');
     }
 );
+
+if (isTzSubDomain()) {
+    Route::group(['domain' => env('TZ_DOMAIN'), 'middleware' => 'auth.systemVersion'], $subdomainRoutes);
+} else {
+    Route::group(['domain' => env('CORE_DOMAIN'), 'middleware' => 'auth.systemVersion'], $subdomainRoutes);
+    Route::group(['domain' => env('CORE_DOMAIN'), 'middleware' => 'auth.systemVersion'], function () {
+        Route::get('/lite/activity', [
+            'as' => 'lite.activity.index',
+            'uses' => 'Lite\Activity\ActivityController@index'
+        ]);
+    });
+}

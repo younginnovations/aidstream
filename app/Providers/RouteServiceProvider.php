@@ -39,6 +39,8 @@ class RouteServiceProvider extends ServiceProvider
         $router->group(
             ['namespace' => $this->namespace],
             function ($router) {
+                require app_path('Http/routes/Lite/lite.php');
+                require app_path('Http/routes/login.php');
                 require app_path('Http/routes.php');
                 require app_path('Http/routes/organization.php');
                 require app_path('Http/routes/activity.php');
@@ -54,7 +56,6 @@ class RouteServiceProvider extends ServiceProvider
                 require app_path('Http/routes/import/result/importresult.php');
                 require app_path('Http/routes/import/transaction/importTransaction.php');
                 require app_path('Http/routes/xmlImport.php');
-                require app_path('Http/routes/Lite/lite.php');
                 require app_path('Http/routes/Lite/settings.php');
                 require app_path('Http/routes/Lite/users.php');
                 require app_path('Http/routes/Lite/workflow.php');

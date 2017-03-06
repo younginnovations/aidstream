@@ -192,9 +192,8 @@ class AuthController extends Controller
                 $this->storeDetailsInSession($user)
                      ->setVersions();
 
-
-                if ($this->userIsRegisteredForLite($user)) {
-                    return $this->redirectToLite();
+                if ($this->userIsRegisteredForSpecificVersion($user)) {
+                    return $this->redirectToCorrectVersion($user);
                 }
 
                 $redirectPath = ($user->isSuperAdmin() || $user->isGroupAdmin())
