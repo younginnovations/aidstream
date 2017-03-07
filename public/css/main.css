@@ -4043,7 +4043,7 @@ label {
   .add-new-activity li.dropdown:hover > a {
     background-color: #f6f6f6;
     color: #484848 !important; }
-  .add-new-activity li.dropdown a:hover, .add-new-activity li.dropdown a:focus {
+  .add-new-activity li.dropdown > a:hover, .add-new-activity li.dropdown > a:focus {
     color: #484848 !important; }
 
 .caret {
