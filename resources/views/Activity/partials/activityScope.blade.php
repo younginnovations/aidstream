@@ -1,7 +1,7 @@
 @if(!empty(getVal($activityDataList, ['activity_scope'], [])))
     <div class="activity-element-wrapper">
         <div class="activity-element-list">
-            <div class="activity-element-label">@lang('element.activity_scope') @if(array_key_exists('Activity Scope',$errors)) <i class='imported-from-xml'>icon</i>@endif </div>
+            <div class="activity-element-label col-md-4">@lang('element.activity_scope') @if(array_key_exists('Activity Scope',$errors)) <i class='imported-from-xml'>icon</i>@endif </div>
             <div class="activity-element-info">
                 {{ $getCode->getCodeNameOnly('ActivityScope', getVal($activityDataList, ['activity_scope'], [])) }}
             </div>

@@ -3,7 +3,7 @@
         <div class="title">@lang('element.participating_organisation') @if(array_key_exists('Participating Organization',$errors)) <i class='imported-from-xml'>icon</i>@endif </div>
         @foreach(groupActivityElements(getVal($activityDataList, ['participating_organization'], []) , 'organization_role') as $key => $organizations)
             <div class="activity-element-list">
-                <div class="activity-element-label">
+                <div class="activity-element-label col-md-4">
                     {{ $getCode->getCodeNameOnly('OrganisationRole', $key)}} Organisation(s)
                 </div>
                 <div class="activity-element-info">

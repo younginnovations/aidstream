@@ -3,7 +3,7 @@
         <div class="title">@lang('element.planned_disbursement') @if(array_key_exists('Planned Disbursement',$errors)) <i class='imported-from-xml'>icon</i>@endif </div>
         @foreach( groupBudgetElements(getVal($activityDataList, ['planned_disbursement'], []) , 'planned_disbursement_type') as $key => $disbursements)
             <div class="activity-element-list">
-                <div class="activity-element-label">{{ $getCode->getCodeNameOnly('BudgetType' , $key) }}</div>
+                <div class="activity-element-label col-md-4">{{ $getCode->getCodeNameOnly('BudgetType' , $key) }}</div>
                 <div class="activity-element-info">
                     @foreach($disbursements as $disbursement)
                         <li>{!! getCurrencyValueDate(getVal($disbursement, ['value', 0]) , "planned") !!}</li>

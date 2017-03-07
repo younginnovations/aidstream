@@ -3,7 +3,7 @@
         <div class="title">@lang('element.conditions') @if(array_key_exists('Conditions',$errors)) <i class='imported-from-xml'>icon</i>@endif </div>
         @if(getVal($activityDataList, ['conditions', 'condition_attached']) == 0)
             <div class="activity-element-list">
-                <div class="activity-element-label">@lang('elementForm.condition_not_attached')</div>
+                <div class="activity-element-label col-md-4">@lang('elementForm.condition_not_attached')</div>
             </div>
         @else
             @foreach(groupActivityElements(getVal($activityDataList, ['conditions', 'condition'],[]),   'condition_type') as $key => $condition)

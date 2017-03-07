@@ -33,11 +33,11 @@ class XmlGenerator extends XmlGenerator201
         $xmlData['iati-activity']                = $this->getXmlData($activity, $transaction, $result, $organization);
         $xmlData['iati-activity']['@attributes'] = [
             'last-updated-datetime' => gmdate('c', time($activity->updated_at)),
-            'xml:lang'              => $activity->default_field_values[0]['default_language'],
-            'default-currency'      => $activity->default_field_values[0]['default_currency'],
-            'humanitarian'          => array_key_exists('humanitarian', (array) $activity->default_field_values[0]) ? (int) $activity->default_field_values[0]['humanitarian'] : false,
-            'hierarchy'             => ($hierarchy = $activity->default_field_values[0]['default_hierarchy']) ? $hierarchy : 1,
-            'linked-data-uri'       => $activity->default_field_values[0]['linked_data_uri']
+            'xml:lang'              => getVal($activity->default_field_values, [0, 'default_language']),
+            'default-currency'      => getVal($activity->default_field_values, [0, 'default_currency']),
+            'humanitarian'          => getVal($activity->default_field_values, [0, 'humanitarian'], false),
+            'hierarchy'             => getVal($activity->default_field_values, [0, 'default_hierarchy'], 1),
+            'linked-data-uri'       => getVal($activity->default_field_values, [0, 'linked_data_uri'])
         ];
 
         return $this->arrayToXml->createXML('iati-activities', $xmlData);

@@ -1,7 +1,7 @@
 @if(!emptyOrHasEmptyTemplate(getVal($activityDataList, ['title'], [])))
     <div class="activity-element-wrapper">
         <div class="activity-element-list">
-            <div class="activity-element-label">@lang('element.title') @if(array_key_exists('Title',$errors)) <i class='imported-from-xml'>icon</i>@endif </div>
+            <div class="activity-element-label col-md-4">@lang('element.title') @if(array_key_exists('Title',$errors)) <i class='imported-from-xml'>icon</i>@endif </div>
             <div class="activity-element-info">
                 {{ getVal($activityDataList, ['title', 0, 'narrative'])}}
                 <em>(language: {{ getLanguage(getVal($activityDataList, ['title', 0, 'language'], '')) }})</em>

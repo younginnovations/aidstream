@@ -3,7 +3,7 @@
         <div class="title">@lang('element.sector') @if(array_key_exists('Sector',$errors)) <i class='imported-from-xml'>icon</i>@endif </div>
         @foreach(groupSectorElements(getVal($activityDataList, ['sector'], [])) as $key => $sectors)
             <div class="activity-element-list">
-                <div class="activity-element-label">{{$key}}</div>
+                <div class="activity-element-label col-md-4">{{$key}}</div>
                 <div class="activity-element-info">
                     @foreach($sectors as $sector)
                         <li>{!! checkIfEmpty(getSectorInformation($sector , getVal($sector, ['percentage'])))  !!}</li>

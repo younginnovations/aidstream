@@ -6538,6 +6538,7 @@ table.dataTable thead .sorting_desc {
   text-align: left;
   line-height: 22px;
   white-space: inherit;
+  padding-left: 0;
   padding-right: 20px; }
 
 .activity-element-wrapper .activity-element-info em {

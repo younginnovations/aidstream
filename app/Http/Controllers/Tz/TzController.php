@@ -29,6 +29,9 @@ class TzController extends LiteController
      */
     protected $activityPublished;
 
+    /**
+     *
+     */
     const TZ_VERSION_ID = 3;
 
     /**
@@ -51,9 +54,10 @@ class TzController extends LiteController
      */
     public function index()
     {
-//        $activities = $this->getPublishedActivitiesForTanzania();
+        $organizationCount        = $this->organizationCount();
+        $publishedActivitiesCount = $this->publishedActivities();
 
-        return view('tz.home');
+        return view('tz.home', compact('organizationCount', 'publishedActivitiesCount'));
     }
 
     /**
@@ -63,8 +67,42 @@ class TzController extends LiteController
      */
     public function activities()
     {
-        $jsonData   = json_encode($this->generateMetaData($this->getActivityDataForTz()));
+        $jsonData = json_encode($this->generateMetaData($this->getActivityDataForTz()));
 
         return view('tz.jsonActivities', compact('jsonData'));
     }
+
+    /**
+     * Returns count of organisation registered for tz.
+     *
+     * @return mixed
+     */
+    protected function organizationCount()
+    {
+        return $this->activityPublished->join('organizations', 'organizations.id', '=', 'activity_published.organization_id')
+                                       ->where('organizations.system_version_id', config('system-version.Tz.id'))
+                                       ->count();
+    }
+
+    /**
+     * Returns count of published activities of organisation registered for tz.
+     *
+     * @return mixed
+     */
+    protected function publishedActivities()
+    {
+        $activitiesCount = 0;
+        $this->activityPublished->join('organizations', 'organizations.id', '=', 'activity_published.organization_id')
+                                ->where('organizations.system_version_id', config('system-version.Tz.id'))
+                                ->select('activity_published.published_activities')
+                                ->get()
+                                ->each(
+                                    function ($publishedActivity) use (&$activitiesCount) {
+                                        $activitiesCount += count($publishedActivity->published_activities);
+                                    }
+                                );
+
+        return $activitiesCount;
+    }
 }
+

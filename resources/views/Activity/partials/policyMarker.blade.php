@@ -3,7 +3,7 @@
         <div class="title">@lang('element.policy_marker') @if(array_key_exists('Policy Marker',$errors)) <i class='imported-from-xml'>icon</i>@endif </div>
         @foreach(groupPolicyMarkerElement(getVal($activityDataList, ['policy_marker'], [])) as $key => $policyMarkers)
             <div class="activity-element-list">
-                <div class="activity-element-label">{{$key}}</div>
+                <div class="activity-element-label col-md-4">{{$key}}</div>
                 <div class="activity-element-info">
                     @foreach($policyMarkers as $policyMarker)
                         <li>{{ getVal($policyMarker, ['policy_marker']) .' - '. $getCode->getCodeNameOnly('PolicyMarker' , getVal($policyMarker, ['policy_marker'])) }}</li>

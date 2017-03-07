@@ -1,7 +1,7 @@
 @if(!emptyOrHasEmptyTemplate(getVal($activityDataList, ['country_budget_items'], [])))
     <div class="activity-element-wrapper">
         <div class="activity-element-list">
-            <div class="activity-element-label">@lang('element.country_budget_items') @if(array_key_exists('Country Budget Item',$errors)) <i class='imported-from-xml'>icon</i>@endif </div>
+            <div class="activity-element-label col-md-4">@lang('element.country_budget_items') @if(array_key_exists('Country Budget Item',$errors)) <i class='imported-from-xml'>icon</i>@endif </div>
             <div class="activity-element-info">
                 @foreach(getVal(getVal($activityDataList, ['country_budget_items'], []), [0, 'budget_item'], []) as $budgetItems)
                     <li>{!!  getCountryBudgetItems(getVal(getVal($activityDataList, ['country_budget_items'], []), [0, 'vocabulary']), $budgetItems) !!} </li>

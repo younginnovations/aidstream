@@ -3,7 +3,7 @@
         <div class="title">@lang('element.related_activity') @if(array_key_exists('Related Activity',$errors)) <i class='imported-from-xml'>icon</i>@endif </div>
         @foreach(groupActivityElements(getVal($activityDataList, ['related_activity'], []) , 'relationship_type') as $key => $relatedActivities)
             <div class="activity-element-list">
-                <div class="activity-element-label">{!! $getCode->getCodeNameOnly('RelatedActivityType' , $key) !!}</div>
+                <div class="activity-element-label col-md-4">{!! $getCode->getCodeNameOnly('RelatedActivityType' , $key) !!}</div>
                 <div class="activity-element-info related-activity">
                     @foreach($relatedActivities as $relatedActivity)
                         <li>{{ getVal($relatedActivity, ['activity_identifier']) }}</li>

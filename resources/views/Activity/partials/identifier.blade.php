@@ -1,7 +1,7 @@
 @if(!emptyOrHasEmptyTemplate(getVal($activityDataList, ['identifier'], [])))
     <div class="activity-element-wrapper">
         <div class="activity-element-list">
-            <div class="activity-element-label">@lang('element.activity_identifier')</div>
+            <div class="activity-element-label col-md-4">@lang('element.activity_identifier')</div>
             <div class="activity-element-info">
                 {{ getVal($activityDataList, ['identifier', 'iati_identifier_text'])}}
             </div>

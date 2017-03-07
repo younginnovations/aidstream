@@ -3,7 +3,7 @@
         <div class="title">@lang('element.activity_date') @if(array_key_exists('Activity Date',$errors)) <i class='imported-from-xml'>icon</i>@endif </div>
         @foreach(groupActivityElements(getVal($activityDataList, ['activity_date'], []) , 'type') as $key => $groupedDates)
             <div class="activity-element-list">
-                <div class="activity-element-label">
+                <div class="activity-element-label col-md-4">
                     {{ $getCode->getCodeNameOnly('ActivityDateType', $key) }} @lang('elementForm.date')
                 </div>
                 <div class="activity-element-info">

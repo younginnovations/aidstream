@@ -3,7 +3,7 @@
         <div class="title">@lang('element.humanitarian_scope') @if(array_key_exists('Humanitarian Scope',$errors)) <i class='imported-from-xml'>icon</i>@endif </div>
         @foreach(groupActivityElements(getVal($activityDataList, ['humanitarian_scope'], []) , 'type' ) as $key => $humanitarianScopes)
             <div class="activity-element-list">
-                <div class="activity-element-label"> {{ $getCode->getCodeNameOnly('HumanitarianScopeType' , $key) }} </div>
+                <div class="activity-element-label col-md-4"> {{ $getCode->getCodeNameOnly('HumanitarianScopeType' , $key) }} </div>
                 <div class="activity-element-info">
                     @foreach($humanitarianScopes as $humanitarianScope)
                         <li>

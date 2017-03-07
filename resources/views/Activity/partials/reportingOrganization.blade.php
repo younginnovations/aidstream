@@ -1,7 +1,7 @@
 @if(!emptyOrHasEmptyTemplate(getVal($activityDataList, ['reporting_org', 0], [])))
     <div class="activity-element-wrapper">
         <div class="activity-element-list">
-            <div class="activity-element-label">@lang('element.reporting_organisation')</div>
+            <div class="activity-element-label col-md-4">@lang('element.reporting_organisation')</div>
             <div class="activity-element-info">
                 <li>{!! checkIfEmpty(getFirstNarrative(getVal($activityDataList, ['reporting_org', 0], []))) !!}
                     @include('Activity.partials.viewInOtherLanguage' ,['otherLanguages' => getOtherLanguages(getVal($activityDataList, ['reporting_org', 0, 'narrative'], []))])
