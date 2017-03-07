@@ -314,7 +314,7 @@
                     </span>
                     </div>
                 @endif
-                @if(getVal($activity, [0, 'filename']))
+                @if(getVal($activity, [0, 'filename']) && !isTzSubDomain())
                     <a href="{{'/files/xml/'.getVal($activity, [0, 'filename'], '#')}}" target="_blank" class="view-xml-file">@lang('perfectViewer.view_xml_file_here')</a>
                 @endif
             </div>

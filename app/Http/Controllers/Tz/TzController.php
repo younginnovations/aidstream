@@ -91,18 +91,20 @@ class TzController extends LiteController
      */
     protected function publishedActivities()
     {
-        $activitiesCount = 0;
-        $this->activityPublished->join('organizations', 'organizations.id', '=', 'activity_published.organization_id')
-                                ->where('organizations.system_version_id', config('system-version.Tz.id'))
-                                ->select('activity_published.published_activities')
-                                ->get()
-                                ->each(
-                                    function ($publishedActivity) use (&$activitiesCount) {
-                                        $activitiesCount += count($publishedActivity->published_activities);
-                                    }
-                                );
+        return count($this->getActivityDataForTz());
 
-        return $activitiesCount;
+        //        $activitiesCount = 0;
+//        $this->activityPublished->join('organizations', 'organizations.id', '=', 'activity_published.organization_id')
+//                                ->where('organizations.system_version_id', config('system-version.Tz.id'))
+//                                ->select('activity_published.published_activities')
+//                                ->get()
+//                                ->each(
+//                                    function ($publishedActivity) use (&$activitiesCount) {
+//                                        $activitiesCount += count($publishedActivity->published_activities);
+//                                    }
+//                                );
+//
+//        return $activitiesCount;
     }
 }
 
