@@ -1,11 +1,10 @@
 <?php namespace app\Core\V201\Requests;
 
+use App\Core\V201\Traits\GetCodes;
 use App\Http\Requests\Request;
 use App\Models\Organization\Organization;
-use App\Models\SystemVersion;
 use App\User;
 use Illuminate\Support\Facades\Validator;
-use App\Core\V201\Traits\GetCodes;
 
 /**
  * Class Register
@@ -72,7 +71,7 @@ class Register extends Request
      */
     public function rules()
     {
-        $rules          = [];
+        $rules = [];
 //        $systemVersions = implode(",", SystemVersion::lists('id')->toArray());
 
 //        $rules     = ['systemVersion' => sprintf('required|in:%s', $systemVersions)];
@@ -107,7 +106,8 @@ class Register extends Request
     protected function getRulesForOrg($organization)
     {
         $formBase    = 'organization';
-        $regAgencies = implode(',', array_keys(json_decode($organization['agencies'], true)));
+        $agencies    = json_decode($organization['agencies'], true);
+        $regAgencies = implode(',', array_keys($agencies ? $agencies : []));
         $rules       = [];
 
         $rules[sprintf('%s.organization_name', $formBase)]                = 'required';
