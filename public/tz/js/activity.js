@@ -7,14 +7,14 @@ var Activity = {
         })
     },
     appendDistrict: function (region, districtSelector, selectedValue) {
-        if (region != "") {
-            var options = districtSelector.find('option');
-            options.remove();
+        var options = districtSelector.find('option');
+        options.remove();
 
+        if (region != "") {
             if (!selectedValue) {
                 districtSelector.siblings('span').find('.selection').find('.select2-selection__rendered').html("Choose a district");
             }
-
+            districtSelector.append("<option value=''>Choose a district</option>");
             $.each(districts[0][region], function (index, value) {
                 if (selectedValue === value) {
                     districtSelector.append("<option value='" + index + "' selected> " + value + "</option>");
@@ -22,6 +22,8 @@ var Activity = {
                     districtSelector.append("<option value='" + index + "'>" + value + "</option>");
                 }
             });
+        } else {
+            districtSelector.siblings('span').find('.selection').find('.select2-selection__rendered').html("Choose a district");
         }
     },
     loadDistrictIfRegionIsPresent: function (selectedDistricts) {
@@ -33,13 +35,16 @@ var Activity = {
             }
             var selectedRegion = $(region).find('.region').val();
             var selectedCountry = parentContainer.find('.country').children('select').val();
+
             if (selectedCountry != "TZ") {
                 $(region).parent().find('.district-container').remove();
                 $(region).closest('.administrative').next().remove();
                 $(region).remove();
             } else {
                 district = $(region).parent().find('.district-container').children('select');
-                Activity.appendDistrict(selectedRegion, district, selectedDistricts[selectedRegion]);
+                if (selectedDistricts != "") {
+                    Activity.appendDistrict(selectedRegion, district, selectedDistricts[index][selectedRegion]);
+                }
             }
         });
     },
