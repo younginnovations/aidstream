@@ -1314,10 +1314,10 @@ label {
     }
     &:hover > a {
       background-color: #f6f6f6;
-      color: $color_gravel_approx!important;
+      color: $color_gravel_approx !important;
     }
-    a:hover,a:focus {
-      color: $color_gravel_approx!important;
+    > a:hover, > a:focus {
+      color: $color_gravel_approx !important;
     }
   }
 }
@@ -3515,7 +3515,7 @@ $organization-logo-width: 124px;
 }
 
 .version-wrap {
-  margin: 15px 14px 8px 0!important;
+  margin: 15px 14px 8px 0 !important;
 }
 
 .element-show {
@@ -5659,7 +5659,7 @@ body > .skiptranslate iframe {
     background: $color_dodger_blue_approx;
     border: 1px solid $color_dodger_blue_approx !important;
     &:before {
-      background: url(../../images/ic-side-arrow.svg) no-repeat!important;
+      background: url(../../images/ic-side-arrow.svg) no-repeat !important;
       transform: rotate(180deg);
     }
   }
@@ -7980,7 +7980,7 @@ body > .skiptranslate iframe {
     margin-left: 15px;
   }
 
-  .change-activity-form>form .btn {
+  .change-activity-form > form .btn {
     width: initial !important;
   }
 
@@ -7989,7 +7989,7 @@ body > .skiptranslate iframe {
   }
 
   .update-transaction {
-    margin-left: 32px!important;
+    margin-left: 32px !important;
   }
 }
 
