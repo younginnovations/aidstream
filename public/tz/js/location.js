@@ -1,7 +1,8 @@
 var TzLocation = {
-    map: [],
+    map: '',
     coordinates: [52.48626, -1.89042],
     countryDetails: '',
+    openedMap: '',
     returnLatAndLong: function (country) {
         var coordinates = '';
         $.each(this.countryDetails[0], function (index, countries) {
@@ -40,7 +41,11 @@ var TzLocation = {
             if (country != "") {
                 TzLocation.coordinates = (latitudeValue != "" && longitudeValue != "") ? TzLocation.coordinates : TzLocation.returnLatAndLong(country);
             }
-            TzLocation.map.push(initMap(mapContainer.attr('id'), TzLocation.coordinates));
+            
+            if (TzLocation.map) {
+                TzLocation.map.remove();
+            }
+            TzLocation.map = initMap(mapContainer.attr('id'), TzLocation.coordinates);
         } else {
             pointContainer.css('display', 'none');
             mapContainer.css('display', 'block');
@@ -48,13 +53,9 @@ var TzLocation = {
     },
     onCountryChanged: function () {
         $('.country').on('change', 'select', function () {
-            var country = $(this).val();
-            if (country != "" && TzLocation.map != "") {
-                var coordinates = TzLocation.returnLatAndLong(country);
-                $.each(TzLocation.map, function (index, map) {
-                    flyTo(map, coordinates);
-                });
-            }
+            var parentContainer = $(this).closest('.country').parent();
+            parentContainer.find('.latitude').val('');
+            parentContainer.find('.longitude').val('');
         });
     },
     toggleLatLongAndMap: function (mapContainerSelector, latitudeSelector, longitudeSelector) {
@@ -65,29 +66,17 @@ var TzLocation = {
     closeOpenedMap: function (countryDetails) {
         $(document).on('click', function (e) {
             if ($(e.target).closest('.point').length == 1) {
-                $(e.target).closest('.point').display('block');
+                $(e.target).closest('.point').css('display', 'block');
             }
             else if ($(e.target).hasClass('view_map')) {
+                if (TzLocation.openedMap != "") {
+                    $(TzLocation.openedMap).css('display', 'none');
+                }
+                TzLocation.openedMap = $(e.target).parent().parent().find('.point');
                 TzLocation.loadMap(countryDetails, $(e.target));
             } else {
                 $('.point').css('display', 'none');
             }
         })
     }
-    // onLatAndLongChange: function () {
-    //     $('.location').on('change', '.latitude, .longitude', function () {
-    //         var source = $(this).attr('class');
-    //         var mapContainerId = $(this).parent().parent().find('.map_container').attr('id');
-
-    // if (source === 'latitude') {
-    //     var latitude = $(this).val();
-    //     var longitude = $(this).parent().parent().find('.longitude').val();
-    // }
-
-    // if (TzLocation.map != "" && latitude != "" && longitude != "") {
-    //     console.log(TzLocation.map);
-    // flyTo(TzLocation.ma)
-    // }
-    // });
-    // }
 };

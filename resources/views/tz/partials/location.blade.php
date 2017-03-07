@@ -2,7 +2,7 @@
     <div class="form-group col-sm-6 country">
         <label for="location[locationCount][country]" class="control-label required">@lang('lite/elementForm.country')</label>
         <select class="form-control" required="required" id="location[locationCount][country]" name="location[locationCount][country]">
-            <option value="" selected="selected">Select one of the following options</option>
+            <option value="" selected="selected">Choose a Recipient Country</option>
             <option value="AF">AF - AFGHANISTAN</option>
             <option value="AX">AX - &Aring;LAND ISLANDS</option>
             <option value="AL">AL - ALBANIA</option>

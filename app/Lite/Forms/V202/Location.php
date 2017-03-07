@@ -1,31 +1,35 @@
 <?php namespace App\Lite\Forms\V202;
 
 
+use App\Lite\Forms\FormPathProvider;
 use App\Lite\Forms\LiteBaseForm;
 
 
 class Location extends LiteBaseForm
 {
+    use FormPathProvider;
+
     public function buildForm()
     {
-        $this->add('latitude', 'text', ['attr' => ['class' => 'latitude'], 'label' => trans('lite/elementForm.latitude'), 'help_block' => $this->addHelpText('Activity_Location_Point_Pos-latitude')])
+        $this->addSelect(
+            'country',
+            $this->getCodeList('Country', 'Organization'),
+            trans('lite/elementForm.country'),
+            null,
+            null,
+            true,
+            ['wrapper' => ['class' => 'form-group col-sm-6 country']]
+        )->addToCollection('administrative', ' ', $this->getFormPath('Administrative'), 'collection_form administrative')
              ->add(
-                 'longitude',
-                 'text',
-                 ['attr' => ['class' => 'longitude'], 'label' => trans('lite/elementForm.longitude'), 'help_block' => $this->addHelpText('Activity_Location_Point_Pos-longitude')]
-             )
-             ->add(
-                 'map',
-                 'static',
+                 'remove_button',
+                 'button',
                  [
-                     'label'   => false,
-                     'attr'    => [
-                         'class' => 'map_container',
-                         'style' => 'height: 400px;'
+                     'label' => 'Remove This',
+                     'attr'  => [
+                         'class' => 'remove_from_collection',
                      ],
-                     'wrapper' => ['class' => 'form-group full-width-wrap']
                  ]
-             );
+             );;
     }
 }
 

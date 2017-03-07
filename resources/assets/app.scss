@@ -9596,3 +9596,162 @@ body > .skiptranslate iframe {
     padding-bottom: 28px !important;
   }
 }
+
+#location h2 + .row {
+  margin: 0;
+}
+
+#location {
+  .location > .form-group:not(.new-location-block) > .country {
+    margin: 0;
+    padding: 0 !important;
+  }
+  .administrative {
+    padding: 0 14px;
+    > label {
+      display: none;
+    }
+    & + .form-group {
+      margin-bottom: 0 !important;
+    }
+    .added-new-block {
+      margin: 0 0 10px !important;
+      padding-top: 15px !important;
+      .point {
+        top: 61px;
+      }
+    }
+  }
+  .view_map {
+    background: transparent url(../../images/ic_location.svg) no-repeat left;
+    color: $color-dodger_blue_approx;
+    font-size: 14px;
+    margin: 34px 0 0;
+    padding-left: 18px;
+    width: auto;
+  }
+  .country {
+    float: left;
+    + .administrative {
+      clear: none;
+      float: left;
+      width: 50%;
+    }
+  }
+  .location {
+    > .form-group {
+      margin-bottom: 0!important;
+    }
+    + .add-to-collection {
+      margin-top: 5px;
+      padding-left: 26px;
+      &:before {
+        left: 0;
+      }
+    }
+    .administrative + .remove_from_collection {
+      top: 30px;
+    }
+    .added-new-block {
+      margin: 10px 0 0!important;
+      padding-top: 10px!important;
+      .remove_from_collection {
+        top: 40px;
+      }
+    }
+  }
+}
+
+.add_another_location, .add_another_location:hover, .add_another_location:active, .add_another_location:focus,
+.add-location, .add-location:hover, .add-location:active, .add-location:focus {
+  background: 0 0;
+  color: #484848;
+  font-size: 12px;
+  float: left;
+  margin: 2px 0 20px;
+  padding: 0 0 0 24px !important;
+  position: relative;
+  &:before {
+    border: 1px solid #484848;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+    content: " + ";
+    height: 18px;
+    font-size: 20px;
+    line-height: 16px;
+    position: absolute;
+    left: 0;
+    width: 18px;
+  }
+}
+
+.add-location, .add-location:hover, .add-location:focus {
+  bottom: -17px;
+  left: 0;
+  position: absolute;
+  z-index: 1;
+}
+
+.add_another_location:hover, .add_another_location:focus, .add-to-collection:hover, .add-to-collection:focus,
+.add-location:hover, .add-location:focus {
+  color: $color-dodger_blue_approx;
+  &:before {
+    border-color: $color-dodger_blue_approx;
+    color: $color-dodger_blue_approx;
+  }
+}
+
+.region-container, .district-container, .point {
+  padding: 0;
+  margin-right: 12px;
+}
+
+.map-location {
+  float: left !important;
+  margin: 0!important;
+  padding: 0 4px !important;
+  position: relative;
+  width: 80px !important;
+}
+
+.point {
+  background: #fff;
+  box-shadow: 0 2px 40px 0 #C6D8CA;
+  border-radius: 4px;
+  display: none;
+  @include position(absolute,61px 20px auto auto);
+  padding: 20px 5px;
+  width: 490px !important;
+  z-index: 100000000000;
+  &:before {
+    background: #fff;
+    box-shadow: 0 2px 40px 0 #C6D8CA;
+    content: " ";
+    height: 8px;
+    left: 50%;
+    position: absolute;
+    top: -4px;
+    transform: rotate(45deg);
+    width: 8px;
+  }
+  > label {
+    display: none;
+  }
+  > .form-group {
+    margin: 0 !important;
+    width: 100% !important;
+    > .col-sm-6 {
+      &:first-child {
+        padding-right: 10px;
+      }
+      &:last-child {
+        padding-left: 10px;
+      }
+    }
+    > .full-width-wrap {
+      margin: 10px 0 0 !important;
+      padding: 0 18px;
+      width: calc(100% - 13px) !important;
+    }
+  }
+}

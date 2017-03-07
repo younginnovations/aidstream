@@ -45,6 +45,7 @@ return [
     'add_another_incoming_funds'            => 'Add another Incoming funds',
     'add_this_transaction'                  => 'Add this transaction',
     'add_another_location'                  => 'Add another location in Tanzania',
+    'add_another_country'                   => 'Add another country',
     'edit_budget'                           => 'Edit Budget',
     'add_budget'                            => 'Add Budget',
     'edit_disbursement'                     => 'Edit Disbursement',

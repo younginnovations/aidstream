@@ -345,8 +345,10 @@ class Activity implements MapperInterface
                 $this->mappedData[$key][$this->index] = $template;
                 $region                               = getVal($administrative, ['region']);
                 $district                             = getVal($administrative, ['district']);
-                $latitude                             = getVal($administrative, ['point', 0, 'latitude']);
-                $longitude                            = getVal($administrative, ['point', 0, 'latitude']);
+                foreach (getVal($administrative, ['point'], []) as $pointIndex => $point) {
+                    $latitude  = getVal($point, ['latitude']);
+                    $longitude = getVal($point, ['longitude']);
+                }
 
                 $this->mappedData[$key][$this->index]['country_code'] = getVal($location, ['country']);
 

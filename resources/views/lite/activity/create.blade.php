@@ -53,7 +53,7 @@
                                         <a href='#' class='pull-left display No' id='displayAddMore'><span class="pull-right">switch</span></a>
                                     </div>
                                 @else
-                                    {!! form_until($form,'location') !!}
+                                    {!! form_until($form,'add_more_location') !!}
                                 @endif
                             </div>
                         </div>
@@ -93,6 +93,10 @@
                         <div class="location-container hidden">
                             @include('tz.partials.location')
                         </div>
+                    @else
+                        <div class="location-container hidden"
+                             data-prototype="{{ form_row($form->location->prototype()) }}">
+                        </div>
                     @endif
                 </div>
             </div>
@@ -118,7 +122,7 @@
             TzLocation.closeOpenedMap(countryDetails);
             TzLocation.onCountryChanged();
             @else
-                Location.loadMap(countryDetails);
+            Location.closeOpenedMap(countryDetails);
             Location.onCountryChange();
             @endif
         })
@@ -129,28 +133,28 @@
         CreateActivity.addToCollection();
         CreateActivity.scroll();
 
-                @if(isRegisteredForTz())
-        var districts = [{!! json_encode(config('tz.district')) !!}];
-        Activity.changeRegionAndDistrict();
-        Activity.removeCountriesExceptTz();
-        Activity.addMoreAdministrative();
-        Activity.deleteCountryOnClick();
-        var district = [];
-        var counter = 0;
-        @foreach(getVal($form->getModel(),['location'],[]) as $index => $location )
-            @foreach(getVal($location,['administrative'],[]) as $key => $administrative)
-                @if(getVal($administrative,['region'],'') != "")
-                    district[counter] = [];
-                    district[counter]["{!! getVal($administrative,['region'],'') !!}"]= "{!! getVal($administrative,['district'],'') !!}";
-                    counter++;
-                @endif
+        @if(isRegisteredForTz())
+            var districts = [{!! json_encode(config('tz.district')) !!}];
+            Activity.changeRegionAndDistrict();
+            Activity.removeCountriesExceptTz();
+            Activity.addMoreAdministrative();
+            Activity.deleteCountryOnClick();
+            var district = [];
+            var counter = 0;
+            @foreach(getVal($form->getModel(),['location'],[]) as $index => $location )
+                @foreach(getVal($location,['administrative'],[]) as $key => $administrative)
+                    @if(getVal($administrative,['region'],'') != "")
+                        district[counter] = [];
+                        district[counter]["{!! getVal($administrative,['region'],'') !!}"] = "{!! getVal($administrative,['district'],'') !!}";
+                        counter++;
+                    @endif
+                @endforeach
             @endforeach
-        @endforeach
-        Activity.loadDistrictIfRegionIsPresent(district);
-        Activity.displayAddMoreCountry();
-        ProgressBar.setTotalFields(22);
-        ProgressBar.setLocationFields(5);
-        ProgressBar.addFilledFieldsForTz();
+            Activity.loadDistrictIfRegionIsPresent(district);
+            Activity.displayAddMoreCountry();
+            ProgressBar.setTotalFields(22);
+            ProgressBar.setLocationFields(5);
+            ProgressBar.addFilledFieldsForTz();
         @endif
 
         ProgressBar.calculateProgressBar(completedText);
