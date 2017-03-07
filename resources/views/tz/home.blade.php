@@ -27,7 +27,7 @@
                 <p>AidStream Tanzania is an online platform for Tanzanian organisations that wish to publish their aid data in accordance with the International Aid Transparency Initiative(IATI)
                     format but want to avoid dealing with the complexities of creating XML.</p>
                 <a href="{{ url('/register') }}" class="btn btn-primary get-started-btn">Get Started</a>
-                <p><a href="#">8 organizations</a> are using AidStream Tanzania and have published <strong>10 activities</strong> so far</p>
+                <p><a href="{{url('/who-is-using')}}">{{$organizationCount}} organizations</a> are using AidStream Tanzania and have published <strong>{{$publishedActivitiesCount}} activities</strong> so far</p>
             </div>
         </div>
     </div>
