@@ -3,7 +3,7 @@
         <div class="title">@lang('element.budget')</div>
         @foreach( groupBudgetElements(getVal($activityDataList, ['budget'], []) , 'budget_type') as $key => $budgets)
             <div class="activity-element-list">
-                <div class="activity-element-label">{{ $getCode->getCodeNameOnly('BudgetType' , $key) }}</div>
+                <div class="activity-element-label col-md-4">{{ $getCode->getCodeNameOnly('BudgetType' , $key) }}</div>
                 <div class="activity-element-info">
                     @foreach($budgets as $budget)
                         <li>{!! getBudgetInformation('currency_with_valuedate' , $budget) !!}</li>

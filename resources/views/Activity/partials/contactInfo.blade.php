@@ -3,7 +3,7 @@
         <div class="title">@lang('element.contact_info') @if(array_key_exists('Contact Info',$errors)) <i class='imported-from-xml'>icon</i>@endif </div>
         @foreach(groupContactInformation(getVal($activityDataList, ['contact_info'], [])) as $key => $contactInformation)
             <div class="activity-element-list">
-                <div class="activity-element-label">{{ checkIfEmpty($getCode->getCodeNameOnly('ContactType' , getVal($contactInformation, [0, 'type'], '')), "General Enquiries") }}</div>
+                <div class="activity-element-label col-md-4">{{ checkIfEmpty($getCode->getCodeNameOnly('ContactType' , getVal($contactInformation, [0, 'type'], '')), "General Enquiries") }}</div>
                 <div class="activity-element-info">
                     @foreach($contactInformation as $information)
                         <li>

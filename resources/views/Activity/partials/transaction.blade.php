@@ -3,7 +3,7 @@
         <div class="title">@lang('element.transaction') @if(array_key_exists('Transaction',$errors)) <i class='imported-from-xml'>icon</i>@endif </div>
         @foreach(groupTransactionElements(getVal($activityDataList, ['transaction'], [])) as $key => $groupedTransactions)
             <div class="activity-element-list">
-                <div class="activity-element-label">{{$key}}</div>
+                <div class="activity-element-label col-md-4">{{$key}}</div>
                 <div class="activity-element-info">
                     @foreach($groupedTransactions as $transaction)
                         <li>{!! getCurrencyValueDate(getVal($transaction, ['value', 0]) , "transaction") !!}</li>

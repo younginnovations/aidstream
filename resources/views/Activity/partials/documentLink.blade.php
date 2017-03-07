@@ -1,7 +1,7 @@
 @if(!emptyOrHasEmptyTemplate(getVal($activityDataList, ['document_links'], [])))
     <div class="activity-element-wrapper">
         <div class="activity-element-list">
-            <div class="activity-element-label">@lang('element.document_link') @if(array_key_exists('Document Link',$errors)) <i class='imported-from-xml'>icon</i>@endif </div>
+            <div class="activity-element-label col-md-4">@lang('element.document_link') @if(array_key_exists('Document Link',$errors)) <i class='imported-from-xml'>icon</i>@endif </div>
             <div class="activity-element-info">
                 @foreach(getVal($activityDataList, ['document_links'], []) as $documentLink)
                     <li>{!! getClickableLink(getVal($documentLink, ['document_link', 'url'])) !!}</li>

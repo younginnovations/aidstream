@@ -3,7 +3,7 @@
         <div class="title">@lang('element.results') @if(array_key_exists('Results',$errors)) <i class='imported-from-xml'>icon</i>@endif </div>
         @foreach(groupResultElements(getval($activityDataList, ['results'], [])) as $key => $results)
             <div class="activity-element-list">
-                <div class="activity-element-label">{{ $key }}</div>
+                <div class="activity-element-label col-md-4">{{ $key }}</div>
                 <div class="activity-element-info">
                     @foreach($results as $result)
                         <li>

@@ -3,7 +3,7 @@
         <div class="title">@lang('element.location') @if(array_key_exists('Location',$errors)) <i class='imported-from-xml'>icon</i>@endif </div>
         @foreach(getLocationReach(getVal($activityDataList, ['location'], [])) as $key => $locations)
             <div class="activity-element-list">
-                <div class="activity-element-label">
+                <div class="activity-element-label col-md-4">
                     {{ $key }}
                 </div>
                 <div class="activity-element-info">

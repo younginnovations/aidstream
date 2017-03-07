@@ -3,7 +3,7 @@
         <div class="title">@lang('element.description') @if(array_key_exists('Description',$errors)) <i class='imported-from-xml'>icon</i>@endif </div>
         @foreach(getVal($activityDataList, ['description'], []) as $description)
             <div class="activity-element-list">
-                <div class="activity-element-label">
+                <div class="activity-element-label col-md-4">
                     {{$getCode->getCodeNameOnly('DescriptionType', getVal($description, ['type'], ''))}} @lang('elementForm.description')
                 </div>
                 <div class="activity-element-info">

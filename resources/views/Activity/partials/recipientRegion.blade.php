@@ -1,7 +1,7 @@
 @if(!emptyOrHasEmptyTemplate(getVal($activityDataList, ['recipient_region'], [])))
     <div class="activity-element-wrapper">
         <div class="activity-element-list">
-            <div class="activity-element-label">@lang('element.recipient_region') @if(array_key_exists('Recipient Region',$errors)) <i class='imported-from-xml'>icon</i>@endif </div>
+            <div class="activity-element-label col-md-4">@lang('element.recipient_region') @if(array_key_exists('Recipient Region',$errors)) <i class='imported-from-xml'>icon</i>@endif </div>
             <div class="activity-element-info">
                 @foreach(getVal($activityDataList, ['recipient_region'], []) as $recipientRegion)
                     <li>{!! getRecipientInformation(getVal($recipientRegion, ['region_code']), getVal($recipientRegion, ['percentage']), 'Region') !!}</li>
