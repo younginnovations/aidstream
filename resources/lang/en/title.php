@@ -95,6 +95,7 @@ return [
     'activity_document_link'            => 'Activity Document Link',
     'activity_viewer'                   => 'Activity Viewer',
     'import_transactions'               => 'Import Transactions',
-    'page_not_found'                    => 'Page Not Found'
+    'page_not_found'                    => 'Page Not Found',
+    'tz_aidstream'                      => 'AidStream Tanzania'
 ];
 

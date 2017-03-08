@@ -7,7 +7,7 @@
     {{ header("Cache-Control: no-cache, no-store, must-revalidate")}}
     {{ header("Pragma: no-cache") }}
     {{ header("Expires: 0 ")}}
-    <title>Aidstream</title>
+    <title>Aidstream Tanzania</title>
     <link rel="shortcut icon" type="image/png" sizes="32*32" href="{{ asset('/images/favicon-tz.png') }}"/>
     <link rel="stylesheet" href="{{ asset('/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('/css/style.min.css') }}">

@@ -4,13 +4,23 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport'/>
-    <title>@lang('title.aidstream')</title>
-    <link rel="shortcut icon" type="image/png" sizes="16*16" href="images/favicon.png"/>
+    <title>@lang('title.tz_aidstream')</title>
     <link rel="stylesheet" href="{{asset('/css/bootstrap.min.css')}}">
     <link rel="stylesheet" href="{{asset('css/style.min.css')}}">
+    @if($isTz)
+        <link rel="shortcut icon" type="image/png" sizes="32*32" href="{{ asset('/images/favicon-tz.png') }}"/>
+        <link href="{{ asset('tz/css/tanzania_style/tz.style.css') }}" rel="stylesheet">
+    @else
+        <link rel="shortcut icon" type="image/png" sizes="16*16" href="/images/favicon.png"/>
+    @endif
 </head>
 <body>
-@include('includes.header')
+@if($isTz)
+    @include('tz.partials.header')
+@else
+    @include('includes.header')
+@endif
+
 <section class="main-container">
     <div class="organisation-list-wrapper">
         <div class="col-md-12 text-center">
@@ -41,7 +51,12 @@
         </div>
     </div>
 </section>
-@include('includes.footer')
+@if($isTz)
+    @include('tz.partials.footer')
+@else
+    @include('includes.footer')
+@endif
+
 {{--<div class="hidden">--}}
 {{--<ul class="no-image-logo">--}}
 {{--<li><span><a href=""></a></span></li>--}}

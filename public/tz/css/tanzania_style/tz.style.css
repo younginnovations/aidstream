@@ -380,9 +380,11 @@ tr, td {
 .header-banner {
   background: -webkit-gradient(linear, left top, left bottom, from(rgba(255, 255, 255, 0.92)), to(rgba(255, 255, 255, 0.92))), url("/images/tz-banner-bg.jpg") top center no-repeat;
   background: -webkit-linear-gradient(rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.92)), url("/images/tz-banner-bg.jpg") top center no-repeat;
+  background: -moz-linear-gradient(rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.92)), url("/images/tz-banner-bg.jpg") top center no-repeat;
   background: -o-linear-gradient(rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.92)), url("/images/tz-banner-bg.jpg") top center no-repeat;
   background: linear-gradient(rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.92)), url("/images/tz-banner-bg.jpg") top center no-repeat;
-  background-size: cover; }
+  -o-background-size: cover;
+     background-size: cover; }
   .header-banner .navbar, .header-banner .navbar-default {
     background: transparent; }
 
@@ -443,6 +445,14 @@ footer .footer-logo a {
 .aidstream-logo {
   margin-bottom: 30px; }
 
+.main-container {
+  display: block; }
+
+.information-wrapper {
+  border-bottom: 0; }
+  .information-wrapper p {
+    line-height: 24px; }
+
 @media all and (min-width: 900px) {
   .introduction-wrapper > .container {
     width: 880px; } }
@@ -462,6 +472,10 @@ footer .footer-logo a {
     margin: 0 auto;
     padding: 0 20px;
     text-align: center; }
+
+.search-org input[type="text"] {
+  background: none !important;
+  border: 0 !important; }
 
 @media all and (min-width: 768px) {
   .info-wrapper p {
@@ -940,6 +954,7 @@ tr, td {
 .panel__body {
   background: #FDFFFE;
   min-height: -webkit-calc(100vh - 110px);
+  min-height: -moz-calc(100vh - 110px);
   min-height: calc(100vh - 110px); }
 
 .panel__nav nav {
@@ -1002,6 +1017,7 @@ tr, td {
     float: left;
     margin-bottom: 0 !important;
     width: -webkit-calc(100% - 60px) !important;
+    width: -moz-calc(100% - 60px) !important;
     width: calc(100% - 60px) !important; }
 
 #location .location > .form-group:not(.new-location-block) > .country {
@@ -1110,6 +1126,7 @@ tr, td {
     position: absolute;
     top: -4px;
     -webkit-transform: rotate(45deg);
+       -moz-transform: rotate(45deg);
         -ms-transform: rotate(45deg);
          -o-transform: rotate(45deg);
             transform: rotate(45deg);
@@ -1127,6 +1144,7 @@ tr, td {
       margin: 10px 0 0 !important;
       padding: 0 18px;
       width: -webkit-calc(100% - 13px) !important;
+      width: -moz-calc(100% - 13px) !important;
       width: calc(100% - 13px) !important; }
 
 .remove_from_collection:hover {
@@ -1271,11 +1289,13 @@ tr, td {
   border-bottom: 1px solid #d6f9de; }
   .panel__status .col-sm-4 {
     background-image: -webkit-radial-gradient(50% 0, circle, #f3fdf5, #f0fdf2);
+    background-image: -moz-radial-gradient(50% 0, circle, #f3fdf5, #f0fdf2);
     background-image: -o-radial-gradient(50% 0, circle, #f3fdf5, #f0fdf2);
     background-image: radial-gradient(circle at 50% 0, #f3fdf5, #f0fdf2);
     border-right: 1px solid #d6f9de; }
     .panel__status .col-sm-4:nth-child(even) {
       background-image: -webkit-radial-gradient(50% 0, circle, #f2fbf4, #dffde6);
+      background-image: -moz-radial-gradient(50% 0, circle, #f2fbf4, #dffde6);
       background-image: -o-radial-gradient(50% 0, circle, #f2fbf4, #dffde6);
       background-image: radial-gradient(circle at 50% 0, #f2fbf4, #dffde6); }
 

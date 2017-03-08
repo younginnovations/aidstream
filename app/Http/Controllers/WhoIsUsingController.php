@@ -32,14 +32,14 @@ class WhoIsUsingController extends Controller
     /**
      * WhoIsUsingController constructor.
      *
-     * @param ActivityManager      $activityManager
-     * @param User                 $user
+     * @param ActivityManager $activityManager
+     * @param User $user
      * @param PerfectViewerManager $perfectViewerManager
      */
     function __construct(ActivityManager $activityManager, User $user, PerfectViewerManager $perfectViewerManager)
     {
-        $this->activityManager      = $activityManager;
-        $this->user                 = $user;
+        $this->activityManager = $activityManager;
+        $this->user = $user;
         $this->perfectViewerManager = $perfectViewerManager;
     }
 
@@ -51,12 +51,12 @@ class WhoIsUsingController extends Controller
     public function index()
     {
         if (isTzSubDomain()) {
-            $organizations = $this->organizationQueryBuilder()->where('system_version_id', 3)->get();
+            list($organizations, $isTz) = [$this->organizationQueryBuilder()->where('system_version_id', config('system-version.Tz.id'))->get(), true];
         } else {
-            $organizations = $this->organizationQueryBuilder()->get();
+            list($organizations, $isTz) = [$this->organizationQueryBuilder()->get(), false];
         }
 
-        return view('who-is-using', compact('organizations'));
+        return view('who-is-using', compact('organizations', 'isTz'));
     }
 
     /**
@@ -98,14 +98,14 @@ class WhoIsUsingController extends Controller
             return redirect()->back()->withResponse($this->getNotFoundResponse());
         }
 
-        $activityData       = $this->activityManager->getActivityData($activityId);
+        $activityData = $this->activityManager->getActivityData($activityId);
         $defaultFieldValues = $activityData->default_field_values;
 
         $recipientCountries = $this->getRecipientCountries($activityIdExists->toArray());
-        $user               = $this->user->getDataByOrgIdAndRoleId($organizationIdExists[0]->org_id, '1');
+        $user = $this->user->getDataByOrgIdAndRoleId($organizationIdExists[0]->org_id, '1');
 
-        $organization                     = json_decode($organizationIdExists, true);
-        $activity                         = json_decode($activityIdExists, true);
+        $organization = json_decode($organizationIdExists, true);
+        $activity = json_decode($activityIdExists, true);
         $organization[0]['reporting_org'] = trimReportingOrg(json_decode(getVal($organization, [0, 'reporting_org']), true));
 
         $activity = $this->filterDescription($activity);
@@ -131,19 +131,19 @@ class WhoIsUsingController extends Controller
      */
     public function showOrganization($organizationId, Request $request)
     {
-        $queryParamPublished  = $request->input('published');
+        $queryParamPublished = $request->input('published');
         $organizationIdExists = $this->organizationQueryBuilder()->where('org_slug', $organizationId)->get();
 
         if (count($organizationIdExists) == 0) {
             return redirect()->back()->withResponse($this->getNotFoundResponse());
         }
 
-        $activitySnapshot               = $this->perfectViewerManager->getSnapshotWithOrgId($organizationIdExists[0]->org_id);
-        $organizations                  = json_decode($organizationIdExists[0], true);
+        $activitySnapshot = $this->perfectViewerManager->getSnapshotWithOrgId($organizationIdExists[0]->org_id);
+        $organizations = json_decode($organizationIdExists[0], true);
         $organizations['reporting_org'] = trimReportingOrg(json_decode(getVal($organizations, ['reporting_org']), true));
-        $allActivities                  = json_decode($activitySnapshot, true);
-        $recipientCountries             = $this->getRecipientCountries($allActivities);
-        $user                           = $this->user->getDataByOrgIdAndRoleId($organizationIdExists[0]->org_id, '1');
+        $allActivities = json_decode($activitySnapshot, true);
+        $recipientCountries = $this->getRecipientCountries($allActivities);
+        $user = $this->user->getDataByOrgIdAndRoleId($organizationIdExists[0]->org_id, '1');
 
         $activities = [];
 
