@@ -1,6 +1,4 @@
-<?php
-
-namespace App\Models\PerfectViewer;
+<?php namespace App\Models\PerfectViewer;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -13,4 +11,5 @@ class OrganizationSnapshot extends Model
     protected $casts = [
         'transaction_totals' => 'json',
     ];
+
 }

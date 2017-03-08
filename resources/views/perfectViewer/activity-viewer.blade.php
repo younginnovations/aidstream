@@ -136,7 +136,9 @@
                             </li>
                         </ul>
                         <ul class="pull-right links">
-                            <li><a href="mailto:{{$user->email}}"><i class="pull-left material-icons">mail</i>@lang('perfectViewer.contact')</a></li>
+                            @if ($user)
+                                <li><a href="mailto:{{$user->email}}"><i class="pull-left material-icons">mail</i>@lang('perfectViewer.contact')</a></li>
+                            @endif
                             <li>
                                 <a href="#"><i class="pull-left material-icons">share</i>@lang('perfectViewer.share')</a>
                                 <ul class="share-links">
@@ -314,7 +316,7 @@
                     </span>
                     </div>
                 @endif
-                @if(getVal($activity, [0, 'filename']) && !isTzSubDomain())
+                @if(fileExists($activity))
                     <a href="{{'/files/xml/'.getVal($activity, [0, 'filename'], '#')}}" target="_blank" class="view-xml-file">@lang('perfectViewer.view_xml_file_here')</a>
                 @endif
             </div>
