@@ -32,15 +32,18 @@
     <meta name="twitter:url" content="{{ url()->current() }}"/>
 
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="shortcut icon" type="image/png" sizes="16*16" href="{{asset('/images/favicon.png')}}"/>
     <link rel="stylesheet" href="{{asset('/css/bootstrap.min.css')}}">
     <link href="{{asset('/css/jquery.jscrollpane.css')}}" rel="stylesheet">
-    <link rel="stylesheet" href="{{asset('css/style.min.css')}}">
+    {!! publicStylesheet() !!}
     <title>@lang('title.activity_viewer')</title>
 </head>
 <body>
 <div class="activity-header-wrapper">
-    @include('includes.header')
+    @if (isTzSubDomain())
+        @include('tz.partials.header')
+    @else
+        @include('includes.header')
+    @endif
 </div>
 <div class="wrapper">
     <div id="tooltip" class="tooltips"></div>

@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/style.min.css">
     <link href="{{ asset('tz/css/tanzania_style/tz.style.css') }}" rel="stylesheet">
-    <link href="{{ asset('/css/tanzania_style/tz.style.css') }}" rel="stylesheet">
 </head>
 <body>
 @include('tz.partials.header')

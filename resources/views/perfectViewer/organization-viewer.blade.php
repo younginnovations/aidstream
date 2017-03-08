@@ -9,10 +9,9 @@
     <title>Organization Viewer</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport'/>
-    <link rel="shortcut icon" type="image/png" sizes="16*16" href="{{asset('/images/favicon.png')}}"/>
     <link rel="stylesheet" href="{{asset('/css/bootstrap.min.css')}}">
     <link href="{{ asset('/css/jquery.jscrollpane.css') }}" rel="stylesheet">
-    <link rel="stylesheet" href="{{asset('css/style.min.css')}}">
+    {!! publicStylesheet() !!}
 </head>
 
 <style type="text/css">
@@ -40,7 +39,11 @@
 
 <body>
 <div class="org-header-wrapper">
-    @include('includes.header')
+    @if (isTzSubDomain())
+        @include('tz.partials.header')
+    @else
+        @include('includes.header')
+    @endif
 </div>
 <div class="wrapper">
     @include('includes.response')
