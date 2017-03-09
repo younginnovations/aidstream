@@ -1903,18 +1903,18 @@ class XmlValidator
     protected function messagesForDocumentLink(array $activity)
     {
         $messages      = [];
-        $documentLinks = getVal($activity, ['document_link'], []);
+        $documentLinks = getVal($activity, ['document_links'], []);
 
         foreach ($documentLinks as $documentLinkIndex => $documentLink) {
-            $documentLinkBase                                                                                = sprintf('document_link.%s', $documentLinkIndex);
-            $messages[sprintf('document_link.%s.url.required', $documentLinkIndex)]                          = trans('validation.code_list', ['attribute' => trans('elementForm.url')]);
-            $messages[sprintf('document_link.%s.url.url', $documentLinkIndex)]                               = trans('validation.url');
-            $messages[sprintf('document_link.%s.format.required', $documentLinkIndex)]                       = trans('validation.code_list', ['attribute' => trans('elementForm.format')]);
-            $messages[sprintf('document_link.%s.format.in', $documentLinkIndex)]                             = trans(
+            $documentLinkBase                                                                                = sprintf('document_links.%s', $documentLinkIndex);
+            $messages[sprintf('%s.document_link.url.required', $documentLinkBase)]                                         = trans('validation.code_list', ['attribute' => trans('elementForm.url')]);
+            $messages[sprintf('%s.document_link.url.url', $documentLinkBase)]                                              = trans('validation.url');
+            $messages[sprintf('%s.document_link.format.required', $documentLinkBase)]                                      = trans('validation.code_list', ['attribute' => trans('elementForm.format')]);
+            $messages[sprintf('%s.document_link.format.in', $documentLinkBase)]                                            = trans(
                 'validation.code_list',
                 ['attribute' => trans('elementForm.document_format_type')]
             );
-            $messages[sprintf('document_link.%s.language.*.language.in', $documentLinkIndex)]                = trans('validation.code_list', ['attribute' => trans('elementForm.language')]);
+            $messages[sprintf('%s.document_link.language.*.language.in', $documentLinkBase)]                               = trans('validation.code_list', ['attribute' => trans('elementForm.language')]);
             $messages                                                                                        = array_merge(
                 $messages,
                 $this->factory->getMessagesForNarrative(getVal($documentLink, ['document_link', 'title', 0, 'narrative'], []), sprintf('%s.document_link.title.0', $documentLinkBase)),
@@ -1924,7 +1924,6 @@ class XmlValidator
         }
 
         return $messages;
-
     }
 
     /**
@@ -1980,7 +1979,7 @@ class XmlValidator
      * @param array $activity
      * @return array
      */
-    protected function messagesForRelatedActivity(array  $activity)
+    protected function messagesForRelatedActivity(array $activity)
     {
         $messages          = [];
         $relatedActivities = getVal($activity, ['related_activity'], []);

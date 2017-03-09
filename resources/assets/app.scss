@@ -9755,3 +9755,16 @@ body > .skiptranslate iframe {
     }
   }
 }
+
+.import-activity-info {
+  width: -webkit-calc(100% - 370px);
+  width: calc(100% - 370px);
+  font-size: 12px;
+  color: #aaa;
+  font-weight: 400;
+  display: inline-block;
+  vertical-align: top;
+  margin: -40px 0 0 40px;
+  line-height: 18px;
+  position: relative;
+}

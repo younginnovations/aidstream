@@ -4,6 +4,10 @@
  * Interface SuperAdmin
  * @package App\SuperAdmin\Repositories\SuperAdminInterfaces
  */
+/**
+ * Interface SuperAdmin
+ * @package App\SuperAdmin\Repositories\SuperAdminInterfaces
+ */
 interface SuperAdmin
 {
     /**
@@ -33,4 +37,12 @@ interface SuperAdmin
      * @return mixed
      */
     public function saveOrganization(array $orgDetails, $orgId);
+
+    /**
+     * Returns organisation according their system version id
+     *
+     * @param $id
+     * @return mixed
+     */
+    public function getOrganizationBySystemVersion($id);
 }
