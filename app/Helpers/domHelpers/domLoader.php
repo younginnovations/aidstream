@@ -13,7 +13,7 @@ function publicStylesheet()
 
 
     if (isTzSubDomain()) {
-        $styleSheet = sprintf($link, asset('tz/css/tanzania_style/tz.style.css'));
+        $styleSheet = sprintf($link, asset('/tz/css/tz.min.css'));
 
         return $faviconLink . $baseStyleSheet . $styleSheet;
     } else {
@@ -31,11 +31,11 @@ function publicStylesheet()
 function authStyleSheets()
 {
     $link           = "<link href='%s' rel='stylesheet'>";
-    $baseStyleSheet = sprintf($link, asset('/css/main.min.css'));
+    $baseStyleSheet = sprintf($link, asset('/lite/css/lite.min.css'));
     $faviconLink = "<link rel='shortcut icon' type='image/png' sizes='32*32' href='%s'/>";
 
     if (isTzSubDomain()) {
-        $styleSheet = sprintf($link, asset('tz/css/tanzania_style/tz.style.css'));
+        $styleSheet = sprintf($link, asset('/tz/css/tz.min.css'));
         $favicon = sprintf($faviconLink, asset('/images/favicon-tz.png'));
 
         return $favicon . $baseStyleSheet . $styleSheet;

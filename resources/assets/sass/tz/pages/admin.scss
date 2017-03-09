@@ -1,17 +1,13 @@
-.navbar-brand {
-  width: 200px;
-}
-
 .sidebar-wrapper ul li a.active {
-  background: $primary-color;
+  background: $color_primary;
 }
 
 .add-dropdown .avatar-img, .add-new-activity .avatar-img, .navbar-admin-dropdown .avatar-img {
-  border-color: $primary-color;
+  border-color: $color_primary;
 }
 
 .form__block, .panel__heading {
-  border-bottom: 1px solid lighten($primary-color, 52%);
+  border-bottom: 1px solid lighten($color_primary, 52%);
 }
 
 .panel__body {
@@ -24,26 +20,26 @@
 }
 
 .form-control[readonly], form .select2-container, input:not([type]), input[type=color], input[type=date], input[type=datetime], input[type=datetime-local], input[type=email], input[type=month], input[type=number], input[type=password], input[type=search], input[type=tel], input[type=text], input[type=time], input[type=url], input[type=week], select, textarea, textarea.form-control {
-  background-color: lighten($primary-color, 59%) !important;
-  border: 1px solid lighten($primary-color, 46%) !important;
+  background-color: lighten($color_primary, 59%) !important;
+  border: 1px solid lighten($color_primary, 46%) !important;
   box-shadow: none;
 }
 
 .select2-container--default .select2-selection--single .select2-selection__arrow b {
-  border-color: $primary-color transparent transparent !important;
+  border-color: $color_primary transparent transparent !important;
 }
 
-.lite .create-form form .datepicker {
+.create-form form .datepicker {
   background: url(../../../images/ic_date-green.svg) no-repeat 97%;
 }
 
 .upload-logo {
   background-image: url(../../../images/ic-camera-green.svg);
-  border-color: $primary-color;
+  border-color: $color_primary;
 }
 
 .change-logo, .upload-label, .view-more-actions ul li a:hover {
-  color: $primary-color;
+  color: $color_primary;
 }
 
 .sort-by-wrap select {
@@ -68,8 +64,8 @@
 
 .organisation-account-wrapper p > a {
   background: none !important;
-  border: 1px solid $primary-color !important;
-  color: $primary-color;
+  border: 1px solid $color_primary !important;
+  color: $color_primary;
 }
 
 @media (min-width: 480px) {
@@ -82,7 +78,7 @@
   margin: 0;
 }
 
-.location > label {
+.create-form .location > label {
   background: url(../../../images/ic_tz-flag.svg) no-repeat 0 0;
   float: left;
   height: 40px;
@@ -103,6 +99,9 @@
       display: none;
     }
   }
+  .location>.form-group {
+    padding: 0;
+  }
   .administrative {
     padding: 0 14px;
     > label {
@@ -114,6 +113,7 @@
     .added-new-block {
       margin: 0 0 10px !important;
       padding-top: 15px !important;
+      width: 100%!important;
       .point {
         top: 61px;
       }
@@ -121,11 +121,19 @@
   }
   .view_map {
     background: transparent url(../../../images/ic_map-use.svg) no-repeat left;
-    color: $primary-color;
+    color: $color_primary;
     font-size: 14px;
     margin: 30px 0 0;
     padding-left: 18px;
     width: auto;
+  }
+  .country + .administrative {
+    float: none;
+    padding-right: 0;
+    width: 100%;
+    .remove_from_collection {
+      right: 0;
+    }
   }
   .location > label + .form-group:not(.new-location-block) > .country {
     > .select2-container {
@@ -134,10 +142,15 @@
       font-size: 14px;
       height: auto;
       padding: 0 10px;
+      pointer-events: none;
     }
     .select2-container--default .select2-selection--single .select2-selection__arrow b {
       border: none !important;
     }
+  }
+  .new-location-block .country + .administrative {
+    float: left;
+    width: 50%;
   }
 }
 
@@ -173,10 +186,10 @@
 
 .add_another_location:hover, .add_another_location:focus, .add-to-collection:hover, .add-to-collection:focus,
 .add-location:hover, .add-location:focus {
-  color: $primary-color;
+  color: $color_primary;
   &:before {
-    border-color: $primary-color;
-    color: $primary-color;
+    border-color: $color_primary;
+    color: $color_primary;
   }
 }
 
@@ -191,11 +204,6 @@
   padding: 0 4px !important;
   position: relative;
   width: 80px !important;
-}
-
-#location .country+.administrative {
-  float: none;
-  width: 100%;
 }
 
 .point {
@@ -287,15 +295,16 @@
   }
 }
 
-.option-to-add-more {
+.create-form .collection_form > .option-to-add-more {
   border-top: 1px solid #D5F5DC;
   display: inline-block;
   margin: 8px 0 0 !important;
   padding: 20px 0 10px !important;
   overflow: hidden;
+  width: 100%!important;
 }
 
-.lite .create-form .new-location-block {
+.create-form .collection_form > .new-location-block {
   border-top: 1px dashed #D5F5DC !important;
   margin: 0 !important;
   padding: 10px 0 !important;
@@ -311,8 +320,8 @@
   }
   .administrative {
     clear: none;
-    float: left!important;
-    width: 50%!important;
+    float: left;
+    width: 50%;
     > .form-group {
       margin-bottom: 0 !important;
     }
@@ -325,10 +334,12 @@
   }
 }
 
-.lite .create-form {
+.create-form {
   .location {
     .option-to-add-more + .new-location-block {
       border: 0 !important;
+      margin: 0 0 10px!important;
+      width: 100%!important;
     }
   }
 }
@@ -356,23 +367,23 @@
 }
 
 .auth-info-wrapper #add-user {
-  color: $primary-color;
+  color: $color_primary;
   &:hover {
-    color: $color-link-hover;
+    color: $color_secondary;
     text-decoration: underline;
   }
 }
 
 .btn-back {
   background: transparent !important;
-  border: 1px solid $primary-color !important;
-  color: $primary-color;
+  border: 1px solid $color_primary !important;
+  color: $color_primary;
   &:before {
     background: url(../../../images/ic-left-arrow-green.svg) no-repeat !important;
   }
   &:hover {
-    background: $primary-color !important;
-    border: 1px solid $primary-color !important;
+    background: $color_primary !important;
+    border: 1px solid $color_primary !important;
     color: #fff;
     &:before {
       background: url(../../../images/ic-side-arrow.svg) no-repeat !important;
@@ -381,16 +392,17 @@
 }
 
 .add-user-link a {
-  color: $primary-color;
+  color: $color_primary;
   &:before, &:after {
-    background: $primary-color;
+    background: $color_primary;
   }
   &:hover {
-    color: $color-link-hover;
+    color: $color_secondary;
   }
 }
 
-.lite .panel__table {
+.panel__table {
+  border-collapse: collapse!important;
   thead tr th {
     border-bottom: 1px solid #d9f3de;
   }
@@ -407,18 +419,17 @@
     }
     td {
       border-color: #d9f3de !important;
+      .view-more:hover > a {
+        color: $color_primary;
+      }
     }
   }
 }
 
-.lite .panel__table tr td .view-more:hover > a {
-  color: $primary-color;
-}
-
 .scrollup {
-  background-color: rgba($primary-color, 0.5);
+  background-color: rgba($color_primary, 0.5);
   &:hover {
-    background-color: $primary-color;
+    background-color: $color_primary;
   }
 }
 
@@ -431,6 +442,37 @@
       background-image: radial-gradient(circle at 50% 0, #f2fbf4, #dffde6);
     }
   }
+}
+
+.add-more {
+  &:hover, &:focus {
+    background: none;
+    color: $color_primary;
+    &:before {
+      border: 1px solid $color_primary;
+    }
+  }
+}
+
+.panel__activity__more--info {
+  background: #f3fdf5;
+  border-color: #d6f9de;
+}
+
+.activity__detail,.activity__block,.activity__detail__block li {
+  border-color: #d6f9de;
+}
+
+.remove_location {
+  right: 0;
+}
+
+.remove_location:hover,.remove_location:focus {
+  background-position: -393px -267px;
+}
+
+.add-activity-form {
+  padding-bottom: 240px;
 }
 
 @media (min-width: 700px) {

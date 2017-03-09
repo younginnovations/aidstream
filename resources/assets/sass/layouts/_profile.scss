@@ -1,0 +1,315 @@
+// profile
+
+.profile-content-wrapper {
+  width: 100%;
+  padding: 0;
+  background: $color_alabaster_approx;
+  height: 93vh;
+}
+
+.content-wrapper .panel-profile {
+  //padding: 62px 36px 43px;
+  margin-bottom: 20px;
+  border-radius: 0;
+  overflow: hidden;
+  background: $color_white;
+  //.panel-body {
+  //  margin-bottom: 50px;
+  //}
+  .form-group {
+    padding-left: 0;
+  }
+  form > div {
+    &:last-child {
+      padding-left: 0;
+    }
+  }
+}
+
+.profile-top-wrapper {
+  overflow: hidden;
+  background: #778084;
+  padding: 30px 36px;
+  text-align: center;
+  > .pull-left {
+    width: 100%;
+    //margin-left: 260px;
+  }
+}
+
+.panel-org-heading {
+  overflow: hidden;
+  padding-bottom: 10px;
+  > * {
+    float: left;
+  }
+  > .panel-sub-heading {
+    margin-top: 7px;
+  }
+}
+
+.edit-org {
+  margin-top: 9px;
+  font-size: 12px;
+  position: relative;
+  padding-right: 38px;
+  &:after {
+    content: "";
+    background: $url_3 -154px -261px no-repeat;
+    width: 32px;
+    height: 32px;
+    position: absolute;
+    top: -9px;
+    right: 0;
+  }
+}
+
+.panel-associated-organization {
+  padding: 60px 36px 40px 70px;
+  background: $color_alabaster_approx;
+  overflow: hidden;
+  .panel-sub-heading {
+    padding: 0;
+  }
+}
+
+.change-password-wrapper {
+  background: $color_white;
+  .create-form > form {
+    padding: 20px 0;
+    > .panel-default {
+      overflow: hidden;
+    }
+    .form-group {
+      margin-bottom: 30px;
+      padding: 0;
+      &:last-of-type {
+        margin-bottom: 0;
+      }
+    }
+  }
+}
+
+.panel-sub-heading {
+  margin: 22px 0 10px;
+  padding-left: 36px;
+  text-transform: uppercase;
+  font-family: $font_0;
+}
+
+.panel-sub-heading + .panel-body {
+  clear: both;
+}
+
+.published-wrapper .panel-sub-heading {
+  float: left;
+  margin-top: 26px;
+}
+
+$organization-logo-width: 124px;
+
+.organization-logo {
+  float: left;
+  margin: 8px 20px 0 0;
+  width: $organization-logo-width;
+}
+
+.organization-name {
+  font: normal 22px $font_1;
+  margin: 10px 0 20px;
+}
+
+.organization-detail {
+  width: calc(100% - #{$organization-logo-width} - 20px);
+  float: left;
+  ul {
+    clear: both;
+    li {
+      padding-left: 0;
+      padding-right: 20px;
+      margin-bottom: 24px;
+      float: none;
+      display: inline-block;
+      width: 49%;
+      vertical-align: top;
+      label {
+        color: rgba($color_gravel_approx, 0.7);
+        margin-bottom: 0 !important;
+      }
+      span {
+        display: block;
+        padding-left: 42px;
+      }
+    }
+    h2 {
+      clear: both;
+      font: 15px $font_1;
+      color: #9b9b9b;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+    }
+  }
+}
+
+.organization-detail ul li:before {
+  content: "";
+  width: 32px;
+  height: 32px;
+  background: $url_23 no-repeat;
+  float: left;
+  margin: 2px 10px 10px 0;
+}
+
+.organization-detail ul li {
+  a {
+    word-wrap: break-word;
+  }
+  &.telephone:before {
+    background-position: -203px -62px;
+  }
+  &.twitter:before {
+    background-position: -303px -62px;
+  }
+  &.website:before {
+    background-position: 0 -62px;
+  }
+  &.address:before {
+    background-position: 0 0;
+  }
+  &.country:before {
+    background-position: -205px 0;
+  }
+  &.org-type:before {
+    background-position: -307px 0;
+  }
+  &.org-reg-agency:before {
+    background-position: -400px -62px;
+  }
+  &.org-reg-number:before {
+    background-position: -100px -62px;
+    width: 35px;
+  }
+}
+
+.profile-img {
+  @include size(180px 180px);
+  margin: 0 auto;
+  background: $color_white;
+  border-radius: 50%;
+  border: 4px solid $color_white;
+  text-align: center;
+  line-height: 180px;
+  img {
+    display: inline-block;
+    vertical-align: middle;
+    border-radius: 50%;
+    @include size(170px);
+    margin-top: -10px;
+  }
+}
+
+.profile-info-block:not(:only-child) {
+  border-bottom: 1px solid rgba(238, 238, 238, 0.2);
+  padding-bottom: 24px;
+  margin-bottom: 20px;
+}
+
+.profile-role-info {
+  border-radius: 4px;
+  overflow: hidden;
+  margin: 24px auto 26px;
+  width: 290px;
+  padding: 0 12px;
+  dl {
+    float: left;
+    margin-right: 30px;
+    margin-bottom: 0;
+    &:last-child {
+      margin-right: 0;
+    }
+    dt {
+      color: rgba($color_gravel_approx, 0.7);
+      margin: 0 0 4px;
+    }
+    dd {
+      font-family: $font_1;
+    }
+  }
+}
+
+.profile-username {
+  display: block;
+  font-size: 20px;
+  color: #ACBDC5;
+  margin: 3px 0;
+}
+
+.profile-user-email {
+  display: block;
+  a {
+    color: $color_white;
+    text-decoration: underline;
+  }
+}
+
+.profile-name {
+  font-size: 18px;
+  color: $color_gravel_approx;
+  margin-top: 5px;
+}
+
+.edit-profile-block {
+  float: right;
+  margin-right: 10px;
+}
+
+.change-password {
+  margin-right: 10px;
+}
+
+.auth-name {
+  font-size: 32px;
+  color: $color_white;
+  display: inline-block;
+  width: 100%;
+}
+
+.edit-profile, .edit-profile:hover, .change-password, .change-password:hover, .edit-profile:focus, .change-password:focus {
+  display: inline-block;
+  color: rgba($color_white, 0.7);
+  text-decoration: underline;
+  font-size: 12px;
+  margin-bottom: 6px;
+}
+
+.change-password, .change-password:hover {
+  margin-left: 6px;
+}
+
+.secondary-contact-block {
+  > span {
+    display: block;
+    color: #ACBDC5;
+    text-transform: uppercase;
+    margin-top: 10px;
+  }
+}
+
+.profile-name {
+  display: block;
+  font-size: 18px;
+  color: $color_white;
+  margin: 5px 0 3px;
+  & + a {
+    color: $color_white;
+    text-decoration: underline;
+  }
+}
+
+.form-password-group {
+  clear: both;
+}
+
+.disqus-wrapper {
+  clear: both;
+}

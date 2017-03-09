@@ -9,7 +9,7 @@
     {{ header("Expires: 0 ")}}
     <title>@lang('title.aidstream')</title>
     <link rel="shortcut icon" type="image/png" sizes="16*16" href="images/favicon.png"/>
-    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/vendor.min.css">
     <link rel="stylesheet" href="css/style.min.css">
 </head>
 <body>

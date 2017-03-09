@@ -1,0 +1,225 @@
+//sidebar
+
+.sidebar-wrapper {
+  margin-right: 0;
+  padding: 0;
+  width: 63px;
+  float: left;
+  overflow: hidden;
+  transition: width 0.3s ease;
+  background: $color_black_approx;
+  position: fixed;
+  top: 63px;
+  left: 0;
+  height: 93vh;
+  z-index: 1;
+  .panel {
+    border: 0;
+    box-shadow: none;
+  }
+  .panel-default {
+    background: inherit;
+  }
+  .panel-body {
+    padding: 0;
+  }
+  ul li {
+    border-bottom: 1px solid rgba($color_gallery_approx, 0.05);
+    a {
+      font-size: 13px;
+      color: $color_white;
+      height: 63px;
+      display: block;
+      position: relative;
+      padding: 22px 0 22px 64px;
+      -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=30)";
+      filter: alpha(opacity=30);
+      -moz-opacity: 0.3;
+      -khtml-opacity: 0.3;
+      opacity: 0.3;
+      white-space: nowrap;
+      &:before {
+        content: "";
+        background: $url_3 no-repeat -73px 0;
+        width: 35px;
+        height: 35px;
+        @include position(absolute, 24% auto auto 12px);
+      }
+      &:hover, &:focus {
+        opacity: 1;
+        background: none;
+        text-decoration: none;
+      }
+      &.active {
+        background-color: $color_primary;
+        -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+        filter: alpha(opacity=100);
+        -moz-opacity: 1;
+        -khtml-opacity: 1;
+        opacity: 1;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        &:before {
+          background-position: -73px 0;
+        }
+      }
+    }
+  }
+
+  .activities a:before {
+    top: 30%;
+  }
+
+  .organization a {
+    &:before {
+      background-position: -73px -59px;
+      top: 24%;
+    }
+    &:hover, &.active, &:focus {
+      &:before {
+        background-position: -73px -59px;
+      }
+    }
+  }
+  .published-files a {
+    &:before {
+      background-position: -73px -127px;
+      top: 30%;
+    }
+    &:hover, &.active, &:focus {
+      &:before {
+        background-position: -73px -127px;
+      }
+    }
+  }
+  .users a {
+    &:before {
+      background-position: -73px -187px;
+    }
+    &:hover, &.active, &:focus {
+      &:before {
+        background-position: -73px -187px;
+      }
+    }
+  }
+  .documents a {
+    &:before {
+      background-position: -73px -251px;
+    }
+    &:hover, &.active, &:focus {
+      &:before {
+        background-position: -73px -251px;
+      }
+    }
+  }
+  .downloads a {
+    &:before {
+      background-position: -73px -316px;
+    }
+    &:hover, &.active, &:focus {
+      &:before {
+        background-position: -73px -316px;
+      }
+    }
+  }
+  .settings a {
+    &:before {
+      background-position: -73px -380px;
+    }
+    &:hover, &.active, &:focus {
+      &:before {
+        background-position: -73px -380px;
+      }
+    }
+  }
+  .logs a {
+    &:before {
+      background-position: -69px -447px;
+    }
+    &:hover, &.active, &:focus {
+      &:before {
+        background-position: -69px -447px;
+      }
+    }
+  }
+}
+
+.sidebar-wrapper {
+  .jspScrollable, .jspContainer {
+    width: auto !important;
+  }
+  .jspDrag {
+    display: none;
+  }
+}
+
+.sidebar-wrapper:not(.touch-sidebar-wrapper) .jspPane {
+  width: 210px !important;
+}
+
+.touch-sidebar-wrapper {
+  .jspScrollable, .jspContainer {
+    width: 62px !important;
+  }
+}
+
+.sidebar-wrapper + .content-wrapper {
+  margin-left: 62px;
+}
+
+.support {
+  padding: 16px 13px 0 16px;
+  position: absolute;
+  bottom: 20px;
+  span {
+    width: 34px;
+    height: 34px;
+    background: $url_3 no-repeat -633px -642px;
+    display: block;
+    text-indent: -9999px;
+    position: absolute;
+    bottom: 20px;
+    transition: opacity 0.3s ease;
+  }
+  p {
+    color: rgba($color_white, 0.3);
+    font-size: 12px;
+    display: block !important;
+    padding: 0 7px;
+    width: 181px;
+    height: 48px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+}
+
+$full-sidebar-wrapper-width: 210px;
+.full-sidebar-wrapper {
+  width: $full-sidebar-wrapper-width;
+  & + .content-wrapper {
+    width: calc(100% - #{$full-sidebar-wrapper-width});
+    margin-left: 210px;
+  }
+  .support {
+    span {
+      opacity: 0;
+    }
+    p {
+      opacity: 1;
+    }
+  }
+}
+
+.touch-sidebar-wrapper + .content-wrapper {
+  width: calc(100% - 62px);
+  margin-left: 62px !important;
+}
+
+.touch-sidebar-wrapper .support p {
+  opacity: 0 !important;
+}
+
+.touch-sidebar-wrapper .support span {
+  opacity: 1 !important;
+  display: block;
+}
+

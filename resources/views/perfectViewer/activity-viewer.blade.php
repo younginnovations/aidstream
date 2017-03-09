@@ -32,8 +32,7 @@
     <meta name="twitter:url" content="{{ url()->current() }}"/>
 
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="{{asset('/css/bootstrap.min.css')}}">
-    <link href="{{asset('/css/jquery.jscrollpane.css')}}" rel="stylesheet">
+    <link rel="stylesheet" href="{{asset('/css/vendor.min.css')}}">
     {!! publicStylesheet() !!}
     <title>@lang('title.activity_viewer')</title>
 </head>

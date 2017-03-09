@@ -1,0 +1,110 @@
+// element-sidebar-wrapper
+
+$element-sidebar-wrapper-width: 283px;
+.element-sidebar-wrapper {
+  padding: 0;
+  float: right;
+  width: $element-sidebar-wrapper-width;
+  padding-right: 0;
+  background: $url_10 repeat-y 16px;
+  .panel-heading {
+    background: transparent;
+    font: 12px 'Open-Sans-Bold';
+    text-transform: uppercase;
+    color: $color_gravel_approx;
+    border-color: $color_gallery_approx;
+    padding: 10px 22px;
+  }
+  .panel-default {
+    padding-bottom: 30px;
+    border-radius: 0;
+    background: none;
+    margin-left: 16px;
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+  .panel-body li {
+    border-bottom: 1px solid $color_gallery_approx;
+    width: 100%;
+    position: relative;
+    a {
+      color: rgba($color_gravel_approx, 0.5);
+      font-size: 12px;
+      padding: 17px 25px;
+      position: relative;
+      &:hover {
+        background-color: transparent;
+        color: $color_primary;
+      }
+    }
+    .active {
+      color: $color_gravel_approx;
+      &:before {
+        content: '';
+        display: inline-block;
+        width: 12px;
+        height: 13px;
+        background: $url_3 no-repeat -637px -269px;
+        margin-left: -16px;
+      }
+    }
+    .highlight, .highlight:hover {
+      background: $color_gravel_approx;
+      color: $color_white;
+    }
+    .highlight + .help-text {
+      background: $url_3 no-repeat -308px -200px;
+    }
+  }
+}
+
+.element-sidebar-fixed {
+  position: fixed !important;
+  right: 0;
+  top: 63px;
+}
+
+.element-menu-wrapper {
+  float: right;
+  position: relative;
+  width: 283px;
+}
+
+.action-icon {
+  width: 33px;
+  height: 33px;
+  text-indent: -9999px;
+  float: left;
+  @include position(absolute, 11px auto auto -16px);
+  padding-left: 0 !important;
+  border-radius: 50%;
+  display: none;
+}
+
+.action-icon.add {
+  background: $color_white $url_3 no-repeat -4px -448px;
+  display: none;
+  margin: 0;
+  &:hover {
+    background-position: -4px -508px;
+  }
+}
+
+.help-text {
+  float: right;
+  text-indent: -9999px;
+  width: 18px;
+  height: 18px;
+  background: $url_3 no-repeat -152px -200px;
+  cursor: pointer;
+  @include position(absolute, 35px -6px auto auto);
+  &:hover {
+    background-position: -222px -200px;
+  }
+}
+
+.nav .help-text {
+  top: 18px;
+  right: 18px;
+}

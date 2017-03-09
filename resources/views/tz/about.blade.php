@@ -6,9 +6,9 @@
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport'/>
     <title>Aidstream Tanzania</title>
     <link rel="shortcut icon" type="image/png" sizes="32*32" href="{{ asset('/images/favicon-tz.png') }}"/>
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/style.min.css">
-    <link href="{{ asset('tz/css/tanzania_style/tz.style.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="css/vendor.min.css">
+    {!!  publicStylesheet() !!}
+    <link href="{{ asset('tz/css/tz.style.css') }}" rel="stylesheet">
 </head>
 <body>
 @include('tz.partials.header')

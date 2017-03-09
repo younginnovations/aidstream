@@ -6,12 +6,11 @@
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport'/>
     <title>@lang('title.aidstream_create_password')</title>
     <link rel="shortcut icon" type="image/png" sizes="32*32" href="{{ asset('/images/favicon.png') }}"/>
-    <link href="{{ asset('/css/bootstrap.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('/css/flag-icon.css') }}" rel="stylesheet">
-    <link href="{{ asset('/css/app.css') }}" rel="stylesheet">
-    <link href="{{ asset('/css/style.css') }}" rel="stylesheet">
+    <link href="{{ asset('/css/vendor.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('/css/main.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('/css/style.min.css') }}" rel="stylesheet">
     @if(isTzSubDomain())
-        <link rel="stylesheet" href="{{ asset('/tz/css/tanzania_style/tz.style.css') }}">
+        <link rel="stylesheet" href="{{ asset('/tz/css/tz.min.css') }}">
     @endif
     <!-- Fonts -->
     <link href='//fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>

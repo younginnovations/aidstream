@@ -1,0 +1,194 @@
+// login
+
+.login-wrapper {
+  //background: $url_1 no-repeat bottom/cover;
+  padding: 80px 0;
+  position: relative;
+  z-index: 1;
+  .language-select-wrapper {
+    float: right;
+    padding: 10px 20px 5px;
+    label {
+      color: $color_white;
+      margin-right: 6px;
+      padding-top: 7px;
+    }
+    .language-selector {
+      background: $color_black_haze_approx;
+      padding: 1px 4px 1px 5px;
+      border-radius: 2px;
+      line-height: 0px;
+      .caret {
+        margin-top: 12px;
+        color: $color_gravel_approx;
+      }
+    }
+    ul.language-flag-wrap {
+      @include position(absolute, 45px 20px auto auto);
+      border-radius: 2px;
+      display: none;
+      padding: 4px 10px;
+      width: auto;
+      background: $color_black_haze_approx;
+      .flag-wrapper {
+        cursor: pointer;
+        .flag-icon-background {
+          opacity: 1;
+        }
+      }
+      .flag-wrapper.active {
+        display: none;
+      }
+      .language {
+        text-transform: capitalize;
+        float: right;
+        padding-top: 5px;
+        padding-left: 2px;
+      }
+    }
+  }
+}
+
+.language-selector .flag-icon-background {
+  margin-right: 2px;
+  opacity: 1;
+}
+
+.login-container {
+  @include outer-container(392px);
+  padding-top: 40px;
+  clear: both;
+  .form-group .btn-link {
+    float: right;
+    margin: 10px 0 0;
+    font-size: 12px !important;
+  }
+  .col-md-12, .col-md-6 {
+    padding: 0;
+  }
+  .col-md-12 {
+    margin-bottom: 25px;
+    input {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.login-block, .reset-block, .contact-admin-container {
+  width: 100%;
+  padding: 0;
+  .panel-default {
+    border: 0;
+    box-shadow: none;
+  }
+  .panel-body {
+    padding: 0;
+  }
+  .btn-submit {
+    width: 180px;
+  }
+}
+
+.reset-block .btn-submit {
+  margin-top: 0;
+  width: auto;
+  font-size: 14px;
+  line-height: normal;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.reset-container {
+  max-width: 360px;
+  .row > p {
+    font-size: 16px;
+    line-height: 24px;
+    margin-bottom: 20px;
+  }
+}
+
+.form-body {
+  width: 100%;
+  float: none;
+  background: $color_white;
+  border-radius: 4px;
+  box-shadow: 0 2px 40px rgba(0, 0, 0, 0.4);
+  padding: 0 0 44px;
+  margin: 0 0 24px;
+  overflow: hidden;
+  .panel {
+    margin: 0;
+    border-bottom: 0;
+    box-shadow: none;
+  }
+  .panel-heading {
+    background: none;
+    border: 0;
+    text-align: center;
+    margin: 36px 0 26px;
+    padding: 0;
+  }
+  .panel-body {
+    padding: 0 33px 0 39px;
+  }
+  .col-md-12 {
+    padding: 0;
+  }
+}
+
+.form-body .form-group {
+  margin: 0;
+  .col-md-6 {
+    padding: 0;
+  }
+  .checkbox label, .btn-link {
+    font-size: 13px;
+  }
+}
+
+.checkbox label {
+  padding-left: 19px;
+}
+
+.checkbox input[type=checkbox] {
+  left: 0;
+  margin: 2px 0 0;
+  width: 14px;
+  height: 14px;
+}
+
+.btn-submit {
+  font-size: 15px;
+  line-height: normal;
+  width: 100%;
+  color: $color_white;
+  margin-top: 24px;
+  height: 46px;
+  &:hover, &:focus, &:active {
+    color: $color_white;
+  }
+}
+
+.create-account-wrapper {
+  font-size: 15px;
+  color: #777;
+  padding: 0 10px;
+  text-align: center;
+  margin-top: 38px;
+}
+
+.logo-text {
+  font: 22px 'Bree Serif', serif;
+  color: $color_silver;
+  text-align: center;
+  margin-bottom: 6px;
+}
+
+.support-desc {
+  text-align: center;
+  font-size: 13px;
+  color: $color_gravel_approx;
+  margin: 0 auto;
+  float: none;
+  clear: both;
+}

@@ -1,8 +1,8 @@
 //colors
 $color_white: #fff;
 $color_gravel_approx: #484848;
-$color_dodger_blue_approx: #00A8FF;
-$color_lochmara_approx: #038ED6;
+$color_primary: #00A8FF;
+$color_secondary: #038ED6;
 $color_gallery_approx: #eee;
 $color_cerulean_approx: #0094de;
 $color_alabaster_approx: #f9f9f9;
@@ -54,9 +54,9 @@ body {
 }
 
 a {
-  color: $color_dodger_blue_approx;
+  color: $color_primary;
   &:hover {
-    color: $color_lochmara_approx;
+    color: $color_secondary;
   }
 }
 
@@ -139,24 +139,26 @@ h2 {
 }
 
 .btn {
-  background: $color_dodger_blue_approx;
+  background: $color_primary;
   border: 0;
   &:hover, &:focus, &:active {
-    background: $color_lochmara_approx;
+    background: $color_secondary;
     color: #fff;
   }
 }
 
 //main container
 .main-container {
+  display: block;
   overflow: hidden;
 }
 
 //introduction
 .introduction-wrapper {
+  padding-top: 30px;
   h1 a {
     color: $color_gravel_approx;
-    border-bottom: 2px solid $color_dodger_blue_approx;
+    border-bottom: 2px solid $color_primary;
     &:hover, &:focus {
       text-decoration: none;
     }
@@ -260,7 +262,7 @@ blockquote {
 
 //convince wrapper
 .convince-wrapper {
-  background: $color_dodger_blue_approx;
+  background: $color_primary;
   padding: 40px 0 30px;
   color: $color_white;
   overflow: hidden;
@@ -278,7 +280,7 @@ blockquote {
   background: $color_cerulean_approx;
   line-height: 68px;
   &:hover {
-    background: $color_lochmara_approx;
+    background: $color_secondary;
   }
 }
 
@@ -345,6 +347,7 @@ footer {
 .footer-nav {
   > .col-md-12 {
     padding-top: 30px;
+    padding-right: 0;
     width: 268px;
     margin: 0 auto;
   }
@@ -372,7 +375,7 @@ footer {
 
 //who are using
 .organisation-list-wrapper {
-  padding-bottom: 100px;
+  padding: 30px 0 100px;
   overflow: hidden;
   h1 {
     margin-bottom: 14px;
@@ -488,7 +491,7 @@ footer {
 //about
 .about-wrapper .screenshot {
   clear: both;
-  background: $color_dodger_blue_approx;
+  background: $color_primary;
   padding-top: 100px;
   margin-bottom: 120px;
   img {
@@ -672,17 +675,17 @@ footer {
     color: #777;
   }
   strong {
-    color: #484848;
+    colganisation-li: #484848;
   }
 }
 
 .modal-dialog .close span, .modal-dialog .close:hover span, .modal-dialog .close:focus span {
-  color: $color_dodger_blue_approx;
+  color: $color_primary;
   font-size: 40px;
   display: block;
   position: absolute;
   top: 15px;
-  right: 15px;
+  right: 18px;
   z-index: 1;
   cursor: pointer;
 }
@@ -1003,7 +1006,6 @@ address {
 }
 
 footer {
-  height: 295px;
   clear: both;
 }
 
@@ -1568,7 +1570,7 @@ footer {
 
   .navbar-default .navbar-nav > li > a {
     &:focus, &:hover, &.active {
-      color: $color_lochmara_approx;
+      color: $color_secondary;
     }
   }
   .navbar-nav > li {
@@ -1605,7 +1607,7 @@ footer {
   }
 
   footer {
-    padding: 84px 0;
+    padding: 72px 0;
     .width-900 > div {
       padding: 0 !important;
       float: none;
@@ -1949,7 +1951,7 @@ footer {
     .icon-bar {
       width: 25px;
       height: 3px;
-      background: $color_dodger_blue_approx;
+      background: $color_primary;
     }
   }
 
@@ -1973,8 +1975,8 @@ footer {
     height: 20px;
     width: 20px;
     cursor: pointer;
-    padding: 0px;
-    border-radius: 0px;
+    padding: 0;
+    border-radius: 0;
     border: none;
   }
 
@@ -1983,7 +1985,7 @@ footer {
     height: 3px;
     margin-bottom: 3px;
     display: block;
-    background: $color_dodger_blue_approx;
+    background: $color_primary;
   }
 
   .navbar-toggle span {

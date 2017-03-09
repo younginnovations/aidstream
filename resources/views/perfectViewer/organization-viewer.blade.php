@@ -9,8 +9,7 @@
     <title>Organization Viewer</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport'/>
-    <link rel="stylesheet" href="{{asset('/css/bootstrap.min.css')}}">
-    <link href="{{ asset('/css/jquery.jscrollpane.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{asset('/css/vendor.min.css')}}">
     {!! publicStylesheet() !!}
 </head>
 

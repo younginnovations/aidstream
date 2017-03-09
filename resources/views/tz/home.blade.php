@@ -8,7 +8,7 @@
     {{ header("Pragma: no-cache") }}
     {{ header("Expires: 0 ")}}
     <title>Aidstream Tanzania</title>
-    <link rel="stylesheet" href="{{ asset('/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('/css/vendor.min.css') }}">
     <link href="http://cdn.leafletjs.com/leaflet-0.7/leaflet.css" rel="stylesheet">
     {!!  publicStylesheet() !!}
     <link href="{{ asset('/css/jquery.jscrollpane.css') }}" rel="stylesheet">
