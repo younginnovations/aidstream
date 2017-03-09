@@ -188,6 +188,15 @@
 <script type="text/javascript" src="/js/publicPages.js"></script>
 <script>
     var recipientCountries = {!!json_encode(array_flip($recipientCountries))!!};
+
+    var pathColorCode = "#D9E5EB";
+    var recipientCountryColorCode = "#00A8FF";
+
+    @if(isTzSubDomain())
+        pathColorCode = "#C5E4BF";
+        recipientCountryColorCode = "#1AAB3C";
+    @endif
+
     $(document).ready(function () {
         function sidebarStick() {
             if ($(window).width() > 768) {
