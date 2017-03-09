@@ -187,7 +187,7 @@
 <script type="text/javascript" src="/js/worldMap.js"></script>
 <script type="text/javascript" src="/js/publicPages.js"></script>
 <script>
-    var recipientCountries = {!!json_encode(array_flip($recipientCountries))!!};
+    var recipientCountries = '{!!json_encode(array_flip($recipientCountries))!!}';
 
     var pathColorCode = "#D9E5EB";
     var recipientCountryColorCode = "#00A8FF";
