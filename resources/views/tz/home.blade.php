@@ -7,13 +7,10 @@
     {{ header("Cache-Control: no-cache, no-store, must-revalidate")}}
     {{ header("Pragma: no-cache") }}
     {{ header("Expires: 0 ")}}
-    <title>Aidstream</title>
-    <link rel="shortcut icon" type="image/png" sizes="32*32" href="{{ asset('/images/favicon-tz.png') }}"/>
+    <title>Aidstream Tanzania</title>
     <link rel="stylesheet" href="{{ asset('/css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('/css/style.min.css') }}">
     <link href="http://cdn.leafletjs.com/leaflet-0.7/leaflet.css" rel="stylesheet">
-    {{--<link href="{{ asset('/js/tz/leaflet/leaflet.css') }}" rel="stylesheet">--}}
-    <link href="{{ asset('tz/css/tanzania_style/tz.style.css') }}" rel="stylesheet">
+    {!!  publicStylesheet() !!}
     <link href="{{ asset('/css/jquery.jscrollpane.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="//cdn.datatables.net/1.10.11/css/jquery.dataTables.min.css"/>
 </head>

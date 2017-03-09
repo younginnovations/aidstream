@@ -60,6 +60,11 @@ class TzController extends LiteController
         return view('tz.home', compact('organizationCount', 'publishedActivitiesCount'));
     }
 
+    public function about()
+    {
+        return view('tz.about');
+    }
+
     /**
      * Get the data for the Tz homepage.
      *

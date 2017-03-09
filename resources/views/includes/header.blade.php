@@ -13,7 +13,9 @@
             <ul class="nav navbar-nav">
                 <li><a class="{{ Request::is('about') ? 'active' : '' }}" href="{{ url('/about') }}">@lang('global.about')</a></li>
                 <li><a class="{{ Request::is('who-is-using') ? 'active' : '' }}" href="{{ url('/who-is-using') }}">@lang('global.who_is_using')</a></li>
-                <li><a href="https://github.com/younginnovations/aidstream-new/wiki/User-Guide" target="_blank">@lang('global.user_guide')</a></li>
+                @if (!isTzSubDomain())
+                    <li><a href="https://github.com/younginnovations/aidstream-new/wiki/User-Guide" target="_blank">@lang('global.user_guide')</a></li>
+                @endif
                 <!--<li><a href="#">Snapshot</a></li>-->
             </ul>
             <div class="action-btn pull-left">

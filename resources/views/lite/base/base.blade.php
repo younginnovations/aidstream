@@ -6,16 +6,8 @@
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport'/>
     <title>AidStream - @yield('title', 'No Title')</title>
     <link rel="stylesheet" href="//cdn.datatables.net/1.10.11/css/jquery.dataTables.min.css"/>
-    @if(isRegisteredForTz())
-        <link rel="shortcut icon" type="image/png" sizes="32*32" href="{{ asset('/images/favicon-tz.png') }}"/>
-    @else
-        <link rel="shortcut icon" type="image/png" sizes="32*32" href="{{ asset('/images/favicon.png') }}"/>
-    @endif
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2-rc.1/css/select2.min.css" rel="stylesheet"/>
-    <link href="{{ asset('/css/main.min.css') }}" rel="stylesheet">
-    @if(isRegisteredForTz())
-        <link rel="stylesheet" href="{{ asset('/tz/css/tanzania_style/tz.style.css') }}">
-    @endif
+    {!! authStyleSheets() !!}
     <link href="https://cdnjs.cloudflare.com/ajax/libs/intro.js/2.1.0/introjs.min.css" rel="stylesheet"/>
 
     <!-- Fonts -->

@@ -32,15 +32,18 @@
     <meta name="twitter:url" content="{{ url()->current() }}"/>
 
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="shortcut icon" type="image/png" sizes="16*16" href="{{asset('/images/favicon.png')}}"/>
     <link rel="stylesheet" href="{{asset('/css/bootstrap.min.css')}}">
     <link href="{{asset('/css/jquery.jscrollpane.css')}}" rel="stylesheet">
-    <link rel="stylesheet" href="{{asset('css/style.min.css')}}">
+    {!! publicStylesheet() !!}
     <title>@lang('title.activity_viewer')</title>
 </head>
 <body>
 <div class="activity-header-wrapper">
-    @include('includes.header')
+    @if (isTzSubDomain())
+        @include('tz.partials.header')
+    @else
+        @include('includes.header')
+    @endif
 </div>
 <div class="wrapper">
     <div id="tooltip" class="tooltips"></div>
@@ -136,7 +139,9 @@
                             </li>
                         </ul>
                         <ul class="pull-right links">
-                            <li><a href="mailto:{{$user->email}}"><i class="pull-left material-icons">mail</i>@lang('perfectViewer.contact')</a></li>
+                            @if ($user)
+                                <li><a href="mailto:{{$user->email}}"><i class="pull-left material-icons">mail</i>@lang('perfectViewer.contact')</a></li>
+                            @endif
                             <li>
                                 <a href="#"><i class="pull-left material-icons">share</i>@lang('perfectViewer.share')</a>
                                 <ul class="share-links">
@@ -314,7 +319,7 @@
                     </span>
                     </div>
                 @endif
-                @if(getVal($activity, [0, 'filename']) && !isTzSubDomain())
+                @if(fileExists($activity))
                     <a href="{{'/files/xml/'.getVal($activity, [0, 'filename'], '#')}}" target="_blank" class="view-xml-file">@lang('perfectViewer.view_xml_file_here')</a>
                 @endif
             </div>
@@ -324,6 +329,14 @@
 </div>
 <script>
     var recipientCountries = {!!json_encode(array_flip($recipientCountries))!!};
+
+    var pathColorCode = "#D9E5EB";
+    var recipientCountryColorCode = "#00A8FF";
+
+    @if(isTzSubDomain())
+        pathColorCode = "#DAEBDE";
+        recipientCountryColorCode = "#1AAB3C";
+    @endif
 </script>
 <script src="/js/jquery.js"></script>
 <script src="/js/d3.min.js"></script>

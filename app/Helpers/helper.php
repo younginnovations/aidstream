@@ -1254,3 +1254,16 @@ function isTzSubDomain()
 
     return false;
 }
+
+/**
+ * Check if an Activity Xml file exists.
+ *
+ * @param $activity
+ * @return bool
+ */
+function fileExists($activity)
+{
+    $filename = getVal($activity, [0, 'filename']);
+
+    return file_exists(public_path('/files/xml/'.$filename));
+}

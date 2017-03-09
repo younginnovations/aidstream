@@ -43,7 +43,8 @@
       "app/Helpers/linkHelpers.php",
       "app/Helpers/AsForm.php",
       "app/Helpers/helper.php",
-      "app/Helpers/HideEmptyArray.php"
+      "app/Helpers/HideEmptyArray.php",
+      "app/Helpers/domHelpers/domLoader.php"
     ],
     "classmap": [
       "database"

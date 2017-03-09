@@ -1,16 +1,15 @@
-
 /* ------- style for header banner ------- */
 
-.container{
+.container {
   padding-right: 0;
   padding-left: 0;
 }
 
 .navbar-header {
-  margin-top: 0!important;
+  margin-top: 0 !important;
 }
 
-.navbar-brand,.footer-logo a{
+.navbar-brand, .footer-logo a {
   background: none;
   display: block;
   padding: 0;
@@ -26,34 +25,34 @@
   color: $color-link-hover;
 }
 
-.tanzania-flag{
+.tanzania-flag {
   position: absolute;
   width: 18px;
   height: 12px;
-  background: url(#{$img-path}/ic_tanzania-flag.svg) center center  no-repeat;
+  background: url(#{$img-path}/ic_tanzania-flag.svg) center center no-repeat;
   top: 21px;
   right: 0;
 }
 
-.header-banner{
+.header-banner {
   background: linear-gradient(
                   rgba(255, 255, 255, 0.92),
                   rgba(255, 255, 255, 0.92)),
-                url("#{$img-path}/tz-banner-bg.jpg") top center no-repeat;
+  url("#{$img-path}/tz-banner-bg.jpg") top center no-repeat;
   background-size: cover;
 
-  .navbar,.navbar-default{
+  .navbar, .navbar-default {
     background: transparent;
   }
 }
 
-@media (min-width: 768px){
+@media (min-width: 768px) {
   .country-specific-wrap .navbar {
     padding: 0 !important;
   }
 
   .header-banner .navbar {
-     padding: 40px 30px;
+    padding: 40px 30px;
   }
 
   .social-wrapper li:first-child {
@@ -62,15 +61,14 @@
 
 }
 
-
 /* ------- style for search section ------ */
-.search-wrap{
+.search-wrap {
   margin-bottom: 52px;
-  input[type="text"]{
+  input[type="text"] {
     padding: 9px 20px 9px 36px;
-    background: #fff url(../../../images/ic-sprite.svg) no-repeat -136px -121px!important;
+    background: #fff url(../../../images/ic-sprite.svg) no-repeat -136px -121px !important;
     border-radius: 19px;
-    border: solid 1px #E5E5E5!important;
+    border: solid 1px #E5E5E5 !important;
     outline: none;
     max-width: 477px;
     font-size: 12px;
@@ -78,7 +76,7 @@
     position: relative;
     width: 100%;
 
-    &:hover,&:focus{
+    &:hover, &:focus {
       outline: none;
     }
   }
@@ -88,13 +86,13 @@
 /* -------- style for footer -------- */
 
 footer {
-  @media (min-width: 768px){
+  @media (min-width: 768px) {
     padding: 0;
   }
 
-  .footer-logo a{
+  .footer-logo a {
     margin: 0 auto;
-    img{
+    img {
       float: left;
     }
   }
@@ -116,7 +114,7 @@ footer {
   overflow: hidden;
   text-align: center;
   p {
-    color: rgba($color_gravel_approx,0.5);
+    color: rgba($color_gravel_approx, 0.5);
     font-size: 12px;
     margin-bottom: 0;
   }
@@ -124,6 +122,17 @@ footer {
 
 .aidstream-logo {
   margin-bottom: 30px;
+}
+
+.main-container {
+  display: block;
+}
+
+.information-wrapper {
+  border-bottom: 0;
+  p {
+    line-height: 24px;
+  }
 }
 
 @media all and (min-width: 900px) {
@@ -152,6 +161,11 @@ footer {
   }
 }
 
+.search-org input[type="text"]{
+  background: none!important;
+  border: 0!important;
+}
+
 @media all and (min-width: 768px) {
   .info-wrapper p {
     width: 690px;
@@ -161,11 +175,15 @@ footer {
     text-align: left;
   }
 
-  footer .width-900>div {
+  footer .width-900 > div {
     margin-top: 5px;
   }
 
   .social-wrapper {
-    margin-top: 0!important;
+    margin-top: 0 !important;
   }
+}
+
+.about-wrapper .screenshot {
+  background: $primary-color;
 }

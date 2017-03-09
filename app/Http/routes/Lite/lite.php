@@ -178,6 +178,13 @@ Route::group(
                 'uses' => 'TzController@index'
             ]
         );
+        Route::get(
+            '/about',
+            [
+                'as'   => 'tz.about',
+                'uses' => 'TzController@about'
+            ]
+        );
 
         Route::get('/api/activities', 'TzController@activities');
     }
