@@ -226,32 +226,16 @@ table {
   margin: 0.75em 0;
   table-layout: fixed;
   width: 100%; }
-  table tbody {
-    /*tr {
-      td {
-        &:first-child {
-          border-left: 4px solid transparent;
-        }
-      }
-      &:hover {
-        td {
-          &:first-child {
-            border-left: 4px solid #00A8FF;
-          }
-        }
-      }
-    }*/ }
-    table tbody tr.clickable-row {
-      cursor: pointer; }
-    table tbody tr.link-row {
-      cursor: pointer; }
-    table tbody tr.clickable-row-bg {
+  table tbody tr.clickable-row {
+    cursor: pointer; }
+  table tbody tr.link-row {
+    cursor: pointer; }
+  table tbody tr.clickable-row-bg {
+    background: #EEF4FB !important; }
+    table tbody tr.clickable-row-bg:nth-child(even) {
       background: #EEF4FB !important; }
-      table tbody tr.clickable-row-bg:nth-child(even) {
-        background: #EEF4FB !important; }
 
 th {
-  border-bottom: 1px solid #a6a6a6;
   font-weight: 600;
   text-align: left;
   vertical-align: middle; }
@@ -265,21 +249,21 @@ tr, td {
     text-transform: uppercase;
     font: normal 13px Open-Sans-Bold;
     color: #484848;
-    border-bottom: 1px solid #D5EAF5;
+    border-bottom: 1px solid #d9f3de;
     padding: 15px 20px 12px; }
   .table > tbody > tr {
     background: #fff !important; }
     .table > tbody > tr:hover {
-      background: #EEFAFB !important; }
+      background: #e4f7e8 !important; }
     .table > tbody > tr > td {
       border-top: 0;
-      border-bottom: 1px solid #D5EAF5;
+      border-bottom: 1px solid #d9f3de;
       padding: 10px 20px;
       word-wrap: break-word; }
     .table > tbody > tr:nth-child(odd) {
-      background: #F8FDFF !important; }
+      background: #f3fdf5 !important; }
       .table > tbody > tr:nth-child(odd):hover {
-        background: #EEFAFB !important; }
+        background: #e4f7e8 !important; }
 
 /* ------- style for bordered table --------*/
 .custom-table {
@@ -380,9 +364,11 @@ tr, td {
 .header-banner {
   background: -webkit-gradient(linear, left top, left bottom, from(rgba(255, 255, 255, 0.92)), to(rgba(255, 255, 255, 0.92))), url("/images/tz-banner-bg.jpg") top center no-repeat;
   background: -webkit-linear-gradient(rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.92)), url("/images/tz-banner-bg.jpg") top center no-repeat;
+  background: -moz-linear-gradient(rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.92)), url("/images/tz-banner-bg.jpg") top center no-repeat;
   background: -o-linear-gradient(rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.92)), url("/images/tz-banner-bg.jpg") top center no-repeat;
   background: linear-gradient(rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.92)), url("/images/tz-banner-bg.jpg") top center no-repeat;
-  background-size: cover; }
+  -o-background-size: cover;
+     background-size: cover; }
   .header-banner .navbar, .header-banner .navbar-default {
     background: transparent; }
 
@@ -618,32 +604,16 @@ table {
   margin: 0.75em 0;
   table-layout: fixed;
   width: 100%; }
-  table tbody {
-    /*tr {
-      td {
-        &:first-child {
-          border-left: 4px solid transparent;
-        }
-      }
-      &:hover {
-        td {
-          &:first-child {
-            border-left: 4px solid #00A8FF;
-          }
-        }
-      }
-    }*/ }
-    table tbody tr.clickable-row {
-      cursor: pointer; }
-    table tbody tr.link-row {
-      cursor: pointer; }
-    table tbody tr.clickable-row-bg {
+  table tbody tr.clickable-row {
+    cursor: pointer; }
+  table tbody tr.link-row {
+    cursor: pointer; }
+  table tbody tr.clickable-row-bg {
+    background: #EEF4FB !important; }
+    table tbody tr.clickable-row-bg:nth-child(even) {
       background: #EEF4FB !important; }
-      table tbody tr.clickable-row-bg:nth-child(even) {
-        background: #EEF4FB !important; }
 
 th {
-  border-bottom: 1px solid #a6a6a6;
   font-weight: 600;
   text-align: left;
   vertical-align: middle; }
@@ -657,21 +627,21 @@ tr, td {
     text-transform: uppercase;
     font: normal 13px Open-Sans-Bold;
     color: #484848;
-    border-bottom: 1px solid #D5EAF5;
+    border-bottom: 1px solid #d9f3de;
     padding: 15px 20px 12px; }
   .table > tbody > tr {
     background: #fff !important; }
     .table > tbody > tr:hover {
-      background: #EEFAFB !important; }
+      background: #e4f7e8 !important; }
     .table > tbody > tr > td {
       border-top: 0;
-      border-bottom: 1px solid #D5EAF5;
+      border-bottom: 1px solid #d9f3de;
       padding: 10px 20px;
       word-wrap: break-word; }
     .table > tbody > tr:nth-child(odd) {
-      background: #F8FDFF !important; }
+      background: #f3fdf5 !important; }
       .table > tbody > tr:nth-child(odd):hover {
-        background: #EEFAFB !important; }
+        background: #e4f7e8 !important; }
 
 /* ------- style for bordered table --------*/
 .custom-table {
@@ -792,50 +762,36 @@ tr, td {
   border: solid 1px transparent;
   margin-top: 8px; }
 
-.organisations-list ul li {
-  line-height: 20px;
-  height: 220px; }
-  .organisations-list ul li:before {
+.organisations-list ul .img-wrap {
+  height: 150px; }
+  .organisations-list ul .img-wrap:before {
     content: "";
     display: inline-block;
     vertical-align: middle;
     height: 100%; }
-  .organisations-list ul li span {
+  .organisations-list ul .img-wrap img {
     display: inline-block;
-    height: auto;
-    width: auto; }
-  .organisations-list ul li a {
-    display: inline-block;
-    vertical-align: middle;
-    padding-top: 0;
-    color: #484848; }
-    .organisations-list ul li a:hover, .organisations-list ul li a:focus, .organisations-list ul li a:active {
-      color: #00A8FF; }
-  .organisations-list ul li a span {
-    margin-top: 10px;
-    font-size: 14px;
-    display: block;
-    line-height: 20px;
-    height: auto;
-    width: auto;
-    vertical-align: inherit;
-    padding: 0 8px; }
-  .organisations-list ul li .img-wrap {
-    height: 150px; }
-    .organisations-list ul li .img-wrap:before {
-      content: "";
-      display: inline-block;
-      vertical-align: middle;
-      height: 100%; }
-    .organisations-list ul li .img-wrap img {
-      display: inline-block;
-      vertical-align: middle; }
+    vertical-align: middle; }
 
 .activity-element-list .title {
   margin-bottom: 0; }
 
 .activity-element-list .add-more {
   margin-top: 4px; }
+
+.see-all-activities {
+  color: #1AAB3C; }
+
+.activity-more-info, .activity-sectors ul li {
+  background: #e4f7e8; }
+
+.activity-sectors ul li .material-icons {
+  color: #1AAB3C; }
+
+#map {
+  background: #e4f7e8; }
+  #map svg path {
+    fill: #c5e4bf !important; }
 
 .form-block:not(:nth-last-child(1)) {
   border-bottom: 1px dashed #A9C6DE;
@@ -955,6 +911,7 @@ tr, td {
 .panel__body {
   background: #FDFFFE;
   min-height: -webkit-calc(100vh - 110px);
+  min-height: -moz-calc(100vh - 110px);
   min-height: calc(100vh - 110px); }
 
 .panel__nav nav {
@@ -1017,6 +974,7 @@ tr, td {
     float: left;
     margin-bottom: 0 !important;
     width: -webkit-calc(100% - 60px) !important;
+    width: -moz-calc(100% - 60px) !important;
     width: calc(100% - 60px) !important; }
 
 #location .location > .form-group:not(.new-location-block) > .country {
@@ -1125,6 +1083,7 @@ tr, td {
     position: absolute;
     top: -4px;
     -webkit-transform: rotate(45deg);
+       -moz-transform: rotate(45deg);
         -ms-transform: rotate(45deg);
          -o-transform: rotate(45deg);
             transform: rotate(45deg);
@@ -1142,6 +1101,7 @@ tr, td {
       margin: 10px 0 0 !important;
       padding: 0 18px;
       width: -webkit-calc(100% - 13px) !important;
+      width: -moz-calc(100% - 13px) !important;
       width: calc(100% - 13px) !important; }
 
 .remove_from_collection:hover {
@@ -1286,11 +1246,13 @@ tr, td {
   border-bottom: 1px solid #d6f9de; }
   .panel__status .col-sm-4 {
     background-image: -webkit-radial-gradient(50% 0, circle, #f3fdf5, #f0fdf2);
+    background-image: -moz-radial-gradient(50% 0, circle, #f3fdf5, #f0fdf2);
     background-image: -o-radial-gradient(50% 0, circle, #f3fdf5, #f0fdf2);
     background-image: radial-gradient(circle at 50% 0, #f3fdf5, #f0fdf2);
     border-right: 1px solid #d6f9de; }
     .panel__status .col-sm-4:nth-child(even) {
       background-image: -webkit-radial-gradient(50% 0, circle, #f2fbf4, #dffde6);
+      background-image: -moz-radial-gradient(50% 0, circle, #f2fbf4, #dffde6);
       background-image: -o-radial-gradient(50% 0, circle, #f2fbf4, #dffde6);
       background-image: radial-gradient(circle at 50% 0, #f2fbf4, #dffde6); }
 
