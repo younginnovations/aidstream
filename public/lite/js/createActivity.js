@@ -96,13 +96,6 @@ var CreateActivity = {
         if (model) {
             $("textarea").css('height', '79px');
         }
-    },
-    changeRegionAndDistrict: function () {
-        $('.region').on('change', function () {
-            var region = $(this).val();
-
-            console.log($("[aria-label='Arusha']"));
-        })
     }
 };
 

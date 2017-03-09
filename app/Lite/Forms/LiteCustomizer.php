@@ -31,18 +31,7 @@ trait LiteCustomizer
 
     protected function location()
     {
-        $this->addAfter(
-            'location',
-            'add_more_location',
-            'button',
-            [
-                'label' => trans('lite/elementForm.add_another_location'),
-                'attr'  => [
-                    'data-collection' => 'location',
-                    'class'           => 'hidden add-to-collection'
-                ]
-            ]
-        );
+        $this->remove('add_more_location');
     }
 
     protected function isCurrentSystemVersionAllowed()

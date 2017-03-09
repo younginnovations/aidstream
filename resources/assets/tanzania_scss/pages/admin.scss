@@ -193,6 +193,11 @@
   width: 80px !important;
 }
 
+#location .country+.administrative {
+  float: none;
+  width: 100%;
+}
+
 .point {
   background: #fff;
   box-shadow: 0 2px 40px 0 #C6D8CA;
@@ -306,8 +311,8 @@
   }
   .administrative {
     clear: none;
-    float: left;
-    width: 50%;
+    float: left!important;
+    width: 50%!important;
     > .form-group {
       margin-bottom: 0 !important;
     }

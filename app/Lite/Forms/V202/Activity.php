@@ -47,7 +47,8 @@ class Activity extends LiteBaseForm
              ->add('general_description', 'textarea', ['label' => trans('lite/elementForm.general_description'), 'required' => true, 'wrapper' => ['class' => 'form-group col-sm-6']])
              ->add('objectives', 'textarea', ['label' => trans('lite/elementForm.objectives'), 'wrapper' => ['class' => 'form-group col-sm-6']])
              ->add('target_groups', 'textarea', ['label' => trans('lite/elementForm.target_groups'), 'wrapper' => ['class' => 'form-group col-sm-6']])
-             ->addToCollection('location', ' ', $locationFormPath, 'collection_form location')
+             ->addToCollection('location', ' ', $locationFormPath, 'collection_form separator location')
+             ->addButton('add_more_location', trans('lite/elementForm.add_another_country'), 'location', 'add_more')
              ->addToCollection('funding_organisations', ' ', $participatingOrganisationFormPath, 'collection_form separator funding_organisations')
              ->addButton('add_more_funding', trans('lite/elementForm.add_another_funding_organisation'), 'funding_organisations', 'add_more')
              ->addToCollection('implementing_organisations', ' ', $participatingOrganisationFormPath, 'collection_form separator implementing_organisations')
@@ -55,7 +56,7 @@ class Activity extends LiteBaseForm
              ->addToCollection('outcomes_document', ' ', $documentLinksFormPath, 'collection_form outcomes_document')
              ->addToCollection('annual_report', ' ', $documentLinksFormPath, 'collection_form annual_report');
 
-//        $this->customize(['location']);
+        $this->customize(['location']);
     }
 }
 

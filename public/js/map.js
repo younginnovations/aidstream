@@ -19,6 +19,7 @@ function initMap(elem, latlng) {
     if (latlng) {
         L.marker(latlng).addTo(map);
     }
+    map.scrollWheelZoom.disable();
 
     map.on('click', function (e) {
         clearMarker(elem);
