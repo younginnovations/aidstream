@@ -36,12 +36,15 @@
                                 <form action="{{ route('xml-import.store') }}" method="POST" enctype="multipart/form-data">
                                     {{ csrf_field() }}
                                     <div class="form-group col-xs-6 col-sm-6 activity-file-choose">
-                                        <label class="control-label">Import Xml</label>
+                                        <label class="control-label">@lang('global.import_xml')</label>
                                         <input type="file" class="form-control" name="xml_file">
                                     </div>
 
-                                    <button type="submit" class="btn">Upload</button>
+                                    <button type="submit" class="btn">@lang('global.upload')</button>
                                 </form>
+                            </div>
+                            <div class="import-activity-info">
+                                To know more on importing activities from xml, please click <a href="https://github.com/younginnovations/aidstream/wiki/How-do-I-import-activities-form-a-XML-file-%3F">here</a>.
                             </div>
                         </div>
                     </div>

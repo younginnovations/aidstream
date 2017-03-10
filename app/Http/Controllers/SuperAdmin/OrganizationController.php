@@ -74,7 +74,12 @@ class OrganizationController extends Controller
      */
     public function oldListOrganizations()
     {
-        $organizations = (session('role_id') == 3) ? $this->adminManager->getOrganizations() : $this->groupManager->getGroupsByUserId(Auth::user()->id);
+        if (isTzSubDomain()) {
+            $organizations = $this->adminManager->getOrganizationBySystemVersion(config('system-version.Tz.id'));
+        } else {
+            $organizations = (session('role_id') == 3) ? $this->adminManager->getOrganizations() : $this->groupManager->getGroupsByUserId(Auth::user()->id);
+
+        }
 
         return view('superAdmin.oldListOrganization', compact('organizations'));
     }
@@ -238,10 +243,11 @@ class OrganizationController extends Controller
      * @param         $orgId
      * @param Request $request
      */
-    public function changeSystemVersion($orgId, Request $request){
+    public function changeSystemVersion($orgId, Request $request)
+    {
         $system_version = $request->except('_token');
 
-        if($this->groupManager->updateSystemVersion($orgId, $system_version)){
+        if ($this->groupManager->updateSystemVersion($orgId, $system_version)) {
             return redirect()->back()->withResponse(['type' => 'success', 'code' => ['updated', ['name' => trans('global.system_version')]]]);
         }
 

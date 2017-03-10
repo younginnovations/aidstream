@@ -109,6 +109,26 @@ class SuperAdmin implements SuperAdminInterface
     }
 
     /**
+     * Returns organisation by system version id
+     * @param $id
+     * @return mixed
+     */
+    public function getOrganizationBySystemVersion($id)
+    {
+        $organisations = $this->organization->with(
+            [
+                'activities',
+                'settings',
+                'users' => function ($query) {
+                    $query->where('role_id', 1);
+                }
+            ]
+        )->orderBy('name', 'asc')->where('system_version_id', $id)->get();
+
+        return $organisations;
+    }
+
+    /**
      * add or update organization by superadmin
      * @param null  $orgId
      * @param array $orgDetails

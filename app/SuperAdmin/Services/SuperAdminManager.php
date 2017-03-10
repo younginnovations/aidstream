@@ -97,6 +97,17 @@ class SuperAdminManager
     }
 
     /**
+     * Returns list of organisations registered for the given version id.
+     *
+     * @param $id
+     * @return mixed
+     */
+    public function getOrganizationBySystemVersion($id)
+    {
+        return $this->adminInterface->getOrganizationBySystemVersion($id);
+    }
+
+    /**
      * saves organization
      * @param null  $id
      * @param array $orgDetails
@@ -147,10 +158,10 @@ class SuperAdminManager
                     [0, 'publisher_id'],
                     ''
                 ) : '';
-                $organizationDetails[$organizationId]['Registration Date']             = $organization->created_at->format('Y-m-d h:m:s');
-                $organizationDetails[$organizationId]['IATI Version']                  = $organization->settings->version;
-                $organizationDetails[$organizationId]['Organisation Data']             = (count($organization->organizationPublished) > 0) ? 1 : 0;
-                $organizationDetails[$organizationId]['Visible in Who\'s Using It?']          = (count($organization->organizationSnapshot) > 0) ? 1 : 0;
+                $organizationDetails[$organizationId]['Registration Date']            = $organization->created_at->format('Y-m-d h:m:s');
+                $organizationDetails[$organizationId]['IATI Version']                 = $organization->settings->version;
+                $organizationDetails[$organizationId]['Organisation Data']            = (count($organization->organizationPublished) > 0) ? 1 : 0;
+                $organizationDetails[$organizationId]['Visible in Who\'s Using It?']  = (count($organization->organizationSnapshot) > 0) ? 1 : 0;
 
             }
         );
@@ -224,6 +235,10 @@ class SuperAdminManager
         return $userDetails ? $userDetails->email : '';
     }
 
+    /**
+     * @param $organizations
+     * @return array
+     */
     protected function getNumberOfPublishedActivitiesForOrg($organizations)
     {
         $noOfPublishedActivities = [];
