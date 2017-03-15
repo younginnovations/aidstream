@@ -6,6 +6,7 @@ use App\Lite\Repositories\Settings\SettingsRepository;
 use App\Lite\Services\Data\Traits\TransformsData;
 use App\Lite\Services\Traits\ProvidesLoggerContext;
 use App\Lite\Services\Users\UserService;
+use App\Models\UserOnBoarding;
 use App\User;
 use Exception;
 use Illuminate\Database\DatabaseManager;
@@ -212,10 +213,10 @@ class SettingsService
         return $users->each(
             function ($user) {
                 $completedSteps = $this->completedStepsFor($user);
-                if ($user->userOnBoarding) {
-                    $user->userOnBoarding()->update(['has_logged_in_once' => false, 'completed_tour' => false, 'settings_completed_steps' => json_encode($completedSteps), 'display_hints' => true]);
+                if ($onBoarding = $user->userOnBoarding) {
+                    $this->updateUserOnBoarding($onBoarding, $completedSteps);
                 } else {
-                    $user->userOnBoarding()->create(['has_logged_in_once' => false, 'settings_completed_steps' => json_encode($completedSteps)]);
+                    $this->createOnBoarding($user, $completedSteps);
                 }
             }
         );
@@ -271,6 +272,33 @@ class SettingsService
         return $this->organisationRepository->find($organizationId);
     }
 
+    /**
+     * Update User Onboarding when upgrading into Core AidStream.
+     *
+     * @param       $onBoarding
+     * @param array $completedSteps
+     */
+    protected function updateUserOnBoarding($onBoarding, array $completedSteps)
+    {
+        $onBoarding->has_logged_in_once       = false;
+        $onBoarding->completed_tour           = false;
+        $onBoarding->settings_completed_steps = $completedSteps;
+        $onBoarding->display_hints            = true;
+        $onBoarding->save();
+    }
 
+    /**
+     * Create User Onboarding when upgrading into Core AidStream.
+     * @param $user
+     * @param $completedSteps
+     */
+    protected function createOnBoarding($user, $completedSteps)
+    {
+        $userOnBoarding = app()->make(UserOnBoarding::class);
+        $userOnBoarding->fill(['has_logged_in_once' => false, 'settings_complete_steps' => $completedSteps]);
+        $userOnBoarding->user()->associate($user);
+
+        $userOnBoarding->save();
+    }
 }
 
