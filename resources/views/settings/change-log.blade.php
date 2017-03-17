@@ -9,7 +9,7 @@
             <div class="col-xs-9 col-md-9 col-lg-9 content-wrapper activity-wrapper">
                 <div class="panel panel-default">
                     <div class="panel-content-heading">
-                        <div>@lang('settings_changelog')</div>
+                        <div>@lang('setting.settings_changelog')</div>
                     </div>
                     <div class="panel-body panel-changelog">
                         <p>@lang('setting.when_you_change_publishing_type')</p>

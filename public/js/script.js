@@ -631,7 +631,11 @@ $(document).ready(function () {
 
     window.onbeforeunload = function () {
         var route = getRouteFromUrl();
-        if (route != 'register' && ($('.introjs-overlay').length == 0)) {
+        if (route == 'publishing-settings') {
+            preventNavigation = false;
+        }
+        if (route != 'register' && ($('.introjs-overlay').length == 0)
+        ) {
             if (preventNavigation) {
                 return localisedData['unsaved_changes'];
             }

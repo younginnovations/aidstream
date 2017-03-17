@@ -276,7 +276,7 @@ class ActivityController extends LiteController
 
         $rawData = $request->except('_token');
         $version = session('version');
-//    dd($rawData);
+
         if (!$this->validation->passes($rawData, self::ENTITY_TYPE, $version)) {
             return redirect()->back()->with('errors', $this->validation->errors())->withInput($rawData);
         }

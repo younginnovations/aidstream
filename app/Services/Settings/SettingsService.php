@@ -199,23 +199,20 @@ class SettingsService
         $changes              = json_decode($details['changes'], true);
         $settings             = json_decode($details['settings'], true);
         $organizationSettings = $organization->settings->toArray();
-        $autoPublish          = $settings['publish_files'];
 
-        if ($autoPublish === 'yes') {
-            if ($this->previousFileWasAlreadyPublished($changes)) {
-                $this->publisher->unlink(getVal($organizationSettings, ['registry_info']), $changes);
+        if ($this->previousFileWasAlreadyPublished($changes)) {
+            $this->publisher->unlink(getVal($organizationSettings, ['registry_info', 0, 'api_id']), $changes);
 
-                $this->organizationDataProvider->unsetPublishedFlag($changes);
+            $this->organizationDataProvider->unsetPublishedFlag($changes);
 
-                $published = true;
-                $this->logger->info(
-                    'Successfully unlinked old file(s) from the IATI Registry.',
-                    [
-                        'changes'   => $changes,
-                        'publisher' => auth()->user()->getNameAttribute()
-                    ]
-                );
-            }
+            $published = true;
+            $this->logger->info(
+                'Successfully unlinked old file(s) from the IATI Registry.',
+                [
+                    'changes'   => $changes,
+                    'publisher' => auth()->user()->getNameAttribute()
+                ]
+            );
 
             $this->publisher->publish(
                 getVal($organizationSettings, ['registry_info'], []),

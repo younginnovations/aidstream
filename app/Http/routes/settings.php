@@ -154,3 +154,43 @@ $router->post(
         'uses' => 'Complete\SettingsController@verifyPublisherAndApi'
     ]
 );
+
+$router->post(
+    'publishing-settings/publisherIdChanged',
+    [
+        'as'   => 'publishing-settings.publisherIdChanged',
+        'uses' => 'Complete\PublisherIdChangeController@publisherIdChanged'
+    ]
+);
+
+$router->post(
+    'publishing-settings/handlePublisherIdChanged',
+    [
+        'as'   => 'publishing-settings.handlePublisherIdChanged',
+        'uses' => 'Complete\PublisherIdChangeController@handlePublisherIdChanged'
+    ]
+);
+
+$router->post(
+    'publishing-settings/verifyApiWithPublisherId',
+    [
+        'as'   => 'publishing-settings.verifyApiWithPublisherId',
+        'uses' => 'Complete\PublisherIdChangeController@verifyApiWithPublisherId'
+    ]
+);
+
+$router->get(
+    'publishing-settings/publisherIdChangeStatus',
+    [
+        'as'   => 'publishing-settings.publisherIdChangeStatus',
+        'uses' => 'Complete\PublisherIdChangeController@getStatus'
+    ]
+);
+$router->post(
+    'publishing-settings/completePublisherIdChange',
+    [
+        'as'   => 'publishing-settings.completePublisherIdChange',
+        'uses' => 'Complete\PublisherIdChangeController@completePublisherIdChangingProcess'
+    ]
+);
+

@@ -154,16 +154,18 @@ class SettingsRepository implements SettingsRepositoryInterface
     {
         $registry_info = [
             0 => [
-                'publisher_id'        => $publishing_info['publisher_id'],
-                'api_id'              => $publishing_info['api_id'],
-                'publish_files'       => $publishing_info['publish_files'],
-                'publisher_id_status' => $publishing_info['publisher_id_status'],
-                'api_id_status'       => $publishing_info['api_id_status']
+                'publisher_id'        => getVal($publishing_info, ['publisher_id']),
+                'api_id'              => getVal($publishing_info, ['api_id']),
+                'publish_files'       => getVal($publishing_info, ['publish_files']),
+                'publisher_id_status' => getVal($publishing_info, ['publisher_id_status']),
+                'api_id_status'       => getVal($publishing_info, ['api_id_status'])
             ]
         ];
+
         if ($settings) {
-            $settings->publishing_type = $publishing_info['publishing'];
+            $settings->publishing_type = getVal($publishing_info, ['publishing']);
             $settings->registry_info   = $registry_info;
+            $settings->post_on_twitter = getVal($publishing_info, ['post_on_twitter'], true);
             $settings->save();
         } else {
             $this->settings->create(['registry_info' => $registry_info, 'publishing' => $publishing_info['publishing'], 'organization_id' => session('org_id')]);

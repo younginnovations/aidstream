@@ -5,7 +5,6 @@ namespace Services\Organization;
 use Mockery as m;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Logging\Log as Logger;
-use App\Services\Twitter\TwitterAPI;
 use Illuminate\Contracts\Logging\Log;
 use App\Models\Organization\OrganizationData;
 use App\Models\OrganizationPublished;
@@ -39,7 +38,6 @@ class OrganizationManagerTest extends AidStreamTestCase
         $this->auth = m::mock(Guard::class);
         $this->logger = m::mock(Logger::class);
         $this->dbLogger = m::mock(Log::class);
-        $this->twitterApi = m::mock(TwitterAPI::class);
         $this->organizationData = m::mock(OrganizationData::class);
         $this->organizationPublished = m::mock(OrganizationPublished::class);
         $this->formBuilder = m::mock(FormBuilder::class);
@@ -57,7 +55,6 @@ class OrganizationManagerTest extends AidStreamTestCase
             $this->userRepository,
             $this->logger,
             $this->dbLogger,
-            $this->twitterApi,
             $this->formBuilder);
     }
 
@@ -142,7 +139,6 @@ class OrganizationManagerTest extends AidStreamTestCase
     public function itShouldpublishOrganizationToRegistry()
     {
         $this->organizationRepository->shouldReceive('publishToRegistry')->once()->with($this->organization, $this->settings, 'filename')->andReturn(true);
-        $this->twitterApi->shouldReceive('post')->once()->with($this->settings, $this->organization);
         $this->assertEquals(true, $this->organizationManager->publishToRegistry($this->organization, $this->settings, 'filename'));
     }
 

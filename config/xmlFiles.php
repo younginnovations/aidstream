@@ -21,4 +21,12 @@ return [
      * Default file mime-type.
      */
     'mimeType'                   => 'application/xml',
+    /**
+     * Path to stored xml.
+     */
+    'xmlStorage'                 => public_path('files/xml'),
+    /*
+     * Dir to store xml
+     */
+    'xmlStorageDir'              => 'files/xml'
 ];

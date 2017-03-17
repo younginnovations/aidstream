@@ -61,7 +61,13 @@ class UserOnBoardingController extends Controller
         $publisherIdStatus = Input::get('publisherIdStatus');
         $apiIdStatus       = Input::get('apiIdStatus');
 
-        $this->userOnBoardingService->storePublisherAndApiKey($organization, $publisherId, $apiId, $publisherIdStatus, $apiIdStatus);
+        if (isUniquePublisherId($publisherId)) {
+            $this->userOnBoardingService->storePublisherAndApiKey($organization, $publisherId, $apiId, $publisherIdStatus, $apiIdStatus);
+
+            return response(['status' => true]);
+        }
+
+        return response(['status' => false]);
     }
 
     /**

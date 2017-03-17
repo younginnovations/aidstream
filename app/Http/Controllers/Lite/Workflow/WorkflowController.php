@@ -77,16 +77,12 @@ class WorkflowController extends MainWorkflowController
 
         $result = $this->workFlowManager->publish($activity, $request->all());
 
-        if (null === $result) {
-            return redirect()->back()->withResponse(['type' => 'warning', 'code' => ['message', ['message' => trans('error.something_is_not_right')]]]);
+        if (getVal($result, ['status']) == false) {
+            return redirect()->back()->withResponse(['type' => 'warning', 'code' => ['message', ['message' => getVal($result, ['message'])]]]);
         }
 
-        if (false == $result) {
-            return redirect()->back()->withResponse(['type' => 'warning', 'code' => ['message', ['message' => trans('error.publisher_not_found')]]]);
-        }
-
-        if (is_string($result) && $result == 'Not Authorized') {
-            return redirect()->back()->withResponse(['type' => 'warning', 'code' => ['message', ['message' => trans('error.not_authorized')]]]);
+        if (getVal($result, ['linked']) == false) {
+            return redirect()->back()->withResponse(['type' => 'success', 'code' => ['published_not_linked', ['name' => '']]]);
         }
 
         return redirect()->back()->withResponse(['type' => 'success', 'code' => ['publish_registry_publish', ['name' => '']]]);

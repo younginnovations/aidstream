@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Controllers\Lite\LiteController;
 use App\Lite\Services\PublishedFiles\PublishedFilesService;
+use Illuminate\Support\Facades\Session;
 
 /**
  * Class PublishedFilesController
@@ -16,6 +17,7 @@ class PublishedFilesController extends LiteController
      * @var PublishedFilesService
      */
     protected $publishedFilesService;
+
 
     /**
      * PublishedFilesController constructor.
@@ -54,6 +56,12 @@ class PublishedFilesController extends LiteController
         }
 
         $this->authorize('delete_activity', $file);
+
+        if (Session::has('publisherIdChange') || isPublisherIdBeingChanged()) {
+            $response = ['type' => 'success', 'code' => ['message', ['message' => trans('success.publisher_id_changing')]]];
+
+            return redirect()->to('publishing-settings')->withResponse($response);
+        }
 
         if (!$this->publishedFilesService->delete($id)) {
             $response = ['type' => 'danger', 'code' => ['message', ['message' => trans('lite/global.delete_unsuccessful', ['type' => 'File'])]]];
@@ -96,3 +104,4 @@ class PublishedFilesController extends LiteController
         return redirect()->back()->withResponse(['type' => 'success', 'code' => ['message', ['message' => trans('lite/global.bulk_publish_successful')]]]);
     }
 }
+

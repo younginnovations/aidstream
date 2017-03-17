@@ -10,7 +10,6 @@ use App\Models\Settings;
 use Exception;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Logging\Log as Logger;
-use App\Services\Twitter\TwitterAPI;
 use Illuminate\Contracts\Logging\Log;
 use Kris\LaravelFormBuilder\FormBuilder;
 
@@ -44,9 +43,9 @@ class OrganizationManager
      * @param Guard                 $auth
      * @param OrganizationData      $orgData
      * @param OrganizationPublished $orgPublished
+     * @param UserRepository        $userRepo
      * @param Logger                $logger
      * @param Log                   $dbLogger
-     * @param TwitterAPI            $twitter
      * @param FormBuilder           $formBuilder
      */
     public function __construct(
@@ -57,7 +56,6 @@ class OrganizationManager
         UserRepository $userRepo,
         Logger $logger,
         Log $dbLogger,
-        TwitterAPI $twitter,
         FormBuilder $formBuilder
     ) {
         $this->version      = $version;
@@ -67,7 +65,6 @@ class OrganizationManager
         $this->orgPublished = $orgPublished;
         $this->logger       = $logger;
         $this->auth         = $auth;
-        $this->twitterApi   = $twitter;
         $this->formBuilder  = $formBuilder;
         $this->dbLogger     = $dbLogger;
         $this->userRepo     = $userRepo;

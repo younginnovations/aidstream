@@ -19,6 +19,7 @@ return [
     'settings_registry_info'                  => 'Please fill up Publisher Id & Api Id to publish.',
     'publish_registry'                        => 'Could not publish to registry. Try Again.',
     'publish_registry_publish'                => 'Activity has been Published.',
+    'publish_registry_organization'           => 'Organization data  has been Published.',
     'update_registry_publish'                 => 'Activity could not be updated.',
     'upgraded'                                => 'Version upgraded to :version.',
     'upgrade_failed'                          => 'Failed to upgrade. Try Again.',
@@ -47,5 +48,7 @@ return [
     'user_created'                            => 'The user account with :name, has been created successfully. Please notify the user their username and password to start using their AidStream account.',
     'csv_header_mismatch'                     => ':message',
     'settings_incomplete'                     => 'Please fill up all the required fields before creating an activity.',
-    'encoding_error'                          => 'It seems the file you have uploaded is not in UTF-8 encoding standard. If you didn\'t get accurate result, please change the file into UTF-8 encoding standard and try again.'
+    'encoding_error'                          => 'It seems the file you have uploaded is not in UTF-8 encoding standard. If you didn\'t get accurate result, please change the file into UTF-8 encoding standard and try again.',
+    'published_not_linked'                    => "You have set automatic update to publish to No in <a href='/publishing-settings'>settings</a>. The activity has been published to AidStream but not linked to the IATI Registry. Please re-publish the activity from <a href='/list-published-files'>here.</a>",
+    'organization_published_not_linked'       => "You have set automatic update to publish to No in <a href='/publishing-settings'>settings</a>. The organization data has been published to AidStream but not linked to the IATI Registry. Please re-publish the organization data from <a href='/list-published-files'>here.</a>"
 ];

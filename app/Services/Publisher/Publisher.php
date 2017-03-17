@@ -1,8 +1,8 @@
 <?php namespace App\Services\Publisher;
 
+use App\Services\Publisher\Traits\RegistryApiInvoker;
 use Exception;
 use App\Http\API\CKAN\CkanClient;
-use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 use Illuminate\Database\Eloquent\Collection;
 use App\Services\Workflow\Registry\RegistryApiHandler;
@@ -15,6 +15,19 @@ use App\Exceptions\Aidstream\Workflow\PublisherNotFoundException;
  */
 class Publisher extends RegistryApiHandler
 {
+    use RegistryApiInvoker;
+
+    const NOT_AUTHORIZED_ERROR_CODE = 403;
+    /**
+     *
+     */
+    const PACKAGE_FORBIDDEN_CODE = 403;
+
+    /**
+     *
+     */
+    const PACKAGE_NOT_FOUND_CODE = 404;
+
     /**
      * @var null
      */
@@ -35,7 +48,7 @@ class Publisher extends RegistryApiHandler
             /* Depcricated */
 //        $this->client->package_search($this->publisherId)
 
-            if (!$this->checkPublisherValidity($this->searchForPublisher())) {
+            if (!$this->checkPublisherValidity($this->searchForPublisher($this->publisherId), $this->publisherId)) {
                 throw new PublisherNotFoundException('Publisher not found.');
             }
 
@@ -52,40 +65,6 @@ class Publisher extends RegistryApiHandler
     }
 
     /**
-     * Unlink a file from the IATI Registry.
-     * @param $registryInfo
-     * @param $changeDetails
-     * @return bool
-     * @throws Exception
-     */
-    public function unlink($registryInfo, $changeDetails)
-    {
-        try {
-            $apiKey = $registryInfo[0]['api_id'];
-            $api    = new CkanClient(env('REGISTRY_URL'), $apiKey);
-
-            foreach ($changeDetails['previous'] as $filename => $previous) {
-                $pieces = explode(".", $filename);
-                $fileId = array_first(
-                    $pieces,
-                    function () {
-                        return true;
-                    }
-                );
-
-                if (getVal($previous, ['published_status'])) {
-                    $api->package_delete($fileId);
-                }
-            }
-
-            return true;
-        } catch (Exception $exception) {
-            throw $exception;
-        }
-    }
-
-
-    /**
      * Returns the request header payload while publishing any files to the IATI Registry.
      * @param      $organization
      * @param      $filename
@@ -96,17 +75,16 @@ class Publisher extends RegistryApiHandler
      */
     protected function generatePayload($organization, $filename, $publishingType, $publishedFile = null)
     {
-        $code  = $this->getCode($filename);
-        $key   = $this->getKey($code);
-        $title = $this->extractTitle($organization, $publishingType, $code);
+        $code     = $this->getCode($filename);
+        $key      = $this->getKey($code);
+        $fileType = $this->getFileType($code);
+        $title    = $this->extractTitle($organization, $publishingType, $code, $fileType);
 
         if (!$publishedFile) {
-            $publishedFile = $organization->publishedFiles()->where('filename', '=', $filename)->first();
-
-            return $this->formatHeaders($this->extractPackage($filename), $organization, $publishedFile, $key, end($code), $title);
+            return $this->formatHeaders($this->extractPackage($filename), $organization, $this->file, $key, $fileType, $title);
         }
 
-        return $this->formatHeaders($this->extractPackage($filename), $organization, $publishedFile, $key, end($code), $title);
+        return $this->formatHeaders($this->extractPackage($filename), $organization, $this->file, $key, $fileType, $title);
     }
 
     /**
@@ -139,33 +117,34 @@ class Publisher extends RegistryApiHandler
     {
         return json_encode(
             [
-                'title'          => $title,
-                'name'           => $filename,
-                'author_email'   => $organization->getAdminUser()->email,
-                'owner_org'      => $this->publisherId,
-                'license_id'     => 'other-open',
-                'resources'      => [
+                'title'                                       => $title,
+                'name'                                        => $filename,
+                'author_email'                                => $organization->getAdminUser()->email,
+                'owner_org'                                   => $this->publisherId,
+                'license_id'                                  => 'other-open',
+                'resources'                                   => [
                     [
                         'format'   => config('xmlFiles.format'),
                         'mimetype' => config('xmlFiles.mimeType'),
                         'url'      => url(sprintf('files/xml/%s.xml', $filename))
                     ]
                 ],
-                "filetype"       => "activity",
-                $key             => ($code == 'activities') ? '' : $code,
-                "data_updated"   => $publishedFile->updated_at->toDateTimeString(),
-                "activity_count" => count($publishedFile->published_activities),
-                "language"       => config('app.locale'),
-                "verified"       => "no"
+                "filetype"                                    => ($code != 'organization') ? 'activity' : $code,
+                $key                                          => ($code == 'activities' || $code == 'organization') ? '' : $code,
+                "data_updated"                                => $publishedFile->updated_at->toDateTimeString(),
+                ($code == 'organization') ?: "activity_count" => count($publishedFile->published_activities),
+                "language"                                    => config('app.locale'),
+                "verified"                                    => "no",
+                "state"                                       => "active"
             ]
         );
     }
 
     /**
-     * @param $registryInfo
-     * @param $file
-     * @param $organization
-     * @param $publishingType
+     * @param        $registryInfo
+     * @param        $file
+     * @param        $organization
+     * @param        $publishingType
      * @throws Exception
      */
     public function publishFile($registryInfo, $file, $organization, $publishingType)
@@ -193,10 +172,15 @@ class Publisher extends RegistryApiHandler
      * @param $organization
      * @param $publishingType
      * @param $code
+     * @param $fileType
      * @return string
      */
-    protected function extractTitle($organization, $publishingType, $code)
+    protected function extractTitle($organization, $publishingType, $code, $fileType)
     {
+        if ($fileType == 'organization') {
+            return $organization->name . ' Organization File';
+        }
+
         return ($publishingType == "segmented")
             ? $organization->name . ' Activity File-' . strtoupper(end($code))
             : $organization->name . ' Activity File';
@@ -213,20 +197,22 @@ class Publisher extends RegistryApiHandler
 
     /**
      * Publish File to the IATI Registry.
-     * @param $organization
-     * @param $filename
-     * @param $publishingType
-     * @param $publishedStatus
+     * @param      $organization
+     * @param      $filename
+     * @param      $publishingType
      */
-    protected function publishToRegistry($organization, $filename, $publishingType, $publishedStatus)
+    protected function publishToRegistry($organization, $filename, $publishingType)
     {
-        $data = $this->generatePayload($organization, $filename, $publishingType);
+        $data      = $this->generatePayload($organization, $filename, $publishingType);
+        $packageId = $this->extractPackage($filename);
 
-        if (!$publishedStatus) {
-            $this->client->package_create($data);
-        } else {
+        if ($this->isPackageAvailable($packageId, $this->apiKey)) {
             $this->client->package_update($data);
+        } else {
+            $this->client->package_create($data);
         }
+
+        $this->updateStatus();
     }
 
     /**
@@ -240,20 +226,9 @@ class Publisher extends RegistryApiHandler
         $changes = $changeDetails['changes'];
 
         foreach ($changes as $filename => $changeDetail) {
-            $this->publishToRegistry($organization, $filename, $publishingType, $changeDetail['published_status']);
+            $this->file = $this->getPublishedActivities($organization, $filename);
+            $this->publishToRegistry($organization, $filename, $publishingType);
         }
-    }
-
-    /**
-     * Check if there data returned by the IATI Registry Api is valid.
-     * @param $publisherData
-     * @return bool
-     */
-    protected function checkPublisherValidity($publisherData)
-    {
-        $publisherData = json_decode($publisherData);
-
-        return $publisherData ? ($publisherData->result->name == $this->publisherId) : false;
     }
 
     /**
@@ -265,50 +240,79 @@ class Publisher extends RegistryApiHandler
     {
         if ($this->file instanceof Collection) {
             foreach ($this->file as $file) {
-                $this->publishToRegistry($organization, $file->filename, $publishingType, $file->published_to_register);
+                $this->publishToRegistry($organization, $file->filename, $publishingType);
             }
         } else {
-            $this->publishToRegistry($organization, $this->file->filename, $publishingType, $this->file->published_to_register);
+            $this->publishToRegistry($organization, $this->file->filename, $publishingType);
         }
     }
 
     /**
-     * Extract the package name from the published filename.
+     * @return Exception
+     */
+    protected function updateStatus()
+    {
+        try {
+            $this->file->published_to_register = 1;
+            $this->file->save();
+        } catch (Exception $exception) {
+            return $exception;
+        }
+    }
+
+    /**
+     * @param $code
+     * @return mixed|string
+     */
+    protected function getFileType($code)
+    {
+        if (in_array('org', $code)) {
+            return 'organization';
+        }
+
+        return end($code);
+    }
+
+    /**
+     * @param $organization
      * @param $filename
-     * @return string
-     */
-    protected function extractPackage($filename)
-    {
-        return array_first(
-            explode('.', $filename),
-            function () {
-                return true;
-            }
-        );
-    }
-
-    /**
-     * Search for a publisher with a specific publisherId.
-     * @return string
-     */
-    protected function searchForPublisher()
-    {
-        $apiHost = env('REGISTRY_URL');
-        $uri     = 'action/organization_show';
-        $url     = sprintf('%s%s?id=%s', $apiHost, $uri, $this->publisherId);
-        $client  = $this->initGuzzleClient();
-
-        return $client->get($url)
-                      ->getBody()
-                      ->getContents();
-    }
-
-    /**
-     * Initialize the GuzzleHttp\Client instance
      * @return mixed
      */
-    protected function initGuzzleClient()
+    protected function getPublishedActivities($organization, $filename)
     {
-        return app()->make(Client::class);
+        return $organization->publishedFiles()->where('filename', '=', $filename)->first();
+    }
+
+    /**
+     * Unlink a file from the IATI Registry.
+     * @param $apiKey
+     * @param $changeDetails
+     * @return bool
+     * @throws Exception
+     */
+    public function unlink($apiKey, $changeDetails)
+    {
+        try {
+            $api = new CkanClient(env('REGISTRY_URL'), $apiKey);
+
+            foreach ($changeDetails['previous'] as $filename => $previous) {
+                $pieces = explode(".", $filename);
+                $fileId = array_first(
+                    $pieces,
+                    function () {
+                        return true;
+                    }
+                );
+
+                if (getVal($previous, ['published_status'])) {
+                    $api->package_delete($fileId);
+                }
+            }
+
+            return true;
+        } catch (Exception $exception) {
+            throw $exception;
+        }
     }
 }
+
