@@ -92,9 +92,20 @@ class LoginService
             if (Auth::attempt($this->credentialsOnly(), $hasRemember)) {
                 $this->loggedInUser = auth()->user();
 
-                $this->verify()
-                     ->storeUserDetailsInSession()
-                     ->setVersion();
+                if ($verified = $this->verify()) {
+                    $this->storeUserDetailsInSession()
+                         ->setVersion();
+                } elseif (false === $verified) {
+                    Auth::logout();
+
+                    return redirect('/auth/login')->withErrors(trans('error.account_disabled'));
+                } elseif (null === $verified) {
+                    Auth::logout();
+
+                    return redirect('/auth/login')->withErrors(
+                        trans('error.account_not_verified')
+                    );
+                }
             }
 
             return $this->loggedInUser;
@@ -174,24 +185,18 @@ class LoginService
     /**
      * Check if the user has been verified.
      *
-     * @return $this
+     * @return $this|bool|null
      */
     protected function verify()
     {
         $this->loggedInUser = $this->loggedInUser ? $this->loggedInUser : auth()->user();
 
         if (!$this->loggedInUser->enabled) {
-            Auth::logout();
-
-            return redirect('/auth/login')->withErrors(trans('error.account_disabled'));
+            return false;
         }
 
         if (!$this->loggedInUser->verified_status) {
-            Auth::logout();
-
-            return redirect('/auth/login')->withErrors(
-                trans('error.account_not_verified')
-            );
+            return null;
         }
 
         return $this;
@@ -231,7 +236,7 @@ class LoginService
      */
     protected function setVersion()
     {
-        $version     = session('current_version');
+        $version  = session('current_version');
         $versions = $this->database->table('versions')->lists('version');
 
         $versionKey   = array_search($version, $versions);
