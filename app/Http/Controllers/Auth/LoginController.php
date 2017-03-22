@@ -94,6 +94,12 @@ class LoginController extends Controller
                 !($intendedUrl == url('/')) ?: session()->set('url.intended', $redirectPath);
 
                 return redirect()->intended($redirectPath);
+            } elseif (false === $user) {
+                return redirect('/auth/login')->withErrors(trans('error.account_disabled'));
+            } elseif (null === $user) {
+                return redirect('/auth/login')->withErrors(
+                    trans('error.account_not_verified')
+                );
             }
 
             $login = $request->input('login');
