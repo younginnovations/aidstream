@@ -22,6 +22,33 @@ a, .btn-link {
   }
 }
 
+%extend_1 {
+  border-radius: 13px;
+  border: 1px solid;
+  font-size: 12px;
+  color: rgba($color_gravel_approx, 0.6);
+  padding: 4px 18px 4px 25px;
+  position: relative;
+  text-transform: capitalize;
+}
+
+%extend_2 {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: transparent;
+  @include position(absolute, 44% auto auto 13px);
+}
+
+%extend_3 {
+  float: left;
+  text-indent: -9999px;
+  width: 18px;
+  height: 12px;
+  background: $url_3 no-repeat -158px -344px;
+}
+
 label {
   display: block;
   color: rgba($color_gravel_approx, 0.7);
@@ -113,5 +140,14 @@ strong {
   padding: 0;
   &:hover,&:focus {
     background: transparent $url_3 no-repeat -393px -197px;
+  }
+}
+
+.delete, .delete-lite-published-files {
+  @extend %extend_3;
+  height: 23px;
+  background-position: -229px -332px;
+  &:hover {
+    background-position: -230px -390px;
   }
 }

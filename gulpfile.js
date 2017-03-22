@@ -101,8 +101,8 @@ gulp.task('watch', function () {
     gulp.watch('./resources/assets/sass/lite/lite.scss', ['lite-sass']);
     gulp.watch('./resources/assets/sass/tz/**/*.scss',['tz-sass']);
     gulp.watch(vendor_files, ['vendor-main']);
+    gulp.watch(css_style, ['style-main']);
     gulp.watch(app_style, ['app-main']);
-    gulp.watch(css_style, ['css-main']);
     gulp.watch(lite_style, ['lite-main']);
     gulp.watch(tz_style, ['tz-main']);
     gulp.watch(js_files, ['js-main']);
@@ -175,7 +175,7 @@ gulp.task('image-min', function() {
 /*
  * Default task, running just `gulp` will compile the sass,
  */
-gulp.task('default', ['style-sass',"sass","tz-sass", 'watch']);
+gulp.task('default', ['style-sass',"sass","lite-sass","tz-sass", 'watch']);
 
 
 

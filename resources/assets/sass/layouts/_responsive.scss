@@ -15,7 +15,7 @@
   }
 
   .element-content-wrapper, .organization-wrapper {
-    width: 100%;
+    width: 100%!important;
     padding-bottom: 100px;
   }
 
@@ -851,14 +851,14 @@
 
 @media all and (min-width: 768px) {
   .create-form > form > .collection_form > .form-group > .collection_form .form-group > .form-group {
-    width: 47%;
+    width: 47%!important;
     //padding-right: 30px;
     margin-right: 0;
   }
 
   .create-form > form > .collection_form > .form-group > .form-group,
   .change-activity-form > form > .form-group {
-    width: 50%;
+    width: 50%!important;
     //padding-right: 30px;
     margin-right: -2px;
   }
@@ -873,7 +873,7 @@
   }
 
   .create-activity-form .form-group:only-of-type {
-    width: 50%;
+    width: 50%!important;
     padding-right: 15px;
   }
 
@@ -921,7 +921,7 @@
       min-width: 218px;
     }
     .btn-cancel {
-      left: 233px;
+      left: 233px!important;
     }
   }
 
@@ -1029,7 +1029,7 @@
   }
 
   .settings-form .btn-cancel {
-    left: 300px !important;
+    left: 250px !important;
   }
 
   .form-password-group .form-group {
@@ -1185,7 +1185,7 @@
   }
 
   .panel-action-btn {
-    margin-top: 0;
+    margin-top: 0!important;
     float: right;
   }
 

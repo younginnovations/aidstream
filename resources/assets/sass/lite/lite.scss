@@ -378,7 +378,7 @@
 }
 
 .panel__table {
-  border-collapse: collapse;
+  border-collapse: collapse!important;
   border: 0 !important;
   margin: 0 24px;
   table-layout: auto;
@@ -490,6 +490,14 @@
 
 .panel-users-settings {
   margin: 0;
+  .delete {
+    background: url(../../images/ic-sprite.svg) -393px 0 no-repeat;
+    width: 33px;
+    height: 33px;
+    &:hover {
+      background: url(../../images/ic-sprite.svg) -393px -197px no-repeat;
+    }
+  }
 }
 
 .btn-go-back {
@@ -1029,6 +1037,8 @@
   }
 }
 
+@import "../layouts/responsive";
+
 @media all and (min-width: 600px) {
   .dataTables_wrapper .dataTables_filter {
     margin: -77px 0 20px 24px;
@@ -1458,3 +1468,4 @@
     }
   }
 }
+
