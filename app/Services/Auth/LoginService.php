@@ -95,16 +95,10 @@ class LoginService
                 if ($verified = $this->verify()) {
                     $this->storeUserDetailsInSession()
                          ->setVersion();
-                } elseif (false === $verified) {
+                } elseif ((false === $verified) || (null === $verified)) {
                     Auth::logout();
 
-                    return redirect('/auth/login')->withErrors(trans('error.account_disabled'));
-                } elseif (null === $verified) {
-                    Auth::logout();
-
-                    return redirect('/auth/login')->withErrors(
-                        trans('error.account_not_verified')
-                    );
+                    return $verified;
                 }
             }
 
