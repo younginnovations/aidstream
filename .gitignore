@@ -2,6 +2,7 @@
 /node_modules
 .env
 .env.testing
+.php_cs.cache
 .idea/
 /public/css/maps
 _ide_helper.php
@@ -17,3 +18,4 @@ _ide_helper.php
 .DS_store
 /storage/csvImporter/tmp
 /storage/xmlImporter/
+tags
