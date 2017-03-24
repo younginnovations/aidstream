@@ -20,7 +20,7 @@
 
   .select-block-wrap{
     position: absolute;
-    top: 0px;
+    top: 0;
     left: 0;
     right: 0;
   }
@@ -118,7 +118,7 @@
 
   .card-body{
     height: 179px;
-    width: 250px;
+    width: 250px!important;
     overflow: auto;
   }
 }

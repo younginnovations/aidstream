@@ -10,18 +10,31 @@ var gulp = require('gulp'),
     rename = require('gulp-rename'),
     pngquant = require('imagemin-pngquant');
 
-var css_files = [
-    './public/css/bootstrap.min.css',
-    './public/css/flag-icon.css',
-    './public/css/jquery.datetimepicker.css',
-    './public/css/jquery.jscrollpane.css',
-    './public/css/jquery-ui-1.10.4.tooltip.css',
-    './public/css/leaflet.css',
-    './public/css/app.css'
+var vendor_files = [
+    './resources/assets/sass/vendor/bootstrap.min.css',
+    './resources/assets/sass/vendor/flag-icon.css',
+    './resources/assets/sass/vendor/jquery.datetimepicker.css',
+    './resources/assets/sass/vendor/jquery.jscrollpane.css',
+    './resources/assets/sass/vendor/jquery-ui-1.10.4.tooltip.css',
+    './resources/assets/sass/vendor/jquery.jsonview.css',
+    './resources/assets/sass/vendor/select2.min.css',
+    './resources/assets/sass/vendor/leaflet.css'
 ];
 
 var css_style = [
     './public/css/style.css'
+];
+
+var app_style = [
+    './public/css/app.css'
+];
+
+var lite_style = [
+    './public/lite/css/lite.css'
+];
+
+var tz_style = [
+    './public/tz/css/tz.css'
 ];
 
 var js_files = [
@@ -42,8 +55,9 @@ var js_files = [
 /**
  * Compile files from _scss
  */
-gulp.task('sass', function () {
-    return gulp.src('./resources/assets/app.scss')
+
+gulp.task('style-sass', function () {
+    return gulp.src('./resources/assets/sass/style.scss')
         .pipe(sourcemaps.init())
         .pipe(sass())
         .pipe(postcss([autoprefixer({browsers: ['last 30 versions', '> 1%', 'ie 8', 'ie 7']})]))
@@ -51,36 +65,70 @@ gulp.task('sass', function () {
         .pipe(gulp.dest('./public/css'));
 });
 
-gulp.task('tz_sass', function () {
-
-    var tz_style = gulp.src('./resources/assets/tanzania_scss/tz.style.scss')
+gulp.task('sass', function () {
+    return gulp.src('./resources/assets/sass/app.scss')
         .pipe(sourcemaps.init())
         .pipe(sass())
         .pipe(postcss([autoprefixer({browsers: ['last 30 versions', '> 1%', 'ie 8', 'ie 7']})]))
         .pipe(sourcemaps.write('./maps'))
-        .pipe(gulp.dest('./public/tz/css/tanzania_style/'));
+        .pipe(gulp.dest('./public/css'));
 });
 
+gulp.task('lite-sass', function () {
+    return gulp.src('./resources/assets/sass/lite/lite.scss')
+        .pipe(sourcemaps.init())
+        .pipe(sass())
+        .pipe(postcss([autoprefixer({browsers: ['last 30 versions', '> 1%', 'ie 8', 'ie 7']})]))
+        .pipe(sourcemaps.write('./maps'))
+        .pipe(gulp.dest('./public/lite/css'));
+});
+
+gulp.task('tz-sass', function () {
+    var tz_style = gulp.src('./resources/assets/sass/tz/tz.scss')
+        .pipe(sourcemaps.init())
+        .pipe(sass())
+        .pipe(postcss([autoprefixer({browsers: ['last 30 versions', '> 1%', 'ie 8', 'ie 7']})]))
+        .pipe(sourcemaps.write('./maps'))
+        .pipe(gulp.dest('./public/tz/css'));
+});
 
 /*
  * Watch scss files for changes & recompile
  */
 gulp.task('watch', function () {
-    gulp.watch('./resources/assets/app.scss', ['sass']);
-    gulp.watch('./resources/assets/tanzania_scss/**/*.scss',['tz_sass']);
-    gulp.watch(css_files, ['css-main']);
-    gulp.watch(css_style, ['css-style']);
+    gulp.watch('./resources/assets/sass/style.scss', ['style-sass']);
+    gulp.watch('./resources/assets/sass/app.scss', ['sass']);
+    gulp.watch('./resources/assets/sass/lite/lite.scss', ['lite-sass']);
+    gulp.watch('./resources/assets/sass/tz/**/*.scss',['tz-sass']);
+    gulp.watch(vendor_files, ['vendor-main']);
+    gulp.watch(css_style, ['style-main']);
+    gulp.watch(app_style, ['app-main']);
+    gulp.watch(lite_style, ['lite-main']);
+    gulp.watch(tz_style, ['tz-main']);
     gulp.watch(js_files, ['js-main']);
     gulp.watch(['image-min']);
 });
 
-/*
- * Default task, running just `gulp` will compile the sass,
- */
-gulp.task('default', ['sass',"tz_sass", 'watch']);
+gulp.task('vendor-main', function () {
+    return gulp.src(vendor_files)
+        .pipe(sourcemaps.init())
+        .pipe(concat('vendor.css'))
+        .pipe(gulp.dest('./public/css'))
+        .pipe(rename({suffix: '.min'}))
+        .pipe(minifyCss({compatibility: 'ie8'}))
+        .pipe(gulp.dest('./public/css'));
+});
 
-gulp.task('css-main', function () {
-    return gulp.src(css_files)
+gulp.task('style-main', function () {
+    return gulp.src(css_style)
+        .pipe(sourcemaps.init())
+        .pipe(rename({suffix: '.min'}))
+        .pipe(minifyCss({compatibility: 'ie8'}))
+        .pipe(gulp.dest('./public/css'));
+});
+
+gulp.task('app-main', function () {
+    return gulp.src(app_style)
         .pipe(sourcemaps.init())
         .pipe(concat('main.css'))
         .pipe(gulp.dest('./public/css'))
@@ -89,12 +137,20 @@ gulp.task('css-main', function () {
         .pipe(gulp.dest('./public/css'));
 });
 
-gulp.task('css-style', function () {
-    return gulp.src(css_style)
+gulp.task('lite-main', function () {
+    return gulp.src(lite_style)
         .pipe(sourcemaps.init())
         .pipe(rename({suffix: '.min'}))
         .pipe(minifyCss({compatibility: 'ie8'}))
-        .pipe(gulp.dest('./public/css'));
+        .pipe(gulp.dest('./public/lite/css'));
+});
+
+gulp.task('tz-main', function () {
+    return gulp.src(tz_style)
+        .pipe(sourcemaps.init())
+        .pipe(rename({suffix: '.min'}))
+        .pipe(minifyCss({compatibility: 'ie8'}))
+        .pipe(gulp.dest('./public/tz/css'));
 });
 
 gulp.task('js-main', function () {
@@ -106,7 +162,6 @@ gulp.task('js-main', function () {
         .pipe(gulp.dest('./public/js'));
 });
 
-
 gulp.task('image-min', function() {
     return gulp.src('./public/img/*')
         .pipe(imagemin({
@@ -116,6 +171,11 @@ gulp.task('image-min', function() {
         }))
         .pipe(gulp.dest('./public/images'));
 });
+
+/*
+ * Default task, running just `gulp` will compile the sass,
+ */
+gulp.task('default', ['style-sass',"sass","lite-sass","tz-sass", 'watch']);
 
 
 

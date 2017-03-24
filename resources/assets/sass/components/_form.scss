@@ -1,0 +1,136 @@
+textarea {
+  height: 40px;
+  padding: 0.5em !important;
+  font-size: 14px !important;
+}
+
+
+select[disabled="disabled"], input[readonly="readonly"] {
+  background: #d8d8d8 !important;
+  border: 1px solid #d8d8d8 !important;
+  box-shadow: inset 0 0 1000px #d8d8d8;
+  color: #aaa;
+}
+
+
+input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill, input:-webkit-autofill:focus, textarea:-webkit-autofill:focus, select:-webkit-autofill:focus {
+  box-shadow: 0 0 0 1000px $color_black_squeeze_approx inset !important;
+}
+
+#{$all-text-inputs},
+select, button {
+  font: normal 14px $font_0;
+  color: $color_gravel_approx;
+  &:focus {
+    outline: none;
+  }
+}
+
+select:disabled:hover {
+  border: 1px solid transparent;
+}
+
+input[type="submit"] {
+  -webkit-font-smoothing: auto;
+}
+
+#{$all-text-inputs},
+select, .form-control[readonly] {
+  font-family: $font_0;
+  &:focus {
+    box-shadow: 0 0 0 1000px $color_black_squeeze_approx inset;
+    border: 1px solid #AFD8E8;
+  }
+}
+
+textarea, textarea.form-control {
+  border: 1px solid $color_blue !important;
+  height: 40px;
+  margin-bottom: 0;
+}
+
+#{$all-text-inputs}, select,
+select.form-control, form .select2-container {
+  height: 40px;
+  border: 1px solid $color_blue;
+  margin-bottom: 0.75em;
+}
+
+form .select2-container {
+  width: 100% !important;
+  margin-bottom: 3px;
+}
+
+.admin-container .select2-container {
+  padding: 1px !important;
+}
+
+.select2-search__field {
+  height: auto !important;
+}
+
+.select2-container--default .select2-selection--multiple, .select2-container--default.select2-container--focus .select2-selection--multiple {
+  border: 0 !important;
+  background: none !important;
+}
+
+.select2-container .select2-selection--single .select2-selection__rendered {
+  line-height: 22px;
+  padding-left: 0 !important;
+  line-height: 22px !important;
+}
+
+button, input, input[type=button], input[type=reset], input[type=submit], label, select {
+  font-family: $font_0;
+}
+
+.btn-primary {
+  border-color: transparent;
+  &:hover {
+    border-color: transparent;
+  }
+}
+
+.form-control:focus {
+  box-shadow: none !important;
+}
+
+input, button {
+  font-weight: normal !important;
+  &:focus, &:active {
+    outline: none !important;
+  }
+}
+
+button, input[type="button"], input[type="reset"], input[type="submit"], .btn {
+  background-color: $color_primary;
+  color: $color_white;
+  opacity: 1 !important;
+  border-color: $color_primary !important;
+  &:hover, &:focus, &:active {
+    background-color: $color_secondary;
+    color: $color_white;
+    border-color: $color_secondary !important;
+  }
+}
+
+label[class*="text-"] {
+  margin-bottom: 0 !important;
+}
+
+//select2-container
+.select2-container--default .select2-selection--single, .select2-container--default .select2-selection--single:focus {
+  background: transparent !important;
+  border: none !important;
+  outline: none !important;
+  font: 14px $font_0;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+  height: 42px !important;
+  b {
+    border-width: 5px 5px 0 5px !important;
+    margin-left: -8px !important;
+    border-color: $color_primary transparent transparent transparent !important;
+  }
+}

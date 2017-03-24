@@ -13,7 +13,7 @@
                 <p>@lang('lite/global.add_an_activity_in_simple_steps')</p>
             </div>
             <div class="panel__body">
-                <div class="create-form create-project-form edit-form">
+                <div class="create-form create-project-form edit-form add-activity-form">
                     {!! form_start($form) !!}
                     <div class="form__block" id="basics">
                         <div class="col-md-9">

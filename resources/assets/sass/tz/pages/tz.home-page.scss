@@ -9,41 +9,14 @@
   margin-top: 0 !important;
 }
 
-.navbar-brand, .footer-logo a {
-  background: none;
-  display: block;
+.navbar-brand {
+  background: none!important;
   padding: 0;
-  position: relative;
-  width: 182px;
-}
-
-.navbar-fixed .navbar-brand {
-  background: none;
+  width: 200px;
 }
 
 .navbar-default .navbar-nav > li > a:focus, .navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a.active {
-  color: $color-link-hover;
-}
-
-.tanzania-flag {
-  position: absolute;
-  width: 18px;
-  height: 12px;
-  background: url(#{$img-path}/ic_tanzania-flag.svg) center center no-repeat;
-  top: 21px;
-  right: 0;
-}
-
-.header-banner {
-  background: linear-gradient(
-                  rgba(255, 255, 255, 0.92),
-                  rgba(255, 255, 255, 0.92)),
-  url("#{$img-path}/tz-banner-bg.jpg") top center no-repeat;
-  background-size: cover;
-
-  .navbar, .navbar-default {
-    background: transparent;
-  }
+  color: $color_secondary;
 }
 
 @media (min-width: 768px) {
@@ -96,6 +69,13 @@ footer {
       float: left;
     }
   }
+}
+
+.footer-logo a {
+  background: none;
+  display: block;
+  position: relative;
+  width: 182px;
 }
 
 .action-btn a {
@@ -151,7 +131,7 @@ footer {
 
 .info-wrapper {
   background: #F7F7F7;
-  border-bottom: 4px solid $primary-color;
+  border-bottom: 4px solid $color_primary;
   padding: 55px 0 45px;
   p {
     line-height: 26px;
@@ -185,5 +165,5 @@ footer {
 }
 
 .about-wrapper .screenshot {
-  background: $primary-color;
+  background: $color_primary;
 }

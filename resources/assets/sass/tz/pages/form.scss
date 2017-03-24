@@ -15,17 +15,14 @@
 }
 
 .form-block{
-
   .form-group{
     margin-bottom: 20px;
   }
-
   .title{
     font-family: inherit;
     margin-bottom: 10px;
     font-weight: normal;
   }
-
   .select2-container{
     margin-bottom: 0;
   }
@@ -84,31 +81,6 @@
 .activity-element-wrapper .delete .delete-transaction{
   background: none;
 }
-
-/*
-
-.delete-wrap{
-  //display: none;
-  width: 24px;
-  height: 23px;
-  !*position: absolute;
-  right: 0;
-  top: 2px;*!
-  input{
-    width: 24px;
-    height: 23px;
-    position: relative;
-    padding: 0;
-    background: #aaa url(../../images/ic-action-sprite.svg) -24px 5px no-repeat;
-    text-indent: -9999px;
-    border-radius: 50%;
-  }
-}
-
-.activity-element-wrapper:hover > .activity-element-info .delete-wrap{
-  display: block !important;
-}
-*/
 
 .added-new-block:first-of-type{
   .remove_from_collection{

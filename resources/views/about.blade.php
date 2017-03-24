@@ -6,7 +6,7 @@
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport'/>
     <title>@lang('title.aidstream')</title>
     <link rel="shortcut icon" type="image/png" sizes="16*16" href="images/favicon.png"/>
-    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/vendor.min.css">
     <link rel="stylesheet" href="css/style.min.css">
 </head>
 <body>
