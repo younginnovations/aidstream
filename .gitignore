@@ -3,6 +3,7 @@
 .env
 .env.testing
 .php_cs.cache
+*.swp
 .idea/
 /public/css/maps
 _ide_helper.php

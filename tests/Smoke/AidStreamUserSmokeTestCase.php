@@ -13,7 +13,7 @@ class AidStreamUserSmokeTestCase extends BaseUserTestCase
     /**
      * @var string
      */
-    protected $baseUrl = 'http://newstage.aidstream.org/';
+    protected $baseUrl = 'http://stage.aidstream.org/';
 
     /**
      * @var string
