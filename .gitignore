@@ -20,3 +20,4 @@ _ide_helper.php
 /storage/csvImporter/tmp
 /storage/xmlImporter/
 tags
+/log

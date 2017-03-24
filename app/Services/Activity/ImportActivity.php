@@ -40,8 +40,9 @@ class ImportActivity
      * @param Log                 $logger
      * @param OrganizationManager $orgManager
      */
-    public function __construct(Version $version, Log $logger, OrganizationManager $orgManager)
+    public function __construct(DatabaseManager $databaseManager, Version $version, Log $logger, OrganizationManager $orgManager)
     {
+        $this->databaseManager          = $databaseManager;
         $this->simpleActivityParser     = $version->getActivityElement()->getSimpleActivityParser();
         $this->simpleActivityDemoParser = $version->getActivityElement()->getSimpleActivityDemoParser();
         $this->version                  = $version;
@@ -104,13 +105,12 @@ class ImportActivity
      */
     public function importActivities(array $activities)
     {
-        $database = app(DatabaseManager::class);
         try {
-            $database->beginTransaction();
+            $this->databaseManager->beginTransaction();
             $organization = $this->orgManager->getOrganization(session('org_id'));
             $this->template ?: $this->setTemplate(json_decode($activities[0], true));
             $this->importedActivities = $this->template->save($activities);
-            $database->commit();
+            $this->databaseManager->commit();
 
             $this->logger->activity(
                 "activity.activity_uploaded",
@@ -122,7 +122,8 @@ class ImportActivity
 
             return true;
         } catch (Exception $exception) {
-            $database->rollback();
+            dd($exception->getMessage(), $exception->getTraceAsString());
+            $this->databaseManager->rollback();
             $this->logger->error($exception, ['activities' => $activities]);
         }
 

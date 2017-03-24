@@ -99,7 +99,6 @@ class PerfectViewerManager
             );
 
             return $this;
-
         } catch (Exception $exception) {
             $this->database->rollback();
             $this->logger->error(
@@ -209,13 +208,10 @@ class PerfectViewerManager
         $totalTransaction['total_disbursements']  = 0;
         $totalTransaction['total_expenditures']   = 0;
 
-        foreach ($transactions as $index => $transactionChild) {
+        foreach ($transactions as $index => $transaction) {
+            $value = $this->giveCorrectValue(getVal($transaction, ['transaction'], []));
 
-            foreach ($transactionChild as $tranIndex => $transaction) {
-
-                $value = $this->giveCorrectValue(getVal($transaction, ['transaction'], []));
-
-                switch (getVal($transaction, ['transaction', 'transaction_type', 0, 'transaction_type_code'], '')) {
+            switch (getVal($transaction, ['transaction', 'transaction_type', 0, 'transaction_type_code'], '')) {
 
                     case 1:
                         $totalTransaction['total_incoming_funds'] += (float) $value;
@@ -236,7 +232,6 @@ class PerfectViewerManager
                     default:
                         break;
                 }
-            }
         }
 
         return $totalTransaction;
@@ -304,7 +299,6 @@ class PerfectViewerManager
     public function activityQueryBuilder()
     {
         return $this->perfectViewerRepo->activityQueryBuilder();
-
     }
 
     /**
@@ -403,12 +397,12 @@ class PerfectViewerManager
      */
     protected function storeActivitySnapshot($activityId, $organization, $activity, $orgId, $publishedToRegistry)
     {
-        $activityTransaction = $this->perfectViewerRepo->getActivityTransactions($activityId);
+        $activityTransaction = $this->perfectViewerRepo->getActivityTransactions($activityId)->toArray();
         $reporting_org       = getVal($organization, [0, 'reporting_org'], []);
         $totalBudget         = $this->calculateBudget(getVal($activity->toArray(), ['budget'], []));
 
         $perfectData = $this->makeArray($activity, $reporting_org, $activityTransaction, $totalBudget);
-        $file        = $this->perfectViewerRepo->getPublishedFileName(getVal((array) $organization[0], ['id'], []));
+        $file        = $this->perfectViewerRepo->getPublishedFileName(getVal((array) $organization, [0, 'id'], []));
         $filename    = $file ? $file->filename : '';
 
         $this->database->beginTransaction();
@@ -424,7 +418,7 @@ class PerfectViewerManager
      */
     protected function storeOrganizationSnapshot($orgId, $organization)
     {
-        $transactions     = $this->perfectViewerRepo->getTransactions($orgId);
+        $transactions     = $this->perfectViewerRepo->getTransactions($orgId)->toArray();
         $totalTransaction = $this->calculateTransaction($transactions);
         $perfectOrg       = $this->makePerfectOrg($organization, $totalTransaction);
 
@@ -432,5 +426,4 @@ class PerfectViewerManager
         $this->perfectViewerRepo->storeOrganization($perfectOrg);
         $this->database->commit();
     }
-
 }
