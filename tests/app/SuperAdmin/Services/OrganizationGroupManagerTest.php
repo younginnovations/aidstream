@@ -1,13 +1,13 @@
 <?php namespace Test\SuperAdmin\Services;
 
+use App\Core\V201\Repositories\Organization\OrganizationRepository;
 use App\Models\Organization\Organization;
 use App\Models\SuperAdmin\UserGroup;
 use App\SuperAdmin\Services\OrganizationGroupManager;
-use App\User;
 use Illuminate\Database\DatabaseManager;
+use Mockery as m;
 use Psr\Log\LoggerInterface;
 use Test\AidStreamTestCase;
-use Mockery as m;
 
 /**
  * Class OrganizationGroupManagerTest
@@ -21,16 +21,25 @@ class OrganizationGroupManagerTest extends AidStreamTestCase
     protected $orgGroupManager;
     protected $databaseManager;
     protected $logger;
+    protected $organizationRepository;
 
     public function setUp()
     {
         parent::setUp();
-        $this->orgGroupInterface = m::mock('App\SuperAdmin\Repositories\SuperAdminInterfaces\OrganizationGroup');
-        $this->userGroup         = m::mock(UserGroup::class);
-        $this->organization      = m::mock(Organization::class);
-        $this->databaseManager   = m::mock(DatabaseManager::class);
-        $this->logger            = m::mock(LoggerInterface::class);
-        $this->orgGroupManager   = new OrganizationGroupManager($this->orgGroupInterface, $this->userGroup, $this->organization, $this->databaseManager, $this->logger);
+        $this->orgGroupInterface      = m::mock('App\SuperAdmin\Repositories\SuperAdminInterfaces\OrganizationGroup');
+        $this->userGroup              = m::mock(UserGroup::class);
+        $this->organization           = m::mock(Organization::class);
+        $this->databaseManager        = m::mock(DatabaseManager::class);
+        $this->logger                 = m::mock(LoggerInterface::class);
+        $this->organizationRepository = m::mock(OrganizationRepository::class);
+        $this->orgGroupManager        = new OrganizationGroupManager(
+            $this->orgGroupInterface,
+            $this->userGroup,
+            $this->organization,
+            $this->databaseManager,
+            $this->logger,
+            $this->organizationRepository
+        );
     }
 
     public function testItShouldGetAllOrganizationGroups()

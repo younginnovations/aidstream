@@ -4,6 +4,7 @@ use App\Core\Version;
 use App\Core\V201\Repositories\SettingsRepository;
 use App\Models\Organization\Organization;
 use App\Models\Settings;
+use App\Services\UserOnBoarding\UserOnBoardingService;
 use Test\AidStreamTestCase;
 use Mockery as m;
 use App\Services\Activity\ActivityManager;
@@ -27,6 +28,8 @@ class SettingsManagerTest extends AidStreamTestCase
     protected $dbLogger;
     protected $auth;
     protected $dbManager;
+    protected $userOnBoardingService;
+    protected $formBuilder;
 
     public function SetUp()
     {
@@ -42,6 +45,7 @@ class SettingsManagerTest extends AidStreamTestCase
         $this->auth                = m::mock(Guard::class);
         $this->dbManager           = m::mock(DatabaseManager::class);
         $this->formBuilder         = m::mock(FormBuilder::class);
+        $this->userOnBoardingService = m::mock(UserOnBoardingService::class);
         $this->settingManager      = new SettingsManager(
             $this->version,
             $this->activityManager,
@@ -50,7 +54,8 @@ class SettingsManagerTest extends AidStreamTestCase
             $this->auth,
             $this->dbLogger,
             $this->logger,
-            $this->formBuilder
+            $this->formBuilder,
+            $this->userOnBoardingService
         );
     }
 

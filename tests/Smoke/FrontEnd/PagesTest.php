@@ -22,7 +22,7 @@ class PagesTest extends AidStreamSmokeTestCase
             ['about', 200],
             ['who-is-using', 200],
             ['auth/login', 200],
-            ['auth/register', 200],
+            ['register', 200],
             ['password/email', 200]
         ];
     }
