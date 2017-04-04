@@ -81,8 +81,8 @@ class LoginService
 
     /**
      * Log the attempting User into the system.
-     *
      * @return null
+     * @throws Exception
      */
     public function login()
     {
@@ -100,16 +100,23 @@ class LoginService
 
                     return $verified;
                 }
+
+                return $this->loggedInUser;
             }
 
-            return $this->loggedInUser;
+            throw new Exception(trans('error.incorrect_credentials'), 401);
+
         } catch (Exception $exception) {
-            $this->logger->error(
-                sprintf('Error due to %s', $exception->getMessage()),
-                [
-                    'trace' => $exception->getTraceAsString()
-                ]
-            );
+            if ($exception->getCode() === 401) {
+                throw $exception;
+            } else {
+                $this->logger->error(
+                    sprintf('Error due to %s', $exception->getMessage()),
+                    [
+                        'trace' => $exception->getTraceAsString()
+                    ]
+                );
+            }
 
             return null;
         }
