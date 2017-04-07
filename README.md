@@ -1,4 +1,4 @@
-# [![AidStream](https://aidstream.org/images/logo.png)](https://aidstream.org)
+# ![AidStream](https://aidstream.org/images/logo.png)[AidStream](https://aidstream.org)
 
 ### AidStream stands as one such platform, that presents complexity of the IATI in an understandable and a consumable way.
 
