@@ -23,7 +23,6 @@ class ImportActivityTest extends AidStreamTestCase
     protected $importActivity;
     protected $excelReader;
     protected $importActivityMock;
-    protected $database;
     protected $orgManager;
 
     public function setUp()
@@ -34,14 +33,13 @@ class ImportActivityTest extends AidStreamTestCase
         $this->version                  = m::mock(Version::class);
         $this->logger                   = m::mock(Log::class);
         $this->excelReader              = m::mock(LaravelExcelReader::class);
-        $this->importActivityMock       = m::mock(ImportActivity::class);
-        $this->database                 = m::mock(DatabaseManager::class);
+        $this->databaseManager          = m::mock(DatabaseManager::class);
         $this->orgManager               = m::mock(OrganizationManager::class);
 
         $this->version->shouldReceive('getActivityElement->getSimpleActivityParser')->andReturn($this->simpleActivityParser);
         $this->version->shouldReceive('getActivityElement->getSimpleActivityDemoParser')->andReturn($this->simpleActivityDemoParser);
 
-        $this->importActivity = new ImportActivity($this->version, $this->logger, $this->orgManager);
+        $this->importActivity = new ImportActivity($this->databaseManager, $this->version, $this->logger, $this->orgManager);
     }
 
     public function testItShouldReturnActivitiesFromCsvFile()
@@ -66,13 +64,13 @@ class ImportActivityTest extends AidStreamTestCase
         session()->put('org_id', 60);
         $orgModel = m::mock(Organization::class);
 
-        $this->database->shouldReceive('beginTransaction');
+        $this->databaseManager->shouldReceive('beginTransaction');
         $this->orgManager->shouldReceive('getOrganization')->once()->with(session('org_id'))->andReturn($orgModel);
         $orgModel->shouldReceive('getAttribute')->once()->with('name')->andReturn('Org Name');
         $orgModel->shouldReceive('getAttribute')->once()->with('id')->andReturn(session('org_id'));
         $this->simpleActivityParser->shouldReceive('getTemplate')->once()->with(json_decode($firstData, true))->andReturn($this->simpleActivityParser);
         $this->simpleActivityParser->shouldReceive('save')->once()->with($activities)->andReturn([]);
-        $this->database->shouldReceive('commit');
+        $this->databaseManager->shouldReceive('commit');
         $this->logger->shouldReceive('activity')->once()->with("activity.activity_uploaded", ['organization' => 'Org Name', 'organization_id' => session('org_id')]);
 
         $this->assertTrue($this->importActivity->importActivities($activities));

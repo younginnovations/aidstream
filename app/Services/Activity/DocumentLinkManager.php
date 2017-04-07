@@ -42,13 +42,14 @@ class DocumentLinkManager
      * @param Log             $dbLogger
      * @param LoggerInterface $logger
      */
-    public function __construct(Version $version, Guard $auth, DatabaseManager $database, Log $dbLogger, LoggerInterface $logger)
+    public function __construct(DocumentManager $documentManager, Version $version, Guard $auth, DatabaseManager $database, Log $dbLogger, LoggerInterface $logger)
     {
         $this->auth             = $auth;
         $this->database         = $database;
         $this->DocumentLinkRepo = $version->getActivityElement()->getDocumentLink()->getRepository();
         $this->dbLogger         = $dbLogger;
         $this->logger           = $logger;
+        $this->documentManager  = $documentManager;
     }
 
     /**
@@ -63,23 +64,22 @@ class DocumentLinkManager
             $this->database->beginTransaction();
             $documentLinkExists = $activityDocumentLink->exists;
             $activityId         = $activityDocumentLink->activity_id;
-            $documentManager    = app(DocumentManager::class);
             if ($documentLinkExists) {
                 $url        = $activityDocumentLink->document_link['url'];
-                $document   = $documentManager->getDocument(session('org_id'), $url);
+                $document   = $this->documentManager->getDocument(session('org_id'), $url);
                 $activities = (array) $document->activities;
                 unset($activities[$activityId]);
                 $document->activities = $activities;
-                $documentManager->update($document);
+                $this->documentManager->update($document);
             }
 
             $url                     = $documentLink[0]['url'];
-            $document                = $documentManager->getDocument(session('org_id'), $url);
+            $document                = $this->documentManager->getDocument(session('org_id'), $url);
             $activities              = (array) $document->activities;
             $identifier              = $activityDocumentLink->activity->identifier['activity_identifier'];
             $activities[$activityId] = $identifier;
             $document->activities    = $activities;
-            $documentManager->update($document);
+            $this->documentManager->update($document);
 
             $this->DocumentLinkRepo->update($documentLink, $activityDocumentLink);
             $this->database->commit();

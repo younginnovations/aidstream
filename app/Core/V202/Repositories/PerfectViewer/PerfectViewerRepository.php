@@ -107,19 +107,24 @@ class PerfectViewerRepository
      * Provide transaction data form activity snapshots
      *
      * @param $orgId
-     * @return mixed
+     * @return Transaction
      */
     public function getTransactions($orgId)
     {
+        $organization = $this->organization->where('id', $orgId)->with(['activities' =>
+            function ($query) {
+                return $query->with(['transactions']);
+            }])->first();
+
         $transactions = [];
 
-        $activities = array_flatten(json_decode($this->activitySnapshot->select('activity_id')->where('org_id', $orgId)->get(), true));
-
-        foreach ($activities as $activityId) {
-            $transactions[] = $this->transaction->where('activity_id', $activityId)->get()->toArray();
+        foreach ($organization->activities as $activity) {
+            foreach ($activity->transactions as $transaction) {
+                $transactions[] = $transaction;
+            }
         }
 
-        return $transactions;
+        return collect($transactions);
     }
 
     /**
@@ -192,6 +197,6 @@ class PerfectViewerRepository
      */
     public function getActivityTransactions($activityId)
     {
-        return $this->transaction->where('activity_id', $activityId)->get()->toArray();
+        return $this->transaction->where('activity_id', $activityId)->get();
     }
 }

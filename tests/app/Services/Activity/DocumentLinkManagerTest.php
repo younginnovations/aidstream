@@ -14,6 +14,7 @@ use Psr\Log\LoggerInterface;
 use Illuminate\Database\DatabaseManager;
 use Mockery as m;
 use Test\AidStreamTestCase;
+use App\Models\Document;
 
 /**
  * Class DocumentLinkManagerTest
@@ -44,10 +45,12 @@ class DocumentLinkManagerTest extends AidStreamTestCase
         $this->documentLinkModel = m::mock(ActivityDocumentLink::class);
         $this->documentManager   = m::mock(DocumentManager::class);
         $this->database          = m::mock(DatabaseManager::class);
+        $this->document          = m::mock(Document::class);
         $this->version->shouldReceive('getActivityElement->getDocumentLink->getRepository')->andReturn(
             $this->documentLinkRepo
         );
         $this->documentLinkManager = new DocumentLinkManager(
+            $this->documentManager,
             $this->version,
             $this->auth,
             $this->database,
@@ -66,6 +69,11 @@ class DocumentLinkManagerTest extends AidStreamTestCase
         $this->documentLinkModel->shouldReceive('getAttribute')->once()->with('id')->andReturn(1);
         $this->documentLinkModel->shouldReceive('getAttribute')->once()->with('activity')->andReturn($this->activity);
         $this->activity->shouldReceive('getAttribute')->once()->with('identifier')->andReturn(['activity_identifier' => 1]);
+
+        $this->documentManager->shouldReceive('getDocument')->with(null, 'testUrl')->andReturn($this->document);
+        $this->document->shouldReceive('getAttribute')->with('activities')->andReturn([]);
+        $this->document->shouldReceive('setAttribute')->with('activities', [1=>1])->andReturnSelf();
+        $this->documentManager->shouldReceive('update')->with($this->document);
 
         $orgModel = m::mock(Organization::class);
         $orgModel->shouldReceive('getAttribute')->once()->with('name')->andReturn('orgName');
