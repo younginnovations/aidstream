@@ -21,5 +21,13 @@
         <env name="CACHE_DRIVER" value="array"/>
         <env name="SESSION_DRIVER" value="array"/>
         <env name="QUEUE_DRIVER" value="sync"/>
-    </php>
+    </php>    
+    <filter>
+	<whitelist processUncoveredFilesFromWhitelist="true">
+	     <directory suffix=".php">./</directory>
+	    <exclude>
+		<directory suffix=".php">./vendor</directory>
+	    </exclude>
+	 </whitelist>
+    </filter>
 </phpunit>
