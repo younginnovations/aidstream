@@ -105,7 +105,14 @@ class ActivityDateController extends Controller
     {
         $messages = [];
         $hasStart = false;
-        foreach ($data as $activityDateIndex => $activityDate) {
+
+        $activityDates = [];
+
+        foreach ($data as $datum) {
+            $activityDates[] = $datum;
+        }
+
+        foreach ($activityDates as $activityDateIndex => $activityDate) {
             $blockIndex = $activityDateIndex + 1;
             $date       = $activityDate['date'];
             $type       = $activityDate['type'];
@@ -115,7 +122,7 @@ class ActivityDateController extends Controller
             if ($type == 1 || $type == 2) {
                 $hasStart = true;
             } elseif ($type == 3 || $type == 4) {
-                $prevData = isset($data[$activityDateIndex - 1]) ? $data[$activityDateIndex - 1] : null;
+                $prevData = isset($activityDates[$activityDateIndex - 1]) ? $activityDates[$activityDateIndex - 1] : null;
 
                 if (!$prevData) {
                     $messages[] = trans('error.end_date_after_start_date', ['block' => $blockIndex]);
