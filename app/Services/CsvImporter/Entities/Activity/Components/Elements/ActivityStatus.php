@@ -74,8 +74,6 @@ class ActivityStatus extends Element
      */
     public function rules()
     {
-        $rules = [];
-
         $rules = [
             $this->csvHeader() => sprintf('required|in:%s', $this->validActivityStatus())
         ];
@@ -94,9 +92,9 @@ class ActivityStatus extends Element
         $key = $this->csvHeader();
 
         return [
-            sprintf('%s.required', $key) => trans('validation.required', ['attribute' => trans('element.activity_scope')]),
-            sprintf('%s.size', $key)     => trans('validation.multiple_values', ['attribute' => trans('element.activity_scope')]),
-            sprintf('%s.in', $key)       => trans('validation.code_list', ['attribute' => trans('element.activity_scope')])
+            sprintf('%s.required', $key) => trans('validation.required', ['attribute' => trans('element.activity_status')]),
+            sprintf('%s.size', $key)     => trans('validation.multiple_values', ['attribute' => trans('element.activity_status')]),
+            sprintf('%s.in', $key)       => trans('validation.code_list', ['attribute' => trans('element.activity_status')])
         ];
     }
 

@@ -28,7 +28,11 @@
                 @lang('home.aidstream_is_online_platform')
             </p>
 
-            <a href="{{ url('/register') }}" class="btn btn-primary get-started-btn">@lang('global.get_started')</a>
+            @if(auth()->user())
+                <a href="{{ route('registration') }}" class="btn btn-primary get-started-btn">@lang('global.get_started')</a>
+            @else
+                <a href="#convinceWrapper" class="btn btn-primary get-started-btn">@lang('global.get_started')</a>
+            @endif
 
             <div class="screenshot">
                 <img src="images/screenshot.png" alt="">
@@ -46,7 +50,9 @@
                 <li><img src="images/ic-org-apt.png" alt=""></li>
             </ul>
             {{--<p>387 organisations have published their aid data. <a href="{{ url('/who-are-using') }}">{{ $organizationCount }}</a> have done it through AidStream</p>--}}
-            <p><a href="{{ url('/who-is-using') }}">{{ $organizationCount }}</a> @lang('home.organisations_are_using_aidstream')</p>
+            <p>
+                <a href="{{ url('/who-is-using') }}">{{ $organizationCount }}</a> @lang('home.organisations_are_using_aidstream')
+            </p>
         </div>
     </div>
     <div class="information-wrapper bottom-line">
@@ -104,14 +110,60 @@
     {{--</blockquote>--}}
     {{--</div>--}}
     {{--</div>--}}
-    <div class="convince-wrapper">
+    <div class="convince-wrapper" id="convinceWrapper">
         <div class="col-md-12 text-center width-900">
             <h2>@lang('home.still_not_convinced')</h2>
-
             <p>@lang('home.did_we_mention_that_free')</p>
-            <a href="{{ url('/register') }}" class="btn btn-primary get-started-btn">@lang('global.get_started')</a>
+            {{--<a href="{{ url('/register') }}" class="btn btn-primary get-started-btn">@lang('global.get_started')</a>--}}
         </div>
     </div>
+    @if(!auth()->user())
+    <div class="version-wrapper" id="versionWrapper">
+        <div class="col-xs-12 width-900">
+            <div class="col-xs-12 col-sm-4 col-md-4">
+                <div class="panel-heading text-center">
+                    <img src="{{ url('/images/ic-lite-logo.svg') }}" alt="Lite" width="40" height="37">
+                    <h3>Lite</h3>
+                </div>
+                <div class="panel-body text-left">
+                    <ul>
+                        <li>Basic IATI fields to get you started</li>
+                        <li>For small organizations that don’t understand IATI</li>
+                    </ul>
+                    <p>You will be able to upgrade to Core any time you want.</p>
+                    <a href="{{ route('registration', config('system-version.Lite.id')) }}" class="btn btn-line">Start now</a>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-4 col-md-4">
+                <div class="panel-heading text-center">
+                    <span>We recommend!</span>
+                    <img src="{{ url('/images/ic-core-logo.svg') }}" alt="Core" width="40" height="37">
+                    <h3>Core</h3>
+                </div>
+                <div class="panel-body text-left">
+                    <ul>
+                        <li>With both basic and other fields of IATI</li>
+                        <li>For large (and small) organizations that have a good understanding of IATI</li>
+                    </ul>
+                    <a href="{{ route('registration', config('system-version.Core.id')) }}" class="btn">Start now</a>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-4 col-md-4">
+                <div class="panel-heading text-center">
+                    <img src="{{ url('/images/ic-custom-logo.svg') }}" alt="Custom" width="52" height="45">
+                    <h3>Custom</h3>
+                </div>
+                <div class="panel-body text-left">
+                    <ul>
+                        <li>Customized to meet your organizations’ needs</li>
+                        <li>For organizations that have multiple organizations under them.</li>
+                    </ul>
+                    <a href="mailto:support@aidstream.org" class="btn btn-line">Contact Us</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    @endif
 </section>
 
 @if(session()->has('secondary_contact_name'))
@@ -119,7 +171,8 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-body clearfix text-center ">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
                     <div class="col-md-12 text-center verification-wrapper">
                         <img src={{ url('/images/ic-sent-mail.svg') }} alt="mail" width="88" height="94">
                         <h1>@lang('global.thank_you')!</h1>
@@ -140,8 +193,9 @@
     <div class="modal fade message-modal" tabindex="-1" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <div class="modal-header ">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
                 </div>
                 <div class="modal-body clearfix">
                     <div class="col-md-12 text-center verification-wrapper">
@@ -159,8 +213,9 @@
     <div class="modal fade verification-modal" tabindex="-1" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <div class="modal-header modal-verify-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title">@lang('registration.email_verification')</h4>
                 </div>
                 <div class="modal-body clearfix">
@@ -187,7 +242,6 @@
                 $(this).toggleClass('collapsed');
             });
         }
-
         hamburgerMenu();
 
         if ($('.modal').length > 0) {
@@ -196,6 +250,14 @@
 
         $('#languages').change(function () {
             window.location.href = '/switch-language/' + $(this).val();
+        });
+
+        $(document).on('click', '.get-started-btn', function(event) {
+            var $anchor = $(this);
+            $('html, body').stop().animate({
+                scrollTop: $($anchor.attr('href')).offset().top
+            }, 1000);
+            event.preventDefault();
         });
     });
 </script>

@@ -214,16 +214,20 @@ var ProgressBar = {
         }
     },
     onMapClicked: function () {
+        var self = this;
         $('.map_container').on('click', function () {
-            var name = 'location[0][administrative][0][point][0][latitude]';
-            for (var i = 0; i < 2; i++) {
-                ProgressBar.changeStatusOfField(name, true);
-                name = 'location[0][administrative][0][point][0][longitude]';
-            }
-            ProgressBar.updateFilledFields();
-            ProgressBar.updatePercentage();
-            ProgressBar.updateWidthOfRectangle("bar");
+            self.triggerMapClick();
         });
+    },
+    triggerMapClick: function () {
+        var name = 'location[0][administrative][0][point][0][latitude]';
+        for (var i = 0; i < 2; i++) {
+            ProgressBar.changeStatusOfField(name, true);
+            name = 'location[0][administrative][0][point][0][longitude]';
+        }
+        ProgressBar.updateFilledFields();
+        ProgressBar.updatePercentage();
+        ProgressBar.updateWidthOfRectangle("bar");
     },
     setTotalFields: function (value) {
         this.totalFields = value;

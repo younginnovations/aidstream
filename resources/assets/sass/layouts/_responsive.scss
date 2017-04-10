@@ -1059,7 +1059,7 @@
     float: none;
     margin-left: -2px;
     vertical-align: top;
-    width: 100%;
+    //width: 100%;
   }
 
   .settings-form > form .collection_form > .form-group {
@@ -1333,8 +1333,9 @@
 
 @media print {
   body {
-    margin-left: -210px !important;
+    margin-left: -50px !important;
   }
+
   .navbar, .sidebar-wrapper, .full-sidebar-wrapper, .sidebar-wrapper:not(.touch-sidebar-wrapper), .element-panel-heading, .activity-status, .element-menu-wrapper, .override-activity, .print,
   .more-info:before {
     display: none !important;
@@ -1359,6 +1360,9 @@
     border-bottom: 1px solid #444;
     padding-bottom: 2px;
     margin-bottom: 6px;
+    .activity-element-label {
+      line-height: 18px;
+    }
   }
 
   .view-other-language {
@@ -1400,6 +1404,14 @@
     padding: 4px 14px;
   }
 
+  .expanded {
+    border: 1px solid #444;
+    > div {
+      border-bottom: 1px solid #444;
+      padding: 4px 0;
+    }
+  }
+
   .activity-element-list {
     font-size: 11px;
     line-height: normal !important;
@@ -1416,8 +1428,8 @@
     margin: 2.5cm 1cm;
   }
 
-  @page :first {
-    margin-top: 0.5in;
+  @page:first {
+    margin-top: 1in;
   }
 
   .activity-element-info li {

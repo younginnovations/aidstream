@@ -42,7 +42,7 @@ trait ProvidesLoggerContext
      */
     protected function getOrganizationName(User $user)
     {
-        return $user->organization ? $user->organization->getNameAttribute() : '';
+        return $user->organization ? $user->organization->name : '';
     }
 
     /**

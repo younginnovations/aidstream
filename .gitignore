@@ -4,6 +4,7 @@
 .env.testing
 .php_cs.cache
 *.swp
+*.log
 .idea/
 /public/css/maps
 _ide_helper.php

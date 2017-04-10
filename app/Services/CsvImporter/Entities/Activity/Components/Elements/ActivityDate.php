@@ -113,9 +113,9 @@ class ActivityDate extends Element
      */
     public function setDate($value)
     {
-        $this->dates[] = $value;
+        $this->dates[] = dateFormat('Y-m-d', $value);
 
-        return $value;
+        return dateFormat('Y-m-d', $value);
     }
 
     /**

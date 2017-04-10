@@ -321,7 +321,7 @@
                     </div>
                 </div>
             </div>
-            <button class="remove_location" type="button">Remove This</button>
+            <button class="remove_from_collection" type="button">Remove This</button>
         </div>
     </div>
 </div>

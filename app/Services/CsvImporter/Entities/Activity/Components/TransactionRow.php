@@ -79,6 +79,7 @@ class TransactionRow
     protected $allowedHumanitarianValues = ['yes' => '1', 'no' => '0', 'true' => '1', 'false' => '0'];
     protected $allowedBothCasesField = ['country_code', 'currency', 'aid_type'];
     protected $allowedDoubleValue = ['amount'];
+    protected $dateField = ['transaction_value_date'];
 
     /**
      * TransactionRow constructor.
@@ -184,6 +185,10 @@ class TransactionRow
     {
         if (in_array($field, $this->allowedDoubleValue)) {
             return $value;
+        }
+
+        if (in_array($field, $this->dateField)) {
+            return dateFormat('Y-m-d', $value);
         }
 
         if (gettype($value) == 'double') {

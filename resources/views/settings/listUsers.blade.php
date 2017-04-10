@@ -25,7 +25,7 @@
                         <td>
                             <a href="mailto:{{$value->email}}">{{$value->email}}</a>
                         </td>
-                        <td>
+                        <td class="permission">
                             @if($value->role_id == 1)
                                 {{ Form::select('permission',['1' => 'Administrator'],$value->role_id,['disabled']) }}
                             @elseif(auth()->user()->role_id == 5 || auth()->user()->role_id == 1)

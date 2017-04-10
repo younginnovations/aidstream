@@ -142,6 +142,7 @@ class Organization extends Model
 
     /**
      * get organization name
+     * @param $value
      * @return string
      */
     public function getNameAttribute($value)

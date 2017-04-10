@@ -40,7 +40,8 @@ class Activity extends LiteBaseForm
                  null,
                  null,
                  true,
-                 ['wrapper' => ['class' => 'form-group col-sm-6']]
+                 ['attr' => ['multiple' => 'multiple'], 'wrapper' => ['class' => 'form-group col-sm-6']],
+                 true
              )
              ->add('start_date', 'date', ['label' => trans('lite/elementForm.start_date'), 'required' => true, 'wrapper' => ['class' => 'form-group col-sm-6']])
              ->add('end_date', 'date', ['label' => trans('lite/elementForm.end_date'), 'wrapper' => ['class' => 'form-group col-sm-6']])

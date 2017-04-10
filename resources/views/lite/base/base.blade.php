@@ -41,7 +41,7 @@
                     @else
                         <div class="pull-left logo">
                             <a href="{{url('/')}}" title="AidStream Lite">
-                                <img src="{{url('images/header_logo.svg')}}" alt="AidStream">
+                                <img src="{{url('images/logo-aidstream-lite.svg')}}" alt="AidStream">
                             </a>
                         </div>
                         <a href="{{url('/')}}" title="AidStream Lite">

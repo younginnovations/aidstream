@@ -8,36 +8,41 @@ class Point extends LiteBaseForm
     public function buildForm()
     {
         $this->add(
+            'locationName',
+            'text',
+            [
+                'attr'    => ['class' => 'locationName'],
+                'label'   => trans('elementForm.name'),
+                //                'help_block' => $this->addHelpText('Activity_Location_Point_Pos-latitude'),
+                'wrapper' => ['class' => 'col-sm-6 hidden']
+            ]
+        )->add(
             'latitude',
             'text',
             [
-                'attr' => ['class' => 'latitude'],
-                'label' => trans('elementForm.latitude'),
+                'attr'       => ['class' => 'latitude'],
+                'label'      => trans('elementForm.latitude'),
                 'help_block' => $this->addHelpText('Activity_Location_Point_Pos-latitude'),
-                'wrapper' => ['class' => 'col-sm-6 hidden']
+                'wrapper'    => ['class' => 'col-sm-6 hidden']
             ]
         )
-            ->add(
-                'longitude',
-                'text',
-                [
-                    'attr' => ['class' => 'longitude'],
-                    'label' => trans('elementForm.longitude'),
-                    'help_block' => $this->addHelpText('Activity_Location_Point_Pos-longitude'),
-                    'wrapper' => ['class' => 'col-sm-6 hidden']
-                ]
-            )
-            ->add(
-                'map',
-                'static',
-                [
-                    'label' => false,
-                    'attr' => [
-                        'class' => 'map_container',
-                        'style' => 'height: 400px'
-                    ],
-                    'wrapper' => ['class' => 'form-group full-width-wrap']
-                ]
-            );
+             ->add(
+                 'longitude',
+                 'text',
+                 [
+                     'attr'       => ['class' => 'longitude'],
+                     'label'      => trans('elementForm.longitude'),
+                     'help_block' => $this->addHelpText('Activity_Location_Point_Pos-longitude'),
+                     'wrapper'    => ['class' => 'col-sm-6 hidden']
+                 ]
+             )
+             ->add(
+                 'remove_point',
+                 'button',
+                 [
+                     'attr'  => ['class' => 'remove_from_location hidden'],
+                     'label' => trans('global.delete')
+                 ]
+             );
     }
 }

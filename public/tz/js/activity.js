@@ -1,4 +1,6 @@
 var Activity = {
+    administrativeCount: [],
+    locationCount: 0,
     changeRegionAndDistrict: function () {
         $('.location').on('change', '.region', function () {
             var region = $(this).val();
@@ -9,7 +11,6 @@ var Activity = {
     appendDistrict: function (region, districtSelector, selectedValue) {
         var options = districtSelector.find('option');
         options.remove();
-
         if (region != "") {
             if (!selectedValue) {
                 districtSelector.siblings('span').find('.selection').find('.select2-selection__rendered').html("Choose a district");
@@ -35,14 +36,13 @@ var Activity = {
             }
             var selectedRegion = $(region).find('.region').val();
             var selectedCountry = parentContainer.find('.country').children('select').val();
-
             if (selectedCountry != "TZ") {
                 $(region).parent().find('.district-container').remove();
                 $(region).closest('.administrative').next().remove();
                 $(region).remove();
             } else {
                 district = $(region).parent().find('.district-container').children('select');
-                if (selectedDistricts != "") {
+                if (selectedDistricts.length != 0) {
                     Activity.appendDistrict(selectedRegion, district, selectedDistricts[index][selectedRegion]);
                 }
             }
@@ -92,9 +92,15 @@ var Activity = {
     addLocation: function (source) {
         var locationContainer = $(source).closest('.location');
         var collection = $('.location-container');
-        var locationCount = locationContainer.find('.country').length;
+        var currentLocationCount = locationContainer.find('.country').length;
+        if (this.locationCount >= currentLocationCount) {
+            this.locationCount = this.locationCount + 1;
+        }
+        else {
+            this.locationCount = currentLocationCount;
+        }
 
-        var proto = collection.html().replace(/locationCount/g, locationCount);
+        var proto = collection.html().replace(/locationCount/g, this.locationCount);
         proto = proto.replace(/administrativeCount/g, 0);
         proto = $(proto).addClass('added-new-block new-location-block');
         locationContainer.append(proto);
@@ -117,25 +123,28 @@ var Activity = {
         $('form select').select2();
     },
     addMoreAdministrative: function () {
+        var self = this;
         $('.add_another_location').on('click', function () {
             var administrativeContainer = $(this).parent().parent().find('.administrative');
             var collection = $('.administrative-container');
-            var administrativeCount = administrativeContainer.children('.form-group').length;
-            var locationCount = $(this).closest('.country').length;
+            var countryContainer = administrativeContainer.parent().find('.country');
+            var countryId = countryContainer.find('select').attr('id');
+            var administrativeCount = 0;
+
+            if (self.administrativeCount[countryId] == undefined) {
+                administrativeCount = administrativeContainer.children('.form-group').length;
+                self.administrativeCount[countryId] = administrativeCount;
+            } else {
+                administrativeCount = self.administrativeCount[countryId] + 1;
+            }
 
             var proto = collection.html().replace(/locationCount/g, 0);
+
             proto = proto.replace(/administrativeCount/g, administrativeCount);
             proto = $(proto).addClass('added-new-block');
             administrativeContainer.append(proto);
 
             $('form select').select2();
-        });
-    },
-    deleteCountryOnClick: function () {
-        $('.collection_form').on('click', '.remove_location', function () {
-            if ($('.new-location-block').length > 1) {
-                $(this).closest('.new-location-block').remove();
-            }
         });
     }
 };

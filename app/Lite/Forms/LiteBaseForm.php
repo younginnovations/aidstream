@@ -114,12 +114,13 @@ class LiteBaseForm extends BaseForm
         $helpText = null,
         $defaultValue = null,
         $required = false,
-        $customOptions = []
+        $customOptions = [],
+        $emptyValue = null
     ) {
         $options = [
             'choices'       => $choices,
             'label'         => $label,
-            'empty_value'   => trans('elementForm.select_text'),
+            'empty_value'   => $emptyValue ? '' : trans('elementForm.select_text'),
             'default_value' => $defaultValue,
             'help_block'    => $helpText,
             'required'      => $required

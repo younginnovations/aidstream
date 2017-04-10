@@ -23,6 +23,13 @@ return [
     'version_upgrade_tooltip'          => 'Upgrade your AidStream to the Core version to use it to the fullest.',
     'go_back'                          => 'Back to Lite',
     'confirm_upgrade'                  => 'Are you sure you want to upgrade AidStream ?',
-    'agree_upgrade'                    => 'I am aware of the upgrade process. Lets upgrade AidStream.',
-    'upgrade_changes'                  => "You are going to upgrade AidStream to its core version. You will have different features and will be able to use all the IATI elements. But once you upgrade, you won't be able to go back."
+    'agree_upgrade'                    => 'I am aware of the upgrade process and consequences. Lets upgrade AidStream.',
+    'upgrade_changes'                  => [
+        'first'                   => "You are going to upgrade AidStream to its <u>Core Version</u>.",
+        'second'                  => "You will have different features at your disposal and will be able to use all the <a href='http://iatistandard.org/' target='_blank'>IATI</a> elements according to your need.",
+        'third'                   => "You will not lose any data. <u><br><br> But once you upgrade, <b>you won't be able to go back.</b></u>",
+        'unsure'                  => "If you are unsure about upgrading or do not know AidStream at its Core",
+        'recommendations-wiki'    => "We suggest you go through our <a href='https://github.com/younginnovations/aidstream/wiki/User-Guide' target='_blank'>User Guide</a> before you upgrade.",
+        'recommendations-support' => "You can always shoot us an email at <a href='mailto:support@aidstream.org'>support@aidstream.org</a>"
+    ]
 ];

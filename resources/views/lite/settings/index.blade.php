@@ -27,12 +27,12 @@
                             <div class="form-group upload-logo-block edit-profile-block edit-profile-form-block">
                                 <label class="control-label">Profile Picture</label>
                                 <div class="upload-logo">
-                                    {{ Form::file('organisation_logo',['class'=>'inputfile form-control', 'id' => 'picture']) }}
+                                    {{ Form::file('organisation_logo',['class'=>'inputfile form-control', 'id' => 'picture', 'old' => old('organisation_logo')]) }}
                                     <label for="file-logo">
                                         <div class="uploaded-logo">
-                                            @if($loggedInUser->profile_picture)
-                                                <img src="{{ $loggedInUser->profile_url }}" height="150" width="150"
-                                                     alt="{{ $loggedInUser->profile_picture }}" id="selected_picture">
+                                            @if($loggedInUser->organization->logo)
+                                                <img src="{{ url($loggedInUser->organization->logo_url) }}" height="150" width="150"
+                                                     alt="{{ $loggedInUser->organization->logo }}" id="selected_picture">
                                             @else
                                                 <img src="" height="150" width="150" alt="Uploaded Image"
                                                      id="selected_picture">
@@ -59,21 +59,42 @@
         </div>
     </div>
 
-    <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
-         id="system-upgrade-modal">
+    <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" id="system-upgrade-modal">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                                aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">@lang('lite/settings.confirm_upgrade')</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <div class="pull-left">
+                    <img src="{{ asset('images/ic-lite-logo.svg') }}"/> <span class="glyphicon glyphicon-arrow-right"></span> <img src="{{ asset('images/ic-core-logo.svg') }}"/>
+                    </div>
+                    <h4 class="modal-title" id="myModalLabel"><b>@lang('lite/settings.confirm_upgrade')</b></h4>
                 </div>
+
                 <form action="{{ route('lite.settings.upgrade-version') }}" method="POST">
                     {{ csrf_field() }}
                     <div class="modal-body">
                         <p>
-                            @lang('lite/settings.upgrade_changes')
+                            <b>@lang('lite/settings.upgrade_changes.first')</b>
                         </p>
+                        <p>
+                            <ul>
+                                <li>
+                                    @lang('lite/settings.upgrade_changes.second')
+                                </li>
+                                <li>
+                                    @lang('lite/settings.upgrade_changes.third')
+                                </li>
+                            </ul>
+                        </p>
+                        <p>
+                            @lang('lite/settings.upgrade_changes.unsure')
+                        </p>
+                        <li>
+                            @lang('lite/settings.upgrade_changes.recommendations-wiki')
+                        </li>
+                        <li>
+                            @lang('lite/settings.upgrade_changes.recommendations-support')
+                        </li>
                     </div>
                     <div class="modal-footer">
                         <label>

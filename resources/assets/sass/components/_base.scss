@@ -151,3 +151,107 @@ strong {
     background-position: -230px -390px;
   }
 }
+
+.no-data {
+  font-size: 16px;
+  font-style: italic;
+  color: rgba($color_gravel_approx, 0.7);
+  padding: 44px 0 50px;
+  background: rgba($color_gravel_approx, 0.06);
+  margin: 36px 30px 36px 36px;
+  .btn {
+    background: $color_primary;
+    border: 0;
+    line-height: 50px;
+    padding: 0 24px 0 52px;
+    font-size: 14px;
+    display: inline-block;
+    margin: 10px auto;
+    font-style: normal;
+    position: relative;
+    &:before {
+      background: $url_3 no-repeat -492px -150px;
+      content: "";
+      @include size(34px 34px);
+      @include position(absolute, 5px auto auto 9px);
+    }
+    &:hover {
+      background-color: $color_cerulean_approx;
+    }
+    & + .btn {
+      margin-left: 10px;
+    }
+  }
+}
+
+.no-data .btn-upload:before {
+  background-position: -497px -302px;
+}
+
+.no-data-btn > .btn {
+  display: inline-block;
+  margin-left: 10px;
+}
+
+.no-data-btn .upload {
+  color: $color_white;
+  background-position: -483px -292px;
+}
+
+.no-activity-data {
+  background: rgba($color_gravel_approx, 0.06) $url_5 no-repeat center 79px;
+  padding: 204px 0 20px;
+}
+
+.published-wrapper .no-document-data {
+  margin-top: 14px;
+}
+
+.no-document-data, .no-result-data {
+  background: rgba($color_gravel_approx, 0.06) $url_6 no-repeat center 79px;
+  padding: 204px 0 20px;
+}
+
+.no-user-data {
+  background: rgba($color_gravel_approx, 0.06) $url_7 no-repeat center 79px;
+  padding: 204px 0 20px;
+}
+
+.permission select {
+  font-size: 13px;
+  height: 28px;
+  padding: 0;
+}
+
+.modal-verify-header {
+  border: 0;
+}
+
+.print, .override-activity {
+  font-size: 12px;
+  margin: 0 24px 10px 0;
+}
+
+.print {
+  background: $url_19 no-repeat 16px 8px;
+  box-shadow: 0px 0px 0px 1px #aaa;
+  border-radius: 50px;
+  color: #777;
+  padding: 7px 16px 7px 36px;
+  &:hover, &:focus {
+    color: #000;
+    text-decoration: none;
+    background-position: 16px -31px;
+    box-shadow: 0px 0px 0px 1px #555;
+  }
+}
+
+.override-activity {
+  margin: 7px 14px 0 0;
+}
+
+.select2-container--default .select2-selection--multiple .select2-selection__choice {
+  border-color: #ccc;
+  font: 14px $font_0;
+  margin: 0 5px 5px 0;
+}

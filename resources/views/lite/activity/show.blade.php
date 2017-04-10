@@ -16,6 +16,7 @@
             </div>
             <a href="{{ route('lite.activity.edit', $activity->id) }}"
                class="edit-activity pull-right">@lang('lite/global.edit_activity')</a>
+            <a href="" class="pull-right print">Print</a>
         </div>
         <div class="panel__body">
             <div class="col-xs-12 col-sm-9 panel__activity__detail">
@@ -55,7 +56,7 @@
                             @if($activity->activity_status)
                                 <li>
                                     <i class="pull-left material-icons">autorenew</i>
-                                    <span>{{  $getCode->getCodeNameOnly('ActivityStatus', $activity->activity_status) }}<i>(Status)</i></span>
+                                    <span>{{  $getCode->getCodeNameOnly('ActivityStatus', $activity->activity_status) }}<i> (Status)</i></span>
                                 </li>
                             @endif
                         </ul>
@@ -75,17 +76,16 @@
                     @endforeach
                     @include('lite.activity.partials.workflow')
                 </div>
-                {{--<div class="activity__block activity__map">--}}
-                {{--map--}}
-                {{--</div>--}}
+                <div class="activity__block activity__map" id="map">
+
+                </div>
                 <div class="activity__block activity__detail__block">
-                    <ul>
-                        <li><span>@lang('lite/global.activity_detail')</span></li>
-                        <li><a href="#activity__budget">@lang('lite/global.budget')</a><i>({{ getVal($count, ['budget'], 0) }})</i></li>
-                        <li><a href="#activity__disbursement">@lang('lite/title.disbursement')</a><i>({{ getVal($count, ['disbursement'], 0) }})</i></li>
-                        <li><a href="#activity__expenditure">@lang('lite/title.expenditure')</a><i>({{ getVal($count, ['expenditure'], 0) }})</i></li>
-                        <li><a href="#activity__incoming">@lang('lite/title.incoming_funds')</a><i>({{ getVal($count, ['incoming_funds'], 0) }})</i></li>
-                        {{--<li><a href="#">@lang('lite/global.transactions')</a><i>({{ getVal($count, ['transaction'], 0) }})</i></li>--}}
+                    <h4 data-toggle="collapse" data-target="#add-list"><span class="add-more">@lang('lite/global.add_other_elements')</span><span class="caret pull-right"></span></h4>
+                    <ul id="add-list" class="collapse in">
+                        <li><a href="{{ route('lite.activity.budget.create', $activity->id) }}">@lang('lite/global.budget')</a></li>
+                        <li><a href="{{ route('lite.activity.transaction.create', [$activity->id, 3]) }}">@lang('lite/title.disbursement')</a></li>
+                        <li><a href="{{ route('lite.activity.transaction.create', [$activity->id, 4]) }}">@lang('lite/title.expenditure')</a></li>
+                        <li><a href="{{ route('lite.activity.transaction.create', [$activity->id, 1]) }}">@lang('lite/title.incoming_funds')</a></li>
                     </ul>
                 </div>
                 <div class="activity__block activity__updated__date">
@@ -96,6 +96,13 @@
     </div>
 @endsection
 @section ('script')
+    <script src="/js/d3.min.js"></script>
+    <script>
+        var recipientCountries = {!!json_encode(array_flip($recipientCountries))!!};
+        var pathColorCode = "#D9E5EB";
+        var recipientCountryColorCode = "#00A8FF";
+    </script>
+    <script type="text/javascript" src="/js/worldMap.js"></script>
     <script>
         $(document).ready(function () {
             function fixedTop() {
@@ -115,13 +122,13 @@
                 fixedTop();
             });
 
-            $('.activity__detail__block a').bind('click', function (event) {
-                var $anchor = $(this);
-                $('html, body').stop().animate({
-                    scrollTop: $($anchor.attr('href')).offset().top - 60
-                }, 1000);
-                event.preventDefault();
-            });
+//            $('.activity__detail__block a').bind('click', function (event) {
+//                var $anchor = $(this);
+//                $('html, body').stop().animate({
+//                    scrollTop: $($anchor.attr('href')).offset().top - 60
+//                }, 1000);
+//                event.preventDefault();
+//            });
         });
     </script>
 @stop

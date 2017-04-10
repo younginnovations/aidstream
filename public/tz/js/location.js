@@ -41,11 +41,11 @@ var TzLocation = {
             if (country != "") {
                 TzLocation.coordinates = (latitudeValue != "" && longitudeValue != "") ? TzLocation.coordinates : TzLocation.returnLatAndLong(country);
             }
-            
+
             if (TzLocation.map) {
                 TzLocation.map.remove();
             }
-            TzLocation.map = initMap(mapContainer.attr('id'), TzLocation.coordinates);
+            TzLocation.map = Map.initMap(mapContainer.attr('id'), TzLocation.coordinates);
         } else {
             pointContainer.css('display', 'none');
             mapContainer.css('display', 'block');

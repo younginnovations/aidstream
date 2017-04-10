@@ -66,9 +66,13 @@
                 <h3>
                     @lang('lite/elementForm.sector')
                 </h3>
-                <div class="activity__element--info">
-                    {{ $getCode->getCodeNameOnly('Sector', getVal((array)$activity->sector, [0, 'sector_code']),-7)}}
-                </div>
+                @foreach($activity->sector as $index => $sector)
+                    <div class="activity__element--info">
+                        <li>
+                            {{ getVal($sector, ['sector_code'], '') }} - {{ $getCode->getCodeNameOnly('Sector', getVal($sector, ['sector_code']),-7)}}
+                        </li>
+                    </div>
+                @endforeach
             </div>
         </div>
     @endif
@@ -101,7 +105,7 @@
                 @foreach((array) $activity->recipient_country as $index => $recipientCountry)
                     <div class="activity__element--info">
                         <li>
-                            {{$getCode->getCodeNameOnly('Country', getVal($recipientCountry,['country_code']),-4,'Organization')}}
+                            {{$getCode->getCodeNameOnly('Country', getVal($recipientCountry,['country_code']),-4,'Organization')}} - {{ getVal($recipientCountry, ['country_code'], '') }}
                         </li>
                     </div>
                 @endforeach
@@ -135,14 +139,14 @@
                         <h3>
                             @lang('lite/elementForm.implementing_organisation')
                         </h3>
+                        <div class="activity__element--info">
                         @foreach($participatingOrganization as $index => $implementingOrganization)
-                            <div class="activity__element--info">
                                 <li>
                                     {{ getVal($implementingOrganization, ['narrative', 0, 'narrative']) }}
                                     , {{$getCode->getCodeNameOnly('OrganisationType', getVal($implementingOrganization, ['organization_type']))}}
                                 </li>
-                            </div>
                         @endforeach
+                        </div>
                     </div>
                 </div>
             @endif

@@ -58,7 +58,7 @@ class RegistrationController extends Controller
      * returns registration view
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function showRegistrationForm()
+    public function showRegistrationForm($systemVersion = null)
     {
         $regInfo        = session()->pull('reg_info');
         $orgType        = $this->baseForm->getCodeList('OrganizationType', 'Organization', false);
@@ -66,7 +66,7 @@ class RegistrationController extends Controller
         $orgRegAgency   = $this->baseForm->getCodeList('OrganisationRegistrationAgency', 'Organization', false);
         $dbRegAgency    = $this->regAgencyManager->getRegAgenciesCode();
         $orgRegAgency   = array_merge($orgRegAgency, $dbRegAgency);
-        $systemVersions = $this->systemVersion->lists('system_version', 'id')->toArray();
+        $systemVersions = $this->systemVersion->where('id', '<>', config('system-version.Tz.id'))->lists('system_version', 'id')->toArray();
 
         $dbRoles = \DB::table('role')->whereNotNull('permissions')->orderBy('role', 'desc')->get();
         $roles   = [];
@@ -74,7 +74,7 @@ class RegistrationController extends Controller
             $roles[$role->id] = $role->role;
         }
 
-        return view('auth.register', compact('orgType', 'countries', 'orgRegAgency', 'roles', 'regInfo', 'systemVersions'));
+        return view('auth.register', compact('orgType', 'countries', 'orgRegAgency', 'roles', 'regInfo', 'systemVersions', 'systemVersion'));
     }
 
     /**
@@ -86,7 +86,7 @@ class RegistrationController extends Controller
     {
         $request = request();
 
-        $systemVersion = isTzSubDomain() ? 3 : 1;
+        $systemVersion = isTzSubDomain() ? 3 : $request->get('systemVersion');
         $users         = $request->get('users');
         $orgInfo       = $request->get('organization');
 

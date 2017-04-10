@@ -19,7 +19,29 @@ class Location extends LiteBaseForm
             null,
             true,
             ['wrapper' => ['class' => 'form-group col-sm-6 country']]
-        )->addToCollection('administrative', ' ', $this->getFormPath('Administrative'), 'collection_form administrative')
+        )
+             ->add(
+                 'map',
+                 'static',
+                 [
+                     'label'   => false,
+                     'attr'    => [
+                         'class' => 'map_container',
+                         'style' => 'height: 400px; width:400px'
+                     ],
+                     'wrapper' => ['class' => 'form-group full-width-wrap map-wrapper']
+                 ]
+             )
+             ->add(
+                 'add_map',
+                 'button',
+                 [
+                     'attr'    => ['class' => 'form-group view_map'],
+                     'label'   => trans('lite/elementForm.map'),
+                     'wrapper' => ['class' => 'form-group map-location']
+                 ]
+             )
+             ->addToCollection('administrative', ' ', $this->getFormPath('Administrative'), 'collection_form administrative')
              ->add(
                  'remove_button',
                  'button',

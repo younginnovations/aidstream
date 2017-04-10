@@ -44,14 +44,13 @@
                         <div class="col-md-9">
                             <h2>@lang('lite/global.location')</h2>
                             <div class="row">
-                                @if(isRegisteredForTz())
-                                    {!! form_until($form,'location') !!}
-                                    <div class="option-to-add-more form-group">
+                                @if(isRegisteredForTz()) {!! form_until($form,'location') !!}
+                                <div class="option-to-add-more form-group">
                                         <span class="pull-left">
                                             @lang('lite/global.add_more_country_than_tanzania')
                                         </span>
-                                        <a href='#' class='pull-left display No' id='displayAddMore'><span class="pull-right">switch</span></a>
-                                    </div>
+                                    <a href='#' class='pull-left display No' id='displayAddMore'><span class="pull-right">switch</span></a>
+                                </div>
                                 @else
                                     {!! form_until($form,'add_more_location') !!}
                                 @endif
@@ -97,9 +96,33 @@
                         <div class="location-container hidden"
                              data-prototype="{{ form_row($form->location->prototype()) }}">
                         </div>
+                        <div class="point-container hidden">
+                            @include('lite.activity.partials.point')
+                        </div>
                     @endif
                 </div>
             </div>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div id="countryChange" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Confirm</h4>
+                </div>
+                <div class="modal-body">
+                    <p>It will remove the locations of this country. Are you sure?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default remove-location" data-dismiss="modal">Remove</button>
+                    <button type="button" class="btn btn-default remove-location-cancel" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+
         </div>
     </div>
 @stop
@@ -108,57 +131,74 @@
     <script type="text/javascript" src="{{ url('/lite/js/createActivity.js') }}"></script>
     <script type="text/javascript" src="{{url('/lite/js/progressBar.js')}}"></script>
     <script type="text/javascript" src="{{url('/js/leaflet.js')}}"></script>
-    <script type="text/javascript" src="{{url('/js/map.js')}}"></script>
     @if(isRegisteredForTz())
+        <script type="text/javascript" src="{{url('/js/map.js')}}"></script>
         <script type="text/javascript" src="{{ url('/tz/js/location.js') }}"></script>
         <script type="text/javascript" src="{{ url('/tz/js/activity.js') }}"></script>
+    @else
+        <script type="text/javascript" src="{{url('/lite/js/map.js')}}"></script>
     @endif
     <script type="text/javascript" src="{{ url('/lite/js/location.js') }}"></script>
 
-    <script type="text/javascript">
-        $(document).ready(function () {
-            var countryDetails = [{!! $countryDetails !!}];
-            @if(isRegisteredForTz())
-            TzLocation.closeOpenedMap(countryDetails);
-            TzLocation.onCountryChanged();
-            @else
-            Location.closeOpenedMap(countryDetails);
-            Location.onCountryChange();
-            @endif
-        })
-    </script>
-    <script type="text/javascript">
-        var completedText = "{{strtolower(trans('lite/global.completed'))}}";
-        CreateActivity.editTextArea({!! empty(!$form->getModel()) !!});
-        CreateActivity.addToCollection();
-        CreateActivity.scroll();
+<script type="text/javascript">
+var countryElement;
+var selectElement;
+var countryVal;
+var geoJson = {!! $geoJson !!}
+$(document).ready(function () {
+  Location.clearUseMap();
+  $('button.remove-location').on('click', function() {
+    if(countryElement){
+      Location.clearLocations();
+    }
+  });
+  $('button.remove-location-cancel').on('click', function() {
+    selectElement.val(countryVal).change();
+  });
+  var countryDetails = [{!! $countryDetails !!}];
+  Location.prepareElements();
+  @if(isRegisteredForTz())
+    TzLocation.closeOpenedMap(countryDetails);
+  TzLocation.onCountryChanged();
+  @else
+    Location.closeOpenedMap(countryDetails);
+  Location.onCountryChange();
+  Location.onCountryDelete();
+  Map.reverseLocation();
+  @endif
+})
+</script>
+<script type="text/javascript">
+var completedText = "{{strtolower(trans('lite/global.completed'))}}";
+CreateActivity.editTextArea({!! empty(!$form->getModel()) !!});
+CreateActivity.addToCollection();
+CreateActivity.scroll();
+CreateActivity.deleteCountryOnClick();
+@if(isRegisteredForTz())
+  var districts = [{!! json_encode(config('tz.district')) !!}];
+Activity.changeRegionAndDistrict();
+Activity.removeCountriesExceptTz();
+Activity.addMoreAdministrative();
+var district = [];
+var counter = 0;
+@foreach(getVal($form->getModel(),['location'],[]) as $index => $location )
+  @foreach(getVal($location,['administrative'],[]) as $key => $administrative)
+  @if(getVal($administrative,['region'],'') != "")
+  district[counter] = [];
+district[counter]["{!! getVal($administrative,['region'],'') !!}"] = "{!! getVal($administrative,['district'],'') !!}";
+counter++;
+@endif
+  @endforeach
+  @endforeach
+  Activity.loadDistrictIfRegionIsPresent(district);
+Activity.displayAddMoreCountry();
+ProgressBar.setTotalFields(22);
+ProgressBar.setLocationFields(5);
+ProgressBar.addFilledFieldsForTz();
+ProgressBar.onMapClicked();
+@endif
 
-        @if(isRegisteredForTz())
-            var districts = [{!! json_encode(config('tz.district')) !!}];
-            Activity.changeRegionAndDistrict();
-            Activity.removeCountriesExceptTz();
-            Activity.addMoreAdministrative();
-            Activity.deleteCountryOnClick();
-            var district = [];
-            var counter = 0;
-            @foreach(getVal($form->getModel(),['location'],[]) as $index => $location )
-                @foreach(getVal($location,['administrative'],[]) as $key => $administrative)
-                    @if(getVal($administrative,['region'],'') != "")
-                        district[counter] = [];
-                        district[counter]["{!! getVal($administrative,['region'],'') !!}"] = "{!! getVal($administrative,['district'],'') !!}";
-                        counter++;
-                    @endif
-                @endforeach
-            @endforeach
-            Activity.loadDistrictIfRegionIsPresent(district);
-            Activity.displayAddMoreCountry();
-            ProgressBar.setTotalFields(22);
-            ProgressBar.setLocationFields(5);
-            ProgressBar.addFilledFieldsForTz();
-        @endif
-
-        ProgressBar.calculateProgressBar(completedText);
+    ProgressBar.calculateProgressBar(completedText);
         ProgressBar.calculate();
-        ProgressBar.onMapClicked();
     </script>
 @stop

@@ -333,7 +333,7 @@ $router->post(
 $router->resource('agency', 'AgencyController');
 
 $router->get(
-    'register',
+    'register/{systemVersion?}',
     [
         'as'   => 'registration',
         'uses' => 'Auth\RegistrationController@showRegistrationForm'

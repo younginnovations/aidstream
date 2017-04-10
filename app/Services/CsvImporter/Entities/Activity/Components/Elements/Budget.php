@@ -162,7 +162,7 @@ class Budget extends Element
             $this->data['budget'][$index]['value'][0]['amount'] = $value;
         }
         if ($key == $this->_csvHeaders[5]) {
-            $this->data['budget'][$index]['value'][0]['value_date'] = $value;
+            $this->data['budget'][$index]['value'][0]['value_date'] = dateFormat('Y-m-d', $value);
         }
     }
 

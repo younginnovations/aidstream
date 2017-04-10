@@ -1,12 +1,21 @@
 var CreateActivity = {
     addToCollection: function () {
+        $('button.remove_from_collection').first().hide();
         $('.add-to-collection').on('click', function (e) {
             e.preventDefault();
             var source = $(this).attr('data-collection');
             var collection = $('.' + source + '-container');
             var parentContainer = $('.' + source);
             var count = $('.' + source + '> div.form-group').length;
-            var proto = collection.data('prototype').replace(/__NAME__/g, count);
+            var proto = '';
+
+            if (source == 'location') {
+                proto = collection.data('prototype').replace(/location\[__NAME__\]/g, 'location[' + count + ']');
+                proto = proto.replace(/\[administrative\]\[__NAME__\]/g, '[administrative][' + 0 + ']');
+                proto = proto.replace(/\[point\]\[__NAME__\]/g, '[point][' + 0 + ']');
+            } else {
+                proto = collection.data('prototype').replace(/__NAME__/g, count);
+            }
 
             if (source == "funding_organisations" || source == "implementing_organisations") {
                 $(parentContainer).append(proto);
@@ -27,7 +36,7 @@ var CreateActivity = {
              * page is scrolled/
              */
             $(window).scroll(function () {
-                var window_top = $(window).scrollTop() + 20; // the "12" should equal the margin-top value for nav.stick
+                var window_top = $(window).scrollTop(); // the "12" should equal the margin-top value for nav.stick
                 var div_top = $('#nav-anchor').offset().top;
                 if (window_top > div_top) {
                     $('.panel__nav nav').addClass('stick');
@@ -42,7 +51,10 @@ var CreateActivity = {
              */
             $(".panel__nav nav a").click(function (evn) {
                 evn.preventDefault();
-                $('html,body').scrollTo(this.hash, this.hash);
+                var $anchor = $(this);
+                $('html, body').stop().animate({
+                    scrollTop: $($anchor.attr('href')).offset().top - 70
+                }, 1000);
             });
 
             /**
@@ -65,9 +77,10 @@ var CreateActivity = {
 
                 for (var i = 0; i < aArray.length; i++) {
                     var theID = aArray[i];
-                    var divPos = $(theID).offset().top; // get the offset of the div from the top of page
+                    var divPos = $(theID).offset().top - 70; // get the offset of the div from the top of page
                     var divHeight = $(theID).height(); // get the height of the div in question
                     if (windowPos >= divPos && windowPos < (divPos + divHeight)) {
+                        $(".stick a").removeClass("active");
                         $("a[href='" + theID + "']").addClass("active");
                     } else {
                         $("a[href='" + theID + "']").removeClass("active");
@@ -96,6 +109,13 @@ var CreateActivity = {
         if (model) {
             $("textarea").css('height', '79px');
         }
+    },
+    deleteCountryOnClick: function () {
+        $('.collection_form').on('click', '.remove_from_collection', function () {
+            if ($('.new-location-block').length > 1) {
+                $(this).closest('.new-location-block').remove();
+            }
+        });
     }
 };
 

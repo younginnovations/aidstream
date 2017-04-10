@@ -316,7 +316,10 @@ class Settings
         foreach ($ids as $id) {
             $publisherIds[] = getVal($id, ['registry_info', 0, 'publisher_id']);
         }
-        $this->settingsRules['publisherId'] = sprintf('include_operators|not_in:%s', implode(",", $publisherIds));
+
+        if (request()->get('publisherId')) {
+            $this->settingsRules['publisherId'] = sprintf('include_operators|not_in:%s', implode(",", $publisherIds));
+        }
     }
 
     /**
@@ -324,7 +327,9 @@ class Settings
      */
     protected function messagesForPublisherId()
     {
-        $this->settingsMessages['publisherId.not_in'] = trans('validation.unique_validation', ['attribute' => trans('lite/settings.publisher_id')]);
-        $this->settingsMessages['publisherId.include_operators'] = trans('validation.alpha_dash', ['attribute' => trans('lite/settings.publisher_id')]);
+        if (request()->get('publisherId')) {
+            $this->settingsMessages['publisherId.not_in']            = trans('validation.unique_validation', ['attribute' => trans('lite/settings.publisher_id')]);
+            $this->settingsMessages['publisherId.include_operators'] = trans('validation.alpha_dash', ['attribute' => trans('lite/settings.publisher_id')]);
+        }
     }
 }
