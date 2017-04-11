@@ -562,7 +562,7 @@ class ResultRow extends Row
      */
     protected function setIndicatorBaselineComment($index)
     {
-        $values = getVal($this->indicators[$index], ['baseline_comment']);
+        $values = getVal($this->indicators[$index], ['baseline_comment'], []);
 
         if (!is_null($values)) {
             foreach ($values as $baselineIndex => $value) {
