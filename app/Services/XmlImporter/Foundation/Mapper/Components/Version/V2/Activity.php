@@ -188,6 +188,8 @@ class Activity
             $this->activity[$this->activityElements[$elementName]] = $this->$elementName($element, $template);
         }
 
+        $this->activity['description'] = array_values($this->activity['description']);
+
         return $this->activity;
     }
 
