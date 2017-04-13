@@ -325,26 +325,26 @@ class ActivityRepository
         return $this->activity->create(
             [
                 'identifier'                 => $activityData['identifier'],
-                'title'                      => $activityData['title'],
-                'description'                => $activityData['description'],
+                'title'                      => array_values($activityData['title']),
+                'description'                => array_values($activityData['description']),
                 'activity_status'            => $activityData['activity_status'],
-                'activity_date'              => $activityData['activity_date'],
-                'participating_organization' => $activityData['participating_organization'],
-                'recipient_country'          => $activityData['recipient_country'],
-                'recipient_region'           => $activityData['recipient_region'],
-                'sector'                     => $activityData['sector'],
+                'activity_date'              => array_values($activityData['activity_date']),
+                'participating_organization' => array_values($activityData['participating_organization']),
+                'recipient_country'          => array_values($activityData['recipient_country']),
+                'recipient_region'           => array_values($activityData['recipient_region']),
+                'sector'                     => array_values($activityData['sector']),
                 'organization_id'            => $activityData['organization_id'],
-                'policy_marker'              => (array_key_exists('policy_marker', $activityData) ? $activityData['policy_marker'] : null),
-                'budget'                     => (array_key_exists('budget', $activityData) ? $activityData['budget'] : null),
-                'activity_scope'             => (array_key_exists('activity_scope', $activityData) ? $activityData['activity_scope'] : null),
+                'policy_marker'              => array_key_exists('policy_marker', $activityData) ? array_values($activityData['policy_marker']) : null,
+                'budget'                     => array_key_exists('budget', $activityData) ? array_values($activityData['budget']) : null,
+                'activity_scope'             => array_key_exists('activity_scope', $activityData) ? array_values($activityData['activity_scope']) : null,
                 'default_field_values'       => $defaultFieldValues,
-                'collaboration_type'         => (($collaborationType = getVal($defaultFieldValues, [0, 'default_collaboration_type'])) == "" ? null : $collaborationType),
-                'default_flow_type'          => (($defaultFlowType = getVal($defaultFieldValues, [0, 'default_flow_type'])) == "" ? null : $defaultFlowType),
-                'default_finance_type'       => (($defaultFinanceType = getVal($defaultFieldValues, [0, 'default_finance_type'])) == "" ? null : $defaultFinanceType),
-                'default_aid_type'           => (($defaultAidType = getVal($defaultFieldValues, [0, 'default_aid_type'])) == "" ? null : $defaultAidType),
-                'default_tied_status'        => (($defaultTiedStatus = getVal($defaultFieldValues, [0, 'default_tied_status'])) == "" ? null : $defaultTiedStatus),
-                'contact_info'               => getVal($activityData, ['contact_info'], null),
-                'related_activity'           => getVal($activityData, ['related_activity'], null)
+                'collaboration_type'         => getVal(array_values($defaultFieldValues), [0, 'default_collaboration_type'], null),
+                'default_flow_type'          => getVal(array_values($defaultFieldValues), [0, 'default_flow_type'], null),
+                'default_finance_type'       => getVal(array_values($defaultFieldValues), [0, 'default_finance_type'], null),
+                'default_aid_type'           => getVal(array_values($defaultFieldValues), [0, 'default_aid_type'], null),
+                'default_tied_status'        => getVal(array_values($defaultFieldValues), [0, 'default_tied_status'], null),
+                'contact_info'               => getVal(array_values($activityData), ['contact_info'], null),
+                'related_activity'           => getVal(array_values($activityData), ['related_activity'], null)
             ]
         );
     }
@@ -442,26 +442,26 @@ class ActivityRepository
         $defaultFieldValues = $this->setDefaultFieldValues($activityData['default_field_values'], $activityData['organization_id']);
 
         $activity->identifier                 = $activityData['identifier'];
-        $activity->title                      = $activityData['title'];
-        $activity->description                = $activityData['description'];
+        $activity->title                      = array_values($activityData['title']);
+        $activity->description                = array_values($activityData['description']);
         $activity->activity_status            = $activityData['activity_status'];
-        $activity->activity_date              = $activityData['activity_date'];
-        $activity->participating_organization = $activityData['participating_organization'];
-        $activity->recipient_country          = $activityData['recipient_country'];
-        $activity->recipient_region           = $activityData['recipient_region'];
-        $activity->sector                     = $activityData['sector'];
+        $activity->activity_date              = array_values($activityData['activity_date']);
+        $activity->participating_organization = array_values($activityData['participating_organization']);
+        $activity->recipient_country          = array_values($activityData['recipient_country']);
+        $activity->recipient_region           = array_values($activityData['recipient_region']);
+        $activity->sector                     = array_values($activityData['sector']);
         $activity->organization_id            = $activityData['organization_id'];
-        $activity->policy_marker              = (array_key_exists('policy_marker', $activityData) ? $activityData['policy_marker'] : null);
-        $activity->budget                     = (array_key_exists('budget', $activityData) ? $activityData['budget'] : null);
-        $activity->activity_scope             = (array_key_exists('activity_scope', $activityData) ? $activityData['activity_scope'] : null);
+        $activity->policy_marker              = array_key_exists('policy_marker', $activityData) ? array_values($activityData['policy_marker']) : null;
+        $activity->budget                     = array_key_exists('budget', $activityData) ? array_values($activityData['budget']) : null;
+        $activity->activity_scope             = array_key_exists('activity_scope', $activityData) ? array_values($activityData['activity_scope']) : null;
         $activity->default_field_values       = $defaultFieldValues;
-        $activity->collaboration_type         = (($collaborationType = getVal($defaultFieldValues, [0, 'default_collaboration_type'])) == "" ? null : $collaborationType);
-        $activity->default_flow_type          = (($defaultFlowType = getVal($defaultFieldValues, [0, 'default_flow_type'])) == "" ? null : $defaultFlowType);
-        $activity->default_finance_type       = (($defaultFinanceType = getVal($defaultFieldValues, [0, 'default_finance_type'])) == "" ? null : $defaultFinanceType);
-        $activity->default_aid_type           = (($defaultAidType = getVal($defaultFieldValues, [0, 'default_aid_type'])) == "" ? null : $defaultAidType);
-        $activity->default_tied_status        = (($defaultTiedStatus = getVal($defaultFieldValues, [0, 'default_tied_status'])) == "" ? null : $defaultTiedStatus);
-        $activity->contact_info               = getVal($activityData, ['contact_info'], null);
-        $activity->related_activity           = getVal($activityData, ['related_activity'], null);
+        $activity->collaboration_type         = getVal(array_values($defaultFieldValues), [0, 'default_collaboration_type'], null);
+        $activity->default_flow_type          = getVal(array_values($defaultFieldValues), [0, 'default_flow_type'], null);
+        $activity->default_finance_type       = getVal(array_values($defaultFieldValues), [0, 'default_finance_type'], null);
+        $activity->default_aid_type           = getVal(array_values($defaultFieldValues), [0, 'default_aid_type'], null);
+        $activity->default_tied_status        = getVal(array_values($defaultFieldValues), [0, 'default_tied_status'], null);
+        $activity->contact_info               = getVal(array_values($activityData), ['contact_info'], null);
+        $activity->related_activity           = getVal(array_values($activityData), ['related_activity'], null);
 
         return $activity;
     }

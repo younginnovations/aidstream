@@ -235,6 +235,8 @@ return [
     'reporting_organisation_language'            => 'Reporting Organisation Language',
     'activity_date'                              => 'Activity Date',
     'activity_file'                              => 'Activity File',
-    'transaction_internal_reference'             => 'Transaction Internal Reference'
+    'transaction_internal_reference'             => 'Transaction Internal Reference',
+    'participating_organisation'                 => 'Participating Organization',
+    'participating_organisation_identifier'      => 'Participating Organization Identifier'
 ];
 
