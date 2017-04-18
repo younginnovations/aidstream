@@ -229,7 +229,7 @@
                             <tr>
                                 <td>
                                     <span class="transaction-value">
-                                        {{number_format(getVal($transaction, ['transaction', 'value', 0, 'amount'], @trans('perfectViewer.not_available')))}}
+                                        {{ getVal($transaction, ['transaction', 'value', 0, 'amount'], null) ? number_format(getVal($transaction, ['transaction', 'value', 0, 'amount'], 0)) : @trans('perfectViewer.not_available') }}
                                     </span>
                                     @if(getVal($transaction, ['transaction', 'value', 0, 'amount'], null))
                                         @if(getVal($transaction, ['transaction', 'value', 0, 'currency'], null))
