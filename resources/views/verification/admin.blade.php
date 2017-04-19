@@ -1,6 +1,5 @@
 @inject('code', 'App\Helpers\GetCodeName')
 
-<p>@lang('registration.thank_you_for_verifying_your_email',['organisation_name' => $user->organization->name])</p>
 <ul>
     @foreach($users as $orgUser)
         <li>

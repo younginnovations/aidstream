@@ -1,7 +1,7 @@
 <?php namespace App\Services\CsvImporter\Queue;
 
+use App\Services\CsvImporter\CsvReader\CsvReader;
 use App\Services\CsvImporter\CsvResultProcessor;
-use Maatwebsite\Excel\Excel;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use App\Services\CsvImporter\Queue\Jobs\ImportResult;
 
@@ -19,7 +19,7 @@ class ResultProcessor
     protected $importResult;
 
     /**
-     * @var Excel
+     * @var CsvReader
      */
     protected $csvReader;
 
@@ -30,9 +30,9 @@ class ResultProcessor
 
     /**
      * Processor constructor.
-     * @param Excel $csvReader
+     * @param CsvReader $csvReader
      */
-    public function __construct(Excel $csvReader)
+    public function __construct(CsvReader $csvReader)
     {
         $this->csvReader = $csvReader;
     }

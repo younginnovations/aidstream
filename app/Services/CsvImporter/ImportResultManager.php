@@ -41,6 +41,11 @@ class ImportResultManager
     const UPLOADED_CSV_STORAGE_PATH = 'csvImporter/tmp/result/file';
 
     /**
+     *
+     */
+    const DEFAULT_ENCODING = 'UTF-8';
+
+    /**
      * @var Excel
      */
     protected $excel;
@@ -206,7 +211,9 @@ class ImportResultManager
     public function removeImportDirectory()
     {
         $dir = storage_path(sprintf('%s/%s/%s', self::CSV_DATA_STORAGE_PATH, session('org_id'), $this->userId));
-        $this->filesystem->deleteDirectory($dir);
+        if (file_exists($dir)) {
+            $this->filesystem->deleteDirectory($dir);
+        }
     }
 
     /**
@@ -384,7 +391,7 @@ class ImportResultManager
     public function storeCsv(UploadedFile $file)
     {
         try {
-            $file->move($this->getStoredCsvPath(), $file->getClientOriginalName());
+            $file->move($this->getStoredCsvPath(), str_replace(' ', '', $file->getClientOriginalName()));
 
             return true;
         } catch (Exception $exception) {
@@ -548,4 +555,35 @@ class ImportResultManager
 
         return $results;
     }
+
+    /**
+     * Checks if the file is in UTF8Encoding.
+     *
+     * @param $filename
+     * @return bool
+     */
+    public function isInUTF8Encoding($filename)
+    {
+        $file = new File($this->getStoredCsvPath($filename));
+
+
+        if (getEncodingType($file) == self::DEFAULT_ENCODING) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Empty the previously imported result if status is present in session.
+     */
+    public function clearImport()
+    {
+        if ($this->sessionManager->has('import-result-status')) {
+            $this->removeImportDirectory();
+            $this->endImport();
+        }
+    }
 }
+
+
