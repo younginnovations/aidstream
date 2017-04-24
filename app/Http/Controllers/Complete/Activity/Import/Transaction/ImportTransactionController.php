@@ -79,13 +79,18 @@ class ImportTransactionController extends Controller
 
         $file = $request->file('transaction');
 
-
         if ($this->transactionManager->storeCsvTemporarily($file)) {
-            $filename = $file->getClientOriginalName();
+            $filename = str_replace(' ', '', $file->getClientOriginalName());
             $this->transactionManager->startImport($filename)
                                      ->fireCsvUploadEvent($filename, $id);
 
-            return redirect()->route('activity.import-transaction.status', [$id]);
+            $response = null;
+
+            if (!$this->transactionManager->isInUTF8Encoding($filename)) {
+                $response = ['type' => 'warning', 'code' => ['encoding_error', ['message' => trans('error.something_is_not_right')]]];
+            }
+
+            return redirect()->route('activity.import-transaction.status', [$id])->withResponse($response);
         }
 
         $response = ['type' => 'danger', 'code' => ['csv_header_mismatch', ['message' => trans('error.something_is_not_right')]]];

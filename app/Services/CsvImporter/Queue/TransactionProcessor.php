@@ -2,10 +2,10 @@
 
 
 use App\Services\Activity\UploadTransactionManager;
+use App\Services\CsvImporter\CsvReader\CsvReader;
 use App\Services\CsvImporter\Queue\Jobs\ImportTransaction;
 use App\Services\CsvImporter\TransactionCsvProcessor;
 use Illuminate\Foundation\Bus\DispatchesJobs;
-use Maatwebsite\Excel\Excel;
 
 /**
  * Class TransactionProcessor
@@ -26,9 +26,9 @@ class TransactionProcessor
 
     /**
      * TransactionProcess constructor.
-     * @param Excel $csvReader
+     * @param CsvReader $csvReader
      */
-    public function __construct(Excel $csvReader)
+    public function __construct(CsvReader $csvReader)
     {
         $this->csvReader = $csvReader;
     }

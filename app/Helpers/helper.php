@@ -1265,5 +1265,28 @@ function fileExists($activity)
 {
     $filename = getVal($activity, [0, 'filename']);
 
-    return file_exists(public_path('/files/xml/'.$filename));
+    return file_exists(public_path('/files/xml/' . $filename));
+}
+
+/**
+ * Returns encoding type of the file.
+ * Returns UTF-8 if any exception or charset is not found.
+ *
+ * @param $file
+ * @return string
+ */
+function getEncodingType($file)
+{
+    try {
+        $response = exec('file -i ' . $file->getPathname());
+        $charset  = strripos($response, 'charset=');
+
+        if ($charset) {
+            return strtoupper(substr($response, $charset + strlen('charset=')));
+        }
+
+        return 'UTF-8';
+    } catch (\Exception $exception) {
+        return 'UTF-8';
+    }
 }

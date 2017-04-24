@@ -3,6 +3,7 @@
 
 use App\Core\V201\Repositories\Activity\ActivityRepository;
 use App\Core\V201\Repositories\Activity\Transaction;
+use App\Services\CsvImporter\CsvReader\CsvReader;
 use App\Services\CsvImporter\Entities\Activity\Transaction\DataReader\TransactionDataReader;
 use App\Services\CsvImporter\Entities\Activity\Transaction\DataWriter\TransactionDataWriter;
 use App\Services\CsvImporter\Events\TransactionCsvWasUploaded;
@@ -47,6 +48,11 @@ class ImportTransactionManager
      * Filename for temporary invalid json file.
      */
     const INVALID_JSON_TEMP_FILENAME = 'invalid_temp.json';
+
+    /**
+     * Default encoding for csv.
+     */
+    const DEFAULT_ENCODING = 'UTF-8';
 
     /**
      * @var TransactionProcessor
@@ -126,7 +132,7 @@ class ImportTransactionManager
     public function storeCsvTemporarily(UploadedFile $file)
     {
         try {
-            $file->move($this->getStoredCsvPath(), $file->getClientOriginalName());
+            $file->move($this->getStoredCsvPath(), str_replace(' ', '', $file->getClientOriginalName()));
 
             return true;
         } catch (Exception $exception) {
@@ -301,8 +307,8 @@ class ImportTransactionManager
         try {
             $response = [];
 
-            $displayedValidData  = $this->dataReader->getJson(self::VALID_JSON_TEMP_FILENAME, $orgId, $userId, $activityId);
-            $processedValidData  = $this->dataReader->getValidJson($orgId, $userId, $activityId);
+            $displayedValidData = $this->dataReader->getJson(self::VALID_JSON_TEMP_FILENAME, $orgId, $userId, $activityId);
+            $processedValidData = $this->dataReader->getValidJson($orgId, $userId, $activityId);
 
             $differenceValidData = array_diff_key($processedValidData, $displayedValidData);
             $displayedValidData  = array_merge($displayedValidData, $differenceValidData);
@@ -501,6 +507,23 @@ class ImportTransactionManager
     protected function getDataWriterClass($organizationId, $userId, $activityId)
     {
         $this->dataWriter = app()->make(TransactionDataWriter::class, [$organizationId, $activityId, $userId]);
+    }
+
+    /**
+     * Checks if the file is in UTF8Encoding.
+     *
+     * @param $filename
+     * @return bool
+     */
+    public function isInUTF8Encoding($filename)
+    {
+        $file = new File($this->getStoredCsvPath($filename));
+
+        if (getEncodingType($file) == self::DEFAULT_ENCODING) {
+            return true;
+        }
+
+        return false;
     }
 }
 

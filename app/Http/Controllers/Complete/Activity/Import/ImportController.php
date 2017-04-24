@@ -70,7 +70,7 @@ class ImportController extends Controller
         $this->form                = $form;
         $this->organizationManager = $organizationManager;
         $this->importManager       = $importManager;
-        $this->userId = $this->getUserId();
+        $this->userId              = $this->getUserId();
     }
 
     /**
@@ -149,13 +149,19 @@ class ImportController extends Controller
         $this->importManager->clearOldImport();
 
         if ($this->importManager->storeCsv($file)) {
-            $filename = $file->getClientOriginalName();
+            $filename = str_replace(' ', '', $file->getClientOriginalName());
             $this->importManager->startImport($filename)
                                 ->fireCsvUploadEvent($filename);
 
             $this->fixPermission(storage_path('csvImporter/tmp'));
 
-            return redirect()->route('activity.import-status');
+            $response = null;
+
+            if (!$this->importManager->isInUTF8Encoding($filename)) {
+                $response = ['type' => 'warning', 'code' => ['encoding_error', ['message' => trans('error.something_is_not_right')]]];
+            }
+
+            return redirect()->route('activity.import-status')->withResponse($response);
         }
 
         $response = ['type' => 'danger', 'code' => ['csv_header_mismatch', ['message' => trans('error.something_is_not_right')]]];

@@ -100,14 +100,22 @@ class ImportResultController extends Controller
     {
         $file = $request->file('result');
 
+        $this->importManager->clearImport();
+
         if ($this->importManager->storeCsv($file)) {
-            $filename = $file->getClientOriginalName();
+            $filename = str_replace(' ', '', $file->getClientOriginalName());
             $this->importManager->startImport($filename)
                                 ->fireCsvUploadEvent($filename);
 
             $this->fixPermission(storage_path('csvImporter/tmp'));
 
-            return redirect()->route('activity.result.import-status', $activityId);
+            $response = null;
+
+            if (!$this->importManager->isInUTF8Encoding($filename)) {
+                $response = ['type' => 'warning', 'code' => ['encoding_error', ['message' => trans('error.something_is_not_right')]]];
+            }
+
+            return redirect()->route('activity.result.import-status', $activityId)->withResponse($response);
         }
 
         $response = ['type' => 'danger', 'code' => ['csv_header_mismatch', ['message' => trans('error.something_is_not_right')]]];

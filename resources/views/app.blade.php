@@ -190,7 +190,7 @@
 </script>
 @if($loggedInUser && $loggedInUser->userOnBoarding && (session('role_id')!= 3 && session('role_id')!= 4))
     <script src="{{url('js/userOnBoarding.js')}}"></script>
-    <script type="text/javascript" src="{{url('js/userOnBoarding.js')}}"></script>
+    <script type="text/javascript" src="{{url('js/hints.js')}}"></script>
 @endif
 <!-- End of script -->
 @yield('script')

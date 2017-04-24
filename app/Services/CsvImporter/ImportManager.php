@@ -42,6 +42,11 @@ class ImportManager
     const UPLOADED_CSV_STORAGE_PATH = 'csvImporter/tmp/file';
 
     /**
+     * Default encoding for csv file.
+     */
+    const DEFAULT_ENCODING = 'UTF-8';
+
+    /**
      * @var Excel
      */
     protected $excel;
@@ -427,7 +432,7 @@ class ImportManager
     public function storeCsv(UploadedFile $file)
     {
         try {
-            $file->move($this->getStoredCsvPath(), $file->getClientOriginalName());
+            $file->move($this->getStoredCsvPath(), str_replace(' ', '', $file->getClientOriginalName()));
 
             return true;
         } catch (Exception $exception) {
@@ -653,6 +658,24 @@ class ImportManager
     protected function isOldActivity($activity)
     {
         return (getVal($activity, ['existence']) === true);
+    }
+
+
+    /**
+     * Checks if the file is in UTF8Encoding.
+     *
+     * @param $filename
+     * @return bool
+     */
+    public function isInUTF8Encoding($filename)
+    {
+        $file = new File($this->getStoredCsvPath($filename));
+
+        if (getEncodingType($file) == self::DEFAULT_ENCODING) {
+            return true;
+        }
+
+        return false;
     }
 }
 

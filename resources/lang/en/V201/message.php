@@ -46,5 +46,6 @@ return [
     'organization_element_not_removed'        => 'Failed to remove organisation element',
     'user_created'                            => 'The user account with :name, has been created successfully. Please notify the user their username and password to start using their AidStream account.',
     'csv_header_mismatch'                     => ':message',
-    'settings_incomplete'                     => 'Please fill up all the required fields before creating an activity.'
+    'settings_incomplete'                     => 'Please fill up all the required fields before creating an activity.',
+    'encoding_error'                          => 'It seems the file you have uploaded is not in UTF-8 encoding standard. If you didn\'t get accurate result, please change the file into UTF-8 encoding standard and try again.'
 ];
