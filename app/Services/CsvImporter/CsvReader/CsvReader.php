@@ -25,14 +25,14 @@ class CsvReader
 
     /**
      * @param        $file
-     * @param bool   $checkEncoding
-     * @param string $encoding
      * @return \Maatwebsite\Excel\Readers\LaravelExcelReader
      */
-    public function load($file, $checkEncoding = true, $encoding = 'UTF-8')
+    public function load($file)
     {
-        if ($checkEncoding) {
-            $encoding = getEncodingType($file);
+        $encoding = getEncodingType($file);
+
+        if (!in_array($encoding, mb_list_encodings())) {
+            $encoding = null;
         }
 
         return $this->reader->load($file, null, $encoding);
