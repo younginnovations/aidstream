@@ -135,6 +135,15 @@ namespace :aidstream do
         end
     end
 
+    desc "Restart Laravel Queue"
+    task :queue_restart do
+        on roles(:app) do
+            within release_path do
+                execute :php, "artisan queue:restart"
+            end
+        end
+    end
+
     desc 'Create ver.txt'
     task :create_ver_txt do
         on roles(:all) do
@@ -223,6 +232,7 @@ namespace :deploy do
     after :updated, "environment:set_variables"
     after :published, "aidstream:create_symlink"
     after :finished, "hipchat:deployed"
+    after :finished, "aidstream:queue_restart"
     after :finished, "aidstream:create_ver_txt"
     after :failed, "hipchat:notify_deploy_failed"
 end
