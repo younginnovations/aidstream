@@ -2,6 +2,7 @@
 
 namespace Tests\App\Services\Workflow;
 
+use App\Services\Workflow\SegmentationChangeHandler;
 use \Mockery as m;
 use App\Services\PerfectViewer\PerfectViewerManager;
 use App\Services\Twitter\TwitterAPI;
@@ -30,30 +31,33 @@ class WorkflowManagerTest extends AidStreamTestCase
     {
         parent::setup();
 
-        $this->activityPublished = m::mock(ActivityPublished::class);
-        $this->organizationManager = m::mock(OrganizationManager::class);
-        $this->activityManager = m::mock(ActivityManager::class);
-        $this->xmlServiceProvider = m::mock(XmlServiceProvider::class);
-        $this->organizationDataProvider = m::mock(OrganizationDataProvider::class);
-        $this->publisher = m::mock(Publisher::class);
-        $this->logger = m::mock(LoggerInterface::class);
-        $this->twitter = m::mock(TwitterAPI::class);
-        $this->perfectViewerManager = m::mock(PerfectViewerManager::class);
-        $this->activity = m::mock(Activity::class);
-        $this->organization = m::mock(Organization::class);
-        $this->settings = m::mock(Settings::class);
-        $this->version = m::mock(Version::class);
-        $this->iatiActivity = m::mock(IatiActivity::class);
-        $this->iatiOrganization = m::mock(IatiOrganization::class);
-
-        $this->workflowManager = new WorkflowManager($this->organizationManager,
+        $this->activityPublished         = m::mock(ActivityPublished::class);
+        $this->organizationManager       = m::mock(OrganizationManager::class);
+        $this->activityManager           = m::mock(ActivityManager::class);
+        $this->xmlServiceProvider        = m::mock(XmlServiceProvider::class);
+        $this->organizationDataProvider  = m::mock(OrganizationDataProvider::class);
+        $this->publisher                 = m::mock(Publisher::class);
+        $this->logger                    = m::mock(LoggerInterface::class);
+        $this->twitter                   = m::mock(TwitterAPI::class);
+        $this->perfectViewerManager      = m::mock(PerfectViewerManager::class);
+        $this->activity                  = m::mock(Activity::class);
+        $this->organization              = m::mock(Organization::class);
+        $this->settings                  = m::mock(Settings::class);
+        $this->version                   = m::mock(Version::class);
+        $this->iatiActivity              = m::mock(IatiActivity::class);
+        $this->iatiOrganization          = m::mock(IatiOrganization::class);
+        $this->segmentationChangeHandler = m::mock(SegmentationChangeHandler::class);
+        $this->workflowManager           = new WorkflowManager(
+            $this->organizationManager,
             $this->activityManager,
             $this->xmlServiceProvider,
             $this->organizationDataProvider,
             $this->publisher,
             $this->logger,
             $this->twitter,
-            $this->perfectViewerManager);
+            $this->segmentationChangeHandler,
+            $this->perfectViewerManager
+        );
     }
 
     /** @test */

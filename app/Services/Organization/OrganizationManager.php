@@ -200,9 +200,9 @@ class OrganizationManager
     {
         $response = $this->repo->publishToRegistry($organization, $settings, $filename);
 
-        if ($response) {
-            $twitter = $this->twitterApi->post($settings, $organization);
-        }
+//        if ($response) {
+//            $twitter = $this->twitterApi->post($settings, $organization);
+//        }
 
         return $response;
     }

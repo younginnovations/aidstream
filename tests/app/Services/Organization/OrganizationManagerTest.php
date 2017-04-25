@@ -136,7 +136,7 @@ class OrganizationManagerTest extends AidStreamTestCase
     }
 
     /** @test */
-    public function itShouldpublishOrganizationToRegistry()
+    public function itShouldPublishOrganizationToRegistry()
     {
         $this->organizationRepository->shouldReceive('publishToRegistry')->once()->with($this->organization, $this->settings, 'filename')->andReturn(true);
         $this->assertEquals(true, $this->organizationManager->publishToRegistry($this->organization, $this->settings, 'filename'));
