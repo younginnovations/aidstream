@@ -15,7 +15,6 @@ use App\Services\Settings\ChangeHandler;
 use App\Services\Settings\SettingsService;
 use App\Services\SettingsManager;
 use App\Services\Organization\OrganizationManager;
-use Aws\Common\Facade\Ses;
 use Illuminate\Database\DatabaseManager;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
@@ -27,7 +26,7 @@ use Psr\Log\LoggerInterface;
  * Class SettingsController
  * @package App\Http\Controllers\Complete
  */
-class SettingsController extends LiteController
+class SettingsController extends Controller
 {
     /**
      * @var SettingsService

@@ -133,7 +133,7 @@ class ChangeHandler
                 $this->handlePublishedOrganizationData($publishedOrganizationData, $settings, $publisherId, $organization, $newApiKey);
             }
 
-            $this->savePublisherId($settings, $publisherId);
+            $this->savePublisherId($settings, $publisherId, $newApiKey);
             $this->databaseManager->commit();
 
             return ['status' => true];
@@ -285,11 +285,12 @@ class ChangeHandler
             if ($this->changeFilenameOfStoredXml($newFilename, $oldFilename)) {
                 $publishedOrganizationData->filename = $newFilename;
                 $publishedOrganizationData->save();
-
-                $settings['registry_info'][0]['publisher_id'] = $publisherId;
             }
 
             if ($packageAvailability && $this->apiKeyCorrectness) {
+                $settings['registry_info'][0]['publisher_id'] = $publisherId;
+                $settings['registry_info'][0]['api_id']       = $newApiKey;
+
                 $this->publisher->publishFile(
                     getVal($settings, ['registry_info'], []),
                     $publishedOrganizationData,
@@ -496,11 +497,12 @@ class ChangeHandler
      * @param $newPublisherId
      * @throws Exception
      */
-    protected function savePublisherId($settings, $newPublisherId)
+    protected function savePublisherId($settings, $newPublisherId, $newApiKey)
     {
         try {
             $registryInfo                           = $settings->registry_info;
             $registryInfo[0]['publisher_id']        = $newPublisherId;
+            $registryInfo[0]['api_id']              = $newApiKey;
             $registryInfo[0]['publisher_id_status'] = 'Correct';
 
             $settings->registry_info = $registryInfo;

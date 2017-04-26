@@ -1,5 +1,5 @@
 <p>Hi {{$first_name}} {{$last_name}},</p>
-@if($status)
+@if($status === true)
     <p>The publisher id for your account has been changed successfully.</p>
     <p>Following changes have been made.</p>
     @if(count(getVal($changes,['organizationData'],[])) > 0)
@@ -42,7 +42,7 @@
     @endif
 @else
     <p>Sorry! there was an error while changing your publisher Id.</p>
-    <p>{{$status}}</p>
+    <p>{!! $status !!}</p>
 @endif
 <p>If you have any questions, please feel free to send us an email with your queries at <a href="mailto:support@aidstream.org">support@aidstream.org</a></p>
 <p>Happy publishing data!</p>
