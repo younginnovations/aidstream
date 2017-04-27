@@ -50,13 +50,16 @@ return [
     'failed_to_update_settings'                              => 'Failed to update Settings',
     'could_not_change_segmentation'                          => 'Could not change segmentation.',
     'could_not_publish_to_registry'                          => 'Could not publish to registry.',
-    'publisher_not_found'                                    => sprintf("It seems your publisher id is not correct.<a href='%s'>Please correct your publisher Id.</a>",route('publishing-settings')),
+    'publisher_not_found'                                    => sprintf("It seems your publisher id is not correct.<a href='%s'>Please correct your publisher Id.</a>", route('publishing-settings')),
     'failed_to_submit_query'                                 => 'Failed to submit your query. Please try again.',
     'select_activities_to_be_imported'                       => 'Select activities to be imported',
     'select_transactions_to_be_imported'                     => 'Select transactions to be imported',
     'no_ongoing_processes'                                   => 'Please upload CSV file to process.',
     'no_data_available'                                      => 'It seems you have uploaded an empty file. Please fill the values in the file and try uploading once again.',
-    'not_authorized'                                         => sprintf("It seems your api key is incorrect. Please correct the api key <a href='%s'>here</a> and try publishing again.", route('publishing-settings')),
+    'not_authorized'                                         => sprintf(
+        "It seems your api key is incorrect. Please correct the api key <a href='%s'>here</a> and try publishing again.",
+        route('publishing-settings')
+    ),
     'error_budget_create'                                    => 'Error occurred during creation of budget',
     'error_transaction_update'                               => 'Error updating transaction',
     'error_transaction_create'                               => 'Error creating transaction',
@@ -68,5 +71,6 @@ return [
     'package_not_found'                                      => "The dataset was not found in IATI Registry. Please contact us at <a href='mailto:support@aidstream.org'>support@aidstream.org</a> for further assistance.",
     'xml_file_not_found'                                     => "The xml file was not found. Please contact us at <a href='mailto:support@aidstream.org'>support@aidstream.org</a> for further assistance.",
     'not_allowed'                                            => 'You are not allowed to publish the selected xml file.',
+    'file_not_found'                                         => 'The file :file could not be found in AidStream.'
 ];
 

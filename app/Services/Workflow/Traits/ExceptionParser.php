@@ -1,14 +1,12 @@
 <?php namespace App\Services\Workflow\Traits;
 
 
-use App\Exceptions\Aidstream\Workflow\ActivityDatasetDeletedException;
 use App\Exceptions\Aidstream\Workflow\ApiKeyIncorrectException;
 use App\Exceptions\Aidstream\Workflow\PublisherNotFoundException;
-use App\Services\CsvImporter\Entities\Activity\Activity;
 use Exception;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\ConnectException;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
 
 /**
  * Class ExceptionParser
@@ -42,6 +40,10 @@ trait ExceptionParser
             }
         }
 
+        if ($exception instanceof FileNotFoundException) {
+            return ['status' => false, 'message' => $exception->getMessage()];
+        }
+
         try {
             if (getVal(explode(':', explode("\n", $exception->getMessage())[0]), [0]) == self::NOT_AUTHORIZED_ERROR_CODE) {
                 return ['status' => false, 'message' => trans('error.not_authorized')];
@@ -54,6 +56,7 @@ trait ExceptionParser
             if (trim($exception->getMessage()) === 'Trying to get property of non-object') {
                 return ['status' => false, 'message' => trans('error.not_allowed')];
             }
+
         } catch (Exception $exception) {
             return ['status' => false, 'message' => $exception->getTraceAsString()];
         }

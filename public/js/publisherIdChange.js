@@ -120,9 +120,9 @@ var PublisherId = {
                         errorBar.removeClass('hidden').html(data.message);
                         self.completeProcess();
                         clearInterval(interval);
-                        // setTimeout(function () {
-                        //     window.location.reload();
-                        // }, 2000);
+                        setTimeout(function () {
+                            window.location.reload();
+                        }, 1000);
                     }
                 });
         }, 2000);

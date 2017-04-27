@@ -3,6 +3,7 @@
 
 use App\Exceptions\Aidstream\Workflow\ApiKeyIncorrectException;
 use App\Exceptions\Aidstream\Workflow\PublisherNotFoundException;
+use App\Exceptions\Aidstream\XmlFileNotFound;
 use App\Models\Organization\Organization;
 use App\Services\Organization\OrganizationManager;
 use App\Services\Publisher\Publisher;
@@ -13,6 +14,7 @@ use Exception;
 use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Database\DatabaseManager;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
 
 /**
  * Class ChangeHandler
@@ -36,7 +38,6 @@ class ChangeHandler
      * Package not found error code.
      */
     const PACKAGE_NOT_FOUND_CODE = 404;
-
 
     /**
      * @var OrganizationManager
@@ -73,6 +74,15 @@ class ChangeHandler
      * @var
      */
     protected $changedFiles = [];
+
+    /**
+     * @var array
+     */
+    protected $publishedFiles = [];
+    /**
+     * @var array
+     */
+    protected $unlinkedFiles = [];
 
     /**
      * ChangeHandler constructor.
@@ -125,21 +135,16 @@ class ChangeHandler
             $publishedActivities       = $this->getPublishedActivities($organization);
 
             $this->databaseManager->beginTransaction();
-            if ($this->hasPublishedAnyActivityFile($publishedActivities)) {
-                $this->handlePublishedActivities($publishedActivities, $settings, $publisherId, $organization, $newApiKey);
-            }
 
-            if ($this->hasPublishedAnyOrganizationFile($publishedOrganizationData)) {
-                $this->handlePublishedOrganizationData($publishedOrganizationData, $settings, $publisherId, $organization, $newApiKey);
-            }
-
+            $this->cloneAndPublishDatasets($publishedActivities, $publishedOrganizationData, $settings, $publisherId, $organization, $newApiKey);
+            $this->unlinkAndSaveDatasets($publishedActivities, $publishedOrganizationData, $settings, $publisherId, $organization, $newApiKey);
             $this->savePublisherId($settings, $publisherId, $newApiKey);
+
             $this->databaseManager->commit();
 
             return ['status' => true];
         } catch (Exception $exception) {
             $this->databaseManager->rollback();
-            $this->revertRenamedFiles();
             $this->logger->error($exception->getMessage(), ['Organization Id' => $organizationId]);
 
             return $this->parse($exception);
@@ -192,117 +197,6 @@ class ChangeHandler
         }
 
         return false;
-    }
-
-
-    /**
-     * Rename the old activity xml filename with the new filename.
-     * Update the record in database.
-     * Delete the old package and publish the new package.
-     *
-     * @param $publishedActivities
-     * @param $settings
-     * @param $publisherId
-     * @param $organization
-     * @param $newApiKey
-     * @return bool
-     * @throws Exception
-     */
-    protected function handlePublishedActivities($publishedActivities, $settings, $publisherId, $organization, $newApiKey)
-    {
-        try {
-            $settings  = $settings->toArray();
-            $oldApiKey = getVal($settings, ['registry_info', 0, 'api_id']);
-
-            foreach ($publishedActivities as $index => $publishedActivity) {
-                $oldFilename = $publishedActivity->filename;
-                $newFilename = $this->generateNewFilename($publisherId, $oldFilename);
-
-                if ($oldFilename == $newFilename) {
-                    break;
-                }
-                $packageAvailability = $this->isPackageAvailable($this->extractPackage($oldFilename), $oldApiKey);
-
-                if ($packageAvailability && $this->apiKeyCorrectness) {
-                    $this->deletePackage($oldApiKey, $this->extractPackage($oldFilename));
-                }
-
-                if ($this->changeFilenameOfStoredXml($newFilename, $oldFilename)) {
-                    $publishedActivity->filename             = $newFilename;
-                    $publishedActivity->published_activities = $this->returnFilenameForIncludedActivities($publisherId, $publishedActivity->published_activities);
-                    $publishedActivity->save();
-                }
-
-                if ($packageAvailability && $this->apiKeyCorrectness) {
-                    $settings['registry_info'][0]['publisher_id'] = $publisherId;
-                    $settings['registry_info'][0]['api_id']       = $newApiKey;
-                    $this->publisher->publishFile(
-                        getVal($settings, ['registry_info'], []),
-                        $publishedActivity,
-                        $organization,
-                        getVal($settings, ['publishing_type'])
-                    );
-                }
-            }
-
-            return true;
-        } catch (Exception $exception) {
-            throw $exception;
-        }
-    }
-
-    /**
-     * Rename the old organization xml filename with the new filename.
-     * Update the record in database.
-     * Delete the old package and publish the new package.
-     *
-     * @param $publishedOrganizationData
-     * @param $settings
-     * @param $publisherId
-     * @param $organization
-     * @param $newApiKey
-     * @return bool
-     * @throws Exception
-     */
-    protected function handlePublishedOrganizationData($publishedOrganizationData, $settings, $publisherId, $organization, $newApiKey)
-    {
-        try {
-            $settings    = $settings->toArray();
-            $oldFilename = $publishedOrganizationData->filename;
-            $newFilename = $this->generateNewFilename($publisherId, $oldFilename);
-            $oldApiKey   = getVal($settings, ['registry_info', 0, 'api_id']);
-
-            if ($oldFilename == $newFilename) {
-                return true;
-            }
-
-            $packageAvailability = $this->isPackageAvailable($this->extractPackage($oldFilename), $oldApiKey);
-
-            if ($packageAvailability && $this->apiKeyCorrectness) {
-                $this->deletePackage($oldApiKey, $this->extractPackage($oldFilename));
-            }
-
-            if ($this->changeFilenameOfStoredXml($newFilename, $oldFilename)) {
-                $publishedOrganizationData->filename = $newFilename;
-                $publishedOrganizationData->save();
-            }
-
-            if ($packageAvailability && $this->apiKeyCorrectness) {
-                $settings['registry_info'][0]['publisher_id'] = $publisherId;
-                $settings['registry_info'][0]['api_id']       = $newApiKey;
-
-                $this->publisher->publishFile(
-                    getVal($settings, ['registry_info'], []),
-                    $publishedOrganizationData,
-                    $organization,
-                    getVal($settings, ['publishing_type'])
-                );
-            }
-
-            return true;
-        } catch (Exception $exception) {
-            throw $exception;
-        }
     }
 
     /**
@@ -423,12 +317,12 @@ class ChangeHandler
     protected function changeFilenameOfStoredXml($newFilename, $oldFilename)
     {
         try {
-            rename($this->getXmlPath($oldFilename), $this->getXmlPath($newFilename));
+            copy($this->getXmlPath($oldFilename), $this->getXmlPath($newFilename));
             $this->changedFiles[] = ['old' => $oldFilename, 'new' => $newFilename];
 
             return true;
         } catch (Exception $exception) {
-            throw $exception;
+            throw new XmlFileNotFound(trans('error.file_not_found', ['file' => $oldFilename]));
         }
     }
 
@@ -513,17 +407,299 @@ class ChangeHandler
     }
 
     /**
-     * Revert the renamed xml files.
+     * Clone the xml files present in the database.
+     * Publish the new package in the IATI Registry.
+     *
+     * @param $publishedActivities
+     * @param $publishedOrganizationData
+     * @param $settings
+     * @param $publisherId
+     * @param $organization
+     * @param $newApiKey
      * @throws Exception
      */
-    protected function revertRenamedFiles()
+    protected function cloneAndPublishDatasets($publishedActivities, $publishedOrganizationData, $settings, $publisherId, $organization, $newApiKey)
     {
         try {
-            foreach ($this->changedFiles as $index => $filename) {
-                rename($this->getXmlPath($filename['new']), $this->getXmlPath($filename['old']));
+            if ($this->hasPublishedAnyOrganizationFile($publishedOrganizationData)) {
+                $this->cloneAndPublishOrganizationData($publishedOrganizationData, $settings, $publisherId, $organization, $newApiKey);
             }
-        } catch (exception $exception) {
+
+            if ($this->hasPublishedAnyActivityFile($publishedActivities)) {
+                $this->cloneAndPublishActivities($publishedActivities, $settings, $publisherId, $organization, $newApiKey);
+            }
+        } catch (Exception $exception) {
+            $this->rollBackPublishedFiles($newApiKey);
             throw  $exception;
+        }
+    }
+
+    /**
+     * Unlink the organization and activity dataset from the IATI Registry.
+     * Save the changes in database.
+     *
+     * @param $publishedActivities
+     * @param $publishedOrganizationData
+     * @param $settings
+     * @param $publisherId
+     * @param $organization
+     * @param $newApiKey
+     * @throws Exception
+     */
+    protected function unlinkAndSaveDatasets($publishedActivities, $publishedOrganizationData, $settings, $publisherId, $organization, $newApiKey)
+    {
+        try {
+            if ($this->hasPublishedAnyOrganizationFile($publishedOrganizationData)) {
+                $this->unlinkAndSaveOrganizationData($publishedOrganizationData, $settings, $publisherId);
+            }
+
+            if ($this->hasPublishedAnyActivityFile($publishedActivities)) {
+                $this->unlinkAndSaveActivities($publishedActivities, $settings, $publisherId);
+            }
+
+        } catch (Exception $exception) {
+            $this->rollBackUnlinkedFiles($newApiKey, $settings, $organization, $publishedActivities, $publishedOrganizationData);
+            throw  $exception;
+        }
+    }
+
+    /**
+     * Clone the old organization xml file.
+     * Publish the organization xml file to the IATI Registry.
+     *
+     * @param $publishedOrganizationData
+     * @param $settings
+     * @param $publisherId
+     * @param $organization
+     * @param $newApiKey
+     * @return bool
+     * @throws Exception
+     */
+    protected function cloneAndPublishOrganizationData($publishedOrganizationData, $settings, $publisherId, $organization, $newApiKey)
+    {
+        try {
+            $settings    = $settings->toArray();
+            $oldFilename = $publishedOrganizationData->filename;
+            $newFilename = $this->generateNewFilename($publisherId, $oldFilename);
+            $oldApiKey   = getVal($settings, ['registry_info', 0, 'api_id']);
+
+            if ($oldFilename == $newFilename) {
+                return true;
+            }
+
+            $this->changeFilenameOfStoredXml($newFilename, $oldFilename);
+            $packageAvailability = $this->isPackageAvailable($this->extractPackage($oldFilename), $oldApiKey);
+
+            if ($packageAvailability && $this->apiKeyCorrectness) {
+                $settings['registry_info'][0]['publisher_id'] = $publisherId;
+                $settings['registry_info'][0]['api_id']       = $newApiKey;
+
+                $publishedOrganizationData->filename = $newFilename;
+                $this->publisher->publishFile(
+                    getVal($settings, ['registry_info'], []),
+                    $publishedOrganizationData,
+                    $organization,
+                    getVal($settings, ['publishing_type'])
+                );
+                $publishedOrganizationData->filename = $oldFilename;
+
+                $this->publishedFiles[] = ['newPackage' => $this->extractPackage($newFilename)];
+            }
+
+            return true;
+        } catch (Exception $exception) {
+            throw $exception;
+        }
+
+    }
+
+    /**
+     * Clone the old xml file.
+     * Publish the old package to the IATI Registry.
+     *
+     * @param $publishedActivities
+     * @param $settings
+     * @param $publisherId
+     * @param $organization
+     * @param $newApiKey
+     * @return bool
+     * @throws Exception
+     */
+    protected function cloneAndPublishActivities($publishedActivities, $settings, $publisherId, $organization, $newApiKey)
+    {
+        try {
+            $settings  = $settings->toArray();
+            $oldApiKey = getVal($settings, ['registry_info', 0, 'api_id']);
+
+            foreach ($publishedActivities as $index => $publishedActivity) {
+                $oldFilename = $publishedActivity->filename;
+                $newFilename = $this->generateNewFilename($publisherId, $oldFilename);
+
+                if ($oldFilename == $newFilename) {
+                    break;
+                }
+
+                $this->changeFilenameOfStoredXml($newFilename, $oldFilename);
+
+                $packageAvailability = $this->isPackageAvailable($this->extractPackage($oldFilename), $oldApiKey);
+
+                if ($packageAvailability && $this->apiKeyCorrectness) {
+                    $settings['registry_info'][0]['publisher_id'] = $publisherId;
+                    $settings['registry_info'][0]['api_id']       = $newApiKey;
+                    $publishedActivity->filename                  = $newFilename;
+
+                    $this->publisher->publishFile(
+                        getVal($settings, ['registry_info'], []),
+                        $publishedActivity,
+                        $organization,
+                        getVal($settings, ['publishing_type'])
+                    );
+                    $publishedActivity->filename = $oldFilename;
+
+                    $this->publishedFiles[] = ['newPackage' => $this->extractPackage($newFilename)];
+                }
+            }
+
+            return true;
+
+        } catch (Exception $exception) {
+            throw $exception;
+        }
+    }
+
+    /**
+     * Unlink the old package.
+     * Save in database.
+     *
+     * @param $publishedActivities
+     * @param $settings
+     * @param $publisherId
+     * @return bool
+     * @throws Exception
+     */
+    protected function unlinkAndSaveActivities($publishedActivities, $settings, $publisherId)
+    {
+        try {
+            $settings  = $settings->toArray();
+            $oldApiKey = getVal($settings, ['registry_info', 0, 'api_id']);
+
+            foreach ($publishedActivities as $index => $publishedActivity) {
+                $oldFilename = $publishedActivity->filename;
+                $newFilename = $this->generateNewFilename($publisherId, $oldFilename);
+
+                if ($oldFilename == $newFilename) {
+                    break;
+                }
+
+                $publishedActivity->filename             = $newFilename;
+                $publishedActivity->published_activities = $this->returnFilenameForIncludedActivities($publisherId, $publishedActivity->published_activities);
+                $publishedActivity->save();
+
+                $packageAvailability = $this->isPackageAvailable($this->extractPackage($oldFilename), $oldApiKey);
+
+                if ($packageAvailability && $this->apiKeyCorrectness) {
+                    $this->deletePackage($oldApiKey, $this->extractPackage($oldFilename));
+
+                    $this->unlinkedFiles[] = $oldFilename;
+                }
+            }
+
+            return true;
+        } catch (Exception $exception) {
+            $this->databaseManager->rollback();
+            throw $exception;
+        }
+    }
+
+    /**
+     * Unlink the old package.
+     * Save the record in database.
+     *
+     * @param $publishedOrganizationData
+     * @param $settings
+     * @param $publisherId
+     * @return bool
+     * @throws Exception
+     */
+    protected function unlinkAndSaveOrganizationData($publishedOrganizationData, $settings, $publisherId)
+    {
+        try {
+            $settings    = $settings->toArray();
+            $oldFilename = $publishedOrganizationData->filename;
+            $newFilename = $this->generateNewFilename($publisherId, $oldFilename);
+            $oldApiKey   = getVal($settings, ['registry_info', 0, 'api_id']);
+
+            if ($oldFilename == $newFilename) {
+                return true;
+            }
+
+            $packageAvailability = $this->isPackageAvailable($this->extractPackage($oldFilename), $oldApiKey);
+
+            $publishedOrganizationData->filename = $newFilename;
+            $publishedOrganizationData->save();
+
+            if ($packageAvailability && $this->apiKeyCorrectness) {
+                $this->deletePackage($oldApiKey, $this->extractPackage($oldFilename));
+
+                $this->unlinkedFiles = ['oldPackage' => $this->extractPackage($oldFilename)];
+            }
+
+            return true;
+        } catch (Exception $exception) {
+            $this->databaseManager->rollback();
+            throw $exception;
+        }
+    }
+
+    /**
+     * Unlink recently published packages.
+     *
+     * @param $newApiKey
+     */
+    protected function rollBackPublishedFiles($newApiKey)
+    {
+        foreach ($this->publishedFiles as $index => $file) {
+            $this->deletePackage($newApiKey, getVal($file, ['newPackage']));
+        }
+    }
+
+    /**
+     * Unlink newly published package
+     * Publish unlinked old package.
+     *
+     * @param $newApiKey
+     * @param $settings
+     * @param $organization
+     * @param $publishedActivities
+     * @param $publishedOrganizationData
+     */
+    protected function rollBackUnlinkedFiles($newApiKey, $settings, $organization, $publishedActivities, $publishedOrganizationData)
+    {
+        $this->rollBackPublishedFiles($newApiKey);
+
+        foreach ($publishedActivities as $index => $publishedActivity) {
+            $oldFilename = $publishedActivity->filename;
+
+            if (in_array($oldFilename, $this->unlinkedFiles)) {
+                $this->publisher->publishFile(
+                    getVal($settings, ['registry_info'], []),
+                    $publishedActivity,
+                    $organization,
+                    getVal($settings, ['publishing_type'])
+                );
+            }
+        }
+
+        $oldOrgFilename = $publishedOrganizationData->filename;
+
+        if (in_array($oldOrgFilename, $this->unlinkedFiles)) {
+            $this->publisher->publishFile(
+                getVal($settings, ['registry_info'], []),
+                $publishedOrganizationData,
+                $organization,
+                getVal($settings, ['publishing_type'])
+            );
+
         }
     }
 }

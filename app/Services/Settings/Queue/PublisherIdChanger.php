@@ -135,6 +135,8 @@ class PublisherIdChanger extends Job
         if (!file_exists($this->filePath)) {
             mkdir($this->filePath, 0777, true);
         }
+
+        shell_exec(sprintf('chmod 777 -R %s', $this->filePath));
     }
 
     /**
