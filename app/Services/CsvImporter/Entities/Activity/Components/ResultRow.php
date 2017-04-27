@@ -1084,7 +1084,7 @@ class ResultRow extends Row
         $messages['indicator.*.baseline.0.year.integer']                             = trans('validation.integer', ['attribute' => trans('elementForm.indicator_baseline_year')]);
         $messages['indicator.*.baseline.0.year.required_with']                       = trans(
             'validation.required_with',
-            ['attribute' => trans('elementForm.indicator_baseline_year'), 'values' => 'elementForm.indicator_baseline_value']
+            ['attribute' => trans('elementForm.indicator_baseline_year'), 'values' => trans('elementForm.indicator_baseline_value')]
         );
         $messages['indicator.*.baseline.0.value.string']                             = trans('validation.string', ['attribute' => trans('elementForm.indicator_baseline_value')]);
         $messages['indicator.*.baseline.0.value.required_with']                      = trans(
