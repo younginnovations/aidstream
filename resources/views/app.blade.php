@@ -189,6 +189,10 @@
     var roleId = "{!! $loggedInUser->role_id!!}";
 </script>
 @if($loggedInUser && $loggedInUser->userOnBoarding && (session('role_id')!= 3 && session('role_id')!= 4))
+    <script>
+        var hintStatus = "{!! ($loggedInUser->userOnBoarding->display_hints) ? 1 : 0 !!}";
+        var completedTour = "{!! ($loggedInUser->userOnBoarding->completed_tour) ? 1 : 0 !!}";
+    </script>
     <script src="{{url('js/userOnBoarding.js')}}"></script>
     <script type="text/javascript" src="{{url('js/hints.js')}}"></script>
 @endif
