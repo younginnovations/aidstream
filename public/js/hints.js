@@ -1,6 +1,3 @@
-var hintStatus = "{!! ($loggedInUser->userOnBoarding->display_hints) ? 1 : 0 !!}";
-var completedTour = "{!! ($loggedInUser->userOnBoarding->completed_tour) ? 1 : 0 !!}";
-
 var className = (hintStatus == 1) ? 'pull-right display Yes' : 'pull-right display No';
 
 $('#logout').before(
