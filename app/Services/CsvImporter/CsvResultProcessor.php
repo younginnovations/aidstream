@@ -96,16 +96,16 @@ class CsvResultProcessor
     {
         $index = - 1;
 
-        $this->data[0]['type'] = '';
-        $this->data[0]['aggregation_status'] = '';
-        
+        $this->data[0]['type'] = null;
+        $this->data[0]['aggregation_status'] = null;
+
         foreach ($this->csv as $row) {
             if (!$this->isSameEntity($row)) {
 
                 $index ++;
 
-                $this->data[$index]['type'] = '';
-                $this->data[$index]['aggregation_status'] = '';
+                $this->data[$index]['type'] = null;
+                $this->data[$index]['aggregation_status'] = null;
             }
 
             $this->group($row, $index);
