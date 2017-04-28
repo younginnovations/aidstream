@@ -641,6 +641,7 @@ footer .footer-logo a {
 
 .org-transaction-wrapper {
   background-image: -webkit-linear-gradient(91deg, #4CBF73 2%, #5CE67C 99%);
+  background-image: -o-linear-gradient(91deg, #4CBF73 2%, #5CE67C 99%);
   background-image: linear-gradient(-1deg, #4CBF73 2%, #5CE67C 99%); }
 
 .form-block:not(:nth-last-child(1)) {
@@ -921,6 +922,7 @@ footer .footer-logo a {
     top: -4px;
     -webkit-transform: rotate(45deg);
         -ms-transform: rotate(45deg);
+         -o-transform: rotate(45deg);
             transform: rotate(45deg);
     width: 8px; }
   .point > label {
@@ -1083,10 +1085,12 @@ footer .footer-logo a {
   border-bottom: 1px solid #d6f9de; }
   .panel__status .col-sm-4 {
     background-image: -webkit-radial-gradient(50% 0, circle, #f3fdf5, #f0fdf2);
+    background-image: -o-radial-gradient(50% 0, circle, #f3fdf5, #f0fdf2);
     background-image: radial-gradient(circle at 50% 0, #f3fdf5, #f0fdf2);
     border-right: 1px solid #d6f9de; }
     .panel__status .col-sm-4:nth-child(even) {
       background-image: -webkit-radial-gradient(50% 0, circle, #f2fbf4, #dffde6);
+      background-image: -o-radial-gradient(50% 0, circle, #f2fbf4, #dffde6);
       background-image: radial-gradient(circle at 50% 0, #f2fbf4, #dffde6); }
 
 .add-more:hover, .add-more:focus {

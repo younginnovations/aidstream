@@ -66,8 +66,8 @@ class PublisherIdChangeController extends Controller
     public function publisherIdChanged(Request $request)
     {
         $currentUser    = auth()->user();
-        $publisherId    = $request->get('publisherId');
-        $apiKey         = $request->get('apiKey');
+        $publisherId    = trim($request->get('publisherId'));
+        $apiKey         = trim($request->get('apiKey'));
         $organizationId = session('org_id');
         $changes        = [];
         $dbSettings     = $this->settingsManager->getSettings($organizationId)->toArray();
@@ -85,11 +85,11 @@ class PublisherIdChangeController extends Controller
         }
 
         if ($this->hasPublisherIdBeenChanged($publisherId, $dbSettings)) {
-//            if (!isUniquePublisherId($publisherId)) {
-//                $isUnique = false;
-//
-//                return view('settings.publisherIdChanged', compact('isUnique', 'publisherId', 'isCorrect', 'inputApiKey', 'changes', 'apiKey'))->render();
-//            }
+            if (!isUniquePublisherId($publisherId)) {
+                $isUnique = false;
+
+                return view('settings.publisherIdChanged', compact('isUnique', 'publisherId', 'isCorrect', 'inputApiKey', 'changes', 'apiKey'))->render();
+            }
 
             if ($this->changeHandler->checkPublisherValidity($this->changeHandler->searchForPublisher($publisherId), $publisherId)) {
                 $isCorrect                 = true;

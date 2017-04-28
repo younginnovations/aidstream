@@ -299,9 +299,11 @@ footer {
       backface-visibility: hidden;
       -moz-osx-font-smoothing: grayscale;
       -webkit-transition-duration: 0.3s;
-      transition-duration: 0.3s;
+      -o-transition-duration: 0.3s;
+         transition-duration: 0.3s;
       -webkit-transition-property: -webkit-box-shadow;
-      transition-property: box-shadow; }
+      -o-transition-property: box-shadow;
+         transition-property: box-shadow; }
       .organisations-list ul li a {
         display: block;
         padding-top: 10px; }
@@ -671,6 +673,7 @@ address {
     overflow: hidden;
     border-bottom: 1px solid rgba(151, 151, 151, 0.2);
     -webkit-transition: all 0.2s ease-in-out;
+         -o-transition: all 0.2s ease-in-out;
             transition: all 0.2s ease-in-out;
     position: relative; }
     .activities-listing > li:last-child {
@@ -760,6 +763,7 @@ address {
 
 .org-transaction-wrapper {
   background-image: -webkit-linear-gradient(90deg, #5F9FBF 0%, #7FEAFF 100%);
+  background-image: -o-linear-gradient(90deg, #5F9FBF 0%, #7FEAFF 100%);
   background-image: linear-gradient(0deg, #5F9FBF 0%, #7FEAFF 100%);
   -webkit-box-shadow: 0 1px 20px 0 rgba(0, 0, 0, 0.2);
           box-shadow: 0 1px 20px 0 rgba(0, 0, 0, 0.2);
@@ -875,6 +879,7 @@ footer {
       font-size: 17px;
       -webkit-transform: rotate(180deg);
           -ms-transform: rotate(180deg);
+           -o-transform: rotate(180deg);
               transform: rotate(180deg);
       color: #00A8FF;
       cursor: pointer; }
@@ -1005,6 +1010,7 @@ footer {
     border-bottom: 2px solid #F6A623;
     -webkit-transform: rotate(45deg);
         -ms-transform: rotate(45deg);
+         -o-transform: rotate(45deg);
             transform: rotate(45deg);
     width: 6px;
     height: 6px; }
@@ -1079,6 +1085,7 @@ footer {
   .links > li:last-child a, .links > li:last-child i {
     opacity: 1;
     -webkit-transition: opacity 0.1s ease-in-out;
+         -o-transition: opacity 0.1s ease-in-out;
             transition: opacity 0.1s ease-in-out; }
   .links > li:last-child:hover > a {
     opacity: 0; }
@@ -1097,6 +1104,7 @@ footer {
   left: 0;
   opacity: 0;
   -webkit-transition: opacity 0.2s ease-in-out;
+       -o-transition: opacity 0.2s ease-in-out;
           transition: opacity 0.2s ease-in-out; }
   .share-links li {
     float: left; }
@@ -1265,7 +1273,8 @@ footer {
       -ms-flex-align: center;
       -webkit-align-items: center;
       -webkit-box-align: center;
-      align-items: center; }
+      -moz-box-align: center;
+           align-items: center; }
   .left-wrapper {
     display: inline-block;
     padding-right: 20px;
@@ -1281,6 +1290,7 @@ footer {
     padding-left: 30px;
     padding-right: 0;
     -webkit-box-ordinal-group: 2;
+    -moz-box-ordinal-group: 2;
     -ms-flex-order: 2;
     -webkit-order: 2;
     order: 2; }
@@ -1474,6 +1484,7 @@ footer {
     z-index: 3; }
   .navbar-toggle * {
     -webkit-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
     transition: all 0.5s ease; }
   .navbar-toggle {
     height: 20px;
@@ -1498,21 +1509,26 @@ footer {
   .navbar-toggle span.bar1 {
     -ms-transform: rotate(45deg);
     -webkit-transform: rotate(45deg);
+    -o-transform: rotate(45deg);
     transform: rotate(45deg);
     -ms-transform-origin: 1px 1px;
     -webkit-transform-origin: 1px 1px;
+    -o-transform-origin: 1px 1px;
     transform-origin: 1px 1px;
     width: 24px; }
   .navbar-toggle span.bar2 {
     -ms-transform: rotate(-360deg) scale(0);
     -webkit-transform: rotate(-360deg) scale(0);
+    -o-transform: rotate(-360deg) scale(0);
     transform: rotate(-360deg) scale(0); }
   .navbar-toggle span.bar3 {
     -ms-transform: rotate(-45deg);
     -webkit-transform: rotate(-45deg);
-    transform: rotate(-45deg);
+    -o-transform: rotate(-45deg);
+       transform: rotate(-45deg);
     -ms-transform-origin: 5px 4px;
     -webkit-transform-origin: 5px 4px;
+    -o-transform-origin: 5px 4px;
     transform-origin: 5px 4px;
     width: 24px; }
   .navbar-toggle.collapsed span.bar1,
@@ -1520,7 +1536,8 @@ footer {
   .navbar-toggle.collapsed span.bar3 {
     -ms-transform: none;
     -webkit-transform: none;
-    transform: none;
+    -o-transform: none;
+       transform: none;
     width: 24px; }
   .navbar-default .navbar-collapse {
     position: absolute;
@@ -1533,6 +1550,7 @@ footer {
     opacity: 0;
     pointer-events: none;
     -webkit-transition: all .2s ease-in-out;
+    -o-transition: all .2s ease-in-out;
     transition: all .2s ease-in-out; }
     .navbar-default .navbar-collapse .navbar-nav {
       margin-top: 100px;
@@ -1548,6 +1566,7 @@ footer {
           text-decoration: none;
           border-bottom: 2px solid transparent;
           -webkit-transition: all .2s linear;
+          -o-transition: all .2s linear;
           transition: all .2s linear;
           display: inline-block;
           padding-bottom: 0; }

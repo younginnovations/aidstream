@@ -65,7 +65,7 @@ var PublisherId = {
     },
     verifyingStatus: function () {
         var apiStatus = $('#apiStatus');
-        apiStatus.html('Verifying...');
+        apiStatus.removeClass('text-success text-danger').html('Verifying...');
     },
     storeValues: function (data) {
         var publisher_response = data['publisher_id'];
@@ -84,10 +84,12 @@ var PublisherId = {
                     '/publishing-settings/verifyApiWithPublisherId', 'POST', self.verifyingStatus())
                     .success(function (data) {
                         if (data.status == true) {
+                            apiStatus.addClass('text-success');
                             apiStatus.html('Correct');
                             $('#saveChanges').prop('disabled', false);
                         }
                         if (data.status == false) {
+                            apiStatus.addClass('text-danger');
                             apiStatus.html('Incorrect');
                         }
                     })

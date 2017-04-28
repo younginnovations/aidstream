@@ -58,22 +58,22 @@
             });
         });
         $(window).load(function () {
-        @if(!session('publisherIdChange'))
-            PublisherId.onChange();
-            PublisherId.verifyApi();
-            Chunk.verifyPublisherAndApi();
-            @if(session('first_login') && (auth()->user()->isAdmin()))
-                var stepNumber = location.hash.replace('#', '');
-                if (stepNumber == 1 || stepNumber == 2 || stepNumber == 3) {
-                    var completedSteps = [{!! json_encode((array)$completedSteps) !!}];
-                    UserOnBoarding.getLocalisedSettingsText(completedSteps);
-                    UserOnBoarding.validatePublishingInfo();
-                }
+            @if(!session('publisherIdChange'))
+                PublisherId.onChange();
+                PublisherId.verifyApi();
+                Chunk.verifyPublisherAndApi();
+                @if(session('first_login') && (auth()->user()->isAdmin()))
+                    var stepNumber = location.hash.replace('#', '');
+                    if (stepNumber == 1 || stepNumber == 2 || stepNumber == 3) {
+                        var completedSteps = [{!! json_encode((array)$completedSteps) !!}];
+                        UserOnBoarding.getLocalisedSettingsText(completedSteps);
+                        UserOnBoarding.validatePublishingInfo();
+                    }
+                @endif
+            @else
+                PublisherId.checkStatus();
+                PublisherId.disableFormSubmit();
             @endif
-        @else
-            PublisherId.checkStatus();
-            PublisherId.disableFormSubmit();
-        @endif
         });
     </script>
 @endsection

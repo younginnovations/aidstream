@@ -4,25 +4,27 @@
 <div class="modal-dialog" role="document">
     <div class="modal-content">
         <div class="modal-header">
-            <h4 class="modal-title">Change Publisher Id??</h4>
+            <h4 class="modal-title">@lang('publisherIdChanged.change_publisher_id')</h4>
         </div>
         <div class="modal-body">
             @if($isCorrect)
-                <p>You are about to change your Publisher Id from <strong>{{$oldPublisherId}}</strong> to <strong>{{$publisherId}}</strong></p>
-                <p>The following changes will come into effect after your confirmation:</p>
-                <ul>
-                    <li>Your present file(s) will be renamed.</li>
-                    @if($inputApiKey)
-                        <li>Your current file(s) will be deleted from IATI Registry and the renamed files will be published.</li>
-                    @endif
-                </ul>
+                <p>{!!  trans('publisherIdChanged.about_to_change_publisher_id', ['oldPublisher' => $oldPublisherId , 'publisherId' => $publisherId]) !!}</p>
+                @if(count(getVal($changes,['organizationData'],[])) > 0 || count(getVal($changes,['activity'],[])) > 0)
+                    <p>@lang('publisherIdChanged.changes_after_confirmation')</p>
+                    <ul>
+                        <li>@lang('publisherIdChanged.present_file_will_be_renamed')</li>
+                        @if($inputApiKey)
+                            <li>@lang('publisherIdChanged.current_files_will_be_deleted')</li>
+                        @endif
+                    </ul>
+                @endif
                 @if(count(getVal($changes,['organizationData'],[])) > 0)
                     <table>
-                        <caption>Organization Data</caption>
+                        <caption>@lang('publisherIdChanged.organization_data')</caption>
                         <thead>
                         <tr>
-                            <th>Old Filename</th>
-                            <th>New Filename</th>
+                            <th>@lang('publisherIdChanged.old_filename')</th>
+                            <th>@lang('publisherIdChanged.new_filename')</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -39,11 +41,11 @@
                 @endif
                 @if(count(getVal($changes,['activity'],[])) > 0)
                     <table>
-                        <caption>Activities</caption>
+                        <caption>@lang('publisherIdChanged.activities')</caption>
                         <thead>
                         <tr>
-                            <th>Old Filename</th>
-                            <th>New Filename</th>
+                            <th>@lang('publisherIdChanged.old_filename')</th>
+                            <th>@lang('publisherIdChanged.new_filename')</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -59,8 +61,8 @@
                 @endif
                 <div>
                     @if($inputApiKey)
-                        <p>Please enter the API Key for the new Publisher Id for the changes to come into effect.</p>
-                        {!! Form::label('apiKey', 'Api Key') !!}
+                        <p>@lang('publisherIdChanged.enter_api_key')</p>
+                        {!! Form::label('apiKey', trans('publisherIdChanged.api_key')) !!}
                         {!! Form::text('apiKey', '',['id' => 'newApiKey']) !!}
                         <span id="apiStatus"></span>
                     @else
@@ -69,23 +71,23 @@
                 </div>
             @elseif(!$isUnique)
                 <p>
-                    The Publisher Id <strong>{{$publisherId}}</strong> is already being used. Please check your Publisher Id and try again.
+                    {!! trans('publisherIdChanged.publisher_id_used',['publisherId' => $publisherId]) !!}
                 </p>
             @elseif(!$isAuthorized)
                 <p>
-                    You are not authorized to change the Settings. Please contact your administrator to change the Settings.
+                    @lang('publisherIdChanged.not_authorized')
                 </p>
             @else
                 <p>
-                    The Publisher Id you have entered is incorrect. Since, these changes will affect your datasets and xml files, we cannot allow you to make these changes.
+                    @lang('publisherIdChanged.publisher_id_incorrect')
                 </p>
             @endif
         </div>
         <div class="modal-footer">
             @if($isCorrect)
-                <button type="submit" class="btn btn-primary" id="saveChanges" {{ !$inputApiKey ?: 'disabled' }}>Yes</button>
+                <button type="submit" class="btn btn-primary" id="saveChanges" {{ !$inputApiKey ?: 'disabled' }}>@lang('global.yes')</button>
             @endif
-            <button type="button" class="btn btn-default" onclick="window.location.href= '/publishing-settings'">Close</button>
+            <button type="button" class="btn btn-default" onclick="window.location.href= '/publishing-settings'">@lang('global.cancel')</button>
         </div>
     </div>
 </div>

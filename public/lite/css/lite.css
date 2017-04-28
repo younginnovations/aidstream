@@ -28,6 +28,7 @@ button, input[type="button"], input[type="reset"], input[type="submit"] {
   padding: 0.75em 1.5em;
   text-decoration: none;
   -webkit-transition: background-color 150ms ease;
+       -o-transition: background-color 150ms ease;
           transition: background-color 150ms ease;
   -webkit-user-select: none;
      -moz-user-select: none;
@@ -81,6 +82,7 @@ select, .form-control[readonly], form .select2-container, textarea {
   margin-bottom: 0.75em;
   padding: 0.5em;
   -webkit-transition: border-color 150ms ease;
+       -o-transition: border-color 150ms ease;
           transition: border-color 150ms ease;
   width: 100%; }
   input[type="color"]:focus, input[type="date"]:focus, input[type="datetime"]:focus, input[type="datetime-local"]:focus, input[type="email"]:focus, input[type="month"]:focus, input[type="number"]:focus, input[type="password"]:focus, input[type="search"]:focus, input[type="tel"]:focus, input[type="text"]:focus, input[type="time"]:focus, input[type="url"]:focus, input[type="week"]:focus, input:not([type]):focus, textarea:focus,
@@ -186,6 +188,7 @@ a {
   color: #477dca;
   text-decoration: none;
   -webkit-transition: color 150ms ease;
+       -o-transition: color 150ms ease;
           transition: color 150ms ease; }
   a:active, a:focus, a:hover {
     color: #355e98; }
@@ -234,6 +237,7 @@ h1, h2, h3, h4, h5, h6 {
 a, .btn-link {
   color: #00A8FF;
   -webkit-transition: none;
+       -o-transition: none;
           transition: none;
   cursor: pointer; }
   a:hover, a:focus, .btn-link:hover, .btn-link:focus {
@@ -274,6 +278,7 @@ strong {
   padding: 0;
   position: relative;
   -webkit-transition: left 0.4s;
+       -o-transition: left 0.4s;
           transition: left 0.4s; }
   .main-container::after {
     clear: both;
@@ -291,6 +296,7 @@ strong {
   width: calc(100% - 62px);
   float: left;
   -webkit-transition: margin-left 0.3s ease;
+       -o-transition: margin-left 0.3s ease;
           transition: margin-left 0.3s ease; }
   .content-wrapper .panel {
     border: 0; }
@@ -683,7 +689,8 @@ strong {
   height: 25px;
   -webkit-transform: rotate(45deg);
   -ms-transform: rotate(45deg);
-  transform: rotate(45deg); }
+  -o-transform: rotate(45deg);
+     transform: rotate(45deg); }
 
 .arrow.top:after {
   bottom: -20px;
@@ -812,6 +819,7 @@ label[class*="text-"] {
   float: left;
   overflow: hidden;
   -webkit-transition: width 0.3s ease;
+       -o-transition: width 0.3s ease;
           transition: width 0.3s ease;
   background: #262626;
   position: fixed;
@@ -928,6 +936,7 @@ label[class*="text-"] {
     position: absolute;
     bottom: 20px;
     -webkit-transition: opacity 0.3s ease;
+         -o-transition: opacity 0.3s ease;
             transition: opacity 0.3s ease; }
   .support p {
     color: rgba(255, 255, 255, 0.3);
@@ -938,6 +947,7 @@ label[class*="text-"] {
     height: 48px;
     opacity: 0;
     -webkit-transition: opacity 0.3s ease;
+         -o-transition: opacity 0.3s ease;
             transition: opacity 0.3s ease; }
 
 .full-sidebar-wrapper {
@@ -1335,6 +1345,7 @@ label[class*="text-"] {
         border-right: 1px solid #ccc;
         -webkit-transform: rotate(45deg);
             -ms-transform: rotate(45deg);
+             -o-transform: rotate(45deg);
                 transform: rotate(45deg);
         z-index: 1;
         display: none;
@@ -1518,6 +1529,7 @@ label[class*="text-"] {
       background: url(../../../images/ic-side-arrow.svg) no-repeat !important;
       -webkit-transform: rotate(180deg);
           -ms-transform: rotate(180deg);
+           -o-transform: rotate(180deg);
               transform: rotate(180deg); }
 
 .register-container .input-wrapper .organization-list-wrapper {
@@ -1600,6 +1612,7 @@ label[class*="text-"] {
   .register-container .nav-tabs li:after {
     -webkit-transform: rotate(-45deg);
         -ms-transform: rotate(-45deg);
+         -o-transform: rotate(-45deg);
             transform: rotate(-45deg);
     display: block; }
   .register-container .nav-tabs li.active {
@@ -2078,6 +2091,7 @@ label[class*="text-"] {
   position: static;
   width: 218px;
   -webkit-transition: all 0.5s ease-in-out;
+       -o-transition: all 0.5s ease-in-out;
           transition: all 0.5s ease-in-out; }
 
 .remove_from_collection, .remove_from_collection:focus {
@@ -2294,6 +2308,7 @@ label[class*="text-"] {
     bottom: auto;
     left: auto;
     -webkit-transition: all 0.5s ease-in-out;
+         -o-transition: all 0.5s ease-in-out;
             transition: all 0.5s ease-in-out;
     width: 226px; }
     .panel__nav nav li {
@@ -2366,11 +2381,13 @@ label[class*="text-"] {
   overflow: hidden; }
   .panel__status .col-sm-4 {
     background-image: -webkit-radial-gradient(50% 0, circle, #f9fdff, #f0faff);
+    background-image: -o-radial-gradient(50% 0, circle, #f9fdff, #f0faff);
     background-image: radial-gradient(circle at 50% 0, #f9fdff, #f0faff);
     height: 198px;
     padding: 20px 26px; }
     .panel__status .col-sm-4:nth-child(even) {
       background-image: -webkit-radial-gradient(50% 0, circle, #f2fbff, #dff5ff);
+      background-image: -o-radial-gradient(50% 0, circle, #f2fbff, #dff5ff);
       background-image: radial-gradient(circle at 50% 0, #f2fbff, #dff5ff); }
     .panel__status .col-sm-4 h2 {
       font-size: 14px;
@@ -2780,6 +2797,7 @@ label[class*="text-"] {
       .element-sidebar-dropdown .edit-element .caret.caret-out {
         -webkit-transform: rotate(180deg);
             -ms-transform: rotate(180deg);
+             -o-transform: rotate(180deg);
                 transform: rotate(180deg); }
   .element-panel-heading form {
     margin-right: 40px; }
@@ -3553,6 +3571,7 @@ label[class*="text-"] {
   .more-info:before {
     display: none !important;
     -webkit-transition: none !important;
+         -o-transition: none !important;
             transition: none !important; }
   .content-wrapper, .sidebar-wrapper + .content-wrapper, .sidebar-wrapper:not(.touch-sidebar-wrapper) + .content-wrapper {
     width: 100% !important;
@@ -3587,6 +3606,7 @@ label[class*="text-"] {
       content: "";
       -webkit-transform: none;
           -ms-transform: none;
+           -o-transform: none;
               transform: none;
       position: static;
       width: auto;
@@ -3633,6 +3653,7 @@ label[class*="text-"] {
     left: 50%;
     -webkit-transform: translate(-50%, -50%);
         -ms-transform: translate(-50%, -50%);
+         -o-transform: translate(-50%, -50%);
             transform: translate(-50%, -50%); } }
 
 @media all and (min-width: 1500px) {
@@ -3923,6 +3944,7 @@ label[class*="text-"] {
     top: -4px;
     -webkit-transform: rotate(45deg);
         -ms-transform: rotate(45deg);
+         -o-transform: rotate(45deg);
             transform: rotate(45deg);
     width: 8px; }
   .point > label {
