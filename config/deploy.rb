@@ -232,7 +232,7 @@ namespace :deploy do
     after :updated, "environment:set_variables"
     after :published, "aidstream:create_symlink"
     after :finished, "hipchat:deployed"
-    after :finished, "aidstream:queue_restart"
+    #after :finished, "aidstream:queue_restart"
     after :finished, "aidstream:create_ver_txt"
     after :failed, "hipchat:notify_deploy_failed"
 end

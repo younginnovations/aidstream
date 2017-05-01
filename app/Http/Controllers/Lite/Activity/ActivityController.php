@@ -88,7 +88,7 @@ class ActivityController extends LiteController
     {
         $organisation  = auth()->user()->organization;
         $orgId         = $organisation->id;
-        $orgIdentifier = getVal($organisation->reporting_org, [0, 'reporting_organization_identifier']);
+        $orgIdentifier = getVal((array) $organisation->reporting_org, [0, 'reporting_organization_identifier']);
 
         if (Gate::denies('belongsToOrganization', $organisation)) {
             return redirect()->route('lite.activity.index')->withResponse($this->getNoPrivilegesMessage());
