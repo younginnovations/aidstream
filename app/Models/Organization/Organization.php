@@ -144,9 +144,9 @@ class Organization extends Model
      * get organization name
      * @return string
      */
-    public function getNameAttribute()
+    public function getNameAttribute($value)
     {
-        return ($name = getVal((array) $this->reporting_org, [0, 'narrative', 0, 'narrative'])) ? $name : 'No Name';
+        return ($name = getVal((array) $this->reporting_org, [0, 'narrative', 0, 'narrative'])) ? $name : $value;
     }
 
     /**
