@@ -18,7 +18,7 @@ function removeEmptyValues(&$data)
     $data = array_filter(
         $data,
         function ($value) {
-            return ($value != '' && $value != []);
+            return ($value !== '' && $value != []);
         }
     );
 }
