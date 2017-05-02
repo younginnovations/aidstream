@@ -6,8 +6,12 @@ use App\Models\Organization\OrganizationData;
 use App\Models\Settings;
 use App\Models\OrganizationPublished;
 use App\Services\Organization\OrganizationManager;
+use App\Services\Publisher\Publisher;
+use App\Services\Workflow\Traits\ExceptionParser;
+use Exception;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
+use Psr\Log\LoggerInterface;
 
 /**
  * Class XmlGenerator
@@ -15,27 +19,79 @@ use Illuminate\Support\Facades\Storage;
  */
 class XmlGenerator
 {
+    use ExceptionParser;
+
+    /**
+     * Error code when package is not found.
+     */
+    const  PACKAGE_NOT_FOUND_ERROR_CODE = 404;
+    /**
+     * Error code when user is not authorized to perform the api action.
+     */
+    const  NOT_AUTHORIZED_ERROR_CODE = 403;
+    /**
+     * @var ArrayToXml
+     */
     protected $arrayToXml;
+    /**
+     * @var
+     */
     protected $orgElem;
+    /**
+     * @var
+     */
     protected $nameElem;
+    /**
+     * @var
+     */
     protected $reportingOrgElem;
+    /**
+     * @var
+     */
     protected $totalBudgetElem;
+    /**
+     * @var
+     */
     protected $recipientOrgBudgetElem;
+    /**
+     * @var
+     */
     protected $recipientCountrybudgetElem;
+    /**
+     * @var
+     */
     protected $documentLinkElem;
+    /**
+     * @var OrganizationManager
+     */
     protected $organizationManager;
+    /**
+     * @var OrganizationPublished
+     */
     protected $organizationPublished;
+    /**
+     * @var Publisher
+     */
+    private $publisher;
+    /**
+     * @var LoggerInterface
+     */
+    private $logger;
 
     /**
      * @param ArrayToXml            $arrayToXml
      * @param OrganizationPublished $organizationPublished
      * @param OrganizationManager   $organizationManager
+     * @param Publisher             $publisher
+     * @param LoggerInterface       $logger
      */
-    public function __construct(ArrayToXml $arrayToXml, OrganizationPublished $organizationPublished, OrganizationManager $organizationManager)
+    public function __construct(ArrayToXml $arrayToXml, OrganizationPublished $organizationPublished, OrganizationManager $organizationManager, Publisher $publisher, LoggerInterface $logger)
     {
         $this->arrayToXml            = $arrayToXml;
         $this->organizationPublished = $organizationPublished;
         $this->organizationManager   = $organizationManager;
+        $this->publisher             = $publisher;
+        $this->logger                = $logger;
     }
 
     /**
@@ -62,20 +118,31 @@ class XmlGenerator
      */
     public function generateXml(Organization $organization, OrganizationData $organizationData, Settings $settings, $orgElem)
     {
-        $xml      = $this->getXml($organization, $organizationData, $settings, $orgElem);
-        $filename = $settings['registry_info'][0]['publisher_id'] . '-org.xml';
+        try {
+            $xml      = $this->getXml($organization, $organizationData, $settings, $orgElem);
+            $filename = $settings['registry_info'][0]['publisher_id'] . '-org.xml';
 
-        $result = Storage::put(sprintf('%s%s', config('filesystems.xml'), $filename), $xml->saveXML());
+            $result = Storage::put(sprintf('%s%s', config('filesystems.xml'), $filename), $xml->saveXML());
 
-        if ($result) {
-            $published = $this->organizationPublished->firstOrNew(['filename' => $filename, 'organization_id' => $organization->id]);
-            $published->touch();
-            $published->filename        = $filename;
-            $published->organization_id = $organization->id;
-            $published->save();
+            if ($result) {
+                $published = $this->organizationPublished->firstOrNew(['filename' => $filename, 'organization_id' => $organization->id]);
+                $published->touch();
+                $published->filename        = $filename;
+                $published->organization_id = $organization->id;
+                $published->save();
+            }
+
+            if (getVal($settings->toArray(), ['registry_info', 0, 'publish_files']) == 'yes') {
+                $this->publisher->publishFile(getVal($settings->toArray(), ['registry_info'], []), $published, $organization, getVal($settings->toArray(), ['publishing_type']));
+            }
+
+            return ['status' => true];
+
+        } catch (Exception $exception) {
+            $this->logger->error($exception, ['trace' => $exception->getTraceAsString()]);
+
+            return $this->parse($exception);
         }
-
-        return ($settings['registry_info'][0]['publish_files'] == 'yes') ? $this->organizationManager->publishToRegistry($organization, $settings, $filename) : true;
     }
 
     /**
@@ -125,6 +192,13 @@ class XmlGenerator
         return $xmlOrganization;
     }
 
+    /**
+     * @param Organization     $organization
+     * @param OrganizationData $organizationData
+     * @param Settings         $settings
+     * @param                  $orgElem
+     * @return string
+     */
     public function generateTemporaryXml(Organization $organization, OrganizationData $organizationData, Settings $settings, $orgElem)
     {
         $xml = $this->getXml($organization, $organizationData, $settings, $orgElem);

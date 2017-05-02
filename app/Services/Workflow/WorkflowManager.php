@@ -1,9 +1,8 @@
 <?php namespace App\Services\Workflow;
 
-use App\Exceptions\Aidstream\Workflow\PublisherNotFoundException;
 use App\Services\PerfectViewer\PerfectViewerManager;
+use App\Services\Workflow\Traits\ExceptionParser;
 use Exception;
-use GuzzleHttp\Exception\ClientException;
 use Psr\Log\LoggerInterface;
 use App\Models\Activity\Activity;
 use App\Services\Twitter\TwitterAPI;
@@ -12,7 +11,6 @@ use App\Services\Activity\ActivityManager;
 use App\Services\Organization\OrganizationManager;
 use App\Services\Xml\Providers\XmlServiceProvider;
 use App\Services\Workflow\DataProvider\OrganizationDataProvider;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * Class WorkflowManager
@@ -20,10 +18,14 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class WorkflowManager
 {
+    use ExceptionParser;
+
     /**
      * Status code for Not Authorized Exception.
      */
     const NOT_AUTHORIZED_ERROR_CODE = 403;
+
+    const PACKAGE_NOT_FOUND_ERROR_CODE = 404;
 
     /**
      * @var OrganizationManager
@@ -64,17 +66,22 @@ class WorkflowManager
      * @var PerfectViewerManager
      */
     protected $perfectActivity;
+    /**
+     * @var SegmentationChangeHandler
+     */
+    protected $segmentationChangeHandler;
 
     /**
      * WorkflowManager constructor.
-     * @param OrganizationManager      $organizationManager
-     * @param ActivityManager          $activityManager
-     * @param XmlServiceProvider       $xmlServiceProvider
-     * @param OrganizationDataProvider $organizationDataProvider
-     * @param Publisher                $publisher
-     * @param LoggerInterface          $logger
-     * @param TwitterAPI               $twitter
-     * @param PerfectViewerManager     $perfectActivityViewerManager
+     * @param OrganizationManager       $organizationManager
+     * @param ActivityManager           $activityManager
+     * @param XmlServiceProvider        $xmlServiceProvider
+     * @param OrganizationDataProvider  $organizationDataProvider
+     * @param Publisher                 $publisher
+     * @param LoggerInterface           $logger
+     * @param TwitterAPI                $twitter
+     * @param SegmentationChangeHandler $segmentationChangeHandler
+     * @param PerfectViewerManager      $perfectActivityViewerManager
      */
     public function __construct(
         OrganizationManager $organizationManager,
@@ -84,16 +91,18 @@ class WorkflowManager
         Publisher $publisher,
         LoggerInterface $logger,
         TwitterAPI $twitter,
+        SegmentationChangeHandler $segmentationChangeHandler,
         PerfectViewerManager $perfectActivityViewerManager
     ) {
-        $this->organizationManager      = $organizationManager;
-        $this->activityManager          = $activityManager;
-        $this->xmlServiceProvider       = $xmlServiceProvider;
-        $this->organizationDataProvider = $organizationDataProvider;
-        $this->publisher                = $publisher;
-        $this->logger                   = $logger;
-        $this->twitter                  = $twitter;
-        $this->perfectActivity          = $perfectActivityViewerManager;
+        $this->organizationManager       = $organizationManager;
+        $this->activityManager           = $activityManager;
+        $this->xmlServiceProvider        = $xmlServiceProvider;
+        $this->organizationDataProvider  = $organizationDataProvider;
+        $this->publisher                 = $publisher;
+        $this->logger                    = $logger;
+        $this->twitter                   = $twitter;
+        $this->perfectActivity           = $perfectActivityViewerManager;
+        $this->segmentationChangeHandler = $segmentationChangeHandler;
     }
 
     /**
@@ -136,20 +145,28 @@ class WorkflowManager
      * If the auto-publish option is set, the Activity data is published into the IATI Registry.
      * @param $activity
      * @param $details
-     * @return bool
+     * @return array
      */
     public function publish($activity, array $details)
     {
         try {
-            $organization = $activity->organization;
-            $settings     = $organization->settings;
-            $version      = $settings->version;
+            $organization        = $activity->organization;
+            $settings            = $organization->settings;
+            $version             = $settings->version;
+            $linked              = true;
+            $publishedActivities = $organization->publishedFiles;
+            $this->xmlServiceProvider->initializeGenerator($version);
 
-            $this->xmlServiceProvider->initializeGenerator($version)->generate(
+            if ($this->shouldChangeSegmentation($settings, $publishedActivities)) {
+                $this->segmentationChangeHandler->changes($activity, $publishedActivities, $organization, $settings, $this->xmlServiceProvider, $this->publisher);
+            }
+
+            $this->xmlServiceProvider->generate(
                 $activity,
                 $this->organizationManager->getOrganizationElement(),
                 $this->activityManager->getActivityElement()
             );
+
 
             if (getVal($settings['registry_info'], [0, 'publish_files']) == 'yes') {
                 $this->publisher->publishFile(
@@ -163,37 +180,38 @@ class WorkflowManager
                 $activity->save();
 
                 $this->activityManager->activityInRegistry($activity);
-                $this->twitter->post($organization->settings, $organization);
+
+                if ($this->shouldPostOnTwitter($settings)) {
+                    $this->twitter->post($organization->settings, $organization);
+                }
+            } else {
+                $linked = false;
             }
 
             $this->perfectActivity->createSnapshot($activity);
 
             $this->update($details, $activity);
 
-            return true;
+            return ['status' => true, 'linked' => $linked];
         } catch (Exception $exception) {
             $this->logger->error($exception, ['trace' => $exception->getTraceAsString()]);
 
-            if ($exception instanceof PublisherNotFoundException || $exception instanceof ClientException) {
-                return false;
-            }
-
-            if ($message = $this->isForbidden($exception)) {
-                return 'Not Authorized';
-            }
-
-            return null;
+            return $this->parse($exception);
         }
     }
 
-    /**
-     * @param Exception $exception
-     * @return bool
-     */
-    protected function isForbidden(Exception $exception)
+    protected function shouldPostOnTwitter($settings)
     {
-        $message = explode(':', explode("\n", $exception->getMessage())[0]);
+        return ($settings->post_on_twitter) ? true : false;
+    }
 
-        return ($message[0] == self::NOT_AUTHORIZED_ERROR_CODE);
+    protected function shouldChangeSegmentation($settings, $publishedActivities)
+    {
+        if ($settings->publishing_type == 'segmented' && count($publishedActivities) > 0) {
+            return true;
+        }
+
+        return false;
     }
 }
+

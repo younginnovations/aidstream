@@ -13,7 +13,8 @@ class Settings extends Model
         'default_field_groups',
         'version',
         'organization_id',
-        'status'
+        'status',
+        'post_on_twitter'
     ];
     protected $casts = [
         'registry_info'        => 'json',

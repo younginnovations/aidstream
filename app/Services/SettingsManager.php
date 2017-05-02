@@ -9,6 +9,7 @@ use App\Services\Activity\ActivityManager;
 use App\Services\Organization\OrganizationManager;
 use App\Services\UserOnBoarding\UserOnBoardingService;
 use Exception;
+use GuzzleHttp\Client;
 use Illuminate\Database\DatabaseManager;
 use Illuminate\Contracts\Auth\Guard;
 use Kris\LaravelFormBuilder\FormBuilder;

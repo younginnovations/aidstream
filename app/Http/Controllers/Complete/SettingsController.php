@@ -11,14 +11,13 @@ use App\Services\Activity\ActivityManager;
 use App\Services\Activity\OtherIdentifierManager;
 use App;
 use App\Services\RequestManager\Organization\SettingsRequestManager;
+use App\Services\Settings\ChangeHandler;
 use App\Services\Settings\SettingsService;
 use App\Services\SettingsManager;
 use App\Services\Organization\OrganizationManager;
 use Illuminate\Database\DatabaseManager;
-use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\URL;
 use Kris\LaravelFormBuilder\FormBuilder;
 use Psr\Log\LoggerInterface;
 
@@ -27,7 +26,7 @@ use Psr\Log\LoggerInterface;
  * Class SettingsController
  * @package App\Http\Controllers\Complete
  */
-class SettingsController extends LiteController
+class SettingsController extends Controller
 {
     /**
      * @var SettingsService
@@ -71,16 +70,22 @@ class SettingsController extends LiteController
      * @var LoggerInterface
      */
     protected $loggerInterface;
+    /**
+     * @var ChangeHandler
+     */
+    protected $changeHandler;
+
 
     /**
      * @param SettingsManager        $settingsManager
      * @param OrganizationManager    $organizationManager
      * @param ActivityManager        $activityManager
+     * @param ChangeHandler          $changeHandler
      * @param OtherIdentifierManager $otherIdentifierManager
-     * @param SettingsService        $settingsService
-     * @param LoggerInterface        $loggerInterface
      * @param BaseForm               $baseForm
      * @param FormBuilder            $formBuilder
+     * @param SettingsService        $settingsService
+     * @param LoggerInterface        $loggerInterface
      * @internal param FormBuilder $formBuilder
      * @internal param BaseForm $formBase
      */
@@ -88,6 +93,7 @@ class SettingsController extends LiteController
         SettingsManager $settingsManager,
         OrganizationManager $organizationManager,
         ActivityManager $activityManager,
+        ChangeHandler $changeHandler,
         OtherIdentifierManager $otherIdentifierManager,
         BaseForm $baseForm,
         FormBuilder $formBuilder,
@@ -106,6 +112,7 @@ class SettingsController extends LiteController
         $this->loggerInterface        = $loggerInterface;
         $this->baseForm               = $baseForm;
         $this->formBuilder            = $formBuilder;
+        $this->changeHandler          = $changeHandler;
     }
 
     /**
@@ -325,6 +332,7 @@ class SettingsController extends LiteController
             $publishingInfo['publish_files']       = (is_null($settings->registry_info)) ? 'no' : getVal($settings->registry_info, [0, 'publish_files']);
             $publishingInfo['publisher_id_status'] = (is_null($settings->registry_info)) ? '' : getVal($settings->registry_info, [0, 'publisher_id_status']);
             $publishingInfo['api_id_status']       = (is_null($settings->registry_info)) ? '' : getVal($settings->registry_info, [0, 'api_id_status']);
+            $publishingInfo['post_on_twitter']     = ($settings->post_on_twitter) ? strtolower(trans('elementForm.yes')) : strtolower(trans('elementForm.no'));
         } else {
             $publishingInfo = [];
         }
@@ -349,6 +357,11 @@ class SettingsController extends LiteController
     {
         $this->authorize('settings', $this->settings);
 
+        if (Session::has('publisherIdChange') || isPublisherIdBeingChanged()) {
+            $response = ['type' => 'success', 'code' => ['message', ['message' => trans('success.publisher_id_changing')]]];
+
+            return redirect()->back()->withResponse($response);
+        }
         if ($this->settings) {
             $organizationId = session('org_id');
             $settings       = $request->all();
@@ -478,6 +491,11 @@ class SettingsController extends LiteController
      */
     public function verifyPublisherAndApi(Request $request)
     {
+        if (Session::has('publisherIdChange') || isPublisherIdBeingChanged()) {
+            $response = ['type' => 'success', 'code' => ['message', ['message' => trans('success.publisher_id_changing')]]];
+
+            return redirect()->back()->withResponse($response);
+        }
         $apiKey      = $request->get('apiKey');
         $publisherId = $request->get('publisherId');
 
@@ -488,6 +506,7 @@ class SettingsController extends LiteController
 
         return $response;
     }
+
 
     /**
      * Update Settings with segmentation changes.
@@ -564,3 +583,4 @@ class SettingsController extends LiteController
         }
     }
 }
+

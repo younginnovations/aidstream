@@ -235,7 +235,13 @@ var UserOnBoarding = {
                     data: {publisherId: publisherId, apiId: apiId, publisherIdStatus: publisherIdStatus, apiIdStatus: apiIdStatus},
                     type: 'POST',
                     success: function (data) {
-                        calculateNextStep(2);
+                        console.log(data);
+                        if (data.status == true) {
+                            calculateNextStep(2);
+                        } else {
+                            alert('The publisher id has already been used.');
+                        }
+
                     }
                 });
             }
@@ -250,7 +256,6 @@ var UserOnBoarding = {
                 type: 'POST',
                 success: function (data) {
                     calculateNextStep(3);
-                    // intro.goToStep(3);
                 }
             });
         });
@@ -264,7 +269,6 @@ var UserOnBoarding = {
                 type: 'POST',
                 success: function (data) {
                     calculateNextStep(4);
-                    // window.location.href = '/activity-elements-checklist#4';
                 }
             });
         });

@@ -62,6 +62,19 @@ class PublishingInfo extends BaseForm
                     'wrapper'        => ['class' => 'form-group registry-info-wrapper'],
                     'help_block'     => $this->addHelpText('activity_defaults-update_registry', false)
                 ]
+            )->add(
+                'post_on_twitter',
+                'choice',
+                [
+                    'label'          => trans('setting.automatically_post_twitter'),
+                    'choices'        => ['no' => trans('elementForm.no'), 'yes' => trans('elementForm.yes')],
+                    'expanded'       => true,
+                    'default_value'  => 'yes',
+                    'choice_options' => [
+                        'wrapper' => ['class' => 'choice-wrapper']
+                    ],
+                    'wrapper'        => ['class' => 'form-group registry-info-wrapper'],
+                ]
             )
             ->add(
                 'Save',

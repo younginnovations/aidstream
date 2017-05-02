@@ -162,6 +162,7 @@ class OrganizationController extends Controller
 
         $orgElem    = $this->organizationManager->getOrganizationElement();
         $xmlService = $orgElem->getOrgXmlService();
+
         if ($status === "1") {
             $validationMessage = $orgElementValidator->validateOrganization($organizationData);
 
@@ -185,18 +186,23 @@ class OrganizationController extends Controller
                     return redirect()->to('/publishing-settings')->withResponse($response);
                 }
                 $result = $xmlService->generateOrgXml($organization, $organizationData, $settings, $orgElem);
+                $this->organizationManager->updateStatus($input, $organizationData);
 
-                if (!$result) {
-                    $this->organizationManager->updateStatus($input, $organizationData);
-                    $response = ['type' => 'warning', 'code' => ['publish_registry', ['name' => '']]];
-
-                    return redirect()->back()->withResponse($response);
+                if (getVal($result, ['status']) === false) {
+                    return redirect()->back()->withResponse(['type' => 'warning', 'code' => ['message', ['message' => getVal($result, ['message'])]]]);
                 }
+
+                if (getVal($result, ['linked']) === false) {
+                    return redirect()->back()->withResponse(['type' => 'success', 'code' => ['organization_published_not_linked', ['name' => '']]]);
+                }
+
+                return redirect()->back()->withResponse(['type' => 'success', 'code' => ['publish_registry_organization', ['name' => '']]]);
             }
         }
 
         $statusLabel = ['Completed', 'Verified', 'Published'];
-        $response    = ($this->organizationManager->updateStatus($input, $organizationData)) ?
+
+        $response = ($this->organizationManager->updateStatus($input, $organizationData)) ?
             ['type' => 'success', 'code' => ['org_statuses', ['name' => $statusLabel[$status - 1]]]] :
             ['type' => 'danger', 'code' => ['org_statuses_failed', ['name' => $statusLabel[$status - 1]]]];
 
@@ -319,7 +325,7 @@ class OrganizationController extends Controller
         $organization = $this->organizationManager->getOrganization(session('org_id'));
         $this->authorize('settings', $organization->settings);
         $organizationInfoResponse = $this->organizationManager->saveOrganizationInformation($request->all(), $organization);
-        
+
         if ($organizationInfoResponse === "Username updated") {
             return redirect()->route('settings')->with('status', 'changed');
         }

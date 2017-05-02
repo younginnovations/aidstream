@@ -50,7 +50,7 @@
                                                     <tbody>
                                                     @foreach($list as $file)
                                                         <tr>
-                                                            <td><input type="checkbox" name="org_files[]" value="{{$file->organization_id .':'. $file->filename}}"/></td>
+                                                            <td><input type="checkbox" name="org_files[]" value="{{$file->id}}"/></td>
                                                             <td><a href="{{ url('/files/xml/' . $file->filename) }}"
                                                                    target="_blank">{{ $file->filename }}</a></td>
                                                             <td>{{ lastPublishedDate($file) }}</td>
@@ -96,7 +96,7 @@
                                                     <tbody>
                                                     @foreach($activity_list as $file)
                                                         <tr>
-                                                            <td><input type="checkbox" name="activity_files[]" value="{{$file->organization_id .':'. $file->filename}}"></td>
+                                                            <td><input type="checkbox" name="activity_files[]" value="{{$file->id}}"></td>
                                                             <td><a href="{{ url('/files/xml/' . $file->filename) }}"
                                                                    target="_blank">{{ $file->filename }}</a></td>
                                                             <td>{{ lastPublishedDate($file) }}</td>

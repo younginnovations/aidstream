@@ -1290,3 +1290,95 @@ function getEncodingType($file)
         return 'UTF-8';
     }
 }
+
+/**
+ * Return filename for the segmented activity.
+ *
+ * @param Activity $activity
+ * @param          $publisherId
+ * @return string
+ */
+function segmentedXmlFile(Activity $activity, $publisherId)
+{
+    $recipientCountry = (array) $activity['recipient_country'];
+    $recipientRegion  = (array) $activity['recipient_region'];
+
+    if (count($recipientRegion) == 1 && !isEmpty($recipientRegion, 'region_code')) {
+        return $recipientRegion[0]['region_code'];
+    } elseif (count($recipientCountry) == 1 && !isEmpty($recipientCountry, 'country_code')) {
+        return strtolower($recipientCountry[0]['country_code']);
+    } elseif (count($recipientCountry) >= 1) {
+        $maxPercentage = 0;
+        $countryCode   = array_first(
+            $recipientCountry,
+            function () {
+                return true;
+            }
+        );
+        $code          = strtolower($countryCode['country_code']);
+        foreach ($recipientCountry as $country) {
+            $percentage = $country['percentage'];
+            if ($percentage > $maxPercentage) {
+                $maxPercentage = $percentage;
+                $code          = strtolower($country['country_code']);
+            }
+        }
+
+        return sprintf('%s-%s', $publisherId, $code);
+    }
+
+    return sprintf('%s-%s', $publisherId, '998');
+}
+
+/**
+ * Check if an array is empty at the provided $key.
+ * @param array $data
+ * @param       $key
+ * @return bool
+ */
+function isEmpty(array $data, $key)
+{
+    $isEmpty = false;
+
+    foreach ($data as $index => $item) {
+        $isEmpty = empty(getVal($item, [$key], ''));
+    }
+
+    return $isEmpty;
+}
+
+/**
+ * Check if the publisher id is being changed for the organization.
+ * @return bool
+ */
+function isPublisherIdBeingChanged()
+{
+    $filePath = sprintf('%s/%s/%s/%s', storage_path(), 'publisherIdChanged', session('org_id'), 'status.json');
+    if (file_exists($filePath)) {
+        {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+/**
+ * Check if the entered published is already present in db.
+ *
+ * @param $newPublisherId
+ * @return bool
+ */
+function isUniquePublisherId($newPublisherId)
+{
+    $ids = Settings::select('registry_info')->where('organization_id', '<>', session('org_id'))->get()->toArray();
+
+    foreach ($ids as $id) {
+        if (getVal($id, ['registry_info', 0, 'publisher_id']) == $newPublisherId) {
+            return false;
+        }
+    }
+
+    return true;
+}
+

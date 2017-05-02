@@ -23,13 +23,6 @@ $router->group(
             ]
         );
 
-        $router->post(
-            'publish/org-files',
-            [
-                'as'   => 'org.bulk-publish',
-                'uses' => 'OrganizationController@orgBulkPublishToRegistry'
-            ]
-        );
         $router->get(
             'organization/{id}/delete-element/{element}',
             [
@@ -57,7 +50,7 @@ $router->group(
         $router->get(
             '/organization/{organizationId}/xml/view/{true}',
             [
-                'as' => 'errors.organizationXml',
+                'as'   => 'errors.organizationXml',
                 'uses' => 'OrganizationController@viewOrganizationXml'
             ]
         );

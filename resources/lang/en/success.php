@@ -29,5 +29,6 @@ return [
     'transaction_success_created'                   => 'Transaction successfully created.',
     'transaction_success_deleted'                   => 'Transaction successfully deleted.',
     'transaction_success_updated'                   => 'Transaction successfully updated',
-    'aidstream_upgraded'                            => 'Congratulations! You have upgraded AidStream!'
+    'aidstream_upgraded'                            => 'Congratulations! You have upgraded AidStream!',
+    'publisher_id_changing'                         => "Your publisher id is being changed. In the meantime, you cannot change your registry settings. Thank you for your patience."
 ];

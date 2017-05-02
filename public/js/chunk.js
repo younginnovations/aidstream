@@ -33,7 +33,7 @@ if (typeof(Chunk) == "undefined") var Chunk = {};
 
                     reader.onload = function (e) {
                         $('#selected_picture').attr('src', e.target.result).parent('.uploaded-logo').addClass('has-image');
-                    }
+                    };
 
                     reader.readAsDataURL(input.files[0]);
                 }
@@ -78,7 +78,7 @@ if (typeof(Chunk) == "undefined") var Chunk = {};
                 var username = $(this).closest('tr').find('#name').html();
                 var permission = $(this).val();
                 var permission_text = $(':selected', this).text();
-                $('#response').addClass('hidden')
+                $('#response').addClass('hidden');
                 $.ajax({
                     headers: {'X-CSRF-TOKEN': $('[name="_token"]').val()},
                     url: '/organization-user/update-permission/' + user_id,
@@ -136,19 +136,18 @@ if (typeof(Chunk) == "undefined") var Chunk = {};
             }
 
             function storeValues(source, data, publisherIdStatus, apiIdStatus) {
-                var publisher_response = data['publisher_id'];
-                var api_key = data['api_key'];
-                var publisherStatus = (publisher_response) ? "Correct" : "Incorrect";
-                var apiKeyStatus = (api_key) ? "Correct" : "Incorrect";
-                $("[name = 'publisher_id_status']").val(publisherStatus);
-                $("[name = 'api_id_status']").val(apiKeyStatus);
-
                 if (source == "publisher" || source == "both") {
+                    var publisher_response = data['publisher_id'];
+                    var publisherStatus = (publisher_response) ? "Correct" : "Incorrect";
+                    $("[name = 'publisher_id_status']").val(publisherStatus);
                     publisherIdStatus.val(publisherStatus);
                     $("#publisher_id_status_display").removeClass('text-danger text-success').addClass(publisher_response ? 'text-success' : 'text-danger').html(publisherStatus);
                 }
                 if (source == "api" || source == "both") {
+                    var api_key = data['api_key'];
+                    var apiKeyStatus = (api_key) ? "Correct" : "Incorrect";
                     apiIdStatus.val(apiKeyStatus);
+                    $("[name = 'api_id_status']").val(apiKeyStatus);
                     $("#api_id_status_display").removeClass('text-danger text-success').addClass(api_key ? 'text-success' : 'text-danger').html(apiKeyStatus);
                 }
             }
@@ -156,11 +155,11 @@ if (typeof(Chunk) == "undefined") var Chunk = {};
             $('#verify').on('click', function () {
                 verify("both");
             });
-            $('#publisher_id').on('blur', function () {
-                verify("publisher");
-            });
+
             $('#api_id').on('blur', function () {
-                verify("api");
+                if (!$('.loader').length > 0 && !$('#publisherIdChanged').children().length > 0) {
+                    verify("api");
+                }
             });
         },
         checkImport: function () {

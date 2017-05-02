@@ -78,13 +78,7 @@ $router->group(
                 'uses' => 'ActivityController@duplicateActivityAction'
             ]
         );
-        $router->post(
-            'publish/activity',
-            [
-                'as'   => 'activity.bulk-publish',
-                'uses' => 'ActivityController@activityBulkPublishToRegistry'
-            ]
-        );
+
         $router->get(
             'activity/{id}/delete-element/{element}',
             [
@@ -100,13 +94,13 @@ $router->group(
             ]
         )->where(['jsonPath' => '[a-z0-9_/]+']);
 
-        $router->get(
-            '/tweet',
-            [
-                'as'   => 'twitter',
-                'uses' => 'ActivityController@twitterPost'
-            ]
-        );
+//        $router->get(
+//            '/tweet',
+//            [
+//                'as'   => 'twitter',
+//                'uses' => 'ActivityController@twitterPost'
+//            ]
+//        );
 
         $router->get(
             '/import-activity',
