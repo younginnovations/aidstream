@@ -188,7 +188,7 @@ class CorrectionService
         if (!is_null($this->publisherMetaData) && !is_null($this->organization)) {
             $currentlyPublishedActivities = $this->getCurrentlyPublishedActivities();
 
-            $actuallyPublishedActivities = $this->publisherMetaData->result->results;
+            $actuallyPublishedActivities = $this->publisherMetaData->result->packages;
 
             return $this->syncDatabase($currentlyPublishedActivities, $actuallyPublishedActivities);
         }
@@ -383,8 +383,8 @@ class CorrectionService
     protected function searchForPublisher($publisherId)
     {
         $apiHost = env('REGISTRY_URL');
-        $uri     = 'action/package_search';
-        $url     = sprintf('%s%s?q=&fq=organization:%s', $apiHost, $uri, $publisherId);
+        $uri     = 'action/organization_show';
+        $url     = sprintf('%s%s?id=%s&include_dataset_count=true&include_datasets=true', $apiHost, $uri, $publisherId);
 
         return file_get_contents($url);
     }
