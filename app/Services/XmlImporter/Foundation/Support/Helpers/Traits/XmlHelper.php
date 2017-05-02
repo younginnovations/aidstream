@@ -42,6 +42,9 @@ trait XmlHelper
     {
         $index = 0;
         $data  = [[$key => '']];
+
+        $values = $values ?: [];
+
         foreach ($values as $value) {
             if ($this->name($value['name']) == $key) {
                 $data[$index][$key] = $this->value($value);
@@ -62,6 +65,8 @@ trait XmlHelper
      */
     protected function filterAttributes($values, $key = null, array $template)
     {
+        $values = $values ?: [];
+
         $index = 0;
         $data  = $this->templateToArray($template);
         foreach ($values as $value) {
