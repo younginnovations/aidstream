@@ -71,27 +71,23 @@ class Grouping
      */
     public function groupValues()
     {
-        foreach($this->indicatorKeys as $index => $value){
-            if(!array_key_exists($value, $this->fields)){
-                return $this->indicatorKeys;
+        if (array_keys($this->fields) == array_keys($this->indicatorKeys)) {
+            $index = - 1;
+
+            foreach ($this->fields[$this->keys[0]] as $i => $row) {
+                if (!$this->isSameEntity($index, $i)) {
+                    $index ++;
+                }
+
+                if ($index >= 0) {
+                    $this->setValue($index, $i);
+                }
             }
+
+            return $this->grouped;
+        } else {
+            return $this->indicatorKeys;
         }
-        $index = - 1;
-
-        foreach ($this->fields[$this->keys[0]] as $i => $row) {
-
-            if (!$this->isSameEntity($index, $i)) {
-
-                $index ++;
-
-            }
-
-            if ($index >= 0) {
-                $this->setValue($index, $i);
-            }
-        }
-
-        return $this->grouped;
     }
 
     /**
@@ -104,7 +100,6 @@ class Grouping
         if ((is_null($this->fields[$this->keys[0]][$i]) || $this->fields[$this->keys[0]][$i] == '')
             && (is_null($this->fields[$this->keys[1]][$i]) || $this->fields[$this->keys[1]][$i] == '')
         ) {
-
             return true;
         }
 

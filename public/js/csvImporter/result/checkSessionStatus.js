@@ -13,16 +13,21 @@ $(document).ready(function () {
                     return;
                 }
 
-                placeHolder.empty().append($('<a/>', {
-                    href: '/activity/' + activity + '/import-result/import-status',
-                    text: "Csv File Processing " + response.status
-                }));
-
                 if (response.status == 'Complete') {
+                    placeHolder.empty().append($('<a/>', {
+                        href: '/activity/' + activity + '/import-result/import-status',
+                        text: "Csv File Processing " + response.status
+                    }));
+
                     return;
                 }
 
                 if (response.status == 'Processing') {
+                    placeHolder.empty().append($('<a/>', {
+                        href: '/activity/' + activity + '/import-result/import-status',
+                        text: "Csv File " + response.status
+                    }));
+
                     checkResultSessionStatus();
                 }
             });
