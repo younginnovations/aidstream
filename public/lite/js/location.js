@@ -81,7 +81,7 @@ var Location = {
     onCountryChange: function () {
       var modal = $('#countryChange');
 
-      $('div.country').on('select2:selecting', 'select', function (e) {
+      $('div.location').on('select2:selecting', 'select', function (e) {
           countryElement = $(e.target);
           countryVal = countryElement.val();
           selectElement = $(this);

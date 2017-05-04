@@ -26,6 +26,8 @@ var CreateActivity = {
 
             $('form select').select2();
             $("[type='date']").attr('type', 'text').addClass('datepicker').datetimepicker({timepicker: false, format: 'Y-m-d'});
+
+            Location.clearUseMap();
         });
     },
     scroll: function () {
