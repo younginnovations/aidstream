@@ -1,6 +1,7 @@
 <?php namespace App\Lite\Services\Data\V202\Activity;
 
 use App\Lite\Services\Data\Contract\MapperInterface;
+use App\Lite\Services\Traits\GeocodeReverser;
 use App\Models\Organization\Organization;
 
 /**
@@ -167,11 +168,15 @@ class Activity implements MapperInterface
         $this->mappedData['activity_identifier'] = getVal($this->rawData, ['identifier', 'activity_identifier']);
         $this->mappedData['activity_title']      = getVal($this->rawData, ['title', 0, 'narrative']);
         $this->mappedData['activity_status']     = getVal($this->rawData, ['activity_status']);
-        $this->mappedData['sector']              = getVal($this->rawData, ['sector', 0, 'sector_code']);
+
+        foreach (getVal($this->rawData, ['sector'], []) as $index => $value) {
+            $this->mappedData['sector'][$index] = getVal($value, ['sector_code']);
+        }
 
         $this->reverseMapDescription()
              ->reverseMapActivityDate()
              ->reverseMapParticipatingOrganisation()
+             ->reverseMapRecipientCountry()
              ->reverseMapLocation();
 
         return $this->mappedData;
@@ -260,9 +265,11 @@ class Activity implements MapperInterface
      */
     protected function sector($key, $value, $template)
     {
-        $template['sector_vocabulary']            = '1';
-        $template['sector_code']                  = $value;
-        $this->mappedData['sector'][$this->index] = $template;
+        foreach ($value as $index => $val) {
+            $template['sector_vocabulary']      = '1';
+            $template['sector_code']            = $val;
+            $this->mappedData['sector'][$index] = $template;
+        }
     }
 
     /**
@@ -336,25 +343,34 @@ class Activity implements MapperInterface
     {
         $administrativeTemplate = getVal($template, ['administrative'], []);
         $percentage             = $this->calculatePercentageForCountry(count($value));
+        $index                  = 0;
 
-        foreach ($value as $index => $location) {
+        foreach ($value as $location) {
             $countryCode = getVal($location, ['country'], '');
             $this->recipient_country('recipient_country', $countryCode, $this->getTemplateOf('country'), $index, $percentage);
+
+            if (empty(getVal($location, ['administrative'], []))) {
+                $this->mappedData[$key][$this->index]                 = $template;
+                $this->mappedData[$key][$this->index]['country_code'] = $countryCode;
+                $this->index ++;
+            }
+
 
             foreach (getVal($location, ['administrative'], []) as $administrativeIndex => $administrative) {
                 $this->mappedData[$key][$this->index] = $template;
                 $region                               = getVal($administrative, ['region']);
                 $district                             = getVal($administrative, ['district']);
                 foreach (getVal($administrative, ['point'], []) as $pointIndex => $point) {
-                    $latitude  = getVal($point, ['latitude']);
-                    $longitude = getVal($point, ['longitude']);
+                    $latitude     = getVal($point, ['latitude']);
+                    $longitude    = getVal($point, ['longitude']);
+                    $locationName = getVal($point, ['locationName']);
                 }
 
                 $this->mappedData[$key][$this->index]['country_code'] = getVal($location, ['country']);
-
                 if ($latitude != "" || $latitude != "") {
-                    $this->mappedData[$key][$this->index]['point'][0]['srs_name']    = self::LOCATION_SRS_NAME_VALUE;
-                    $this->mappedData[$key][$this->index]['point'][0]['position'][0] = [
+                    $this->mappedData[$key][$this->index]['name'][0]['narrative'][0]['narrative'] = $locationName;
+                    $this->mappedData[$key][$this->index]['point'][0]['srs_name']                 = self::LOCATION_SRS_NAME_VALUE;
+                    $this->mappedData[$key][$this->index]['point'][0]['position'][0]              = [
                         'latitude'  => $latitude,
                         'longitude' => $longitude
                     ];
@@ -365,6 +381,7 @@ class Activity implements MapperInterface
                 }
                 $this->index ++;
             }
+            $index ++;
         }
     }
 
@@ -435,7 +452,7 @@ class Activity implements MapperInterface
     protected function reverseMapRecipientCountry()
     {
         foreach (getVal($this->rawData, ['recipient_country'], []) as $index => $country) {
-            $this->mappedData['location'][$index]['country'] = getVal($country, ['country_code']);
+            $this->mappedData['country'][$index] = getVal($country, ['country_code']);
         }
 
         return $this;
@@ -487,14 +504,14 @@ class Activity implements MapperInterface
                 }
 
                 $this->mappedData['location'][$locationIndex]['country'] = $countryCode;
-
                 foreach (getVal($location, ['point'], []) as $pointIndex => $point) {
                     $longitude = getVal($point, ['position', 0, 'longitude']);
                     $latitude  = getVal($point, ['position', 0, 'latitude']);
 
                     if ($longitude != "" || $latitude != "") {
-                        $this->mappedData['location'][$locationIndex]['administrative'][$administrativeIndex]['point'][0]['longitude'] = $longitude;
-                        $this->mappedData['location'][$locationIndex]['administrative'][$administrativeIndex]['point'][0]['latitude']  = $latitude;
+                        $this->mappedData['location'][$locationIndex]['administrative'][$administrativeIndex]['point'][0]['locationName'] = getVal($location, ['name', 0, 'narrative', 0, 'narrative']);
+                        $this->mappedData['location'][$locationIndex]['administrative'][$administrativeIndex]['point'][0]['latitude']     = $latitude;
+                        $this->mappedData['location'][$locationIndex]['administrative'][$administrativeIndex]['point'][0]['longitude']    = $longitude;
                     }
                 }
 

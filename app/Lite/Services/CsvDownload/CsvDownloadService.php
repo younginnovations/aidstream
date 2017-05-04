@@ -2,6 +2,7 @@
 
 
 use App\Core\V201\Traits\GetCodes;
+use App\Helpers\GetCodeName;
 use App\Lite\Contracts\ActivityRepositoryInterface;
 use App\Lite\Services\Data\Traits\TransformsData;
 
@@ -76,12 +77,19 @@ class CsvDownloadService
     ];
 
     /**
+     * @var GetCodeName
+     */
+    protected $codeName;
+
+    /**
      * CsvDownloadService constructor.
      * @param ActivityRepositoryInterface $activityRepository
+     * @param GetCodeName                 $codeName
      */
-    public function __construct(ActivityRepositoryInterface $activityRepository)
+    public function __construct(ActivityRepositoryInterface $activityRepository, GetCodeName $codeName)
     {
         $this->activityRepository = $activityRepository;
+        $this->codeName           = $codeName;
     }
 
     /**
@@ -93,39 +101,36 @@ class CsvDownloadService
      */
     public function simpleData($orgId, $version)
     {
-        $processedActivity = $this->prepareSimpleData($orgId, $version);
-        $template          = $this->getTemplate();
+        $activities = $this->activityRepository->all($orgId);
+        $template   = $this->getTemplate();
+        $header     = $this->simpleHeaders();
 
-        foreach ($processedActivity as $index => $activity) {
+        foreach ($activities as $index => $activity) {
+            $reversedData                = $this->prepareSimpleData($activity, $version);
             $this->csvData[$this->index] = $template;
-
-            foreach ($activity as $field => $value) {
-                if (is_array($value)) {
-                    $methodName = getVal($this->fieldToMethodMapper, [$field]);
-
-                    if (method_exists($this, $methodName)) {
-                        $this->{$this->fieldToMethodMapper[$field]}($value);
-                    } elseif (!in_array($field, $this->ignoredElement)) {
-                        $this->{$field}($value);
+            foreach ($reversedData as $field => $value) {
+                if (is_array($value) && !empty($value)) {
+                    if (!in_array($field, $this->ignoredElement)) {
+                        if (method_exists($this, $methodName = camel_case($field))) {
+                            $this->{$methodName}($value);
+                        }
                     }
                 } else {
-                    $this->csvData[$this->index][$field] = $value;
+                    $this->csvData[$this->index][getVal($header, [$field])] = $value;
                 }
             }
-            $this->fillEmptyStringInEmptyColumns();
 
+            $this->fillEmptyStringInEmptyColumns();
+            $this->index         += $this->maxRowIndex;
             $this->maxRowIndex   = 0;
             $this->rowIndexCount = 0;
-            $this->index ++;
         }
-
-        $this->csvData['headers'] = $this->simpleHeaders();
 
         return $this->csvData;
     }
 
     /**
-     * Sets empty value to field that doesn't have multiple values.
+     * Sets empty value to field that does not have multiple values.
      */
     protected function fillEmptyStringInEmptyColumns()
     {
@@ -135,6 +140,22 @@ class CsvDownloadService
                 $this->csvData                    = $tempContainer;
             }
         }
+    }
+
+    /**
+     * Returns csv formatted country data.
+     * @param $value
+     */
+    protected function country($value)
+    {
+        $this->rowIndexCount = 0;
+        foreach ($value as $index => $country) {
+            $this->csvData[$this->index]['Country'] = $country;
+            $this->index ++;
+            $this->rowIndexCount ++;
+        }
+        $this->maxRowIndex = ($this->rowIndexCount > $this->maxRowIndex) ? $this->rowIndexCount : $this->maxRowIndex;
+        $this->index       = $this->index - $this->rowIndexCount;
     }
 
     /**
@@ -149,10 +170,15 @@ class CsvDownloadService
 
         foreach ($value as $orgRole => $participatingOrg) {
             foreach ($participatingOrg as $specificOrg) {
-                $this->csvData[$this->index]['participating_organisation_role'] = sprintf('%s (%s)', ucwords(str_replace('_', ' ', $orgRole)), $this->orgRoles[$orgRole]);
+                $this->csvData[$this->index]['Participating Organisation Role'] = ($orgRole != "") ? sprintf('%s (%s)', ucwords(str_replace('_', ' ', $orgRole)), $this->orgRoles[$orgRole]) : $orgRole;
                 $participatingOrgTypeCode                                       = getVal($specificOrg, ['organisation_type']);
-                $this->csvData[$this->index]['participating_organisation_type'] = sprintf('%s (%s)', getVal($organisationTypes, [$participatingOrgTypeCode]), $participatingOrgTypeCode);
-                $this->csvData[$this->index]['participating_organisation_name'] = getVal($specificOrg, ['organisation_name']);
+                $this->csvData[$this->index]['Participating Organisation Type'] =
+                    (($typeCode = getVal($organisationTypes, [$participatingOrgTypeCode])) != "") ? sprintf(
+                        '%s (%s)',
+                        $typeCode,
+                        $participatingOrgTypeCode
+                    ) : '';
+                $this->csvData[$this->index]['Participating Organisation Name'] = getVal($specificOrg, ['organisation_name']);
                 $this->index ++;
                 $this->rowIndexCount ++;
             }
@@ -172,10 +198,10 @@ class CsvDownloadService
         $this->rowIndexCount = 0;
 
         foreach ($value as $budget) {
-            $this->csvData[$this->index]['budget_period_start'] = getVal($budget, ['startDate']);
-            $this->csvData[$this->index]['budget_period_end']   = getVal($budget, ['endDate']);
-            $this->csvData[$this->index]['budget_amount']       = getVal($budget, ['amount']);
-            $this->csvData[$this->index]['budget_currency']     = getVal($budget, ['currency']);
+            $this->csvData[$this->index]['Budget Period Start'] = getVal($budget, ['startDate']);
+            $this->csvData[$this->index]['Budget Period End']   = getVal($budget, ['endDate']);
+            $this->csvData[$this->index]['Budget Amount']       = getVal($budget, ['amount']);
+            $this->csvData[$this->index]['Budget Currency']     = getVal($budget, ['currency']);
             $this->index ++;
             $this->rowIndexCount ++;
         }
@@ -196,9 +222,9 @@ class CsvDownloadService
 
         foreach ($value as $documentType => $documentLink) {
             $documentCategory                                      = $this->documentType[$documentType];
-            $this->csvData[$this->index]['document_link_category'] = ($documentCategory) ? sprintf('%s (%s)', $documentCategories[$documentCategory], $documentCategory) : '';
-            $this->csvData[$this->index]['document_link_title']    = getVal($documentLink, [0, 'document_title']);
-            $this->csvData[$this->index]['document_link_url']      = getVal($documentLink, [0, 'document_url']);
+            $this->csvData[$this->index]['Document Link Category'] = ($documentCategory) ? sprintf('%s (%s)', $documentCategories[$documentCategory], $documentCategory) : '';
+            $this->csvData[$this->index]['Document Link Title']    = getVal($documentLink, [0, 'document_title']);
+            $this->csvData[$this->index]['Document Link Url']      = getVal($documentLink, [0, 'document_url']);
             $this->index ++;
             $this->rowIndexCount ++;
         }
@@ -218,65 +244,57 @@ class CsvDownloadService
         $transactionTypes    = $this->getNameWithCode('Activity', 'TransactionType');
         foreach ($value as $transaction) {
             $transactionTypeCode                                                   = getVal($transaction, ['type']);
-            $this->csvData[$this->index]['transaction_type']                       = ($transactionTypeCode) ? sprintf(
+            $this->csvData[$this->index]['Transaction Type']                       = ($transactionTypeCode) ? sprintf(
                 '%s (%s)',
                 $transactionTypes[$transactionTypeCode],
                 $transactionTypeCode
             ) : '';
-            $this->csvData[$this->index]['transaction_reference']                  = getVal($transaction, ['reference']);
-            $this->csvData[$this->index]['transaction_date']                       = getVal($transaction, ['date']);
-            $this->csvData[$this->index]['transaction_amount']                     = getVal($transaction, ['amount']);
-            $this->csvData[$this->index]['transaction_currency']                   = getVal($transaction, ['currency']);
-            $this->csvData[$this->index]['transaction_description']                = getVal($transaction, ['description']);
-            $this->csvData[$this->index]['transaction_receiver_organisation_name'] = getVal($transaction, ['organisation']);
+            $this->csvData[$this->index]['Transaction Reference']                  = getVal($transaction, ['reference']);
+            $this->csvData[$this->index]['Transaction Date']                       = getVal($transaction, ['date']);
+            $this->csvData[$this->index]['Transaction Amount']                     = getVal($transaction, ['amount']);
+            $this->csvData[$this->index]['Transaction Currency']                   = getVal($transaction, ['currency']);
+            $this->csvData[$this->index]['Transaction Description']                = getVal($transaction, ['description']);
+            $this->csvData[$this->index]['Transaction Receiver Organisation Name'] = getVal($transaction, ['organisation']);
             $this->index ++;
             $this->rowIndexCount ++;
         }
 
         $this->maxRowIndex = ($this->rowIndexCount > $this->maxRowIndex) ? $this->rowIndexCount : $this->maxRowIndex;
-        $this->index       = ($this->index > $this->maxRowIndex) ? $this->index : $this->maxRowIndex - 1;
+        $this->index       = $this->index - $this->rowIndexCount;
     }
 
     /**
      * Prepare simple data of the organisation.
      *
-     * @param $orgId
+     * @param $activity
      * @param $version
      * @return array
      */
-    protected function prepareSimpleData($orgId, $version)
+    protected function prepareSimpleData($activity, $version)
     {
-        $activities   = $this->activityRepository->all($orgId);
-        $reversedData = [];
+        $documentLinks = $activity->documentLinks;
+        $transactions  = $activity->transactions;
+        $budget        = $activity->budget;
+        $reversedData  = $this->transformReverse($this->getMapping($activity->toArray(), 'Activity', $version));
+        $reversedData  = array_merge($reversedData, $this->transformReverse($this->getMapping(['budget' => $budget], 'Budget', $version)));
 
-        foreach ($activities as $index => $activity) {
-            $documentLinks        = $activity->documentLinks;
-            $transactions         = $activity->transactions;
-            $budget               = $activity->budget;
-            $reversedData[$index] = $this->transformReverse($this->getMapping($activity->toArray(), 'Activity', $version));
-            $reversedData[$index] = array_merge($reversedData[$index], $this->transformReverse($this->getMapping(['budget' => $budget], 'Budget', $version)));
+        if (array_key_exists('funding_organisations', $reversedData)) {
+            $reversedData['participating_organisation']['funding_organisations'] = getVal($reversedData, ['funding_organisations'], []);
+            unset($reversedData['funding_organisations']);
+        }
 
-            $fundingOrganisation      = array_pluck($reversedData, 'funding_organisations');
-            $implementingOrganisation = array_pluck($reversedData, 'implementing_organisations');
+        if (array_key_exists('implementing_organisations', $reversedData)) {
+            $reversedData['participating_organisation']['implementing_organisations'] = getVal($reversedData, ['implementing_organisations'], []);
+            unset($reversedData['implementing_organisations']);
+        }
 
-            if (array_key_exists('funding_organisations', $reversedData[$index])) {
-                unset($reversedData[$index]['funding_organisations']);
-                $reversedData[$index]['participating_organisation']['funding_organisations'] = getVal($fundingOrganisation, [0], []);
-            }
+        if ($documentLinks) {
+            $reversedData = array_merge($reversedData, ['document_link' => $this->transformReverse($this->getMapping($documentLinks->toArray(), 'DocumentLink', $version))]);
+        }
 
-            if (array_key_exists('implementing_organisations', $reversedData[$index])) {
-                unset($reversedData[$index]['implementing_organisations']);
-                $reversedData[$index]['participating_organisation']['implementing_organisations'] = getVal($implementingOrganisation, [0], []);
-            }
-
-            if ($documentLinks) {
-                $reversedData[$index] = array_merge($reversedData[$index], ['document_link' => $this->transformReverse($this->getMapping($documentLinks->toArray(), 'DocumentLink', $version))]);
-            }
-
-            if ($transactions) {
-                $mappedTransactions   = ['transaction' => $this->transformReverse($this->getMapping($transactions->toArray(), 'Transaction', $version))];
-                $reversedData[$index] = array_merge($reversedData[$index], $this->prepareTransactionData($mappedTransactions, $transactions));
-            }
+        if ($transactions) {
+            $mappedTransactions = ['transaction' => $this->transformReverse($this->getMapping($transactions->toArray(), 'Transaction', $version))];
+            $reversedData       = array_merge($reversedData, $this->prepareTransactionData($mappedTransactions, $transactions));
         }
 
         return $reversedData;
@@ -290,33 +308,33 @@ class CsvDownloadService
     protected function simpleHeaders()
     {
         return [
-            'activity_identifier',
-            'activity_title',
-            'activity_status',
-            'sector',
-            'general_description',
-            'objectives',
-            'target_groups',
-            'start_date',
-            'end_date',
-            'country',
-            'participating_organisation_role',
-            'participating_organisation_type',
-            'participating_organisation_name',
-            'document_link_category',
-            'document_link_title',
-            'document_link_url',
-            'budget_period_start',
-            'budget_period_end',
-            'budget_amount',
-            'budget_currency',
-            'transaction_type',
-            'transaction_reference',
-            'transaction_date',
-            'transaction_amount',
-            'transaction_currency',
-            'transaction_description',
-            'transaction_receiver_organisation_name'
+            'activity_identifier'                    => 'Activity Identifier',
+            'activity_title'                         => 'Activity Title',
+            'activity_status'                        => 'Activity Status',
+            'sector'                                 => 'Activity Sector',
+            'general_description'                    => 'General Description',
+            'objectives'                             => 'Objectives',
+            'target_groups'                          => 'Target Groups',
+            'start_date'                             => 'Start Date',
+            'end_date'                               => 'End Date',
+            'country'                                => 'Country',
+            'participating_organisation_role'        => 'Participating Organisation Role',
+            'participating_organisation_type'        => 'Participating Organisation Type',
+            'participating_organisation_name'        => 'Participating Organisation Name',
+            'document_link_category'                 => 'Document Link Category',
+            'document_link_title'                    => 'Document Link Title',
+            'document_link_url'                      => 'Document Link Url',
+            'budget_period_start'                    => 'Budget Period Start',
+            'budget_period_end'                      => 'Budget Period End',
+            'budget_amount'                          => 'Budget Amount',
+            'budget_currency'                        => 'Budget Currency',
+            'transaction_type'                       => 'Transaction Type',
+            'transaction_reference'                  => 'Transaction Reference',
+            'transaction_date'                       => 'Transaction Date',
+            'transaction_amount'                     => 'Transaction Amount',
+            'transaction_currency'                   => 'Transaction Currency',
+            'transaction_description'                => 'Transaction Description',
+            'transaction_receiver_organisation_name' => 'Transaction Receiver Organisation Name'
         ];
     }
 
@@ -355,6 +373,23 @@ class CsvDownloadService
         }
 
         return $mappedTransactions;
+    }
+
+    /**
+     * Map Sector data into Csv format.
+     *
+     * @param array $values
+     */
+    protected function sector(array $values)
+    {
+        foreach ($values as $value) {
+            $this->csvData[$this->index]['Activity Sector'] = $this->codeName->getCodeName('Activity', 'Sector', $value);
+            $this->index ++;
+            $this->rowIndexCount ++;
+        }
+
+        $this->maxRowIndex = ($this->rowIndexCount > $this->maxRowIndex) ? $this->rowIndexCount : $this->maxRowIndex;
+        $this->index       = $this->index - $this->rowIndexCount;
     }
 }
 

@@ -1,5 +1,5 @@
+@if ($disbursement)
 <div class="activity__detail" id="activity__disbursement">
-    @if ($disbursement)
         <div>
         </div>
         <div class="activity__element__list">
@@ -33,12 +33,7 @@
                 </ul>
             </div>
             <a href="{{ route('lite.activity.transaction.create', [$activity->id, 3]) }}"
-               class="add-more"><span>@lang('lite/elementForm.add_disbursement')</span></a>
+               class="add-more"><span>@lang('lite/elementForm.add_more_disbursement')</span></a>
         </div>
-    @else
-        <div class="activity__element__list">
-            <a href="{{ route('lite.activity.transaction.create', [$activity->id, 3]) }}"
-               class="add-more"><span>@lang('lite/elementForm.add_disbursement')</span></a>
-        </div>
-    @endif
 </div>
+@endif

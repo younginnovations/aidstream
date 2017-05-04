@@ -56,15 +56,15 @@
                             </div>
                         </form>
                     </div>
+                    @if($userLogs->total() > 0)
                     <table class="table table-striped">
                         <thead>
                         <th>@lang('global.date')</th>
                         <th>@lang('global.action')</th>
                         <th>@lang('global.user')</th>
                         </thead>
-
                         <tbody>
-                        @forelse($userLogs as $logs)
+                        @foreach($userLogs as $logs)
                             <tr>
                                 <td> {{$logs->created_date}} </td>
                                 <td> {!! trans($logs->action, $logs->param) !!}
@@ -76,14 +76,14 @@
                                 </td>
                                 <td> {{$logs->user ? $logs->user->first_name." ".$logs->user->last_name: trans('success.user_deleted')}} </td>
                             </tr>
-                        @empty
-                            <td class="text-center no-data" colspan="4">@lang('global.no_activity_log')::</td>
-                        @endforelse
+                        @endforeach
                         </tbody>
                     </table>
                     {!! $userLogs->render() !!}
+                @else
+                        <div class="text-center no-data no-activity-data">@lang('global.no_activity_log')::</div>
+                    @endif
                     <div>
-
                     </div>
                 </div>
             </div>

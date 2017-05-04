@@ -4,6 +4,14 @@
         <p>@lang('organisation.organisation_information_text')</p>
     </div>
     <div class="input-wrapper">
+        <div class="choose-wrapper">
+            @foreach($systemVersions as $id => $version)
+                <div class="choose-option pull-left">
+                    <input type="radio" value="{{$id}}" {{($id == $systemVersion) ? 'checked' : ($id == 1) ? 'checked' : ''}} name="systemVersion"/><span>{{$version}}</span>
+                    <p>@lang(sprintf('organisation.%s', $version))</p>
+                </div>
+            @endforeach
+        </div>
         <div class="col-xs-12 col-md-12">
             {!! AsForm::text(['name' => 'organization[organization_name]', 'label' => trans('organisation.organisation_name'), 'class' => 'organization_name', 'required' => true, 'parent' => 'col-xs-12 col-sm-6 col-md-6', 'html' => '<span class="availability-check hidden"></span>']) !!}
             {!! AsForm::text(['name' => 'organization[organization_name_abbr]', 'class' => 'organization_name_abbr', 'label' => trans('organisation.organisation_name_abbreviation'), 'help' => 'registration_org_name_abbr', 'required' => true, 'parent' => 'col-xs-12 col-sm-6 col-md-6', 'html' => '<span class="availability-check hidden"></span>']) !!}

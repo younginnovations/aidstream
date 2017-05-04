@@ -56,7 +56,7 @@ trait PreparesTransactionData
     protected function setTransactionDate($key, $value)
     {
         if ($key == $this->_csvHeaders[2]) {
-            $this->data['transaction']['transaction_date'][] = ['date' => $value];
+            $this->data['transaction']['transaction_date'][] = ['date' => dateFormat('Y-m-d', $value)];
         }
     }
 
@@ -277,7 +277,7 @@ trait PreparesTransactionData
     {
         $validOrganizationType = $this->loadCodeList('OrganisationType', 'V201');
         foreach ($validOrganizationType['OrganisationType'] as $type) {
-            if (ucwords($value )== $type['name']) {
+            if (ucwords($value) == $type['name']) {
                 $value = $type['code'];
                 break;
             }

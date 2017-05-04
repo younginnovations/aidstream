@@ -275,5 +275,6 @@ return [
     'here'                                         => 'here',
     'add_new_activity_manually'                    => 'Add a New Activity Manually',
     'import_transaction'                           => 'Import Transaction',
-    'import_xml'                                   => 'Import Xml'
+    'import_xml'                                   => 'Import Xml',
+    'warning'                                      => 'Warning'
 ];

@@ -85,7 +85,7 @@
   padding-bottom: 0;
   .nav-tabs {
     //margin-bottom: 70px;
-    margin-bottom: 34px;
+    margin-bottom: 30px;
     border-bottom: 0;
     overflow: hidden;
     li {
@@ -360,6 +360,25 @@
   }
 }
 
+.choose-wrapper {
+  margin-bottom: 20px;
+  overflow: hidden;
+  padding-left: 2px;
+}
+
+.choose-option {
+  padding-right: 20px;
+  width: 50%;
+  span {
+    display: inline-block;
+  }
+  p {
+    color: #777;
+    font-size: 12px;
+    padding: 2px 0 0 18px;
+  }
+}
+
 @media all and (min-width: 480px) {
   .similar-org-container {
     .form-group, .btn-search {
@@ -459,5 +478,12 @@
     &:last-child {
       min-width: 223px;
     }
+  }
+}
+
+#reg_agency .modal-header {
+  padding: 14px 20px;
+  h4 {
+    float: none;
   }
 }

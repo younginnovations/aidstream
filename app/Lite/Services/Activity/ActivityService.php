@@ -459,6 +459,10 @@ class ActivityService
         return $this->transformReverse($this->getMapping($rawData, 'Activity', $version));
     }
 
+    /**
+     * @param $activity
+     * @return array
+     */
     public function location($activity)
     {
         $locations = getVal($activity, ['location'], []);
@@ -474,4 +478,24 @@ class ActivityService
 
         return $data;
     }
+
+    /**
+     * Returns recipient countries of the activity.
+     *
+     * @param $countries
+     * @return array
+     */
+    public function getRecipientCountry($countries)
+    {
+        $countryCode = [];
+
+        if(is_array($countries)) {
+            foreach ($countries as $index => $country) {
+                $countryCode[] = getVal($country, ['country_code']);
+            }
+        }
+
+        return $countryCode;
+    }
 }
+

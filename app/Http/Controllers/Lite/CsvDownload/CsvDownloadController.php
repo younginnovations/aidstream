@@ -5,6 +5,7 @@ use App\Http\Controllers\Lite\LiteController;
 use App\Lite\Services\CsvDownload\CsvDownloadService;
 use App\Services\Download\DownloadCsvManager;
 use App\Services\Export\CsvGenerator;
+use App\Services\Organization\OrganizationManager;
 use Illuminate\Support\Facades\Session;
 
 /**
@@ -21,18 +22,24 @@ class CsvDownloadController extends LiteController
     /**
      * @var CsvDownloadService
      */
-    private $downloadService;
+    protected $downloadService;
+    /**
+     * @var OrganizationManager
+     */
+    protected $organizationManager;
 
     /**
      * CsvDownloadController constructor.
      * @param CsvDownloadService $downloadService
-     * @param CsvGenerator       $csvGenerator
+     * @param CsvGenerator $csvGenerator
+     * @param OrganizationManager $organizationManager
      */
-    public function __construct(CsvDownloadService $downloadService, CsvGenerator $csvGenerator)
+    public function __construct(CsvDownloadService $downloadService, CsvGenerator $csvGenerator, OrganizationManager $organizationManager)
     {
         $this->middleware('auth');
-        $this->csvGenerator    = $csvGenerator;
+        $this->csvGenerator = $csvGenerator;
         $this->downloadService = $downloadService;
+        $this->organizationManager = $organizationManager;
     }
 
     /**
@@ -47,8 +54,18 @@ class CsvDownloadController extends LiteController
         }
 
         $activities = $this->downloadService->simpleData(session('org_id'), session('version'));
-        $headers    = $activities['headers'];
-        unset($activities['headers']);
-        $this->csvGenerator->generateWithHeaders('Simple', $activities, $headers);
+
+        if (count($activities) > 0) {
+            return $this->csvGenerator->generate($this->getOrgName(), $activities);
+        }
+
+        return redirect()->back()->withResponse(['messages' => [trans('error.none_activity')], 'type' => 'warning']);
+    }
+
+    protected function getOrgName()
+    {
+        $organization = $this->organizationManager->getOrganization(session('org_id'));
+
+        return getVal((array)$organization->reporting_org, [0, 'narrative', 0, 'narrative'], 'No name');
     }
 }

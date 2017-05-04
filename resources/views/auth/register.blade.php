@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -62,20 +63,8 @@
                     <div class="panel-body">
 
                         @include('includes.response')
-
                         {{--*/ $regInfo = (array) (old() ? old() : session('reg_info')); /*--}}
                         {{ Form::model($regInfo, ['url' => route('registration.register'), 'method' => 'post', 'id' => 'from-registration']) }}
-
-                        <div>
-
-                            {{--{!! AsForm::select(['name' => 'systemVersion','label' => 'System Version','data' => $systemVersions]) !!}--}}
-                            {{--<select name="systemVersion">--}}
-                            {{----}}
-                            {{--@foreach($systemVersions as $id => $version)--}}
-                            {{--<option value="{{$id}}">{{$version}}</option>--}}
-                            {{--@endforeach--}}
-                            {{--</select>--}}
-                        </div>
 
                         <div class="tab-content">
                             <div role="tabpanel" class="tab-pane clearfix active" id="tab-organization">
@@ -223,7 +212,7 @@
                         </div>
                     @endif
                     <img src="{{ url('/images/ic-warning.svg') }}" alt="warning" width="81" height="66">
-                    <h1 class="text-center">@lang('registration.organisation_name_error')</h1>
+                    <h1 class="text-center">@lang('registration.organisation_name_warning')</h1>
                     <p class="text-center">
                         @lang('registration.organisation_name_error_text')
                     </p>

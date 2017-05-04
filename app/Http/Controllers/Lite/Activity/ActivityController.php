@@ -1,14 +1,15 @@
 <?php namespace App\Http\Controllers\Lite\Activity;
 
-use App\Http\Requests\Request;
 use App\Lite\Services\FormCreator\Activity;
 use App\Http\Controllers\Lite\LiteController;
 use App\Lite\Services\Activity\ActivityService;
 use App\Lite\Services\FormCreator\Budget;
 use App\Lite\Services\FormCreator\Transaction;
 use App\Lite\Services\Activity\Transaction\TransactionService;
+use App\Lite\Services\Traits\GeocodeReverser;
 use App\Lite\Services\Validation\ValidationService;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 
 /**
@@ -17,6 +18,7 @@ use Illuminate\Support\Facades\Gate;
  */
 class ActivityController extends LiteController
 {
+    use GeocodeReverser;
     /**
      * @var ActivityService
      */
@@ -121,6 +123,7 @@ class ActivityController extends LiteController
 
         $data           = ['organisation' => $organisation->toArray(), 'settings' => $settings->toArray()];
         $countryDetails = file_get_contents(public_path('/data/countriesDetails.json'));
+        $geoJson        = file_get_contents(public_path('/data/countries.geo.json'));
 
         if (!$this->validation->passes($data, 'ActivityRequiredFields', $version)) {
             return redirect()->route('lite.settings.edit')->withResponse(['type' => 'danger', 'code' => ['settings_incomplete']]);
@@ -128,7 +131,7 @@ class ActivityController extends LiteController
 
         $form = $this->activityForm->form(route('lite.activity.store'), trans('lite/elementForm.add_this_activity'));
 
-        return view('lite.activity.create', compact('form', 'countryDetails'));
+        return view('lite.activity.create', compact('form', 'countryDetails', 'geoJson'));
     }
 
     /**
@@ -175,19 +178,20 @@ class ActivityController extends LiteController
             return redirect()->route('lite.activity.index')->withResponse($this->getNoPrivilegesMessage());
         }
 
-        $version          = session('version');
-        $documentLinks    = $this->activityService->documentLinks($activityId, $version);
-        $transaction      = $activity->transactions->toArray();
-        $transactions     = $this->transactionService->getFilteredTransactions($transaction);
-        $location         = $this->activityService->location($activity->toArray());
-        $disbursement     = getVal($transactions, ['disbursement'], '');
-        $expenditure      = getVal($transactions, ['expenditure'], '');
-        $incoming         = getVal($transactions, ['incoming'], '');
-        $defaultCurrency  = $this->transactionService->getDefaultCurrency($activity);
-        $statusLabel      = ['draft', 'completed', 'verified', 'published'];
-        $activityWorkflow = $activity->activity_workflow;
-        $btn_status_label = ['Completed', 'Verified', 'Published'];
-        $btn_text         = $activityWorkflow > 2 ? "" : $btn_status_label[$activityWorkflow];
+        $version            = session('version');
+        $documentLinks      = $this->activityService->documentLinks($activityId, $version);
+        $transaction        = $activity->transactions->toArray();
+        $transactions       = $this->transactionService->getFilteredTransactions($transaction);
+        $location           = $this->activityService->location($activity->toArray());
+        $disbursement       = getVal($transactions, ['disbursement'], '');
+        $expenditure        = getVal($transactions, ['expenditure'], '');
+        $incoming           = getVal($transactions, ['incoming'], '');
+        $defaultCurrency    = $this->transactionService->getDefaultCurrency($activity);
+        $statusLabel        = ['draft', 'completed', 'verified', 'published'];
+        $activityWorkflow   = $activity->activity_workflow;
+        $btn_status_label   = ['Completed', 'Verified', 'Published'];
+        $btn_text           = $activityWorkflow > 2 ? "" : $btn_status_label[$activityWorkflow];
+        $recipientCountries = $this->activityService->getRecipientCountry($activity->recipient_country);
 
         if ($activity['activity_workflow'] == 0) {
             $nextRoute = route('lite.activity.complete', $activityId);
@@ -197,15 +201,22 @@ class ActivityController extends LiteController
             $nextRoute = route('lite.activity.publish', $activityId);
         }
 
-        $count['budget'] = ($activity->budget ? count($activity->budget) : 0);
-//        $count['transaction'] = ($disbursement ? count($disbursement) : 0) + ($expenditure ? count($expenditure) : 0) + ($incoming ? count($incoming) : 0);
-        $count['disbursement']   = $disbursement ? count($disbursement) : 0;
-        $count['expenditure']    = $expenditure ? count($expenditure) : 0;
-        $count['incoming_funds'] = $incoming ? count($incoming) : 0;
-
         return view(
             'lite.activity.show',
-            compact('activity', 'statusLabel', 'activityWorkflow', 'btn_text', 'nextRoute', 'disbursement', 'expenditure', 'incoming', 'defaultCurrency', 'documentLinks', 'count', 'location')
+            compact(
+                'activity',
+                'statusLabel',
+                'activityWorkflow',
+                'btn_text',
+                'nextRoute',
+                'disbursement',
+                'expenditure',
+                'incoming',
+                'defaultCurrency',
+                'documentLinks',
+                'location',
+                'recipientCountries'
+            )
         );
     }
 
@@ -220,16 +231,17 @@ class ActivityController extends LiteController
         $version       = session('version');
         $activityModel = $this->activityService->find($activityId);
         $activity      = $this->activityService->edit($activityId, $version);
-
         if (Gate::denies('ownership', $activityModel)) {
             return redirect()->route('lite.activity.index')->withResponse($this->getNoPrivilegesMessage());
         }
+
         $this->authorize('edit_activity', $activityModel);
 
         $countryDetails = file_get_contents(public_path('/data/countriesDetails.json'));
+        $geoJson        = file_get_contents(public_path('/data/countries.geo.json'));
         $form           = $this->activityForm->form(route('lite.activity.update', $activityId), trans('lite/elementForm.update_this_activity'), $activity);
 
-        return view('lite.activity.create', compact('form', 'activity', 'countryDetails', 'activityId'));
+        return view('lite.activity.create', compact('form', 'activity', 'countryDetails', 'geoJson', 'activityId'));
     }
 
 
@@ -633,6 +645,18 @@ class ActivityController extends LiteController
     public function budgetDetails()
     {
         return $this->activityService->getBudgetDetails();
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+     */
+    public function reverseGeoCode(Request $request)
+    {
+        $latitude  = $request->get('latitude');
+        $longitude = $request->get('longitude');
+
+        return response($this->reverse($latitude, $longitude));
     }
 }
 

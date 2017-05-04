@@ -202,6 +202,7 @@
 
 .old-version, .new-version {
   display: none;
+  padding: 12px 0;
   position: absolute;
   width: 238px;
   border-radius: 4px;
@@ -212,13 +213,12 @@
   left: -50%;
   text-align: center;
   &:before {
+    background: $color_white;
+    box-shadow: 1px -1px 2px 0px rgba(0,0,0,0.1);
     content: "";
-    border-bottom: 6px solid transparent;
-    border-left: 6px solid transparent;
-    border-right: 6px solid transparent;
-    float: left;
-    margin-top: -6px;
-    margin-left: 50%;
+    @include position(absolute,-4px auto auto 50%);
+    @include size(8px);
+    transform: rotate(-45deg);
   }
 }
 
@@ -245,13 +245,18 @@
     color: $color_white !important;
     &:hover {
       &:before {
-        border-bottom-color: $color_gravel_approx !important;
+       background: $color_gravel_approx !important;
       }
     }
   }
   &:before {
-    border-bottom-color: $color_primary !important;
+    background: $color_primary !important;
   }
+}
+
+.new-version {
+  background: $color_white;
+  color: rgba($color_gravel_approx, 0.7);
 }
 
 .navbar-admin-dropdown .dropdown-menu li .old-version:hover {
@@ -270,17 +275,6 @@
   text-decoration: none;
   background: transparent !important;
   color: #777 !important;
-}
-
-.new-version {
-  background: $color_white;
-  color: rgba($color_gravel_approx, 0.7);
-  padding: 12px 0;
-  &:before {
-    border-bottom-color: $color_white !important;
-    filter: drop-shadow(0 -2px 7px rgba(0, 0, 0, 0.5));
-    margin-top: -18px;
-  }
 }
 
 .navbar-default .navbar-nav .open .dropdown-menu > li > a {

@@ -268,11 +268,12 @@ blockquote {
   overflow: hidden;
   h2 {
     font-size: 28px;
-  }
-  p {
-    font-size: 16px;
-    line-height: 24px;
-    margin-bottom: 30px;
+    & + p {
+      color: rgba($color_white, 0.7);
+      font-size: 16px;
+      line-height: 24px;
+      margin-bottom: 60px;
+    }
   }
 }
 
@@ -281,6 +282,102 @@ blockquote {
   line-height: 68px;
   &:hover {
     background: $color_secondary;
+  }
+}
+
+.version-wrapper {
+  background: #375666;
+  display: inline-block;
+  vertical-align: top;
+  width: 100%;
+  .width-900 {
+    padding: 0;
+    > .col-md-4 {
+      color: $color_gravel_approx;
+      background: #F2FBFF;
+      padding: 0;
+      position: relative;
+      .panel-heading {
+        background: #DFF1FA;
+        padding: 44px 24px 24px;
+        h3 {
+          color: $color_gravel_approx;
+          font-size: 22px;
+          margin-top: 16px;
+          text-transform: uppercase;
+        }
+      }
+      .panel-body {
+        padding: 20px 24px 32px;
+        ul {
+          margin: 0;
+          padding: 0;
+          li {
+            background: url(../images/ic-tick.svg) no-repeat 0 6px;
+            line-height: 22px;
+            list-style: none;
+            margin-bottom: 8px;
+            padding-left: 20px;
+          }
+        }
+        p {
+          color: #727678;
+          font-size: 12px;
+          line-height: 17px;
+          margin-top: 6px;
+        }
+        .btn {
+          margin-top: 10px;
+          transition: all 0.5s ease-in-out;
+          width: 100%;
+        }
+      }
+      .btn {
+        border: 1px solid $color_primary;
+        border-radius: 4px;
+        color: $color_white;
+        font-size: 16px;
+        line-height: 50px;
+        padding: 0;
+        transition: all 0.3s ease-in-out;
+        &:hover {
+          background: $color_secondary;
+          border-color: $color_secondary;
+          color: $color_white;
+        }
+      }
+      .btn-line {
+        background: none;
+        color: $color_primary;
+      }
+    }
+  }
+}
+
+.version-wrapper .width-900 > .col-md-4 {
+  &:first-child {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+  &:nth-child(2) {
+    background: $color_white;
+    margin-top: -13px;
+    .panel-heading {
+      background: #E5F6FF;
+      padding-top: 17px;
+      span {
+        color: #67C737;
+        display: block;
+        margin-bottom: 20px;
+      }
+    }
+  }
+  &:nth-child(3) {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    .panel-heading {
+      padding-top: 42px;
+    }
   }
 }
 
@@ -789,7 +886,7 @@ section {
   }
 }
 
-.org-header-wrapper .navbar,.activity-header-wrapper .navbar {
+.org-header-wrapper .navbar, .activity-header-wrapper .navbar {
   padding: 20px;
   margin-bottom: 0;
 }
@@ -1456,7 +1553,7 @@ footer {
   }
 
   #map svg {
-    margin-top: -260px!important;
+    margin-top: -260px !important;
   }
 }
 
@@ -1595,7 +1692,35 @@ footer {
 
   .convince-wrapper {
     padding-top: 100px;
-    padding-bottom: 50px;
+    padding-bottom: 126px;
+  }
+
+  .version-wrapper {
+    padding-bottom: 84px;
+    vertical-align: top;
+    > .width-900 {
+      margin-top: -126px;
+      padding: 0 15px;
+      > .col-md-4 {
+        border-radius: 4px;
+        height: 424px;
+        .panel-body p {
+          text-align: center;
+        }
+        .btn {
+          bottom: 32px;
+          position: absolute;
+          left: 36px;
+          width: calc(100% - 72px) !important;
+        }
+        &:nth-child(2) {
+          height: 450px;
+          .btn {
+            bottom: 45px;
+          }
+        }
+      }
+    }
   }
 
   .social-wrapper {
@@ -1820,7 +1945,7 @@ footer {
     svg {
       float: right;
       width: 560px;
-      margin-top: -170px!important;
+      margin-top: -170px !important;
     }
   }
 
@@ -1836,7 +1961,7 @@ footer {
     padding: 0;
   }
 
-  .activities-listing >li a {
+  .activities-listing > li a {
     padding-top: 20px;
     &:first-child {
       padding-top: 30px;
@@ -1860,12 +1985,16 @@ footer {
 
   #map svg {
     width: 940px;
-    margin: -230px -100px 0 0!important;
+    margin: -230px -100px 0 0 !important;
   }
 
   .organisation-name a {
     font-size: 26px;
     line-height: 32px;
+  }
+
+  .version-wrapper .width-900 > .col-md-4 .panel-body {
+    padding: 20px 36px 32px;
   }
 }
 
@@ -1920,11 +2049,17 @@ footer {
     float: left;
     border-right: 1px solid rgba(255, 255, 255, 0.2);
   }
+
+  .version-wrapper .width-900>.col-md-4 .panel-body {
+    padding: 20px 24px 32px;
+    width: 70%;
+    margin: 0 auto;
+  }
 }
 
 @media all and (min-width: 600px) and (max-width: 767px) {
   #map svg {
-    margin-top: -300px!important;
+    margin-top: -300px !important;
   }
 }
 
@@ -2094,3 +2229,5 @@ footer {
     }
   }
 }
+
+

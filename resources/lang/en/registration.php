@@ -31,4 +31,5 @@ return [
     'your_email_address'                     => 'Your E-mail Address',
     'your_message'                           => 'Your Message',
     'please_click_on_the_link_to_verify'     => 'Please click on the link in the email to verify and activate your new AidStream account.',
+    'organisation_name_warning'              => 'Organisation Name Warning',
 ];

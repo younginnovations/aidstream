@@ -20,8 +20,7 @@ return [
                         direct to the IATI Registry - all with a single click! All you have to do is sit back and relax
                         - AidStream takes care of everything else.',
     'still_not_convinced'                => 'Still not convinced?',
-    'did_we_mention_that_free'           => 'Did we mention that it’s free!? You can’t go wrong - with AidStream, publishing your data to IATI is a
-                piece of cake!',
+    'did_we_mention_that_free'           => 'Did we mention that it’s free!? You can’t go wrong - with AidStream, publishing your data to IATI is a piece of cake! Just choose your choice of AidStream from below:',
     'an_email_containing_your_account'   => 'An email containing your account details has been sent to the secondary or "backup" contact for your organisation,"{{ session(\'secondary_contact_name\') }}". Please contact
                             them directly.',
     'if_you_need_any_help'               => 'If you need any help, <a href=":route">contact the AidStream support team</a>.',

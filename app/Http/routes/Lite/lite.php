@@ -161,7 +161,13 @@ $subdomainRoutes = function () {
                             'uses' => 'ActivityController@deleteTransaction'
                         ]
                     );
-
+                    Route::get(
+                        '/lite/reverseGeoCode',
+                        [
+                            'as'   => 'lite.reverseGeoCode',
+                            'uses' => 'ActivityController@reverseGeoCode'
+                        ]
+                    );
                 }
             );
         }
@@ -194,10 +200,16 @@ if (isTzSubDomain()) {
     Route::group(['domain' => env('TZ_DOMAIN'), 'middleware' => 'auth.systemVersion'], $subdomainRoutes);
 } else {
     Route::group(['domain' => env('CORE_DOMAIN'), 'middleware' => 'auth.systemVersion'], $subdomainRoutes);
-    Route::group(['domain' => env('CORE_DOMAIN'), 'middleware' => 'auth.systemVersion'], function () {
-        Route::get('/lite/activity', [
-            'as' => 'lite.activity.index',
-            'uses' => 'Lite\Activity\ActivityController@index'
-        ]);
-    });
+    Route::group(
+        ['domain' => env('CORE_DOMAIN'), 'middleware' => 'auth.systemVersion'],
+        function () {
+            Route::get(
+                '/lite/activity',
+                [
+                    'as'   => 'lite.activity.index',
+                    'uses' => 'Lite\Activity\ActivityController@index'
+                ]
+            );
+        }
+    );
 }

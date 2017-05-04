@@ -161,7 +161,7 @@ class Activity
      */
     protected function rulesForSector()
     {
-        $this->activityRules['sector'] = sprintf('required|in:%s', $this->getStringFormatCode('Sector', 'Activity'));
+        $this->activityRules['sector.*'] = sprintf('required|in:%s', $this->getStringFormatCode('Sector', 'Activity'));
     }
 
     /**
@@ -169,8 +169,8 @@ class Activity
      */
     protected function messagesForSector()
     {
-        $this->activityMessages['sector.required'] = trans('validation.required', ['attribute' => trans('lite/elementForm.sector')]);
-        $this->activityMessages['sector.in']       = trans('validation.code_list', ['attribute' => trans('lite/elementForm.sector')]);
+        $this->activityMessages['sector.*.required'] = trans('validation.required', ['attribute' => trans('lite/elementForm.sector')]);
+        $this->activityMessages['sector.*.in']       = trans('validation.code_list', ['attribute' => trans('lite/elementForm.sector')]);
     }
 
     /**
@@ -261,14 +261,16 @@ class Activity
 
     protected function rulesForDocumentUrl()
     {
-        $this->activityRules['outcomes_document.*.document_url'] = 'url';
-        $this->activityRules['annual_report.*.document_url']     = 'url';
+        $this->activityRules['outcomes_document.0.document_url'] = 'required_with:outcomes_document.0.document_title|url';
+        $this->activityRules['annual_report.0.document_url']     = 'required_with:annual_report.0.document_title|url';
     }
 
     protected function messagesForDocumentUrl()
     {
-        $this->activityRules['outcomes_document_url.*.document_url.url'] = trans('validation.url', ['attribute' => trans('lite/elementForm.outcomes_document_url')]);
-        $this->activityRules['annual_report_url.*.document_url.url']     = trans('validation.url', ['attribute' => trans('lite/elementForm.annual_report_url')]);
+        $this->activityMessages['outcomes_document.0.document_url.required_with'] = trans('validation.required_with', ['attribute' => trans('lite/elementForm.outcomes_document_url'), 'values' => trans('lite/elementForm.outcomes_document_title')]);
+        $this->activityMessages['annual_report.0.document_url.required_with']     = trans('validation.required_with', ['attribute' => trans('lite/elementForm.annual_report_url'), 'values' => trans('lite/elementForm.annual_report_title')]);
+        $this->activityMessages['outcomes_document.0.document_url.url']           = trans('validation.url');
+        $this->activityMessages['annual_report.0.document_url.url']               = trans('validation.url');
     }
 
     protected function rulesForLocation()

@@ -138,9 +138,7 @@ namespace :aidstream do
     desc "Restart Laravel Queue"
     task :queue_restart do
         on roles(:app) do
-            within release_path do
-                execute :php, "artisan queue:restart"
-            end
+            execute "sudo supervisorctl restart activity_csv_importer_queue"
         end
     end
 
@@ -232,9 +230,9 @@ namespace :deploy do
     after :updated, "environment:set_variables"
     after :published, "aidstream:create_symlink"
     after :finished, "hipchat:deployed"
-    #after :finished, "aidstream:queue_restart"
+    after :finished, "aidstream:queue_restart"
     after :finished, "aidstream:create_ver_txt"
     after :failed, "hipchat:notify_deploy_failed"
 end
 
-after "deploy",   "nginx:reload"
+after "deploy", "nginx:reload"
