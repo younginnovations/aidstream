@@ -3,5 +3,6 @@
   "failed": "Failed",
   "activities_processed": "Activity Processed",
   "xml_file_incorrect": "Sorry the xml file you uploaded is incorrect",
-  "invalid_xml_version": "Sorry! the version of xml you uploaded is currently not supported."
+  "invalid_xml_version": "Sorry! the version of xml you uploaded is currently not supported.",
+  "processing_error": "Error importing the activity from xml. Please contact us at <a href='mailto:support@aidstream.org'>support@aidstream.org</a> and send us the xml file you were trying to upload."
 }

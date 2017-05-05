@@ -7,7 +7,8 @@ var XmlImporter = {
         file_not_found: 102,
         complete: 103,
         schema_error: 104,
-        version_error: 105
+        version_error: 105,
+        processing_error: 106
     },
     callAsync: function (url, methodType) {
         return $.ajax({
@@ -37,6 +38,15 @@ var XmlImporter = {
                     $('#xml-import-status-placeholder').html(
                         "<div class='alert alert-danger'>"
                         + XmlImporter.localisedData['invalid_xml_version']
+                        + "</div>"
+                    );
+                    xmlImportCompleted = true;
+                }
+
+                if (data.status == XmlImporter.statusCode['processing_error']) {
+                    $('#xml-import-status-placeholder').html(
+                        "<div class='alert alert-danger'>"
+                        + XmlImporter.localisedData['processing_error']
                         + "</div>"
                     );
                     xmlImportCompleted = true;

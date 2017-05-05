@@ -104,7 +104,7 @@ class XmlImportController extends Controller
         $invalid           = $this->xmlImportManager->loadJsonFile('error.json');
 
         if ($invalid) {
-            $status = config('status-code.xml.version_error');
+            $status = config(sprintf('status-code.xml.%s', getVal($invalid, ['code'], 'processing_error')));
         } else {
             $status = ($completedActivity) ? config('status-code.xml.incomplete') : config('status-code.xml.file_not_found');
         }
