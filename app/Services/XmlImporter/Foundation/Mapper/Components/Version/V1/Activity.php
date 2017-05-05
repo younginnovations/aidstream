@@ -192,7 +192,9 @@ class Activity
             $this->activity[$this->activityElements[$elementName]] = $this->$elementName($element, $template);
         }
 
-        $this->activity['description'] = array_values($this->activity['description']);
+        if (array_key_exists('description', $this->activity)) {
+            $this->activity['description'] = array_values(getVal($this->activity, ['description'], null));
+        }
 
         return $this->activity;
     }

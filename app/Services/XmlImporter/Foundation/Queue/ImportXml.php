@@ -34,9 +34,13 @@ class ImportXml extends Job implements ShouldQueue
 
     public function handle()
     {
-        $xmlImportQueue = app()->make(XmlQueueProcessor::class);
-        $xmlImportQueue->import($this->filename, $this->organizationId, $this->userId);
+        try {
+            $xmlImportQueue = app()->make(XmlQueueProcessor::class);
+            $xmlImportQueue->import($this->filename, $this->organizationId, $this->userId);
 
-        $this->delete();
+            $this->delete();
+        } catch (\Exception $exception) {
+            $this->delete();
+        }
     }
 }
