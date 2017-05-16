@@ -74,6 +74,16 @@ class RegistrationController extends Controller
             $roles[$role->id] = $role->role;
         }
 
+        $data = [];
+        foreach ($orgRegAgency as $agencyShortName => $agency) {
+            if ($agencyShortName !== "") {
+                $data[$agencyShortName] = sprintf('%s - %s', $agencyShortName, $agency);
+            }
+        }
+
+        $orgRegAgency = $data;
+
+
         return view('auth.register', compact('orgType', 'countries', 'orgRegAgency', 'roles', 'regInfo', 'systemVersions', 'systemVersion'));
     }
 
