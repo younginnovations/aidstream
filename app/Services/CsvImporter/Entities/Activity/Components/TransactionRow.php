@@ -79,7 +79,7 @@ class TransactionRow
     protected $allowedHumanitarianValues = ['yes' => '1', 'no' => '0', 'true' => '1', 'false' => '0'];
     protected $allowedBothCasesField = ['country_code', 'currency', 'aid_type'];
     protected $allowedDoubleValue = ['amount'];
-    protected $dateField = ['transaction_value_date'];
+    protected $dateField = ['date'];
 
     /**
      * TransactionRow constructor.

@@ -127,7 +127,7 @@ class Budget extends Element
             $this->data['budget'][$index]['period_start'][0]['date'] = '';
         }
         if ($key == $this->_csvHeaders[2]) {
-            $this->data['budget'][$index]['period_start'][0]['date'] = $value;
+            $this->data['budget'][$index]['period_start'][0]['date'] = dateFormat('Y-m-d', $value);
         }
     }
 
@@ -143,7 +143,7 @@ class Budget extends Element
             $this->data['budget'][$index]['period_end'][0]['date'] = '';
         }
         if ($key == $this->_csvHeaders[3]) {
-            $this->data['budget'][$index]['period_end'][0]['date'] = $value;
+            $this->data['budget'][$index]['period_end'][0]['date'] = dateFormat('Y-m-d', $value);
         }
     }
 
