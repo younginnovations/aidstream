@@ -80,7 +80,7 @@ trait PreparesTransactionData
     protected function setTransactionValueDate($key, $value)
     {
         if ($key == $this->_csvHeaders[4]) {
-            $this->data['transaction']['value'][0]['date']     = $value;
+            $this->data['transaction']['value'][0]['date']     = dateFormat('Y-m-d', $value);
             $this->data['transaction']['value'][0]['currency'] = '';
         }
     }
