@@ -651,7 +651,7 @@ $(document).ready(function () {
     }
 
     //activity view
-    $('.show-more-info,.hide-more-info').click(function () {
+    $(document).on('click', '.show-more-info,.hide-more-info', function () {
         $(this).toggleClass('hidden').siblings('span').toggleClass('hidden');
         $(this).parents('.toggle-btn').next('.more-info').toggleClass('hidden');
     });
