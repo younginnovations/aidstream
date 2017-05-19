@@ -1,4 +1,5 @@
 @if(!emptyOrHasEmptyTemplate(getVal($activityDataList, ['transaction'], [])))
+    @inject('getCode', 'App\Helpers\GetCodeName')
     <div class="activity-element-wrapper">
         <div class="title">@lang('element.transaction') @if(array_key_exists('Transaction',$errors)) <i class='imported-from-xml'>icon</i>@endif </div>
         @foreach(groupTransactionElements(getVal($activityDataList, ['transaction'], [])) as $key => $groupedTransactions)

@@ -26,12 +26,12 @@
         @endif
         @include('Activity.partials.budget')
         @include('Activity.partials.plannedDisbursement')
-        @include('Activity.partials.transaction')
+{{--        @include('Activity.partials.transaction')--}}
         @include('Activity.partials.capitalSpend')
         @include('Activity.partials.documentLink')
         @include('Activity.partials.relatedActivity')
         @include('Activity.partials.condition')
-        @include('Activity.partials.result')
+{{--        @include('Activity.partials.result')--}}
         @include('Activity.partials.legacyData')
     </div>
 </div>

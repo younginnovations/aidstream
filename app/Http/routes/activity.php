@@ -166,5 +166,21 @@ $router->group(
                 'uses' => 'ActivityController@removeTransactionSector'
             ]
         );
+
+        $router->post(
+            '/activity/getTransactionView',
+            [
+                'as'   => 'activity.getTransactionView',
+                'uses' => 'ActivityController@getTransactionView'
+            ]
+        );
+
+        $router->post(
+            '/activity/getResultView',
+            [
+                'as'   => 'activity.getResultView',
+                'uses' => 'ActivityController@getResultView'
+            ]
+        );
     }
 );

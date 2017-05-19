@@ -50,14 +50,14 @@ class ActivityManager
      */
     public function __construct(Version $version, Guard $auth, Logger $logger, DatabaseManager $database, PerfectViewerManager $perfectViewerManager)
     {
-        $this->auth            = $auth;
-        $this->logger          = $logger;
-        $this->version         = $version;
-        $this->activityElement = $version->getActivityElement();
-        $this->activityRepo    = $this->activityElement->getRepository();
-        $this->transactionRepo = $this->activityElement->getTransactionRepository();
-        $this->resultRepo      = $this->activityElement->getResultRepository();
-        $this->database        = $database;
+        $this->auth                 = $auth;
+        $this->logger               = $logger;
+        $this->version              = $version;
+        $this->activityElement      = $version->getActivityElement();
+        $this->activityRepo         = $this->activityElement->getRepository();
+        $this->transactionRepo      = $this->activityElement->getTransactionRepository();
+        $this->resultRepo           = $this->activityElement->getResultRepository();
+        $this->database             = $database;
         $this->perfectViewerManager = $perfectViewerManager;
     }
 
@@ -723,7 +723,7 @@ class ActivityManager
     {
         try {
             $this->database->beginTransaction();
-            $activity = $this->getActivityData($activityId);
+            $activity                        = $this->getActivityData($activityId);
             $activity->published_to_registry = 1;
             $activity->save();
 

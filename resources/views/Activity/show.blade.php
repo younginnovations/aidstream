@@ -81,9 +81,13 @@
     @endif
 @endsection
 @section('foot')
+    <script type="text/javascript" src="{{asset('js/loadView.js')}}"></script>
     <script>
         $(document).ready(function () {
             $('[data-toggle="popover"]').popover({html: true});
+            var csrfToken = {'X-CSRF-TOKEN': "{{csrf_token()}}"};
+            var id = "{{$id}}";
+            View.init(csrfToken, id);
         });
     </script>
 @endsection
