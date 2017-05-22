@@ -93,6 +93,9 @@ class ActivityController extends Controller
      */
     protected $documentLinkManager;
 
+    /**
+     * @var Settings
+     */
     protected $settings;
 
     /**
@@ -871,18 +874,22 @@ class ActivityController extends Controller
      */
     protected function getActivityAsArray(Activity $activityData)
     {
-        $activityDataList                   = $activityData->activity_data_list;
-        $activityResult                     = $this->resultManager->getResults($activityData->id)->toArray();
-        $activityTransaction                = $this->transactionManager->getTransactions($activityData->id)->toArray();
-        $activityDocumentLinks              = $this->documentLinkManager->getDocumentLinks($activityData->id)->toArray();
-        $activityDataList['results']        = $activityResult;
-        $activityDataList['transaction']    = $activityTransaction;
+        $activityDataList = $activityData->activity_data_list;
+//        $activityResult                     = $this->resultManager->getResults($activityData->id)->toArray();
+//        $activityTransaction                = $this->transactionManager->getTransactions($activityData->id)->toArray();
+        $activityDocumentLinks = $this->documentLinkManager->getDocumentLinks($activityData->id)->toArray();
+//        $activityDataList['results']        = $activityResult;
+//        $activityDataList['transaction']    = $activityTransaction;
         $activityDataList['document_links'] = $activityDocumentLinks;
         $activityDataList['reporting_org']  = $activityData->organization->reporting_org;
 
         return $activityDataList;
     }
 
+    /**
+     * @param $activityData
+     * @return mixed
+     */
     protected function resetImportedFromXmlFlag($activityData)
     {
         $activityData->imported_from_xml = false;
@@ -890,4 +897,33 @@ class ActivityController extends Controller
 
         return $activityData;
     }
+
+    /**
+     * Returns rendered transaction view of the activity.
+     *
+     * @param Request $request
+     * @return string
+     */
+    public function getTransactionView(Request $request)
+    {
+        $id = $request->get('id');
+        $activityDataList['transaction'] = $this->transactionManager->getTransactions($id)->toArray();;
+
+        return view('Activity.partials.transaction', compact('activityDataList', 'id'))->render();
+    }
+
+    /**
+     * Returns rendered result view of the activity.
+     *
+     * @param Request $request
+     * @return string
+     */
+    public function getResultView(Request $request)
+    {
+        $id = $request->get('id');
+        $activityDataList['results'] = $this->resultManager->getResults($id)->toArray();
+
+        return view('Activity.partials.result', compact('activityDataList', 'id'))->render();
+    }
 }
+

@@ -2189,10 +2189,11 @@ $(document).ready(function () {
     /* Removes form on click to Remove This button */
     $('form').delegate('.remove_from_collection', 'click', function () {
         var _this = $(this);
+        var sth = _this.parent().find('.map_container').attr('id');
 
         if ($('#removeDialog').length === 0) {
             $('body').append('' +
-                '<div class="modal" id="removeDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="z-index: 9999">' +
+                '<div class="modal" id="removeDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="z-index: 9999" data-source="' + sth + '">' +
                 '<div class="modal-dialog">' +
                 '<div class="modal-content">' +
                 '<div class="modal-header">' +
@@ -2718,7 +2719,7 @@ $(document).ready(function () {
     }
 
     //activity view
-    $('.show-more-info,.hide-more-info').click(function () {
+    $(document).on('click', '.show-more-info,.hide-more-info', function () {
         $(this).toggleClass('hidden').siblings('span').toggleClass('hidden');
         $(this).parents('.toggle-btn').next('.more-info').toggleClass('hidden');
     });
