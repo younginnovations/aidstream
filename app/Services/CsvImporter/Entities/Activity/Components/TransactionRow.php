@@ -184,7 +184,7 @@ class TransactionRow
     protected function filterValue($value, $field)
     {
         if (in_array($field, $this->allowedDoubleValue)) {
-            return $value;
+            return str_replace(',', '', $value);
         }
 
         if (in_array($field, $this->dateField)) {
