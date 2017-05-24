@@ -68,7 +68,7 @@ trait PreparesTransactionData
     protected function setTransactionValue($key, $value)
     {
         if ($key == $this->_csvHeaders[3]) {
-            $this->data['transaction']['value'][0]['amount'] = $value;
+            $this->data['transaction']['value'][0]['amount'] = str_replace(',', '', $value);
         }
     }
 
