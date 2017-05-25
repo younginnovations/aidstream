@@ -62,7 +62,9 @@ trait ExceptionParser
         }
 
 
-        return ['status' => false, 'message' => $exception->getMessage()];
+        // return ['status' => false, 'message' => $exception->getMessage()];
+
+        return ['status' => false, 'message' => trans('error.problem_with_the_registry')];
     }
 }
 

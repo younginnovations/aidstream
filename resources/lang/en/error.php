@@ -71,6 +71,7 @@ return [
     'package_not_found'                                      => "The dataset was not found in IATI Registry. Please contact us at <a href='mailto:support@aidstream.org'>support@aidstream.org</a> for further assistance.",
     'xml_file_not_found'                                     => "The xml file was not found. Please contact us at <a href='mailto:support@aidstream.org'>support@aidstream.org</a> for further assistance.",
     'not_allowed'                                            => 'You are not allowed to publish the selected xml file.',
-    'file_not_found'                                         => 'The file :file could not be found in AidStream.'
+    'file_not_found'                                         => 'The file :file could not be found in AidStream.',
+    'problem_with_the_registry'                              => 'There seems to be a problem with the registry. Please try again later.'
 ];
 
