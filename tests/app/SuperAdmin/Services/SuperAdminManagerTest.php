@@ -6,6 +6,7 @@ use App\Models\OrganizationPublished;
 use App\Services\Export\CsvGenerator;
 use App\SuperAdmin\Services\SuperAdminManager;
 use App\User;
+use Psr\Log\LoggerInterface;
 use Test\AidStreamTestCase;
 use Mockery as m;
 
@@ -22,6 +23,7 @@ class SuperAdminManagerTest extends AidStreamTestCase
     protected $activityPublished;
     protected $organizationPublished;
     protected $activity;
+    protected $logger;
 
     public function setUp()
     {
@@ -32,14 +34,9 @@ class SuperAdminManagerTest extends AidStreamTestCase
         $this->activityPublished     = m::mock(ActivityPublished::class);
         $this->organizationPublished = m::mock(OrganizationPublished::class);
         $this->activity              = m::mock(Activity::class);
+        $this->logger                = m::mock(LoggerInterface::class);
 
-        $this->superAdminManager = new SuperAdminManager($this->adminInterface, $this->generator, $this->user, $this->activityPublished, $this->organizationPublished, $this->activity);
-    }
-
-    public function testItShouldGetAllOrganizations()
-    {
-        $this->adminInterface->shouldReceive('getOrganizations')->andReturnSelf();
-        $this->assertInstanceOf('App\SuperAdmin\Repositories\SuperAdminInterfaces\SuperAdmin', $this->superAdminManager->getOrganizations());
+        $this->superAdminManager = new SuperAdminManager($this->adminInterface, $this->generator, $this->user, $this->activityPublished, $this->organizationPublished, $this->activity, $this->logger);
     }
 
     public function testItShouldGetOrganizationById()

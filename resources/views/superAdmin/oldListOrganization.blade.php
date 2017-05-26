@@ -3,6 +3,14 @@
 @section('title', 'Organisations')
 
 @section('content')
+    <style>
+        .less-description {
+            text-overflow: ellipsis;
+            overflow: hidden;
+            max-width: 100px;
+            white-space: nowrap;
+        }
+    </style>
     <div class="container main-container admin-container">
         <div class="row">
             <div class="panel-content-heading">
@@ -27,7 +35,7 @@
                                 @foreach($organizations as $key=>$organization)
                                     <tr>
                                         <td>{{ $key + 1 }}</td>
-                                        <td>{{ $organization->name}}
+                                        <td class="less-description">{{ $organization->name}}
                                             <div>{{getVal($organization->users->toArray(), [0, 'email'])}}</div>
                                         </td>
                                         <td>{{ $organization->settings ? $organization->settings->version : '' }}</td>
