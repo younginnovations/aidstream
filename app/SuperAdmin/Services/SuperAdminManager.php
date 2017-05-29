@@ -8,6 +8,8 @@ use App\Models\OrganizationPublished;
 use App\Services\Export\CsvGenerator;
 use App\SuperAdmin\Repositories\SuperAdminInterfaces\SuperAdmin as SuperAdminInterface;
 use App\User;
+use Illuminate\Support\Facades\DB;
+use Psr\Log\LoggerInterface;
 
 
 /**
@@ -42,6 +44,10 @@ class SuperAdminManager
      * @var CsvGenerator
      */
     protected $generator;
+    /**
+     * @var LoggerInterface
+     */
+    protected $logger;
 
     /**
      * @param SuperAdminInterface   $adminInterface
@@ -50,6 +56,7 @@ class SuperAdminManager
      * @param ActivityPublished     $activityPublished
      * @param OrganizationPublished $organizationPublished
      * @param Activity              $activity
+     * @param LoggerInterface       $logger
      */
     function __construct(
         SuperAdminInterface $adminInterface,
@@ -57,7 +64,8 @@ class SuperAdminManager
         User $user,
         ActivityPublished $activityPublished,
         OrganizationPublished $organizationPublished,
-        Activity $activity
+        Activity $activity,
+        LoggerInterface $logger
     ) {
         $this->adminInterface        = $adminInterface;
         $this->user                  = $user;
@@ -65,6 +73,7 @@ class SuperAdminManager
         $this->activityPublished     = $activityPublished;
         $this->organizationPublished = $organizationPublished;
         $this->generator             = $generator;
+        $this->logger                = $logger;
     }
 
     /**
@@ -124,57 +133,67 @@ class SuperAdminManager
      */
     public function getAllOrganizationInfo()
     {
-        $organizations = Organization::with(
-            [
-                'activities' => function ($query) {
-                    return $query->orderBy('updated_at', 'desc');
-                },
-                'settings',
-                'organizationPublished',
-                'organizationSnapshot',
-                'users'      => function ($query) {
-                    return $query->where('role_id', 1);
-                }
-            ]
-        )->get();
+        try {
+            $organizationDetails = [];
+            $organizations       = Organization::leftJoin('activity_data', 'organizations.id', '=', 'activity_data.organization_id')
+                                               ->leftJoin('settings', 'organizations.id', '=', 'settings.organization_id')
+                                               ->leftJoin('organization_published', 'organizations.id', '=', 'organization_published.organization_id')
+                                               ->leftJoin('users', 'organizations.id', '=', 'users.org_id')
+                                               ->where('users.role_id', '=', '1')
+                                               ->select(
+                                                   'organizations.id',
+                                                   'organizations.name',
+                                                   'users.email',
+                                                   'organizations.country',
+                                                   'organizations.created_at as createdDate',
+                                                   'settings.version',
+                                                   DB::raw('count(activity_data.id) as noOfActivities'),
+                                                   DB::raw('max(activity_data.updated_at) as lastUpdatedAt'),
+                                                   DB::raw("concat(organizations.registration_agency, '-',organizations.registration_number) as registrationNumber"),
+                                                   'organization_published.published_to_register as organizationDataPublishedStatus',
+                                                   'organization_published.updated_at as organizationLastUpdatedAt'
+                                               )
+                                               ->groupBy('organizations.id', 'settings.id', 'users.id', 'organization_published.id')
+                                               ->get();
 
-        $noOfPublishedActivities = $this->getNumberOfPublishedActivitiesForOrg($organizations);
-        $organizationDetails     = [];
-
-        $organizations->each(
-            function ($organization) use (&$organizationDetails, $noOfPublishedActivities) {
+            foreach ($organizations as $index => $organization) {
                 $organizationId                                                       = $organization->id;
+                $organizationDetails[$organizationId]['Id']                           = $organization->id;
                 $organizationDetails[$organizationId]['Name']                         = $organization->name;
-                $organizationDetails[$organizationId]['Admin Email']                  = getVal($organization->users->toArray(), [0, 'email'], '');
-                $organizationDetails[$organizationId]['No. of Activities']            = count($organization->activities);
-                $organizationDetails[$organizationId]['Activity Last Updated At']     = getVal($organization->activities->toArray(), [0, 'updated_at'], '');
-                $organizationDetails[$organizationId]['No. of Activities Published']  = getVal($noOfPublishedActivities, [$organizationId], 0);
-                $organizationDetails[$organizationId]['Organisation Data Published']  = $organization->published_to_registry;
-                $organizationDetails[$organizationId]['Organisation Last Updated At'] = $organization->updated_at ? $organization->updated_at->format('Y-m-d h:m:s') : '';
+                $organizationDetails[$organizationId]['Admin Email']                  = $organization->email;
+                $organizationDetails[$organizationId]['No. of Activities']            = $organization->noofactivities;
+                $organizationDetails[$organizationId]['No. of Activities Published']  = $organization->activities()->where('published_to_registry', 1)->count();
+                $organizationDetails[$organizationId]['Activity Last Updated At']     = $organization->lastupdatedat;
+                $organizationDetails[$organizationId]['Organisation Data']            = (count($organization->organizationPublished) > 0) ? 1 : 0;
+                $organizationDetails[$organizationId]['Organisation Data Published']  = $organization->organizationDataPublishedStatus;
+                $organizationDetails[$organizationId]['Organisation Last Updated At'] = $organization->organizationLastUpdatedAt;
                 $organizationDetails[$organizationId]['Country']                      = $organization->country;
-                $organizationDetails[$organizationId]['Organisation Identifier']      = ($organization->registration_agency && $organization->registration_number) ? $organization->registration_agency . '-' . $organization->registration_number : '';
+                $organizationDetails[$organizationId]['Organisation Identifier']      = $organization->registrationnumber;
                 $organizationDetails[$organizationId]['Publisher Id']                 = $organization->settings->registry_info ? getVal(
                     $organization->settings->registry_info,
                     [0, 'publisher_id'],
                     ''
                 ) : '';
-                $organizationDetails[$organizationId]['Registration Date']            = $organization->created_at->format('Y-m-d h:m:s');
-                $organizationDetails[$organizationId]['IATI Version']                 = $organization->settings->version;
-                $organizationDetails[$organizationId]['Organisation Data']            = (count($organization->organizationPublished) > 0) ? 1 : 0;
+                $organizationDetails[$organizationId]['Registration Date']            = $organization->createdDate;
+                $organizationDetails[$organizationId]['IATI Version']                 = $organization->version;
                 $organizationDetails[$organizationId]['Visible in Who\'s Using It?']  = (count($organization->organizationSnapshot) > 0) ? 1 : 0;
-
             }
-        );
 
-        return $organizationDetails;
+            return $organizationDetails;
+        } catch (\Exception $exception) {
+            $this->logger->error(sprintf('Failed to download csv due to : %s', $exception->getMessage()), ['trace' => $exception->getTraceAsString()]);
+
+            return [];
+        }
     }
 
     /**
      *  Exports the organization details to csv format
-     * @param $organizationDetails
      */
-    public function exportDetails($organizationDetails)
+    public function exportDetails()
     {
+        $organizationDetails = $this->getAllOrganizationInfo();
+
         $headers = [
             'Organization Name',
             'Admin Email',
@@ -194,63 +213,5 @@ class SuperAdminManager
 
         $this->generator->generateWithHeaders("Organization details", $organizationDetails, $headers);
     }
-
-    /** Returns no. of activities and last updated date of activity of given organization
-     * @param $orgId
-     * @return mixed
-     */
-    public function getActivitiesData($orgId)
-    {
-        $activitiesData = $this->activity->getActivitiesData($orgId);
-
-        return $activitiesData;
-    }
-
-    /** Returns no. of activities published in the registry.
-     * @param $orgId
-     * @return mixed
-     */
-    public function getNoOfActivitiesPublished($orgId)
-    {
-        return $this->activityPublished->getNoOfActivitiesPublished($orgId);
-    }
-
-    /** Returns status of the organization data
-     * @param $orgId
-     * @return mixed
-     */
-    public function statusOfOrganizationDataPublished($orgId)
-    {
-        return $this->organizationPublished->statusOfOrganizationDataPublished($orgId);
-    }
-
-    /** Returns email of the admin of the organization.
-     * @param $orgId
-     * @return string
-     */
-    public function getEmailOfOrganizationAdmin($orgId)
-    {
-        $userDetails = $this->user->getDataByOrgIdAndRoleId($orgId, 1);
-
-        return $userDetails ? $userDetails->email : '';
-    }
-
-    /**
-     * @param $organizations
-     * @return array
-     */
-    protected function getNumberOfPublishedActivitiesForOrg($organizations)
-    {
-        $noOfPublishedActivities = [];
-        foreach ($organizations as $index => $organization) {
-            $noOfPublishedActivities[$organization->id] = 0;
-            foreach ($organization->activities as $i => $activity) {
-                if ($organization->activities[$i]->published_to_registry) {
-                    $noOfPublishedActivities[$organization->id] ++;
-                }
-            }
-        }
-
-        return $noOfPublishedActivities;
-    }
 }
+

@@ -232,9 +232,7 @@ class OrganizationController extends Controller
      */
     public function exportOrganizationInfo()
     {
-        $organizationDetails = $this->adminManager->getAllOrganizationInfo();
-
-        return $this->adminManager->exportDetails($organizationDetails);
+        $this->adminManager->exportDetails();
     }
 
     /**

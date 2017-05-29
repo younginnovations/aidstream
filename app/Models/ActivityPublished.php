@@ -17,19 +17,6 @@ class ActivityPublished extends Model
         'published_activities' => 'json'
     ];
 
-    /** Returns total no of activities published of given organization
-     * @param $orgId
-     * @return mixed
-     */
-    public function getNoOfActivitiesPublished($orgId)
-    {
-        return DB::table('organizations')
-                 ->join('activity_published', 'activity_published.organization_id', '=', 'organizations.id')
-                 ->select(DB::raw('count(activity_published.published_to_register) as NoOfPublishedActivities'))
-                 ->where('organizations.id', $orgId)
-                 ->where('activity_published.published_to_register', 1)
-                 ->get();
-    }
 
     /**
      * Extract the Activity Ids from the activity-xml filenames included with in the Activity Xml file.
