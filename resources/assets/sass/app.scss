@@ -4893,3 +4893,39 @@ select.systemVersion {
     bottom: 110px;
   }
 }
+
+.search-org {
+  background-color: $color_white;
+  border: 1px solid #e5e5e5;
+  height: 38px;
+  margin: 20px 20px 30px;
+  padding: 0;
+  width: 300px;
+  input[type="text"] {
+    border: 0;
+    color: #484848;
+    font: 12px Open-Sans-Regular;
+    height: 38px;
+    width: calc(100% - 90px);
+    background: transparent!important;
+    box-shadow: none!important;
+    margin: 0;
+    padding: 0 0 0 12px;
+    display: inline-block;
+    &:focus {
+      outline: 0;
+    }
+  }
+  input[type="submit"] {
+    display: inline-block;
+    height: 38px;
+    margin-top: -5px;
+    border-radius: 0;
+  }
+}
+
+.back-to-admin-dashboard {
+  font-size: 13px;
+  margin: 30px 20px;
+}
+

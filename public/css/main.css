@@ -6986,4 +6986,37 @@ select.systemVersion {
   .edit-profile-form .btn-form {
     bottom: 110px; } }
 
+.search-org {
+  background-color: #fff;
+  border: 1px solid #e5e5e5;
+  height: 38px;
+  margin: 20px 20px 30px;
+  padding: 0;
+  width: 300px; }
+  .search-org input[type="text"] {
+    border: 0;
+    color: #484848;
+    font: 12px Open-Sans-Regular;
+    height: 38px;
+    width: -webkit-calc(100% - 90px);
+    width: calc(100% - 90px);
+    background: transparent !important;
+    -webkit-box-shadow: none !important;
+            box-shadow: none !important;
+    margin: 0;
+    padding: 0 0 0 12px;
+    display: inline-block; }
+    .search-org input[type="text"]:focus {
+      outline: 0; }
+  .search-org input[type="submit"] {
+    display: inline-block;
+    height: 38px;
+    margin-top: -5px;
+    -webkit-border-radius: 0;
+            border-radius: 0; }
+
+.back-to-admin-dashboard {
+  font-size: 13px;
+  margin: 30px 20px; }
+
 /*# sourceMappingURL=maps/app.css.map */

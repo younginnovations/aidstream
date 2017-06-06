@@ -20,6 +20,15 @@
                 <div class="panel panel-default">
                     <div class="panel-body">
                         @if(count($organizations) > 0)
+                            <div class="col-md-4 pull-right search-org">
+                                <form action="{{ route('admin.list-organization') }}" method="GET">
+                                    <input type="text" name="organization" placeholder="Search Organizations" value="{{ isset($organizationName) ? $organizationName : '' }}">
+                                    <input type="submit" value="Search">
+                                </form>
+                            </div>
+                            @if (request()->has('organization'))
+                                <a href="{{ route('admin.list-organization') }}" class="pull-left back-to-admin-dashboard">Back To Organisations List</a>
+                            @endif
                             <table class="table table-striped">
                                 <thead>
                                 <tr>
@@ -68,8 +77,24 @@
                                 </tbody>
                             </table>
                         @else
-                            <div class="text-center no-data">No Organisation Registered Yet ::</div>
+                            @if (request()->has('organization'))
+                                <div class="col-md-4 pull-right search-org">
+                                    <form action="{{ route('admin.list-organization') }}" method="GET">
+                                        <input type="text" name="organization" placeholder="Search Organizations" value="{{ isset($organizationName) ? $organizationName : '' }}">
+                                        <input type="submit" value="Search">
+                                    </form>
+                                </div>
+                                @if (request()->has('organization'))
+                                    <a href="{{ route('admin.list-organization') }}" class="pull-left back-to-admin-dashboard">Back To Organisations List</a>
+                                @endif
+                                <div class="text-center no-data">No Results Found.</div>
+                            @else
+                                <div class="text-center no-data">No Organisation Registered Yet ::</div>
+                            @endif
                         @endif
+                    </div>
+                    <div class="text-center">
+                        {!! $organizations->render() !!}
                     </div>
                 </div>
             </div>

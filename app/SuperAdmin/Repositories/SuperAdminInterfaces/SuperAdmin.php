@@ -14,7 +14,7 @@ interface SuperAdmin
      * get all organization details
      * @return mixed
      */
-    public function getOrganizations();
+    public function getOrganizations($organizationName = null);
 
     /**
      * get organization details with specific id
