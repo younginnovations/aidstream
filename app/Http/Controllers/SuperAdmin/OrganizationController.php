@@ -36,6 +36,8 @@ class OrganizationController extends Controller
      */
     protected $groupManager;
 
+    protected $filteredOrganization = null;
+
     /**
      * @param SuperAdminManager        $adminManager
      * @param SettingsManager          $settingsManager
@@ -70,18 +72,23 @@ class OrganizationController extends Controller
 
     /**
      * get all organizations
+     * @param Request $request
      * @return \Illuminate\View\View
      */
-    public function oldListOrganizations()
+    public function oldListOrganizations(Request $request)
     {
         if (isTzSubDomain()) {
             $organizations = $this->adminManager->getOrganizationBySystemVersion(config('system-version.Tz.id'));
         } else {
-            $organizations = (session('role_id') == 3) ? $this->adminManager->getOrganizations() : $this->groupManager->getGroupsByUserId(Auth::user()->id);
-
+            if ($request->has('organization')) {
+                $organizationName = $request->get('organization');
+                $organizations    = $this->adminManager->getOrganizations($organizationName);
+            } else {
+                $organizations = (session('role_id') == 3) ? $this->adminManager->getOrganizations() : $this->groupManager->getGroupsByUserId(Auth::user()->id);
+            }
         }
 
-        return view('superAdmin.oldListOrganization', compact('organizations'));
+        return view('superAdmin.oldListOrganization', compact('organizations', 'organizationName'));
     }
 
     /**

@@ -45,7 +45,7 @@ class SuperAdminTest extends AidStreamTestCase
 
     public function testItShouldGetAllOrganizations()
     {
-        $this->organization->shouldReceive('with->orderBy->get')->andReturn(
+        $this->organization->shouldReceive('with->orderBy->paginate')->andReturn(
             m::mock('\Illuminate\Database\Eloquent\Collection')
         );
         $this->assertInstanceOf('\Illuminate\Database\Eloquent\Collection', $this->superAdmin->getOrganizations());

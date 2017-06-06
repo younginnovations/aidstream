@@ -80,9 +80,9 @@ class SuperAdminManager
      * return all organizations
      * @return mixed
      */
-    public function getOrganizations()
+    public function getOrganizations($organizationName = null)
     {
-        return $this->adminInterface->getOrganizations();
+        return $this->adminInterface->getOrganizations($organizationName);
     }
 
     /**

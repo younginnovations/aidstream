@@ -68,19 +68,33 @@ class SuperAdmin implements SuperAdminInterface
      * get all organization data with their users and activities
      * @return \Illuminate\Database\Eloquent\Collection|static[]
      */
-    public function getOrganizations()
+    public function getOrganizations($organizationName = null)
     {
-        $organisations = $this->organization->with(
-            [
-                'activities',
-                'settings',
-                'users' => function ($query) {
-                    $query->where('role_id', 1);
-                }
-            ]
-        )->orderBy('name', 'asc')->get();
+        if (!$organizationName) {
+            return $this->organization->with(
+                [
+                    'activities',
+                    'settings',
+                    'users' => function ($query) {
+                        $query->where('role_id', 1);
+                    }
+                ]
+            )->orderBy('name', 'asc')->paginate(15);
+        }
 
-        return $organisations;
+        return $this->organization
+            ->with(
+                [
+                    'activities',
+                    'settings',
+                    'users' => function ($query) {
+                        $query->where('role_id', 1);
+                    }
+                ]
+            )
+            ->where('name', 'ilike', '%' . $organizationName . '%')
+            ->orderBy('name', 'asc')
+            ->paginate(15);
     }
 
     /**
