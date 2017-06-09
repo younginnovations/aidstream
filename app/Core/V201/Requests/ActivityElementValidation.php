@@ -108,7 +108,7 @@ class ActivityElementValidation
             }
         }
 
-        if ($totalPercentage !== 100 && $totalPercentage !== 0) {
+        if ($totalPercentage != 100 && $totalPercentage != 0) {
             if ($recipientCountryValue == true && $recipientRegionValue == true) {
                 $messages[] = trans('validation.sum_of_percentage', ['attribute' => trans('element.recipient_country') . ' ' . trans('global.and') . ' ' . trans('element.recipient_region')]);
             } elseif ($recipientCountryValue == true) {
