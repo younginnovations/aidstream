@@ -744,9 +744,9 @@ function getIndicatorPeriod($measure, array $periods)
         $targetValue                  = getVal($period, ['target', 0, 'value']);
         $actualValue                  = getVal($period, ['actual', 0, 'value']);
         $periodValue                  = getBudgetPeriod($period);
-        $measure                      = ($measure == 2) ? '%' : ' ' . trans_choice('activityView.units', $targetValue);
-        $targetValue                  = ($targetValue == "") ? sprintf('<em>%s</em>', trans('global.not_available')) : $targetValue . $measure;
-        $actualValue                  = ($actualValue == "") ? sprintf('<em>%s</em>', trans('global.not_available')) : $actualValue . $measure;
+        $periodMeasure                = ($measure == 2) ? '%' : ' ' . trans_choice('activityView.units', $targetValue);
+        $targetValue                  = ($targetValue == "") ? sprintf('<em>%s</em>', trans('global.not_available')) : $targetValue . $periodMeasure;
+        $actualValue                  = ($actualValue == "") ? sprintf('<em>%s</em>', trans('global.not_available')) : $actualValue . $periodMeasure;
         $outputPeriod['period']       = $periodValue;
         $outputPeriod['target_value'] = $targetValue;
         $outputPeriod['actual_value'] = $actualValue;
