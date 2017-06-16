@@ -178,7 +178,9 @@ class ImportManager
 
             if ($this->isOldActivity($activity)) {
                 $oldActivity = $this->activityRepo->getActivityFromIdentifier(getVal($activity, ['data', 'identifier', 'activity_identifier']), $organizationId);
-                $oldActivity->transactions()->delete();
+                if ($oldActivity->transactions) {
+                    $oldActivity->transactions()->delete();
+                }
                 $createdActivity = $this->activityRepo->updateActivityWithIdentifier($oldActivity, getVal($activity, ['data']));
             } else {
                 $createdActivity = $this->activityRepo->createActivity(getVal($activity, ['data']));

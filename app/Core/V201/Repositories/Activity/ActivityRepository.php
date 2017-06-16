@@ -322,7 +322,7 @@ class ActivityRepository
     {
         $defaultFieldValues = $this->setDefaultFieldValues($activityData['default_field_values'], $activityData['organization_id']);
 
-        return $this->activity->create(
+                return $this->activity->create(
             [
                 'identifier'                 => $activityData['identifier'],
                 'title'                      => array_values($activityData['title']),
@@ -336,7 +336,7 @@ class ActivityRepository
                 'organization_id'            => $activityData['organization_id'],
                 'policy_marker'              => array_key_exists('policy_marker', $activityData) ? array_values($activityData['policy_marker']) : null,
                 'budget'                     => array_key_exists('budget', $activityData) ? array_values($activityData['budget']) : null,
-                'activity_scope'             => array_key_exists('activity_scope', $activityData) ? array_values($activityData['activity_scope']) : null,
+                'activity_scope'             => array_key_exists('activity_scope', $activityData) ? array_get($activityData, 'activity_scope') : null,
                 'default_field_values'       => $defaultFieldValues,
                 'collaboration_type'         => getVal(array_values($defaultFieldValues), [0, 'default_collaboration_type'], null),
                 'default_flow_type'          => getVal(array_values($defaultFieldValues), [0, 'default_flow_type'], null),

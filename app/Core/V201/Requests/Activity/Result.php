@@ -33,6 +33,37 @@ class Result extends ActivityBaseRequest
                 return ($hasNarrative && ($value['year'] || $value['value']));
             }
         );
+
+        Validator::extendImplicit(
+            'value_ref_dimension_narrative_validation',
+            function ($attribute, $value, $parameters, $validator) {
+                if (getVal($value, ['value']) != "") {
+                    return true;
+                }
+
+                foreach (getVal($value, ['location'], []) as $location) {
+                    if (getVal($location, ['ref']) != '') {
+                        return false;
+                    }
+                }
+
+                foreach (getVal($value, ['dimension'], []) as $dimension) {
+                    if (getVal($dimension, ['name']) != '' || getVal($dimension, ['value']) != '') {
+                        return false;
+                    }
+                }
+
+                foreach (getVal($value, ['comment', 0, 'narrative'], []) as $narrative) {
+                    if (getVal($narrative, ['narrative']) != '' || getVal($narrative, ['language']) != '') {
+                        return false;
+                    }
+                }
+
+                return true;
+            }
+        );
+
+
     }
 
     /**
@@ -269,11 +300,11 @@ class Result extends ActivityBaseRequest
     protected function getRulesForTarget($formFields, $formBase)
     {
         $rules = [];
-
         foreach ($formFields as $targetIndex => $target) {
             $targetForm         = sprintf('%s.%s', $formBase, $targetIndex);
-            $rules[$targetForm] = 'year_value_narrative_validation';
-            $rules              = array_merge(
+            $rules[$targetForm] = 'value_ref_dimension_narrative_validation';
+
+            $rules = array_merge(
                 $rules,
                 $this->getRulesForNarrative($target['comment'][0]['narrative'], sprintf('%s.comment.0', $targetForm))
             );
@@ -293,12 +324,18 @@ class Result extends ActivityBaseRequest
         $messages = [];
 
         foreach ($formFields as $targetIndex => $target) {
-            $targetForm                                                           = sprintf('%s.%s', $formBase, $targetIndex);
-            $messages[sprintf('%s.year_value_narrative_validation', $targetForm)] = trans(
-                'validation.year_narrative_validation',
-                ['year' => trans('elementForm.year'), 'narrative' => trans('elementForm.narrative')]
+            $targetForm                                                          = sprintf('%s.%s', $formBase, $targetIndex);
+            $messages[$targetForm . '.value_ref_dimension_narrative_validation'] = trans(
+                'validation.required_with_all',
+                [
+                    'attribute' => trans('elementForm.value'),
+                    'values'    => '' . trans('elementForm.location_reference') . ', ' . trans('elementForm.name') . ', ' . trans('elementForm.value') . ', ' . trans(
+                            'elementForm.narrative'
+                        ) . ', ' . trans('elementForm.language')
+                ]
             );
-            $messages                                                             = array_merge(
+
+            $messages = array_merge(
                 $messages,
                 $this->getMessagesForNarrative($target['comment'][0]['narrative'], sprintf('%s.comment.0', $targetForm))
             );
