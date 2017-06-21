@@ -130,14 +130,12 @@ class RelatedActivity extends Element
 
         foreach (getVal($this->data(), ['related_activity'], []) as $key => $value) {
             $rules['related_activity.' . $key . '.activity_identifier'] = sprintf(
-                'required_unless:%s,%s',
-                'related_activity.' . $key . '.relationship_type',
-                ''
+                'required_with:%s',
+                'related_activity.' . $key . '.relationship_type'
             );
             $rules['related_activity.' . $key . '.relationship_type']   = sprintf(
-                'required_unless:%s,%s|in:%s',
+                'required_with:%s|in:%s',
                 'related_activity.' . $key . '.activity_identifier',
-                '',
                 $this->relatedActivityCode()
             );
         }
@@ -154,8 +152,8 @@ class RelatedActivity extends Element
         $messages = [];
 
         foreach (getVal($this->data(), ['related_activity'], []) as $key => $value) {
-            $messages['related_activity.' . $key . '.activity_identifier.required_unless'] = trans('validation.required', ['attribute' => trans('elementForm.related_activity_identifier')]);
-            $messages['related_activity.' . $key . '.relationship_type.required_unless']   = trans('validation.required', ['attribute' => trans('elementForm.related_activity_relationship_type')]);
+            $messages['related_activity.' . $key . '.activity_identifier.required_with'] = trans('validation.required', ['attribute' => trans('elementForm.related_activity_identifier')]);
+            $messages['related_activity.' . $key . '.relationship_type.required_with']   = trans('validation.required', ['attribute' => trans('elementForm.related_activity_relationship_type')]);
             $messages['related_activity.' . $key . '.relationship_type.in']                = trans('validation.code_list', ['attribute' => trans('elementForm.related_activity_relationship_type')]);
         }
 

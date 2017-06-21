@@ -171,11 +171,9 @@ class PolicyMarker extends Element
 
         foreach (getVal($this->data, ['policy_marker'], []) as $key => $value) {
             $rules['policy_marker.' . $key . '.policy_marker'] = sprintf(
-                'required_unless:%s,%s,%s,%s|in:%s',
+                'required_with:%s,%s|in:%s',
                 'policy_marker.' . $key . '.vocabulary',
-                '',
                 'policy_marker.' . $key . '.significance',
-                '',
                 $this->policyMarkerCodeList('PolicyMarker')
             );
         }
@@ -195,8 +193,8 @@ class PolicyMarker extends Element
         ];
 
         foreach (getVal($this->data, ['policy_marker'], []) as $key => $value) {
-            $messages['policy_marker.' . $key . '.policy_marker.required_unless'] = trans('validation.required', ['attribute' => trans('element.policy_marker_code')]);
-            $messages['policy_marker.' . $key . '.policy_marker.in']              = trans('validation.code_list', ['attribute' => trans('element.policy_marker_code')]);
+            $messages['policy_marker.' . $key . '.policy_marker.required_with'] = trans('validation.required', ['attribute' => trans('elementForm.policy_marker_code')]);
+            $messages['policy_marker.' . $key . '.policy_marker.in']            = trans('validation.code_list', ['attribute' => trans('elementForm.policy_marker_code')]);
         }
 
         return $messages;
