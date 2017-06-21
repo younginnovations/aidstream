@@ -225,70 +225,45 @@ class Budget extends Element
         foreach (getVal($this->data(), ['budget'], []) as $key => $value) {
             $rules['budget.' . $key . '.budget_type']         = sprintf('in:%s', $this->budgetCodeListWithValue('BudgetType'));
             $rules['budget.' . $key . '.status']              = sprintf(
-                'required_unless:%s,%s,%s,%s,%s,%s,%s,%s,%s,%s|in:%s',
+                'required_with:%s,%s,%s,%s,%s|in:%s',
                 'budget.' . $key . '.budget_type',
-                '',
                 'budget.' . $key . '.period_start.0.date',
-                '',
                 'budget.' . $key . '.period_end.0.date',
-                '',
                 'budget.' . $key . '.value.0.amount',
-                '',
                 'budget.' . $key . '.value.0.value_date',
-                '',
                 $this->budgetCodeListWithValue('BudgetStatus', 'V202')
             );
             $rules['budget.' . $key . '.period_start.0.date'] = sprintf(
-                'required_unless:%s,%s,%s,%s,%s,%s,%s,%s,%s,%s|date_format:Y-m-d',
+                'required_with:%s,%s,%s,%s,%s|date_format:Y-m-d',
                 'budget.' . $key . '.budget_type',
-                '',
                 'budget.' . $key . '.status',
-                '',
                 'budget.' . $key . '.period_end.0.date',
-                '',
                 'budget.' . $key . '.value.0.amount',
-                '',
-                'budget.' . $key . '.value.0.value_date',
-                ''
+                'budget.' . $key . '.value.0.value_date'
             );
             $rules['budget.' . $key . '.period_end.0.date']   = sprintf(
-                'required_unless:%s,%s,%s,%s,%s,%s,%s,%s,%s,%s|date_format:Y-m-d',
+                'required_with:%s,%s,%s,%s,%s|date_format:Y-m-d',
                 'budget.' . $key . '.budget_type',
-                '',
                 'budget.' . $key . '.status',
-                '',
                 'budget.' . $key . '.period_start.0.date',
-                '',
                 'budget.' . $key . '.value.0.amount',
-                '',
-                'budget.' . $key . '.value.0.value_date',
-                ''
+                'budget.' . $key . '.value.0.value_date'
             );
             $rules['budget.' . $key . '.value.0.amount']      = sprintf(
-                'required_unless:%s,%s,%s,%s,%s,%s,%s,%s,%s,%s|numeric|min:0',
+                'required_with:%s,%s,%s,%s,%s|numeric|min:0',
                 'budget.' . $key . '.budget_type',
-                '',
                 'budget.' . $key . '.status',
-                '',
                 'budget.' . $key . '.period_start.0.date',
-                '',
                 'budget.' . $key . '.period_end.0.date',
-                '',
-                'budget.' . $key . '.value.0.value_date',
-                ''
+                'budget.' . $key . '.value.0.value_date'
             );
             $rules['budget.' . $key . '.value.0.value_date']  = sprintf(
-                'required_unless:%s,%s,%s,%s,%s,%s,%s,%s,%s,%s|date_format:Y-m-d',
+                'required_with:%s,%s,%s, %s,%s|date_format:Y-m-d',
                 'budget.' . $key . '.budget_type',
-                '',
                 'budget.' . $key . '.status',
-                '',
                 'budget.' . $key . '.period_start.0.date',
-                '',
                 'budget.' . $key . '.period_end.0.date',
-                '',
-                'budget.' . $key . '.value.0.amount',
-                ''
+                'budget.' . $key . '.value.0.amount'
             );
             $rules['budget.' . $key . '.value.0.currency']    = sprintf('in:%s', $this->currencyCodeList());
         }
@@ -308,19 +283,19 @@ class Budget extends Element
         ];
 
         foreach (getVal($this->data(), ['budget'], []) as $key => $value) {
-            $messages['budget.' . $key . '.budget_type.in']                      = trans('validation.code_list', ['attribute' => trans('elementForm.budget_type')]);
-            $messages['budget.' . $key . '.status.required_unless']              = trans('validation.required', ['attribute' => trans('elementForm.budget_status')]);
-            $messages['budget.' . $key . '.status.in']                           = trans('validation.code_list', ['attribute' => trans('element.budget_status')]);
-            $messages['budget.' . $key . '.period_start.0.date.date_format']     = trans('validation.csv_date', ['attribute' => trans('elementForm.budget_period_start_date')]);
-            $messages['budget.' . $key . '.period_start.0.date.required_unless'] = trans('validation.required', ['attribute' => trans('elementForm.budget_period_start_date')]);
-            $messages['budget.' . $key . '.period_end.0.date.date_format']       = trans('validation.budget_period_end_date', ['attribute' => trans('elementForm.budget_period_end_date')]);
-            $messages['budget.' . $key . '.period_end.0.date.required_unless']   = trans('validation.required', ['attribute' => trans('elementForm.budget_period_end_date')]);
-            $messages['budget.' . $key . '.value.0.amount.required_unless']      = trans('validation.required', ['attribute' => trans('elementForm.budget_value')]);
-            $messages['budget.' . $key . '.value.0.amount.numeric']              = trans('validation.numeric', ['attribute' => trans('elementForm.budget_value')]);
-            $messages['budget.' . $key . '.value.0.amount.min']                  = trans('validation.negative', ['attribute' => trans('elementForm.budget_value')]);
-            $messages['budget.' . $key . '.value.0.value_date.required_unless']  = trans('validation.required', ['attribute' => trans('elementForm.budget_value_date')]);
-            $messages['budget.' . $key . '.value.0.value_date.date_format']      = trans('validation.csv_date', ['attribute' => trans('elementForm.budget_value_date')]);
-            $messages['budget.' . $key . '.value.0.currency.in']                 = trans('validation.code_list', ['attribute' => trans('elementForm.budget_currency_code')]);
+            $messages['budget.' . $key . '.budget_type.in']                    = trans('validation.code_list', ['attribute' => trans('elementForm.budget_type')]);
+            $messages['budget.' . $key . '.status.required_with']              = trans('validation.required', ['attribute' => trans('elementForm.budget_status')]);
+            $messages['budget.' . $key . '.status.in']                         = trans('validation.code_list', ['attribute' => trans('element.budget_status')]);
+            $messages['budget.' . $key . '.period_start.0.date.date_format']   = trans('validation.csv_date', ['attribute' => trans('elementForm.budget_period_start_date')]);
+            $messages['budget.' . $key . '.period_start.0.date.required_with'] = trans('validation.required', ['attribute' => trans('elementForm.budget_period_start_date')]);
+            $messages['budget.' . $key . '.period_end.0.date.date_format']     = trans('validation.budget_period_end_date', ['attribute' => trans('elementForm.budget_period_end_date')]);
+            $messages['budget.' . $key . '.period_end.0.date.required_with']   = trans('validation.required', ['attribute' => trans('elementForm.budget_period_end_date')]);
+            $messages['budget.' . $key . '.value.0.amount.required_with']      = trans('validation.required', ['attribute' => trans('elementForm.budget_value')]);
+            $messages['budget.' . $key . '.value.0.amount.numeric']            = trans('validation.numeric', ['attribute' => trans('elementForm.budget_value')]);
+            $messages['budget.' . $key . '.value.0.amount.min']                = trans('validation.negative', ['attribute' => trans('elementForm.budget_value')]);
+            $messages['budget.' . $key . '.value.0.value_date.required_with']  = trans('validation.required', ['attribute' => trans('elementForm.budget_value_date')]);
+            $messages['budget.' . $key . '.value.0.value_date.date_format']    = trans('validation.csv_date', ['attribute' => trans('elementForm.budget_value_date')]);
+            $messages['budget.' . $key . '.value.0.currency.in']               = trans('validation.code_list', ['attribute' => trans('elementForm.budget_currency_code')]);
         }
 
         return $messages;
