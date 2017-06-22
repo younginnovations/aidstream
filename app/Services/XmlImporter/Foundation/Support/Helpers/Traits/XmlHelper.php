@@ -217,7 +217,7 @@ trait XmlHelper
     {
         $value = "";
 
-        foreach ($element['value'] as $value) {
+        foreach (getVal($element, ['value'], []) as $value) {
             if ($fieldName == $this->name($value['name'])) {
                 return $this->attributes($value, $key);
             } else {

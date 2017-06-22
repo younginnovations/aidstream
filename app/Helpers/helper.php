@@ -1150,6 +1150,12 @@ function getSectorCode(array $sector)
  */
 function dateFormat($format = 'M d, Y', $date)
 {
+    if ((str_contains($date, '/'))) {
+        $formattedDate = str_replace('/', '-', $date);
+
+        return date($format, strtotime($formattedDate));
+    }
+
     return date($format, strtotime($date));
 }
 
