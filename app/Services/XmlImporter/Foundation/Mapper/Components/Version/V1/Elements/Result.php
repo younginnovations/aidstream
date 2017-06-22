@@ -102,13 +102,13 @@ class Result
     protected function period($indicator, $indicatorTemplate)
     {
         $periods     = $this->filterValues($indicator, 'period');
-        $periodsData = getVal($indicatorTemplate, [0, 'period']);
+        $periodsData = $periodsTemplate = getVal($indicatorTemplate, [0, 'period']);
         foreach ($periods as $index => $period) {
             $period                                         = getVal($period, ['period'], []);
             $periodsData[$index]['period_start'][0]['date'] = getVal($this->filterAttributes($period, 'periodStart', ['iso-date']), [0, 'iso-date'], '');
             $periodsData[$index]['period_end'][0]['date']   = getVal($this->filterAttributes($period, 'periodEnd', ['iso-date']), [0, 'iso-date'], '');
-            $periodsData[$index]['target']                  = $this->target($period, $periodsData);
-            $periodsData[$index]['actual']                  = $this->actual($period, $periodsData);
+            $periodsData[$index]['target']                  = $this->target($period, $periodsTemplate);
+            $periodsData[$index]['actual']                  = $this->actual($period, $periodsTemplate);
 
         }
 

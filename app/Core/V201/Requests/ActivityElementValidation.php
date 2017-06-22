@@ -87,11 +87,13 @@ class ActivityElementValidation
         $recipientRegionValue          = false;
         $activityRecipientRegionValue  = false;
         $totalPercentage               = 0;
+        $percentage                    = [];
 
         if (!empty($activityData->recipient_country)) {
             foreach ($activityData->recipient_country as $recipientCountry) {
                 if ($recipientCountry['percentage'] !== '') {
-                    $totalPercentage += $recipientCountry['percentage'];
+                    $percentage[] = $recipientCountry['percentage'];
+                    $totalPercentage += (float) $recipientCountry['percentage'];
                     $recipientCountryValue = true;
                 }
                 $activityRecipientCountryValue = true;
@@ -101,14 +103,17 @@ class ActivityElementValidation
         if (!empty($activityData->recipient_region)) {
             foreach ($activityData->recipient_region as $recipientRegion) {
                 if ($recipientRegion['percentage'] !== '') {
-                    $totalPercentage += $recipientRegion['percentage'];
+                    $percentage[] = $recipientRegion['percentage'];
+                    $totalPercentage += (float) $recipientRegion['percentage'];
                     $recipientRegionValue = true;
                 }
                 $activityRecipientRegionValue = true;
             }
         }
 
-        if ($totalPercentage != 100 && $totalPercentage != 0) {
+        $epsilon = 0.01;
+
+        if (!(abs(100.0 - $totalPercentage) < $epsilon) && $totalPercentage != 0) {
             if ($recipientCountryValue == true && $recipientRegionValue == true) {
                 $messages[] = trans('validation.sum_of_percentage', ['attribute' => trans('element.recipient_country') . ' ' . trans('global.and') . ' ' . trans('element.recipient_region')]);
             } elseif ($recipientCountryValue == true) {
