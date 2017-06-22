@@ -185,7 +185,9 @@ class Activity
         foreach ($elementData as $activityIndex => $element) {
             $elementName = $this->name($element);
             $this->resetIndex($elementName);
-            $this->activity[$this->activityElements[$elementName]] = $this->$elementName($element, $template);
+            if (array_key_exists($elementName, $this->activityElements)) {
+                $this->activity[$this->activityElements[$elementName]] = $this->$elementName($element, $template);
+            }
         }
 
         if (array_key_exists('description', $this->activity)) {
@@ -232,7 +234,7 @@ class Activity
         $this->otherIdentifier[$this->index]['reference']                 = $this->attributes($element, 'ref');
         $this->otherIdentifier[$this->index]['type']                      = $this->attributes($element, 'type');
         $this->otherIdentifier[$this->index]['owner_org'][0]['reference'] = $this->attributes($element, 'ref', 'ownerOrg');
-        $this->otherIdentifier[$this->index]['owner_org'][0]['narrative'] = (($narrative = $this->value($element['value'], 'ownerOrg')) == '') ? $this->emptyNarrative : $narrative;
+        $this->otherIdentifier[$this->index]['owner_org'][0]['narrative'] = (($narrative = $this->value(getVal($element, ['value'], []), 'ownerOrg')) == '') ? $this->emptyNarrative : $narrative;
         $this->index ++;
 
         return $this->otherIdentifier;
