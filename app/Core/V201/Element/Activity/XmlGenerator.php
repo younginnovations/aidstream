@@ -241,7 +241,7 @@ class XmlGenerator
         $recipientCountry = (array) $activity['recipient_country'];
         $recipientRegion  = (array) $activity['recipient_region'];
 
-        if (count($recipientRegion) == 1 && $this->isEmpty($recipientRegion, 'region_code')) {
+        if (count($recipientRegion) == 1 && !$this->isEmpty($recipientRegion, 'region_code')) {
             return $recipientRegion[0]['region_code'];
         } elseif (count($recipientCountry) == 1 && $this->isEmpty($recipientCountry, 'country_code')) {
             return strtolower($recipientCountry[0]['country_code']);
