@@ -41,8 +41,8 @@ class ImportResult extends Result
      */
     public function messages()
     {
-        $messages['result.required']      = trans('validation.required', ['attribute' => 'result file']);
-        $messages['result.activity_file'] = trans('validation.mimes', ['attribute' => 'result', ':values' => 'csv']);
+        $messages['result.required']    = trans('validation.required', ['attribute' => 'Result File']);
+        $messages['result.result_file'] = trans('validation.mimes', ['attribute' => 'result', ':values' => 'csv']);
 
         return $messages;
     }
