@@ -1,6 +1,7 @@
 var View = {
     csrfToken: '',
     id: '',
+    elementName: '',
     callAsync: function (url, data, beforeSend, complete) {
         return $.ajax({
             headers: View.csrfToken,
@@ -22,13 +23,15 @@ var View = {
         // View.loadResult();
     },
     loadTransaction: function () {
-        this.callAsync('/activity/getTransactionView', {'id': View.id})
+        this.elementName = 'Transaction';
+        this.callAsync('/activity/getTransactionView', {'id': View.id}, View.beforeSend, View.complete)
             .success(function (data) {
                 $('.activity-element-wrapper:last').parent().append(data);
                 View.loadResult()
             });
     },
     loadResult: function () {
+        this.elementName = 'Result';
         this.callAsync('/activity/getResultView', {'id': View.id}, View.beforeSend, View.complete)
             .success(function (data) {
                 $('.activity-element-wrapper:last').parent().append(data);
@@ -37,7 +40,7 @@ var View = {
     beforeSend: function () {
         $('.activity-element-wrapper:last').parent().append("" +
             "<div class='loading' style='color:rgba(72,72,72,.7);'>" +
-            "Loading Result Data..." +
+            "Loading " + View.elementName + " Data..." +
             "</div>" +
             "")
     },
