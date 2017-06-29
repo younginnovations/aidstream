@@ -1,10 +1,9 @@
 <?php namespace App\Core\V201\Requests\Activity;
 
+use App\Helpers\GetCodeName;
 use App\Http\Requests\Request;
-use App\Models\Activity\Activity;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
-use App\Helpers\GetCodeName;
 
 /**
  * Class ActivityBaseRequest

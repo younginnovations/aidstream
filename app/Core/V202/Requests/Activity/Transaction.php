@@ -109,7 +109,10 @@ class Transaction extends V201Transaction
 
         foreach ($formFields as $providerOrgIndex => $providerOrg) {
             $providerOrgForm = sprintf('%s.provider_organization.%s', $formBase, $providerOrgIndex);
-            $rules           = array_merge(
+
+            $rules[sprintf('%s.%s', $providerOrgForm, 'provider_activity_id')] = 'exclude_operators';
+
+            $rules = array_merge(
                 $rules,
                 $this->getRulesForNarrative($providerOrg['narrative'], $providerOrgForm)
             );
@@ -149,7 +152,10 @@ class Transaction extends V201Transaction
 
         foreach ($formFields as $receiverOrgIndex => $receiverOrg) {
             $receiverOrgForm = sprintf('%s.receiver_organization.%s', $formBase, $receiverOrgIndex);
-            $rules           = array_merge(
+
+            $rules[sprintf('%s.%s', $receiverOrgForm, 'receiver_activity_id')] = 'exclude_operators';
+
+            $rules = array_merge(
                 $rules,
                 $this->getRulesForNarrative($receiverOrg['narrative'], $receiverOrgForm)
             );
