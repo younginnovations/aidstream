@@ -1,11 +1,12 @@
 <?php namespace App\Http\Controllers\Complete\Activity\Import\Result;
 
-use App\Http\Requests\Request;
-use App\Http\Controllers\Controller;
-use App\Services\Organization\OrganizationManager;
 use App\Core\V201\Requests\Activity\Result\ImportResult;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Request;
+use App\Models\Activity\Activity;
 use App\Services\CsvImporter\ImportResultManager as ImportManager;
 use App\Services\FormCreator\Activity\Result\ImportResult as ImportResultForm;
+use App\Services\Organization\OrganizationManager;
 
 /**
  * Class ImportResultController
@@ -136,6 +137,11 @@ class ImportResultController extends Controller
         if ($results) {
             $this->importManager->create($activityId, $results);
             $this->importManager->endImport();
+
+            $activity = Activity::find($activityId);
+
+            $activity->activity_workflow = 0;
+            $activity->save();
 
             return redirect()->route('activity.show', $activityId)->withResponse(['type' => 'success', 'code' => ['message', ['message' => trans('success.results_imported')]]]);
         }
