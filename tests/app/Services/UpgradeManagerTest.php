@@ -47,6 +47,9 @@ class UpgradeManagerTest extends AidStreamTestCase
         );
     }
 
+    /**
+     * @test
+     */
     public function testItShouldUpgradeToCertainVersionWithCertainOrganizationId()
     {
         $orgModel = m::mock(Organization::class);

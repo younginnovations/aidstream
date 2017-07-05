@@ -42,24 +42,36 @@ class OrganizationGroupManagerTest extends AidStreamTestCase
         );
     }
 
+    /**
+     * @test
+     */
     public function testItShouldGetAllOrganizationGroups()
     {
         $this->orgGroupInterface->shouldReceive('getOrganizationGroups')->andReturnSelf();
         $this->assertInstanceOf('App\SuperAdmin\Repositories\SuperAdminInterfaces\OrganizationGroup', $this->orgGroupManager->getOrganizationGroups());
     }
 
+    /**
+     * @test
+     */
     public function testItShouldGetAllOrganizationGroupUserById()
     {
         $this->orgGroupInterface->shouldReceive('getOrganizationGroupUserById')->once()->with(1)->andReturnSelf();
         $this->assertInstanceOf('App\SuperAdmin\Repositories\SuperAdminInterfaces\OrganizationGroup', $this->orgGroupManager->getOrganizationGroupUserById(1));
     }
 
+    /**
+     * @test
+     */
     public function testItShouldSaveOrganizationUserGroup()
     {
         $this->orgGroupInterface->shouldReceive('save')->once()->with([], 1)->andReturnSelf();
         $this->assertInstanceOf('App\SuperAdmin\Repositories\SuperAdminInterfaces\OrganizationGroup', $this->orgGroupManager->save([], 1));
     }
 
+    /**
+     * @test
+     */
     public function testItShouldGetGroupsByUserId()
     {
         $a = m::mock(UserGroup::class);
@@ -69,6 +81,9 @@ class OrganizationGroupManagerTest extends AidStreamTestCase
         $this->assertInstanceOf('\Illuminate\Database\Eloquent\Collection', $this->orgGroupManager->getGroupsByUserId(1));
     }
 
+    /**
+     * @test
+     */
     public function testItShouldGetOrganizationGroupModelForUpdate()
     {
         $this->orgGroupInterface->shouldReceive('getOrganizationGroupUserById')->once()->with(1)->andReturn(['assigned_organizations' => 'assignedOrg', 'user' => 'user']);

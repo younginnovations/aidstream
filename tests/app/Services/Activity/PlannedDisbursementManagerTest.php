@@ -22,6 +22,9 @@ class PlannedDisbursementManagerTest extends AidStreamTestCase
         $this->planned_disbursement = new PlannedDisbursement($this->activity);
     }
 
+    /**
+     * @test
+     */
     public function testItShouldUpdatePlannedDisbursement()
     {
         $this->activity->shouldReceive('setAttribute')->once()->with('planned_disbursement', 'testPlannedDisbursement');
@@ -31,6 +34,9 @@ class PlannedDisbursementManagerTest extends AidStreamTestCase
         );
     }
 
+    /**
+     * @test
+     */
     public function testItShouldReturnPlannedDisbursementDataWithSpecificActivityId()
     {
         $this->activity->shouldReceive('findorFail')->once()->with(1)->andReturnSelf()->shouldReceive(

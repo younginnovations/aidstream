@@ -41,6 +41,9 @@ class StepThreeManagerTest extends AidStreamTestCase
         $this->stepThreeManager = new StepThreeManager($this->version, $this->auth, $this->database, $this->logger);
     }
 
+    /**
+     * @test
+     */
     public function testItShouldUpdateStepTwoActivityElementUsingWizardView()
     {
         $orgModel = m::mock(Organization::class);

@@ -42,6 +42,9 @@ class ImportActivityTest extends AidStreamTestCase
         $this->importActivity = new ImportActivity($this->databaseManager, $this->version, $this->logger, $this->orgManager);
     }
 
+    /**
+     * @test
+     */
     public function testItShouldReturnActivitiesFromCsvFile()
     {
         $csvFile    = '';
@@ -57,6 +60,9 @@ class ImportActivityTest extends AidStreamTestCase
         $this->assertEquals($activities, $this->importActivity->getActivities($csvFile));
     }
 
+    /**
+     * @test
+     */
     public function testItShouldImportSelectedActivities()
     {
         $firstData  = '["firstData"]';
@@ -76,4 +82,9 @@ class ImportActivityTest extends AidStreamTestCase
         $this->assertTrue($this->importActivity->importActivities($activities));
     }
 
+    public function tearDown()
+    {
+        parent::tearDown();
+        m::close();
+    }
 }

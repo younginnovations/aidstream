@@ -21,6 +21,9 @@ class StepThreeTest extends AidStreamTestCase
         $this->stepThree     = new StepThree($this->activityModel);
     }
 
+    /**
+     * @test
+     */
     public function testItShouldUpdateStepThreeActivityElements()
     {
         $this->activityModel->shouldReceive('setAttribute')->once()->with('activity_status', 'activityStatus');

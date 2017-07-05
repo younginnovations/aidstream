@@ -55,4 +55,10 @@ class SimpleActivityRowTest extends AidStreamTestCase
 
         $this->assertTrue($this->simpleActivityRow->save($activity));
     }
+
+    public function tearDown()
+    {
+        parent::tearDown();
+        m::close();
+    }
 }

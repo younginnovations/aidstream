@@ -41,6 +41,9 @@ class ActivityManagerTest extends AidStreamTestCase
         $this->activityManager = new ActivityManager($this->version, $this->auth, $this->database, $this->logger);
     }
 
+    /**
+     * @test
+     */
     public function testItShouldStoreNewActivityInDatabaseUsingWizardView()
     {
         $orgModel = m::mock(Organization::class);
@@ -77,6 +80,9 @@ class ActivityManagerTest extends AidStreamTestCase
         $this->assertInstanceOf('App\Models\Activity\Activity', $this->activityManager->store(['activity_identifier' => 'testActivityIdentifier'], ['defaultFieldValues']));
     }
 
+    /**
+     * @test
+     */
     public function testItShouldGetActivityDataWithSpecificActivityId()
     {
         $this->activityRepo->shouldReceive('getActivityData')->once()->with(1)->andReturn($this->activity);

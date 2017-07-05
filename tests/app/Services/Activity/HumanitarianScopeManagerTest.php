@@ -44,18 +44,27 @@ class HumanitarianScopeManagerTest extends AidStreamTestCase
         $this->humanitarianScopeManager = new HumanitarianScopeManager($this->version, $this->auth, $this->database, $this->dbLogger, $this->logger);
     }
 
+    /**
+     * @test
+     */
     public function testItShouldGetActivityDataWithCertainActivityId()
     {
         $this->humanitarianScopeRepo->shouldReceive('getActivityData')->with(1)->andReturn($this->activity);
         $this->assertInstanceOf('App\Models\Activity\Activity', $this->humanitarianScopeManager->getActivityData(1));
     }
 
+    /**
+     * @test
+     */
     public function testItShouldGetHumanitarianScopeDataWithCertainId()
     {
         $this->humanitarianScopeRepo->shouldReceive('getActivityHumanitarianScopeData')->once()->with(1)->andReturn($this->activity);
         $this->assertInstanceOf('App\Models\Activity\Activity', $this->humanitarianScopeManager->getActivityHumanitarianScopeData(1));
     }
 
+    /**
+     * @test
+     */
     public function testItShouldUpdateActivityHumanitarianScope()
     {
         $orgModel = m::mock(Organization::class);

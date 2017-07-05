@@ -50,6 +50,9 @@ class DefaultFinanceTypeManagerTest extends AidStreamTestCase
         );
     }
 
+    /**
+     * @test
+     */
     public function testItShouldUpdateActivityDefaultFinanceType()
     {
         $orgModel = m::mock(Organization::class);
@@ -89,6 +92,9 @@ class DefaultFinanceTypeManagerTest extends AidStreamTestCase
         );
     }
 
+    /**
+     * @test
+     */
     public function testItShouldGetDefaultFinanceTypeDataWithCertainId()
     {
         $this->defaultFinanceTypeRepo->shouldReceive('getDefaultFinanceTypeData')->once()->with(1)->andReturn(

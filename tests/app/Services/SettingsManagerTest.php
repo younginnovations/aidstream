@@ -31,22 +31,22 @@ class SettingsManagerTest extends AidStreamTestCase
     protected $userOnBoardingService;
     protected $formBuilder;
 
-    public function SetUp()
+    public function setUp()
     {
         parent::setUp();
         $this->version     = m::mock(Version::class);
         $this->settingRepo = m::mock(SettingsRepository::class);
         $this->version->shouldReceive('getSettingsElement->getRepository')->andReturn($this->settingRepo);
-        $this->activityManager     = m::mock(ActivityManager::class);
-        $this->organizationManager = m::mock(OrganizationManager::class);
-        $this->setting             = m::mock(Settings::class);
-        $this->logger              = m::mock(LoggerInterface::class);
-        $this->dbLogger            = m::mock(Log::class);
-        $this->auth                = m::mock(Guard::class);
-        $this->dbManager           = m::mock(DatabaseManager::class);
-        $this->formBuilder         = m::mock(FormBuilder::class);
+        $this->activityManager       = m::mock(ActivityManager::class);
+        $this->organizationManager   = m::mock(OrganizationManager::class);
+        $this->setting               = m::mock(Settings::class);
+        $this->logger                = m::mock(LoggerInterface::class);
+        $this->dbLogger              = m::mock(Log::class);
+        $this->auth                  = m::mock(Guard::class);
+        $this->dbManager             = m::mock(DatabaseManager::class);
+        $this->formBuilder           = m::mock(FormBuilder::class);
         $this->userOnBoardingService = m::mock(UserOnBoardingService::class);
-        $this->settingManager      = new SettingsManager(
+        $this->settingManager        = new SettingsManager(
             $this->version,
             $this->activityManager,
             $this->organizationManager,
@@ -59,18 +59,27 @@ class SettingsManagerTest extends AidStreamTestCase
         );
     }
 
+    /**
+     * @test
+     */
     public function testItShouldReturnSettingsDataWithSpecificOrganizationId()
     {
         $this->settingRepo->shouldReceive('getSettings')->once()->with(1)->andReturn([]);
         $this->assertTrue(is_array($this->settingManager->getSettings(1)));
     }
 
+    /**
+     * @test
+     */
     public function testItShouldStoreSetting()
     {
         $this->settingRepo->shouldReceive('storeSettings')->once()->with('testSetting', 1)->andReturn(true);
         $this->assertTrue($this->settingManager->storeSettings('testSetting', 1));
     }
 
+    /**
+     * @test
+     */
     public function testItShouldUpdateSetting()
     {
         $this->dbManager->shouldReceive('beginTransaction');

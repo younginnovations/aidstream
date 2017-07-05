@@ -50,6 +50,9 @@ class DefaultFlowTypeManagerTest extends AidStreamTestCase
         );
     }
 
+    /**
+     * @test
+     */
     public function testItShouldUpdateActivityDefaultFlowType()
     {
         $orgModel = m::mock(Organization::class);
@@ -89,6 +92,9 @@ class DefaultFlowTypeManagerTest extends AidStreamTestCase
         );
     }
 
+    /**
+     * @test
+     */
     public function testItShouldGetDefaultFlowTypeDataWithCertainId()
     {
         $this->defaultFlowTypeRepo->shouldReceive('getDefaultFlowTypeData')->once()->with(1)->andReturn(

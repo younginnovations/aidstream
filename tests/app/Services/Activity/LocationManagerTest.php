@@ -35,6 +35,9 @@ class LocationManagerTest extends AidStreamTestCase
         );
     }
 
+    /**
+     * @test
+     */
     public function testItShouldUpdateActivityLocationData()
     {
         $organizationModel = m::mock(Organization::class);
@@ -75,6 +78,9 @@ class LocationManagerTest extends AidStreamTestCase
         );
     }
 
+    /**
+     * @test
+     */
     public function testItShouldGetActivityLocationDataWithCertainId()
     {
         $this->locationRepository->shouldReceive('getLocation')

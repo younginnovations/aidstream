@@ -41,6 +41,9 @@ class StepTwoManagerTest extends AidStreamTestCase
         $this->stepTwoManager = new StepTwoManager($this->version, $this->auth, $this->database, $this->logger);
     }
 
+    /**
+     * @test
+     */
     public function testItShouldUpdateStepTwoActivityElementUsingWizardView()
     {
         $orgModel = m::mock(Organization::class);

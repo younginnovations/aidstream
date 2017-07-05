@@ -15,14 +15,17 @@ class DocumentLinkManagerTest extends AidStreamTestCase
     public function setUp()
     {
         parent::setUp();
-        $this->version = m::mock('App\Core\Version');
+        $this->version                = m::mock('App\Core\Version');
         $this->documentLinkRepository = m::mock('App\Core\V201\Repositories\Organization\DocumentLinkRepository');
         $this->version->shouldReceive('getOrganizationElement->getDocumentLink->getRepository')->andReturn($this->documentLinkRepository);
-        $this->logger = m::mock('Illuminate\Contracts\Logging\Log');
-        $this->auth = m::mock('Illuminate\Contracts\Auth\Guard');
+        $this->logger         = m::mock('Illuminate\Contracts\Logging\Log');
+        $this->auth           = m::mock('Illuminate\Contracts\Auth\Guard');
         $this->docLinkManager = new DocumentLinkManager($this->version, $this->logger, $this->auth);
     }
 
+    /**
+     * @test
+     */
     public function testItShouldUpdateDocumentLinkData()
     {
         $organizationModel = m::mock('App\Models\Organization\Organization');
@@ -34,20 +37,26 @@ class DocumentLinkManagerTest extends AidStreamTestCase
         $organizationDataModel->shouldReceive('getAttribute')->once()->with('document_link')->andReturn('documentLink');
         $this->documentLinkRepository->shouldReceive('update')->once()->with([], $organizationDataModel)->andReturn(true);
         $this->logger->shouldReceive('info')->once()->with("Document Link Updated", ['for' => 'documentLink']);
-        $this->logger->shouldReceive('activity')->once()->with('organization.document_link_updated', ['name'=>'organizationName']);
+        $this->logger->shouldReceive('activity')->once()->with('organization.document_link_updated', ['name' => 'organizationName']);
         $this->assertTrue($this->docLinkManager->update([], $organizationDataModel));
     }
 
+    /**
+     * @test
+     */
     public function testItShouldGetAllOrganizationDataWithCertainId()
     {
         $this->documentLinkRepository->shouldReceive('getOrganizationData')->with(1)->andReturn(m::mock('App\Models\Organization\OrganizationData'));
         $this->assertInstanceOf('App\Models\Organization\OrganizationData', $this->docLinkManager->getOrganizationData(1));
     }
 
+    /**
+     * @test
+     */
     public function testItShouldGetOrganizationDocumentLinkDataWithCertainId()
     {
         $this->documentLinkRepository->shouldReceive('getDocumentLinkData')->with(1)->andReturn(m::mock('App\Models\Organization\OrganizationData'));
-        $this->assertInstanceOf('App\Models\Organization\OrganizationData', $this->docLinkManager->getDocumentLinkData(1) );
+        $this->assertInstanceOf('App\Models\Organization\OrganizationData', $this->docLinkManager->getDocumentLinkData(1));
     }
 
     public function tearDown()

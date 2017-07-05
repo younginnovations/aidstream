@@ -21,6 +21,9 @@ class StepTwoTest extends AidStreamTestCase
         $this->stepTwo       = new StepTwo($this->activityModel);
     }
 
+    /**
+     * @test
+     */
     public function testItShouldUpdateStepTwoActivityElements()
     {
         $this->activityModel->shouldReceive('setAttribute')->once()->with('title', 'testTitle');

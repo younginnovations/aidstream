@@ -50,6 +50,9 @@ class DefaultAidTypeManagerTest extends AidStreamTestCase
         );
     }
 
+    /**
+     * @test
+     */
     public function testItShouldUpdateActivityDefaultAidType()
     {
         $orgModel = m::mock(Organization::class);
@@ -89,6 +92,9 @@ class DefaultAidTypeManagerTest extends AidStreamTestCase
         );
     }
 
+    /**
+     * @test
+     */
     public function testItShouldGetDefaultAidTypeDataWithCertainId()
     {
         $this->defaultAidTypeRepo->shouldReceive('getDefaultAidTypeData')->once()->with(1)->andReturn(

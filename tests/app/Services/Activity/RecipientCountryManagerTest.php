@@ -41,6 +41,9 @@ class RecipientCountryManagerTest extends AidStreamTestCase
         );
     }
 
+    /**
+     * @test
+     */
     public function testItShouldUpdateRecipientCountry()
     {
         $organizationModel = m::mock(Organization::class);
@@ -81,6 +84,9 @@ class RecipientCountryManagerTest extends AidStreamTestCase
         );
     }
 
+    /**
+     * @test
+     */
     public function testItShouldGetRecipientCountryDataWithCertainId()
     {
         $this->recipientCountryRepository->shouldReceive('getRecipientCountryData')

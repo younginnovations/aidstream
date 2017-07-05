@@ -21,6 +21,9 @@ class ActivityRepositoryTest extends AidStreamTestCase
         $this->activityRepo  = new ActivityRepository($this->activityModel);
     }
 
+    /**
+     * @test
+     */
     public function testItShouldStoreActivityDataToDatabase()
     {
         $this->activityModel->shouldReceive('create')->once()->with(
@@ -29,12 +32,18 @@ class ActivityRepositoryTest extends AidStreamTestCase
         $this->assertTrue($this->activityRepo->store(['identifier' => 'testIdentifier'], ['defaultFieldValues'], 1));
     }
 
+    /**
+     * @test
+     */
     public function testItShouldReturnActivityWithSpecificActivityId()
     {
         $this->activityModel->shouldReceive('findOrFail')->once()->with(1)->andReturnSelf();
         $this->assertInstanceOf('App\Models\Activity\Activity', $this->activityRepo->getActivityData(1));
     }
 
+    /**
+     * @test
+     */
     public function testItShouldSaveDefaultValuesWithSpecificActivityId()
     {
         $activity = $this->activityModel->shouldReceive('find')->once()->with(1)->andReturn($this->activityModel);

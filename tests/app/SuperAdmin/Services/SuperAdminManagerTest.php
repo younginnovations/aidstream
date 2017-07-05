@@ -7,6 +7,7 @@ use App\Services\Export\CsvGenerator;
 use App\SuperAdmin\Services\SuperAdminManager;
 use App\User;
 use Psr\Log\LoggerInterface;
+use ReflectionProperty;
 use Test\AidStreamTestCase;
 use Mockery as m;
 
@@ -39,18 +40,27 @@ class SuperAdminManagerTest extends AidStreamTestCase
         $this->superAdminManager = new SuperAdminManager($this->adminInterface, $this->generator, $this->user, $this->activityPublished, $this->organizationPublished, $this->activity, $this->logger);
     }
 
+    /**
+     * @test
+     */
     public function testItShouldGetOrganizationById()
     {
         $this->adminInterface->shouldReceive('getOrganizationById')->once()->with(1)->andReturnSelf();
         $this->assertInstanceOf('App\SuperAdmin\Repositories\SuperAdminInterfaces\SuperAdmin', $this->superAdminManager->getOrganizationById(1));
     }
 
+    /**
+     * @test
+     */
     public function testItShouldGetOrganizationUserDataById()
     {
         $this->adminInterface->shouldReceive('getOrganizationUserById')->once()->with(1)->andReturnSelf();
         $this->assertInstanceOf('App\SuperAdmin\Repositories\SuperAdminInterfaces\SuperAdmin', $this->superAdminManager->getOrganizationUserById(1));
     }
 
+    /**
+     * @test
+     */
     public function testItShouldSaveOrganization()
     {
         $this->adminInterface->shouldReceive('saveOrganization')->once()->with([], 1)->andReturnSelf();

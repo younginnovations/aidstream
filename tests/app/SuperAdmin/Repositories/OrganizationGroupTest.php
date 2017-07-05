@@ -24,6 +24,9 @@ class OrganizationGroupTest extends AidStreamTestCase
     protected $userGroup;
     protected $organizationGroup;
 
+    /**
+     * @test
+     */
     public function setUp()
     {
         parent::setUp();
@@ -43,12 +46,18 @@ class OrganizationGroupTest extends AidStreamTestCase
         );
     }
 
+    /**
+     * @test
+     */
     public function testItShouldGetAllOrganizationGroups()
     {
         $this->userGroup->shouldReceive('all')->andReturnSelf();
         $this->assertInstanceOf('App\Models\SuperAdmin\UserGroup', $this->organizationGroup->getOrganizationGroups());
     }
 
+    /**
+     * @test
+     */
     public function testItShouldGetOrganizationGroupUserById()
     {
         $this->userGroup->shouldReceive('findOrFail')->once()->with(1)->andReturnSelf()->shouldReceive('getAttribute')->once()->with('user_id')->andReturn(1);
@@ -56,6 +65,9 @@ class OrganizationGroupTest extends AidStreamTestCase
         $this->assertTrue(is_array($this->organizationGroup->getOrganizationGroupUserById(1)));
     }
 
+    /**
+     * @test
+     */
     public function testItShouldSaveOrganizationGroupDetails()
     {
         $this->database->shouldReceive('beginTransaction')->once()->andReturnSelf();

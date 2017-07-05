@@ -291,4 +291,10 @@ class ActivityDataParserTest extends AidStreamTestCase
         $this->activityDataParser->setScope();
         $this->assertEquals($output, $this->activityDataParser->getActivityData()['activity_scope']);
     }
+
+    public function tearDown()
+    {
+        parent::tearDown();
+        m::close();
+    }
 }

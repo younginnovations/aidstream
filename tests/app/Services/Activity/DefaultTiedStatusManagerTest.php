@@ -28,7 +28,7 @@ class DefaultTiedStatusManagerTest extends AidStreamTestCase
     protected $activity;
     protected $database;
 
-    public function SetUp()
+    public function setUp()
     {
         parent::setUp();
         $this->version               = m::mock(Version::class);
@@ -50,6 +50,9 @@ class DefaultTiedStatusManagerTest extends AidStreamTestCase
         );
     }
 
+    /**
+     * @test
+     */
     public function testItShouldUpdateActivityDefaultTiedStatus()
     {
         $orgModel = m::mock(Organization::class);
@@ -89,6 +92,9 @@ class DefaultTiedStatusManagerTest extends AidStreamTestCase
         );
     }
 
+    /**
+     * @test
+     */
     public function testItShouldGetDefaultTiedStatusDataWithCertainId()
     {
         $this->defaultTiedStatusRepo->shouldReceive('getDefaultTiedStatusData')->once()->with(1)->andReturn(
