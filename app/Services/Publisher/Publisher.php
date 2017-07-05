@@ -115,29 +115,32 @@ class Publisher extends RegistryApiHandler
      */
     protected function formatHeaders($filename, $organization, $publishedFile, $key, $code, $title)
     {
-        return json_encode(
-            [
-                'title'                                       => $title,
-                'name'                                        => $filename,
-                'author_email'                                => $organization->getAdminUser()->email,
-                'owner_org'                                   => $this->publisherId,
-                'license_id'                                  => 'other-open',
-                'resources'                                   => [
-                    [
-                        'format'   => config('xmlFiles.format'),
-                        'mimetype' => config('xmlFiles.mimeType'),
-                        'url'      => url(sprintf('files/xml/%s.xml', $filename))
-                    ]
-                ],
-                "filetype"                                    => ($code != 'organization') ? 'activity' : $code,
-                $key                                          => ($code == 'activities' || $code == 'organization') ? '' : $code,
-                "data_updated"                                => $publishedFile->updated_at->toDateTimeString(),
-                ($code == 'organization') ?: "activity_count" => count($publishedFile->published_activities),
-                "language"                                    => config('app.locale'),
-                "verified"                                    => "no",
-                "state"                                       => "active"
-            ]
-        );
+        $data = [
+            'title'                                       => $title,
+            'name'                                        => $filename,
+            'author_email'                                => $organization->getAdminUser()->email,
+            'owner_org'                                   => $this->publisherId,
+            'license_id'                                  => 'other-open',
+            'resources'                                   => [
+                [
+                    'format'   => config('xmlFiles.format'),
+                    'mimetype' => config('xmlFiles.mimeType'),
+                    'url'      => url(sprintf('files/xml/%s.xml', $filename))
+                ]
+            ],
+            "filetype"                                    => ($code != 'organisation') ? 'activity' : $code,
+            $key                                          => ($code == 'activities' || $code == 'organisation') ? '' : $code,
+            "data_updated"                                => $publishedFile->updated_at->toDateTimeString(),
+            "language"                                    => config('app.locale'),
+            "verified"                                    => "no",
+            "state"                                       => "active"
+        ];
+
+        if ($code != 'organisation') {
+            $data['activity_count'] = count($publishedFile->published_activities);
+        }
+
+        return json_encode($data);
     }
 
     /**
@@ -177,8 +180,8 @@ class Publisher extends RegistryApiHandler
      */
     protected function extractTitle($organization, $publishingType, $code, $fileType)
     {
-        if ($fileType == 'organization') {
-            return $organization->name . ' Organization File';
+        if ($fileType == 'organisation') {
+            return $organization->name . ' Organisation File';
         }
 
         return ($publishingType == "segmented")
@@ -267,7 +270,7 @@ class Publisher extends RegistryApiHandler
     protected function getFileType($code)
     {
         if (in_array('org', $code)) {
-            return 'organization';
+            return 'organisation';
         }
 
         return end($code);

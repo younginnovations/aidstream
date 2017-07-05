@@ -69,8 +69,9 @@ trait HistoryExchangeRates
     {
         $exchangeRatesModel = app()->make(HistoricalExchangeRate::class);
         $allDates           = $exchangeRatesModel->select('date')->get()->toArray();
-
-        $newDates = array_values(array_diff($dates, array_flatten($allDates)));
+        $dates              = collect($dates);
+        $newDates           = $dates->diff(array_flatten($allDates));
+        $newDates           = array_values($newDates->toArray());
 
         return $this->newExchangeRates($newDates);
     }
@@ -85,7 +86,8 @@ trait HistoryExchangeRates
     {
         $exchangeRates = [];
         foreach ($newDates as $index => $newDate) {
-            if ($newDate < date('Y-m-d')) {
+            $year = explode('-', $newDate);
+            if ($newDate < date('Y-m-d') && $year[0] > '1999') {
                 $exchangeRates[] = $this->clean(json_decode($this->curl($newDate), true), $newDate);
             }
         }
