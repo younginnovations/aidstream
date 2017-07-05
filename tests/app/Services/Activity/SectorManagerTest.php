@@ -38,6 +38,9 @@ class SectorManagerTest extends AidStreamTestCase
         $this->sectorManager = new SectorManager($this->version, $this->auth, $this->logger);
     }
 
+    /**
+     * @test
+     */
     public function testItShouldUpdateActivitySector()
     {
         $orgModel = m::mock(Organization::class);
@@ -75,6 +78,9 @@ class SectorManagerTest extends AidStreamTestCase
         );
     }
 
+    /**
+     * @test
+     */
     public function testItShouldGetSectorDataWithCertainId()
     {
         $this->sectorRepository->shouldReceive('getSectorData')->once()->with(1)->andReturn($this->activity);

@@ -2,6 +2,7 @@
 
 namespace Core\V202\Repositories\PerfectViewer;
 
+use App\Models\Activity\Activity;
 use App\Models\PerfectViewer\ActivitySnapshot;
 use App\Models\ActivityPublished;
 use App\Models\Activity\Transaction;
@@ -11,7 +12,6 @@ use App\Models\Organization\Organization;
 use Mockery as m;
 use Test\AidStreamTestCase;
 use App\Core\V202\Repositories\PerfectViewer\PerfectViewerRepository;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Collection as SupportCollection;
 use Illuminate\Database\Query\Builder;

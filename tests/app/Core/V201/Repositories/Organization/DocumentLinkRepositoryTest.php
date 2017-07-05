@@ -17,6 +17,9 @@ class DocumentLinkRepositoryTest extends AidStreamTestCase
         $this->documentLinkRepository = new DocumentLinkRepository($this->organizationData);
     }
 
+    /**
+     * @test
+     */
     public function testItShouldUpdateOrganizationDocumentLinkData()
     {
         $this->organizationData->shouldReceive('setAttribute')->once()->with('document_link', 'a');
@@ -24,12 +27,18 @@ class DocumentLinkRepositoryTest extends AidStreamTestCase
         $this->assertTrue($this->documentLinkRepository->update(['document_link' => 'a'], $this->organizationData));
     }
 
+    /**
+     * @test
+     */
     public function testItShouldGetOrganizationDataWithSpecificId()
     {
         $this->organizationData->shouldReceive('where->first')->once()->andReturn($this->organizationData);
         $this->assertInstanceOf('App\Models\Organization\OrganizationData', $this->documentLinkRepository->getOrganizationData(1));
     }
 
+    /**
+     * @test
+     */
     public function testItShouldReturnGetOrganizationDocumentLinkDataWithSpecificId()
     {
         $this->organizationData->shouldReceive('where->first')->once()->andReturn($this->organizationData);
@@ -37,6 +46,9 @@ class DocumentLinkRepositoryTest extends AidStreamTestCase
         $this->assertTrue(is_array($this->documentLinkRepository->getDocumentLinkData(1)));
     }
 
+    /**
+     * @test
+     */
     public function tearDown()
     {
         parent::tearDown();

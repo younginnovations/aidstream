@@ -49,6 +49,9 @@ class ResultManagerTest extends AidStreamTestCase
         );
     }
 
+    /**
+     * @test
+     */
     public function testItShouldUpdateActivityResult()
     {
         $this->database->shouldReceive('beginTransaction');
@@ -74,6 +77,9 @@ class ResultManagerTest extends AidStreamTestCase
         $this->assertTrue($this->resultManager->update(['result' => 'testResult'], $this->activityResult));
     }
 
+    /**
+     * @test
+     */
     public function testItShouldGetResultsWithCertainActivityId()
     {
         $collection = m::mock(Collection::class);
@@ -84,6 +90,9 @@ class ResultManagerTest extends AidStreamTestCase
         );
     }
 
+    /**
+     * @test
+     */
     public function testItShouldGetResultWithCertainId()
     {
         $this->resultRepo->shouldReceive('getResult')->with(1, 1)->andReturn($this->activityResult);
@@ -93,6 +102,9 @@ class ResultManagerTest extends AidStreamTestCase
         );
     }
 
+    /**
+     * @test
+     */
     public function testItShouldReceiveDeleteResult()
     {
         $this->resultRepo->shouldReceive('deleteResult')->with($this->activityResult)->andReturn(true);

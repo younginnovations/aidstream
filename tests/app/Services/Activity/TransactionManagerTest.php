@@ -32,6 +32,9 @@ class TransactionManagerTest extends AidStreamTestCase
         $this->transactionManager = new TransactionManager($this->version, $this->auth, $this->dbLogger, $this->logger);
     }
 
+    /**
+     * @test
+     */
     public function testItShouldUpdateTransactionDetails()
     {
         $this->transactionRepo->shouldReceive('update')->once()->with([], 1);
@@ -42,6 +45,9 @@ class TransactionManagerTest extends AidStreamTestCase
         $this->assertTrue($this->transactionManager->save([], $activity, 1));
     }
 
+    /**
+     * @test
+     */
     public function testItShouldCreateTransactionDetails()
     {
         $activity = m::mock(Activity::class);
@@ -52,6 +58,9 @@ class TransactionManagerTest extends AidStreamTestCase
         $this->assertTrue($this->transactionManager->save([], $activity));
     }
 
+    /**
+     * @test
+     */
     public function testItShouldThrowExceptionInCaseProblemOccursWhileUpdatingTransaction()
     {
         $activity  = m::mock(Activity::class);
@@ -59,5 +68,11 @@ class TransactionManagerTest extends AidStreamTestCase
         $this->transactionRepo->shouldReceive('update')->with([], $activity)->andThrow($exception);
         $this->logger->shouldReceive('error');
         $this->assertFalse($this->transactionManager->save([], $activity, 1));
+    }
+
+    public function tearDown()
+    {
+        parent::tearDown();
+        m::close();
     }
 }

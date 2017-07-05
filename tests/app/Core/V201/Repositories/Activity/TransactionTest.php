@@ -41,4 +41,10 @@ class TransactionTest extends AidStreamTestCase
         $this->transactionModel->shouldReceive('findOrFail')->with(1)->andReturn($this->transactionModel);
         $this->assertInstanceOf('App\Models\Activity\Transaction', $this->transactionRepo->getTransaction(1));
     }
+
+    public function tearDown()
+    {
+        parent::tearDown();
+        m::close();
+    }
 }

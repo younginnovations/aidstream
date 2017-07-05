@@ -267,4 +267,9 @@ class V1ResultDataMappingTest extends AidStreamTestCase
 
         return [['narrative' => '', 'language' => '']];
     }
+
+    public function tearDown()
+    {
+        parent::tearDown();
+    }
 }

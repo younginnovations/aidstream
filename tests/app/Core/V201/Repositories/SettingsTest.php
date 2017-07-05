@@ -31,12 +31,18 @@ class SettingsTest extends AidStreamTestCase
         $this->settingRepository = new SettingsRepository($this->settings, $this->organizationData, $this->sessionManager, $this->databaseManager, $this->user);
     }
 
+    /**
+     * @test
+     */
     public function testItShouldReturnSettingsDataWithSpecificOrganizationId()
     {
         $this->settings->shouldReceive('where->first')->andReturn($this->settings);
         $this->assertInstanceOf('App\Models\Settings', $this->settingRepository->getSettings(1));
     }
 
+    /**
+     * @test
+     */
     public function testItShouldStoreSettings()
     {
         $this->organization->shouldReceive('organization->save')->with(['reporting_org' => 1]);
@@ -45,6 +51,9 @@ class SettingsTest extends AidStreamTestCase
         $this->assertTrue(true, 'Organization Settings Inserted');
     }
 
+    /**
+     * @test
+     */
     public function testItShouldUpdateSettings()
     {
         $this->organization->shouldReceive('organization->save')->with(['reporting_org' => 1]);

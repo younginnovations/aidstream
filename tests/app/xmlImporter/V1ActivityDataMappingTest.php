@@ -921,4 +921,9 @@ class V1ActivityDataMappingTest extends AidStreamTestCase
     {
         return $this->template;
     }
+
+    public function tearDown()
+    {
+        parent::tearDown();
+    }
 }

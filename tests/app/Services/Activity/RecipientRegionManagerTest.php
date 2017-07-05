@@ -38,6 +38,9 @@ class RecipientRegionManagerTest extends AidStreamTestCase
         $this->recipientRegionManager = new RecipientRegionManager($this->version, $this->logger, $this->auth);
     }
 
+    /**
+     * @test
+     */
     public function testItShouldUpdateActivityRecipientRegion()
     {
         $organizationModel = m::mock(Organization::class);
@@ -78,6 +81,9 @@ class RecipientRegionManagerTest extends AidStreamTestCase
         );
     }
 
+    /**
+     * @test
+     */
     public function testItShouldGetRecipientRegionDataWithCertainId()
     {
         $this->recipientRegionRepo->shouldReceive('getRecipientRegionData')

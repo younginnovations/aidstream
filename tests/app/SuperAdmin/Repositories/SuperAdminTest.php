@@ -43,6 +43,9 @@ class SuperAdminTest extends AidStreamTestCase
         );
     }
 
+    /**
+     * @test
+     */
     public function testItShouldGetAllOrganizations()
     {
         $this->organization->shouldReceive('with->orderBy->paginate')->andReturn(
@@ -51,6 +54,9 @@ class SuperAdminTest extends AidStreamTestCase
         $this->assertInstanceOf('\Illuminate\Database\Eloquent\Collection', $this->superAdmin->getOrganizations());
     }
 
+    /**
+     * @test
+     */
     public function testItShouldReturnOrganizationDataWithSpecificId()
     {
         $this->organization->shouldReceive('findOrFail')->once()->with(1)->andReturn(
@@ -59,12 +65,18 @@ class SuperAdminTest extends AidStreamTestCase
         $this->assertInstanceOf('\Illuminate\Database\Eloquent\Collection', $this->superAdmin->getOrganizationById(1));
     }
 
+    /**
+     * @test
+     */
     public function testItShouldReceiveOrganizationDataAndUserDataWithSpecificId()
     {
         $this->organization->shouldReceive('join->where->where->select->get->toArray')->andReturn([]);
         $this->assertTrue(is_array($this->superAdmin->getOrganizationUserById(1)));
     }
 
+    /**
+     * @test
+     */
     public function testItShouldSaveOrganizationDetails()
     {
         $collection = m::mock(Collection::class);

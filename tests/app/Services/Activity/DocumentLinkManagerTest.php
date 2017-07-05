@@ -59,6 +59,9 @@ class DocumentLinkManagerTest extends AidStreamTestCase
         );
     }
 
+    /**
+     * @test
+     */
     public function testItShouldUpdateActivityDocumentLink()
     {
         $documentLinkData = [['url' => 'testUrl']];
@@ -108,6 +111,9 @@ class DocumentLinkManagerTest extends AidStreamTestCase
         );
     }
 
+    /**
+     * @test
+     */
     public function testItShouldGetDocumentLinkWithCertainIdAndActivityId()
     {
         $this->documentLinkRepo->shouldReceive('getDocumentLink')->once()->with(1, 2)->andReturn($this->documentLinkModel);
@@ -117,6 +123,9 @@ class DocumentLinkManagerTest extends AidStreamTestCase
         );
     }
 
+    /**
+     * @test
+     */
     public function testItShouldGetDocumentLinksWithCertainActivityId()
     {
         $this->documentLinkRepo->shouldReceive('getDocumentLinks')->once()->with(2)->andReturn([]);

@@ -224,4 +224,9 @@ class V1TransactionDataMappingTest extends AidStreamTestCase
 
         return [['narrative' => '', 'language' => '']];
     }
+
+    public function tearDown()
+    {
+        parent::tearDown();
+    }
 }

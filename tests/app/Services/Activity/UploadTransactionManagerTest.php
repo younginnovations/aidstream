@@ -25,7 +25,7 @@ class UploadTransactionManagerTest extends AidStreamTestCase
     protected $uploadTransactionRepo;
     protected $uploadTransactionManager;
 
-    public function SetUp()
+    public function setUp()
     {
         parent::setUp();
         $this->version               = m::mock(Version::class);
@@ -39,6 +39,9 @@ class UploadTransactionManagerTest extends AidStreamTestCase
         $this->uploadTransactionManager = new UploadTransactionManager($this->version, $this->auth, $this->dbLogger, $this->logger);
     }
 
+    /**
+     * @test
+     */
     public function testItShouldSaveUploadedTransaction()
     {
         $transactionCsv = m::mock(UploadedFile::class);
@@ -62,6 +65,9 @@ class UploadTransactionManagerTest extends AidStreamTestCase
         $this->assertTrue($this->uploadTransactionManager->save($transactionCsv, $activity));
     }
 
+    /**
+     * @test
+     */
     public function testItShouldUpdateTransactionByUploadingTransaction()
     {
         $transactionCsv = m::mock(UploadedFile::class);
@@ -85,6 +91,9 @@ class UploadTransactionManagerTest extends AidStreamTestCase
         $this->assertTrue($this->uploadTransactionManager->save($transactionCsv, $activity));
     }
 
+    /**
+     * @test
+     */
     public function testItShouldReturnExceptionIfErrorOccursInTransactionUpload()
     {
         $transactionCsv = m::mock(UploadedFile::class);
@@ -105,5 +114,11 @@ class UploadTransactionManagerTest extends AidStreamTestCase
         $this->uploadTransactionRepo->shouldReceive('update')->andThrow($exception);
         $this->logger->shouldReceive('error');
         $this->assertFalse($this->uploadTransactionManager->save($transactionCsv, $activity));
+    }
+
+    public function tearDown()
+    {
+        parent::tearDown();
+        m::close();
     }
 }

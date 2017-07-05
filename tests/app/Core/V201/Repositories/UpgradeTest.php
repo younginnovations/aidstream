@@ -31,6 +31,9 @@ class UpgradeTest extends AidStreamTestCase
         $this->upgrade  = new Upgrade($this->settings, $this->orgData, $this->activity, $this->transaction);
     }
 
+    /**
+     * @test
+     */
     public function testItShouldUpgradeDataWithCertainOrganizationAndVersion()
     {
         $this->settings->shouldReceive('where')->with('organization_id', 1)->andReturnSelf();

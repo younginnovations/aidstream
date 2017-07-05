@@ -46,6 +46,9 @@ class RelatedActivityManagerTest extends AidStreamTestCase
         );
     }
 
+    /**
+     * @test
+     */
     public function testItShouldUpdateRelatedActivity()
     {
         $organizationModel = m::mock(Organization::class);
@@ -84,6 +87,9 @@ class RelatedActivityManagerTest extends AidStreamTestCase
         );
     }
 
+    /**
+     * @test
+     */
     public function testItShouldGetRelatedActivityDataWithCertainId()
     {
         $this->relatedActivityRepository->shouldReceive('getRelatedActivityData')

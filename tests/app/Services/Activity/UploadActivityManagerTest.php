@@ -39,6 +39,9 @@ class UploadActivityManagerTest extends AidStreamTestCase
         $this->uploadActivityManager = new UploadActivityManager($this->version, $this->auth, $this->database, $this->dbLogger, $this->logger);
     }
 
+    /**
+     * @test
+     */
     public function testItShouldSaveUploadedActivity()
     {
         $activityCsv = m::mock(UploadedFile::class);
@@ -64,11 +67,17 @@ class UploadActivityManagerTest extends AidStreamTestCase
         $this->assertTrue($this->uploadActivityManager->save($activityCsv, $organization, []));
     }
 
+    /**
+     * @test
+     */
     public function testItShouldSaveUpdateActivity()
     {
         $this->uploadActivityRepo->shouldReceive('update')->with([], 1);
     }
 
+    /**
+     * @test
+     */
     public function testItShouldReturnExceptionIfErrorOccursInActivityUpload()
     {
         $activityCsv = m::mock(UploadedFile::class);

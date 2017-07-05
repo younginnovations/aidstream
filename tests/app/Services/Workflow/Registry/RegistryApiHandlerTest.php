@@ -11,6 +11,8 @@ use App\Services\Workflow\Registry\RegistryApiHandler;
  */
 class RegistryApiHandlerTest extends AidStreamTestCase
 {
+    protected $registryApiHandler;
+
     public function setUp()
     {
         parent::setup();

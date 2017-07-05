@@ -46,6 +46,9 @@ class PolicyMarkerManagerTest extends AidStreamTestCase
         );
     }
 
+    /**
+     * @test
+     */
     public function testItShouldUpdatePolicyMarker()
     {
         $organizationModel = m::mock(Organization::class);
@@ -84,6 +87,9 @@ class PolicyMarkerManagerTest extends AidStreamTestCase
         );
     }
 
+    /**
+     * @test
+     */
     public function testItShouldGetPolicyMarkerDataWithCertainId()
     {
         $this->policyMarkerRepository->shouldReceive('getPolicyMarkerData')

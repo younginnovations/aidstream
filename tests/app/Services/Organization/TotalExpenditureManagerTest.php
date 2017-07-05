@@ -41,6 +41,9 @@ class TotalExpenditureManagerTest extends AidStreamTestCase
         $this->totalExpenditureManager = new TotalExpenditureManager($this->version, $this->auth, $this->database, $this->dbLogger, $this->logger);
     }
 
+    /**
+     * @test
+     */
     public function testItShouldUpdateTotalExpenditureData()
     {
         $organizationModel = m::mock(Organization::class);
@@ -57,12 +60,18 @@ class TotalExpenditureManagerTest extends AidStreamTestCase
         $this->assertTrue($this->totalExpenditureManager->update([], $this->orgDataModel));
     }
 
+    /**
+     * @test
+     */
     public function testItShouldGetAllOrganizationDataWithCertainId()
     {
         $this->totalExpenditureRepo->shouldReceive('getOrganizationData')->with(1)->andReturn($this->orgDataModel);
         $this->assertInstanceOf('App\Models\Organization\OrganizationData', $this->totalExpenditureManager->getOrganizationData(1));
     }
 
+    /**
+     * @test
+     */
     public function testItShouldGetOrganizationTotalExpenditureDataWithCertainId()
     {
         $this->totalExpenditureRepo->shouldReceive('getOrganizationTotalExpenditureData')->with(1)->andReturn($this->orgDataModel);

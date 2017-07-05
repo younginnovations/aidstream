@@ -29,6 +29,9 @@ class DocumentManagerTest extends AidStreamTestCase
     protected $database;
     protected $document;
 
+    /**
+     * @test
+     */
     public function SetUp()
     {
         parent::setUp();
@@ -51,18 +54,27 @@ class DocumentManagerTest extends AidStreamTestCase
         );
     }
 
+    /**
+     * @test
+     */
     public function testItShouldReturnDocumentsOfTheOrganization()
     {
         $this->documentRepo->shouldReceive('getDocuments')->once()->with(1)->andReturn(m::mock(Collection::class));
         $this->assertInstanceOf('Illuminate\Support\Collection', $this->documentManager->getDocuments(1));
     }
 
+    /**
+     * @test
+     */
     public function testItShouldReturnSpecificDocument()
     {
         $this->documentRepo->shouldReceive('getDocument')->once()->with(1, 'url', 'filename')->andReturn($this->document);
         $this->assertInstanceOf('App\Models\Document', $this->documentManager->getDocument(1, 'url', 'filename'));
     }
 
+    /**
+     * @test
+     */
     public function testItShouldStoreDocument()
     {
         $user     = m::mock(User::class);

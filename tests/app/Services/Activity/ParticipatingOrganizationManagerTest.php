@@ -34,6 +34,9 @@ class ParticipatingOrganizationManagerTest extends AidStreamTestCase
         );
     }
 
+    /**
+     * @test
+     */
     public function testItShouldUpdateParticipatingOrganizationData()
     {
         $organizationModel = m::mock(Organization::class);
@@ -74,6 +77,9 @@ class ParticipatingOrganizationManagerTest extends AidStreamTestCase
         );
     }
 
+    /**
+     * @test
+     */
     public function testItShouldGetActivityParticipatingOrganizationDataWithCertainId()
     {
         $this->participatingOrgRepository->shouldReceive('getParticipatingOrganizationData')

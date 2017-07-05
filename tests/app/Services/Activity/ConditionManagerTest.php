@@ -47,6 +47,9 @@ class ConditionManagerTest extends AidStreamTestCase
      */
     protected $conditionManager;
 
+    /**
+     * @test
+     */
     public function setup()
     {
         parent::setup();
@@ -62,6 +65,9 @@ class ConditionManagerTest extends AidStreamTestCase
         $this->conditionManager = new ConditionManager($this->version, $this->dbLogger, $this->auth, $this->logger);
     }
 
+    /**
+     * @test
+     */
     public function testItShouldUpdateCondition()
     {
         $organizationModel = m::mock(Organization::class);
@@ -79,6 +85,9 @@ class ConditionManagerTest extends AidStreamTestCase
         $this->assertTrue($this->conditionManager->update(['condition' => 'condition'], $activityModel));
     }
 
+    /**
+     * @test
+     */
     public function testItShouldGetConditionDataWithCertainId()
     {
         $this->conditionRepository->shouldReceive('getConditionData')->with(1)->andReturn($this->activity);

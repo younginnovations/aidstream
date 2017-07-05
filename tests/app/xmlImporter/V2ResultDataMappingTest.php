@@ -276,4 +276,9 @@ class V2ResultDataMappingTest extends AidStreamTestCase
             ]
         ];
     }
+
+    public function tearDown()
+    {
+        parent::tearDown();
+    }
 }

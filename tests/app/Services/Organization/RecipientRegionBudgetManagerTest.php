@@ -41,6 +41,9 @@ class RecipientRegionBudgetManagerTest extends AidStreamTestCase
         $this->recipientRegionBudgetManager = new RecipientRegionBudgetManager($this->version, $this->auth, $this->database, $this->dbLogger, $this->logger);
     }
 
+    /**
+     * @test
+     */
     public function testItShouldUpdateRecipientRegionBudgetData()
     {
         $organizationModel = m::mock(Organization::class);
@@ -57,12 +60,18 @@ class RecipientRegionBudgetManagerTest extends AidStreamTestCase
         $this->assertTrue($this->recipientRegionBudgetManager->update([], $this->orgDataModel));
     }
 
+    /**
+     * @test
+     */
     public function testItShouldGetAllOrganizationDataWithCertainId()
     {
         $this->recipientRegionBudgetRepo->shouldReceive('getOrganizationData')->with(1)->andReturn($this->orgDataModel);
         $this->assertInstanceOf('App\Models\Organization\OrganizationData', $this->recipientRegionBudgetManager->getOrganizationData(1));
     }
 
+    /**
+     * @test
+     */
     public function testItShouldGetOrganizationRecipientRegionBudgetDataWithCertainId()
     {
         $this->recipientRegionBudgetRepo->shouldReceive('getRecipientRegionBudgetData')->with(1)->andReturn($this->orgDataModel);

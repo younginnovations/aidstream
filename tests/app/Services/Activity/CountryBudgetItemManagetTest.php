@@ -46,6 +46,9 @@ class CountryBudgetItemManagerTest extends AidStreamTestCase
         );
     }
 
+    /**
+     * @test
+     */
     public function testItShouldUpdateActivityCountryBudgetItem()
     {
         $orgModel = m::mock(Organization::class);
@@ -85,6 +88,9 @@ class CountryBudgetItemManagerTest extends AidStreamTestCase
         );
     }
 
+    /**
+     * @test
+     */
     public function testItShouldGetCountryBudgetItemDataWithCertainId()
     {
         $this->countryBudgetItemRepo->shouldReceive('getCountryBudgetItemData')->once()->with(1)->andReturn($this->activity);

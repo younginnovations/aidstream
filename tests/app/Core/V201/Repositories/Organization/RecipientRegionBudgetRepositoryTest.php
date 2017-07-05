@@ -17,6 +17,9 @@ class RecipientRegionBudgetRepositoryTest extends AidStreamTestCase
         $this->recipientRegionBudgetRepository = new RecipientRegionBudget($this->organizationData);
     }
 
+    /**
+     * @test
+     */
     public function testItShouldUpdateOrganizationRecipientRegionBudgetData()
     {
         $this->organizationData->shouldReceive('setAttribute')->once()->with('recipient_region_budget', 'a');
@@ -24,6 +27,9 @@ class RecipientRegionBudgetRepositoryTest extends AidStreamTestCase
         $this->assertTrue($this->recipientRegionBudgetRepository->update(['recipient_region_budget' => 'a'], $this->organizationData));
     }
 
+    /**
+     * @test
+     */
     public function testItShouldGetOrganizationDataWithSpecificId()
     {
         $this->organizationData->shouldReceive('where')->once()->with('organization_id', 1)->andReturnSelf();
@@ -31,6 +37,9 @@ class RecipientRegionBudgetRepositoryTest extends AidStreamTestCase
         $this->assertInstanceOf('App\Models\Organization\OrganizationData', $this->recipientRegionBudgetRepository->getOrganizationData(1));
     }
 
+    /**
+     * @test
+     */
     public function testItShouldReturnGetOrganizationRecipientRegionBudgetDataWithSpecificId()
     {
         $this->organizationData->shouldReceive('where')->once()->with('organization_id', 1)->andReturnSelf();

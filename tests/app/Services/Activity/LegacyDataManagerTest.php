@@ -39,6 +39,9 @@ class LegacyDataManagerTest extends AidStreamTestCase
         $this->legacyDataManager = new LegacyDataManager($this->version, $this->dbLogger, $this->auth, $this->logger);
     }
 
+    /**
+     * @test
+     */
     public function testItShouldUpdateLegacyData()
     {
         $organizationModel = m::mock(Organization::class);
@@ -56,6 +59,9 @@ class LegacyDataManagerTest extends AidStreamTestCase
         $this->assertTrue($this->legacyDataManager->update(['legacy_data' => 'legacyData'], $activityModel));
     }
 
+    /**
+     * @test
+     */
     public function testItShouldGetLegacyDataWithCertainId()
     {
         $this->legacyDataRepository->shouldReceive('getLegacyData')->with(1)->andReturn($this->activity);

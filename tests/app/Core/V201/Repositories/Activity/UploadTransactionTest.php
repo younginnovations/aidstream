@@ -85,4 +85,10 @@ class UploadTransactionTest extends AidStreamTestCase
 
         $this->assertTrue(is_array($this->uploadTransactionRepo->getTransactionReferences(1)));
     }
+
+    public function tearDown()
+    {
+        parent::tearDown();
+        m::close();
+    }
 }

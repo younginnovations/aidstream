@@ -42,4 +42,9 @@ class SimpleActivityTest extends AidStreamTestCase
         $this->assertEquals([true, true], $this->simpleActivity->save($csvData));
     }
 
+    public function tearDown()
+    {
+        parent::tearDown();
+        m::close();
+    }
 }
