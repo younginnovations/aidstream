@@ -1,5 +1,5 @@
 {
-  "date-last-modified": "2015-10-16T10:42:20.844773+00:00",
+  "date-last-modified": "2017-07-03T16:29:55.521060+00:00",
   "version": "",
   "name": "FinanceType",
   "xml:lang": "en",
@@ -7,10 +7,11 @@
     {
       "category": "100",
       "code": "110",
-      "name": "Aid grant excluding debt reorganisation",
+      "name": "Standard grant",
       "language": "en",
       "category-description": "Transfers in cash or in kind for which no legal debt is incurred by the recipient.",
-      "category-name": "GRANT"
+      "category-name": "GRANTS",
+      "description": "Grants are transfers in cash or in kind for which no legal debt is incurred by the recipient."
     },
     {
       "category": "100",
@@ -18,15 +19,16 @@
       "name": "Subsidies to national private investors",
       "language": "en",
       "category-description": "Transfers in cash or in kind for which no legal debt is incurred by the recipient.",
-      "category-name": "GRANT"
+      "category-name": "GRANTS"
     },
     {
-      "category": "200",
+      "category": "100",
       "code": "210",
-      "name": "Interest subsidy grant in AF",
+      "name": "Interest subsidy",
       "language": "en",
-      "category-description": "Subsidies to soften the terms of private export credits, or loans or credits by the banking sector.",
-      "category-name": "INTEREST SUBSIDY"
+      "category-description": "Transfers in cash or in kind for which no legal debt is incurred by the recipient.",
+      "category-name": "GRANTS",
+      "description": "A payment to soften the terms of private export credits, or loans or credits by the banking sector."
     },
     {
       "category": "200",
@@ -37,20 +39,21 @@
       "category-name": "INTEREST SUBSIDY"
     },
     {
-      "category": "300",
+      "category": "100",
       "code": "310",
-      "name": "Deposit basis",
+      "name": "Capital subscription on deposit basis",
       "language": "en",
-      "category-description": "Payments to multilateral agencies in the form of notes and similar instruments, unconditionally cashable at sight by the recipient institutions.",
-      "category-name": "CAPITAL SUBSCRIPTION"
+      "category-description": "Transfers in cash or in kind for which no legal debt is incurred by the recipient.",
+      "category-name": "GRANTS",
+      "description": "Payments to multilateral agencies in the form of notes and similar instruments, unconditionally encashable at sight by the recipient institutions."
     },
     {
-      "category": "300",
+      "category": "100",
       "code": "311",
-      "name": "Encashment basis",
+      "name": "Capital subscription on encashment basis",
       "language": "en",
-      "category-description": "Payments to multilateral agencies in the form of notes and similar instruments, unconditionally cashable at sight by the recipient institutions.",
-      "category-name": "CAPITAL SUBSCRIPTION"
+      "category-description": "Transfers in cash or in kind for which no legal debt is incurred by the recipient.",
+      "category-name": "GRANTS"
     },
     {
       "category": "400",
@@ -93,6 +96,69 @@
       "category-name": "LOAN"
     },
     {
+      "category": "420",
+      "code": "421",
+      "name": "Standard loan",
+      "language": "en",
+      "category-name": "DEBT INSTRUMENTS",
+      "description": "Transfers in cash or in kind for which the recipient incurs legal debt (and the resulting claim is not intended to be traded). Since payment obligations on standard loan are senior obligations, i.e. creditors are entitled to receive payments against their claims before anyone else, they are also referred to as senior loans."
+    },
+    {
+      "category": "420",
+      "code": "422",
+      "name": "Reimbursable grant",
+      "language": "en",
+      "category-name": "DEBT INSTRUMENTS",
+      "description": "A contribution provided to a recipient institution for investment purposes, with the expectation of long-term reflows at conditions specified in the financing agreement. The provider assumes the risk of total or partial failure of the investment; it can also decide if and when to reclaim its investment."
+    },
+    {
+      "category": "420",
+      "code": "423",
+      "name": "Bonds",
+      "language": "en",
+      "category-name": "DEBT INSTRUMENTS",
+      "description": "Fixed-interest debt instruments, issued by governments, public utilities, banks or companies, tradable in financial markets."
+    },
+    {
+      "category": "420",
+      "code": "424",
+      "name": "Asset-backed securities",
+      "language": "en",
+      "category-name": "DEBT INSTRUMENTS",
+      "description": "Securities whose value and income payments are derived from and backed by a specific pool of underlying assets."
+    },
+    {
+      "category": "420",
+      "category-name": "DEBT INSTRUMENTS",
+      "code": "425",
+      "name": "Other debt securities",
+      "language": "en"
+    },
+    {
+      "category": "430",
+      "code": "431",
+      "name": "Subordinated loan",
+      "language": "en",
+      "category-name": "MEZZANINE FINANCE INSTRUMENTS",
+      "description": "A loan that, in the event of default, will only be repaid after all senior obligations have been satisfied. In compensation for the increased risk, mezzanine debt holders require a higher return for their investment than secured or more senior lenders."
+    },
+    {
+      "category": "430",
+      "code": "432",
+      "name": "Preferred equity",
+      "language": "en",
+      "category-name": "MEZZANINE FINANCE INSTRUMENTS",
+      "description": "Equity that, in the event of default, will be repaid after all senior obligations and subordinated loans have been satisfied; and will be paid before common equity holders. It is a more expensive source of finance than senior debt, a less expensive source than equity."
+    },
+    {
+      "category": "430",
+      "code": "433",
+      "name": "Other hybrid instruments",
+      "language": "en",
+      "category-name": "MEZZANINE FINANCE INSTRUMENTS",
+      "description": "Including convertible debt or equity."
+    },
+    {
       "category": "450",
       "code": "451",
       "name": "Non-banks guaranteed export credits",
@@ -119,10 +185,11 @@
     {
       "category": "500",
       "code": "510",
-      "name": "Acquisition of equity as part of a joint venture with the recipient",
+      "name": "Common equity",
       "language": "en",
       "category-description": "Investment in a country on the DAC List of ODA Recipients that is not made to acquire a lasting interest in an enterprise.",
-      "category-name": "EQUITY"
+      "category-name": "EQUITY AND SHARES IN COLLECTIVE INVESTMENT VEHICLES",
+      "description": "A share in the ownership of a corporation that gives the owner claims on the residual value of the corporation after creditors\u2019 claims have been met."
     },
     {
       "category": "500",
@@ -130,20 +197,38 @@
       "name": "Acquisition of equity not part of joint venture in developing countries",
       "language": "en",
       "category-description": "Investment in a country on the DAC List of ODA Recipients that is not made to acquire a lasting interest in an enterprise.",
-      "category-name": "EQUITY"
+      "category-name": "EQUITY AND SHARES IN COLLECTIVE INVESTMENT VEHICLES"
     },
     {
       "category": "500",
       "code": "512",
-      "name": "Other acquisition of equity. Investment in a country on the DAC List of ODA Recipients that is not made to acquire a lasting interest in an enterprise.",
+      "name": "Other acquisition of equity",
       "language": "en",
       "category-description": "Investment in a country on the DAC List of ODA Recipients that is not made to acquire a lasting interest in an enterprise.",
-      "category-name": "EQUITY"
+      "category-name": "EQUITY AND SHARES IN COLLECTIVE INVESTMENT VEHICLES"
+    },
+    {
+      "category": "500",
+      "code": "520",
+      "name": "Shares in collective investment vehicles",
+      "language": "en",
+      "category-description": "Investment in a country on the DAC List of ODA Recipients that is not made to acquire a lasting interest in an enterprise.",
+      "category-name": "EQUITY AND SHARES IN COLLECTIVE INVESTMENT VEHICLES",
+      "description": "Collective undertakings through which investors pool funds for investment in financial or nonfinancial assets or both. These vehicles issue shares (if a corporate structure is used) or units (if a trust structure is used)."
+    },
+    {
+      "category": "500",
+      "code": "530",
+      "name": "Reinvested earnings",
+      "language": "en",
+      "category-description": "Investment in a country on the DAC List of ODA Recipients that is not made to acquire a lasting interest in an enterprise.",
+      "category-name": "EQUITY AND SHARES IN COLLECTIVE INVESTMENT VEHICLES",
+      "description": "This item is only applicable to Foreign Direct Investment (FDI). Reinvested earnings on FDI consist of the retained earnings of a direct foreign investment enterprise which are treated as if they were distributed and remitted to foreign direct investors in proportion to their ownership of the equity of the enterprise and then reinvested by them in the enterprise."
     },
     {
       "category": "600",
       "code": "610",
-      "name": "Debt forgiveness: ODA claims (P)",
+      "name": "Debt forgiveness/conversion: ODA claims (P)",
       "language": "en",
       "category-description": "Debt cancellations, debt conversions, debt rescheduling within or outside the framework of the Paris Club.",
       "category-name": "DEBT RELIEF"
@@ -151,7 +236,7 @@
     {
       "category": "600",
       "code": "611",
-      "name": "Debt forgiveness: ODA claims (I)",
+      "name": "Debt forgiveness/conversion: ODA claims (I)",
       "language": "en",
       "category-description": "Debt cancellations, debt conversions, debt rescheduling within or outside the framework of the Paris Club.",
       "category-name": "DEBT RELIEF"
@@ -159,7 +244,7 @@
     {
       "category": "600",
       "code": "612",
-      "name": "Debt forgiveness: OOF claims (P)",
+      "name": "Debt forgiveness/conversion: OOF claims (P)",
       "language": "en",
       "category-description": "Debt cancellations, debt conversions, debt rescheduling within or outside the framework of the Paris Club.",
       "category-name": "DEBT RELIEF"
@@ -167,7 +252,7 @@
     {
       "category": "600",
       "code": "613",
-      "name": "Debt forgiveness: OOF claims (I)",
+      "name": "Debt forgiveness/conversion: OOF claims (I)",
       "language": "en",
       "category-description": "Debt cancellations, debt conversions, debt rescheduling within or outside the framework of the Paris Club.",
       "category-name": "DEBT RELIEF"
@@ -175,7 +260,7 @@
     {
       "category": "600",
       "code": "614",
-      "name": "Debt forgiveness: Private claims (P)",
+      "name": "Debt forgiveness/conversion: Private claims (P)",
       "language": "en",
       "category-description": "Debt cancellations, debt conversions, debt rescheduling within or outside the framework of the Paris Club.",
       "category-name": "DEBT RELIEF"
@@ -183,7 +268,7 @@
     {
       "category": "600",
       "code": "615",
-      "name": "Debt forgiveness: Private claims (I)",
+      "name": "Debt forgiveness/conversion: Private claims (I)",
       "language": "en",
       "category-description": "Debt cancellations, debt conversions, debt rescheduling within or outside the framework of the Paris Club.",
       "category-name": "DEBT RELIEF"
@@ -279,7 +364,7 @@
     {
       "category": "600",
       "code": "630",
-      "name": "Debt rescheduling: OOF claim (DSR - original loan principal)",
+      "name": "Debt rescheduling: OOF claim (DSR \u2013 original loan principal)",
       "language": "en",
       "category-description": "Debt cancellations, debt conversions, debt rescheduling within or outside the framework of the Paris Club.",
       "category-name": "DEBT RELIEF"
@@ -287,7 +372,7 @@
     {
       "category": "600",
       "code": "631",
-      "name": "Debt rescheduling: OOF claim (DSR - original loan interest)",
+      "name": "Debt rescheduling: OOF claim (DSR \u2013 original loan interest)",
       "language": "en",
       "category-description": "Debt cancellations, debt conversions, debt rescheduling within or outside the framework of the Paris Club.",
       "category-name": "DEBT RELIEF"
@@ -295,7 +380,63 @@
     {
       "category": "600",
       "code": "632",
-      "name": "Debt rescheduling: Private claim (DSR - original loan principal)",
+      "name": "Debt rescheduling: Private claim (DSR \u2013 original loan principal)",
+      "language": "en",
+      "category-description": "Debt cancellations, debt conversions, debt rescheduling within or outside the framework of the Paris Club.",
+      "category-name": "DEBT RELIEF"
+    },
+    {
+      "category": "600",
+      "code": "633",
+      "name": "Debt forgiveness/conversion: export credit claims (P)",
+      "language": "en",
+      "category-description": "Debt cancellations, debt conversions, debt rescheduling within or outside the framework of the Paris Club.",
+      "category-name": "DEBT RELIEF"
+    },
+    {
+      "category": "600",
+      "code": "634",
+      "name": "Debt forgiveness/conversion: export credit claims (I)",
+      "language": "en",
+      "category-description": "Debt cancellations, debt conversions, debt rescheduling within or outside the framework of the Paris Club.",
+      "category-name": "DEBT RELIEF"
+    },
+    {
+      "category": "600",
+      "code": "635",
+      "name": "Debt forgiveness: export credit claims (DSR)",
+      "language": "en",
+      "category-description": "Debt cancellations, debt conversions, debt rescheduling within or outside the framework of the Paris Club.",
+      "category-name": "DEBT RELIEF"
+    },
+    {
+      "category": "600",
+      "code": "636",
+      "name": "Debt rescheduling: export credit claims (P)",
+      "language": "en",
+      "category-description": "Debt cancellations, debt conversions, debt rescheduling within or outside the framework of the Paris Club.",
+      "category-name": "DEBT RELIEF"
+    },
+    {
+      "category": "600",
+      "code": "637",
+      "name": "Debt rescheduling: export credit claims (I)",
+      "language": "en",
+      "category-description": "Debt cancellations, debt conversions, debt rescheduling within or outside the framework of the Paris Club.",
+      "category-name": "DEBT RELIEF"
+    },
+    {
+      "category": "600",
+      "code": "638",
+      "name": "Debt rescheduling: export credit claims (DSR)",
+      "language": "en",
+      "category-description": "Debt cancellations, debt conversions, debt rescheduling within or outside the framework of the Paris Club.",
+      "category-name": "DEBT RELIEF"
+    },
+    {
+      "category": "600",
+      "code": "639",
+      "name": "Debt rescheduling: export credit claim (DSR \u2013 original loan principal)",
       "language": "en",
       "category-description": "Debt cancellations, debt conversions, debt rescheduling within or outside the framework of the Paris Club.",
       "category-name": "DEBT RELIEF"
@@ -352,6 +493,14 @@
       "code": "912",
       "name": "Securities and other instruments issued by multilateral agencies",
       "language": "en"
+    },
+    {
+      "category": "1000",
+      "code": "1100",
+      "name": "Guarantees/insurance",
+      "language": "en",
+      "category-name": "GUARANTEES AND OTHER UNFUNDED CONTINGENT LIABILITIES",
+      "description": "A guarantee refers to a risk-sharing agreement under which the guarantor agrees to pay part or the entire amount due on a loan, equity or other instrument to the lender/investor in the event of non-payment by the borrower or loss of value in case of investment. Other unfunded contingent liabilities refer to other instruments that do not constitute a flow as such but may be also collected in future."
     }
   ]
 }

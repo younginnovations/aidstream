@@ -1,4 +1,4 @@
-var humanitarianScopeTypeOneVocabularyOptions = {'1-1': '1-1 - UN OCHA FTS', '1-2': '1-2 - Glide', '99': '99 - Reporting Organisation'};
+var humanitarianScopeTypeOneVocabularyOptions = {'1-2': '1-2 - Glide', '99': '99 - Reporting Organisation'};
 var humanitarianScopeTypeTwoVocabularyOptions = {'2-1': '2-1 - Humanitarian Plan', '99': '99 - Reporting Organisation'};
 
 var HumanitarianScopeVocabularyImprovisor = {
