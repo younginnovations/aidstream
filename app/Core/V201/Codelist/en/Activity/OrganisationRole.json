@@ -1,5 +1,5 @@
 {
-  "date-last-modified": "2015-08-26T16:08:18.546567+00:00",
+  "date-last-modified": "2017-07-03T16:29:56.553411+00:00",
   "version": "",
   "name": "OrganisationRole",
   "xml:lang": "en",
@@ -8,7 +8,7 @@
       "code": "1",
       "name": "Funding",
       "language": "en",
-      "description": "The government or organisation which provides funds to the activity."
+      "description": "The government or organisation which provides funds to the activity. "
     },
     {
       "code": "2",

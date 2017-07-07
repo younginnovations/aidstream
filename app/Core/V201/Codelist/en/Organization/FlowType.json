@@ -1,5 +1,5 @@
 {
-  "date-last-modified": "2016-02-29T16:53:17.223024+00:00",
+  "date-last-modified": "2017-07-03T16:29:57.009805+00:00",
   "version": "",
   "name": "FlowType",
   "xml:lang": "en",
@@ -17,6 +17,18 @@
       "description": "Other Official Flows"
     },
     {
+      "code": "21",
+      "name": "Non-export credit OOF",
+      "language": "en",
+      "description": "Other Official Flows, excl. export credits."
+    },
+    {
+      "code": "22",
+      "name": "Officially supported export credits",
+      "language": "en",
+      "description": "Officially supported export credits. Covers both official direct export credits and private export credits under official guarantee or insurance."
+    },
+    {
       "code": "30",
       "name": "Private grants",
       "language": "en",
@@ -24,9 +36,21 @@
     },
     {
       "code": "35",
-      "name": "Private Market",
+      "name": "Private market",
       "language": "en",
       "description": "Private market"
+    },
+    {
+      "code": "36",
+      "name": "Private Foreign Direct Investment",
+      "language": "en",
+      "description": "Private Foreign Direct Investment."
+    },
+    {
+      "code": "37",
+      "name": "Other Private flows at market terms",
+      "language": "en",
+      "description": "Private long-term (i.e. over one-year maturity) capital transactions made by residents of DAC countries."
     },
     {
       "code": "40",

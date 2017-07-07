@@ -1,5 +1,5 @@
 {
-  "date-last-modified": "2015-08-26T16:08:17.391367+00:00",
+  "date-last-modified": "2017-07-03T16:29:57.041989+00:00",
   "version": "",
   "name": "Country",
   "xml:lang": "en",
@@ -11,7 +11,7 @@
     },
     {
       "code": "AX",
-      "name": "ÅLAND ISLANDS",
+      "name": "\u00c5LAND ISLANDS",
       "language": "en"
     },
     {
@@ -276,7 +276,7 @@
     },
     {
       "code": "CI",
-      "name": "CÔTE D'IVOIRE",
+      "name": "C\u00d4TE D'IVOIRE",
       "language": "en"
     },
     {
@@ -291,7 +291,7 @@
     },
     {
       "code": "CW",
-      "name": "CURAÇAO",
+      "name": "CURA\u00c7AO",
       "language": "en"
     },
     {
@@ -936,7 +936,7 @@
     },
     {
       "code": "BL",
-      "name": "SAINT BARTHÉLEMY",
+      "name": "SAINT BARTH\u00c9LEMY",
       "language": "en"
     },
     {

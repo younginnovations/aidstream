@@ -1,5 +1,5 @@
 {
-  "date-last-modified": "2015-08-26T16:08:18.671762+00:00",
+  "date-last-modified": "2017-07-03T16:29:57.250203+00:00",
   "version": "",
   "name": "FileFormat",
   "xml:lang": "en",
@@ -14,7 +14,28 @@
     {
       "category": "application",
       "category-name": "",
+      "code": "application/3gpdash-qoe-report+xml",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
       "code": "application/3gpp-ims+xml",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/A2L",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/activemessage",
       "name": "",
       "language": "en"
     },
@@ -98,6 +119,13 @@
     {
       "category": "application",
       "category-name": "",
+      "code": "application/AML",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
       "code": "application/andrew-inset",
       "name": "",
       "language": "en"
@@ -106,6 +134,20 @@
       "category": "application",
       "category-name": "",
       "code": "application/applefile",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/ATF",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/ATFX",
       "name": "",
       "language": "en"
     },
@@ -141,6 +183,13 @@
       "category": "application",
       "category-name": "",
       "code": "application/atomsvc+xml",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/ATXML",
       "name": "",
       "language": "en"
     },
@@ -196,7 +245,7 @@
     {
       "category": "application",
       "category-name": "",
-      "code": "application/cals-1840",
+      "code": "application/CALS-1840",
       "name": "",
       "language": "en"
     },
@@ -218,6 +267,13 @@
       "category": "application",
       "category-name": "",
       "code": "application/ccxml+xml",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/CDFX+XML",
       "name": "",
       "language": "en"
     },
@@ -259,6 +315,20 @@
     {
       "category": "application",
       "category-name": "",
+      "code": "application/cdni",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/CEA",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
       "code": "application/cea-2018+xml",
       "name": "",
       "language": "en"
@@ -280,6 +350,13 @@
     {
       "category": "application",
       "category-name": "",
+      "code": "application/clue_info+xml",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
       "code": "application/cms",
       "name": "",
       "language": "en"
@@ -288,6 +365,20 @@
       "category": "application",
       "category-name": "",
       "code": "application/cnrp+xml",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/coap-group+json",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/coap-payload",
       "name": "",
       "language": "en"
     },
@@ -315,6 +406,27 @@
     {
       "category": "application",
       "category-name": "",
+      "code": "application/cose",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/cose-key",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/cose-key-set",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
       "code": "application/csrattrs",
       "name": "",
       "language": "en"
@@ -330,6 +442,13 @@
       "category": "application",
       "category-name": "",
       "code": "application/CSTAdata+xml",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/csvm+json",
       "name": "",
       "language": "en"
     },
@@ -371,6 +490,13 @@
     {
       "category": "application",
       "category-name": "",
+      "code": "application/DCD",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
       "code": "application/dec-dx",
       "name": "",
       "language": "en"
@@ -386,6 +512,34 @@
       "category": "application",
       "category-name": "",
       "code": "application/dicom",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/dicom+json",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/dicom+xml",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/DII",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/DIT",
       "name": "",
       "language": "en"
     },
@@ -455,6 +609,69 @@
     {
       "category": "application",
       "category-name": "",
+      "code": "application/efi",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/EmergencyCallData.Comment+xml",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/EmergencyCallData.Control+xml",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/EmergencyCallData.DeviceInfo+xml",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/EmergencyCallData.eCall.MSD",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/EmergencyCallData.ProviderInfo+xml",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/EmergencyCallData.ServiceInfo+xml",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/EmergencyCallData.SubscriberInfo+xml",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/EmergencyCallData.VEDS+xml",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
       "code": "application/emma+xml",
       "name": "",
       "language": "en"
@@ -477,6 +694,13 @@
       "category": "application",
       "category-name": "",
       "code": "application/epp+xml",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/epub+zip",
       "name": "",
       "language": "en"
     },
@@ -554,6 +778,27 @@
       "category": "application",
       "category-name": "",
       "code": "application/framework-attributes+xml",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/geo+json",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/geo+json-seq",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/gml+xml",
       "name": "",
       "language": "en"
     },
@@ -714,6 +959,20 @@
     {
       "category": "application",
       "category-name": "",
+      "code": "application/jose",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/jose+json",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
       "code": "application/jrd+json",
       "name": "",
       "language": "en"
@@ -735,6 +994,34 @@
     {
       "category": "application",
       "category-name": "",
+      "code": "application/json-seq",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/jwk+json",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/jwk-set+json",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/jwt",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
       "code": "application/kpml-request+xml",
       "name": "",
       "language": "en"
@@ -750,6 +1037,13 @@
       "category": "application",
       "category-name": "",
       "code": "application/ld+json",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/lgr+xml",
       "name": "",
       "language": "en"
     },
@@ -778,6 +1072,13 @@
       "category": "application",
       "category-name": "",
       "code": "application/lostsync+xml",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/LXF",
       "name": "",
       "language": "en"
     },
@@ -952,6 +1253,13 @@
     {
       "category": "application",
       "category-name": "",
+      "code": "application/merge-patch+json",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
       "code": "application/metalink4+xml",
       "name": "",
       "language": "en"
@@ -960,6 +1268,13 @@
       "category": "application",
       "category-name": "",
       "code": "application/mets+xml",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/MF4",
       "name": "",
       "language": "en"
     },
@@ -1078,7 +1393,28 @@
     {
       "category": "application",
       "category-name": "",
+      "code": "application/mud+json",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
       "code": "application/mxf",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/n-quads",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/n-triples",
       "name": "",
       "language": "en"
     },
@@ -1281,6 +1617,13 @@
     {
       "category": "application",
       "category-name": "",
+      "code": "application/pkcs12",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
       "code": "application/pkix-attr-cert",
       "name": "",
       "language": "en"
@@ -1331,6 +1674,27 @@
       "category": "application",
       "category-name": "",
       "code": "application/postscript",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/ppsp-tracker+json",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/problem+json",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/problem+xml",
       "name": "",
       "language": "en"
     },
@@ -1421,6 +1785,13 @@
     {
       "category": "application",
       "category-name": "",
+      "code": "application/rdap+json",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
       "code": "application/reginfo+xml",
       "name": "",
       "language": "en"
@@ -1463,6 +1834,13 @@
     {
       "category": "application",
       "category-name": "",
+      "code": "application/rfc+xml",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
       "code": "application/riscos",
       "name": "",
       "language": "en"
@@ -1492,6 +1870,13 @@
       "category": "application",
       "category-name": "",
       "code": "application/rpki-manifest",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/rpki-publication",
       "name": "",
       "language": "en"
     },
@@ -1548,6 +1933,20 @@
       "category": "application",
       "category-name": "",
       "code": "application/sbml+xml",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/scaip+xml",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/scim+json",
       "name": "",
       "language": "en"
     },
@@ -1897,6 +2296,13 @@
     {
       "category": "application",
       "category-name": "",
+      "code": "application/trig",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
       "code": "application/ttml+xml",
       "name": "",
       "language": "en"
@@ -1967,7 +2373,28 @@
     {
       "category": "application",
       "category-name": "",
+      "code": "application/vnd.1000minds.decision-model+xml",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/vnd.3gpp.access-transfer-events+xml",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
       "code": "application/vnd.3gpp.bsf+xml",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/vnd.3gpp.mid-call+xml",
       "name": "",
       "language": "en"
     },
@@ -1995,7 +2422,56 @@
     {
       "category": "application",
       "category-name": "",
+      "code": "application/vnd.3gpp-prose-pc3ch+xml",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/vnd.3gpp-prose+xml",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
       "code": "application/vnd.3gpp.sms",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/vnd.3gpp.sms+xml",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/vnd.3gpp.srvcc-ext+xml",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/vnd.3gpp.SRVCC-info+xml",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/vnd.3gpp.state-and-event-info+xml",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/vnd.3gpp.ussd+xml",
       "name": "",
       "language": "en"
     },
@@ -2017,6 +2493,13 @@
       "category": "application",
       "category-name": "",
       "code": "application/vnd.3gpp2.tcap",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/vnd.3lightssoftware.imagescal",
       "name": "",
       "language": "en"
     },
@@ -2135,6 +2618,13 @@
     {
       "category": "application",
       "category-name": "",
+      "code": "application/vnd.amazon.mobi8-ebook",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
       "code": "application/vnd.americandynamics.acc",
       "name": "",
       "language": "en"
@@ -2156,6 +2646,13 @@
     {
       "category": "application",
       "category-name": "",
+      "code": "application/vnd.anki",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
       "code": "application/vnd.anser-web-certificate-issue-initiation",
       "name": "",
       "language": "en"
@@ -2170,7 +2667,35 @@
     {
       "category": "application",
       "category-name": "",
+      "code": "application/vnd.apache.thrift.binary",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/vnd.apache.thrift.compact",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/vnd.apache.thrift.json",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
       "code": "application/vnd.api+json",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/vnd.apothekende.reservation+json",
       "name": "",
       "language": "en"
     },
@@ -2199,6 +2724,13 @@
       "category": "application",
       "category-name": "",
       "code": "application/vnd.aristanetworks.swi",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/vnd.artsquare",
       "name": "",
       "language": "en"
     },
@@ -2240,7 +2772,28 @@
     {
       "category": "application",
       "category-name": "",
+      "code": "application/vnd.balsamiq.bmpr",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
       "code": "application/vnd.bekitzur-stech+json",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/vnd.bint.med-content",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/vnd.biopax.rdf+xml",
       "name": "",
       "language": "en"
     },
@@ -2303,6 +2856,13 @@
     {
       "category": "application",
       "category-name": "",
+      "code": "application/vnd.capasystems-pg+json",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
       "code": "application/vnd.cendio.thinlinc.clientconf",
       "name": "",
       "language": "en"
@@ -2324,6 +2884,13 @@
     {
       "category": "application",
       "category-name": "",
+      "code": "application/vnd.chess-pgn",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
       "code": "application/vnd.chipnuts.karaoke-mmd",
       "name": "",
       "language": "en"
@@ -2339,6 +2906,13 @@
       "category": "application",
       "category-name": "",
       "code": "application/vnd.cirpack.isdn-ext",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/vnd.citationstyles.style+xml",
       "name": "",
       "language": "en"
     },
@@ -2380,6 +2954,13 @@
     {
       "category": "application",
       "category-name": "",
+      "code": "application/vnd.coffeescript",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
       "code": "application/vnd.collection.doc+json",
       "name": "",
       "language": "en"
@@ -2401,6 +2982,13 @@
     {
       "category": "application",
       "category-name": "",
+      "code": "application/vnd.comicbook+zip",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
       "code": "application/vnd.commerce-battelle",
       "name": "",
       "language": "en"
@@ -2409,6 +2997,13 @@
       "category": "application",
       "category-name": "",
       "code": "application/vnd.commonspace",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/vnd.coreos.ignition+json",
       "name": "",
       "language": "en"
     },
@@ -2541,6 +3136,13 @@
     {
       "category": "application",
       "category-name": "",
+      "code": "application/vnd.d2l.coursepackage1p0+zip",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
       "code": "application/vnd.dart",
       "name": "",
       "language": "en"
@@ -2549,6 +3151,27 @@
       "category": "application",
       "category-name": "",
       "code": "application/vnd.data-vision.rdz",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/vnd.datapackage+json",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/vnd.dataresource+json",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/vnd.debian.binary-package",
       "name": "",
       "language": "en"
     },
@@ -2639,6 +3262,13 @@
     {
       "category": "application",
       "category-name": "",
+      "code": "application/vnd.doremir.scorecloud-binary-document",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
       "code": "application/vnd.dpgraph",
       "name": "",
       "language": "en"
@@ -2647,6 +3277,13 @@
       "category": "application",
       "category-name": "",
       "code": "application/vnd.dreamfactory",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/vnd.drive+json",
       "name": "",
       "language": "en"
     },
@@ -2821,6 +3458,13 @@
     {
       "category": "application",
       "category-name": "",
+      "code": "application/vnd.dzr",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
       "code": "application/vnd.easykaraoke.cdgdownload",
       "name": "",
       "language": "en"
@@ -2877,6 +3521,20 @@
     {
       "category": "application",
       "category-name": "",
+      "code": "application/vnd.efi.img",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/vnd.efi.iso",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
       "code": "application/vnd.emclient.accessrequest+xml",
       "name": "",
       "language": "en"
@@ -2885,6 +3543,13 @@
       "category": "application",
       "category-name": "",
       "code": "application/vnd.enliven",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/vnd.enphase.envoy",
       "name": "",
       "language": "en"
     },
@@ -2934,6 +3599,13 @@
       "category": "application",
       "category-name": "",
       "code": "application/vnd.ericsson.quickcall",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/vnd.espass-espass+zip",
       "name": "",
       "language": "en"
     },
@@ -3101,6 +3773,13 @@
     {
       "category": "application",
       "category-name": "",
+      "code": "application/vnd.evolv.ecig.theme",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
       "code": "application/vnd.eudora.data",
       "name": "",
       "language": "en"
@@ -3123,6 +3802,13 @@
       "category": "application",
       "category-name": "",
       "code": "application/vnd.f-secure.mobile",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/vnd.fastcopy-disk-image",
       "name": "",
       "language": "en"
     },
@@ -3157,7 +3843,21 @@
     {
       "category": "application",
       "category-name": "",
+      "code": "application/vnd.filmit.zfc",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
       "code": "application/vnd.fints",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/vnd.firemonkeys.cloudcell",
       "name": "",
       "language": "en"
     },
@@ -3318,6 +4018,13 @@
     {
       "category": "application",
       "category-name": "",
+      "code": "application/vnd.geo+json",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
       "code": "application/vnd.geocube+xml",
       "name": "",
       "language": "en"
@@ -3367,6 +4074,13 @@
     {
       "category": "application",
       "category-name": "",
+      "code": "application/vnd.gerber",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
       "code": "application/vnd.globalplatform.card-content-mgt",
       "name": "",
       "language": "en"
@@ -3396,6 +4110,27 @@
       "category": "application",
       "category-name": "",
       "code": "application/vnd.google-earth.kmz",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/vnd.gov.sk.e-form+xml",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/vnd.gov.sk.e-form+zip",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/vnd.gov.sk.xmldatacontainer+xml",
       "name": "",
       "language": "en"
     },
@@ -3493,7 +4228,21 @@
     {
       "category": "application",
       "category-name": "",
+      "code": "application/vnd.hc+json",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
       "code": "application/vnd.hcl-bireports",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/vnd.hdt",
       "name": "",
       "language": "en"
     },
@@ -3570,6 +4319,20 @@
     {
       "category": "application",
       "category-name": "",
+      "code": "application/vnd.hyper-item+json",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/vnd.hyperdrive+json",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
       "code": "application/vnd.hzn-3d-crossword",
       "name": "",
       "language": "en"
@@ -3640,6 +4403,20 @@
     {
       "category": "application",
       "category-name": "",
+      "code": "application/vnd.imagemeter.folder+zip",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/vnd.imagemeter.image+zip",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
       "code": "application/vnd.immervision-ivp",
       "name": "",
       "language": "en"
@@ -3648,6 +4425,69 @@
       "category": "application",
       "category-name": "",
       "code": "application/vnd.immervision-ivu",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/vnd.ims.imsccv1p1",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/vnd.ims.imsccv1p2",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/vnd.ims.imsccv1p3",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/vnd.ims.lis.v2.result+json",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/vnd.ims.lti.v2.toolconsumerprofile+json",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/vnd.ims.lti.v2.toolproxy.id+json",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/vnd.ims.lti.v2.toolproxy+json",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/vnd.ims.lti.v2.toolsettings+json",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/vnd.ims.lti.v2.toolsettings.simple+json",
       "name": "",
       "language": "en"
     },
@@ -4004,6 +4844,13 @@
     {
       "category": "application",
       "category-name": "",
+      "code": "application/vnd.las.las+json",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
       "code": "application/vnd.las.las+xml",
       "name": "",
       "language": "en"
@@ -4088,6 +4935,20 @@
     {
       "category": "application",
       "category-name": "",
+      "code": "application/vnd.macports.portpkg",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/vnd.mapbox-vector-tile",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
       "code": "application/vnd.marlin.drm.actiontoken+xml",
       "name": "",
       "language": "en"
@@ -4117,6 +4978,13 @@
       "category": "application",
       "category-name": "",
       "code": "application/vnd.mason+json",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/vnd.maxmind.maxmind-db",
       "name": "",
       "language": "en"
     },
@@ -4165,6 +5033,13 @@
     {
       "category": "application",
       "category-name": "",
+      "code": "application/vnd.micro+json",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
       "code": "application/vnd.micrografx.flo",
       "name": "",
       "language": "en"
@@ -4173,6 +5048,27 @@
       "category": "application",
       "category-name": "",
       "code": "application/vnd.micrografx.igx",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/vnd.microsoft.portable-executable",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/vnd.microsoft.windows.thumbnail-cache",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/vnd.miele+json",
       "name": "",
       "language": "en"
     },
@@ -4347,7 +5243,7 @@
     {
       "category": "application",
       "category-name": "",
-      "code": "application/vnd.mseq",
+      "code": "application/vnd.ms-3mfdocument",
       "name": "",
       "language": "en"
     },
@@ -4480,6 +5376,20 @@
     {
       "category": "application",
       "category-name": "",
+      "code": "application/vnd.ms-PrintDeviceCapabilities+xml",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/vnd.ms-PrintSchemaTicket+xml",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
       "code": "application/vnd.ms-project",
       "name": "",
       "language": "en"
@@ -4494,7 +5404,28 @@
     {
       "category": "application",
       "category-name": "",
+      "code": "application/vnd.ms-windows.devicepairing",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/vnd.ms-windows.nwprinting.oob",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
       "code": "application/vnd.ms-windows.printerpairing",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/vnd.ms-windows.wsd.oob",
       "name": "",
       "language": "en"
     },
@@ -4564,6 +5495,20 @@
     {
       "category": "application",
       "category-name": "",
+      "code": "application/vnd.msa-disk-image",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/vnd.mseq",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
       "code": "application/vnd.msign",
       "name": "",
       "language": "en"
@@ -4621,6 +5566,13 @@
       "category": "application",
       "category-name": "",
       "code": "application/vnd.ncd.reference",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/vnd.nearst.inv+json",
       "name": "",
       "language": "en"
     },
@@ -4837,6 +5789,13 @@
     {
       "category": "application",
       "category-name": "",
+      "code": "application/vnd.ntt-local.ogw_remote-access",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
       "code": "application/vnd.ntt-local.sip-ta_remote",
       "name": "",
       "language": "en"
@@ -4971,6 +5930,13 @@
       "category": "application",
       "category-name": "",
       "code": "application/vnd.obn",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/vnd.ocf+cbor",
       "name": "",
       "language": "en"
     },
@@ -5229,6 +6195,20 @@
     {
       "category": "application",
       "category-name": "",
+      "code": "application/vnd.oma.lwm2m+json",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/vnd.oma.lwm2m+tlv",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
       "code": "application/vnd.oma.pal+xml",
       "name": "",
       "language": "en"
@@ -5341,7 +6321,70 @@
     {
       "category": "application",
       "category-name": "",
+      "code": "application/vnd.onepager",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/vnd.onepagertamp",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/vnd.onepagertamx",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/vnd.onepagertat",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/vnd.onepagertatp",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/vnd.onepagertatx",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/vnd.openblox.game-binary",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/vnd.openblox.game+xml",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
       "code": "application/vnd.openeye.oeb",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/vnd.openstreetmap.data+xml",
       "name": "",
       "language": "en"
     },
@@ -5705,7 +6748,7 @@
     {
       "category": "application",
       "category-name": "",
-      "code": "application/vnd.openxmlformats-officedocument.spreadsheetml.usernames+xml",
+      "code": "application/vnd.openxmlformats-officedocument.spreadsheetml.userNames+xml",
       "name": "",
       "language": "en"
     },
@@ -5866,6 +6909,13 @@
     {
       "category": "application",
       "category-name": "",
+      "code": "application/vnd.oracle.resource+json",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
       "code": "application/vnd.orange.indata",
       "name": "",
       "language": "en"
@@ -5915,7 +6965,28 @@
     {
       "category": "application",
       "category-name": "",
+      "code": "application/vnd.oxli.countgraph",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/vnd.pagerduty+json",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
       "code": "application/vnd.palm",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/vnd.panoply",
       "name": "",
       "language": "en"
     },
@@ -6090,6 +7161,13 @@
     {
       "category": "application",
       "category-name": "",
+      "code": "application/vnd.quarantainenet",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
       "code": "application/vnd.Quark.QuarkXPress",
       "name": "",
       "language": "en"
@@ -6217,6 +7295,13 @@
       "category": "application",
       "category-name": "",
       "code": "application/vnd.rapid",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/vnd.rar",
       "name": "",
       "language": "en"
     },
@@ -6447,6 +7532,13 @@
     {
       "category": "application",
       "category-name": "",
+      "code": "application/vnd.sigrok.session",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
       "code": "application/vnd.SimTech-MindMapper",
       "name": "",
       "language": "en"
@@ -6650,6 +7742,13 @@
     {
       "category": "application",
       "category-name": "",
+      "code": "application/vnd.tableschema+json",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
       "code": "application/vnd.tao.intent-module-archive",
       "name": "",
       "language": "en"
@@ -6664,7 +7763,28 @@
     {
       "category": "application",
       "category-name": "",
+      "code": "application/vnd.tml",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/vnd.tmd.mediaflex.api+xml",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
       "code": "application/vnd.tmobile-livetv",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/vnd.tri.onesource",
       "name": "",
       "language": "en"
     },
@@ -6825,7 +7945,21 @@
     {
       "category": "application",
       "category-name": "",
+      "code": "application/vnd.uri-map",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
       "code": "application/vnd.uplanet.signal",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/vnd.valve.source.material",
       "name": "",
       "language": "en"
     },
@@ -6847,6 +7981,13 @@
       "category": "application",
       "category-name": "",
       "code": "application/vnd.vectorworks",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/vnd.vel+json",
       "name": "",
       "language": "en"
     },
@@ -7182,6 +8323,13 @@
     {
       "category": "application",
       "category-name": "",
+      "code": "application/vnd.yaoweme",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
       "code": "application/vnd.yellowriver-custom-menu",
       "name": "",
       "language": "en"
@@ -7267,6 +8415,13 @@
       "category": "application",
       "category-name": "",
       "code": "application/wspolicy+xml",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/x-www-form-urlencoded",
       "name": "",
       "language": "en"
     },
@@ -7385,6 +8540,13 @@
     {
       "category": "application",
       "category-name": "",
+      "code": "application/xml-patch+xml",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
       "code": "application/xmpp+xml",
       "name": "",
       "language": "en"
@@ -7414,6 +8576,34 @@
       "category": "application",
       "category-name": "",
       "code": "application/yang",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/yang-data+json",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/yang-data+xml",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/yang-patch+json",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "application",
+      "category-name": "",
+      "code": "application/yang-patch+xml",
       "name": "",
       "language": "en"
     },
@@ -7484,6 +8674,20 @@
       "category": "audio",
       "category-name": "",
       "code": "audio/AMR-WB",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "audio",
+      "category-name": "",
+      "code": "audio/amr-wb+",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "audio",
+      "category-name": "",
+      "code": "audio/aptx",
       "name": "",
       "language": "en"
     },
@@ -7714,6 +8918,13 @@
     {
       "category": "audio",
       "category-name": "",
+      "code": "audio/EVS",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "audio",
+      "category-name": "",
       "code": "audio/example",
       "name": "",
       "language": "en"
@@ -7728,6 +8939,13 @@
     {
       "category": "audio",
       "category-name": "",
+      "code": "audio/G711-0",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "audio",
+      "category-name": "",
       "code": "audio/G719",
       "name": "",
       "language": "en"
@@ -7735,14 +8953,14 @@
     {
       "category": "audio",
       "category-name": "",
-      "code": "audio/G722",
+      "code": "audio/G7221",
       "name": "",
       "language": "en"
     },
     {
       "category": "audio",
       "category-name": "",
-      "code": "audio/G7221",
+      "code": "audio/G722",
       "name": "",
       "language": "en"
     },
@@ -7889,6 +9107,34 @@
     {
       "category": "audio",
       "category-name": "",
+      "code": "audio/MELP",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "audio",
+      "category-name": "",
+      "code": "audio/MELP600",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "audio",
+      "category-name": "",
+      "code": "audio/MELP1200",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "audio",
+      "category-name": "",
+      "code": "audio/MELP2400",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "audio",
+      "category-name": "",
       "code": "audio/mobile-xmf",
       "name": "",
       "language": "en"
@@ -7939,6 +9185,13 @@
       "category": "audio",
       "category-name": "",
       "code": "audio/ogg",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "audio",
+      "category-name": "",
+      "code": "audio/opus",
       "name": "",
       "language": "en"
     },
@@ -8405,9 +9658,72 @@
       "language": "en"
     },
     {
+      "category": "font",
+      "category-name": "",
+      "code": "font/collection",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "font",
+      "category-name": "",
+      "code": "font/otf",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "font",
+      "category-name": "",
+      "code": "font/sfnt",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "font",
+      "category-name": "",
+      "code": "font/ttf",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "font",
+      "category-name": "",
+      "code": "font/woff",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "font",
+      "category-name": "",
+      "code": "font/woff2",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "image",
+      "category-name": "",
+      "code": "image/bmp",
+      "name": "",
+      "language": "en"
+    },
+    {
       "category": "image",
       "category-name": "",
       "code": "image/cgm",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "image",
+      "category-name": "",
+      "code": "image/dicom-rle",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "image",
+      "category-name": "",
+      "code": "image/emf",
       "name": "",
       "language": "en"
     },
@@ -8443,6 +9759,13 @@
       "category": "image",
       "category-name": "",
       "code": "image/ief",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "image",
+      "category-name": "",
+      "code": "image/jls",
       "name": "",
       "language": "en"
     },
@@ -8666,6 +9989,13 @@
     {
       "category": "image",
       "category-name": "",
+      "code": "image/vnd.mozilla.apng",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "image",
+      "category-name": "",
       "code": "image/vnd.net-fpx",
       "name": "",
       "language": "en"
@@ -8708,6 +10038,13 @@
     {
       "category": "image",
       "category-name": "",
+      "code": "image/vnd.tencent.tap",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "image",
+      "category-name": "",
       "code": "image/vnd.valve.source.texture",
       "name": "",
       "language": "en"
@@ -8723,6 +10060,34 @@
       "category": "image",
       "category-name": "",
       "code": "image/vnd.xiff",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "image",
+      "category-name": "",
+      "code": "image/vnd.zbrush.pcx",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "image",
+      "category-name": "",
+      "code": "image/wmf",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "image",
+      "category-name": "",
+      "code": "image/x-emf",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "image",
+      "category-name": "",
+      "code": "image/x-wmf",
       "name": "",
       "language": "en"
     },
@@ -8876,7 +10241,21 @@
     {
       "category": "model",
       "category-name": "",
+      "code": "model/3mf",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "model",
+      "category-name": "",
       "code": "model/example",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "model",
+      "category-name": "",
+      "code": "model/gltf+json",
       "name": "",
       "language": "en"
     },
@@ -8953,6 +10332,13 @@
     {
       "category": "model",
       "category-name": "",
+      "code": "model/vnd.opengex",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "model",
+      "category-name": "",
       "code": "model/vnd.parasolid.transmit.binary",
       "name": "",
       "language": "en"
@@ -8961,6 +10347,20 @@
       "category": "model",
       "category-name": "",
       "code": "model/vnd.parasolid.transmit.text",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "model",
+      "category-name": "",
+      "code": "model/vnd.rosette.annotated-data-model",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "model",
+      "category-name": "",
+      "code": "model/vnd.valve.source.compiled-map",
       "name": "",
       "language": "en"
     },
@@ -9093,7 +10493,21 @@
     {
       "category": "multipart",
       "category-name": "",
+      "code": "multipart/vnd.bint.med-plus",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "multipart",
+      "category-name": "",
       "code": "multipart/voice-message",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "multipart",
+      "category-name": "",
+      "code": "multipart/x-mixed-replace",
       "name": "",
       "language": "en"
     },
@@ -9101,6 +10515,13 @@
       "category": "text",
       "category-name": "",
       "code": "text/1d-interleaved-parityfec",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "text",
+      "category-name": "",
+      "code": "text/cache-manifest",
       "name": "",
       "language": "en"
     },
@@ -9122,6 +10543,13 @@
       "category": "text",
       "category-name": "",
       "code": "text/csv",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "text",
+      "category-name": "",
+      "code": "text/csv-schema",
       "name": "",
       "language": "en"
     },
@@ -9205,6 +10633,13 @@
     {
       "category": "text",
       "category-name": "",
+      "code": "text/markdown",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "text",
+      "category-name": "",
       "code": "text/mizar",
       "name": "",
       "language": "en"
@@ -9255,6 +10690,13 @@
       "category": "text",
       "category-name": "",
       "code": "text/prs.lines.tag",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "text",
+      "category-name": "",
+      "code": "text/prs.prop.logic",
       "name": "",
       "language": "en"
     },
@@ -9324,6 +10766,13 @@
     {
       "category": "text",
       "category-name": "",
+      "code": "text/strings",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "text",
+      "category-name": "",
       "code": "text/t140",
       "name": "",
       "language": "en"
@@ -9381,6 +10830,13 @@
       "category": "text",
       "category-name": "",
       "code": "text/vnd.abc",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "text",
+      "category-name": "",
+      "code": "text/vnd.ascii-art",
       "name": "",
       "language": "en"
     },
@@ -9688,6 +11144,13 @@
     {
       "category": "video",
       "category-name": "",
+      "code": "video/H265",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "video",
+      "category-name": "",
       "code": "video/iso.segment",
       "name": "",
       "language": "en"
@@ -9709,7 +11172,7 @@
     {
       "category": "video",
       "category-name": "",
-      "code": "video/MJ2",
+      "code": "video/mj2",
       "name": "",
       "language": "en"
     },
@@ -10095,6 +11558,13 @@
       "category": "video",
       "category-name": "",
       "code": "video/vnd.vivo",
+      "name": "",
+      "language": "en"
+    },
+    {
+      "category": "video",
+      "category-name": "",
+      "code": "video/VP8",
       "name": "",
       "language": "en"
     }

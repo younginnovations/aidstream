@@ -1,5 +1,5 @@
 {
-  "date-last-modified": "2015-08-26T16:08:18.488848+00:00",
+  "date-last-modified": "2017-07-03T16:29:56.967764+00:00",
   "version": "",
   "name": "Currency",
   "xml:lang": "en",
@@ -511,7 +511,7 @@
     },
     {
       "code": "MXV",
-      "name": "Mexican Unidad de In version (UDI)",
+      "name": "Mexican Unidad de Inversion (UDI)",
       "language": "en"
     },
     {
