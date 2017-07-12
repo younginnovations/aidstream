@@ -64,21 +64,28 @@ class ImportActivity extends Job implements ShouldQueue
      */
     public function handle()
     {
-        $this->csvProcessor->handle($this->organizationId, $this->userId, $this->activityIdentifiers);
-        $directoryPath = storage_path(sprintf('%s/%s/%s', 'csvImporter/tmp/', $this->organizationId, $this->userId));
-        shell_exec(sprintf('chmod 777 -R %s', $directoryPath));
+        try {
+            $path = storage_path(sprintf('%s/%s/%s/%s', 'csvImporter/tmp/', $this->organizationId, $this->userId, 'status.json'));
 
-        $path = storage_path(sprintf('%s/%s/%s/%s', 'csvImporter/tmp/', $this->organizationId, $this->userId, 'status.json'));
+            $this->csvProcessor->handle($this->organizationId, $this->userId, $this->activityIdentifiers);
+            $directoryPath = storage_path(sprintf('%s/%s/%s', 'csvImporter/tmp/', $this->organizationId, $this->userId));
+            shell_exec(sprintf('chmod 777 -R %s', $directoryPath));
 
-        file_put_contents($path, json_encode(['status' => 'Complete']));
+            file_put_contents($path, json_encode(['status' => 'Complete']));
 
-        $uploadedFilepath = $this->getStoredCsvFilePath($this->filename);
+            $uploadedFilepath = $this->getStoredCsvFilePath($this->filename);
 
-        if (file_exists($uploadedFilepath)) {
-            unlink($uploadedFilepath);
+            if (file_exists($uploadedFilepath)) {
+                unlink($uploadedFilepath);
+            }
+
+            $this->delete();
+        } catch (\Exception $exception) {
+            file_put_contents($path, json_encode(['status' => 'Complete']));
+
+            $this->delete();
         }
 
-        $this->delete();
     }
 
     /**

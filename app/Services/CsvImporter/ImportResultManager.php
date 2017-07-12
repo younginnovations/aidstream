@@ -131,11 +131,7 @@ class ImportResultManager
         try {
             $file = new File($this->getStoredCsvPath($filename));
 
-            if ($this->processor->pushIntoQueue($file, $filename)) {
-                return true;
-            }
-
-            return false;
+            $this->processor->pushIntoQueue($file, $filename);
         } catch (Exception $exception) {
             $this->logger->error(
                 $exception->getMessage(),

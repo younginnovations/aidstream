@@ -58,19 +58,25 @@ class ImportResult extends Job implements ShouldQueue
      */
     public function handle()
     {
-        $this->csvResultProcessor->handle($this->organizationId, $this->userId);
+        try {
+            $path = storage_path(sprintf('%s/%s/%s/%s', 'csvImporter/tmp/result/', $this->organizationId, $this->userId, 'status.json'));
+            $this->csvResultProcessor->handle($this->organizationId, $this->userId);
 
-        $path = storage_path(sprintf('%s/%s/%s/%s', 'csvImporter/tmp/result/', $this->organizationId, $this->userId, 'status.json'));
-        file_put_contents($path, json_encode(['status' => 'Complete']));
+            file_put_contents($path, json_encode(['status' => 'Complete']));
 
-        $this->fixStagingPermission($path);
-        $uploadedFilepath = $this->getStoredCsvFilePath($this->filename);
+            $this->fixStagingPermission($path);
+            $uploadedFilepath = $this->getStoredCsvFilePath($this->filename);
 
-        if (file_exists($uploadedFilepath)) {
-            unlink($uploadedFilepath);
+            if (file_exists($uploadedFilepath)) {
+                unlink($uploadedFilepath);
+            }
+
+            $this->delete();
+        } catch (\Exception $exception) {
+            file_put_contents($path, json_encode(['status' => 'Complete']));
+
+            $this->delete();
         }
-
-        $this->delete();
     }
 
     /**
