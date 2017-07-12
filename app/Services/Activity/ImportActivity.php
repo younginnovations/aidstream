@@ -122,7 +122,6 @@ class ImportActivity
 
             return true;
         } catch (Exception $exception) {
-            dd($exception->getMessage(), $exception->getTraceAsString());
             $this->databaseManager->rollback();
             $this->logger->error($exception, ['activities' => $activities]);
         }

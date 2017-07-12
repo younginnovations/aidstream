@@ -339,7 +339,7 @@ class TransactionRow
         $rules = [
             'transaction'                                                  => 'check_recipient_region_country',
             'transaction.humanitarian'                                     => 'in:1,0',
-            'transaction.transaction_type.*.transaction_type_code'         => sprintf('required|in:%s', $this->validCodeList('TransactionType', 'V201')),
+            'transaction.transaction_type.*.transaction_type_code'         => sprintf('required|in:%s', $this->validCodeList('TransactionType', $this->version)),
             'transaction.transaction_date.*.date'                          => 'required|date_format:Y-m-d',
             'transaction.value.*.amount'                                   => 'required|numeric|min:0',
             'transaction.value.*.date'                                     => 'required|date_format:Y-m-d',

@@ -62,32 +62,37 @@ class TransactionCsvProcessor
      * @param $activityId
      * @param $userId
      * @param $version
+     * @throws \Exception
      */
     public function handle($orgId, $activityId, $userId, $version)
     {
-        $this->filterHeader();
+        try {
+            $this->filterHeader();
 
-        $this->initTransaction(
-            [
-                'organization_id' => $orgId,
-                'activity_id'     => $activityId,
-                'user_id'         => $userId,
-                'version'         => $version
-            ]
-        );
+            $this->initTransaction(
+                [
+                    'organization_id' => $orgId,
+                    'activity_id'     => $activityId,
+                    'user_id'         => $userId,
+                    'version'         => $version
+                ]
+            );
 
-
-        if ($this->isCorrectCsv()) {
-            $this->transaction->process();
-        } else {
             $dataWriter = $this->transaction->dataWriterClass();
 
-            if (!$this->csv) {
-                $dataWriter->storeStatus('no_data_available');
+            if ($this->isCorrectCsv()) {
+                $this->transaction->process();
             } else {
-                $dataWriter->storeStatus('header_mismatch');
-            }
+                if (!$this->csv) {
+                    $dataWriter->storeStatus('no_data_available');
+                } else {
+                    $dataWriter->storeStatus('header_mismatch');
+                }
 
+            }
+        } catch (\Exception $exception) {
+            $dataWriter->storeStatus('complete');
+            throw  $exception;
         }
     }
 
@@ -150,7 +155,7 @@ class TransactionCsvProcessor
      *
      * @param array $options
      */
-    protected function initTransaction(array  $options = [])
+    protected function initTransaction(array $options = [])
     {
         if (class_exists(Transaction::class)) {
             $this->transaction = app()->make(
