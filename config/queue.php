@@ -86,7 +86,7 @@ return [
 	*/
 
 	'failed' => [
-		'database' => 'pgsql', 'table' => 'jobs',
+		'database' => 'pgsql', 'table' => 'failed_jobs',
 	],
 
 ];
