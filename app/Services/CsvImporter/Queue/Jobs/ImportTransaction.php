@@ -67,9 +67,13 @@ class ImportTransaction extends Job
      */
     public function handle()
     {
-        $this->csvProcessor->handle($this->orgId, $this->activityId, $this->userId, $this->version);
+        try {
+            $this->csvProcessor->handle($this->orgId, $this->activityId, $this->userId, $this->version);
 
-        $this->delete();
+            $this->delete();
+        } catch (\Exception $exception) {
+            $this->delete();
+        }
     }
 }
 
