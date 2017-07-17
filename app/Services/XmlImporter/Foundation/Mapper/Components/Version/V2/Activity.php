@@ -331,7 +331,7 @@ class Activity
     public function activityDate($element, $template)
     {
         $this->activityDate[$this->index]              = $template['activity_date'];
-        $this->activityDate[$this->index]['date']      = $this->attributes($element, 'iso-date');
+        $this->activityDate[$this->index]['date']      = dateFormat('Y-m-d', $this->attributes($element, 'iso-date'));
         $this->activityDate[$this->index]['type']      = $this->attributes($element, 'type');
         $this->activityDate[$this->index]['narrative'] = $this->narrative($element);
         $this->index ++;
@@ -442,11 +442,11 @@ class Activity
         $this->budget[$this->index]                            = $template['budget'];
         $this->budget[$this->index]['budget_type']             = $this->attributes($element, 'type');
         $this->budget[$this->index]['status']                  = $this->attributes($element, 'status');
-        $this->budget[$this->index]['period_start'][0]['date'] = $this->attributes($element, 'iso-date', 'periodStart');
-        $this->budget[$this->index]['period_end'][0]['date']   = $this->attributes($element, 'iso-date', 'periodEnd');
+        $this->budget[$this->index]['period_start'][0]['date'] = dateFormat('Y-m-d', $this->attributes($element, 'iso-date', 'periodStart'));
+        $this->budget[$this->index]['period_end'][0]['date']   = dateFormat('Y-m-d', $this->attributes($element, 'iso-date', 'periodEnd'));
         $this->budget[$this->index]['value'][0]['amount']      = $this->value(getVal($element, ['value'], []), 'value');
         $this->budget[$this->index]['value'][0]['currency']    = $this->attributes($element, 'currency', 'value');
-        $this->budget[$this->index]['value'][0]['value_date']  = $this->attributes($element, 'value-date', 'value');
+        $this->budget[$this->index]['value'][0]['value_date']  = dateFormat('Y-m-d', $this->attributes($element, 'value-date', 'value'));
         $this->index ++;
 
         return $this->budget;
@@ -529,11 +529,11 @@ class Activity
     {
         $this->plannedDisbursement[$this->index]                                   = $template['planned_disbursement'];
         $this->plannedDisbursement[$this->index]['planned_disbursement_type']      = $this->attributes($element, 'type');
-        $this->plannedDisbursement[$this->index]['period_start'][0]['date']        = $this->attributes($element, 'iso-date', 'periodStart');
-        $this->plannedDisbursement[$this->index]['period_end'][0]['date']          = $this->attributes($element, 'iso-date', 'periodEnd');
+        $this->plannedDisbursement[$this->index]['period_start'][0]['date']        = dateFormat('Y-m-d', $this->attributes($element, 'iso-date', 'periodStart'));
+        $this->plannedDisbursement[$this->index]['period_end'][0]['date']          = dateFormat('Y-m-d', $this->attributes($element, 'iso-date', 'periodEnd'));
         $this->plannedDisbursement[$this->index]['value'][0]['amount']             = $this->value(getVal($element, ['value'], []), 'value');
         $this->plannedDisbursement[$this->index]['value'][0]['currency']           = $this->attributes($element, 'currency', 'value');
-        $this->plannedDisbursement[$this->index]['value'][0]['value_date']         = $this->attributes($element, 'value-date', 'value');
+        $this->plannedDisbursement[$this->index]['value'][0]['value_date']         = dateFormat('Y-m-d', $this->attributes($element, 'value-date', 'value'));
         $this->plannedDisbursement[$this->index]['provider_org'][0]['ref']         = $this->attributes($element, 'ref', 'providerOrg');
         $this->plannedDisbursement[$this->index]['provider_org'][0]['activity_id'] = $this->attributes($element, 'provider-activity-id', 'providerOrg');
         $this->plannedDisbursement[$this->index]['provider_org'][0]['type']        = $this->attributes($element, 'type', 'providerOrg');
@@ -591,7 +591,7 @@ class Activity
         foreach ($this->filterAttributes($element['value'], 'language', ['code']) as $index => $language) {
             $this->documentLink[$this->index]['language'][$index]['language'] = $language['code'];
         }
-        $this->documentLink[$this->index]['document_date'][0]['date'] = $this->attributes($element, 'iso-date', 'documentDate');
+        $this->documentLink[$this->index]['document_date'][0]['date'] = dateFormat('Y-m-d', $this->attributes($element, 'iso-date', 'documentDate'));
         $this->index ++;
 
         return $this->documentLink;
