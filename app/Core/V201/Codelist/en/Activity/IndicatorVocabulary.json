@@ -1,53 +1,48 @@
 {
-  "attributes": {
-    "category-codelist": null,
-    "name": "IndicatorVocabulary",
-    "complete": "0"
-  },
-  "data": [
+  "date-last-modified": "2017-07-03T16:29:56.949303+00:00",
+  "version": "",
+  "name": "IndicatorVocabulary",
+  "xml:lang": "en",
+  "IndicatorVocabulary": [
     {
-      "url": "http://apps.who.int/gho/indicatorregistry/App_Main/indicator_registry.aspx",
       "code": "1",
-      "name": "WHO Registry"
+      "name": "WHO Registry",
+      "language": "en"
     },
     {
-      "url": "http://www.spherehandbook.org",
       "code": "2",
-      "name": "Sphere Handbook"
+      "name": "Sphere Handbook",
+      "language": "en"
     },
     {
-      "url": "http://www.state.gov/s/d/rm/rls/dosstrat/2007/html/82981.htm",
       "code": "3",
-      "name": "US Foreign Assistance Framework"
+      "name": "US Foreign Assistance Framework",
+      "language": "en"
     },
     {
-      "url": "http://data.worldbank.org/data-catalog/world-development-indicators",
       "code": "4",
-      "name": "World Bank World Development Indicators"
+      "name": "World Bank World Development Indicators",
+      "language": "en"
     },
     {
-      "url": "http://mdgs.un.org/unsd/mdg/Host.aspx?Content=Indicators/OfficialList.htm",
       "code": "5",
-      "name": "UN Millennium Development Goals Indicators"
+      "name": "UN Millennium Development Goals Indicators",
+      "language": "en"
     },
     {
-      "url": "https://www.humanitarianresponse.info/applications/ir/indicators",
       "code": "6",
-      "name": "UNOCHA Humanitarian Response Indicators"
+      "name": "UNOCHA Humanitarian Response Indicators",
+      "language": "en"
     },
     {
-      "url": "http://www.indicatorregistry.org",
       "code": "7",
-      "name": "HIV/AIDS Indicator Registry"
+      "name": "HIV/AIDS Indicator Registry",
+      "language": "en"
     },
     {
       "code": "99",
-      "name": "Reporting Organisation"
+      "name": "Reporting Organisation",
+      "language": "en"
     }
-  ],
-  "metadata": {
-    "url": null,
-    "name": "Indicator Vocabulary",
-    "description": "\n                The Indicator Vocabulary codelist defines a range of external codelists which themselves provide codes and descriptions for indicators, for example to specify results.\n            "
-  }
+  ]
 }

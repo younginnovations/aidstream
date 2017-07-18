@@ -1,5 +1,5 @@
 {
-  "date-last-modified": "2015-10-16T10:42:20.384471+00:00",
+  "date-last-modified": "2017-07-03T16:29:56.841179+00:00",
   "version": "",
   "name": "ResultType",
   "xml:lang": "en",
@@ -8,13 +8,13 @@
       "code": "1",
       "name": "Output",
       "language": "en",
-      "description": "Results of the activity that came about as a direct effect of your work and specific, what is done, and what communities are reached. For example, X number of individuals "
+      "description": "Results of the activity that came about as a direct effect of your work and specific, what is done, and what communities are reached. For example, X number of individuals."
     },
     {
       "code": "2",
       "name": "Outcome",
       "language": "en",
-      "description": "Results of the activity that produce an effect on the overall communities or issues you serve. For example lower rate of infection after a vaccination procgramme"
+      "description": "Results of the activity that produce an effect on the overall communities or issues you serve. For example lower rate of infection after a vaccination programme."
     },
     {
       "code": "3",
