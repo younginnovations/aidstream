@@ -1,18 +1,14 @@
 <?php namespace App\Http\Controllers\Complete\Organization;
 
-use App\Http\Requests;
 use App\Http\Controllers\Controller;
-
-use App\Services\Organization\OrganizationManager;
 use App\Http\Requests\Request;
+use App\Services\FormCreator\Organization\DocumentLinkForm as FormBuilder;
 use App\Services\Organization\DocumentLinkManager;
+use App\Services\Organization\OrganizationManager;
+use App\Services\RequestManager\Organization\DocumentLinkRequestManager;
 use Illuminate\Support\Facades\Gate;
 use Session;
 use URL;
-use Illuminate\Support\Facades\Input;
-use Illuminate\Support\Facades\Redirect;
-use App\Services\RequestManager\Organization\DocumentLinkRequestManager;
-use App\Services\FormCreator\Organization\DocumentLinkForm as FormBuilder;
 
 
 class DocumentLinkController extends Controller
@@ -40,7 +36,7 @@ class DocumentLinkController extends Controller
      */
     public function index($orgId)
     {
-        $organization = $this->organizationManager->getOrganization($orgId);
+        $organization = $this->organizationManager->findOrganizationData($orgId);
 
         if (Gate::denies('belongsToOrganization', $organization)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
@@ -61,16 +57,15 @@ class DocumentLinkController extends Controller
      */
     public function update($orgId, DocumentLinkRequestManager $documentLinkRequestManager, Request $request)
     {
-        $organization = $this->organizationManager->getOrganization($orgId);
+        $organization = $this->organizationManager->findOrganizationData($orgId);
         if (Gate::denies('belongsToOrganization', $organization)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
-        $organizationData = $this->documentLinkManager->getOrganizationData($orgId);
-        $this->authorizeByRequestType($organizationData, 'document_link');
+        $this->authorizeByRequestType($organization, 'document_link');
         $input = $request->all();
 
-        if ($this->documentLinkManager->update($input, $organizationData)) {
+        if ($this->documentLinkManager->update($input, $organization)) {
             $this->organizationManager->resetStatus($orgId);
             $response = ['type' => 'success', 'code' => ['updated', ['name' => trans('title.org_document_link')]]];
 

@@ -14,8 +14,15 @@ class OrganizationData extends Model
         'document_link',
         'organization_id',
         'status',
-        'total_expenditure'
+        'total_expenditure',
+        'type',
+        'country',
+        'is_reporting_org',
+        'is_publisher',
+        'identifier',
+        'used_by'
     ];
+
     protected $casts = [
         'name'                          => 'json',
         'total_budget'                  => 'json',
@@ -23,7 +30,8 @@ class OrganizationData extends Model
         'recipient_region_budget'       => 'json',
         'recipient_country_budget'      => 'json',
         'document_link'                 => 'json',
-        'total_expenditure'             => 'json'
+        'total_expenditure'             => 'json',
+        'used_by'                       => 'json'
     ];
 
     public function getName()
@@ -83,5 +91,34 @@ class OrganizationData extends Model
     public function organization()
     {
         return $this->belongsTo(Organization::class);
+    }
+
+    /**
+     * Get the number of Activities in which an Organization is selected as a Partner.
+     *
+     * @return string
+     */
+    public function includedActivities()
+    {
+        return count($this->used_by) . ' Activities';
+    }
+
+    /**
+     * Get the status of the Organization Data.
+     *
+     * @return string|\Symfony\Component\Translation\TranslatorInterface
+     */
+    public function getStatus()
+    {
+        switch ($this->status) {
+            case 0:
+                return trans('global.draft');
+            case 1:
+                return trans('global.completed');
+            case 2:
+                return trans('global.verified');
+            case 3:
+                return trans('global.published');
+        }
     }
 }

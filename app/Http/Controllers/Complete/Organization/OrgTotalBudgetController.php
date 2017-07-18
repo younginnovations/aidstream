@@ -1,12 +1,11 @@
 <?php namespace App\Http\Controllers\Complete\Organization;
 
-use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Request;
+use App\Services\FormCreator\Organization\TotalBudgetForm as FormBuilder;
 use App\Services\Organization\OrganizationManager;
 use App\Services\Organization\OrgTotalBudgetManager;
-use App\Http\Requests\Request;
 use App\Services\RequestManager\Organization\TotalBudgetRequestManager;
-use App\Services\FormCreator\Organization\TotalBudgetForm as FormBuilder;
 use Illuminate\Support\Facades\Gate;
 
 /**
@@ -38,7 +37,7 @@ class OrgTotalBudgetController extends Controller
      */
     public function index($orgId)
     {
-        $organization = $this->organizationManager->getOrganization($orgId);
+        $organization = $this->organizationManager->findOrganizationData($orgId);
 
         if (Gate::denies('belongsToOrganization', $organization)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
@@ -61,7 +60,7 @@ class OrgTotalBudgetController extends Controller
      */
     public function update($orgId, TotalBudgetRequestManager $totalBudgetRequestManager, Request $request)
     {
-        $organization = $this->organizationManager->getOrganization($orgId);
+        $organization = $this->organizationManager->findOrganizationData($orgId);
         if (Gate::denies('belongsToOrganization', $organization)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }

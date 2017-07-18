@@ -37,7 +37,7 @@ class TotalBudgetRepository
      */
     public function getOrganizationData($organization_id)
     {
-        return $this->org->where('organization_id', $organization_id)->first();
+        return $this->org->where('id', $organization_id)->first();
     }
 
     /**
@@ -47,6 +47,6 @@ class TotalBudgetRepository
      */
     public function getOrganizationTotalBudgetData($organization_id)
     {
-        return $this->org->where('organization_id', $organization_id)->first()->total_budget;
+        return $this->org->where('id', $organization_id)->first()->total_budget;
     }
 }

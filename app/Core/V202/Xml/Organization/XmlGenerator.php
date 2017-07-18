@@ -19,7 +19,7 @@ class XmlGenerator extends V201XmlGenerator
     public function getXmlData(Organization $organization, OrganizationData $organizationData)
     {
         $xmlOrganization                             = [];
-        $xmlOrganization['organisation-identifier']  = $organization->reporting_org[0]['reporting_organization_identifier'];
+        $xmlOrganization['organisation-identifier']  = $organizationData->is_reporting_org? $organization->reporting_org[0]['reporting_organization_identifier'] : $organizationData->identifier;
         $xmlOrganization['name']                     = $this->nameElem->getXmlData($organizationData);
         $xmlOrganization['reporting-org']            = $this->reportingOrgElem->getXmlData($organization);
         $xmlOrganization['total-budget']             = $this->totalBudgetElem->getXmlData($organizationData);
@@ -28,6 +28,8 @@ class XmlGenerator extends V201XmlGenerator
         $xmlOrganization['recipient-country-budget'] = $this->recipientCountrybudgetElem->getXmlData($organizationData);
         $xmlOrganization['total-expenditure']        = $this->orgElem->getTotalExpenditureXml($organizationData);
         $xmlOrganization['document-link']            = $this->documentLinkElem->getXmlData($organizationData);
+        $xmlOrganization['aidstream:type']           = $organizationData->type;
+        $xmlOrganization['aidstream:country']        = $organizationData->country;
 
         removeEmptyValues($xmlOrganization);
 

@@ -167,7 +167,7 @@
     <script type="text/javascript" src="{{url('/js/jquery.cookie.js')}}"></script>
     <script type="text/javascript" src="{{url('/js/jquery.mousewheel.js')}}"></script>
     <script type="text/javascript" src="{{url('/js/jquery.jscrollpane.min.js')}}"></script>
-    <script type="text/javascript" src="{{url('/js/select2.min.js')}}"></script>
+{{--    <script type="text/javascript" src="{{url('/js/select2.min.js')}}"></script>--}}
     <script type="text/javascript" src="{{url('/js/jquery.datetimepicker.full.min.js')}}"></script>
     <script type="text/javascript" src="{{url('/js/script.js')}}"></script>
     <script type="text/javascript" src="{{url('/js/datatable.js')}}"></script>

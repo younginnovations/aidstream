@@ -6,6 +6,7 @@ use App\Models\Activity\Activity;
 use App\Models\ActivityPublished;
 use App\Models\Document;
 use App\Models\Organization\Organization;
+use App\Models\Organization\OrganizationData;
 use Illuminate\Contracts\Auth\Access\Gate as GateContract;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
@@ -34,50 +35,71 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies($gate);
 
-        $gate->define('ownership', function ($user, $activity) {
-            return $this->checkUserOwnershipFor($user, $activity);
-        });
-
-        $gate->define('create', function ($user, $organization) {
-            return $this->doesUserBelongToOrganization($user, $organization);
-        });
-
-        $gate->define('belongsToOrganization', function ($user, $organization) {
-            return $this->doesUserBelongToOrganization($user, $organization);
-        });
-
-        $gate->define('settings-update', function ($user) {
-            if ($user->isAdmin()) {
-                return true;
+        $gate->define(
+            'ownership',
+            function ($user, $activity) {
+                return $this->checkUserOwnershipFor($user, $activity);
             }
-            return false;
-        });
+        );
 
-        $gate->define('update-status', function ($user, $activity) {
-            if ($user->isAdmin() || $user->isSuperAdmin()) {
-                return true;
+        $gate->define(
+            'create',
+            function ($user, $organization) {
+                return $this->doesUserBelongToOrganization($user, $organization);
             }
+        );
 
-            return $this->checkUserOwnershipFor($user, $activity);
-        });
-
-        $gate->define('isValidUser', function ($user, $currentUser) {
-            return ($user->id == $currentUser->id);
-        });
-
-        $gate->before(function ($user, $ability, $model) {
-            if ($user->isSuperAdmin()) {
-                return true;
+        $gate->define(
+            'belongsToOrganization',
+            function ($user, $organization) {
+                return $this->doesUserBelongToOrganization($user, $organization);
             }
+        );
 
-            if ($user->isAdmin()) {
-                if ($model instanceof Organization) {
-                    if ($this->doesUserBelongToOrganization($user, $model)) {
-                        return true;
+        $gate->define(
+            'settings-update',
+            function ($user) {
+                if ($user->isAdmin()) {
+                    return true;
+                }
+
+                return false;
+            }
+        );
+
+        $gate->define(
+            'update-status',
+            function ($user, $activity) {
+                if ($user->isAdmin() || $user->isSuperAdmin()) {
+                    return true;
+                }
+
+                return $this->checkUserOwnershipFor($user, $activity);
+            }
+        );
+
+        $gate->define(
+            'isValidUser',
+            function ($user, $currentUser) {
+                return ($user->id == $currentUser->id);
+            }
+        );
+
+        $gate->before(
+            function ($user, $ability, $model) {
+                if ($user->isSuperAdmin()) {
+                    return true;
+                }
+
+                if ($user->isAdmin()) {
+                    if ($model instanceof Organization) {
+                        if ($this->doesUserBelongToOrganization($user, $model)) {
+                            return true;
+                        }
                     }
                 }
             }
-        });
+        );
 
 
         foreach ($this->permissions as $permission) {
@@ -135,6 +157,10 @@ class AuthServiceProvider extends ServiceProvider
     {
         if ($organization instanceof Organization) {
             return ($user->org_id == $organization->id);
+        }
+
+        if ($organization instanceof OrganizationData) {
+            return ($user->org_id == $organization->organization_id);
         }
 
         return false;

@@ -1,0 +1,70 @@
+{
+  "publishers": [
+    {
+      "name": "Japan",
+      "identifier": "JP",
+      "type": 10,
+      "country": "JP"
+    },
+    {
+      "name": "American Refugee Committee",
+      "identifier": "US-EIN-36-3241033",
+      "type": 21,
+      "country": "US"
+    },
+    {
+      "name": "CORE Group",
+      "identifier": "US-EIN-311744950",
+      "type": 21
+    },
+    {
+      "name": "Crown Agents Limited",
+      "identifier": "GB-COH-03259922",
+      "type": 70
+    },
+    {
+      "name": "Solidarity Center",
+      "identifier": "US-EIN-52-1984713",
+      "type": 21
+    },
+    {
+      "name": "Triple Line & Crown Agents (Joint Venture)",
+      "identifier": "GB-COH-03788027",
+      "type": 70
+    },
+    {
+      "name": "Help A Child",
+      "identifier": "NL-KVK-41022454",
+      "type": "INGO"
+    },
+    {
+      "name": "ACROSS",
+      "identifier": "KE-NGC-9381",
+      "type": "INGO"
+    },
+    {
+      "name": "ADRA",
+      "identifier": "KE-NGC-663",
+      "type": "",
+      "country": "GB"
+    },
+    {
+      "name": "Peace Support Fund",
+      "identifier": "PSF",
+      "type": "",
+      "country": "US"
+    },
+    {
+      "name": "Health International UK",
+      "identifier": "GB-CHC-19022",
+      "type": "22",
+      "country": "GB"
+    },
+    {
+      "name": "Department For International Development",
+      "identifier": "GB-CHC-1",
+      "type": "21",
+      "country": "GB"
+    }
+  ]
+}

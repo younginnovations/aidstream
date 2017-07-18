@@ -37,7 +37,7 @@ class RecipientCountryBudgetRepository
      */
     public function getOrganizationData($organization_id)
     {
-        return $this->org->where('organization_id', $organization_id)->first();
+        return $this->org->where('id', $organization_id)->first();
     }
 
     /**
@@ -47,6 +47,6 @@ class RecipientCountryBudgetRepository
      */
     public function getRecipientCountryBudgetData($organization_id)
     {
-        return $this->org->where('organization_id', $organization_id)->first()->recipient_country_budget;
+        return $this->org->where('id', $organization_id)->first()->recipient_country_budget;
     }
 }

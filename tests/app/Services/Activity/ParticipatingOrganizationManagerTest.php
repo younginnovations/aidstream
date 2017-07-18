@@ -1,9 +1,11 @@
 <?php namespace Test\app\Services\Activity;
 
 use App\Core\V201\Repositories\Activity\ParticipatingOrganization;
+use App\Core\V201\Repositories\Organization\OrganizationRepository;
 use App\Models\Activity\Activity;
 use App\Models\Organization\Organization;
 use App\Services\Activity\ParticipatingOrganizationManager;
+use App\Services\Organization\OrganizationManager;
 use Mockery as m;
 use Test\AidStreamTestCase;
 
@@ -18,6 +20,8 @@ class ParticipatingOrganizationManagerTest extends AidStreamTestCase
     protected $auth;
     protected $participatingOrgRepository;
     protected $participatingOrgManager;
+    protected $organizationManager;
+    protected $organizationRepository;
 
     public function setUp()
     {
@@ -27,8 +31,12 @@ class ParticipatingOrganizationManagerTest extends AidStreamTestCase
         $this->version->shouldReceive('getActivityElement->getParticipatingOrganization->getRepository')->andReturn($this->participatingOrgRepository);
         $this->logger                  = m::mock('Illuminate\Contracts\Logging\Log');
         $this->auth                    = m::mock('Illuminate\Contracts\Auth\Guard');
+        $this->organizationManager    = m::mock(OrganizationManager::class);
+        $this->organizationRepository  = m::mock(OrganizationRepository::class);
         $this->participatingOrgManager = new ParticipatingOrganizationManager(
             $this->version,
+            $this->organizationManager,
+            $this->organizationRepository,
             $this->logger,
             $this->auth
         );

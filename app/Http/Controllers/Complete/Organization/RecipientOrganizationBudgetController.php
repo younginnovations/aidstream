@@ -1,18 +1,14 @@
 <?php namespace App\Http\Controllers\Complete\Organization;
 
-use App\Http\Requests;
 use App\Http\Controllers\Controller;
-
-use App\Services\Organization\OrganizationManager;
-use App\Services\RequestManager\Organization\CreateOrgRecipientOrgBudgetRequestManager;
+use App\Http\Requests\Request;
 use App\Services\FormCreator\Organization\RecipientOrgBudgetForm;
+use App\Services\Organization\OrganizationManager;
 use App\Services\Organization\RecipientOrgBudgetManager;
+use App\Services\RequestManager\Organization\CreateOrgRecipientOrgBudgetRequestManager;
 use Illuminate\Support\Facades\Gate;
 use Session;
 use URL;
-use App\Http\Requests\Request;
-use Illuminate\Support\Facades\Input;
-use Illuminate\Support\Facades\Redirect;
 
 class RecipientOrganizationBudgetController extends Controller
 {
@@ -41,7 +37,7 @@ class RecipientOrganizationBudgetController extends Controller
      */
     public function index($organizationId)
     {
-        $organization = $this->organizationManager->getOrganization($organizationId);
+        $organization = $this->organizationManager->findOrganizationData($organizationId);
 
         if (Gate::denies('belongsToOrganization', $organization)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
@@ -59,24 +55,23 @@ class RecipientOrganizationBudgetController extends Controller
 
     /**
      * write brief description
-     * @param                                                   $orgId
-     * @param CreateOrgRecipientOrgBudgetRequestManager         $request
-     * @param CreateOrgRecipientOrgBudgetRequestManager|Request $request
+     * @param                                           $orgId
+     * @param CreateOrgRecipientOrgBudgetRequestManager $createOrgRecipientOrgBudgetRequestManager
+     * @param Request                                   $request
      * @return mixed
      */
-    public function update($orgId, CreateOrgRecipientOrgBudgetRequestManager $request, Request $request)
+    public function update($orgId, CreateOrgRecipientOrgBudgetRequestManager $createOrgRecipientOrgBudgetRequestManager, Request $request)
     {
-        $organization = $this->organizationManager->getOrganization($orgId);
+        $organization = $this->organizationManager->findOrganizationData($orgId);
 
         if (Gate::denies('belongsToOrganization', $organization)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
-        $organizationData = $this->recipientOrgBudgetManager->getOrganizationData($orgId);
-        $this->authorizeByRequestType($organizationData, 'recipient_organization_budget');
+        $this->authorizeByRequestType($organization, 'recipient_organization_budget');
         $input = $request->all();
 
-        if ($this->recipientOrgBudgetManager->update($input, $organizationData)) {
+        if ($this->recipientOrgBudgetManager->update($input, $organization)) {
             $this->organizationManager->resetStatus($orgId);
             $response = ['type' => 'success', 'code' => ['updated', ['name' => trans('title.org_recipient_organisation_budget')]]];
 

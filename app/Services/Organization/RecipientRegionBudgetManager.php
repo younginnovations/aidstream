@@ -2,6 +2,7 @@
 
 use App\Core\Version;
 use App\Models\Organization\OrganizationData;
+use Exception;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Database\DatabaseManager;
 use Illuminate\Contracts\Logging\Log as DbLogger;
@@ -74,7 +75,7 @@ class RecipientRegionBudgetManager
             );
 
             return true;
-        } catch (Exception $exception) {
+        } catch (\Exception $exception) {
             $this->database->rollback();
             $this->logger->error($exception, ['OrganizationRecipientRegionBudget' => $input]);
         }

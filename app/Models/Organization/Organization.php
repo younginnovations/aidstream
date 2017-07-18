@@ -38,11 +38,11 @@ class Organization extends Model
 
     /**
      * organization one organization data
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function orgData()
     {
-        return $this->hasOne('App\Models\Organization\OrganizationData', 'organization_id');
+        return $this->hasMany('App\Models\Organization\OrganizationData', 'organization_id');
     }
 
     /**
@@ -133,11 +133,11 @@ class Organization extends Model
 
     /**
      * An Organization can have many Organization Published files.
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
     public function organizationPublished()
     {
-        return $this->hasMany(OrganizationPublished::class);
+        return $this->hasOne(OrganizationPublished::class);
     }
 
     /**

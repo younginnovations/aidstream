@@ -49,6 +49,6 @@ class RecipientOrgBudgetRepository
      */
     public function getRecipientOrgBudgetData($organization_id)
     {
-        return $this->org->where('organization_id', $organization_id)->first()->recipient_organization_budget;
+        return $this->org->where('id', $organization_id)->first()->recipient_organization_budget;
     }
 }

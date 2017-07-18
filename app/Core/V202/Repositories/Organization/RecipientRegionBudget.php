@@ -40,7 +40,7 @@ class RecipientRegionBudget
      */
     public function getOrganizationData($organization_id)
     {
-        return $this->org->where('organization_id', $organization_id)->first();
+        return $this->org->where('id', $organization_id)->first();
     }
 
     /**
@@ -50,6 +50,6 @@ class RecipientRegionBudget
      */
     public function getRecipientRegionBudgetData($organization_id)
     {
-        return $this->org->where('organization_id', $organization_id)->first()->recipient_region_budget;
+        return $this->org->where('id', $organization_id)->first()->recipient_region_budget;
     }
 }

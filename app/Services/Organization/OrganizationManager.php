@@ -1,18 +1,22 @@
 <?php namespace App\Services\Organization;
 
+use App;
 use App\Core\V201\Repositories\UserRepository;
 use App\Core\Version;
-use App;
 use App\Models\Organization\Organization;
 use App\Models\Organization\OrganizationData;
 use App\Models\OrganizationPublished;
 use App\Models\Settings;
 use Exception;
 use Illuminate\Contracts\Auth\Guard;
-use Illuminate\Contracts\Logging\Log as Logger;
 use Illuminate\Contracts\Logging\Log;
+use Illuminate\Contracts\Logging\Log as Logger;
 use Kris\LaravelFormBuilder\FormBuilder;
 
+/**
+ * Class OrganizationManager
+ * @package App\Services\Organization
+ */
 class OrganizationManager
 {
     /**
@@ -115,11 +119,21 @@ class OrganizationManager
 
     /**
      * @param $id
-     * @return model
      */
     public function getOrganizationData($id)
     {
         return $this->repo->getOrganizationData($id);
+    }
+
+    /**
+     * Find OrganizationData.
+     *
+     * @param $id
+     * @return OrganizationData
+     */
+    public function findOrganizationData($id)
+    {
+        return $this->repo->findOrganizationData($id);
     }
 
     /**
@@ -207,6 +221,11 @@ class OrganizationManager
         return $response;
     }
 
+    /**
+     * @param $filename
+     * @param $orgId
+     * @return mixed
+     */
     public function saveOrganizationPublishedFiles($filename, $orgId)
     {
         return $this->repo->saveOrganizationPublishedFiles($filename, $orgId);
@@ -361,6 +380,108 @@ class OrganizationManager
     public function getPublishedOrganizationData($organization_id)
     {
         return $this->repo->getPublishedOrganizationData($organization_id);
+    }
+
+    /**
+     * Store the organisations from ajax request.
+     * Store in organization_data table.
+     *
+     * @param $id
+     * @param $data
+     * @return bool
+     */
+    public function store($id, $data)
+    {
+        try {
+            foreach (array_get($data, 'organisation') as $organisation) {
+                $organisation['is_publisher']     = (array_get($organisation, 'is_publisher', '0') === '1') ? true : null;
+                $organisation['organization_id']  = $id;
+                $organisation['is_reporting_org'] = false;
+                $this->repo->storeOrgData($organisation);
+            }
+
+            return true;
+        } catch (Exception $exception) {
+
+            return false;
+        }
+    }
+
+    public function update($orgDataId, $orgData)
+    {
+        try {
+            return $this->repo->updateOrganizationData($orgDataId, $orgData);
+        } catch (Exception $exception) {
+            return false;
+        }
+    }
+
+    /**
+     * Deletes record
+     *
+     * @param $id
+     * @return mixed
+     */
+    public function delete($orgData)
+    {
+        return $this->repo->delete($orgData);
+    }
+
+    /**
+     * Returns partner organizations of the given id.
+     *
+     * @param $orgId
+     */
+    public function getPartnerOrganizations($orgId)
+    {
+        return $this->repo->getPartnerOrganizations($orgId);
+    }
+
+    /**
+     * Unpublish an OrganizationData.
+     *
+     * @param Organization $organization
+     * @param              $organizationDataId
+     * @return bool|null
+     */
+    public function unpublishOrganization(Organization $organization, $organizationDataId)
+    {
+        try {
+            $organizationData          = $this->findOrganizationData($organizationDataId);
+            $organizationPublished     = $organization->organizationPublished;
+            $publishedOrganizationData = $organizationPublished->published_org_data;
+            $xmlService                = $this->orgElement->getOrgXmlService();
+
+            if (in_array($organizationDataId, $publishedOrganizationData)) {
+                $remainingOrganizationData                 = array_flip(array_except(array_flip($publishedOrganizationData), $organizationDataId));
+                $organizationPublished->published_org_data = array_values($remainingOrganizationData);
+                $organizationPublished->save();
+            }
+
+            $organizationData->status = 0;
+            $organizationData->save();
+
+            $xmlService->generateOrgXml($organization, $organizationData, $organization->settings, $this->orgElement, true);
+
+            $this->logger->info(
+                sprintf('OrganizationData successfully unlinked for organization with id %s', $organization->id),
+                [
+                    'user' => auth()->user()->id
+                ]
+            );
+
+            return true;
+        } catch (Exception $exception) {
+            $this->logger->error(
+                sprintf('Error while unlinking OrganizationData with id %s', $organizationDataId),
+                [
+                    'trace' => $exception->getTraceAsString(),
+                    'user'  => auth()->user()->id
+                ]
+            );
+
+            return null;
+        }
     }
 }
 

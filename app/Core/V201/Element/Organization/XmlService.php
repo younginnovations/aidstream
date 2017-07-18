@@ -83,15 +83,16 @@ class XmlService
     }
 
     /**
-     * @param $organization
-     * @param $organizationData
-     * @param $settings
-     * @param $orgElem
+     * @param      $organization
+     * @param      $organizationData
+     * @param      $settings
+     * @param      $orgElem
+     * @param bool $unpublish
      * @return mixed
      */
-    public function generateOrgXml($organization, $organizationData, $settings, $orgElem)
+    public function generateOrgXml($organization, $organizationData, $settings, $orgElem, $unpublish = false)
     {
-        return $this->xmlGenerator->generateXml($organization, $organizationData, $settings, $orgElem);
+        return $this->xmlGenerator->generateXml($organization, $organizationData, $settings, $orgElem, $unpublish);
     }
 
     public function generateTemporaryOrganizationXml($organization, $organizationData, $settings, $orgElem)

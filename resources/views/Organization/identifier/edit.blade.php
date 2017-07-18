@@ -20,7 +20,7 @@
                     <div class="panel panel-default">
                         <div class="panel-body">
                             <div class="create-activity-form">
-                                {!! form_row($form->reporting_org->getChildren()[0]->reporting_organization_identifier) !!}
+                                {!! form_row($form->reporting_org) !!}
                             </div>
                         </div>
                     </div>

@@ -1,6 +1,7 @@
 <?php
 use App\Models\Activity\Activity;
 use App\Models\Settings;
+use App\Services\Collection2;
 use App\User;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -1395,5 +1396,10 @@ function isUniquePublisherId($newPublisherId)
     }
 
     return true;
+}
+
+function collect2($value = null)
+{
+    return new Collection2($value);
 }
 

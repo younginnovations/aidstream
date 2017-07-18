@@ -2,7 +2,7 @@
 
 {{--*/
 $orgData = $organizationData->get();
-$orgId = session('org_id');
+$orgId = $orgData['id'];
 /*--}}
 <div class="element-menu-wrapper">
     <div class="element-sidebar-dropdown">

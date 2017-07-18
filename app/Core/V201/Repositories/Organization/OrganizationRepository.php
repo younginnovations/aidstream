@@ -7,11 +7,10 @@ use App\Models\Organization\OrganizationData;
 use App\Models\OrganizationPublished;
 use App\Models\Settings;
 use App\User;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
-use Illuminate\Database\Eloquent\Collection;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -119,7 +118,16 @@ class OrganizationRepository implements OrganizationRepositoryInterface
      */
     public function getOrganizationData($id)
     {
-        return $this->orgData->where('organization_id', $id)->first();
+        return $this->orgData->where('organization_id', $id)->get();
+    }
+
+    /**
+     * @param $id
+     * @return model
+     */
+    public function findOrganizationData($id)
+    {
+        return $this->orgData->where('id', $id)->first();
     }
 
     /**
@@ -148,7 +156,7 @@ class OrganizationRepository implements OrganizationRepositoryInterface
      */
     public function resetStatus($organization_id)
     {
-        $this->orgData->where('organization_id', $organization_id)->update(['status' => 0]);
+        $this->orgData->where('id', $organization_id)->update(['status' => 0]);
     }
 
     /**
@@ -452,5 +460,61 @@ class OrganizationRepository implements OrganizationRepositoryInterface
         $organisation->system_version_id = getVal($system_version, ['index'], 1);
 
         return $organisation->save();
+    }
+
+    /**
+     * Store the organisations from ajax request.
+     * Store in organization_data table.
+     *
+     * @param $organisation
+     * @return OrganizationData
+     */
+    public function storeOrgData($organisation)
+    {
+        return $this->orgData->create($organisation);
+    }
+
+    /**
+     * Deletes record
+     * @param $id
+     * @return int
+     */
+    public function delete($orgData)
+    {
+        return $orgData->delete();
+    }
+
+    /**
+     * Find OrganizationData with a specific id.
+     *
+     * @param $id
+     * @return mixed
+     */
+    public function find($id)
+    {
+        return $this->orgData->find($id);
+    }
+
+    /**
+     *  Returns partner organizations of the given id.
+     *
+     * @param $id
+     * @return mixed
+     */
+    public function getPartnerOrganizations($id)
+    {
+        return $this->orgData->where('organization_id', $id)->select('name', 'id', 'identifier', 'type', 'country', 'is_publisher')->where('is_reporting_org', false)->get();
+    }
+
+    public function updateOrganizationData($orgDataId, $orgData)
+    {
+        $organisation = $this->findOrganizationData($orgDataId);
+
+        return $organisation->update($orgData[0]);
+    }
+
+    public function getAllOrganizationData()
+    {
+        return $this->orgData->all();
     }
 }

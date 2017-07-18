@@ -6,6 +6,7 @@ use App\Models\Activity\Transaction;
 use App\Models\ActivityPublished;
 use App\Models\Organization\Organization;
 use App\Models\OrganizationPublished;
+use App\Services\Organization\OrganizationManager;
 
 /**
  * Class AuthorizesOwnerRequest
@@ -134,9 +135,10 @@ trait AuthorizesOwnerRequest
      */
     protected function userBelongsToOrganization($organizationId)
     {
-        $user = $this->getCurrentUser();
+        $user             = $this->getCurrentUser();
+        $organizationData = app()->make(OrganizationManager::class)->findOrganizationData($organizationId);
 
-        return ($user->org_id == $organizationId);
+        return ($user->org_id == $organizationData->organization->id);
     }
 
     /**

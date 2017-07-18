@@ -49,6 +49,6 @@ class NameRepository
      */
     public function getOrganizationNameData($organization_id)
     {
-        return $this->orgData->where('organization_id', $organization_id)->first()->name;
+        return $this->orgData->where('id', $organization_id)->first()->name;
     }
 }

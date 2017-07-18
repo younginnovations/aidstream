@@ -9,6 +9,7 @@ use App\Services\Organization\OrganizationManager;
 use App\Services\Publisher\Publisher;
 use App\Services\Workflow\Traits\ExceptionParser;
 use Exception;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Psr\Log\LoggerInterface;
@@ -119,8 +120,15 @@ class XmlGenerator
     public function generateXml(Organization $organization, OrganizationData $organizationData, Settings $settings, $orgElem)
     {
         try {
-            $xml      = $this->getXml($organization, $organizationData, $settings, $orgElem);
-            $filename = $settings['registry_info'][0]['publisher_id'] . '-org.xml';
+            $publisherId    = array_get($settings, 'registry_info.0.publisher_id');
+            $currentOrgData = $organization->orgData()->where('status', '=', 3)->get();
+            if ($organizationData->status == '2') {
+                $currentOrgData->push($organizationData);
+            }
+
+            $xml = $this->getTotalXml($organization, $currentOrgData, $settings, $orgElem);
+
+            $filename = $publisherId . '-org.xml';
 
             $result = Storage::put(sprintf('%s%s', config('filesystems.xml'), $filename), $xml->saveXML());
 
@@ -129,6 +137,17 @@ class XmlGenerator
                 $published->touch();
                 $published->filename        = $filename;
                 $published->organization_id = $organization->id;
+
+                if (null === $published->published_org_data) {
+                    $published->published_org_data = [$organizationData->id];
+                } else {
+                    $orgDataIds = $published->published_org_data;
+                    if (!in_array($organizationData->id, $orgDataIds)) {
+                        $orgDataIds[] = $organizationData->id;
+                    }
+                    $published->published_org_data = $orgDataIds;
+
+                }
                 $published->save();
             }
 
@@ -164,7 +183,8 @@ class XmlGenerator
         $xmlData['iati-organisation']['@attributes'] = [
             'last-updated-datetime' => gmdate('c', time($settings->updated_at)),
             'xml:lang'              => $settings->default_field_values[0]['default_language'],
-            'default-currency'      => $settings->default_field_values[0]['default_currency']
+            'default-currency'      => $settings->default_field_values[0]['default_currency'],
+            'xmlns:aidstream'       => 'http://example.org/aidstream/ns#'
         ];
 
         return $this->arrayToXml->createXML('iati-organisations', $xmlData);
@@ -179,13 +199,15 @@ class XmlGenerator
     public function getXmlData(Organization $organization, OrganizationData $organizationData)
     {
         $xmlOrganization                             = [];
-        $xmlOrganization['organisation-identifier']  = $organization->reporting_org[0]['reporting_organization_identifier'];
+        $xmlOrganization['organisation-identifier']  = $organizationData->is_reporting_org ? $organization->reporting_org[0]['reporting_organization_identifier'] : $organizationData->identifier;
         $xmlOrganization['name']                     = $this->nameElem->getXmlData($organizationData);
         $xmlOrganization['reporting-org']            = $this->reportingOrgElem->getXmlData($organization);
         $xmlOrganization['total-budget']             = $this->totalBudgetElem->getXmlData($organizationData);
         $xmlOrganization['recipient-org-budget']     = $this->recipientOrgBudgetElem->getXmlData($organizationData);
         $xmlOrganization['recipient-country-budget'] = $this->recipientCountrybudgetElem->getXmlData($organizationData);
         $xmlOrganization['document-link']            = $this->documentLinkElem->getXmlData($organizationData);
+        $xmlOrganization['aidstream:type']           = $organizationData->type;
+        $xmlOrganization['aidstream:country']        = $organizationData->country;
 
         removeEmptyValues($xmlOrganization);
 
@@ -204,5 +226,36 @@ class XmlGenerator
         $xml = $this->getXml($organization, $organizationData, $settings, $orgElem);
 
         return $xml->saveXML();
+    }
+
+    /**
+     * Generate xml for multiple OrganizationData.
+     *
+     * @param            $organization
+     * @param Collection $currentOrgData
+     * @param            $settings
+     * @param            $orgElem
+     * @return \DomDocument
+     */
+    protected function getTotalXml($organization, Collection $currentOrgData, $settings, $orgElem)
+    {
+        $this->setElements($orgElem);
+        $xmlData                = [];
+        $xmlData['@attributes'] = [
+            'version'            => $settings->version,
+            'generated-datetime' => gmdate('c')
+        ];
+
+        foreach ($currentOrgData as $index => $organizationData) {
+            $xmlData['iati-organisation'][$index]                = $this->getXmlData($organization, $organizationData);
+            $xmlData['iati-organisation'][$index]['@attributes'] = [
+                'last-updated-datetime' => gmdate('c', time($settings->updated_at)),
+                'xml:lang'              => $settings->default_field_values[0]['default_language'],
+                'default-currency'      => $settings->default_field_values[0]['default_currency'],
+                'xmlns:aidstream'       => 'http://example.org/aidstream/ns#'
+            ];
+        }
+
+        return $this->arrayToXml->createXML('iati-organisations', $xmlData);
     }
 }
