@@ -8,7 +8,7 @@
                 @if(session('version') != 'V201')
                     <div class="activity-element-label">{{ $getCode->getCodeNameOnly('BudgetStatus', $key) }}</div>
                 @else
-                    <div class="activity-element-label">@lang('elementForm.total_budget')</div>
+                    <div class="activity-element-label">@lang('element.total_budget')</div>
                 @endif
                 <div class="activity-element-info">
                     @foreach($totalBudgets as $totalBudget)

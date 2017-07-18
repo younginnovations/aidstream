@@ -68,7 +68,7 @@ class Transaction
      */
     protected function transactionDate($subElement, $index)
     {
-        $this->transaction[$index]['transaction_date'][0]['date'] = $this->attributes($subElement, 'iso-date');
+        $this->transaction[$index]['transaction_date'][0]['date'] = dateFormat('Y-m-d', $this->attributes($subElement, 'iso-date'));
     }
 
     /**
@@ -78,7 +78,7 @@ class Transaction
     protected function value($subElement, $index)
     {
         $this->transaction[$index]['value'][0]['amount']   = $this->getValue($subElement);
-        $this->transaction[$index]['value'][0]['date']     = $this->attributes($subElement, 'value-date');
+        $this->transaction[$index]['value'][0]['date']     = dateFormat('Y-m-d', $this->attributes($subElement, 'value-date'));
         $this->transaction[$index]['value'][0]['currency'] = $this->attributes($subElement, 'currency');
     }
 
