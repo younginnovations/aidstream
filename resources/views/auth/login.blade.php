@@ -85,14 +85,14 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <div class="col-md-6 pull-left">
-                                        <div class="checkbox">
-                                            <label>
-                                                <input type="checkbox" name="remember"
-                                                       class="ignore_change"> @lang('trans.remember_me')
-                                            </label>
-                                        </div>
-                                    </div>
+                                    {{--<div class="col-md-6 pull-left">--}}
+                                        {{--<div class="checkbox">--}}
+                                            {{--<label>--}}
+                                                {{--<input type="checkbox" name="remember"--}}
+                                                       {{--class="ignore_change"> @lang('trans.remember_me')--}}
+                                            {{--</label>--}}
+                                        {{--</div>--}}
+                                    {{--</div>--}}
                                     <div class="col-md-6 pull-right">
                                         <a class="btn-link"
                                            href="{{ url('/password/email') }}">@lang('trans.forgot_password')?</a>
