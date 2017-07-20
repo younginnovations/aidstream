@@ -1331,7 +1331,7 @@ class ResultRow extends Row
         $list = $this->loadCodeList('IndicatorVocabulary', 'V201');
 
         $codes = [];
-        foreach ($list['data'] as $code) {
+        foreach ($list['IndicatorVocabulary'] as $code) {
             $codes[] = $code['code'];
         }
 
