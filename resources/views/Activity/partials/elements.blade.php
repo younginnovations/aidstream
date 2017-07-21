@@ -21,9 +21,7 @@
         @include('Activity.partials.defaultAidType')
         @include('Activity.partials.defaultTiedStatus')
         @include('Activity.partials.countryBudgetItem')
-        @if(!empty($humanitarianScopes))
-            @include('Activity.partials.humanitarianScope')
-        @endif
+        @include('Activity.partials.humanitarianScope')
         @include('Activity.partials.budget')
         @include('Activity.partials.plannedDisbursement')
 {{--        @include('Activity.partials.transaction')--}}

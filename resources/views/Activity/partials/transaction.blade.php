@@ -49,7 +49,7 @@
                             <div class="element-info">
                                 <div class="activity-element-label">@lang('elementForm.provider_organisation')</div>
                                 <div class="activity-element-info">
-                                    {!! getFirstNarrative(getVal($transaction, ['provider_organization', 0], [])) !!}
+                                    {!! getFirstNarrative(getVal($transaction, ['provider_organization', 0], []), trans('global.no_name_available')) !!}
                                     @include('Activity.partials.viewInOtherLanguage', ['otherLanguages' => getOtherLanguages(getVal($transaction, ['provider_organization', 0, 'narrative'], []))])
                                     {!! getTransactionProviderDetails(getVal($transaction, ['provider_organization', 0], []), 'provider') !!}
                                 </div>
@@ -57,7 +57,7 @@
                             <div class="element-info">
                                 <div class="activity-element-label">@lang('elementForm.receiver_organisation')</div>
                                 <div class="activity-element-info">
-                                    {!! getFirstNarrative(getVal($transaction, ['receiver_organization', 0], [])) !!}
+                                    {!! getFirstNarrative(getVal($transaction, ['receiver_organization', 0], []), trans('global.no_name_available')) !!}
                                     @include('Activity.partials.viewInOtherLanguage', ['otherLanguages' => getOtherLanguages(getVal($transaction, ['receiver_organization', 0, 'narrative'], []))])
                                     {!! getTransactionProviderDetails($transaction['receiver_organization'][0] , 'receiver') !!}
                                 </div>

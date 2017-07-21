@@ -213,13 +213,18 @@ function getOwnerNarrative(array $groupedIdentifiers)
 /**
  * Returns the first element of Narrative.
  * @param array $narrative
+ * @param null  $default
  * @return string
  */
-function getFirstNarrative(array $narrative)
+function getFirstNarrative(array $narrative, $default = null)
 {
     $narrativeElements = getVal($narrative, ['narrative', 0]);
 
-    return (empty($narrativeElements['narrative'])) ? sprintf('<em>%s</em>', trans('global.not_available')) :
+    if (!$default) {
+        $default = trans('global.not_available');
+    }
+
+    return (empty($narrativeElements['narrative'])) ? sprintf('<em>%s</em>', $default) :
         sprintf(
             "%s <em>(%s: %s)</em>",
             $narrativeElements['narrative'],
