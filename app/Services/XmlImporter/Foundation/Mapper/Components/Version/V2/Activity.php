@@ -1,5 +1,6 @@
 <?php namespace App\Services\XmlImporter\Foundation\Mapper\Components\Version\V2;
 
+use App\Core\V201\Traits\GetCodes;
 use App\Services\XmlImporter\Foundation\Support\Helpers\Traits\XmlHelper;
 
 /**
@@ -8,7 +9,7 @@ use App\Services\XmlImporter\Foundation\Support\Helpers\Traits\XmlHelper;
  */
 class Activity
 {
-    use XmlHelper;
+    use XmlHelper, GetCodes;
 
     /**
      * @var array
@@ -320,7 +321,18 @@ class Activity
      */
     public function activityStatus($element, $template)
     {
-        return $this->attributes($element, 'code');
+        $activityStatusCodes = array_flip($this->getNameWithCode('Activity', 'ActivityStatus'));
+        $code                = $this->attributes($element, 'code');
+
+        if (array_key_exists($code, $activityStatusCodes)) {
+            return $activityStatusCodes[$code];
+        }
+
+        if (in_array($code, $activityStatusCodes)) {
+            return $code;
+        }
+
+        return null;
     }
 
     /**
