@@ -1,6 +1,7 @@
 <?php namespace App\Services\XmlImporter\Foundation\Mapper\Components\Version\V1;
 
 
+use App\Core\V201\Traits\GetCodes;
 use App\Services\XmlImporter\Foundation\Support\Helpers\Traits\XmlHelper;
 
 /**
@@ -9,7 +10,7 @@ use App\Services\XmlImporter\Foundation\Support\Helpers\Traits\XmlHelper;
  */
 class Activity
 {
-    use XmlHelper;
+    use XmlHelper, GetCodes;
 
     /**
      * @var array
@@ -279,7 +280,18 @@ class Activity
 
     protected function activityStatus($element, $template)
     {
-        return $this->attributes($element, 'code');
+        $activityStatusCodes = array_flip($this->getNameWithCode('Activity', 'ActivityStatus'));
+        $code                = $this->attributes($element, 'code');
+
+        if (array_key_exists($code, $activityStatusCodes)) {
+            return $activityStatusCodes[$code];
+        }
+
+        if (in_array($code, $activityStatusCodes)) {
+            return $code;
+        }
+
+        return null;
     }
 
     public function activityDate($element, $template)
@@ -519,7 +531,7 @@ class Activity
 
     protected function getPolicyMarkerVocabulary($vocabulary)
     {
-        switch ($vocabulary) {
+        switch (strtoupper($vocabulary)) {
             case 'DAC':
                 return '1';
             case 'RO':
@@ -533,7 +545,7 @@ class Activity
 
     protected function getSectorVocabulary($vocabulary)
     {
-        switch ($vocabulary) {
+        switch (strtoupper($vocabulary)) {
             case 'DAC' :
                 return '1';
             case 'DAC-3' :
@@ -569,7 +581,7 @@ class Activity
 
     protected function getActivityDateType($type)
     {
-        switch ($type) {
+        switch (strtolower($type)) {
             case 'start-planned':
                 return '1';
             case 'start-actual':
