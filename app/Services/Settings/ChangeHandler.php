@@ -244,9 +244,20 @@ class ChangeHandler
      */
     public function isApiKeyOfThePublisher($publisherIdResponse, $apiKeyResponse)
     {
-        $publisherIdResponseUserId = getVal($apiKeyResponse, ['result', 0, 'data', 'package', 'owner_org']);
+        if (array_key_exists('package', getVal($apiKeyResponse, ['result', 0, 'data'], []))) {
+            $publisherIdResponseUserId = getVal($apiKeyResponse, ['result', 0, 'data', 'package', 'owner_org']);
 
-        return ($publisherIdResponseUserId == getVal($publisherIdResponse, ['result', 'id'])) ? true : false;
+            return ($publisherIdResponseUserId == getVal($publisherIdResponse, ['result', 'id'])) ? true : false;
+
+        }
+
+        if (array_key_exists('group', getVal($apiKeyResponse, ['result', 0, 'data'], []))) {
+            $name = getVal($apiKeyResponse, ['result', 0, 'data', 'group', 'name']);
+
+            return ($name === getVal($publisherIdResponse, ['result', 'name'])) ? true : false;
+        }
+
+        return false;
     }
 
     /**
