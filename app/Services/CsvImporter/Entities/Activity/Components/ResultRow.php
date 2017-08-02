@@ -585,7 +585,7 @@ class ResultRow extends Row
     {
         $this->groupPeriods();
 
-        foreach ($this->indicators[$index]['period'] as $i => $value) {
+        foreach (getVal($this->indicators, [$index, 'period'], []) as $i => $value) {
             $this->data['indicator'][$index]['period'][$i] = getVal($this->template, ['indicator', 0, 'period', 0]);
             $this->setIndicatorPeriodStart($index, $i)
                  ->setIndicatorPeriodEnd($index, $i)
@@ -602,8 +602,10 @@ class ResultRow extends Row
     protected function groupPeriods()
     {
         foreach ($this->indicators as $indicatorIndex => $values) {
-            $grouping                                    = app()->make(Grouping::class, [$this->indicators[$indicatorIndex], $this->periodFields])->groupValues();
-            $this->indicators[$indicatorIndex]['period'] = $grouping;
+            if (!array_diff_key(array_flip($this->periodFields), $this->indicators[$indicatorIndex])) {
+                $grouping                                    = app()->make(Grouping::class, [$this->indicators[$indicatorIndex], $this->periodFields])->groupValues();
+                $this->indicators[$indicatorIndex]['period'] = $grouping;
+            }
         }
     }
 
@@ -897,14 +899,14 @@ class ResultRow extends Row
         foreach ($narrative as $index => $value) {
 
             if (!is_null($value)) {
-                array_set($this->data, implode('.', [implode('.', $key), $index, 'narrative', 0, 'narrative']), $value);
+                array_set($this->data, implode('.', [implode('.', $key), 0, 'narrative', $index, 'narrative']), $value);
             }
         }
 
         foreach ($language as $index => $value) {
 
             if (!is_null($value)) {
-                array_set($this->data, implode('.', [implode('.', $key), $index, 'narrative', 0, 'language']), $value);
+                array_set($this->data, implode('.', [implode('.', $key), 0, 'narrative', $index, 'language']), $value);
             }
         }
     }
