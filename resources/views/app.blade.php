@@ -49,7 +49,9 @@
                             <li><a href="{{route('activity.create') }}">@lang('global.add_new_activity_manually')</a></li>
                             {{--<li><a href="{{route('wizard.activity.create') }}">Add Activity using Wizard</a></li>--}}
                             <li><a href="{{ route('import-activity.index') }}">@lang('global.import_activities')</a></li>
-                            <li><a href="{{ route('xml-import.index') }}">@lang('global.import_activity_xml')</a></li>
+                            @if (session('version') === 'V202')
+                                <li><a href="{{ route('xml-import.index') }}">@lang('global.import_activity_xml')</a></li>
+                            @endif
                         </ul>
                     </li>
                 </ul>
