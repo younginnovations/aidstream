@@ -13,57 +13,196 @@
                 @include('includes.breadcrumb')
                 <div class="element-panel-heading">
                     <div><span class="pull-left">@lang('global.organisations')</span></div>
-                    <div class="view-xml-btn org-xml-btn">
-                        <span class="pull-left">
-                            <a class="view-xml-btn org-xml-btn" href="{{ route('organization.create', session('org_id')) }}">@lang('global.create_organisation')</a>
-                        </span>
-                    </div>
                 </div>
-                <div class="col-xs-12 col-md-8 col-lg-8 element-content-wrapper">
-                <span>
-                    Below you’ll find your organization (reporting organization) and all other organizations that you’ve listed as partner organization in your activities. Any organization you’ll add here will be available as an option while associating an activity to a partner organization.
-                </span>
-                    <div class="panel-body">
+                <div class="col-xs-12 element-content-wrapper full-width-wrapper">
+                <div class="element-description">
+                    <p>Below you’ll find your organization (reporting organization) and all other organizations that you’ve listed as partner organization in your activities. Any organization you’ll add here will be available as an option while associating an activity to a partner organization.</p>
+                </div>
+                    <div class="panel-body panel-org-body panel__reporting-org">
+                        <h3>@lang('global.reporting_organisation')</h3>
                         <table class="table table-striped">
-                            <thead>
-                            <tr>
-                                <td>@lang('global.reporting_organisation')</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            </thead>
+                            {{--<thead>--}}
+                            {{--<tr>--}}
+                                {{--<th>@lang('global.reporting_organisation')</th>--}}
+                                {{--<th></th>--}}
+                                {{--<th></th>--}}
+                                {{--<th></th>--}}
+                            {{--</tr>--}}
+                            {{--</thead>--}}
                             <tbody>
                             <tr>
-                                <td>
+                                <td width="10px">
+                                    <a href="{{ route('organization-data.edit', $reportingOrg->id)}}" class="edit-activity pull-right">@lang('global.edit')</a>
+                                </td>
+                                <td class="organisation-name">
                                     <a href="{{route('organization.show', $reportingOrg->id)}}">
-                                        {{ $reportingOrg->name[0]['narrative'] }}
+                                    {{ $reportingOrg->name[0]['narrative'] }}
                                     </a>
+                                    <span class="identifier">US-EIN-042347643</span>
+                                </td>
+                                <td class="sector">
+                                    {{--{{ $reportingOrg->type ? $getCode->getCodeNameOnly('OrganizationType', $reportingOrg->type, -4, 'Organization') : '' }}--}}
+                                    Private Sector
                                 </td>
                                 <td>
-                                    {{ $reportingOrg->type ? $getCode->getCodeNameOnly('OrganizationType', $reportingOrg->type, -4, 'Organization') : '' }}
+                                    <div class="activity__status activity-status-{{ $reportingOrg->getStatus() }}">
+                                        <span>{{ $reportingOrg->getStatus() }}</span>
+                                    </div>
                                 </td>
-                                <td>
-                                    {{ $reportingOrg->getStatus() }}
-                                </td>
-                                <td>
-                                    <a href="{{ route('organization-data.edit', $reportingOrg->id)}}" class="edit pull-right">@lang('global.edit')</a>
+                                <td width="50px">
+                                    <div class="view-more">
+                                        <a href="#">⋯</a>
+                                        <div class="view-more-actions">
+                                            <ul>
+                                                <li><a href="#" class="merge-with">Merge with ...</a></li>
+                                                <li>
+                                                    <a href="#" class="edit-this-org">Edit this organisation</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
                                 </td>
                             </tr>
                             </tbody>
                         </table>
                     </div>
-                    <div class="panel-body">
+                    <div class="panel-body panel-org-body panel__partner-org">
+                        <h3>@lang('global.partner_organisations')</h3>
+                        <a class="pull-right add-new-organisation" href="{{ route('organization.create', session('org_id')) }}">@lang('global.add_a_new_organisation')</a>
                         <table class="table table-striped">
-                            <thead>
-                            <tr>
-                                <td>@lang('global.partner_organisations')</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                            <tbody>
+                            <tr class="clickable-row" data-href="#">
+                                <td width="10px">
+                                    <a href="#" class="edit-activity pull-right">@lang('global.edit')</a>
+                                </td>
+                                <td class="organisation-name">
+                                    <a href="#">DFID</a>
+                                    <span class="identifier">GB-GOV-1</span>
+                                </td>
+                                <td class="activities">
+                                    <span>4</span> Activities
+                                </td>
+                                <td class="sector">
+                                    Government
+                                </td>
+                                <td>
+                                    <div class="activity__status activity-status-Published">
+                                        <span>Published</span>
+                                    </div>
+                                </td>
+                                <td width="50px">
+                                    <div class="view-more">
+                                        <a href="#">⋯</a>
+                                        <div class="view-more-actions">
+                                            <ul>
+                                                <li><a href="#" class="merge-with">Merge with ...</a></li>
+                                                <li>
+                                                    <a href="#" class="edit-this-org">Edit this organisation</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </td>
                             </tr>
-                            </thead>
+                            <tr class="clickable-row" data-href="#">
+                                <td width="10px">
+                                    <a href="#" class="edit-activity pull-right">@lang('global.edit')</a>
+                                </td>
+                                <td class="organisation-name">
+                                    <a href="#">Abt Associates Inc.</a>
+                                    <span class="identifier">US-EIN-042347643</span>
+                                </td>
+                                <td class="activities">
+                                    <span>6</span> Activities
+                                </td>
+                                <td class="sector">
+                                    Private sector
+                                </td>
+                                <td>
+                                    <div class="activity__status activity-status-Completed">
+                                        <span>Completed</span>
+                                    </div>
+                                </td>
+                                <td width="50px">
+                                    <div class="view-more">
+                                        <a href="#">⋯</a>
+                                        <div class="view-more-actions">
+                                            <ul>
+                                                <li><a href="#" class="merge-with">Merge with ...</a></li>
+                                                <li>
+                                                    <a href="#" class="edit-this-org">Edit this organisation</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="clickable-row" data-href="#">
+                                <td width="10px">
+                                    <a href="{{ route('organization-data.edit', $reportingOrg->id)}}" class="edit-activity pull-right">@lang('global.edit')</a>
+                                </td>
+                                <td class="organisation-name">
+                                    <a href="#">Nepal Women Commission</a>
+                                    <span class="identifier">NP-CRO-098126</span>
+                                </td>
+                                <td class="activities">
+                                    <span>2</span> Activities
+                                </td>
+                                <td class="sector">
+                                    Private Sector
+                                </td>
+                                <td>
+                                    <div class="activity__status activity-status-Published">
+                                        <span>Published</span>
+                                    </div>
+                                </td>
+                                <td width="50px">
+                                    <div class="view-more">
+                                        <a href="#">⋯</a>
+                                        <div class="view-more-actions">
+                                            <ul>
+                                                <li><a href="#" class="merge-with">Merge with ...</a></li>
+                                                <li>
+                                                    <a href="#" class="edit-this-org">Edit this organisation</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="clickable-row" data-href="#">
+                                <td width="10px">
+                                    <a href="{{ route('organization-data.edit', $reportingOrg->id)}}" class="edit-activity pull-right">@lang('global.edit')</a>
+                                </td>
+                                <td class="organisation-name">
+                                    <a href="#">DFIDUK</a>
+                                </td>
+                                <td class="activities">
+                                    <span>2</span> Activities
+                                </td>
+                                <td class="sector">
+                                    Government
+                                </td>
+                                <td>
+                                    <div class="activity__status activity-status-Published">
+                                        <span>Published</span>
+                                    </div>
+                                </td>
+                                <td width="50px">
+                                    <div class="view-more">
+                                        <a href="#">⋯</a>
+                                        <div class="view-more-actions">
+                                            <ul>
+                                                <li><a href="#" class="merge-with">Merge with ...</a></li>
+                                                <li>
+                                                    <a href="#" class="edit-this-org">Edit this organisation</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            </tbody>
                             <tbody>
                             @foreach($participatingOrg as $orgData)
                                 <tr>

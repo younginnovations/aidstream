@@ -286,5 +286,6 @@ return [
     'unpublish_organisation'                       => 'Unpublish Organisation',
     'successfully_unlinked_org_data'               => 'Organization Data unlinked successfully.',
     'unlink_org_data_unsuccessful'                 => 'Could not unlink Organization Data.',
-    'partner_organisations'                        => 'Partner Organisations'
+    'partner_organisations'                        => 'Partner Organisations',
+    'add_a_new_organisation'                       => 'Add a new Organisation'
 ];
