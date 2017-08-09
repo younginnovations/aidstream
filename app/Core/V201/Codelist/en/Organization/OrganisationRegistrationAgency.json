@@ -723,6 +723,13 @@
       "code": "ZW-ROD",
       "name": "Registrar of Deeds",
       "language": "en"
+    },
+    {
+      "category": "LR",
+      "category-name": "LIBERIA",
+      "code": "LR-MPEA",
+      "name": "Ministry of Planning and Economic Affairs",
+      "language": "en"
     }
   ]
 }
