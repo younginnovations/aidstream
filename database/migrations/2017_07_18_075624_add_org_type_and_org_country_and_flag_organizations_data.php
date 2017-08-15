@@ -19,7 +19,7 @@ class AddOrgTypeAndOrgCountryAndFlagOrganizationsData extends Migration
                 $table->string('country')->nullable();
                 $table->string('identifier')->nullable();
                 $table->boolean('is_reporting_org')->default(true);
-                $table->boolean('is_publisher')->default(false);
+                $table->boolean('is_publisher')->default(false)->nullable();
                 $table->json('used_by')->default(json_encode([]));
             }
         );

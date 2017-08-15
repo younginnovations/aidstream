@@ -3,100 +3,100 @@
 @section('title', trans('title.participating_organisation'). ' - ' . $activityData->IdentifierTitle)
 
 @section('content')
-    <style>
-        .lists li {
-            margin-bottom: 20px;
-        }
+    {{--<style>--}}
+        {{--.lists li {--}}
+            {{--margin-bottom: 20px;--}}
+        {{--}--}}
 
-        .lists span {
-            margin-right: 10px;
-            margin-left: 20px;
-        }
+        {{--.lists span {--}}
+            {{--margin-right: 10px;--}}
+            {{--margin-left: 20px;--}}
+        {{--}--}}
 
-        .lists div {
-            margin-bottom: 10px;
-        }
+        {{--.lists div {--}}
+            {{--margin-bottom: 10px;--}}
+        {{--}--}}
 
-        .not-found-publisher, .found-publishers {
-            border: 1px solid silver;
-            border-radius: 5px;
-            box-shadow: 0 1px 1px #00A8FF;
-            position: absolute;
-            z-index: 999999999 !important;
-            background-color: white;
-        }
+        {{--.not-found-publisher, .found-publishers {--}}
+            {{--border: 1px solid silver;--}}
+            {{--border-radius: 5px;--}}
+            {{--box-shadow: 0 1px 1px #00A8FF;--}}
+            {{--position: absolute;--}}
+            {{--z-index: 999999999 !important;--}}
+            {{--background-color: white;--}}
+        {{--}--}}
 
-        .not-found-publisher li, .found-publishers li {
-            padding: 10px 10px;
-        }
+        {{--.not-found-publisher li, .found-publishers li {--}}
+            {{--padding: 10px 10px;--}}
+        {{--}--}}
 
-        .found-publishers li:not(:last-child):not(:first-child):hover {
-            background-color: #BFDEEC;
-        }
+        {{--.found-publishers li:not(:last-child):not(:first-child):hover {--}}
+            {{--background-color: #BFDEEC;--}}
+        {{--}--}}
 
-        .contact-heading {
-            color: #00A8FF;
-            font-size: 16px !important;
-        }
+        {{--.contact-heading {--}}
+            {{--color: #00A8FF;--}}
+            {{--font-size: 16px !important;--}}
+        {{--}--}}
 
-        .not-found-publisher li p, .found-publishers li p {
-            margin-left: 5px;
-            font-size: 13px;
-        }
+        {{--.not-found-publisher li p, .found-publishers li p {--}}
+            {{--margin-left: 5px;--}}
+            {{--font-size: 13px;--}}
+        {{--}--}}
 
-        .found-publishers li p {
-            margin-bottom: 2px;
-        }
+        {{--.found-publishers li p {--}}
+            {{--margin-bottom: 2px;--}}
+        {{--}--}}
 
-        .not-found-publisher li a, .found-publishers li a {
-            text-decoration: none;
-            color: inherit;
-        }
+        {{--.not-found-publisher li a, .found-publishers li a {--}}
+            {{--text-decoration: none;--}}
+            {{--color: inherit;--}}
+        {{--}--}}
 
-        .not-found-publisher li:nth-child(even) {
-            background-color: #BFDEEC;
-        }
+        {{--.not-found-publisher li:nth-child(even) {--}}
+            {{--background-color: #BFDEEC;--}}
+        {{--}--}}
 
-        .remove_organisation {
-            background: url(../../images/ic-sprite.svg) -393px 0 no-repeat;
-            border: none;
-            text-indent: -999px;
-            position: absolute;
-            right: 10px;
-            top: 8px;
-            width: 22px;
-            height: 22px;
-            padding: 0;
-        }
+        {{--.remove_organisation {--}}
+            {{--background: url(../../images/ic-sprite.svg) -393px 0 no-repeat;--}}
+            {{--border: none;--}}
+            {{--text-indent: -999px;--}}
+            {{--position: absolute;--}}
+            {{--right: 10px;--}}
+            {{--top: 8px;--}}
+            {{--width: 22px;--}}
+            {{--height: 22px;--}}
+            {{--padding: 0;--}}
+        {{--}--}}
 
-        .addMore, .addMore:focus {
-            background: url(../../images/ic-sprite.svg) 31px -637px no-repeat;
-            border: none;
-            font-size: 12px;
-            padding: 0 0 5px 52px;
-            margin: 0 0 0 -9px;
-            display: block;
-            color: #484848;
-            overflow: hidden;
-            line-height: 34px;
-            position: relative;
-        }
+        {{--.addMore, .addMore:focus {--}}
+            {{--background: url(../../images/ic-sprite.svg) 31px -637px no-repeat;--}}
+            {{--border: none;--}}
+            {{--font-size: 12px;--}}
+            {{--padding: 0 0 5px 52px;--}}
+            {{--margin: 0 0 0 -9px;--}}
+            {{--display: block;--}}
+            {{--color: #484848;--}}
+            {{--overflow: hidden;--}}
+            {{--line-height: 34px;--}}
+            {{--position: relative;--}}
+        {{--}--}}
 
-        .addMore, .addMore:focus, .addMore:hover {
-            white-space: normal;
-            line-height: normal;
-            text-align: left;
-        }
+        {{--.addMore, .addMore:focus, .addMore:hover {--}}
+            {{--white-space: normal;--}}
+            {{--line-height: normal;--}}
+            {{--text-align: left;--}}
+        {{--}--}}
 
-        .addMore:hover {
-            color: #00A8FF;
-            background-color: white;
-        }
+        {{--.addMore:hover {--}}
+            {{--color: #00A8FF;--}}
+            {{--background-color: white;--}}
+        {{--}--}}
 
-        [v-cloak] {
-            display: none;
-        }
-    </style>
+        {{--[v-cloak] {--}}
+            {{--display: none;--}}
+        {{--}--}}
+    {{--</style>--}}
     {{Session::get('message')}}
     <div class="container main-container">
         <div class="row">
@@ -147,11 +147,20 @@
     <div id="participating-form" class="hidden">
         <div class="collection_form has_add_more">
             <div class="form-group">
-                <div class="form-group" v-bind:class="{'has-error': (organisation.organization_role == '' && display_error)}">
-                    {{Form::label('Organisation Role',trans('elementForm.organisation_role'),['class' => '.control-label'])}}
-                    {{Form::select('organization_role', $organizationRoles,null,['class' => 'form-control ignore_change','v-bind:value' => 'organisation.organization_role', 'v-on:change'=>'onchange($event)', 'placeholder' => 'Please select the following options.'])}}
-                    <div v-if="(organisation.organization_role == '' && display_error)" class="text-danger">Organisation Role is required.</div>
+                <div class="organisation-role">
+                    <label>Organisation Role</label>
+                    <ul>
+                        <li class="active"><input type="radio">1 - Funding</li>
+                        <li><input type="radio">2 - Accountable</li>
+                        <li><input type="radio">3 - Extending</li>
+                        <li><input type="radio">4 - Implementing</li>
+                    </ul>
                 </div>
+                {{--<div class="form-group" v-bind:class="{'has-error': (organisation.organization_role == '' && display_error)}">--}}
+                    {{--{{Form::label('Organisation Role',trans('elementForm.organisation_role'),['class' => '.control-label'])}}--}}
+                    {{--{{Form::select('organization_role', $organizationRoles,null,['class' => 'form-control ignore_change','v-bind:value' => 'organisation.organization_role', 'v-on:change'=>'onchange($event)', 'placeholder' => 'Please select the following options.'])}}--}}
+                    {{--<div v-if="(organisation.organization_role == '' && display_error)" class="text-danger">Organisation Role is required.</div>--}}
+                {{--</div>--}}
                 <div class="form-group" v-bind:class="{'has-error': (organisation.organization_type == '' && display_error)}">
                     {{Form::label('organisation_Type',trans('elementForm.organisation_type'),['class' => 'control-label'])}}
                     {{Form::select('organization_type',$organizationTypes, null,['class' => 'form-control ignore_change', 'v-bind:value' => 'organisation.organization_type', 'v-on:change'=>'onchange($event)', 'placeholder' => 'Please select the following options.','v-bind:readonly' => "disable_options[index]"])}}
