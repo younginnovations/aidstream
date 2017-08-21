@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="14px" height="14px" viewBox="0 0 14 14" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 45.1 (43504) - http://www.bohemiancoding.com/sketch -->
+    <title>Shape</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Screens" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="AidStream_Add-PO_choose-org-finder" transform="translate(-118.000000, -425.000000)" fill="#00A8FF">
+            <g id="organization-name_dropdown" transform="translate(96.000000, 391.000000)">
+                <g id="filter-org-name" transform="translate(11.000000, 21.000000)">
+                    <g id="search" transform="translate(11.000000, 13.000000)">
+                        <path d="M9.72222222,8.55555556 L9.1,8.55555556 L8.86666667,8.32222222 C9.64444444,7.46666667 10.1111111,6.3 10.1111111,5.05555556 C10.1111111,2.25555556 7.85555556,0 5.05555556,0 C2.25555556,0 0,2.25555556 0,5.05555556 C0,7.85555556 2.25555556,10.1111111 5.05555556,10.1111111 C6.3,10.1111111 7.46666667,9.64444444 8.32222222,8.86666667 L8.55555556,9.1 L8.55555556,9.72222222 L12.4444444,13.6111111 L13.6111111,12.4444444 L9.72222222,8.55555556 L9.72222222,8.55555556 Z M5.05555556,8.55555556 C3.11111111,8.55555556 1.55555556,7 1.55555556,5.05555556 C1.55555556,3.11111111 3.11111111,1.55555556 5.05555556,1.55555556 C7,1.55555556 8.55555556,3.11111111 8.55555556,5.05555556 C8.55555556,7 7,8.55555556 5.05555556,8.55555556 L5.05555556,8.55555556 Z" id="Shape"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

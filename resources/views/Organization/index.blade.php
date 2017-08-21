@@ -34,17 +34,17 @@
                                 <td width="10px">
                                     <a href="{{ route('organization-data.edit', $reportingOrg->id)}}" class="edit-activity pull-right">@lang('global.edit')</a>
                                 </td>
-                                <td class="organisation-name">
+                                <td class="organisation-name" width="70%">
                                     <a href="{{route('organization.show', $reportingOrg->id)}}">
                                     {{ $reportingOrg->name[0]['narrative'] }}
                                     </a>
                                     <span class="identifier">US-EIN-042347643</span>
                                 </td>
-                                <td class="sector">
+                                <td class="sector" width="15%">
                                     {{--{{ $reportingOrg->type ? $getCode->getCodeNameOnly('OrganizationType', $reportingOrg->type, -4, 'Organization') : '' }}--}}
                                     Private Sector
                                 </td>
-                                <td>
+                                <td width="10%">
                                     <div class="activity__status activity-status-{{ $reportingOrg->getStatus() }}">
                                         <span>{{ $reportingOrg->getStatus() }}</span>
                                     </div>
@@ -209,19 +209,19 @@
                                     <td width="10px">
                                         <a href="#" class="edit-activity pull-right">@lang('global.edit')</a>
                                     </td>
-                                    <td class="organisation-name">
+                                    <td class="organisation-name" width="55%">
                                         <a href="{{route('organization.show', $orgData->id)}}">
                                             {{ $orgData->name[0]['narrative'] ? $orgData->name[0]['narrative'] : trans('global.name_not_given')}}
                                         </a>
                                         <span class="identifier">GB-GOV-1</span>
                                     </td>
-                                    <td class="activities">
+                                    <td class="activities" width="15%">
                                         {{ $orgData->includedActivities() }}
                                     </td>
-                                    <td class="sector">
+                                    <td class="sector" width="15%">
                                         {{ $getCode->getCodeNameOnly('OrganizationType', $orgData->type, -4, 'Organization') }}
                                     </td>
-                                    <td>
+                                    <td width="10%">
                                         <div class="activity__status activity-status-{{ $orgData->getStatus() }}">
                                             <span>{{ $orgData->getStatus() }}</span>
                                         </div>

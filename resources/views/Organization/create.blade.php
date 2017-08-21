@@ -10,10 +10,7 @@
                 @include('includes.response')
                 <div class="element-panel-heading">
                     <div>
-                        <span>Add a participating organization</span>
-                        <div class="element-panel-heading-info">
-                            <span class="po-type">6504(AGDEVCO: IMPACT EVALUATION OF AFRICAN AGRICULTURAL DEVELOPMENT COMPANY (AGDEVCO))</span>
-                        </div>
+                        <span>Add a new partner organization</span>
                     </div>
                     {{--<div>@lang('element.name')--}}
                     {{--<div class="panel-action-btn">--}}
@@ -29,15 +26,6 @@
                                 <div class="create-form" id="participatingContainer"
                                      data-organization="{{json_encode($organizations)}}" data-route="{{$formRoute}}">
                                     {{Form::open()}}
-                                    {{--<div class="organisation-role">--}}
-                                    {{--<label>Organisation Role</label>--}}
-                                    {{--<ul>--}}
-                                    {{--<li class="active"><input type="radio">1 - Funding</li>--}}
-                                    {{--<li><input type="radio">2 - Accountable</li>--}}
-                                    {{--<li><input type="radio">3 - Extending</li>--}}
-                                    {{--<li><input type="radio">4 - Implementing</li>--}}
-                                    {{--</ul>--}}
-                                    {{--</div>--}}
                                     <participating-org v-for="(organisation,index) in organisations"
                                                        v-on:search="setCurrentOrganization(index,$event)"
                                                        :organisation="organisation"
@@ -148,14 +136,16 @@
                         </div>
                         <div class="suggestions">
                             <h3>Please choose a list from below</h3>
-                            <div class="lists" style="height:230px;max-height: 230px;overflow: scroll">
-                                <ul style="border: 1px solid silver;padding: 10px">
+                            <div class="lists">
+                                <ul>
                                     <li v-for="(list,index) in registrar_list[0]">
-                                        <div><input type="radio" name="registrar" v-on:change="displayForm($event)"
-                                                    v-bind:value="list['code']"/> @{{ list['name']['en'] }}
-                                            (@{{ list['code'] }})
+                                        <div class="register-list">
+                                            <input type="radio" name="registrar" v-on:change="displayForm($event)"
+                                                    v-bind:value="list['code']"/>
+                                            <span>@{{ list['name']['en'] }}
+                                            <strong>(@{{ list['code'] }})</strong></span>
                                         </div>
-                                        <div><span>Quality Score: @{{ list['quality'] }}</span><span><a
+                                        <div class="score-block"><span>Quality Score: <strong>@{{ list['quality'] }}</strong></span><span><a
                                                         v-bind:href="list.url" target="_blank">View this list</a></span>
                                         </div>
                                     </li>
@@ -170,6 +160,9 @@
                                 <div class="form-group">
                                     {{Form::label('Identifier','Organisation Registration Number',['class' => 'control-label'])}}
                                     {{Form::text('identifier', null,['class' => 'form-control ignore_change', 'v-bind:value' => 'organisation.identifier', "@blur" => 'updateOrgIdentifier($event)'])}}
+                                </div>
+                                <div class="form-group">
+                                <button class="btn btn-form">Use this organisation</button>
                                 </div>
                             </div>
                         </div>

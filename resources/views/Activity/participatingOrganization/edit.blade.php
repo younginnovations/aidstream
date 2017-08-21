@@ -105,12 +105,12 @@
                 @include('includes.response')
                 <div class="element-panel-heading">
                     <div>
-                        <span>@lang('element.participating_organisation')</span>
+                        <span>@lang('element.add_participating_organisation')</span>
                         <div class="element-panel-heading-info"><span>{{$activityData->IdentifierTitle}}</span></div>
-                        <div class="panel-action-btn">
-                            <a href="{{ route('activity.show', $id) }}" class="btn btn-primary btn-view-it">@lang('global.view_activity')
-                            </a>
-                        </div>
+                    </div>
+                    <div class="panel-action-btn">
+                        <a href="{{ route('activity.show', $id) }}" class="btn btn-primary btn-view-it">@lang('global.view_activity')
+                        </a>
                     </div>
                 </div>
                 <div class="col-xs-12 col-md-8 col-lg-8 element-content-wrapper">
@@ -188,13 +188,24 @@
                         <li><p>The above list is pulled from IATI Registry publisher's list.</p></li>
                     </ul>
 
-                    <ul v-if="display_partner_org && (partner_organisations.length > 0)" class="found-publishers">
-                        <li><p>Choose an organisation from below.</p></li>
-                        <li v-for="(partnerOrganization, index) in partner_organisations">
+                    <ul v-if="display_partner_org && (partner_organisations.length > 0)" class="found-publishers filter-publishers">
+                        <li><div class="search-publishers"><input type="search" placeholder="Filter by organisation name..."></div></li>
+                        <li>
+                            <p>From your Partner Organization List</p>
+                            <div v-for="(partnerOrganization, index) in partner_organisations">
                             <a href="#" v-on:click="partnerSelected($event)" v-bind:selectedPartner="index">
-                                <p v-bind:selectedPartner="index">@{{ partnerOrganization.identifier }} @{{ partnerOrganization.name ? partnerOrganization.name[0]['narrative'] : 'No name'}}</p>
-                                <p v-bind:selectedPartner="index">@{{ partnerOrganization.type}}</p>
+                                <strong v-bind:selectedPartner="index">@{{ partnerOrganization.identifier }} @{{ partnerOrganization.name ? partnerOrganization.name[0]['narrative'] : 'No name'}}</strong>
+                                <span class="language">en</span>
                             </a>
+                            <div class="partners">
+                                <div class="pull-left">
+                                    <span v-bind:selectedPartner="index" class="tick">@{{ partnerOrganization.type}}</span>
+                                </div>
+                                <div class="pull-right">
+                                    <span class="suggest-edit">Suggest Edit</span>
+                                </div>
+                            </div>
+                            </div>
                         </li>
                         <li><p>The above list is pulled from your organisation data.</p></li>
                     </ul>
@@ -218,16 +229,14 @@
                         </li>
                     </ul>
                 </div>
-
+                <div class="form-group organisation-identifier">
+                    {{Form::label('organisation_identifier','Organisation Identifier:',['class' => 'control-label'])}}
+                    {{--@{{ organisation.narrative[0]['narrative'] }}--}}
+                    @{{organisation.identifier}}
+                </div>
                 <div class="form-group">
                     {{Form::label('activity_id',trans('elementForm.activity_id'),['class' => 'control-label'])}}
                     {{Form::text('activity_id',null,['class' => 'form-control','v-bind:value' => 'organisation.activity_id' ])}}
-                </div>
-                <div class="row">
-                    <div class="form-group">
-                        @{{ organisation.narrative[0]['narrative'] }}
-                        @{{organisation.identifier}}
-                    </div>
                 </div>
                 <button class="remove_organisation" type="button" @click="remove()" v-bind:index="index">Remove Organisation</button>
             </div>
