@@ -103,7 +103,7 @@
                             <a href="#" @click="display()">
                                 <h3 class="contact-heading">Use Organization Finder <span> (org-id.guide)</span></h3>
                                 <p>Use our organization finder helper to get a new identifier for this.</p>
-                                <p><span class="caution">Caution:</span> Please beaware that this can be a long and
+                                <p><span class="caution">Caution:</span> Please beware that this can be a long and
                                     tedious process. It may be the case that you will not
                                     find the organization even with this. In this case, leave the identifier field blank
                                     and just mention organisation name only.</p>
