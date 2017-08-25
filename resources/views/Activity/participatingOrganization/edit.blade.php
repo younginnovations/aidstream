@@ -3,100 +3,6 @@
 @section('title', trans('title.participating_organisation'). ' - ' . $activityData->IdentifierTitle)
 
 @section('content')
-    {{--<style>--}}
-        {{--.lists li {--}}
-            {{--margin-bottom: 20px;--}}
-        {{--}--}}
-
-        {{--.lists span {--}}
-            {{--margin-right: 10px;--}}
-            {{--margin-left: 20px;--}}
-        {{--}--}}
-
-        {{--.lists div {--}}
-            {{--margin-bottom: 10px;--}}
-        {{--}--}}
-
-        {{--.not-found-publisher, .found-publishers {--}}
-            {{--border: 1px solid silver;--}}
-            {{--border-radius: 5px;--}}
-            {{--box-shadow: 0 1px 1px #00A8FF;--}}
-            {{--position: absolute;--}}
-            {{--z-index: 999999999 !important;--}}
-            {{--background-color: white;--}}
-        {{--}--}}
-
-        {{--.not-found-publisher li, .found-publishers li {--}}
-            {{--padding: 10px 10px;--}}
-        {{--}--}}
-
-        {{--.found-publishers li:not(:last-child):not(:first-child):hover {--}}
-            {{--background-color: #BFDEEC;--}}
-        {{--}--}}
-
-        {{--.contact-heading {--}}
-            {{--color: #00A8FF;--}}
-            {{--font-size: 16px !important;--}}
-        {{--}--}}
-
-        {{--.not-found-publisher li p, .found-publishers li p {--}}
-            {{--margin-left: 5px;--}}
-            {{--font-size: 13px;--}}
-        {{--}--}}
-
-        {{--.found-publishers li p {--}}
-            {{--margin-bottom: 2px;--}}
-        {{--}--}}
-
-        {{--.not-found-publisher li a, .found-publishers li a {--}}
-            {{--text-decoration: none;--}}
-            {{--color: inherit;--}}
-        {{--}--}}
-
-        {{--.not-found-publisher li:nth-child(even) {--}}
-            {{--background-color: #BFDEEC;--}}
-        {{--}--}}
-
-        {{--.remove_organisation {--}}
-            {{--background: url(../../images/ic-sprite.svg) -393px 0 no-repeat;--}}
-            {{--border: none;--}}
-            {{--text-indent: -999px;--}}
-            {{--position: absolute;--}}
-            {{--right: 10px;--}}
-            {{--top: 8px;--}}
-            {{--width: 22px;--}}
-            {{--height: 22px;--}}
-            {{--padding: 0;--}}
-        {{--}--}}
-
-        {{--.addMore, .addMore:focus {--}}
-            {{--background: url(../../images/ic-sprite.svg) 31px -637px no-repeat;--}}
-            {{--border: none;--}}
-            {{--font-size: 12px;--}}
-            {{--padding: 0 0 5px 52px;--}}
-            {{--margin: 0 0 0 -9px;--}}
-            {{--display: block;--}}
-            {{--color: #484848;--}}
-            {{--overflow: hidden;--}}
-            {{--line-height: 34px;--}}
-            {{--position: relative;--}}
-        {{--}--}}
-
-        {{--.addMore, .addMore:focus, .addMore:hover {--}}
-            {{--white-space: normal;--}}
-            {{--line-height: normal;--}}
-            {{--text-align: left;--}}
-        {{--}--}}
-
-        {{--.addMore:hover {--}}
-            {{--color: #00A8FF;--}}
-            {{--background-color: white;--}}
-        {{--}--}}
-
-        {{--[v-cloak] {--}}
-            {{--display: none;--}}
-        {{--}--}}
-    {{--</style>--}}
     {{Session::get('message')}}
     <div class="container main-container">
         <div class="row">
@@ -118,7 +24,8 @@
                         <div class="panel-body">
                             <div class="create-form">
                                 <div v-cloak class="create-form" id="participatingContainer" data-organization="{{json_encode($participatingOrganizations)}}"
-                                     data-partnerOrganization="{{json_encode($partnerOrganizations)}}" data-activityId="{{$id}}">
+                                     data-partnerOrganization="{{json_encode($partnerOrganizations)}}" data-activityId="{{$id}}"
+                                     data-organizationRoles="{{json_encode($organizationRoles)}}">
                                     <div v-if="display_server_error_message" class="alert alert-danger">@{{ server_error_message }}</div>
                                     {{Form::open()}}
                                     <participating-org v-for="(organisation,index) in organisations" v-on:remove="removeOrganisation(index)"
@@ -126,6 +33,7 @@
                                                        :organisation="organisation" :index="index"
                                                        v-on:display="displayModal($event)"
                                                        :display_error="display_error"
+                                                       :organisation_roles="organisationRoles"
                                                        :partner_organisations="partnerOrganisations">
                                     </participating-org>
                                     <button class="addMore" type="button" @click="addOrganisations()">Add another organisation</button>
@@ -147,20 +55,18 @@
     <div id="participating-form" class="hidden">
         <div class="collection_form has_add_more">
             <div class="form-group">
-                <div class="organisation-role">
-                    <label>Organisation Role</label>
+                <div class="organisation-role" v-bind:class="{'has-error': (organisation.organization_role == '' && display_error)}">
+                    {{Form::label('Organisation Role',trans('elementForm.organisation_role'),['class' => '.control-label'])}}
                     <ul>
-                        <li class="active"><input type="radio">1 - Funding</li>
-                        <li><input type="radio">2 - Accountable</li>
-                        <li><input type="radio">3 - Extending</li>
-                        <li><input type="radio">4 - Implementing</li>
+                        <li v-for="(role,code) in organisation_roles" v-bind:class="{'active': (organisation.organization_role == code)}">
+                            <label>
+                                <input type="radio" :checked="organisation.organization_role == code" name="organization_role" v-bind:value='code' v-on:change='onchange($event)'>@{{ role }}
+                            </label>
+                        </li>
                     </ul>
+                    <div v-if="(organisation.organization_role == '' && display_error)" class="text-danger">Organisation Role is required.</div>
                 </div>
-                {{--<div class="form-group" v-bind:class="{'has-error': (organisation.organization_role == '' && display_error)}">--}}
-                    {{--{{Form::label('Organisation Role',trans('elementForm.organisation_role'),['class' => '.control-label'])}}--}}
-                    {{--{{Form::select('organization_role', $organizationRoles,null,['class' => 'form-control ignore_change','v-bind:value' => 'organisation.organization_role', 'v-on:change'=>'onchange($event)', 'placeholder' => 'Please select the following options.'])}}--}}
-                    {{--<div v-if="(organisation.organization_role == '' && display_error)" class="text-danger">Organisation Role is required.</div>--}}
-                {{--</div>--}}
+
                 <div class="form-group" v-bind:class="{'has-error': (organisation.organization_type == '' && display_error)}">
                     {{Form::label('organisation_Type',trans('elementForm.organisation_type'),['class' => 'control-label'])}}
                     {{Form::select('organization_type',$organizationTypes, null,['class' => 'form-control ignore_change', 'v-bind:value' => 'organisation.organization_type', 'v-on:change'=>'onchange($event)', 'placeholder' => 'Please select the following options.','v-bind:readonly' => "disable_options[index]"])}}
@@ -174,66 +80,88 @@
                 </div>
                 <div class="form-group" v-bind:class="{'has-error': (organisation.narrative[0]['narrative'] == '' && display_error) }">
                     {{Form::label('Organization',trans('elementForm.organisation'),['class' => 'control-label'])}}
-                    {{Form::text('organization',null,['class' => 'form-control ignore_change','placeholder' => 'Type an organization name or identifier','@focus' => 'search($event)', '@keyup' => 'search($event)', '@keydown.tab'=> 'hideSuggestion','@blur'=>'hide($event)','autocomplete' => 'off'])}}
+                    {{Form::text('organization',null,['class' => 'form-control ignore_change','v-bind:value' => "organisation.narrative[0]['narrative']",'@focus' => 'displaySuggestion($event)', '@keydown.tab'=> 'hideSuggestion','@blur'=>'hide($event)','autocomplete' => 'off', 'readonly' => true])}}
 
                     <div v-if="(organisation.narrative[0]['narrative'] == '' && display_error)" class="text-danger">Organisation Name is required.</div>
-                    <ul v-if="suggestions.length > 0" class="found-publishers">
-                        <li><p>Choose an organisation from below</p></li>
-                        <li v-for="(publisher, index) in suggestions">
-                            <a href="#" v-on:click="selected($event)" v-bind:selectedSuggestion="index">
-                                <p v-bind:selectedSuggestion="index">@{{publisher.identifier}} @{{publisher.name}}</p>
-                                <p v-bind:selectedSuggestion="index">Type: @{{publisher.type}}</p>
-                            </a>
-                        </li>
-                        <li><p>The above list is pulled from IATI Registry publisher's list.</p></li>
-                    </ul>
 
-                    <ul v-if="display_partner_org && (partner_organisations.length > 0)" class="found-publishers filter-publishers">
-                        <li><div class="search-publishers"><input type="search" placeholder="Filter by organisation name..."></div></li>
-                        <li>
-                            <p>From your Partner Organization List</p>
-                            <div v-for="(partnerOrganization, index) in partner_organisations">
-                            <a href="#" v-on:click="partnerSelected($event)" v-bind:selectedPartner="index">
-                                <strong v-bind:selectedPartner="index">@{{ partnerOrganization.identifier }} @{{ partnerOrganization.name ? partnerOrganization.name[0]['narrative'] : 'No name'}}</strong>
-                                <span class="language">en</span>
-                            </a>
-                            <div class="partners">
-                                <div class="pull-left">
-                                    <span v-bind:selectedPartner="index" class="tick">@{{ partnerOrganization.type}}</span>
-                                </div>
-                                <div class="pull-right">
-                                    <span class="suggest-edit">Suggest Edit</span>
-                                </div>
-                            </div>
-                            </div>
-                        </li>
-                        <li><p>The above list is pulled from your organisation data.</p></li>
-                    </ul>
 
-                    <ul v-if="display_org_finder" class="not-found-publisher">
-                        <li><p>It seems there's no matching organisation in IATI Registry of publishers. You may do one of the following at this point.</p></li>
-                        <li class="contact-org" id="orgFinder">
-                            <a href="#">
-                                <p class="contact-heading">Contact Organisation</p>
-                                <p>Send them a message letting them know about this.</p>
-                            </a>
-                        </li>
-                        <li class="or">Or</li>
-                        <li id="orgFinder">
-                            <a href="#" @click="display()">
+                    <div v-if="display_org_list">
+                        <ul class="filter-publishers">
+                            <li>
+                                <div class="search-publishers">
+                                    <input type="search" :value="keywords[index]" placeholder="Filter by organisation name..." @keyup ='search($event)'>
+                                </div>
+                            </li>
+                        </ul>
+
+                        <ul v-if="suggestions.length > 0" class="found-publishers filter-publishers">
+                            <li><p>Choose an organisation from below</p></li>
+                            <li v-for="(publisher, index) in suggestions">
+                                <a href="#" v-on:click="selected($event)" v-bind:selectedSuggestion="index">
+                                    <strong v-bind:selectedSuggestion="index">@{{publisher.identifier}} @{{publisher.name}}</strong>
+                                    <div class="partners">
+                                        <div class="pull-left">
+                                            <span v-bind:selectedSuggestion="index">Type: @{{publisher.type}}</span>
+                                        </div>
+                                        <div class="pull-right">
+                                            <span class="suggest-edit">Suggest Edit</span>
+                                        </div>
+                                    </div>
+                                </a>
+
+                            </li>
+                            <li><p>The above list is pulled from IATI Registry publisher's list.</p></li>
+                        </ul>
+
+                        <ul v-if="display_partner_org && (partner_organisations.length > 0)" class="found-publishers filter-publishers">
+                            {{--<li>--}}
+                            {{--<div class="search-publishers"><input type="search" placeholder="Filter by organisation name..."></div>--}}
+                            {{--</li>--}}
+                            <li>
+                                <p>From your Partner Organization List</p>
+                                <div v-for="(partnerOrganization, index) in partner_organisations">
+                                    <a href="#" v-on:click="partnerSelected($event)" v-bind:selectedPartner="index">
+                                        <strong v-bind:selectedPartner="index">@{{ partnerOrganization.name ? partnerOrganization.name[0]['narrative'] : 'No name'}}</strong> <span class="language">en</span>
+                                    </a>
+                                    <div class="partners">
+                                        <div class="pull-left">
+                                            <span v-bind:selectedPartner="index" class="tick">@{{ partnerOrganization.identifier }} </span>
+                                        </div>
+                                        <div class="pull-right">
+                                            <span class="suggest-edit" v-if="partnerOrganization.is_publisher">Suggest Edit</span>
+                                            <span class="suggest-edit" v-if="!partnerOrganization.is_publisher">Edit</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li><p>The above list is pulled from your organisation data.</p></li>
+                        </ul>
+
+                        <ul v-if="display_org_finder" class="not-found-publisher">
+                            <li><p>It seems there's no matching organisation in IATI Registry of publishers. You may do one of the following at this point.</p></li>
+                            <li class="contact-org" id="orgFinder">
+                                <a href="#">
+                                    <p class="contact-heading">Contact Organisation</p>
+                                    <p>Send them a message letting them know about this.</p>
+                                </a>
+                            </li>
+                            <li class="or">Or</li>
+                            <li id="orgFinder">
+                                <a href="#" @click="display()">
                                 <h3 class="contact-heading">Use Organization Finder <span> (org-id.guide)</span></h3>
                                 <p>Use our organization finder helper to get a new identifier for this.</p>
                                 <p><span class="caution">Caution:</span> Please beware that this can be a long and
                                     tedious process. It may be the case that you will not
                                     find the organization even with this. In this case, leave the identifier field blank
                                     and just mention organisation name only.</p>
-                            </a>
-                        </li>
-                    </ul>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
                 </div>
                 <div class="form-group organisation-identifier">
                     {{Form::label('organisation_identifier','Organisation Identifier:',['class' => 'control-label'])}}
-                    {{--@{{ organisation.narrative[0]['narrative'] }}--}}
                     @{{organisation.identifier}}
                 </div>
                 <div class="form-group">
@@ -304,29 +232,37 @@
         template: '#participating-form',
         data: function () {
           return {
+            display_org_list: false,
             display_org_finder: false,
             display_partner_org: false,
             suggestions: [],
             searching: false,
-            disable_options: []
+            disable_options: [],
+            keywords: []
           }
         },
         created: function () {
+          this.keywords[this.index] = '';
           this.disable_options[this.index] = (this.organisation.is_publisher) ? true : false;
         },
-        props: ['partner_organisations', 'organisation', 'index', 'display_error'],
+        props: ['partner_organisations', 'organisation', 'index', 'display_error', 'organisation_roles'],
         methods: {
+          displaySuggestion: function () {
+            this.keywords[this.index] = '';
+            this.display_org_list = true;
+            this.display_partner_org = true;
+          },
           search: function (event) {
             var self = this;
             self.display_partner_org = true;
-
+            this.keywords[this.index] = event.target.value;
             if (event.target.value.trim().length > 3) {
               self.display_partner_org = false;
               if (!self.searching) {
                 self.searching = true;
-                self.organisation['narrative'][0]['narrative'] = '';
-                self.organisation['narrative'][0]['language'] = '';
-                self.organisation['identifier'] = '';
+//                self.organisation['narrative'][0]['narrative'] = '';
+//                self.organisation['narrative'][0]['language'] = '';
+//                self.organisation['identifier'] = '';
                 self.disable_options[this.index] = false;
                 this.suggestions.splice(0, this.suggestions.length);
                 setTimeout(function () {
@@ -336,7 +272,6 @@
                       response.data.forEach(function (publisher) {
                         publisher.is_publisher = true;
                         self.suggestions.push(publisher);
-                        self.display_org_finder = false;
                       });
                     })
                     .catch(function (error) {
@@ -354,6 +289,7 @@
             this.$emit('search', this.index);
           },
           hideSuggestion: function () {
+            this.display_org_list = false;
             this.display_partner_org = false;
             this.display_org_finder = false;
             this.suggestions.splice(0, this.suggestions.length);
@@ -366,6 +302,7 @@
             this.organisation[event.target.name] = event.target.value;
           },
           display: function () {
+            this.display_org_list = false;
             this.display_org_finder = false;
             var country = this.organisation['country'];
             var self = this;
@@ -379,6 +316,7 @@
           },
           selected: function (event) {
             this.disable_options[this.index] = true;
+            this.display_org_list = false;
             var selectedIndex = event.target.getAttribute('selectedSuggestion');
             this.organisation['organization_type'] = this.suggestions[selectedIndex]['type'];
             this.organisation['is_publisher'] = this.suggestions[selectedIndex]['is_publisher'];
@@ -390,6 +328,7 @@
           },
           hide: function (event) {
             if (!event.relatedTarget) {
+              this.display_org_list = false;
               this.display_org_finder = false;
               this.display_partner_org = false;
               this.suggestions.splice(0, this.suggestions.length);
@@ -407,6 +346,7 @@
             this.organisation['narrative'][0]['language'] = 'en';
             this.disable_options[this.index] = (this.organisation.is_publisher) ? true : false;
             this.display_partner_org = false;
+            this.display_org_list = false;
           }
         }
       });
@@ -422,6 +362,7 @@
         },
         methods: {
           close: function () {
+            this.display_org_info_form = false;
             this.$emit('close', false);
           },
           displayForm: function (event) {
@@ -457,7 +398,8 @@
           registrarList: [],
           display_error: false,
           display_server_error_message: false,
-          server_error_message: ''
+          server_error_message: '',
+          organisationRoles: []
         },
         mounted: function () {
           if (JSON.parse(this.$el.getAttribute('data-organization'))) {
@@ -472,6 +414,10 @@
               "org_data_id": "",
               "narrative": [{"narrative": "", "language": ""}]
             });
+          }
+
+          if (JSON.parse(this.$el.getAttribute('data-organizationRoles'))) {
+            this.organisationRoles = JSON.parse(this.$el.getAttribute('data-organizationRoles'));
           }
 
           if (JSON.parse(this.$el.getAttribute('data-partnerOrganization'))) {
