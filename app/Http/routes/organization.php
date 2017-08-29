@@ -99,5 +99,15 @@ $router->group(
             'as'   => 'organization-data.unpublish',
             'uses' => 'OrganizationController@unpublishOrganizationData'
         ]);
+
+        $router->get('/get-activity-titles/{organizationDataId}', [
+            'as'   => 'organization.get-activity-titles',
+            'uses' => 'OrganizationController@getActivityTitles'
+        ]);
+
+        $router->post('/organization/{organizationFrom}/{organizationTo}', [
+            'as'   => 'organization.merge-organization-data',
+            'uses' => 'OrganizationController@mergeOrganizations'
+        ]);
     }
 );

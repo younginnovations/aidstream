@@ -60,7 +60,7 @@
                     <ul>
                         <li v-for="(role,code) in organisation_roles" v-bind:class="{'active': (organisation.organization_role == code)}">
                             <label>
-                                <input type="radio" :checked="organisation.organization_role == code" name="organization_role" v-bind:value='code' v-on:change='onchange($event)'>@{{ role }}
+                                <input type="radio" :checked="organisation.organization_role == code" :name="index" v-bind:value='code' v-on:change='onchange($event)'>@{{ role }}
                             </label>
                         </li>
                     </ul>
@@ -299,7 +299,11 @@
             this.$emit('remove', this.index);
           },
           onchange: function (event) {
-            this.organisation[event.target.name] = event.target.value;
+              if (event.target.name == this.index) {
+                  this.organisation['organization_role'] = event.target.value;
+              } else {
+                  this.organisation[event.target.name] = event.target.value;
+              }
           },
           display: function () {
             this.display_org_list = false;
@@ -474,6 +478,7 @@
           isValid: function () {
             var self = this;
             var status = true;
+              console.log(this.organisations);
             this.organisations.forEach(function (organisation, index) {
               if (organisation.country === '' || organisation.narrative[0]['narrative'] === '' || organisation.organization_type === '' || organisation.organization_role === '') {
                 self.display_error = true;

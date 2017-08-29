@@ -206,4 +206,14 @@ class Activity extends Model
     {
         return $this->imported_from_xml;
     }
+
+    /**
+     * Get the Title for an Activity.
+     *
+     * @return mixed
+     */
+    public function titleText()
+    {
+        return $this->title[0]['narrative'];
+    }
 }

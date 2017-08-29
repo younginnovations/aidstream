@@ -51,6 +51,8 @@ class OrganizationController extends Controller
      */
     protected $nameManager;
 
+    protected $activityManager;
+
     /**
      * Create a new controller instance.
      *
@@ -719,8 +721,8 @@ class OrganizationController extends Controller
      */
     public function unpublishOrganizationData($organizationDataId, Request $request)
     {
-        $organizationData       = $this->organizationManager->findOrganizationData($organizationDataId);
-        $organization           = $organizationData->organization;
+        $organizationData = $this->organizationManager->findOrganizationData($organizationDataId);
+        $organization     = $organizationData->organization;
 
         if (!$this->organizationManager->unpublishOrganization($organization, $organizationDataId)) {
             $response = ['type' => 'danger', 'code' => ['message', 'message' => trans('global.unlink_org_data_unsuccessful')]];
@@ -729,5 +731,98 @@ class OrganizationController extends Controller
         }
 
         return redirect()->back()->withResponse($response);
+    }
+
+    /**
+     * Get the titles for Activities during the OrganizationData merge process.
+     *
+     * @param $organizationDataId
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getActivityTitles($organizationDataId)
+    {
+        $organization         = $this->organizationManager->findOrganizationData($organizationDataId);
+        $usedActivities       = $organization->used_by;
+        $usedActivitiesTitles = [];
+
+        foreach ($usedActivities as $activity) {
+            $usedActivitiesTitles[] = $this->activityManager->getActivityData($activity)->titleText();
+        }
+
+        return response()->json($usedActivitiesTitles);
+    }
+
+    /**
+     * Merge two OrganisationData.
+     *
+     * @param $organizationFrom
+     * @param $organizationTo
+     * @return mixed
+     */
+    public function mergeOrganizations($organizationFrom, $organizationTo)
+    {
+        $from = $this->organizationManager->findOrganizationData($organizationFrom);
+        $to   = $this->organizationManager->findOrganizationData($organizationTo);
+
+        $usedActivities = $from->used_by;
+
+        foreach ($usedActivities as $activity) {
+            $activity = $this->activityManager->getActivityData($activity);
+            $this->replaceParticipatingOrg($activity, $from, $to);
+        }
+
+        return redirect()->route('organization.index')->withResponse(
+            [
+                'type' => 'success',
+                'code' => ['message', 'message' => trans('organisation-data.successfully_merged')]
+            ]
+        );
+    }
+
+    /**
+     * Replace the Participating Organization in an Activity with the another during the merge process.
+     *
+     * @param $activity
+     * @param $from
+     * @param $to
+     */
+    protected function replaceParticipatingOrg(&$activity, &$from, &$to)
+    {
+        $participatingOrganizations = collect($activity->participating_organization);
+        $orgToBeReplaced            = $participatingOrganizations->filter(
+            function ($organization) use ($from) {
+                return $organization['org_data_id'] == $from->id;
+            }
+        );
+        $orgToBeReplaced = $orgToBeReplaced->first();
+
+        $remainingOrgs = $participatingOrganizations->filter(
+            function ($organization) use ($from) {
+                return $organization['org_data_id'] != $from->id;
+            }
+        );
+
+        $remainingOrgs->push(
+            [
+                'identifier'        => $to->identifier,
+                'activity_id'       => $orgToBeReplaced['activity_id'],
+                'organization_role' => $orgToBeReplaced['organization_role'],
+                'organization_type' => $to->organization_type,
+                'country'           => $to->country,
+                'org_data_id'       => $to->id,
+                'narrative'         => $to->name,
+                'is_publisher'      => $to->is_publisher
+            ]
+        );
+
+        $from->used_by = array_diff($from->used_by, [$activity->id]);
+        $from->save();
+
+        $oldUsedBy   = $to->used_by;
+        $oldUsedBy[] = $activity->id;
+        $to->update(['used_by' => $oldUsedBy]);
+
+        $activity->participating_organization = $remainingOrgs->toArray();
+        $activity->save();
     }
 }

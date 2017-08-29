@@ -176,11 +176,11 @@
 @endif
 @yield('humanitarian-script')
 
-<script type="text/javascript">
-    $(document).ready(function () {
-        $('form select').select2();
-    });
-</script>
+{{--<script type="text/javascript">--}}
+    {{--$(document).ready(function () {--}}
+        {{--$('form select').select2();--}}
+    {{--});--}}
+{{--</script>--}}
 <!-- Google Analytics -->
 <script type="text/javascript" src="{{url('/js/ga.js')}}"></script>
 <script type="text/javascript" src="//cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>

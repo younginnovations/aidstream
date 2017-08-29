@@ -666,9 +666,17 @@ class ActivityController extends Controller
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
-        $result = $this->activityManager->deleteElement($activity, $element);
+        $orgDataId = ($element === 'participating_organization' ) ? array_get($activity->participating_organization, '0.org_data_id', null) : null;
+        $result    = $this->activityManager->deleteElement($activity, $element);
 
         if ($result) {
+            if ($orgDataId && ($element === 'participating_organization' )) {
+                $organizationData          = $this->organizationManager->findOrganizationData($orgDataId);
+                $activitiesInUse           = $organizationData->used_by;
+                $organizationData->used_by = array_diff($activitiesInUse, [$id]);
+                $organizationData->save();
+            }
+
             $this->activityManager->resetActivityWorkflow($id);
             $response = ['type' => 'success', 'code' => ['activity_element_removed', ['element' => trans('global.activity')]]];
         } else {
@@ -677,23 +685,6 @@ class ActivityController extends Controller
 
         return redirect()->back()->withResponse($response);
     }
-
-//    /**
-//     * Convert object of StdClass into an array for registry package update.
-//     * @param $data
-//     * @return array
-//     */
-//    protected function convertIntoArray($data)
-//    {
-//        return [
-//            'title'        => $data->title,
-//            'name'         => $data->name,
-//            'author_email' => $data->author_email,
-//            'owner_org'    => $data->owner_org,
-//            'resources'    => $data->resources,
-//            'extras'       => $data->extras,
-//        ];
-//    }
 
     /**
      * Get data from DB and generate xml
@@ -906,7 +897,7 @@ class ActivityController extends Controller
      */
     public function getTransactionView(Request $request)
     {
-        $id = $request->get('id');
+        $id                              = $request->get('id');
         $activityDataList['transaction'] = $this->transactionManager->getTransactions($id)->toArray();;
 
         return view('Activity.partials.transaction', compact('activityDataList', 'id'))->render();
@@ -920,7 +911,7 @@ class ActivityController extends Controller
      */
     public function getResultView(Request $request)
     {
-        $id = $request->get('id');
+        $id                          = $request->get('id');
         $activityDataList['results'] = $this->resultManager->getResults($id)->toArray();
 
         return view('Activity.partials.result', compact('activityDataList', 'id'))->render();

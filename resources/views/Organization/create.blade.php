@@ -10,7 +10,7 @@
                 @include('includes.response')
                 <div class="element-panel-heading">
                     <div>
-                        <span>Add a new partner organization</span>
+                        <span>{{ ($organizations) ? 'Edit Partner Organization' : 'Add a new Partner Organization' }}</span>
                     </div>
                     {{--<div>@lang('element.name')--}}
                     {{--<div class="panel-action-btn">--}}
@@ -45,7 +45,7 @@
                         </div>
                     </div>
                 </div>
-                @include('includes.menu_org')
+{{--                @include('includes.menu_org')--}}
             </div>
         </div>
     </div>
@@ -160,10 +160,12 @@
                                 <ul>
                                     <li v-for="(list,index) in registrar_list[0]">
                                         <div class="register-list">
-                                            <input type="radio" name="registrar" v-on:change="displayForm($event)"
-                                                   v-bind:value="list['code']"/>
-                                            <span>@{{ list['name']['en'] }}
+                                            <label>
+                                                <input type="radio" name="registrar" v-on:change="displayForm($event)"
+                                                       v-bind:value="list['code']"/>
+                                                <span>@{{ list['name']['en'] }}
                                                 <strong>(@{{ list['code'] }})</strong></span>
+                                            </label>
                                         </div>
                                         <div class="score-block"><span>Quality Score: <strong>@{{ list['quality'] }}</strong></span><span><a
                                                         v-bind:href="list.url" target="_blank">View this list</a></span>
@@ -189,7 +191,7 @@
                     </div>
                     <div class="modal-footer">
                         <div class="reset-form-option">
-                            <span>Reset form</span>
+                            <a @click="resetForm">Reset form</a>
                             <p>Reset the above form to start again.</p>
                         </div>
                         {{--<button type="button" class="btn btn-default" data-dismiss="modal" @click="close">Close</button>--}}
@@ -225,6 +227,7 @@
         methods: {
           displaySuggestion: function (event) {
             this.display_org_list = true;
+            this.keyword = '';
           },
           search: function (event) {
             var self = this;
@@ -335,7 +338,18 @@
           updateOrgIdentifier: function ($event) {
             this.organisation['identifier'] = '';
             this.organisation['identifier'] = this.selectedRegistrar + '-' + event.target.value;
-          }
+          },
+            resetForm: function () {
+                this.defaultData();
+            },
+            defaultData: function () {
+                this.organisation['type'] = '';
+                this.organisation['is_publisher'] = '';
+                this.organisation['identifier'] = '';
+                this.organisation['name'][0]['narrative'] = '';
+                this.organisation['country'] = '';
+                this.organisation['name'][0]['language'] = '';
+            }
         }
       });
 
