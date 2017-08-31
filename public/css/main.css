@@ -77,7 +77,7 @@ select, .form-control[readonly], form .select2-container, textarea {
      -moz-box-sizing: border-box;
           box-sizing: border-box;
   font-family: "Helvetica Neue", "Helvetica", "Roboto", "Arial", sans-serif;
-  font-size: 16px;
+  font-size: 14px;
   margin-bottom: 0.75em;
   padding: 0.5em;
   -webkit-transition: border-color 150ms ease;
@@ -6035,6 +6035,14 @@ select.systemVersion {
     padding: 6px 14px 6px 10px; }
     .organisation-role ul li.active {
       background: #E1F4FD; }
+    .organisation-role ul li label {
+      font-size: 14px;
+      margin-bottom: 0 !important;
+      text-transform: none; }
+      .organisation-role ul li label input[type="radio"] {
+        height: 14px;
+        width: 14px;
+        margin-top: 0; }
 
 .po-type {
   color: rgba(72, 72, 72, 0.7);
@@ -6048,6 +6056,8 @@ select.systemVersion {
   -webkit-box-shadow: 0 -4px 3px 0 rgba(180, 202, 213, 0.2);
           box-shadow: 0 -4px 3px 0 rgba(180, 202, 213, 0.2);
   position: absolute;
+  width: -webkit-calc(100% - 30px);
+  width: calc(100% - 30px);
   z-index: 999999999 !important; }
   .not-found-publisher li, .found-publishers li {
     overflow: hidden;
@@ -6153,24 +6163,46 @@ select.systemVersion {
           border-radius: 4px;
   -webkit-box-shadow: inset 0 1px 3px 0 rgba(0, 0, 0, 0.5);
           box-shadow: inset 0 1px 3px 0 rgba(0, 0, 0, 0.5);
-  height: 228px;
-  overflow: scroll;
-  padding: 10px 14px; }
+  max-height: 228px;
+  overflow: scroll; }
   .lists li {
     margin-bottom: 20px; }
     .lists li input[type="radio"] {
       float: left;
-      margin-left: 1px; }
+      height: 12px;
+      margin-left: 1px;
+      margin-top: 5px; }
   .lists + div {
     margin-top: 24px; }
     .lists + div .form-group:last-of-type {
       margin-bottom: 0 !important; }
+
+.lists .jspPane, #activity-list-container .jspPane {
+  width: 100% !important; }
+  .lists .jspPane ul, #activity-list-container .jspPane ul {
+    padding: 10px 14px; }
+
+.lists .jspVerticalBar, #activity-list-container .jspVerticalBar {
+  right: 6px !important;
+  width: 6px !important; }
+  .lists .jspVerticalBar .jspTrack, #activity-list-container .jspVerticalBar .jspTrack {
+    background: #E4EAED !important; }
+  .lists .jspVerticalBar .jspDrag, #activity-list-container .jspVerticalBar .jspDrag {
+    background: #00A8FF !important; }
 
 .register-list {
   overflow: hidden; }
   .register-list > span {
     float: left;
     width: 90%; }
+  .register-list label {
+    font-size: 14px;
+    margin-bottom: 0 !important;
+    text-transform: none; }
+    .register-list label span {
+      color: #484848;
+      display: block;
+      overflow: hidden; }
 
 .score-block {
   font-size: 10px;
@@ -6201,13 +6233,14 @@ select.systemVersion {
     color: #00A8FF;
     font-size: 10px;
     padding: 0 4px; }
+  .filter-publishers li:last-of-type {
+    margin-bottom: 0; }
 
 .filter-publishers li:not(:first-of-type):not(:last-of-type) {
   background: #F0F8FC; }
   .filter-publishers li:not(:first-of-type):not(:last-of-type) > p {
     color: rgba(72, 72, 72, 0.7);
     font-size: 10px;
-    margin-bottom: 8px;
     text-transform: uppercase; }
   .filter-publishers li:not(:first-of-type):not(:last-of-type) > div {
     border-bottom: 1px solid #DFEDF2;
@@ -6215,13 +6248,39 @@ select.systemVersion {
     overflow: hidden;
     padding: 8px;
     margin: 0 -8px 8px; }
-    .filter-publishers li:not(:first-of-type):not(:last-of-type) > div:hover {
+
+.publishers-list .jspContainer {
+  margin: 0 !important; }
+
+.publishers-list .jspPane {
+  background: #F0F8FC;
+  padding: 12px 12px 12px 6px !important;
+  width: -webkit-calc(100% - 10px) !important;
+  width: calc(100% - 10px) !important; }
+  .publishers-list .jspPane > p {
+    color: rgba(72, 72, 72, 0.7);
+    font-size: 10px;
+    text-transform: uppercase; }
+  .publishers-list .jspPane > div {
+    border-bottom: 1px solid #DFEDF2;
+    margin-bottom: 8px;
+    overflow: hidden;
+    padding: 8px 0; }
+    .publishers-list .jspPane > div:hover {
       background: #D9F2FF; }
+
+.publishers-list .jspVerticalBar {
+  right: 6px !important;
+  width: 6px !important; }
+  .publishers-list .jspVerticalBar .jspTrack {
+    background: #E4EAED !important; }
+  .publishers-list .jspVerticalBar .jspDrag {
+    background: #00A8FF !important; }
 
 .suggest-edit {
   display: block;
   margin-top: -1px;
-  padding-left: 11px;
+  padding-left: 12px;
   position: relative; }
   .suggest-edit:before {
     background: url(../../images/ic-activity-action-sprite.svg) no-repeat 0 -147px;
@@ -6234,18 +6293,27 @@ select.systemVersion {
     bottom: auto;
     left: 0; }
 
-.partners .tick {
-  position: relative; }
-  .partners .tick:after {
-    background: url(../../images/ic-activity-action-sprite.svg) no-repeat 0 -179px;
-    content: "";
-    height: 14px;
-    width: 14px;
-    position: absolute;
-    top: 1px;
-    right: 0;
-    bottom: auto;
-    left: auto; }
+.partners {
+  margin-top: 3px; }
+  .partners .tick {
+    position: relative; }
+    .partners .tick:after {
+      background: url(../../images/ic-activity-action-sprite.svg) no-repeat 0 -179px;
+      content: "";
+      height: 14px;
+      width: 14px;
+      position: absolute;
+      top: 1px;
+      right: -18px;
+      bottom: auto;
+      left: auto; }
+  .partners .edit-activity {
+    padding-left: 15px; }
+    .partners .edit-activity:before {
+      top: 3px; }
+
+.publishers-list {
+  height: 200px; }
 
 @media all and (max-width: 1030px) {
   .activity-status {
@@ -7344,6 +7412,21 @@ select.systemVersion {
     .panel__partner-org .table > tbody > tr:hover td {
       background-color: #EDF9FF; }
 
+.is-publisher {
+  display: inline-block;
+  position: relative;
+  text-indent: -9999px; }
+  .is-publisher:after {
+    background: url(../images/ic-iati-logo.png) no-repeat 0 0/16px;
+    content: "";
+    height: 16px;
+    width: 16px;
+    position: absolute;
+    top: 4px;
+    right: auto;
+    bottom: auto;
+    left: 0; }
+
 .add-new-organisation {
   font-size: 12px; }
   .add-new-organisation:before {
@@ -7400,10 +7483,65 @@ select.systemVersion {
     float: right;
     margin: 0;
     padding: 0;
-    width: 88%; }
+    width: 92%; }
     .search-publishers input:focus {
       border: 0 !important;
       outline: 0 !important; }
+
+#participatingContainer .collection_form + .collection_form {
+  border-top: 1px dashed #A9C6DE;
+  padding-top: 2px; }
+
+#partner-org-body {
+  display: inline-block;
+  margin: 4px 0 6px; }
+  #partner-org-body p:first-of-type {
+    font-size: 12px; }
+  #partner-org-body label {
+    font-size: 14px;
+    margin-bottom: 10px !important;
+    text-transform: none; }
+
+.merge-with__wrap {
+  background: #FFF7E9;
+  border: 1px solid #FCB651;
+  -webkit-border-radius: 4px;
+          border-radius: 4px; }
+
+#organisation-merger-info-container {
+  font-size: 12px;
+  line-height: 18px;
+  padding: 10px 12px; }
+
+#activity-list-container {
+  background: #FFFDFA;
+  -webkit-border-bottom-left-radius: 4px;
+          border-bottom-left-radius: 4px;
+  -webkit-border-bottom-right-radius: 4px;
+          border-bottom-right-radius: 4px;
+  -webkit-box-shadow: inset 0 1px 3px #DBD2C1;
+          box-shadow: inset 0 1px 3px #DBD2C1;
+  max-height: 200px;
+  overflow: auto;
+  padding: 10px 26px; }
+  #activity-list-container li {
+    border-bottom: 1px solid #D5EAF5;
+    font-size: 12px;
+    margin-bottom: 6px;
+    padding-bottom: 6px;
+    list-style: none; }
+    #activity-list-container li:only-child {
+      border-bottom: 0;
+      margin: 0;
+      padding: 0; }
+
+.modal-footer.text-center {
+  text-align: center; }
+
+.btn-merge {
+  font-size: 15px !important;
+  height: 53px;
+  width: 264px; }
 
 @media (min-width: 400px) {
   .view-more-actions ul li {
@@ -7421,7 +7559,7 @@ select.systemVersion {
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.1);
     display: none;
     position: absolute;
-    top: 22px;
+    top: 18px;
     right: 0;
     bottom: auto;
     left: auto;
@@ -7437,7 +7575,7 @@ select.systemVersion {
   .edit-profile-form .btn-form {
     bottom: 110px; }
   .org-modal .modal-dialog {
-    width: 490px; }
+    width: 460px; }
   .create-form > form .org-modal .form-group {
     width: 300px; } }
 

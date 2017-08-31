@@ -74,9 +74,12 @@
                                             {{ $orgData->name[0]['narrative'] ? $orgData->name[0]['narrative'] : trans('global.name_not_given')}}
                                         </a>
                                         <span class="identifier">GB-GOV-1</span>
+                                        @if($orgData->is_publisher)
+                                            <span class="{{ $orgData->is_publisher ? 'is-publisher' : '' }}">publisher</span>
+                                        @endif
                                     </td>
                                     <td class="activities" width="15%">
-                                        {{ $orgData->includedActivities() }}
+                                        {!! $orgData->includedActivities() !!}
                                     </td>
                                     <td class="sector" width="15%">
                                         {{ $getCode->getCodeNameOnly('OrganizationType', $orgData->type, -4, 'Organization') }}
@@ -118,21 +121,26 @@
         </div>
     </div>
 
-    <div class="modal fade" tabindex="-1" role="dialog" id="mergeWithModal">
+    <div class="modal fade org-modal" tabindex="-1" role="dialog" id="mergeWithModal">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">@lang('organisation-data.merge_with_organisation')</h4>
+                    <h4 class="modal-title">@lang('organisation-data.merge_with_an_organisation')</h4>
                 </div>
                 <form method="POST" id="organization-merger">
                     {{ csrf_field() }}
-                    <div class="modal-body" id="partner-org-body"></div>
-                    <div id="organisation-merger-info-container"></div>
-                    <div id="activity-list-container"></div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <input type="submit" class="btn btn-primary" value="Merge" />
+                    <div class="modal-body">
+                        <div id="partner-org-body"></div>
+                        {{--<div class="merge-with__wrap">--}}
+                            {{----}}
+                        {{--</div>--}}
+                        <div id="organisation-merger-info-container"></div>
+                        <div id="activity-list-container"></div>
+                    </div>
+                    <div class="modal-footer text-center">
+                        {{--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>--}}
+                        <input type="submit" class="btn btn-primary btn-merge" value="Merge these organisations" />
                     </div>
                 </form>
             </div>
@@ -151,6 +159,15 @@
             var form = $('#organization-merger');
 
             $('.mergeWithTrigger').on('click', function (event) {
+                if ($(".merge-with__wrap").length > 0) {
+                    $(".merge-with__wrap").remove();
+                }
+
+                if (activityListContainer.is(':empty')) {
+                    activityListContainer.hide();
+                } else {
+                    activityListContainer.show();
+                }
                 partnerOrganisationContainer.empty();
                 infoContainer.empty();
                 activityListContainer.empty();
@@ -169,7 +186,7 @@
                 var actionInfo = "Please choose an organisation from below you want to merge org_name with:";
                 var info = "Please remember merging organisation_name_placeholder with other organization will remove organisation_name_placeholder from your list and transfer all (see below) activities from organisation_name_placeholder to the organization you choose.";
 
-                partnerOrganisationContainer.html(actionInfo.replace(/org_name/, '<strong>' + organisationName + '</strong>'));
+                partnerOrganisationContainer.html('<p class="text-center">' + actionInfo.replace(/org_name/, '<strong>' + organisationName + '</strong>') + '</p>');
 
                 $.map(requiredOrganisations, function (org, index) {
                     $('<label>\n' +
@@ -191,11 +208,19 @@
 
 
                 $.ajax(route).success(function (response) {
+                    var mainContainer = $('<div/>', {
+                        class: 'merge-with__wrap'
+                    });
+
                     if (response.length) {
-                        infoContainer.html(info.replace(/organisation_name_placeholder/g, '<strong>' + organisationName + '</strong>'));
+                        infoContainer.html(info.replace(/organisation_name_placeholder/g, '<strong>' + organisationName + '</strong>')).appendTo(mainContainer);
                         $.map(response, function (value, index) {
                             $('<li>' + value + '</li>').appendTo(activityListContainer);
                         });
+
+                        activityListContainer.show();
+                        activityListContainer.appendTo(mainContainer);
+                        mainContainer.appendTo($('.modal-body'));
                     }
 
                     form.validate({

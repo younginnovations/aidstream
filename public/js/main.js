@@ -2773,6 +2773,7 @@ $(document).ready(function () {
         $('.xml-info ul').jScrollPane({reinitialise: true});
     });
 
+
 });
 
 $(document).ready(function () {

@@ -51,14 +51,16 @@
     {
       "name": "Peace Support Fund",
       "identifier": "PSF",
-      "type": "",
-      "country": "US"
+      "type": 10,
+      "country": "US",
+      "is_publisher": true
     },
     {
       "name": "Health International UK",
       "identifier": "GB-CHC-19022",
       "type": "22",
-      "country": "GB"
+      "country": "GB",
+      "is_publisher": true
     },
     {
       "name": "Department For International Development",

@@ -78,15 +78,22 @@
                     </div>
 
                     <div v-if="display_org_list">
-                        <ul class="filter-publishers">
+                        {{--<ul class="filter-publishers">--}}
+                            {{--<li>--}}
+                                {{--<div class="search-publishers">--}}
+                                    {{--<input type="search" :value="keyword" placeholder="Filter by organisation name..." @keyup ='search($event)'>--}}
+                                {{--</div>--}}
+                            {{--</li>--}}
+                        {{--</ul>--}}
+
+                        {{--<ul v-if="suggestions.length > 0" class="found-publishers filter-publishers">--}}
+
+                        <ul class="found-publishers filter-publishers">
                             <li>
                                 <div class="search-publishers">
                                     <input type="search" :value="keyword" placeholder="Filter by organisation name..." @keyup ='search($event)'>
                                 </div>
                             </li>
-                        </ul>
-
-                        <ul v-if="suggestions.length > 0" class="found-publishers filter-publishers">
                             <li><p>Choose an organisation from below</p></li>
                             <li v-for="(publisher, index) in suggestions">
                                 <a href="#" v-on:click="selected($event)" v-bind:selectedSuggestion="index">
@@ -126,10 +133,10 @@
                             </li>
                         </ul>
                     </div>
-                    <div class="form-group organisation-identifier">
-                        {{Form::label('organisation_identifier','Organisation Identifier:',['class' => 'control-label'])}}
-                        @{{organisation.identifier}}
-                    </div>
+                </div>
+                <div class="form-group organisation-identifier">
+                    {{Form::label('organisation_identifier','Organisation Identifier:',['class' => 'control-label'])}}
+                    @{{organisation.identifier}}
                 </div>
             </div>
         </div>
@@ -168,7 +175,7 @@
                                             </label>
                                         </div>
                                         <div class="score-block"><span>Quality Score: <strong>@{{ list['quality'] }}</strong></span><span><a
-                                                        v-bind:href="list.url" target="_blank">View this list</a></span>
+                                                        v-bind:href="list.url" target="_blank">View this list →</a></span>
                                         </div>
                                     </li>
                                 </ul>

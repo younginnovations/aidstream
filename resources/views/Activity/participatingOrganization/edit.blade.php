@@ -60,7 +60,7 @@
                     <ul>
                         <li v-for="(role,code) in organisation_roles" v-bind:class="{'active': (organisation.organization_role == code)}">
                             <label>
-                                <input type="radio" :checked="organisation.organization_role == code" :name="index" v-bind:value='code' v-on:change='onchange($event)'>@{{ role }}
+                                <input type="radio" :checked="organisation.organization_role == code" :name="index" v-bind:value='code' v-on:change='onchange($event)'>@{{ code }} - @{{ role }}
                             </label>
                         </li>
                     </ul>
@@ -86,15 +86,20 @@
 
 
                     <div v-if="display_org_list">
-                        <ul class="filter-publishers">
+                        {{--<ul class="filter-publishers">--}}
+                            {{--<li>--}}
+                                {{--<div class="search-publishers">--}}
+                                    {{--<input type="search" :value="keywords[index]" placeholder="Filter by organisation name..." @keyup ='search($event)'>--}}
+                                {{--</div>--}}
+                            {{--</li>--}}
+                        {{--</ul>--}}
+
+                        <ul v-if="suggestions.length > 0" class="found-publishers filter-publishers">
                             <li>
                                 <div class="search-publishers">
                                     <input type="search" :value="keywords[index]" placeholder="Filter by organisation name..." @keyup ='search($event)'>
                                 </div>
                             </li>
-                        </ul>
-
-                        <ul v-if="suggestions.length > 0" class="found-publishers filter-publishers">
                             <li><p>Choose an organisation from below</p></li>
                             <li v-for="(publisher, index) in suggestions">
                                 <a href="#" v-on:click="selected($event)" v-bind:selectedSuggestion="index">
@@ -114,10 +119,10 @@
                         </ul>
 
                         <ul v-if="display_partner_org && (partner_organisations.length > 0)" class="found-publishers filter-publishers">
-                            {{--<li>--}}
-                            {{--<div class="search-publishers"><input type="search" placeholder="Filter by organisation name..."></div>--}}
-                            {{--</li>--}}
                             <li>
+                            <div class="search-publishers"><input type="search" placeholder="Filter by organisation name..."></div>
+                            </li>
+                            <li class="publishers-list">
                                 <p>From your Partner Organization List</p>
                                 <div v-for="(partnerOrganization, index) in partner_organisations">
                                     <a href="#" v-on:click="partnerSelected($event)" v-bind:selectedPartner="index">
@@ -129,7 +134,7 @@
                                         </div>
                                         <div class="pull-right">
                                             <span class="suggest-edit" v-if="partnerOrganization.is_publisher">Suggest Edit</span>
-                                            <span class="suggest-edit" v-if="!partnerOrganization.is_publisher">Edit</span>
+                                            <span class="edit-activity" v-if="!partnerOrganization.is_publisher">Edit</span>
                                         </div>
                                     </div>
                                 </div>
@@ -490,6 +495,9 @@
             return status;
           }
         }
+      });
+      $(document).ready(function(){
+          $(".publishers-list").jScrollPane({reinitialise: true});
       });
     </script>
 @endsection

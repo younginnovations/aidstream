@@ -100,7 +100,7 @@ class OrganizationData extends Model
      */
     public function includedActivities()
     {
-        return count($this->used_by) . ' Activities';
+        return sprintf("<span>%s</span> Activities", count($this->used_by));
     }
 
     /**
