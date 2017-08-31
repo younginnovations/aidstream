@@ -85,21 +85,22 @@
                     <div v-if="(organisation.narrative[0]['narrative'] == '' && display_error)" class="text-danger">Organisation Name is required.</div>
 
 
-                    <div v-if="display_org_list">
-                        {{--<ul class="filter-publishers">--}}
-                            {{--<li>--}}
-                                {{--<div class="search-publishers">--}}
-                                    {{--<input type="search" :value="keywords[index]" placeholder="Filter by organisation name..." @keyup ='search($event)'>--}}
-                                {{--</div>--}}
-                            {{--</li>--}}
-                        {{--</ul>--}}
-
-                        <ul v-if="suggestions.length > 0" class="found-publishers filter-publishers">
+                    <div v-if="display_org_list
+">
+                        <ul class="filter-publishers">
                             <li>
                                 <div class="search-publishers">
                                     <input type="search" :value="keywords[index]" placeholder="Filter by organisation name..." @keyup ='search($event)'>
                                 </div>
                             </li>
+                        </ul>
+
+                        <ul v-if="suggestions.length > 0" class="found-publishers filter-publishers">
+                            {{--<li>--}}
+                                {{--<div class="search-publishers">--}}
+                                    {{--<input type="search" :value="keywords[index]" placeholder="Filter by organisation name..." @keyup='search($event)'>--}}
+                                {{--</div>--}}
+                            {{--</li>--}}
                             <li><p>Choose an organisation from below</p></li>
                             <li v-for="(publisher, index) in suggestions">
                                 <a href="#" v-on:click="selected($event)" v-bind:selectedSuggestion="index">
@@ -119,9 +120,12 @@
                         </ul>
 
                         <ul v-if="display_partner_org && (partner_organisations.length > 0)" class="found-publishers filter-publishers">
-                            <li>
-                            <div class="search-publishers"><input type="search" placeholder="Filter by organisation name..."></div>
-                            </li>
+                            <!---design malfunction due to this <li>---!>
+                                {{--<li>--}}
+                                    {{--<div class="search-publishers"><input type="search" :value="keywords[index]" placeholder="Filter by organisation name..." @keyup ='search($event)'></div>--}}
+                                {{--</li>--}}
+                            <!---design malfunction due to this <li>---!>
+
                             <li class="publishers-list">
                                 <p>From your Partner Organization List</p>
                                 <div v-for="(partnerOrganization, index) in partner_organisations">
@@ -197,7 +201,7 @@
                             {{Form::label('country','Country the organization is based in',['class' => 'control-label'])}}
                             {{Form::select('country',$countries, null,['class' => 'form-control ignore_change', 'v-bind:value' => 'organisation.country', 'placeholder' => 'Please select the following options.','v-on:change' => 'getRegistrars($event)'])}}
                         </div>
-                        <div class="suggestions">
+                        <div class="suggestions" v-show="registrar_list">
                             <p>PLEASE CHOOSE A LIST FROM BELOW:</p>
                             <div class="lists" style="height:230px;max-height: 230px;overflow: scroll">
                                 <ul style="border: 1px solid silver;padding: 10px">
