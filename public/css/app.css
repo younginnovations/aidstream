@@ -6048,7 +6048,7 @@ select.systemVersion {
   color: rgba(72, 72, 72, 0.7);
   font-size: 11px; }
 
-.not-found-publisher, .found-publishers {
+.publisher-wrap {
   background-color: #fff;
   border: 1px solid #B6DAEA;
   -webkit-border-radius: 5px;
@@ -6059,20 +6059,7 @@ select.systemVersion {
   width: -webkit-calc(100% - 30px);
   width: calc(100% - 30px);
   z-index: 999999999 !important; }
-  .not-found-publisher li, .found-publishers li {
-    overflow: hidden;
-    padding: 12px; }
-    .not-found-publisher li p, .found-publishers li p {
-      font-size: 12px;
-      margin: 0; }
-    .not-found-publisher li:first-of-type p, .found-publishers li:first-of-type p {
-      font-size: 11px;
-      line-height: 18px;
-      margin: 0; }
-    .not-found-publisher li a, .found-publishers li a {
-      text-decoration: none;
-      color: inherit; }
-  .not-found-publisher:before, .found-publishers:before {
+  .publisher-wrap:before {
     background: #fff;
     border-top: 1px solid #B6DAEA;
     border-left: 1px solid #B6DAEA;
@@ -6087,6 +6074,20 @@ select.systemVersion {
         -ms-transform: rotate(45deg);
             transform: rotate(45deg);
     width: 10px; }
+
+.not-found-publisher li, .found-publishers li {
+  overflow: hidden;
+  padding: 12px; }
+  .not-found-publisher li p, .found-publishers li p {
+    font-size: 12px;
+    margin: 0; }
+  .not-found-publisher li:first-of-type p, .found-publishers li:first-of-type p {
+    font-size: 11px;
+    line-height: 18px;
+    margin: 0; }
+  .not-found-publisher li a, .found-publishers li a {
+    text-decoration: none;
+    color: inherit; }
 
 .tick {
   display: block; }
@@ -6137,6 +6138,9 @@ select.systemVersion {
 #orgFinder {
   padding: 12px 18px 18px; }
 
+.publisher-description {
+  padding-top: 0 !important; }
+
 .contact-heading {
   color: #00A8FF;
   font: 14px Open-Sans-Bold !important;
@@ -6184,6 +6188,7 @@ select.systemVersion {
 
 .lists .jspVerticalBar, #activity-list-container .jspVerticalBar {
   right: 6px !important;
+  top: 1px;
   width: 6px !important; }
   .lists .jspVerticalBar .jspTrack, #activity-list-container .jspVerticalBar .jspTrack {
     background: #E4EAED !important; }
@@ -6222,27 +6227,30 @@ select.systemVersion {
   .organisation-identifier + .form-group {
     margin-bottom: 0 !important; }
 
-.filter-publishers li {
+.filter-publishers {
+  padding: 12px; }
+
+.found-publishers li, .not-found-publishers li {
   font-size: 11px; }
-  .filter-publishers li strong {
+  .found-publishers li strong, .not-found-publishers li strong {
     font-size: 12px; }
-  .filter-publishers li .language {
+  .found-publishers li .language, .not-found-publishers li .language {
     border: 1px solid #BFDFEC;
     -webkit-border-radius: 7px;
             border-radius: 7px;
     color: #00A8FF;
     font-size: 10px;
     padding: 0 4px; }
-  .filter-publishers li:last-of-type {
+  .found-publishers li:last-of-type, .not-found-publishers li:last-of-type {
     margin-bottom: 0; }
 
-.filter-publishers li:not(:first-of-type):not(:last-of-type) {
+.found-publishers li:not(:first-of-type):not(:last-of-type), .not-found-publishers li:not(:first-of-type):not(:last-of-type) {
   background: #F0F8FC; }
-  .filter-publishers li:not(:first-of-type):not(:last-of-type) > p {
+  .found-publishers li:not(:first-of-type):not(:last-of-type) > p, .not-found-publishers li:not(:first-of-type):not(:last-of-type) > p {
     color: rgba(72, 72, 72, 0.7);
     font-size: 10px;
     text-transform: uppercase; }
-  .filter-publishers li:not(:first-of-type):not(:last-of-type) > div {
+  .found-publishers li:not(:first-of-type):not(:last-of-type) > div, .not-found-publishers li:not(:first-of-type):not(:last-of-type) > div {
     border-bottom: 1px solid #DFEDF2;
     margin-bottom: 8px;
     overflow: hidden;
@@ -6254,9 +6262,8 @@ select.systemVersion {
 
 .publishers-list .jspPane {
   background: #F0F8FC;
-  padding: 12px 12px 12px 6px !important;
-  width: -webkit-calc(100% - 10px) !important;
-  width: calc(100% - 10px) !important; }
+  padding: 12px 20px 12px 14px !important;
+  width: 100% !important; }
   .publishers-list .jspPane > p {
     color: rgba(72, 72, 72, 0.7);
     font-size: 10px;
@@ -6265,12 +6272,16 @@ select.systemVersion {
     border-bottom: 1px solid #DFEDF2;
     margin-bottom: 8px;
     overflow: hidden;
-    padding: 8px 0; }
+    margin: 0 -8px 8px;
+    padding: 8px; }
+    .publishers-list .jspPane > div:last-of-type {
+      margin-bottom: 0; }
     .publishers-list .jspPane > div:hover {
       background: #D9F2FF; }
 
 .publishers-list .jspVerticalBar {
   right: 6px !important;
+  top: 1px;
   width: 6px !important; }
   .publishers-list .jspVerticalBar .jspTrack {
     background: #E4EAED !important; }
@@ -7448,7 +7459,7 @@ select.systemVersion {
   padding: 22px 36px 0; }
 
 .org-modal .modal-footer {
-  padding: 20px 36px; }
+  padding: 20px 36px 24px; }
 
 .org-modal .btn-form {
   position: static; }
@@ -7472,7 +7483,7 @@ select.systemVersion {
     color: rgba(51, 51, 51, 0.5); }
 
 .search-publishers {
-  background: #F2F9FC url(../images/ic_search.svg) no-repeat 12px;
+  background: #F2F9FC url(../images/ic_search.svg) no-repeat 12px 14px;
   border: 1px solid #BFDFEC;
   -webkit-border-radius: 4px;
           border-radius: 4px;
@@ -7480,10 +7491,11 @@ select.systemVersion {
   .search-publishers input {
     background: none;
     border: none;
-    float: right;
-    margin: 0;
+    float: left;
+    margin: 0 0 0 34px;
     padding: 0;
-    width: 92%; }
+    width: -webkit-calc(100% - 34px);
+    width: calc(100% - 34px); }
     .search-publishers input:focus {
       border: 0 !important;
       outline: 0 !important; }
@@ -7501,17 +7513,21 @@ select.systemVersion {
     font-size: 14px;
     margin-bottom: 10px !important;
     text-transform: none; }
+    #partner-org-body label:last-of-type {
+      margin-bottom: 0 !important; }
 
 .merge-with__wrap {
   background: #FFF7E9;
   border: 1px solid #FCB651;
   -webkit-border-radius: 4px;
-          border-radius: 4px; }
+          border-radius: 4px;
+  margin-top: 10px; }
 
 #organisation-merger-info-container {
   font-size: 12px;
-  line-height: 18px;
-  padding: 10px 12px; }
+  line-height: 18px; }
+  #organisation-merger-info-container > div {
+    padding: 10px 12px; }
 
 #activity-list-container {
   background: #FFFDFA;
@@ -7563,7 +7579,7 @@ select.systemVersion {
     right: 0;
     bottom: auto;
     left: auto;
-    padding: 20px;
+    padding: 14px 20px;
     width: 192px;
     z-index: 1; }
   .view-more-actions ul li {

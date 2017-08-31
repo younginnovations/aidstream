@@ -4914,7 +4914,7 @@ select.systemVersion {
   font-size: 11px;
 }
 
-.not-found-publisher, .found-publishers {
+.publisher-wrap {
   background-color: $color_white;
   border: 1px solid #B6DAEA;
   border-radius: 5px;
@@ -4922,6 +4922,19 @@ select.systemVersion {
   position: absolute;
   width: calc(100% - 30px);
   z-index: 999999999 !important;
+  &:before {
+    background: $color_white;
+    border-top: 1px solid #B6DAEA;
+    border-left: 1px solid #B6DAEA;
+    content: "";
+    @include position(absolute, -6px auto auto 50%);
+    height: 10px;
+    transform: rotate(45deg);
+    width: 10px;
+  }
+}
+
+.not-found-publisher, .found-publishers {
   li {
     overflow: hidden;
     padding: 12px;
@@ -4938,16 +4951,6 @@ select.systemVersion {
       text-decoration: none;
       color: inherit;
     }
-  }
-  &:before {
-    background: $color_white;
-    border-top: 1px solid #B6DAEA;
-    border-left: 1px solid #B6DAEA;
-    content: "";
-    @include position(absolute, -6px auto auto 50%);
-    height: 10px;
-    transform: rotate(45deg);
-    width: 10px;
   }
 }
 
@@ -5005,6 +5008,10 @@ select.systemVersion {
 
 #orgFinder {
   padding: 12px 18px 18px;
+}
+
+.publisher-description {
+  padding-top: 0!important;
 }
 
 .contact-heading {
@@ -5065,6 +5072,7 @@ select.systemVersion {
   }
   .jspVerticalBar {
     right: 6px!important;
+    top: 1px;
     width: 6px!important;
     .jspTrack {
       background: #E4EAED!important;
@@ -5118,6 +5126,10 @@ select.systemVersion {
 }
 
 .filter-publishers {
+  padding: 12px;
+}
+
+.found-publishers,.not-found-publishers  {
   li {
     font-size: 11px;
     strong {
@@ -5161,8 +5173,8 @@ select.systemVersion {
   }
   .jspPane {
     background: #F0F8FC;
-    padding: 12px 12px 12px 6px!important;
-    width: calc(100% - 10px)!important;
+    padding: 12px 20px 12px 14px!important;
+    width: 100%!important;
     > p {
       color: rgba($color_gravel_approx, 0.7);
       font-size: 10px;
@@ -5172,7 +5184,11 @@ select.systemVersion {
       border-bottom: 1px solid #DFEDF2;
       margin-bottom: 8px;
       overflow: hidden;
-      padding: 8px 0;
+      margin: 0 -8px 8px;
+      padding: 8px;
+      &:last-of-type {
+        margin-bottom: 0;
+      }
       &:hover {
         background: #D9F2FF;
       }
@@ -5180,6 +5196,7 @@ select.systemVersion {
   }
   .jspVerticalBar {
     right: 6px!important;
+    top: 1px;
     width: 6px!important;
     .jspTrack {
       background: #E4EAED!important;
@@ -5503,7 +5520,7 @@ select.systemVersion {
     padding: 22px 36px 0;
   }
   .modal-footer {
-    padding: 20px 36px;
+    padding: 20px 36px 24px;
   }
   .btn-form {
     position: static;
@@ -5535,17 +5552,17 @@ select.systemVersion {
 }
 
 .search-publishers {
-  background: #F2F9FC url(../images/ic_search.svg) no-repeat 12px;
+  background: #F2F9FC url(../images/ic_search.svg) no-repeat 12px 14px;
   border: 1px solid #BFDFEC;
   border-radius: 4px;
   overflow: hidden;
   input {
     background: none;
     border: none;
-    float: right;
-    margin: 0;
+    float: left;
+    margin: 0 0 0 34px;
     padding: 0;
-    width: 92%;
+    width: calc(100% - 34px);
     &:focus {
       border: 0 !important;
       outline: 0 !important;
@@ -5570,6 +5587,9 @@ select.systemVersion {
     font-size: 14px;
     margin-bottom: 10px !important;
     text-transform: none;
+    &:last-of-type {
+      margin-bottom: 0!important;
+    }
   }
 }
 
@@ -5577,12 +5597,15 @@ select.systemVersion {
   background: #FFF7E9;
   border: 1px solid #FCB651;
   border-radius: 4px;
+  margin-top: 10px;
 }
 
 #organisation-merger-info-container {
   font-size: 12px;
   line-height: 18px;
-  padding: 10px 12px;
+  > div {
+    padding: 10px 12px;
+  }
 }
 
 #activity-list-container {
@@ -5636,7 +5659,7 @@ select.systemVersion {
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .1);
     display: none;
     @include position(absolute, 18px 0 auto auto);
-    padding: 20px;
+    padding: 14px 20px;
     width: 192px;
     z-index: 1;
   }

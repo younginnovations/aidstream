@@ -85,8 +85,7 @@
                     <div v-if="(organisation.narrative[0]['narrative'] == '' && display_error)" class="text-danger">Organisation Name is required.</div>
 
 
-                    <div v-if="display_org_list
-">
+                    <div v-if="display_org_list" class="publisher-wrap">
                         <ul class="filter-publishers">
                             <li>
                                 <div class="search-publishers">
@@ -96,11 +95,6 @@
                         </ul>
 
                         <ul v-if="suggestions.length > 0" class="found-publishers filter-publishers">
-                            {{--<li>--}}
-                                {{--<div class="search-publishers">--}}
-                                    {{--<input type="search" :value="keywords[index]" placeholder="Filter by organisation name..." @keyup='search($event)'>--}}
-                                {{--</div>--}}
-                            {{--</li>--}}
                             <li><p>Choose an organisation from below</p></li>
                             <li v-for="(publisher, index) in suggestions">
                                 <a href="#" v-on:click="selected($event)" v-bind:selectedSuggestion="index">
@@ -119,14 +113,14 @@
                             <li><p>The above list is pulled from IATI Registry publisher's list.</p></li>
                         </ul>
 
-                        <ul v-if="display_partner_org && (partner_organisations.length > 0)" class="found-publishers filter-publishers">
-                            <!---design malfunction due to this <li>---!>
+                        <ul v-if="display_partner_org && (partner_organisations.length > 0)" class="found-publishers">
+                            {{--design malfunction due to this <li>--}}
                                 {{--<li>--}}
                                     {{--<div class="search-publishers"><input type="search" :value="keywords[index]" placeholder="Filter by organisation name..." @keyup ='search($event)'></div>--}}
                                 {{--</li>--}}
-                            <!---design malfunction due to this <li>---!>
+                            {{--design malfunction due to this <li>--}}
 
-                            <li class="publishers-list">
+                            <li class="publishers-list scroll-list">
                                 <p>From your Partner Organization List</p>
                                 <div v-for="(partnerOrganization, index) in partner_organisations">
                                     <a href="#" v-on:click="partnerSelected($event)" v-bind:selectedPartner="index">
@@ -499,9 +493,6 @@
             return status;
           }
         }
-      });
-      $(document).ready(function(){
-          $(".publishers-list").jScrollPane({reinitialise: true});
       });
     </script>
 @endsection

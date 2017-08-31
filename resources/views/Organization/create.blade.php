@@ -77,7 +77,7 @@
                         Organisation Name is required.
                     </div>
 
-                    <div v-if="display_org_list">
+                    <div v-if="display_org_list" class="publisher-wrap">
                         <ul class="filter-publishers">
                             <li>
                                 <div class="search-publishers">
@@ -87,13 +87,7 @@
                         </ul>
 
                         <ul v-if="suggestions.length > 0" class="found-publishers filter-publishers">
-                        {{--<ul class="found-publishers filter-publishers">--}}
-                            {{--<li>--}}
-                                {{--<div class="search-publishers">--}}
-                                    {{--<input type="search" :value="keyword" placeholder="Filter by organisation name..." @keyup ='search($event)'>--}}
-                                {{--</div>--}}
-                            {{--</li>--}}
-                            <li><p>Choose an organisation from below</p></li>
+                            <li class="publisher-description"><p>Choose an organisation from below</p></li>
                             <li v-for="(publisher, index) in suggestions">
                                 <a href="#" v-on:click="selected($event)" v-bind:selectedSuggestion="index">
                                     <strong v-bind:selectedSuggestion="index">@{{publisher.identifier}} @{{publisher.name}}</strong>
@@ -111,7 +105,7 @@
                             <li><p>The above list is pulled from IATI Registry publisher's list.</p></li>
                         </ul>
                         <ul v-if="display_org_finder" class="not-found-publisher">
-                            <li><p>It seems there's no matching organisation in IATI Registry of publishers. You may do one
+                            <li class="publisher-description"><p>It seems there's no matching organisation in IATI Registry of publishers. You may do one
                                     of the following at this point.</p></li>
                             <li class="contact-org" id="orgFinder">
                                 <a href="#">
@@ -162,7 +156,7 @@
                         </div>
                         <div class="suggestions">
                             <h3>Please choose a list from below</h3>
-                            <div class="lists">
+                            <div class="lists scroll-list">
                                 <ul>
                                     <li v-for="(list,index) in registrar_list[0]">
                                         <div class="register-list">

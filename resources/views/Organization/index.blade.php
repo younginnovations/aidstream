@@ -136,7 +136,7 @@
                             {{----}}
                         {{--</div>--}}
                         <div id="organisation-merger-info-container"></div>
-                        <div id="activity-list-container"></div>
+                        <div id="activity-list-container" class="scroll-list"></div>
                     </div>
                     <div class="modal-footer text-center">
                         {{--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>--}}
@@ -213,7 +213,7 @@
                     });
 
                     if (response.length) {
-                        infoContainer.html(info.replace(/organisation_name_placeholder/g, '<strong>' + organisationName + '</strong>')).appendTo(mainContainer);
+                        infoContainer.html('<div>' + info.replace(/organisation_name_placeholder/g, '<strong>' + organisationName + '</strong>') + '</div>').appendTo(mainContainer);
                         $.map(response, function (value, index) {
                             $('<li>' + value + '</li>').appendTo(activityListContainer);
                         });
