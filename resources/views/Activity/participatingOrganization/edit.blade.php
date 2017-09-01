@@ -114,11 +114,6 @@
                         </ul>
 
                         <ul v-if="display_partner_org && (partner_organisations.length > 0)" class="found-publishers">
-                            {{--design malfunction due to this <li>--}}
-                            <li>
-                                {{--<div class="search-publishers"><input type="search" :value="keywords[index]" placeholder="Filter by organisation name..." @keyup ='search($event)'></div>--}}
-                            </li>
-                            {{--design malfunction due to this <li>--}}
                             <li class="publishers-list scroll-list">
                                 <p>From your Partner Organization List</p>
                                 <div v-for="(partnerOrganization, index) in partner_organisations">
@@ -177,7 +172,7 @@
     </div>
 
     <div class="hidden" id="modalComponent">
-        <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal fade org-modal" id="myModal" role="dialog">
             <div class="modal-dialog ">
                 <!-- Modal content-->
                 <div class="modal-content">
