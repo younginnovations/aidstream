@@ -94,9 +94,10 @@
                             </li>
                         </ul>
 
-                        <ul v-if="suggestions.length > 0" class="found-publishers filter-publishers scroll-list">
-                            <li><p>Choose an organisation from below</p></li>
-                            <li v-for="(publisher, index) in suggestions">
+                        <ul v-if="suggestions.length > 0" class="found-publishers">
+                            <li class="publishers-list scroll-list">
+                            <p>Choose an organisation from below</p>
+                            <div v-for="(publisher, index) in suggestions">
                                 <a href="#" v-on:click="selected($event)" v-bind:selectedSuggestion="index">
                                     <strong v-bind:selectedSuggestion="index">@{{publisher.identifier}} @{{publisher.name}}</strong>
                                     <div class="partners">
@@ -108,7 +109,7 @@
                                         </div>
                                     </div>
                                 </a>
-
+                            </div>
                             </li>
                             <li><p>The above list is pulled from IATI Registry publisher's list.</p></li>
                         </ul>

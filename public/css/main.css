@@ -6181,18 +6181,18 @@ select.systemVersion {
     .lists + div .form-group:last-of-type {
       margin-bottom: 0 !important; }
 
-.lists .jspPane, #activity-list-container .jspPane {
+.lists .jspPane, #activity-list-container .jspPane, .found-publishers .jspPane, .not-found-publishers .jspPane {
   width: 100% !important; }
-  .lists .jspPane ul, #activity-list-container .jspPane ul {
+  .lists .jspPane ul, #activity-list-container .jspPane ul, .found-publishers .jspPane ul, .not-found-publishers .jspPane ul {
     padding: 10px 14px; }
 
-.lists .jspVerticalBar, #activity-list-container .jspVerticalBar {
+.lists .jspVerticalBar, #activity-list-container .jspVerticalBar, .found-publishers .jspVerticalBar, .not-found-publishers .jspVerticalBar {
   right: 6px !important;
   top: 1px;
   width: 6px !important; }
-  .lists .jspVerticalBar .jspTrack, #activity-list-container .jspVerticalBar .jspTrack {
+  .lists .jspVerticalBar .jspTrack, #activity-list-container .jspVerticalBar .jspTrack, .found-publishers .jspVerticalBar .jspTrack, .not-found-publishers .jspVerticalBar .jspTrack {
     background: #E4EAED !important; }
-  .lists .jspVerticalBar .jspDrag, #activity-list-container .jspVerticalBar .jspDrag {
+  .lists .jspVerticalBar .jspDrag, #activity-list-container .jspVerticalBar .jspDrag, .found-publishers .jspVerticalBar .jspDrag, .not-found-publishers .jspVerticalBar .jspDrag {
     background: #00A8FF !important; }
 
 .register-list {
@@ -6324,7 +6324,8 @@ select.systemVersion {
       top: 3px; }
 
 .publishers-list {
-  height: 200px; }
+  min-height: 100px;
+  max-height: 200px; }
 
 @media all and (max-width: 1030px) {
   .activity-status {

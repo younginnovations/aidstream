@@ -5063,9 +5063,10 @@ select.systemVersion {
   }
 }
 
-.lists,#activity-list-container {
+.lists,#activity-list-container,.found-publishers,.not-found-publishers {
   .jspPane {
     width: 100%!important;
+
     ul {
       padding: 10px 14px;
     }
@@ -5240,7 +5241,8 @@ select.systemVersion {
 }
 
 .publishers-list {
-  height: 200px;
+  min-height: 100px;
+  max-height: 200px;
 }
 
 @import "layouts/responsive";
