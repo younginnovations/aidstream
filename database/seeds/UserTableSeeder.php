@@ -23,12 +23,11 @@ class UserTableSeeder extends Seeder
                 'last_name'    => 'Admin',
                 'username'     => 'yipl_admin',
                 'email'        => 'admin@aidstream.com.np',
-                'password'     => bcrypt('admin123'),
+                'password'     => bcrypt(env('SUPERADMIN_PASSWORD')),
                 'role_id'      => 3,
                 'time_zone_id' => 1,
                 'time_zone'    => 'GMT'
             ]
         );
-
     }
 }
