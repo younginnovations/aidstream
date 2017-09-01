@@ -94,7 +94,7 @@
                             </li>
                         </ul>
 
-                        <ul v-if="suggestions.length > 0" class="found-publishers filter-publishers">
+                        <ul v-if="suggestions.length > 0" class="found-publishers filter-publishers scroll-list">
                             <li><p>Choose an organisation from below</p></li>
                             <li v-for="(publisher, index) in suggestions">
                                 <a href="#" v-on:click="selected($event)" v-bind:selectedSuggestion="index">
@@ -115,16 +115,16 @@
 
                         <ul v-if="display_partner_org && (partner_organisations.length > 0)" class="found-publishers">
                             {{--design malfunction due to this <li>--}}
-                                {{--<li>--}}
-                                    {{--<div class="search-publishers"><input type="search" :value="keywords[index]" placeholder="Filter by organisation name..." @keyup ='search($event)'></div>--}}
-                                {{--</li>--}}
+                            <li>
+                                {{--<div class="search-publishers"><input type="search" :value="keywords[index]" placeholder="Filter by organisation name..." @keyup ='search($event)'></div>--}}
+                            </li>
                             {{--design malfunction due to this <li>--}}
-
                             <li class="publishers-list scroll-list">
                                 <p>From your Partner Organization List</p>
                                 <div v-for="(partnerOrganization, index) in partner_organisations">
                                     <a href="#" v-on:click="partnerSelected($event)" v-bind:selectedPartner="index">
-                                        <strong v-bind:selectedPartner="index">@{{ partnerOrganization.name ? partnerOrganization.name[0]['narrative'] : 'No name'}}</strong> <span class="language">en</span>
+                                        <strong v-bind:selectedPartner="index">@{{ partnerOrganization.name ? partnerOrganization.name[0]['narrative'] : 'No name'}}</strong>
+                                        <span class="language">en</span>
                                     </a>
                                     <div class="partners">
                                         <div class="pull-left">
@@ -195,13 +195,22 @@
                             {{Form::label('country','Country the organization is based in',['class' => 'control-label'])}}
                             {{Form::select('country',$countries, null,['class' => 'form-control ignore_change', 'v-bind:value' => 'organisation.country', 'placeholder' => 'Please select the following options.','v-on:change' => 'getRegistrars($event)'])}}
                         </div>
-                        <div class="suggestions" v-show="registrar_list">
+                        <div class="suggestions" v-if="display_registrar_list">
                             <p>PLEASE CHOOSE A LIST FROM BELOW:</p>
-                            <div class="lists" style="height:230px;max-height: 230px;overflow: scroll">
-                                <ul style="border: 1px solid silver;padding: 10px">
+                            <div class="lists scroll-list">
+                                <ul>
                                     <li v-for="(list,index) in registrar_list[0]">
-                                        <div><input type="radio" name="registrar" v-on:change="displayForm($event)" v-bind:value="list['code']"/> @{{ list['name']['en'] }} (@{{ list['code'] }})</div>
-                                        <div><span>Quality Score: @{{ list['quality'] }}</span><span><a v-bind:href="list.url" target="_blank">View this list</a></span></div>
+                                        <div class="register-list">
+                                            <label>
+                                                <input type="radio" name="registrar" v-on:change="displayForm($event)"
+                                                       v-bind:value="list['code']"/>
+                                                <span>@{{ list['name']['en'] }}
+                                                    <strong>(@{{ list['code'] }})</strong></span>
+                                            </label>
+                                        </div>
+                                        <div class="score-block"><span>Quality Score: <strong>@{{ list['quality'] }}</strong></span><span><a
+                                                        v-bind:href="list.url" target="_blank">View this list →</a></span>
+                                        </div>
                                     </li>
                                 </ul>
                             </div>
@@ -215,11 +224,18 @@
                                     {{Form::label('Identifier','Organisation Registration Number',['class' => 'control-label'])}}
                                     {{Form::text('identifier', null,['class' => 'form-control ignore_change', 'v-bind:value' => 'organisation.identifier', "@blur" => 'updateOrgIdentifier($event)'])}}
                                 </div>
+                                <div class="form-group">
+                                    <button class="btn btn-form" type="button" @click="close">Use this organisation</button>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal" @click="close">Close</button>
+                        <div class="reset-form-option">
+                            <a @click="resetForm">Reset form</a>
+                            <p>Reset the above form to start again.</p>
+                        </div>
+                        {{--<button type="button" class="btn btn-default" data-dismiss="modal" @click="close">Close</button>--}}
                     </div>
                 </div>
 
@@ -243,6 +259,9 @@
             disable_options: [],
             keywords: []
           }
+        },
+        updated: function () {
+          $('.scroll-list').jScrollPane({autoReinitialise: true});
         },
         created: function () {
           this.keywords[this.index] = '';
@@ -302,11 +321,11 @@
             this.$emit('remove', this.index);
           },
           onchange: function (event) {
-              if (event.target.name == this.index) {
-                  this.organisation['organization_role'] = event.target.value;
-              } else {
-                  this.organisation[event.target.name] = event.target.value;
-              }
+            if (event.target.name == this.index) {
+              this.organisation['organization_role'] = event.target.value;
+            } else {
+              this.organisation[event.target.name] = event.target.value;
+            }
           },
           display: function () {
             this.display_org_list = false;
@@ -364,8 +383,19 @@
         data: function () {
           return {
             display_org_info_form: false,
-            selectedRegistrar: ''
+            selectedRegistrar: '',
+            display_registrar_list: false
           }
+        },
+        beforeUpdate: function () {
+          if (this.registrar_list[0] != undefined) {
+            if (this.registrar_list[0].length != 0) {
+              this.display_registrar_list = true;
+            }
+          }
+        },
+        updated: function () {
+          $('.scroll-list').jScrollPane({autoReinitialise: true});
         },
         methods: {
           close: function () {
@@ -391,6 +421,18 @@
           updateOrgIdentifier: function ($event) {
             this.organisation['identifier'] = '';
             this.organisation['identifier'] = this.selectedRegistrar + '-' + event.target.value;
+          },
+          resetForm: function () {
+            this.defaultData();
+          },
+          defaultData: function () {
+            this.organisation['organization_type'] = '';
+            this.organisation['organization_role'] = '';
+            this.organisation['is_publisher'] = '';
+            this.organisation['identifier'] = '';
+            this.organisation['narrative'][0]['narrative'] = '';
+            this.organisation['country'] = '';
+            this.organisation['narrative'][0]['language'] = '';
           }
         }
       });
@@ -481,7 +523,6 @@
           isValid: function () {
             var self = this;
             var status = true;
-              console.log(this.organisations);
             this.organisations.forEach(function (organisation, index) {
               if (organisation.country === '' || organisation.narrative[0]['narrative'] === '' || organisation.organization_type === '' || organisation.organization_role === '') {
                 self.display_error = true;

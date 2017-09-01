@@ -45,7 +45,7 @@
                         </div>
                     </div>
                 </div>
-{{--                @include('includes.menu_org')--}}
+                {{--                @include('includes.menu_org')--}}
             </div>
         </div>
     </div>
@@ -86,7 +86,7 @@
                             </li>
                         </ul>
 
-                        <ul v-if="suggestions.length > 0" class="found-publishers filter-publishers">
+                        <ul v-if="suggestions.length > 0" class="found-publishers filter-publishers scroll-list">
                             <li class="publisher-description"><p>Choose an organisation from below</p></li>
                             <li v-for="(publisher, index) in suggestions">
                                 <a href="#" v-on:click="selected($event)" v-bind:selectedSuggestion="index">
@@ -154,7 +154,7 @@
                             {{Form::label('country','Country the organization is based in',['class' => 'control-label'])}}
                             {{Form::select('country',$countries, null,['class' => 'form-control ignore_change', 'v-bind:value' => 'organisation.country', 'placeholder' => 'Please select the following options.','v-on:change' => 'getRegistrars($event)'])}}
                         </div>
-                        <div class="suggestions">
+                        <div class="suggestions" v-if="display_registrar_list">
                             <h3>Please choose a list from below</h3>
                             <div class="lists scroll-list">
                                 <ul>
@@ -164,7 +164,7 @@
                                                 <input type="radio" name="registrar" v-on:change="displayForm($event)"
                                                        v-bind:value="list['code']"/>
                                                 <span>@{{ list['name']['en'] }}
-                                                <strong>(@{{ list['code'] }})</strong></span>
+                                                    <strong>(@{{ list['code'] }})</strong></span>
                                             </label>
                                         </div>
                                         <div class="score-block"><span>Quality Score: <strong>@{{ list['quality'] }}</strong></span><span><a
@@ -217,6 +217,9 @@
             searching: false,
             keyword: ''
           }
+        },
+        updated: function () {
+          $('.scroll-list').jScrollPane({autoReinitialise: true});
         },
         mounted: function () {
           if (this.organisation.is_publisher) {
@@ -312,7 +315,16 @@
         data: function () {
           return {
             display_org_info_form: false,
-            selectedRegistrar: ''
+            selectedRegistrar: '',
+            display_registrar_list: false
+          }
+        },
+        beforeUpdate: function () {
+          $('.scroll-list').jScrollPane({autoReinitialise: true});
+          if (this.registrar_list[0] != undefined) {
+            if (this.registrar_list[0].length != 0) {
+              this.display_registrar_list = true;
+            }
           }
         },
         methods: {
@@ -339,17 +351,17 @@
             this.organisation['identifier'] = '';
             this.organisation['identifier'] = this.selectedRegistrar + '-' + event.target.value;
           },
-            resetForm: function () {
-                this.defaultData();
-            },
-            defaultData: function () {
-                this.organisation['type'] = '';
-                this.organisation['is_publisher'] = '';
-                this.organisation['identifier'] = '';
-                this.organisation['name'][0]['narrative'] = '';
-                this.organisation['country'] = '';
-                this.organisation['name'][0]['language'] = '';
-            }
+          resetForm: function () {
+            this.defaultData();
+          },
+          defaultData: function () {
+            this.organisation['type'] = '';
+            this.organisation['is_publisher'] = '';
+            this.organisation['identifier'] = '';
+            this.organisation['name'][0]['narrative'] = '';
+            this.organisation['country'] = '';
+            this.organisation['name'][0]['language'] = '';
+          }
         }
       });
 
