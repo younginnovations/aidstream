@@ -239,8 +239,6 @@
               if (!self.searching) {
                 self.searching = true;
                 this.disable_options = false;
-//                self.organisation['name'][0]['narrative'] = '';
-//                self.organisation['identifier'] = '';
                 this.suggestions.splice(0, this.suggestions.length);
                 setTimeout(function () {
                   axios.get('/findpublisher?name=' + event.target.value + '&identifier=' + event.target.value)
@@ -326,6 +324,9 @@
               this.display_registrar_list = true;
             }
           }
+        },
+        updated: function () {
+          $('.scroll-list').jScrollPane({autoReinitialise: true});
         },
         methods: {
           close: function () {

@@ -277,9 +277,6 @@
               self.display_partner_org = false;
               if (!self.searching) {
                 self.searching = true;
-//                self.organisation['narrative'][0]['narrative'] = '';
-//                self.organisation['narrative'][0]['language'] = '';
-//                self.organisation['identifier'] = '';
                 self.disable_options[this.index] = false;
                 this.suggestions.splice(0, this.suggestions.length);
                 setTimeout(function () {
