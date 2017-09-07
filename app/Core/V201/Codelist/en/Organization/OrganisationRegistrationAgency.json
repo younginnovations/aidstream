@@ -730,6 +730,13 @@
       "code": "LR-MPEA",
       "name": "Ministry of Planning and Economic Affairs",
       "language": "en"
+    },
+    {
+      "category": "JO",
+      "category-name": "JORDAN",
+      "code": "JO-CCD",
+      "name": "Companies Control Department",
+      "language": "en"
     }
   ]
 }
