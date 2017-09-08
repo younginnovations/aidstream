@@ -53,7 +53,7 @@
     <div id="participating-form" class="hidden">
         <div class="collection_form has_add_more">
             <div class="form-group">
-                <div class="form-group" v-bind:class="{'has-error': (organisation.type == '' && display_error)}">
+                <div tabindex="1" class="form-group" v-bind:class="{'has-error': (organisation.type == '' && display_error)}">
                     {{Form::label('Organisation Type',trans('elementForm.organisation_type'),['class' => 'control-label'])}}
                     {{Form::select('type',$organizationTypes, null,['class' => 'form-control ignore_change', 'v-bind:value' => 'organisation.type', 'v-on:change'=>'onchange($event)', 'placeholder' => 'Please select the following options.','v-bind:readonly' => "disable_options"])}}
                     <div v-if="(organisation.type == '' && display_error)" class="text-danger">Organisation Type is
@@ -61,14 +61,14 @@
                     </div>
                 </div>
 
-                <div class="form-group"
+                <div tabindex="1" class="form-group"
                      v-bind:class="{'has-error': (organisation.country == '' && display_error), 'disabled': disable_options}">
                     {{Form::label('country','Country the organization is based in',['class' => 'control-label'])}}
                     {{Form::select('country',$countries, null,['class' => 'form-control ignore_change', 'v-bind:value' => 'organisation.country', 'v-on:change'=>'onchange($event)', 'placeholder' => 'Please select the following options.','v-bind:readonly' => "disable_options"])}}
                     <div v-if="(organisation.country == '' && display_error)" class="text-danger">Country is required.
                     </div>
                 </div>
-                <div class="form-group"
+                <div tabindex="1" class="form-group"
                      v-bind:class="{'has-error': (organisation.name[0]['narrative'] == '' && display_error)}">
                     {{Form::label('Organization',trans('elementForm.organisation'),['class' => 'control-label'])}}
                     {{Form::text('organization',null,['class' => 'form-control ignore_change','v-bind:value' => "organisation.name[0]['narrative']",'@focus' => 'displaySuggestion($event)', '@keydown.tab'=> 'hideSuggestion','@blur'=>'hide($event)','autocomplete' => 'off', 'readonly' => true])}}
@@ -89,7 +89,7 @@
                         <ul v-if="suggestions.length > 0" class="found-publishers filter-publishers scroll-list">
                             <li class="publisher-description"><p>Choose an organisation from below</p></li>
                             <li v-for="(publisher, index) in suggestions">
-                                <a href="#" v-on:click="selected($event)" v-bind:selectedSuggestion="index">
+                                <a href="javascript:void(0)" v-on:click="selected($event)" v-bind:selectedSuggestion="index">
                                     <strong v-bind:selectedSuggestion="index">@{{publisher.identifier}} @{{publisher.name}}</strong>
                                     <div class="partners">
                                         <div class="pull-left">
@@ -108,14 +108,14 @@
                             <li class="publisher-description"><p>It seems there's no matching organisation in IATI Registry of publishers. You may do one
                                     of the following at this point.</p></li>
                             <li class="contact-org" id="orgFinder">
-                                <a href="#">
+                                <a href="javascript:void(0)">
                                     <h3 class="contact-heading">Contact Organisation</h3>
                                     <p>Send them a message letting them know about this.</p>
                                 </a>
                             </li>
                             <li class="or">Or</li>
                             <li id="orgFinder">
-                                <a href="#" @click="display()">
+                                <a href="javascript:void(0)" @click="display()">
                                 <h3 class="contact-heading">Use Organization Finder <span> (org-id.guide)</span></h3>
                                 <p>Use our organization finder helper to get a new identifier for this.</p>
                                 <p><span class="caution">Caution:</span> Please beware that this can be a long and
@@ -167,8 +167,8 @@
                                                     <strong>(@{{ list['code'] }})</strong></span>
                                             </label>
                                         </div>
-                                        <div class="score-block"><span>Quality Score: <strong>@{{ list['quality'] }}</strong></span><span><a
-                                                        v-bind:href="list.url" target="_blank">View this list →</a></span>
+                                        <div class="score-block"><span>Quality Score: <strong>@{{ list['quality'] }}</strong></span><span>
+                                                <a v-bind:href="list.url" target="_blank">View this list →</a></span>
                                         </div>
                                     </li>
                                 </ul>
@@ -219,7 +219,11 @@
           }
         },
         updated: function () {
-          $('.scroll-list').jScrollPane({autoReinitialise: true});
+          $('.scroll-list').jScrollPane({ autoReinitialise: true });
+          var errorDiv = this.$el.querySelector('.has-error');
+          if (errorDiv) {
+            errorDiv.focus();
+          }
         },
         mounted: function () {
           if (this.organisation.is_publisher) {
@@ -318,7 +322,7 @@
           }
         },
         beforeUpdate: function () {
-          $('.scroll-list').jScrollPane({autoReinitialise: true});
+          $('.scroll-list').jScrollPane({ autoReinitialise: true });
           if (this.registrar_list[0] != undefined) {
             if (this.registrar_list[0].length != 0) {
               this.display_registrar_list = true;
@@ -326,7 +330,7 @@
           }
         },
         updated: function () {
-          $('.scroll-list').jScrollPane({autoReinitialise: true});
+          $('.scroll-list').jScrollPane({ autoReinitialise: true });
         },
         methods: {
           close: function () {
@@ -383,7 +387,7 @@
               "identifier": "",
               "type": "",
               "country": "",
-              "name": [{"narrative": ""}],
+              "name": [{ "narrative": "" }],
               "is_publisher": false
             });
           }
@@ -401,7 +405,7 @@
             $('#myModal').modal();
           },
           addOrganisations: function () {
-            this.organisations.push({"identifier": "", "type": "", "country": "", "name": [{"narrative": ""}]});
+            this.organisations.push({ "identifier": "", "type": "", "country": "", "name": [{ "narrative": "" }] });
           },
           closeModal: function () {
             this.showModal = false;
@@ -411,7 +415,7 @@
             var route = this.$el.getAttribute('data-route');
             var self = this;
             if (this.isValid()) {
-              axios.post(route, {organisation: self.organisations})
+              axios.post(route, { organisation: self.organisations })
                 .then(function (response) {
                   window.location.href = '/organization/';
                 }).catch(function (error) {
