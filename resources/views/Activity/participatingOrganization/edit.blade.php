@@ -55,7 +55,7 @@
     <div id="participating-form" class="hidden">
         <div class="collection_form has_add_more">
             <div class="form-group">
-                <div tabindex="1" class="organisation-role" v-bind:class="{'has-error': (organisation.organization_role == '' && display_error)}">
+                <div class="organisation-role" v-bind:class="{'has-error': (organisation.organization_role == '' && display_error)}">
                     {{Form::label('Organisation Role',trans('elementForm.organisation_role'),['class' => '.control-label'])}}
                     <ul>
                         <li v-for="(role,code) in organisation_roles" v-bind:class="{'active': (organisation.organization_role == code)}">
@@ -67,18 +67,18 @@
                     <div v-if="(organisation.organization_role == '' && display_error)" class="text-danger">Organisation Role is required.</div>
                 </div>
 
-                <div tabindex="1" class="form-group" v-bind:class="{'has-error': (organisation.organization_type == '' && display_error)}">
+                <div class="form-group" v-bind:class="{'has-error': (organisation.organization_type == '' && display_error)}">
                     {{Form::label('organisation_Type',trans('elementForm.organisation_type'),['class' => 'control-label'])}}
                     {{Form::select('organization_type',$organizationTypes, null,['class' => 'form-control ignore_change', 'v-bind:value' => 'organisation.organization_type', 'v-on:change'=>'onchange($event)', 'placeholder' => 'Please select the following options.','v-bind:readonly' => "disable_options[index]"])}}
                     <div v-if="(organisation.organization_type == '' && display_error)" class="text-danger">Organisation Type is required.</div>
                 </div>
 
-                <div tabindex="1" class="form-group" v-bind:class="{'has-error': (organisation.country == '' && display_error)}">
+                <div class="form-group" v-bind:class="{'has-error': (organisation.country == '' && display_error)}">
                     {{Form::label('country','Country the organization is based in',['class' => 'control-label'])}}
                     {{Form::select('country',$countries, null,['class' => 'form-control ignore_change', 'v-bind:value' => 'organisation.country', 'v-on:change'=>'onchange($event)', 'placeholder' => 'Please select the following options.', 'v-bind:readonly' => "disable_options[index]"])}}
                     <div v-if="(organisation.country == '' && display_error)" class="text-danger">Country is required.</div>
                 </div>
-                <div tabindex="1" class="form-group" v-bind:class="{'has-error': (organisation.narrative[0]['narrative'] == '' && display_error) }">
+                <div class="form-group" v-bind:class="{'has-error': (organisation.narrative[0]['narrative'] == '' && display_error) }">
                     {{Form::label('Organization',trans('elementForm.organisation'),['class' => 'control-label'])}}
                     {{Form::text('organization',null,['class' => 'form-control ignore_change','v-bind:value' => "organisation.narrative[0]['narrative']",'@focus' => 'displaySuggestion($event)', '@keydown.tab'=> 'hideSuggestion','@blur'=>'hide($event)','autocomplete' => 'off', 'readonly' => true])}}
 
@@ -258,10 +258,6 @@
         },
         updated: function () {
           $('.scroll-list').jScrollPane({ autoReinitialise: true });
-          var errorDiv = this.$el.querySelector('.has-error');
-          if (errorDiv) {
-            errorDiv.focus();
-          }
         },
         created: function () {
           this.keywords[this.index] = '';

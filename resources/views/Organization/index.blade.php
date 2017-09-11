@@ -91,7 +91,7 @@
                                     </td>
                                     <td width="50px">
                                         <div class="view-more">
-                                            <a href="#">⋯</a>
+                                            <a href="javascript:void()">⋯</a>
                                             <div class="view-more-actions">
                                                 <ul>
                                                     <li><a href="javascript:void(0)" data-org-id="{{ $orgData->id }}" data-org-name="{{ $orgData->name[0]['narrative'] }}"

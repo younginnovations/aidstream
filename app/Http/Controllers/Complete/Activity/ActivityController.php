@@ -666,15 +666,18 @@ class ActivityController extends Controller
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
-        $orgDataId = ($element === 'participating_organization' ) ? array_get($activity->participating_organization, '0.org_data_id', null) : null;
-        $result    = $this->activityManager->deleteElement($activity, $element);
+        $orgDataIds = collect($activity->participating_organization)->pluck('org_data_id')->toArray();
+        $result     = $this->activityManager->deleteElement($activity, $element);
 
         if ($result) {
-            if ($orgDataId && ($element === 'participating_organization' )) {
-                $organizationData          = $this->organizationManager->findOrganizationData($orgDataId);
-                $activitiesInUse           = $organizationData->used_by;
-                $organizationData->used_by = array_diff($activitiesInUse, [$id]);
-                $organizationData->save();
+            if ($orgDataIds && ($element === 'participating_organization')) {
+                foreach ($orgDataIds as $orgDataId) {
+                    if ($organizationData = $this->organizationManager->findOrganizationData($orgDataId)) {
+                        $activitiesInUse           = $organizationData->used_by;
+                        $organizationData->used_by = array_diff($activitiesInUse, [$id]);
+                        $organizationData->save();
+                    }
+                }
             }
 
             $this->activityManager->resetActivityWorkflow($id);
