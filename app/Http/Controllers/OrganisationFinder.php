@@ -9,8 +9,32 @@ use App\Http\Requests\Request;
 class OrganisationFinder extends Controller
 {
 
+    /**
+     *
+     */
     const PUBLISHER_FILE = 'data/publishers.json';
-    const ORG_FILE       = 'data/org.json';
+    /**
+     *
+     */
+    const ORG_FILE = 'data/org.json';
+
+    /**
+     * IATI organisation type code to Org guide structure map
+     *
+     * @var array
+     */
+    private $iatiToOrgGuideMapper = [
+        10 => 'government agency',
+        15 => 'government agency',
+        21 => 'charity',
+        22 => 'charity',
+        23 => 'charity',
+        30 => 'company',
+        40 => 'trust',
+        60 => 'trust',
+        70 => 'company',
+        80 => 'company'
+    ];
 
     /**
      * @param Request $request
@@ -43,15 +67,31 @@ class OrganisationFinder extends Controller
     public function findOrg(Request $request)
     {
         $file = collect2(json_decode(file_get_contents(public_path(self::ORG_FILE)), true)['lists']);
-
         if ($request->has('country')) {
             $countryRegistrars = $file->matchRegistrar('coverage', $request->get('country'));
             $file              = $countryRegistrars->merge($file->where('coverage', null));
         }
 
-//        if ($request->has('name')) {
-//            $file = $file->where('name.en', $request->get('name'));
-//        }
+        if ($request->has('type')) {
+            $typeRegistrars = $file->matchRegistrar('structure', $this->getOrgGuideType($request->get('type')));
+            $file           = $typeRegistrars->merge($file->where('coverage', null))->unique();
+        }
+
         return $file->isEmpty() ? response([], 404) : response()->json($file->values(), 200);
+    }
+
+    /**
+     * Returns the org guide structure to IATI organisation type code.
+     * 
+     * @param $type
+     * @return mixed|string
+     */
+    protected function getOrgGuideType($type)
+    {
+        if ($type != "") {
+            return $this->iatiToOrgGuideMapper[strtolower($type)];
+        }
+
+        return "";
     }
 }

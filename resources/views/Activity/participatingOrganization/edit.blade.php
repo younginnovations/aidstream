@@ -285,6 +285,7 @@
                   axios.get('/findpublisher?name=' + event.target.value + '&identifier=' + event.target.value)
                     .then(function (response) {
                       self.searching = false;
+                      self.display_org_finder = false;
                       response.data.forEach(function (publisher) {
                         publisher.is_publisher = true;
                         self.suggestions.push(publisher);
@@ -325,9 +326,10 @@
             this.display_org_list = false;
             this.display_org_finder = false;
             var country = this.organisation['country'];
+            var type = this.organisation['organization_type'];
             var self = this;
-            if (country != "") {
-              axios.get('/findorg?country=' + country)
+            if (country != "" || type != "") {
+              axios.get('/findorg?country=' + country + '&type=' + type)
                 .then(function (response) {
                   self.$emit('display', response.data);
                 });
@@ -377,19 +379,28 @@
         data: function () {
           return {
             display_org_info_form: false,
-            selectedRegistrar: '',
-            display_registrar_list: false
+            selectedRegistrar: ''
           }
         },
-        beforeUpdate: function () {
-          if (this.registrar_list[0] != undefined) {
-            if (this.registrar_list[0].length != 0) {
-              this.display_registrar_list = true;
+        computed: {
+          display_registrar_list: function () {
+            if (this.registrar_list[0] != undefined) {
+              if (this.registrar_list[0].length != 0) {
+                return true;
+              }
             }
+
+            return false;
           }
         },
         updated: function () {
-          $('.scroll-list').jScrollPane({ autoReinitialise: true });
+          if (this.display_registrar_list) {
+            var element = this.$el;
+            setTimeout(function () {
+              var scroll = $(element).find('.scroll-list');
+              scroll.jScrollPane({ autoReinitialise: true });
+            }, 900);
+          }
         },
         methods: {
           close: function () {
@@ -403,11 +414,15 @@
           getRegistrars: function (event) {
             var self = this;
             this.organisation[event.target.name] = event.target.value;
-            axios.get('/findorg?country=' + event.target.value)
-              .then(function (response) {
-                self.registrar_list.splice(0, self.registrar_list.length);
-                self.registrar_list.push(response.data);
-              });
+            var country = this.organisation['country'];
+            var type = this.organisation['organization_type'];
+            if (country != "" || type != "") {
+              axios.get('/findorg?country=' + country + '&type=' + type)
+                .then(function (response) {
+                  self.registrar_list.splice(0, self.registrar_list.length);
+                  self.registrar_list.push(response.data);
+                });
+            }
           },
           updateOrgName: function (event) {
             this.organisation['narrative'][0]['narrative'] = event.target.value;
