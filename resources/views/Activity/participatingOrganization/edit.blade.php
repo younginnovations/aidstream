@@ -100,7 +100,7 @@
                                 <div v-for="(publisher, index) in suggestions">
                                     <a href="javascript:void(0)" v-on:click="selected($event)" v-bind:selectedSuggestion="index">
                                         <strong v-bind:selectedSuggestion="index">@{{publisher.identifier}} @{{publisher.name}}</strong>
-                                        <div class="partners">
+                                        <div class="partners" style="overflow: hidden;" v-on:click="selected($event)" v-bind:selectedSuggestion="index">
                                             <div class="pull-left">
                                                 <span v-bind:selectedSuggestion="index">Type: @{{publisher.type}}</span>
                                             </div>
@@ -118,19 +118,20 @@
                             <li class="publishers-list scroll-list">
                                 <p>From your Partner Organization List</p>
                                 <div v-for="(partnerOrganization, index) in partner_organisations">
-                                    <a href="javascript:void(0)" v-on:click="partnerSelected($event)" v-bind:selectedPartner="index">
+                                    <a style="display: block;" href="javascript:void(0)" v-on:click="partnerSelected($event)" v-bind:selectedPartner="index">
                                         <strong v-bind:selectedPartner="index">@{{ partnerOrganization.name ? partnerOrganization.name[0]['narrative'] : 'No name'}}</strong>
                                         <span class="language">en</span>
+
+                                        <div class="partners" style="overflow: hidden;" v-on:click="partnerSelected($event)" v-bind:selectedPartner="index">
+                                            <div class="pull-left">
+                                                <span v-bind:selectedPartner="index" class="tick">@{{ partnerOrganization.identifier }} </span>
+                                            </div>
+                                            <div class="pull-right">
+                                                <span class="suggest-edit" v-if="partnerOrganization.is_publisher">Suggest Edit</span>
+                                                <span class="edit-activity" v-if="!partnerOrganization.is_publisher">Edit</span>
+                                            </div>
+                                        </div>
                                     </a>
-                                    <div class="partners">
-                                        <div class="pull-left">
-                                            <span v-bind:selectedPartner="index" class="tick">@{{ partnerOrganization.identifier }} </span>
-                                        </div>
-                                        <div class="pull-right">
-                                            <span class="suggest-edit" v-if="partnerOrganization.is_publisher">Suggest Edit</span>
-                                            <span class="edit-activity" v-if="!partnerOrganization.is_publisher">Edit</span>
-                                        </div>
-                                    </div>
                                 </div>
                             </li>
                             <li><p>The above list is pulled from your organisation data.</p></li>
@@ -221,7 +222,7 @@
                                     {{Form::text('identifier', null,['class' => 'form-control ignore_change', 'v-bind:value' => 'organisation.identifier', "@blur" => 'updateOrgIdentifier($event)'])}}
                                 </div>
                                 <div class="form-group">
-                                    <button class="btn btn-form" type="button" @click="close">Use this organisation</button>
+                                    <button class="btn btn-form" type="button" data-dismiss="modal" @click="close">Use this organisation</button>
                                 </div>
                             </div>
                         </div>
@@ -498,6 +499,7 @@
           closeModal: function () {
             this.showModal = false;
             $('.modal-backdrop').remove();
+            $('body').removeClass('modal-open');
           },
           onSubmit: function () {
             var activityId = this.$el.getAttribute('data-activityId');

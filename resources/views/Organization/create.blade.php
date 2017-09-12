@@ -39,7 +39,6 @@
                         </div>
                     </div>
                 </div>
-                {{--                @include('includes.menu_org')--}}
             </div>
         </div>
     </div>
@@ -85,7 +84,7 @@
                             <li v-for="(publisher, index) in suggestions">
                                 <a href="javascript:void(0)" v-on:click="selected($event)" v-bind:selectedSuggestion="index">
                                     <strong v-bind:selectedSuggestion="index">@{{publisher.identifier}} @{{publisher.name}}</strong>
-                                    <div class="partners">
+                                    <div class="partners" style="overflow: hidden;" v-on:click="selected($event)" v-bind:selectedSuggestion="index">
                                         <div class="pull-left">
                                             <span v-bind:selectedSuggestion="index">Type: @{{publisher.type}}</span>
                                         </div>
@@ -399,6 +398,7 @@
           closeModal: function () {
             this.showModal = false;
             $('.modal-backdrop').remove();
+            $('body').removeClass('modal-open');
           },
           onSubmit: function () {
             var route = this.$el.getAttribute('data-route');
