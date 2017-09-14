@@ -69,20 +69,25 @@ class OrganisationFinder extends Controller
         $file = collect2(json_decode(file_get_contents(public_path(self::ORG_FILE)), true)['lists']);
         if ($request->has('country')) {
             $countryRegistrars = $file->matchRegistrar('coverage', $request->get('country'));
-            $file              = $countryRegistrars->merge($file->where('coverage', null));
+            $file = $countryRegistrars->merge($file->where('coverage', null));
         }
 
         if ($request->has('type')) {
             $typeRegistrars = $file->matchRegistrar('structure', $this->getOrgGuideType($request->get('type')));
-            $file           = $typeRegistrars->merge($file->where('coverage', null))->unique();
+            $file = $typeRegistrars->merge($file->where('coverage', null))->unique();
         }
 
-        return $file->isEmpty() ? response([], 404) : response()->json($file->values(), 200);
+        $filtered = [];
+        foreach ($file->values() as $index => $data) {
+            $filtered[] = collect($data)->only(['code', 'name', 'quality', 'url'])->toArray();
+        }
+
+        return empty($filtered) ? response([], 404) : response()->json($filtered, 200);
     }
 
     /**
      * Returns the org guide structure to IATI organisation type code.
-     * 
+     *
      * @param $type
      * @return mixed|string
      */
