@@ -32,10 +32,12 @@ class NameController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param $orgId
      * @return Response
      */
     public function index($orgId)
     {
+        $id           = $orgId;
         $organization = $this->organizationManager->findOrganizationData($orgId);
 
         if (Gate::denies('belongsToOrganization', $organization)) {
@@ -45,7 +47,7 @@ class NameController extends Controller
         $orgName = $this->nameManager->getOrganizationNameData($orgId);
         $form    = $this->nameForm->editForm($orgName, $orgId);
 
-        return view('Organization.name.edit', compact('form', 'orgName', 'orgId'));
+        return view('Organization.name.edit', compact('form', 'orgName', 'orgId', 'id'));
     }
 
     /**

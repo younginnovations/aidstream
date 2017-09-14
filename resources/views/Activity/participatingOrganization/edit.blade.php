@@ -89,7 +89,7 @@
                         <ul class="filter-publishers">
                             <li>
                                 <div class="search-publishers">
-                                    <input type="search" :value="keywords[index]" placeholder="Filter by organisation name..." @keyup ='search($event)'>
+                                    <input type="search" :value="keywords[index]" placeholder="Filter by organisation name..." @keyup='search($event)'>
                                 </div>
                             </li>
                         </ul>
@@ -99,7 +99,8 @@
                                 <p>Choose an organisation from below</p>
                                 <div v-for="(publisher, index) in suggestions">
                                     <a href="javascript:void(0)" v-on:click="selected($event)" v-bind:selectedSuggestion="index">
-                                        <strong v-bind:selectedSuggestion="index">@{{publisher.identifier}} @{{publisher.name}}</strong>
+                                        <strong v-bind:selectedSuggestion="index">@{{publisher.identifier}} @{{publisher.Names[0].name}}</strong>
+                                        <span class="language">@{{ publisher.Names[0].language }}</span>
                                         <div class="partners" style="overflow: hidden;" v-on:click="selected($event)" v-bind:selectedSuggestion="index">
                                             <div class="pull-left">
                                                 <span v-bind:selectedSuggestion="index">Type: @{{publisher.type}}</span>
@@ -148,12 +149,12 @@
                             <li class="or">Or</li>
                             <li id="orgFinder">
                                 <a href="javascript:void(0)" @click="display()">
-                                <h3 class="contact-heading">Use Organization Finder <span> (org-id.guide)</span></h3>
-                                <p>Use our organization finder helper to get a new identifier for this.</p>
-                                <p><span class="caution">Caution:</span> Please beware that this can be a long and
-                                    tedious process. It may be the case that you will not
-                                    find the organization even with this. In this case, leave the identifier field blank
-                                    and just mention organisation name only.</p>
+                                    <h3 class="contact-heading">Use Organization Finder <span> (org-id.guide)</span></h3>
+                                    <p>Use our organization finder helper to get a new identifier for this.</p>
+                                    <p><span class="caution">Caution:</span> Please beware that this can be a long and
+                                        tedious process. It may be the case that you will not
+                                        find the organization even with this. In this case, leave the identifier field blank
+                                        and just mention organisation name only.</p>
                                 </a>
                             </li>
                         </ul>
@@ -244,6 +245,10 @@
     <script src="https://unpkg.com/vue"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script>
+      var apiUrl = "{!! env('PO_API_URL') !!}";
+      var countries = {!! json_encode(array_flip($countries)) !!};
+    </script>
+    <script>
       Vue.component('participating-org', {
         template: '#participating-form',
         data: function () {
@@ -282,20 +287,23 @@
                 self.disable_options[this.index] = false;
                 this.suggestions.splice(0, this.suggestions.length);
                 setTimeout(function () {
-                  axios.get('/findpublisher?name=' + event.target.value + '&identifier=' + event.target.value)
-                    .then(function (response) {
-                      self.searching = false;
-                      self.display_org_finder = false;
-                      response.data.forEach(function (publisher) {
-                        publisher.is_publisher = true;
-                        self.suggestions.push(publisher);
-                      });
-                    })
-                    .catch(function (error) {
-                      self.suggestions.splice(0, self.suggestions.length);
-                      self.display_org_finder = true;
-                      self.searching = false;
+                  axios({
+                    method: 'GET',
+                    url: apiUrl + '/api/suggestions?name=' + event.target.value + '&identifier=' + event.target.value,
+                    headers: { 'Origin': '*' }
+                  }).then(function (response) {
+                    self.searching = false;
+                    self.display_org_finder = false;
+
+                    response.data.forEach(function (publisher) {
+                      publisher.is_publisher = true;
+                      self.suggestions.push(publisher);
                     });
+                  }).catch(function (error) {
+                    self.suggestions.splice(0, self.suggestions.length);
+                    self.display_org_finder = true;
+                    self.searching = false;
+                  });
                 }, 1000);
               }
             } else {
@@ -337,15 +345,17 @@
             self.$emit('display', []);
           },
           selected: function (event) {
+            var selectedIndex = event.target.getAttribute('selectedSuggestion');
+            var organizationCountry = this.suggestions[selectedIndex]['country'];
+
             this.disable_options[this.index] = true;
             this.display_org_list = false;
-            var selectedIndex = event.target.getAttribute('selectedSuggestion');
             this.organisation['organization_type'] = this.suggestions[selectedIndex]['type'];
             this.organisation['is_publisher'] = this.suggestions[selectedIndex]['is_publisher'];
             this.organisation['identifier'] = this.suggestions[selectedIndex]['identifier'];
-            this.organisation['country'] = this.suggestions[selectedIndex]['country'];
-            this.organisation['narrative'][0]['narrative'] = this.suggestions[selectedIndex]['name'];
-            this.organisation['narrative'][0]['language'] = 'en';
+            this.organisation['country'] = organizationCountry ? countries[organizationCountry.toUpperCase()] : '';
+            this.organisation['narrative'][0]['narrative'] = this.suggestions[selectedIndex]['Names'][0]['name'];
+            this.organisation['narrative'][0]['language'] = this.suggestions[selectedIndex]['Names'][0]['language'];
             this.suggestions.splice(0, this.suggestions.length);
           },
           hide: function (event) {

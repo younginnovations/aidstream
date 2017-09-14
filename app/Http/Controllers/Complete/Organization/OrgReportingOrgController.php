@@ -49,6 +49,7 @@ class OrgReportingOrgController extends Controller
     public function index($organizationId)
     {
         $organization = $this->organizationManager->findOrganizationData($organizationId);
+        $id           = $organizationId;
 
         if (Gate::denies('belongsToOrganization', $organization)) {
             return redirect()->route('activity.index')->withResponse($this->getNoPrivilegesMessage());
@@ -57,7 +58,7 @@ class OrgReportingOrgController extends Controller
         $reportingOrganization = $this->organizationManager->getOrganization(session('org_id'))->reporting_org;
         $form                  = $this->orgReportingOrgFormCreator->editForm($reportingOrganization, $organization);
 
-        return view('Organization.reportingOrg.edit', compact('form', 'organization', 'reportingOrganization', 'organizationId'));
+        return view('Organization.reportingOrg.edit', compact('form', 'organization', 'reportingOrganization', 'organizationId', 'id'));
     }
 
     /**

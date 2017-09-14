@@ -38,6 +38,7 @@ class RecipientOrganizationBudgetController extends Controller
     public function index($organizationId)
     {
         $organization = $this->organizationManager->findOrganizationData($organizationId);
+        $id           = $organizationId;
 
         if (Gate::denies('belongsToOrganization', $organization)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
@@ -49,7 +50,7 @@ class RecipientOrganizationBudgetController extends Controller
             $organizationId
         );
 
-        return view('Organization.recipientOrgBudget.edit', compact('form', 'recipientCountryBudget', 'organizationId'));
+        return view('Organization.recipientOrgBudget.edit', compact('form', 'recipientCountryBudget', 'organizationId', 'id'));
     }
 
 

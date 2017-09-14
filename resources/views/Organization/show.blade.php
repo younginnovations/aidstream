@@ -6,7 +6,7 @@
 
 @section('content')
 
-    {{--*/ $orgId = session('org_id');   /*--}}
+    {{--*/ $orgId = $id;   /*--}}
     @inject('code', 'App\Helpers\GetCodeName')
     <div class="container main-container">
         <div class="row">

@@ -38,6 +38,7 @@ class OrgTotalBudgetController extends Controller
     public function index($orgId)
     {
         $organization = $this->organizationManager->findOrganizationData($orgId);
+        $id           = $orgId;
 
         if (Gate::denies('belongsToOrganization', $organization)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
@@ -48,7 +49,7 @@ class OrgTotalBudgetController extends Controller
         $totalBudget = $this->totalBudgetManager->getOrganizationTotalBudgetData($orgId);
         $form        = $this->totalBudgetForm->editForm($totalBudget, $orgId);
 
-        return view('Organization.totalBudget.totalBudget', compact('form', 'totalBudget', 'orgId'));
+        return view('Organization.totalBudget.totalBudget', compact('form', 'totalBudget', 'orgId', 'id'));
     }
 
     /**
@@ -61,6 +62,7 @@ class OrgTotalBudgetController extends Controller
     public function update($orgId, TotalBudgetRequestManager $totalBudgetRequestManager, Request $request)
     {
         $organization = $this->organizationManager->findOrganizationData($orgId);
+
         if (Gate::denies('belongsToOrganization', $organization)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }

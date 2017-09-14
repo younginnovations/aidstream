@@ -37,6 +37,7 @@ class DocumentLinkController extends Controller
     public function index($orgId)
     {
         $organization = $this->organizationManager->findOrganizationData($orgId);
+        $id           = $orgId;
 
         if (Gate::denies('belongsToOrganization', $organization)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
@@ -45,7 +46,7 @@ class DocumentLinkController extends Controller
         $documentLink = $this->documentLinkManager->getDocumentLinkData($orgId);
         $form         = $this->documentLinkForm->editForm($documentLink, $orgId);
 
-        return view('Organization.documentLink.documentLink', compact('form', 'documentLink', 'orgId'));
+        return view('Organization.documentLink.documentLink', compact('form', 'documentLink', 'orgId', 'id'));
     }
 
 
