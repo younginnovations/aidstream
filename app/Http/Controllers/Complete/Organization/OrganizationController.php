@@ -416,7 +416,6 @@ class OrganizationController extends Controller
     public function deleteElement($id, $element)
     {
         $organizationData = $this->organizationManager->findOrganizationData($id);
-//        $organization     = $this->organizationManager->getOrganization($id);
 
         if (Gate::denies('belongsToOrganization', $organizationData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
@@ -430,7 +429,7 @@ class OrganizationController extends Controller
             $response = ['type' => 'danger', 'code' => ['organization_element_not_removed', ['element' => trans('global.activity')]]];
         }
 
-        return redirect()->back()->withResponse($response);
+        return redirect()->route('organization.show', $id)->withResponse($response);
     }
 
     /**

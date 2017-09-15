@@ -506,6 +506,13 @@ class OrganizationRepository implements OrganizationRepositoryInterface
         return $this->orgData->where('organization_id', $id)->select('name', 'id', 'identifier', 'type', 'country', 'is_publisher')->where('is_reporting_org', false)->get();
     }
 
+    /**
+     * Update OrganizationData.
+     *
+     * @param $orgDataId
+     * @param $orgData
+     * @return mixed
+     */
     public function updateOrganizationData($orgDataId, $orgData)
     {
         $organisation = $this->findOrganizationData($orgDataId);
@@ -516,5 +523,16 @@ class OrganizationRepository implements OrganizationRepositoryInterface
     public function getAllOrganizationData()
     {
         return $this->orgData->all();
+    }
+
+    /**
+     * Get OrganizationData with a specific organizationId.
+     *
+     * @param $organizationId
+     * @return mixed
+     */
+    public function getOrganizationDataFor($organizationId)
+    {
+        return $this->orgData->where('organization_id', '=', $organizationId)->get();
     }
 }

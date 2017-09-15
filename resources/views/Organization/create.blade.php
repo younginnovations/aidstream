@@ -201,7 +201,7 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script>
       var apiUrl = "{!! env('PO_API_URL') !!}";
-      var countries = {!! json_encode(array_flip($countries)) !!};
+      var countries = {!! json_encode($countries) !!};
     </script>
     <script>
       Vue.component('participating-org', {
@@ -295,7 +295,7 @@
             this.organisation['is_publisher'] = this.suggestions[selectedIndex]['is_publisher'];
             this.organisation['identifier'] = this.suggestions[selectedIndex]['identifier'];
             this.organisation['name'][0]['narrative'] = this.suggestions[selectedIndex]['name'];
-            this.organisation['country'] = organizationCountry ? countries[organizationCountry.toUpperCase()] : '';
+            this.organisation['country'] = organizationCountry;
             this.organisation['name'][0]['language'] = 'en';
             this.disable_options = true;
             this.display_org_list = false;

@@ -87,8 +87,8 @@ class ParticipatingOrganizationController extends Controller
      */
     public function update($id, Request $request, ParticipatingOrganizationRequestManager $participatingOrganizationRequestManager)
     {
-        $participatingOrganization = $this->participatingOrganizationManager->addOrgData($id, $request);
         $activityData              = $this->activityManager->getActivityData($id);
+        $participatingOrganization = $this->participatingOrganizationManager->addOrgData($id, $request);
 
         if (Gate::denies('ownership', $activityData)) {
             return response()->json($this->getNoPrivilegesMessage(), 500);
@@ -101,11 +101,9 @@ class ParticipatingOrganizationController extends Controller
 
         if ($this->participatingOrganizationManager->update($participatingOrganization, $activityData)) {
             $this->activityManager->resetActivityWorkflow($id);
-            $response = ['type' => 'success', 'code' => ['updated', ['name' => trans('title.participating_organisation')]]];
 
             return response()->json(trans('V201/message.updated', ['name' => 'participating organization']), 200);
         }
-        $response = ['type' => 'danger', 'code' => ['update_failed', ['name' => trans('title.participating_organisation')]]];
 
         return response()->json(trans('V201/message.updated_failed', ['name' => 'participating organization']), 500);
     }

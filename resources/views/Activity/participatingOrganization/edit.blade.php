@@ -246,7 +246,7 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script>
       var apiUrl = "{!! env('PO_API_URL') !!}";
-      var countries = {!! json_encode(array_flip($countries)) !!};
+      var countries = {!! json_encode($countries) !!};
     </script>
     <script>
       Vue.component('participating-org', {
@@ -350,10 +350,10 @@
 
             this.disable_options[this.index] = true;
             this.display_org_list = false;
-            this.organisation['organization_type'] = this.suggestions[selectedIndex]['type'];
+            this.organisation['organization_type'] = this.suggestions[selectedIndex]['type'] ? this.suggestions[selectedIndex]['type'] : 21;
             this.organisation['is_publisher'] = this.suggestions[selectedIndex]['is_publisher'];
             this.organisation['identifier'] = this.suggestions[selectedIndex]['identifier'];
-            this.organisation['country'] = organizationCountry ? countries[organizationCountry.toUpperCase()] : '';
+            this.organisation['country'] = organizationCountry ? organizationCountry : "NP";
             this.organisation['narrative'][0]['narrative'] = this.suggestions[selectedIndex]['Names'][0]['name'];
             this.organisation['narrative'][0]['language'] = this.suggestions[selectedIndex]['Names'][0]['language'];
             this.suggestions.splice(0, this.suggestions.length);
@@ -533,7 +533,7 @@
             if (this.isValid()) {
               axios.put(route, { participating_organization: self.organisations })
                 .then(function (response) {
-                  window.location.href = '/activity/' + activityId;
+                  window.location.href = '/activity/' + activityId + '?flash=true';
                 }).catch(function (error) {
                 self.server_error_message = error.response.data;
                 self.display_server_error_message = true;

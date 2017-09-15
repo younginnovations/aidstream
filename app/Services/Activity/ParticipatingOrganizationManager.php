@@ -114,7 +114,7 @@ class ParticipatingOrganizationManager
     public function addOrgData($id, $request)
     {
         $participatingOrganization = $request->all();
-        $allOrganizationData       = $this->organizationRepository->getAllOrganizationData();
+        $allOrganizationData       = $this->organizationRepository->getOrganizationDataFor(session('org_id'));
 
         try {
             foreach (getVal($participatingOrganization, ['participating_organization']) as $item => $value) {

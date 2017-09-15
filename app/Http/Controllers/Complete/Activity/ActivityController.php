@@ -245,6 +245,12 @@ class ActivityController extends Controller
             $nextRoute = route('activity.publish', $id);
         }
 
+        if (request()->get('flash')) {
+            $response = ['type' => 'success', 'code' => ['created', ['name' => trans('global.participating_organisations')]]];
+
+            return redirect()->route('activity.show', $id)->withResponse($response);
+        }
+
         return view('Activity.show', compact('activityDataList', 'id', 'filename', 'activityPublishedStatus', 'message', 'nextRoute', 'errors'));
     }
 
@@ -686,7 +692,7 @@ class ActivityController extends Controller
             $response = ['type' => 'danger', 'code' => ['activity_element_not_removed', ['element' => trans('global.activity')]]];
         }
 
-        return redirect()->back()->withResponse($response);
+        return redirect()->route('activity.show', $id)->withResponse($response);
     }
 
     /**
