@@ -83,8 +83,8 @@
                             <li class="publisher-description"><p>Choose an organisation from below</p></li>
                             <li v-for="(publisher, index) in suggestions">
                                 <a href="javascript:void(0)" v-on:click="selected($event)" v-bind:selectedSuggestion="index">
-                                    <strong v-bind:selectedSuggestion="index">@{{publisher.identifier}} @{{publisher.Names[0].name }}</strong>
-                                    <span class="language">@{{ publisher.Names[0].language }}</span>
+                                    <strong v-bind:selectedSuggestion="index">@{{publisher.identifier}} @{{publisher.names[0].name }}</strong>
+                                    <span class="language">@{{ publisher.names[0].language }}</span>
 
                                     <div class="partners" style="overflow: hidden;" v-on:click="selected($event)" v-bind:selectedSuggestion="index">
                                         <div class="pull-left">
@@ -111,12 +111,12 @@
                             <li class="or">Or</li>
                             <li id="orgFinder">
                                 <a href="javascript:void(0)" @click="display()">
-                                    <h3 class="contact-heading">Use Organization Finder <span> (org-id.guide)</span></h3>
-                                    <p>Use our organization finder helper to get a new identifier for this.</p>
-                                    <p><span class="caution">Caution:</span> Please beware that this can be a long and
-                                        tedious process. It may be the case that you will not
-                                        find the organization even with this. In this case, leave the identifier field blank
-                                        and just mention organisation name only.</p>
+                                <h3 class="contact-heading">Use Organization Finder <span> (org-id.guide)</span></h3>
+                                <p>Use our organization finder helper to get a new identifier for this.</p>
+                                <p><span class="caution">Caution:</span> Please beware that this can be a long and
+                                    tedious process. It may be the case that you will not
+                                    find the organization even with this. In this case, leave the identifier field blank
+                                    and just mention organisation name only.</p>
                                 </a>
                             </li>
                         </ul>
@@ -294,9 +294,19 @@
             this.organisation['type'] = this.suggestions[selectedIndex]['type'];
             this.organisation['is_publisher'] = this.suggestions[selectedIndex]['is_publisher'];
             this.organisation['identifier'] = this.suggestions[selectedIndex]['identifier'];
-            this.organisation['name'][0]['narrative'] = this.suggestions[selectedIndex]['name'];
             this.organisation['country'] = organizationCountry;
-            this.organisation['name'][0]['language'] = 'en';
+            var self = this;
+
+            if (this.suggestions[selectedIndex]['names'].length > 0) {
+              this.suggestions[selectedIndex]['names'].forEach(function (name, index) {
+                if (self.organisation['name'][index] == undefined) {
+                  self.organisation['name'][index] = { 'narrative': '', 'language': '' };
+                }
+                self.organisation['name'][index]['narrative'] = name.name;
+                self.organisation['name'][index]['language'] = name.language;
+              });
+            }
+
             this.disable_options = true;
             this.display_org_list = false;
             this.suggestions.splice(0, this.suggestions.length);
@@ -400,7 +410,7 @@
               "identifier": "",
               "type": "",
               "country": "",
-              "name": [{ "narrative": "" }],
+              "name": [{ "language": "", "narrative": "" }],
               "is_publisher": false
             });
           }
