@@ -6323,7 +6323,7 @@ select.systemVersion {
     .partners .edit-activity:before {
       top: 3px; }
 
-.publishers-list {
+.scroll-list {
   min-height: 100px;
   max-height: 200px; }
 

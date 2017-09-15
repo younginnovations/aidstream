@@ -5011,7 +5011,7 @@ select.systemVersion {
 }
 
 .publisher-description {
-  padding-top: 0!important;
+  padding-top: 0 !important;
 }
 
 .contact-heading {
@@ -5063,23 +5063,23 @@ select.systemVersion {
   }
 }
 
-.lists,#activity-list-container,.found-publishers,.not-found-publishers {
+.lists, #activity-list-container, .found-publishers, .not-found-publishers {
   .jspPane {
-    width: 100%!important;
+    width: 100% !important;
 
     ul {
       padding: 10px 14px;
     }
   }
   .jspVerticalBar {
-    right: 6px!important;
+    right: 6px !important;
     top: 1px;
-    width: 6px!important;
+    width: 6px !important;
     .jspTrack {
-      background: #E4EAED!important;
+      background: #E4EAED !important;
     }
     .jspDrag {
-      background: $color_primary!important;
+      background: $color_primary !important;
     }
   }
 }
@@ -5130,7 +5130,7 @@ select.systemVersion {
   padding: 12px;
 }
 
-.found-publishers,.not-found-publishers  {
+.found-publishers, .not-found-publishers {
   li {
     font-size: 11px;
     strong {
@@ -5170,12 +5170,12 @@ select.systemVersion {
 
 .publishers-list {
   .jspContainer {
-    margin: 0!important;
+    margin: 0 !important;
   }
   .jspPane {
     background: #F0F8FC;
-    padding: 12px 20px 12px 14px!important;
-    width: 100%!important;
+    padding: 12px 20px 12px 14px !important;
+    width: 100% !important;
     > p {
       color: rgba($color_gravel_approx, 0.7);
       font-size: 10px;
@@ -5196,14 +5196,14 @@ select.systemVersion {
     }
   }
   .jspVerticalBar {
-    right: 6px!important;
+    right: 6px !important;
     top: 1px;
-    width: 6px!important;
+    width: 6px !important;
     .jspTrack {
-      background: #E4EAED!important;
+      background: #E4EAED !important;
     }
     .jspDrag {
-      background: $color_primary!important;
+      background: $color_primary !important;
     }
   }
 }
@@ -5240,7 +5240,7 @@ select.systemVersion {
   }
 }
 
-.publishers-list {
+.scroll-list {
   min-height: 100px;
   max-height: 200px;
 }
@@ -5590,7 +5590,7 @@ select.systemVersion {
     margin-bottom: 10px !important;
     text-transform: none;
     &:last-of-type {
-      margin-bottom: 0!important;
+      margin-bottom: 0 !important;
     }
   }
 }
