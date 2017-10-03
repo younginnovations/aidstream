@@ -341,7 +341,7 @@ class TransactionRow
             'transaction.humanitarian'                                     => 'in:1,0',
             'transaction.transaction_type.*.transaction_type_code'         => sprintf('required|in:%s', $this->validCodeList('TransactionType', $this->version)),
             'transaction.transaction_date.*.date'                          => 'required|date_format:Y-m-d',
-            'transaction.value.*.amount'                                   => 'required|numeric|min:0',
+            'transaction.value.*.amount'                                   => 'required|numeric',
             'transaction.value.*.date'                                     => 'required|date_format:Y-m-d',
             'transaction.value.*.currency'                                 => sprintf('in:%s', $this->validCodeList('Currency', 'V201')),
             'transaction.provider_organization.*.type'                     => sprintf('in:%s', $this->validCodeList('OrganisationType', 'V201')),
