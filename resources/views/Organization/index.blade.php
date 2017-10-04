@@ -24,18 +24,17 @@
                         <table class="table table-striped">
                             <tbody>
                             <tr class="clickable-row" data-href="{{ route('organization.show', $reportingOrg->id) }}">
-                                <td>
-                                    <a href="{{ route('organization-data.edit', $reportingOrg->id)}}" class="edit-activity pull-right">@lang('global.edit')</a>
-                                </td>
+                                {{--<td>--}}
+                                {{--<a href="{{ route('organization-data.edit', $reportingOrg->id)}}" class="edit-activity pull-right">@lang('global.edit')</a>--}}
+                                {{--</td>--}}
                                 <td class="organisation-name" width="70%">
                                     <a href="{{route('organization.show', $reportingOrg->id)}}">
-                                        {{ $reportingOrg->name[0]['narrative'] }}
+                                        {{ $reportingOrg->reporting_org }}
                                     </a>
                                     <span class="identifier">{{ $reportingOrg->identifier }}</span>
                                 </td>
                                 <td class="sector" width="15%">
                                     {{ $reportingOrg->type ? $getCode->getCodeNameOnly('OrganizationType', $reportingOrg->type, -4, 'Organization') : '' }}
-                                    {{--Private Sector--}}
                                 </td>
                                 <td width="10%">
                                     <div class="activity__status activity-status-{{ $reportingOrg->getStatus() }}">
@@ -49,7 +48,7 @@
                                             <ul>
                                                 {{--<li><a href="#" class="merge-with">Merge with ...</a></li>--}}
                                                 <li>
-                                                    <a href="{{ route('organization.show', $reportingOrg->id)}}" class="edit-this-org">Edit this organisation</a>
+                                                    <a href="{{ route('organization.show', $reportingOrg->id)}}">@lang('global.edit_this_organisation')</a>
                                                 </li>
                                             </ul>
                                         </div>
@@ -73,7 +72,9 @@
                                         <a href="{{route('organization.show', $orgData->id)}}">
                                             {{ $orgData->name[0]['narrative'] ? $orgData->name[0]['narrative'] : trans('global.name_not_given')}}
                                         </a>
-                                        <span class="identifier">GB-GOV-1</span>
+                                        <span class="identifier">
+                                            {{ $orgData->identifier }}
+                                        </span>
                                         @if($orgData->is_publisher)
                                             <span class="{{ $orgData->is_publisher ? 'is-publisher' : '' }}">publisher</span>
                                         @endif
@@ -91,21 +92,30 @@
                                     </td>
                                     <td width="50px">
                                         <div class="view-more">
-                                            <a href="javascript:void()">⋯</a>
+                                            <a href="javascript:void(0)">⋯</a>
                                             <div class="view-more-actions">
                                                 <ul>
-                                                    <li><a href="javascript:void(0)" data-org-id="{{ $orgData->id }}" data-org-name="{{ $orgData->name[0]['narrative'] }}"
-                                                           class="merge-with mergeWithTrigger">@lang('organisation-data.merge_with_label')</a></li>
                                                     <li>
-                                                        <a href="{{ route('organization-data.edit', $orgData->id)}}" class="edit-this-org">Edit this organisation</a>
+                                                        <a href="javascript:void(0)" data-org-id="{{ $orgData->id }}" data-org-name="{{ $orgData->name[0]['narrative'] }}"
+                                                           class="merge-with mergeWithTrigger">@lang('organisation-data.merge_with_label')
+                                                        </a>
                                                     </li>
                                                     @if ($orgData->status === 3 && ($orgData->organization->published_to_registry === 1))
-                                                        <form action="{{ route('organization-data.unpublish', $orgData->id) }}" method="POST">
-                                                            {{ csrf_field() }}
-                                                            <small>
-                                                                <input class="button button-submit btn-xs btn-action-wrap" type="submit" value="@lang('global.unpublish_organisation')">
-                                                            </small>
-                                                        </form>
+                                                        <li>
+                                                            <form action="{{ route('organization-data.unpublish', $orgData->id) }}" method="POST">
+                                                                {{ csrf_field() }}
+                                                                <small>
+                                                                    <input class="button button-submit btn-xs btn-action-wrap" type="submit" value="@lang('global.unpublish_organisation')">
+                                                                </small>
+                                                            </form>
+                                                        </li>
+                                                    @else
+                                                        <li>
+                                                            <a href="{{ route('organization-data.edit', $orgData->id)}}">@lang('global.edit_this_organisation')</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="{{ route('organization-data.delete', $orgData->id)}}" class="edit-this-org">@lang('global.delete_this_organisation')</a>
+                                                        </li>
                                                     @endif
                                                 </ul>
                                             </div>
@@ -133,14 +143,14 @@
                     <div class="modal-body">
                         <div id="partner-org-body"></div>
                         {{--<div class="merge-with__wrap">--}}
-                            {{----}}
+                        {{----}}
                         {{--</div>--}}
                         <div id="organisation-merger-info-container"></div>
                         <div id="activity-list-container" class="scroll-list"></div>
                     </div>
                     <div class="modal-footer text-center">
                         {{--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>--}}
-                        <input type="submit" class="btn btn-primary btn-merge" value="Merge these organisations" />
+                        <input type="submit" class="btn btn-primary btn-merge" value="Merge these organisations"/>
                     </div>
                 </form>
             </div>
@@ -150,97 +160,97 @@
 
 @section('script')
     <script>
-        $(document).ready(function () {
-            var partnerOrganisations = {!! json_encode($participatingOrg) !!};
-            var partnerOrganisationContainer = $('#partner-org-body');
-            var infoContainer = $('#organisation-merger-info-container');
-            var activityListContainer = $('#activity-list-container');
-            var mergerRoute = "{!! route('organization.merge-organization-data', ['organization-from', 'organization-to']) !!}";
-            var form = $('#organization-merger');
+      $(document).ready(function () {
+        var partnerOrganisations = {!! json_encode($participatingOrg) !!};
+        var partnerOrganisationContainer = $('#partner-org-body');
+        var infoContainer = $('#organisation-merger-info-container');
+        var activityListContainer = $('#activity-list-container');
+        var mergerRoute = "{!! route('organization.merge-organization-data', ['organization-from', 'organization-to']) !!}";
+        var form = $('#organization-merger');
 
-            $('.mergeWithTrigger').on('click', function (event) {
-                if ($(".merge-with__wrap").length > 0) {
-                    $(".merge-with__wrap").remove();
-                }
+        $('.mergeWithTrigger').on('click', function (event) {
+          if ($(".merge-with__wrap").length > 0) {
+            $(".merge-with__wrap").remove();
+          }
 
-                if (activityListContainer.is(':empty')) {
-                    activityListContainer.hide();
-                } else {
-                    activityListContainer.show();
-                }
-                partnerOrganisationContainer.empty();
-                infoContainer.empty();
-                activityListContainer.empty();
+          if (activityListContainer.is(':empty')) {
+            activityListContainer.hide();
+          } else {
+            activityListContainer.show();
+          }
+          partnerOrganisationContainer.empty();
+          infoContainer.empty();
+          activityListContainer.empty();
 
-                var self = $(this);
-                var organisationName = self.attr('data-org-name');
-                var organisationId = self.attr('data-org-id');
-                var route = '/get-activity-titles/' + organisationId;
+          var self = $(this);
+          var organisationName = self.attr('data-org-name');
+          var organisationId = self.attr('data-org-id');
+          var route = '/get-activity-titles/' + organisationId;
 
-                var requiredOrganisations = $.map(partnerOrganisations, function (org, index) {
-                    if (org.id != organisationId) {
-                        return org;
-                    }
-                });
+          var requiredOrganisations = $.map(partnerOrganisations, function (org, index) {
+            if (org.id != organisationId) {
+              return org;
+            }
+          });
 
-                var actionInfo = "Please choose an organisation from below you want to merge org_name with:";
-                var info = "Please remember merging organisation_name_placeholder with other organization will remove organisation_name_placeholder from your list and transfer all (see below) activities from organisation_name_placeholder to the organization you choose.";
+          var actionInfo = "Please choose an organisation from below you want to merge org_name with:";
+          var info = "Please remember merging organisation_name_placeholder with other organization will remove organisation_name_placeholder from your list and transfer all (see below) activities from organisation_name_placeholder to the organization you choose.";
 
-                partnerOrganisationContainer.html('<p class="text-center">' + actionInfo.replace(/org_name/, '<strong>' + organisationName + '</strong>') + '</p>');
+          partnerOrganisationContainer.html('<p class="text-center">' + actionInfo.replace(/org_name/, '<strong>' + organisationName + '</strong>') + '</p>');
 
-                $.map(requiredOrganisations, function (org, index) {
-                    $('<label>\n' +
-                        '<input type="radio" class="organization-to-be-merged-with" name="merge_target" value="' + org.id + '">' + org.name[0].narrative +
-                        '</label>').appendTo(partnerOrganisationContainer)
-                });
+          $.map(requiredOrganisations, function (org, index) {
+            $('<label>\n' +
+              '<input type="radio" class="organization-to-be-merged-with" name="merge_target" value="' + org.id + '">' + org.name[0].narrative +
+              '</label>').appendTo(partnerOrganisationContainer)
+          });
 
-                var rules = {
-                    merge_target: {
-                        required: true
-                    }
-                };
+          var rules = {
+            merge_target: {
+              required: true
+            }
+          };
 
-                var messages = {
-                    merge_target: {
-                        required: 'Please select an Organisation.'
-                    }
-                };
+          var messages = {
+            merge_target: {
+              required: 'Please select an Organisation.'
+            }
+          };
 
 
-                $.ajax(route).success(function (response) {
-                    var mainContainer = $('<div/>', {
-                        class: 'merge-with__wrap'
-                    });
-
-                    if (response.length) {
-                        infoContainer.html('<div>' + info.replace(/organisation_name_placeholder/g, '<strong>' + organisationName + '</strong>') + '</div>').appendTo(mainContainer);
-                        $.map(response, function (value, index) {
-                            $('<li>' + value + '</li>').appendTo(activityListContainer);
-                        });
-
-                        activityListContainer.show();
-                        activityListContainer.appendTo(mainContainer);
-                        mainContainer.appendTo($('.modal-body'));
-                    }
-
-                    form.validate({
-                        rules: rules,
-                        messages: messages
-                    });
-                });
-
-                $('.organization-to-be-merged-with').click(function () {
-                    var that = $(this);
-                    form.find('input[type="submit"]').attr('disabled', false);
-                    var formMergerRoute = mergerRoute.replace(/organization-from/g, organisationId);
-                    formMergerRoute = formMergerRoute.replace(/organization-to/g, that.val());
-                    form.attr('action', formMergerRoute);
-                });
-
-                form.find('input[type="submit"]').attr('disabled', false);
-
-                $('#mergeWithModal').modal('show');
+          $.ajax(route).success(function (response) {
+            var mainContainer = $('<div/>', {
+              class: 'merge-with__wrap'
             });
+
+            if (response.length) {
+              infoContainer.html('<div>' + info.replace(/organisation_name_placeholder/g, '<strong>' + organisationName + '</strong>') + '</div>').appendTo(mainContainer);
+              $.map(response, function (value, index) {
+                $('<li>' + value + '</li>').appendTo(activityListContainer);
+              });
+
+              activityListContainer.show();
+              activityListContainer.appendTo(mainContainer);
+              mainContainer.appendTo($('.modal-body'));
+            }
+
+            form.validate({
+              rules: rules,
+              messages: messages
+            });
+          });
+
+          $('.organization-to-be-merged-with').click(function () {
+            var that = $(this);
+            form.find('input[type="submit"]').attr('disabled', false);
+            var formMergerRoute = mergerRoute.replace(/organization-from/g, organisationId);
+            formMergerRoute = formMergerRoute.replace(/organization-to/g, that.val());
+            form.attr('action', formMergerRoute);
+          });
+
+          form.find('input[type="submit"]').attr('disabled', false);
+
+          $('#mergeWithModal').modal('show');
         });
+      });
     </script>
 @endsection

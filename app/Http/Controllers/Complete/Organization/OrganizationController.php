@@ -499,21 +499,23 @@ class OrganizationController extends Controller
     }
 
     /** Returns status of the published data of organization.
-     * @param $organization_id
+     *
+     * @param $organizationId
      * @return string
      */
-    public function getPublishedOrganizationStatus($organization_id)
+    public function getPublishedOrganizationStatus($organizationId)
     {
-        $organization_data = $this->organizationManager->getPublishedOrganizationData($organization_id);
-        $settings          = $this->settingsManager->getSettings($organization_id);
-        $autoPublishing    = getVal($settings->toArray(), ['registry_info', 0, 'publish_files'], 'no');
-        $status            = 'unlinked';
+        $organizationPublished = $this->organizationManager->getPublishedOrganizationData($organizationId);
 
-        if ($organization_data) {
+        $settings              = $this->settingsManager->getSettings($organizationId);
+        $autoPublishing        = getVal($settings->toArray(), ['registry_info', 0, 'publish_files'], 'no');
+        $status                = 'unlinked';
+
+        if ($organizationPublished) {
             if ($autoPublishing == "no") {
-                $status = ($organization_data->published_to_register == 1) ? "Linked" : "Unlinked";
+                $status = ($organizationPublished->published_to_register == 1) ? "Linked" : "Unlinked";
             } else {
-                $status = ($organization_data->published_to_register == 1) ? "Linked" : "unlinked";
+                $status = ($organizationPublished->published_to_register == 1) ? "Linked" : "unlinked";
             }
         }
 
@@ -793,7 +795,7 @@ class OrganizationController extends Controller
                 return $organization['org_data_id'] == $from->id;
             }
         );
-        $orgToBeReplaced = $orgToBeReplaced->first();
+        $orgToBeReplaced            = $orgToBeReplaced->first();
 
         $remainingOrgs = $participatingOrganizations->filter(
             function ($organization) use ($from) {

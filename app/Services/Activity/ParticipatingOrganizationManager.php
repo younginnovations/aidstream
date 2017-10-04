@@ -113,33 +113,31 @@ class ParticipatingOrganizationManager
      */
     public function addOrgData($id, $request)
     {
-        $participatingOrganization = $request->all();
-        $allOrganizationData       = $this->organizationRepository->getOrganizationDataFor(session('org_id'));
-
         try {
+            $participatingOrganization = $request->all();
+            $allOrganizationData       = $this->organizationRepository->getOrganizationDataFor(session('org_id'));
+            $oldUsedOrganizations      = $allOrganizationData->filter(
+                function ($item) use ($id) {
+                    $temp = [];
+
+                    if (array_has(array_flip($item->used_by), $id)) {
+                        $temp[] = $item;
+                    }
+
+                    return $temp;
+                }
+            );
+
+            $this->manageOldOrganizations($oldUsedOrganizations, $participatingOrganization, $id);
+
             foreach (getVal($participatingOrganization, ['participating_organization']) as $item => $value) {
                 $orgData         = [];
                 $oldOrganization = $this->checkForNewOrganization(getVal($value, ['identifier']), getVal($value, ['narrative', 0, 'narrative']), $allOrganizationData);
+
                 if (!$oldOrganization) {
-                    $value['organization_id']  = session('org_id');
-                    $value['name']             = $value['narrative'];
-                    $value['used_by']          = [+ $id];
-                    $value['is_reporting_org'] = false;
-                    $value['type']             = $value['organization_type'];
-                    $orgData                   = $this->organizationRepository->storeOrgData($value);
+                    $orgData = $this->createNewPartnerOrganization($value, $id);
                 } else {
-                    $usedBy = $oldOrganization->used_by;
-                    $match  = array_first(
-                        $usedBy,
-                        function ($key, $value) use ($id) {
-                            return $value == $id;
-                        }
-                    );
-                    if (!$match) {
-                        array_push($usedBy, + $id);
-                        $oldOrganization->used_by = $usedBy;
-                        $oldOrganization->save();
-                    }
+                    $this->updateExistingPartnerOrganization($oldOrganization, $id);
                 }
 
                 if (!getVal($value, ['org_data_id'], null) && !empty($orgData)) {
@@ -170,5 +168,70 @@ class ParticipatingOrganizationManager
         }
 
         return false;
+    }
+
+    /**
+     * Update old Organisations that has not been used anymore.
+     *
+     * @param $oldUsedOrganizations
+     * @param $participatingOrganization
+     * @param $id
+     */
+    protected function manageOldOrganizations($oldUsedOrganizations, $participatingOrganization, $id)
+    {
+        foreach ($oldUsedOrganizations as $oldUsedOrganization) {
+            foreach ($participatingOrganization['participating_organization'] as $value) {
+                if (($oldUsedOrganization->identifier != array_get($value, 'identifier')) && array_has(array_flip($oldUsedOrganization->used_by), $id)) {
+                    $oldUsedBy = array_flip($oldUsedOrganization->used_by);
+                    unset($oldUsedBy[$id]);
+                    $oldUsedOrganization->used_by = array_flip($oldUsedBy);
+
+                    $oldUsedOrganization->save();
+                }
+            }
+        }
+    }
+
+    /**
+     * Create a new Partner Organization.
+     *
+     * @param $value
+     * @param $id
+     * @return \App\Models\Organization\OrganizationData
+     */
+    protected function createNewPartnerOrganization($value, $id)
+    {
+        $value['organization_id']  = session('org_id');
+        $value['name']             = $value['narrative'];
+        $value['used_by']          = [+ $id];
+        $value['is_reporting_org'] = false;
+        $value['type']             = $value['organization_type'];
+
+        return $this->organizationRepository->storeOrgData($value);
+    }
+
+    /**
+     * Update existing Partner Organization.
+     *
+     * @param $oldOrganization
+     * @param $id
+     */
+    protected function updateExistingPartnerOrganization($oldOrganization, $id)
+    {
+        $usedBy = $oldOrganization->used_by;
+        $match  = false;
+
+        foreach ($usedBy as $activityId) {
+            if ($activityId == $id) {
+                $match = true;
+            }
+        }
+
+        if (!$match) {
+            array_push($usedBy, + $id);
+            $oldOrganization->used_by = $usedBy;
+
+            $oldOrganization->save();
+        }
     }
 }

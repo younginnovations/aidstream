@@ -121,4 +121,14 @@ class OrganizationData extends Model
                 return trans('global.published');
         }
     }
+
+    /**
+     * Get the Reporting Organization associated with an OrganizationData.
+     *
+     * @return mixed
+     */
+    public function getReportingOrgAttribute()
+    {
+        return array_get($this->organization->reporting_org, '0.narrative.0.narrative');
+    }
 }
