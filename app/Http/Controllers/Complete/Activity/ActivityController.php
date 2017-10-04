@@ -382,8 +382,10 @@ class ActivityController extends Controller
         }
 
         $this->authorize('delete_activity', $activity);
+        $organization     = $this->organizationManager->getOrganization(session('org_id'));
+        $organizationData = $organization->orgData()->where('is_reporting_org', '=', 'false')->get();
 
-        $response = ($this->activityManager->destroy($activity)) ? [
+        $response = ($this->activityManager->destroy($activity, $organization, $organizationData)) ? [
             'type' => 'success',
             'code' => ['deleted', ['name' => trans('global.activity')]],
         ] : [

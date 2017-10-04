@@ -100,16 +100,17 @@
                                                            class="merge-with mergeWithTrigger">@lang('organisation-data.merge_with_label')
                                                         </a>
                                                     </li>
-                                                    @if ($orgData->status === 3 && ($orgData->organization->published_to_registry === 1))
-                                                        <li>
-                                                            <form action="{{ route('organization-data.unpublish', $orgData->id) }}" method="POST">
-                                                                {{ csrf_field() }}
-                                                                <small>
-                                                                    <input class="button button-submit btn-xs btn-action-wrap" type="submit" value="@lang('global.unpublish_organisation')">
-                                                                </small>
-                                                            </form>
-                                                        </li>
-                                                    @else
+                                                    {{--@if ($orgData->status === 3 && ($orgData->organization->published_to_registry === 1))--}}
+                                                        {{--<li>--}}
+                                                            {{--<form action="{{ route('organization-data.unpublish', $orgData->id) }}" method="POST">--}}
+                                                                {{--{{ csrf_field() }}--}}
+                                                                {{--<small>--}}
+                                                                    {{--<input class="button button-submit btn-xs btn-action-wrap" type="submit" value="@lang('global.unpublish_organisation')">--}}
+                                                                {{--</small>--}}
+                                                            {{--</form>--}}
+                                                        {{--</li>--}}
+                                                    {{--@endif--}}
+                                                    @if (count($orgData->used_by) == 0)
                                                         <li>
                                                             <a href="{{ route('organization-data.edit', $orgData->id)}}">@lang('global.edit_this_organisation')</a>
                                                         </li>
