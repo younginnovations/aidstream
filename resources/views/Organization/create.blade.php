@@ -64,7 +64,7 @@
                 <div class="form-group"
                      v-bind:class="{'has-error': (organisation.name[0]['narrative'] == '' && display_error)}">
                     {{Form::label('Organization',trans('elementForm.organisation'),['class' => 'control-label'])}}
-                    {{Form::text('organization',null,['class' => 'form-control ignore_change','v-bind:value' => "organisation.name[0]['narrative']",'@focus' => 'displaySuggestion($event)', '@keydown.tab'=> 'hideSuggestion','@blur'=>'hide($event)','autocomplete' => 'off', 'readonly' => true])}}
+                    {{Form::text('organization',null,['class' => 'form-control ignore_change','v-bind:value' => "organisation.name[0]['narrative']",'@focus' => 'displaySuggestion($event)', '@keydown.tab'=> 'hideSuggestion','autocomplete' => 'off', 'readonly' => true])}}
 
                     <div v-if="(organisation.name[0]['narrative'] == '' && display_error)" class="text-danger">
                         Organisation Name is required.
@@ -74,31 +74,61 @@
                         <ul class="filter-publishers">
                             <li>
                                 <div class="search-publishers">
-                                    <input type="search" :value="keyword" placeholder="Filter by organisation name..." @keyup='search($event)'>
+                                    <input type="search" class="keyword" :value="keyword" placeholder="Filter by organisation name..." @keyup='search($event)' @blur='hide($event)'>
                                 </div>
                             </li>
                         </ul>
-
-                        <ul v-if="suggestions.length > 0" class="found-publishers filter-publishers scroll-list">
-                            <li class="publisher-description"><p>Choose an organisation from below</p></li>
-                            <li v-for="(publisher, index) in suggestions">
-                                <a href="javascript:void(0)" v-on:click="selected($event)" v-bind:selectedSuggestion="index">
-                                    <strong v-bind:selectedSuggestion="index">@{{publisher.identifier}} @{{publisher.names[0].name }}</strong>
-                                    <span class="language">@{{ publisher.names[0].language }}</span>
-
-                                    <div class="partners" style="overflow: hidden;" v-on:click="selected($event)" v-bind:selectedSuggestion="index">
-                                        <div class="pull-left">
-                                            <span v-bind:selectedSuggestion="index">Type: @{{publisher.type}}</span>
+                        <ul v-if="suggestions.length > 0" class="found-publishers">
+                            <li><p class="publisher-description">Choose an organisation from below</p></li>
+                            <li class="publishers-list scroll-list">
+                                <div v-for="(publisher, index) in suggestions">
+                                    <a href="javascript:void(0)" v-on:click="selected($event)" v-bind:selectedSuggestion="index">
+                                        <strong v-bind:selectedSuggestion="index">@{{publisher.identifier}} @{{publisher.names[0].name}}</strong>
+                                        <span class="language">@{{ publisher.names[0].language }}</span>
+                                        <div class="partners" style="overflow: hidden;" v-on:click="selected($event)" v-bind:selectedSuggestion="index">
+                                            <div class="pull-left">
+                                                <span v-bind:selectedSuggestion="index">Type: @{{publisher.type}}</span>
+                                            </div>
+                                            <div class="pull-right">
+                                                <span class="suggest-edit">Suggest Edit</span>
+                                            </div>
                                         </div>
-                                        <div class="pull-right">
-                                            <span class="suggest-edit">Suggest Edit</span>
-                                        </div>
-                                    </div>
-                                </a>
-
+                                    </a>
+                                </div>
                             </li>
-                            <li><p>The above list is pulled from IATI Registry publisher's list.</p></li>
+                            <li>
+                                <p class="publisher-description" style="margin-bottom:5px;padding-bottom:5px;border-bottom: 1px solid #DFEDF2;">The above list is pulled from IATI Registry publisher's
+                                    list.</p>
+                                <p class="publisher-description">
+                                    <a href="javascript:void(0)" @click="display()"><b>Didn't find what you are looking for? Go to Organisation Finder" to search for the organisation you are looking
+                                        for.</b>
+                                    </a>
+                                </p>
+                            </li>
                         </ul>
+                        {{--<ul v-if="suggestions.length > 0" class="found-publishers filter-publishers">--}}
+                        {{--<li class="publisher-description"><p>Choose an organisation from below</p></li>--}}
+                        {{--<li v-for="(publisher, index) in suggestions" class="scroll-list">--}}
+                        {{--<a href="javascript:void(0)" v-on:click="selected($event)" v-bind:selectedSuggestion="index">--}}
+                        {{--<strong v-bind:selectedSuggestion="index">@{{publisher.identifier}} @{{publisher.names[0].name }}</strong>--}}
+                        {{--<span class="language">@{{ publisher.names[0].language }}</span>--}}
+
+                        {{--<div class="partners" style="overflow: hidden;" v-on:click="selected($event)" v-bind:selectedSuggestion="index">--}}
+                        {{--<div class="pull-left">--}}
+                        {{--<span v-bind:selectedSuggestion="index">Type: @{{publisher.type}}</span>--}}
+                        {{--</div>--}}
+                        {{--<div class="pull-right">--}}
+                        {{--<span class="suggest-edit">Suggest Edit</span>--}}
+                        {{--</div>--}}
+                        {{--</div>--}}
+                        {{--</a>--}}
+
+                        {{--</li>--}}
+                        {{--<li><p>The above list is pulled from IATI Registry publisher's list.</p></li>--}}
+                        {{--<li class="publishers-list" @click="display()">--}}
+                        {{--<a href="javascript:void(0)" @click="display()">Didn't find what you are looking for? Go to Organisation Finder" to search for the organisation you are looking for.</a>--}}
+                        {{--</li>--}}
+                        {{--</ul>--}}
                         <ul v-if="display_org_finder" class="not-found-publisher">
                             <li class="publisher-description"><p>It seems there's no matching organisation in IATI Registry of publishers. You may do one
                                     of the following at this point.</p></li>
@@ -171,12 +201,12 @@
                             <div v-if="display_org_info_form">
                                 <div class="form-group">
                                     {{Form::label('Organisation Name',trans('elementForm.organisation_name'),['class' => 'control-label'])}}
-                                    {{Form::text('name', null,['class' => 'form-control ignore_change', "v-bind:value" => "organisation.name[0]['narrative']", "@blur" => 'updateOrgName($event)'])}}
+                                    {{Form::text('name', null,['class' => 'form-control ignore_change', "v-bind:value" => "organisation.tempName", "@blur" => 'updateOrgName($event)'])}}
                                 </div>
 
                                 <div class="form-group">
                                     {{Form::label('Identifier','Organisation Registration Number',['class' => 'control-label'])}}
-                                    {{Form::text('identifier', null,['class' => 'form-control ignore_change', 'v-bind:value' => 'organisation.identifier', "@blur" => 'updateOrgIdentifier($event)'])}}
+                                    {{Form::text('identifier', null,['class' => 'form-control ignore_change', 'v-bind:value' => 'organisation.tempIdentifier', "@blur" => 'updateOrgIdentifier($event)'])}}
                                 </div>
                                 <div class="form-group">
                                     <button class="btn btn-form" type="button" @click="close">Use this organisation</button>
@@ -218,6 +248,10 @@
         },
         updated: function () {
           $('.scroll-list').jScrollPane({ autoReinitialise: true });
+          if (this.display_org_list === true) {
+            var container = this.$el;
+            $(container).find('.keyword').focus();
+          }
         },
         mounted: function () {
           if (this.organisation.is_publisher) {
@@ -231,6 +265,10 @@
             this.keyword = '';
           },
           search: function (event) {
+            if (event.keyCode === 27) {
+              this.display_org_list = false;
+            }
+
             var self = this;
             this.keyword = event.target.value;
             if (event.target.value.trim().length > 3) {
@@ -277,6 +315,8 @@
             this.display_org_list = false;
             var country = this.organisation['country'];
             var type = this.organisation['type'];
+            this.organisation.tempName = this.keyword;
+            this.organisation.tempIdentifier = '';
             var self = this;
             if (country != "" || type != "") {
               axios.get('/findorg?country=' + country + '&type= ' + type)
@@ -352,6 +392,11 @@
         },
         methods: {
           close: function () {
+            this.organisation['name'][0]['narrative'] = this.organisation.tempName;
+            this.organisation['name'][0]['language'] = 'en';
+            this.organisation['identifier'] = this.organisation.tempIdentifier;
+            delete this.organisation.tempName;
+            delete this.organisation.tempIdentifier;
             this.$emit('close', false);
           },
           displayForm: function (event) {
@@ -373,11 +418,10 @@
             }
           },
           updateOrgName: function (event) {
-            this.organisation['name'][0]['narrative'] = event.target.value;
+            this.organisation.tempName = event.target.value;
           },
           updateOrgIdentifier: function ($event) {
-            this.organisation['identifier'] = '';
-            this.organisation['identifier'] = this.selectedRegistrar + '-' + event.target.value;
+            this.organisation.tempIdentifier = this.selectedRegistrar + '-' + event.target.value;
           },
           resetForm: function () {
             this.defaultData();
@@ -432,8 +476,7 @@
           },
           closeModal: function () {
             this.showModal = false;
-            $('.modal-backdrop').remove();
-            $('body').removeClass('modal-open');
+            $('#myModal').modal('hide');
           },
           onSubmit: function () {
             var route = this.$el.getAttribute('data-route');
