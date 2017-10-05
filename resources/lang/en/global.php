@@ -289,5 +289,7 @@ return [
     'partner_organisations'                        => 'Partner Organisations',
     'add_a_new_organisation'                       => 'Add a new Organisation',
     'delete_this_organisation'                     => 'Delete this Organisation',
-    'edit_this_organisation'                       => 'Edit this Organisation'
+    'edit_this_organisation'                       => 'Edit this Organisation',
+    'suggest'                                      => 'Suggest Edit',
+
 ];

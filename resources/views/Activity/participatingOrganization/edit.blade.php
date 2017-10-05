@@ -94,29 +94,6 @@
                             </li>
                         </ul>
 
-                        <ul v-if="display_partner_org && (matchingPartnerOrg[0].length > 0)" class="found-publishers">
-                            <li><p class="publisher-description">From your Partner Organization List</p></li>
-                            <li class="publishers-list scroll-list">
-                                <div v-for="(partnerOrganization, index) in matchingPartnerOrg[0]">
-                                    <a style="display: block;" href="javascript:void(0)" v-on:click="partnerSelected($event)" v-bind:selectedPartner="index">
-                                        <strong v-bind:selectedPartner="index">@{{ partnerOrganization.name ? partnerOrganization.name[0]['narrative'] : 'No name'}}</strong>
-                                        <span class="language">en</span>
-
-                                        <div class="partners" style="overflow: hidden;" v-on:click="partnerSelected($event)" v-bind:selectedPartner="index">
-                                            <div class="pull-left">
-                                                <span v-bind:selectedPartner="index" class="tick">@{{ partnerOrganization.identifier }} </span>
-                                            </div>
-                                            <div class="pull-right">
-                                                <span class="suggest-edit" v-if="partnerOrganization.is_publisher">Suggest Edit</span>
-                                                <span class="edit-activity" v-if="!partnerOrganization.is_publisher">Edit</span>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                            </li>
-                            <li><p class="publisher-description">The above list is pulled from your organisation data.</p></li>
-                        </ul>
-
                         <ul v-if="suggestions.length > 0" class="found-publishers">
                             <li><p class="publisher-description">Choose an organisation from below</p></li>
                             <li class="publishers-list scroll-list">
@@ -145,6 +122,29 @@
                                     </a>
                                 </p>
                             </li>
+                        </ul>
+
+                        <ul v-if="display_partner_org && (matchingPartnerOrg[0].length > 0)" class="found-publishers">
+                            <li><p class="publisher-description">From your Partner Organization List</p></li>
+                            <li class="publishers-list scroll-list">
+                                <div v-for="(partnerOrganization, index) in matchingPartnerOrg[0]">
+                                    <a style="display: block;" href="javascript:void(0)" v-on:click="partnerSelected($event)" v-bind:selectedPartner="index">
+                                        <strong v-bind:selectedPartner="index">@{{ partnerOrganization.name ? partnerOrganization.name[0]['narrative'] : 'No name'}}</strong>
+                                        <span class="language">en</span>
+
+                                        <div class="partners" style="overflow: hidden;" v-on:click="partnerSelected($event)" v-bind:selectedPartner="index">
+                                            <div class="pull-left">
+                                                <span v-bind:selectedPartner="index" class="tick">@{{ partnerOrganization.identifier }} </span>
+                                            </div>
+                                            <div class="pull-right">
+                                                <a target="_blank" v-bind:href="'{{ env('PO_API_URL') }}' + '/suggestion/' + partnerOrganization.identifier + '/suggest'" class="suggest-edit" v-if="partnerOrganization.is_publisher || partnerOrganization.is_org_file">@lang('global.suggest')</a>
+                                                <span class="edit-activity" v-if="!partnerOrganization.is_publisher">@lang('global.edit')</span>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </li>
+                            <li><p class="publisher-description">The above list is pulled from your organisation data.</p></li>
                         </ul>
 
                         <ul v-show="display_org_finder" class="not-found-publisher">
@@ -189,7 +189,7 @@
                 <!-- Modal content-->
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" @click="close">&times;</button>
+                        <button type="button" class="close" data-dismiss="modal" @click="close(false)">&times;</button>
                         <h4 class="modal-title">Organization Finder</h4>
                     </div>
                     <div class="modal-body">
@@ -232,7 +232,7 @@
                                     {{Form::text('identifier', null,['class' => 'form-control ignore_change', 'v-bind:value' => 'organisation.tempIdentifier', "@blur" => 'updateOrgIdentifier($event)'])}}
                                 </div>
                                 <div class="form-group">
-                                    <button class="btn btn-form" type="button" data-dismiss="modal" @click="close">Use this organisation</button>
+                                    <button class="btn btn-form" type="button" data-dismiss="modal" @click="close(true)">Use this organisation</button>
                                 </div>
                             </div>
                         </div>
@@ -482,12 +482,15 @@
           }
         },
         methods: {
-          close: function () {
-            this.organisation['narrative'][0]['narrative'] = this.organisation.tempName;
-            this.organisation['narrative'][0]['language'] = 'en';
-            this.organisation['identifier'] = this.organisation.tempIdentifier;
-            delete this.organisation.tempName;
-            delete this.organisation.tempIdentifier;
+          close: function (bind) {
+            if (bind) {
+              this.organisation['narrative'][0]['narrative'] = this.organisation.tempName;
+              this.organisation['narrative'][0]['language'] = 'en';
+              this.organisation['identifier'] = this.organisation.tempIdentifier;
+              delete this.organisation.tempName;
+              delete this.organisation.tempIdentifier;
+            }
+
             this.$emit('close', false);
           },
           displayForm: function (event) {
