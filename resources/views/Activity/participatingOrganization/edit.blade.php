@@ -23,10 +23,12 @@
                     <div class="panel panel-default">
                         <div class="panel-body">
                             <div class="create-form">
+                                <div class="loading-div"></div>
                                 <div v-cloak class="create-form" id="participatingContainer" data-organization="{{json_encode($participatingOrganizations)}}"
                                      data-partnerOrganization="{{json_encode($partnerOrganizations)}}" data-activityId="{{$id}}"
                                      data-organizationRoles="{{json_encode($organizationRoles)}}">
                                     <div v-if="display_server_error_message" class="alert alert-danger">@{{ server_error_message }}</div>
+
                                     {{Form::open()}}
                                     <participating-org v-for="(organisation,index) in organisations" v-on:remove="removeOrganisation(index)"
                                                        v-on:search="setCurrentOrganization(index,$event)"
@@ -545,6 +547,8 @@
           organisationRoles: []
         },
         mounted: function () {
+          $("div.loading-div").hide();
+
           if (JSON.parse(this.$el.getAttribute('data-organization'))) {
             this.organisations = JSON.parse(this.$el.getAttribute('data-organization'));
           } else {

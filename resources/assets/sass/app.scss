@@ -5040,6 +5040,13 @@ select.systemVersion {
   display: none;
 }
 
+.loading-div {
+  margin: 0 auto;
+  width: 256px;
+  height: 256px;
+  background: url('../images/loading.gif') no-repeat;
+}
+
 .lists {
   background: #fcfcfc;
   border-radius: 4px;

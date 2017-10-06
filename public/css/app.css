@@ -6161,6 +6161,12 @@ select.systemVersion {
 [v-cloak] {
   display: none; }
 
+.loading-div {
+  margin: 0 auto;
+  width: 256px;
+  height: 256px;
+  background: url("../images/loading.gif") no-repeat; }
+
 .lists {
   background: #fcfcfc;
   -webkit-border-radius: 4px;

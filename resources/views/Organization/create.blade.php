@@ -17,6 +17,7 @@
                     <div class="panel panel-default">
                         <div class="panel-body">
                             <div class="create-form">
+                                <div class="loading-div"></div>
                                 <div v-cloak class="create-form" id="participatingContainer"
                                      data-organization="{{json_encode($organizations)}}" data-route="{{$formRoute}}">
                                     {{Form::open()}}
@@ -447,6 +448,7 @@
           display_error: false
         },
         mounted: function () {
+          $("div.loading-div").hide();
           if (JSON.parse(this.$el.getAttribute('data-organization'))) {
             this.organisations = JSON.parse(this.$el.getAttribute('data-organization'));
           } else {
