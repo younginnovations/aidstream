@@ -71,13 +71,16 @@
 
                 <div class="form-group" v-bind:class="{'has-error': (organisation.organization_type == '' && display_error)}">
                     {{Form::label('organisation_Type',trans('elementForm.organisation_type'),['class' => 'control-label'])}}
-                    {{Form::select('organization_type',$organizationTypes, null,['class' => 'form-control ignore_change', 'v-bind:value' => 'organisation.organization_type', 'v-on:change'=>'onchange($event)', 'placeholder' => 'Please select the following options.','v-bind:readonly' => "disable_options[index]"])}}
+                    {{--                    {{Form::select('organization_type',$organizationTypes, null,['class' => 'form-control ignore_change', 'v-bind:value' => 'organisation.organization_type', 'v-on:change'=>'onchange($event)', 'placeholder' => 'Please select the following options.','v-bind:readonly' => "disable_options[index]"])}}--}}
+                    <vue-select2 :bind_variable='organisation' name='organization_type' attr_name='typeText' options='{{json_encode($organizationTypes)}}' :disable_options='disable_options[index]' v-on:change='getRegistrars($event)'>
+                    </vue-select2>
                     <div v-if="(organisation.organization_type == '' && display_error)" class="text-danger">Organisation Type is required.</div>
                 </div>
 
                 <div class="form-group" v-bind:class="{'has-error': (organisation.country == '' && display_error)}">
                     {{Form::label('country','Country the organization is based in',['class' => 'control-label'])}}
-                    {{Form::select('country',$countries, null,['class' => 'form-control ignore_change', 'v-bind:value' => 'organisation.country', 'v-on:change'=>'onchange($event)', 'placeholder' => 'Please select the following options.', 'v-bind:readonly' => "disable_options[index]"])}}
+                    {{--                    {{Form::select('country',$countries, null,['class' => 'form-control ignore_change', 'v-bind:value' => 'organisation.country', 'v-on:change'=>'onchange($event)', 'placeholder' => 'Please select the following options.', 'v-bind:readonly' => "disable_options[index]"])}}--}}
+                    <vue-select2 :bind_variable='organisation' name='country' attr_name='countryText' options='{{json_encode($countries)}}' :disable_options='disable_options[index]' v-on:change='getRegistrars($event)'></vue-select2>
                     <div v-if="(organisation.country == '' && display_error)" class="text-danger">Country is required.</div>
                 </div>
                 <div class="form-group" v-bind:class="{'has-error': (organisation.narrative[0]['narrative'] == '' && display_error) }">
@@ -102,7 +105,7 @@
                                 <div v-for="(publisher, index) in suggestions">
                                     <a href="javascript:void(0)" v-on:click="selected($event)" v-bind:selectedSuggestion="index">
                                         <strong v-bind:selectedSuggestion="index">@{{publisher.identifier}} @{{publisher.names[0].name}}</strong>
-                                        <span class="language">@{{ publisher.names[0].language }}</span>
+                                        <span class="language" v-for="(key,index) in publisher.names">@{{ key.language }}</span>
                                         <div class="partners" style="overflow: hidden;" v-on:click="selected($event)" v-bind:selectedSuggestion="index">
                                             <div class="pull-left">
                                                 <span v-bind:selectedSuggestion="index">Type: @{{publisher.type}}</span>
@@ -132,7 +135,7 @@
                                 <div v-for="(partnerOrganization, index) in matchingPartnerOrg[0]">
                                     <a style="display: block;" href="javascript:void(0)" v-on:click="partnerSelected($event)" v-bind:selectedPartner="index">
                                         <strong v-bind:selectedPartner="index">@{{ partnerOrganization.name ? partnerOrganization.name[0]['narrative'] : 'No name'}}</strong>
-                                        <span class="language">en</span>
+                                        <span class="language" v-for="(key,index) in partnerOrganization.name">@{{ key.language }}</span>
 
                                         <div class="partners" style="overflow: hidden;" v-on:click="partnerSelected($event)" v-bind:selectedPartner="index">
                                             <div class="pull-left">
@@ -197,12 +200,14 @@
                     <div class="modal-body">
                         <div class="form-group">
                             {{Form::label('Organisation Type',trans('elementForm.organisation_type'),['class' => 'control-label'])}}
-                            {{Form::select('organization_type',$organizationTypes, null,['class' => 'form-control ignore_change', 'v-bind:value' => 'organisation.organization_type', 'placeholder' => 'Please select the following options.', 'v-on:change' => 'getRegistrars($event)'])}}
+                            {{--{{Form::select('organization_type',$organizationTypes, null,['class' => 'form-control ignore_change', 'v-bind:value' => 'organisation.organization_type', 'placeholder' => 'Please select the following options.', 'v-on:change' => 'getRegistrars($event)'])}}--}}
+                            <vue-select2 :bind_variable='organisation' name='organization_type' attr_name='typeText' options='{{json_encode($organizationTypes)}}' v-on:change='getRegistrars($event)'></vue-select2>
                         </div>
 
                         <div class="form-group">
                             {{Form::label('country','Country the organization is based in',['class' => 'control-label'])}}
-                            {{Form::select('country',$countries, null,['class' => 'form-control ignore_change', 'v-bind:value' => 'organisation.country', 'placeholder' => 'Please select the following options.','v-on:change' => 'getRegistrars($event)'])}}
+                            {{--                            {{Form::select('country',$countries, null,['class' => 'form-control ignore_change', 'v-bind:value' => 'organisation.country', 'placeholder' => 'Please select the following options.','v-on:change' => 'getRegistrars($event)'])}}--}}
+                            <vue-select2 :bind_variable='organisation' name='country' attr_name='countryText' options='{{json_encode($countries)}}' v-on:change='getRegistrars($event)'></vue-select2>
                         </div>
                         <div class="suggestions" v-if="display_registrar_list">
                             <p>PLEASE CHOOSE A LIST FROM BELOW:</p>
@@ -255,9 +260,11 @@
 @section('script')
     <script src="https://unpkg.com/vue"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="{{asset('js/vue/vue-select2.js')}}"></script>
     <script>
       var apiUrl = "{!! env('PO_API_URL') !!}";
       var countries = {!! json_encode($countries) !!};
+      var types = {!! json_encode($organizationTypes) !!};
     </script>
     <script>
       Vue.component('participating-org', {
@@ -271,7 +278,9 @@
             searching: false,
             disable_options: [],
             keywords: [],
-            matchingPartnerOrg: []
+            matchingPartnerOrg: [],
+            countries: [],
+            types: []
           }
         },
         updated: function () {
@@ -280,6 +289,13 @@
             var container = this.$el;
             $(container).find('.keyword').focus();
           }
+          if (!this.organisation.is_publisher) {
+            this.disable_options[this.index] = false;
+          }
+        },
+        mounted: function () {
+          this.countries = countries;
+          this.types = types;
         },
         created: function () {
           this.keywords[this.index] = '';
@@ -289,7 +305,9 @@
         props: ['partner_organisations', 'organisation', 'index', 'display_error', 'organisation_roles'],
         methods: {
           displaySuggestion: function (event) {
-            this.keywords[this.index] = '';
+            this.keywords.splice(this.index, 1);
+            this.matchingPartnerOrg.splice(0, this.matchingPartnerOrg.length);
+            this.matchingPartnerOrg.push(this.partner_organisations);
             this.display_org_list = true;
             this.display_partner_org = true;
           },
@@ -303,7 +321,6 @@
             if (event.target.value.trim().length > 3) {
               if (!self.searching) {
                 self.searching = true;
-                self.disable_options[this.index] = false;
                 this.suggestions.splice(0, this.suggestions.length);
                 setTimeout(function () {
                   self.checkKeywordInPartnerOrg(event.target.value);
@@ -402,6 +419,8 @@
             this.organisation['is_publisher'] = this.suggestions[selectedIndex]['is_publisher'];
             this.organisation['identifier'] = this.suggestions[selectedIndex]['identifier'];
             this.organisation['country'] = organizationCountry ? organizationCountry : "NP";
+            this.organisation['countryText'] = this.countries[organizationCountry];
+            this.organisation['typeText'] = this.types[this.organisation['organization_type']];
             var self = this;
 
             if (this.suggestions[selectedIndex]['names'].length > 0) {
@@ -413,7 +432,7 @@
                 self.organisation['narrative'][index]['language'] = name.language;
               });
             }
-
+            this.keywords.splice(this.index, 1);
             this.suggestions.splice(0, this.suggestions.length);
           },
           hide: function (event) {
@@ -429,15 +448,17 @@
           partnerSelected: function (event) {
             var selectedIndex = event.target.getAttribute('selectedPartner');
 
-            this.organisation['organization_type'] = this.partner_organisations[selectedIndex]['type'];
-            this.organisation['is_publisher'] = this.partner_organisations[selectedIndex]['is_publisher'];
-            this.organisation['identifier'] = this.partner_organisations[selectedIndex]['identifier'];
-            this.organisation['country'] = this.partner_organisations[selectedIndex]['country'];
-            this.organisation['org_data_id'] = this.partner_organisations[selectedIndex]['id'];
+            this.organisation['organization_type'] = this.matchingPartnerOrg[0][selectedIndex]['type'];
+            this.organisation['is_publisher'] = this.matchingPartnerOrg[0][selectedIndex]['is_publisher'];
+            this.organisation['identifier'] = this.matchingPartnerOrg[0][selectedIndex]['identifier'];
+            this.organisation['country'] = this.matchingPartnerOrg[0][selectedIndex]['country'];
+            this.organisation['org_data_id'] = this.matchingPartnerOrg[0][selectedIndex]['id'];
+            this.organisation['countryText'] = this.countries[this.organisation['country']];
+            this.organisation['typeText'] = this.types[this.organisation['organization_type']];
             var self = this;
 
-            if (this.partner_organisations[selectedIndex]['name'].length > 0) {
-              this.partner_organisations[selectedIndex]['name'].forEach(function (name, index) {
+            if (this.matchingPartnerOrg[0][selectedIndex]['name'].length > 0) {
+              this.matchingPartnerOrg[0][selectedIndex]['name'].forEach(function (name, index) {
                 if (self.organisation['narrative'][index] == undefined) {
                   self.organisation['narrative'][index] = { 'narrative': '', 'language': '' };
                 }
@@ -489,6 +510,7 @@
               this.organisation['narrative'][0]['narrative'] = this.organisation.tempName;
               this.organisation['narrative'][0]['language'] = 'en';
               this.organisation['identifier'] = this.organisation.tempIdentifier;
+              this.organisation['is_publisher'] = false;
               delete this.organisation.tempName;
               delete this.organisation.tempIdentifier;
             }
@@ -501,7 +523,7 @@
           },
           getRegistrars: function (event) {
             var self = this;
-            this.organisation[event.target.name] = event.target.value;
+            this.organisation[event.name] = event.value;
             var country = this.organisation['country'];
             var type = this.organisation['organization_type'];
             if (country != "" || type != "") {
