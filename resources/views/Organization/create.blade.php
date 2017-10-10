@@ -46,6 +46,11 @@
 
     <div id="participating-form" class="hidden">
         <div class="collection_form has_add_more">
+            <div class="reset-form-option" v-on:click="reset">
+                <p>&nbsp;</p>
+                <p>&nbsp;</p>
+            </div>
+            {{--<button type="button">Reset</button>--}}
             <div class="form-group">
                 <div class="form-group" v-bind:class="{'has-error': (organisation.type == '' && display_error)}">
                     {{Form::label('Organisation Type',trans('elementForm.organisation_type'),['class' => 'control-label'])}}
@@ -372,6 +377,16 @@
               this.display_org_list = false;
               this.suggestions.splice(0, this.suggestions.length);
             }
+          },
+          reset: function () {
+            this.organisation['type'] = '';
+            this.organisation['is_publisher'] = '';
+            this.organisation['identifier'] = '';
+            this.organisation['name'][0]['narrative'] = '';
+            this.organisation['country'] = '';
+            this.organisation['countryText'] = '';
+            this.organisation['typeText'] = '';
+            this.organisation['name'][0]['language'] = '';
           }
         }
       });
@@ -451,6 +466,8 @@
             this.organisation['name'][0]['narrative'] = '';
             this.organisation['country'] = '';
             this.organisation['name'][0]['language'] = '';
+            this.organisation['countryText'] = '';
+            this.organisation['typeText'] = '';
           }
         }
       });
