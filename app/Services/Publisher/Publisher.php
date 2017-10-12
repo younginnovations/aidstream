@@ -47,8 +47,9 @@ class Publisher extends RegistryApiHandler
 
             /* Depcricated */
 //        $this->client->package_search($this->publisherId)
-
-            if (!$this->checkPublisherValidity($this->searchForPublisher($this->publisherId), $this->publisherId)) {
+            $publisherData = $this->searchForPublisher($this->publisherId);
+            
+            if (!$this->checkPublisherValidity($publisherData, $this->publisherId)) {
                 throw new PublisherNotFoundException('Publisher not found.');
             }
 
@@ -116,24 +117,24 @@ class Publisher extends RegistryApiHandler
     protected function formatHeaders($filename, $organization, $publishedFile, $key, $code, $title)
     {
         $data = [
-            'title'                                       => $title,
-            'name'                                        => $filename,
-            'author_email'                                => $organization->getAdminUser()->email,
-            'owner_org'                                   => $this->publisherId,
-            'license_id'                                  => 'other-open',
-            'resources'                                   => [
+            'title'        => $title,
+            'name'         => $filename,
+            'author_email' => $organization->getAdminUser()->email,
+            'owner_org'    => $this->publisherId,
+            'license_id'   => 'other-open',
+            'resources'    => [
                 [
                     'format'   => config('xmlFiles.format'),
                     'mimetype' => config('xmlFiles.mimeType'),
                     'url'      => url(sprintf('files/xml/%s.xml', $filename))
                 ]
             ],
-            "filetype"                                    => ($code != 'organisation') ? 'activity' : $code,
-            $key                                          => ($code == 'activities' || $code == 'organisation') ? '' : $code,
-            "data_updated"                                => $publishedFile->updated_at->toDateTimeString(),
-            "language"                                    => config('app.locale'),
-            "verified"                                    => "no",
-            "state"                                       => "active"
+            "filetype"     => ($code != 'organisation') ? 'activity' : $code,
+            $key           => ($code == 'activities' || $code == 'organisation') ? '' : $code,
+            "data_updated" => $publishedFile->updated_at->toDateTimeString(),
+            "language"     => config('app.locale'),
+            "verified"     => "no",
+            "state"        => "active"
         ];
 
         if ($code != 'organisation') {
