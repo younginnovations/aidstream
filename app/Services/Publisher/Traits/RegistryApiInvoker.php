@@ -44,13 +44,14 @@ trait RegistryApiInvoker
      *
      * @param $publisherId
      * @return string
+     * @throws Exception
      */
     public function searchForPublisher($publisherId)
     {
         try {
             return $this->request('organization_show', $publisherId);
         } catch (Exception $exception) {
-            return false;
+            throw $exception;
         }
     }
 
