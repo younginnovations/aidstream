@@ -6105,6 +6105,8 @@ select.systemVersion {
   width: 22px;
   height: 22px;
   padding: 0; }
+  .remove_organisation:hover {
+    background: transparent url(../../images/ic-sprite.svg) -393px -198px no-repeat; }
 
 .addMore, .addMore:focus {
   background: none;
@@ -6281,6 +6283,7 @@ select.systemVersion {
     margin: 0 -8px 8px;
     padding: 8px; }
     .publishers-list .jspPane > div:last-of-type {
+      border-bottom: 0;
       margin-bottom: 0; }
     .publishers-list .jspPane > div:hover {
       background: #D9F2FF; }
@@ -7398,7 +7401,7 @@ select.systemVersion {
   position: relative;
   width: auto; }
   .view-more-actions ul li a:before {
-    background: url(../../images/ic-activity-action-sprite.svg) no-repeat;
+    background: url(../../images/ic-activity-action-sprite.svg) no-repeat 0 2px;
     content: "";
     height: 12px;
     width: 12px;
@@ -7417,6 +7420,8 @@ select.systemVersion {
     background-position: -38px -147px; }
   .view-more-actions ul li a:hover {
     color: #00A8FF; }
+    .view-more-actions ul li a:hover:before {
+      background-position: -40px 2px; }
 
 .panel__partner-org .table {
   border-bottom: 1px solid #D5EAF5; }
@@ -7482,12 +7487,23 @@ select.systemVersion {
   float: left;
   font-size: 10px;
   padding-left: 22px;
-  text-align: left; }
+  position: relative;
+  text-align: left;
+  z-index: 1; }
   .reset-form-option span {
     font: 12px Open-Sans-Bold;
     color: #00A8FF; }
   .reset-form-option p {
     color: rgba(51, 51, 51, 0.5); }
+
+.reset-form-option--small {
+  background-size: 14px;
+  color: #00A8FF;
+  cursor: pointer;
+  font-size: 12px;
+  line-height: 27px;
+  margin-right: 40px;
+  padding-left: 18px; }
 
 .search-publishers {
   background: #F2F9FC url(../images/ic_search.svg) no-repeat 12px 14px;
@@ -7510,6 +7526,14 @@ select.systemVersion {
 #participatingContainer .collection_form + .collection_form {
   border-top: 1px dashed #A9C6DE;
   padding-top: 2px; }
+
+#participatingContainer .remove_organisation {
+  right: 68px; }
+
+.reset-form-option--tag {
+  margin: 20px 30px 0 0; }
+  .reset-form-option--tag + .form-group {
+    margin-top: -35px; }
 
 #partner-org-body {
   display: inline-block;
@@ -7565,6 +7589,30 @@ select.systemVersion {
   font-size: 15px !important;
   height: 53px;
   width: 264px; }
+
+.display-list {
+  position: absolute;
+  z-index: 9999 !important;
+  max-height: 200px;
+  overflow: scroll;
+  border: 1px solid #BFDFEC;
+  background-color: #fff;
+  width: -webkit-calc(100% - 30px);
+  width: calc(100% - 30px);
+  -webkit-border-radius: 4px;
+          border-radius: 4px;
+  top: 64px; }
+  .display-list li:hover {
+    background: #f7f7f7; }
+
+.go-to__org-finder {
+  background: #fafafa;
+  -webkit-border-bottom-left-radius: 4px;
+          border-bottom-left-radius: 4px;
+  -webkit-border-bottom-right-radius: 4px;
+          border-bottom-right-radius: 4px;
+  margin: -5px -12px -12px !important;
+  padding: 8px 12px !important; }
 
 @media (min-width: 400px) {
   .view-more-actions ul li {

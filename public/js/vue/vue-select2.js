@@ -2,7 +2,7 @@ Vue.component('vue-select2', {
   template: "<div id='select2-container'>" +
   "<input type='text' v-on:focus='display($event)' v-on:blur='hide($event)' placeholder='Please select the following options.' v-model:value='bind_variable[attrText]' v-on:keyup='search($event)' v-bind:readonly = 'disable_options'>" +
   "<input type='text' :value='bind_variable[name]' class='hidden'>" +
-  "<ul v-if='displayList' style='position:absolute;z-index:9999!important;max-height:200px;overflow:scroll;border:1px solid #BFDFEC;background-color: #F2F9FC!important'>" +
+  "<ul v-if='displayList' class='display-list'>" +
   "<li v-for='(value,code) in options' :code='code' :value='value' style='padding:5px 10px' :name='name' v-on:click='selected($event)'>{{ value }}</li>" +
   "</ul>" +
   "</div>",

@@ -4972,6 +4972,9 @@ select.systemVersion {
   width: 22px;
   height: 22px;
   padding: 0;
+  &:hover {
+    background: transparent url(../../images/ic-sprite.svg) -393px -198px no-repeat;
+  }
 }
 
 .addMore, .addMore:focus {
@@ -5195,6 +5198,7 @@ select.systemVersion {
       margin: 0 -8px 8px;
       padding: 8px;
       &:last-of-type {
+        border-bottom: 0;
         margin-bottom: 0;
       }
       &:hover {
@@ -5440,7 +5444,7 @@ select.systemVersion {
   position: relative;
   width: auto;
   &:before {
-    background: $url_27 no-repeat;
+    background: $url_27 no-repeat 0 2px;
     content: "";
     @include size(12px);
     @include position(absolute, 2px auto auto 0);
@@ -5467,6 +5471,9 @@ select.systemVersion {
   }
   &:hover {
     color: $color_primary;
+    &:before {
+      background-position: -40px 2px;
+    }
   }
 }
 
@@ -5550,7 +5557,9 @@ select.systemVersion {
   float: left;
   font-size: 10px;
   padding-left: 22px;
+  position: relative;
   text-align: left;
+  z-index: 1;
   span {
     font: 12px $font_1;
     color: $color_primary;
@@ -5558,6 +5567,16 @@ select.systemVersion {
   p {
     color: rgba(51, 51, 51, 0.5);
   }
+}
+
+.reset-form-option--small {
+  background-size: 14px;
+  color: $color_primary;
+  cursor: pointer;
+  font-size: 12px;
+  line-height: 27px;
+  margin-right: 40px;
+  padding-left: 18px;
 }
 
 .search-publishers {
@@ -5583,6 +5602,16 @@ select.systemVersion {
   .collection_form + .collection_form {
     border-top: 1px dashed #A9C6DE;
     padding-top: 2px;
+  }
+  .remove_organisation {
+    right: 68px;
+  }
+}
+
+.reset-form-option--tag {
+  margin: 20px 30px 0 0;
+  & + .form-group {
+    margin-top: -35px;
   }
 }
 
@@ -5647,6 +5676,29 @@ select.systemVersion {
   font-size: 15px !important;
   height: 53px;
   width: 264px;
+}
+
+.display-list {
+  position: absolute;
+  z-index: 9999 !important;
+  max-height: 200px;
+  overflow: scroll;
+  border: 1px solid #BFDFEC;
+  background-color: $color_white;
+  width: calc(100% - 30px);
+  border-radius: 4px;
+  top: 64px;
+  li:hover {
+    background: #f7f7f7;
+  }
+}
+
+.go-to__org-finder {
+  background: #fafafa;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+  margin: -5px -12px -12px!important;
+  padding: 8px 12px!important;
 }
 
 @media (min-width: 400px) {

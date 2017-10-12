@@ -56,10 +56,7 @@
 
     <div id="participating-form" class="hidden">
         <div class="collection_form has_add_more">
-            <div class="reset-form-option" v-on:click="reset">
-                <p>&nbsp;</p>
-                <p>&nbsp;</p>
-            </div>
+            <div class="reset-form-option reset-form-option--small reset-form-option--tag pull-right" v-on:click="reset">Reset</div>
             <div class="form-group">
                 <div class="organisation-role" v-bind:class="{'has-error': (organisation.organization_role == '' && display_error)}">
                     {{Form::label('Organisation Role',trans('elementForm.organisation_role'),['class' => '.control-label'])}}

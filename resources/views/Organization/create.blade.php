@@ -46,9 +46,7 @@
 
     <div id="participating-form" class="hidden">
         <div class="collection_form has_add_more">
-            <div class="reset-form-option" v-on:click="reset">
-                <p>&nbsp;</p>
-                <p>&nbsp;</p>
+            <div class="reset-form-option reset-form-option--small pull-right" v-on:click="reset">Reset
             </div>
             {{--<button type="button">Reset</button>--}}
             <div class="form-group">
@@ -105,9 +103,9 @@
                             <li>
                                 <p class="publisher-description" style="margin-bottom:5px;padding-bottom:5px;border-bottom: 1px solid #DFEDF2;">The above list is pulled from IATI Registry publisher's
                                     list.</p>
-                                <p class="publisher-description">
-                                    <a href="javascript:void(0)" @click="display()"><b>Didn't find what you are looking for? Go to Organisation Finder" to search for the organisation you are looking
-                                        for.</b>
+                                <p class="publisher-description go-to__org-finder">
+                                    <a href="javascript:void(0)" @click="display()">Didn't find what you are looking for? Go to <strong>"Organisation Finder"</strong> to search for the organisation you are looking
+                                        for.
                                     </a>
                                 </p>
                             </li>
