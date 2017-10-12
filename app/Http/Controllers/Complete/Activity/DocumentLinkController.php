@@ -180,7 +180,8 @@ class DocumentLinkController extends Controller
 
         $this->authorize('delete_activity', $activityData);
         $activityDocumentLink = $this->documentLinkManager->getDocumentLink($documentLinkId, $id);
-        if ($this->documentLinkManager->delete($activityDocumentLink)) {
+
+        if (($this->documentLinkManager->removeLinkage($id, $activityDocumentLink)) && ($this->documentLinkManager->delete($activityDocumentLink))) {
             $this->activityManager->resetActivityWorkflow($id);
             $response = ['type' => 'success', 'code' => ['deleted', ['name' => trans('element.document_link')]]];
         } else {
