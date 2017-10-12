@@ -151,4 +151,64 @@ class DocumentLinkManager
 
         return false;
     }
+
+    /**
+     * Remove the linkage to Activity while deleting a DocumentLink.
+     *
+     * @param $id
+     * @param $activityDocumentLink
+     * @return bool|null
+     */
+    public function removeLinkage($id, $activityDocumentLink)
+    {
+        $allDocumentLinks = $this->getDocumentLinks($id);
+
+        try {
+            $usedDocument = $this->documentManager->getDocument(session('org_id'), $activityDocumentLink->document_link['url']);
+
+            if ($this->documentIsLinkedOnlyOnce($allDocumentLinks, $id, $usedDocument)) {
+                $activityLinkage = $usedDocument->activities;
+                unset($activityLinkage[$id]);
+                $usedDocument->activities = $activityLinkage;
+
+                $usedDocument->save();
+            }
+
+            $this->dbLogger->activity(
+                "activity.activity_document_link_deleted",
+                [
+                    'document_link_id' => $activityDocumentLink->id,
+                    'activity_id'      => $activityDocumentLink->activity_id
+                ],
+                $activityDocumentLink->toArray()
+            );
+
+            return true;
+        } catch (\Exception $exception) {
+            $this->logger->error($exception, ['documentLink' => $activityDocumentLink]);
+
+            return null;
+        }
+    }
+
+    /**
+     * Check if a Document has been linked only once.
+     *
+     * @param $allDocumentLinks
+     * @param $id
+     * @param $usedDocument
+     * @return bool
+     */
+    protected function documentIsLinkedOnlyOnce($allDocumentLinks, $id, $usedDocument)
+    {
+        $usageCount = 0;
+
+        foreach ($allDocumentLinks as $documentLink) {
+            if (array_has($usedDocument->activities, $id) && $documentLink->document_link['url'] == $usedDocument->url) {
+                $usageCount++;
+            }
+        }
+
+        return $usageCount < 2 ? true : false;
+    }
 }
