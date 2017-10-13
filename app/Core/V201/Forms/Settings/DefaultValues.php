@@ -48,6 +48,7 @@ class DefaultValues extends BaseForm
                      'help_block'    => $this->addHelpText('activity_defaults-hierarchy', false),
                      'wrapper'       => ['class' => 'form-group col-md-6'],
                      'default_value' => 1,
+                     'attr'          => ['readonly' => true],
                      'label'         => trans('elementForm.default_hierarchy')
                  ]
              )
