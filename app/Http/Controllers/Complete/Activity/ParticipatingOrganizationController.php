@@ -90,6 +90,10 @@ class ParticipatingOrganizationController extends Controller
         $activityData              = $this->activityManager->getActivityData($id);
         $participatingOrganization = $this->participatingOrganizationManager->addOrgData($id, $request);
 
+        if (!$participatingOrganization) {
+            return response()->json(trans('V201/message.updated_failed', ['name' => 'participating organization']), 400);
+        }
+
         if (Gate::denies('ownership', $activityData)) {
             return response()->json($this->getNoPrivilegesMessage(), 500);
         }

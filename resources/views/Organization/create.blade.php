@@ -104,8 +104,7 @@
                                 <p class="publisher-description" style="margin-bottom:5px;padding-bottom:5px;border-bottom: 1px solid #DFEDF2;">The above list is pulled from IATI Registry publisher's
                                     list.</p>
                                 <p class="publisher-description go-to__org-finder">
-                                    <a href="javascript:void(0)" @click="display()">Didn't find what you are looking for? Go to <strong>"Organisation Finder"</strong> to search for the organisation you are looking
-                                        for.
+                                    <a href="javascript:void(0)" @click="display()">Didn't find what you are looking for? Go to <strong>"Organisation Finder"</strong> to search for the organisation you are looking for.
                                     </a>
                                 </p>
                             </li>
@@ -265,7 +264,6 @@
             var container = this.$el;
             $(container).find('.keyword').focus();
           }
-
           if (!this.organisation.is_publisher) {
             this.disable_options = false;
           }
@@ -273,6 +271,9 @@
         mounted: function () {
           this.countries = countries;
           this.types = types;
+          if (this.organisation.is_publisher) {
+            this.disable_options = true;
+          }
         },
         props: ['organisation', 'display_error'],
         methods: {

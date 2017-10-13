@@ -483,6 +483,7 @@
             this.organisation['narrative'][0]['language'] = '';
             this.organisation['countryText'] = '';
             this.organisation['typeText'] = '';
+            this.disable_options[this.index] = false;
           }
         }
       });

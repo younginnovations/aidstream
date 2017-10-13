@@ -145,7 +145,7 @@ class ParticipatingOrganizationManager
                 }
             }
         } catch (\Exception $exception) {
-            return response()->json($exception, 400);
+            return null;
         }
 
         return $participatingOrganization;
