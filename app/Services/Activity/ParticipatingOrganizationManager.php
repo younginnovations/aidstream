@@ -145,6 +145,9 @@ class ParticipatingOrganizationManager
                 }
             }
         } catch (\Exception $exception) {
+            $this->log->error($exception->getMessage(), ['trace' => $exception->getTraceAsString()]);
+            dd($exception->getMessage());
+
             return null;
         }
 

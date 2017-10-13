@@ -131,4 +131,14 @@ class OrganizationData extends Model
     {
         return array_get($this->organization->reporting_org, '0.narrative.0.narrative');
     }
+
+    /**
+     * Accessor for is_publisher attribute.
+     *
+     * @param $value
+     */
+    public function setIsPublisherAttribute($value)
+    {
+        $this->is_publisher = $value ? $value : false;
+    }
 }
