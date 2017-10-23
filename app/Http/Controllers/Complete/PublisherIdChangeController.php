@@ -65,62 +65,66 @@ class PublisherIdChangeController extends Controller
      */
     public function publisherIdChanged(Request $request)
     {
-        $currentUser    = auth()->user();
-        $publisherId    = trim($request->get('publisherId'));
-        $apiKey         = trim($request->get('apiKey'));
-        $organizationId = session('org_id');
-        $changes        = [];
-        $dbSettings     = $this->settingsManager->getSettings($organizationId)->toArray();
-        $organization   = $this->changeHandler->getOrganization($organizationId);
-        $oldPublisherId = getVal($dbSettings, ['registry_info', 0, 'publisher_id']);
-        $inputApiKey    = false;
-        $isCorrect      = false;
-        $isUnique       = true;
-        $isAuthorized   = true;
+        try {
+            $currentUser    = auth()->user();
+            $publisherId    = trim($request->get('publisherId'));
+            $apiKey         = trim($request->get('apiKey'));
+            $organizationId = session('org_id');
+            $changes        = [];
+            $dbSettings     = $this->settingsManager->getSettings($organizationId)->toArray();
+            $organization   = $this->changeHandler->getOrganization($organizationId);
+            $oldPublisherId = getVal($dbSettings, ['registry_info', 0, 'publisher_id']);
+            $inputApiKey    = false;
+            $isCorrect      = false;
+            $isUnique       = true;
+            $isAuthorized   = true;
 
-        if ($currentUser->isNotAdmin()) {
-            $isAuthorized = false;
+            if ($currentUser->isNotAdmin()) {
+                $isAuthorized = false;
 
-            return view('settings.publisherIdChanged', compact('isAuthorized', 'isUnique', 'publisherId', 'isCorrect', 'inputApiKey', 'changes', 'apiKey'))->render();
-        }
-
-        if ($this->hasPublisherIdBeenChanged($publisherId, $dbSettings)) {
-            if (!isUniquePublisherId($publisherId)) {
-                $isUnique = false;
-
-                return view('settings.publisherIdChanged', compact('isUnique', 'publisherId', 'isCorrect', 'inputApiKey', 'changes', 'apiKey'))->render();
+                return view('settings.publisherIdChanged', compact('isAuthorized', 'isUnique', 'publisherId', 'isCorrect', 'inputApiKey', 'changes', 'apiKey'))->render();
             }
 
-            if ($this->changeHandler->checkPublisherValidity($this->changeHandler->searchForPublisher($publisherId), $publisherId)) {
-                $isCorrect                 = true;
-                $publishedOrganizationData = $this->changeHandler->getPublishedOrganizationData($organization)->first();
-                $publishedActivities       = $this->changeHandler->getPublishedActivities($organization);
+            if ($this->hasPublisherIdBeenChanged($publisherId, $dbSettings)) {
+                if (!isUniquePublisherId($publisherId)) {
+                    $isUnique = false;
 
-                if ($this->changeHandler->hasPublishedAnyOrganizationFile($publishedOrganizationData)) {
-                    $changes['organizationData'] = $this->changeHandler->changesForOrganizationData($publishedOrganizationData, $publisherId, $apiKey);
-                    (getVal($changes, ['organizationData', 0, 'linkage']) == false) ?: $inputApiKey = true;
-                    unset($changes['organizationData']['linkage']);
+                    return view('settings.publisherIdChanged', compact('isUnique', 'publisherId', 'isCorrect', 'inputApiKey', 'changes', 'apiKey'))->render();
                 }
 
-                if ($this->changeHandler->hasPublishedAnyActivityFile($publishedActivities)) {
-                    $changes['activity'] = $this->changeHandler->changesForActivityData($publishedActivities, $publisherId, $apiKey);
-                    (getVal($changes, ['activity', 'linkage']) == false) ?: $inputApiKey = true;
-                    unset($changes['activity']['linkage']);
+                if ($this->changeHandler->checkPublisherValidity($this->changeHandler->searchForPublisher($publisherId), $publisherId)) {
+                    $isCorrect                 = true;
+                    $publishedOrganizationData = $this->changeHandler->getPublishedOrganizationData($organization)->first();
+                    $publishedActivities       = $this->changeHandler->getPublishedActivities($organization);
+
+                    if ($this->changeHandler->hasPublishedAnyOrganizationFile($publishedOrganizationData)) {
+                        $changes['organizationData'] = $this->changeHandler->changesForOrganizationData($publishedOrganizationData, $publisherId, $apiKey);
+                        (getVal($changes, ['organizationData', 0, 'linkage']) == false) ?: $inputApiKey = true;
+                        unset($changes['organizationData']['linkage']);
+                    }
+
+                    if ($this->changeHandler->hasPublishedAnyActivityFile($publishedActivities)) {
+                        $changes['activity'] = $this->changeHandler->changesForActivityData($publishedActivities, $publisherId, $apiKey);
+                        (getVal($changes, ['activity', 'linkage']) == false) ?: $inputApiKey = true;
+                        unset($changes['activity']['linkage']);
+                    }
                 }
+
+                return view('settings.publisherIdChanged', compact('changes', 'publisherId', 'oldPublisherId', 'apiKey', 'inputApiKey', 'isCorrect', 'isUnique', 'isAuthorized'))->render();
             }
 
-            return view('settings.publisherIdChanged', compact('changes', 'publisherId', 'oldPublisherId', 'apiKey', 'inputApiKey', 'isCorrect', 'isUnique', 'isAuthorized'))->render();
-        }
+            if ($oldPublisherId == "" || $publisherId == $oldPublisherId) {
+                if (!$this->changeHandler->checkPublisherValidity($this->changeHandler->searchForPublisher($publisherId), $publisherId) || !isUniquePublisherId($publisherId)) {
+                    return response(['status' => 'Incorrect', 'loadModal' => false]);
+                }
 
-        if ($oldPublisherId == "" || $publisherId == $oldPublisherId) {
-            if (!$this->changeHandler->checkPublisherValidity($this->changeHandler->searchForPublisher($publisherId), $publisherId) || !isUniquePublisherId($publisherId)) {
-                return response(['status' => 'Incorrect', 'loadModal' => false]);
+                return response(['status' => 'Correct', 'loadModal' => false]);
             }
 
-            return response(['status' => 'Correct', 'loadModal' => false]);
+            return response(['status' => false, 'loadModal' => false]);
+        } catch (Exception $exception) {
+            return response(['status' => false, 'loadModal' => false]);
         }
-
-        return response(['status' => false, 'loadModal' => false]);
     }
 
     /**
