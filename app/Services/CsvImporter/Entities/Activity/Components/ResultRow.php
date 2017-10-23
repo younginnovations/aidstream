@@ -621,7 +621,7 @@ class ResultRow extends Row
 
         foreach ($values as $value) {
             if (!is_null($value)) {
-                $this->data['indicator'][$index]['period'][$i]['period_start'][0]['date'] = $value;
+                $this->data['indicator'][$index]['period'][$i]['period_start'][0]['date'] = dateFormat('Y-m-d', $value);
             }
         }
 
@@ -641,7 +641,7 @@ class ResultRow extends Row
 
         foreach ($values as $value) {
             if (!is_null($value)) {
-                $this->data['indicator'][$index]['period'][$i]['period_end'][0]['date'] = $value;
+                $this->data['indicator'][$index]['period'][$i]['period_end'][0]['date'] = dateFormat('Y-m-d', $value);
             }
         }
 
