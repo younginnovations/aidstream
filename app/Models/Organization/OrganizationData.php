@@ -133,12 +133,12 @@ class OrganizationData extends Model
     }
 
     /**
-     * Accessor for is_publisher attribute.
+     * Get the Organization Identifier Attribute.
      *
-     * @param $value
+     * @return mixed
      */
-    public function setIsPublisherAttribute($value)
+    public function getOrganizationIdentifierAttribute()
     {
-        $this->is_publisher = $value ? $value : false;
+        return array_get($this->organization->reporting_org, '0.reporting_organization_identifier');
     }
 }

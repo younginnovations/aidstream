@@ -87,14 +87,22 @@
                             <li class="publishers-list scroll-list">
                                 <div v-for="(publisher, index) in suggestions">
                                     <a href="javascript:void(0)" v-on:click="selected($event)" v-bind:selectedSuggestion="index">
-                                        <strong v-bind:selectedSuggestion="index">@{{publisher.identifier}} @{{publisher.names[0].name}}</strong>
-                                        <span class="language" v-for="(key,index) in publisher.names">@{{ key.language }}</span>
-                                        <div class="partners" style="overflow: hidden;" v-on:click="selected($event)" v-bind:selectedSuggestion="index">
+                                        <p>
+                                            <strong v-bind:selectedSuggestion="index">@{{publisher.names[0].name}}</strong>
+                                            <span class="language" v-if="key.language" v-for="(key,index) in publisher.names">@{{ key.language }}</span>
+                                        </p>
+                                        <p>
+                                            <strong v-bind:selectedSuggestion="index">@{{publisher.identifier}}</strong>
+                                        </p>
+                                        <div class="partners" style="overflow: hidden;" v-bind:selectedSuggestion="index">
                                             <div class="pull-left">
-                                                <span v-bind:selectedSuggestion="index">Type: @{{publisher.type}}</span>
+                                                <span v-bind:selectedSuggestion="index" class="tick">
+                                                    @{{publisher.type | getOrganisationType}}
+                                                </span>
                                             </div>
                                             <div class="pull-right">
-                                                <span class="suggest-edit">Suggest Edit</span>
+                                                <a target="_blank" v-bind:href="'{{ env('PO_API_URL') }}' + '/suggestion/' + publisher.identifier + '/suggest'" class="suggest-edit"
+                                                   v-if="publisher.is_publisher || publisher.is_org_file">@lang('global.suggest')</a>
                                             </div>
                                         </div>
                                     </a>
@@ -109,29 +117,6 @@
                                 </p>
                             </li>
                         </ul>
-                        {{--<ul v-if="suggestions.length > 0" class="found-publishers filter-publishers">--}}
-                        {{--<li class="publisher-description"><p>Choose an organisation from below</p></li>--}}
-                        {{--<li v-for="(publisher, index) in suggestions" class="scroll-list">--}}
-                        {{--<a href="javascript:void(0)" v-on:click="selected($event)" v-bind:selectedSuggestion="index">--}}
-                        {{--<strong v-bind:selectedSuggestion="index">@{{publisher.identifier}} @{{publisher.names[0].name }}</strong>--}}
-                        {{--<span class="language">@{{ publisher.names[0].language }}</span>--}}
-
-                        {{--<div class="partners" style="overflow: hidden;" v-on:click="selected($event)" v-bind:selectedSuggestion="index">--}}
-                        {{--<div class="pull-left">--}}
-                        {{--<span v-bind:selectedSuggestion="index">Type: @{{publisher.type}}</span>--}}
-                        {{--</div>--}}
-                        {{--<div class="pull-right">--}}
-                        {{--<span class="suggest-edit">Suggest Edit</span>--}}
-                        {{--</div>--}}
-                        {{--</div>--}}
-                        {{--</a>--}}
-
-                        {{--</li>--}}
-                        {{--<li><p>The above list is pulled from IATI Registry publisher's list.</p></li>--}}
-                        {{--<li class="publishers-list" @click="display()">--}}
-                        {{--<a href="javascript:void(0)" @click="display()">Didn't find what you are looking for? Go to Organisation Finder" to search for the organisation you are looking for.</a>--}}
-                        {{--</li>--}}
-                        {{--</ul>--}}
                         <ul v-if="display_org_finder" class="not-found-publisher">
                             <li class="publisher-description"><p>It seems there's no matching organisation in IATI Registry of publishers. You may do one
                                     of the following at this point.</p></li>
@@ -389,6 +374,15 @@
           }
         }
       });
+
+      Vue.filter('getOrganisationType', function (value) {
+        if (value && (types[value] !== undefined)) {
+          return types[value];
+        }
+
+        return '';
+      });
+
       Vue.component('modal', {
         template: '#modalComponent',
         props: ['organisation', 'registrar_list'],

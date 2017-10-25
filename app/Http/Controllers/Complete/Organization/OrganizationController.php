@@ -181,11 +181,11 @@ class OrganizationController extends Controller
         $input  = $request->all();
         $status = $input['status'];
 
-        $organization = $this->organizationManager->getOrganization($orgId);
+//        $organization = $this->organizationManager->getOrganization($id);
         if ($status == 3) {
             $this->authorize('publish_activity', $organization);
         }
-        $settings = $this->settingsManager->getSettings($orgId);
+        $settings = $this->settingsManager->getSettings($id);
 
         $orgElem    = $this->organizationManager->getOrganizationElement();
         $xmlService = $orgElem->getOrgXmlService();
@@ -622,20 +622,20 @@ class OrganizationController extends Controller
         $organizationPublished = $organization->organizationPublished;
 
         if ($orgData->is_reporting_org) {
-            return redirect()->back()->withResponse(['type' => 'danger', 'code' => ['cannot_delete_reporting_org']]);
+            return redirect()->route('organization.index')->withResponse(['type' => 'danger', 'code' => ['cannot_delete_reporting_org']]);
         }
 
-        if ($organizationPublished && $organizationPublished->published_to_register && in_array($id, $organizationPublished->published_org_data)) {
-            return redirect()->back()->withResponse(['type' => 'warning', 'code' => ['cannot_delete_published_org', ['name' => trans('global.organization')]]]);
+        if ($organizationPublished && $organizationPublished->published_to_register && ($organizationPublished->published_org_data && in_array($id, $organizationPublished->published_org_data))) {
+            return redirect()->route('organization.index')->withResponse(['type' => 'warning', 'code' => ['cannot_delete_published_org', ['name' => trans('global.organization')]]]);
         }
 
         $result = $this->organizationManager->delete($orgData);
 
         if ($result) {
-            return redirect()->back()->withResponse(['type' => 'success', 'code' => ['deleted', ['name' => trans('global.organization')]]]);
+            return redirect()->route('organization.index')->withResponse(['type' => 'success', 'code' => ['deleted', ['name' => trans('global.organization')]]]);
         }
 
-        return redirect()->back()->withResponse(['type' => 'danger', 'code' => ['delete_failed', ['name' => trans('global.organization')]]]);
+        return redirect()->route('organization.index')->withResponse(['type' => 'danger', 'code' => ['delete_failed', ['name' => trans('global.organization')]]]);
     }
 
     /**
@@ -792,7 +792,7 @@ class OrganizationController extends Controller
         $participatingOrganizations = collect($activity->participating_organization);
         $orgToBeReplaced            = $participatingOrganizations->filter(
             function ($organization) use ($from) {
-                return $organization['org_data_id'] == $from->id;
+                return array_get($organization, 'org_data_id') == $from->id;
             }
         );
         $orgToBeReplaced            = $orgToBeReplaced->first();
@@ -808,7 +808,7 @@ class OrganizationController extends Controller
                 'identifier'        => $to->identifier,
                 'activity_id'       => $orgToBeReplaced['activity_id'],
                 'organization_role' => $orgToBeReplaced['organization_role'],
-                'organization_type' => $to->organization_type,
+                'organization_type' => $to->type,
                 'country'           => $to->country,
                 'org_data_id'       => $to->id,
                 'narrative'         => $to->name,

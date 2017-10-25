@@ -466,12 +466,15 @@ class OrganizationRepository implements OrganizationRepositoryInterface
      * Store the organisations from ajax request.
      * Store in organization_data table.
      *
-     * @param $organisation
+     * @param $organisationDetails
      * @return OrganizationData
      */
-    public function storeOrgData($organisation)
+    public function storeOrgData($organisationDetails)
     {
-        return $this->orgData->create($organisation);
+        $organisation = $this->orgData->newInstance($organisationDetails);
+        $organisation->save();
+
+        return $organisation;
     }
 
     /**
@@ -533,6 +536,6 @@ class OrganizationRepository implements OrganizationRepositoryInterface
      */
     public function getOrganizationDataFor($organizationId)
     {
-        return $this->orgData->where('organization_id', '=', $organizationId)->get();
+        return $this->orgData->where('organization_id', '=', $organizationId)->where('is_reporting_org', '=', false)->get();
     }
 }

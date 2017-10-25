@@ -73,7 +73,8 @@
                 <div class="form-group" v-bind:class="{'has-error': (organisation.organization_type == '' && display_error)}">
                     {{Form::label('organisation_Type',trans('elementForm.organisation_type'),['class' => 'control-label'])}}
                     {{--                    {{Form::select('organization_type',$organizationTypes, null,['class' => 'form-control ignore_change', 'v-bind:value' => 'organisation.organization_type', 'v-on:change'=>'onchange($event)', 'placeholder' => 'Please select the following options.','v-bind:readonly' => "disable_options[index]"])}}--}}
-                    <vue-select2 :bind_variable='organisation' name='organization_type' attr_name='typeText' options='{{json_encode($organizationTypes)}}' :disable_options='disable_options[index]' v-on:change='getRegistrars($event)'>
+                    <vue-select2 :bind_variable='organisation' name='organization_type' attr_name='typeText' options='{{json_encode($organizationTypes)}}' :disable_options='disable_options[index]'
+                                 v-on:change='getRegistrars($event)'>
                     </vue-select2>
                     <div v-if="(organisation.organization_type == '' && display_error)" class="text-danger">Organisation Type is required.</div>
                 </div>
@@ -81,7 +82,8 @@
                 <div class="form-group" v-bind:class="{'has-error': (organisation.country == '' && display_error)}">
                     {{Form::label('country','Country the organization is based in',['class' => 'control-label'])}}
                     {{--                    {{Form::select('country',$countries, null,['class' => 'form-control ignore_change', 'v-bind:value' => 'organisation.country', 'v-on:change'=>'onchange($event)', 'placeholder' => 'Please select the following options.', 'v-bind:readonly' => "disable_options[index]"])}}--}}
-                    <vue-select2 :bind_variable='organisation' name='country' attr_name='countryText' options='{{json_encode($countries)}}' :disable_options='disable_options[index]' v-on:change='getRegistrars($event)'></vue-select2>
+                    <vue-select2 :bind_variable='organisation' name='country' attr_name='countryText' options='{{json_encode($countries)}}' :disable_options='disable_options[index]'
+                                 v-on:change='getRegistrars($event)'></vue-select2>
                     <div v-if="(organisation.country == '' && display_error)" class="text-danger">Country is required.</div>
                 </div>
                 <div class="form-group" v-bind:class="{'has-error': (organisation.narrative[0]['narrative'] == '' && display_error) }">
@@ -105,14 +107,23 @@
                             <li class="publishers-list scroll-list">
                                 <div v-for="(publisher, index) in suggestions">
                                     <a href="javascript:void(0)" v-on:click="selected($event)" v-bind:selectedSuggestion="index">
-                                        <strong v-bind:selectedSuggestion="index">@{{publisher.identifier}} @{{publisher.names[0].name}}</strong>
-                                        <span class="language" v-for="(key,index) in publisher.names">@{{ key.language }}</span>
-                                        <div class="partners" style="overflow: hidden;" v-on:click="selected($event)" v-bind:selectedSuggestion="index">
-                                            <div class="pull-left">
-                                                <span v-bind:selectedSuggestion="index">Type: @{{publisher.type}}</span>
+                                        <p>
+                                            <strong v-bind:selectedSuggestion="index">@{{publisher.names[0].name}}</strong>
+                                            <span class="language" v-if="key.language" v-for="(key,index) in publisher.names">@{{ key.language }}</span>
+                                        </p>
+                                        <p>
+                                            <strong v-bind:selectedSuggestion="index">@{{publisher.identifier}}</strong>
+                                        </p>
+                                        <div class="partners" style="overflow: hidden;" v-bind:selectedSuggestion="index">
+                                            <div class="pull-left" v-bind:selectedSuggestion="index">
+                                                <span v-bind:selectedSuggestion="index" class="tick">
+                                                    @{{publisher.type | getOrganisationType}}
+                                                </span>
                                             </div>
                                             <div class="pull-right">
-                                                <span class="suggest-edit">Suggest Edit</span>
+                                                <a target="_blank" v-bind:href="'{{ env('PO_API_URL') }}' + '/suggestion/' + publisher.identifier + '/suggest'" class="suggest-edit"
+                                                   v-if="publisher.is_publisher || publisher.is_org_file">@lang('global.suggest')</a>
+                                                {{--<span class="suggest-edit">Suggest Edit</span>--}}
                                             </div>
                                         </div>
                                     </a>
@@ -135,15 +146,23 @@
                             <li class="publishers-list scroll-list">
                                 <div v-for="(partnerOrganization, index) in matchingPartnerOrg[0]">
                                     <a style="display: block;" href="javascript:void(0)" v-on:click="partnerSelected($event)" v-bind:selectedPartner="index">
-                                        <strong v-bind:selectedPartner="index">@{{ partnerOrganization.name ? partnerOrganization.name[0]['narrative'] : 'No name'}}</strong>
-                                        <span class="language" v-for="(key,index) in partnerOrganization.name">@{{ key.language }}</span>
+                                        <p>
+                                            <strong v-bind:selectedSuggestion="index">@{{ partnerOrganization.name ? partnerOrganization.name[0].narrative : 'No name' }}</strong>
+                                            <span class="language" v-if="key.language" v-for="(key,index) in partnerOrganization.name">@{{ key.language }}</span>
+                                        </p>
+                                        <p>
+                                            <strong v-bind:selectedSuggestion="index">@{{partnerOrganization.identifier}}</strong>
+                                        </p>
+                                        {{--<strong v-bind:selectedPartner="index">@{{ partnerOrganization.name ? partnerOrganization.name[0]['narrative'] : 'No name'}}</strong>--}}
+                                        {{--<span class="language" v-for="(key,index) in partnerOrganization.name">@{{ key.language }}</span>--}}
 
-                                        <div class="partners" style="overflow: hidden;" v-on:click="partnerSelected($event)" v-bind:selectedPartner="index">
+                                        <div class="partners" style="overflow: hidden;" v-bind:selectedPartner="index">
                                             <div class="pull-left">
-                                                <span v-bind:selectedPartner="index" class="tick">@{{ partnerOrganization.identifier }} </span>
+                                                <span v-bind:selectedPartner="index" v-bind:class="{'tick' : (partnerOrganization.is_publisher || partnerOrganization.is_org_file)}">@{{partnerOrganization.type | getOrganisationType}}</span>
                                             </div>
                                             <div class="pull-right">
-                                                <a target="_blank" v-bind:href="'{{ env('PO_API_URL') }}' + '/suggestion/' + partnerOrganization.identifier + '/suggest'" class="suggest-edit" v-if="partnerOrganization.is_publisher || partnerOrganization.is_org_file">@lang('global.suggest')</a>
+                                                <a target="_blank" v-bind:href="'{{ env('PO_API_URL') }}' + '/suggestion/' + partnerOrganization.identifier + '/suggest'" class="suggest-edit"
+                                                   v-if="partnerOrganization.is_publisher || partnerOrganization.is_org_file">@lang('global.suggest')</a>
                                                 <span class="edit-activity" v-if="!partnerOrganization.is_publisher">@lang('global.edit')</span>
                                             </div>
                                         </div>
@@ -164,12 +183,12 @@
                             <li class="or">Or</li>
                             <li id="orgFinder">
                                 <a href="javascript:void(0)" @click="display()">
-                                <h3 class="contact-heading">Use Organization Finder <span> (org-id.guide)</span></h3>
-                                <p>Use our organization finder helper to get a new identifier for this.</p>
-                                <p><span class="caution">Caution:</span> Please beware that this can be a long and
-                                    tedious process. It may be the case that you will not
-                                    find the organization even with this. In this case, leave the identifier field blank
-                                    and just mention organisation name only.</p>
+                                    <h3 class="contact-heading">Use Organization Finder <span> (org-id.guide)</span></h3>
+                                    <p>Use our organization finder helper to get a new identifier for this.</p>
+                                    <p><span class="caution">Caution:</span> Please beware that this can be a long and
+                                        tedious process. It may be the case that you will not
+                                        find the organization even with this. In this case, leave the identifier field blank
+                                        and just mention organisation name only.</p>
                                 </a>
                             </li>
                         </ul>
@@ -182,7 +201,7 @@
                 </div>
                 <div class="form-group">
                     {{Form::label('activity_id',trans('elementForm.activity_id'),['class' => 'control-label'])}}
-                    {{Form::text('activity_id',null,['class' => 'form-control','v-bind:value' => 'organisation.activity_id' ])}}
+                    {{Form::text('activity_id',null,['class' => 'form-control','v-model:value' => 'organisation.activity_id' ])}}
                 </div>
                 <button class="remove_organisation" type="button" @click="remove()" v-bind:index="index">Remove Organisation</button>
             </div>
@@ -202,7 +221,8 @@
                         <div class="form-group">
                             {{Form::label('Organisation Type',trans('elementForm.organisation_type'),['class' => 'control-label'])}}
                             {{--{{Form::select('organization_type',$organizationTypes, null,['class' => 'form-control ignore_change', 'v-bind:value' => 'organisation.organization_type', 'placeholder' => 'Please select the following options.', 'v-on:change' => 'getRegistrars($event)'])}}--}}
-                            <vue-select2 :bind_variable='organisation' name='organization_type' attr_name='typeText' options='{{json_encode($organizationTypes)}}' v-on:change='getRegistrars($event)'></vue-select2>
+                            <vue-select2 :bind_variable='organisation' name='organization_type' attr_name='typeText' options='{{json_encode($organizationTypes)}}'
+                                         v-on:change='getRegistrars($event)'></vue-select2>
                         </div>
 
                         <div class="form-group">
@@ -488,6 +508,14 @@
         }
       });
 
+      Vue.filter('getOrganisationType', function (value) {
+        if (value && (types[value] !== undefined)) {
+          return types[value];
+        }
+
+        return '';
+      });
+
       Vue.component('modal', {
         template: '#modalComponent',
         props: ['organisation', 'registrar_list'],
@@ -659,6 +687,9 @@
             var self = this;
             var status = true;
             this.organisations.forEach(function (organisation, index) {
+              delete organisation['typeText'];
+              delete organisation['countryText'];
+
               if (organisation.country === '' || organisation.narrative[0]['narrative'] === '' || organisation.organization_type === '' || organisation.organization_role === '') {
                 self.display_error = true;
                 status = false;
@@ -666,6 +697,7 @@
                 return false;
               }
             });
+
             return status;
           }
         }

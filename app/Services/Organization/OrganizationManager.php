@@ -393,15 +393,29 @@ class OrganizationManager
     public function store($id, $data)
     {
         try {
+            $partnerOrganizations = $this->orgData->where('organization_id', '=', $id)->where('is_reporting_org', '=', false)->get();
+
             foreach (array_get($data, 'organisation') as $organisation) {
-                $organisation['is_publisher']     = (array_get($organisation, 'is_publisher', '0') === '1') ? true : null;
-                $organisation['organization_id']  = $id;
-                $organisation['is_reporting_org'] = false;
-                $this->repo->storeOrgData($organisation);
+                if ($partnerOrganizations->count()) {
+                    if (!$this->organizationIsCompletelySame($organisation, $partnerOrganizations) || !array_get($organisation, 'identifier')) {
+                        $organisation['is_publisher']     = boolval(array_get($organisation, 'is_publisher'));
+                        $organisation['organization_id']  = $id;
+                        $organisation['is_reporting_org'] = false;
+
+                        $this->repo->storeOrgData($organisation);
+                    }
+                } else {
+                    $organisation['is_publisher']     = boolval(array_get($organisation, 'is_publisher'));
+                    $organisation['organization_id']  = $id;
+                    $organisation['is_reporting_org'] = false;
+
+                    $this->repo->storeOrgData($organisation);
+                }
             }
 
             return true;
         } catch (Exception $exception) {
+            $this->logger->error($exception->getMessage(), ['trace' => $exception->getTraceAsString()]);
 
             return false;
         }
@@ -482,6 +496,29 @@ class OrganizationManager
 
             return null;
         }
+    }
+
+    /**
+     * Check if the data of an Organisation being added is completely same as other Partner Organisations.
+     *
+     * @param $organisation
+     * @param $partnerOrganizations
+     * @return bool
+     */
+    protected function organizationIsCompletelySame($organisation, $partnerOrganizations)
+    {
+        $isSameOrganization = false;
+
+        foreach ($partnerOrganizations as $item => $value) {
+            if ($value->identifier == array_get($organisation, 'identifier')
+                && $value->name[0]['narrative'] == array_get($organisation, 'name.0.narrative')
+                && $value->country == array_get($organisation, 'country')
+                && $value->type == array_get($organisation, 'type')) {
+                $isSameOrganization = true;
+            }
+        }
+
+        return $isSameOrganization;
     }
 }
 

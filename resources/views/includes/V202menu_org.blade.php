@@ -10,35 +10,35 @@ $orgId = $orgData['id'];
     </div>
     <div class="col-xs-4 col-md-4 col-lg-4 element-sidebar-wrapper">
         <div class="panel panel-default">
-            <div class="panel-heading"> @lang('element.identification')</div>
-            <div class="panel-body">
-                <ul class="nav">
-                    <li>
+            {{--<div class="panel-heading"> @lang('element.identification')</div>--}}
+            {{--<div class="panel-body">--}}
+                {{--<ul class="nav">--}}
+                    {{--<li>--}}
                         {{--*/ $filled = $orgData['reporting_org']; /*--}}
-                        <a href="{{ url('/organization/' . $orgId . '/reportingOrg') }}" class="{{ $filled ? 'active' : '' }}" title="{{ $filled ? 'Edit' : 'Add' }} @lang('element.reporting_organisation')">
-                            <span class="action-icon {{ $filled ? 'edit-value' : 'add' }}">icon</span>
-                            @lang('element.reporting_organisation')
-                        </a>
-                        <span class="help-text" data-toggle="tooltip" data-placement="top" title="@lang(session()->get('version') . '/help.Organisation_ReportingOrg')">help text</span>
-                    </li>
-                    <li>
+                        {{--<a href="{{ url('/organization/' . $orgId . '/reportingOrg') }}" class="{{ $filled ? 'active' : '' }}" title="{{ $filled ? 'Edit' : 'Add' }} @lang('element.reporting_organisation')">--}}
+                            {{--<span class="action-icon {{ $filled ? 'edit-value' : 'add' }}">icon</span>--}}
+                            {{--@lang('element.reporting_organisation')--}}
+                        {{--</a>--}}
+                        {{--<span class="help-text" data-toggle="tooltip" data-placement="top" title="@lang(session()->get('version') . '/help.Organisation_ReportingOrg')">help text</span>--}}
+                    {{--</li>--}}
+                    {{--<li>--}}
                         {{--*/ $filled = $orgData['reporting_org']; /*--}}
-                        <a href="{{ url('/organization/' . $orgId . '/identifier')  }}" class="{{ $filled ? 'active' : '' }}" title="{{ $filled ? 'Edit' : 'Add' }} @lang('element.organisation_identifier')">
-                            <span class="action-icon {{ $filled ? 'edit-value' : 'add' }}">icon</span>
-                            @lang('element.organisation_identifier')
-                        </a>
-                        <span class="help-text" data-toggle="tooltip" data-placement="top" title="@lang(session()->get('version') . '/help.Organisation_Identifier')">help text</span>
-                    </li>
-                    <li>
+                        {{--<a href="{{ url('/organization/' . $orgId . '/identifier')  }}" class="{{ $filled ? 'active' : '' }}" title="{{ $filled ? 'Edit' : 'Add' }} @lang('element.organisation_identifier')">--}}
+                            {{--<span class="action-icon {{ $filled ? 'edit-value' : 'add' }}">icon</span>--}}
+                            {{--@lang('element.organisation_identifier')--}}
+                        {{--</a>--}}
+                        {{--<span class="help-text" data-toggle="tooltip" data-placement="top" title="@lang(session()->get('version') . '/help.Organisation_Identifier')">help text</span>--}}
+                    {{--</li>--}}
+                    {{--<li>--}}
                         {{--*/ $filled = $orgData['name']; /*--}}
-                        <a href="{{ url('/organization/' . $orgId . '/name') }}" class="{{ $filled ? 'active' : '' }}" title="{{ $filled ? 'Edit' : 'Add' }} Name">
-                            <span class="action-icon {{ $filled ? 'edit-value' : 'add' }}">icon</span>
-                            @lang('element.name')
-                        </a>
-                        <span class="help-text" data-toggle="tooltip" data-placement="top" title="@lang(session()->get('version') . '/help.Organisation_Name')">help text</span>
-                    </li>
-                </ul>
-            </div>
+                        {{--<a href="{{ url('/organization/' . $orgId . '/name') }}" class="{{ $filled ? 'active' : '' }}" title="{{ $filled ? 'Edit' : 'Add' }} Name">--}}
+                            {{--<span class="action-icon {{ $filled ? 'edit-value' : 'add' }}">icon</span>--}}
+                            {{--@lang('element.name')--}}
+                        {{--</a>--}}
+                        {{--<span class="help-text" data-toggle="tooltip" data-placement="top" title="@lang(session()->get('version') . '/help.Organisation_Name')">help text</span>--}}
+                    {{--</li>--}}
+                {{--</ul>--}}
+            {{--</div>--}}
         </div>
         <div class="panel panel-default">
             <div class="panel-heading">@lang('element.budget')</div>

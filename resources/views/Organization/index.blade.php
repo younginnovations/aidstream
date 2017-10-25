@@ -59,15 +59,12 @@
                         </table>
                     </div>
                     <div class="panel-body panel-org-body panel__partner-org">
-                        <h3>@lang('global.partner_organisations')</h3>
+                        @if (count($participatingOrg))<h3>@lang('global.partner_organisations')</h3>@endif
                         <a class="pull-right add-new-organisation" href="{{ route('organization.create', session('org_id')) }}">@lang('global.add_a_new_organisation')</a>
                         <table class="table table-striped">
                             <tbody>
                             @foreach($participatingOrg as $orgData)
                                 <tr class="clickable-row" data-href="{{route('organization.show', $orgData->id)}}">
-                                    <td width="10px">
-                                        <a href="#" class="edit-activity pull-right">@lang('global.edit')</a>
-                                    </td>
                                     <td class="organisation-name" width="55%">
                                         <a href="{{route('organization.show', $orgData->id)}}">
                                             {{ $orgData->name[0]['narrative'] ? $orgData->name[0]['narrative'] : trans('global.name_not_given')}}
@@ -92,30 +89,25 @@
                                     </td>
                                     <td width="50px">
                                         <div class="view-more">
-                                            <a href="javascript:void(0)">⋯</a>
-                                            <div class="view-more-actions">
+                                            <a href="javascript:void(0)" class="{{ (count($participatingOrg) > 1) ?: 'hidden'}}">⋯</a>
+                                            <div class="view-more-actions {{ (count($participatingOrg) > 1) ?: 'hidden'}}">
                                                 <ul>
-                                                    <li>
-                                                        <a href="javascript:void(0)" data-org-id="{{ $orgData->id }}" data-org-name="{{ $orgData->name[0]['narrative'] }}"
-                                                           class="merge-with mergeWithTrigger">@lang('organisation-data.merge_with_label')
-                                                        </a>
-                                                    </li>
-                                                    {{--@if ($orgData->status === 3 && ($orgData->organization->published_to_registry === 1))--}}
-                                                        {{--<li>--}}
-                                                            {{--<form action="{{ route('organization-data.unpublish', $orgData->id) }}" method="POST">--}}
-                                                                {{--{{ csrf_field() }}--}}
-                                                                {{--<small>--}}
-                                                                    {{--<input class="button button-submit btn-xs btn-action-wrap" type="submit" value="@lang('global.unpublish_organisation')">--}}
-                                                                {{--</small>--}}
-                                                            {{--</form>--}}
-                                                        {{--</li>--}}
-                                                    {{--@endif--}}
-                                                    @if (count($orgData->used_by) == 0)
+                                                    @if (count($participatingOrg) > 1)
                                                         <li>
-                                                            <a href="{{ route('organization-data.edit', $orgData->id)}}">@lang('global.edit_this_organisation')</a>
+                                                            <a href="javascript:void(0)" data-org-id="{{ $orgData->id }}" data-org-name="{{ $orgData->name[0]['narrative'] }}"
+                                                               class="merge-with mergeWithTrigger">@lang('organisation-data.merge_with_label')
+                                                            </a>
                                                         </li>
+                                                    @endif
+                                                    @if (count($orgData->used_by) == 0)
+                                                        {{--<li>--}}
+                                                            {{--<a href="{{ route('organization-data.edit', $orgData->id)}}">@lang('global.edit_this_organisation')</a>--}}
+                                                        {{--</li>--}}
                                                         <li>
-                                                            <a href="{{ route('organization-data.delete', $orgData->id)}}" class="edit-this-org">@lang('global.delete_this_organisation')</a>
+                                                            <form action="{{ route('organization-data.delete', $orgData->id)}}" method="POST">
+                                                                {{ csrf_field() }}
+                                                                <input type="submit" value="{{ trans('global.delete_this_organisation') }}">
+                                                            </form>
                                                         </li>
                                                     @endif
                                                 </ul>

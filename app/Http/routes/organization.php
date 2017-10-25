@@ -55,7 +55,7 @@ $router->group(
             ]
         );
 
-        $router->get(
+        $router->post(
             '/organization-data/{id}/delete',
             [
                 'as'   => 'organization-data.delete',

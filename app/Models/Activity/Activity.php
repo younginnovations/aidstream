@@ -214,6 +214,8 @@ class Activity extends Model
      */
     public function titleText()
     {
-        return $this->title[0]['narrative'];
+        $title = array_get($this->title, '0.narrative', null);
+
+        return $title ? $title : 'No Title';
     }
 }
