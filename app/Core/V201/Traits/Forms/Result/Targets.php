@@ -23,6 +23,6 @@ trait Targets
      */
     public function addActualTargets()
     {
-        return $this->addCollection('actual', 'Activity\Target', '', ['class' => 'indicator_period_actual_comment_title_narrative'], trans('elementForm.actual'));
+        return $this->addCollection('actual', 'Activity\Actual', '', ['class' => 'indicator_period_actual_comment_title_narrative'], trans('elementForm.actual'));
     }
 }
