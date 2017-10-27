@@ -7423,6 +7423,29 @@ select.systemVersion {
     .view-more-actions ul li a:hover:before {
       background-position: -40px 2px; }
 
+.view-more-actions ul li form {
+  position: relative; }
+  .view-more-actions ul li form:before {
+    background: url(../../images/ic-activity-action-sprite.svg) no-repeat 0 -65px;
+    content: "";
+    height: 15px;
+    width: 12px;
+    position: absolute;
+    top: 2px;
+    right: auto;
+    bottom: auto;
+    left: 0; }
+  .view-more-actions ul li form input {
+    background: transparent;
+    color: #484848;
+    font-size: 12px;
+    padding: 0 0 2px 15px; }
+  .view-more-actions ul li form:hover:before {
+    background-position: -41px -65px; }
+  .view-more-actions ul li form:hover input {
+    background: transparent;
+    color: #00A8FF; }
+
 .panel__partner-org .table {
   border-bottom: 1px solid #D5EAF5; }
   .panel__partner-org .table > tbody > tr {
@@ -7590,6 +7613,9 @@ select.systemVersion {
   height: 53px;
   width: 264px; }
 
+#select2-container {
+  position: relative; }
+
 .display-list {
   position: absolute;
   z-index: 9999 !important;
@@ -7597,11 +7623,10 @@ select.systemVersion {
   overflow: scroll;
   border: 1px solid #BFDFEC;
   background-color: #fff;
-  width: -webkit-calc(100% - 30px);
-  width: calc(100% - 30px);
+  width: 100%;
   -webkit-border-radius: 4px;
           border-radius: 4px;
-  top: 64px; }
+  top: 40px; }
   .display-list li:hover {
     background: #f7f7f7; }
 
