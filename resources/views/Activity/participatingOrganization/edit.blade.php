@@ -198,6 +198,7 @@
                 <div class="form-group organisation-identifier">
                     {{Form::label('organisation_identifier','Organisation Identifier:',['class' => 'control-label'])}}
                     @{{organisation.identifier}}
+                    <div v-if="(organisation.identifier.match(/[\/\&\|\?|]+/) && display_error)" class="text-danger">Special characters are not allowed.</div>
                 </div>
                 <div class="form-group">
                     {{Form::label('activity_id',trans('elementForm.activity_id'),['class' => 'control-label'])}}
@@ -690,7 +691,7 @@
               delete organisation['typeText'];
               delete organisation['countryText'];
 
-              if (organisation.country === '' || organisation.narrative[0]['narrative'] === '' || organisation.organization_type === '' || organisation.organization_role === '') {
+              if (organisation.country === '' || organisation.narrative[0]['narrative'] === '' || organisation.organization_type === '' || organisation.organization_role === '' || organisation.identifier.match(/[\/\&\|\?|]+/)) {
                 self.display_error = true;
                 status = false;
 
