@@ -147,11 +147,11 @@
                                 <div v-for="(partnerOrganization, index) in matchingPartnerOrg[0]">
                                     <a style="display: block;" href="javascript:void(0)" v-on:click="partnerSelected($event)" v-bind:selectedPartner="index">
                                         <p>
-                                            <strong v-bind:selectedSuggestion="index">@{{ partnerOrganization.name ? partnerOrganization.name[0].narrative : 'No name' }}</strong>
+                                            <strong v-bind:selectedPartner="index">@{{ partnerOrganization.name ? partnerOrganization.name[0].narrative : 'No name' }}</strong>
                                             <span class="language" v-if="key.language" v-for="(key,index) in partnerOrganization.name">@{{ key.language }}</span>
                                         </p>
                                         <p>
-                                            <strong v-bind:selectedSuggestion="index">@{{partnerOrganization.identifier}}</strong>
+                                            <strong v-bind:selectedPartner="index">@{{partnerOrganization.identifier}}</strong>
                                         </p>
                                         {{--<strong v-bind:selectedPartner="index">@{{ partnerOrganization.name ? partnerOrganization.name[0]['narrative'] : 'No name'}}</strong>--}}
                                         {{--<span class="language" v-for="(key,index) in partnerOrganization.name">@{{ key.language }}</span>--}}
@@ -550,7 +550,7 @@
           close: function (bind) {
             if (bind) {
               this.organisation['narrative'][0]['narrative'] = this.organisation.tempName;
-              this.organisation['narrative'][0]['language'] = 'en';
+              this.organisation['narrative'][0]['language'] = '';
               this.organisation['identifier'] = this.organisation.tempIdentifier;
               this.organisation['is_publisher'] = false;
               delete this.organisation.tempName;
@@ -577,10 +577,14 @@
             }
           },
           updateOrgName: function (event) {
-            this.organisation.tempName = event.target.value;
+            if (event.target.value) {
+              this.organisation.tempName = event.target.value;
+            }
           },
-          updateOrgIdentifier: function ($event) {
-            this.organisation.tempIdentifier = this.selectedRegistrar + '-' + event.target.value;
+          updateOrgIdentifier: function (event) {
+            if (event.target.value) {
+              this.organisation.tempIdentifier = this.selectedRegistrar + '-' + event.target.value;
+            }
           },
           resetForm: function () {
             this.defaultData();

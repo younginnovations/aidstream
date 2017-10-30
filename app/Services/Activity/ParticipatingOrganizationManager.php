@@ -115,7 +115,8 @@ class ParticipatingOrganizationManager
     {
         try {
             $participatingOrganization = $request->all();
-            $allOrganizationData       = $this->organizationRepository->getOrganizationDataFor(session('org_id'));
+            $organizationId            = session('org_id');
+            $allOrganizationData       = $this->organizationRepository->getOrganizationDataFor($organizationId);
             $oldUsedOrganizations      = $allOrganizationData->filter(
                 function ($item) use ($id) {
                     $temp = [];
@@ -131,8 +132,9 @@ class ParticipatingOrganizationManager
             $this->manageOldOrganizations($oldUsedOrganizations, $participatingOrganization, $id);
 
             foreach (getVal($participatingOrganization, ['participating_organization']) as $item => $value) {
-                $orgData         = [];
-                $oldOrganization = $this->checkForNewOrganization($value, $allOrganizationData);
+                $createdOrganizations = $this->organizationRepository->getOrganizationDataFor($organizationId);
+                $orgData              = [];
+                $oldOrganization      = $this->checkForNewOrganization($value, $allOrganizationData, $createdOrganizations);
 
                 if (!$oldOrganization || !array_get($value, 'identifier')) {
                     $orgData = $this->createNewPartnerOrganization($value, $id);
@@ -158,17 +160,28 @@ class ParticipatingOrganizationManager
      *
      * @param $value
      * @param $allOrganizationData
+     * @param $createdOrganizations
      * @return bool
      */
-    protected function checkForNewOrganization($value, $allOrganizationData)
+    protected function checkForNewOrganization($value, $allOrganizationData, $createdOrganizations)
     {
-        foreach ($allOrganizationData as $item => $organisation) {
-            if (!array_get($value, 'identifier')) {
-                return false;
-            }
+        if ($allOrganizationData) {
+            foreach ($allOrganizationData as $item => $organisation) {
+                if (!array_get($value, 'identifier')) {
+                    return false;
+                }
 
-            if ($this->organizationIsCompletelySame($organisation, $value)) {
-                return $organisation;
+                if ($this->organizationIsCompletelySame($organisation, $value)) {
+                    return $organisation;
+                }
+            }
+        }
+
+        if ($createdOrganizations) {
+            foreach ($createdOrganizations as $createdOrganization) {
+                if ($createdOrganization->identifier == array_get($value, 'identifier')) {
+                    return $createdOrganization;
+                }
             }
         }
 
@@ -211,7 +224,7 @@ class ParticipatingOrganizationManager
         $value['used_by']          = [+ $id];
         $value['is_reporting_org'] = false;
         $value['type']             = $value['organization_type'];
-        $value['is_publisher']     = boolval($value['is_publisher']);
+        $value['is_publisher']     = boolval(array_get($value, 'is_publisher', null));
 
         return $this->organizationRepository->storeOrgData($value);
     }
@@ -251,7 +264,7 @@ class ParticipatingOrganizationManager
     protected function organizationIsCompletelySame($organization, $value)
     {
         if ($organization->identifier == array_get($value, 'identifier')
-            && $organization->name[0]['narrative'] == array_get($value, 'narrative.0.narrative')
+            && array_get($organization->name, '0.narrative') == array_get($value, 'narrative.0.narrative')
             && $organization->country == array_get($value, 'country')
             && $organization->type == array_get($value, 'organization_type')) {
 

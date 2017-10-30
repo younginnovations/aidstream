@@ -112,7 +112,8 @@
                                 <p class="publisher-description" style="margin-bottom:5px;padding-bottom:5px;border-bottom: 1px solid #DFEDF2;">The above list is pulled from IATI Registry publisher's
                                     list.</p>
                                 <p class="publisher-description go-to__org-finder">
-                                    <a href="javascript:void(0)" @click="display()">Didn't find what you are looking for? Go to <strong>"Organisation Finder"</strong> to search for the organisation you are looking for.
+                                    <a href="javascript:void(0)" @click="display()">Didn't find what you are looking for? Go to <strong>"Organisation Finder"</strong> to search for the organisation
+                                        you are looking for.
                                     </a>
                                 </p>
                             </li>
@@ -129,12 +130,12 @@
                             <li class="or">Or</li>
                             <li id="orgFinder">
                                 <a href="javascript:void(0)" @click="display()">
-                                <h3 class="contact-heading">Use Organization Finder <span> (org-id.guide)</span></h3>
-                                <p>Use our organization finder helper to get a new identifier for this.</p>
-                                <p><span class="caution">Caution:</span> Please beware that this can be a long and
-                                    tedious process. It may be the case that you will not
-                                    find the organization even with this. In this case, leave the identifier field blank
-                                    and just mention organisation name only.</p>
+                                    <h3 class="contact-heading">Use Organization Finder <span> (org-id.guide)</span></h3>
+                                    <p>Use our organization finder helper to get a new identifier for this.</p>
+                                    <p><span class="caution">Caution:</span> Please beware that this can be a long and
+                                        tedious process. It may be the case that you will not
+                                        find the organization even with this. In this case, leave the identifier field blank
+                                        and just mention organisation name only.</p>
                                 </a>
                             </li>
                         </ul>
@@ -417,7 +418,7 @@
           close: function (bind) {
             if (bind) {
               this.organisation['name'][0]['narrative'] = this.organisation.tempName;
-              this.organisation['name'][0]['language'] = 'en';
+              this.organisation['name'][0]['language'] = '';
               this.organisation['identifier'] = this.organisation.tempIdentifier;
               this.organisation['is_publisher'] = false;
               delete this.organisation.tempName;
@@ -445,10 +446,14 @@
             }
           },
           updateOrgName: function (event) {
-            this.organisation.tempName = event.target.value;
+            if (event.target.value) {
+              this.organisation.tempName = event.target.value;
+            }
           },
           updateOrgIdentifier: function ($event) {
-            this.organisation.tempIdentifier = this.selectedRegistrar + '-' + event.target.value;
+            if (event.target.value) {
+              this.organisation.tempIdentifier = this.selectedRegistrar + '-' + event.target.value;
+            }
           },
           resetForm: function () {
             this.defaultData();
