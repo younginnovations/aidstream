@@ -101,12 +101,12 @@
                                                     @endif
                                                     @if (count($orgData->used_by) == 0)
                                                         {{--<li>--}}
-                                                            {{--<a href="{{ route('organization-data.edit', $orgData->id)}}">@lang('global.edit_this_organisation')</a>--}}
+                                                        {{--<a href="{{ route('organization-data.edit', $orgData->id)}}">@lang('global.edit_this_organisation')</a>--}}
                                                         {{--</li>--}}
                                                         <li>
-                                                            <form action="{{ route('organization-data.delete', $orgData->id)}}" method="POST">
+                                                            <form data-route="{{ route('organization-data.delete', $orgData->id)}}" method="POST" class="delete-org-data-form">
                                                                 {{ csrf_field() }}
-                                                                <input type="submit" value="{{ trans('global.delete_this_organisation') }}">
+                                                                <input type="submit" value="{{ trans('global.delete_this_organisation') }}" class="delete-org-data-button">
                                                             </form>
                                                         </li>
                                                     @endif
@@ -161,6 +161,41 @@
         var mergerRoute = "{!! route('organization.merge-organization-data', ['organization-from', 'organization-to']) !!}";
         var form = $('#organization-merger');
 
+        $('.delete-org-data-button').on('click', function (event) {
+          event.preventDefault();
+          var deleteOrgDataForm = $('.delete-org-data-form');
+          var route = deleteOrgDataForm.attr('data-route');
+
+          $('body').append('' +
+            '<div class="modal" id="delDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="z-index: 9999">' +
+            '<div class="modal-dialog">' +
+            '<div class="modal-content">' +
+            '<div class="modal-header">' +
+            '<h4 class="modal-title" id="myModalLabel"></h4>' +
+            '</div>' +
+            '<div class="modal-body"></div>' +
+            '<div class="modal-footer"></div>' +
+            '</div>' +
+            '</div>' +
+            '</div>');
+
+          var delDialog = $('#delDialog');
+
+          var buttons = '' +
+            '<button class="btn btn_del delete-org-data-confirm" type="button">' + localisedData['yes'] + '</button>' +
+            '<button class="btn btn-default" type="button"  data-dismiss="modal">' + localisedData['no'] + '</button>';
+
+          $('.modal-header .modal-title', delDialog).html(localisedData['delete_confirmation']);
+          $('.modal-body', delDialog).html(localisedData['delete_sure']);
+          $('.modal-footer', delDialog).html(buttons);
+
+          delDialog.modal('show');
+          $('.delete-org-data-confirm').on('click', function (event) {
+            deleteOrgDataForm.attr('action', route);
+            deleteOrgDataForm.trigger('submit');
+          });
+        });
+
         $('.mergeWithTrigger').on('click', function (event) {
           if ($(".merge-with__wrap").length > 0) {
             $(".merge-with__wrap").remove();
@@ -193,7 +228,7 @@
 
           $.map(requiredOrganisations, function (org, index) {
             $('<label>\n' +
-              '<input type="radio" class="organization-to-be-merged-with" name="merge_target" value="' + org.id + '">' + org.name[0].narrative +
+              '<input required="true" type="radio" class="organization-to-be-merged-with" name="merge_target" value="' + org.id + '">' + org.name[0].narrative +
               '</label>').appendTo(partnerOrganisationContainer)
           });
 
@@ -228,7 +263,10 @@
 
             form.validate({
               rules: rules,
-              messages: messages
+              messages: messages,
+              errorPlacement: function (error, element) {
+                error.insertBefore(element);
+              }
             });
           });
 

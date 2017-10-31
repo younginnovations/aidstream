@@ -821,7 +821,7 @@ class OrganizationController extends Controller
 
         $oldUsedBy   = $to->used_by;
         $oldUsedBy[] = $activity->id;
-        $to->update(['used_by' => $oldUsedBy]);
+        $to->update(['used_by' => array_unique($oldUsedBy)]);
 
         $activity->participating_organization = $remainingOrgs->toArray();
         $activity->save();

@@ -97,7 +97,7 @@
                                         <div class="partners" style="overflow: hidden;" v-bind:selectedSuggestion="index">
                                             <div class="pull-left">
                                                 <span v-bind:selectedSuggestion="index" class="tick">
-                                                    @{{publisher.type | getOrganisationType}}
+                                                    @{{publisher.type | getOrganisationType}}, @{{ publisher.country }}
                                                 </span>
                                             </div>
                                             <div class="pull-right">
@@ -336,7 +336,7 @@
 
             this.organisation['type'] = this.suggestions[selectedIndex]['type'];
             this.organisation['is_publisher'] = this.suggestions[selectedIndex]['is_publisher'];
-            this.organisation['identifier'] = this.suggestions[selectedIndex]['identifier'];
+            this.organisation['identifier'] = this.suggestions[selectedIndex]['identifier'].replace(/\//g, "-");
             this.organisation['country'] = organizationCountry;
             this.organisation['countryText'] = this.countries[organizationCountry];
             this.organisation['typeText'] = this.types[this.organisation['type']];
@@ -527,7 +527,7 @@
           isValid: function () {
             var organisation = this.organisations[0];
             if (organisation.hasOwnProperty('typeText')) {
-              delete  organisation.typeText;
+              delete organisation.typeText;
             }
 
             if (organisation.hasOwnProperty('countryText')) {

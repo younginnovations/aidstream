@@ -30,6 +30,8 @@ Vue.component('vue-select2', {
   },
   methods: {
     display: function (event) {
+      this.text = this.bind_variable[this.attrText];
+      this.bind_variable[this.attrText] = '';
       if (!this.disable_options) {
         this.displayList = true;
         this.options = this.fullOptions;
@@ -37,6 +39,8 @@ Vue.component('vue-select2', {
     },
     hide: function (event) {
       var self = this;
+      this.bind_variable[this.attrText] = this.text;
+
       if (this.bind_variable[this.name]) {
         this.bind_variable[this.attrText] = this.fullOptions[this.bind_variable[this.name]];
       } else {
