@@ -506,7 +506,6 @@ class OrganizationController extends Controller
     public function getPublishedOrganizationStatus($organizationId)
     {
         $organizationPublished = $this->organizationManager->getPublishedOrganizationData($organizationId);
-
         $settings              = $this->settingsManager->getSettings($organizationId);
         $autoPublishing        = getVal($settings->toArray(), ['registry_info', 0, 'publish_files'], 'no');
         $status                = 'unlinked';
@@ -806,8 +805,8 @@ class OrganizationController extends Controller
         $remainingOrgs->push(
             [
                 'identifier'        => $to->identifier,
-                'activity_id'       => $orgToBeReplaced['activity_id'],
-                'organization_role' => $orgToBeReplaced['organization_role'],
+                'activity_id'       => array_get($orgToBeReplaced, 'activity_id', ''),
+                'organization_role' => array_get($orgToBeReplaced, 'organization_role'),
                 'organization_type' => $to->type,
                 'country'           => $to->country,
                 'org_data_id'       => $to->id,

@@ -72,6 +72,10 @@ class ParticipatingOrganizationController extends Controller
             (array_key_exists('country', $organization)) ?: $participatingOrganizations[$index]['country'] = '';
         }
 
+        if ($participatingOrganizations) {
+            $participatingOrganizations = array_values($participatingOrganizations);
+        }
+
         return view(
             'Activity.participatingOrganization.edit',
             compact('form', 'activityData', 'id', 'participatingOrganizations', 'organizationRoles', 'organizationTypes', 'countries', 'partnerOrganizations')
