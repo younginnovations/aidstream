@@ -27,7 +27,14 @@
                                 <div v-cloak class="create-form" id="participatingContainer" data-organization="{{json_encode($participatingOrganizations)}}"
                                      data-partnerOrganization="{{json_encode($partnerOrganizations)}}" data-activityId="{{$id}}"
                                      data-organizationRoles="{{json_encode($organizationRoles)}}">
-                                    <div v-if="display_server_error_message" class="alert alert-danger">@{{ server_error_message }}</div>
+                                    <div v-if="display_server_error_message" class="alert alert-danger">
+                                        Please fix the following validation errors:
+                                        <div v-for="(message, index) in server_error_message">
+                                            <li>
+                                                @{{ message[0] }}
+                                            </li>
+                                        </div>
+                                    </div>
 
                                     {{Form::open()}}
                                     <participating-org v-for="(organisation,index) in organisations" v-on:remove="removeOrganisation(index)"
@@ -130,10 +137,11 @@
                                 <p class="publisher-description" style="margin-bottom:5px;padding-bottom:5px;border-bottom: 1px solid #DFEDF2;">The above list is pulled from IATI Registry publisher's
                                     list.</p>
                                 <p class="publisher-description" v-on:click="display()">
-                                    <a href="javascript:void(0)" v-on:click="display()">
-                                        <b>Didn't find what you are looking for? Go to Organisation Finder" to search for the organisation you are looking
-                                            for.</b>
-                                    </a>
+                                    <strong>
+                                        <a href="javascript:void(0)" v-on:click="display()">
+                                            Didn't find what you are looking for? Go to Organisation Finder" to search for the organisation you are looking for.
+                                        </a>
+                                    </strong>
                                 </p>
                             </li>
                         </ul>
@@ -313,10 +321,10 @@
           this.countries = countries;
           this.types = types;
 
-          if(!(this.organisation['country']) && this.organisation['identifier']){
-            var countryCode = this.organisation['identifier'].substr(0,2);
+          if (!(this.organisation['country']) && this.organisation['identifier']) {
+            var countryCode = this.organisation['identifier'].substr(0, 2);
 
-            if(this.countries[countryCode] !== undefined){
+            if (this.countries[countryCode] !== undefined) {
               this.organisation['country'] = countryCode;
               this.organisation['countryText'] = this.countries[countryCode];
             }
@@ -443,7 +451,7 @@
             this.organisation['organization_type'] = this.suggestions[selectedIndex]['type'] ? this.suggestions[selectedIndex]['type'] : 21;
             this.organisation['is_publisher'] = this.suggestions[selectedIndex]['is_publisher'];
             this.organisation['identifier'] = this.suggestions[selectedIndex]['identifier'].replace(/\//g, "-");
-            this.organisation['country'] = organizationCountry ? organizationCountry : "NP";
+            this.organisation['country'] = organizationCountry ? organizationCountry : "";
             this.organisation['countryText'] = this.countries[organizationCountry];
             this.organisation['typeText'] = this.types[this.organisation['organization_type']];
             var self = this;
@@ -696,7 +704,7 @@
             var self = this;
             var status = true;
             this.organisations.forEach(function (organisation, index) {
-              if (organisation.country === '' || organisation.narrative[0]['narrative'] === '' || organisation.organization_type === '' || organisation.organization_role === '' || organisation.identifier.match(/[\/\&\|\?|]+/)) {
+              if (organisation.narrative[0]['narrative'] === '' || organisation.organization_type === '' || organisation.organization_role === '' || organisation.identifier.match(/[\/\&\|\?|]+/)) {
                 self.display_error = true;
                 status = false;
 
@@ -706,8 +714,8 @@
 
             return status;
           },
-          removeTempValues: function (){
-            this.organisations.forEach(function (organisation){
+          removeTempValues: function () {
+            this.organisations.forEach(function (organisation) {
               delete organisation['typeText'];
               delete organisation['countryText'];
             });

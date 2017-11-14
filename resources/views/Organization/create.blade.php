@@ -112,9 +112,9 @@
                                 <p class="publisher-description" style="margin-bottom:5px;padding-bottom:5px;border-bottom: 1px solid #DFEDF2;">The above list is pulled from IATI Registry publisher's
                                     list.</p>
                                 <p class="publisher-description go-to__org-finder">
-                                    <a href="javascript:void(0)" @click="display()">Didn't find what you are looking for? Go to <strong>"Organisation Finder"</strong> to search for the organisation
+                                    <strong><a href="javascript:void(0)" @click="display()">Didn't find what you are looking for? Go to <strong>"Organisation Finder"</strong> to search for the organisation
                                         you are looking for.
-                                    </a>
+                                    </a></strong>
                                 </p>
                             </li>
                         </ul>
