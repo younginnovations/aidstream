@@ -76,10 +76,13 @@
             <div class="activity-element-list">
                 <div class="activity-element-label">@lang('elementForm.sector')</div>
                 <div class="activity-element-info">
-                    {!! getSectorInformation(getVal($transactionDetail,['sector',0],[] ), "") !!}
-                    {!! getTransactionSectorDetails(getVal($transactionDetail,['sector',0],[])) !!} <br>
-                    {!! getFirstNarrative(getVal($transactionDetail,['sector',0],[])) !!}
-                    @include('Activity.partials.viewInOtherLanguage', ['otherLanguages' => getOtherLanguages(getVal($transactionDetail,['sector',0,'narrative'],[]))])
+                    @foreach (array_get($transactionDetail, 'sector', []) as $sector)
+                        <li>{!! getSectorInformation($sector, '') !!}</li>
+                        <ul>{!! getTransactionSectorDetails($sector) !!}</ul><br>
+                        <ul>{!! getFirstNarrative($sector) !!}</ul>
+                        @include('Activity.partials.viewInOtherLanguage', ['otherLanguages' => getOtherLanguages(array_get($sector, 'narrative', []))])
+                        <br>
+                    @endforeach
                 </div>
             </div>
             <div class="activity-element-list">

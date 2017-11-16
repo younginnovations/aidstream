@@ -12,7 +12,8 @@ trait Sector
      */
     public function addSector()
     {
-        return $this->addCollection('sector', 'Activity\Transactions\Sector', '', [], trans('elementForm.sector'));
+        return $this->addCollection('sector', 'Activity\Transactions\Sector', 'sector')
+                    ->addAddMoreButton('add', 'sector');
     }
 
     /**

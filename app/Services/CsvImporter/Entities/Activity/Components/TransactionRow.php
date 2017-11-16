@@ -45,8 +45,7 @@ class TransactionRow
         'transaction_value_date'                    => ['value' => 'date'],
         'transaction_currency'                      => ['value' => 'currency'],
         'transaction_description'                   => ['description' => [['narrative' => ['narrative']]]],
-        'sector_vocabulary'                         => ['sector' => ['sector_vocabulary']],
-        'sector_code'                               => ['sector' => ['sector_code']],
+        'sector'                                    => 'sector',
         'recipient_country_code'                    => ['recipient_country' => ['country_code']],
         'recipient_region_code'                     => ['recipient_region' => ['region_code']],
         'provider_organisation_identifier'          => ['provider_organization' => 'organization_identifier_code'],
@@ -80,6 +79,8 @@ class TransactionRow
     protected $allowedBothCasesField = ['country_code', 'currency', 'aid_type'];
     protected $allowedDoubleValue = ['amount'];
     protected $dateField = ['date'];
+    /* Fields that can have multiple rows of value */
+    protected $allowedMultipleValues = ['sector'];
 
     /**
      * TransactionRow constructor.
@@ -115,7 +116,6 @@ class TransactionRow
              ->filterHumanitarian()
              ->filterTransactionType();
 
-
         return $this;
     }
 
@@ -131,8 +131,30 @@ class TransactionRow
             foreach ($this->headerToFieldMap[$csvHeader] as $arrayKey => $field) {
                 $this->map($arrayKey, $field, $value);
             }
+        } elseif (in_array($csvHeader, $this->allowedMultipleValues)) {
+            $this->mapMultipleValues($csvHeader, $value);
         } else {
             $this->transactionRow['transaction'][$this->headerToFieldMap[$csvHeader]] = (string) $this->filterValue($value, $this->headerToFieldMap[$csvHeader]);
+        }
+    }
+
+    /**
+     * Function to map multiple values
+     *
+     * @param $csvHeader
+     * @param $values
+     */
+    public function mapMultipleValues($csvHeader, $values)
+    {
+        $template = $this->transactionRow['transaction'][$this->headerToFieldMap[$csvHeader]][0];
+
+        foreach ($values as $index => $value) {
+            $this->transactionRow['transaction'][$this->headerToFieldMap[$csvHeader]][$index] = $template;
+            foreach ($template as $key => $item) {
+                if (array_key_exists($key, $value)) {
+                    $this->transactionRow['transaction'][$this->headerToFieldMap[$csvHeader]][$index][$key] = (string) $this->filterValue($value[$key], $this->headerToFieldMap[$csvHeader]);
+                }
+            }
         }
     }
 
@@ -300,8 +322,11 @@ class TransactionRow
     {
         $activity = Activity::where('id', $this->activityId)->first()->toArray();
 
-        $activitySector                                                     = getVal($activity, ['sector'], []);
-        $this->transactionRow['transaction']['sector'][0]['activitySector'] = (empty($activitySector) ? '' : $activitySector);
+        $activitySector = getVal($activity, ['sector'], []);
+
+        foreach ($this->transactionRow['transaction']['sector'] as $index => $sector) {
+            $this->transactionRow['transaction']['sector'][$index]['activitySector'] = (empty($activitySector) ? '' : $activitySector);
+        }
 
         $recipientRegion                                                = getVal($activity, ['recipient_region'], []);
         $this->transactionRow['transaction']['activityRecipientRegion'] = (empty($recipientRegion) ? '' : $recipientRegion);
