@@ -61,8 +61,9 @@ class Transaction extends TransactionCsv
     {
         $dataWriter = $this->dataWriterClass();
         $dataWriter->internalReferences();
+        $transactions = $this->groupBySector();
 
-        foreach ($this->rows() as $index => $row) {
+        foreach ($transactions as $index => $row) {
             $this->data = $this->initialize($row)
                                ->process()
                                ->validate();
@@ -73,6 +74,46 @@ class Transaction extends TransactionCsv
         }
 
         $dataWriter->storeStatus('Completed');
+    }
+
+    public function groupBySector()
+    {
+        $transactions = [];
+
+        foreach ($this->rows() as $index => $row) {
+            $shouldMerge     = true;
+            $shouldDeleteRow = true;
+
+            foreach ($row as $key => $value) {
+                if ($value) {
+                    $shouldDeleteRow = false;
+                    if ($key != 'sector_vocabulary' && $key != 'sector_code') {
+                        $shouldMerge = false;
+                    }
+                }
+
+                if (!$shouldDeleteRow) {
+                    $transactions[$index][$key] = $value;
+
+                    if ($key === 'sector_vocabulary') {
+                        $transactions[$index]['sector'][0]['sector_vocabulary'] = $value;
+                        unset($transactions[$index]['sector_vocabulary']);
+                    }
+
+                    if ($key === 'sector_code') {
+                        $transactions[$index]['sector'][0]['sector_code'] = $value;
+                        unset($transactions[$index]['sector_code']);
+                    }
+                }
+
+            }
+            if ($shouldMerge && $index != 0) {
+                array_push($transactions[$index - 1]['sector'], $transactions[$index]['sector'][0]);
+                unset($transactions[$index]);
+            }
+        }
+
+        return $transactions;
     }
 
     /**
