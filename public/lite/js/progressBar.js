@@ -4,7 +4,7 @@ var ProgressBar = {
         'activity_identifier': false,
         'activity_title': false,
         'activity_status': false,
-        'sector': false,
+        'sector[]': false,
         'start_date': false,
         'end_date': false,
         'general_description': false,

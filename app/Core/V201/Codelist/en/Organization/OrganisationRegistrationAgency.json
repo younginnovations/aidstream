@@ -737,6 +737,13 @@
       "code": "JO-CCD",
       "name": "Companies Control Department",
       "language": "en"
+    },
+    {
+      "category": "ZW",
+      "category-name": "ZIMBABWE",
+      "code": "ZW-RWO",
+      "name": "Registrar of Welfare Organisation",
+      "language": "en"
     }
   ]
 }
