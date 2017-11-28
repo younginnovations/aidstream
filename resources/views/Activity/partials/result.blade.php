@@ -103,6 +103,6 @@
             </div>
         @endforeach
         <a href="{{route('activity.result.index', $id)}}" class="edit-element">@lang('global.edit')</a>
-        <a href="{{route('activity.delete-element', [$id, 'result'])}}" class="delete pull-right">@lang('global.remove')</a>
+        {{--<a href="{{route('activity.delete-element', [$id, 'result'])}}" class="delete pull-right">@lang('global.remove')</a>--}}
     </div>
 @endif
