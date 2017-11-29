@@ -47,11 +47,15 @@ class Publisher extends RegistryApiHandler
 
             /* Depcricated */
 //        $this->client->package_search($this->publisherId)
-            $publisherData = $this->searchForPublisher($this->publisherId);
-            
-            if (!$this->checkPublisherValidity($publisherData, $this->publisherId)) {
+            try {
+                $this->searchForPublisher($this->publisherId);
+            } catch (Exception $exception) {
                 throw new PublisherNotFoundException('Publisher not found.');
             }
+
+//            if (!$this->checkPublisherValidity($publisherData, $this->publisherId)) {
+//                throw new PublisherNotFoundException('Publisher not found.');
+//            }
 
             if ($changes) {
                 $this->publishSegmentationChanges($changes, $organization, $publishingType);
