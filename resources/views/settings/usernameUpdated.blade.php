@@ -1,4 +1,4 @@
-@if(count($user) > 1)
+@if(count($users) > 1)
     <form method="POST" action="{{route('organization-information.notify-user')}}">
         {{csrf_field()}}
         <div class="modal fade" tabindex="-1" role="dialog" id="usernameChanged">
