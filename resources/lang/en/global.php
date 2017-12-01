@@ -291,5 +291,6 @@ return [
     'delete_this_organisation'                     => 'Delete this Organisation',
     'edit_this_organisation'                       => 'Edit this Organisation',
     'suggest'                                      => 'Suggest Edit',
+    'remove' => 'Remove'
 
 ];

@@ -24,6 +24,6 @@
             </div>
         </div>
         <a href="{{route('activity.country-budget-items.index', $id)}}" class="edit-element">@lang('global.edit')</a>
-        <a href="{{route('activity.delete-element', [$id, 'country_budget_items'])}}" class="delete pull-right">@lang('global.remove')</a>
+        @include('Activity.partials.element-delete-form', ['element' => 'country_budget_items', 'id' => $id])
     </div>
 @endif

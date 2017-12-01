@@ -79,7 +79,7 @@ $router->group(
             ]
         );
 
-        $router->get(
+        $router->post(
             'activity/{id}/delete-element/{element}',
             [
                 'as'   => 'activity.delete-element',

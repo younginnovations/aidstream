@@ -7,6 +7,6 @@
             </div>
         </div>
         <a href="{{route('activity.capital-spend.index', $id)}}" class="edit-element">@lang('global.edit')</a>
-        <a href="{{route('activity.delete-element', [$id, 'capital_spend'])}}" class="delete pull-right">@lang('global.remove')</a>
+        @include('Activity.partials.element-delete-form', ['element' => 'capital_spend', 'id' => $id])
     </div>
 @endif

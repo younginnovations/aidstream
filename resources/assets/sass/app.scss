@@ -5779,11 +5779,27 @@ select.systemVersion {
   }
 }
 
+.delete-element-form {
+  position: absolute;
+  top: 6px;
+  right: 0;
+  display: none;
+}
+
+.activity-element-wrapper:hover .delete-element-form {
+  display: block;
+}
+
 @media all and (min-width: 1200px) {
   #publisherIdChanged .jspPane {
     width: auto !important;
   }
 }
 
-
-
+.delete-element-submit {
+  background: transparent url('../images/ic-action-sprite.svg') -19px -3px!important;
+  height: 10px;
+  padding: 0!important;
+  text-indent: -9999px;
+  width: 10px;
+}

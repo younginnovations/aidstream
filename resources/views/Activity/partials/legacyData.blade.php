@@ -12,6 +12,6 @@
             </div>
         </div>
         <a href="{{route('activity.legacy-data.index', $id)}}" class="edit-element">@lang('global.edit')</a>
-        <a href="{{route('activity.delete-element', [$id, 'legacy_data'])}}" class="delete pull-right">@lang('global.remove')</a>
+        @include('Activity.partials.element-delete-form', ['element' => 'legacy_data', 'id' => $id])
     </div>
 @endif

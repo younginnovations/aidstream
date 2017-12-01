@@ -7,6 +7,6 @@
             </div>
         </div>
         <a href="{{route('activity.collaboration-type.index', $id)}}" class="edit-element">@lang('global.edit')</a>
-        <a href="{{route('activity.delete-element', [$id, 'collaboration_type'])}}" class="delete pull-right">@lang('global.remove')</a>
+        @include('Activity.partials.element-delete-form', ['element' => 'collaboration_type', 'id' => $id])
     </div>
 @endif

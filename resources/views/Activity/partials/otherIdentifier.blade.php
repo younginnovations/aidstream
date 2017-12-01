@@ -29,6 +29,6 @@
             </div>
         @endforeach
         <a href="{{route('activity.other-identifier.index', $id)}}" class="edit-element">@lang('global.edit')</a>
-        <a href="{{route('activity.delete-element', [$id, 'other_identifier'])}}" class="delete pull-right" data-toggle="tooltip" title="delete other identifier-">@lang('global.remove')</a>
+        @include('Activity.partials.element-delete-form', ['element' => 'other_identifier', 'id' => $id])
     </div>
 @endif
