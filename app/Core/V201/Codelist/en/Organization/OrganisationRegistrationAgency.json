@@ -744,6 +744,13 @@
       "code": "ZW-RWO",
       "name": "Registrar of Welfare Organisation",
       "language": "en"
+    },
+    {
+      "category": "MZ",
+      "category-name": "MOZAMBIQUE",
+      "code": "MZ-NUIT",
+      "name": "Unique Tax Identification Number",
+      "language": "en"
     }
   ]
 }
