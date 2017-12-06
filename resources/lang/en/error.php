@@ -72,6 +72,9 @@ return [
     'xml_file_not_found'                                     => "The xml file was not found. Please contact us at <a href='mailto:support@aidstream.org'>support@aidstream.org</a> for further assistance.",
     'not_allowed'                                            => 'You are not allowed to publish the selected xml file.',
     'file_not_found'                                         => 'The file :file could not be found in AidStream.',
-    'problem_with_the_registry'                              => 'There seems to be a problem with the registry. Please try again later.'
+    'problem_with_the_registry'                              => 'There seems to be a problem with the registry. Please try again later.',
+    'no_authority' => sprintf(
+      "It seems you don't have the authority to publish yet. Please contact <a href='mailto:support@iatistandard.org'>support@iatistandard.org</a> for further information."
+    )
 ];
 
