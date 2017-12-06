@@ -566,7 +566,14 @@ class OrganizationController extends Controller
      */
     public function store($id, Request $request)
     {
-        if ($this->organizationManager->store($id, $request->all())) {
+        $partnerDetails        = $request->all();
+        $reportingOrganisation = $this->organizationManager->getOrganization($id);
+
+        if (array_get($partnerDetails, 'organisation.0.identifier') == array_get($reportingOrganisation->toArray(), 'reporting_org.0.reporting_organization_identifier')) {
+            return response()->json('Cannot add Reporting Organisation as a partner.', 400);
+        }
+
+        if ($this->organizationManager->store($id, $partnerDetails)) {
             return response()->json(true, 200);
         }
 

@@ -60,11 +60,23 @@ class ParticipatingOrganizationController extends Controller
         }
 
 //        $participatingOrganization  = $this->participatingOrganizationManager->getParticipatingOrganizationData($id);
-        $activityData = $this->activityManager->getActivityData($id);
 //        $form                       = $this->participatingOrganizationForm->editForm($participatingOrganization, $id);
-        $organizationTypes          = $this->getNameWithCode('Activity', 'OrganisationType');
-        $organizationRoles          = $this->getNameWithCode('Activity', 'OrganisationRole');
-        $partnerOrganizations       = $this->participatingOrganizationManager->getPartnerOrganizations(session('org_id'))->toArray();
+        $activityData          = $this->activityManager->getActivityData($id);
+        $organizationTypes     = $this->getNameWithCode('Activity', 'OrganisationType');
+        $organizationRoles     = $this->getNameWithCode('Activity', 'OrganisationRole');
+        $partnerOrganizations  = $this->participatingOrganizationManager->getPartnerOrganizations(session('org_id'))->toArray();
+        $reportingOrganisation = $activityData->organization->toArray();
+        $reportingOrgData      = [
+            'name'         => array_get($reportingOrganisation, 'reporting_org.0.narrative'),
+            'identifier'   => array_get($reportingOrganisation, 'reporting_org.0.reporting_organization_identifier'),
+            'country'      => array_get($reportingOrganisation, 'country'),
+            'type'         => array_get($reportingOrganisation, 'reporting_org.0.reporting_organization_type'),
+            'id'           => $activityData->organization->orgData()->where('is_reporting_org', true)->pluck('id')->first(),
+            'is_publisher' => false
+        ];
+
+        array_push($partnerOrganizations, $reportingOrgData);
+
         $countries                  = $this->getNameWithCode('Organization', 'Country');
         $participatingOrganizations = $activityData->participating_organization;
 
@@ -91,20 +103,24 @@ class ParticipatingOrganizationController extends Controller
      */
     public function update($id, Request $request, ParticipatingOrganizationRequestManager $participatingOrganizationRequestManager)
     {
-        $activityData              = $this->activityManager->getActivityData($id);
-        $participatingOrganization = $this->participatingOrganizationManager->addOrgData($id, $request);
-
-        if (!$participatingOrganization) {
-            return response()->json(trans('V201/message.updated_failed', ['name' => 'participating organization']), 400);
-        }
+        $activityData = $this->activityManager->getActivityData($id);
 
         if (Gate::denies('ownership', $activityData)) {
             return response()->json($this->getNoPrivilegesMessage(), 500);
         }
 
+        $reportingOrganisation = $activityData->organization;
+
         $this->authorizeByRequestType($activityData, 'participating_organization');
+
         if (!$this->validateData($request->get('participating_organization'))) {
             return response()->json(trans('V201/message.participating_org', ['name' => 'participating organization']), 500);
+        }
+
+        $participatingOrganization = $this->participatingOrganizationManager->addOrgData($id, $request, $reportingOrganisation->toArray());
+
+        if (!$participatingOrganization) {
+            return response()->json(trans('V201/message.update_failed', ['name' => 'participating organization']), 400);
         }
 
         if ($this->participatingOrganizationManager->update($participatingOrganization, $activityData)) {
@@ -121,9 +137,10 @@ class ParticipatingOrganizationController extends Controller
      * @param array $data
      * @return bool
      */
-    private function validateData(array $data)
+    protected function validateData(array $data)
     {
         $check = false;
+
         foreach ($data as $participatingOrg) {
             $orgRole = $participatingOrg['organization_role'];
             if ($orgRole === "1" || $orgRole == "4") {

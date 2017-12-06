@@ -20,6 +20,15 @@
                                 <div class="loading-div"></div>
                                 <div v-cloak class="create-form" id="participatingContainer"
                                      data-organization="{{json_encode($organizations)}}" data-route="{{$formRoute}}">
+                                    <div v-if="display_error" class="alert alert-danger">
+                                        Please fix the following errors.
+                                        <div v-if="error">
+                                            <li>
+                                                @{{ error }}
+                                            </li>
+                                        </div>
+                                    </div>
+
                                     {{Form::open()}}
                                     <participating-org v-for="(organisation,index) in organisations"
                                                        v-on:search="setCurrentOrganization(index,$event)"
@@ -479,6 +488,7 @@
           currentOrganisation: [],
           registrarList: [],
           display_error: false,
+          error: ''
         },
         mounted: function () {
           $("div.loading-div").hide();
@@ -521,6 +531,10 @@
                 .then(function (response) {
                   window.location.href = '/organization/';
                 }).catch(function (error) {
+                  if (error.response.status == 400) {
+                    self.error = error.response.data;
+                    self.display_error = true;
+                  }
               });
             }
           },

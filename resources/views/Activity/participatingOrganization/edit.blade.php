@@ -29,9 +29,9 @@
                                      data-organizationRoles="{{json_encode($organizationRoles)}}">
                                     <div v-if="display_server_error_message" class="alert alert-danger">
                                         Please fix the following validation errors:
-                                        <div v-for="(message, index) in server_error_message">
+                                        <div v-if="server_error_message">
                                             <li>
-                                                @{{ message[0] }}
+                                                @{{ server_error_message }}
                                             </li>
                                         </div>
                                     </div>

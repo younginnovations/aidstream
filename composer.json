@@ -33,7 +33,6 @@
     "symfony/dom-crawler": "~3.0",
     "symfony/css-selector": "~3.0",
     "barryvdh/laravel-ide-helper": "2.1.2",
-    "barryvdh/laravel-debugbar": "2.1.1",
     "yipl/hookah": "0.5.1"
   },
   "autoload": {
