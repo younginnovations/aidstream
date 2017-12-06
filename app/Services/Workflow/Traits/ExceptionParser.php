@@ -45,8 +45,8 @@ trait ExceptionParser
         }
 
         try {
-            if (getVal(explode(':', explode("\n", $exception->getMessage())[0]), [0]) == self::NOT_AUTHORIZED_ERROR_CODE) {
-                return ['status' => false, 'message' => trans('error.not_authorized')];
+            if (last(explode(' ', explode(':', explode("\n", $exception->getMessage())[0])[0])) == self::NOT_AUTHORIZED_ERROR_CODE) {
+                return ['status' => false, 'message' => trans('error.no_authority')];
             }
 
             if (trim(getVal(explode(":", $exception->getMessage()), [3])) == 'I/O warning') {
