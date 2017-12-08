@@ -79,7 +79,7 @@ class ActivityBaseRequest extends Request
         Validator::extend(
             'exclude_operators',
             function ($attribute, $value, $parameters, $validator) {
-                return !preg_match('/[\/\&\|\?|]+/', $value);
+                return !preg_match('/[\&\|\?|]+/', $value);
             }
         );
     }
