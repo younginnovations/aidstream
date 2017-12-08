@@ -78,7 +78,7 @@ class OrganizationInfoRequest extends Request
         $rules['organization_type']     = 'required';
         $rules['user_identifier']       = $user_identifier_rule;
         $rules['registration_agency']   = 'required';
-        $rules['registration_number']   = 'required|regex:/^[0-9a-zA-Z-_\/]+$/';
+        $rules['registration_number']   = 'required|regex:/^[0-9a-zA-Z-_\/:]+$/';
         $rules['logo']                  = 'image';
         $rules['organization_url']      = 'url';
 
