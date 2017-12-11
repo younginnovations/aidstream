@@ -805,7 +805,7 @@ class OrganizationController extends Controller
 
         $remainingOrgs = $participatingOrganizations->filter(
             function ($organization) use ($from) {
-                return $organization['org_data_id'] != $from->id;
+                return array_get($organization, 'org_data_id', '') != $from->id;
             }
         );
 
