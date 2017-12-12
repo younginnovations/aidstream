@@ -214,7 +214,8 @@ class Transaction extends Element
                 'validation.required_if',
                 [
                     'attribute' => trans('elementForm.provider_organisation_identifier'),
-                    'values'    => trans('elementForm.organisation_name')
+                    'values'    => trans('elementForm.organisation_name'),
+                    'value'     => 'absent'
                 ]
             ),
             'transaction.receiver_organization.*.type.in'                   => trans('validation.invalid_in_transaction', ['attribute' => trans('elementForm.receiver_organisation_type')]),
