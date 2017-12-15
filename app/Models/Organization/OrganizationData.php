@@ -141,4 +141,18 @@ class OrganizationData extends Model
     {
         return array_get($this->organization->reporting_org, '0.reporting_organization_identifier');
     }
+
+    /**
+     * Get the Name of the Organization.
+     *
+     * @return mixed|null
+     */
+    public function actualName()
+    {
+        if ($this->name && is_array($this->name)) {
+            return array_get($this->name, '0.narrative', null);
+        }
+
+        return null;
+    }
 }

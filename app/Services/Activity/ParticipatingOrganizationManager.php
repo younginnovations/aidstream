@@ -3,6 +3,8 @@
 use App\Core\V201\Repositories\Organization\OrganizationRepository;
 use App\Core\Version;
 use App\Models\Activity\Activity;
+use App\Models\Organization\Organization;
+use App\Services\Activity\ParticipatingOrganizations\PartnerOrganizationData;
 use App\Services\Organization\OrganizationManager;
 use Exception;
 use Illuminate\Contracts\Auth\Guard;
@@ -19,32 +21,48 @@ class ParticipatingOrganizationManager
      * @var Guard
      */
     protected $auth;
+
     /**
      * @var Log
      */
     protected $log;
+
     /**
      * @var Version
      */
     protected $version;
+
     /**
      * @var OrganizationManager
      */
     protected $organizationManager;
+
     /**
      * @var OrganizationRepository
      */
-    private $organizationRepository;
+    protected $organizationRepository;
 
     /**
-     * @param Version                $version
-     * @param OrganizationManager    $organizationManager
-     * @param OrganizationRepository $organizationRepository
-     * @param Log                    $log
-     * @param Guard                  $auth
+     * @var PartnerOrganizationData
      */
-    public function __construct(Version $version, OrganizationManager $organizationManager, OrganizationRepository $organizationRepository, Log $log, Guard $auth)
-    {
+    protected $partnerOrganization;
+
+    /**
+     * @param Version                 $version
+     * @param OrganizationManager     $organizationManager
+     * @param OrganizationRepository  $organizationRepository
+     * @param PartnerOrganizationData $partnerOrganization
+     * @param Log                     $log
+     * @param Guard                   $auth
+     */
+    public function __construct(
+        Version $version,
+        OrganizationManager $organizationManager,
+        OrganizationRepository $organizationRepository,
+        PartnerOrganizationData $partnerOrganization,
+        Log $log,
+        Guard $auth
+    ) {
         $this->auth                   = $auth;
         $this->log                    = $log;
         $this->participatingOrgRepo   = $version->getActivityElement()
@@ -53,6 +71,7 @@ class ParticipatingOrganizationManager
         $this->version                = $version;
         $this->organizationManager    = $organizationManager;
         $this->organizationRepository = $organizationRepository;
+        $this->partnerOrganization    = $partnerOrganization;
     }
 
     /**
@@ -105,170 +124,28 @@ class ParticipatingOrganizationManager
     }
 
     /**
-     * Add new Organization data if not exist when participating organization is added.
+     * Manage Partners for an Activity.
      *
-     * @param $id
-     * @param $request
-     * @return null|array
+     * @param Activity $activity
+     * @param array    $participatingOrganizationDetails
+     * @return array|null
      */
-    public function addOrgData($id, $request, array $reportingOrganisation)
+    public function managePartnerOrganizations(Activity $activity, array $participatingOrganizationDetails)
     {
         try {
-            $participatingOrganization = $request->all();
-            $organizationId            = session('org_id');
-            $allOrganizationData       = $this->organizationRepository->getOrganizationDataFor($organizationId);
+            $this->partnerOrganization->init($activity, array_get($participatingOrganizationDetails, 'participating_organization', []), $this->organizationRepository)
+                                      ->sync();
 
-            $oldUsedOrganizations = $allOrganizationData->filter(
-                function ($item) use ($id) {
-                    $temp = [];
-
-                    if (array_has(array_flip($item->used_by), $id)) {
-                        $temp[] = $item;
-                    }
-
-                    return $temp;
-                }
+            return $participatingOrganizationDetails;
+        } catch (Exception $exception) {
+            $this->log->error(
+                $exception->getMessage(),
+                [
+                    'trace' => $exception->getTraceAsString()
+                ]
             );
-
-            $this->manageOldOrganizations($oldUsedOrganizations, $participatingOrganization, $id);
-
-            foreach (getVal($participatingOrganization, ['participating_organization']) as $item => $value) {
-                $orgData = [];
-
-                if (array_get($value, 'identifier') != array_get($reportingOrganisation, 'reporting_org.0.reporting_organization_identifier')) {
-                    $oldOrganization = $this->checkForNewOrganization($value, $allOrganizationData);
-
-                    if (!$oldOrganization) {
-                        $orgData = $this->createNewPartnerOrganization($value, $id);
-                    } else {
-                        $this->updateExistingPartnerOrganization($oldOrganization, $id);
-                    }
-
-                    if (!getVal($value, ['org_data_id'], null) && !empty($orgData)) {
-                        $participatingOrganization['participating_organization'][$item]['org_data_id'] = $orgData->id;
-                    }
-                }
-            }
-        } catch (\Exception $exception) {
-            $this->log->error($exception->getMessage(), ['trace' => $exception->getTraceAsString()]);
 
             return null;
         }
-
-        return $participatingOrganization;
-    }
-
-    /**
-     * Check if the organization exists in our database.
-     *
-     * @param $value
-     * @param $allOrganizationData
-     * @return bool
-     */
-    protected function checkForNewOrganization($value, $allOrganizationData)
-    {
-        if ($allOrganizationData) {
-            foreach ($allOrganizationData as $item => $organisation) {
-                if ($this->organizationIsCompletelySame($organisation, $value)) {
-                    return $organisation;
-                }
-            }
-        }
-
-        return false;
-    }
-
-    /**
-     * Update old Organisations that has not been used anymore.
-     *
-     * @param $oldUsedOrganizations
-     * @param $participatingOrganization
-     * @param $id
-     */
-    protected function manageOldOrganizations($oldUsedOrganizations, $participatingOrganization, $id)
-    {
-        foreach ($oldUsedOrganizations as $oldUsedOrganization) {
-            foreach ($participatingOrganization['participating_organization'] as $value) {
-                if (($oldUsedOrganization->identifier != array_get($value, 'identifier')) && array_has(array_flip($oldUsedOrganization->used_by), $id)) {
-                    $oldUsedBy = array_flip($oldUsedOrganization->used_by);
-                    unset($oldUsedBy[$id]);
-                    $oldUsedOrganization->used_by = array_flip($oldUsedBy);
-
-                    $oldUsedOrganization->save();
-                }
-            }
-        }
-    }
-
-    /**
-     * Create a new Partner Organization.
-     *
-     * @param $value
-     * @param $id
-     * @return \App\Models\Organization\OrganizationData
-     */
-    protected function createNewPartnerOrganization($value, $id)
-    {
-        $value['organization_id']  = session('org_id');
-        $value['name']             = $value['narrative'];
-        $value['used_by']          = [+ $id];
-        $value['is_reporting_org'] = false;
-        $value['type']             = $value['organization_type'];
-        $value['is_publisher']     = boolval(array_get($value, 'is_publisher', null));
-
-        return $this->organizationRepository->storeOrgData($value);
-    }
-
-    /**
-     * Update existing Partner Organization.
-     *
-     * @param $oldOrganization
-     * @param $id
-     */
-    protected function updateExistingPartnerOrganization($oldOrganization, $id)
-    {
-        $usedBy = $oldOrganization->used_by;
-        $match  = false;
-
-        foreach ($usedBy as $activityId) {
-            if ($activityId == $id) {
-                $match = true;
-            }
-        }
-
-        if (!$match) {
-            array_push($usedBy, + $id);
-            $oldOrganization->used_by = $usedBy;
-
-            $oldOrganization->save();
-        }
-    }
-
-    /**
-     * Check if the data of an Organisation being added is completely same as other Partner Organisations.
-     *
-     * @param $organization
-     * @param $value
-     * @return bool
-     */
-    protected function organizationIsCompletelySame($organization, $value)
-    {
-        if ($organization->identifier == array_get($value, 'identifier')
-            && array_get($organization->name, '0.narrative') == array_get($value, 'narrative.0.narrative')
-            && $organization->country == array_get($value, 'country')
-            && $organization->type == array_get($value, 'organization_type')) {
-
-            return true;
-        }
-
-        if (!$organization->identifier
-            && array_get($organization->name, '0.narrative') == array_get($value, 'narrative.0.narrative')
-            && $organization->country == array_get($value, 'country')
-            && $organization->type == array_get($value, 'organization_type')) {
-
-            return true;
-        }
-
-        return false;
     }
 }

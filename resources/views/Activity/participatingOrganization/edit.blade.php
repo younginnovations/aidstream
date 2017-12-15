@@ -74,7 +74,7 @@
                             </label>
                         </li>
                     </ul>
-                    <div v-if="(organisation.organization_role == '' && display_error)" class="text-danger">Organisation Role is required.</div>
+                    <div v-if="(!organisation.organization_role && display_error)" class="text-danger">Organisation Role is required.</div>
                 </div>
 
                 <div class="form-group" v-bind:class="{'has-error': (organisation.organization_type == '' && display_error)}">
@@ -695,8 +695,13 @@
                 .then(function (response) {
                   window.location.href = '/activity/' + activityId + '?flash=true';
                 }).catch(function (error) {
-                self.server_error_message = error.response.data;
-                self.display_server_error_message = true;
+                  self.display_server_error_message = true;
+
+                  if (error.response.status !== 500 || error.response.status !== 400) {
+                    self.server_error_message = error.response.data;
+                  } else {
+                    self.server_error_message = 'Something seems to be wrong.';
+                  }
               });
             }
           },
@@ -704,7 +709,10 @@
             var self = this;
             var status = true;
             this.organisations.forEach(function (organisation, index) {
-              if (organisation.narrative[0]['narrative'] === '' || organisation.organization_type === '' || organisation.organization_role === '' || organisation.identifier.match(/[\/\&\|\?|]+/)) {
+              if ((organisation.narrative[0]['narrative'] == '' || !organisation.narrative[0]['narrative'])
+                || (organisation.organization_type == '' || !organisation.organization_type)
+                || (organisation.organization_role == '' || !organisation.organization_role)
+                || organisation.identifier.match(/[\&\|\?|]+/)) {
                 self.display_error = true;
                 status = false;
 

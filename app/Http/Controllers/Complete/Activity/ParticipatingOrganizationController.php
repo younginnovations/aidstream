@@ -109,15 +109,13 @@ class ParticipatingOrganizationController extends Controller
             return response()->json($this->getNoPrivilegesMessage(), 500);
         }
 
-        $reportingOrganisation = $activityData->organization;
-
         $this->authorizeByRequestType($activityData, 'participating_organization');
 
         if (!$this->validateData($request->get('participating_organization'))) {
             return response()->json(trans('V201/message.participating_org', ['name' => 'participating organization']), 500);
         }
 
-        $participatingOrganization = $this->participatingOrganizationManager->addOrgData($id, $request, $reportingOrganisation->toArray());
+        $participatingOrganization  = $this->participatingOrganizationManager->managePartnerOrganizations($activityData, $request->all());
 
         if (!$participatingOrganization) {
             return response()->json(trans('V201/message.update_failed', ['name' => 'participating organization']), 400);
@@ -143,7 +141,7 @@ class ParticipatingOrganizationController extends Controller
 
         foreach ($data as $participatingOrg) {
             $orgRole = $participatingOrg['organization_role'];
-            if ($orgRole === "1" || $orgRole == "4") {
+            if ($orgRole == "1" || $orgRole == "4") {
                 $check = true;
                 break;
             }

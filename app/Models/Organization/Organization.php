@@ -5,6 +5,7 @@ use App\Models\OrganizationPublished;
 use App\Models\PerfectViewer\OrganizationSnapshot;
 use App\Models\SystemVersion;
 use App\User;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
@@ -32,7 +33,8 @@ class Organization extends Model
         'registration_agency',
         'registration_number',
         'secondary_contact',
-        'system_version_id'
+        'system_version_id',
+
     ];
     protected $casts = ['reporting_org' => 'json', 'secondary_contact' => 'json'];
 
@@ -167,5 +169,25 @@ class Organization extends Model
     public function organizationSnapshot()
     {
         return $this->hasOne(OrganizationSnapshot::class, 'org_id');
+    }
+
+    /**
+     * Get the Partner Organizations for a Reporting Organization.
+     *
+     * @return Collection
+     */
+    public function partners()
+    {
+        return $this->orgData()->where('is_reporting_org', 'false')->get();
+    }
+
+    /**
+     * Get the Organisation Identifier Attribute.
+     *
+     * @return mixed
+     */
+    public function getIdentifierAttribute()
+    {
+        return array_get($this->reporting_org, '0.reporting_organization_identifier', '');
     }
 }
