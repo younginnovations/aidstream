@@ -165,7 +165,7 @@ class Transaction extends Element
             'transaction'                                          => 'check_recipient_region_country',
             'transaction.transaction_type.*.transaction_type_code' => sprintf('required|in:%s', $this->validCodeOrName('TransactionType', 'V201')),
             'transaction.transaction_date.*.date'                  => 'required|date_format:Y-m-d',
-            'transaction.value.*.amount'                           => 'required|numeric|min:0',
+            'transaction.value.*.amount'                           => 'required|numeric',
             'transaction.value.*.date'                             => 'required|date_format:Y-m-d',
             'transaction.provider_organization.*.type'             => sprintf('in:%s', $this->validCodeOrName('OrganisationType', 'V201')),
             'transaction.provider_organization'                    => 'only_one_among',
