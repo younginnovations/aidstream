@@ -751,6 +751,13 @@
       "code": "MZ-NUIT",
       "name": "Unique Tax Identification Number",
       "language": "en"
+    },
+    {
+      "category": "SN",
+      "category-name": "SENEGAL",
+      "code": "SN-NINEA",
+      "name": "National Identification Number of Companies and Associations",
+      "language": "en"
     }
   ]
 }
