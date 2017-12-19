@@ -615,7 +615,7 @@ class ActivityRow extends Row
 
     /**
      * Checks if the activityIdentifiers already exists or not.
-     * 
+     *
      * @param $row
      * @return $this
      */
@@ -665,8 +665,10 @@ class ActivityRow extends Row
 
         foreach ($rows as $index => $row) {
             if (array_key_exists('activity_identifier', $row)) {
-                if ($this->identifier->data()['activity_identifier'] == getVal($row, ['activity_identifier', 0])) {
-                    $commonIdentifierCount ++;
+                if ($this->identifier->data()) {
+                    if ($this->identifier->data()['activity_identifier'] == getVal($row, ['activity_identifier', 0])) {
+                        $commonIdentifierCount ++;
+                    }
                 }
             }
         }
