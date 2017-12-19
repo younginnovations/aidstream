@@ -322,7 +322,7 @@ class ActivityRepository
     {
         $defaultFieldValues = $this->setDefaultFieldValues($activityData['default_field_values'], $activityData['organization_id']);
 
-                return $this->activity->create(
+        return $this->activity->create(
             [
                 'identifier'                 => $activityData['identifier'],
                 'title'                      => array_values($activityData['title']),
@@ -453,15 +453,21 @@ class ActivityRepository
         $activity->organization_id            = $activityData['organization_id'];
         $activity->policy_marker              = array_key_exists('policy_marker', $activityData) ? array_values($activityData['policy_marker']) : null;
         $activity->budget                     = array_key_exists('budget', $activityData) ? array_values($activityData['budget']) : null;
-        $activity->activity_scope             = array_key_exists('activity_scope', $activityData) ? array_values($activityData['activity_scope']) : null;
-        $activity->default_field_values       = $defaultFieldValues;
-        $activity->collaboration_type         = getVal(array_values($defaultFieldValues), [0, 'default_collaboration_type'], null);
-        $activity->default_flow_type          = getVal(array_values($defaultFieldValues), [0, 'default_flow_type'], null);
-        $activity->default_finance_type       = getVal(array_values($defaultFieldValues), [0, 'default_finance_type'], null);
-        $activity->default_aid_type           = getVal(array_values($defaultFieldValues), [0, 'default_aid_type'], null);
-        $activity->default_tied_status        = getVal(array_values($defaultFieldValues), [0, 'default_tied_status'], null);
-        $activity->contact_info               = getVal(array_values($activityData), ['contact_info'], null);
-        $activity->related_activity           = getVal(array_values($activityData), ['related_activity'], null);
+
+        if (array_key_exists('activity_scope', $activityData)) {
+            $activity->activity_scope = is_array($activityData['activity_scope']) ? array_values($activityData['activity_scope']) : $activityData['activity_scope'];
+        } else {
+            $activity->activity_scope = null;
+        }
+
+        $activity->default_field_values = $defaultFieldValues;
+        $activity->collaboration_type   = getVal(array_values($defaultFieldValues), [0, 'default_collaboration_type'], null);
+        $activity->default_flow_type    = getVal(array_values($defaultFieldValues), [0, 'default_flow_type'], null);
+        $activity->default_finance_type = getVal(array_values($defaultFieldValues), [0, 'default_finance_type'], null);
+        $activity->default_aid_type     = getVal(array_values($defaultFieldValues), [0, 'default_aid_type'], null);
+        $activity->default_tied_status  = getVal(array_values($defaultFieldValues), [0, 'default_tied_status'], null);
+        $activity->contact_info         = getVal(array_values($activityData), ['contact_info'], null);
+        $activity->related_activity     = getVal(array_values($activityData), ['related_activity'], null);
 
         return $activity;
     }
