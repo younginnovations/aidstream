@@ -142,7 +142,7 @@ class ActivityManager
         } catch (Exception $exception) {
             $this->logger->error($exception);
 
-            return false;
+            throw $exception;
         }
     }
 

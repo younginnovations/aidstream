@@ -263,7 +263,7 @@ class Publisher extends RegistryApiHandler
     }
 
     /**
-     * @return Exception
+     * @throws Exception
      */
     protected function updateStatus()
     {
@@ -271,7 +271,7 @@ class Publisher extends RegistryApiHandler
             $this->file->published_to_register = 1;
             $this->file->save();
         } catch (Exception $exception) {
-            return $exception;
+            throw $exception;
         }
     }
 
