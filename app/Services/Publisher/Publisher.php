@@ -39,11 +39,13 @@ class Publisher extends RegistryApiHandler
      * @param       $publishingType
      * @param array $changes
      * @throws PublisherNotFoundException
+     * @throws Exception
      */
     public function publish($registryInfo, $organization, $publishingType, array $changes = [])
     {
         try {
-            $this->init(env('REGISTRY_URL'), getVal($registryInfo, [0, 'api_id'], ''))->setPublisher(getVal($registryInfo, [0, 'publisher_id'], ''));
+            $this->init(env('REGISTRY_URL'), getVal($registryInfo, [0, 'api_id'], ''))
+                 ->setPublisher(getVal($registryInfo, [0, 'publisher_id'], ''));
 
             /* Depcricated */
 //        $this->client->package_search($this->publisherId)

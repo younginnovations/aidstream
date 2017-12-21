@@ -27,7 +27,7 @@ abstract class RegistryApiHandler
      * Initialize an CkanClient instance.
      * @param $url
      * @param $key
-     * @return CkanClient
+     * @return RegistryApiHandler
      */
     public function init($url, $key)
     {
