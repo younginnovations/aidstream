@@ -39,11 +39,13 @@ class Publisher extends RegistryApiHandler
      * @param       $publishingType
      * @param array $changes
      * @throws PublisherNotFoundException
+     * @throws Exception
      */
     public function publish($registryInfo, $organization, $publishingType, array $changes = [])
     {
         try {
-            $this->init(env('REGISTRY_URL'), getVal($registryInfo, [0, 'api_id'], ''))->setPublisher(getVal($registryInfo, [0, 'publisher_id'], ''));
+            $this->init(env('REGISTRY_URL'), getVal($registryInfo, [0, 'api_id'], ''))
+                 ->setPublisher(getVal($registryInfo, [0, 'publisher_id'], ''));
 
             /* Depcricated */
 //        $this->client->package_search($this->publisherId)
@@ -166,13 +168,15 @@ class Publisher extends RegistryApiHandler
     }
 
     /**
-     * Get the country code/region code from the filename.
+     * Get the data type or country code/region code from the filename.
      * @param $filename
      * @return array
      */
     protected function getCode($filename)
     {
-        return explode('-', explode('.', $filename)[0]);
+        $filename = str_replace('.xml', '', $filename);
+
+        return substr($filename, strlen($this->publisherId) + 1);
     }
 
     /**
@@ -190,7 +194,7 @@ class Publisher extends RegistryApiHandler
         }
 
         return ($publishingType == "segmented")
-            ? $organization->name . ' Activity File-' . strtoupper(end($code))
+            ? $organization->name . ' Activity File-' . strtoupper($code)
             : $organization->name . ' Activity File';
     }
 
@@ -208,6 +212,7 @@ class Publisher extends RegistryApiHandler
      * @param      $organization
      * @param      $filename
      * @param      $publishingType
+     * @throws Exception
      */
     protected function publishToRegistry($organization, $filename, $publishingType)
     {
@@ -228,6 +233,7 @@ class Publisher extends RegistryApiHandler
      * @param $changeDetails
      * @param $organization
      * @param $publishingType
+     * @throws Exception
      */
     protected function publishSegmentationChanges($changeDetails, $organization, $publishingType)
     {
@@ -243,6 +249,7 @@ class Publisher extends RegistryApiHandler
      * Publish file(s) into the IATI Registry.
      * @param $organization
      * @param $publishingType
+     * @throws Exception
      */
     protected function publishIntoRegistry($organization, $publishingType)
     {
@@ -256,7 +263,7 @@ class Publisher extends RegistryApiHandler
     }
 
     /**
-     * @return Exception
+     * @throws Exception
      */
     protected function updateStatus()
     {
@@ -264,7 +271,7 @@ class Publisher extends RegistryApiHandler
             $this->file->published_to_register = 1;
             $this->file->save();
         } catch (Exception $exception) {
-            return $exception;
+            throw $exception;
         }
     }
 
@@ -274,11 +281,11 @@ class Publisher extends RegistryApiHandler
      */
     protected function getFileType($code)
     {
-        if (in_array('org', $code)) {
+        if ($code === 'org' || $code === 'organisation') {
             return 'organisation';
         }
 
-        return end($code);
+        return $code;
     }
 
     /**
@@ -297,6 +304,7 @@ class Publisher extends RegistryApiHandler
      * @param $changeDetails
      * @return bool
      * @throws Exception
+     * @throws \CKAN\NotFoundHttpException
      */
     public function unlink($apiKey, $changeDetails)
     {

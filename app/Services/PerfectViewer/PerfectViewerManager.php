@@ -75,6 +75,7 @@ class PerfectViewerManager
      *
      * @param $activity
      * @return PerfectViewerManager|bool
+     * @throws Exception
      */
     public function createSnapshot(Activity $activity)
     {
@@ -110,7 +111,7 @@ class PerfectViewerManager
             );
         }
 
-        return false;
+        throw $exception;
     }
 
     /**
@@ -212,26 +213,25 @@ class PerfectViewerManager
             $value = $this->giveCorrectValue(getVal($transaction, ['transaction'], []));
 
             switch (getVal($transaction, ['transaction', 'transaction_type', 0, 'transaction_type_code'], '')) {
+                case 1:
+                    $totalTransaction['total_incoming_funds'] += (float) $value;
+                    break;
 
-                    case 1:
-                        $totalTransaction['total_incoming_funds'] += (float) $value;
-                        break;
+                case 2:
+                    $totalTransaction['total_commitments'] += (float) $value;
+                    break;
 
-                    case 2:
-                        $totalTransaction['total_commitments'] += (float) $value;
-                        break;
+                case 3:
+                    $totalTransaction['total_disbursements'] += (float) $value;
+                    break;
 
-                    case 3:
-                        $totalTransaction['total_disbursements'] += (float) $value;
-                        break;
+                case 4:
+                    $totalTransaction['total_expenditures'] += (float) $value;
+                    break;
 
-                    case 4:
-                        $totalTransaction['total_expenditures'] += (float) $value;
-                        break;
-
-                    default:
-                        break;
-                }
+                default:
+                    break;
+            }
         }
 
         return $totalTransaction;
