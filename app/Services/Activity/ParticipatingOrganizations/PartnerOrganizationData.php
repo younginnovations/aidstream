@@ -37,17 +37,17 @@ class PartnerOrganizationData
     /**
      * @var
      */
-    protected $partners;
+    protected $partners = null;
 
     /**
      * @var
      */
-    protected $activityPartners;
+    protected $activityPartners = null;
 
     /**
      * @var
      */
-    protected $partnersWithName;
+    protected $partnersWithName = null;
 
     /**
      * Initialize the ParticipatingOrganizationData class.
@@ -112,6 +112,8 @@ class PartnerOrganizationData
         foreach ($this->organizations as $organization) {
             $this->organizationRepository->storeOrgData($organization);
         }
+
+        $this->partnersWithName = $this->getPartnersWithName();
     }
 
     /**
@@ -122,19 +124,21 @@ class PartnerOrganizationData
     protected function updateOldPartners()
     {
         foreach ($this->participatingOrganizations as $participatingOrganization) {
-            if ($participatingOrganization->identifier() !== $this->reportingOrganization->identifier) {
+            if ($participatingOrganization->identifier() != $this->reportingOrganization->identifier) {
                 if ($participatingOrganization->identifier()) {
                     if ($existingPartner = $this->partners->where('identifier', $participatingOrganization->identifier())->first()) {
                         $this->updatePartner($existingPartner);
                     }
                 } else {
-                    if ($existingPartner = $this->partnersWithName->where('actualName', $participatingOrganization->name())->first()) {
+                    if ($existingPartner = $this->partnersWithName->where('nameString', $participatingOrganization->name())->first()) {
                         $this->updatePartner($existingPartner);
                     }
                 }
 
             }
         }
+
+        $this->partnersWithName = $this->getPartnersWithName();
 
         return $this;
     }
@@ -179,7 +183,7 @@ class PartnerOrganizationData
                         return $value;
                     }
                 } else {
-                    if (!in_array($value->actualName, $names)) {
+                    if (!in_array($value->nameString, $names)) {
                         return $value;
                     }
                 }
@@ -191,12 +195,14 @@ class PartnerOrganizationData
             unset($oldUsed[$this->activityId]);
             $organization->used_by = array_flip($oldUsed);
 
-            if (array_key_exists('actualName', $organization->toArray())) {
-                unset($organization->actualName);
+            if (array_key_exists('nameString', $organization->toArray())) {
+                unset($organization->nameString);
             }
 
             $organization->save();
         }
+
+        $this->partnersWithName = $this->getPartnersWithName();
 
         return $this;
     }
@@ -215,12 +221,14 @@ class PartnerOrganizationData
                         $this->createPartnerOrganization($participatingOrganization);
                     }
                 } else {
-                    if (!$existingPartner = $this->partnersWithName->where('actualName', $participatingOrganization->name())->first()) {
+                    if (!$existingPartner = $this->partnersWithName->where('nameString', $participatingOrganization->name())->first()) {
                         $this->createPartnerOrganization($participatingOrganization);
                     }
                 }
             }
         }
+
+        $this->partnersWithName = $this->getPartnersWithName();
 
         return $this;
     }
@@ -254,7 +262,7 @@ class PartnerOrganizationData
 
         foreach ($this->partners as $index => $partner) {
             $tempOrg                      = $partner;
-            $tempOrg['actualName']        = $partner->actualName();
+            $tempOrg['nameString']        = $partner->actualName();
             $partnerOrganizations[$index] = $tempOrg;
         }
 
@@ -273,8 +281,8 @@ class PartnerOrganizationData
             $usedBy[]                 = $this->activityId;
             $existingPartner->used_by = array_unique($usedBy);
 
-            if (array_key_exists('actualName', $existingPartner->toArray())) {
-                unset($existingPartner->actualName);
+            if (array_key_exists('nameString', $existingPartner->toArray())) {
+                unset($existingPartner->nameString);
             }
 
             $existingPartner->save();

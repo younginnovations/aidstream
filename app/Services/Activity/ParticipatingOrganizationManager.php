@@ -59,7 +59,7 @@ class ParticipatingOrganizationManager
         Version $version,
         OrganizationManager $organizationManager,
         OrganizationRepository $organizationRepository,
-        PartnerOrganizationData $partnerOrganization,
+//        PartnerOrganizationData $partnerOrganization,
         Log $log,
         Guard $auth
     ) {
@@ -71,7 +71,7 @@ class ParticipatingOrganizationManager
         $this->version                = $version;
         $this->organizationManager    = $organizationManager;
         $this->organizationRepository = $organizationRepository;
-        $this->partnerOrganization    = $partnerOrganization;
+//        $this->partnerOrganization    = $partnerOrganization;
     }
 
     /**
@@ -130,10 +130,18 @@ class ParticipatingOrganizationManager
      * @param array    $participatingOrganizationDetails
      * @return array|null
      */
-    public function managePartnerOrganizations(Activity $activity, array $participatingOrganizationDetails)
+    public function managePartnerOrganizations(Activity $activity, $participatingOrganizationDetails = null)
     {
         try {
-            $this->partnerOrganization->init($activity, array_get($participatingOrganizationDetails, 'participating_organization', []), $this->organizationRepository)
+            $this->partnerOrganization = app()->make(PartnerOrganizationData::class);
+
+            if (!$participatingOrganizationDetails) {
+                $participatingOrganizations = $activity->participating_organization ? $activity->participating_organization : [];
+            } else {
+                $participatingOrganizations = array_get($participatingOrganizationDetails, 'participating_organization', []);
+            }
+
+            $this->partnerOrganization->init($activity, $participatingOrganizations, $this->organizationRepository)
                                       ->sync();
 
             return $participatingOrganizationDetails;
