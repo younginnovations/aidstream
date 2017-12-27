@@ -50,6 +50,11 @@ class PartnerOrganizationData
     protected $partnersWithName = null;
 
     /**
+     * @var
+     */
+    protected $cleanData;
+
+    /**
      * Initialize the ParticipatingOrganizationData class.
      *
      * @param Activity $activity
@@ -57,11 +62,12 @@ class PartnerOrganizationData
      * @param          $organizationRepository
      * @return $this
      */
-    public function init(Activity $activity, array $partnerOrganizationDetails, $organizationRepository)
+    public function init(Activity $activity, array $partnerOrganizationDetails, $organizationRepository, $cleanData = null)
     {
         $this->activityId             = $activity->id;
         $this->reportingOrganization  = $activity->organization;
         $this->organizationRepository = $organizationRepository;
+        $this->cleanData              = $cleanData;
 
         foreach ($partnerOrganizationDetails as $data) {
             $this->participatingOrganizations[] = new ParticipatingOrganization($data);
@@ -95,25 +101,33 @@ class PartnerOrganizationData
     {
         foreach ($this->participatingOrganizations as $participatingOrganization) {
             if ($participatingOrganization->identifier() !== $this->reportingOrganization->identifier) {
-                $value                     = $participatingOrganization->data();
-                $value['organization_id']  = $this->reportingOrganization->id;
-                $value['name']             = array_get($value, 'narrative', [['narrative' => '', 'language' => '']]);
+                $value                    = $participatingOrganization->data();
+                $value['organization_id'] = $this->reportingOrganization->id;
+
+                if ($this->needsToBeCleaned()) {
+                    if ($data = $this->cleanData->where('identifier', $participatingOrganization->identifier())->first()) {
+                        $value['name']    = [['narrative' => $data->validnames, 'language' => $data->validlang]];
+                        $value['type']    = $data->validtype;
+                        $value['country'] = $data->validcountry;
+                    } else {
+                        $value['name']    = array_get($value, 'narrative', [['narrative' => '', 'language' => '']]);
+                        $value['type']    = array_get($value, 'organization_type', '');
+                        $value['country'] = $this->getCountry($participatingOrganization->identifier());
+                    }
+                } else {
+                    $value['name']    = array_get($value, 'narrative', [['narrative' => '', 'language' => '']]);
+                    $value['type']    = array_get($value, 'organization_type', '');
+                    $value['country'] = $this->getCountry($participatingOrganization->identifier());
+                }
+
                 $value['used_by']          = [+ $this->activityId];
                 $value['is_reporting_org'] = false;
-                $value['type']             = array_get($value, 'organization_type', '');
                 $value['is_publisher']     = boolval(array_get($value, 'is_publisher', false));
 
-                if (!array_has($this->organizations, $participatingOrganization->identifier())) {
-                    $this->organizations[$participatingOrganization->identifier()] = $value;
-                }
+                $this->organizationRepository->storeOrgData($value);
+                $this->partnersWithName = $this->getPartnersWithName();
             }
         }
-
-        foreach ($this->organizations as $organization) {
-            $this->organizationRepository->storeOrgData($organization);
-        }
-
-        $this->partnersWithName = $this->getPartnersWithName();
     }
 
     /**
@@ -240,12 +254,27 @@ class PartnerOrganizationData
      */
     protected function createPartnerOrganization(ParticipatingOrganization $participatingOrganization)
     {
-        $value                     = $participatingOrganization->data();
+        $value = $participatingOrganization->data();
+
+        if ($this->needsToBeCleaned()) {
+            if ($data = $this->cleanData->where('identifier', $participatingOrganization->identifier())->first()) {
+                $value['name']    = [['narrative' => $data->validnames, 'language' => $data->validlang]];
+                $value['type']    = $data->validtype;
+                $value['country'] = $data->validcountry;
+            } else {
+                $value['name']    = array_get($value, 'narrative', [['narrative' => '', 'language' => '']]);
+                $value['type']    = array_get($value, 'organization_type', '');
+                $value['country'] = $this->getCountry($participatingOrganization->identifier());
+            }
+        } else {
+            $value['name']    = array_get($value, 'narrative', [['narrative' => '', 'language' => '']]);
+            $value['type']    = array_get($value, 'organization_type', '');
+            $value['country'] = $this->getCountry($participatingOrganization->identifier());
+        }
+
         $value['organization_id']  = $this->reportingOrganization->id;
-        $value['name']             = array_get($value, 'narrative', [['narrative' => '', 'language' => '']]);
         $value['used_by']          = [+ $this->activityId];
         $value['is_reporting_org'] = false;
-        $value['type']             = array_get($value, 'organization_type', '');
         $value['is_publisher']     = boolval(array_get($value, 'is_publisher', false));
 
         $this->organizationRepository->storeOrgData($value);
@@ -287,5 +316,45 @@ class PartnerOrganizationData
 
             $existingPartner->save();
         }
+    }
+
+    /**
+     * Check if the Partner Organizations' data need to be cleaned.
+     *
+     * @return bool
+     */
+    protected function needsToBeCleaned()
+    {
+        return boolval($this->cleanData);
+    }
+
+    /**
+     * Get the country by breaking down an Organization Identifier.
+     *
+     * @param $identifier
+     * @return mixed
+     */
+    protected function getCountry($identifier)
+    {
+        return array_first(
+            explode('-', $identifier),
+            function ($pieces) {
+                return true;
+            }
+        );
+    }
+
+    /**
+     * Store OrganizationData.
+     *
+     * @return $this
+     */
+    protected function storeOrganizations()
+    {
+        foreach ($this->organizations as $organization) {
+            $this->organizationRepository->storeOrgData($organization);
+        }
+
+        return $this;
     }
 }

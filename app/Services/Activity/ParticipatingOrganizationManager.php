@@ -10,6 +10,7 @@ use Exception;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Logging\Log;
 use Illuminate\Database\Eloquent\Model;
+use Maatwebsite\Excel\Excel;
 
 /**
  * Class ParticipatingOrganizationManager
@@ -42,24 +43,34 @@ class ParticipatingOrganizationManager
      */
     protected $organizationRepository;
 
+    protected $participatingOrgRepo;
+
     /**
      * @var PartnerOrganizationData
      */
     protected $partnerOrganization;
 
     /**
-     * @param Version                 $version
-     * @param OrganizationManager     $organizationManager
-     * @param OrganizationRepository  $organizationRepository
-     * @param PartnerOrganizationData $partnerOrganization
-     * @param Log                     $log
-     * @param Guard                   $auth
+     * @var Excel
+     */
+    protected $excel;
+
+    protected $filename = 'foundapi.csv';
+
+    /**
+     * @param Version                $version
+     * @param OrganizationManager    $organizationManager
+     * @param OrganizationRepository $organizationRepository
+     * @param Excel                  $excel
+     * @param Log                    $log
+     * @param Guard                  $auth
      */
     public function __construct(
         Version $version,
         OrganizationManager $organizationManager,
         OrganizationRepository $organizationRepository,
 //        PartnerOrganizationData $partnerOrganization,
+        Excel $excel,
         Log $log,
         Guard $auth
     ) {
@@ -71,7 +82,9 @@ class ParticipatingOrganizationManager
         $this->version                = $version;
         $this->organizationManager    = $organizationManager;
         $this->organizationRepository = $organizationRepository;
+        $this->excel                  = $excel;
 //        $this->partnerOrganization    = $partnerOrganization;
+
     }
 
     /**
@@ -130,7 +143,7 @@ class ParticipatingOrganizationManager
      * @param array    $participatingOrganizationDetails
      * @return array|null
      */
-    public function managePartnerOrganizations(Activity $activity, $participatingOrganizationDetails = null)
+    public function managePartnerOrganizations(Activity $activity, $participatingOrganizationDetails = null, $data = null)
     {
         try {
             $this->partnerOrganization = app()->make(PartnerOrganizationData::class);
@@ -141,10 +154,8 @@ class ParticipatingOrganizationManager
                 $participatingOrganizations = array_get($participatingOrganizationDetails, 'participating_organization', []);
             }
 
-            $this->partnerOrganization->init($activity, $participatingOrganizations, $this->organizationRepository)
+            $this->partnerOrganization->init($activity, $participatingOrganizations, $this->organizationRepository, $data)
                                       ->sync();
-
-            return $participatingOrganizationDetails;
         } catch (Exception $exception) {
             $this->log->error(
                 $exception->getMessage(),
