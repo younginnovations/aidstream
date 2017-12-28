@@ -77,20 +77,22 @@ class SyncPartnerOrganizations extends Command
             $organizations = Organization::all();
             $progress      = $this->output->createProgressBar($organizations->count());
             $cleanUpNeeded = $this->option('clean');
+
             $this->databaseManager->beginTransaction();
 
             $data = $cleanUpNeeded ? $this->excel->load(storage_path($this->filename))->get() : null;
 
             foreach ($organizations as $organization) {
                 foreach ($organization->activities as $activity) {
-                    $this->participatingOrganizationManager->managePartnerOrganizations($activity, null, $data);
+                    if ($participatingOrganizationData = $this->participatingOrganizationManager->managePartnerOrganizations($activity, null, $data)) {
+                        $this->update($activity, $participatingOrganizationData);
+                    }
                 }
 
                 $progress->advance();
             }
 
             $this->databaseManager->commit();
-
             $progress->finish();
 
             $this->info('Partner Organizations sync complete.');
@@ -107,12 +109,16 @@ class SyncPartnerOrganizations extends Command
     }
 
     /**
-     * @param Collection $organizations
-     * @param bool       $cleanUpNeeded
-     * @return SyncPartnerOrganizations
+     * Update Activity.
+     *
+     * @param $activity
+     * @param $participatingOrganizationData
      */
-    protected function importPartners(Collection $organizations, $cleanUpNeeded = false)
+    protected function update($activity, $participatingOrganizationData)
     {
-        return $this;
+        $activity->participating_organization = $participatingOrganizationData;
+        $activity->activity_workflow = 0;
+
+        $activity->save();
     }
 }

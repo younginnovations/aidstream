@@ -813,7 +813,7 @@ class OrganizationController extends Controller
             [
                 'identifier'        => $to->identifier,
                 'activity_id'       => array_get($orgToBeReplaced, 'activity_id', ''),
-                'organization_role' => array_get($orgToBeReplaced, 'organization_role'),
+                'organization_role' => array_get($orgToBeReplaced, 'organization_role', ''),
                 'organization_type' => $to->type,
                 'country'           => $to->country,
                 'org_data_id'       => $to->id,

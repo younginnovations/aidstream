@@ -18,7 +18,7 @@ class ParticipatingOrganization
     /**
      * @var array
      */
-    protected $data = [];
+    public $data = [];
 
     /**
      * @var mixed|string

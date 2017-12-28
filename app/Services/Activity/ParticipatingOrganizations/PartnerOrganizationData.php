@@ -1,5 +1,6 @@
 <?php namespace App\Services\Activity\ParticipatingOrganizations;
 
+use App\Core\V201\Traits\GetCodes;
 use App\Models\Activity\Activity;
 use App\Models\Organization\Organization;
 
@@ -9,6 +10,8 @@ use App\Models\Organization\Organization;
  */
 class PartnerOrganizationData
 {
+    use GetCodes;
+
     /**
      * @var
      */
@@ -54,6 +57,8 @@ class PartnerOrganizationData
      */
     protected $cleanData;
 
+    protected $countries = [];
+
     /**
      * Initialize the ParticipatingOrganizationData class.
      *
@@ -68,6 +73,9 @@ class PartnerOrganizationData
         $this->reportingOrganization  = $activity->organization;
         $this->organizationRepository = $organizationRepository;
         $this->cleanData              = $cleanData;
+        $this->countries              = $this->getNameWithCode('Organization', 'Country');
+
+        $this->activity = $activity;
 
         foreach ($partnerOrganizationDetails as $data) {
             $this->participatingOrganizations[] = new ParticipatingOrganization($data);
@@ -81,9 +89,10 @@ class PartnerOrganizationData
      */
     public function sync()
     {
-        $this->partners         = $this->reportingOrganization->partners();
-        $this->partnersWithName = $this->getPartnersWithName();
-        $this->activityPartners = $this->activityPartners();
+        $participatingOrganizationData = [];
+        $this->partners                = $this->reportingOrganization->partners();
+        $this->partnersWithName        = $this->getPartnersWithName();
+        $this->activityPartners        = $this->activityPartners();
 
         if ($this->partners->isEmpty()) {
             $this->createNewPartners();
@@ -92,6 +101,12 @@ class PartnerOrganizationData
                  ->removeActivity()
                  ->addNewPartners();
         }
+
+        foreach ($this->participatingOrganizations as $organization) {
+            $participatingOrganizationData[] = $organization->data();
+        }
+
+        return $participatingOrganizationData;
     }
 
     /**
@@ -124,8 +139,12 @@ class PartnerOrganizationData
                 $value['is_reporting_org'] = false;
                 $value['is_publisher']     = boolval(array_get($value, 'is_publisher', false));
 
-                $this->organizationRepository->storeOrgData($value);
+
+                $organization           = $this->organizationRepository->storeOrgData($value);
                 $this->partnersWithName = $this->getPartnersWithName();
+
+                $participatingOrganization->data['org_data_id'] = $organization->id;
+                $participatingOrganization->data['country']     = array_has($this->countries, $organization->country) ? $organization->country : '';
             }
         }
     }
@@ -232,12 +251,17 @@ class PartnerOrganizationData
             if ($participatingOrganization->identifier() !== $this->reportingOrganization->identifier) {
                 if ($participatingOrganization->identifier()) {
                     if (!($existingPartner = $this->partners->where('identifier', $participatingOrganization->identifier())->first())) {
-                        $this->createPartnerOrganization($participatingOrganization);
+                        $organization = $this->createPartnerOrganization($participatingOrganization);
                     }
                 } else {
                     if (!$existingPartner = $this->partnersWithName->where('nameString', $participatingOrganization->name())->first()) {
-                        $this->createPartnerOrganization($participatingOrganization);
+                        $organization = $this->createPartnerOrganization($participatingOrganization);
                     }
+                }
+
+                if (isset($organization)) {
+                    $participatingOrganization->data['org_data_id'] = $organization->id;
+                    $participatingOrganization->data['country']     = array_has($this->countries, $organization->country) ? $organization->country : '';
                 }
             }
         }
@@ -251,6 +275,7 @@ class PartnerOrganizationData
      * Create a new Partner Organisation (OrganizationData).
      *
      * @param ParticipatingOrganization $participatingOrganization
+     * @return
      */
     protected function createPartnerOrganization(ParticipatingOrganization $participatingOrganization)
     {
@@ -277,7 +302,7 @@ class PartnerOrganizationData
         $value['is_reporting_org'] = false;
         $value['is_publisher']     = boolval(array_get($value, 'is_publisher', false));
 
-        $this->organizationRepository->storeOrgData($value);
+        return $this->organizationRepository->storeOrgData($value);
     }
 
     /**

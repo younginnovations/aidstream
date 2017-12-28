@@ -69,7 +69,6 @@ class ParticipatingOrganizationManager
         Version $version,
         OrganizationManager $organizationManager,
         OrganizationRepository $organizationRepository,
-//        PartnerOrganizationData $partnerOrganization,
         Excel $excel,
         Log $log,
         Guard $auth
@@ -83,8 +82,6 @@ class ParticipatingOrganizationManager
         $this->organizationManager    = $organizationManager;
         $this->organizationRepository = $organizationRepository;
         $this->excel                  = $excel;
-//        $this->partnerOrganization    = $partnerOrganization;
-
     }
 
     /**
@@ -154,8 +151,10 @@ class ParticipatingOrganizationManager
                 $participatingOrganizations = array_get($participatingOrganizationDetails, 'participating_organization', []);
             }
 
-            $this->partnerOrganization->init($activity, $participatingOrganizations, $this->organizationRepository, $data)
-                                      ->sync();
+            $participatingOrganizationData = $this->partnerOrganization->init($activity, $participatingOrganizations, $this->organizationRepository, $data)
+                                                                       ->sync();
+
+            return $participatingOrganizationData;
         } catch (Exception $exception) {
             $this->log->error(
                 $exception->getMessage(),

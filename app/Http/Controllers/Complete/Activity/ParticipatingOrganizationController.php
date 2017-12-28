@@ -115,7 +115,7 @@ class ParticipatingOrganizationController extends Controller
             return response()->json(trans('V201/message.participating_org', ['name' => 'participating organization']), 500);
         }
 
-        $participatingOrganization  = $this->participatingOrganizationManager->managePartnerOrganizations($activityData, $request->all());
+        $participatingOrganization['participating_organization']  = $this->participatingOrganizationManager->managePartnerOrganizations($activityData, $request->all());
 
         if (!$participatingOrganization) {
             return response()->json(trans('V201/message.update_failed', ['name' => 'participating organization']), 400);
@@ -127,7 +127,7 @@ class ParticipatingOrganizationController extends Controller
             return response()->json(trans('V201/message.updated', ['name' => 'participating organization']), 200);
         }
 
-        return response()->json(trans('V201/message.updated_failed', ['name' => 'participating organization']), 500);
+        return response()->json(trans('V201/message.update_failed', ['name' => 'participating organization']), 500);
     }
 
     /**
