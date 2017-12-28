@@ -773,10 +773,12 @@ class OrganizationController extends Controller
 
         $usedActivities = $from->used_by;
 
-        foreach ($usedActivities as $activity) {
-            $activity = $this->activityManager->getActivityData($activity);
+        foreach ($usedActivities as $activityId) {
+            $activity = $this->activityManager->getActivityData($activityId);
             $this->replaceParticipatingOrg($activity, $from, $to);
         }
+
+        $this->updatePartners($usedActivities, $from, $to);
 
         return redirect()->route('organization.index')->withResponse(
             [
@@ -793,19 +795,32 @@ class OrganizationController extends Controller
      * @param $from
      * @param $to
      */
-    protected function replaceParticipatingOrg(&$activity, &$from, &$to)
+    protected function replaceParticipatingOrg($activity, $from, $to)
     {
+        $remainingOrgs   = null;
+        $orgToBeReplaced = null;
+
         $participatingOrganizations = collect($activity->participating_organization);
-        $orgToBeReplaced            = $participatingOrganizations->filter(
+
+        $orgToBeReplaced = $participatingOrganizations->filter(
             function ($organization) use ($from) {
-                return array_get($organization, 'org_data_id') == $from->id;
+                if (array_has($organization, 'org_data_id') && ($id = array_get($organization, 'org_data_id', null)) !== '') {
+                    return $id == $from->id;
+                } else {
+                    return array_get($organization, 'identifier', '') == $from->identifier;
+                }
             }
         );
-        $orgToBeReplaced            = $orgToBeReplaced->first();
+
+        $orgToBeReplaced = $orgToBeReplaced->first();
 
         $remainingOrgs = $participatingOrganizations->filter(
             function ($organization) use ($from) {
-                return array_get($organization, 'org_data_id', '') != $from->id;
+                if (array_has($organization, 'org_data_id') && ($id = array_get($organization, 'org_data_id', null)) !== '') {
+                    return $id != $from->id;
+                } else {
+                    return array_get($organization, 'identifier', '') != $from->identifier;
+                }
             }
         );
 
@@ -822,14 +837,25 @@ class OrganizationController extends Controller
             ]
         );
 
-        $from->used_by = array_diff($from->used_by, [$activity->id]);
-        $from->save();
-
-        $oldUsedBy   = $to->used_by;
-        $oldUsedBy[] = $activity->id;
-        $to->update(['used_by' => array_unique($oldUsedBy)]);
-
         $activity->participating_organization = $remainingOrgs->toArray();
         $activity->save();
+    }
+
+    /**
+     * Update Activities for Partner Organizations.
+     * 
+     * @param $activities
+     * @param $from
+     * @param $to
+     */
+    protected function updatePartners($activities, $from, $to)
+    {
+        $from->used_by = array_diff($from->used_by, $activities);
+        $from->save();
+
+        $oldUsedBy = $to->used_by;
+        $oldUsedBy = array_merge($oldUsedBy, $activities);
+
+        $to->update(['used_by' => array_unique($oldUsedBy)]);
     }
 }
