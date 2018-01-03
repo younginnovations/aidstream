@@ -229,7 +229,7 @@
 
           $.map(requiredOrganisations, function (org, index) {
             $('<label>\n' +
-              '<input required="true" type="radio" class="organization-to-be-merged-with" name="merge_target" value="' + org.id + '">' + org.name[0].narrative +
+              '<input required="true" type="radio" class="organization-to-be-merged-with" name="merge_target" value="' + org.id + '">' + org.name[0].narrative + "\t" + (org.identifier ?  "(" + org.identifier + ")" : "") +
               '</label>').appendTo(partnerOrganisationContainer)
           });
 

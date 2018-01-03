@@ -78,21 +78,19 @@ class SyncPartnerOrganizations extends Command
             $progress      = $this->output->createProgressBar($organizations->count());
             $cleanUpNeeded = $this->option('clean');
 
-            $this->databaseManager->beginTransaction();
-
             $data = $cleanUpNeeded ? $this->excel->load(storage_path($this->filename))->get() : null;
 
             foreach ($organizations as $organization) {
+                $this->databaseManager->beginTransaction();
                 foreach ($organization->activities as $activity) {
                     if ($participatingOrganizationData = $this->participatingOrganizationManager->managePartnerOrganizations($activity, null, $data)) {
                         $this->update($activity, $participatingOrganizationData);
                     }
                 }
-
+                $this->databaseManager->commit();
                 $progress->advance();
             }
 
-            $this->databaseManager->commit();
             $progress->finish();
 
             $this->info('Partner Organizations sync complete.');
