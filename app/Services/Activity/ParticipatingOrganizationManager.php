@@ -138,6 +138,7 @@ class ParticipatingOrganizationManager
      *
      * @param Activity $activity
      * @param array    $participatingOrganizationDetails
+     * @param null     $data
      * @return array|null
      */
     public function managePartnerOrganizations(Activity $activity, $participatingOrganizationDetails = null, $data = null)

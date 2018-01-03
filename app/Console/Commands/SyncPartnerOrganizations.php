@@ -81,13 +81,13 @@ class SyncPartnerOrganizations extends Command
             $data = $cleanUpNeeded ? $this->excel->load(storage_path($this->filename))->get() : null;
 
             foreach ($organizations as $organization) {
-                $this->databaseManager->beginTransaction();
                 foreach ($organization->activities as $activity) {
+                    $this->databaseManager->beginTransaction();
                     if ($participatingOrganizationData = $this->participatingOrganizationManager->managePartnerOrganizations($activity, null, $data)) {
                         $this->update($activity, $participatingOrganizationData);
                     }
+                    $this->databaseManager->commit();
                 }
-                $this->databaseManager->commit();
                 $progress->advance();
             }
 

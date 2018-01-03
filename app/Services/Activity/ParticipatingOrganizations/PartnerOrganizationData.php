@@ -125,12 +125,16 @@ class PartnerOrganizationData
                         $value['type']    = $data->validtype;
                         $value['country'] = $data->validcountry;
                     } else {
-                        $value['name']    = array_get($value, 'narrative', [['narrative' => '', 'language' => '']]);
+                        $name             = array_get($value, 'narrative.0.narrative', '');
+                        $language         = array_get($value, 'narrative.0.language', '');
+                        $value['name']    = [['narrative' => trim($name), 'language' => $language]];
                         $value['type']    = array_get($value, 'organization_type', '');
                         $value['country'] = $this->getCountry($participatingOrganization->identifier());
                     }
                 } else {
-                    $value['name']    = array_get($value, 'narrative', [['narrative' => '', 'language' => '']]);
+                    $name             = array_get($value, 'narrative.0.narrative', '');
+                    $language         = array_get($value, 'narrative.0.language', '');
+                    $value['name']    = [['narrative' => trim($name), 'language' => $language]];
                     $value['type']    = array_get($value, 'organization_type', '');
                     $value['country'] = $this->getCountry($participatingOrganization->identifier());
                 }
@@ -287,12 +291,16 @@ class PartnerOrganizationData
                 $value['type']    = $data->validtype;
                 $value['country'] = $data->validcountry;
             } else {
-                $value['name']    = array_get($value, 'narrative', [['narrative' => '', 'language' => '']]);
+                $name             = array_get($value, 'narrative.0.narrative', '');
+                $language         = array_get($value, 'narrative.0.language', '');
+                $value['name']    = [['narrative' => trim($name), 'language' => $language]];
                 $value['type']    = array_get($value, 'organization_type', '');
                 $value['country'] = $this->getCountry($participatingOrganization->identifier());
             }
         } else {
-            $value['name']    = array_get($value, 'narrative', [['narrative' => '', 'language' => '']]);
+            $name             = array_get($value, 'narrative.0.narrative', '');
+            $language         = array_get($value, 'narrative.0.language', '');
+            $value['name']    = [['narrative' => trim($name), 'language' => $language]];
             $value['type']    = array_get($value, 'organization_type', '');
             $value['country'] = $this->getCountry($participatingOrganization->identifier());
         }
