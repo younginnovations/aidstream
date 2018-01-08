@@ -116,7 +116,7 @@ class PerfectViewerRepository
                 'activities' =>
                     function ($query) {
                         return $query->where('published_to_registry', '=', true)
-//                                     ->orWhere('activity_workflow', '=', 3)
+                                     ->where('activity_workflow', '=', 3)
                                      ->with(['transactions']);
                     }
             ]
