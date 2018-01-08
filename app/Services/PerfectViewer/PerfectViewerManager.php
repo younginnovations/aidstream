@@ -405,7 +405,7 @@ class PerfectViewerManager
         $totalBudget         = $this->calculateBudget(getVal($activity->toArray(), ['budget'], []));
 
         $perfectData = $this->makeArray($activity, $reporting_org, $activityTransaction, $totalBudget);
-        $file        = $this->perfectViewerRepo->getPublishedFileName(getVal((array) $organization, [0, 'id'], []));
+        $file        = $this->perfectViewerRepo->getPublishedFileName($orgId);
         $filename    = $file ? $file->filename : '';
 
         $this->database->beginTransaction();
