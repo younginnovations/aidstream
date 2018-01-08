@@ -85,11 +85,14 @@ class PerfectViewerManager
             $orgId                      = $activity->organization_id;
             $activityId                 = $activity->id;
             $publishedToRegistry        = $activity->published_to_registry;
-            $organization               = $this->getOrg($orgId)->toArray();
+            $organizationModel          = $this->getOrg($orgId)->first();
+            $organization               = $organizationModel->toArray();
 
             $this->storeActivitySnapshot($activityId, $organization, $activity, $orgId, $publishedToRegistry);
 
-            $this->storeOrganizationSnapshot($orgId, $organization);
+            if ($organizationModel->activities->count() < 100) {
+                $this->storeOrganizationSnapshot($orgId, $organization);
+            }
 
             $this->logger->info(
                 'Activity snapshot has been added',
