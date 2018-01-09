@@ -85,8 +85,9 @@ class PerfectViewerManager
             $orgId                      = $activity->organization_id;
             $activityId                 = $activity->id;
             $publishedToRegistry        = $activity->published_to_registry;
-            $organizationModel          = $this->getOrg($orgId)->first();
-            $organization               = $organizationModel->toArray();
+            $org                        = $this->getOrg($orgId);
+            $organization               = $org->toArray();
+            $organizationModel          = $org->first();
 
             $this->storeActivitySnapshot($activityId, $organization, $activity, $orgId, $publishedToRegistry);
 
