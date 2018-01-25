@@ -165,7 +165,7 @@
                                             <div class="pull-right">
                                                 <a target="_blank" v-bind:href="'{{ env('PO_API_URL') }}' + '/suggestion/' + partnerOrganization.identifier + '/suggest'" class="suggest-edit"
                                                    v-if="partnerOrganization.is_publisher || partnerOrganization.is_org_file">@lang('global.suggest')</a>
-                                                <span class="edit-activity" v-if="!partnerOrganization.is_publisher">@lang('global.edit')</span>
+<!--                                                <span class="edit-activity" v-if="!partnerOrganization.is_publisher">@lang('global.edit')</span>-->
                                             </div>
                                         </div>
                                     </a>

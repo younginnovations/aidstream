@@ -163,7 +163,8 @@ class PartnerOrganizationData
         foreach ($this->participatingOrganizations as $participatingOrganization) {
             if ($participatingOrganization->identifier() != $this->reportingOrganization->identifier) {
                 if ($participatingOrganization->identifier()) {
-                    if ($existingPartner = $this->partners->where('identifier', $participatingOrganization->identifier())->first()) {
+                    $identifier = (string) $participatingOrganization->identifier();
+                    if ($existingPartner = $this->partners->where('identifier', $identifier)->first()) {
                         $this->updatePartner($existingPartner);
                     }
                 } else {
@@ -173,9 +174,10 @@ class PartnerOrganizationData
                 }
 
             }
-        }
 
-        $this->partnersWithName = $this->getPartnersWithName();
+            $this->partners         = $this->reportingOrganization->partners();
+            $this->partnersWithName = $this->getPartnersWithName();
+        }
 
         return $this;
     }
@@ -254,7 +256,8 @@ class PartnerOrganizationData
         foreach ($this->participatingOrganizations as $participatingOrganization) {
             if ($participatingOrganization->identifier() !== $this->reportingOrganization->identifier) {
                 if ($participatingOrganization->identifier()) {
-                    if (!($existingPartner = $this->partners->where('identifier', $participatingOrganization->identifier())->first())) {
+                    $identifier = (string) $participatingOrganization->identifier();
+                    if (!($existingPartner = $this->partners->where('identifier', $identifier)->first())) {
                         $organization = $this->createPartnerOrganization($participatingOrganization);
                     }
                 } else {
@@ -268,9 +271,10 @@ class PartnerOrganizationData
                     $participatingOrganization->data['country']     = array_has($this->countries, $organization->country) ? $organization->country : '';
                 }
             }
-        }
 
-        $this->partnersWithName = $this->getPartnersWithName();
+            $this->partners         = $this->reportingOrganization->partners();
+            $this->partnersWithName = $this->getPartnersWithName();
+        }
 
         return $this;
     }
