@@ -168,7 +168,7 @@ class PartnerOrganizationData
                         $this->updatePartner($existingPartner);
                     }
                 } else {
-                    if ($existingPartner = $this->partnersWithName->where('nameString', $participatingOrganization->name())->first()) {
+                    if ($existingPartner = $this->partnersWithName->where('nameString', trim($participatingOrganization->name()))->first()) {
                         $this->updatePartner($existingPartner);
                     }
                 }
@@ -261,7 +261,7 @@ class PartnerOrganizationData
                         $organization = $this->createPartnerOrganization($participatingOrganization);
                     }
                 } else {
-                    if (!$existingPartner = $this->partnersWithName->where('nameString', $participatingOrganization->name())->first()) {
+                    if (!$existingPartner = $this->partnersWithName->where('nameString', trim($participatingOrganization->name()))->first()) {
                         $organization = $this->createPartnerOrganization($participatingOrganization);
                     }
                 }

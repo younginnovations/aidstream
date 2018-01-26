@@ -83,9 +83,7 @@ class SyncPartnerOrganizations extends Command
             foreach ($organizations as $organization) {
                 foreach ($organization->activities as $activity) {
                     $this->databaseManager->beginTransaction();
-                    if ($participatingOrganizationData = $this->participatingOrganizationManager->managePartnerOrganizations($activity, null, $data)) {
-                        $this->update($activity, $participatingOrganizationData);
-                    }
+                    $this->participatingOrganizationManager->managePartnerOrganizations($activity, null, $data);
                     $this->databaseManager->commit();
                 }
                 $progress->advance();
