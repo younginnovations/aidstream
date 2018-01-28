@@ -167,7 +167,7 @@
           var deleteOrgDataForm = $(this).closest('.delete-org-data-form');
 
           var route = deleteOrgDataForm.attr('data-route');
-          console.log(route);
+
           $('body').append('' +
             '<div class="modal" id="delDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="z-index: 9999">' +
             '<div class="modal-dialog">' +
