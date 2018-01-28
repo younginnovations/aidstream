@@ -98,7 +98,7 @@ class PartnerOrganizationData
             $this->createNewPartners();
         } else {
             $this->updateOldPartners()
-                 ->removeActivity()
+//                 ->removeActivity()
                  ->addNewPartners();
         }
 
@@ -115,15 +115,25 @@ class PartnerOrganizationData
     protected function createNewPartners()
     {
         foreach ($this->participatingOrganizations as $participatingOrganization) {
-            if ($participatingOrganization->identifier() !== $this->reportingOrganization->identifier) {
-                $value                    = $participatingOrganization->data();
-                $value['organization_id'] = $this->reportingOrganization->id;
+            if ($participatingOrganization->identifier() === $this->reportingOrganization->identifier) {
+                if (trim($participatingOrganization->name()) !== trim($this->reportingOrganization->name)
+                    || $participatingOrganization->type() !== array_get($this->reportingOrganization->reporting_org, '0.reporting_organization_type', '')) {
 
-                if ($this->needsToBeCleaned()) {
-                    if ($data = $this->cleanData->where('identifier', $participatingOrganization->identifier())->first()) {
-                        $value['name']    = [['narrative' => $data->validnames, 'language' => $data->validlang]];
-                        $value['type']    = $data->validtype;
-                        $value['country'] = $data->validcountry;
+                    $value                    = $participatingOrganization->data();
+                    $value['organization_id'] = $this->reportingOrganization->id;
+
+                    if ($this->needsToBeCleaned()) {
+                        if ($data = $this->cleanData->where('identifier', $participatingOrganization->identifier())->first()) {
+                            $value['name']    = [['narrative' => $data->validnames, 'language' => $data->validlang]];
+                            $value['type']    = $data->validtype;
+                            $value['country'] = $data->validcountry;
+                        } else {
+                            $name             = array_get($value, 'narrative.0.narrative', '');
+                            $language         = array_get($value, 'narrative.0.language', '');
+                            $value['name']    = [['narrative' => trim($name), 'language' => $language]];
+                            $value['type']    = array_get($value, 'organization_type', '');
+                            $value['country'] = $this->getCountry($participatingOrganization->identifier());
+                        }
                     } else {
                         $name             = array_get($value, 'narrative.0.narrative', '');
                         $language         = array_get($value, 'narrative.0.language', '');
@@ -131,24 +141,18 @@ class PartnerOrganizationData
                         $value['type']    = array_get($value, 'organization_type', '');
                         $value['country'] = $this->getCountry($participatingOrganization->identifier());
                     }
-                } else {
-                    $name             = array_get($value, 'narrative.0.narrative', '');
-                    $language         = array_get($value, 'narrative.0.language', '');
-                    $value['name']    = [['narrative' => trim($name), 'language' => $language]];
-                    $value['type']    = array_get($value, 'organization_type', '');
-                    $value['country'] = $this->getCountry($participatingOrganization->identifier());
+
+                    $value['used_by']          = [+ $this->activityId];
+                    $value['is_reporting_org'] = false;
+                    $value['is_publisher']     = boolval(array_get($value, 'is_publisher', false));
+
+
+                    $organization           = $this->organizationRepository->storeOrgData($value);
+                    $this->partnersWithName = $this->getPartnersWithName();
+
+                    $participatingOrganization->data['org_data_id'] = $organization->id;
+                    $participatingOrganization->data['country']     = array_has($this->countries, $organization->country) ? $organization->country : '';
                 }
-
-                $value['used_by']          = [+ $this->activityId];
-                $value['is_reporting_org'] = false;
-                $value['is_publisher']     = boolval(array_get($value, 'is_publisher', false));
-
-
-                $organization           = $this->organizationRepository->storeOrgData($value);
-                $this->partnersWithName = $this->getPartnersWithName();
-
-                $participatingOrganization->data['org_data_id'] = $organization->id;
-                $participatingOrganization->data['country']     = array_has($this->countries, $organization->country) ? $organization->country : '';
             }
         }
     }
@@ -161,22 +165,25 @@ class PartnerOrganizationData
     protected function updateOldPartners()
     {
         foreach ($this->participatingOrganizations as $participatingOrganization) {
-            if ($participatingOrganization->identifier() != $this->reportingOrganization->identifier) {
-                if ($participatingOrganization->identifier()) {
-                    $identifier = (string) $participatingOrganization->identifier();
-                    if ($existingPartner = $this->partners->where('identifier', $identifier)->first()) {
-                        $this->updatePartner($existingPartner);
+            if ($participatingOrganization->identifier() === $this->reportingOrganization->identifier) {
+                if (trim($participatingOrganization->name()) !== trim($this->reportingOrganization->name)
+                    || $participatingOrganization->type() !== array_get($this->reportingOrganization->reporting_org, '0.reporting_organization_type', '')) {
+                    if ($participatingOrganization->identifier()) {
+                        $identifier = (string) $participatingOrganization->identifier();
+                        if ($existingPartner = $this->partners->where('identifier', $identifier)->first()) {
+                            $this->updatePartner($existingPartner);
+                        }
+                    } else {
+                        if ($existingPartner = $this->partnersWithName->where('nameString', trim($participatingOrganization->name()))->first()) {
+                            $this->updatePartner($existingPartner);
+                        }
                     }
-                } else {
-                    if ($existingPartner = $this->partnersWithName->where('nameString', trim($participatingOrganization->name()))->first()) {
-                        $this->updatePartner($existingPartner);
-                    }
+
                 }
 
+                $this->partners         = $this->reportingOrganization->partners();
+                $this->partnersWithName = $this->getPartnersWithName();
             }
-
-            $this->partners         = $this->reportingOrganization->partners();
-            $this->partnersWithName = $this->getPartnersWithName();
         }
 
         return $this;
@@ -254,26 +261,30 @@ class PartnerOrganizationData
     protected function addNewPartners()
     {
         foreach ($this->participatingOrganizations as $participatingOrganization) {
-            if ($participatingOrganization->identifier() !== $this->reportingOrganization->identifier) {
-                if ($participatingOrganization->identifier()) {
-                    $identifier = (string) $participatingOrganization->identifier();
-                    if (!($existingPartner = $this->partners->where('identifier', $identifier)->first())) {
-                        $organization = $this->createPartnerOrganization($participatingOrganization);
+            if ($participatingOrganization->identifier() === $this->reportingOrganization->identifier) {
+                if (trim($participatingOrganization->name()) !== trim($this->reportingOrganization->name)
+                    || $participatingOrganization->type() !== array_get($this->reportingOrganization->reporting_org, '0.reporting_organization_type', '')) {
+
+                    if ($participatingOrganization->identifier()) {
+                        $identifier = (string) $participatingOrganization->identifier();
+                        if (!($existingPartner = $this->partners->where('identifier', $identifier)->first())) {
+                            $organization = $this->createPartnerOrganization($participatingOrganization);
+                        }
+                    } else {
+                        if (!$existingPartner = $this->partnersWithName->where('nameString', trim($participatingOrganization->name()))->first()) {
+                            $organization = $this->createPartnerOrganization($participatingOrganization);
+                        }
                     }
-                } else {
-                    if (!$existingPartner = $this->partnersWithName->where('nameString', trim($participatingOrganization->name()))->first()) {
-                        $organization = $this->createPartnerOrganization($participatingOrganization);
+
+                    if (isset($organization)) {
+                        $participatingOrganization->data['org_data_id'] = $organization->id;
+                        $participatingOrganization->data['country']     = array_has($this->countries, $organization->country) ? $organization->country : '';
                     }
                 }
 
-                if (isset($organization)) {
-                    $participatingOrganization->data['org_data_id'] = $organization->id;
-                    $participatingOrganization->data['country']     = array_has($this->countries, $organization->country) ? $organization->country : '';
-                }
+                $this->partners         = $this->reportingOrganization->partners();
+                $this->partnersWithName = $this->getPartnersWithName();
             }
-
-            $this->partners         = $this->reportingOrganization->partners();
-            $this->partnersWithName = $this->getPartnersWithName();
         }
 
         return $this;

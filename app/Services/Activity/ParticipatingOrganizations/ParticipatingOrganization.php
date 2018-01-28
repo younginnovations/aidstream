@@ -85,4 +85,9 @@ class ParticipatingOrganization
     {
         return array_get($this->data, $key, null);
     }
+
+    public function type()
+    {
+        return $this->type;
+    }
 }
