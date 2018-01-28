@@ -99,7 +99,7 @@ class OrganizationController extends Controller
         $reportingOrg     = $organizationData->where('is_reporting_org', true)->first();
         $participatingOrg = $organizationData->where('is_reporting_org', false);
 
-        return view('Organization/index', compact('reportingOrg', 'participatingOrg'));
+        return view('Organization/index', compact('reportingOrg', 'participatingOrg', 'organizationData'));
     }
 
     /**
@@ -843,7 +843,7 @@ class OrganizationController extends Controller
 
     /**
      * Update Activities for Partner Organizations.
-     * 
+     *
      * @param $activities
      * @param $from
      * @param $to

@@ -155,6 +155,7 @@
     <script>
       $(document).ready(function () {
         var partnerOrganisations = {!! json_encode($participatingOrg) !!};
+        var orgs = {!! json_encode($organizationData) !!};
         var partnerOrganisationContainer = $('#partner-org-body');
         var infoContainer = $('#organisation-merger-info-container');
         var activityListContainer = $('#activity-list-container');
@@ -216,10 +217,8 @@
           var organisationId = self.attr('data-org-id');
           var route = '/get-activity-titles/' + organisationId;
 
-          var requiredOrganisations = $.map(partnerOrganisations, function (org, index) {
-            if (org.id != organisationId) {
+          var requiredOrganisations = $.map(orgs, function (org, index) {
               return org;
-            }
           });
 
           var actionInfo = "Please choose an organisation from below you want to merge org_name with:";
