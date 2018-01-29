@@ -227,9 +227,15 @@
           partnerOrganisationContainer.html('<p class="text-center">' + actionInfo.replace(/org_name/, '<strong>' + organisationName + '</strong>') + '</p>');
 
           $.map(requiredOrganisations, function (org, index) {
-            $('<label>\n' +
-              '<input required="true" type="radio" class="organization-to-be-merged-with" name="merge_target" value="' + org.id + '">' + org.name[0].narrative + "\t" + (org.identifier ?  "(" + org.identifier + ")" : "") +
-              '</label>').appendTo(partnerOrganisationContainer)
+              if (org.is_reporting_org && org.organization) {
+                  $('<label>\n' +
+                      '<input required="true" type="radio" class="organization-to-be-merged-with" name="merge_target" value="' + org.id + '">' + '<b>' + org.organization.name + "\t" + (org.identifier ?  "(" + org.identifier + ")" : "(" + org.organization.reporting_org[0].reporting_organization_identifier + ")") + ' ' + "(This is you)" + '</b>' +
+                      '</label>').appendTo(partnerOrganisationContainer);
+              } else {
+                  $('<label>\n' +
+                      '<input required="true" type="radio" class="organization-to-be-merged-with" name="merge_target" value="' + org.id + '">' + org.name[0].narrative + "\t" + (org.identifier ?  "(" + org.identifier + ")" : "") +
+                      '</label>').appendTo(partnerOrganisationContainer);
+              }
           });
 
           var rules = {

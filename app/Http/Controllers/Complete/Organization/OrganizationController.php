@@ -826,13 +826,13 @@ class OrganizationController extends Controller
 
         $remainingOrgs->push(
             [
-                'identifier'        => $to->identifier,
+                'identifier'        => $to->is_reporting_org ? $to->organization->identifier : $to->identifier,
                 'activity_id'       => array_get($orgToBeReplaced, 'activity_id', ''),
                 'organization_role' => array_get($orgToBeReplaced, 'organization_role', ''),
-                'organization_type' => $to->type,
+                'organization_type' => ($to->is_reporting_org) ? array_get($to->organization->reporting_org, '0.reporting_organization_type') : $to->type,
                 'country'           => $to->country,
                 'org_data_id'       => $to->id,
-                'narrative'         => $to->name,
+                'narrative'         => ($to->is_reporting_org) ? array_get($to->organization->reporting_org, '0.narrative') : $to->name,
                 'is_publisher'      => $to->is_publisher
             ]
         );

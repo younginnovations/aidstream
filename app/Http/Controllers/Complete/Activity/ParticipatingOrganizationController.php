@@ -61,7 +61,6 @@ class ParticipatingOrganizationController extends Controller
 
 //        $participatingOrganization  = $this->participatingOrganizationManager->getParticipatingOrganizationData($id);
 //        $form                       = $this->participatingOrganizationForm->editForm($participatingOrganization, $id);
-        $activityData          = $this->activityManager->getActivityData($id);
         $organizationTypes     = $this->getNameWithCode('Activity', 'OrganisationType');
         $organizationRoles     = $this->getNameWithCode('Activity', 'OrganisationRole');
         $partnerOrganizations  = $this->participatingOrganizationManager->getPartnerOrganizations(session('org_id'))->toArray();
