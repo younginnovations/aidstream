@@ -38,7 +38,7 @@ class DocumentLinkRepository
      */
     public function getOrganizationData($organization_id)
     {
-        return $this->org->where('organization_id', $organization_id)->first();
+        return $this->org->where('id', $organization_id)->first();
     }
 
     /**
@@ -48,6 +48,6 @@ class DocumentLinkRepository
      */
     public function getDocumentLinkData($organization_id)
     {
-        return $this->org->where('organization_id', $organization_id)->first()->document_link;
+        return $this->org->where('id', $organization_id)->first()->document_link;
     }
 }

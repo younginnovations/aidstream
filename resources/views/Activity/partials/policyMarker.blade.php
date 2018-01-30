@@ -35,6 +35,6 @@
             </div>
         @endforeach
         <a href="{{route('activity.policy-marker.index', $id)}}" class="edit-element">@lang('global.edit')</a>
-        <a href="{{route('activity.delete-element', [$id, 'policy_marker'])}}" class="delete pull-right">@lang('global.remove')</a>
+        @include('Activity.partials.element-delete-form', ['element' => 'policy_marker', 'id' => $id])
     </div>
 @endif

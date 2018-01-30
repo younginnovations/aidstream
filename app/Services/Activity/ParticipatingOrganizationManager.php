@@ -1,11 +1,16 @@
 <?php namespace App\Services\Activity;
 
+use App\Core\V201\Repositories\Organization\OrganizationRepository;
 use App\Core\Version;
 use App\Models\Activity\Activity;
+use App\Models\Organization\Organization;
+use App\Services\Activity\ParticipatingOrganizations\PartnerOrganizationData;
+use App\Services\Organization\OrganizationManager;
 use Exception;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Logging\Log;
 use Illuminate\Database\Eloquent\Model;
+use Maatwebsite\Excel\Excel;
 
 /**
  * Class ParticipatingOrganizationManager
@@ -17,27 +22,66 @@ class ParticipatingOrganizationManager
      * @var Guard
      */
     protected $auth;
+
     /**
      * @var Log
      */
     protected $log;
+
     /**
      * @var Version
      */
     protected $version;
 
     /**
-     * @param Version $version
-     * @param Log     $log
-     * @param Guard   $auth
+     * @var OrganizationManager
      */
-    public function __construct(Version $version, Log $log, Guard $auth)
-    {
-        $this->auth                 = $auth;
-        $this->log                  = $log;
-        $this->participatingOrgRepo = $version->getActivityElement()
-                                              ->getParticipatingOrganization()
-                                              ->getRepository();
+    protected $organizationManager;
+
+    /**
+     * @var OrganizationRepository
+     */
+    protected $organizationRepository;
+
+    protected $participatingOrgRepo;
+
+    /**
+     * @var PartnerOrganizationData
+     */
+    protected $partnerOrganization;
+
+    /**
+     * @var Excel
+     */
+    protected $excel;
+
+    protected $filename = 'foundapi.csv';
+
+    /**
+     * @param Version                $version
+     * @param OrganizationManager    $organizationManager
+     * @param OrganizationRepository $organizationRepository
+     * @param Excel                  $excel
+     * @param Log                    $log
+     * @param Guard                  $auth
+     */
+    public function __construct(
+        Version $version,
+        OrganizationManager $organizationManager,
+        OrganizationRepository $organizationRepository,
+        Excel $excel,
+        Log $log,
+        Guard $auth
+    ) {
+        $this->auth                   = $auth;
+        $this->log                    = $log;
+        $this->participatingOrgRepo   = $version->getActivityElement()
+                                                ->getParticipatingOrganization()
+                                                ->getRepository();
+        $this->version                = $version;
+        $this->organizationManager    = $organizationManager;
+        $this->organizationRepository = $organizationRepository;
+        $this->excel                  = $excel;
     }
 
     /**
@@ -78,5 +122,49 @@ class ParticipatingOrganizationManager
     public function getParticipatingOrganizationData($id)
     {
         return $this->participatingOrgRepo->getParticipatingOrganizationData($id);
+    }
+
+    /**
+     * @param $orgId
+     * @return mixed
+     */
+    public function getPartnerOrganizations($orgId)
+    {
+        return $this->organizationManager->getPartnerOrganizations($orgId);
+    }
+
+    /**
+     * Manage Partners for an Activity.
+     *
+     * @param Activity $activity
+     * @param array    $participatingOrganizationDetails
+     * @param null     $data
+     * @return array|null
+     */
+    public function managePartnerOrganizations(Activity $activity, $participatingOrganizationDetails = null, $data = null)
+    {
+        try {
+            $this->partnerOrganization = app()->make(PartnerOrganizationData::class);
+
+            if (!$participatingOrganizationDetails) {
+                $participatingOrganizations = $activity->participating_organization ? $activity->participating_organization : [];
+            } else {
+                $participatingOrganizations = array_get($participatingOrganizationDetails, 'participating_organization', []);
+            }
+
+            $participatingOrganizationData = $this->partnerOrganization->init($activity, $participatingOrganizations, $this->organizationRepository, $data)
+                                                                       ->sync();
+
+            return $participatingOrganizationData;
+        } catch (Exception $exception) {
+            $this->log->error(
+                $exception->getMessage(),
+                [
+                    'trace' => $exception->getTraceAsString()
+                ]
+            );
+
+            return null;
+        }
     }
 }

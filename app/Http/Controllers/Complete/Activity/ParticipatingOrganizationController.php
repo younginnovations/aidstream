@@ -1,11 +1,12 @@
 <?php namespace App\Http\Controllers\Complete\Activity;
 
+use App\Core\V201\Traits\GetCodes;
 use App\Http\Controllers\Controller;
-use App\Services\Activity\ParticipatingOrganizationManager;
+use App\Http\Requests\Request;
 use App\Services\Activity\ActivityManager;
+use App\Services\Activity\ParticipatingOrganizationManager;
 use App\Services\FormCreator\Activity\ParticipatingOrganization as ParticipatingOrganizationForm;
 use App\Services\RequestManager\Activity\ParticipatingOrganization as ParticipatingOrganizationRequestManager;
-use App\Http\Requests\Request;
 use Illuminate\Support\Facades\Gate;
 
 /**
@@ -14,6 +15,8 @@ use Illuminate\Support\Facades\Gate;
  */
 class ParticipatingOrganizationController extends Controller
 {
+    use GetCodes;
+
     /**
      * @var ActivityManager
      */
@@ -56,13 +59,37 @@ class ParticipatingOrganizationController extends Controller
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
-        $participatingOrganization = $this->participatingOrganizationManager->getParticipatingOrganizationData($id);
-        $activityData              = $this->activityManager->getActivityData($id);
-        $form                      = $this->participatingOrganizationForm->editForm($participatingOrganization, $id);
+//        $participatingOrganization  = $this->participatingOrganizationManager->getParticipatingOrganizationData($id);
+//        $form                       = $this->participatingOrganizationForm->editForm($participatingOrganization, $id);
+        $organizationTypes     = $this->getNameWithCode('Activity', 'OrganisationType');
+        $organizationRoles     = $this->getNameWithCode('Activity', 'OrganisationRole');
+        $partnerOrganizations  = $this->participatingOrganizationManager->getPartnerOrganizations(session('org_id'))->toArray();
+        $reportingOrganisation = $activityData->organization->toArray();
+        $reportingOrgData      = [
+            'name'         => array_get($reportingOrganisation, 'reporting_org.0.narrative'),
+            'identifier'   => array_get($reportingOrganisation, 'reporting_org.0.reporting_organization_identifier'),
+            'country'      => array_get($reportingOrganisation, 'country'),
+            'type'         => array_get($reportingOrganisation, 'reporting_org.0.reporting_organization_type'),
+            'id'           => $activityData->organization->orgData()->where('is_reporting_org', true)->pluck('id')->first(),
+            'is_publisher' => false
+        ];
+
+        array_push($partnerOrganizations, $reportingOrgData);
+
+        $countries                  = $this->getNameWithCode('Organization', 'Country');
+        $participatingOrganizations = $activityData->participating_organization;
+
+        foreach ((array) $participatingOrganizations as $index => $organization) {
+            (array_key_exists('country', $organization)) ?: $participatingOrganizations[$index]['country'] = '';
+        }
+
+        if ($participatingOrganizations) {
+            $participatingOrganizations = array_values($participatingOrganizations);
+        }
 
         return view(
             'Activity.participatingOrganization.edit',
-            compact('form', 'activityData', 'id')
+            compact('form', 'activityData', 'id', 'participatingOrganizations', 'organizationRoles', 'organizationTypes', 'countries', 'partnerOrganizations')
         );
     }
 
@@ -78,26 +105,28 @@ class ParticipatingOrganizationController extends Controller
         $activityData = $this->activityManager->getActivityData($id);
 
         if (Gate::denies('ownership', $activityData)) {
-            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
+            return response()->json($this->getNoPrivilegesMessage(), 500);
         }
 
         $this->authorizeByRequestType($activityData, 'participating_organization');
-        $participatingOrganization = $request->all();
-        if (!$this->validateData($request->get('participating_organization'))) {
-            $response = ['type' => 'warning', 'code' => ['participating_org', ['name' => 'participating organization']]];
 
-            return redirect()->back()->withInput()->withResponse($response);
+        if (!$this->validateData($request->get('participating_organization'))) {
+            return response()->json(trans('V201/message.participating_org', ['name' => 'participating organization']), 500);
         }
+
+        $participatingOrganization['participating_organization']  = $this->participatingOrganizationManager->managePartnerOrganizations($activityData, $request->all());
+
+        if (!$participatingOrganization) {
+            return response()->json(trans('V201/message.update_failed', ['name' => 'participating organization']), 400);
+        }
+
         if ($this->participatingOrganizationManager->update($participatingOrganization, $activityData)) {
             $this->activityManager->resetActivityWorkflow($id);
 
-            $response = ['type' => 'success', 'code' => ['updated', ['name' => trans('title.participating_organisation')]]];
-
-            return redirect()->to(sprintf('/activity/%s', $id))->withResponse($response);
+            return response()->json(trans('V201/message.updated', ['name' => 'participating organization']), 200);
         }
-        $response = ['type' => 'danger', 'code' => ['update_failed', ['name' => trans('title.participating_organisation')]]];
 
-        return redirect()->back()->withInput()->withResponse($response);
+        return response()->json(trans('V201/message.update_failed', ['name' => 'participating organization']), 500);
     }
 
     /**
@@ -105,12 +134,13 @@ class ParticipatingOrganizationController extends Controller
      * @param array $data
      * @return bool
      */
-    private function validateData(array $data)
+    protected function validateData(array $data)
     {
         $check = false;
+
         foreach ($data as $participatingOrg) {
             $orgRole = $participatingOrg['organization_role'];
-            if ($orgRole === "1" || $orgRole == "4") {
+            if ($orgRole == "1" || $orgRole == "4") {
                 $check = true;
                 break;
             }
@@ -118,4 +148,5 @@ class ParticipatingOrganizationController extends Controller
 
         return $check;
     }
+
 }

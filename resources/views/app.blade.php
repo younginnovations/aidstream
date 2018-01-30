@@ -167,7 +167,7 @@
     <script type="text/javascript" src="{{url('/js/jquery.cookie.js')}}"></script>
     <script type="text/javascript" src="{{url('/js/jquery.mousewheel.js')}}"></script>
     <script type="text/javascript" src="{{url('/js/jquery.jscrollpane.min.js')}}"></script>
-    <script type="text/javascript" src="{{url('/js/select2.min.js')}}"></script>
+{{--    <script type="text/javascript" src="{{url('/js/select2.min.js')}}"></script>--}}
     <script type="text/javascript" src="{{url('/js/jquery.datetimepicker.full.min.js')}}"></script>
     <script type="text/javascript" src="{{url('/js/script.js')}}"></script>
     <script type="text/javascript" src="{{url('/js/datatable.js')}}"></script>
@@ -176,11 +176,11 @@
 @endif
 @yield('humanitarian-script')
 
-<script type="text/javascript">
-    $(document).ready(function () {
-        $('form select').select2();
-    });
-</script>
+{{--<script type="text/javascript">--}}
+    {{--$(document).ready(function () {--}}
+        {{--$('form select').select2();--}}
+    {{--});--}}
+{{--</script>--}}
 <!-- Google Analytics -->
 <script type="text/javascript" src="{{url('/js/ga.js')}}"></script>
 <script type="text/javascript" src="//cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>

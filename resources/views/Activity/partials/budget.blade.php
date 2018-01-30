@@ -28,6 +28,6 @@
             </div>
         @endforeach
         <a href="{{route('activity.budget.index', $id)}}" class="edit-element">@lang('global.edit')</a>
-        <a href="{{route('activity.delete-element', [$id, 'budget'])}}" class="delete pull-right">@lang('global.remove')</a>
+        @include('Activity.partials.element-delete-form', ['element' => 'budget', 'id' => $id])
     </div>
 @endif

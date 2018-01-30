@@ -73,6 +73,10 @@ class ParticipatingOrganization extends ActivityBaseRequest
                 'validation.required_without',
                 ['attribute' => trans('elementForm.narrative'), 'values' => trans('elementForm.identifier')]
             );
+            $messages[$identifier.'.exclude_operators'] = trans(
+                'validation.exclude_operators',
+                ['attribute' => trans('elementForm.identifier'), 'values' => trans('elementForm.identifier')]
+            );
             $messages                                                        = array_merge(
                 $messages,
                 $this->getMessagesForNarrative($participatingOrg['narrative'], $participatingOrgForm)

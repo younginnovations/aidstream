@@ -58,7 +58,7 @@ class RecipientCountryBudgetManager
             );
 
             return true;
-        } catch (Exception $exception) {
+        } catch (\Exception $exception) {
             $this->log->error($exception, ['OrganizationRecipientCountryBudget' => $input]);
         }
 

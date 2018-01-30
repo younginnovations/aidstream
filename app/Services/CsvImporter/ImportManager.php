@@ -1,5 +1,6 @@
 <?php namespace App\Services\CsvImporter;
 
+use App\Services\Activity\ParticipatingOrganizations\PartnerOrganizationData;
 use Exception;
 use Maatwebsite\Excel\Excel;
 use Psr\Log\LoggerInterface;
@@ -185,6 +186,11 @@ class ImportManager
             } else {
                 $createdActivity = $this->activityRepo->createActivity(getVal($activity, ['data']));
             }
+
+            $partnerOrganization = app()->make(PartnerOrganizationData::class);
+
+            $partnerOrganization->init($createdActivity, array_get($activity, 'data.participating_organization', []), $this->organizationRepo)
+                                ->sync();
 
             if (array_key_exists('transaction', $activity['data'])) {
                 $this->createTransaction(getVal($activity['data'], ['transaction'], []), $createdActivity->id);

@@ -1,15 +1,14 @@
 <?php namespace App\Http\Controllers\Complete\Organization;
 
-use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Request;
+use App\Services\FormCreator\Organization\TotalExpenditure as FormBuilder;
 use App\Services\Organization\OrganizationManager;
 use App\Services\Organization\TotalExpenditureManager;
 use App\Services\RequestManager\Organization\TotalExpenditureRequestManager;
 use Illuminate\Support\Facades\Gate;
 use Session;
 use URL;
-use App\Http\Requests\Request;
-use App\Services\FormCreator\Organization\TotalExpenditure as FormBuilder;
 
 /**
  * Class TotalExpenditureController
@@ -60,7 +59,7 @@ class TotalExpenditureController extends Controller
      */
     public function index($orgId)
     {
-        $organization = $this->organizationManager->getOrganization($orgId);
+        $organization = $this->organizationManager->findOrganizationData($orgId);
 
         if (Gate::denies('belongsToOrganization', $organization)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
@@ -81,18 +80,16 @@ class TotalExpenditureController extends Controller
      */
     public function update($orgId, Request $request, TotalExpenditureRequestManager $expenditureRequestManager)
     {
-        $organization     = $this->organizationManager->getOrganization($orgId);
-        $organizationData = $this->totalExpenditureManager->getOrganizationData($orgId);
+        $organization = $this->organizationManager->findOrganizationData($orgId);
 
         if (Gate::denies('belongsToOrganization', $organization)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
-        $organizationData = $this->totalExpenditureManager->getOrganizationData($orgId);
-        $this->authorizeByRequestType($organizationData, 'total_expenditure');
+        $this->authorizeByRequestType($organization, 'total_expenditure');
         $totalExpenditure = $request->all();
 
-        if ($this->totalExpenditureManager->update($totalExpenditure, $organizationData)) {
+        if ($this->totalExpenditureManager->update($totalExpenditure, $organization)) {
             $this->organizationManager->resetStatus($orgId);
             $response = ['type' => 'success', 'code' => ['updated', ['name' => trans('title.org_total_expenditure')]]];
 

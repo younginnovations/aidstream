@@ -53,7 +53,7 @@
                 @endforeach
             </div>
         </div>
-        <a href="{{ url('/organization/' . $orgId . '/document-link') }}" class="edit-element">@lang('global.edit')</a>
-        <a href="{{ route('organization.delete-element',[$orgId,'document_link'])}}" class="delete pull-right">@lang('global.delete')</a>
+        <a href="{{ url('/organization/' . $id . '/document-link') }}" class="edit-element">@lang('global.edit')</a>
+        <a href="{{ route('organization.delete-element',[$id,'document_link'])}}" class="delete pull-right">@lang('global.delete')</a>
     </div>
 @endif

@@ -65,6 +65,7 @@ var Map = {
         var countryId = administrativeContainer.parent().find('.country').find('select').attr('id');
         var countryIndex = this.getIndex(countryId, 0);
         var currentAdministrativeCount = administrativeContainer.children('.form-group').length;
+
         var pointContainer = administrativeContainer.find('.point');
         var mapWrapperContainer = mapContainer.parent('.map-wrapper');
         if(mapWrapperContainer.find(".close-map").length === 0){
@@ -188,8 +189,8 @@ var Map = {
                 var longitude = $(point).find('.longitude').val();
                 var locationName = $(point).find('.locationName').val();
                 var field = $(point).find('.locationName').attr('id');
-
                 if (latitude !== "" && longitude !== "") {
+                    // console.log(point, latitude, longitude);
                     pane.find('p').remove();
                     if(mapWrapper.find(".close-map").length === 0){
                         mapWrapper.append("<div class='btn close-map'>Done</div>");

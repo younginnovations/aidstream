@@ -1,11 +1,11 @@
 <?php namespace App\Http\Controllers\Complete\Organization;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Request;
+use App\Services\FormCreator\Organization\RecipientRegionBudget;
 use App\Services\Organization\OrganizationManager;
 use App\Services\Organization\RecipientRegionBudgetManager;
-use App\Http\Requests\Request;
 use App\Services\RequestManager\Organization\RecipientRegionBudget as RecipientRegionBudgetRequest;
-use App\Services\FormCreator\Organization\RecipientRegionBudget;
 use Illuminate\Support\Facades\Gate;
 
 /**
@@ -46,7 +46,7 @@ class RecipientRegionBudgetController extends Controller
      */
     public function index($orgId)
     {
-        $organization = $this->organizationManager->getOrganization($orgId);
+        $organization = $this->organizationManager->findOrganizationData($orgId);
 
         if (Gate::denies('belongsToOrganization', $organization)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
@@ -66,17 +66,16 @@ class RecipientRegionBudgetController extends Controller
      */
     public function update($orgId, RecipientRegionBudgetRequest $recipientRegionBudgetRequest, Request $request)
     {
-        $organization     = $this->organizationManager->getOrganization($orgId);
-        $organizationData = $this->recipientRegionBudgetManager->getOrganizationData($orgId);
+        $organization     = $this->organizationManager->findOrganizationData($orgId);
 
         if (Gate::denies('belongsToOrganization', $organization)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
-        $this->authorizeByRequestType($organizationData, 'recipient_region_budget');
+        $this->authorizeByRequestType($organization, 'recipient_region_budget');
         $input = $request->all();
 
-        if ($this->recipientRegionBudgetManager->update($input, $organizationData)) {
+        if ($this->recipientRegionBudgetManager->update($input, $organization)) {
             $this->organizationManager->resetStatus($orgId);
             $response = ['type' => 'success', 'code' => ['updated', ['name' => trans('title.org_recipient_region_budget')]]];
 

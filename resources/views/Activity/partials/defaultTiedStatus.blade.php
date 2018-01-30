@@ -7,6 +7,6 @@
             </div>
         </div>
         <a href="{{route('activity.default-tied-status.index', $id)}}" class="edit-element">@lang('global.edit')</a>
-        <a href="{{route('activity.delete-element', [$id, 'default_tied_status'])}}" class="delete pull-right">@lang('global.remove')</a>
+        @include('Activity.partials.element-delete-form', ['element' => 'default_tied_status', 'id' => $id])
     </div>
 @endif

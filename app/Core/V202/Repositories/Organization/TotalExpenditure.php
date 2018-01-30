@@ -50,6 +50,6 @@ class TotalExpenditure
      */
     public function getOrganizationTotalExpenditureData($orgId)
     {
-        return $this->org->where('organization_id', $orgId)->first()->total_expenditure;
+        return $this->org->where('id', $orgId)->first()->total_expenditure;
     }
 }

@@ -47,7 +47,7 @@
                 </div>
             </div>
         @endforeach
-            <a href="{{ route('organization.total-budget.index', $orgId) }}" class="edit-element">@lang('global.edit')</a>
-            <a href="{{ route('organization.delete-element', [$orgId, 'total_budget']) }}" class="delete pull-right">@lang('global.delete')</a>
+            <a href="{{ route('organization.total-budget.index', $id) }}" class="edit-element">@lang('global.edit')</a>
+            <a href="{{ route('organization.delete-element', [$id, 'total_budget']) }}" class="delete pull-right">@lang('global.delete')</a>
     </div>
 @endif

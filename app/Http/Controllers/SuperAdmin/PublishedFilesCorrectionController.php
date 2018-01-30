@@ -43,7 +43,7 @@ class PublishedFilesCorrectionController extends Controller
     {
         $organization               = $this->organizationService->find($organizationId);
         $publishedFiles             = $organization->publishedFiles;
-        $organizationPublishedFiles = $organization->organizationPublished;
+        $organizationPublishedFiles = $organization->organizationPublished()->get();
         $settings                   = $organization->settings;
 
         return view('superAdmin.publishedFilesCorrection.show', compact('organization', 'publishedFiles', 'settings', 'organizationPublishedFiles'));

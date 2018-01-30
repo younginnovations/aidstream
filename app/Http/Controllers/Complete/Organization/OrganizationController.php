@@ -2,15 +2,15 @@
 
 use App\Core\Form\BaseForm;
 use App\Core\V201\Requests\Settings\OrganizationInfoRequest;
-use App\Http\Requests;
+use App\Core\V201\Traits\GetCodes;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Request;
 use App\Services\Activity\ActivityManager;
+use App\Services\FormCreator\Organization\OrgReportingOrgForm;
+use App\Services\Organization\OrganizationManager;
+use App\Services\Organization\OrgNameManager;
 use App\Services\RequestManager\OrganizationElementValidator;
 use App\Services\SettingsManager;
-use App\Services\Organization\OrganizationManager;
-use App\Services\FormCreator\Organization\OrgReportingOrgForm;
-use App\Services\Organization\OrgNameManager;
 use App\Services\UserManager;
 use Illuminate\Contracts\Mail\Mailer;
 use Illuminate\Support\Facades\Gate;
@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Gate;
  */
 class OrganizationController extends Controller
 {
+    use GetCodes;
     /**
      * @var OrganizationManager
      */
@@ -30,11 +31,27 @@ class OrganizationController extends Controller
      */
     protected $settingsManager;
 
+    /**
+     * @var BaseForm
+     */
     protected $baseForm;
 
+    /**
+     * @var UserManager
+     */
     protected $userManager;
 
+    /**
+     * @var Mailer
+     */
     protected $mailer;
+
+    /**
+     * @var OrgNameManager
+     */
+    protected $nameManager;
+
+    protected $activityManager;
 
     /**
      * Create a new controller instance.
@@ -73,9 +90,16 @@ class OrganizationController extends Controller
         $this->mailer                     = $mailer;
     }
 
+    /**
+     *
+     */
     public function index()
     {
-        //
+        $organizationData = $this->organizationManager->getOrganizationData(session('org_id'));
+        $reportingOrg     = $organizationData->where('is_reporting_org', true)->first();
+        $participatingOrg = $organizationData->where('is_reporting_org', false);
+
+        return view('Organization/index', compact('reportingOrg', 'participatingOrg', 'organizationData'));
     }
 
     /**
@@ -86,9 +110,10 @@ class OrganizationController extends Controller
      */
     public function show($id)
     {
-        $organization = $this->organizationManager->getOrganization($id);
+        $organizationData = $this->organizationManager->findOrganizationData($id);
+        $organization     = $this->organizationManager->getOrganization(session('org_id'));
 
-        if (Gate::denies('belongsToOrganization', $organization)) {
+        if (Gate::denies('belongsToOrganization', $organizationData)) {
             return redirect()->route('activity.index')->withResponse($this->getNoPrivilegesMessage());
         }
 
@@ -97,7 +122,8 @@ class OrganizationController extends Controller
 
             return redirect('/settings')->withResponse($response);
         }
-        $organizationData              = $this->nameManager->getOrganizationData($id);
+
+//        $organizationData              = $this->nameManager->getOrganizationData($id);
         $reporting_org                 = (array) $organization->reporting_org[0];
         $org_name                      = (array) $organizationData->name;
         $total_budget                  = (array) $organizationData->total_budget;
@@ -131,7 +157,8 @@ class OrganizationController extends Controller
                 'recipient_region_budget',
                 'total_expenditure',
                 'organizationDataStatus',
-                'message'
+                'message',
+                'organizationData'
             )
         );
     }
@@ -144,21 +171,21 @@ class OrganizationController extends Controller
      */
     public function updateStatus($id, Request $request, OrganizationElementValidator $orgElementValidator)
     {
-        $organization = $this->organizationManager->getOrganization($id);
+        $organization     = $this->organizationManager->getOrganization($id);
+        $organizationData = $this->organizationManager->getOrganizationData($id);
 
-        if (Gate::denies('belongsToOrganization', $organization)) {
+        if (Gate::denies('belongsToOrganization', $organizationData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
         $input  = $request->all();
         $status = $input['status'];
 
+//        $organization = $this->organizationManager->getOrganization($id);
         if ($status == 3) {
             $this->authorize('publish_activity', $organization);
         }
-        $organization     = $this->organizationManager->getOrganization($id);
-        $organizationData = $this->organizationManager->getOrganizationData($id);
-        $settings         = $this->settingsManager->getSettings($id);
+        $settings = $this->settingsManager->getSettings($id);
 
         $orgElem    = $this->organizationManager->getOrganizationElement();
         $xmlService = $orgElem->getOrgXmlService();
@@ -220,8 +247,8 @@ class OrganizationController extends Controller
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
-        $organization = $this->organizationManager->getOrganization($id);
-        $data         = $organization->reporting_org;
+        $organization = $this->organizationManager->findOrganizationData($id);
+        $data         = $organization->identifier;
         $form         = $this->orgReportingOrgFormCreator->editForm($data, $organization);
 
         return view('Organization.identifier.edit', compact('form', 'organization', 'id'));
@@ -388,10 +415,9 @@ class OrganizationController extends Controller
      */
     public function deleteElement($id, $element)
     {
-        $organizationData = $this->organizationManager->getOrganizationData($id);
-        $organization     = $this->organizationManager->getOrganization($id);
+        $organizationData = $this->organizationManager->findOrganizationData($id);
 
-        if (Gate::denies('belongsToOrganization', $organization)) {
+        if (Gate::denies('belongsToOrganization', $organizationData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
         $result = $this->organizationManager->deleteElement($organizationData, $element);
@@ -403,7 +429,7 @@ class OrganizationController extends Controller
             $response = ['type' => 'danger', 'code' => ['organization_element_not_removed', ['element' => trans('global.activity')]]];
         }
 
-        return redirect()->back()->withResponse($response);
+        return redirect()->route('organization.show', $id)->withResponse($response);
     }
 
     /**
@@ -414,12 +440,13 @@ class OrganizationController extends Controller
      */
     public function viewOrganizationXml($orgId, $viewErrors = false)
     {
-        $orgElem    = $this->organizationManager->getOrganizationElement();
-        $xmlService = $orgElem->getOrgXmlService();
-        $xml        = $xmlService->generateTemporaryOrganizationXml(
-            $this->organizationManager->getOrganization($orgId),
-            $this->organizationManager->getOrganizationData($orgId),
-            $this->settingsManager->getSettings($orgId),
+        $orgElem      = $this->organizationManager->getOrganizationElement();
+        $organization = $this->organizationManager->getOrganization(session('org_id'));
+        $xmlService   = $orgElem->getOrgXmlService();
+        $xml          = $xmlService->generateTemporaryOrganizationXml(
+            $organization,
+            $this->organizationManager->findOrganizationData($orgId),
+            $organization->settings,
             $orgElem
         );
 
@@ -436,12 +463,13 @@ class OrganizationController extends Controller
      */
     public function downloadOrganizationXml($orgId)
     {
-        $orgElem    = $this->organizationManager->getOrganizationElement();
-        $xmlService = $orgElem->getOrgXmlService();
-        $xml        = $xmlService->generateTemporaryOrganizationXml(
-            $this->organizationManager->getOrganization($orgId),
-            $this->organizationManager->getOrganizationData($orgId),
-            $this->settingsManager->getSettings($orgId),
+        $orgElem      = $this->organizationManager->getOrganizationElement();
+        $organization = $this->organizationManager->getOrganization(session('org_id'));
+        $xmlService   = $orgElem->getOrgXmlService();
+        $xml          = $xmlService->generateTemporaryOrganizationXml(
+            $organization,
+            $this->organizationManager->findOrganizationData($orgId),
+            $organization->settings,
             $orgElem
         );
 
@@ -471,21 +499,22 @@ class OrganizationController extends Controller
     }
 
     /** Returns status of the published data of organization.
-     * @param $organization_id
+     *
+     * @param $organizationId
      * @return string
      */
-    public function getPublishedOrganizationStatus($organization_id)
+    public function getPublishedOrganizationStatus($organizationId)
     {
-        $organization_data = $this->organizationManager->getPublishedOrganizationData($organization_id);
-        $settings          = $this->settingsManager->getSettings($organization_id);
-        $autoPublishing    = getVal($settings->toArray(), ['registry_info', 0, 'publish_files'], 'no');
-        $status            = 'unlinked';
+        $organizationPublished = $this->organizationManager->getPublishedOrganizationData($organizationId);
+        $settings              = $this->settingsManager->getSettings($organizationId);
+        $autoPublishing        = getVal($settings->toArray(), ['registry_info', 0, 'publish_files'], 'no');
+        $status                = 'unlinked';
 
-        if ($organization_data) {
+        if ($organizationPublished) {
             if ($autoPublishing == "no") {
-                $status = ($organization_data->published_to_register == 1) ? "Linked" : "Unlinked";
+                $status = ($organizationPublished->published_to_register == 1) ? "Linked" : "Unlinked";
             } else {
-                $status = ($organization_data->published_to_register == 1) ? "Linked" : "unlinked";
+                $status = ($organizationPublished->published_to_register == 1) ? "Linked" : "unlinked";
             }
         }
 
@@ -508,5 +537,325 @@ class OrganizationController extends Controller
         }
 
         return $message;
+    }
+
+    /**
+     * Return form to add a new partner organisation.
+     *
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function create($id)
+    {
+        $organizationTypes = $this->getNameWithCode('Activity', 'OrganisationType');
+        $countries         = $this->getNameWithCode('Organization', 'Country');
+        $organizations     = null;
+        $formRoute         = sprintf('/organization/%s/store', session('org_id'));
+
+
+        return view('Organization.create', compact('organizationTypes', 'organizationRoles', 'organizations', 'countries', 'id', 'formRoute'));
+    }
+
+    /**
+     * Store the organisations from ajax request.
+     * Store in organization_data table.
+     *
+     * @param         $id
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function store($id, Request $request)
+    {
+        $partnerDetails        = $request->all();
+        $reportingOrganisation = $this->organizationManager->getOrganization($id);
+
+        if (array_get($partnerDetails, 'organisation.0.identifier') == array_get($reportingOrganisation->toArray(), 'reporting_org.0.reporting_organization_identifier')) {
+            return response()->json('Cannot add Reporting Organisation as a partner.', 400);
+        }
+
+        if ($this->organizationManager->store($id, $partnerDetails)) {
+            return response()->json(true, 200);
+        }
+
+        return response()->json(false, 500);
+    }
+
+    /**
+     * Display form to edit the organization data.
+     *
+     * @param $orgDataId
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function edit($orgDataId)
+    {
+        $organization      = $this->organizationManager->findOrganizationData($orgDataId)->toArray();
+        $organizations[0]  = array_only($organization, ['name', 'type', 'identifier', 'is_publisher', 'country']);
+        $id                = session('org_id');
+        $organizationTypes = $this->getNameWithCode('Activity', 'OrganisationType');
+        $countries         = $this->getNameWithCode('Organization', 'Country');
+        $formRoute         = sprintf('/organization-data/%s/update', $orgDataId);
+
+        return view('Organization.create', compact('organizationTypes', 'organizationRoles', 'organizations', 'countries', 'id', 'formRoute'));
+    }
+
+    /**
+     * Update the organization data from ajax request.
+     *
+     * @param         $orgDataId
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function update($orgDataId, Request $request)
+    {
+        if ($this->organizationManager->update($orgDataId, $request->get('organisation'))) {
+            return response()->json(true, 200);
+        }
+
+        return response()->json(false, 500);
+    }
+
+
+    /**
+     * Delete a matched organization data
+     *
+     * @param $id
+     * @return mixed
+     */
+    public function deleteOrganizationData($id)
+    {
+        $orgData               = $this->organizationManager->findOrganizationData($id);
+        $organization          = $this->organizationManager->getOrganization($orgData->organization_id);
+        $organizationPublished = $organization->organizationPublished;
+
+        if ($orgData->is_reporting_org) {
+            return redirect()->route('organization.index')->withResponse(['type' => 'danger', 'code' => ['cannot_delete_reporting_org']]);
+        }
+
+        if ($organizationPublished && $organizationPublished->published_to_register && ($organizationPublished->published_org_data && in_array($id, $organizationPublished->published_org_data))) {
+            return redirect()->route('organization.index')->withResponse(['type' => 'warning', 'code' => ['cannot_delete_published_org', ['name' => trans('global.organization')]]]);
+        }
+
+        $result = $this->organizationManager->delete($orgData);
+
+        if ($result) {
+            return redirect()->route('organization.index')->withResponse(['type' => 'success', 'code' => ['deleted', ['name' => trans('global.organization')]]]);
+        }
+
+        return redirect()->route('organization.index')->withResponse(['type' => 'danger', 'code' => ['delete_failed', ['name' => trans('global.organization')]]]);
+    }
+
+    /**
+     * Update OrganizationData through the publishing workflow.
+     *
+     * @param                              $organizationDataId
+     * @param Request                      $request
+     * @param OrganizationElementValidator $orgElementValidator
+     * @return mixed
+     */
+    public function updateOrganizationDataStatus($organizationDataId, Request $request, OrganizationElementValidator $orgElementValidator)
+    {
+        $organization     = $this->organizationManager->getOrganization(session('org_id'));
+        $organizationData = $this->organizationManager->findOrganizationData($organizationDataId);
+
+        if (Gate::denies('belongsToOrganization', $organizationData)) {
+            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
+        }
+
+        $input  = $request->all();
+        $status = $input['status'];
+
+        if ($status == 3) {
+            $this->authorize('publish_activity', $organization);
+        }
+        $settings = $organization->settings;
+
+        $orgElem    = $this->organizationManager->getOrganizationElement();
+        $xmlService = $orgElem->getOrgXmlService();
+
+        if ($status === "1") {
+            $validationMessage = $orgElementValidator->validateOrganization($organizationData);
+
+            if ($validationMessage) {
+                $response = ['type' => 'warning', 'code' => ['message', ['message' => $validationMessage]]];
+
+                return redirect()->back()->withResponse($response);
+            }
+
+            $messages = $xmlService->validateOrgSchema($organization, $organizationData, $settings, $orgElem);
+            if ($messages != []) {
+                $response = ['type' => 'danger', 'messages' => $messages, 'organization' => 'true'];
+
+                return redirect()->back()->withResponse($response);
+            }
+        } else {
+            if ($status === "3") {
+                if (empty($settings['registry_info'][0]['publisher_id']) && empty($settings['registry_info'][0]['api_id'])) {
+                    $response = ['type' => 'warning', 'code' => ['settings_registry_info', ['name' => '']]];
+
+                    return redirect()->to('/publishing-settings')->withResponse($response);
+                }
+                $result = $xmlService->generateOrgXml($organization, $organizationData, $settings, $orgElem);
+
+                $this->organizationManager->updateStatus($input, $organizationData);
+
+                if (getVal($result, ['status']) === false) {
+                    return redirect()->back()->withResponse(['type' => 'warning', 'code' => ['message', ['message' => getVal($result, ['message'])]]]);
+                }
+
+                if (getVal($result, ['linked']) === false) {
+                    return redirect()->back()->withResponse(['type' => 'success', 'code' => ['organization_published_not_linked', ['name' => '']]]);
+                }
+
+                return redirect()->back()->withResponse(['type' => 'success', 'code' => ['publish_registry_organization', ['name' => '']]]);
+            }
+        }
+
+        $statusLabel = ['Completed', 'Verified', 'Published'];
+
+        $response = ($this->organizationManager->updateStatus($input, $organizationData)) ?
+            ['type' => 'success', 'code' => ['org_statuses', ['name' => $statusLabel[$status - 1]]]] :
+            ['type' => 'danger', 'code' => ['org_statuses_failed', ['name' => $statusLabel[$status - 1]]]];
+
+        return redirect()->back()->withResponse($response);
+    }
+
+    /**
+     * Unpublish an OrganizationData from the Registry.
+     *
+     * @param         $organizationDataId
+     * @param Request $request
+     * @return mixed
+     */
+    public function unpublishOrganizationData($organizationDataId, Request $request)
+    {
+        $organizationData = $this->organizationManager->findOrganizationData($organizationDataId);
+        $organization     = $organizationData->organization;
+
+        if (!$this->organizationManager->unpublishOrganization($organization, $organizationDataId)) {
+            $response = ['type' => 'danger', 'code' => ['message', 'message' => trans('global.unlink_org_data_unsuccessful')]];
+        } else {
+            $response = ['type' => 'success', 'code' => ['message', 'message' => trans('global.successfully_unlinked_org_data')]];
+        }
+
+        return redirect()->back()->withResponse($response);
+    }
+
+    /**
+     * Get the titles for Activities during the OrganizationData merge process.
+     *
+     * @param $organizationDataId
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getActivityTitles($organizationDataId)
+    {
+        $organization         = $this->organizationManager->findOrganizationData($organizationDataId);
+        $usedActivities       = $organization->used_by;
+        $usedActivitiesTitles = [];
+
+        foreach ($usedActivities as $activity) {
+            $usedActivitiesTitles[] = $this->activityManager->getActivityData($activity)->titleText();
+        }
+
+        return response()->json($usedActivitiesTitles);
+    }
+
+    /**
+     * Merge two OrganisationData.
+     *
+     * @param $organizationFrom
+     * @param $organizationTo
+     * @return mixed
+     */
+    public function mergeOrganizations($organizationFrom, $organizationTo)
+    {
+        $from = $this->organizationManager->findOrganizationData($organizationFrom);
+        $to   = $this->organizationManager->findOrganizationData($organizationTo);
+
+        $usedActivities = $from->used_by;
+
+        foreach ($usedActivities as $activityId) {
+            $activity = $this->activityManager->getActivityData($activityId);
+            $this->replaceParticipatingOrg($activity, $from, $to);
+        }
+
+        $this->updatePartners($usedActivities, $from, $to);
+
+        return redirect()->route('organization.index')->withResponse(
+            [
+                'type' => 'success',
+                'code' => ['message', 'message' => trans('organisation-data.successfully_merged')]
+            ]
+        );
+    }
+
+    /**
+     * Replace the Participating Organization in an Activity with the another during the merge process.
+     *
+     * @param $activity
+     * @param $from
+     * @param $to
+     */
+    protected function replaceParticipatingOrg($activity, $from, $to)
+    {
+        $remainingOrgs   = null;
+        $orgToBeReplaced = null;
+
+        $participatingOrganizations = collect($activity->participating_organization);
+
+        $orgToBeReplaced = $participatingOrganizations->filter(
+            function ($organization) use ($from) {
+                if (array_has($organization, 'org_data_id') && ($id = array_get($organization, 'org_data_id', null)) !== '') {
+                    return $id == $from->id;
+                } else {
+                    return array_get($organization, 'identifier', '') == $from->identifier;
+                }
+            }
+        );
+
+        $orgToBeReplaced = $orgToBeReplaced->first();
+
+        $remainingOrgs = $participatingOrganizations->filter(
+            function ($organization) use ($from) {
+                if (array_has($organization, 'org_data_id') && ($id = array_get($organization, 'org_data_id', null)) !== '') {
+                    return $id != $from->id;
+                } else {
+                    return array_get($organization, 'identifier', '') != $from->identifier;
+                }
+            }
+        );
+
+        $remainingOrgs->push(
+            [
+                'identifier'        => $to->is_reporting_org ? $to->organization->identifier : $to->identifier,
+                'activity_id'       => array_get($orgToBeReplaced, 'activity_id', ''),
+                'organization_role' => array_get($orgToBeReplaced, 'organization_role', ''),
+                'organization_type' => ($to->is_reporting_org) ? array_get($to->organization->reporting_org, '0.reporting_organization_type') : $to->type,
+                'country'           => $to->country,
+                'org_data_id'       => $to->id,
+                'narrative'         => ($to->is_reporting_org) ? array_get($to->organization->reporting_org, '0.narrative') : $to->name,
+                'is_publisher'      => $to->is_publisher
+            ]
+        );
+
+        $activity->participating_organization = $remainingOrgs->toArray();
+        $activity->save();
+    }
+
+    /**
+     * Update Activities for Partner Organizations.
+     *
+     * @param $activities
+     * @param $from
+     * @param $to
+     */
+    protected function updatePartners($activities, $from, $to)
+    {
+        $from->used_by = array_diff($from->used_by, $activities);
+        $from->save();
+
+        $oldUsedBy = $to->used_by;
+        $oldUsedBy = array_merge($oldUsedBy, $activities);
+
+        $to->update(['used_by' => array_unique($oldUsedBy)]);
     }
 }

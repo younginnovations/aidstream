@@ -32,7 +32,7 @@ class RecipientRegionBudgetRepositoryTest extends AidStreamTestCase
      */
     public function testItShouldGetOrganizationDataWithSpecificId()
     {
-        $this->organizationData->shouldReceive('where')->once()->with('organization_id', 1)->andReturnSelf();
+        $this->organizationData->shouldReceive('where')->once()->with('id', 1)->andReturnSelf();
         $this->organizationData->shouldReceive('first')->andReturn($this->organizationData);
         $this->assertInstanceOf('App\Models\Organization\OrganizationData', $this->recipientRegionBudgetRepository->getOrganizationData(1));
     }
@@ -42,7 +42,7 @@ class RecipientRegionBudgetRepositoryTest extends AidStreamTestCase
      */
     public function testItShouldReturnGetOrganizationRecipientRegionBudgetDataWithSpecificId()
     {
-        $this->organizationData->shouldReceive('where')->once()->with('organization_id', 1)->andReturnSelf();
+        $this->organizationData->shouldReceive('where')->once()->with('id', 1)->andReturnSelf();
         $this->organizationData->shouldReceive('first')->andReturn($this->organizationData);
         $this->organizationData->shouldReceive('getAttribute')->once()->with('recipient_region_budget')->andReturn([]);
         $this->assertTrue(is_array($this->recipientRegionBudgetRepository->getRecipientRegionBudgetData(1)));

@@ -59,6 +59,7 @@ return [
     'document'                      => 'Document',
     'activity_document_links'       => 'Activity Document Links',
     'activity_results'              => 'Activity Results',
-    'results'                       => 'Results'
+    'results'                       => 'Results',
+    'add_participating_organisation' => 'Add a participating organization',
 ];
 

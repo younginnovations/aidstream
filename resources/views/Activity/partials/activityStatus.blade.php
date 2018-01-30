@@ -7,6 +7,7 @@
             </div>
         </div>
         <a href="{{route('activity.activity-status.index', $id)}}" class="edit-element">@lang('global.edit')</a>
-        <a href="{{route('activity.delete-element', [$id, 'activity_status'])}}" class="delete pull-right">@lang('global.remove')</a>
+        @include('Activity.partials.element-delete-form', ['element' => 'activity_status', 'id' => $id])
+{{--        <a href="{{route('activity.delete-element', [$id, 'activity_status'])}}" class="delete pull-right">@lang('global.remove')</a>--}}
     </div>
 @endif

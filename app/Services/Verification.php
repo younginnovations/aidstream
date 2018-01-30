@@ -230,7 +230,7 @@ class Verification
 
         $data             = $secondary;
         $data['admin']    = $organization->users->where('role_id', 1)->first()->toArray();
-        $orgName          = $organization->orgData->name[0]['narrative'];
+        $orgName          = $organization->orgData()->first()->name[0]['narrative'];
         $data['org_name'] = $orgName;
         $callback         = function ($message) use ($data) {
             $message->subject(sprintf('%s is now live on AidStream', $data['org_name']));

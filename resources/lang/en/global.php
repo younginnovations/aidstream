@@ -277,5 +277,20 @@ return [
     'import_transaction'                           => 'Import Transaction',
     'import_xml'                                   => 'Import Xml',
     'warning'                                      => 'Warning',
-    'no_name_available'                            => 'No Name Available'
+    'no_name_available'                            => 'No Name Available',
+    'name_not_given'                               => 'Name not given',
+    'organization'                                 => 'Organisation',
+    'reporting_organisation'                       => 'Reporting Organisation',
+    'participating_organisations'                  => 'Participating Organisations',
+    'create_organisation'                          => 'Create Organisation',
+    'unpublish_organisation'                       => 'Unpublish Organisation',
+    'successfully_unlinked_org_data'               => 'Organization Data unlinked successfully.',
+    'unlink_org_data_unsuccessful'                 => 'Could not unlink Organization Data.',
+    'partner_organisations'                        => 'Partner Organisations',
+    'add_a_new_organisation'                       => 'Add a new Organisation',
+    'delete_this_organisation'                     => 'Delete this Organisation',
+    'edit_this_organisation'                       => 'Edit this Organisation',
+    'suggest'                                      => 'Suggest Edit',
+    'remove' => 'Remove'
+
 ];

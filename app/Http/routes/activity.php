@@ -14,7 +14,7 @@ $router->group(
         $router->resource('activity.activity-date', 'ActivityDateController');
         $router->resource('activity.contact-info', 'ContactInfoController');
         $router->resource('activity.activity-scope', 'ActivityScopeController');
-        $router->resource('activity.participating-organization', 'ParticipatingOrganizationController');
+        $router->resource('activity.participating-organization', 'ParticipatingOrganizationController', ['only' => ['index', 'update']]);
         $router->resource('activity.recipient-country', 'RecipientCountryController');
         $router->resource('activity.recipient-region', 'RecipientRegionController');
         $router->resource('activity.sector', 'SectorController');
@@ -79,7 +79,7 @@ $router->group(
             ]
         );
 
-        $router->get(
+        $router->post(
             'activity/{id}/delete-element/{element}',
             [
                 'as'   => 'activity.delete-element',

@@ -278,7 +278,7 @@ class ActivityManager
      * @param $activityData
      * @return bool
      */
-    public function destroy($activityData)
+    public function destroy($activityData, $organization, &$organizationData)
     {
         try {
             $activityId   = $activityData->id;
@@ -293,6 +293,17 @@ class ActivityManager
             $this->removeActivityAssociation($activityId, $publishedFiles);
 
             $activityData->delete();
+
+            foreach ($organizationData as &$data) {
+                $usedBy = array_flip($data->used_by);
+
+                if (array_has($usedBy, $activityId)) {
+                    unset($usedBy[$activityId]);
+                    $data->used_by = array_flip($usedBy);
+
+                    $data->save();
+                }
+            }
 
             $this->database->commit();
 

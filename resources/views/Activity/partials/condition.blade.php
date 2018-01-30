@@ -23,6 +23,6 @@
             @endforeach
         @endif
         <a href="{{route('activity.condition.index', $id)}}" class="edit-element">@lang('global.edit')</a>
-        <a href="{{route('activity.delete-element', [$id, 'condition'])}}" class="delete pull-right">@lang('global.remove')</a>
+        @include('Activity.partials.element-delete-form', ['element' => 'condition', 'id' => $id])
     </div>
 @endif

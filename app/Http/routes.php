@@ -503,3 +503,19 @@ $router->get(
         'uses' => 'LanguageController@localisedFormText'
     ]
 );
+
+$router->get(
+  '/findpublisher',
+  [
+      'as' => 'findPublisher',
+      'uses' => 'OrganisationFinder@findPublisher'
+  ]
+);
+
+$router->get(
+    '/findorg',
+    [
+        'as' => 'findOrg',
+        'uses' => 'OrganisationFinder@findOrg'
+    ]
+);

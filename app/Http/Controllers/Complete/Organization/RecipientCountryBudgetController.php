@@ -1,15 +1,14 @@
 <?php namespace App\Http\Controllers\Complete\Organization;
 
-use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Request;
+use App\Services\FormCreator\Organization\RecipientCountryBudgetForm as FormBuilder;
 use App\Services\Organization\OrganizationManager;
 use App\Services\Organization\RecipientCountryBudgetManager;
+use App\Services\RequestManager\Organization\RecipientCountryBudgetRequestManager;
 use Illuminate\Support\Facades\Gate;
 use Session;
 use URL;
-use App\Http\Requests\Request;
-use App\Services\RequestManager\Organization\RecipientCountryBudgetRequestManager;
-use App\Services\FormCreator\Organization\RecipientCountryBudgetForm as FormBuilder;
 
 /**
  * Class OrgRecipientCountryBudgetController
@@ -37,7 +36,8 @@ class RecipientCountryBudgetController extends Controller
      */
     public function index($orgId)
     {
-        $organization = $this->organizationManager->getOrganization($orgId);
+        $organization = $this->organizationManager->findOrganizationData($orgId);
+        $id           = $orgId;
 
         if (Gate::denies('belongsToOrganization', $organization)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
@@ -48,7 +48,7 @@ class RecipientCountryBudgetController extends Controller
 
         return view(
             'Organization.recipientCountryBudget.recipientCountryBudget',
-            compact('form', 'recipientCountryBudget', 'orgId')
+            compact('form', 'recipientCountryBudget', 'orgId', 'id')
         );
     }
 
@@ -60,7 +60,7 @@ class RecipientCountryBudgetController extends Controller
      */
     public function update($orgId, RecipientCountryBudgetRequestManager $recipientCountryBudgetRequestManager, Request $request)
     {
-        $organization = $this->organizationManager->getOrganization($orgId);
+        $organization = $this->organizationManager->findOrganizationData($orgId);
         if (Gate::denies('belongsToOrganization', $organization)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }

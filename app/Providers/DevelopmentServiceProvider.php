@@ -2,7 +2,6 @@
 
 namespace App\Providers;
 
-use Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider;
 use Illuminate\Support\ServiceProvider;
 
 class DevelopmentServiceProvider extends ServiceProvider
@@ -26,8 +25,7 @@ class DevelopmentServiceProvider extends ServiceProvider
     {
         $this->app->register('Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider');
         if (getenv('APP_ENV') == "local"){
-            $this->app->register('Barryvdh\Debugbar\ServiceProvider');
-            $this->app->register(IdeHelperServiceProvider::class);
+
         }
     }
 }

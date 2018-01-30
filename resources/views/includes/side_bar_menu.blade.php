@@ -4,7 +4,7 @@
             <ul class="nav">
                 <li class="activities" data-step="2"><a href="{{ route('activity.index') }}">@lang('global.activities')</a>
                 </li>
-                <li class="organization" data-step="3"><a href="{{ route('organization.show', session('org_id')) }}">@lang('global.organisation')</a></li>
+                <li class="organization" data-step="3"><a href="{{ route('organization.index') }}">@lang('global.organisation')</a></li>
                 <li class="published-files" data-step="4"><a href="{{ route('list-published-files') }}">@lang('global.published_files')</a></li>
                 <li class="documents" data-step="5"><a href="{{ route('documents') }}">@lang('global.documents')</a></li>
                 <li class="downloads" data-step="6"><a href="{{route('download.index')}}">@lang('global.downloads')</a></li>

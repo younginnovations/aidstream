@@ -2686,13 +2686,13 @@ $(document).ready(function () {
     }
 
     //js for form input check and leave page alert
-    $('form').delegate('textarea:not(".ignore_change"), select:not(".ignore_change"), input:not(".ignore_change")', 'change keyup', function (e) {
-        var element = $(e.target);
-        if (e.isTrigger !== undefined && (element.is('input') || element.is('textarea') || element.is('select'))) {
-            return false;
-        }
-        preventNavigation = true;
-    });
+    // $('form').delegate('textarea:not(".ignore_change"), select:not(".ignore_change"), input:not(".ignore_change")', 'change keyup', function (e) {
+    //     var element = $(e.target);
+    //     if (e.isTrigger !== undefined && (element.is('input') || element.is('textarea') || element.is('select'))) {
+    //         return false;
+    //     }
+    //     preventNavigation = true;
+    // });
 
     $('[type="submit"]').click(function () {
         preventNavigation = false;
@@ -2772,6 +2772,7 @@ $(document).ready(function () {
     $(window).load(function () {
         $('.xml-info ul').jScrollPane({reinitialise: true});
     });
+
 
 });
 

@@ -245,6 +245,12 @@ class ActivityController extends Controller
             $nextRoute = route('activity.publish', $id);
         }
 
+        if (request()->get('flash')) {
+            $response = ['type' => 'success', 'code' => ['created', ['name' => trans('global.participating_organisations')]]];
+
+            return redirect()->route('activity.show', $id)->withResponse($response);
+        }
+
         return view('Activity.show', compact('activityDataList', 'id', 'filename', 'activityPublishedStatus', 'message', 'nextRoute', 'errors'));
     }
 
@@ -376,8 +382,10 @@ class ActivityController extends Controller
         }
 
         $this->authorize('delete_activity', $activity);
+        $organization     = $this->organizationManager->getOrganization(session('org_id'));
+        $organizationData = $organization->orgData()->where('is_reporting_org', '=', 'false')->get();
 
-        $response = ($this->activityManager->destroy($activity)) ? [
+        $response = ($this->activityManager->destroy($activity, $organization, $organizationData)) ? [
             'type' => 'success',
             'code' => ['deleted', ['name' => trans('global.activity')]],
         ] : [
@@ -666,34 +674,28 @@ class ActivityController extends Controller
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
-        $result = $this->activityManager->deleteElement($activity, $element);
+        $orgDataIds = collect($activity->participating_organization)->pluck('org_data_id')->toArray();
+        $result     = $this->activityManager->deleteElement($activity, $element);
 
         if ($result) {
+            if ($orgDataIds && ($element === 'participating_organization')) {
+                foreach ($orgDataIds as $orgDataId) {
+                    if ($organizationData = $this->organizationManager->findOrganizationData($orgDataId)) {
+                        $activitiesInUse           = $organizationData->used_by;
+                        $organizationData->used_by = array_diff($activitiesInUse, [$id]);
+                        $organizationData->save();
+                    }
+                }
+            }
+
             $this->activityManager->resetActivityWorkflow($id);
             $response = ['type' => 'success', 'code' => ['activity_element_removed', ['element' => trans('global.activity')]]];
         } else {
             $response = ['type' => 'danger', 'code' => ['activity_element_not_removed', ['element' => trans('global.activity')]]];
         }
 
-        return redirect()->back()->withResponse($response);
+        return redirect()->route('activity.show', $id)->withResponse($response);
     }
-
-//    /**
-//     * Convert object of StdClass into an array for registry package update.
-//     * @param $data
-//     * @return array
-//     */
-//    protected function convertIntoArray($data)
-//    {
-//        return [
-//            'title'        => $data->title,
-//            'name'         => $data->name,
-//            'author_email' => $data->author_email,
-//            'owner_org'    => $data->owner_org,
-//            'resources'    => $data->resources,
-//            'extras'       => $data->extras,
-//        ];
-//    }
 
     /**
      * Get data from DB and generate xml
@@ -906,7 +908,7 @@ class ActivityController extends Controller
      */
     public function getTransactionView(Request $request)
     {
-        $id = $request->get('id');
+        $id                              = $request->get('id');
         $activityDataList['transaction'] = $this->transactionManager->getTransactions($id)->toArray();;
 
         return view('Activity.partials.transaction', compact('activityDataList', 'id'))->render();
@@ -920,7 +922,7 @@ class ActivityController extends Controller
      */
     public function getResultView(Request $request)
     {
-        $id = $request->get('id');
+        $id                          = $request->get('id');
         $activityDataList['results'] = $this->resultManager->getResults($id)->toArray();
 
         return view('Activity.partials.result', compact('activityDataList', 'id'))->render();
