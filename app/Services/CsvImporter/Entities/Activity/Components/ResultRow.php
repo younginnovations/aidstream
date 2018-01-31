@@ -677,7 +677,7 @@ class ResultRow extends Row
 
         foreach ($values as $key => $value) {
             if (!is_null($value)) {
-                $this->data['indicator'][$index]['period'][$i]['target'][$key]['value'] = $value;
+                $this->data['indicator'][$index]['period'][$i]['target'][$key]['value'] = (string) $value;
             }
         }
 
@@ -791,7 +791,7 @@ class ResultRow extends Row
 
         foreach ($values as $value) {
             if (!is_null($value)) {
-                $this->data['indicator'][$index]['period'][$i]['actual'][0]['value'] = $value;
+                $this->data['indicator'][$index]['period'][$i]['actual'][0]['value'] = (string) $value;
             }
         }
 
