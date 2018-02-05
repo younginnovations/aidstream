@@ -94,15 +94,19 @@ class PublisherIdChangeController extends Controller
 
                 if ($this->changeHandler->checkPublisherValidity($this->changeHandler->searchForPublisher($publisherId), $publisherId)) {
                     $isCorrect                 = true;
-                    $publishedOrganizationData = $this->changeHandler->getPublishedOrganizationData($organization)->first();
+                    $publishedOrgData = $this->changeHandler->getPublishedOrganizationData($organization);
+                    if ($publishedOrgData) {
+                        $publishedOrganizationData = $publishedOrgData->first();
+
+                        if ($this->changeHandler->hasPublishedAnyOrganizationFile($publishedOrganizationData)) {
+                            $changes['organizationData'] = $this->changeHandler->changesForOrganizationData($publishedOrganizationData, $publisherId, $apiKey);
+                            (getVal($changes, ['organizationData', 0, 'linkage']) == false) ?: $inputApiKey = true;
+                            unset($changes['organizationData']['linkage']);
+                        }
+
+                   }
+
                     $publishedActivities       = $this->changeHandler->getPublishedActivities($organization);
-
-                    if ($this->changeHandler->hasPublishedAnyOrganizationFile($publishedOrganizationData)) {
-                        $changes['organizationData'] = $this->changeHandler->changesForOrganizationData($publishedOrganizationData, $publisherId, $apiKey);
-                        (getVal($changes, ['organizationData', 0, 'linkage']) == false) ?: $inputApiKey = true;
-                        unset($changes['organizationData']['linkage']);
-                    }
-
                     if ($this->changeHandler->hasPublishedAnyActivityFile($publishedActivities)) {
                         $changes['activity'] = $this->changeHandler->changesForActivityData($publishedActivities, $publisherId, $apiKey);
                         (getVal($changes, ['activity', 'linkage']) == false) ?: $inputApiKey = true;
