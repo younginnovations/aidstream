@@ -131,7 +131,9 @@ class ChangeHandler
             $this->setApiKeyCorrectness($newApiKey, $publisherIdResponse);
 
             $organization              = $this->getOrganization($organizationId);
-            $publishedOrganizationData = $this->getPublishedOrganizationData($organization)->first();
+
+            $publishedOrganization = $this->getPublishedOrganizationData($organization);
+            $publishedOrganizationData = $publishedOrganization ? $publishedOrganization->first() : [];
             $publishedActivities       = $this->getPublishedActivities($organization);
 
             $this->databaseManager->beginTransaction();
