@@ -28,9 +28,15 @@
                                 {{--<a href="{{ route('organization-data.edit', $reportingOrg->id)}}" class="edit-activity pull-right">@lang('global.edit')</a>--}}
                                 {{--</td>--}}
                                 <td class="organisation-name" width="70%">
-                                    <a href="{{route('organization.show', $reportingOrg->id)}}">
-                                        {{ $reportingOrg->reporting_org }}
-                                    </a>
+                                    @if (!$reportingOrg->reporting_org)
+                                        <a href="{{route('organization.show', $reportingOrg->id)}}" data-toggle="tooltip" data-placement="top" title="Please update Organisation Info under Settings">
+                                            Reporting Organisation Name Not Available
+                                        </a>
+                                    @else
+                                        <a href="{{route('organization.show', $reportingOrg->id)}}">
+                                            {{ $reportingOrg->reporting_org }}
+                                        </a>
+                                    @endif
                                     <span class="identifier">{{ $reportingOrg->identifier }}</span>
                                 </td>
                                 <td class="sector" width="15%">
