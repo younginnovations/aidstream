@@ -132,14 +132,14 @@ class PartnerOrganizationData
                             $language         = array_get($value, 'narrative.0.language', '');
                             $value['name']    = [['narrative' => trim($name), 'language' => $language]];
                             $value['type']    = array_get($value, 'organization_type', '');
-                            $value['country'] = $this->getCountry($participatingOrganization->identifier());
+                            $value['country'] = $participatingOrganization->get('country') ? $participatingOrganization->get('country') : $this->getCountry($participatingOrganization->identifier());
                         }
                     } else {
                         $name             = array_get($value, 'narrative.0.narrative', '');
                         $language         = array_get($value, 'narrative.0.language', '');
                         $value['name']    = [['narrative' => trim($name), 'language' => $language]];
                         $value['type']    = array_get($value, 'organization_type', '');
-                        $value['country'] = $this->getCountry($participatingOrganization->identifier());
+                        $value['country'] = $participatingOrganization->get('country') ? $participatingOrganization->get('country') : $this->getCountry($participatingOrganization->identifier());
                     }
 
                     $value['used_by']          = [+ $this->activityId];
@@ -167,14 +167,14 @@ class PartnerOrganizationData
                         $language         = array_get($value, 'narrative.0.language', '');
                         $value['name']    = [['narrative' => trim($name), 'language' => $language]];
                         $value['type']    = array_get($value, 'organization_type', '');
-                        $value['country'] = $this->getCountry($participatingOrganization->identifier());
+                        $value['country'] = $participatingOrganization->get('country') ? $participatingOrganization->get('country') : $this->getCountry($participatingOrganization->identifier());
                     }
                 } else {
                     $name             = array_get($value, 'narrative.0.narrative', '');
                     $language         = array_get($value, 'narrative.0.language', '');
                     $value['name']    = [['narrative' => trim($name), 'language' => $language]];
                     $value['type']    = array_get($value, 'organization_type', '');
-                    $value['country'] = $this->getCountry($participatingOrganization->identifier());
+                    $value['country'] = $participatingOrganization->get('country') ? $participatingOrganization->get('country') : $this->getCountry($participatingOrganization->identifier());
                 }
 
                 $value['used_by']          = [+ $this->activityId];
@@ -371,14 +371,14 @@ class PartnerOrganizationData
                 $language         = array_get($value, 'narrative.0.language', '');
                 $value['name']    = [['narrative' => trim($name), 'language' => $language]];
                 $value['type']    = array_get($value, 'organization_type', '');
-                $value['country'] = $this->getCountry($participatingOrganization->identifier());
+                $value['country'] = $participatingOrganization->get('country') ? $participatingOrganization->get('country') : $this->getCountry($participatingOrganization->identifier());
             }
         } else {
             $name             = array_get($value, 'narrative.0.narrative', '');
             $language         = array_get($value, 'narrative.0.language', '');
             $value['name']    = [['narrative' => trim($name), 'language' => $language]];
             $value['type']    = array_get($value, 'organization_type', '');
-            $value['country'] = $this->getCountry($participatingOrganization->identifier());
+            $value['country'] = $participatingOrganization->get('country') ? $participatingOrganization->get('country') : $this->getCountry($participatingOrganization->identifier());
         }
 
         $value['organization_id']  = $this->reportingOrganization->id;
