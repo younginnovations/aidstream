@@ -758,6 +758,13 @@
       "code": "SN-NINEA",
       "name": "National Identification Number of Companies and Associations",
       "language": "en"
+    },
+    {
+      "category": "DE",
+      "category-name": "GERMANY",
+      "code": "DE-CR",
+      "name": "Common Register Portal of the German Federal States (CRP)",
+      "language": "en"
     }
   ]
 }
