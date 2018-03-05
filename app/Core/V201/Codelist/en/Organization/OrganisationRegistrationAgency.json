@@ -765,6 +765,13 @@
       "code": "DE-CR",
       "name": "Common Register Portal of the German Federal States (CRP)",
       "language": "en"
+    },
+    {
+      "category": "ET",
+      "category-name": "ETHIOPIA",
+      "code": "ET-MOT",
+      "name": "Ministry Of Trade",
+      "language": "en"
     }
   ]
 }
