@@ -14,13 +14,15 @@ class BaseElement
     public function buildNarrative($narratives)
     {
         $narrativeData = [];
-        foreach ($narratives as $narrative) {
-            $narrativeData[] = [
-                '@value'      => getVal($narrative, ['narrative']),
-                '@attributes' => [
-                    'xml:lang' => getVal($narrative, ['language'])
-                ]
-            ];
+        if ($narratives) {
+            foreach ($narratives as $narrative) {
+                $narrativeData[] = [
+                    '@value'      => getVal($narrative, ['narrative']),
+                    '@attributes' => [
+                        'xml:lang' => getVal($narrative, ['language'])
+                    ]
+                ];
+            }
         }
 
         return $narrativeData;
@@ -47,7 +49,7 @@ class BaseElement
     }
 
     /**
-     * 
+     *
      * @param $values
      * @return array
      */
