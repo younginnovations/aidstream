@@ -58,6 +58,7 @@ class XmlGenerator extends XmlGenerator201
         $xmlActivity['title']                = $this->titleElem->getXmlData($activity);
         $xmlActivity['description']          = $this->descriptionElem->getXmlData($activity);
         $xmlActivity['participating-org']    = $this->participatingOrgElem->getXmlData($activity);
+        $xmlActivity['other-identifier']     = $this->otherIdentifierElem->getXmlData($activity);
         $xmlActivity['activity-status']      = $this->activityStatusElem->getXmlData($activity);
         $xmlActivity['activity-date']        = $this->activityDateElem->getXmlData($activity);
         $xmlActivity['contact-info']         = $this->contactElem->getXmlData($activity);

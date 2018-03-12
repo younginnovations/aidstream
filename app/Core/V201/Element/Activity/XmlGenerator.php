@@ -1,8 +1,8 @@
 <?php namespace App\Core\V201\Element\Activity;
 
 use App\Helpers\ArrayToXml;
-use App\Models\Activity\Activity;
 use App\Models\ActivityPublished;
+use App\Models\Activity\Activity;
 use App\Models\Settings;
 use DOMDocument;
 use Illuminate\Support\Collection;
@@ -45,6 +45,8 @@ class XmlGenerator
     protected $resultElem;
     protected $reportingOrgElem;
     protected $activityElement;
+    protected $otherIdentifier;
+
     /**
      * @var Settings
      */
@@ -95,6 +97,7 @@ class XmlGenerator
         $this->conditionElem           = $activityElement->getCondition();
         $this->transactionElem         = $activityElement->getTransaction();
         $this->resultElem              = $activityElement->getResult();
+        $this->otherIdentifierElem     = $activityElement->getOtherIdentifier();
         $this->reportingOrgElem        = $orgElem->getOrgReportingOrg();
     }
 
@@ -119,8 +122,8 @@ class XmlGenerator
 
         if ($result) {
             $publishedFiles = ($settings->publishing_type != "segmented")
-                ? $this->savePublishedFiles($filename, $activity->organization_id, $publishedActivity)
-                : $this->saveSegmentedPublishedFiles($filename, $activity, $publishedActivity);
+            ? $this->savePublishedFiles($filename, $activity->organization_id, $publishedActivity)
+            : $this->saveSegmentedPublishedFiles($filename, $activity, $publishedActivity);
 
             $this->getMergeXml($publishedFiles, $filename);
         }
@@ -139,10 +142,10 @@ class XmlGenerator
     public function getXml(Activity $activity, Collection $transaction, Collection $result, Settings $settings, $activityElement, $orgElem, $organization)
     {
         $this->setElements($activityElement, $orgElem);
-        $xmlData                                 = [];
-        $xmlData['@attributes']                  = [
+        $xmlData                = [];
+        $xmlData['@attributes'] = [
             'version'            => $settings->version,
-            'generated-datetime' => gmdate('c')
+            'generated-datetime' => gmdate('c'),
         ];
         $xmlData['iati-activity']                = $this->getXmlData($activity, $transaction, $result, $organization);
         $xmlData['iati-activity']['@attributes'] = [
@@ -150,7 +153,7 @@ class XmlGenerator
             'xml:lang'              => $activity->default_field_values[0]['default_language'],
             'default-currency'      => $activity->default_field_values[0]['default_currency'],
             'hierarchy'             => ($hierarchy = $activity->default_field_values[0]['default_hierarchy']) ? $hierarchy : 1,
-            'linked-data-uri'       => $activity->default_field_values[0]['linked_data_uri']
+            'linked-data-uri'       => $activity->default_field_values[0]['linked_data_uri'],
         ];
 
         return $this->arrayToXml->createXML('iati-activities', $xmlData);
@@ -171,6 +174,7 @@ class XmlGenerator
         $xmlActivity['title']                = $this->titleElem->getXmlData($activity);
         $xmlActivity['description']          = $this->descriptionElem->getXmlData($activity);
         $xmlActivity['participating-org']    = $this->participatingOrgElem->getXmlData($activity);
+        $xmlActivity['other-identifier']     = $this->otherIdentifierElem->getXmlData($activity);
         $xmlActivity['activity-status']      = $this->activityStatusElem->getXmlData($activity);
         $xmlActivity['activity-date']        = $this->activityDateElem->getXmlData($activity);
         $xmlActivity['contact-info']         = $this->contactElem->getXmlData($activity);
@@ -195,7 +199,6 @@ class XmlGenerator
         $xmlActivity['legacy-data']          = $this->legacyDataElem->getXmlData($activity);
         $xmlActivity['conditions']           = $this->conditionElem->getXmlData($activity);
         $xmlActivity['result']               = $this->resultElem->getXmlData($result);
-
         removeEmptyValues($xmlActivity);
 
         return $xmlActivity;
@@ -247,10 +250,12 @@ class XmlGenerator
             return strtolower($recipientCountry[0]['country_code']);
         } elseif (count($recipientCountry) >= 1) {
             $maxPercentage = 0;
-            $countryCode = array_first($recipientCountry, function () { return true; });
-            $code          = strtolower($countryCode['country_code']);
+            $countryCode   = array_first($recipientCountry, function () {return true;});
+            $code = strtolower($countryCode['country_code']);
+
             foreach ($recipientCountry as $country) {
                 $percentage = $country['percentage'];
+
                 if ($percentage > $maxPercentage) {
                     $maxPercentage = $percentage;
                     $code          = strtolower($country['country_code']);
@@ -316,9 +321,9 @@ class XmlGenerator
         $organizationId             = $activity->organization_id;
         $publishedActivities        = $this->activityPublished->where('organization_id', '=', $organizationId)->get();
         $activityForSameCountryCode = $this->activityPublished->where('filename', '=', $filename)
-                                                              ->where('organization_id', '=', $organizationId)
-                                                              ->first();
-        $newActivity                = null;
+            ->where('organization_id', '=', $organizationId)
+            ->first();
+        $newActivity = null;
 
         if ($activityForSameCountryCode) {
             foreach ($publishedActivities as $activityPublished) {
@@ -388,8 +393,8 @@ class XmlGenerator
 
         if ($result) {
             $publishedFiles = ($settings->publishing_type != "segmented")
-                ? $this->savePublishedFiles($filename, $activity->organization_id, $publishedActivity)
-                : $this->saveSegmentedPublishedFiles($filename, $activity, $publishedActivity);
+            ? $this->savePublishedFiles($filename, $activity->organization_id, $publishedActivity)
+            : $this->saveSegmentedPublishedFiles($filename, $activity, $publishedActivity);
 
             $this->getMergeXml($publishedFiles, $filename);
         }
