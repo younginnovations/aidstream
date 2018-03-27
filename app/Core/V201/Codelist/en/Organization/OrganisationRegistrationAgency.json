@@ -772,6 +772,41 @@
       "code": "ET-MOT",
       "name": "Ministry Of Trade",
       "language": "en"
+    },
+    {
+      "category": "TZ",
+      "category-name": "TANZANIA, UNITED REPUBLIC OF",
+      "code": "TZ-TRA",
+      "name": "Tanzanian Revenue Authority",
+      "language": "en"
+    },
+    {
+      "category": "PE",
+      "category-name": "PERU",
+      "code": "PE-SUNARP",
+      "name": "Superintendencia Nacional de los Registros Públicos (Peru)",
+      "language": "es-PE"
+    },
+    {
+      "category": "MU",
+      "category-name": "MAURITIUS",
+      "code": "MU-CR",
+      "name": "Registrar of Companies in Mauritius",
+      "language": "es-PE"
+    },
+    {
+      "category": "AE",
+      "category-name": "UNITED ARAB EMIRATES",
+      "code": "AE-DMCC",
+      "name": "Dubai Multi Commodities Centre",
+      "language": "en"
+    },
+    {
+      "category": "TR",
+      "category-name": "TURKEY",
+      "code": "TR-MOI",
+      "name": "Department of Associations (Ministry of Interior, Turkey)",
+      "language": "en"
     }
   ]
 }
