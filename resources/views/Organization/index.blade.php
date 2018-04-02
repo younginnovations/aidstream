@@ -95,8 +95,8 @@
                                     </td>
                                     <td width="50px">
                                         <div class="view-more">
-                                            <a href="javascript:void(0)" class="{{ (count($participatingOrg) > 1) ?: 'hidden'}}">⋯</a>
-                                            <div class="view-more-actions {{ (count($participatingOrg) > 1) ?: 'hidden'}}">
+                                            <a href="javascript:void(0)" class="{{ (count($participatingOrg) > 0) ?: 'hidden'}}">⋯</a>
+                                            <div class="view-more-actions {{ (count($participatingOrg) > 0) ?: 'hidden'}}">
                                                 <ul>
                                                     @if (count($participatingOrg) > 1)
                                                         <li>
