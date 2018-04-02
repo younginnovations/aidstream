@@ -326,12 +326,12 @@
             this.display_org_finder = false;
             this.display_org_list = false;
             var country = this.organisation['country'];
-            var type = this.organisation['type'];
             this.organisation.tempName = this.keyword;
             this.organisation.tempIdentifier = '';
             var self = this;
-            if (country != "" || type != "") {
-              axios.get('/findorg?country=' + country + '&type= ' + type)
+
+            if (country != "") {
+              axios.get('/findorg?country=' + country)
                 .then(function (response) {
                   self.$emit('display', response.data);
                 });
@@ -444,10 +444,9 @@
             var self = this;
             this.organisation[event.name] = event.value;
             var country = this.organisation['country'];
-            var type = this.organisation['type'];
 
-            if (country != "" || type != "") {
-              axios.get('/findorg?country=' + country + '&type=' + type)
+            if (country != "") {
+              axios.get('/findorg?country=' + country)
                 .then(function (response) {
                   self.registrar_list.splice(0, self.registrar_list.length);
                   self.registrar_list.push(response.data);
