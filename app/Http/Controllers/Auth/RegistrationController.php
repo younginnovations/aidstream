@@ -56,6 +56,7 @@ class RegistrationController extends Controller
 
     /**
      * returns registration view
+     * @param null $systemVersion
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function showRegistrationForm($systemVersion = null)

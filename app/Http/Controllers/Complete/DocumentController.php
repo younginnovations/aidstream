@@ -26,7 +26,7 @@ class DocumentController extends Controller
      * Allowed extensions for documents.
      * @var array
      */
-    protected $allowedExtensions = ['doc', 'docx', 'pdf', 'jpeg', 'jpg', 'ppt', 'pptx', 'png', 'xls', 'bmp'];
+    protected $allowedExtensions = ['doc', 'docx', 'pdf', 'jpeg', 'jpg', 'ppt', 'pptx', 'png', 'xls', 'bmp', 'xlsx'];
 
     /**
      * @param DocumentManager $documentManager
