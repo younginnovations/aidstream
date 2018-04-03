@@ -145,7 +145,7 @@ class Registration
     protected function saveUsers($users, $organization)
     {
         $users['role']     = '1';
-        $users['username'] = sprintf('%s_admin', strToLower($organization->user_identifier));
+        $users['username'] = sprintf('%s_admin', $organization->user_identifier);
         $admin             = $this->prepareUser($users);
         $users             = $this->getUsers(getVal($users, ['user'], []));
         $allUsers          = array_merge([$admin], $users);
