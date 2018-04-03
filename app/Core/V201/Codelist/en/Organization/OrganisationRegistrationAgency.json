@@ -807,6 +807,20 @@
       "code": "TR-MOI",
       "name": "Department of Associations (Ministry of Interior, Turkey)",
       "language": "en"
+    },
+    {
+      "category": "CO",
+      "category-name": "COLOMBIA",
+      "code": "CO-RUE",
+      "name": "Unified Commercial and Social Registry (RUES)",
+      "language": "en"
+    },
+    {
+      "category": "ES",
+      "category-name": "SPAIN",
+      "code": "ES-RMC",
+      "name": "Central Commercial Register of the Kingdom of Spain",
+      "language": "en"
     }
   ]
 }
