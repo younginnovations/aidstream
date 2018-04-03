@@ -135,7 +135,7 @@ class LoginService
 
         unset($credentials['login']);
 
-        $this->setCredentials(array_merge($credentials, [$loginField => strToLower($loginValue)]));
+        $this->setCredentials(array_merge($credentials, [$loginField => $loginValue]));
 
         return $this;
     }
