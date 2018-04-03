@@ -821,6 +821,13 @@
       "code": "ES-RMC",
       "name": "Central Commercial Register of the Kingdom of Spain",
       "language": "en"
+    },
+    {
+      "category": "ES",
+      "category-name": "SPAIN",
+      "code": "ES-CIF",
+      "name": "Company Tax Identification Code (Delegación de Hacienda)",
+      "language": "en"
     }
   ]
 }
