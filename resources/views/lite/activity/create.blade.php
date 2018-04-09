@@ -140,76 +140,28 @@
     @endif
     <script type="text/javascript" src="{{ url('/lite/js/location.js') }}"></script>
 
-<<<<<<< Updated upstream
-<script type="text/javascript">
-var countryElement;
-var selectElement;
-var countryVal;
-var geoJson = {!! $geoJson !!}
-$(document).ready(function () {
-  Location.clearUseMap();
-  $('button.remove-location').on('click', function() {
-    if(countryElement){
-      Location.clearLocations();
-    }
-  });
-  $('button.remove-location-cancel').on('click', function() {
-    selectElement.val(countryVal).change();
-  });
-  var countryDetails = [{!! $countryDetails !!}];
-  Location.prepareElements();
-  @if(isRegisteredForTz())
-    TzLocation.closeOpenedMap(countryDetails);
-  TzLocation.onCountryChanged();
-  @else
-    Location.closeOpenedMap(countryDetails);
-  Location.onCountryChange();
-  Location.onCountryDelete();
-  Map.reverseLocation();
-  @endif
-})
-</script>
-<script type="text/javascript">
-var completedText = "{{strtolower(trans('lite/global.completed'))}}";
-CreateActivity.editTextArea({!! empty(!$form->getModel()) !!});
-CreateActivity.addToCollection();
-CreateActivity.scroll();
-CreateActivity.deleteCountryOnClick();
-@if(isRegisteredForTz())
-  var districts = [{!! json_encode(config('tz.district')) !!}];
-Activity.changeRegionAndDistrict();
-Activity.removeCountriesExceptTz();
-Activity.addMoreAdministrative();
-var district = [];
-var counter = 0;
-@foreach(getVal($form->getModel(),['location'],[]) as $index => $location )
-  @foreach(getVal($location,['administrative'],[]) as $key => $administrative)
-  @if(getVal($administrative,['region'],'') != "")
-  district[counter] = [];
-district[counter]["{!! getVal($administrative,['region'],'') !!}"] = "{!! getVal($administrative,['district'],'') !!}";
-counter++;
-@endif
-  @endforeach
-  @endforeach
-  Activity.loadDistrictIfRegionIsPresent(district);
-Activity.displayAddMoreCountry();
-ProgressBar.setTotalFields(22);
-ProgressBar.setLocationFields(5);
-ProgressBar.addFilledFieldsForTz();
-ProgressBar.onMapClicked();
-@endif
-
-    ProgressBar.calculateProgressBar(completedText);
-        ProgressBar.calculate();
-=======
     <script type="text/javascript">
+        var countryElement;
+        var selectElement;
+        var countryVal;
+        var geoJson = {!! $geoJson !!}
         $(document).ready(function () {
+            Location.clearUseMap();
+            $('button.remove-location').on('click', function () {
+                if (countryElement) {
+                    Location.clearLocations();
+                }
+            });
+            $('button.remove-location-cancel').on('click', function () {
+                selectElement.val(countryVal).change();
+            });
             var countryDetails = [{!! $countryDetails !!}];
+            Location.prepareElements();
             @if(isRegisteredForTz())
-                TzLocation.closeOpenedMap(countryDetails);
+            TzLocation.closeOpenedMap(countryDetails);
             TzLocation.onCountryChanged();
             @else
-                Location.closeOpenedMap(countryDetails);
+            Location.closeOpenedMap(countryDetails);
             Location.onCountryChange();
             Location.onCountryDelete();
             Map.reverseLocation();
@@ -236,18 +188,17 @@ ProgressBar.onMapClicked();
         district[counter]["{!! getVal($administrative,['region'],'') !!}"] = "{!! getVal($administrative,['district'],'') !!}";
         counter++;
         @endif
-    @endforeach
-@endforeach
-Activity.loadDistrictIfRegionIsPresent(district);
+        @endforeach
+        @endforeach
+        Activity.loadDistrictIfRegionIsPresent(district);
         Activity.displayAddMoreCountry();
         ProgressBar.setTotalFields(22);
         ProgressBar.setLocationFields(5);
         ProgressBar.addFilledFieldsForTz();
+        ProgressBar.onMapClicked();
         @endif
 
-    ProgressBar.calculateProgressBar(completedText);
+        ProgressBar.calculateProgressBar(completedText);
         ProgressBar.calculate();
-        ProgressBar.onMapClicked();
->>>>>>> Stashed changes
     </script>
 @stop
