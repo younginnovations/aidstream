@@ -42,7 +42,8 @@
                                             @if (!$identifiers)
                                                 <a href="{{ url('/files/documents') . '/' . rawurlencode($document['filename']) }}">{{ url('/files/documents') . '/' . $document['filename'] }}</a>
                                             @else
-                                                <a href="{{ $document['url'] }}">{{ $document['url'] }}</a>
+                                            {{--*/$url = explode('/', rtrim($document['url'], '/'))/*--}}
+                                                <a href="{{ url('/files/documents') . '/' . rawurlencode(end($url)) }}">{{ $document['url'] }}</a>
                                             @endif
                                         </td>
                                         <td>
