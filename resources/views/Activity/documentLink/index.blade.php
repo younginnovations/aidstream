@@ -45,11 +45,11 @@
                                                     /*--}}
                                                 @endif
                                                 {{--*/
-                                                    $url = $documentLinkData['url'];
+                                                    $url = explode('/', rtrim($documentLinkData['url'], '/'));
                                                     $title = $documentLinkData['title'][0]['narrative'][0]['narrative'];
                                                     $title ?: $title = $url;
                                                 /*--}}
-                                                <a href="{{ $url }}" target="_blank">{{ $title }}</a>
+                                                <a href="{{ url('/files/documents') . '/' .rawurlencode(end($url)) }}" target="_blank">{{ $title }}</a>
                                             </td>
                                             <td>
                                                 {{ $documentLinkData['format'] }}
