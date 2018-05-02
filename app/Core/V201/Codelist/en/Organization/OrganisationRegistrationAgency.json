@@ -828,6 +828,13 @@
       "code": "ES-CIF",
       "name": "Company Tax Identification Code (Delegación de Hacienda)",
       "language": "en"
+    },
+    {
+      "category": "RW",
+      "category-name": "RWANDA",
+      "code": "RW-RGB",
+      "name": "Rwanda Governance Board",
+      "language": "en"
     }
   ]
 }
