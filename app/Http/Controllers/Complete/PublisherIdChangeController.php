@@ -96,7 +96,7 @@ class PublisherIdChangeController extends Controller
                     $isCorrect                 = true;
                     $publishedOrgData = $this->changeHandler->getPublishedOrganizationData($organization);
                     if ($publishedOrgData) {
-                        $publishedOrganizationData = $publishedOrgData->first();
+                        $publishedOrganizationData = $publishedOrgData;
 
                         if ($this->changeHandler->hasPublishedAnyOrganizationFile($publishedOrganizationData)) {
                             $changes['organizationData'] = $this->changeHandler->changesForOrganizationData($publishedOrganizationData, $publisherId, $apiKey);

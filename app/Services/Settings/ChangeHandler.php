@@ -15,6 +15,7 @@ use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Database\DatabaseManager;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
+use Illuminate\Database\Eloquent\Collection;
 
 /**
  * Class ChangeHandler
@@ -133,7 +134,14 @@ class ChangeHandler
             $organization              = $this->getOrganization($organizationId);
 
             $publishedOrganization = $this->getPublishedOrganizationData($organization);
-            $publishedOrganizationData = $publishedOrganization ? $publishedOrganization->first() : [];
+            // $publishedOrganizationData = $publishedOrganization ? $publishedOrganization->first() : [];
+
+            if ($publishedOrganization) {
+                $publishedOrganizationData = ($publishedOrganization instanceof Collection) ? $publishedOrganization->first() : $publishedOrganization;
+            } else {
+                $publishedOrganizationData = [];
+            }
+
             $publishedActivities       = $this->getPublishedActivities($organization);
 
             $this->databaseManager->beginTransaction();
