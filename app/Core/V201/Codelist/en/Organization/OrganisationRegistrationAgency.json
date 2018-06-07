@@ -835,6 +835,27 @@
       "code": "RW-RGB",
       "name": "Rwanda Governance Board",
       "language": "en"
+    },
+    {
+      "category": "IT",
+      "category-name": "ITALY",
+      "code": "IT-CF",
+      "name": "Italian Tax Code / VAT Number",
+      "language": "en"
+    },
+    {
+      "category": "IT",
+      "category-name": "ITALY",
+      "code": "IT-RI",
+      "name": "Business Register of the Italian Chambers of Commerce",
+      "language": "en"
+    },
+    {
+      "category": "SO",
+      "category-name": "SOMALIA",
+      "code": "SO-MPND",
+      "name": "General Register for Non-Governmental Organizations",
+      "language": "en"
     }
   ]
 }

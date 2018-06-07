@@ -49,6 +49,8 @@ class Processor
      */
     public function pushIntoQueue($file, $filename, $activityIdentifiers)
     {
+        $str = mb_convert_encoding(file_get_contents($file) , "UTF-8") ;
+        file_put_contents($file,$str);
         $csv = $this->csvReader->load($file)->toArray();
 
         $this->dispatch(
