@@ -343,7 +343,7 @@ class ActivityRepository
                 'default_finance_type'       => getVal(array_values($defaultFieldValues), [0, 'default_finance_type'], null),
                 'default_aid_type'           => getVal(array_values($defaultFieldValues), [0, 'default_aid_type'], null),
                 'default_tied_status'        => getVal(array_values($defaultFieldValues), [0, 'default_tied_status'], null),
-                'contact_info'               => getVal(array_values($activityData), ['contact_info'], null),
+                'contact_info'               => empty($activityData['contact_info']) ? null : array_values($activityData['contact_info']),
                 'related_activity'           => getVal(array_values($activityData), ['related_activity'], null)
             ]
         );
@@ -466,7 +466,7 @@ class ActivityRepository
         $activity->default_finance_type = getVal(array_values($defaultFieldValues), [0, 'default_finance_type'], null);
         $activity->default_aid_type     = getVal(array_values($defaultFieldValues), [0, 'default_aid_type'], null);
         $activity->default_tied_status  = getVal(array_values($defaultFieldValues), [0, 'default_tied_status'], null);
-        $activity->contact_info         = getVal(array_values($activityData), ['contact_info'], null);
+        $activity->contact_info         = empty($activityData['contact_info']) ? null : array_values($activityData['contact_info']);
         $activity->related_activity     = getVal(array_values($activityData), ['related_activity'], null);
 
         return $activity;
