@@ -70,11 +70,11 @@
                         <table class="table table-striped">
                             <tbody>
                             @foreach($participatingOrg as $orgData)
-                                <tr class="clickable-row" data-href="{{route('organization.show', $orgData->id)}}">
+                                <tr>
                                     <td class="organisation-name" width="55%">
-                                        <a href="{{route('organization.show', $orgData->id)}}">
+                                        <!-- <a href="{{route('organization.show', $orgData->id)}}"> -->
                                             {{ $orgData->name[0]['narrative'] ? $orgData->name[0]['narrative'] : trans('global.name_not_given')}}
-                                        </a>
+                                        <!-- </a> -->
                                         <span class="identifier">
                                             {{ $orgData->identifier }}
                                         </span>
@@ -82,17 +82,17 @@
                                             <span class="{{ $orgData->is_publisher ? 'is-publisher' : '' }}">publisher</span>
                                         @endif
                                     </td>
-                                    <td class="activities" width="15%">
+                                    <td class="activities" width="20%">
                                         {!! $orgData->includedActivities() !!}
                                     </td>
                                     <td class="sector" width="15%">
                                         {{ $getCode->getCodeNameOnly('OrganizationType', $orgData->type, -4, 'Organization') }}
                                     </td>
-                                    <td width="10%">
+                                    <!-- <td width="10%">
                                         <div class="activity__status activity-status-{{ $orgData->getStatus() }}">
                                             <span>{{ $orgData->getStatus() }}</span>
                                         </div>
-                                    </td>
+                                    </td> -->
                                     <td width="50px">
                                         <div class="view-more">
                                             <a href="javascript:void(0)" class="{{ (count($participatingOrg) > 0) ?: 'hidden'}}">⋯</a>

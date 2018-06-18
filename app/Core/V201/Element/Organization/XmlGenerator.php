@@ -121,7 +121,7 @@ class XmlGenerator
     {
         try {
             $publisherId    = array_get($settings, 'registry_info.0.publisher_id');
-            $currentOrgData = $organization->orgData()->where('status', '=', 3)->get();
+            $currentOrgData = $organization->orgData()->where('status', '=', 3)->where('is_reporting_org',true)->get();
             if ($organizationData->status == '2') {
                 $currentOrgData->push($organizationData);
             }
