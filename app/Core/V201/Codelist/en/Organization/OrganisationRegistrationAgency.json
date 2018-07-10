@@ -856,6 +856,13 @@
       "code": "SO-MPND",
       "name": "General Register for Non-Governmental Organizations",
       "language": "en"
+    },
+    {
+      "category": "KE",
+      "category-name": "KENYA",
+      "code": "KE-KRA",
+      "name": "Kenya Revenue Authority PIN",
+      "language": "en"
     }
   ]
 }
