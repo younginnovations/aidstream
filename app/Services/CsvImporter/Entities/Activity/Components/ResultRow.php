@@ -899,7 +899,7 @@ class ResultRow extends Row
         foreach ($narrative as $index => $value) {
 
             if (!is_null($value)) {
-                array_set($this->data, implode('.', [implode('.', $key), 0, 'narrative', $index, 'narrative']), strtolower($value));
+                array_set($this->data, implode('.', [implode('.', $key), 0, 'narrative', $index, 'narrative']), $value);
             }
         }
 
