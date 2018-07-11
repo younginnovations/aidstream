@@ -1,0 +1,28 @@
+label,
+input,
+select {
+  display: inline;
+}
+#data-table_info,
+#data-table_length {
+  margin-left: 20px;
+  margin-top: 10px;
+}
+#data-table_filter,
+#data-table_paginate {
+  margin-right: 50px;
+  margin-top: 10px;
+}
+#data-table_paginate,
+#data-table_info {
+  margin-bottom: 10px;
+}
+#data-table_length > label > select {
+  width: 56px;
+}
+#data-table_filter > label > input {
+  width: 180px;
+}
+select[name="data-table_length"] {
+  margin: 0 3px;
+}

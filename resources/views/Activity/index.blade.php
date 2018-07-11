@@ -83,7 +83,13 @@
         </div>
     </div>
 @endsection
-
+@section('script')
+    <script>
+        $(document).ready( function () {
+        $('#data-table').DataTable();
+    });
+ </script>
+@endsection
 @section('foot')
     @if(xmlImportIsStarted())
         <script type="text/javascript" src="{{asset('js/xmlImporter/xmlImporter.js')}}"></script>
