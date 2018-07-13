@@ -233,7 +233,27 @@
                             {{--                            {{Form::select('country',$countries, null,['class' => 'form-control ignore_change', 'v-bind:value' => 'organisation.country', 'placeholder' => 'Please select the following options.','v-on:change' => 'getRegistrars($event)'])}}--}}
                             <vue-select2 :bind_variable='organisation' name='country' attr_name='countryText' options='{{json_encode($countries)}}' v-on:change='getRegistrars($event)'></vue-select2>
                         </div>
-                        <div class="suggestions" v-if="display_registrar_list">
+                        <div>
+                            <div class="form-group">
+                                {{Form::label('Organisation Name',trans('elementForm.organisation_name'),['class' => 'control-label'])}}
+                                {{Form::text('name', null,['class' => 'form-control ignore_change', "v-bind:value" => "organisation.tempName", "@blur" => 'updateOrgName($event)'])}}
+                            </div>
+
+                            <div class="form-group">
+                                {{Form::label('Identifier','Organisation Registration Number',['class' => 'control-label'])}}
+                                {{Form::text('identifier', null,['class' => 'form-control ignore_change', 'v-bind:value' => 'organisation.tempIdentifier', "@blur" => 'updateOrgIdentifier($event)'])}}
+                            </div>
+                            
+                        </div>
+                        
+                        <div class="form-group" v-if="display_registrar_list">
+                         <label for="use-organisation-number">
+                          <input type="checkbox" v-model="useOrganisationNumber" id="use-organisation-number" />
+                          I have organisation registration number for above organisation.
+                        </label> 
+                        </div>
+                        <div class="form-group">
+                        <div class="suggestions" v-if="useOrganisationNumber">
                             <p>PLEASE CHOOSE A LIST FROM BELOW:</p>
                             <div class="lists scroll-list">
                                 <ul>
@@ -252,21 +272,12 @@
                                     </li>
                                 </ul>
                             </div>
-                            <div v-if="display_org_info_form">
-                                <div class="form-group">
-                                    {{Form::label('Organisation Name',trans('elementForm.organisation_name'),['class' => 'control-label'])}}
-                                    {{Form::text('name', null,['class' => 'form-control ignore_change', "v-bind:value" => "organisation.tempName", "@blur" => 'updateOrgName($event)'])}}
-                                </div>
-
-                                <div class="form-group">
-                                    {{Form::label('Identifier','Organisation Registration Number',['class' => 'control-label'])}}
-                                    {{Form::text('identifier', null,['class' => 'form-control ignore_change', 'v-bind:value' => 'organisation.tempIdentifier', "@blur" => 'updateOrgIdentifier($event)'])}}
-                                </div>
-                                <div class="form-group">
-                                    <button class="btn btn-form" type="button" data-dismiss="modal" @click="close(true)">Use this organisation</button>
-                                </div>
-                            </div>
+                            
                         </div>
+</div>
+                        <div class="form-group">
+                                <button class="btn btn-form" type="button" data-dismiss="modal" @click="close(true)">Use this organisation</button>
+                            </div>
                     </div>
                     <div class="modal-footer">
                         <div class="reset-form-option">
@@ -534,7 +545,8 @@
         data: function () {
           return {
             display_org_info_form: false,
-            selectedRegistrar: ''
+            selectedRegistrar: '',
+            useOrganisationNumber: false
           }
         },
         computed: {

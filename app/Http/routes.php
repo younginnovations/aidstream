@@ -519,3 +519,10 @@ $router->get(
         'uses' => 'OrganisationFinder@findOrg'
     ]
 );
+
+$router->get(
+  '/results-app',
+  function() {
+    return view('resultsApp.index');
+  }
+);
