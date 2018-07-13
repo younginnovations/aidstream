@@ -63,7 +63,7 @@
         </div>
     </div>
 
-    <div id="participating-form" class="hidden">
+    <script type="text/x-template" id="participating-form">
         <div class="collection_form has_add_more">
             <div class="reset-form-option reset-form-option--small reset-form-option--tag pull-right" v-on:click="reset">Reset</div>
             <div class="form-group">
@@ -94,7 +94,7 @@
                 </div>
                 <div class="form-group" v-bind:class="{'has-error': (organisation.narrative[0]['narrative'] == '' && display_error) }">
                     {{Form::label('Organization',trans('elementForm.organisation'),['class' => 'control-label'])}}
-                    {{Form::text('organization',null,['class' => 'form-control ignore_change','v-bind:value' => "organisation.narrative[0]['narrative']",'@focus' => 'displaySuggestion($event)', '@keydown.tab'=> 'hideSuggestion','autocomplete' => 'off', 'readonly' => true])}}
+                    {{Form::text('organization',null,['class' => 'form-control ignore_change','v-bind:value' => 'organisation.narrative[0]["narrative"]','@focus' => 'displaySuggestion($event)', '@keydown.tab'=> 'hideSuggestion','autocomplete' => 'off', 'readonly' => true])}}
 
                     <div v-if="(organisation.narrative[0]['narrative'] == '' && display_error)" class="text-danger">Organisation Name is required.</div>
 
@@ -186,7 +186,7 @@
                             </li>
                             <li class="or">Or</li>
                             <li id="orgFinder">
-                                <a href="javascript:void(0)" @click="display()">
+                                <a href="#" @mousedown.prevent="display()">
                                     <h3 class="contact-heading">Use Organization Finder <span> (org-id.guide)</span></h3>
                                     <p>Use our organization finder helper to get a new identifier for this.</p>
                                     <p><span class="caution">Caution:</span> Please beware that this can be a long and
@@ -211,9 +211,9 @@
                 <button class="remove_organisation" type="button" @click="remove()" v-bind:index="index">Remove Organisation</button>
             </div>
         </div>
-    </div>
+    </script>
 
-    <div id="modalComponent">
+    <script type="text/x-template" id="modalComponent">
         <div class="modal fade org-modal" id="myModal" role="dialog">
             <div class="modal-dialog ">
                 <!-- Modal content-->
@@ -222,53 +222,59 @@
                         <button type="button" class="close" data-dismiss="modal" @click="close(false)">&times;</button>
                         <h4 class="modal-title">Organization Finder</h4>
                     </div>
-                    <div class="modal-body">
-                        <div class="form-group">
-                            {{Form::label('Organisation Type',trans('elementForm.organisation_type'),['class' => 'control-label'])}}
-                            {{--{{Form::select('organization_type',$organizationTypes, null,['class' => 'form-control ignore_change', 'v-bind:value' => 'organisation.organization_type', 'placeholder' => 'Please select the following options.', 'v-on:change' => 'getRegistrars($event)'])}}--}}
-                            <vue-select2 :bind_variable='organisation' name='organization_type' attr_name='typeText' options='{{json_encode($organizationTypes)}}'
-                                         v-on:change='getRegistrars($event)'></vue-select2>
-                        </div>
+                    <div class="modal-body clearfix">
+                          <div class="form-group">
+                              {{Form::label('Organisation Type',trans('elementForm.organisation_type'),['class' => 'control-label'])}}
+                              {{--{{Form::select('organization_type',$organizationTypes, null,['class' => 'form-control ignore_change', 'v-bind:value' => 'organisation.organization_type', 'placeholder' => 'Please select the following options.', 'v-on:change' => 'getRegistrars($event)'])}}--}}
+                              <vue-select2 :bind_variable='organisation' name='organization_type' attr_name='typeText' options='{{json_encode($organizationTypes)}}'
+                                          v-on:change='getRegistrars($event)'></vue-select2>
+                          </div>
 
-                        <div class="form-group">
-                            {{Form::label('country','Country the organization is based in',['class' => 'control-label'])}}
-                            {{--                            {{Form::select('country',$countries, null,['class' => 'form-control ignore_change', 'v-bind:value' => 'organisation.country', 'placeholder' => 'Please select the following options.','v-on:change' => 'getRegistrars($event)'])}}--}}
-                            <vue-select2 :bind_variable='organisation' name='country' attr_name='countryText' options='{{json_encode($countries)}}' v-on:change='getRegistrars($event)'></vue-select2>
-                        </div>
-                        <div class="suggestions" v-if="display_registrar_list">
-                            <p>PLEASE CHOOSE A LIST FROM BELOW:</p>
-                            <div class="lists scroll-list">
-                                <ul>
-                                    <li v-for="(list,index) in registrar_list[0]" v-if="registrar_list[0]" :key="index">
-                                        <div class="register-list">
-                                            <label>
-                                                <input type="radio" name="registrar" v-on:change="displayForm($event)"
-                                                       v-bind:value="list['code']"/>
-                                                <span>@{{ list['name']['en'] }}
-                                                    <strong>(@{{ list['code'] }})</strong></span>
-                                            </label>
-                                        </div>
-                                        <div class="score-block"><span>Quality Score: <strong>@{{ list['quality'] }}</strong></span><span><a
-                                                        v-bind:href="list.url" target="_blank">View this list →</a></span>
-                                        </div>
-                                    </li>
-                                </ul>
+                          <div class="form-group">
+                              {{Form::label('country','Country the organization is based in',['class' => 'control-label'])}}
+                              {{--                            {{Form::select('country',$countries, null,['class' => 'form-control ignore_change', 'v-bind:value' => 'organisation.country', 'placeholder' => 'Please select the following options.','v-on:change' => 'getRegistrars($event)'])}}--}}
+                              <vue-select2 :bind_variable='organisation' name='country' attr_name='countryText' options='{{json_encode($countries)}}' v-on:change='getRegistrars($event)'></vue-select2>
+                          </div>
+                            <div class="form-group">
+                                {{Form::label('Organisation Name',trans('elementForm.organisation_name'),['class' => 'control-label'])}}
+                                {{Form::text('name', null,['class' => 'form-control ignore_change', "v-bind:value" => "organisation.tempName", "@blur" => 'updateOrgName($event)'])}}
                             </div>
-                            <div v-if="display_org_info_form">
-                                <div class="form-group">
-                                    {{Form::label('Organisation Name',trans('elementForm.organisation_name'),['class' => 'control-label'])}}
-                                    {{Form::text('name', null,['class' => 'form-control ignore_change', "v-bind:value" => "organisation.tempName", "@blur" => 'updateOrgName($event)'])}}
-                                </div>
 
-                                <div class="form-group">
-                                    {{Form::label('Identifier','Organisation Registration Number',['class' => 'control-label'])}}
-                                    {{Form::text('identifier', null,['class' => 'form-control ignore_change', 'v-bind:value' => 'organisation.tempIdentifier', "@blur" => 'updateOrgIdentifier($event)'])}}
-                                </div>
-                                <div class="form-group">
-                                    <button class="btn btn-form" type="button" data-dismiss="modal" @click="close(true)">Use this organisation</button>
-                                </div>
-                            </div>
+                            
+                        <div class="form-group" v-if="display_registrar_list">
+                          <label for="use-organisation-number">
+                          <input type="checkbox" v-model="useOrganisationNumber" id="use-organisation-number" />
+                          I have organisation registration number for above organisation.
+                        </label> 
                         </div>
+                        
+                          <div class="suggestions" v-if="useOrganisationNumber">
+                              <p>PLEASE CHOOSE A LIST FROM BELOW:</p>
+                              <div class="lists scroll-list">
+                                  <ul>
+                                      <li v-for="(list,index) in registrar_list[0]" v-if="registrar_list[0]" :key="index">
+                                          <div class="register-list">
+                                              <label>
+                                                  <input type="radio" name="registrar" v-on:change="displayForm($event)"
+                                                        v-bind:value="list['code']"/>
+                                                  <span>@{{ list['name']['en'] }}
+                                                      <strong>(@{{ list['code'] }})</strong></span>
+                                              </label>
+                                          </div>
+                                          <div class="score-block"><span>Quality Score: <strong>@{{ list['quality'] }}</strong></span><span><a
+                                                          v-bind:href="list.url" target="_blank">View this list →</a></span>
+                                          </div>
+                                      </li>
+                                  </ul>
+                              </div>
+                              <div class="form-group">
+                                {{Form::label('Identifier','Organisation Registration Number',['class' => 'control-label'])}}
+                                {{Form::text('identifier', null,['class' => 'form-control ignore_change', 'v-bind:value' => 'organisation.tempIdentifier', "@blur" => 'updateOrgIdentifier($event)'])}}
+                            </div>
+                          </div>
+                      <div>
+                        <button class="btn btn-form" type="button" data-dismiss="modal" @click="close(true)">Use this organisation</button>
+                      </div>
                     </div>
                     <div class="modal-footer">
                         <div class="reset-form-option">
@@ -281,7 +287,7 @@
 
             </div>
         </div>
-    </div>
+    </script>
 @endsection
 @section('script')
     <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.min.js"></script>
@@ -528,12 +534,13 @@
       });
 
       Vue.component('modal', {
-        el: '#modalComponent',
+        template: '#modalComponent',
         props: ['organisation', 'registrar_list'],
         data: function () {
           return {
             display_org_info_form: false,
-            selectedRegistrar: ''
+            selectedRegistrar: '',
+            useOrganisationNumber: false
           }
         },
         computed: {
