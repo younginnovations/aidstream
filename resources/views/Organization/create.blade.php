@@ -34,7 +34,9 @@
                                                        v-on:search="setCurrentOrganization(index,$event)"
                                                        :organisation="organisation"
                                                        v-on:display="displayModal($event)"
-                                                       :display_error="display_error">
+                                                       :display_error="display_error"
+                                                       v-if="organisations"
+                                                       :key="index">
                                     </participating-org>
                                     <modal v-show="showModal" v-on:close="closeModal"
                                            :organisation="currentOrganisation"
@@ -91,14 +93,14 @@
                                 </div>
                             </li>
                         </ul>
-                        <ul v-if="suggestions.length > 0" class="found-publishers">
+                        <ul v-if="suggestions.length" class="found-publishers">
                             <li><p class="publisher-description">Choose an organisation from below</p></li>
                             <li class="publishers-list scroll-list">
-                                <div v-for="(publisher, index) in suggestions">
-                                    <a href="javascript:void(0)" v-on:click="selected($event)" v-bind:selectedSuggestion="index">
+                                <div v-for="(publisher, index) in suggestions" v-if="suggestions" :key="index">
+                                    <a href="javascript:void(0)" v-on:click="selected(publisher, index)" v-bind:selectedSuggestion="index">
                                         <p>
                                             <strong v-bind:selectedSuggestion="index">@{{publisher.names[0].name}}</strong>
-                                            <span class="language" v-if="key.language" v-for="(key,index) in publisher.names">@{{ key.language }}</span>
+                                            <span class="language" v-if="key.language" v-for="(key,indx) in publisher.names" :key="indx">@{{ key.language }}</span>
                                         </p>
                                         <p>
                                             <strong v-bind:selectedSuggestion="index">@{{publisher.identifier}}</strong>
@@ -159,7 +161,7 @@
         </div>
     </div>
 
-    <div class="hidden" id="modalComponent">
+    <div id="modalComponent">
         <div class="modal fade org-modal" id="myModal" role="dialog">
             <div class="modal-dialog ">
                 <!-- Modal content-->
@@ -187,7 +189,7 @@
                             <h3>Please choose a list from below</h3>
                             <div class="lists scroll-list">
                                 <ul>
-                                    <li v-for="(list,index) in registrar_list[0]">
+                                    <li v-for="(list,index) in registrar_list[0]" v-if="registrar_list[0]" :key="index">
                                         <div class="register-list">
                                             <label>
                                                 <input type="radio" name="registrar" v-on:change="displayForm($event)"
@@ -231,6 +233,7 @@
     </div>
 @endsection
 @section('script')
+    <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.min.js"></script>
     <script src="https://unpkg.com/vue"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script>
@@ -287,7 +290,7 @@
             if (event.target.value.trim().length > 3) {
               if (!self.searching) {
                 self.searching = true;
-                this.suggestions.splice(0, this.suggestions.length);
+                this.suggestions = [];
                 setTimeout(function () {
                   axios({
                     method: 'GET',
@@ -302,14 +305,14 @@
                       self.suggestions.push(publisher);
                     });
                   }).catch(function (error) {
-                    self.suggestions.splice(0, self.suggestions.length);
+                    self.suggestions = [];
                     self.display_org_finder = true;
                     self.searching = false;
                   });
                 }, 1000);
               }
             } else {
-              this.suggestions.splice(0, this.suggestions.length);
+              this.suggestions = [];
               this.display_org_finder = false;
             }
             this.$emit('search', this.index);
@@ -317,7 +320,7 @@
           hideSuggestion: function () {
             this.display_org_finder = false;
             this.display_org_list = false;
-            this.suggestions.splice(0, this.suggestions.length);
+            this.suggestions = [];
           },
           onchange: function (event) {
             this.organisation[event.target.name] = event.target.value;
@@ -339,21 +342,20 @@
               self.$emit('display', []);
             }
           },
-          selected: function (event) {
-            var selectedIndex = event.target.getAttribute('selectedSuggestion');
-            var organizationCountry = this.suggestions[selectedIndex]['country'];
+          selected: function (publisher, index) {
+            var organizationCountry = publisher['country'];
 
-            this.organisation['type'] = this.suggestions[selectedIndex]['type'];
-            this.organisation['is_publisher'] = this.suggestions[selectedIndex]['is_publisher'];
-            this.organisation['identifier'] = this.suggestions[selectedIndex]['identifier'].replace(/\//g, "-");
+            this.organisation['type'] = publisher['type'];
+            this.organisation['is_publisher'] = publisher['is_publisher'];
+            this.organisation['identifier'] = publisher['identifier'].replace(/\//g, "-");
             this.organisation['country'] = organizationCountry;
             this.organisation['countryText'] = this.countries[organizationCountry];
             this.organisation['typeText'] = this.types[this.organisation['type']];
 
             var self = this;
 
-            if (this.suggestions[selectedIndex]['names'].length > 0) {
-              this.suggestions[selectedIndex]['names'].forEach(function (name, index) {
+            if (publisher['names'].length > 0) {
+              publisher['names'].forEach(function (name, index) {
                 if (self.organisation['name'][index] == undefined) {
                   self.organisation['name'][index] = { 'narrative': '', 'language': '' };
                 }
@@ -364,13 +366,12 @@
 
             this.disable_options = true;
             this.display_org_list = false;
-            this.suggestions.splice(0, this.suggestions.length);
           },
           hide: function (event) {
             if (!event.relatedTarget) {
               this.display_org_finder = false;
               this.display_org_list = false;
-              this.suggestions.splice(0, this.suggestions.length);
+              this.suggestions = [];
             }
           },
           reset: function () {
@@ -395,7 +396,7 @@
       });
 
       Vue.component('modal', {
-        template: '#modalComponent',
+        el: '#modalComponent',
         props: ['organisation', 'registrar_list'],
         data: function () {
           return {

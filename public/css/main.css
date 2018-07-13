@@ -7694,5 +7694,7 @@ select.systemVersion {
   padding: 0 !important;
   text-indent: -9999px;
   width: 10px; }
-
+.modal-open .modal {
+  display: block;
+}
 /*# sourceMappingURL=maps/app.css.map */
