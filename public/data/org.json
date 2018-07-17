@@ -17,7 +17,7 @@
       "confirmed": true,
       "data": {
         "licenseStatus": "open_license",
-        "dataAccessDetails": "Data is available online, but is hard to find on the website. Users must go to 'DIR3 reusable Data (minhap.gob)' http://www.minhap.gob.es/es-ES/GobiernoAbierto/Datos%20Abiertos/Paginas/CatalogoRISPSecretariadeEstadodeAdministracionesPublicas.aspx or to http://datos.gob.es/es/catalogo/e04990101-directorio-comun-de-unidades-organicas-y-oficinas-dir3.\n\nThis opens a list with many options. The correct spreadsheet is 'Listado de informaci\u00f3n b\u00e1sica de oficinas de la AGE'.",
+        "dataAccessDetails": "Data is available online, but is hard to find on the website. Users must go to 'DIR3 reusable Data (minhap.gob)' http://www.minhap.gob.es/es-ES/GobiernoAbierto/Datos%20Abiertos/Paginas/CatalogoRISPSecretariadeEstadodeAdministracionesPublicas.aspx or to http://datos.gob.es/es/catalogo/e04990101-directorio-comun-de-unidades-organicas-y-oficinas-dir3.\n\nThis opens a list with many options. The correct spreadsheet is 'Listado de información básica de oficinas de la AGE'.",
         "features": [
           "registration_number",
           "date_of_registration"
@@ -31,7 +31,7 @@
       "access": {
         "publicDatabase": "http://www.minhap.gob.es/es-ES/GobiernoAbierto/Datos%20Abiertos/Paginas/CatalogoRISPSecretariadeEstadodeAdministracionesPublicas.aspx",
         "exampleIdentifiers": "E04100802, E00142804, E00003301",
-        "guidanceOnLocatingIds": "Users can download a dataset containing information on government agencies in Spain using this link - http://www.minhap.gob.es/es-ES/GobiernoAbierto/Datos%20Abiertos/Paginas/CatalogoRISPSecretariadeEstadodeAdministracionesPublicas.aspx or http://datos.gob.es/es/catalogo/e04990101-directorio-comun-de-unidades-organicas-y-oficinas-dir3 and looking for the file 'Listado de informaci\u00f3n b\u00e1sica de oficinas de la AGE'\n\nIdentifiers are under Column Header - C_ID_UNIDAD_RESPONSABLE.",
+        "guidanceOnLocatingIds": "Users can download a dataset containing information on government agencies in Spain using this link - http://www.minhap.gob.es/es-ES/GobiernoAbierto/Datos%20Abiertos/Paginas/CatalogoRISPSecretariadeEstadodeAdministracionesPublicas.aspx or http://datos.gob.es/es/catalogo/e04990101-directorio-comun-de-unidades-organicas-y-oficinas-dir3 and looking for the file 'Listado de información básica de oficinas de la AGE'\n\nIdentifiers are under Column Header - C_ID_UNIDAD_RESPONSABLE.",
         "languages": [
           "en",
           "es",
@@ -57,7 +57,7 @@
       "url": "http://administracionelectronica.gob.es/ctt/dir3/descargas",
       "code": "ES-DIR3",
       "description": {
-        "en": "The Common Directory of Organizational Units and Offices (DIR3) is a project to improve interoperability between public administration units in Spain. As a part of this, a list of all the public bodies is maintained by the Centro de Transferencia de Tecnolog\u00eda (Technology Transfer Centre).\n\n\"The Common Directory is conceived as a Inventory information on the organizational structure of the public administration, and its citizens care offices. That is, a catalogue of functional units, public agencies and registry offices and attention to the citizen of the administration\" [1] \n\n[1] http://administracionelectronica.gob.es/pae_Home/pae_Estrategias/Racionaliza_y_Comparte/sistemas_informacion_transversales/DIR3.html?idioma=en#.WDTAPaIrL8o\n\nEXCEL Tables: http://administracionelectronica.gob.es/ctt/resources/Soluciones/238/Area%20descargas/Listado%20Oficinas%20AGE.xlsx?idIniciativa=238&idElemento=2745"
+        "en": "The Common Directory of Organizational Units and Offices (DIR3) is a project to improve interoperability between public administration units in Spain. As a part of this, a list of all the public bodies is maintained by the Centro de Transferencia de Tecnología (Technology Transfer Centre).\n\n\"The Common Directory is conceived as a Inventory information on the organizational structure of the public administration, and its citizens care offices. That is, a catalogue of functional units, public agencies and registry offices and attention to the citizen of the administration\" [1] \n\n[1] http://administracionelectronica.gob.es/pae_Home/pae_Estrategias/Racionaliza_y_Comparte/sistemas_informacion_transversales/DIR3.html?idioma=en#.WDTAPaIrL8o\n\nEXCEL Tables: http://administracionelectronica.gob.es/ctt/resources/Soluciones/238/Area%20descargas/Listado%20Oficinas%20AGE.xlsx?idIniciativa=238&idElemento=2745"
       },
       "name": {
         "en": "Common Directory of Organizational Units and Offices - DIR3",
@@ -255,6 +255,54 @@
       "coverage": null
     },
     {
+      "sector": [],
+      "deprecated": null,
+      "subnationalCoverage": null,
+      "links": {
+        "opencorporates": null,
+        "wikipedia": null
+      },
+      "meta": {},
+      "confirmed": true,
+      "data": {
+        "licenseStatus": "no_license",
+        "features": [],
+        "availability": [],
+        "licenseDetails": "",
+        "dataAccessDetails": "A list of identifiers is available via an XML API. "
+      },
+      "access": {
+        "languages": [
+          "en"
+        ],
+        "exampleIdentifiers": "",
+        "guidanceOnLocatingIds": "",
+        "onlineAccessDetails": "A list of identifiers is available via an XML API. ",
+        "availableOnline": false,
+        "publicDatabase": ""
+      },
+      "name": {
+        "en": "Registro de Personas Jurídicas",
+        "local": ""
+      },
+      "structure": null,
+      "quality_explained": {
+        "Availability: API": 2,
+        "Availability: XML format": 1,
+        "List type: Local": 5,
+        "License: No License": 5
+      },
+      "formerPrefixes": null,
+      "listType": "local",
+      "quality": 13,
+      "url": "",
+      "code": "CR-RPJ",
+      "description": {
+        "en": ""
+      },
+      "coverage": null
+    },
+    {
       "deprecated": false,
       "subnationalCoverage": [],
       "links": {
@@ -309,7 +357,7 @@
       "url": "https://www.kvk.nl/english/",
       "code": "NL-KVK",
       "description": {
-        "en": "All companies and entities (including most NGOs) in the Netherlands must enrol with the Commercial Register, which is hosted by the Dutch Chamber of Commerce. Each entity receives a Chamber of Commerce number upon registration, which is the appropriate identifier Dutch companies and NPOs.\n\nBasic company information is available for free, detailed info can be downloaded for a fee.\n\n\"All companies and entities in the Netherlands must enroll in the Commercial Register. By law, you have a business if you provide common goods or services to others with the intent to make a profit.\" [1] \n\n\"Recipient companies can consult www.kvk.nl/waadi to check if agencies are registered on the Chamber of Commerce website. They can do this simply by entering their Chamber or Commerce number, which is assigned to all companies and legal entities upon registration in the Business Register.\" [2] \n\n\"The major forms of Dutch non-profit organization are the associations, the foundations and the churches... Associations registered in The Netherlands are unions between two or more individuals, physical persons or corporate bodies that pursue certain goals stated in the Articles of Association and that cannot divide profit among its members... There are two types of associations that can be set up in the Netherlands: with complete authority under the law (in this case the articles of associations are drawn by a civil notary and it\u2019s mandatory in this case that the association is registered at the Dutch Chamber of Commerce trade register) and with limited authority under the law (when the articles are not drawn up by a notary and the registration is not mandatory).\" [3] \n\n[1] https://www.kvk.nl/inschrijven-en-wijzigen/inschrijven/?block=420250\n[2] https://www.kvk.nl/english/how-to-register-deregister-and-report-changes/registering-with-the-chamber-of-commerce/hiring-or-provision-of-workers-in-the-netherlands/\n[3] http://www.bridgewest.eu/article/register-non-profit-organization-netherlands"
+        "en": "All companies and entities (including most NGOs) in the Netherlands must enrol with the Commercial Register, which is hosted by the Dutch Chamber of Commerce. Each entity receives a Chamber of Commerce number upon registration, which is the appropriate identifier Dutch companies and NPOs.\n\nBasic company information is available for free, detailed info can be downloaded for a fee.\n\n\"All companies and entities in the Netherlands must enroll in the Commercial Register. By law, you have a business if you provide common goods or services to others with the intent to make a profit.\" [1] \n\n\"Recipient companies can consult www.kvk.nl/waadi to check if agencies are registered on the Chamber of Commerce website. They can do this simply by entering their Chamber or Commerce number, which is assigned to all companies and legal entities upon registration in the Business Register.\" [2] \n\n\"The major forms of Dutch non-profit organization are the associations, the foundations and the churches... Associations registered in The Netherlands are unions between two or more individuals, physical persons or corporate bodies that pursue certain goals stated in the Articles of Association and that cannot divide profit among its members... There are two types of associations that can be set up in the Netherlands: with complete authority under the law (in this case the articles of associations are drawn by a civil notary and it’s mandatory in this case that the association is registered at the Dutch Chamber of Commerce trade register) and with limited authority under the law (when the articles are not drawn up by a notary and the registration is not mandatory).\" [3] \n\n[1] https://www.kvk.nl/inschrijven-en-wijzigen/inschrijven/?block=420250\n[2] https://www.kvk.nl/english/how-to-register-deregister-and-report-changes/registering-with-the-chamber-of-commerce/hiring-or-provision-of-workers-in-the-netherlands/\n[3] http://www.bridgewest.eu/article/register-non-profit-organization-netherlands"
       },
       "name": {
         "en": "Chamber of Commerce (Netherlands)",
@@ -541,7 +589,7 @@
       },
       "name": {
         "en": "Ajman Chamber of Commerce and Industry",
-        "local": "\u063a\u0631\u0641\u0629 \u062a\u062c\u0627\u0631\u0629 \u0648\u0635\u0646\u0627\u0639\u0629 \u0639\u062c\u0645\u0627\u0646"
+        "local": "غرفة تجارة وصناعة عجمان"
       }
     },
     {
@@ -564,7 +612,7 @@
       "confirmed": true,
       "data": {
         "licenseStatus": "open_license",
-        "dataAccessDetails": "Visit https://opendata.riik.ee/en/dataset/http-avaandmed-rik-ee-andmed-ariregister on the Estonian Open Data Portal for a bulk download. This appears to be a complete list of the e-\u00c4riregistri business registry including registration numbers. Update status is \"once a week\". ",
+        "dataAccessDetails": "Visit https://opendata.riik.ee/en/dataset/http-avaandmed-rik-ee-andmed-ariregister on the Estonian Open Data Portal for a bulk download. This appears to be a complete list of the e-Äriregistri business registry including registration numbers. Update status is \"once a week\". ",
         "features": [],
         "licenseDetails": "http://creativecommons.org/licenses/by-sa/3.0/",
         "availability": [
@@ -605,7 +653,7 @@
       },
       "name": {
         "en": "e-Business Register (Estonia)",
-        "local": "E-\u00e4riregister"
+        "local": "E-äriregister"
       }
     },
     {
@@ -654,7 +702,7 @@
       "url": "https://www.justiz.gv.at/web2013/html/default/2c9484852308c2a601240b693e1c0860.de.html",
       "code": "AT-UID",
       "description": {
-        "en": "\"Since July 11, 2005, the records of all commercial register courts are kept electronically. The general ledger is kept by storing the entries in a central database, the so-called \"Firmenbuchdatenbank\" in the Federal Computing Center in Vienna.\"[1]\n\nClearing houses commissioned by the Federal Ministry of Justice (Die \u00d6sterreichische Justiz) provide the only access to the database.[2] Interfaces are mostly available only in German, and access/fees vary between the different operators.\n\nConsider using the Business Register number with the prefix AT-FB (see list AT-FB) - which is a primary rather than secondary list - instead of the VAT number.\n\n[1] https://www.justiz.gv.at/web2013/html/default/2c9484852308c2a601240b693e1c0860.de.html\n[2] A full list of authorized clearing houses is available at https://www.justiz.gv.at/web2013/home/e-justice/firmenbuch/die_firmenbuchdatenbank~2c9484852308c2a601240b693e1c0860.de.html"
+        "en": "\"Since July 11, 2005, the records of all commercial register courts are kept electronically. The general ledger is kept by storing the entries in a central database, the so-called \"Firmenbuchdatenbank\" in the Federal Computing Center in Vienna.\"[1]\n\nClearing houses commissioned by the Federal Ministry of Justice (Die Österreichische Justiz) provide the only access to the database.[2] Interfaces are mostly available only in German, and access/fees vary between the different operators.\n\nConsider using the Business Register number with the prefix AT-FB (see list AT-FB) - which is a primary rather than secondary list - instead of the VAT number.\n\n[1] https://www.justiz.gv.at/web2013/html/default/2c9484852308c2a601240b693e1c0860.de.html\n[2] A full list of authorized clearing houses is available at https://www.justiz.gv.at/web2013/home/e-justice/firmenbuch/die_firmenbuchdatenbank~2c9484852308c2a601240b693e1c0860.de.html"
       },
       "name": {
         "en": "VAT number (Austria Company Register)",
@@ -711,7 +759,7 @@
       },
       "name": {
         "en": "Ajman Free Zone Authority",
-        "local": "\u0633\u0644\u0637\u0629 \u0627\u0644\u0645\u0646\u0637\u0642\u0629 \u0627\u0644\u062d\u0631\u0629 \u0641\u064a \u0639\u062c\u0645\u0627\u0646"
+        "local": "سلطة المنطقة الحرة في عجمان"
       }
     },
     {
@@ -763,7 +811,7 @@
       },
       "name": {
         "en": "Lithuania Register of Legal Entities",
-        "local": "Juridini\u0173 asmen\u0173 registras"
+        "local": "Juridinių asmenų registras"
       }
     },
     {
@@ -802,7 +850,7 @@
           "sk"
         ],
         "exampleIdentifiers": "35919043, 47364319, 36781673",
-        "guidanceOnLocatingIds": "Users can find identifiers using the simple, searchable online database. Users will have to click on the link for 'Aktu\u00e1lny' or '\u00dapln\u00fd' under the column heading V\u00fdpis - or in English,  for 'Actual' or 'Full' under the column heading 'Extract' - of one of the companies in the search results in order to see company details.\n\nIdentifiers will be next to the heading 'I\u010cO' or 'Identification' in English",
+        "guidanceOnLocatingIds": "Users can find identifiers using the simple, searchable online database. Users will have to click on the link for 'Aktuálny' or 'Úplný' under the column heading Výpis - or in English,  for 'Actual' or 'Full' under the column heading 'Extract' - of one of the companies in the search results in order to see company details.\n\nIdentifiers will be next to the heading 'IČO' or 'Identification' in English",
         "onlineAccessDetails": "Database can be searched using the simple search. ",
         "availableOnline": false,
         "publicDatabase": "http://www.orsr.sk/search_subjekt.asp?lan=en"
@@ -863,7 +911,7 @@
       },
       "name": {
         "en": "Corporate Registry Office ",
-        "local": " Bureau d'enregistrement des soci\u00e9t\u00e9s"
+        "local": " Bureau d'enregistrement des sociétés"
       },
       "structure": [
         "company"
@@ -1073,7 +1121,7 @@
       },
       "name": {
         "en": "Dubai Multi Commodities Centre",
-        "local": "\u0645\u0631\u0643\u0632 \u062f\u0628\u064a \u0644\u0644\u0633\u0644\u0639 \u0627\u0644\u0645\u062a\u0639\u062f\u062f\u0629"
+        "local": "مركز دبي للسلع المتعددة"
       }
     },
     {
@@ -1126,11 +1174,11 @@
       "url": "https://www.ajpes.eu/",
       "code": "SI-TIN",
       "description": {
-        "en": "A unique tax identifier code (Dav\u010dna \u0161tevilka) which every legal entity or an individual entrepreneur must obtain.\n\nThese are entered on to the Slovenian Business Register (Poslovni register Slovenije)"
+        "en": "A unique tax identifier code (Davčna številka) which every legal entity or an individual entrepreneur must obtain.\n\nThese are entered on to the Slovenian Business Register (Poslovni register Slovenije)"
       },
       "name": {
         "en": "Tax Identification Number (Slovenia)",
-        "local": "Dav\u010dna \u0161tevilka"
+        "local": "Davčna številka"
       }
     },
     {
@@ -1294,7 +1342,7 @@
       "access": {
         "publicDatabase": "",
         "exampleIdentifiers": "100000709",
-        "guidanceOnLocatingIds": "Registration number will be under `\u041c\u0411\u0420` header, PIB - under `\u041f\u0418\u0411` header.",
+        "guidanceOnLocatingIds": "Registration number will be under `МБР` header, PIB - under `ПИБ` header.",
         "languages": [
           "sr"
         ],
@@ -1425,11 +1473,11 @@
       "url": "http://kgd.gov.kz/en/services/taxpayer_search/legal_entity",
       "code": "KZ-BIN",
       "description": {
-        "en": "\"Business Identification Number (BIN) is a unique number consisting of 12 digits created for legal person (branch and agency) and individual entrepreneur operating in form of joint entrepreneurship.\n\n[...] as from January 1, 2013 [...] BIN (Business Identification Number) will be implemented in the Republic of Kazakhstan instead of Taxpayer\u2019s Registration Number (TRN).\"[1]\n\nThe Ministry of Finance of the Republic of Kazakhstan maintains the business register.\n\n[1] https://www.norvik.eu/en/iin-and-bin-implementation-in-the-republic-of-kazakhstan/?print=1"
+        "en": "\"Business Identification Number (BIN) is a unique number consisting of 12 digits created for legal person (branch and agency) and individual entrepreneur operating in form of joint entrepreneurship.\n\n[...] as from January 1, 2013 [...] BIN (Business Identification Number) will be implemented in the Republic of Kazakhstan instead of Taxpayer’s Registration Number (TRN).\"[1]\n\nThe Ministry of Finance of the Republic of Kazakhstan maintains the business register.\n\n[1] https://www.norvik.eu/en/iin-and-bin-implementation-in-the-republic-of-kazakhstan/?print=1"
       },
       "name": {
         "en": "Business Identification Number (BIN)",
-        "local": "\u0411\u0438\u0437\u043d\u0435\u0441 \u0441\u04d9\u0439\u043a\u0435\u0441\u0442\u0435\u043d\u0434\u0456\u0440\u0443 \u043d\u043e\u043c\u0435\u0440\u0456 (\u0411\u0418\u041d)"
+        "local": "Бизнес сәйкестендіру номері (БИН)"
       }
     },
     {
@@ -1742,7 +1790,7 @@
       "url": "http://wwwinfo.mfcr.cz/ares/ares_es.html.en",
       "code": "CZ-ICO",
       "description": {
-        "en": "The ARES is an information system which collates data from several public registers in the Czech Republic. These include:\n\nPublic registers comprising: the Commercial Register Federal Register, the Register of Foundations Register\u2019s Institute, Register of Public Service Companies, Trade Register, and the Register of Economic Entities.\n\nEnterprises do not register with the ARES. They must be register with the relevant registration authority. \n\n\"The purpose of the ARES web sites of the Ministry of Finance is to provide a single-point access to all data concerning economic entities kept in particular registers or maintained in files of the state administration. ARES provides an easy access to the data transferred from the source registers to the ARES database. It allows also to switch directly to www applications of the state administration bodies provided that such applications already exist.\" [1]\n\n\"It is not possible to make a registration in the Information System ARES directly. It is necessary to proceed in accordance with applicable laws and to make a registration at the registration points of the public administration authorities. Likewise, data changes or termination of the registration must be reported to the institution that maintains the source registry. List of source registers and responsible institutions is presented in the tab REGISTRATION AUTHORITIES.\" [2]\n\n Information on companies is searchable in English and is free-of-charge.\n\n[1] http://wwwinfo.mfcr.cz/ares/ares_es.html.en\n[2] http://wwwinfo.mfcr.cz/ares/ares.html.en"
+        "en": "The ARES is an information system which collates data from several public registers in the Czech Republic. These include:\n\nPublic registers comprising: the Commercial Register Federal Register, the Register of Foundations Register’s Institute, Register of Public Service Companies, Trade Register, and the Register of Economic Entities.\n\nEnterprises do not register with the ARES. They must be register with the relevant registration authority. \n\n\"The purpose of the ARES web sites of the Ministry of Finance is to provide a single-point access to all data concerning economic entities kept in particular registers or maintained in files of the state administration. ARES provides an easy access to the data transferred from the source registers to the ARES database. It allows also to switch directly to www applications of the state administration bodies provided that such applications already exist.\" [1]\n\n\"It is not possible to make a registration in the Information System ARES directly. It is necessary to proceed in accordance with applicable laws and to make a registration at the registration points of the public administration authorities. Likewise, data changes or termination of the registration must be reported to the institution that maintains the source registry. List of source registers and responsible institutions is presented in the tab REGISTRATION AUTHORITIES.\" [2]\n\n Information on companies is searchable in English and is free-of-charge.\n\n[1] http://wwwinfo.mfcr.cz/ares/ares_es.html.en\n[2] http://wwwinfo.mfcr.cz/ares/ares.html.en"
       },
       "coverage": [
         "CZ"
@@ -1773,7 +1821,7 @@
       "access": {
         "publicDatabase": "http://www.societies.gov.jo",
         "exampleIdentifiers": "2013011100066, 2017011116227, 2017011116153",
-        "guidanceOnLocatingIds": "Use the \"national number of association\" (\u0627\u0644\u0631\u0642\u0645 \u0627\u0644\u0648\u0637\u0646\u064a \u0644\u0644\u062c\u0645\u0639\u064a\u0629 in original Arabic) as found on the search results page. \n\nThese are typically 13-digit numbers.",
+        "guidanceOnLocatingIds": "Use the \"national number of association\" (الرقم الوطني للجمعية in original Arabic) as found on the search results page. \n\nThese are typically 13-digit numbers.",
         "languages": [
           "ar"
         ],
@@ -1798,7 +1846,7 @@
       },
       "name": {
         "en": "Register of Associations, Jordan",
-        "local": "\u0633\u062c\u0644 \u0627\u0644\u062c\u0645\u0639\u064a\u0627\u062a"
+        "local": "سجل الجمعيات"
       }
     },
     {
@@ -1850,7 +1898,7 @@
       },
       "name": {
         "en": "Taxpayer Single Identification Number (Mozambique)",
-        "local": "N\u00famero Unico de Identificacao Tributaria"
+        "local": "Número Unico de Identificacao Tributaria"
       }
     },
     {
@@ -1887,14 +1935,14 @@
           "ru"
         ],
         "exampleIdentifiers": "38422948, 19280108",
-        "guidanceOnLocatingIds": "Users can find identifiers by using the database on the Ministry website. Users will need to complete a Captcha puzzle in order to search, and the identifiers will be under the column header '\u0406\u0434\u0435\u043d\u0442\u0438\u0444\u0456\u043a\u0430- \u0446\u0456\u0439\u043d\u0438\u0439 \u043a\u043e\u0434 \u044e\u0440\u0438\u0434\u0438\u0447\u043d\u043e\u0457 \u043e\u0441\u043e\u0431\u0438' .This website is in Ukrainian.\n\nUsers can find identifiers using the third-party website, Papir. The Identifiers will be next to the column header '\u041a\u043e\u0434 \u0440\u0435\u0433\u0438\u0441\u0442\u0440\u0430\u0446\u0438\u0438'. This website is in Russian.",
+        "guidanceOnLocatingIds": "Users can find identifiers by using the database on the Ministry website. Users will need to complete a Captcha puzzle in order to search, and the identifiers will be under the column header 'Ідентифіка- ційний код юридичної особи' .This website is in Ukrainian.\n\nUsers can find identifiers using the third-party website, Papir. The Identifiers will be next to the column header 'Код регистрации'. This website is in Russian.",
         "onlineAccessDetails": null,
         "availableOnline": false,
         "publicDatabase": "Ministry - https://usr.minjust.gov.ua/ua/freesearch Third-party - http://askpapir.com/"
       },
       "name": {
         "en": "United State Register ",
-        "local": " \u0404\u0434\u0438\u043d\u043e\u0433\u043e \u0434\u0435\u0440\u0436\u0430\u0432\u043d\u043e\u0433\u043e \u0440\u0435\u0454\u0441\u0442\u0440\u0443 \u044e\u0440\u0438\u0434\u0438\u0447\u043d\u0438\u0445 \u043e\u0441\u0456\u0431"
+        "local": " Єдиного державного реєстру юридичних осіб"
       },
       "structure": [
         "company"
@@ -1971,7 +2019,7 @@
       "url": "http://www.guernseyregistry.com/",
       "code": "GG-RCE",
       "description": {
-        "en": "All companies in Guernsey must register with the Guernsey Registry. This also applies to most charities and NPOs. The Guernsey Registry maintain a registry of all companies, charities and all NPOs in Guernsey. These are recorded in a publicly searchable webpage database for companies and also two separate lists for charities and NPOs.\n\nPlease Note: According to OpenCorporates, the identifiers are not unique across the Guernsey Registry, as there a five separate registries that can be assigned to organisation information and up to five companies my have the same identifier. OC have thus added their own identifier number based on each registry type. Further details available here - qa_public/register_problems/guernsey\n\n\"All Guernsey companies must file an Annual Validation submission with the Registry during January 2017 (unless incorporated in December 2016). Submissions received after 31 January 2017 will be subject to a \u00a3100 late filing fee.\" [1]\n\n\"The Charities and Non Profit Organisation (Registration) (Guernsey) Law, 2008 requires all Non Profit organisations based in the Islands of Guernsey, Alderney, Herm and Jethou to register with the Office of the Registrar. A failure to do so is an offence.\n\nHowever there is an exemption from this requirement. This applies to Non Profit organisations based in the Islands of Guernsey, Alderney, Herm and Jethou with gross assets and funds of less than \u00a310,000, or gross annual income of less than \u00a35,000.\" [2]\n\n[1] http://www.guernseyregistry.com/\n[2] http://www.guernseyregistry.com/article/112911/Do-I-need-to-register-a-Charity-or-Non-Profit-organisation-"
+        "en": "All companies in Guernsey must register with the Guernsey Registry. This also applies to most charities and NPOs. The Guernsey Registry maintain a registry of all companies, charities and all NPOs in Guernsey. These are recorded in a publicly searchable webpage database for companies and also two separate lists for charities and NPOs.\n\nPlease Note: According to OpenCorporates, the identifiers are not unique across the Guernsey Registry, as there a five separate registries that can be assigned to organisation information and up to five companies my have the same identifier. OC have thus added their own identifier number based on each registry type. Further details available here - qa_public/register_problems/guernsey\n\n\"All Guernsey companies must file an Annual Validation submission with the Registry during January 2017 (unless incorporated in December 2016). Submissions received after 31 January 2017 will be subject to a £100 late filing fee.\" [1]\n\n\"The Charities and Non Profit Organisation (Registration) (Guernsey) Law, 2008 requires all Non Profit organisations based in the Islands of Guernsey, Alderney, Herm and Jethou to register with the Office of the Registrar. A failure to do so is an offence.\n\nHowever there is an exemption from this requirement. This applies to Non Profit organisations based in the Islands of Guernsey, Alderney, Herm and Jethou with gross assets and funds of less than £10,000, or gross annual income of less than £5,000.\" [2]\n\n[1] http://www.guernseyregistry.com/\n[2] http://www.guernseyregistry.com/article/112911/Do-I-need-to-register-a-Charity-or-Non-Profit-organisation-"
       },
       "name": {
         "en": "Guernsey Registry",
@@ -2013,7 +2061,7 @@
           "es"
         ],
         "exampleIdentifiers": null,
-        "guidanceOnLocatingIds": "Use the final segment of the url (below /federal and excluding the extension) as the \u201cregistration number\u201d, converting all \u201c-\u201d to \u201c_\u201d. Keep \u201cregistration number\u201d portion all lowercase.\n\nADD EXAMPLE",
+        "guidanceOnLocatingIds": "Use the final segment of the url (below /federal and excluding the extension) as the “registration number”, converting all “-” to “_”. Keep “registration number” portion all lowercase.\n\nADD EXAMPLE",
         "onlineAccessDetails": null,
         "availableOnline": false,
         "publicDatabase": "http://www.usa.gov/directory/federal/index.shtml"
@@ -2358,7 +2406,7 @@
           "registered_address",
           "directors_trustees_governors"
         ],
-        "licenseDetails": "\u201cSupplied under section 47 and 50 of the Copyright, Designs and Patents Act 1988 and Schedule 1 of the Database Regulations (SI 1997/3032)\u201d",
+        "licenseDetails": "“Supplied under section 47 and 50 of the Copyright, Designs and Patents Act 1988 and Schedule 1 of the Database Regulations (SI 1997/3032)”",
         "availability": [
           "api"
         ]
@@ -2424,12 +2472,12 @@
       "access": {
         "publicDatabase": "http://creationdentreprise.sn/en/finding-business",
         "exampleIdentifiers": "006478110, 006470108, 006480256",
-        "guidanceOnLocatingIds": "A NIN\u00c9A number can be used in conjunction with the list code prefix to produce a unique identifier.",
+        "guidanceOnLocatingIds": "A NINÉA number can be used in conjunction with the list code prefix to produce a unique identifier.",
         "languages": [
           "EN",
           "FR"
         ],
-        "onlineAccessDetails": "A (possible partial) and freely accessible online list is available from the Senegalese Bureau d'appui \u00e0 la Cr\u00e9ation d'Entreprise (BCE) http://creationdentreprise.sn/en/finding-business.",
+        "onlineAccessDetails": "A (possible partial) and freely accessible online list is available from the Senegalese Bureau d'appui à la Création d'Entreprise (BCE) http://creationdentreprise.sn/en/finding-business.",
         "availableOnline": true
       },
       "sector": [],
@@ -2446,11 +2494,11 @@
       "url": "http://creationdentreprise.sn/en/finding-business",
       "code": "SN-NINEA",
       "description": {
-        "en": "Any organization (company, association, NGO) operating in Senegal must be included in a directory of legal entities ([Source](http://www.impotsetdomaines.gouv.sn/fr/demander-un-ninea)). \n\nRegistration takes place through several agencies, and a Num\u00e9ro d\u2019Identification National des Entreprises et des Associations (NINEA) (National Identification Number for Companies and Associations) is provided to incorporated bodies.\n\nA directory or lookup of companies and numbers is not available online, however most legal entities will have an NINEA which can be used as an identifier."
+        "en": "Any organization (company, association, NGO) operating in Senegal must be included in a directory of legal entities ([Source](http://www.impotsetdomaines.gouv.sn/fr/demander-un-ninea)). \n\nRegistration takes place through several agencies, and a Numéro d’Identification National des Entreprises et des Associations (NINEA) (National Identification Number for Companies and Associations) is provided to incorporated bodies.\n\nA directory or lookup of companies and numbers is not available online, however most legal entities will have an NINEA which can be used as an identifier."
       },
       "name": {
         "en": "National Identification Number of Companies and Associations (NINEA), Senegal",
-        "local": "Num\u00e9ro d'Identification Nationale des Entreprises et des Associations - NINEA (Senegal)"
+        "local": "Numéro d'Identification Nationale des Entreprises et des Associations - NINEA (Senegal)"
       }
     },
     {
@@ -2664,7 +2712,7 @@
       },
       "name": {
         "en": "Bogota Chamber of Commerce ",
-        "local": " C\u00e1mara de Comercio de Bogota"
+        "local": " Cámara de Comercio de Bogota"
       },
       "structure": [
         "company"
@@ -2867,7 +2915,7 @@
       },
       "name": {
         "en": "National Tax Agency Corporate Number Publication Site",
-        "local": "\u6cd5\u4eba\u767b\u8a18)"
+        "local": "法人登記)"
       }
     },
     {
@@ -2888,7 +2936,7 @@
       "data": {
         "dataAccessDetails": "",
         "features": [],
-        "licenseDetails": "\u00a9 2017 - Palestinian Interior Ministry",
+        "licenseDetails": "© 2017 - Palestinian Interior Ministry",
         "availability": []
       },
       "access": {
@@ -2917,7 +2965,7 @@
       },
       "name": {
         "en": "Ministry of Interior (Palestine)",
-        "local": "\u0648\u0632\u0627\u0631\u0629 \u0627\u0644\u0640\u062f\u0627\u062e\u0640\u0644\u0640\u064a\u0640\u0640\u0629"
+        "local": "وزارة الـداخـلـيــة"
       }
     },
     {
@@ -2970,7 +3018,7 @@
       },
       "name": {
         "en": "Sharjah Airport International Free Zone",
-        "local": "\u0627\u0644\u0645\u0646\u0637\u0642\u0629 \u0627\u0644\u062d\u0631\u0629 \u0641\u064a \u0645\u0637\u0627\u0631 \u0627\u0644\u0634\u0627\u0631\u0642\u0629 \u0627\u0644\u062f\u0648\u0644\u064a"
+        "local": "المنطقة الحرة في مطار الشارقة الدولي"
       }
     },
     {
@@ -3086,7 +3134,7 @@
       },
       "name": {
         "en": "Information and Electronic Company Registration Service",
-        "local": "Elektronikus C\u00e9gelj\u00e1r\u00e1sban K\u00f6zrem\u0171k\u00f6d\u0151 Szolg\u00e1lat"
+        "local": "Elektronikus Cégeljárásban Közreműködő Szolgálat"
       }
     },
     {
@@ -3171,12 +3219,12 @@
       "access": {
         "publicDatabase": "",
         "exampleIdentifiers": "1207199510092",
-        "guidanceOnLocatingIds": "Tax number is under `\u0418\u041d\u041d` header.",
+        "guidanceOnLocatingIds": "Tax number is under `ИНН` header.",
         "languages": [
           "kg",
           "ru"
         ],
-        "onlineAccessDetails": "Company can be searched by its name (`\u043d\u0430\u0438\u043c\u0435\u043d\u043e\u0432\u0430\u043d\u0438\u0435`), registration number (`\u0420\u0435\u0433. \u2116`), tax number (`\u0418\u041d\u041d`), OKPO code (assigned to each legal entity for statistics purposes), company status, registration date etc.  Search is free-of-charge, no English interface.",
+        "onlineAccessDetails": "Company can be searched by its name (`наименование`), registration number (`Рег. №`), tax number (`ИНН`), OKPO code (assigned to each legal entity for statistics purposes), company status, registration date etc.  Search is free-of-charge, no English interface.",
         "availableOnline": true
       },
       "sector": [],
@@ -3196,7 +3244,7 @@
       },
       "name": {
         "en": "Kyrgyz Republic Register of Legal Entities",
-        "local": "\u042e\u0440\u0438\u0434\u0438\u043a\u0430\u043b\u044b\u043a \u0436\u0430\u043a\u0442\u0430\u0440\u0434\u044b, \u041a\u044b\u0440\u0433\u044b\u0437 \u0420\u0435\u0441\u043f\u0443\u0431\u043b\u0438\u043a\u0430\u0441\u044b\u043d\u044b\u043d \u043a\u0430\u0440\u043e\u043e"
+        "local": "Юридикалык жактарды, Кыргыз Республикасынын кароо"
       }
     },
     {
@@ -3252,7 +3300,7 @@
       },
       "name": {
         "en": "National Tax Service Business Registration Number",
-        "local": "\uad6d\uc138\uccad \uc0ac\uc5c5\uc790 \ub4f1\ub85d \ubc88\ud638"
+        "local": "국세청 사업자 등록 번호"
       }
     },
     {
@@ -3335,13 +3383,13 @@
       "access": {
         "publicDatabase": "http://egr.gov.by/egrn/index.jsp?content=Find&language=en",
         "exampleIdentifiers": "100373962, 100281343, 600124881",
-        "guidanceOnLocatingIds": "Use the 9-digit Registration Number (\u0420\u0435\u0433\u0438\u0441\u0442\u0440\u0430\u0446\u0438\u043e\u043d\u043d\u044b\u0439 \u043d\u043e\u043c\u0435\u0440) from the search results for the matching organisation.",
+        "guidanceOnLocatingIds": "Use the 9-digit Registration Number (Регистрационный номер) from the search results for the matching organisation.",
         "languages": [
           "en",
           "ru",
           "be"
         ],
-        "onlineAccessDetails": "Companies can be searched by legal name or registration number with the online service http://egr.gov.by/egrn/index.jsp?content=Find&language=en\n\nSearch results provide registration number (\u0420\u0435\u0433\u0438\u0441\u0442\u0440\u0430\u0446\u0438\u043e\u043d\u043d\u044b\u0439 \u043d\u043e\u043c\u0435\u0440), legal entity's name, registration body, registration date, company status etc. \n\nThere is an English interface, yet not complete. ",
+        "onlineAccessDetails": "Companies can be searched by legal name or registration number with the online service http://egr.gov.by/egrn/index.jsp?content=Find&language=en\n\nSearch results provide registration number (Регистрационный номер), legal entity's name, registration body, registration date, company status etc. \n\nThere is an English interface, yet not complete. ",
         "availableOnline": true
       },
       "sector": [],
@@ -3361,7 +3409,7 @@
       },
       "name": {
         "en": "Unified State Register of Legal Entities and Individual Entrepreneurs (Ministry of Justice of the Republic of Belarus)",
-        "local": "\u0410\u0434\u0437\u0456\u043d\u044b \u0434\u0437\u044f\u0440\u0436\u0430\u045e\u043d\u044b \u0440\u044d\u0435\u0441\u0442\u0440"
+        "local": "Адзіны дзяржаўны рэестр"
       }
     },
     {
@@ -3414,7 +3462,7 @@
       },
       "name": {
         "en": "Sharjah Chamber of Commerce and Industry",
-        "local": "\u063a\u0631\u0641\u0629 \u062a\u062c\u0627\u0631\u0629 \u0648\u0635\u0646\u0627\u0639\u0629 \u0627\u0644\u0634\u0627\u0631\u0642\u0629: \u062f\u0644\u064a\u0644 \u0627\u0644\u0623\u0639\u0645\u0627\u0644"
+        "local": "غرفة تجارة وصناعة الشارقة: دليل الأعمال"
       }
     },
     {
@@ -3538,7 +3586,7 @@
       },
       "name": {
         "en": "Ecuador Unique Taxpayer Registry",
-        "local": "Registro \u00danico de Contribuyentes (Ecuador)"
+        "local": "Registro Único de Contribuyentes (Ecuador)"
       }
     },
     {
@@ -3666,7 +3714,7 @@
       "url": "http://www.infogreffe.fr",
       "code": "FR-RCS",
       "description": {
-        "en": "In France, companies register through a number of institutions, predominantly the local centres de formalit\u00e9s des entreprises, but all companies must eventually be registered with the Trade and Companies Register. Once registered, companies receive a SIREN or SIRET number, which is a unique business identifier.\n\nThis information is maintained by Infogreffe. Infogreffe provide a basic overview of company information for free, and bulk download of data for a fee.\n\nA note on identifiers: \n\n- A SIRET number is constituted by the SIREN number, plus the NIC code. \n\n- The SIREN number relates to a business, whereas a SIRET number relates to a specific geographically located establishment which will be owned by a business.\n\n- \"A SIREN number is your unique French business identification number. This 9 digit number will be requested by all French administration when dealing with you.. It is a proof that you are a fully registered French business\" [1]\n\n\"The SIRET code/number is an INSEE code which allows the geographic identification of any French establishment or business.\n\nThe 14-digit number consists of three parts:\n\n- first, the SIREN code of the business (or legal unit or person) that owns the unit represented by the SIRET code,\n- second, the NIC (French: Num\u00e9ro interne de classement), is a sequential four-digit number unique to the establishment,\n- and finally, a check digit that verifies the entire SIRET number.\n\nFor example, 732 829 320 00074 would refer to the seventh establishment of the business with SIREN number 732 829 320.\" [2]\n\n\"Registration is administered by local centres de formalit\u00e9s des entreprises ( CFE), which checks your application and submits details to the relevant agencies (for a small fee). The CFE will provide you with a form M0, which is for the creation of a company.\" [3] \n\n\"Creating a company requires that it is registered with the Trade and Companies Register (RCS).\" [4] \n\n\"WHAT SOURCE IS USED FOR INFORMATION AVAILABLE ON THE INFOGREFFE WEBSITE?\n\nInformation concerning companies entered on the Trade and Companies Register with Registries of the Commercial Courts is taken directly from public registers held by said registries. \n\nInformation concerning companies entered on the Trade and Companies Register with other jurisdictions (district courts with commercial jurisdiction, mixed commercial courts in the overseas departments and territories) is provided by the National Industrial Property Institute (INPI).\n\nInformation concerning companies not entered on the Trade and Companies Register is taken from data on the SIRENE listing held by INSEE.\" [5]\n\n\"WHAT DOCUMENTS ARE AVAILABLE ON THE INFOGREFFE WEBSITE?\nInfogreffe makes the following information available to the general public:\n\nFree information\n\u2022    Company search and information form\n\u2022    Key figures concerning a company\n\u2022    Implementing tracking (free alert, paid consultation).\n\u2022    Lists of articles of association and company deeds available.\n\u2022    Your formalities with online help to be incorporated on the Trade and Companies Register.\n\nPaid information\nView, download, order\" [6]\n\n[1] http://www.startbusinessinfrance.com/blog/post/tip-what-is-a-siren-or-siret-number\n[2] https://en.wikipedia.org/wiki/SIRET_code\n[3] https://www.justlanded.com/english/France/France-Guide/Business/Paperwork\n[4][5] https://www.infogreffe.com/societes/formalites-entreprise/immatriculation-entreprise.html\n[6] https://www.infogreffe.com/societes/informations-et-dossiers-entreprises/aide-faq.html#1"
+        "en": "In France, companies register through a number of institutions, predominantly the local centres de formalités des entreprises, but all companies must eventually be registered with the Trade and Companies Register. Once registered, companies receive a SIREN or SIRET number, which is a unique business identifier.\n\nThis information is maintained by Infogreffe. Infogreffe provide a basic overview of company information for free, and bulk download of data for a fee.\n\nA note on identifiers: \n\n- A SIRET number is constituted by the SIREN number, plus the NIC code. \n\n- The SIREN number relates to a business, whereas a SIRET number relates to a specific geographically located establishment which will be owned by a business.\n\n- \"A SIREN number is your unique French business identification number. This 9 digit number will be requested by all French administration when dealing with you.. It is a proof that you are a fully registered French business\" [1]\n\n\"The SIRET code/number is an INSEE code which allows the geographic identification of any French establishment or business.\n\nThe 14-digit number consists of three parts:\n\n- first, the SIREN code of the business (or legal unit or person) that owns the unit represented by the SIRET code,\n- second, the NIC (French: Numéro interne de classement), is a sequential four-digit number unique to the establishment,\n- and finally, a check digit that verifies the entire SIRET number.\n\nFor example, 732 829 320 00074 would refer to the seventh establishment of the business with SIREN number 732 829 320.\" [2]\n\n\"Registration is administered by local centres de formalités des entreprises ( CFE), which checks your application and submits details to the relevant agencies (for a small fee). The CFE will provide you with a form M0, which is for the creation of a company.\" [3] \n\n\"Creating a company requires that it is registered with the Trade and Companies Register (RCS).\" [4] \n\n\"WHAT SOURCE IS USED FOR INFORMATION AVAILABLE ON THE INFOGREFFE WEBSITE?\n\nInformation concerning companies entered on the Trade and Companies Register with Registries of the Commercial Courts is taken directly from public registers held by said registries. \n\nInformation concerning companies entered on the Trade and Companies Register with other jurisdictions (district courts with commercial jurisdiction, mixed commercial courts in the overseas departments and territories) is provided by the National Industrial Property Institute (INPI).\n\nInformation concerning companies not entered on the Trade and Companies Register is taken from data on the SIRENE listing held by INSEE.\" [5]\n\n\"WHAT DOCUMENTS ARE AVAILABLE ON THE INFOGREFFE WEBSITE?\nInfogreffe makes the following information available to the general public:\n\nFree information\n•    Company search and information form\n•    Key figures concerning a company\n•    Implementing tracking (free alert, paid consultation).\n•    Lists of articles of association and company deeds available.\n•    Your formalities with online help to be incorporated on the Trade and Companies Register.\n\nPaid information\nView, download, order\" [6]\n\n[1] http://www.startbusinessinfrance.com/blog/post/tip-what-is-a-siren-or-siret-number\n[2] https://en.wikipedia.org/wiki/SIRET_code\n[3] https://www.justlanded.com/english/France/France-Guide/Business/Paperwork\n[4][5] https://www.infogreffe.com/societes/formalites-entreprise/immatriculation-entreprise.html\n[6] https://www.infogreffe.com/societes/informations-et-dossiers-entreprises/aide-faq.html#1"
       },
       "coverage": [
         "FR"
@@ -3726,7 +3774,7 @@
       },
       "name": {
         "en": "Unique Tax Identification Code (Argentina)",
-        "local": "Clave \u00danica Identificaci\u00f3n Tributaria (Argentina)"
+        "local": "Clave Única Identificación Tributaria (Argentina)"
       }
     },
     {
@@ -3884,7 +3932,7 @@
       },
       "name": {
         "en": "Dubai Financial Services Authority ",
-        "local": "\u0647\u064a\u0626\u0629 \u062f\u0628\u064a \u0644\u0644\u062e\u062f\u0645\u0627\u062a \u0627\u0644\u0645\u0627\u0644\u064a\u0629"
+        "local": "هيئة دبي للخدمات المالية"
       }
     },
     {
@@ -4361,7 +4409,7 @@
       },
       "name": {
         "en": "Charities and Societies Agency (Ethiopia)",
-        "local": "\u12e8\u1260\u130e \u12a0\u12f5\u122b\u130e\u1275 \u12f5\u122d\u1305\u1276\u127d\u1293 \u121b\u1205\u1260\u122b\u1275 \u12a4\u1300\u1295\u1232"
+        "local": "የበጎ አድራጎት ድርጅቶችና ማህበራት ኤጀንሲ"
       }
     },
     {
@@ -5036,7 +5084,7 @@
       },
       "name": {
         "en": "Yukon Corporate Affairs ",
-        "local": " Direction des entreprises, associations et coop\u00e9ratives"
+        "local": " Direction des entreprises, associations et coopératives"
       },
       "structure": [
         "company"
@@ -5089,7 +5137,7 @@
       "access": {
         "publicDatabase": "http://pretraga2.apr.gov.rs/ObjedinjenePretrage/Search/Search",
         "exampleIdentifiers": "06115403, 20203641, 29500258",
-        "guidanceOnLocatingIds": "Users can find identifiers by using the simple, searchable database. The database is provided in Serbian.\n\nIn the search results, identifiers will be under the column heading '\u041c\u0430\u0442\u0438\u0447\u043d\u0438 \u0431\u0440\u043e\u0458' (or 'Identification Number' in English).\n\nCompanies of different types appear to have similar identification structure.",
+        "guidanceOnLocatingIds": "Users can find identifiers by using the simple, searchable database. The database is provided in Serbian.\n\nIn the search results, identifiers will be under the column heading 'Матични број' (or 'Identification Number' in English).\n\nCompanies of different types appear to have similar identification structure.",
         "languages": [
           "sr"
         ],
@@ -5110,11 +5158,11 @@
       "url": "http://www.apr.gov.rs/eng/Home.aspx",
       "code": "RS-APR",
       "description": {
-        "en": "The Serbian Business Registrations Agency (APR) provides a single place of registration for all companies and individuals - domestic and foreign - operating in Serbia. Each entity is given an identification number and a tax number in the Business Entities Register. \n\nThe \u041c\u0430\u0442\u0438\u0447\u043d\u0438 \u0431\u0440\u043e\u0458 / identification number should be used for identifiers.\n\nA searchable database of the Business Entities Register is available online.\n\n\"The SBRA runs business registers as single, centralized, public electronic databases:\n\nThe Business Register, in accordance with the Law on Business Entities Registration (operative as of 1/1/2005):\n\n *Register of Companies (in effect as of 1 January 2005)\n* Register of Entrepreneurs (in effect as of 1 January 2006)\n* Register of foreign parties (in effect as of 1 January 2006)\" [1]\n\n\"Serbian term or phrase:\tmati\u010dni broj / identification number\nThis is the identification number contained in the Company Register \" [2]\n\n[1] http://www.apr.gov.rs/eng/AboutAgency/AllRegistersatOnePlace.aspx\n[2] http://www.proz.com/kudoz/serbian_to_english/law_contracts/2614508-maticni_broj.html"
+        "en": "The Serbian Business Registrations Agency (APR) provides a single place of registration for all companies and individuals - domestic and foreign - operating in Serbia. Each entity is given an identification number and a tax number in the Business Entities Register. \n\nThe Матични број / identification number should be used for identifiers.\n\nA searchable database of the Business Entities Register is available online.\n\n\"The SBRA runs business registers as single, centralized, public electronic databases:\n\nThe Business Register, in accordance with the Law on Business Entities Registration (operative as of 1/1/2005):\n\n *Register of Companies (in effect as of 1 January 2005)\n* Register of Entrepreneurs (in effect as of 1 January 2006)\n* Register of foreign parties (in effect as of 1 January 2006)\" [1]\n\n\"Serbian term or phrase:\tmatični broj / identification number\nThis is the identification number contained in the Company Register \" [2]\n\n[1] http://www.apr.gov.rs/eng/AboutAgency/AllRegistersatOnePlace.aspx\n[2] http://www.proz.com/kudoz/serbian_to_english/law_contracts/2614508-maticni_broj.html"
       },
       "name": {
         "en": "Serbian Business Registrations Agency ",
-        "local": " \u0410\u0433\u0435\u043d\u0446\u0438\u0458\u0430 \u0437\u0430 \u0441\u0440\u043f\u0441\u043a\u0438 \u043f\u043e\u0441\u043b\u043e\u0432\u043d\u0438 \u041f\u0440\u0438\u0458\u0430\u0432\u0435"
+        "local": " Агенција за српски пословни Пријаве"
       }
     },
     {
@@ -5222,7 +5270,7 @@
       },
       "name": {
         "en": "Dubai Chamber of Commerce and Industry ",
-        "local": "\u063a\u0631\u0641\u0629 \u062a\u062c\u0627\u0631\u0629 \u0648\u0635\u0646\u0627\u0639\u0629 \u062f\u0628\u064a"
+        "local": "غرفة تجارة وصناعة دبي"
       }
     },
     {
@@ -5287,7 +5335,7 @@
       },
       "name": {
         "en": "REGON - Statistical number of an economy entity",
-        "local": "REGON - Krajowy Rejestr Urz\u0119dowy Podmiot\u00f3w Gospodarki Narodowej"
+        "local": "REGON - Krajowy Rejestr Urzędowy Podmiotów Gospodarki Narodowej"
       }
     },
     {
@@ -5381,7 +5429,7 @@
           "sk"
         ],
         "exampleIdentifiers": "35919043, 47364319, 36781673",
-        "guidanceOnLocatingIds": "Users can find identifiers using the simple, searchable online database. Users will have to click on the link for 'Aktu\u00e1lny' or '\u00dapln\u00fd' under the column heading V\u00fdpis - or in English,  for 'Actual' or 'Full' under the column heading 'Extract' - of one of the companies in the search results in order to see company details.\n\nIdentifiers will be next to the heading 'I\u010cO' or 'Identification' in English",
+        "guidanceOnLocatingIds": "Users can find identifiers using the simple, searchable online database. Users will have to click on the link for 'Aktuálny' or 'Úplný' under the column heading Výpis - or in English,  for 'Actual' or 'Full' under the column heading 'Extract' - of one of the companies in the search results in order to see company details.\n\nIdentifiers will be next to the heading 'IČO' or 'Identification' in English",
         "onlineAccessDetails": null,
         "availableOnline": false,
         "publicDatabase": "http://www.orsr.sk/search_subjekt.asp?lan=en"
@@ -5403,7 +5451,7 @@
       "url": "http://www.orsr.sk/search_subjekt.asp?lan=en",
       "code": "SK-ORSR",
       "description": {
-        "en": "\"The companies register is administered by the Ministry of Justice. Entry to the register is obligatory for companies, cooperatives and for some specific physical entities stated by law. Information in the register is searchable by trade name, identification number, registered office, registration number and name of a person.\" [1]\n\n\"The Obchodn\u00fd register (commercial register) is a public list containing statutory data concerning entrepreneurs, companies and other legal entities, where this is laid down by separate legislation.\nThe list is administered by the Ministry of Justice of the Slovak Republic.\" [2]\n\n[1] http://www.company-registers.info/en/european-union/slovakia.html\n[2] https://e-justice.europa.eu/content_business_registers_in_member_states-106-sk-en.do?member=1"
+        "en": "\"The companies register is administered by the Ministry of Justice. Entry to the register is obligatory for companies, cooperatives and for some specific physical entities stated by law. Information in the register is searchable by trade name, identification number, registered office, registration number and name of a person.\" [1]\n\n\"The Obchodný register (commercial register) is a public list containing statutory data concerning entrepreneurs, companies and other legal entities, where this is laid down by separate legislation.\nThe list is administered by the Ministry of Justice of the Slovak Republic.\" [2]\n\n[1] http://www.company-registers.info/en/european-union/slovakia.html\n[2] https://e-justice.europa.eu/content_business_registers_in_member_states-106-sk-en.do?member=1"
       },
       "coverage": [
         "SK"
@@ -5443,7 +5491,7 @@
       },
       "name": {
         "en": "British Columbia Corporate Registry ",
-        "local": " Registre des soci\u00e9t\u00e9s"
+        "local": " Registre des sociétés"
       },
       "structure": [
         "company"
@@ -5490,11 +5538,11 @@
       "access": {
         "publicDatabase": "https://www.e-taxes.gov.az/ebyn/commersialChecker.jsp",
         "exampleIdentifiers": "990001490, 3100073821",
-        "guidanceOnLocatingIds": "10-digit TIN (aka company registration number) is under 'V\u00d6EN' header",
+        "guidanceOnLocatingIds": "10-digit TIN (aka company registration number) is under 'VÖEN' header",
         "languages": [
           "az"
         ],
-        "onlineAccessDetails": "Company can be searched by V\u00d6EN or legal name. \n\nName searches return a list of possible company name matches and their V\u00d6EN codes.\n\nIf searching by the VOEN more information will be provided: name of commercial organization, taxpayer's name, organizational-legal form, legal address, charter capital, fiscal year, legal representative, registration date. \n\nNo English interface.",
+        "onlineAccessDetails": "Company can be searched by VÖEN or legal name. \n\nName searches return a list of possible company name matches and their VÖEN codes.\n\nIf searching by the VOEN more information will be provided: name of commercial organization, taxpayer's name, organizational-legal form, legal address, charter capital, fiscal year, legal representative, registration date. \n\nNo English interface.",
         "availableOnline": true
       },
       "sector": [],
@@ -5514,7 +5562,7 @@
       },
       "name": {
         "en": "State Register of Commercial Entities (Ministry of Taxes of Azerbaijan Republic)",
-        "local": "Kommersiya qurumlar\u0131n\u0131n d\u00f6vl\u0259t reyestri"
+        "local": "Kommersiya qurumlarının dövlət reyestri"
       }
     },
     {
@@ -5552,7 +5600,7 @@
       },
       "name": {
         "en": "ServiceOntario, Ministry of Government Services ",
-        "local": " Minist\u00e8re des Services gouvernementaux"
+        "local": " Ministère des Services gouvernementaux"
       },
       "structure": [
         "company"
@@ -5668,11 +5716,11 @@
       "access": {
         "publicDatabase": "http://www.kurzy.cz/dic/",
         "exampleIdentifiers": "CZ25111299",
-        "guidanceOnLocatingIds": "DI\u010c number will be under `DI\u010c` header",
+        "guidanceOnLocatingIds": "DIČ number will be under `DIČ` header",
         "languages": [
           "cs"
         ],
-        "onlineAccessDetails": "DI\u010c number can be validated by entering it in the `Vyhled\u00e1v\u00e1n\u00ed v registru pl\u00e1tc\u016f DPH` section and then clicking `Vyhledat registraci`. Search results will provide company details",
+        "onlineAccessDetails": "DIČ number can be validated by entering it in the `Vyhledávání v registru plátců DPH` section and then clicking `Vyhledat registraci`. Search results will provide company details",
         "availableOnline": true
       },
       "sector": [],
@@ -5689,11 +5737,11 @@
       "url": "http://www.kurzy.cz/dic/",
       "code": "CZ-DIC",
       "description": {
-        "en": "A VAT registration number (DI\u010c) is a unique and unambiguous identification of each tax entity, a legal or natural person who is a taxpayer (taxpayer). The tax identification number is assigned only after the entity, natural or legal person, obtains its I\u010cO - its unique identification number. Note that the list [CZ-ICO](/list/CZ-ICO) might therefore provide a better set of identifiers for legal entities.\n\nYou can search by VAT (DI\u010c) number for a of the VAT payer registered in the Czech Republic. You can also use your company ID or company name or your business name and surname if you want to verify your VAT payer details."
+        "en": "A VAT registration number (DIČ) is a unique and unambiguous identification of each tax entity, a legal or natural person who is a taxpayer (taxpayer). The tax identification number is assigned only after the entity, natural or legal person, obtains its IČO - its unique identification number. Note that the list [CZ-ICO](/list/CZ-ICO) might therefore provide a better set of identifiers for legal entities.\n\nYou can search by VAT (DIČ) number for a of the VAT payer registered in the Czech Republic. You can also use your company ID or company name or your business name and surname if you want to verify your VAT payer details."
       },
       "name": {
-        "en": "Tax ID (DI\u010c) Czech Republic",
-        "local": "Da\u0148ov\u00e9 identifika\u010dn\u00ed \u010d\u00edslo"
+        "en": "Tax ID (DIČ) Czech Republic",
+        "local": "Daňové identifikační číslo"
       }
     },
     {
@@ -5784,7 +5832,7 @@
       "access": {
         "publicDatabase": "http://open.canada.ca/data/en/dataset/22090865-f8a6-4b83-9bad-e9d61f26a821",
         "exampleIdentifiers": "001, 097, 124",
-        "guidanceOnLocatingIds": "Identifiers are in the \"Department_number-Minist\u00e8re_num\u00e9ro\" column in the downloadable spreadsheet.",
+        "guidanceOnLocatingIds": "Identifiers are in the \"Department_number-Ministère_numéro\" column in the downloadable spreadsheet.",
         "languages": [
           "en",
           "fr"
@@ -5813,7 +5861,7 @@
       },
       "name": {
         "en": "List of legal department names (Government of Canada)",
-        "local": "Liste d\u2019appellation l\u00e9gale des minist\u00e8res "
+        "local": "Liste d’appellation légale des ministères "
       }
     },
     {
@@ -6070,7 +6118,7 @@
       },
       "name": {
         "en": "Cyprus Department of Registrar of Companies and Official Receiver (DRCOR)",
-        "local": "\u015eirketler Mukayyidi ve Resmi Sendik Dairesi"
+        "local": "Şirketler Mukayyidi ve Resmi Sendik Dairesi"
       }
     },
     {
@@ -6183,7 +6231,7 @@
       },
       "name": {
         "en": "Department of Associations (Ministry of Interior, Turkey)",
-        "local": "Dernekler Dairesi Ba\u015fkanl\u0131\u011f\u0131"
+        "local": "Dernekler Dairesi Başkanlığı"
       }
     },
     {
@@ -6531,7 +6579,7 @@
       },
       "name": {
         "en": "Unique Tax Identifier",
-        "local": "L\u2019identifiant Fiscal Unique"
+        "local": "L’identifiant Fiscal Unique"
       }
     },
     {
@@ -6588,7 +6636,7 @@
       "url": "http://www.jerseyfsc.org/index.asp",
       "code": "JE-FSC",
       "description": {
-        "en": "Companies and Non Profit Organisations operating in Jersey register with the Financial Services Commission (JFSC). A search of company information is freely available on the Commission website. There was no search available for NPOs at the time of last checks.\n\nUsers should be aware that the identifier numbers are not unique, as there are multiple types of companies and identifiers can be repeated. For example, there are two companies with the number '1381' - an LP (limited partnership) and an RC (Registered Private Company)\n\nIt is recommended that those creating identifiers for JSFC use the business codes as part of the identifier. For example, the limited partnership company described above should have the identifier:\n\nJE-FSC-LP_1381\n\n\n\"The Non-Profit Organizations (Jersey) Law 2008 (the \u201cNPO Law\u201d) was registered by the Royal Court on 25 July 2008 and came into effect on 8 August 2008.  This legislation requires NPOs to register with the Commission in certain circumstances.  The definition of an NPO, as provided by Article 1 of the NPO Law, is given below:\n\n\u201cAn organization is a non-profit organization for the purposes of this Law if \u2013 \n(a) it is established solely or primarily for charitable, religious, cultural, educational, social,\n    or fraternal purposes with the intention of benefiting the public or a section of the public; and\n(b) it raises or disburses funds in pursuance of those purposes.\u201d \" [1]\n\n[1] http://www.jerseyfsc.org/anti-money_laundering/forms/NPO/index.asp"
+        "en": "Companies and Non Profit Organisations operating in Jersey register with the Financial Services Commission (JFSC). A search of company information is freely available on the Commission website. There was no search available for NPOs at the time of last checks.\n\nUsers should be aware that the identifier numbers are not unique, as there are multiple types of companies and identifiers can be repeated. For example, there are two companies with the number '1381' - an LP (limited partnership) and an RC (Registered Private Company)\n\nIt is recommended that those creating identifiers for JSFC use the business codes as part of the identifier. For example, the limited partnership company described above should have the identifier:\n\nJE-FSC-LP_1381\n\n\n\"The Non-Profit Organizations (Jersey) Law 2008 (the “NPO Law”) was registered by the Royal Court on 25 July 2008 and came into effect on 8 August 2008.  This legislation requires NPOs to register with the Commission in certain circumstances.  The definition of an NPO, as provided by Article 1 of the NPO Law, is given below:\n\n“An organization is a non-profit organization for the purposes of this Law if – \n(a) it is established solely or primarily for charitable, religious, cultural, educational, social,\n    or fraternal purposes with the intention of benefiting the public or a section of the public; and\n(b) it raises or disburses funds in pursuance of those purposes.” \" [1]\n\n[1] http://www.jerseyfsc.org/anti-money_laundering/forms/NPO/index.asp"
       },
       "name": {
         "en": "Jersey Financial Services Commission (JFSC)",
@@ -6701,11 +6749,11 @@
       "url": "http://www.transparenciapresupuestaria.gob.mx/work/models/PTP/DatosAbiertos/Metadatos/catalogos_presupuestarios.xlsx",
       "code": "MX-CPA",
       "description": {
-        "en": "This list provides Mexico's administrative classification, which includes the following concepts:\n\n* Ramo: a concept that groups all the specific organizations from Mexico's Public Administration.\n* Unidad Responsable: the specific organizations from Mexico's Public Administration\n\nBy combining the Ramo, and Unidad Responsable codes, a unique identifier can be created for government entities. \n\nFor example:\n\n4-121 for Direcci\u00f3n General de Protecci\u00f3n Civil"
+        "en": "This list provides Mexico's administrative classification, which includes the following concepts:\n\n* Ramo: a concept that groups all the specific organizations from Mexico's Public Administration.\n* Unidad Responsable: the specific organizations from Mexico's Public Administration\n\nBy combining the Ramo, and Unidad Responsable codes, a unique identifier can be created for government entities. \n\nFor example:\n\n4-121 for Dirección General de Protección Civil"
       },
       "name": {
         "en": "Budget Classification of Public Entities (Mexico)",
-        "local": "Cat\u00e1logo Presupuestario de la Administraci\u00f3n P\u00fablica Federal de M\u00e9xico"
+        "local": "Catálogo Presupuestario de la Administración Pública Federal de México"
       }
     },
     {
@@ -6836,11 +6884,11 @@
       "url": "https://portalsat.plataforma.sat.gob.mx/ConsultaRFC/",
       "code": "MX-RFC",
       "description": {
-        "en": "The Registro Federal de Contribuyentes de M\u00e9xico assigns an RFC identifier to both individual and corporate taxpayers.\n\nRegistration takes place through Servicio de Administraci\u00f3n Tributaria (SAT) and registrants are provided with their RFC.\n\nWhilst there is no public database of RFCs available, a web service to validate RFCs is available at https://portalsat.plataforma.sat.gob.mx/ConsultaRFC/\n\nThe structure of an RFC encodes information about the initials and date of registration of a company\n\n"
+        "en": "The Registro Federal de Contribuyentes de México assigns an RFC identifier to both individual and corporate taxpayers.\n\nRegistration takes place through Servicio de Administración Tributaria (SAT) and registrants are provided with their RFC.\n\nWhilst there is no public database of RFCs available, a web service to validate RFCs is available at https://portalsat.plataforma.sat.gob.mx/ConsultaRFC/\n\nThe structure of an RFC encodes information about the initials and date of registration of a company\n\n"
       },
       "name": {
         "en": "Federal Taxpayers Registry",
-        "local": "Registro Federal de Contribuyentes de M\u00e9xico"
+        "local": "Registro Federal de Contribuyentes de México"
       }
     },
     {
@@ -6871,7 +6919,7 @@
         "onlineAccessDetails": "Through this web site you can search for any legal entity (individual entrepreneur, commercial legal entity, nonprofit legal entity, etc.) in Georgia.  You can also obtain their statements and scanned archive documents, as well as information about the legal form of the organization, persons with representative authority, liquidation process and other registered data.",
         "publicDatabase": "https://enreg.reestri.gov.ge",
         "exampleIdentifiers": "233105449, 416337084, 202378480",
-        "guidanceOnLocatingIds": "Search for a company using it's title (using the Georgian language). This will return a list of matches with an 'identification code' (\u10e1\u10d0\u10d8\u10d3\u10d4\u10dc\u10e2\u10d8\u10e4\u10d8\u10d9\u10d0\u10ea\u10d8\u10dd \u10d9\u10dd\u10d3\u10d8).",
+        "guidanceOnLocatingIds": "Search for a company using it's title (using the Georgian language). This will return a list of matches with an 'identification code' (საიდენტიფიკაციო კოდი).",
         "languages": [
           "GE"
         ]
@@ -6893,7 +6941,7 @@
       },
       "name": {
         "en": "Register of Entrepreneurial and Non-Entrepreneurial Legal Entities, Georgia",
-        "local": "\u10db\u10d4\u10ec\u10d0\u10e0\u10db\u10d4\u10d7\u10d0 \u10d3\u10d0 \u10d0\u10e0\u10d0\u10e1\u10d0\u10db\u10d4\u10ec\u10d0\u10e0\u10db\u10d4\u10dd (\u10d0\u10e0\u10d0\u10d9\u10dd\u10db\u10d4\u10e0\u10ea\u10d8\u10e3\u10da) \u10d8\u10e3\u10e0\u10d8\u10d3\u10d8\u10e3\u10da \u10de\u10d8\u10e0\u10d7\u10d0 \u10e0\u10d4\u10d4\u10e1\u10e2\u10e0\u10d8"
+        "local": "მეწარმეთა და არასამეწარმეო (არაკომერციულ) იურიდიულ პირთა რეესტრი"
       }
     },
     {
@@ -6932,7 +6980,7 @@
       "access": {
         "publicDatabase": "http://www.ur.gov.lv/",
         "exampleIdentifiers": "40008124830, 51203041201, 40003108882",
-        "guidanceOnLocatingIds": "# Users can find identifiers by using the search bar which is present near the top of every page on the website [1]. Users must have a name or key word, and select 'Company / Organisation' on the drop-down box to the right of the search bar. The identifier will be next to the heading 'Registration number' ('Re\u0123istr\u0101cijas numurs') in the results shown.\n\n# Users can also download a CSV of the entire registry[2], where the identifier appears under the 'regcode'\n\n# Users can also use the search on the Lursoft website in English[3]. After opening one of the results, the identifier can be found under the heading 'VAT number' and should have the LV prefix removed before use as an org-id format identifier.\n\n[1] http://www.ur.gov.lv/\n[2] http://dati.ur.gov.lv/register/\n[3] http://www.lursoft.lv/?v=en",
+        "guidanceOnLocatingIds": "# Users can find identifiers by using the search bar which is present near the top of every page on the website [1]. Users must have a name or key word, and select 'Company / Organisation' on the drop-down box to the right of the search bar. The identifier will be next to the heading 'Registration number' ('Reģistrācijas numurs') in the results shown.\n\n# Users can also download a CSV of the entire registry[2], where the identifier appears under the 'regcode'\n\n# Users can also use the search on the Lursoft website in English[3]. After opening one of the results, the identifier can be found under the heading 'VAT number' and should have the LV prefix removed before use as an org-id format identifier.\n\n[1] http://www.ur.gov.lv/\n[2] http://dati.ur.gov.lv/register/\n[3] http://www.lursoft.lv/?v=en",
         "languages": [
           "en",
           "lv"
@@ -6961,7 +7009,7 @@
       },
       "name": {
         "en": "Register of Enterprises of the Republic of Latvia",
-        "local": "Latvijas Republikas Uz\u0146\u0113mumu Re\u0123istrs"
+        "local": "Latvijas Republikas Uzņēmumu Reģistrs"
       }
     },
     {
@@ -7014,7 +7062,7 @@
       },
       "name": {
         "en": "Hamriyah Free Zone Authority",
-        "local": "\u0633\u0644\u0637\u0629 \u0627\u0644\u0645\u0646\u0637\u0642\u0629 \u0627\u0644\u062d\u0631\u0629 \u0628\u0627\u0644\u062d\u0645\u0631\u064a\u0629"
+        "local": "سلطة المنطقة الحرة بالحمرية"
       }
     },
     {
@@ -7047,14 +7095,14 @@
           "es"
         ],
         "exampleIdentifiers": "830093516, 900563742",
-        "guidanceOnLocatingIds": "Users can find identifiers by searching the simple database. The identifier will be under the column header 'N\u00famero Identificaci\u00f3n'. The database is available in Spanish.\n\nUsers should note that some identifiers are provided with a checksum (e.g. 900876653-3).  Details on how this number is formed can be found in Spanish on Wikipedia - https://es.wikipedia.org/wiki/N%C3%BAmero_de_Identificaci%C3%B3n_Tributaria\n\nYou should provide the identifier without the checksum. ",
+        "guidanceOnLocatingIds": "Users can find identifiers by searching the simple database. The identifier will be under the column header 'Número Identificación'. The database is available in Spanish.\n\nUsers should note that some identifiers are provided with a checksum (e.g. 900876653-3).  Details on how this number is formed can be found in Spanish on Wikipedia - https://es.wikipedia.org/wiki/N%C3%BAmero_de_Identificaci%C3%B3n_Tributaria\n\nYou should provide the identifier without the checksum. ",
         "onlineAccessDetails": "It is possible to search the register online",
         "availableOnline": false,
         "publicDatabase": "http://www.rues.org.co/RUES_Web/"
       },
       "name": {
         "en": "Unified Commercial and Social Registry (RUES) ",
-        "local": " Registro \u00danico Empresarial y Social"
+        "local": " Registro Único Empresarial y Social"
       },
       "structure": [
         "company",
@@ -7070,7 +7118,7 @@
       "url": "http://www.rues.org.co/RUES_Web/",
       "code": "CO-RUE",
       "description": {
-        "en": "The Unified Commercial and Social Registry (RUES) integrates multiple commercial registries, including the NIT (N\u00famero de Identificaci\u00f3n Tributaria) which can be used as the unique identifier. \n\nThis database can be searched online for free.\n\n\"The CCB hereby informs that, in accordance with Resolution 71029 issued by the Superintendence of Industry and Commerce, starting as of November 13, 2013, entrepreneurs must fill out the new Unified Commercial and Social Registry (RUES), a form that integrates the information from the following forms and records:\n\n* Merchant's Certificate.\n* Unified Offeror Registry.\n* Non-For-Profit Organizations Registry.\n* Common Regime (Associations, Foundations and Corporations) and * Solidary Economy Institutions (Cooperatives, Precooperatives, Employee Funds and Mutual Associations).\n* Activity, games and gambling Registry.\n* Citizen Oversight Associations Registry (applicable only when registering or signing-up).\n* Solidarity Economy Registry.\" [1]\n\n[1] http://www.ccb.org.co/en/Registrations-and-renewals/Merchant-s-certificate/Unified-Commercial-and-Social-Registry-RUES"
+        "en": "The Unified Commercial and Social Registry (RUES) integrates multiple commercial registries, including the NIT (Número de Identificación Tributaria) which can be used as the unique identifier. \n\nThis database can be searched online for free.\n\n\"The CCB hereby informs that, in accordance with Resolution 71029 issued by the Superintendence of Industry and Commerce, starting as of November 13, 2013, entrepreneurs must fill out the new Unified Commercial and Social Registry (RUES), a form that integrates the information from the following forms and records:\n\n* Merchant's Certificate.\n* Unified Offeror Registry.\n* Non-For-Profit Organizations Registry.\n* Common Regime (Associations, Foundations and Corporations) and * Solidary Economy Institutions (Cooperatives, Precooperatives, Employee Funds and Mutual Associations).\n* Activity, games and gambling Registry.\n* Citizen Oversight Associations Registry (applicable only when registering or signing-up).\n* Solidarity Economy Registry.\" [1]\n\n[1] http://www.ccb.org.co/en/Registrations-and-renewals/Merchant-s-certificate/Unified-Commercial-and-Social-Registry-RUES"
       },
       "coverage": [
         "CO"
@@ -7340,7 +7388,7 @@
       "url": "http://www.jerseyoverseasaid.org.je/",
       "code": "JE-OAC",
       "description": {
-        "en": "The Jersey Overseas Aid Commission is responsible for distributing international development funds from Jersey. But they are not responsible for registration of NGOs. No database for organisation identifiers has been found.\n\n\"Jersey has been funding international aid and development since 1968, but the current \u2018Jersey Overseas Aid Commission\u2019 was established by law in 2005. It is an independent body within the responsibilities of the Chief Minister. It is governed by three States Commissioners and three non-States Commissioners, all of whom are appointed by the States of Jersey.\" [1]\n\n\"The Non-Profit Organizations (Jersey) Law 2008 (the \u201cNPO Law\u201d) was registered by the Royal Court on 25 July 2008 and came into effect on 8 August 2008. This legislation requires NPOs to register with the Commission in certain circumstances. \" [2]\n\n[1] https://www.joa.je/the-commission/\n[2] http://www.jerseyfsc.org/anti-money_laundering/forms/NPO/index.asp"
+        "en": "The Jersey Overseas Aid Commission is responsible for distributing international development funds from Jersey. But they are not responsible for registration of NGOs. No database for organisation identifiers has been found.\n\n\"Jersey has been funding international aid and development since 1968, but the current ‘Jersey Overseas Aid Commission’ was established by law in 2005. It is an independent body within the responsibilities of the Chief Minister. It is governed by three States Commissioners and three non-States Commissioners, all of whom are appointed by the States of Jersey.\" [1]\n\n\"The Non-Profit Organizations (Jersey) Law 2008 (the “NPO Law”) was registered by the Royal Court on 25 July 2008 and came into effect on 8 August 2008. This legislation requires NPOs to register with the Commission in certain circumstances. \" [2]\n\n[1] https://www.joa.je/the-commission/\n[2] http://www.jerseyfsc.org/anti-money_laundering/forms/NPO/index.asp"
       },
       "coverage": [
         "JE"
@@ -7467,7 +7515,7 @@
       },
       "name": {
         "en": "Companies Control Department (Jordan)",
-        "local": " \u062f\u0627\u0626\u0631\u0629 \u0645\u0631\u0627\u0642\u0628\u0629 \u0627\u0644\u0634\u0631\u0643\u0627\u062a"
+        "local": " دائرة مراقبة الشركات"
       }
     },
     {
@@ -7520,7 +7568,7 @@
       },
       "name": {
         "en": "Common Register Portal of the German Federal States (CRP)",
-        "local": "Gemeinsames Registerportal der L\u00e4nder"
+        "local": "Gemeinsames Registerportal der Länder"
       }
     },
     {
@@ -7674,7 +7722,7 @@
       },
       "name": {
         "en": "Saskatchewan Corporate Registry ",
-        "local": " Registre des soci\u00e9t\u00e9s"
+        "local": " Registre des sociétés"
       },
       "structure": [
         "company"
@@ -7744,7 +7792,7 @@
       },
       "name": {
         "en": "Uniform State Register of Legal Entities of Russian Federation",
-        "local": "\u0415\u0434\u0438\u043d\u044b\u0439 \u0433\u043e\u0441\u0443\u0434\u0430\u0440\u0441\u0442\u0432\u0435\u043d\u043d\u044b\u0439 \u0440\u0435\u0435\u0441\u0442\u0440 \u044e\u0440\u0438\u0434\u0438\u0447\u0435\u0441\u043a\u0438\u0445 \u043b\u0438\u0446"
+        "local": "Единый государственный реестр юридических лиц"
       }
     },
     {
@@ -7903,7 +7951,7 @@
       "url": "https://sudreg.pravosudje.hr/registar",
       "code": "HR-MBS",
       "description": {
-        "en": "The court business register is maintained by the Croatian Ministry of Justice (Ministarstvo Pravosuda Republike Hrvatske).\n\nRegistered corporations each have a court-assigned company registration number (mati\u010dni broj poslovnog subjekta - MBS)"
+        "en": "The court business register is maintained by the Croatian Ministry of Justice (Ministarstvo Pravosuda Republike Hrvatske).\n\nRegistered corporations each have a court-assigned company registration number (matični broj poslovnog subjekta - MBS)"
       },
       "name": {
         "en": "Croatian Court Business Register",
@@ -8025,7 +8073,7 @@
       "url": "http://iatistandard.org/codelists/IATIOrganisationIdentifier/",
       "code": "XI-IATI",
       "description": {
-        "en": "XI-IATI is a list of organisation identifiers that is maintained by the IATI Secretariat. Any publisher may apply to the IATI Technical Team for an identifier to be generated.\n\n\"If a bona fide organisation is not registered with any recognised or appropriate registration agency (http://iatistandard.org/202/codelists/OrganisationRegistrationAgency/) they should contact the IATI Technical Team who will exceptionally allocate an organisation identifier using the XI-IATI prefix.\n\nWhile some of these identifiers have been derived from DAC codes, this \u2018meaning\u2019 is not carried forward. i.e. IATI generated identifiers have no intrinsic meaning.\n\nFor general guidance about constructing Organisation Identifiers, please see http://iatistandard.org/organisation-identifiers/\" [1]\n\n[1] http://iatistandard.org/202/codelists/IATIOrganisationIdentifier/"
+        "en": "XI-IATI is a list of organisation identifiers that is maintained by the IATI Secretariat. Any publisher may apply to the IATI Technical Team for an identifier to be generated.\n\n\"If a bona fide organisation is not registered with any recognised or appropriate registration agency (http://iatistandard.org/202/codelists/OrganisationRegistrationAgency/) they should contact the IATI Technical Team who will exceptionally allocate an organisation identifier using the XI-IATI prefix.\n\nWhile some of these identifiers have been derived from DAC codes, this ‘meaning’ is not carried forward. i.e. IATI generated identifiers have no intrinsic meaning.\n\nFor general guidance about constructing Organisation Identifiers, please see http://iatistandard.org/organisation-identifiers/\" [1]\n\n[1] http://iatistandard.org/202/codelists/IATIOrganisationIdentifier/"
       },
       "coverage": null
     },
@@ -8078,11 +8126,11 @@
       "url": "http://demarchesadministratives.gouv.ml/demarches/afficher/Numero-d-Identification-Fiscale-NIF",
       "code": "ML-NIF",
       "description": {
-        "en": "The Tax Identification Number (Numero d\u2019Identification Fiscale) is issued to registered companies, and to branches of foreign organisations operating in Mali.\n\nThere is publicly available register of assigned Tax Identification Numbers. \n"
+        "en": "The Tax Identification Number (Numero d’Identification Fiscale) is issued to registered companies, and to branches of foreign organisations operating in Mali.\n\nThere is publicly available register of assigned Tax Identification Numbers. \n"
       },
       "name": {
         "en": "Tax Identification Number",
-        "local": "Numero d\u2019Identification Fiscale "
+        "local": "Numero d’Identification Fiscale "
       }
     },
     {
@@ -8199,7 +8247,7 @@
       "url": "http://www.mra.mw/",
       "code": "MW-MRA",
       "description": {
-        "en": "The Malawi Revenue Authority is responsible for processing tax payments and investigating cases of tax evasion in Malawi. They do not appear to be responsible for the registration of companies or maintaining a database of organisations.\n\nCompany registration in Malawi is done through the Department of Registrar General, under the Ministry of Justice and Constitutional Affairs.\n\n\"The Ministry of Industry and Trade is responsible for providing application forms for Registration of Business Name.\nApplications may be submitted to the Department of Registrar General\u2019s Head Office in Blantyre and its Regional Office in Lilongwe.\" [1]\n\n[1] https://www.wikiprocedure.com/index.php/Malawi_-_Register_Business_Name"
+        "en": "The Malawi Revenue Authority is responsible for processing tax payments and investigating cases of tax evasion in Malawi. They do not appear to be responsible for the registration of companies or maintaining a database of organisations.\n\nCompany registration in Malawi is done through the Department of Registrar General, under the Ministry of Justice and Constitutional Affairs.\n\n\"The Ministry of Industry and Trade is responsible for providing application forms for Registration of Business Name.\nApplications may be submitted to the Department of Registrar General’s Head Office in Blantyre and its Regional Office in Lilongwe.\" [1]\n\n[1] https://www.wikiprocedure.com/index.php/Malawi_-_Register_Business_Name"
       },
       "coverage": [
         "MW"
@@ -8255,7 +8303,7 @@
       },
       "name": {
         "en": "Abu Dhabi Commercial Directory",
-        "local": "\u062f\u0644\u064a\u0644 \u0623\u0628\u0648\u0638\u0628\u064a \u0627\u0644\u062a\u062c\u0627\u0631\u064a"
+        "local": "دليل أبوظبي التجاري"
       }
     },
     {
@@ -8350,7 +8398,7 @@
       },
       "name": {
         "en": "Nova Scotia Registry of Joint Stock Companies ",
-        "local": " Registre des soci\u00e9t\u00e9s de capitaux"
+        "local": " Registre des sociétés de capitaux"
       },
       "structure": [
         "company"
@@ -8488,7 +8536,7 @@
       },
       "name": {
         "en": "Bangladesh NGO Affairs Bureau ",
-        "local": " \u098f\u09a8\u099c\u09bf\u0993 \u09ac\u09bf\u09b7\u09af\u09bc\u0995 \u09ac\u09cd\u09af\u09c1\u09b0\u09cb"
+        "local": " এনজিও বিষয়ক ব্যুরো"
       }
     },
     {
@@ -8647,7 +8695,7 @@
       },
       "name": {
         "en": "Umm al-Quwain Chamber of Commerce and Industry",
-        "local": "\u063a\u0631\u0641\u0629 \u062a\u062c\u0627\u0631\u0629 \u0648\u0635\u0646\u0627\u0639\u0629 \u0623\u0645 \u0627\u0644\u0642\u064a\u0648\u064a\u0646"
+        "local": "غرفة تجارة وصناعة أم القيوين"
       }
     },
     {
@@ -8699,11 +8747,11 @@
       "url": "http://www.chileproveedores.cl/",
       "code": "CL-RUT",
       "description": {
-        "en": "Any company that will be subject to taxes in Chile must obtain a Rol \u00danico Tributario (RUT).  \n\nA RUT has 7 or 8 digits, plus a check digit. Identifiers should be presented without any punctuation and including the check digit. "
+        "en": "Any company that will be subject to taxes in Chile must obtain a Rol Único Tributario (RUT).  \n\nA RUT has 7 or 8 digits, plus a check digit. Identifiers should be presented without any punctuation and including the check digit. "
       },
       "name": {
-        "en": "Rol \u00danico Tributario de Chile (Taxpayer Number)",
-        "local": "Rol \u00danico Tributario de Chile"
+        "en": "Rol Único Tributario de Chile (Taxpayer Number)",
+        "local": "Rol Único Tributario de Chile"
       }
     },
     {
@@ -8886,11 +8934,11 @@
       "url": "http://www.hacienda.gov.py/web-hacienda/archivo.php?a=keke1117221b211c20db1d141bdedcdde2db1019ke2016131610ke111c1fdedcdde2da1d1113ke0ac&x=6262001&y=keke0ac",
       "code": "PY-PGN",
       "description": {
-        "en": "Provides identifiers for organizations and institutions from the Paraguayan State, including national public bodies, administrative departments, and municipalities.\n\nFrom the National Budget Law (Presupuesto General de la Naci\u00f3n (PGN)) of 2016 from Paraguay:\n\n\u201cThe objective of the classification by entities is to organize information related income, spending and budgetary credits from the different state organisms and entities at various institutional levels according to their functions, nature, characteristics and dependencies.\u201d[1]\n\nThe list is yearly updated given each the yearly national budget law.\n\nN.B. Please note, many government organisations also have an 'RUC' code (list [PY-RUC](/list/PY-RUC)), which is preferred to this list.\n\n[1]: http://bit.ly/PGNPY2016"
+        "en": "Provides identifiers for organizations and institutions from the Paraguayan State, including national public bodies, administrative departments, and municipalities.\n\nFrom the National Budget Law (Presupuesto General de la Nación (PGN)) of 2016 from Paraguay:\n\n“The objective of the classification by entities is to organize information related income, spending and budgetary credits from the different state organisms and entities at various institutional levels according to their functions, nature, characteristics and dependencies.”[1]\n\nThe list is yearly updated given each the yearly national budget law.\n\nN.B. Please note, many government organisations also have an 'RUC' code (list [PY-RUC](/list/PY-RUC)), which is preferred to this list.\n\n[1]: http://bit.ly/PGNPY2016"
       },
       "name": {
         "en": "Classification of Entities in the National Budget for Paraguay",
-        "local": "Clasificaci\u00f3n por Entidades del Presupuesto General de la Naci\u00f3n del Paraguay"
+        "local": "Clasificación por Entidades del Presupuesto General de la Nación del Paraguay"
       }
     },
     {
@@ -9127,7 +9175,7 @@
       "confirmed": true,
       "data": {
         "licenseStatus": "no_license",
-        "dataAccessDetails": "Search for \"Registrul de stat al unit\u0103\u0163ilor de drept privind \u00eentreprinderile \u00eenregistrate\" on the Moldova Open Data Portal (http://www.date.gov.md).",
+        "dataAccessDetails": "Search for \"Registrul de stat al unităţilor de drept privind întreprinderile înregistrate\" on the Moldova Open Data Portal (http://www.date.gov.md).",
         "features": [
           "website",
           "registration_number",
@@ -9165,11 +9213,11 @@
       "url": "http://www.idno.md/",
       "code": "MD-IDNO",
       "description": {
-        "en": "\"General information about the legal entities incorporated on the Republic of Moldova\u2019s territory, except political parties, non-governmental organizations and press agencies. Data from the State Chamber of Registration is published once per month on the Government Portal of Open Data (http://www.date.gov.md/en) and can be searched in a convenient way via dedicated platform http://www.idno.md/.\"[1]\n\nThe unique state identification number (IDNO) assigned to the legal entity also constitutes its fiscal code.\n\n\"The idno.md platform has been developed to facilitate access to open government data and to help citizens gain added value by using them. The project is based on the reuse of public data about registered companies in the Republic of Moldova, presenting them in a user-friendly way so that everyone can easily analyze and process them.\n\nThe platform allows users to search through data, track company history, and generate infotainment based on available data. At present, information is available about over 215,000 companies that have been registered in Moldova since 1991.\n\nThe data on idno.md is updated monthly, automatically. The idno.md team has long envisioned to integrate other information that will be available to the public, including information on public procurement connected with companies that have won tenders over the years.\"[1]\n\nMore information about companies and their administrators / founders can be requested at the State Registration Chamber.\n\n[1] http://www.idno.md/page?id=2 (Nov, 2017)\n[2] http://www.idno.md/page?id=5 (Nov, 2017)"
+        "en": "\"General information about the legal entities incorporated on the Republic of Moldova’s territory, except political parties, non-governmental organizations and press agencies. Data from the State Chamber of Registration is published once per month on the Government Portal of Open Data (http://www.date.gov.md/en) and can be searched in a convenient way via dedicated platform http://www.idno.md/.\"[1]\n\nThe unique state identification number (IDNO) assigned to the legal entity also constitutes its fiscal code.\n\n\"The idno.md platform has been developed to facilitate access to open government data and to help citizens gain added value by using them. The project is based on the reuse of public data about registered companies in the Republic of Moldova, presenting them in a user-friendly way so that everyone can easily analyze and process them.\n\nThe platform allows users to search through data, track company history, and generate infotainment based on available data. At present, information is available about over 215,000 companies that have been registered in Moldova since 1991.\n\nThe data on idno.md is updated monthly, automatically. The idno.md team has long envisioned to integrate other information that will be available to the public, including information on public procurement connected with companies that have won tenders over the years.\"[1]\n\nMore information about companies and their administrators / founders can be requested at the State Registration Chamber.\n\n[1] http://www.idno.md/page?id=2 (Nov, 2017)\n[2] http://www.idno.md/page?id=5 (Nov, 2017)"
       },
       "name": {
         "en": "Legal entity registration number (IDNO) Moldova",
-        "local": "Num\u0103rul de \u00eenregistrare al persoanei juridice"
+        "local": "Numărul de înregistrare al persoanei juridice"
       }
     },
     {
@@ -9207,7 +9255,7 @@
       },
       "name": {
         "en": "Manitoba Companies Office, Department of Entrepreneurship, Training and Trade ",
-        "local": " Bureau des entreprises du Manitoba, minist\u00e8re de l'Entrepreneuriat, de la Formation et du Commerce"
+        "local": " Bureau des entreprises du Manitoba, ministère de l'Entrepreneuriat, de la Formation et du Commerce"
       },
       "structure": [
         "company"
@@ -9313,7 +9361,7 @@
       "access": {
         "publicDatabase": "http://havarot.justice.gov.il/",
         "exampleIdentifiers": "510230055",
-        "guidanceOnLocatingIds": "Registration number will be under `\u05de\u05e1\u05e4\u05e8` header.",
+        "guidanceOnLocatingIds": "Registration number will be under `מספר` header.",
         "languages": [
           "he"
         ],
@@ -9338,7 +9386,7 @@
       },
       "name": {
         "en": "Registrar of Companies (Israel)",
-        "local": "\u05e8\u05e9\u05d5\u05ea \u05ea\u05d0\u05d2\u05d9\u05d3\u05d9\u05dd"
+        "local": "רשות תאגידים"
       }
     },
     {
@@ -9385,7 +9433,7 @@
       "access": {
         "publicDatabase": "https://ems.ms.gov.pl/krs/wyszukiwaniepodmiotu",
         "exampleIdentifiers": "0000359730, 0000511485, 0000172011",
-        "guidanceOnLocatingIds": "1. Check both boxes: \"Przedsi\u0119biorcy\" (companies) and \"Stowarzyszenia, inne organizacje spo\u0142. i zawodowe, fundacje, ZOZ\" (associations, foundations, charities, unions, public health institutions)\n2. Input KRS number in the relevant field (or search by other means, such as a name or a city)\n3. Enter captcha \"Kod z obrazka\"\n4. Start search: \"Szukaj\"\n5. Choose one of the results by clicking \"Wy\u015bwietl\"\n6. You will get a page with basic details. To get whole info click \"Pobierz wydruk\" to get a PDF with all the information\n\nKRS number is mentioned as \"Numer KRS\". Commonly it is prefixed by zeros, but they are non-significant and in other sources (such as a company's website) may be dropped.",
+        "guidanceOnLocatingIds": "1. Check both boxes: \"Przedsiębiorcy\" (companies) and \"Stowarzyszenia, inne organizacje społ. i zawodowe, fundacje, ZOZ\" (associations, foundations, charities, unions, public health institutions)\n2. Input KRS number in the relevant field (or search by other means, such as a name or a city)\n3. Enter captcha \"Kod z obrazka\"\n4. Start search: \"Szukaj\"\n5. Choose one of the results by clicking \"Wyświetl\"\n6. You will get a page with basic details. To get whole info click \"Pobierz wydruk\" to get a PDF with all the information\n\nKRS number is mentioned as \"Numer KRS\". Commonly it is prefixed by zeros, but they are non-significant and in other sources (such as a company's website) may be dropped.",
         "languages": [
           "PL"
         ],
@@ -9406,11 +9454,11 @@
       "url": "https://ems.ms.gov.pl/krs/wyszukiwaniepodmiotu",
       "code": "PL-KRS",
       "description": {
-        "en": "The National Court Register (KRS standing for Krajowy Rejestr S\u0105dowy) number is required to be acquired by several types of organizations: companies (without Sole Proprietorships that register in CEiDG), non-profits (associations, foundations, charities), unions and public health institutions.\n\nAn organization has to apply for a KRS number and pay a fee (around 25$). "
+        "en": "The National Court Register (KRS standing for Krajowy Rejestr Sądowy) number is required to be acquired by several types of organizations: companies (without Sole Proprietorships that register in CEiDG), non-profits (associations, foundations, charities), unions and public health institutions.\n\nAn organization has to apply for a KRS number and pay a fee (around 25$). "
       },
       "name": {
         "en": "The National Court Register (Poland)",
-        "local": "Krajowy Rejestr S\u0105dowy"
+        "local": "Krajowy Rejestr Sądowy"
       }
     },
     {
@@ -9514,7 +9562,7 @@
       },
       "name": {
         "en": "Information Platform of Legal Entities (Lithuania)",
-        "local": "Juridini\u0173 asmen\u0173 dalyvi\u0173 informacin\u0117 sistema"
+        "local": "Juridinių asmenų dalyvių informacinė sistema"
       }
     },
     {
@@ -9614,7 +9662,7 @@
       "url": "http://gsxt.saic.gov.cn/",
       "code": "CN-SAIC",
       "description": {
-        "en": "The SAIC is the national body which ensures business rights in China, for both domestic and foreign enterprises. Businesses must register with the SAIC. The Enterprise Registration Bureau is the department responsible for enterprise registration.\n\nFor further details on the procedure for starting a business entity, see this WikiProcedure - https://www.wikiprocedure.com/index.php/China_-_Start_a_Business_Entity\n\nThe database is only available in Chinese language\n\n\"The State Administration for Industry & Commerce (SAIC) of the People\u2019s Republic of China is the competent authority of ministerial level directly under the State Council in charge of market supervision/regulation and related law enforcement through administrative means.\n\nWith creating a regulated and harmonized market environment of fairness, justice and faithfulness for the coordinated socioeconomic development as its objective, SAIC functions in maintaining market order and protecting the legitimate rights and interests of businesses and consumers by carrying out regulations in the fields of enterprise registration, competition, consumer protection, trademark protection and combating economic illegalities.\" [1] \n\n\"Our responsibilities:\n2.     Carry out and administer registration of enterprises (including foreign-invested enterprises), agricultural cooperatives, entities or individuals engaged in business operation and resident representative offices of foreign companies; and take charge of the investigation and ban on unlicensed business operation according to law.\" [2]\n\n\"Enterprise Registration Bureau\n-        Draft measures and practice directions regarding enterprise registration;\n-        Coordinate and guide enterprise registration nationwide; \n-        Take charge of registration of certain enterprises and supervises the registrants\u2019 registration practices; \n-        Organize and guide credit rating of businesses; \n-        Establish and maintain the national database of enterprise registration information, and analyze and publish registration information of domestic enterprises.\" [3]\n\n[1][2] http://www.saic.gov.cn/english/aboutus/Mission/index.html\n[3] http://www.saic.gov.cn/english/aboutus/Departments/"
+        "en": "The SAIC is the national body which ensures business rights in China, for both domestic and foreign enterprises. Businesses must register with the SAIC. The Enterprise Registration Bureau is the department responsible for enterprise registration.\n\nFor further details on the procedure for starting a business entity, see this WikiProcedure - https://www.wikiprocedure.com/index.php/China_-_Start_a_Business_Entity\n\nThe database is only available in Chinese language\n\n\"The State Administration for Industry & Commerce (SAIC) of the People’s Republic of China is the competent authority of ministerial level directly under the State Council in charge of market supervision/regulation and related law enforcement through administrative means.\n\nWith creating a regulated and harmonized market environment of fairness, justice and faithfulness for the coordinated socioeconomic development as its objective, SAIC functions in maintaining market order and protecting the legitimate rights and interests of businesses and consumers by carrying out regulations in the fields of enterprise registration, competition, consumer protection, trademark protection and combating economic illegalities.\" [1] \n\n\"Our responsibilities:\n2.     Carry out and administer registration of enterprises (including foreign-invested enterprises), agricultural cooperatives, entities or individuals engaged in business operation and resident representative offices of foreign companies; and take charge of the investigation and ban on unlicensed business operation according to law.\" [2]\n\n\"Enterprise Registration Bureau\n-        Draft measures and practice directions regarding enterprise registration;\n-        Coordinate and guide enterprise registration nationwide; \n-        Take charge of registration of certain enterprises and supervises the registrants’ registration practices; \n-        Organize and guide credit rating of businesses; \n-        Establish and maintain the national database of enterprise registration information, and analyze and publish registration information of domestic enterprises.\" [3]\n\n[1][2] http://www.saic.gov.cn/english/aboutus/Mission/index.html\n[3] http://www.saic.gov.cn/english/aboutus/Departments/"
       },
       "coverage": [
         "CN"
@@ -9660,7 +9708,7 @@
       },
       "name": {
         "en": "Ministry of Economy NGO Department ",
-        "local": " \u0648\u0632\u0627\u0631\u0629 \u0627\u0644\u0627\u0642\u062a\u0635\u0627\u062f  \u0627\u0646\u0633\u062c\u0627\u0645 \u0645\u0648\u0633\u0633\u0627\u062a \u063a\u06cc\u0631 \u062f\u0648\u0644\u062a\u06cc"
+        "local": " وزارة الاقتصاد  انسجام موسسات غیر دولتی"
       },
       "structure": [
         "charity"
@@ -9727,11 +9775,11 @@
       "url": "https://my.gov.uz/uz/regService/413",
       "code": "UZ-KTUT",
       "description": {
-        "en": "The State Statistics Committee of the Republic of Uzbekistan maintans the United State Register of Corporate Entites and organizations (\u041a\u043e\u0440\u0445\u043e\u043d\u0430\u043b\u0430\u0440 \u0432\u0430 \u0442\u0430\u0448\u043a\u0438\u043b\u043e\u0442\u043b\u0430\u0440\u043d\u0438\u043d\u0433 \u044f\u0433\u043e\u043d\u0430 \u0434\u0430\u0432\u043b\u0430\u0442)"
+        "en": "The State Statistics Committee of the Republic of Uzbekistan maintans the United State Register of Corporate Entites and organizations (Корхоналар ва ташкилотларнинг ягона давлат)"
       },
       "name": {
         "en": "United State Register of Corporate Entites",
-        "local": "\u041a\u043e\u0440\u0445\u043e\u043d\u0430\u043b\u0430\u0440 \u0432\u0430 \u0442\u0430\u0448\u043a\u0438\u043b\u043e\u0442\u043b\u0430\u0440\u043d\u0438\u043d\u0433 \u044f\u0433\u043e\u043d\u0430 \u0434\u0430\u0432\u043b\u0430\u0442"
+        "local": "Корхоналар ва ташкилотларнинг ягона давлат"
       }
     },
     {
@@ -9795,7 +9843,7 @@
       "url": "https://datacvr.virk.dk/data/",
       "code": "DK-CVR",
       "description": {
-        "en": "The CBR is the national body for registering companies and maintaining this information in Denmark. The Central Business Register at Virk is available with English headings and categories. It can be used to search for information on all Danish businesses.\n\n\"The Danish Central Business Register (aka CVR \u2014 Det Centrale Virksomhedsregister) is the central government register containing primary data on all businesses in Denmark, regardless of economic and organizational structure, except personally owned companies with an annual turnover of less than 50,000 Danish krones.\" [1]\n\n[1] https://en.wikipedia.org/wiki/Central_Business_Register_(Denmark)"
+        "en": "The CBR is the national body for registering companies and maintaining this information in Denmark. The Central Business Register at Virk is available with English headings and categories. It can be used to search for information on all Danish businesses.\n\n\"The Danish Central Business Register (aka CVR — Det Centrale Virksomhedsregister) is the central government register containing primary data on all businesses in Denmark, regardless of economic and organizational structure, except personally owned companies with an annual turnover of less than 50,000 Danish krones.\" [1]\n\n[1] https://en.wikipedia.org/wiki/Central_Business_Register_(Denmark)"
       },
       "coverage": [
         "DK"
@@ -9948,7 +9996,7 @@
       },
       "confirmed": true,
       "data": {
-        "dataAccessDetails": "Entity search allows one-off lookups of entity records. Bulk download (requires registration) enables the retrieval of Thomson Reuters\u2019 entity data in .gz files, one per entity. Currently Turtle and Ntriples file formats are supported.",
+        "dataAccessDetails": "Entity search allows one-off lookups of entity records. Bulk download (requires registration) enables the retrieval of Thomson Reuters’ entity data in .gz files, one per entity. Currently Turtle and Ntriples file formats are supported.",
         "features": [],
         "licenseDetails": "Basic data (including the PermID) is licensed under CC-BY 4.0. Extended data (viewable by registered users only) is licensed under CC-NC 4.0. Some further fields are under commercial or third-party licences. Please see https://permid.org/terms for full details of each.",
         "availability": [
@@ -10393,7 +10441,7 @@
       "url": "http://www.attorney-general.go.ke/",
       "code": "KE-RSO",
       "description": {
-        "en": "The Registrar of Societies is held under the Office of the Attorney General and Department of Justice. Interest groups in Kenya apply to the Registrar of Societies for both registration and exemption from registration of being a 'society'. But there is no indication that societies have legal/corporate foundation. There is also no publicly available database of the Registrar of Societies.\n\nFor Kenya's NGO registry list, users should look to KE-NCB. Please note there is currently no publicly available dataset for this registry.\n\n\"In summary, State Law Office and Department of Justice is mandated to promote the rule of law and public participation; support Government\u2019s investment in socio-economic development; promote transparency, accountability, ethics and integrity; spearhead policy, legal and institutional reforms; promote economic governance and empowerment; promotion, fulfillment and protection of human rights; undertake administrative management; capacity building; and enhance access to justice.\" [1]\n\n[1] http://www.statelaw.go.ke/about-office-of-the-attorney-general-and-department-of-justice/"
+        "en": "The Registrar of Societies is held under the Office of the Attorney General and Department of Justice. Interest groups in Kenya apply to the Registrar of Societies for both registration and exemption from registration of being a 'society'. But there is no indication that societies have legal/corporate foundation. There is also no publicly available database of the Registrar of Societies.\n\nFor Kenya's NGO registry list, users should look to KE-NCB. Please note there is currently no publicly available dataset for this registry.\n\n\"In summary, State Law Office and Department of Justice is mandated to promote the rule of law and public participation; support Government’s investment in socio-economic development; promote transparency, accountability, ethics and integrity; spearhead policy, legal and institutional reforms; promote economic governance and empowerment; promotion, fulfillment and protection of human rights; undertake administrative management; capacity building; and enhance access to justice.\" [1]\n\n[1] http://www.statelaw.go.ke/about-office-of-the-attorney-general-and-department-of-justice/"
       },
       "coverage": [
         "KE"
@@ -10503,7 +10551,7 @@
       },
       "name": {
         "en": "Ras al-Khaimah Investment Authority",
-        "local": "\u0647\u064a\u0626\u0629 \u0631\u0623\u0633 \u0627\u0644\u062e\u064a\u0645\u0629 \u0644\u0644\u0627\u0633\u062a\u062b\u0645\u0627\u0631"
+        "local": "هيئة رأس الخيمة للاستثمار"
       }
     },
     {
@@ -10556,7 +10604,7 @@
       },
       "name": {
         "en": "Fujairah Chamber of Commerce and Industry",
-        "local": "\u063a\u0631\u0641\u0629 \u062a\u062c\u0627\u0631\u0629 \u0648\u0635\u0646\u0627\u0639\u0629 \u0627\u0644\u0641\u062c\u064a\u0631\u0629"
+        "local": "غرفة تجارة وصناعة الفجيرة"
       }
     },
     {
@@ -10598,13 +10646,13 @@
           "no"
         ],
         "exampleIdentifiers": "972417920, 894961902, 968253980",
-        "guidanceOnLocatingIds": "Users can find identifiers by searching on the homepage of the Br\u00f8nn\u00f8ysundregistren. Identifiers will be under the column heading 'Orgnr.'. If the user clicks on the result for more details, the identifier will be next to 'Organisasjonsnummer' , or 'Organisation number' in English.\n\nUsers can also search the database before downloading extracts (or the entire dataset). The identifiers will be under the column heading 'Organisasjonsnummer' , or 'Organisation number' in English.",
+        "guidanceOnLocatingIds": "Users can find identifiers by searching on the homepage of the Brønnøysundregistren. Identifiers will be under the column heading 'Orgnr.'. If the user clicks on the result for more details, the identifier will be next to 'Organisasjonsnummer' , or 'Organisation number' in English.\n\nUsers can also search the database before downloading extracts (or the entire dataset). The identifiers will be under the column heading 'Organisasjonsnummer' , or 'Organisation number' in English.",
         "onlineAccessDetails": "Data is available to search for free",
         "availableOnline": false,
         "publicDatabase": "https://www.brreg.no/home/ , https://www.brreg.no/produkter-og-tjenester/apne-data/"
       },
       "name": {
-        "en": "Br\u00f8nn\u00f8ysundregistrene",
+        "en": "Brønnøysundregistrene",
         "local": ""
       },
       "structure": [
@@ -10626,7 +10674,7 @@
       "url": "http://www.brreg.no/",
       "code": "NO-BRC",
       "description": {
-        "en": "Companies in Norway must be Registered with the Register of Business Enterprises. Non-profits are eligible for registry with the Register of Non-Profit Organizations. \n\nThese registries are maintained by the Br\u00f8nn\u00f8ysundregistrene.  Businesses can be incorporated by applying to the online 'coordinated register notification' - Altinn, which is also maintained by Br\u00f8nn\u00f8ysundregistrene.  \n\nThis database can be searched by the public for free from the organisation homepage, and can be downloaded in various data format.\n\n\"The Register of Business Enterprises registers all Norwegian and foreign businesses in Norway, ensuring legal protection and financial overview.\" [1] \n\n\"Non-profit organizations that run voluntary activities not motivated by profit are eligible to register. Examples of such organizations are:\n\n- associations\n- non-commercial foundations that do not distribute funds, or that only - distribute funds to non-profit activities\n- commercial foundations that only distribute funds to non-profit activities\n- limited liability companies that only distribute funds to non-profit activities.\" [2] \n\n\"Br\u00f8nn\u00f8ysund Register Centre (Norwegian Bokm\u00e5l: Br\u00f8nn\u00f8ysundregistrene, Norwegian Nynorsk: Br\u00f8nn\u00f8ysundregistra) is a Norwegian government agency that is responsible for the management of numerous public registers for Norway, and governmental systems for digital exchange of information.\" [3]\n\n[1][2] https://www.brreg.no/home/about-us/the-registers-and-their-timeline/\n[3] https://en.wikipedia.org/wiki/Br%C3%B8nn%C3%B8ysund_Register_Centre"
+        "en": "Companies in Norway must be Registered with the Register of Business Enterprises. Non-profits are eligible for registry with the Register of Non-Profit Organizations. \n\nThese registries are maintained by the Brønnøysundregistrene.  Businesses can be incorporated by applying to the online 'coordinated register notification' - Altinn, which is also maintained by Brønnøysundregistrene.  \n\nThis database can be searched by the public for free from the organisation homepage, and can be downloaded in various data format.\n\n\"The Register of Business Enterprises registers all Norwegian and foreign businesses in Norway, ensuring legal protection and financial overview.\" [1] \n\n\"Non-profit organizations that run voluntary activities not motivated by profit are eligible to register. Examples of such organizations are:\n\n- associations\n- non-commercial foundations that do not distribute funds, or that only - distribute funds to non-profit activities\n- commercial foundations that only distribute funds to non-profit activities\n- limited liability companies that only distribute funds to non-profit activities.\" [2] \n\n\"Brønnøysund Register Centre (Norwegian Bokmål: Brønnøysundregistrene, Norwegian Nynorsk: Brønnøysundregistra) is a Norwegian government agency that is responsible for the management of numerous public registers for Norway, and governmental systems for digital exchange of information.\" [3]\n\n[1][2] https://www.brreg.no/home/about-us/the-registers-and-their-timeline/\n[3] https://en.wikipedia.org/wiki/Br%C3%B8nn%C3%B8ysund_Register_Centre"
       },
       "coverage": [
         "NO"
@@ -10716,7 +10764,7 @@
           "pt",
           "en"
         ],
-        "onlineAccessDetails": "The search is made using the tax identification number of the entity, which is the entity's registration number in the business register as well as its tax number. Paper extracts must be applied for at registry offices but the relevant information may be accessed on the one-stop-shop website for entrepreneurs (Balc\u00e3o do Empreendedor[1]) in the form of an electronic extract on the entity's legal situation, which is constantly updated and available in Portuguese and English. Extracts from the register and of related documents, whether in paper or electronic form, must be paid for.\n\n[1]: https://bde.portaldocidadao.pt/evo/Templates/GeralEO.aspx?NRNODEGUID={0AB79FDE-92FE-4BEF-84CE-962D954F4D59}",
+        "onlineAccessDetails": "The search is made using the tax identification number of the entity, which is the entity's registration number in the business register as well as its tax number. Paper extracts must be applied for at registry offices but the relevant information may be accessed on the one-stop-shop website for entrepreneurs (Balcão do Empreendedor[1]) in the form of an electronic extract on the entity's legal situation, which is constantly updated and available in Portuguese and English. Extracts from the register and of related documents, whether in paper or electronic form, must be paid for.\n\n[1]: https://bde.portaldocidadao.pt/evo/Templates/GeralEO.aspx?NRNODEGUID={0AB79FDE-92FE-4BEF-84CE-962D954F4D59}",
         "availableOnline": true
       },
       "sector": [],
@@ -10736,7 +10784,7 @@
       },
       "name": {
         "en": "Portal of Public Services",
-        "local": "Portal do cidad\u00e3o"
+        "local": "Portal do cidadão"
       }
     },
     {
@@ -10765,7 +10813,7 @@
       "access": {
         "publicDatabase": "https://www.egrul.ru/",
         "exampleIdentifiers": "1137746072375",
-        "guidanceOnLocatingIds": "Use the Primary State Registration Number (OGRN/\u041e\u0413\u0420\u041d)",
+        "guidanceOnLocatingIds": "Use the Primary State Registration Number (OGRN/ОГРН)",
         "languages": [
           "ru",
           "en"
@@ -10790,7 +10838,7 @@
       },
       "name": {
         "en": "Unified State Register of Legal Entities (USRLE), Russian Federation",
-        "local": "\u0415\u0434\u0438\u043d\u044b\u0439 \u0433\u043e\u0441\u0443\u0434\u0430\u0440\u0441\u0442\u0432\u0435\u043d\u043d\u044b\u0439 \u0440\u0435\u0435\u0441\u0442\u0440 \u044e\u0440\u0438\u0434\u0438\u0447\u0435\u0441\u043a\u0438\u0445 \u043b\u0438\u0446 (EGRUL)"
+        "local": "Единый государственный реестр юридических лиц (EGRUL)"
       }
     },
     {
@@ -11021,7 +11069,7 @@
       },
       "name": {
         "en": "Dubai International Financial Centre",
-        "local": "\u0645\u0631\u0643\u0632 \u062f\u0628\u064a \u0627\u0644\u0645\u0627\u0644\u064a \u0627\u0644\u0639\u0627\u0644\u0645\u064a"
+        "local": "مركز دبي المالي العالمي"
       }
     },
     {
@@ -11131,7 +11179,7 @@
       },
       "name": {
         "en": "Mozambique Commercial Registry",
-        "local": "O registo Comercial de Mo\u00e7ambique"
+        "local": "O registo Comercial de Moçambique"
       }
     },
     {
@@ -11272,14 +11320,14 @@
           "ar"
         ],
         "exampleIdentifiers": "77621, 77668, 1500001",
-        "guidanceOnLocatingIds": "Use the registration number (\u0631\u0642\u0645 \u0627\u0644\u062a\u0633\u062c\u064a\u0644) given for each company.",
+        "guidanceOnLocatingIds": "Use the registration number (رقم التسجيل) given for each company.",
         "onlineAccessDetails": "There is a freely accessible serach interface at http://cr.justice.gov.lb/ where companies can be searched by name or record number (in Arabic only). More information about each company is given in the search results, including address, type of activites, officers, date of registration and legal form.",
         "availableOnline": true,
         "publicDatabase": "http://cr.justice.gov.lb/"
       },
       "name": {
         "en": "Lebanese Ministry of Justice, Commercial Register",
-        "local": " \u0648\u0632\u0627\u0631\u0629 \u0627\u0644\u0639\u062f\u0644 \u0627\u0644\u0644\u0628\u0646\u0627\u0646\u064a\u0629\u060c \u0627\u0644\u0633\u062c\u0644 \u0627\u0644\u062a\u062c\u0627\u0631\u064a"
+        "local": " وزارة العدل اللبنانية، السجل التجاري"
       },
       "structure": [
         "company"
@@ -11351,7 +11399,7 @@
       },
       "name": {
         "en": "Commercial Register",
-        "local": "\u0422\u044a\u0440\u0433\u043e\u0432\u0441\u043a\u0438 \u0440\u0435\u0433\u0438\u0441\u0442\u044a\u0440"
+        "local": "Търговски регистър"
       }
     },
     {
@@ -11408,11 +11456,11 @@
       "url": "http://www.hacienda.gov.py/web-hacienda/index.php?c=77",
       "code": "PY-RUC",
       "description": {
-        "en": "The Registro \u00danico del Contribuyente (RUC) is the unique taxpayer registry that maintains the personal, non-transferable, identification number for all those physical persons (national or foreign) and legal entities (for-profit and non-profit) that carry out economic activities in the Paraguayan territory. \n\nThe identification number is created primarily for tax purposes."
+        "en": "The Registro Único del Contribuyente (RUC) is the unique taxpayer registry that maintains the personal, non-transferable, identification number for all those physical persons (national or foreign) and legal entities (for-profit and non-profit) that carry out economic activities in the Paraguayan territory. \n\nThe identification number is created primarily for tax purposes."
       },
       "name": {
         "en": "Unique Taxpayer Registry, Paraguay",
-        "local": "Registro \u00danico de Contribuyente del Paraguay"
+        "local": "Registro Único de Contribuyente del Paraguay"
       }
     },
     {
@@ -11445,7 +11493,7 @@
       "access": {
         "publicDatabase": "https://www.sunarp.gob.pe/dn-personas-juridicas.asp",
         "exampleIdentifiers": "12623829, 00890227, 13964442",
-        "guidanceOnLocatingIds": "For a successful search, identifiers are displayed in the 'Partida' column.\n\nOrganisations may also be able to find their identifier on their registration certificate prefixed by 'N\u00ba Partida'. ",
+        "guidanceOnLocatingIds": "For a successful search, identifiers are displayed in the 'Partida' column.\n\nOrganisations may also be able to find their identifier on their registration certificate prefixed by 'Nº Partida'. ",
         "languages": [
           "es"
         ],
@@ -11470,7 +11518,7 @@
       },
       "name": {
         "en": "Peruvian National Superintendency of Public Registries - Registered Legal Entities ",
-        "local": "Superintendencia Nacional de los Registros P\u00fablicos - Personas Jur\u00eddicas Inscritas"
+        "local": "Superintendencia Nacional de los Registros Públicos - Personas Jurídicas Inscritas"
       }
     },
     {
@@ -11523,7 +11571,7 @@
       },
       "name": {
         "en": "Fujairah Free Zone Company Listing",
-        "local": "\u0634\u0631\u0643\u0629 \u0627\u0644\u0641\u062c\u064a\u0631\u0629 \u0644\u0644\u0645\u0646\u0637\u0642\u0629 \u0627\u0644\u062d\u0631\u0629"
+        "local": "شركة الفجيرة للمنطقة الحرة"
       }
     },
     {
@@ -11639,7 +11687,7 @@
       "url": "https://mutuals.fsa.gov.uk/",
       "code": "GB-MPR",
       "description": {
-        "en": "The Mutuals Public Register is the public record of registered mutual societies:\n\n* building societies\n* credit unions\n* friendly societies\n* registered societies\n\nIt contains:\n\n* details of societies\u2019 registered offices and contact information\nthe services they offer\n* public documents such as yearly returns and accounts"
+        "en": "The Mutuals Public Register is the public record of registered mutual societies:\n\n* building societies\n* credit unions\n* friendly societies\n* registered societies\n\nIt contains:\n\n* details of societies’ registered offices and contact information\nthe services they offer\n* public documents such as yearly returns and accounts"
       },
       "coverage": [
         "GB"
@@ -11700,7 +11748,7 @@
       "url": "http://www.gov.im/registries/courts/charities/",
       "code": "IM-GR",
       "description": {
-        "en": "All charities in the Isle of Man must be registered with the General Registry. The General Registry maintain information about charities in the Index of Registered Isle of Man Charities\n\n\"The General Registry has specific statutory roles in relation to the registration of charities and the receipt of statutory statements, accounts and other documents in relation to charities.\" [1] \n\n\"The General Registry is the department which administers \u2013\n\nthe civil and criminal Courts of the Isle of Man\nthe High Court of Justice of the Isle of Man\nCourts of General Gaol Delivery\ncourts of summary jurisdiction\nthe Registries\nDeeds and Probate Registry\nLand Registry\nCivil Registry, responsible for registration of births, deaths and marriages\nregistration of charities\nLegal Aid\nthe Public Record Office\ncriminal injuries compensation\nregistration of legal practitioners (other than advocates)\" [2]\n\n[1] https://www.gov.im/registries/courts/charities/\n[2] https://en.wikipedia.org/wiki/General_Registry_(Isle_of_Man)"
+        "en": "All charities in the Isle of Man must be registered with the General Registry. The General Registry maintain information about charities in the Index of Registered Isle of Man Charities\n\n\"The General Registry has specific statutory roles in relation to the registration of charities and the receipt of statutory statements, accounts and other documents in relation to charities.\" [1] \n\n\"The General Registry is the department which administers –\n\nthe civil and criminal Courts of the Isle of Man\nthe High Court of Justice of the Isle of Man\nCourts of General Gaol Delivery\ncourts of summary jurisdiction\nthe Registries\nDeeds and Probate Registry\nLand Registry\nCivil Registry, responsible for registration of births, deaths and marriages\nregistration of charities\nLegal Aid\nthe Public Record Office\ncriminal injuries compensation\nregistration of legal practitioners (other than advocates)\" [2]\n\n[1] https://www.gov.im/registries/courts/charities/\n[2] https://en.wikipedia.org/wiki/General_Registry_(Isle_of_Man)"
       },
       "name": {
         "en": "Isle of Man Index of Registered Charities ",
@@ -11758,7 +11806,7 @@
       "url": "http://www.cenoc.gob.ar/",
       "code": "AR-CENOC",
       "description": {
-        "en": "Law N\u00ba 25.855, de Voluntariado Social (Social Volunteering) established in 2004 a role for  El Centro Nacional de Organizaciones de la Comunidad to maintain a database of civil society organisations (CSOs).\n\n\"The CSOs that receive or intend to receive public funds must be included in the database, to carry out projects financed in whole or in part with state resources, whatever the subject matter.\"\n\nRegistration for the database requests detailed information, including capturing a CUIT number for the organisation (where known), address and contact information. However, only a basic list of identifiers and names is currently published. "
+        "en": "Law Nº 25.855, de Voluntariado Social (Social Volunteering) established in 2004 a role for  El Centro Nacional de Organizaciones de la Comunidad to maintain a database of civil society organisations (CSOs).\n\n\"The CSOs that receive or intend to receive public funds must be included in the database, to carry out projects financed in whole or in part with state resources, whatever the subject matter.\"\n\nRegistration for the database requests detailed information, including capturing a CUIT number for the organisation (where known), address and contact information. However, only a basic list of identifiers and names is currently published. "
       },
       "name": {
         "en": "The National Centre of Community Organisations (Argentina)",
@@ -11823,7 +11871,7 @@
       "url": "http://www.smeru.or.id/en",
       "code": "ID-SMR",
       "description": {
-        "en": "The SMERU Research Institute is an independent body which conducts research on social issues in Indonesia. They also maintains a database of NGOs working in Indonesia.\n\n\"The SMERU Research Institute is an independent institution for research and public policy studies. We professionally and proactively provide accurate and timely information, as well as objective analyses, on various socioeconomic and poverty issues considered most urgent and relevant for the people of Indonesia.\" [1]\n\n\"SMERU manages Indonesia's most comprehensive online database of national and regional non-governmental organizations (NGOs). Currently, there are almost 3,000 NGOs in the database, which provides information on the NGOs\u2019 name, address, contact person, vision, mission, legal form, activities, and sector.\" [2]\n\n[1] http://www.smeru.or.id/en/about\n[2] http://www.smeru.or.id/en/content/ngo-database"
+        "en": "The SMERU Research Institute is an independent body which conducts research on social issues in Indonesia. They also maintains a database of NGOs working in Indonesia.\n\n\"The SMERU Research Institute is an independent institution for research and public policy studies. We professionally and proactively provide accurate and timely information, as well as objective analyses, on various socioeconomic and poverty issues considered most urgent and relevant for the people of Indonesia.\" [1]\n\n\"SMERU manages Indonesia's most comprehensive online database of national and regional non-governmental organizations (NGOs). Currently, there are almost 3,000 NGOs in the database, which provides information on the NGOs’ name, address, contact person, vision, mission, legal form, activities, and sector.\" [2]\n\n[1] http://www.smeru.or.id/en/about\n[2] http://www.smeru.or.id/en/content/ngo-database"
       },
       "coverage": [
         "ID"
@@ -11861,7 +11909,7 @@
           "ro",
           "en"
         ],
-        "onlineAccessDetails": "Upon registration and payment of 8 lei, a company's details can be requested through the ONRC Portal InfoCert service https://portal.onrc.ro/ONRCPortalWeb/appmanager/myONRC/wicket?p=rc.certificateConstatatoare.[1]\n\nInformation regarding a company including the following details: \n* order number in the trade register\n* company name\n* legal form\n* unique registration code\n* registered office\n* company\u2019s status\n* main activity\n* share capital\n* administrators, partners/shareholders\n* data registered in the trade register attesting that a certain document or fact is/is not registered.\n\n[1] Other access choices are described at https://www.onrc.ro/index.php/en/informatii-2/informatii-rc",
+        "onlineAccessDetails": "Upon registration and payment of 8 lei, a company's details can be requested through the ONRC Portal InfoCert service https://portal.onrc.ro/ONRCPortalWeb/appmanager/myONRC/wicket?p=rc.certificateConstatatoare.[1]\n\nInformation regarding a company including the following details: \n* order number in the trade register\n* company name\n* legal form\n* unique registration code\n* registered office\n* company’s status\n* main activity\n* share capital\n* administrators, partners/shareholders\n* data registered in the trade register attesting that a certain document or fact is/is not registered.\n\n[1] Other access choices are described at https://www.onrc.ro/index.php/en/informatii-2/informatii-rc",
         "availableOnline": true
       },
       "sector": [],
@@ -11882,7 +11930,7 @@
       },
       "name": {
         "en": "National Trade Register (Romania)",
-        "local": "Na\u021bional al Registrului Comer\u021bului"
+        "local": "Național al Registrului Comerțului"
       }
     },
     {
@@ -11910,13 +11958,13 @@
       },
       "access": {
         "publicDatabase": "http://register.minjust.gov.kg/register/SearchAction.seam?logic=and&cid=1184653",
-        "exampleIdentifiers": "48206-3303-\u041e\u041e\u041e",
-        "guidanceOnLocatingIds": "Registration number is the '\u0420\u0435\u0433. \u2116' which should be used as the identifier",
+        "exampleIdentifiers": "48206-3303-ООО",
+        "guidanceOnLocatingIds": "Registration number is the 'Рег. №' which should be used as the identifier",
         "languages": [
           "ky",
           "ru"
         ],
-        "onlineAccessDetails": "Company can be searched by its name ('\u043d\u0430\u0438\u043c\u0435\u043d\u043e\u0432\u0430\u043d\u0438\u0435'), registration number ('\u0420\u0435\u0433. \u2116'), tax number ('\u0418\u041d\u041d'), OKPO code ('\u041a\u043e\u0434 \u041e\u041a\u041f\u041e', assigned to each legal entity for statistics purposes), company status ('\u0421\u0442\u0430\u0442\u0443\u0441'), registration date ('\u0414\u0430\u0442\u0430') etc.  \n\nSearch is free-of-charge, no English interface.",
+        "onlineAccessDetails": "Company can be searched by its name ('наименование'), registration number ('Рег. №'), tax number ('ИНН'), OKPO code ('Код ОКПО', assigned to each legal entity for statistics purposes), company status ('Статус'), registration date ('Дата') etc.  \n\nSearch is free-of-charge, no English interface.",
         "availableOnline": true
       },
       "sector": [],
@@ -11936,7 +11984,7 @@
       },
       "name": {
         "en": "Electronic database of legal entities and branches (Krygyzstan)",
-        "local": "\u042e\u0440\u0438\u0434\u0438\u043a\u0430\u043b\u044b\u043a \u0436\u0430\u043a\u0442\u0430\u0440\u0434\u044b\u043d, \u0444\u0438\u043b\u0438\u0430\u043b\u0434\u0430\u0440\u0434\u044b\u043d \u044d\u043b\u0435\u043a\u0442\u0440\u043e\u043d\u0434\u0443\u043a \u0431\u0430\u0437\u0430\u0441\u044b"
+        "local": "Юридикалык жактардын, филиалдардын электрондук базасы"
       }
     },
     {
@@ -12271,7 +12319,7 @@
       },
       "name": {
         "en": "MERSIS - Central Trade Registry System",
-        "local": "Merkezi Sicil Kay\u0131t Sistemi"
+        "local": "Merkezi Sicil Kayıt Sistemi"
       }
     },
     {
