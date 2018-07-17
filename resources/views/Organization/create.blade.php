@@ -55,7 +55,7 @@
         </div>
     </div>
 
-    <div id="participating-form" class="hidden">
+    <script type="text/x-template" id="participating-form">
         <div class="collection_form has_add_more">
             <div class="reset-form-option reset-form-option--small pull-right" v-on:click="reset">Reset
             </div>
@@ -79,7 +79,7 @@
                 </div>
                 <div class="form-group" v-bind:class="{'has-error': (organisation.name[0]['narrative'] == '' && display_error)}">
                     {{Form::label('Organization',trans('elementForm.organisation'),['class' => 'control-label'])}}
-                    {{Form::text('organization',null,['class' => 'form-control ignore_change','v-bind:value' => "organisation.name[0]['narrative']",'@focus' => 'displaySuggestion($event)', '@keydown.tab'=> 'hideSuggestion','autocomplete' => 'off', 'readonly' => true])}}
+                    {{Form::text('organization',null,['class' => 'form-control ignore_change','v-bind:value' => 'organisation.name[0]["narrative"]','@focus' => 'displaySuggestion($event)', '@keydown.tab'=> 'hideSuggestion','autocomplete' => 'off', 'readonly' => true])}}
 
                     <div v-if="(organisation.name[0]['narrative'] == '' && display_error)" class="text-danger">
                         Organisation Name is required.
@@ -89,7 +89,7 @@
                         <ul class="filter-publishers">
                             <li>
                                 <div class="search-publishers">
-                                    <input type="search" class="keyword" :value="keyword" placeholder="Filter by organisation name..." @keyup='search($event)' @blur='hide($event)'>
+                                    <input type="search" class="keyword" :value="keyword" placeholder="Filter by organisation name..." @keyup="search($event)" @blur="hide($event)">
                                 </div>
                             </li>
                         </ul>
@@ -123,7 +123,7 @@
                                 <p class="publisher-description" style="margin-bottom:5px;padding-bottom:5px;border-bottom: 1px solid #DFEDF2;">The above list is pulled from IATI Registry publisher's
                                     list.</p>
                                 <p class="publisher-description go-to__org-finder">
-                                    <strong><a href="javascript:void(0)" @click="display()">Didn't find what you are looking for? Go to <strong>"Organisation Finder"</strong> to search for the organisation
+                                    <strong><a href="#" @click.prevent="display()">Didn't find what you are looking for? Go to <strong>"Organisation Finder"</strong> to search for the organisation
                                         you are looking for.
                                     </a></strong>
                                 </p>
@@ -140,7 +140,7 @@
                             </li>
                             <li class="or">Or</li>
                             <li id="orgFinder">
-                                <a href="javascript:void(0)" @click="display()">
+                                <a href="#" @mousedown.prevent="display()">
                                     <h3 class="contact-heading">Use Organization Finder <span> (org-id.guide)</span></h3>
                                     <p>Use our organization finder helper to get a new identifier for this.</p>
                                     <p><span class="caution">Caution:</span> Please beware that this can be a long and
@@ -159,9 +159,9 @@
                 </div>
             </div>
         </div>
-    </div>
+    </script>
 
-    <div id="modalComponent">
+<script type="text/x-template" id="modalComponent">
         <div class="modal fade org-modal" id="myModal" role="dialog">
             <div class="modal-dialog ">
                 <!-- Modal content-->
@@ -170,7 +170,7 @@
                         <button type="button" class="close" data-dismiss="modal" @click="close(false)">&times;</button>
                         <h4 class="modal-title">Add from org-id.guide</h4>
                     </div>
-                    <div class="modal-body">
+                    <div class="modal-body clearfix">
                         <div class="form-group">
                             {{Form::label('Organisation Type',trans('elementForm.organisation_type'),['class' => 'control-label'])}}
                             <vue-select2 :bind_variable='organisation' name='type' attr_name='typeText' options='{{json_encode($organizationTypes)}}' v-on:change='getRegistrars($event)'></vue-select2>
@@ -185,7 +185,20 @@
                             <vue-select2 :bind_variable='organisation' name='country' attr_name='countryText' options='{{json_encode($countries)}}' v-on:change='getRegistrars($event)'></vue-select2>
                         </div>
 
-                        <div class="suggestions" v-if="display_registrar_list">
+                        <div class="form-group">
+                            {{Form::label('Organisation Name',trans('elementForm.organisation_name'),['class' => 'control-label'])}}
+                            {{Form::text('name', null,['class' => 'form-control ignore_change', 'v-bind:value' => 'organisation.tempName', '@blur' => 'updateOrgName($event)'])}}
+                        </div>
+
+                        <div class="form-group" v-if="display_registrar_list">
+                          <label for="use-organisation-number">
+                          <input type="checkbox" v-model="useOrganisationNumber" id="use-organisation-number" />
+                          I have organisation registration number for above organisation.
+                        </label> 
+                        </div>
+
+                        
+                        <div class="suggestions" v-if="useOrganisationNumber">
                             <h3>Please choose a list from below</h3>
                             <div class="lists scroll-list">
                                 <ul>
@@ -204,20 +217,13 @@
                                     </li>
                                 </ul>
                             </div>
-                            <div v-if="display_org_info_form">
-                                <div class="form-group">
-                                    {{Form::label('Organisation Name',trans('elementForm.organisation_name'),['class' => 'control-label'])}}
-                                    {{Form::text('name', null,['class' => 'form-control ignore_change', "v-bind:value" => "organisation.tempName", "@blur" => 'updateOrgName($event)'])}}
-                                </div>
-
-                                <div class="form-group">
+                            <div class="form-group">
                                     {{Form::label('Identifier','Organisation Registration Number',['class' => 'control-label'])}}
-                                    {{Form::text('identifier', null,['class' => 'form-control ignore_change', 'v-bind:value' => 'organisation.tempIdentifier', "@blur" => 'updateOrgIdentifier($event)'])}}
+                                    {{Form::text('identifier', null,['class' => 'form-control ignore_change', 'v-bind:value' => 'organisation.tempIdentifier', '@blur' => 'updateOrgIdentifier($event)'])}}
                                 </div>
-                                <div class="form-group">
-                                    <button class="btn btn-form" type="button" @click="close(true)">Use this organisation</button>
-                                </div>
-                            </div>
+                        </div>
+                        <div>
+                            <button class="btn btn-form" type="button" @click="close(true)">Use this organisation</button>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -230,7 +236,7 @@
 
             </div>
         </div>
-    </div>
+    </script>
 @endsection
 @section('script')
     <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.min.js"></script>
@@ -341,6 +347,7 @@
             } else {
               self.$emit('display', []);
             }
+            return false;
           },
           selected: function (publisher, index) {
             var organizationCountry = publisher['country'];
@@ -396,12 +403,13 @@
       });
 
       Vue.component('modal', {
-        el: '#modalComponent',
+        template: '#modalComponent',
         props: ['organisation', 'registrar_list'],
         data: function () {
           return {
             display_org_info_form: false,
-            selectedRegistrar: ''
+            selectedRegistrar: '',
+            useOrganisationNumber: false
           }
         },
         computed: {
