@@ -224,20 +224,22 @@
                     </div>
                     <div class="modal-body clearfix">
                           <div class="form-group">
-                              {{Form::label('Organisation Type',trans('elementForm.organisation_type'),['class' => 'control-label'])}}
-                              {{--{{Form::select('organization_type',$organizationTypes, null,['class' => 'form-control ignore_change', 'v-bind:value' => 'organisation.organization_type', 'placeholder' => 'Please select the following options.', 'v-on:change' => 'getRegistrars($event)'])}}--}}
+                              <!-- {{Form::label('organization_type','Organisation Type *', ['v-bind:class' => '[{"text-danger": inputErrors.selectedOrgType}, "control-label"]'])}} -->
+                              <label for="organization_type" v-bind:class="[{'text-danger': inputErrors.selectedOrgType}, 'control-label']">Organisation Type *</label>
+                              
                               <vue-select2 :bind_variable='organisation' name='organization_type' attr_name='typeText' options='{{json_encode($organizationTypes)}}'
                                           v-on:change='getRegistrars($event)'></vue-select2>
                           </div>
 
                           <div class="form-group">
-                              {{Form::label('country','Country the organization is based in',['class' => 'control-label'])}}
-                              {{--                            {{Form::select('country',$countries, null,['class' => 'form-control ignore_change', 'v-bind:value' => 'organisation.country', 'placeholder' => 'Please select the following options.','v-on:change' => 'getRegistrars($event)'])}}--}}
+                              <!-- {{Form::label('country','Country the organization is based in *', ['v-bind:class' => '[{"text-danger": inputErrors.selectedOrgCountry}, "control-label"]'])}} -->
+                              <label for="country" v-bind:class="[{'text-danger': inputErrors.selectedOrgCountry}, 'control-label']">Country the organization is based in *</label>
+                              
                               <vue-select2 :bind_variable='organisation' name='country' attr_name='countryText' options='{{json_encode($countries)}}' v-on:change='getRegistrars($event)'></vue-select2>
                           </div>
                             <div class="form-group">
                                 {{Form::label('Organisation Name',trans('elementForm.organisation_name'),['class' => 'control-label'])}}
-                                {{Form::text('name', null,['class' => 'form-control ignore_change', "v-bind:value" => "organisation.tempName", "@blur" => 'updateOrgName($event)'])}}
+                                {{Form::text('name', null,['class' => 'form-control ignore_change', 'v-bind:value' => 'organisation.tempName', '@blur' => 'updateOrgName($event)'])}}
                             </div>
 
                             
@@ -249,14 +251,14 @@
                         </div>
                         
                           <div class="suggestions" v-if="useOrganisationNumber">
-                              <p>PLEASE CHOOSE A LIST FROM BELOW:</p>
+                              <p v-bind:class="{'text-danger':inputErrors.selectedOrg}">PLEASE CHOOSE A LIST FROM BELOW *:</p>
                               <div class="lists scroll-list">
                                   <ul>
                                       <li v-for="(list,index) in registrar_list[0]" v-if="registrar_list[0]" :key="index">
                                           <div class="register-list">
                                               <label>
                                                   <input type="radio" name="registrar" v-on:change="displayForm($event)"
-                                                        v-bind:value="list['code']"/>
+                                                        v-bind:value="list['code']" v-model="selectedOrg" />
                                                   <span>@{{ list['name']['en'] }}
                                                       <strong>(@{{ list['code'] }})</strong></span>
                                               </label>
@@ -268,12 +270,14 @@
                                   </ul>
                               </div>
                               <div class="form-group">
+                                <div v-if="selectedOrg">
                                 {{Form::label('Identifier','Organisation Registration Number',['class' => 'control-label'])}}
-                                {{Form::text('identifier', null,['class' => 'form-control ignore_change', 'v-bind:value' => 'organisation.tempIdentifier', "@blur" => 'updateOrgIdentifier($event)'])}}
+                                {{Form::text('identifier', null,['class' => 'form-control ignore_change', 'v-bind:value' => 'organisation.tempIdentifier', '@blur' => 'updateOrgIdentifier($event)'])}}
+                                </div>
                             </div>
                           </div>
                       <div>
-                        <button class="btn btn-form" type="button" data-dismiss="modal" @click="close(true)">Use this organisation</button>
+                        <button class="btn btn-form" type="button" @click="close(true)">Use this organisation</button>
                       </div>
                     </div>
                     <div class="modal-footer">
@@ -540,7 +544,13 @@
           return {
             display_org_info_form: false,
             selectedRegistrar: '',
-            useOrganisationNumber: false
+            useOrganisationNumber: false,
+            selectedOrg: '',
+            inputErrors: {
+              selectedOrgType: 0,
+              selectedOrgCountry: 0,
+              selectedOrg: 0
+            }
           }
         },
         computed: {
@@ -566,6 +576,27 @@
         methods: {
           close: function (bind) {
             if (bind) {
+              if(this.useOrganisationNumber && !this.selectedOrg) {
+                this.inputErrors.selectedOrg = 1;
+              } else {
+                this.inputErrors.selectedOrg = 0;
+              }
+              if(!this.organisation['organization_type']) {
+                this.inputErrors.selectedOrgType = 1;
+              }
+              if(!this.organisation['country']) {
+                this.inputErrors.selectedOrgCountry = 1;
+              }
+              var isError = Object.values(this.inputErrors).filter(v=>v===1).length;
+              if(isError) {
+                return false;
+              }
+
+              this.selectedOrg = '';
+              this.useOrganisationNumber = false;
+              this.display_org_info_form = false;
+              this.selectedRegistrar = '';
+
               this.organisation['narrative'][0]['narrative'] = this.organisation.tempName;
               this.organisation['narrative'][0]['language'] = '';
               this.organisation['identifier'] = this.organisation.tempIdentifier;
@@ -579,12 +610,21 @@
           displayForm: function (event) {
             this.selectedRegistrar = event.target.getAttribute('value');
             this.display_org_info_form = true;
+            if(this.selectedRegistrar) {
+              this.inputErrors.selectedOrg = 0;
+            }
           },
           getRegistrars: function (event) {
             var self = this;
             this.organisation[event.name] = event.value;
             var country = this.organisation['country'];
             var type = this.organisation['organization_type'];
+            if(country) {
+              this.inputErrors.selectedOrgCountry = 0;
+            }
+            if(type) {
+              this.inputErrors.selectedOrgType = 0;
+            }
             if (country != "") {
               axios.get('/findorg?country=' + country)
                 .then(function (response) {
@@ -616,6 +656,16 @@
             this.organisation['narrative'][0]['language'] = '';
             this.organisation['countryText'] = '';
             this.organisation['typeText'] = '';
+
+            this.inputErrors = {
+              selectedOrgType: 0,
+              selectedOrgCountry: 0,
+              selectedOrg: 0
+            };
+            this.selectedOrg = '';
+            this.useOrganisationNumber = false;
+            this.display_org_info_form = false;
+
           }
         }
       });
