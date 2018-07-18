@@ -255,6 +255,54 @@
       "coverage": null
     },
     {
+      "sector": [],
+      "deprecated": null,
+      "subnationalCoverage": null,
+      "links": {
+        "opencorporates": null,
+        "wikipedia": null
+      },
+      "meta": {},
+      "confirmed": true,
+      "data": {
+        "licenseStatus": "no_license",
+        "features": [],
+        "availability": [],
+        "licenseDetails": "",
+        "dataAccessDetails": "A list of identifiers is available via an XML API. "
+      },
+      "access": {
+        "languages": [
+          "en"
+        ],
+        "exampleIdentifiers": "",
+        "guidanceOnLocatingIds": "",
+        "onlineAccessDetails": "A list of identifiers is available via an XML API. ",
+        "availableOnline": false,
+        "publicDatabase": ""
+      },
+      "name": {
+        "en": "Registro de Personas Jurídicas",
+        "local": ""
+      },
+      "structure": null,
+      "quality_explained": {
+        "Availability: API": 2,
+        "Availability: XML format": 1,
+        "List type: Local": 5,
+        "License: No License": 5
+      },
+      "formerPrefixes": null,
+      "listType": "local",
+      "quality": 13,
+      "url": "",
+      "code": "CR-RPJ",
+      "description": {
+        "en": ""
+      },
+      "coverage": null
+    },
+    {
       "deprecated": false,
       "subnationalCoverage": [],
       "links": {

@@ -863,6 +863,13 @@
       "code": "KE-KRA",
       "name": "Kenya Revenue Authority PIN",
       "language": "en"
+    },
+    {
+      "category": "CR",
+      "category-name": "COSTA RICA",
+      "code": "CR-RPJ",
+      "name": "Registro de Personas Jurídicas",
+      "language": "en"
     }
   ]
 }
