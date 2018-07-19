@@ -7671,9 +7671,9 @@ select.systemVersion {
   .edit-profile-form .btn-form {
     bottom: 110px; }
   .org-modal .modal-dialog {
-    width: 460px; }
+    width: 520px; }
   .create-form > form .org-modal .form-group {
-    width: 300px; } }
+    width: 100%; } }
 
 .delete-element-form {
   position: absolute;
@@ -7694,5 +7694,9 @@ select.systemVersion {
   padding: 0 !important;
   text-indent: -9999px;
   width: 10px; }
+
+.modal-open .modal {
+  display: block;
+}
 
 /*# sourceMappingURL=maps/app.css.map */
