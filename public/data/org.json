@@ -1808,6 +1808,57 @@
       ],
       "meta": {
         "lastUpdated": "2018-01-15",
+        "source": "\n"
+      },
+      "confirmed": true,
+      "data": {
+        "licenseStatus": "open_license",
+        "dataAccessDetails": "",
+        "features": [],
+        "licenseDetails": "",
+        "availability": []
+      },
+      "access": {
+        "publicDatabase": "",
+        "exampleIdentifiers": "",
+        "guidanceOnLocatingIds": "",
+        "languages": [
+          "ar"
+        ],
+        "onlineAccessDetails": "",
+        "availableOnline": true
+      },
+      "sector": [],
+      "coverage": ["IL"],
+      "quality_explained": {
+        "List type: Primary": 75,
+        "License: Open License": 10
+      },
+      "formerPrefixes": [],
+      "listType": "primary",
+      "quality": 85,
+      "url": "",
+      "code": "IL-RA",
+      "description": {
+        "en": "Israel’s Rasham Ha'amutot entries for charities"
+      },
+      "name": {
+        "en": "Rasham Ha’amutot",
+        "local": ""
+      }
+    },
+    {
+      "deprecated": false,
+      "subnationalCoverage": [],
+      "links": {
+        "opencorporates": "",
+        "wikipedia": ""
+      },
+      "structure": [
+        "charity"
+      ],
+      "meta": {
+        "lastUpdated": "2018-01-15",
         "source": "Desk research Open Data Services (request from IATI publisher)"
       },
       "confirmed": true,
