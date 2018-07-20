@@ -870,6 +870,20 @@
       "code": "CR-RPJ",
       "name": "Registro de Personas Jurídicas",
       "language": "en"
+    },
+    {
+      "category": "JO",
+      "category-name": "Jordan",
+      "code": "JO-MSD",
+      "name": "Register of Associations, Jordan",
+      "language": "en"
+    },
+    {
+      "category": "IL",
+      "category-name": "Israel",
+      "code": "IL-RA",
+      "name": "Rasham Ha’amutot",
+      "language": "en"
     }
   ]
 }
