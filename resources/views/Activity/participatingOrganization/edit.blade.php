@@ -198,8 +198,10 @@
                 </div>
                 <div class="form-group organisation-identifier">
                     {{Form::label('organisation_identifier','Organisation Identifier:',['class' => 'control-label'])}}
+                    <div v-if="typeof organisation.identifier === 'string'">
                     @{{organisation.identifier}}
-                    <div v-if="(organisation.identifier && (organisation.identifier.match(/[\&\|\?|]+/) && display_error))" class="text-danger">Special characters are not allowed.</div>
+                    <div v-if="(organisation.identifier.match(/[\&\|\?|]+/) && display_error)" class="text-danger">Special characters are not allowed.</div>
+                    </div>
                 </div>
                 <div class="form-group">
                     {{Form::label('activity_id',trans('elementForm.activity_id'),['class' => 'control-label'])}}
@@ -327,9 +329,9 @@
         mounted: function () {
           this.countries = countries;
           this.types = types;
-
           if (!(this.organisation['country']) && this.organisation['identifier']) {
-            var countryCode = this.organisation['identifier'].substr(0, 2);
+            if(typeof this.organisation['identifier'] !== 'string') return
+            var countryCode = this.organisation['identifier'].slice(0,2);
 
             if (this.countries[countryCode] !== undefined) {
               this.organisation['country'] = countryCode;
@@ -765,6 +767,7 @@
             var self = this;
             var status = true;
             this.organisations.forEach(function (organisation, index) {
+              if(typeof organisation.identifier !== 'string') return
               if (organisation.narrative[0]['narrative'] == '' || !organisation.narrative[0]['narrative']) {
                   if ((organisation.organization_type == '' || !organisation.organization_type)
                       || (organisation.organization_role == '' || !organisation.organization_role)
