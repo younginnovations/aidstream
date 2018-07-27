@@ -884,6 +884,13 @@
       "code": "IL-RA",
       "name": "Rasham Ha’amutot",
       "language": "en"
+    },
+    {
+      "category": "TZ",
+      "category-name": "TANZANIA, UNITED REPUBLIC OF",
+      "code": "TZ-NNCB",
+      "name": "Tanzania National NGO Coordination Board",
+      "language": "en"
     }
   ]
 }
