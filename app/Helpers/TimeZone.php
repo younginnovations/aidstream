@@ -21,6 +21,7 @@ function changeTimeZone($date, $format = 'M d, Y H:i:s')
     return $result->format($format);
 }
 
+
 /**
  * convert date format
  * @param        $date

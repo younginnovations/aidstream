@@ -5,17 +5,17 @@ select {
 }
 #data-table_info,
 #data-table_length {
-  margin-left: 20px;
+  margin-right: 20px;
   margin-top: 10px;
 }
 #data-table_filter,
 #data-table_paginate {
-  margin-right: 50px;
+  margin-left: 20px;
   margin-top: 10px;
 }
 #data-table_paginate,
 #data-table_info {
-  margin-bottom: 10px;
+  margin: 10px;
 }
 #data-table_length > label > select {
   width: 56px;
