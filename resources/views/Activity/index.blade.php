@@ -48,7 +48,7 @@
                                             <i class="{{ $activity->isImportedFromXml() ? 'imported-from-xml' : '' }}">icon</i>
                                             <span>{{ getVal($activity->toArray(), ['identifier', 'activity_identifier'], '') }}</span>
                                         </td>
-                                        <td class="updated-date">{{ changeTimeZone($activity->updated_at) }}</td>
+                                        <td class="updated-date"><span style="display:none">{{ changeTimeZone($activity->updated_at, 'Ymd') }}</span>{{ changeTimeZone($activity->updated_at) }}</td>
                                         <td>
                                             <span class="{{ $status_label[$activity->activity_workflow] }}">{{ trans(sprintf('global.%s', $status_label[$activity->activity_workflow]))}}</span>
                                             @if($activity->activity_workflow == 3)
@@ -87,9 +87,12 @@
     <script>
         $(document).ready( function () {
         $('#data-table').DataTable();
+        $('#data-table_length').addClass('pull-right');
+        $('#data-table_filter').addClass('pull-left');
     });
  </script>
 @endsection
+
 @section('foot')
     @if(xmlImportIsStarted())
         <script type="text/javascript" src="{{asset('js/xmlImporter/xmlImporter.js')}}"></script>
