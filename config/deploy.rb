@@ -9,10 +9,10 @@ set :tmp_dir,         :tmp_dir
 
 # SCM #
 #####################################################################################
-set :repo_url,        'git@gitlab.yipl.com.np:web-apps/aidstream-new.git'
+set :repo_url,        'git@github.com:younginnovations/aidstream.git'
 set :scm,             :git
-set :repo_base_url,   :'http://gitlab.yipl.com.np/'
-set :repo_diff_path,  :'web-apps/aidstream-new/compare/master...'
+set :repo_base_url,   :'https://github.com/younginnovations/'
+set :repo_diff_path,  :'aidstream/compare/master...'
 
 # Multistage Deployment #
 #####################################################################################
