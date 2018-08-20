@@ -5,12 +5,16 @@ use App\Http\Controllers\Lite\LiteController;
 use App\Lite\Services\Activity\ActivityService;
 use App\Lite\Services\FormCreator\Budget;
 use App\Lite\Services\FormCreator\Transaction;
+use App\Models\Settings;
 use App\Lite\Services\Activity\Transaction\TransactionService;
+use App\Services\Activity\ActivityManager;
 use App\Lite\Services\Traits\GeocodeReverser;
 use App\Lite\Services\Validation\ValidationService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use App\Services\SettingsManager;
+use Illuminate\Session\SessionManager;
 
 /**
  * Class ActivityController
@@ -35,6 +39,11 @@ class ActivityController extends LiteController
     protected $validation;
 
     /**
+     * @var Settings
+     */
+    protected $settings;
+
+    /**
      * Entity type for Activity.
      */
     const ENTITY_TYPE = 'Activity';
@@ -43,6 +52,13 @@ class ActivityController extends LiteController
      * @var Budget
      */
     protected $budgetForm;
+
+    /**
+     * Organization Id
+     *
+     * @var Integer
+     */
+    protected $organization_id;
 
     /**
      * @var Transaction
@@ -66,19 +82,28 @@ class ActivityController extends LiteController
      */
     public function __construct(
         ActivityService $activityService,
+        SettingsManager $settingsManager,
+        SessionManager $sessionManager,
         TransactionService $transactionService,
         Transaction $transactionForm,
+        ActivityManager $activityManager,
+        Settings $settings,
         Budget $budgetForm,
         Activity $activityForm,
         ValidationService $validationService
     ) {
         $this->middleware('auth');
+        $this->settingsManager    = $settingsManager;
+        $this->sessionManager     = $sessionManager;
         $this->activityService    = $activityService;
         $this->activityForm       = $activityForm;
         $this->validation         = $validationService;
+        $this->activityManager    = $activityManager;
         $this->budgetForm         = $budgetForm;
         $this->transactionForm    = $transactionForm;
+        $this->settings           = $settings;
         $this->transactionService = $transactionService;
+        $this->organization_id    = $this->sessionManager->get('org_id');
     }
 
     /**
@@ -193,6 +218,12 @@ class ActivityController extends LiteController
         $btn_text           = $activityWorkflow > 2 ? "" : $btn_status_label[$activityWorkflow];
         $recipientCountries = $this->activityService->getRecipientCountry($activity->recipient_country);
 
+        if ($activity->activity_workflow == 3) {
+            $filename                = $this->getPublishedActivityFilename($this->organization_id, $activity);
+            $activityPublishedStatus = $this->getPublishedActivityStatus($filename, $this->organization_id);
+            $message                 = $this->getMessageForPublishedActivity($activityPublishedStatus, $filename, $activity->organization);
+        }
+
         if ($activity['activity_workflow'] == 0) {
             $nextRoute = route('lite.activity.complete', $activityId);
         } elseif ($activity['activity_workflow'] == 1) {
@@ -213,11 +244,79 @@ class ActivityController extends LiteController
                 'expenditure',
                 'incoming',
                 'defaultCurrency',
+                'activityPublishedStatus',
                 'documentLinks',
                 'location',
                 'recipientCountries'
             )
         );
+    }
+
+    /** Returns the filename that is generated when activity is published based on publishing type.
+     * @param $organization_id
+     * @param $activity
+     * @return string
+     */
+    public function getPublishedActivityFilename($organization_id, $activity)
+    {
+        $settings       = $this->settings->where('organization_id', $organization_id)->first();
+        $publisherId    = $settings->registry_info[0]['publisher_id'];
+        $publishingType = $settings->publishing_type;
+
+        if ($publishingType != "segmented") {
+            $endName = 'activities';
+        } else {
+            $activityElement = $this->activityManager->getActivityElement();
+            $xmlService      = $activityElement->getActivityXmlService();
+            $endName         = $xmlService->segmentedXmlFile($activity);
+        }
+        $filename = sprintf('%s' . '-' . '%s.xml', $publisherId, $endName);
+
+        return $filename;
+    }
+
+    /** Returns according to published to registry status of the activity.
+     * @param $filename
+     * @param $organization_id
+     * @return string
+     */
+    public function getPublishedActivityStatus($filename, $organization_id)
+    {
+        $activityPublished   = $this->activityManager->getActivityPublishedData($filename, $organization_id);
+        $settings            = $this->settings->where('organization_id', $organization_id)->first();
+        $autoPublishSettings = $settings->registry_info[0]['publish_files'];
+        $status              = 'Unlinked';
+
+        if ($activityPublished) {
+            if ($autoPublishSettings == "no") {
+                ($activityPublished->published_to_register == 0) ? $status = "Unlinked" : $status = "Linked";
+            } else {
+                ($activityPublished->published_to_register == 0) ? $status = "unlinked" : $status = "Linked";
+            }
+        }
+
+        return $status;
+    }
+
+    /** Returns message according to the status of the activity
+     * @param $status
+     * @param $filename
+     * @return string
+     */
+    protected function getMessageForPublishedActivity($status, $filename, $organization)
+    {
+        $publisherId = getVal($organization->settings->toArray(), ['registry_info', 0, 'publisher_id'], null);
+        $link        = $publisherId ? "<a href='https://iatiregistry.org/publisher/" . $publisherId . "' target='_blank'>IATI registry</a>" : "IATI Registry";
+
+        if ($status == "Unlinked") {
+            $message = trans('error.activity_not_published_to_registry');
+        } elseif ($status == "Linked") {
+            $message = trans('success.activity_published_to_registry', ['link' => $link]) . ' ' . "<a href='/files/xml/$filename'>$filename</a>";
+        } else {
+            $message = trans('error.republish_activity');
+        }
+
+        return $message;
     }
 
     /**
