@@ -87,7 +87,8 @@
                                     </span>
                         </div>
                         <div class="pull-right activity-publish-state">
-                            @if(getVal($activity, [0, 'activity_in_registry'], null))
+                            {{-- @if(getVal($activity, [0, 'activity_in_registry'], null)) --}}
+                            @if($activityPublishedStatus == 'Linked')
                                 <span class="pull-left published-in-iati">
                                         @lang('perfectViewer.published_in_iati')
                                     </span>
