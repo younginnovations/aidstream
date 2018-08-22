@@ -2,9 +2,13 @@
 
 use App\Http\Controllers\Complete\Activity\RecipientCountryController;
 use App\Http\Requests\Request;
+use App\Lite\Services\Activity\ActivityService;
 use App\Models\PerfectViewer\ActivitySnapshot;
 use App\Services\Activity\ActivityManager;
 use App\Services\PerfectViewer\PerfectViewerManager;
+use App\Services\SettingsManager;
+use Illuminate\Session\SessionManager;
+use App\Models\Settings;
 use App\User;
 
 /**
@@ -30,17 +34,53 @@ class WhoIsUsingController extends Controller
     protected $user;
 
     /**
+     * @var ActivityService
+     */
+    protected $activityService;
+
+    /**
+     * @var Settings
+     */
+    protected $settings;
+
+    /**
+     * @var SettingsManager
+     */
+    protected $settingsManager;
+
+    /**
+     * @var SessionManager
+     */
+    protected $sessionManager;
+
+    /**
+     * Organization ID
+     *
+     * @var Integer
+     */
+    protected $organization_id;
+
+    /**
      * WhoIsUsingController constructor.
      *
      * @param ActivityManager $activityManager
      * @param User $user
      * @param PerfectViewerManager $perfectViewerManager
      */
-    function __construct(ActivityManager $activityManager, User $user, PerfectViewerManager $perfectViewerManager)
-    {
-        $this->activityManager = $activityManager;
-        $this->user = $user;
+    function __construct(
+        ActivityManager             $activityManager, 
+        User                        $user, 
+        PerfectViewerManager        $perfectViewerManager,
+        SettingsManager             $settingsManager,
+        SessionManager              $sessionManager,
+        Settings                    $settings
+    ) {
+        $this->activityManager      = $activityManager;
+        $this->user                 = $user;
         $this->perfectViewerManager = $perfectViewerManager;
+        $this->settingsManager      = $settingsManager;
+        $this->sessionManager       = $sessionManager;
+        $this->settings             = $settings;
     }
 
     /**
@@ -99,6 +139,11 @@ class WhoIsUsingController extends Controller
         }
 
         $activityData = $this->activityManager->getActivityData($activityId);
+        $this->organization_id = $organizationIdExists[0]['id'];
+        $filename                = $this->getPublishedActivityFilename($this->organization_id, $activityData);
+        $activityPublishedStatus = $this->getPublishedActivityStatus($filename, $this->organization_id);
+        $message                 = $this->getMessageForPublishedActivity($activityPublishedStatus, $filename, $activityData->organization);
+
         $defaultFieldValues = $activityData->default_field_values;
 
         $recipientCountries = $this->getRecipientCountries($activityIdExists->toArray());
@@ -119,7 +164,75 @@ class WhoIsUsingController extends Controller
             )
         );
 
-        return view('perfectViewer.activity-viewer', compact('organization', 'activity', 'user', 'recipientCountries', 'defaultFieldValues', 'transactions'));
+        return view('perfectViewer.activity-viewer', compact('organization', 'activity', 'user', 'recipientCountries', 'activityPublishedStatus', 'defaultFieldValues', 'transactions'));
+    }
+
+    /** Returns the filename that is generated when activity is published based on publishing type.
+     * @param $organization_id
+     * @param $activity
+     * @return string
+     */
+    public function getPublishedActivityFilename($organization_id, $activity)
+    {
+        $settings       = $this->settings->where('organization_id', $organization_id)->first();
+
+        $publisherId    = $settings->registry_info[0]['publisher_id'];
+        $publishingType = $settings->publishing_type;
+
+        if ($publishingType != "segmented") {
+            $endName = 'activities';
+        } else {
+            $activityElement = $this->activityManager->getActivityElement();
+            $xmlService      = $activityElement->getActivityXmlService();
+            $endName         = $xmlService->segmentedXmlFile($activity);
+        }
+        $filename = sprintf('%s' . '-' . '%s.xml', $publisherId, $endName);
+
+        return $filename;
+    }
+
+    /** Returns according to published to registry status of the activity.
+     * @param $filename
+     * @param $organization_id
+     * @return string
+     */
+    public function getPublishedActivityStatus($filename, $organization_id)
+    {
+        $activityPublished   = $this->activityManager->getActivityPublishedData($filename, $organization_id);
+        $settings            = $this->settings->where('organization_id', $organization_id)->first();
+        $autoPublishSettings = $settings->registry_info[0]['publish_files'];
+        $status              = 'Unlinked';
+
+        if ($activityPublished) {
+            if ($autoPublishSettings == "no") {
+                ($activityPublished->published_to_register == 0) ? $status = "Unlinked" : $status = "Linked";
+            } else {
+                ($activityPublished->published_to_register == 0) ? $status = "unlinked" : $status = "Linked";
+            }
+        }
+
+        return $status;
+    }
+
+    /** Returns message according to the status of the activity
+     * @param $status
+     * @param $filename
+     * @return string
+     */
+    protected function getMessageForPublishedActivity($status, $filename, $organization)
+    {
+        $publisherId = getVal($organization->settings->toArray(), ['registry_info', 0, 'publisher_id'], null);
+        $link        = $publisherId ? "<a href='https://iatiregistry.org/publisher/" . $publisherId . "' target='_blank'>IATI registry</a>" : "IATI Registry";
+
+        if ($status == "Unlinked") {
+            $message = trans('error.activity_not_published_to_registry');
+        } elseif ($status == "Linked") {
+            $message = trans('success.activity_published_to_registry', ['link' => $link]) . ' ' . "<a href='/files/xml/$filename'>$filename</a>";
+        } else {
+            $message = trans('error.republish_activity');
+        }
+
+        return $message;
     }
 
     /**

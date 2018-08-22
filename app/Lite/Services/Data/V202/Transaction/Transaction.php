@@ -58,7 +58,7 @@ class Transaction implements MapperInterface
                     $mappedData[$index]['transaction']['value'][0]['currency']                                  = getVal($field, ['currency'], null);
                     $mappedData[$index]['transaction']['value'][0]['date']                                      = getVal($field, ['date'], null);
                     $mappedData[$index]['transaction']['description'][0]['narrative'][0]['narrative']           = getVal($field, ['description'], null);
-                    $mappedData[$index]['transaction']['receiver_organization'][0]['narrative'][0]['narrative'] = getVal($field, ['organisation'], null);
+                    $mappedData[$index]['transaction']['provider_organization'][0]['narrative'][0]['narrative'] = getVal($field, ['organisation'], null);
                 }
             }
         }
@@ -82,7 +82,7 @@ class Transaction implements MapperInterface
             $mappedData[$index]['amount']       = getVal($field, ['transaction', 'value', 0, 'amount'], '');
             $mappedData[$index]['currency']     = getVal($field, ['transaction', 'value', 0, 'currency'], '');
             $mappedData[$index]['description']  = getVal($field, ['transaction', 'description', 0, 'narrative', 0, 'narrative'], '');
-            $mappedData[$index]['organisation'] = getVal($field, ['transaction', 'receiver_organization', 0, 'narrative', 0, 'narrative'], '');
+            $mappedData[$index]['organisation'] = getVal($field, ['transaction', 'provider_organization', 0, 'narrative', 0, 'narrative'], '');
         }
 
         return $mappedData;
