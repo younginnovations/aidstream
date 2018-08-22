@@ -291,7 +291,7 @@
 @endsection
 @section('script')
     <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.min.js"></script>
-    <script src="https://unpkg.com/vue"></script>
+    <script src="https://unpkg.com/vue/dist/vue.min.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="{{asset('js/vue/vue-select2.js')}}"></script>
     <script>
@@ -369,7 +369,7 @@
                   axios({
                     method: 'GET',
                     url: apiUrl + '/api/suggestions?name=' + event.target.value + '&identifier=' + event.target.value,
-                    headers: { 'Origin': '*' }
+                    // headers: { 'Origin': '*' }
                   }).then(function (response) {
                     self.searching = false;
                     self.display_org_finder = false;
