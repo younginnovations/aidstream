@@ -32,10 +32,10 @@
       </xsd:documentation>
     </xsd:annotation>
     <xsd:complexType>
-      <xsd:choice minOccurs="0" maxOccurs="unbounded">
-        <xsd:element ref="iati-activity"/>
-        <xsd:any namespace="##other" processContents="lax"/>
-      </xsd:choice>
+      <xsd:sequence>
+        <xsd:element ref="iati-activity" minOccurs="1" maxOccurs="unbounded"/>
+        <xsd:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
       <xsd:attribute name="version" type="xsd:decimal" use="optional">
         <xsd:annotation>
           <xsd:documentation xml:lang="en">
@@ -70,7 +70,7 @@
             choose to publish as Linked Data alongside it.
             
             This attribute is URI path upon which an activity
-            identifier can be appended to get a dereferenceable URI
+            identifier can be appended to get a differentiable URI
             for any activity contained within a file.
             
             Where a publisher declares using one of these properties
@@ -175,7 +175,7 @@
         <xsd:annotation>
           <xsd:documentation xml:lang="en">
             A Linked Data URI for a given activity (overrides
-            iati-activities/@linked-data-default if set)
+            iati-activities/\@linked-data-default if set)
           </xsd:documentation>
         </xsd:annotation>
       </xsd:attribute>
@@ -346,7 +346,7 @@
       <xsd:documentation xml:lang="en">
         The type of finance (e.g. debt relief). The types will be
         defined by IATI.  This the default value for all transactions
-        in the activity report; it can be overridded by individual
+        in the activity report; it can be overridden by individual
         transactions.
 
         For the value of the @code attribute, see
