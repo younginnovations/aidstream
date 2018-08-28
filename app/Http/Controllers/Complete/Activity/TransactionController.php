@@ -38,7 +38,7 @@ class TransactionController extends Controller
      * @param Transaction        $transactionForm
      * @param TransactionManager $transactionManager
      */
-    function __construct(ActivityManager $activityManager, Transaction $transactionForm, TransactionManager $transactionManager)
+    public function __construct(ActivityManager $activityManager, Transaction $transactionForm, TransactionManager $transactionManager)
     {
         $this->middleware('auth');
         $this->activityManager    = $activityManager;
@@ -245,7 +245,7 @@ class TransactionController extends Controller
      * @param $transactionId
      * @return mixed
      */
-    public function destroy($id, $transactionId)
+    public function destroy($id, $transactionId, Request $request)
     {
         $activity = $this->activityManager->getActivityData($id);
 
@@ -266,8 +266,10 @@ class TransactionController extends Controller
         } else {
             $response = ['type' => 'danger', 'code' => ['delete_failed', ['name' => 'transaction']]];
         }
-
-        return redirect()->back()->withResponse($response);
+        if ($request->get('main') == 1) {
+            return redirect()->back()->withResponse($response);
+        }
+        return redirect()->route('activity.transaction.index', compact('id'))->withResponse($response);
     }
 
     /**

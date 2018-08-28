@@ -168,20 +168,21 @@
     <script type="text/javascript" src="{{url('/js/jquery.cookie.js')}}"></script>
     <script type="text/javascript" src="{{url('/js/jquery.mousewheel.js')}}"></script>
     <script type="text/javascript" src="{{url('/js/jquery.jscrollpane.min.js')}}"></script>
-{{--    <script type="text/javascript" src="{{url('/js/select2.min.js')}}"></script>--}}
+    <script type="text/javascript" src="{{url('/js/select2.min.js')}}"></script>
     <script type="text/javascript" src="{{url('/js/jquery.datetimepicker.full.min.js')}}"></script>
     <script type="text/javascript" src="{{url('/js/script.js')}}"></script>
     {{-- <script type="text/javascript" src="{{url('/js/datatable.js')}}"></script> --}}
+    <script type="text/javascript" src="{{url('/js/test.js')}}"></script>
 @else
     <script type="text/javascript" src="{{url('/js/main.min.js')}}"></script>
 @endif
 @yield('humanitarian-script')
 
-{{--<script type="text/javascript">--}}
-    {{--$(document).ready(function () {--}}
-        {{--$('form select').select2();--}}
-    {{--});--}}
-{{--</script>--}}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('select.form-control').select2();
+    });
+</script>
 <!-- Google Analytics -->
 <script type="text/javascript" src="{{url('/js/ga.js')}}"></script>
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
@@ -190,7 +191,7 @@
 <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery.validation/1.15.0/jquery.validate.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.2.6/vue.min.js"></script>
 <script>
-    var roleId = "{!! $loggedInUser->role_id!!}";
+var roleId = "{!! $loggedInUser->role_id!!}";
 </script>
 @if($loggedInUser && $loggedInUser->userOnBoarding && (session('role_id')!= 3 && session('role_id')!= 4))
     <script>

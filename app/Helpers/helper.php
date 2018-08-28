@@ -245,7 +245,6 @@ function getContactInfo($type, array $contactInformation)
     $arrayContactInfo = [];
 
     foreach ($contactInformation as $information) {
-
         $information        = checkIfEmailOrWebSite($type, $information);
         $arrayContactInfo[] = $information;
     }
@@ -264,7 +263,6 @@ function checkIfEmailOrWebSite($type, $information)
 {
     if ($type == "website" && !empty($information[$type])) {
         $information = getClickableLink($information[$type]);
-
     } else {
         if ($type == "email" && !empty($information[$type])) {
             $information = sprintf("<a href='mailto:%s'>%s</a>", $information[$type], $information[$type]);
@@ -388,7 +386,6 @@ function getAdministrativeVocabulary(array $location)
             checkIfEmpty($location['level'])
         );
     }
-
 }
 
 /**
@@ -401,7 +398,8 @@ function getLocationPoint(array $location)
     $latitude  = getVal($location, ['point', 0, 'position', 0, 'latitude']);
     $longitude = getVal($location, ['point', 0, 'position', 0, 'longitude']);
 
-    $srsLink = (empty(getVal($location, ['point', 0, 'srs_name'])) ? sprintf('<em>%s</em>', trans('global.not_available')) : getClickableLink(
+    $srsLink = (
+        empty(getVal($location, ['point', 0, 'srs_name'])) ? sprintf('<em>%s</em>', trans('global.not_available')) : getClickableLink(
         getVal($location, ['point', 0, 'srs_name'])
     )
     );
@@ -455,7 +453,6 @@ function getSectorInformation(array $sector, $percentage)
             checkIfEmpty($sectorCodeValue, trans('global.sector_code_value_not_available')),
             $percentage . "%"
         );
-
     } else {
         if ($sectorVocabulary === "2") {
             $sectorCodeValue = app('App\Helpers\GetCodeName')->getCodeNameOnly(
@@ -477,7 +474,6 @@ function getSectorInformation(array $sector, $percentage)
                 checkIfEmpty($sectorCodeValue, trans('global.sector_code_value_not_available')),
                 $percentage . " %"
             );
-
         } else {
             if (empty($percentage)) {
                 return $sector['sector_text'];
@@ -488,7 +484,6 @@ function getSectorInformation(array $sector, $percentage)
                 checkIfEmpty($sector['sector_text'], trans('global.sector_text_not_available')),
                 $percentage . "%"
             );
-
         }
     }
 }
@@ -627,7 +622,6 @@ function getBudgetPeriod(array $budget)
     $periodEnd   = formatDate(getVal($budget, ['period_end', 0, 'date']));
 
     return sprintf('%s - %s', $periodStart, $periodEnd);
-
 }
 
 /**
@@ -682,13 +676,13 @@ function groupResultElements(array $results)
     $newResults = [];
 
     foreach ($results as $result) {
-
         $resultType                     = getVal($result, ['result', 'type']);
         $resultTypeValue                = app('App\Helpers\GetCodeName')->getCodeNameOnly(
             'ResultType',
             $resultType,
             - 4
         );
+        $result['result']['id']         = $result['id'];
         $newResults[$resultTypeValue][] = $result['result'];
     }
 
@@ -714,7 +708,6 @@ function getIndicatorReference(array $reference)
 
 
     return sprintf('%s <br> (Code: %s <br> Indicator URI: %s )', $vocabulary, $code, $indicatorUri);
-
 }
 
 /**
@@ -725,7 +718,6 @@ function getIndicatorReference(array $reference)
  */
 function getResultsBaseLine($measure, array $baseLine)
 {
-
     $year    = checkIfEmpty($baseLine['year']);
     $measure = ($measure == 2) ? '%' : trans_choice('activityView.units', $baseLine['value']);
     $value   = ($baseLine['value'] == "") ? sprintf('<em>%s</em>', trans('global.not_available')) : $baseLine['value'] . ' ' . $measure;
@@ -746,7 +738,6 @@ function getIndicatorPeriod($measure, array $periods)
     $finalOutputPeriod = [];
 
     foreach ($periods as $period) {
-
         $targetValue                  = getVal($period, ['target', 0, 'value']);
         $actualValue                  = getVal($period, ['actual', 0, 'value']);
         $periodValue                  = getBudgetPeriod($period);
@@ -760,7 +751,6 @@ function getIndicatorPeriod($measure, array $periods)
         $outputPeriod['actual']       = getVal($period, ['actual', 0]);
 
         $finalOutputPeriod[] = $outputPeriod;
-
     }
 
     return $finalOutputPeriod;
@@ -838,7 +828,8 @@ function getDimension($target)
 function groupTransactionElements(array $transactions)
 {
     $newTransactions = [];
-    foreach ($transactions as $transaction) {
+    foreach ($transactions as &$transaction) {
+        $t_id = getVal($transaction, ['id']);
         $transaction = getVal($transaction, ['transaction']);
 
         $transactionTypeCode = getVal($transaction, ['transaction_type', 0, 'transaction_type_code']);
@@ -846,10 +837,11 @@ function groupTransactionElements(array $transactions)
             'TransactionType',
             $transactionTypeCode
         );
-
+        $transaction['id']=$t_id;
+    
         $newTransactions[$transactionType][] = $transaction;
     }
-
+    
     return $newTransactions;
 }
 
@@ -900,10 +892,8 @@ function getTransactionSectorDetails(array $sector)
 
         return sprintf('<em>(%s: %s , %s: %s )</em>', trans('elementForm.vocabulary'), $vocabulary, trans('elementForm.vocabulary_uri'), $vocabularyURI);
     } else {
-
         return sprintf('<em>(%s: %s)</em>', trans('elementForm.vocabulary'), $vocabulary);
     }
-
 }
 
 /**
@@ -975,7 +965,6 @@ function getDocumentLinkLanguages(array $languages)
     $newLanguage = implode(', ', $newLanguage);
 
     return $newLanguage;
-
 }
 
 /**
@@ -1144,7 +1133,6 @@ function getSectorCode(array $sector)
     }
 
     return getVal($sector, ['sector_text'], '');
-
 }
 
 /**
@@ -1402,4 +1390,3 @@ function collect2($value = null)
 {
     return new Collection2($value);
 }
-

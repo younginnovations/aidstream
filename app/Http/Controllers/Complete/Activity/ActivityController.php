@@ -909,8 +909,7 @@ class ActivityController extends Controller
     public function getTransactionView(Request $request)
     {
         $id                              = $request->get('id');
-        $activityDataList['transaction'] = $this->transactionManager->getTransactions($id)->toArray();;
-
+        $activityDataList['transaction'] = $this->transactionManager->getTransactions($id)->toArray();
         return view('Activity.partials.transaction', compact('activityDataList', 'id'))->render();
     }
 
@@ -924,7 +923,6 @@ class ActivityController extends Controller
     {
         $id                          = $request->get('id');
         $activityDataList['results'] = $this->resultManager->getResults($id)->toArray();
-
         return view('Activity.partials.result', compact('activityDataList', 'id'))->render();
     }
 }

@@ -25,7 +25,7 @@ $(document).ready(function () {
                     url = location.origin + '/files/documents/' + encodeURI(document.filename);
                 }
                 documentList += '<tr>';
-                documentList += '<td>' + encodeURI(document.filename) + '</td>';
+                documentList += '<td class="jpte">' + encodeURI(document.filename) + '</td>';
                 documentList += '<td><a href="' + url + '" class="use_this">' + localisedData['use_this'] + '</a></td>';
                 documentList += '<tr>';
             }

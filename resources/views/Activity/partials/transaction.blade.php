@@ -7,7 +7,16 @@
                 <div class="activity-element-label col-md-4">{{$key}}</div>
                 <div class="activity-element-info">
                     @foreach($groupedTransactions as $transaction)
-                        <li>{!! getCurrencyValueDate(getVal($transaction, ['value', 0]) , "transaction") !!}</li>
+                        <li>{!! getCurrencyValueDate(getVal($transaction, ['value', 0]) , "transaction") !!}
+                        </li>
+                        <div class="groupingBtn">
+                 <a class="edit" href="{{route('activity.transaction.edit',[$id,$transaction['id']])}}">hi</a> 
+                       <form method="POST" id="test-form" action="{{ route('activity.transaction.destroy', [$id, $transaction['id']] )}}?main=1">
+                        {{ csrf_field() }}
+                        {{ method_field('DELETE') }}
+                            <input  type="submit" id="testBtn">
+                        </form>      
+                        </div>
                         <div class="toggle-btn">
                             <span class="show-more-info">@lang('global.show_more_info')</span>
                             <span class="hide-more-info hidden">@lang('global.hide_more_info')</span>
@@ -119,6 +128,6 @@
                 </div>
             </div>
         @endforeach
-        <a href="{{route('activity.transaction.index', $id)}}" class="edit-element">@lang('global.edit')</a>
+        <a href="{{route('activity.transaction.index', $id)}}" class="view" style="position:absolute;top:0;right:20px;">@lang('global.edit')</a>
     </div>
 @endif

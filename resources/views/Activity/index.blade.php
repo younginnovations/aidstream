@@ -89,7 +89,7 @@
         $('#data-table').DataTable();
         $('#data-table_length').addClass('pull-right');
         $('#data-table_filter').addClass('pull-left');
-    });
+    });   
  </script>
 @endsection
 

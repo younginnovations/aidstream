@@ -9,13 +9,19 @@
             <span>@lang('element.transaction')</span>
             <div class="element-panel-heading-info"><span>{{$activity->IdentifierTitle}}</span></div>
             <div class="panel-action-btn">
-                <a href="{{route('activity.transaction.index',$id)}}" class="btn btn-primary btn-view-it">@lang('global.view_transaction')
-                </a>
+                <a href="{{ route('activity.show', $id) }}" class="btn btn-primary btn-view-it">@lang('global.view_activity')</a>
+                <a href="{{route('activity.transaction.index', $id) }}" class="btn btn-primary btn-view-it">@lang('global.view_transaction')</a>
             </div>
         </div>
     </div>
     <div class="col-xs-12 col-md-8 col-lg-8 element-content-wrapper">
         <div class="activity-element-wrapper">
+        <a href="{{route('activity.transaction.edit',[$id, $transactionId]) }}" class="edit" >@lang('global.edit')</a>
+        <form method="POST" id="test-form" action="{{ route('activity.transaction.destroy', [$id, $transactionId] )}}">
+           {{ csrf_field() }}
+           {{ method_field('DELETE') }}
+        <input type="submit" id="testBtn">
+        </form>
             <div class="activity-element-list">
                 <div class="activity-element-label">@lang('elementForm.value')</div>
                 <div class="activity-element-info">{!! getCurrencyValueDate(getVal($transactionDetail,['value',0]), "transaction") !!}</div>

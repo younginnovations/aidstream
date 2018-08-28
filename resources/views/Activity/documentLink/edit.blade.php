@@ -78,6 +78,7 @@
                         <div class="or"><strong><em>Or, you can use below listed documents.</em></strong></div>
                     </div>
                     <div id="document_list">
+                    <input type="text" placeholder="Search here" id="search">
                         <table class="table table-striped">
                             <thead>
                             <tr>
@@ -94,4 +95,13 @@
     </div>
     
     <script type="text/javascript" src="{{url('js/upload-document.js')}}"></script>
+    <script type="text/javascript">
+$(document).on("keyup", '#search', function (e) {
+    var g = $(this).val().toLowerCase();
+            $(".jpte").each(function () {
+                var s = $(this).text().toLowerCase();
+                $(this).closest('tr')[s.indexOf(g) !== -1 ? 'show' : 'hide']();
+            });
+        });
+    </script>
 @endsection

@@ -13,11 +13,20 @@
             </div>
             <div class="panel-action-btn btn-action-wrap">
                 <a href="{{route('activity.show',$id)}}" class="btn btn-primary btn-view-it">@lang('global.view_activity')</a>
+                <a href="{{route('activity.result.index',$id)}}" class="btn btn-primary btn-view-it">@lang('global.view_result')</a>            
             </div>
         </div>
     </div>
     <div class="col-xs-12 col-md-8 col-lg-8 element-content-wrapper">
         <div class="activity-element-wrapper">
+        <div id='jpt'>
+        <a href="{{ route('activity.result.edit', [$id, $result->id]) }}" class="edit">@lang('global.edit')</a>
+        <form method="POST" id="test-form" action="{{route('activity.result.destroy', [$id, $result->id])}}">
+            {{ csrf_field() }}
+            {{ method_field('DELETE') }}
+       <input type="submit" id="testBtn">
+        </form>
+        </div>
             <div class="activity-element-list">
                 <div class="activity-element-label">@lang('elementForm.title')</div>
                 <div class="activity-element-info">

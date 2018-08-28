@@ -13,7 +13,8 @@
                         <span>@lang('global.edit_transaction')</span>
                         <div class="element-panel-heading-info"><span>{{$activity->IdentifierTitle}}</span></div>
                         <div class="panel-action-btn">
-                            <a href="{{route('activity.transaction.index',$id)}}" class="btn btn-primary">@lang('global.view_transaction')
+                        <a href="{{ route('activity.show', $id) }}" class="btn btn-primary btn-view-it">@lang('global.view_activity')</a>
+                            <a href="{{route('activity.transaction.index',$id)}}" class="btn btn-primary btn-view-it">@lang('global.view_transaction')
                             </a>
                         </div>
                     </div>

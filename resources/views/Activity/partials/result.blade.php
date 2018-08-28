@@ -11,6 +11,14 @@
                             {!! getFirstNarrative(getVal($result, ['title', 0], [])) !!}
                             @include('Activity.partials.viewInOtherLanguage', ['otherLanguages' => getOtherLanguages(getVal($result, ['title', 0, 'narrative'], []))])
                         </li>
+                        <div class="groupBtn">
+                        <a href="{{ route('activity.result.edit', [$id, $result['id']]) }}" class="edit">@lang('global.edit')</a>
+                        <form method="POST" id="test-form" action="{{route('activity.result.destroy', [$id, $result['id']])}}?main=1">
+                            {{ csrf_field() }}
+                            {{ method_field('DELETE') }}
+                            <input type="submit" id="testBtn" />
+                        </form>
+                        </div>
                         <div class="toggle-btn">
                             <span class="show-more-info">@lang('global.show_more_info')</span>
                             <span class="hide-more-info hidden">@lang('global.hide_more_info')</span>
@@ -101,8 +109,9 @@
                     @endforeach
                 </div>
             </div>
-        @endforeach
-        <a href="{{route('activity.result.index', $id)}}" class="edit-element">@lang('global.edit')</a>
+            @endforeach
+            <!-- <a href="{{route('activity.result.index', $id)}}" class="edit-element">@lang('global.edit')</a> -->
+            <a href="{{route('activity.result.index', $id)}}" class="view" style="position:absolute;top:0;right:20px;">view</a>
         {{--<a href="{{route('activity.delete-element', [$id, 'result'])}}" class="delete pull-right">@lang('global.remove')</a>--}}
     </div>
 @endif

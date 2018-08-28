@@ -2021,6 +2021,7 @@ label.required::after {
 .element-sidebar-wrapper .jspVerticalBar .jspArrow {
   background: $color_concrete;
   width: 266px;
+  position: fixed!important;
   &:before {
     color: $color_primary;
   }
@@ -3253,7 +3254,8 @@ body > .skiptranslate iframe {
   width: 166px;
   height: 166px;
   display: block;
-  border-radius: 50%
+  border-radius: 50%;
+  overflow: hidden;
 }
 
 #publisher_id_status_display, #api_id_status_display {
@@ -5802,4 +5804,16 @@ select.systemVersion {
   padding: 0!important;
   text-indent: -9999px;
   width: 10px;
+}
+input#testBtn{
+  float: left;
+  text-indent: -9999px;
+  width: 18px;
+  background: url('../images/ic-sprite.svg') no-repeat -229px -332px;
+  height: 23px;
+  background-color: white;
+}
+input#testBtn:hover{
+  background-position: -230px -390px;
+  background-color: white;
 }

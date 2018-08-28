@@ -33,7 +33,7 @@ class ResultController extends Controller
      * @param ResultForm      $resultForm
      * @param ActivityManager $activityManager
      */
-    function __construct(ResultManager $resultManager, ResultForm $resultForm, ActivityManager $activityManager)
+    public function __construct(ResultManager $resultManager, ResultForm $resultForm, ActivityManager $activityManager)
     {
         $this->middleware('auth');
         $this->activityManager = $activityManager;
@@ -170,7 +170,7 @@ class ResultController extends Controller
      * @param      $resultId
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id, $resultId)
+    public function destroy($id, $resultId, Request $request)
     {
         $activityData = $this->activityManager->getActivityData($id);
 
@@ -187,7 +187,9 @@ class ResultController extends Controller
         } else {
             $response = ['type' => 'danger', 'code' => ['delete_failed', ['name' => trans('element.result')]]];
         }
-
-        return redirect()->back()->withResponse($response);
+        if ($request->get('main') == 1) {
+            return redirect()->back()->withResponse($response);
+        }
+        return redirect()->route('activity.result.index', compact('id'))->withResponse($response);
     }
 }
