@@ -353,11 +353,11 @@
               self.$emit('display', []);
             }
           },
-          selected: function (event) {
+          selected: function (publisher, index) {
 
             var organizationCountry = publisher['country'];
 
-            this.organisation['type'] = pubslisher['type'];
+            this.organisation['type'] = publisher['type'];
             this.organisation['is_publisher'] = publisher['is_publisher'];
             this.organisation['identifier'] = publisher['identifier'].replace(/\//g, "-");
             this.organisation['country'] = organizationCountry ? organizationCountry : "";
