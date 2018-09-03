@@ -898,6 +898,13 @@
       "code": "XI-GRID",
       "name": "Global Research Identifiers Database",
       "language": "en"
+    },
+    {
+      "category": "PK",
+      "category-name": "",
+      "code": "PK-SEC",
+      "name": "Securities and Exchange Commission of Pakistan",
+      "language": "en"
     }
   ]
 }
