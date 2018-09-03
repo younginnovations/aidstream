@@ -223,6 +223,15 @@ namespace :nginx do
     end
 end
 
+namespace :php_fpm do
+    desc 'Restart php-fpm'
+        task :reload do
+            on roles(:all) do
+            execute :sudo, :service, "php7.0-fpm reload"
+        end
+    end
+end
+
 namespace :deploy do
     after :starting, "hipchat:start"
     after :updated, "vendor:copy"
@@ -236,3 +245,4 @@ namespace :deploy do
 end
 
 after "deploy", "nginx:reload"
+after "deploy", "php_fpm:reload"
