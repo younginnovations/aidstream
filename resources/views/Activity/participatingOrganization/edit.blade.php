@@ -313,7 +313,8 @@
             keywords: [],
             matchingPartnerOrg: [],
             countries: [],
-            types: []
+            types: [],
+            searchError: false
           }
         },
         updated: function () {
@@ -343,6 +344,15 @@
           this.keywords[this.index] = '';
           this.disable_options[this.index] = (this.organisation.is_publisher) ? true : false;
           this.matchingPartnerOrg.push(this.partner_organisations);
+          var self = this;
+          axios({
+            method: 'GET',
+            url: apiUrl + '/api/suggestions?name=" "',
+          }).then(function(response) {
+            localStorage.setItem('search-data',JSON.stringify(response.data))
+          }).catch(function (error) {
+            self.searchError = true
+          });
         },
         props: ['partner_organisations', 'organisation', 'index', 'display_error', 'organisation_roles'],
         methods: {
@@ -357,40 +367,37 @@
             if (event.keyCode === 27) {
               this.display_org_list = false;
             }
-
+            
             var self = this;
+            var localSearchData = JSON.parse(localStorage.getItem('search-data'))
             this.keywords[this.index] = event.target.value;
+            this.suggestions = [];
             if (event.target.value.trim().length > 3) {
-              if (!self.searching) {
-                self.searching = true;
-                this.suggestions = []
-                setTimeout(function () {
-                  self.checkKeywordInPartnerOrg(event.target.value);
-                  axios({
-                    method: 'GET',
-                    url: apiUrl + '/api/suggestions?name=' + event.target.value + '&identifier=' + event.target.value,
-                    // headers: { 'Origin': '*' }
-                  }).then(function (response) {
-                    self.searching = false;
-                    self.display_org_finder = false;
-                    response.data.forEach(function (publisher) {
-                      publisher.is_publisher = true;
-                      self.suggestions.push(publisher);
-                    });
-                    self.display_partner_org = true;
-                  }).catch(function (error) {
-                    self.suggestions = []
-                    if (self.matchingPartnerOrg[0].length > 0) {
-                      self.display_partner_org = true;
-                    } else {
-                      self.matchingPartnerOrg.push(self.partner_organisations);
-                      self.display_partner_org = false;
-                      self.display_org_finder = true;
-                    }
-                    self.searching = false;
+                this.checkKeywordInPartnerOrg(event.target.value);
+                this.display_org_finder = false
+                
+                var matchedSearchData = !this.searchError && localSearchData.filter(function(data) {
+                var searchValue = event.target.value.toLowerCase();
+                var nameData = data.names[0].name.toLowerCase();
+                var identifierData = data.identifier.toLowerCase();
+
+                  return (nameData.indexOf(searchValue) !== -1) || (identifierData.indexOf(searchValue) !== -1)
+                }) || []
+                if(matchedSearchData.length) {
+                  matchedSearchData.forEach(function(publisher) {
+                    publisher.is_publisher = true;
+                    self.suggestions.push(publisher)
                   });
-                }, 1000);
-              }
+                  this.display_partner_org = true;
+                } else {
+                  if (this.matchingPartnerOrg[0].length > 0) {
+                    this.display_partner_org = true;
+                  } else {
+                    this.matchingPartnerOrg.push(this.partner_organisations);
+                    this.display_partner_org = false;
+                    this.display_org_finder = true;
+                  }
+                }
             } else {
               this.matchingPartnerOrg = []
               this.matchingPartnerOrg.push(this.partner_organisations);

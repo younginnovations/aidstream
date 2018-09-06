@@ -264,8 +264,20 @@
             searching: false,
             keyword: '',
             countries: [],
-            types: []
+            types: [],
+            searchError: false
           }
+        },
+        created: function () {
+          var self = this;
+          axios({
+            method: 'GET',
+            url: apiUrl + '/api/suggestions?name=" "',
+          }).then(function(response) {
+            localStorage.setItem('search-data',JSON.stringify(response.data))
+          }).catch(function (error) {
+            self.searchError = true
+          });
         },
         updated: function () {
           $('.scroll-list').jScrollPane({ autoReinitialise: true });
@@ -296,31 +308,29 @@
             }
 
             var self = this;
+            var localSearchData = JSON.parse(localStorage.getItem('search-data'))
             this.keyword = event.target.value;
+            this.suggestions = [];
             if (event.target.value.trim().length > 3) {
-              if (!self.searching) {
-                self.searching = true;
-                this.suggestions = [];
-                setTimeout(function () {
-                  axios({
-                    method: 'GET',
-                    url: apiUrl + '/api/suggestions?name=' + event.target.value + '&identifier=' + event.target.value,
-                    // headers: { 'Origin': '*' }
-                  }).then(function (response) {
-                    self.searching = false;
-                    self.display_org_finder = false;
+                this.display_org_finder = false
+                
+                var matchedSearchData = !this.searchError && localSearchData.filter(function(data) {
+                var searchValue = event.target.value.toLowerCase();
+                var nameData = data.names[0].name.toLowerCase();
+                var identifierData = data.identifier.toLowerCase();
 
-                    response.data.forEach(function (publisher) {
-                      publisher.is_publisher = true;
-                      self.suggestions.push(publisher);
-                    });
-                  }).catch(function (error) {
-                    self.suggestions = []
-                    self.display_org_finder = true;
-                    self.searching = false;
+                  return (nameData.indexOf(searchValue) !== -1) || (identifierData.indexOf(searchValue) !== -1)
+                }) || []
+                if(matchedSearchData.length) {
+                  matchedSearchData.forEach(function(publisher) {
+                    publisher.is_publisher = true;
+                    self.suggestions.push(publisher)
                   });
-                }, 1000);
-              }
+                  this.display_partner_org = true;
+                } else {
+                  this.display_partner_org = false;
+                  this.display_org_finder = true;
+                }
             } else {
               this.suggestions = []
               this.display_org_finder = false;
