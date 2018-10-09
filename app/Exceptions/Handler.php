@@ -63,7 +63,8 @@ class Handler extends ExceptionHandler
         $route = 'activity.index';
 
         if ($e instanceof NotFoundHttpException || $e instanceof MethodNotAllowedHttpException) {
-            $message = $this->getMessage($e->getStatusCode());
+            $statusCode = $e->getStatusCode()
+            $message = $this->getMessage($statusCode);
 
             if (auth()->check()) {
                 if (($organization = auth()->user()->organization)) {
@@ -71,8 +72,8 @@ class Handler extends ExceptionHandler
                     (!array_key_exists($systemVersion, $this->systemVersionRedirectPath)) ?: $route = $this->systemVersionRedirectPath[$systemVersion];
                 }
             }
-            
-            return response()->view('errors.errors', compact('route', 'message'));
+
+            return response()->view('errors.errors', compact('route', 'message'), $statusCode);
         }
 
         if ($e instanceof QueryException) {
