@@ -34,6 +34,9 @@ class OrganizationGroupController extends Controller
 
     public function lists()
     {
+        if(session('user_permission') == 8){
+            return redirect()->intended(config('app.municipality_dashboard'));
+        }
         $organizations = $this->orgGroupManager->getOrganizationGroups();
 
         return view('superAdmin.groupOrganization.listGroupOrganization', compact('organizations'));

@@ -1,0 +1,90 @@
+.form-block:not(:nth-last-child(1)){
+  border-bottom: 1px dashed #A9C6DE;
+  margin-bottom: 10px;
+}
+
+.create-form{
+  & > form{
+    padding: 25px 0 10px;
+  }
+}
+
+.collection_form .row{
+  margin-right: -15px;
+  margin-left: -15px;
+}
+
+.form-block{
+  .form-group{
+    margin-bottom: 20px;
+  }
+  .title{
+    font-family: inherit;
+    margin-bottom: 10px;
+    font-weight: normal;
+  }
+  .select2-container{
+    margin-bottom: 0;
+  }
+}
+
+
+.has-separate-delete{
+  li{
+    min-height: 24px;
+  }
+/*  there is no delete button*/
+  .edit-element+div{
+    display: none !important;
+  }
+
+}
+
+.activity-element-label {
+  .edit{
+    float: right;
+    margin-left: 4px;
+  }
+}
+
+.has-delete-wrap {
+  display: inline-block;
+  margin-left: 4px;
+  position: relative;
+}
+
+.activity-element-label span:nth-last-child(1){
+  display: inline-block;
+}
+
+.activity-element-wrapper .delete {
+  position: absolute;
+  top: -15px;
+  right: auto;
+  bottom: auto;
+  left: auto;
+  background: url(#{$img-path}/ic-sprite.svg)  -487px -486px no-repeat;
+  text-indent: -9999px;
+  width: 14px;
+  height: 17px;
+  border-radius: 0;
+
+  &:hover {
+    background: url(#{$img-path}/ic-sprite.svg) -487px -539px no-repeat;
+    height: 22px;
+    width: 16px;
+    top: -20px;
+    left: -3px;
+  }
+}
+
+.activity-element-wrapper .delete .delete-transaction{
+  background: none;
+}
+
+.added-new-block:first-of-type{
+  .remove_from_collection{
+    display: none;
+  }
+}
+

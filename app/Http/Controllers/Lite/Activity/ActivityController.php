@@ -606,7 +606,6 @@ class ActivityController extends LiteController
         }
 
         return redirect()->route('lite.activity.show', $activityId)->withResponse(['type' => 'warning', 'messages' => [trans('error.404_not_found')]]);
-
     }
 
     /**
@@ -758,4 +757,3 @@ class ActivityController extends LiteController
         return response($this->reverse($latitude, $longitude));
     }
 }
-

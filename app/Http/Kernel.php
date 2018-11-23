@@ -45,6 +45,7 @@ class Kernel extends HttpKernel
     protected $routeMiddleware = [
         'auth'                   => 'App\Http\Middleware\Authenticate',
         'auth.superAdmin'        => 'App\Http\Middleware\AuthenticateSuperAdmin',
+        'auth.municipalityAdmin' => 'App\Http\Middleware\AuthenticateMunicipalityAdmin',
         'auth.basic'             => 'Illuminate\Auth\Middleware\AuthenticateWithBasicAuth',
         'guest'                  => 'App\Http\Middleware\RedirectIfAuthenticated',
         'auth.organizationAdmin' => 'App\Http\Middleware\AuthenticateOrganizationAdmin',

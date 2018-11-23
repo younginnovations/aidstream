@@ -2,6 +2,7 @@
 
 return [
     'organisation_name'                              => 'Organisation Name',
+    'organisation_name_np'                           => 'Organization Name (नेपालीमा)',
     'organisation_name_abbreviation'                 => 'Organisation Name Abbreviation',
     'organisation_type'                              => 'Organisation Type',
     'organisation_country'                           => 'Organisation Country',
@@ -34,5 +35,8 @@ return [
     'organisation_identifier_already_used'           => 'The IATI organisational identifier you entered <strong>"<span class="org-identifier"></span>"</strong> is being used by another organisation on AidStream.',
     'Lite'                                           => 'A minimalistic version of AidStream with basic IATI fields to get you started. For small organizations that don’t understand IATI.',
     'Core'                                           => 'Core AidStream with full fledged features containing both basic and other fields of IATI. For large (and small) organizations that have a good understanding of IATI.',
-    'secondary_reporter'                             => 'Secondary Reporter?'
+    'secondary_reporter'                             => 'Secondary Reporter?',
+    'working_municipality'                           => 'Working Municipality',
+    'district'                                       => 'District',
+    'municipality'                                   => 'Municipality',
 ];

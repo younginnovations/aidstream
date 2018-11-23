@@ -10,7 +10,7 @@
         <div id="xml-import-status-placeholder"></div>
         <div class="panel panel-default">
             <div class="panel__heading">
-                <div class="panel__title">@lang('lite/title.transaction')</div>
+                <div class="panel__title">{{$type}}</div>
             </div>
             <div class="panel__body">
                 <div class="create-form user-form">
