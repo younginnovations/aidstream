@@ -46,6 +46,11 @@ class Organization extends Model
     {
         return $this->hasMany('App\Models\Organization\OrganizationData', 'organization_id');
     }
+    
+    public function organizationLocation()
+    {
+        return $this->hasMany('App\Models\Organization\OrganizationLocation','organization_id');
+    }
 
     /**
      * organization has many users

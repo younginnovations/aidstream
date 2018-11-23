@@ -196,6 +196,7 @@ Route::group(
     }
 );
 
+
 if (isTzSubDomain()) {
     Route::group(['domain' => env('TZ_DOMAIN'), 'middleware' => 'auth.systemVersion'], $subdomainRoutes);
 } else {

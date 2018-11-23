@@ -291,6 +291,9 @@ return [
     'delete_this_organisation'                     => 'Delete this Organisation',
     'edit_this_organisation'                       => 'Edit this Organisation',
     'suggest'                                      => 'Suggest Edit',
-    'remove' => 'Remove'
+    'remove'                                       => 'Remove',
+    'select_working_municipality'                  => 'Select Working Municipality',
+    'select_district'                              => 'Select District',
+    'select_municipality'                          => 'Select Municipality'
 
 ];

@@ -41,6 +41,11 @@ class LoginController extends Controller
     const TZ_VERSION_ID = 3;
 
     /**
+     * 'Np' System Version Id.
+     */
+    const NP_VERSION_ID = 4;
+
+    /**
      * LoginController constructor.
      * @param LoginService $loginService
      */
@@ -80,6 +85,10 @@ class LoginController extends Controller
             if ($user) {
                 if ($this->userIsRegisteredForSpecificVersion($user)) {
                     return $this->redirectToCorrectVersion($user);
+                }
+
+                if($user->isMunicipalityAdmin()){
+                    return redirect()->intended(config('app.municipality_dashboard'));
                 }
 
                 $redirectPath = ($user->isSuperAdmin() || $user->isGroupAdmin())

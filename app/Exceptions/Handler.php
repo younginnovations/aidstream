@@ -35,7 +35,8 @@ class Handler extends ExceptionHandler
 
     protected $systemVersionRedirectPath = [
         1 => 'activity.index',
-        2 => 'lite.activity.index'
+        2 => 'lite.activity.index',
+        3 => 'np.activity.index'
     ];
 
     /**
