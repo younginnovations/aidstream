@@ -1,3 +1,4 @@
+
 <?php
 
 return [
@@ -52,5 +53,6 @@ return [
     'published_not_linked'                    => "You have set automatic update to publish to No in <a href='/publishing-settings'>settings</a>. The activity has been published to AidStream but not linked to the IATI Registry. Please re-publish the activity from <a href='/list-published-files'>here.</a>",
     'organization_published_not_linked'       => "You have set automatic update to publish to No in <a href='/publishing-settings'>settings</a>. The organization data has been published to AidStream but not linked to the IATI Registry. Please re-publish the organization data from <a href='/list-published-files'>here.</a>",
     'cannot_delete_reporting_org'             => 'Cannot delete reporting organisation',
-    'cannot_delete_published_org'             => 'You cannot delete a published :name.'
+    'cannot_delete_published_org'             => 'You cannot delete a published :name.',
+    'municipality_required'                   => 'Please provide Municipality'
 ];

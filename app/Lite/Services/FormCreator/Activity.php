@@ -1,6 +1,5 @@
 <?php namespace App\Lite\Services\FormCreator;
 
-
 use App\Lite\Forms\FormPathProvider;
 use Kris\LaravelFormBuilder\Form;
 use Kris\LaravelFormBuilder\FormBuilder;

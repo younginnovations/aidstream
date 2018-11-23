@@ -1,0 +1,28 @@
+{
+    "version": "",
+    "name": "NpOrganisationRegistrationAgency",
+    "xml:lang": "en",
+    "NpOrganisationRegistrationAgency": [
+        {
+            "category": "NP",
+            "category-name": "NEPAL",
+            "code": "NP-CRO",
+            "name": "Company Registrar Office",
+            "language": "en"
+        },
+        {
+            "category": "NP",
+            "category-name": "NEPAL",
+            "code": "NP-SWC",
+            "name": "NGO registration",
+            "language": "en"
+        },
+        {
+            "category": "NP",
+            "category-name": "NEPAL",
+            "code": "NP-DAO",
+            "name": "District Registration Office",
+            "language": "en"
+        }
+    ]
+}

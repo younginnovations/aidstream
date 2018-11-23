@@ -18,7 +18,7 @@ class SystemVersion
     /**
      * @var array
      */
-    protected $allowedSubdomains = ['tz'];
+    protected $allowedSubdomains = ['tz', 'np'];
 
     /**
      * Code to redirect to main AidStream
@@ -29,6 +29,11 @@ class SystemVersion
      * Code to redirect to Tz AidStream
      */
     const TZ_ROUTE_CODE = 802;
+
+    /**
+     * Code to redirect to Np Aidstream
+     */
+    const NP_ROUTE_CODE = 804;
 
     /**
      * Code to redirect to the same AidStream
@@ -59,6 +64,8 @@ class SystemVersion
             } else {
                 if (isTzSubDomain()) {
                     return redirect()->route('tz.home');
+                } else if(isNpSubDomain()) {
+                    return redirect()->route('np.home');
                 }
 
                 return redirect()->route('main.home');
@@ -76,6 +83,9 @@ class SystemVersion
                     $this->auth->logOut();
 
                     return redirect()->route('main.home');
+                } else if(self::NP_ROUTE_CODE === $responseCode) {
+
+                    return $next($request);
                 } elseif (self::TZ_ROUTE_CODE === $responseCode) {
                     $this->auth->logOut();
 
@@ -109,6 +119,12 @@ class SystemVersion
                 if (($currentVersion == 'Tz')) {
                     if ($registeredVersion == 'Tz') {
                         return in_array('lite', $segments) ? true : 803;
+                    }
+
+                    return 801;
+                } else if($currentVersion == 'Np') {
+                    if($registeredVersion == 'Np') {
+                        return in_array('lite', $segments) ? true : 804;
                     }
 
                     return 801;
@@ -160,6 +176,12 @@ class SystemVersion
             } else {
                 return false;
             }
+        } else if($systemVersion == 'Np'){
+            if (array_intersect($this->allowedSubdomains, $pieces) && in_array('lite', $uriPieces)){
+                return true;
+            } else {
+                return false;
+            }
         } elseif ($systemVersion == 'Lite') {
             if (!(array_intersect($this->allowedSubdomains, $pieces)) && in_array('lite', $uriPieces)) {
                 return true;
@@ -185,7 +207,9 @@ class SystemVersion
     {
         $host   = $request->getHost();
         $pieces = explode('.', $host);
-
+        if(in_array('np', $pieces)){
+            return 'Np';
+        }
         return in_array('tz', $pieces) ? 'Tz' : 'Main';
     }
 }

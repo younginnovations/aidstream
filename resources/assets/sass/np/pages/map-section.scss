@@ -1,0 +1,124 @@
+#tzmap{
+  background: none;
+  border-bottom: 1px solid #ACD2E1;
+  height: 580px;
+  width: 100%;
+  z-index: 88;
+}
+
+.right-map-section{
+  #tzmap{
+    height: 300px;
+  }
+}
+
+.map-section{
+  width: 100%;
+  background: #BCEDFF url(../../../images/ic_map.svg) no-repeat top center;
+  margin-bottom: 46px;
+  position: relative;
+
+  .select-block-wrap{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+  }
+
+  #reset{
+    display: none;
+  }
+
+  .sector-title{
+    max-height: 224px;
+    max-width: 250px;
+    background: #fff;
+    position: relative;
+    z-index: 88;
+    padding: 10px 12px 4px;
+    border-radius: 4px;
+    margin: 0 0 6px;
+    -webkit-box-shadow: 0 6px 40px -4px rgba(0, 0, 0, 0.5);
+  }
+
+  h3{
+    margin-top: 0;
+    margin-bottom: 6px;
+    font-size: 12px;
+    line-height: 18px;
+    color : rgba(72,72,72,0.6);
+    z-index: 999;
+    position: relative;
+  }
+
+}
+
+.detail-page-map{
+  margin-bottom: 55px;
+  border-radius: 4px 4px 0 0;
+}
+
+
+.select-cards-wrap{
+  margin: 80px auto 100px;
+}
+
+.card{
+  border-radius: 4px;
+  overflow: auto;
+
+  .card-header{
+    padding: 9px 25px;
+    background-color: #fff;
+    border-bottom: 1px solid #ececec;
+    margin-bottom: 0;
+    z-index: 9;
+    position: relative;
+    font-size: 11px;
+    line-height: 18px;
+    text-transform: uppercase;
+  }
+
+  .card-body{
+    background-color: #F0F6F8;
+    z-index: 8;
+    position: relative;
+
+    .checkbox{
+      input[type=checkbox]{
+        margin-left: -12;
+      }
+
+      margin: 0;
+
+      label{
+        border-bottom: solid 1px #DDEBF1;
+        display: block;
+        font-size: 12px;
+        line-height: 18px;
+        padding-bottom: 8px;
+      }
+    }
+
+  }
+}
+
+#regions,#sectors {
+  > div {
+    padding: 8px 26px 0;
+  }
+}
+
+.small-card{
+  max-height: 190px;
+  max-width: 250px;
+  margin-bottom: 12px;
+  z-index: 99;
+  position: relative;
+
+  .card-body{
+    height: 179px;
+    width: 250px!important;
+    overflow: auto;
+  }
+}

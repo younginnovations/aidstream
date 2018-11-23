@@ -91,12 +91,15 @@ class WhoIsUsingController extends Controller
     public function index()
     {
         if (isTzSubDomain()) {
-            list($organizations, $isTz) = [$this->organizationQueryBuilder()->where('system_version_id', config('system-version.Tz.id'))->get(), true];
-        } else {
-            list($organizations, $isTz) = [$this->organizationQueryBuilder()->get(), false];
+            list($organizations, $isTz,$isNp) = [$this->organizationQueryBuilder()->where('system_version_id', config('system-version.Tz.id'))->get(), true,false];
+        }elseif(isNpSubDomain()){
+            list($organizations, $isNp,$isTz) = [$this->organizationQueryBuilder()->where('system_version_id', config('system-version.Np.id'))->get(), true,false];
+        }
+         else {
+            list($organizations, $isTz, $isNp) = [$this->organizationQueryBuilder()->get(), false,false];
         }
 
-        return view('who-is-using', compact('organizations', 'isTz'));
+        return view('who-is-using', compact('organizations', 'isTz', 'isNp'));
     }
 
     /**

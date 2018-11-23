@@ -4,13 +4,15 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport'/>
-    <title>{{ $isTz ? trans('title.tz_aidstream') : trans('title.aidstream') }}</title>
+    <title>{{ $isTz ? trans('title.tz_aidstream'): $isNp? 'Aidstream Nepal' : trans('title.aidstream') }}</title>
     <link rel="stylesheet" href="{{asset('/css/vendor.min.css')}}">
     {!! publicStylesheet() !!}
 </head>
 <body>
 @if($isTz)
     @include('tz.partials.header')
+@elseif($isNp)
+    @include('np.partials.header')
 @else
     @include('includes.header')
 @endif
