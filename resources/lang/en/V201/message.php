@@ -1,3 +1,4 @@
+
 <?php
 
 return [
@@ -54,5 +55,6 @@ return [
     'cannot_delete_reporting_org'             => 'Cannot delete reporting organisation',
     'cannot_delete_published_org'             => 'You cannot delete a published :name.',
     'budget_not_provided'                     => 'Budget Not Provided has been set in Activity Defaults. Please remove the field from <a href=":link">here</a> to add a new Budget',
-    'budget_not_provided_activity_default'    => 'Budget has been set in Activity Data. You need to delete budget to add \'Budget Not Provided\''
+    'budget_not_provided_activity_default'    => 'Budget has been set in Activity Data. You need to delete budget to add \'Budget Not Provided\'',
+    'municipality_required'                   => 'Please provide Municipality'
 ];

@@ -17,7 +17,8 @@ class RedirectIfAuthenticated
     protected $redirectPaths = [
         1 => '/activity',
         2 => '/lite/activity',
-        3 => '/lite/activity'
+        3 => '/lite/activity',
+        4 => '/activity'
     ];
 
     /**

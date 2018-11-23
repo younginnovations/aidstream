@@ -77,8 +77,13 @@ class OrganizationController extends Controller
      */
     public function oldListOrganizations(Request $request)
     {
+        if(session('user_permission') == 8){
+            return redirect()->intended(config('app.municipality_dashboard'));
+        }
         if (isTzSubDomain()) {
             $organizations = $this->adminManager->getOrganizationBySystemVersion(config('system-version.Tz.id'));
+        } else if (isNpSubDomain()) {
+            $organizations = $this->adminManager->getOrganizationBySystemVersion(config('system-version.Np.id'));
         } else {
             if ($request->has('organization')) {
                 $organizationName = $request->get('organization');
