@@ -9,12 +9,18 @@ function publicStylesheet()
 {
     $link           = "<link href='%s' rel='stylesheet'>";
     $baseStyleSheet = sprintf($link, asset('/css/style.min.css'));
-    $faviconLink    = sprintf('<link rel="shortcut icon" type="image/png" sizes="32*32" href="%s"/>', asset('/images/favicon-tz.png'));
 
 
     if (isTzSubDomain()) {
+        $faviconLink    = sprintf('<link rel="shortcut icon" type="image/png" sizes="32*32" href="%s"/>', asset('/images/favicon-tz.png'));
+
         $styleSheet = sprintf($link, asset('/tz/css/tz.min.css'));
 
+        return $faviconLink . $baseStyleSheet . $styleSheet;
+    } elseif (isNpSubDomain()) {
+        $faviconLink    = sprintf('<link rel="shortcut icon" type="image/png" sizes="32*32" href="%s"/>', asset('/images/favicon.png'));
+
+        $styleSheet = sprintf($link, asset('/np/css/np.min.css'));
         return $faviconLink . $baseStyleSheet . $styleSheet;
     } else {
         $faviconLink = sprintf('<link rel="shortcut icon" type="image/png" sizes="32*32" href="%s"/>', '/images/favicon.png');

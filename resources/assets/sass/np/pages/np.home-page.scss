@@ -1,0 +1,169 @@
+/* ------- style for header banner ------- */
+
+.container {
+  padding-right: 0;
+  padding-left: 0;
+}
+
+.navbar-header {
+  margin-top: 0 !important;
+}
+
+.navbar-brand {
+  background: none!important;
+  padding: 0;
+  width: 200px;
+}
+
+.navbar-default .navbar-nav > li > a:focus, .navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a.active {
+  color: $color_secondary;
+}
+
+@media (min-width: 768px) {
+  .country-specific-wrap .navbar {
+    padding: 0 !important;
+  }
+
+  .header-banner .navbar {
+    padding: 40px 30px;
+  }
+
+  .social-wrapper li:first-child {
+    margin-bottom: 16px;
+  }
+
+}
+
+/* ------- style for search section ------ */
+.search-wrap {
+  margin-bottom: 52px;
+  input[type="text"] {
+    padding: 9px 20px 9px 36px;
+    background: #fff url(../../../images/ic-sprite.svg) no-repeat -136px -121px !important;
+    border-radius: 19px;
+    border: solid 1px #E5E5E5 !important;
+    outline: none;
+    max-width: 477px;
+    font-size: 12px;
+    line-height: 18px;
+    position: relative;
+    width: 100%;
+
+    &:hover, &:focus {
+      outline: none;
+    }
+  }
+
+}
+
+/* -------- style for footer -------- */
+
+footer {
+  @media (min-width: 768px) {
+    padding: 0;
+  }
+
+  .footer-logo a {
+    margin: 0 auto;
+    img {
+      float: left;
+    }
+  }
+}
+
+.footer-logo a {
+  background: none;
+  display: block;
+  position: relative;
+  width: 182px;
+}
+
+.action-btn a {
+  padding: 11px 24px;
+}
+
+.footer-top-wrapper {
+  background: #f9f9f9;
+  overflow: hidden;
+  padding: 74px 0 50px;
+}
+
+.footer-bottom-wrapper {
+  background: #F0F0F0;
+  padding: 35px 20px 46px;
+  overflow: hidden;
+  text-align: center;
+  p {
+    color: rgba($color_gravel_approx, 0.5);
+    font-size: 12px;
+    margin-bottom: 0;
+  }
+}
+
+.aidstream-logo {
+  margin-bottom: 30px;
+}
+
+.main-container {
+  display: block;
+}
+
+.information-wrapper {
+  border-bottom: 0;
+  p {
+    line-height: 24px;
+  }
+}
+
+@media all and (min-width: 900px) {
+  .introduction-wrapper > .container {
+    width: 880px;
+  }
+}
+
+.get-started-btn {
+  margin-bottom: 30px;
+  & + p {
+    margin-bottom: 0;
+    color: $color_gravel_approx;
+  }
+}
+
+.info-wrapper {
+  background: #F7F7F7;
+  border-bottom: 4px solid $color_primary;
+  padding: 55px 0 45px;
+  p {
+    line-height: 26px;
+    margin: 0 auto;
+    padding: 0 20px;
+    text-align: center;
+  }
+}
+
+.search-org input[type="text"]{
+  background: none!important;
+  border: 0!important;
+}
+
+@media all and (min-width: 768px) {
+  .info-wrapper p {
+    width: 690px;
+  }
+
+  .footer-bottom-wrapper p {
+    text-align: left;
+  }
+
+  footer .width-900 > div {
+    margin-top: 5px;
+  }
+
+  .social-wrapper {
+    margin-top: 0 !important;
+  }
+}
+
+.about-wrapper .screenshot {
+  background: $color_primary;
+}

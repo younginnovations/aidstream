@@ -1,6 +1,5 @@
 <?php namespace App\Lite\Forms\V202\Tz;
 
-
 use App\Lite\Forms\FormPathProvider;
 use App\Lite\Forms\LiteBaseForm;
 use App\Lite\Forms\LiteCustomizer;
@@ -11,7 +10,8 @@ class Location extends LiteBaseForm
 
     public function buildForm()
     {
-        $this->addSelect(
+        $this
+        ->addSelect(
             'country',
             $this->getCodeList('Country', 'Organization'),
             trans('lite/elementForm.country'),
@@ -34,4 +34,3 @@ class Location extends LiteBaseForm
 //        $this->customize(['country']);
     }
 }
-

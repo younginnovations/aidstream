@@ -1,0 +1,212 @@
+table {
+  border-collapse: inherit;
+  -webkit-font-feature-settings: "kern", "liga", "tnum";
+  -moz-font-feature-settings: "kern", "liga", "tnum";
+  font-feature-settings: "kern", "liga", "tnum";
+  margin: 0.75em 0;
+  table-layout: fixed;
+  width: 100%;
+  tbody {
+    tr.clickable-row {
+      cursor: pointer;
+    }
+    tr.link-row {
+      cursor: pointer;
+    }
+    tr.clickable-row-bg {
+      background: #EEF4FB !important;
+      &:nth-child(even) {
+        background: #EEF4FB !important;
+      }
+    }
+  }
+}
+
+th {
+  font-weight: 600;
+  text-align: left;
+  vertical-align: middle;
+
+}
+
+
+tr,td {
+  vertical-align: middle;
+}
+
+.table {
+  table-layout: auto;
+  >thead {
+    >tr {
+      >th {
+        text-transform: uppercase;
+        font: normal 13px Open-Sans-Bold;
+        color: #484848;
+        border-bottom: 1px solid #d9f3de;
+        padding: 15px 20px 12px;
+      }
+    }
+  }
+  >tbody {
+    >tr {
+      background: #fff !important;
+      &:hover {
+        background: #e4f7e8!important;
+      }
+      >td {
+        border-top: 0;
+        border-bottom: 1px solid #d9f3de;
+        padding: 10px 20px;
+        word-wrap: break-word;
+      }
+      &:nth-child(odd) {
+        background: #f3fdf5 !important;
+        &:hover {
+          background: #e4f7e8!important;
+        }
+      }
+    }
+  }
+}
+th.status {
+  //padding-left: 24px !important;
+}
+
+/* ------- style for bordered table --------*/
+
+.custom-table{
+  margin-bottom: 60px;
+
+  .table>thead>tr>th{
+    border-bottom: solid 1px #d8d8d8;
+  }
+
+  td{
+    color: #484848;
+  }
+
+
+  tr{
+    .bold-col{
+      font-family: Open-Sans-Bold;
+    }
+
+    .light-col{
+      color: rgba(72,72,72,0.50);
+    }
+
+  }
+}
+
+/* Hide table headers (but not display: none;, for accessibility) */
+/*
+  Label the data
+  */
+@media all and (max-width: 767px) {
+  * {
+    &:not(.xdsoft_calendar) {
+      > table {
+        display: block;
+        thead, tbody, th, td, tr {
+          display: block;
+        }
+
+      }
+    }
+  }
+
+  .custom-table{
+    border: none;
+    border-radius: 0;
+  }
+
+  thead {
+    tr {
+      position: absolute;
+      top: -9999px;
+      left: -9999px;
+    }
+  }
+  tr {
+    border: 1px solid #eee;
+  }
+  .table {
+    >tbody {
+      >tr {
+        >td {
+          border: none;
+          border-bottom: 1px solid #eee;
+          position: relative;
+          padding-left: 50% !important;
+          overflow: hidden;
+          min-height: 48px;
+          &:before {
+            position: absolute;
+            top: 15px;
+            left: 6px;
+            width: 45%;
+            padding-right: 10px;
+            white-space: nowrap;
+          }
+        }
+        >td.no-data {
+          padding-left: 0 !important;
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+
+  .project-data-table {
+    td {
+      &:nth-of-type(1) {
+        &:before {
+          content: "Project Title";
+        }
+      }
+      &:nth-of-type(2) {
+        &:before {
+          content: "Reporting Organisation";
+        }
+      }
+      &:nth-of-type(3) {
+        &:before {
+          content: "Sectors";
+        }
+      }
+    }
+    .no-data {
+      margin: 0;
+      &:before {
+        display: none;
+      }
+    }
+  }
+
+  .expenditure-table,.incoming-fund-table{
+    td {
+      &:nth-of-type(1) {
+        &:before {
+          content: "DATE";
+        }
+      }
+      &:nth-of-type(2) {
+        &:before {
+          content: "AMOUNT";
+        }
+      }
+
+      &:nth-of-type(2) {
+        &:before {
+          content: "RECEIVER";
+        }
+      }
+    }
+  }
+
+  .navbar-nav {
+    margin: 0;
+  }
+}
+
+

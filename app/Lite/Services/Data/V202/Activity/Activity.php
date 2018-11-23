@@ -114,6 +114,7 @@ class Activity implements MapperInterface
     protected $mappedFields = [
         'activity_identifier'        => 'identifier',
         'activity_title'             => 'title',
+        'activity_title_np'          => 'title_np',
         'general_description'        => 'description',
         'objectives'                 => 'description',
         'target_groups'              => 'description',
@@ -167,6 +168,7 @@ class Activity implements MapperInterface
     {
         $this->mappedData['activity_identifier'] = getVal($this->rawData, ['identifier', 'activity_identifier']);
         $this->mappedData['activity_title']      = getVal($this->rawData, ['title', 0, 'narrative']);
+        $this->mappedData['activity_title_in_np'] = getVal($this->rawData, ['title',0,'language']);
         $this->mappedData['activity_status']     = getVal($this->rawData, ['activity_status']);
 
         foreach (getVal($this->rawData, ['sector'], []) as $index => $value) {
@@ -221,6 +223,7 @@ class Activity implements MapperInterface
     protected function title($key, $value, $template)
     {
         $template['narrative'] = $value;
+        $template['language'] = '';
 
         $this->mappedData[$this->mappedFields[$key]][$this->index] = $template;
     }
@@ -318,7 +321,6 @@ class Activity implements MapperInterface
     {
         $organizationRole = $this->getOrganizationRole($key);
         foreach ($value as $index => $field) {
-
             if ($organizationRole) {
                 $organizationType = getVal($field, ['organisation_type'], '');
                 $organizationName = getVal($field, ['organisation_name'], '');
@@ -657,4 +659,3 @@ class Activity implements MapperInterface
         return $percentageArray;
     }
 }
-

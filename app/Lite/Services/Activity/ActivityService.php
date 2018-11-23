@@ -82,7 +82,6 @@ class ActivityService
         $this->settingsService        = $settingsService;
         $this->databaseManager        = $databaseManager;
         $this->documentLinkRepository = $documentLinkRepository;
-
     }
 
     /**
@@ -489,7 +488,7 @@ class ActivityService
     {
         $countryCode = [];
 
-        if(is_array($countries)) {
+        if (is_array($countries)) {
             foreach ($countries as $index => $country) {
                 $countryCode[] = getVal($country, ['country_code']);
             }
@@ -498,4 +497,3 @@ class ActivityService
         return $countryCode;
     }
 }
-
