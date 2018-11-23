@@ -1,7 +1,7 @@
 <header>
     <nav class="navbar navbar-default">
         <div class="navbar-header">
-            <a href="{{ url('/') }}" class="navbar-brand">Aidstream</a>
+            <a href="{{ url('/') }}" class="navbar-brand"></a>
             <button type="button" class="navbar-toggle collapsed">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="bar1"></span>

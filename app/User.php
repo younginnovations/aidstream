@@ -39,6 +39,11 @@ class User extends Model implements AuthorizableContract, AuthenticatableContrac
     const ADMINISTRATOR_ROLE_ID = 5;
 
     /**
+     * Municipality Admin Role Id.
+     */
+    const MUNICIPALITY_ADMIN_ROLE_ID = 8;
+
+    /**
      * The database table used by the model.
      *
      * @var string
@@ -123,6 +128,27 @@ class User extends Model implements AuthorizableContract, AuthenticatableContrac
     public function isSuperAdmin()
     {
         return self::SUPERADMIN_ROLE_ID === $this->role_id;
+    }
+
+    public function getMunicipalityByAdmin()
+    {
+        $municipality = DB::table('user_municipality')->where('user_id', $this->id)->first();
+
+        return $municipality->municipality_id;
+    }
+
+    /**
+     * Check if the user is Municipality Admin or not
+     *
+     * @return boolean
+     */
+    public function isMunicipalityAdmin()
+    {
+        if($this->user_permission == 8){
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**

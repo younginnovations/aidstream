@@ -67,12 +67,14 @@ class RegistrationController extends Controller
         $orgRegAgency   = $this->baseForm->getCodeList('OrganisationRegistrationAgency', 'Organization', false);
         $dbRegAgency    = $this->regAgencyManager->getRegAgenciesCode();
         $orgRegAgency   = array_merge($orgRegAgency, $dbRegAgency);
-        $systemVersions = $this->systemVersion->where('id', '<>', config('system-version.Tz.id'))->lists('system_version', 'id')->toArray();
-
+        $systemVersions = $this->systemVersion->where([ ['id', '<>', config('system-version.Tz.id')], ['id', '<>', config('system-version.Np.id')] ])->lists('system_version', 'id')->toArray();
         $dbRoles = \DB::table('role')->whereNotNull('permissions')->orderBy('role', 'desc')->get();
         $roles   = [];
         foreach ($dbRoles as $role) {
             $roles[$role->id] = $role->role;
+        }
+        if(isNpSubDomain()){
+            $orgRegAgency = $this->baseForm->getCodeList('NpOrganisationRegistrationAgency', 'Organization', false);
         }
 
         $data = [];
@@ -97,7 +99,7 @@ class RegistrationController extends Controller
     {
         $request = request();
 
-        $systemVersion = isTzSubDomain() ? 3 : $request->get('systemVersion');
+        $systemVersion = isTzSubDomain() ? 3 : isNpSubDomain() ? 4 : $request->get('systemVersion');
         $users         = $request->get('users');
         $orgInfo       = $request->get('organization');
 

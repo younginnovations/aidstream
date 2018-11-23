@@ -14,6 +14,22 @@ use App\Lite\Repositories\PublishedFiles\PublishedFilesRepository;
 use App\Lite\Repositories\Settings\SettingsRepository;
 use App\Lite\Repositories\Activity\Transaction\TransactionRepository;
 use App\Lite\Repositories\Users\UserRepository;
+use App\Np\Contracts\NpActivityRepositoryInterface;
+use App\Np\Contracts\ActivityLocationRepositoryInterface;
+use App\Np\Contracts\NpDocumentLinkRepositoryInterface;
+use App\Np\Contracts\NpOrganisationRepositoryInterface;
+use App\Np\Contracts\NpPublishedFilesRepositoryInterface;
+use App\Np\Contracts\NpSettingsRepositoryInterface;
+use App\Np\Contracts\NpTransactionRepositoryInterface;
+use App\Np\Contracts\NpUserRepositoryInterface;
+use App\Np\Repositories\Activity\ActivityLocationRepository;
+use App\Np\Repositories\Activity\NpActivityRepository;
+use App\Np\Repositories\DocumentLinks\NpDocumentLinksRepository;
+use App\Np\Repositories\Organisation\NpOrganisationRepository;
+use App\Np\Repositories\PublishedFiles\NpPublishedFilesRepository;
+use App\Np\Repositories\Settings\NpSettingsRepository;
+use App\Np\Repositories\Activity\Transaction\NpTransactionRepository;
+use App\Np\Repositories\Users\NpUserRepository;
 use App\Services\Settings\Segmentation\SegmentationInterface;
 use App\Services\Settings\Segmentation\SegmentationService;
 use Illuminate\Support\ServiceProvider;
@@ -58,5 +74,14 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(DocumentLinkRepositoryInterface::class, DocumentLinksRepository::class);
         $this->app->bind(PublishedFilesRepositoryInterface::class, PublishedFilesRepository::class);
         $this->app->bind(TransactionRepositoryInterface::class, TransactionRepository::class);
+        $this->app->bind(NpActivityRepositoryInterface::class, NpActivityRepository::class);
+        $this->app->bind(ActivityLocationRepositoryInterface::class, ActivityLocationRepository::class);
+        $this->app->bind(NpUserRepositoryInterface::class, NpUserRepository::class);
+        $this->app->bind(NpOrganisationRepositoryInterface::class, NpOrganisationRepository::class);
+        $this->app->bind(NpSettingsRepositoryInterface::class, NpSettingsRepository::class);
+        $this->app->bind(NpUserRepositoryInterface::class, NpUserRepository::class);
+        $this->app->bind(NpDocumentLinkRepositoryInterface::class, NpDocumentLinksRepository::class);
+        $this->app->bind(NpPublishedFilesRepositoryInterface::class, NpPublishedFilesRepository::class);
+        $this->app->bind(NpTransactionRepositoryInterface::class, NpTransactionRepository::class);
     }
 }

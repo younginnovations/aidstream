@@ -36,6 +36,9 @@ var lite_style = [
 var tz_style = [
     './public/tz/css/tz.css'
 ];
+var np_style = [
+    './public/np/css/np.css'
+];
 
 var js_files = [
     './public/js/jquery.js',
@@ -91,6 +94,14 @@ gulp.task('tz-sass', function () {
         .pipe(sourcemaps.write('./maps'))
         .pipe(gulp.dest('./public/tz/css'));
 });
+gulp.task('np-sass', function () {
+    var np_style = gulp.src('./resources/assets/sass/np/np.scss')
+        .pipe(sourcemaps.init())
+        .pipe(sass())
+        .pipe(postcss([autoprefixer({browsers: ['last 30 versions', '> 1%', 'ie 8', 'ie 7']})]))
+        .pipe(sourcemaps.write('./maps'))
+        .pipe(gulp.dest('./public/np/css'));
+});
 
 /*
  * Watch scss files for changes & recompile
@@ -100,11 +111,13 @@ gulp.task('watch', function () {
     gulp.watch('./resources/assets/sass/app.scss', ['sass']);
     gulp.watch('./resources/assets/sass/lite/lite.scss', ['lite-sass']);
     gulp.watch('./resources/assets/sass/tz/**/*.scss',['tz-sass']);
+    gulp.watch('./resources/assets/sass/np/**/*.scss',['np-sass']);
     gulp.watch(vendor_files, ['vendor-main']);
     gulp.watch(css_style, ['style-main']);
     gulp.watch(app_style, ['app-main']);
     gulp.watch(lite_style, ['lite-main']);
     gulp.watch(tz_style, ['tz-main']);
+    gulp.watch(np_style, ['np-main']);
     gulp.watch(js_files, ['js-main']);
     gulp.watch(['image-min']);
 });
@@ -152,6 +165,13 @@ gulp.task('tz-main', function () {
         .pipe(minifyCss({compatibility: 'ie8'}))
         .pipe(gulp.dest('./public/tz/css'));
 });
+gulp.task('np-main', function () {
+    return gulp.src(np_style)
+        .pipe(sourcemaps.init())
+        .pipe(rename({suffix: '.min'}))
+        .pipe(minifyCss({compatibility: 'ie8'}))
+        .pipe(gulp.dest('./public/np/css'));
+});
 
 gulp.task('js-main', function () {
     return gulp.src(js_files)
@@ -175,7 +195,7 @@ gulp.task('image-min', function() {
 /*
  * Default task, running just `gulp` will compile the sass,
  */
-gulp.task('default', ['style-sass',"sass","lite-sass","tz-sass", 'watch']);
+gulp.task('default', ['style-sass',"sass","lite-sass","tz-sass","np-sass", 'watch']);
 
 
 
