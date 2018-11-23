@@ -20,7 +20,8 @@ class OrganizationData extends Model
         'is_reporting_org',
         'is_publisher',
         'identifier',
-        'used_by'
+        'used_by',
+        'org_data'
     ];
 
     protected $casts = [
@@ -31,7 +32,8 @@ class OrganizationData extends Model
         'recipient_country_budget'      => 'json',
         'document_link'                 => 'json',
         'total_expenditure'             => 'json',
-        'used_by'                       => 'json'
+        'used_by'                       => 'json',
+        'org_data'                      => 'json'
     ];
 
     public function getName()

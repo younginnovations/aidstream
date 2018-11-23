@@ -147,6 +147,30 @@ function isSuperAdminRoute()
 }
 
 /**
+ * Checks if the request route contains prefix SuperAdmin.
+ * @return bool
+ */
+function isMunicipalityAdminRoute()
+{
+    if (request()->route()) {
+        $routeAction = request()->route()->getAction();
+
+        return isset($routeAction['MunicipalityAdmin']);
+    }
+
+    return false;
+}
+
+function isMunicipalityAdmin()
+{
+    if(session('user_permission') == 8){
+        return true;
+    }
+
+    return false;
+}
+
+/**
  * Check if the logged in user is admin or user of any organization.
  * @param User $user
  * @return bool
@@ -1272,10 +1296,32 @@ function isRegisteredForTz()
     return false;
 }
 
+function isRegisteredForNp()
+{
+    if (auth()->check()) {
+        if (auth()->user()->organization->system_version_id === 4) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
 function isTzSubDomain()
 {
     if ($host = request()->getHost()) {
         if (in_array('tz', explode('.', strtolower($host)))) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+function isNpSubDomain()
+{
+    if($host = request()->getHost()) {
+        if(in_array('np', explode('.', strtolower($host)))) {
             return true;
         }
     }

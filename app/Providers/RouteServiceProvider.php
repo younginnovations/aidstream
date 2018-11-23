@@ -40,6 +40,14 @@ class RouteServiceProvider extends ServiceProvider
             ['namespace' => $this->namespace],
             function ($router) {
                 require app_path('Http/routes/Lite/lite.php');
+                require app_path('Http/routes/Np/np.php');
+                require app_path('Http/routes/Np/publishedFiles.php');
+                require app_path('Http/routes/Np/users.php');
+                require app_path('Http/routes/Np/settings.php');
+                require app_path('Http/routes/Np/workflow.php');
+                require app_path('Http/routes/Np/profile.php');
+                require app_path('Http/routes/Np/download.php');
+                require app_path('Http/routes/Np/municipalityAdmin.php');
                 require app_path('Http/routes/login.php');
                 require app_path('Http/routes.php');
                 require app_path('Http/routes/organization.php');

@@ -40,7 +40,7 @@
         </div>
         <div class="collapse navbar-collapse navbar-right" id="bs-example-navbar-collapse-1">
             <input type="hidden" name="_token" value="{{csrf_token()}}"/>
-            @if(auth()->user() && !isSuperAdminRoute())
+            @if(auth()->user() && !isSuperAdminRoute() && !isMunicipalityAdminRoute())
                 <ul class="nav navbar-nav pull-left add-new-activity">
                     <li class="dropdown" data-step="0">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
@@ -63,7 +63,7 @@
                     <li><a href="{{ url('/auth/register') }}">@lang('trans.register')</a></li>
                 @else
                     <li>
-                        @if((session('role_id') == 3  || session('role_id') == 4) && !isSuperAdminRoute())
+                        @if((session('role_id') == 3  || session('role_id') == 4) && !isSuperAdminRoute() && !isMunicipalityAdminRoute())
                             <span><a href="{{ route('admin.switch-back') }}" class="pull-left">Switch Back</a></span>
                         @endif
                     </li>
@@ -82,11 +82,11 @@
                             </span>
                             <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
-                            @if(!isSuperAdminRoute())
+                            @if(!isSuperAdminRoute() && !isMunicipalityAdminRoute())
                                 <li><a href="{{url('user/profile')}}">@lang('trans.my_profile')</a></li>
                             @endif
                             <li><a href="{{ url('/auth/logout') }}" id="logout">@lang('trans.logout')</a></li>
-                            @if (superAdminIsLoggedIn())
+                            @if (superAdminIsLoggedIn() && !isMunicipalityAdminRoute())
                                 <li>
                                     <a href="{{ route('lite.activity.index') }}">Lite</a>
                                 </li>
@@ -94,14 +94,14 @@
                             @include('unwanted')
 
                             <li class="pull-left width-491">
-                                @if(!isSuperAdminRoute())
+                                @if(!isSuperAdminRoute() && !isMunicipalityAdminRoute())
                                     <span class="width-490"><a href="{{ route('admin.switch-back') }}"
                                                                class="pull-left">Switch Back</a></span>
                                 @endif
                             </li>
                             <li class="pull-left width-491">
                                 <div class="navbar-left version-wrap width-490">
-                                    @if(!isSuperAdminRoute())
+                                    @if(!isSuperAdminRoute() && !isMunicipalityAdminRoute())
                                         <div class="version pull-right {{ (in_array(session('version'),['V201','V202']) && session('allowed_upgrade') == true) ? 'old' : 'new' }}">
                                             @if (in_array(session('version'),['V201','V202']) && session('allowed_upgrade') == true)
                                                 <a class="version-text" href="{{route('upgrade-version.index')}}">@lang('global.update_available')</a>
@@ -126,7 +126,7 @@
             </ul>
         </div>
         <div class="navbar-right version-wrap">
-            @if(auth()->user() && !isSuperAdminRoute())
+            @if(auth()->user() && !isSuperAdminRoute() && !isMunicipalityAdminRoute())
                 <div class="version pull-right {{ (in_array(session('version'),['V201','V202']) && session('allowed_upgrade') == true) ? 'old' : 'new' }}">
                     @if (session('next_version') && session('allowed_upgrade') == true)
                         <a class="version-text" href="{{route('upgrade-version.index')}}">@lang('global.update_available')</a>
