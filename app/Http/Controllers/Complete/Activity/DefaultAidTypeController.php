@@ -54,8 +54,20 @@ class DefaultAidTypeController extends Controller
         }
 
         $defaultAidType = $this->defaultAidTypeManager->getDefaultAidTypeData($id);
-        $form           = $this->defaultAidTypeForm->editForm($defaultAidType, $id);
+        if(session('version') == 'V203') {
+            if(!is_array($defaultAidType)) {
+                $defaultAidType = [
+                    'default_aid_type' => $defaultAidType,
+                    'default_aidtype_vocabulary' => '1',
+                    'earmarking_category' => '',
+                    'default_aid_type_text' => ''
+                ];
+                $defaultAidType = [$defaultAidType];
+            }
+        }
 
+        $form           = $this->defaultAidTypeForm->editForm($defaultAidType, $id);
+        
         return view('Activity.defaultAidType.edit', compact('form', 'activityData', 'id'));
     }
 

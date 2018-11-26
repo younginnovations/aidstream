@@ -22,7 +22,8 @@ class XmlServiceProvider
      */
     protected $generators = [
         '2.01' => 'App\Core\V201\Element\Activity\XmlGenerator',
-        '2.02' => 'App\Core\V202\Xml\Activity\XmlGenerator'
+        '2.02' => 'App\Core\V202\Xml\Activity\XmlGenerator',
+        '2.03' => 'App\Core\V203\Xml\Activity\XmlGenerator'
     ];
 
     /**
@@ -31,7 +32,8 @@ class XmlServiceProvider
      */
     protected $validators = [
         '2.01' => 'App\Core\V201\Element\Activity\XmlService',
-        '2.02' => 'App\Core\V202\Xml\Activity\XmlService'
+        '2.02' => 'App\Core\V202\Xml\Activity\XmlService',
+        '2.03' => 'App\Core\V203\Xml\Activity\XmlService'
     ];
 
     /**
@@ -108,7 +110,6 @@ class XmlServiceProvider
     public function generate($activity, $organizationElement, $activityElement)
     {
         $organization = $activity->organization;
-
         $this->generator->generateActivityXml($activity, $activity->transactions, $activity->results, $organization->settings, $activityElement, $organizationElement, $organization);
     }
 }

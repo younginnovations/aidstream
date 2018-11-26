@@ -56,7 +56,7 @@ class SectorController extends Controller
         $sector       = $this->sectorManager->getSectorData($id);
         $activityData = $this->activityManager->getActivityData($id);
         $form         = $this->sectorForm->editForm($sector, $id);
-
+        
         return view('Activity.sector.edit', compact('form', 'activityData', 'id'));
     }
 

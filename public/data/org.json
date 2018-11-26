@@ -12423,6 +12423,110 @@
       }
     },
     {
+      "deprecated": true,
+      "subnationalCoverage": [],
+      "links": {
+        "opencorporates": "",
+        "wikipedia": ""
+      },
+      "structure": [
+        ""
+      ],
+      "meta": {
+        "lastUpdated": "",
+        "source": ""
+      },
+      "confirmed": true,
+      "data": {
+        "dataAccessDetails": "",
+        "features": [],
+        "licenseDetails": "",
+        "availability": []
+      },
+      "access": {
+        "publicDatabase": "",
+        "exampleIdentifiers": "",
+        "guidanceOnLocatingIds": "",
+        "languages": [],
+        "onlineAccessDetails": null,
+        "availableOnline": false
+      },
+      "sector": [],
+      "coverage": [
+        "NE"
+      ],
+      "quality_explained": {
+        "List type: Secondary": 50
+      },
+      "formerPrefixes": [],
+      "listType": "secondary",
+      "quality": 50,
+      "url": "",
+      "code": "NE-DGI",
+      "description": {
+        "en": ""
+      },
+      "name": {
+        "en": "Tax Directorate (Niger)",
+        "local": ""
+      }
+    },
+    {
+      "structure": [
+        "charity"
+      ],
+      "deprecated": false,
+      "quality": 55,
+      "description": {
+        "en": "The NGO Directory registers both local and international NGOs operating in Iraq, and assigns a registration number to each. "
+      },
+      "url": "http://www.ngoao.gov.iq/",
+      "access": {
+        "languages": [
+          "ar"
+        ],
+        "publicDatabase": "",
+        "exampleIdentifiers": "1Z2364",
+        "availableOnline": false,
+        "onlineAccessDetails": "",
+        "guidanceOnLocatingIds": "Organisations are provided with a registration certificate which contains their registration number."
+      },
+      "listType": "secondary",
+      "meta": {
+        "source": "Desk research",
+        "lastUpdated": "2018-08-06"
+      },
+      "confirmed": true,
+      "code": "IQ-NGO",
+      "quality_explained": {
+        "License: No License": 5,
+        "List type: Secondary": 50
+      },
+      "subnationalCoverage": [],
+      "links": {
+        "opencorporates": "",
+        "wikipedia": ""
+      },
+      "formerPrefixes": [],
+      "data": {
+        "features": [],
+        "licenseStatus": "no_license",
+        "availability": [
+          "data_not_available"
+        ],
+        "licenseDetails": "",
+        "dataAccessDetails": ""
+      },
+      "coverage": [
+        "IQ"
+      ],
+      "sector": [],
+      "name": {
+        "local": "",
+        "en": "NGO Directorate (Republic of Iraq)"
+      }
+    },
+    {
       "deprecated": false,
       "subnationalCoverage": [],
       "links": {

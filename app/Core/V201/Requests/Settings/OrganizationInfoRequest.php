@@ -78,7 +78,7 @@ class OrganizationInfoRequest extends Request
         $rules['organization_type']     = 'required';
         $rules['user_identifier']       = $user_identifier_rule;
         $rules['registration_agency']   = 'required';
-        $rules['registration_number']   = 'required|regex:/^[0-9a-zA-Z-_\/:]+$/';
+        $rules['registration_number']   = 'required|regex:/^[0-9a-zA-Z-_\/:.]+$/';
         $rules['logo']                  = 'image';
         $rules['organization_url']      = 'url';
 
@@ -97,7 +97,7 @@ class OrganizationInfoRequest extends Request
         $messages['user_identifier.no_spaces']      = trans('validation.spaces_not_allowed');
         $messages['organization_type.required']     = trans('validation.required', ['attribute' => trans('elementForm.organisation_type')]);
         $messages['registration_number.required']   = trans('validation.required', ['attribute' => trans('organisation.organisation_registration_number')]);
-        $messages['registration_number.regex']      = trans('validation.regex', ['attribute' => '-' . ',' . '_']);
+        $messages['registration_number.regex']      = trans('validation.regex', ['attribute' => '-' . ',' . '_'.'.']);
         $messages['registration_agency.required']   = trans('validation.required', ['attribute' => trans('organisation.organisation_registration_agency')]);
         $messages['logo.image']                     = trans('validation.image');
         $messages['organization_url.url']           = trans('validation.enter_valid', ['attribute' => trans('organisation.organisation_url')]);

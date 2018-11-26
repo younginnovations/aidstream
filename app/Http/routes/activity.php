@@ -41,6 +41,7 @@ $router->group(
         $router->resource('activity-upload', 'ActivityUploadController');
         $router->resource('activity.legacy-data', 'LegacyDataController');
         $router->resource('activity.humanitarian-scope', 'HumanitarianScopeController');
+        $router->resource('activity.tag','TagController');
         $router->post('activity/{id}/update-status', 'ActivityController@updateStatus');
         $router->get(
             'delete-published-file/{id}',

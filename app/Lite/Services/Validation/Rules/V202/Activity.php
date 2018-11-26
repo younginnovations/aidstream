@@ -152,8 +152,8 @@ class Activity
      */
     protected function messagesForActivityStatus()
     {
-        $this->activityMessages['activity_status.required'] = trans('validation.required', ['attribute' => trans('lite/elementForm.general_description')]);
-        $this->activityMessages['activity_status.in']       = trans('validation.code_list', ['attribute' => trans('lite/elementForm.general_description')]);
+        $this->activityMessages['activity_status.required'] = trans('validation.required', ['attribute' => trans('lite/elementForm.activity_status')]);
+        $this->activityMessages['activity_status.in']       = trans('validation.code_list', ['attribute' => trans('lite/elementForm.activity_status')]);
     }
 
     /**

@@ -5,6 +5,11 @@
         <div class="create-form settings-form org-info-form">
             {{ Form::model($organization,['method'=>'POST', 'route' => 'organization-information.update','files' => true]) }}
             {!! form_rest($form) !!}
+            @if(session('version') == 'V203')
+            <div class="col-md-12 col-xs-12">
+                {!! AsForm::select(['name'=>'secondary_reporter', 'class' => 'organization_name_abbr','empty_value' => trans('global.select_one_of_the_following_options') ,'data'=>["1"=>'Yes',"0"=>'No'],'label'=>trans('organisation.secondary_reporter'), 'parent'=>'col-xs-12 col-sm-6 col-md-6']) !!}
+            </div>
+            @endif
             <div class="col-md-12 col-xs-12">
                 {!! AsForm::text(['name'=>'user_identifier', 'class' => 'organization_name_abbr','required' => true,'label'=>trans('organisation.organisation_name_abbreviation'), 'parent'=>'col-xs-12 col-sm-6 col-md-6']) !!}
                 {!! AsForm::select(['name'=>'organization_type','label' => trans('organisation.organisation_type'),'data' => $organizationTypes, 'value' => getVal((array) $organization->reporting_org, [ 0 ,'reporting_organization_type']),'empty_value' => trans('global.select_one_of_the_following_options') ,'required' => true,'parent'=>'col-xs-12 col-sm-6 col-md-6']) !!}

@@ -53,8 +53,8 @@ class TransactionProcessor
                 $activityId,
                 $userId,
                 session('version')
-            )
-        );
+            ));
+
     }
 }
 

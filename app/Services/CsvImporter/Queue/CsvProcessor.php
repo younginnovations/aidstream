@@ -2,7 +2,7 @@
 
 use App\Services\CsvImporter\Entities\Activity\Activity;
 use App\Services\CsvImporter\Traits\ChecksCsvHeaders;
-
+use Illuminate\Support\Facades\Log;
 /**
  * Class CsvProcessor
  * @package App\Services\CsvImporter
@@ -66,13 +66,13 @@ class CsvProcessor
      * @param $userId
      * @param $activityIdentifiers
      */
-    public function handle($organizationId, $userId, $activityIdentifiers)
+    public function handle($organizationId, $userId, $activityIdentifiers, $version)
     {
         $this->filterHeader();
         if ($this->isCorrectCsv()) {
             $this->groupValues();
 
-            $this->initActivity(['organization_id' => $organizationId, 'user_id' => $userId, 'activity_identifiers' => $activityIdentifiers]);
+            $this->initActivity(['organization_id' => $organizationId, 'user_id' => $userId, 'activity_identifiers' => $activityIdentifiers, 'version' => $version]);
 
             $this->activity->process();
         } else {
@@ -85,6 +85,7 @@ class CsvProcessor
 
             file_put_contents($filepath . '/' . $filename, json_encode(['mismatch' => true]));
         }
+
     }
 
     /**
@@ -95,7 +96,7 @@ class CsvProcessor
     protected function initActivity(array $options = [])
     {
         if (class_exists(Activity::class)) {
-            $this->activity = app()->make(Activity::class, [$this->data, getVal($options, ['organization_id']), getVal($options, ['user_id']), getVal($options, ['activity_identifiers'])]);
+            $this->activity = app()->make(Activity::class, [$this->data, getVal($options, ['organization_id']), getVal($options, ['user_id']), getVal($options, ['activity_identifiers']), getVal($options, ['version'])]);
         }
     }
 

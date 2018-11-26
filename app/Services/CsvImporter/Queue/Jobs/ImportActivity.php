@@ -3,7 +3,7 @@
 use App\Jobs\Job;
 use App\Services\CsvImporter\Queue\CsvProcessor;
 use Illuminate\Contracts\Queue\ShouldQueue;
-
+use Illuminate\Support\Facades\Log;
 /**
  * Class ImportActivity
  * @package App\Services\CsvImporter\Queue\Jobs
@@ -41,6 +41,7 @@ class ImportActivity extends Job implements ShouldQueue
      */
     private $activityIdentifiers;
 
+    private $version;
     /**
      * Create a new job instance.
      *
@@ -50,11 +51,12 @@ class ImportActivity extends Job implements ShouldQueue
      */
     public function __construct(CsvProcessor $csvProcessor, $filename, $activityIdentifiers)
     {
-        $this->csvProcessor   = $csvProcessor;
-        $this->organizationId = session('org_id');
-        $this->userId         = $this->getUserId();
-        $this->filename       = $filename;
-        $this->activityIdentifiers = $activityIdentifiers;
+        $this->csvProcessor         = $csvProcessor;
+        $this->organizationId       = session('org_id');
+        $this->userId               = $this->getUserId();
+        $this->filename             = $filename;
+        $this->activityIdentifiers  = $activityIdentifiers;
+        $this->version              = session('version');
     }
 
     /**
@@ -67,7 +69,7 @@ class ImportActivity extends Job implements ShouldQueue
         try {
             $path = storage_path(sprintf('%s/%s/%s/%s', 'csvImporter/tmp/', $this->organizationId, $this->userId, 'status.json'));
 
-            $this->csvProcessor->handle($this->organizationId, $this->userId, $this->activityIdentifiers);
+            $this->csvProcessor->handle($this->organizationId, $this->userId, $this->activityIdentifiers, $this->version);
             $directoryPath = storage_path(sprintf('%s/%s/%s', 'csvImporter/tmp/', $this->organizationId, $this->userId));
             shell_exec(sprintf('chmod 777 -R %s', $directoryPath));
 

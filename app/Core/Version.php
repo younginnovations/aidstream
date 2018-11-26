@@ -5,6 +5,8 @@ use App;
 use Auth;
 use Illuminate\Support\Facades\Session;
 use Maatwebsite\Excel\Excel;
+use Illuminate\Support\Facades\Storage;
+
 
 class Version
 {
@@ -54,6 +56,22 @@ class Version
             $this->version = config('app.default_version_name');
             Session::put('version', $this->version);
         }
+
+        if(session('next_version')){
+            Session::put('allowed_upgrade', true);
+        }
+        if(session('next_version') == '2.03'){
+            $fileExists = Storage::disk('storage')->exists('organizationUpgradeList.json');
+            if($fileExists){
+                $contents = Storage::disk('storage')->get('organizationUpgradeList.json');
+                if(!in_array(session('org_id'), json_decode($contents))){
+                    Session::put('allowed_upgrade', false);
+                }
+            } else {
+                Session::put('allowed_upgrade', false);
+            }
+        }
+
         $this->activityElement     = App::make("App\Core\\$this->version\IatiActivity");
         $this->organizationElement = App::make("App\Core\\$this->version\IatiOrganization");
         $this->settingsElement     = App::make("App\Core\\$this->version\IatiSettings");

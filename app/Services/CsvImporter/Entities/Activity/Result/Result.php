@@ -27,10 +27,10 @@ class Result extends ResultCsv
      *
      * @return $this
      */
-    public function process()
+    public function process($version)
     {
         foreach ($this->rows() as $row) {
-            $this->initialize($row)
+            $this->initialize($row, $version)
                  ->mapResultRow()
                  ->validate()
                  ->keep();

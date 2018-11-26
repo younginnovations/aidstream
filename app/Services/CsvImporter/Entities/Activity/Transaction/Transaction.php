@@ -61,7 +61,12 @@ class Transaction extends TransactionCsv
     {
         $dataWriter = $this->dataWriterClass();
         $dataWriter->internalReferences();
+
         $transactions = $this->groupBySector();
+
+        if($this->version == 'V203') {
+            $transactions = $this->groupByAidType($transactions);
+        }
 
         foreach ($transactions as $index => $row) {
             $this->data = $this->initialize($row)
@@ -110,6 +115,35 @@ class Transaction extends TransactionCsv
             if ($shouldMerge && $index != 0) {
                 array_push($transactions[$index - 1]['sector'], $transactions[$index]['sector'][0]);
                 unset($transactions[$index]);
+            }
+        }
+
+        return $transactions;
+    }
+
+    public function groupByAidType($transactions)
+    {
+        foreach ($transactions as $index => $row) {
+
+            $rows = [];
+            $aidTypeArray = [];
+            if($row['aid_type_code'] !== null){
+                $rows = explode(';', $row['aid_type_code']);
+                $rows = collect($rows)->map(
+                    function($rows) {
+                        return [
+                            "default_aid_type"              => $rows,
+                            "default_aidtype_vocabulary"    => ($rows ? "1" : ""),
+                            "aidtype_earmarking_category"   => "",
+                            "default_aid_type_text"         => ""
+                        ];
+                    }
+                )->toArray();
+
+            $aidTypeArray[]['aid_type'] = $rows;
+            $transactions[$index]['aid_type_code'] = $aidTypeArray;
+            } else {
+                $transactions[$index]['aid_type_code'] = [];
             }
         }
 

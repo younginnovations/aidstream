@@ -87,6 +87,13 @@ class ImportResultManager
     protected $filesystem;
 
     /**
+     * System Version
+     *
+     * @var String
+     */
+    protected $version;
+
+    /**
      * File names for the invalid results.
      * @var array
      */
@@ -119,6 +126,7 @@ class ImportResultManager
         $this->organizationRepo = $organizationRepo;
         $this->userId           = $this->getUserId();
         $this->filesystem       = $filesystem;
+        $this->version          = session('version');
     }
 
     /**
@@ -131,7 +139,7 @@ class ImportResultManager
         try {
             $file = new File($this->getStoredCsvPath($filename));
 
-            $this->processor->pushIntoQueue($file, $filename);
+            $this->processor->pushIntoQueue($file, $filename, $this->version);
         } catch (Exception $exception) {
             $this->logger->error(
                 $exception->getMessage(),
@@ -221,7 +229,7 @@ class ImportResultManager
     {
         $this->sessionManager->put(['import-result-status' => 'Processing']);
         $this->sessionManager->put(['filename' => $filename]);
-
+        
         return $this;
     }
 

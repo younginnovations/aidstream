@@ -58,7 +58,13 @@ class ParticipatingOrganizationController extends Controller
         if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
-
+        
+        if(Session('version') == 'V203'){
+            $getCrsChannelCode = $this->getNameWithCode('Activity', 'CRSChannelCode');
+        } else {
+            $getCrsChannelCode = [];
+        }
+        
 //        $participatingOrganization  = $this->participatingOrganizationManager->getParticipatingOrganizationData($id);
 //        $form                       = $this->participatingOrganizationForm->editForm($participatingOrganization, $id);
         $organizationTypes     = $this->getNameWithCode('Activity', 'OrganisationType');
@@ -89,7 +95,7 @@ class ParticipatingOrganizationController extends Controller
 
         return view(
             'Activity.participatingOrganization.edit',
-            compact('form', 'activityData', 'id', 'participatingOrganizations', 'organizationRoles', 'organizationTypes', 'countries', 'partnerOrganizations')
+            compact('form', 'activityData', 'id', 'participatingOrganizations', 'organizationRoles', 'organizationTypes', 'countries', 'partnerOrganizations','getCrsChannelCode')
         );
     }
 

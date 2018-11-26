@@ -61,5 +61,6 @@ return [
     'activity_results'              => 'Activity Results',
     'results'                       => 'Results',
     'add_participating_organisation' => 'Add a participating organization',
+    'tag'                           => 'Tag'
 ];
 

@@ -1,0 +1,58 @@
+{
+  "date-last-modified": "2017-07-03T16:35:13.115662+00:00",
+  "version": "",
+  "name": "IndicatorVocabulary",
+  "xml:lang": "en",
+  "IndicatorVocabulary": [
+    {
+      "code": "1",
+      "name": "WHO Registry",
+      "language": "en"
+    },
+    {
+      "code": "2",
+      "name": "Sphere Handbook",
+      "language": "en"
+    },
+    {
+      "code": "3",
+      "name": "US Foreign Assistance Framework",
+      "language": "en"
+    },
+    {
+      "code": "4",
+      "name": "World Bank World Development Indicators",
+      "language": "en"
+    },
+    {
+      "code": "5",
+      "name": "UN Millennium Development Goals Indicators",
+      "language": "en"
+    },
+    {
+      "code": "6",
+      "name": "UNOCHA Humanitarian Response Indicators",
+      "language": "en"
+    },
+    {
+      "code": "7",
+      "name": "HIV/AIDS Indicator Registry",
+      "language": "en"
+    },
+    {
+      "code": "8",
+      "name": "Harmonized Indicators for Private Sector (HIPSO)",
+      "language": "en"
+    },
+    {
+      "code": "9",
+      "name": "UN Sustainable Development Goals (SDG) Indicators",
+      "language": "en"
+    },
+    {
+      "code": "99",
+      "name": "Reporting Organisation",
+      "language": "en"
+    }
+  ]
+}

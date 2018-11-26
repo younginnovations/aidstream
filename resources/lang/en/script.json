@@ -23,7 +23,7 @@
   "country_required": "Country is required.",
   "org_registration_agency_required": "Organisation Registration Agency is required.",
   "registration_number_required": "Registration Number is required.",
-  "letters_and_numbers_allowed": "Only -, _, letters and numbers are allowed.",
+  "letters_and_numbers_allowed": "Only -, _, ., letters and numbers are allowed.",
   "iati_organisational_identifier_required": "IATI Organisational Identifier is required.",
   "first_name_required": "First Name is required.",
   "last_name_required": "Last Name is required.",

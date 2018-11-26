@@ -1,0 +1,23 @@
+{
+  "date-last-modified": "2017-07-03T16:35:13.113992+00:00",
+  "version": "",
+  "name": "HumanitarianScopeVocabulary",
+  "xml:lang": "en",
+  "HumanitarianScopeVocabulary": [
+    {
+      "code": "1-2",
+      "name": "Glide",
+      "language": "en"
+    },
+    {
+      "code": "2-1",
+      "name": "Humanitarian Plan",
+      "language": "en"
+    },
+    {
+      "code": "99",
+      "name": "Reporting Organisation",
+      "language": "en"
+    }
+  ]
+}

@@ -130,7 +130,6 @@ class BaseForm extends Form
             $defaultVersion,
             $file
         ) : $filePath;
-
         return $this->add(
             $name,
             'collection',
@@ -206,9 +205,9 @@ class BaseForm extends Form
      * @param null $helpText
      * @return $this
      */
-    protected function addPercentage($helpText = null)
+    protected function addPercentage($helpText = null, $bool = null)
     {
-        return $this->add('percentage', 'text', ['help_block' => $helpText, 'label' => trans('elementForm.percentage')]);
+        return $this->add('percentage', 'text', ['help_block' => $helpText, 'label' => trans('elementForm.percentage'), 'required' => $bool]);
     }
 
     /**

@@ -398,7 +398,6 @@ class SettingsController extends Controller
             'url'    => $url,
             'model'  => $defaultValues
         ];
-
         $form = $this->settingsManager->viewDefaultValues($formOptions);
 
         return view('settings.defaultValues', compact('form', 'settings'));

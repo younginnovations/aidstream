@@ -25,7 +25,8 @@ class Sector extends BaseForm
                     'empty_value'   => trans('elementForm.select_text'),
                     'default_value' => '1',
                     'attr'          => ['class' => 'form-control sector_vocabulary'],
-                    'label'         => trans('elementForm.sector_vocabulary')
+                    'label'         => trans('elementForm.sector_vocabulary'),
+                    'required'      => true
                 ]
             )
             ->add('vocabulary_uri', 'text', ['label' => trans('elementForm.vocabulary_uri')])

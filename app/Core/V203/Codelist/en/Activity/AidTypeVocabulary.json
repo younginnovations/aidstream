@@ -1,0 +1,27 @@
+{
+    "date-last-modified": "2018-06-26T16:35:13.281329+00:00",
+    "version": "",
+    "name": "AidTypeVocabulary",
+    "xml:lang": "en",
+    "AidTypeVocabulary": [
+    {  
+            "url":"http://www.oecd.org/dac/stats/dacandcrscodelists.htm",
+            "code":"1",
+            "name":"OECD DAC",
+            "description":"List of codes provided by the OECD DAC used to distinguish types of aid"
+         },
+         {  
+            "url":"http://iatistandard.org/codelists/EarmarkingCategory",
+            "code":"2",
+            "name":"Earmarking Category",
+            "description":"This vocabulary has been created by IATI and is derived from the Grand Bargain Earmarking Modality codelist"
+         },
+         {  
+            "url":"https://reliefweb.int/sites/reliefweb.int/files/resources/Grand_Bargain_final_22_May_FINAL-2.pdf",
+            "code":"3",
+            "name":"Earmarking Modality",
+            "description":"Codes A to L replicated directly from Grand Bargain document found in Annex 1 (pg.16)"
+         }
+    ]
+  }
+  

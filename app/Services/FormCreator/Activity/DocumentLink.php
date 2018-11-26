@@ -42,7 +42,6 @@ class DocumentLink
     public function getForm($activityId, $data = null)
     {
         $modal['document_link'][0] = $data ? $data->document_link : null;
-
         return $this->formBuilder->create(
             $this->formPath,
             [

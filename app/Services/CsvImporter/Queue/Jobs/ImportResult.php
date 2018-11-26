@@ -28,6 +28,13 @@ class ImportResult extends Job implements ShouldQueue
     protected $userId;
 
     /**
+     * System Version
+     *
+     * @var String
+     */
+    protected $version;
+
+    /**
      * Directory where the uploaded Csv file is stored temporarily before import.
      */
     const UPLOADED_CSV_STORAGE_PATH = 'csvImporter/tmp/result/file';
@@ -43,12 +50,13 @@ class ImportResult extends Job implements ShouldQueue
      * @param CsvResultProcessor $csvResultProcessor
      * @param                    $filename
      */
-    public function __construct(CsvResultProcessor $csvResultProcessor, $filename)
+    public function __construct(CsvResultProcessor $csvResultProcessor, $filename, $version)
     {
         $this->csvResultProcessor = $csvResultProcessor;
         $this->organizationId     = session('org_id');
         $this->userId             = $this->getUserId();
         $this->filename           = $filename;
+        $this->version            = $version;
     }
 
     /**
@@ -60,7 +68,7 @@ class ImportResult extends Job implements ShouldQueue
     {
         try {
             $path = storage_path(sprintf('%s/%s/%s/%s', 'csvImporter/tmp/result/', $this->organizationId, $this->userId, 'status.json'));
-            $this->csvResultProcessor->handle($this->organizationId, $this->userId);
+            $this->csvResultProcessor->handle($this->organizationId, $this->userId, $this->version);
 
             file_put_contents($path, json_encode(['status' => 'Complete']));
 
@@ -73,6 +81,7 @@ class ImportResult extends Job implements ShouldQueue
 
             $this->delete();
         } catch (\Exception $exception) {
+            dd($exception->getMessage());
             file_put_contents($path, json_encode(['status' => 'Complete']));
 
             $this->delete();

@@ -117,7 +117,7 @@ class Register extends Request
         $rules[sprintf('%s.organization_address', $formBase)]             = 'required';
         $rules[sprintf('%s.country', $formBase)]                          = 'required|code_list:Organization,Country';
         $rules[sprintf('%s.organization_registration_agency', $formBase)] = 'required|in:' . $regAgencies;
-        $rules[sprintf('%s.registration_number', $formBase)]              = 'required|regex:/^[0-9a-zA-Z-_]+$/';
+        $rules[sprintf('%s.registration_number', $formBase)]              = 'required|regex:/^[0-9a-zA-Z-_.]+$/';
         $rules[sprintf('%s.organization_identifier', $formBase)]          = 'required|unique_org_identifier';
 
         return $rules;

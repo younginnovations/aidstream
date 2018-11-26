@@ -1,0 +1,78 @@
+<?php namespace App\Services\Activity;
+
+use App\Core\Version;
+use App\Models\Activity\Activity;
+use Illuminate\Contracts\Auth\Guard;
+use Illuminate\Contracts\Logging\Log as Logger;
+
+/**
+ * Class SectorManager
+ * @package App\Services\Activity
+ */
+class TagManager
+{
+    /**
+     * @var Guard
+     */
+    protected $auth;
+    /**
+     * @var Logger
+     */
+    protected $logger;
+    /**
+     * @var Version
+     */
+    protected $version;
+
+    /**
+     * @param Version $version
+     * @param Logger  $logger
+     * @param Guard   $auth
+     */
+    public function __construct(Version $version, Guard $auth, Logger $logger)
+    {
+        $this->auth       = $auth;
+        $this->logger     = $logger;
+        $this->tagRepo = $version->getActivityElement()->getTag()->getRepository();
+    }
+
+    /**
+     * updates Activity Sector
+     * @param array    $activityDetails
+     * @param Activity $activity
+     * @return bool
+     */
+    public function update(array $activityDetails, Activity $activity)
+    {
+        try {
+            $this->tagRepo->update($activityDetails, $activity);
+            $this->logger->info(
+                'Activity Sector updated!',
+                ['for' => $activity->sector]
+            );
+            $this->logger->activity(
+                "activity.sector_updated",
+                [
+                    'activity_id'     => $activity->id,
+                    'organization'    => $this->auth->user()->organization->name,
+                    'organization_id' => $this->auth->user()->organization->id
+                ]
+            );
+
+            return true;
+        } catch (Exception $exception) {
+            $this->logger->error($exception, ['sector' => $activityDetails]);
+        }
+
+        return false;
+    }
+
+    /**
+     * @param $id
+     * @return model
+     */
+    public function getTagData($id)
+    {
+        return $this->tagRepo->getTagData($id);
+    }
+}

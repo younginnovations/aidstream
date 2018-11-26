@@ -8,9 +8,14 @@
         @include('includes.response')
         <div id="xml-import-status-placeholder"></div>
         <div class="panel panel-default">
-            <div class="panel__heading">
+           <div class="panel__heading">
+            @if(isset($activityId))
+                <div class="panel__title">@lang('lite/global.edit_activity')</div>
+                <p>@lang('lite/global.edit_this_activity')</p>
+            @else
                 <div class="panel__title">@lang('lite/global.add_an_activity')</div>
                 <p>@lang('lite/global.add_an_activity_in_simple_steps')</p>
+            @endif
             </div>
             <div class="panel__body">
                 <div class="create-form create-project-form edit-form add-activity-form">

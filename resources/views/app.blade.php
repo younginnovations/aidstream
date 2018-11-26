@@ -102,8 +102,8 @@
                             <li class="pull-left width-491">
                                 <div class="navbar-left version-wrap width-490">
                                     @if(!isSuperAdminRoute())
-                                        <div class="version pull-right {{ (session('version') == 'V201') ? 'old' : 'new' }}">
-                                            @if ((session('version') == 'V201'))
+                                        <div class="version pull-right {{ (in_array(session('version'),['V201','V202']) && session('allowed_upgrade') == true) ? 'old' : 'new' }}">
+                                            @if (in_array(session('version'),['V201','V202']) && session('allowed_upgrade') == true)
                                                 <a class="version-text" href="{{route('upgrade-version.index')}}">@lang('global.update_available')</a>
                                                 <span class="old-version">
                                                  <a href="{{route('upgrade-version.index')}}">@lang('global.upgrade_to_iati_version')
@@ -119,6 +119,7 @@
                                     @endif
                                 </div>
                             </li>
+
                         </ul>
                     </li>
                 @endif
@@ -126,8 +127,8 @@
         </div>
         <div class="navbar-right version-wrap">
             @if(auth()->user() && !isSuperAdminRoute())
-                <div class="version pull-right {{ (session('version') == 'V201') ? 'old' : 'new' }}">
-                    @if (session('next_version'))
+                <div class="version pull-right {{ (in_array(session('version'),['V201','V202']) && session('allowed_upgrade') == true) ? 'old' : 'new' }}">
+                    @if (session('next_version') && session('allowed_upgrade') == true)
                         <a class="version-text" href="{{route('upgrade-version.index')}}">@lang('global.update_available')</a>
                         <span class="old-version">
                             <a href="{{route('upgrade-version.index')}}">@lang('global.upgrade_to_iati_version'){{ session('next_version') }} </a>
@@ -141,6 +142,8 @@
                 </div>
             @endif
         </div>
+    </div>
+
     </div>
 </nav>
 
@@ -171,7 +174,7 @@
 {{--    <script type="text/javascript" src="{{url('/js/select2.min.js')}}"></script>--}}
     <script type="text/javascript" src="{{url('/js/jquery.datetimepicker.full.min.js')}}"></script>
     <script type="text/javascript" src="{{url('/js/script.js')}}"></script>
-    {{-- <script type="text/javascript" src="{{url('/js/datatable.js')}}"></script> --}}
+    <script type="text/javascript" src="{{url('/js/datatable.js')}}"></script>
 @else
     <script type="text/javascript" src="{{url('/js/main.min.js')}}"></script>
 @endif
@@ -184,7 +187,7 @@
 {{--</script>--}}
 <!-- Google Analytics -->
 <script type="text/javascript" src="{{url('/js/ga.js')}}"></script>
-<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+{{-- <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script> --}}
 <!-- End Google Analytics -->
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/intro.js/2.1.0/intro.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery.validation/1.15.0/jquery.validate.js"></script>

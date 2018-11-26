@@ -344,6 +344,20 @@ $(document).ready(function () {
     });
     $('.sector_vocabulary').trigger('change');
 
+    /* change the Default Aid Type Code field according to the Default AidType vocabulary selected */
+    $("form").delegate('.default_aidtype_vocabulary', 'change', function () {
+        var parent = $(this).parent('.form-group');
+        var aidtypeVocabulary = $(this).val();
+        if (aidtypeVocabulary == '') {
+            aidtypeVocabulary = 1;
+        }
+        var aidtypeClass = ['','.aidtype_select', '.aidtype_earmarking_category', '.aidtype_text'];
+        var selectedAidtype = aidtypeClass[aidtypeVocabulary] ? aidtypeClass[aidtypeVocabulary] : aidtypeClass[0];
+        parent.siblings('.default_aidtypes').addClass('hidden').children('.form-control').removeAttr('required');
+        parent.siblings(selectedAidtype).removeClass('hidden').children('.form-control').attr('required', 'required');
+    });
+    $('.default_aidtype_vocabulary').trigger('change');
+
     /* generate admin username using organization user identifier while adding new organization by superadmin*/
     $('#organization_user_identifier').keyup(function () {
         $('#admin_username').val($(this).val() + '_admin');

@@ -1,7 +1,7 @@
 <?php namespace App\Services\CsvImporter\Entities\Activity\Components;
 
 use App\Services\CsvImporter\Entities\Row;
-
+use Illuminate\Support\Facades\Log;
 /**
  * Class ActivityRow
  * @package App\Services\CsvImporter\Entities\Activity\Components
@@ -216,17 +216,25 @@ class ActivityRow extends Row
     protected $activityIdentifiers;
 
     /**
+     * System Version
+     *
+     * @var string
+     */
+    public $version;
+
+    /**
      * ActivityRow constructor.
      * @param $fields
      * @param $organizationId
      * @param $userId
      * @param $activityIdentifiers
      */
-    public function __construct($fields, $organizationId, $userId, $activityIdentifiers)
+    public function __construct($fields, $organizationId, $userId, $activityIdentifiers, $version)
     {
         $this->fields         = $fields;
         $this->organizationId = $organizationId;
         $this->userId         = $userId;
+        $this->version        = $version;
         $this->init();
         $this->activityIdentifiers = $activityIdentifiers;
     }

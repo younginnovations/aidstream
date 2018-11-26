@@ -21,9 +21,18 @@
                 <div class="col-xs-12 col-md-8 col-lg-8 element-content-wrapper">
                     <div class="panel panel-default">
                         <div class="panel-body">
+                            @if(session('version') == 'V203')
+                            <div class="create-form">
+                                {!! form($form) !!}
+                            </div>
+                            <div class="collection-container hidden"
+                                 data-prototype="{{ form_row($form->default_aid_type->prototype()) }}">
+                            </div>
+                            @else 
                             <div class="create-activity-form">
                                 {!! form($form) !!}
                             </div>
+                            @endif
                         </div>
                     </div>
                 </div>
