@@ -42,6 +42,8 @@ return [
     'select_version'                        => 'Select Version',
     'reporting_organisation_info'           => 'Reporting Organisation Info',
     'publishing_type'                       => 'Publishing Type',
-    'automatically_post_twitter'            => 'Do you want AidStream to automatically post on twitter when your activities are published?'
+    'automatically_post_twitter'            => 'Do you want AidStream to automatically post on twitter when your activities are published?',
+    'contact_us'                            => "Please Contact us for Publisher ID and API Key."
+
 ];
 
