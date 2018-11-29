@@ -116,7 +116,6 @@ class ActivityController extends LiteController
         $organisation  = auth()->user()->organization;
         $orgId         = $organisation->id;
         $orgIdentifier = getVal((array) $organisation->reporting_org, [0, 'reporting_organization_identifier']);
-        
         if (Gate::denies('belongsToOrganization', $organisation)) {
             return redirect()->route('np.activity.index')->withResponse($this->getNoPrivilegesMessage());
         }
@@ -148,7 +147,6 @@ class ActivityController extends LiteController
                 "text" => $mun->name
             ];
         });
-        
         $wardsArray = collect(\DB::table('municipalities')->select('wards', 'id', 'name')->get());
         $wards =[];
         $wards = $wardsArray->map(function ($ward) {
@@ -376,7 +374,7 @@ class ActivityController extends LiteController
                 "text" => $mun->name
             ];
         });
-        
+
         $wardsArray = collect(\DB::table('municipalities')->select('wards', 'id', 'name')->get());
         $wards =[];
         $wards = $wardsArray->map(function ($ward) {
@@ -455,7 +453,7 @@ class ActivityController extends LiteController
             return redirect()->route('np.activity.show', $activityId)->withResponse(['type' => 'danger', 'code' => ['save_failed', ['name' => trans('lite/global.activity')]]]);
         }
         $this->activityService->saveLocation($rawData, $activityId);
- 
+
         return redirect()->route('np.activity.show', $activityId)->withResponse(['type' => 'success', 'code' => ['updated', ['name' => trans('lite/global.activity')]]]);
     }
 
@@ -528,7 +526,7 @@ class ActivityController extends LiteController
 
         $form = $this->budgetForm->form(route('np.activity.budget.store', $activityId));
 
-        return view('np.activity.budget.edit', compact('form'));
+        return view('np.activity.budget.edit', compact('form','activityId'));
     }
 
     /**
@@ -551,7 +549,7 @@ class ActivityController extends LiteController
         $model   = $this->activityService->getBudgetModel($activityId, $version);
         $form    = $this->budgetForm->form(route('np.activity.budget.update', $activityId), $model);
 
-        return view('np.activity.budget.edit', compact('form'));
+        return view('np.activity.budget.edit', compact('form','activityId'));
     }
 
     /**
@@ -662,7 +660,7 @@ class ActivityController extends LiteController
             $type = $this->transactionService->getTransactionType($typeCode);
             $form = $this->transactionForm->form(route('np.activity.transaction.store', [$activityId, $type]), $type);
 
-            return view('np.activity.transaction.edit', compact('form', 'type', 'ids'));
+            return view('np.activity.transaction.edit', compact('form', 'type', 'ids', 'activityId'));
         }
 
         return redirect()->route('np.activity.show', $activityId)->withResponse(['type' => 'warning', 'messages' => [trans('error.404_not_found')]]);
@@ -696,7 +694,7 @@ class ActivityController extends LiteController
 
             $form = $this->transactionForm->form(route('np.activity.transaction.update', [$activityId, $transactionType]), $type, $newModel);
 
-            return view('np.activity.transaction.edit', compact('form', 'type', 'ids'));
+            return view('np.activity.transaction.edit', compact('form', 'type', 'ids','activityId'));
         }
 
         return redirect()->route('np.activity.show', $activityId)->withResponse(['type' => 'warning', 'messages' => [trans('error.404_not_found')]]);

@@ -119,7 +119,7 @@
             </ul>
         </div>
         <div class="downloads pull-right" data-step="6"><a href="{{route('np.csv.download')}}">@lang('lite/global.download_as_csv')</a></div>
-        <div class="navbar-right version-wrap">
+        {{--<div class="navbar-right version-wrap">
             @if($loggedInUser && !isSuperAdminRoute() &&  !isMunicipalityAdmin())
                 <div class="version pull-right {{ (session('version') == 'V201') ? 'old' : 'new' }}">
                     @if (session('next_version'))
@@ -136,7 +136,7 @@
                     @endif
                 </div>
             @endif
-        </div>
+        </div>--}}
     </div>
 </nav>
 
