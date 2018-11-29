@@ -21,6 +21,7 @@
                         </div>
                         <div class="border-btn-line">
                             {!! form_rest($form) !!}
+                                <a class='btn btn-form' style="margin-left:0;padding-top:15px;" href="{{route('np.activity.show', $activityId)}}">@lang('lite/global.cancel')</a>
                         </div>
                     </div>
                 </div>

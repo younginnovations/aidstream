@@ -102,7 +102,6 @@ class OrganizationController extends Controller
     {
         $organizations = $this->adminManager->getOrganizationBySystemVersion(config('system-version.Np.id'));
 
-        // return view('np.municipalityAdmin.oldListOrganization', compact('organizations', 'organizationName'));
         return view('np.mcpAdmin.organizationList', compact('organizations'));
     }
 
