@@ -144,7 +144,7 @@ class User extends Model implements AuthorizableContract, AuthenticatableContrac
      */
     public function isMunicipalityAdmin()
     {
-        if($this->user_permission == 8){
+        if($this->role_id == self::MUNICIPALITY_ADMIN_ROLE_ID){
             return true;
         } else {
             return false;
@@ -256,7 +256,7 @@ class User extends Model implements AuthorizableContract, AuthenticatableContrac
      */
     public function getEnabledAttribute()
     {
-        return ($this->isGroupAdmin() || $this->isSuperAdmin() || $this->organization->status);
+        return ($this->isGroupAdmin() || $this->isSuperAdmin() || $this->isMunicipalityAdmin() || $this->organization->status);
     }
 
     /**
