@@ -80,9 +80,7 @@
                     @include('np.activity.partials.workflow')
                     @endif
                 </div>
-                <div class="activity__block activity__map" id="map">
-
-                </div>
+                {{--<div class="activity__block activity__map" id="map"></div>--}}
                 @if(!isMunicipalityAdmin())
                 <div class="activity__block activity__detail__block">
                     <h4 data-toggle="collapse" data-target="#add-list"><span class="add-more">@lang('lite/global.add_other_elements')</span><span class="caret pull-right"></span></h4>
@@ -108,7 +106,7 @@
         var pathColorCode = "#D9E5EB";
         var recipientCountryColorCode = "#00A8FF";
     </script>
-    <script type="text/javascript" src="/js/worldMap.js"></script>
+    {{--<script type="text/javascript" src="/js/worldMap.js"></script>--}}
     <script>
         $(document).ready(function () {
             function fixedTop() {
