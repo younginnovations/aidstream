@@ -116,7 +116,7 @@ class ActivityController extends LiteController
         $organisation  = auth()->user()->organization;
         $orgId         = $organisation->id;
         $orgIdentifier = getVal((array) $organisation->reporting_org, [0, 'reporting_organization_identifier']);
-        
+
         if (Gate::denies('belongsToOrganization', $organisation)) {
             return redirect()->route('np.activity.index')->withResponse($this->getNoPrivilegesMessage());
         }
@@ -148,7 +148,7 @@ class ActivityController extends LiteController
                 "text" => $municipality->name
             ];
         });
-        
+
         $wardsArray = collect(\DB::table('municipalities')->select('wards', 'id', 'name')->get());
         $wards =[];
         $wards = $wardsArray->map(function ($ward) {
@@ -164,6 +164,7 @@ class ActivityController extends LiteController
         });
         $wards = json_encode($wards->toArray());
         $municipalities = json_encode($municipalities->toArray());
+        $locationArray = "";
 
         if (Gate::denies('belongsToOrganization', $organisation)) {
             return redirect()->route('np.activity.index')->withResponse($this->getNoPrivilegesMessage());
@@ -181,7 +182,7 @@ class ActivityController extends LiteController
 
         $form = $this->activityForm->form(route('np.activity.store'), trans('lite/elementForm.add_this_activity'));
 
-        return view('np.activity.create', compact('form', 'countryDetails', 'geoJson', 'wards', 'municipalities'));
+        return view('np.activity.create', compact('form', 'countryDetails', 'geoJson', 'wards', 'municipalities','locationArray'));
     }
 
     /**
@@ -226,12 +227,21 @@ class ActivityController extends LiteController
     public function show($activityId)
     {
         $activity = $this->activityService->find($activityId);
-        $count    = [];
-        $locationArray = \DB::table('activity_location')
+        $locationArray = collect(\DB::table('activity_location')
                     ->leftjoin('municipalities', 'activity_location.municipality_id', '=', 'municipalities.id')
-                    ->select('name', 'ward', 'municipality_id')
+                    ->select('name', 'ward')
                     ->where('activity_id', '=', $activityId)
-                    ->get();
+                    ->get());
+
+        $locationArray = $locationArray->groupBy('name')
+                            ->map(function($location){
+                                $wards = $location->map(function($ward){
+                                    return $ward->ward;
+                             });
+                        
+            return $wards->unique()->sort();
+        });
+        $locationArray = $locationArray->toArray();
 
         if (Gate::denies('ownership', $activity)) {
             return redirect()->route('np.activity.index')->withResponse($this->getNoPrivilegesMessage());
@@ -365,6 +375,25 @@ class ActivityController extends LiteController
         $version       = session('version');
         $activityModel = $this->activityService->find($activityId);
         $activity      = $this->activityService->edit($activityId, $version);
+        $municipalities = collect(\DB::table('activity_location')->where('activity_id','=',$activityId)->distinct()->get(['municipality_id']));
+
+        $db = \DB::Class;
+        $locationArray = $municipalities->map(function($location) use ($activityId, $db){
+            $wards = collect(\DB::table('activity_location')->where('activity_id','=',$activityId)->where('municipality_id','=',$location->municipality_id)->get(['ward']));
+            $wards = $wards->map(function($ward){
+                return $ward->ward;
+            });
+            return [
+                "municipality" => $location->municipality_id,
+                "wards"        => $wards->toArray()
+            ];
+        });
+
+        foreach($locationArray as $key=>$activityLocation){
+            $activity["location"][$key]['municipality'] = $activityLocation['municipality'];
+            $activity["location"][$key]['wards']        = $activityLocation['wards'];
+        }
+
         if (Gate::denies('ownership', $activityModel)) {
             return redirect()->route('np.activity.index')->withResponse($this->getNoPrivilegesMessage());
         }
@@ -376,7 +405,7 @@ class ActivityController extends LiteController
                 "text" => $mun->name
             ];
         });
-        
+
         $wardsArray = collect(\DB::table('municipalities')->select('wards', 'id', 'name')->get());
         $wards =[];
         $wards = $wardsArray->map(function ($ward) {
@@ -392,6 +421,7 @@ class ActivityController extends LiteController
         });
         $wards = json_encode($wards->toArray());
         $municipalities = json_encode($municipalities->toArray());
+        $locationArray = json_encode($locationArray->toArray());
 
         $this->authorize('edit_activity', $activityModel);
 
@@ -399,7 +429,7 @@ class ActivityController extends LiteController
         $geoJson        = file_get_contents(public_path('/data/countries.geo.json'));
         $form           = $this->activityForm->form(route('np.activity.update', $activityId), trans('lite/elementForm.update_this_activity'), $activity);
 
-        return view('np.activity.create', compact('form', 'activity', 'countryDetails', 'geoJson', 'activityId', 'wards', 'municipalities'));
+        return view('np.activity.create', compact('form', 'activity', 'countryDetails', 'geoJson', 'activityId', 'wards', 'municipalities', 'locationArray'));
     }
 
 
@@ -455,7 +485,7 @@ class ActivityController extends LiteController
             return redirect()->route('np.activity.show', $activityId)->withResponse(['type' => 'danger', 'code' => ['save_failed', ['name' => trans('lite/global.activity')]]]);
         }
         $this->activityService->saveLocation($rawData, $activityId);
- 
+
         return redirect()->route('np.activity.show', $activityId)->withResponse(['type' => 'success', 'code' => ['updated', ['name' => trans('lite/global.activity')]]]);
     }
 
