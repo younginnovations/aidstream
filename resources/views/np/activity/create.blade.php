@@ -48,7 +48,7 @@
                         <div class="col-md-9">
                             <h2>@lang('lite/global.location')</h2>
                             <div class="row">
-                             {!! form_until($form, "location") !!}     
+                             {!! form_until($form, "location") !!}
                             </div>
                         </div>
                     </div>
@@ -74,7 +74,7 @@
                            class="pull-right btn-go-back">@lang('lite/global.cancel_and_go_back')</a>
                     </div>
                     {!! form_end($form) !!}
-                     <div class="location-container hidden"  
+                     <div class="location-container hidden"
                         data-prototype="{{ form_row($form->location->prototype()) }}">
                     </div>
                     <div class="funding_organisations-container hidden"
@@ -83,27 +83,21 @@
                     <div class="implementing_organisations-container hidden"
                          data-prototype="{{ form_row($form->implementing_organisations->prototype()) }}">
                     </div>
-                    @if(isRegisteredForNp())
                         <div class="administrative-container hidden">
                             @include('np.partials.administrative')
                         </div>
                         <div class="location-container hidden">
                             @include('np.partials.location')
                         </div>
-                    @else
-                        <div class="location-container hidden"  
-                             data-prototype="{{ form_row($form->location->prototype()) }}">
-                        </div>
                         <div class="point-container hidden">
                             @include('np.activity.partials.point')
                         </div>
-                    @endif
                 </div>
             </div>
         </div>
     </div>
     <!-- Modal -->
-    <div id="countryChange" class="modal fade" role="dialog">
+{{-- <div id="countryChange" class="modal fade" role="dialog">
         <div class="modal-dialog">
 
             <!-- Modal content-->
@@ -122,21 +116,15 @@
             </div>
 
         </div>
-    </div>
+    </div>--}}
 @stop
 @section('script')
     <script type="text/javascript" src="{{ url('/js/jquery.scrollto.js') }}"></script>
     <script type="text/javascript" src="{{ url('/lite/js/createActivity.js') }}"></script>
     <script type="text/javascript" src="{{url('/lite/js/progressBar.js')}}"></script>
     <script type="text/javascript" src="{{url('/js/leaflet.js')}}"></script>
-    @if(isRegisteredForNp())
-        <script type="text/javascript" src="{{url('/js/map.js')}}"></script>
-        <script type="text/javascript" src="{{ url('/np/js/location.js') }}"></script>
-        <script type="text/javascript" src="{{ url('/np/js/activity.js') }}"></script>
-    @else
-        <script type="text/javascript" src="{{url('/lite/js/map.js')}}"></script>
-    @endif
-    <script type="text/javascript" src="{{ url('/lite/js/location.js') }}"></script>
+    <script type="text/javascript" src="{{url('/np/js/map.js')}}"></script>
+    <script type="text/javascript" src="{{ url('/np/js/location.js') }}"></script>
     <script>
 
     var wards = {!! $wards !!}
@@ -157,7 +145,6 @@
 				filterData.push(d)
 			}
         })
-      
 		$('.wards').select2({
 			placeholder: 'Select Wards',
 			allowClear: true,
@@ -183,18 +170,13 @@
             });
             var countryDetails = [{!! $countryDetails !!}];
             Location.prepareElements();
-            @if(isRegisteredForNp())
-            TzLocation.closeOpenedMap(countryDetails);
-            TzLocation.onCountryChanged();
-            @else
             Location.closeOpenedMap(countryDetails);
             Location.onCountryChange();
             Location.onCountryDelete();
             Map.reverseLocation();
-            @endif
         })
     </script>
-    <script type="text/javascript">
+    {{--<script type="text/javascript">
         var completedText = "{{strtolower(trans('lite/global.completed'))}}";
         CreateActivity.editTextArea({!! empty(!$form->getModel()) !!});
         CreateActivity.addToCollection();
@@ -225,5 +207,5 @@
 
         ProgressBar.calculateProgressBar(completedText);
         ProgressBar.calculate();
-    </script>
+    </script>--}}
 @stop

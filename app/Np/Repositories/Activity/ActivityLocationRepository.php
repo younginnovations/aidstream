@@ -46,10 +46,9 @@ class ActivityLocationRepository implements ActivityLocationRepositoryInterface
                 $this->activityLocation->create($arr);
             }else{
                 foreach ($value['ward'] as $ward) {
-                    $arr['municipality_id'] = $value['municipality'];
-                    $arr['ward'] = $ward;
-                    $arr['activity_id'] = $activityId;
-
+                    $arr['activity_id'] =(int) $activityId;
+                    $arr['municipality_id'] =(int) $value['municipality'];
+                    $arr['ward'] =(int) $ward;
                     $this->activityLocation->create($arr);
                 }
             }

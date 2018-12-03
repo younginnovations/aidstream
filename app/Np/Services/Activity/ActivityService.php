@@ -526,8 +526,13 @@ class ActivityService
     public function saveLocation(array $rawData, $activityId)
     {
         $arr = getVal($rawData, ['location'], []);
-        $arr['activity_id'] = $activityId;
-        $this->activityLocationRepository->save($arr);
+        $newArr = [];
+        foreach ($arr as $value) {
+          unset($value['administrative']);
+          $newArr[] = $value;
+        }
+        $newArr['activity_id'] = $activityId;
+        $this->activityLocationRepository->save($newArr);
     }
     public function checkError(array $rawData)
     {

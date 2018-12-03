@@ -64,6 +64,7 @@ return [
     'region'                                => 'Region',
     'district'                              => 'District',
     'map'                                   => 'Add Locations for this country',
+    'map_np'                                => 'Add Locations for this municipality',
     'latitude'                              => 'Latitude',
     'longitude'                             => 'Longitude',
     'location'                              => 'Location',

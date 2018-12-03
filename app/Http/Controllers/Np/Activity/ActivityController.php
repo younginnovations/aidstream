@@ -116,7 +116,7 @@ class ActivityController extends LiteController
         $organisation  = auth()->user()->organization;
         $orgId         = $organisation->id;
         $orgIdentifier = getVal((array) $organisation->reporting_org, [0, 'reporting_organization_identifier']);
-        
+
         if (Gate::denies('belongsToOrganization', $organisation)) {
             return redirect()->route('np.activity.index')->withResponse($this->getNoPrivilegesMessage());
         }
@@ -148,7 +148,7 @@ class ActivityController extends LiteController
                 "text" => $mun->name
             ];
         });
-        
+
         $wardsArray = collect(\DB::table('municipalities')->select('wards', 'id', 'name')->get());
         $wards =[];
         $wards = $wardsArray->map(function ($ward) {
@@ -376,7 +376,7 @@ class ActivityController extends LiteController
                 "text" => $mun->name
             ];
         });
-        
+
         $wardsArray = collect(\DB::table('municipalities')->select('wards', 'id', 'name')->get());
         $wards =[];
         $wards = $wardsArray->map(function ($ward) {
@@ -455,7 +455,7 @@ class ActivityController extends LiteController
             return redirect()->route('np.activity.show', $activityId)->withResponse(['type' => 'danger', 'code' => ['save_failed', ['name' => trans('lite/global.activity')]]]);
         }
         $this->activityService->saveLocation($rawData, $activityId);
- 
+
         return redirect()->route('np.activity.show', $activityId)->withResponse(['type' => 'success', 'code' => ['updated', ['name' => trans('lite/global.activity')]]]);
     }
 
