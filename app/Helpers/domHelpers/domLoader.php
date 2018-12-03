@@ -31,7 +31,7 @@ function publicStylesheet()
 
 /**
  * Loads style sheets for all authenticated routes according to the subdomain.
- *
+ *e
  * @return string
  */
 function authStyleSheets()
