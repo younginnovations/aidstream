@@ -14,8 +14,18 @@ class Location extends NpBaseForm
         $municipalities = [];
 
         foreach ($municipalitiesArray as $municipality) {
-            array_push($municipalities, $municipalities[$municipality->id] = $municipality->name);
+            $municipalities[$municipality->id] = $municipality->name;
         }
+        $wardsArray = collect(\DB::table('municipalities')->select('wards', 'id', 'name')->get());
+        $wards =[];
+        $wards = $wardsArray->map(function ($ward) {
+            $map = [];
+            for ($i = 1; $i <= $ward->wards; $i++) {
+                $wards[] = array("id" => $i, "text" => $i);
+            }
+            return $wards;
+        });
+        $wards = $wards;
 
         $this
         ->addSelect(
