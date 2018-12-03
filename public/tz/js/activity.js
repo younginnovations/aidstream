@@ -3,6 +3,7 @@ var Activity = {
     locationCount: 0,
     changeRegionAndDistrict: function () {
         $('.location').on('change', '.region', function () {
+            alert('changed');
             var region = $(this).val();
             var districtSelector = $(this).parent().siblings('.district-container').find('select');
             Activity.appendDistrict(region, districtSelector);
