@@ -1,7 +1,9 @@
 @extends('np.base.sidebar')
 
 @section('title', 'Activities')
+
 @section('content')
+
     {{Session::get('message')}}
     <div class="col-xs-9 col-lg-9 content-wrapper activity-wrapper">
         @include('includes.response')
@@ -48,7 +50,7 @@
                         <div class="col-md-9">
                             <h2>@lang('lite/global.location')</h2>
                             <div class="row">
-                             {!! form_until($form, "location") !!}     
+                             {!! form_until($form, "add_more_location") !!}
                             </div>
                         </div>
                     </div>
@@ -74,7 +76,7 @@
                            class="pull-right btn-go-back">@lang('lite/global.cancel_and_go_back')</a>
                     </div>
                     {!! form_end($form) !!}
-                     <div class="location-container hidden"  
+                     <div class="location-container hidden"
                         data-prototype="{{ form_row($form->location->prototype()) }}">
                     </div>
                     <div class="funding_organisations-container hidden"
@@ -91,7 +93,7 @@
                             @include('np.partials.location')
                         </div>
                     @else
-                        <div class="location-container hidden"  
+                        <div class="location-container hidden"
                              data-prototype="{{ form_row($form->location->prototype()) }}">
                         </div>
                         <div class="point-container hidden">
@@ -126,7 +128,7 @@
 @stop
 @section('script')
     <script type="text/javascript" src="{{ url('/js/jquery.scrollto.js') }}"></script>
-    <script type="text/javascript" src="{{ url('/lite/js/createActivity.js') }}"></script>
+    <script type="text/javascript" src="{{ url('/np/js/createActivity.js') }}"></script>
     <script type="text/javascript" src="{{url('/lite/js/progressBar.js')}}"></script>
     <script type="text/javascript" src="{{url('/js/leaflet.js')}}"></script>
     @if(isRegisteredForNp())
@@ -139,26 +141,42 @@
     <script type="text/javascript" src="{{ url('/lite/js/location.js') }}"></script>
     <script>
 
-    var wards = {!! $wards !!}
-    var municipalities = {!! $municipalities!!}
+    var wards = {!! $wards !!};
+    var municipalities = {!! $municipalities!!};
+    var selectedLocation = {!!$locationArray!!};
     $(document).ready(function(){
-          $('.municipality').select2({
-            placeholder:'Select Municipality'
+    $('.municipality').each(function(i, obj){
+        let municipality = obj.value;
+        let filterData = [];
+        wards.map(d => {
+            if(municipality.includes(String(d.id))){
+                filterData.push(d);
+            }
         })
-
-	$('.municipality').on('change', function () {
-
-		$('.wards').empty().trigger('change')
-
-		let filterData = []
-		let selectedVal = $('.municipality').val()
-		wards.map(d => {
-			if (selectedVal.includes(String(d.id))) {
-				filterData.push(d)
-			}
+        var wardsSelector = $(this).parent().siblings('.ward').find('select');
+        wardsSelector.empty().trigger('change');
+        wardsSelector.select2({
+			placeholder: 'Select Wards',
+			allowClear: true,
+			data: filterData,
+		})
+        var selectedWards = selectedLocation.filter(function(item){
+            if(item.municipality == municipality){
+                wardsSelector.val(item.wards).trigger('change');
+            }
+        });
+    })
+    $('.location').on('change', '.municipality', function () {
+        let selectedMunicipality = $(this).val();
+        let filterData = [];
+        wards.map(d => {
+            if(selectedMunicipality.includes(String(d.id))){
+                filterData.push(d);
+            }
         })
-      
-		$('.wards').select2({
+        var wardsSelector = $(this).parent().siblings('.ward').find('select');
+        wardsSelector.empty().trigger('change');
+        wardsSelector.select2({
 			placeholder: 'Select Wards',
 			allowClear: true,
 			data: filterData

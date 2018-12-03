@@ -114,7 +114,7 @@ class Activity implements MapperInterface
     protected $mappedFields = [
         'activity_identifier'        => 'identifier',
         'activity_title'             => 'title',
-        'activity_title_np'          => 'title_np',
+        'activity_title_in_np'       => 'title_np',
         'general_description'        => 'description',
         'objectives'                 => 'description',
         'target_groups'              => 'description',
@@ -169,7 +169,7 @@ class Activity implements MapperInterface
         $this->mappedData['activity_identifier'] = getVal($this->rawData, ['identifier', 'activity_identifier']);
         $this->mappedData['activity_title']      = getVal($this->rawData, ['title', 0, 'narrative']);
         $this->mappedData['activity_status']     = getVal($this->rawData, ['activity_status']);
-
+        $this->mappedData['activity_title_in_np']= getVal($this->rawData, ['activity_title_in_np']);
         foreach (getVal($this->rawData, ['sector'], []) as $index => $value) {
             $this->mappedData['sector'][$index] = getVal($value, ['sector_code']);
         }
@@ -223,6 +223,13 @@ class Activity implements MapperInterface
     {
         $template['narrative'] = $value;
 
+        $this->mappedData[$this->mappedFields[$key]][$this->index] = $template;
+    }
+
+    protected function title_np($key,$value, $template)
+    {
+        $template['narrative'] = $value;
+        $template['language']  = 'NP';
         $this->mappedData[$this->mappedFields[$key]][$this->index] = $template;
     }
 
