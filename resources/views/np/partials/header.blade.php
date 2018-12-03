@@ -1,7 +1,7 @@
 <header>
     <nav class="navbar navbar-default">
         <div class="navbar-header">
-            <a href="{{ url('/') }}" class="navbar-brand" title="AidStream Nepal"><img src="/images/aidstream_logo-np.svg" alt="AidStream Nepal" width="140px" height="40px"></span></a>
+            <a href="{{ url('/') }}" class="navbar-brand" title="AidStream Nepal"><img src="/images/np/ic_aidstream-logo-np.png" alt="AidStream Nepal" width="140px" height="40px"></span></a>
             <button type="button" class="navbar-toggle collapsed">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="bar1"></span>
