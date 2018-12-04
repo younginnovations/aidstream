@@ -57,8 +57,13 @@
                     <li><a href="{{ url('/auth/register') }}">@lang('trans.register')</a></li>
                 @else
                     <li>
-                        @if((session('role_id') == 3  || session('role_id') == 4) && !isSuperAdminRoute())
+                        @if((session('role_id') == 3  || session('role_id') == 4 || session('role_id') == 8) && !isSuperAdminRoute())
+                            @if(isMunicipalityAdminRoute())
+                            @elseif(session('role_id') == 8)
+                            <span><a href="{{ route('municipalityAdmin.switch-back') }}" class="pull-left">Switch Back</a></span>
+                            @else
                             <span><a href="{{ route('admin.switch-back') }}" class="pull-left">Switch Back</a></span>
+                            @endif
                         @endif
                     </li>
                     <li class="dropdown" data-step="1" id="admin-dropdown">
@@ -118,7 +123,9 @@
                 @endif
             </ul>
         </div>
+        @if(!isMunicipalityAdminRoute())
         <div class="downloads pull-right" data-step="6"><a href="{{route('np.csv.download')}}">@lang('lite/global.download_as_csv')</a></div>
+        @endif
         <div class="navbar-right version-wrap">
             @if($loggedInUser && !isSuperAdminRoute() &&  !isMunicipalityAdmin())
                 <div class="version pull-right {{ (session('version') == 'V201') ? 'old' : 'new' }}">

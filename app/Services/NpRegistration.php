@@ -59,7 +59,7 @@ class NpRegistration
     {
         try {
             $this->database->beginTransaction();
-            $orgInfo['secondary_contact'] = $users['secondary_contact'];
+            // $orgInfo['secondary_contact'] = $users['secondary_contact'];
             $organization                 = $this->saveOrganization($orgInfo, $systemVersion);
             $users                        = $this->saveUsers($users, $organization);
 
@@ -105,10 +105,16 @@ class NpRegistration
                     ]
                 ],
             ]);
-        $organization->organizationLocation()->create([
-            'district_id' => $orgInfo['organization_district'],
-            'municipality_id' => $orgInfo['organization_municipality']
-            ]);
+
+        foreach($orgInfo['organization_municipality'] as $municipality){
+            $district = \DB::table('municipalities')->where('id','=',$municipality)->first();
+
+            $organization->organizationLocation()->create([
+                'district_id' => $district->district_id,
+                'municipality_id' => $municipality
+                ]);
+        }
+        
         $organization->settings()->create(['version' => '2.02']);
 
         return $organization;
@@ -145,7 +151,7 @@ class NpRegistration
         $orgData['secondary_contact']   = [
             'first_name' => '',
             'last_name'  => '',
-            'email'      => $orgInfo['secondary_contact']
+            'email'      => ''
         ];
         $orgData['system_version_id']   = $systemVersion;
 

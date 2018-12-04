@@ -67,7 +67,7 @@
                                                     {{-- <a href="{{ route('admin.delete-organization', $organization->id) }}" class="delete" title="delete">Delete</a> --}}
                                                 @endif
                                                 @if (count($organization->activities) > 0)
-                                                    <a href="{{ route('admin.masquerade-organization',
+                                                    <a href="{{ route('municipalityAdmin.masquerade-organization',
                                                     [$organization->id, getVal($organization->users->toArray(), [0], false) ?
                                                     getVal($organization->users->toArray(), [0, 'id']) :
                                                     $organization->users()->first()->id]) }}"
