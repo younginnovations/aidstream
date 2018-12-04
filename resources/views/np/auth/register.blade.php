@@ -263,7 +263,7 @@
 <script type="text/javascript" src="{{url('/js/select2.min.js')}}"></script>
 <script type="text/javascript" src="{{url('/js/main.min.js')}}"></script>
 <script type="text/javascript" src="{{url('/js/jquery.validate.min.js')}}"></script>
-<script type="text/javascript" src="{{url('/js/registration.js')}}"></script>
+<script type="text/javascript" src="{{url('np/js/registration.js')}}"></script>
 
 <script type="text/javascript">
     var checkSimilarOrg = true;
@@ -280,15 +280,56 @@
         @endif
     @endif
 
-$('form select').select2();
+    var districts = JSON.parse('{!! $districts !!}');
+    var municipalities = JSON.parse('{!! $municipalities!!}');
+
+    $('.registration_district').select2({
+        placeholder:'Select District',
+        data: districts
+    })
+
+    $('.districts').select2({
+            placeholder:'Select Districts',
+            data: districts
+    })
+
+    $('.registration_district_div').hide();
+    $('.organization_registration_agency').on('change', function() {
+        if($('.organization_registration_agency').val() === 'NP-DAO'){
+            $('.registration_district_div').show();
+        } else {
+            $('.registration_district_div').hide();
+        }
+    })
+
+	$('.districts').on('change', function () {
+
+		$('.municipalities').empty().trigger('change')
+
+		let filterData = []
+		let selectedVal = $('.districts').val()
+		municipalities.map(d => {
+			if (selectedVal.includes(String(d.id))) {
+				filterData.push(d)
+			}
+        })
+      
+		$('.municipalities').select2({
+			placeholder: 'Select Municipality',
+			allowClear: true,
+			data: filterData
+		})
+    })
+
+        $('form select').select2();
         $('form select').on('select2:close', function (e) {
             $(this).valid();
         });
 
-        //        Registration.similarOrgs();
-        //        Registration.sameIdentifier();
-        //        Registration.disableOrgSubmitButton();
-        //        Registration.disableUsersSubmitButton();
+            Registration.similarOrgs();
+            Registration.sameIdentifier();
+            Registration.disableOrgSubmitButton();
+            Registration.disableUsersSubmitButton();
     });
 </script>
 

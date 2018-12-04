@@ -22,28 +22,24 @@
                 {!! AsForm::text(['name' => 'organization[organization_name_abbr]', 'class' => 'organization_name_abbr', 'label' => trans('organisation.organisation_name_abbreviation'), 'help' => 'registration_org_name_abbr', 'required' => true, 'parent' => 'col-xs-12 col-sm-6 col-md-6', 'html' => '<span class="availability-check hidden"></span>']) !!}
                 {!! AsForm::select(['name' => 'organization[organization_type]', 'label' => trans('organisation.organisation_type'), 'class' => 'organization_type', 'data' => $orgType, 'required' => true , 'parent' => 'col-xs-12 col-sm-6 col-md-6', 'empty_value' => trans('global.select_a_type')]) !!}
 
-                {{-- {!! AsForm::text(['name' => 'organization[organization_name_abbr]', 'class' => 'organization_name_abbr', 'label' => trans('organisation.organisation_name_abbreviation'), 'help' => 'registration_org_name_abbr', 'required' => true, 'parent' => 'col-xs-12 col-sm-6 col-md-6', 'html' => '<span class="availability-check hidden"></span>']) !!} --}}
             </div>
         <div class="col-xs-12 col-md-12">
-            {{-- @if(isTzSubDomain()) --}}
-                {!! AsForm::select(['name' => 'organization[country]', 'value' => 'NP','label' => trans('organisation.organisation_country'), 'class' => 'country', 'data' => ['NP' => getVal($countries,['NP'])], 'required' => true , 'parent' => 'col-xs-12 col-sm-6 col-md-6', 'empty_value' => trans('global.select_a_country')]) !!}
+            {!! AsForm::select(['name' => 'organization[country]', 'value' => 'NP','label' => trans('organisation.organisation_country'), 'class' => 'country', 'data' => ['NP' => getVal($countries,['NP'])], 'required' => true , 'parent' => 'col-xs-12 col-sm-6 col-md-6', 'empty_value' => trans('global.select_a_country')]) !!}
             {!! AsForm::text(['name' => 'organization[organization_address]', 'label' => trans('organisation.organisation_address'), 'class' => 'organization_address', 'required' => true, 'parent' => 'col-xs-12 col-sm-6 col-md-6']) !!}
-
-            {{-- @else --}}
-                {{-- {!! AsForm::select(['name' => 'organization[country]', 'label' => trans('organisation.organisation_country'), 'class' => 'country', 'data' => $countries, 'required' => true , 'parent' => 'col-xs-12 col-sm-6 col-md-6', 'empty_value' => trans('global.select_a_country')]) !!} --}}
-            {{-- @endif --}}
+        </div>
+        <div class="col-xs-12 col-md-12">
+            {!! AsForm::select(['name' => 'organization[organization_district][]', 'attr' => ['multiple' => 'multiple'],'label' => trans('organisation.district'), 'class' => 'organization_registration districts', 'required' => true , 'parent' => 'col-xs-12 col-sm-6 col-md-6']) !!}
+            {!! AsForm::select(['name' => 'organization[organization_municipality][]','attr' => ['multiple' => 'multiple'], 'label' => trans('organisation.municipality'), 'class' => 'organization_registration municipalities', 'required' => true , 'parent' => 'col-xs-12 col-sm-6 col-md-6']) !!}
         </div>
         <div class="col-xs-12 col-md-12">
             {!! AsForm::select(['name' => 'organization[organization_registration_agency]', 'label' => trans('organisation.organisation_registration_agency'), 'class' => 'organization_registration_agency', 'data' => $orgRegAgency, 'required' => true , 'parent' => 'col-xs-12 col-sm-6 col-md-6', 'empty_value' => trans('global.select_an_agency')]) !!}
-            {!! AsForm::select(['name' => 'organization[organization_district]', 'label' => trans('organisation.district'), 'class' => 'organization_registration', 'data' => $districts, 'required' => true , 'parent' => 'col-xs-12 col-sm-6 col-md-6', 'empty_value' => trans('global.select_district')]) !!}
+            {!! AsForm::select(['name' => 'organization[organization_registration_district]','label' => trans('organisation.district'), 'class' => 'organization_registration registration_district', 'required' => true , 'parent' => 'col-xs-12 col-sm-6 col-md-6 registration_district_div']) !!} 
+            {{-- {{ Form::hidden('organization[organization_registration_district]', null, ['class' => 'organization_registration registration_district', 'id' => 'organization[agency_name]','parent' => 'col-xs-12 col-sm-6 col-md-6 registration_district_div', 'empty_value' => trans('global.select_district')]) }} --}}
+            {{-- {{ Form::hidden('organization[organization_registration_district]', null, ['class' => 'form-control organization_registration_district', 'id' => 'registration_district']) }} --}}
             {{ Form::hidden('organization[agencies]', ($agencies = getVal($regInfo, ['organization', 'agencies'], [])) ? $agencies : json_encode($orgRegAgency), ['class' => 'form-control agencies', 'id' => 'agencies', 'data-agency' => getVal($regInfo, ['organization', 'organization_registration_agency'])]) }}
             {{ Form::hidden('organization[new_agencies]', null, ['class' => 'form-control new_agencies', 'id' => 'organization[new_agencies]']) }}
             {{ Form::hidden('organization[agency_name]', null, ['class' => 'form-control agency_name', 'id' => 'organization[agency_name]']) }}
-            {{ Form::hidden('organization[agency_website]', null, ['class' => 'form-control agency_website', 'id' => 'organization[agency_website]']) }}
-        </div>
-        <div class="col-xs-12 col-md-12">
-            {!! AsForm::select(['name' => 'organization[organization_municipality]', 'label' => trans('organisation.municipality'), 'class' => 'organization_registration', 'data' => $municipalities, 'required' => true , 'parent' => 'col-xs-12 col-sm-6 col-md-6', 'empty_value' => trans('global.select_municipality')]) !!}
-            {{-- {!! AsForm::select(['name' => 'organization[organization_working_municipality]', 'label' => trans('organisation.working_municipality'), 'class' => 'organization_registration', 'data' => $municipalities, 'required' => true , 'parent' => 'col-xs-12 col-sm-6 col-md-6', 'empty_value' => trans('global.select_working_municipality')]) !!} --}}
+            {{ Form::hidden('organization[agency_website]', null, ['class' => 'form-control agency_website', 'id' => 'organization[agency_website]']) }}            
         </div>
         <div class="col-xs-12 col-md-12">
             {!! AsForm::text(['name' => 'organization[registration_number]', 'class' => 'registration_number', 'label' => trans('organisation.registration_number'), 'required' => true, 'parent' => 'col-xs-12 col-sm-6 col-md-6']) !!}
