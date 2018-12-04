@@ -86,6 +86,13 @@ class OrganizationController extends Controller
         return view('superAdmin.listOrganization', compact('organizations'));
     }
 
+    public function dashboard()
+    {
+        $organizations = $this->adminManager->getOrganizationBySystemVersion(config('system-version.Np.id'));
+
+        return view('np.mcpAdmin.index', compact('organizations', 'organizationName'));
+    }
+
     /**
      * get all organizations
      * @param Request $request
@@ -93,20 +100,10 @@ class OrganizationController extends Controller
      */
     public function oldListOrganizations(Request $request)
     {
-        if (isTzSubDomain()) {
-            $organizations = $this->adminManager->getOrganizationBySystemVersion(config('system-version.Tz.id'));
-        } else if (isNpSubDomain()) {
-            $organizations = $this->adminManager->getOrganizationBySystemVersion(config('system-version.Np.id'));
-        } else {
-            if ($request->has('organization')) {
-                $organizationName = $request->get('organization');
-                $organizations    = $this->adminManager->getOrganizations($organizationName);
-            } else {
-                $organizations = (session('role_id') == 3) ? $this->adminManager->getOrganizations() : $this->groupManager->getGroupsByUserId(Auth::user()->id);
-            }
-        }
+        $organizations = $this->adminManager->getOrganizationBySystemVersion(config('system-version.Np.id'));
 
-        return view('np.municipalityAdmin.oldListOrganization', compact('organizations', 'organizationName'));
+        // return view('np.municipalityAdmin.oldListOrganization', compact('organizations', 'organizationName'));
+        return view('np.mcpAdmin.organizationList', compact('organizations'));
     }
 
     public function listAllActivities()
@@ -116,7 +113,9 @@ class OrganizationController extends Controller
         // $stats                   = $this->activityService->getActivityStats();
         // $noOfPublishedActivities = $this->activityService->getNumberOfPublishedActivities($orgId);
         // $lastPublishedToIATI     = $this->activityService->lastPublishedToIATI($orgId);
-        return view('np.municipalityAdmin.listActivities', compact('activities'));
+        // return view('np.municipalityAdmin.listActivities', compact('activities'));
+        return view('np.mcpAdmin.activityList', compact('activities'));
+
     }
 
    /**
@@ -377,12 +376,12 @@ class OrganizationController extends Controller
      * switch back to superAdmin role
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function switchBackAsSuperAdmin()
+    public function switchBackAsMunicipalityAdmin()
     {
         $adminId = Session::get('admin_id');
         Auth::loginUsingId($adminId);
 
-        return redirect()->to(config('app.super_admin_dashboard'));
+        return redirect()->to(config('app.municipality_dashboard'));
     }
 
     /**
