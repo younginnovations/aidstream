@@ -21,6 +21,8 @@
   "org_type_required": "Organisation Type is required.",
   "address_required": "Address is required.",
   "country_required": "Country is required.",
+  "district_required": "District is required.",
+  "municipality_required": "Municipality is required.",
   "org_registration_agency_required": "Organisation Registration Agency is required.",
   "registration_number_required": "Registration Number is required.",
   "letters_and_numbers_allowed": "Only -, _, ., letters and numbers are allowed.",
