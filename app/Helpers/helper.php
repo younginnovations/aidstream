@@ -163,7 +163,7 @@ function isMunicipalityAdminRoute()
 
 function isMunicipalityAdmin()
 {
-    if(session('user_permission') == 8){
+    if(session('role_id') == 8){
         return true;
     }
 

@@ -66,7 +66,7 @@ class RegistrationController extends Controller
         $countries      = $this->baseForm->getCodeList('Country', 'Organization', false);
         $orgRegAgency   = $this->baseForm->getCodeList('NpOrganisationRegistrationAgency', 'Organization', false);
         $dbRegAgency    = $this->regAgencyManager->getRegAgenciesCode();
-        $orgRegAgency   = array_merge($orgRegAgency, $dbRegAgency);
+        // $orgRegAgency   = array_merge($orgRegAgency, $dbRegAgency);
         $systemVersions = $this->systemVersion->where([ ['id', '<>', config('system-version.Tz.id')], ['id', '<>', config('system-version.Np.id')] ])->lists('system_version', 'id')->toArray();
         $dbRoles = \DB::table('role')->whereNotNull('permissions')->orderBy('role', 'desc')->get();
         $districtsArray = \DB::table('districts')->get();
@@ -84,20 +84,43 @@ class RegistrationController extends Controller
             }
         }
 
-        $districts = [];
-        foreach($districtsArray as $district){
-            $districts[$district->id] = $district->name;
-        }
-        
-        $municipalities = [];
-        foreach($municipalitiesArray as $municipality){
-            $municipalities[$municipality->id] = $municipality->name;
-        }
+        // $districts = [];
+        // foreach($districtsArray as $district){
+        //     $districts[$district->id] = $district->name;
+        // }
+        $districts = collect($districtsArray)->map(function($district){
+            return [
+                "id"    => $district->id,
+                "text"  => $district->name
+            ];
+        });
+        $districts = json_encode($districts->toArray());
+
+        // $municipalities = [];
+        // foreach($municipalitiesArray as $municipality){
+        //     $municipalities[$municipality->id] = $municipality->name;
+        // }
+        $municipalities = collect($districtsArray)->map(function($district){
+            $municipalitiesArray = \DB::table('municipalities')->where('district_id','=',$district->id)->get();
+            $municipalitiesArray = collect($municipalitiesArray)->map(function($municipality){
+                return [
+                    "id"    => $municipality->id,
+                    "text"  => $municipality->name
+                ];
+            });
+
+            return [
+                "id" => $district->id,
+                "text" => $district->name,
+                "children" => $municipalitiesArray
+            ];
+        });
+
+        $municipalities = json_encode($municipalities->toArray());
 
         $orgRegAgency = $data;
 
-
-        return view('np.auth.register', compact('orgType', 'districts','municipalities','municipalitiesArray', 'countries', 'orgRegAgency', 'roles', 'regInfo', 'systemVersions', 'systemVersion'));
+        return view('np.auth.register', compact('orgType', 'districts','municipalities', 'countries', 'orgRegAgency', 'roles', 'regInfo', 'systemVersions', 'systemVersion'));
     }
 
     /**

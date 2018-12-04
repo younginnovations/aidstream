@@ -79,7 +79,7 @@ return [
     'default_version'       => '2.01',
     'default_version_name'  => 'V201',
     'super_admin_dashboard' => '/admin/list-organization',
-    'municipality_dashboard'=> '/municipality/admin/list-organization',
+    'municipality_dashboard'=> '/municipality/admin/dashboard',
     'admin_dashboard'       => '/activity',
     'admin_lite_dashboard'  => '/lite/activity',
     'default_language'      => 'en',

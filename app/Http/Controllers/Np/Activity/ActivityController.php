@@ -142,10 +142,10 @@ class ActivityController extends LiteController
 
         $municipalitiesArray = collect(\DB::table('municipalities')->get());
         $municipalities = [];
-        $municipalities = $municipalitiesArray->map(function ($mun) {
+        $municipalities = $municipalitiesArray->map(function ($municipality) {
             return [
-                "id" => $mun->id,
-                "text" => $mun->name
+                "id" => $municipality->id,
+                "text" => $municipality->name
             ];
         });
         
