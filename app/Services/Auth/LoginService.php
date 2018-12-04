@@ -223,7 +223,6 @@ class LoginService
         session()->put('role_id', $this->loggedInUser->role_id);
         session()->put('org_id', $this->loggedInUser->org_id);
         session()->put('admin_id', $this->loggedInUser->id);
-        session()->put('user_permission', $this->loggedInUser->user_permission);
         $settings = $this->settings->where('organization_id', $this->loggedInUser->org_id)->first();
         $version  = (isset($settings)) ? $settings->version : config('app.default_version');
         session()->put('current_version', $version);
