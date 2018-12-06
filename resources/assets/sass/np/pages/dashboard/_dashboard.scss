@@ -1,0 +1,63 @@
+.municipality-admin {
+
+  .navbar-brand {
+    width: 210px;
+
+    .logo {
+      margin: 0;
+    }
+  }
+
+  .navbar-default + .container {
+    padding-top: 84px !important;
+  }
+
+  .sidebar-wrapper {
+    top: 84px;
+
+    ul li a {
+      &.active {
+        background: #7b85f2;
+      }
+    }
+  }
+
+  .panel__heading {
+    padding: 9px 24px 9px;
+  }
+
+  .panel__status .col-sm-4 {
+    background: #f7f8ff;
+    border-right: 1px solid #e8eaff;
+  }
+
+  .panel__body {
+    min-height: calc(100vh - 155px);
+  }
+
+  .panel__status {
+    border-bottom: 1px solid #e8eaff;
+  }
+
+  .panel__table {
+    @include mq('tablet') {
+      margin: 0 25px;
+      width: calc(100% - 50px)!important;
+    }
+    tr {
+      border-top: 1px solid #f7f8ff !important;
+
+      &:nth-child(odd) {
+        background-color: #f7f8ff !important;
+      }
+
+      &:first-child, td {
+        border-color: transparent !important;
+      }
+    }
+
+    tr:hover, tr:nth-child(even):hover {
+      background: #edeffb!important;
+    }
+  }
+}
