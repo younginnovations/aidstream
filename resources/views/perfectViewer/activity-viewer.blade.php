@@ -39,10 +39,14 @@
 <body>
 <div class="activity-header-wrapper">
     @if (isTzSubDomain())
-        @include('tz.partials.header')
-    @else
-        @include('includes.header')
-    @endif
+    @include('tz.partials.header')
+@elseif(isNpSubDomain())
+    <section class="header-banner">
+    @include('np.partials.header')
+    </section>
+@else
+    @include('includes.header')
+@endif
 </div>
 <div class="wrapper">
     <div id="tooltip" class="tooltips"></div>
@@ -325,7 +329,13 @@
             </div>
         </div>
     </section>
-    @include('includes.footer')
+    @if(isTzSubDomain())
+	@include('tz.partials.footer')
+@elseif(isNpSubDomain())
+	@include('np.partials.footer')
+@else
+	@include('includes.footer')
+@endif
 </div>
 <script>
     var recipientCountries = {!!json_encode(array_flip($recipientCountries))!!};

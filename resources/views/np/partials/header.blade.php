@@ -17,7 +17,11 @@
             </ul>
             <div class="action-btn pull-left">
                 @if(auth()->check())
+                    @if(isMunicipalityAdmin())
+                    <a href="{{ config('app.municipality_dashboard') }}" class="btn btn-primary">Go to Dashboard</a>
+                    @else
                     <a href="{{ url((auth()->user()->role_id == 1 || auth()->user()->role_id == 2) ? route('np.activity.index') : config('app.super_admin_dashboard'))}}" class="btn btn-primary">Go to Dashboard</a>
+                    @endif
                 @else
                     <a href="{{ route('login.overridden') }}" class="btn btn-primary">Login/Register</a>
                 @endif

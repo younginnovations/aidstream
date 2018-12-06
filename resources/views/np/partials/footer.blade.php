@@ -3,7 +3,7 @@
 	<div class="footer-top-wrapper">
 		<div class="contact text-center">
 			<h2>Want to know more?</h2>
-			<a href="#" class="btn btn-primary get-started-btn">Contact Us</a>
+			<a href="mailto:support@aidstream.org" class="btn btn-primary get-started-btn">Contact Us</a>
 		</div>
 
 		<div class="container" style="position: relative;">
@@ -31,7 +31,7 @@
 				</div>
 				<div class="logo">
 					<div class="col-md-12 text-center">
-						<a href="{{ url('/') }}" title="AidStream Nepal"><img src="/images/np/ic_aidstream-logo_white.svg" alt="AidStream Nepal"></a>
+						<a href="{{ url('/') }}" title="AidStream Nepal"><img src="/images/np/ic_aidstream-logo-np-white.png" alt="AidStream Nepal"></a>
 					</div>
 				</div>
 			</div>
