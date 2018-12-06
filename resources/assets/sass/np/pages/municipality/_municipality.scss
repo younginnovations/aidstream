@@ -242,10 +242,18 @@
 
 #sector-bar-chart{
   width: 475px;
+
+  rect.chart-label-rect {
+    fill: rgba(253, 151, 137, 0.3);
+  }
 }
 
 #organization-bar-chart {
   width: 250px;
+
+  rect.chart-label-rect {
+    fill: rgba(137, 166, 255, 0.3);
+  }
 }
 
 .axis path,
