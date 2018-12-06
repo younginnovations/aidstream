@@ -142,6 +142,7 @@
     @include mq('tablet-wide') {
       padding: 48px 54px;
       margin-bottom: 0;
+      height: 100%;
     }
   }
 
@@ -387,6 +388,17 @@
     @include mq('tablet') {
       height: 108px;
     }
+  }
+}
+
+#about {
+  @include mq('tablet-wide') {
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+
   }
 }
 
