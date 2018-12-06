@@ -51,7 +51,6 @@
 		</div>
 	</div>
 </section>
-
 @if($isTz)
 	@include('tz.partials.footer')
 @elseif($isNp)
