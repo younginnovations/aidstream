@@ -207,8 +207,28 @@ Route::group(
                 'uses' => 'Auth\RegistrationController@register'
             ]
         );
+
+        Route::get("/municipality", function(){
+            return View::make("np.municipality");
+        });
         
         Route::get('/api/activities', 'NpController@activities');
+
+        Route::get(
+            '/auth/login',
+            [
+                'as'    => 'login.overridden',
+                'uses'  => 'Auth\LoginController@getLogin'
+            ]
+        );
+
+        Route::post(
+            '/auth/login',
+            [
+                'as'    => 'login.post-overridden',
+                'uses'  => 'Auth\LoginController@postLogin'
+            ]
+        );
     }
 );
 

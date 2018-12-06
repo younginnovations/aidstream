@@ -10,8 +10,11 @@
 //Mixins
 @import "mixins/base-mixins";
 
-//Pages
+//Homepage
 @import "pages/homepage/base-homepage";
+
+//Homepage
+@import "pages/municipality/base-municipality";
 
 //About
 @import "pages/about/base-about";
