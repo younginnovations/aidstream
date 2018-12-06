@@ -6,6 +6,7 @@
 }
 
 .action-btn {
+  margin: 0;
   a {
     padding: 10px 15px;
     font-size: 14px;
@@ -31,6 +32,9 @@
   .navbar {
     padding: 12px 16px;
     margin: 0;
+    position: relative;
+    z-index: 100;
+    box-shadow: 0 2px 40px 0 #bbb;
   }
 }
 
@@ -221,19 +225,35 @@
   height: 480px;
   color: #fff;
   padding: 0;
-  background-image: linear-gradient(to right, rgba(8, 6, 6, 0.6), #000000);
+  background: url("/images/np/hero-banner-image.jpg") no-repeat center/cover;
 
   &:before {
     content: '';
     position: absolute;
-    background: url("/images/np/hero-banner.png") no-repeat;
-    background-size: 100%;
-    background-position: bottom;
+    background: url("/images/np/hero-banner.png") no-repeat bottom/cover;
     height: 100%;
     width: 100%;
     display: block;
     bottom: -1px;
     filter: contrast(0.96);
+    z-index: 2;
+  }
+
+  &:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-image: linear-gradient(to right, rgba(8, 6, 6, 0.6), #000000);
+    opacity: 0.9;
+    z-index: 1;
+  }
+
+  .container {
+    position: relative;
+    z-index: 2;
   }
 
   @include mq('tablet') {
@@ -243,8 +263,6 @@
   }
 
   @include mq('tablet-wide') {
-    background-size: 100%;
-    background-position: top;
     height: calc(100vh - 66px);
   }
 
@@ -342,6 +360,44 @@
   @include mq('tablet-wide') {
     max-width: 430px;
   }
+}
+
+.feature-logo {
+  max-width: 700px;
+  margin: 0 10px 30px;
+  background: #fff;
+  border-radius: 4px;
+  transition: all 0.3s ease-in-out;
+  padding: 40px 20px;
+
+  @include mq('tablet') {
+    margin: 0 auto 66px;
+    padding: 87px;
+  }
+
+  &:hover, &:focus {
+    box-shadow: 0 3px 50px 0px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease-in-out;
+    transform: translateY(-3px);
+  }
+
+  img {
+    height: 60px;
+
+    @include mq('tablet') {
+      height: 108px;
+    }
+  }
+}
+
+.feature-content {
+   p {
+     font-family: "Bree Serif", Serif;
+     font-size: 32px;
+     color: #4a4a4a;
+     line-height: 40px;
+     margin: 0 0 55px;
+   }
 }
 
 .get-started-btn {
