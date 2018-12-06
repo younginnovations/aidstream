@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -18,12 +18,12 @@
 <section class="header-banner">
 	@include('np.partials.header')
 	<div class="introduction-wrapper">
-		<div class="container" style="position: relative;">
+		<div class="container">
 			<div class="col-md-6">
 				<div class="hero-content">
 					<h1 class="lead">We help you make aid data open and transparent.</h1>
 					<p class="description">AidStream Dhangadhi is a tool developed to meet the transparency needs of CSOs, development partners, government and wider stakeholders in Dhangadhi.</p>
-					<a href="{{ url('/register') }}" class="btn btn-primary get-started-btn">Get Started</a>
+					<a href="#" class="btn btn-primary get-started-btn">Know more</a>
 				</div>
 			</div>
 
@@ -36,7 +36,7 @@
 	</div>
 </section>
 
-<section class="np-section">
+<section class="np-section" id="about">
 	<h1 class="section-title">Why Open your Data?</h1>
 	<div class="container">
 		<div class="col-md-4">
@@ -76,6 +76,20 @@
 </section>
 
 <section class="np-section">
+	<h1 class="section-title">Aidstream Premium User</h1>
+	<div class="container text-center">
+		<div class="feature-logo">
+			<a href="{{ url('/municipality') }}"><img src="/images/np/ic_aidstream_dhangadhi.png" alt="Aidstream Dhangadi Logo"/></a>
+		</div>
+
+		<div class="feature-content">
+			<p>Do you also want to get registered?</p>
+			<a class="btn btn-primary get-started-btn" href="{{ url('/register') }}">Get Started</a>
+		</div>
+	</div>
+</section>
+
+<section class="np-section">
 	<h1 class="section-title mb-lg">Why use Aidstream Dhangadhi?</h1>
 	<div class="container">
 		<div class="full-width">
@@ -87,7 +101,8 @@
 			<div class="col-sm-6">
 				<div class="highlight-content">
 					<h2>Easy to use interfaces</h2>
-					<p>AidStream has a clear, clean and easy-to-use interface which allows you to quickly add and edit activities, as well as offering you the option of importing activities in bulk. Using AidStream guarantees that your data will always be logged correctly in the right section, with no messy XML causing you to make mistakes!</p>
+					<p>AidStream has a clear, clean and easy-to-use interface which allows you to quickly add and edit activities, as well as offering you the option of importing activities in bulk.
+						Using AidStream guarantees that your data will always be logged correctly in the right section, with no messy XML causing you to make mistakes!</p>
 				</div>
 			</div>
 		</div>
@@ -100,7 +115,8 @@
 			<div class="col-sm-6">
 				<div class="highlight-content">
 					<h2>Less IATI XML complexities</h2>
-					<p>Entering data in AidStream is as easy as filling a simple form. The system hides all the complexities and technicalities of the xml. With AidStream, the necessity to understand the details of the IATI standard becomes lesser.</p>
+					<p>Entering data in AidStream is as easy as filling a simple form. The system hides all the complexities and technicalities of the xml. With AidStream, the necessity to understand
+						the details of the IATI standard becomes lesser.</p>
 				</div>
 			</div>
 		</div>
@@ -113,7 +129,8 @@
 			<div class="col-sm-6">
 				<div class="highlight-content">
 					<h2>Publish data with ease!</h2>
-					<p>AidStream uses the form you fill out to generate the necessary XML files and sends your data direct to the IATI Registry - all with a single click! All you have to do is sit back and relax - AidStream takes care of everything else.</p>
+					<p>AidStream uses the form you fill out to generate the necessary XML files and sends your data direct to the IATI Registry - all with a single click! All you have to do is sit
+						back and relax - AidStream takes care of everything else.</p>
 				</div>
 			</div>
 		</div>
@@ -135,6 +152,13 @@
 <script type="text/javascript" src="//cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
 
 <script>
+
+    $(".hero-content .btn").click(function() {
+        $('html,body').animate({
+                scrollTop: $("#about").offset().top},
+            'slow');
+    });
+
     var projectCollection = new ProjectCollection({
         url: '/api/activities'
     });
