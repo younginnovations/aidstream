@@ -1,4 +1,4 @@
-<?php namespace App\Http\Controllers\Auth;
+<?php namespace App\Http\Controllers\Np\Auth;
 
 use App\Core\EmailQueue;
 use App\Core\Form\BaseForm;
@@ -234,7 +234,7 @@ class AuthController extends Controller
         $baseForm  = new BaseForm();
         $countries = $baseForm->getCodeList('Country', 'Organization');
 
-        return view('auth.register', compact('countries'));
+        return view('np.auth.register', compact('countries'));
     }
 
     /**

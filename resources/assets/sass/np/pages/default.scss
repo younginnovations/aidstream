@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Bree+Serif');
+
 $img-path: "/images";
 $light-black: rgba(0, 0, 0, 0.5);
 $color_primary: #00A8FF;
@@ -8,8 +10,6 @@ $color_gravel_approx: #484848;
 $url_3: url(../../../images/ic-sprite.svg);
 $url_5: url(../../../images/ic-no-activity.svg);
 $url_6: url(../../../images/ic-no-document.svg);
-
-@import url('https://fonts.googleapis.com/css?family=Bree+Serif');
 
 a {
   color: $color_purple;
@@ -162,3 +162,13 @@ h2 {
   background: $color_purple;
 }
 
+.organisations-list ul li a {
+  background: #fff;
+  padding: 0;
+}
+
+.organisation-list-wrapper {
+  input[type='text'] {
+    border: none !important;
+  }
+}

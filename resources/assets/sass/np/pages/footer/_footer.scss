@@ -75,7 +75,7 @@ footer {
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-    width: 200px;
+    width: 300px;
 
     ul {
       display: flex;
@@ -89,7 +89,7 @@ footer {
         margin-bottom: 20px;
 
         @include mq('tablet-wide') {
-          margin-right: 60px;
+          min-width: 150px;
           margin-bottom: 0;
           text-align: left;
           width: auto;
@@ -176,4 +176,9 @@ footer {
       }
     }
   }
+}
+
+//Municipality-landing-ui
+.municipality-page .footer-top-wrapper:before {
+  filter: contrast(1);
 }
