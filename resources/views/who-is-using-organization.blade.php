@@ -33,7 +33,15 @@
     }
 </style>
 <body>
-@include('includes.header')
+@if($isTz)
+	@include('tz.partials.header')
+@elseif($isNp)
+	<section class="header-banner">
+		@include('np.partials.header')
+	</section>
+@else
+	@include('includes.header')
+@endif
 
 <section class="organisation-detail-container">
     <div class="contact-section clearfix">

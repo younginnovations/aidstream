@@ -40,6 +40,10 @@
 <div class="org-header-wrapper">
     @if (isTzSubDomain())
         @include('tz.partials.header')
+    @elseif(isNpSubDomain())
+        <section class="header-banner">
+        @include('np.partials.header')
+        </section>
     @else
         @include('includes.header')
     @endif
@@ -177,7 +181,13 @@
             </div>
         </div>
     </section>
-    @include('includes.footer')
+    @if(isTzSubDomain())
+	@include('tz.partials.footer')
+@elseif(isNpSubDomain())
+	@include('np.partials.footer')
+@else
+	@include('includes.footer')
+@endif
 </div>
 </body>
 <script src="/js/jquery.js"></script>

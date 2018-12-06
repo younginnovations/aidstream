@@ -1,0 +1,260 @@
+.municipality-login {
+
+  section {
+    display: block;
+  }
+
+  .navbar-default .navbar-collapse {
+    margin: 0;
+    padding: 0;
+  }
+
+  .login-container {
+    padding: 0;
+  }
+
+  .row {
+    margin: 0;
+  }
+
+  .panel {
+    background: transparent;
+    text-align: center;
+  }
+
+  .registration-inner-wrapper {
+    .form-control[readonly],
+    .select2-container,
+    input:not([type]),
+    input[type=color],
+    input[type=date],
+    input[type=datetime-local],
+    input[type=datetime],
+    input[type=email],
+    input[type=month],
+    input[type=number],
+    input[type=password],
+    input[type=search],
+    input[type=tel],
+    input[type=text],
+    input[type=time],
+    input[type=url],
+    input[type=week],
+    select, textarea,
+    textarea.form-control {
+      background-color: #F2F9FC!important;
+      border: 1px solid #BFDFEC !important;
+      text-align: left;
+    }
+
+    input[type=search].select2-search__field {
+      border: none !important;
+    }
+
+    .select2-container {
+      max-height: 40px;
+      height: auto;
+      overflow-y: scroll;
+    }
+
+    .select2-container--default .select2-selection--multiple .select2-selection__choice {
+      &:last-of-type {
+        margin-bottom: 0;
+      }
+    }
+  }
+}
+
+.municipality-page {
+  background: #fff;
+
+  .np-section {
+    padding: 0 10px;
+
+    &:after {
+      display: none;
+    }
+
+    &.bg-grey {
+      max-width: 1170px;
+      margin: 0 auto;
+      padding: 50px;
+      display: block;
+      background: #f6f8fa;
+    }
+  }
+
+  .section-grid {
+    max-width: 1170px;
+    margin: 50px auto;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+  }
+
+  .section-card {
+    padding: 30px 15px;
+
+    &.bg-grey {
+      background: #f6f8fa;
+    }
+
+    h3 {
+      font-size: 16px;
+      color: #4a4a4a;
+      text-transform: uppercase;
+      margin: 0;
+    }
+
+    .header {
+      margin-bottom: 25px;
+    }
+
+    .body {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+  }
+
+  .stats {
+    .number {
+      font-size: 60px;
+      font-weight: 600;
+      color: #4a4a4a;
+      margin-bottom: 5px;
+    }
+
+    .text {
+      font-size: 10px;
+      color: rgba(#4a4a4a, 0.7);
+      text-transform: uppercase;
+    }
+  }
+}
+
+.introduction-wrapper.municipality {
+
+  .container {
+    position: relative;
+    z-index: 2;
+  }
+
+  &:before {
+    display: none;
+  }
+}
+
+.project-card {
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 25px;
+    margin-bottom: 22px;
+    border-bottom: 1px solid rgba(#bbb, 0.3);
+  }
+
+  h2 {
+    color: #35383f;
+    font-size: 26px;
+    padding-left: 36px;
+    margin: 0;
+  }
+
+  .search {
+    position: relative;
+    &:before {
+      background: url("/images/np/ic_search.png") no-repeat;
+      background-size: 12px;
+      content: '';
+      display: inline-block;
+      position: absolute;
+      left: 25px;
+      top: 12px;
+      width: 12px;
+      height: 12px;
+      z-index: 1;
+      opacity: 0.3;
+    }
+    input {
+      border: 1px solid #fff;
+      background: #fff;
+      border-radius: 30px;
+      outline: none;
+      width: 280px;
+      padding: 8px 15px 8px 46px;
+      font-size: 12px;
+      color: #35383f;
+
+      &::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+        color: rgba(#000, 0.3);
+      }
+      &::-moz-placeholder { /* Firefox 19+ */
+        color: rgba(#000, 0.3);
+      }
+      &:-ms-input-placeholder { /* IE 10+ */
+        color: rgba(#000, 0.3);
+      }
+      &:-moz-placeholder { /* Firefox 18- */
+        color: rgba(#000, 0.3);
+      }
+    }
+  }
+
+  .table {
+    th {
+      color: rgba(#35383f, 0.5);
+      font-size: 12px;
+      font-weight: 300;
+      padding: 0 0 32px;
+
+      &:first-child {
+        padding-left: 24px;
+      }
+    }
+  }
+
+  tbody {
+    tr {
+      &:nth-child(odd) {
+        background-color: #fff;
+      }
+    }
+
+    td {
+      color: rgba(#35383f, 0.5);
+      font-size: 12px;
+      padding: 19px 10px 19px 0;
+
+      &:first-child {
+        color: #35383f;
+        font-size: 14px;
+        padding-left: 24px;
+      }
+    }
+  }
+}
+
+.org-transaction-wrapper{
+  background-image: linear-gradient(-1deg,#7b81f5 2%,#969aec 99%);
+}
+
+#sector-bar-chart{
+  width: 475px;
+}
+
+#organization-bar-chart {
+  width: 250px;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: black;
+  shape-rendering: crispEdges;
+}
+
+.axis text {
+  font-size: 1.3em;
+}
