@@ -21,8 +21,8 @@
 		<div class="container">
 			<div class="col-md-6">
 				<div class="hero-content">
-					<h1 class="lead">We help you make aid data open and transparent.</h1>
-					<p class="description">AidStream Dhangadhi is a tool developed to meet the transparency needs of CSOs, development partners, government and wider stakeholders in Dhangadhi.</p>
+					<h1 class="lead">Dhangadhi Sub-Metropolitan City</h1>
+					<p class="description">AidStream Dhangadhi is a tool developed to meet the transparency needs of CSOs, development partners, government and wider stakeholders in Dhangadhi</p>
 					<a href="{{ url('/register') }}" class="btn btn-primary get-started-btn">Get Started</a>
 				</div>
 			</div>
@@ -195,8 +195,8 @@
         outerPadding = .2,
         barPadding = .1;
 
-    for (var i = 0; i < 6; i++) {
-        mySectorData.push(Math.ceil(Math.random() * 100) + 6);
+    for (var i = 0; i < 5; i++) {
+        mySectorData.push(Math.ceil(Math.random() * 100) + 5);
     }
 
     var xScale = d3.scale.ordinal()
@@ -237,13 +237,13 @@
     var labelSVG = chart.selectAll('svg').data(mySectorData)
         .enter().append('svg')
         .attr('class', 'chart-label-svg')
-        .attr('width', 80)
+        .attr('width', 70)
         .attr('height', 30)
         .attr('x', function (d, i) {
-            return xScale(i) + xScale.rangeBand();
+            return xScale(i) + 2;
         })
         .attr('y', function (d) {
-            return height - yScale(d) - padding - 30;
+            return height - yScale(d) - padding - 20;
         })
         .style('opacity', '0')
         .append('g');
@@ -353,21 +353,21 @@
 
     var labelSVG = chart.selectAll('svg').data(myOrganizationData)
         .enter().append('svg')
-        .attr('class', 'chart-label-svg')
-        .attr('width', 80)
+        .attr('class', 'chart-label-organization-svg')
+        .attr('width', 70)
         .attr('height', 30)
         .attr('x', function (d, i) {
-            return xScale(i) + xScale.rangeBand();
+            return xScale(i) + 1;
         })
         .attr('y', function (d) {
-            return height - yScale(d) - padding - 30;
+            return height - yScale(d) - padding - 20;
         })
         .style('opacity', '0')
         .append('g');
 
     labelSVG.append('rect')
         .attr('class', 'chart-label-rect')
-        .attr('width', 80)
+        .attr('width', 70)
         .attr('height', 30)
         .attr('x', 0)
         .attr('y', 0)
@@ -392,7 +392,7 @@
         .on('mouseenter', function (d, i) {
             d3.select(this)
                 .style('fill', d3.rgb('#89a6ff').brighter(.3));
-            d3.selectAll('.chart-label-svg')
+            d3.selectAll('.chart-label-organization-svg')
                 .filter(function (e, j) {
                     if (i === j) {
                         return this;
@@ -403,7 +403,7 @@
         .on('mouseleave', function (d, i) {
             d3.select(this)
                 .style('fill', d3.rgb('#89a6ff'));
-            d3.selectAll('.chart-label-svg')
+            d3.selectAll('.chart-label-organization-svg')
                 .filter(function (e, j) {
                     if (i === j) {
                         return this;
