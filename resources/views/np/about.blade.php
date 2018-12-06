@@ -4,7 +4,7 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport'/>
-	<title>Aidstream Nepal</title>
+	<title>AidStream Nepal</title>
 	<link rel="shortcut icon" type="image/png" sizes="32*32" href="{{ asset('/images/favicon-tz.png') }}"/>
 	<link rel="stylesheet" href="{{ asset('/css/vendor.min.css') }}">
 	{!!  publicStylesheet() !!}
@@ -32,7 +32,8 @@
 			<div class="col-md-12 text-center">
 				<div>
 					<p>
-						Aidstream is available to all those Nepali CSOs implementing development projects. We have created a Nepal-specific, highly user-friendly version of AidStream to allow you to
+						AidStream Nepal is available to all those Nepali CSOs implementing development projects. We have created a Nepal-specific, highly user-friendly version of AidStream to allow
+						you to
 						enter your project data with ease, and you can reach a dedicated Nepal support team by emailing us directly at <a href="mailto:support@aidstream.org">support@aidstream.org</a>.
 					</p>
 					<p>
@@ -45,7 +46,8 @@
 						of the global IATI standard for aid.
 					</p>
 					<p>
-						Aidstream Nepal is brought to you by <a href="http://www.yipl.com.np/">YoungInnovations</a>, with support from local organizations and partners in Nepal. It has been developed
+						AidStream Nepal is brought to you by <a href="http://www.yipl.com.np/">YoungInnovations</a>, with support from local organizations and partners in Nepal. It has been
+						developed
 						as an Open Source product, and is also available in <a href="https://github.com/younginnovations/aidstream-tz/">GitHub</a>. The platform has been forked from the existing
 						global AidStream platform which is already a go-to place for global actors to publish data into IATI. Please feel free to reach out to us at <a
 								href="mailto:support@aidstream.org">support@aidstream.org</a> if you want to contribute to this open source development.
