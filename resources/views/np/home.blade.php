@@ -7,7 +7,7 @@
 	{{ header("Cache-Control: no-cache, no-store, must-revalidate")}}
 	{{ header("Pragma: no-cache") }}
 	{{ header("Expires: 0 ")}}
-	<title>Aidstream Nepal</title>
+	<title>AidStream Nepal</title>
 	<link rel="stylesheet" href="{{ asset('/css/vendor.min.css') }}">
 	<link href="http://cdn.leafletjs.com/leaflet-0.7/leaflet.css" rel="stylesheet">
 	{!!  publicStylesheet() !!}
@@ -21,8 +21,8 @@
 		<div class="container">
 			<div class="col-md-6">
 				<div class="hero-content">
-					<h1 class="lead">We help you make aid data open and transparent.</h1>
-					<p class="description">AidStream Dhangadhi is a tool developed to meet the transparency needs of CSOs, development partners, government and wider stakeholders in Dhangadhi.</p>
+					<h1 class="lead">Comprehensive online portal of development projects of Nepal</h1>
+					<p class="description">Collaborative tool and reporting platform for local government and implementing NGOs facilitating closer partnership towards sustainable development</p>
 					<a href="#" class="btn btn-primary get-started-btn">Know more</a>
 				</div>
 			</div>
@@ -46,7 +46,7 @@
 						<img src="./images/np/ic_increases_transparency.svg" alt="Image 1">
 					</div>
 					<h2>Increases Transparency</h2>
-					<p>The transparent nature of publicly accessible data exposes a side of an organization which is quite often kept under wraps. </p>
+					<p>The transparent nature of publicly accessible data exposes a side of an organization which is quite often kept under wraps</p>
 				</div>
 			</div>
 		</div>
@@ -57,7 +57,7 @@
 						<img src="./images/np/ic_develops_credibility.svg" alt="Image 2">
 					</div>
 					<h2>Develops Credibility</h2>
-					<p>The transparent nature of publicly accessible data exposes a side of an organization which is quite often kept under wraps. </p>
+					<p>Digitization of government data and information provides the public with greater insight into government activities, service delivery, upcoming plans and policies</p>
 				</div>
 			</div>
 		</div>
@@ -68,7 +68,7 @@
 						<img src="./images/np/ic_promotes_innovation.svg" alt="Image 3">
 					</div>
 					<h2>Promotes Innovation</h2>
-					<p>The transparent nature of publicly accessible data exposes a side of an organization which is quite often kept under wraps. </p>
+					<p>Access to knowledge resources in the form of data supports innovation  by reducing duplication and promoting reuse of existing resources</p>
 				</div>
 			</div>
 		</div>
@@ -76,10 +76,10 @@
 </section>
 
 <section class="np-section">
-	<h1 class="section-title">Aidstream Premium User</h1>
+	<h1 class="section-title">AidStream Nepal Premium User</h1>
 	<div class="container text-center">
 		<div class="feature-logo">
-			<a href="{{ url('/municipality') }}"><img src="/images/np/ic_aidstream_dhangadhi.png" alt="Aidstream Dhangadi Logo"/></a>
+			<a href="{{ url('/municipality') }}"><img src="/images/np/ic_aidstream_dhangadhi.png" alt="AidStream Dhangadi Logo"/></a>
 		</div>
 
 		<div class="feature-content">
@@ -90,7 +90,7 @@
 </section>
 
 <section class="np-section">
-	<h1 class="section-title mb-lg">Why use Aidstream Dhangadhi?</h1>
+	<h1 class="section-title mb-lg">Why use AidStream Nepal?</h1>
 	<div class="container">
 		<div class="full-width">
 			<div class="col-sm-6">
@@ -101,8 +101,9 @@
 			<div class="col-sm-6">
 				<div class="highlight-content">
 					<h2>Easy to use interfaces</h2>
-					<p>AidStream has a clear, clean and easy-to-use interface which allows you to quickly add and edit activities, as well as offering you the option of importing activities in bulk.
-						Using AidStream guarantees that your data will always be logged correctly in the right section, with no messy XML causing you to make mistakes!</p>
+					<p>AidStream Nepal has a clear, clean and easy-to-use interface which allows you to quickly add and edit activities, as well as offering you the option of importing activities in
+						bulk.
+						Using AidStream Nepal guarantees that your data will always be logged correctly in the right section, with no messy XML causing you to make mistakes!</p>
 				</div>
 			</div>
 		</div>
@@ -115,7 +116,9 @@
 			<div class="col-sm-6">
 				<div class="highlight-content">
 					<h2>Less IATI XML complexities</h2>
-					<p>Entering data in AidStream is as easy as filling a simple form. The system hides all the complexities and technicalities of the xml. With AidStream, the necessity to understand
+					<p>Entering data in AidStream Nepal is as easy as filling a simple form. The system hides all the complexities and technicalities of the xml. With AidStream Nepal, the necessity
+						to
+						understand
 						the details of the IATI standard becomes lesser.</p>
 				</div>
 			</div>
@@ -129,8 +132,7 @@
 			<div class="col-sm-6">
 				<div class="highlight-content">
 					<h2>Publish data with ease!</h2>
-					<p>AidStream uses the form you fill out to generate the necessary XML files and sends your data direct to the IATI Registry - all with a single click! All you have to do is sit
-						back and relax - AidStream takes care of everything else.</p>
+					<p>AidStream Nepal uses the form you fill out to generate the necessary XML files and sends your data direct to the IATI Registry - all with a single click! All you have to do issit back and relax - AidStream Nepal takes care of everything else.</p>
 				</div>
 			</div>
 		</div>

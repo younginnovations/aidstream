@@ -34,22 +34,9 @@
 	@include('np.partials.header')
 </section>
 <div class="login-wrapper">
-	{{--    <div class="language-select-wrapper">
-			<label for="" class="pull-left">Language</label>
-
-			<div class="language-selector pull-left">
-				<span class="flag-wrapper"><span class="img-thumbnail flag flag-icon-background flag-icon-{{ config('app.locale') }}"></span></span>
-				<span class="caret pull-right"></span>
-			</div>
-			<ul class="language-select-wrap language-flag-wrap">
-				@foreach(config('app.locales') as $key => $val)
-					<li class="flag-wrapper" data-lang="{{ $key }}"><span class="img-thumbnail flag flag-icon-background flag-icon-{{ $key }}"></span><span class="language">{{ $val }}</span></li>
-				@endforeach
-			</ul>
-		</div>--}}
 	<div class="container-fluid register-container">
 		<div class="row">
-			<h1 class="text-center">@lang('registration.get_started_with_aidstream')</h1>
+			<h1 class="text-center">Get Started with AidStream Nepal</h1>
 			<p class="text-center">@lang('registration.register_your_organisation_text')</p>
 			<ul class="nav nav-tabs text-center" role="tablist">
 				<li role="presentation" class="active"><span>1</span><a href="#tab-organization" aria-controls="tab-organization" role="tab"
