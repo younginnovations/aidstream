@@ -103,7 +103,7 @@ class SettingsController extends LiteController
 
         $registrationAgency = getVal($model, ['registrationRegistrationAgency'], '');
         $country            = getVal($model, ['country'], '');
-        $agencies           = json_encode($form->getCodeList('OrganisationRegistrationAgency', 'Organization', false));
+        $agencies           = json_encode($form->getCodeList('NpOrganisationRegistrationAgency', 'Organization', false));
 
         return view('np.settings.index', compact('form', 'agencies', 'registrationAgency', 'country', 'users'));
     }
