@@ -162,7 +162,7 @@ class ActivityController extends LiteController
         });
         $wards = json_encode($wards->toArray());
         $municipalities = json_encode($municipalities->toArray());
-        $locationArray = "";
+        $locationArray = "[]";
 
         if (Gate::denies('belongsToOrganization', $organisation)) {
             return redirect()->route('np.activity.index')->withResponse($this->getNoPrivilegesMessage());

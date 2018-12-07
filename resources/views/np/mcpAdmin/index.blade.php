@@ -20,7 +20,7 @@
 					<div class="col-sm-4">
 						<h2>Total Activities</h2>
 						<span class="count">
-                0
+                {{ $activitiesCount }}
                 </span>
 						<div class="published-num">
 							<span>No. of activities published to IATI:</span>
@@ -47,8 +47,8 @@
 					</div>
 					<div class="col-sm-4">
 						<h2>Total Budget</h2>
-						<span class="count" id="budgetTotal"><small>$</small><span id="totalBudget">0</span><small id="placeValue"></small></span>
-						<div class="highest-budget">Highest budget in an activity: <span id="maxBudget">$0</span></div>
+						<span class="count" id="budgetTotal"><small>$</small><span id="totalBudget">{{ array_sum($budget) }}</span><small id="placeValue"></small></span>
+					<div class="highest-budget">Highest budget in an activity: <span id="maxBudget">${{ $budget[0] }}</span></div>
 					</div>
 				</div>
 			</div>
