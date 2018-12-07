@@ -79,7 +79,7 @@
 	<h1 class="section-title">AidStream Nepal Premium User</h1>
 	<div class="container text-center">
 		<div class="feature-logo">
-			<a href="{{ url('/municipality') }}"><img src="/images/np/ic_aidstream_dhangadhi.png" alt="AidStream Dhangadi Logo"/></a>
+			<a href="{{ url('/municipality/dhangadi') }}"><img src="/images/np/ic_aidstream_dhangadhi.png" alt="AidStream Dhangadi Logo"/></a>
 		</div>
 
 		<div class="feature-content">

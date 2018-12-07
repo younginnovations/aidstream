@@ -65,6 +65,28 @@ class NpController extends LiteController
         return view('np.about');
     }
 
+    public function municipality($municipalityId)
+    {
+        if($municipalityId != 'dhangadi'){
+
+            return redirect()->back();
+        }
+
+        $organizationCount  = $this->organizationCount();
+
+        $activityData = $this->getActivityDataForNp();
+        $sectors = [];
+        foreach($activityData as $activity){
+            $sectorCode = getVal($activity->sector, [0 , 'sector_code']);
+            if(!in_array($sectorCode, $sectors)){
+                $sectors[] = $sectorCode;
+            }
+        }
+        
+        $sectorCount = count($sectors);
+        return view('np.municipality', compact('organizationCount', 'sectorCount'));
+    }
+
     /**
      * Get the data for the Tz homepage.
      *
