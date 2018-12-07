@@ -49,7 +49,9 @@
 					<span class="text">Total sectors</span>
 				</div>
 				<div class="bar-chat-wrapper">
-					<div id="sector-bar-chart"></div>
+					<div class="sector-chart-container" id="sector-chart">
+						<svg width="460" height="320"></svg>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -67,7 +69,9 @@
 					<span class="text">Total organizations</span>
 				</div>
 				<div class="bar-chat-wrapper">
-					<div id="organization-bar-chart"></div>
+					<div class="organization-chart-container" id="organization-chart">
+						<svg width="250" height="320"></svg>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -146,7 +150,7 @@
 <script type="text/javascript" src="{{url('/np/js/leaflet/leaflet.js')}}"></script>
 <script type="text/javascript" src="{{url('/np/js/mapping.js')}}"></script>
 <script type="text/javascript" src="//cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
+<script type="text/javascript" src="https://d3js.org/d3.v4.min.js"></script>
 
 <script>
     var projectCollection = new ProjectCollection({
@@ -187,243 +191,168 @@
     });
 
     //Sector-bar-chart
-    var mySectorData = [],
-        colors = ['#1695A3', '#ACF0F2'],
-        width = 475,
-        height = 200,
-        padding = 30,
-        outerPadding = .2,
-        barPadding = .1;
+    var sector_static_data = [{
+        sector_area: 'Education',
+        sector_count: 42
+    }, {
+        sector_area: 'Health',
+        sector_count: 102
+    }, {
+        sector_area: 'Traning',
+        sector_count: 160
+    }, {
+        sector_area: 'Biodiversity',
+        sector_count: 82
+    }, {
+        sector_area: 'Preservation',
+        sector_count: 48
+    }];
 
-    for (var i = 0; i < 5; i++) {
-        mySectorData.push(Math.ceil(Math.random() * 100) + 5);
-    }
+    var tip = d3.select(".sector-chart-container")
+        .append("div")
+        .attr("class", "tip")
+        .style("position", "absolute")
+        .style("z-index", "10")
+        .style("visibility", "hidden");
 
-    var xScale = d3.scale.ordinal()
-        .domain(d3.range(0, mySectorData.length))
-        .rangeBands([padding, width - padding], barPadding, outerPadding);
+    var svg = d3.select("#sector-chart svg").attr("class", "background-style"),
+        margin = {top: 20, right: 20, bottom: 42, left: 40},
+        width = +svg.attr("width") - margin.left - margin.right,
+        height = +svg.attr("height") - margin.top - margin.bottom;
 
-    var yScale = d3.scale.linear()
-        .domain([d3.max(mySectorData), 0])
-        .range([height - (padding * 2), 0]);
+    var x = d3.scaleBand().rangeRound([0, width]).padding(0.05),
+        y = d3.scaleLinear().rangeRound([height, 0]);
 
-    var yAxisScale = d3.scale.linear()
-        .domain([Math.round(d3.max(mySectorData)), 0])
-        .range([0, height - ( padding * 2 )]);
+    var g = svg.append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-    var xAxis = d3.svg.axis()
-        .scale(xScale)
-        .orient('bottom');
+    d3.json("apiPlaceholderURL", function (error, data) {
+        //if (error) throw error;
 
-    var chart = d3.select('#sector-bar-chart')
-        .style('background', '#fff')
-        .append('svg')
-        .attr('width', width)
-        .attr('height', height);
+        data = sector_static_data;
 
-    var chartBars = chart.selectAll('rect').data(mySectorData)
-        .enter().append('rect')
-        .attr('class', 'chart-bar')
-        .attr('width', function (d) {
-            return xScale.rangeBand();
-        })
-        .attr('height', 0)
-        .attr('fill', '#ff9786')
-        .attr('x', function (d, i) {
-            return xScale(i);
-        })
-        .attr('y', height - padding);
+        x.domain(data.map(function (d) {
+            return d.sector_area;
+        }));
+        y.domain([0, d3.max(data, function (d) {
+            return d.sector_count;
+        })]);
 
-    var labelSVG = chart.selectAll('svg').data(mySectorData)
-        .enter().append('svg')
-        .attr('class', 'chart-label-svg')
-        .attr('width', 70)
-        .attr('height', 30)
-        .attr('x', function (d, i) {
-            return xScale(i) + 2;
-        })
-        .attr('y', function (d) {
-            return height - yScale(d) - padding - 20;
-        })
-        .style('opacity', '0')
-        .append('g');
+        g.append("g")
+            .attr("class", "axis axis--x")
+            .attr("transform", "translate(0," + height + ")")
+            .call(d3.axisBottom(x))
+            .append("text")
+            .attr("y", 6)
+            .attr("dy", "2.5em")
+            .attr("dx", width / 2 - margin.left)
+            .attr("text-anchor", "start")
 
-    labelSVG.append('rect')
-        .attr('class', 'chart-label-rect')
-        .attr('width', 80)
-        .attr('height', 30)
-        .attr('x', 0)
-        .attr('y', 0)
-        .attr('fill', 'white');
-
-    labelSVG.append('text')
-        .attr('x', '50%')
-        .attr('y', '50%')
-        .attr('text-anchor', 'middle')
-        .attr('alignment-baseline', 'middle')
-        .attr('fill', '#000')
-        .text(function (d) {
-            return d;
-        });
-
-    var xAxisG = chart.append('g')
-        .attr('class', 'axis')
-        .attr('transform', 'translate(0,' + (height - padding) + ')')
-        .call(xAxis);
-
-    var rectTransitions = chartBars
-        .on('mouseenter', function (d, i) {
-            d3.select(this)
-                .style('fill', d3.rgb('#ff9786').brighter(.3));
-            d3.selectAll('.chart-label-svg')
-                .filter(function (e, j) {
-                    if (i === j) {
-                        return this;
-                    }
-                })
-                .style('opacity', '1.0');
-        })
-        .on('mouseleave', function (d, i) {
-            d3.select(this)
-                .style('fill', d3.rgb('#ff9786'));
-            d3.selectAll('.chart-label-svg')
-                .filter(function (e, j) {
-                    if (i === j) {
-                        return this;
-                    }
-                })
-                .style('opacity', '0');
-        })
-        .transition()
-        .duration(1000)
-        .delay(function (d, i) {
-            return i * 6;
-        })
-        .ease('elastic')
-        .attr('height', function (d) {
-            return yScale(d);
-        })
-        .attr('y', function (d) {
-            return height - yScale(d) - padding;
-        });
-
+        g.selectAll(".bar")
+            .data(data)
+            .enter().append("rect")
+            .attr("class", "bar")
+            .attr("x", function (d) {
+                return x(d.sector_area);
+            })
+            .attr("y", function (d) {
+                return y(d.sector_count);
+            })
+            .attr("width", x.bandwidth())
+            .attr("height", function (d) {
+                return height - y(d.sector_count)
+            })
+            .on("mouseenter", function (d) {
+                return tip.text(d.sector_count).style("visibility", "visible").style("top", y(d.sector_count) - 13 + 'px').style("left", x(d.sector_area) + x.bandwidth() - 12 + 'px')
+            })
+            //.on("mousemove", function(){return tooltip.style("top", (d3.event.pageY-10)+"px").style("left",(d3.event.pageX+10)+"px");})
+            .on("mouseout", function () {
+                return tip.style("visibility", "hidden");
+            });
+    });
 
     //Organization-bar-chart
-    var myOrganizationData = [],
-        width = 250,
-        height = 200,
-        padding = 30,
-        outerPadding = .2,
-        barPadding = .1;
+    var organization_static_data = [{
+        organization_area: 'Community',
+        organization_count: 42
+    }, {
+        organization_area: 'Local NGO',
+        organization_count: 102
+    }];
 
-    for (var i = 0; i < 3; i++) {
-        myOrganizationData.push(Math.ceil(Math.random() * 100) + 3);
-    }
+    var tip_org = d3.select(".organization-chart-container")
+        .append("div")
+        .attr("class", "tip")
+        .style("position", "absolute")
+        .style("z-index", "10")
+        .style("visibility", "hidden");
 
-    var xScale = d3.scale.ordinal()
-        .domain(d3.range(0, myOrganizationData.length))
-        .rangeBands([padding, width - padding], barPadding, outerPadding);
+    var svg = d3.select("#organization-chart svg").attr("class", "background-style"),
+        margin_org = {top: 20, right: 20, bottom: 42, left: 40},
+        width_org = +svg.attr("width") - margin_org.left - margin_org.right,
+        height_org = +svg.attr("height") - margin_org.top - margin_org.bottom;
 
-    var yScale = d3.scale.linear()
-        .domain([d3.max(myOrganizationData), 0])
-        .range([height - (padding * 2), 0]);
+    var x_org = d3.scaleBand().rangeRound([0, width_org]).padding(0.05),
+        y_org = d3.scaleLinear().rangeRound([height_org, 0]);
 
-    var xAxis = d3.svg.axis()
-        .scale(xScale)
-        .orient('bottom');
+    var g_org = svg.append("g")
+        .attr("transform", "translate(" + margin_org.left + "," + margin_org.top + ")");
 
-    var chart = d3.select('#organization-bar-chart')
-        .style('background', '#fff')
-        .append('svg')
-        .attr('width', width)
-        .attr('height', height);
+    d3.json("apiPlaceholderURL", function (error, data) {
+        //if (error) throw error;
 
-    var chartBars = chart.selectAll('rect').data(myOrganizationData)
-        .enter().append('rect')
-        .attr('class', 'chart-bar')
-        .attr('width', function (d) {
-            return xScale.rangeBand();
-        })
-        .attr('height', 0)
-        .attr('fill', '#89a6ff')
-        .attr('x', function (d, i) {
-            return xScale(i);
-        })
-        .attr('y', height - padding);
+        data = organization_static_data;
 
-    var labelSVG = chart.selectAll('svg').data(myOrganizationData)
-        .enter().append('svg')
-        .attr('class', 'chart-label-organization-svg')
-        .attr('width', 70)
-        .attr('height', 30)
-        .attr('x', function (d, i) {
-            return xScale(i) + 1;
-        })
-        .attr('y', function (d) {
-            return height - yScale(d) - padding - 20;
-        })
-        .style('opacity', '0')
-        .append('g');
+        x_org.domain(data.map(function (d) {
+            return d.organization_area;
+        }));
+        y_org.domain([0, d3.max(data, function (d) {
+            return d.organization_count;
+        })]);
 
-    labelSVG.append('rect')
-        .attr('class', 'chart-label-rect')
-        .attr('width', 70)
-        .attr('height', 30)
-        .attr('x', 0)
-        .attr('y', 0)
-        .attr('fill', 'white');
+        g_org.append("g")
+            .attr("class", "axis axis--x")
+            .attr("transform", "translate(0," + height_org + ")")
+            .call(d3.axisBottom(x_org))
+            .append("text")
+            .attr("y", 6)
+            .attr("dy", "2.5em")
+            .attr("dx", width_org / 2 - margin_org.left)
+            .attr("text-anchor", "start")
 
-    labelSVG.append('text')
-        .attr('x', '50%')
-        .attr('y', '50%')
-        .attr('text-anchor', 'middle')
-        .attr('alignment-baseline', 'middle')
-        .attr('fill', '#000')
-        .text(function (d) {
-            return d;
-        });
+//        g.append("g")
+//            .attr("class", "axis axis--y")
+//            .call(d3.axisLeft(y).ticks(10))
+//            .append("text")
+//            .attr("transform", "rotate(-90)")
+//            .attr("y", 6)
+//            .attr("dy", "0.71em")
+//            .attr("text-anchor", "end")
+//            .text("Student Count");
 
-    var xAxisG = chart.append('g')
-        .attr('class', 'axis')
-        .attr('transform', 'translate(0,' + (height - padding) + ')')
-        .call(xAxis);
 
-    var rectTransitions = chartBars
-        .on('mouseenter', function (d, i) {
-            d3.select(this)
-                .style('fill', d3.rgb('#89a6ff').brighter(.3));
-            d3.selectAll('.chart-label-organization-svg')
-                .filter(function (e, j) {
-                    if (i === j) {
-                        return this;
-                    }
-                })
-                .style('opacity', '1.0');
-        })
-        .on('mouseleave', function (d, i) {
-            d3.select(this)
-                .style('fill', d3.rgb('#89a6ff'));
-            d3.selectAll('.chart-label-organization-svg')
-                .filter(function (e, j) {
-                    if (i === j) {
-                        return this;
-                    }
-                })
-                .style('opacity', '0');
-        })
-        .transition()
-        .duration(1000)
-        .delay(function (d, i) {
-            return i * 3;
-        })
-        .ease('elastic')
-        .attr('height', function (d) {
-            return yScale(d);
-        })
-        .attr('y', function (d) {
-            return height - yScale(d) - padding;
-        });
-
+        g_org.selectAll(".bar")
+            .data(data)
+            .enter().append("rect")
+            .attr("class", "bar")
+            .attr("x", function (d) {
+                return x_org(d.organization_area);
+            })
+            .attr("y", function (d) {
+                return y_org(d.organization_count);
+            })
+            .attr("width", x_org.bandwidth())
+            .attr("height", function (d) {
+                return height_org - y_org(d.organization_count)
+            })
+            .on("mouseenter", function (d) {
+                return tip_org.text(d.organization_count).style("visibility", "visible").style("top", y_org(d.organization_count) - 13 + 'px').style("left", x_org(d.organization_area) + x_org.bandwidth() - 12 + 'px')
+            })
+            //.on("mousemove", function(){return tooltip.style("top", (d3.event.pageY-10)+"px").style("left",(d3.event.pageX+10)+"px");})
+            .on("mouseout", function () {
+                return tip_org.style("visibility", "hidden");
+            });
+    });
 </script>
 
 <script type="text/template" id="project-list-item">

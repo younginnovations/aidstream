@@ -11,6 +11,11 @@
 
   .login-container {
     padding: 0;
+
+    input {
+      background: #F2F9FC !important;
+      border: 1px solid #BFDFEC !important;
+    }
   }
 
   .row {
@@ -42,7 +47,7 @@
     input[type=week],
     select, textarea,
     textarea.form-control {
-      background-color: #F2F9FC!important;
+      background-color: #F2F9FC !important;
       border: 1px solid #BFDFEC !important;
       text-align: left;
     }
@@ -236,33 +241,107 @@
   }
 }
 
-.org-transaction-wrapper{
-  background-image: linear-gradient(-1deg,#7b81f5 2%,#969aec 99%);
+.org-transaction-wrapper {
+  background-image: linear-gradient(-1deg, #7b81f5 2%, #969aec 99%);
 }
 
-#sector-bar-chart{
-  width: 475px;
+.sector-chart-container {
+  position: relative;
 
-  rect.chart-label-rect {
-    fill: rgba(253, 151, 137, 0.3);
+  svg {
+    box-shadow: 0 20px 50px -18px rgba(170, 170, 170, 0.3);
+    border-radius: .123rem;
+    background-color: #fff;
+  }
+
+  .bar {
+    fill: #ff9786;
+    transition: all 150ms ease;
+  }
+
+  .bar:hover {
+    fill: #FF887A;
+  }
+
+  .axis--x path {
+    visibility: hidden;
+  }
+
+  svg text {
+    fill: rgba(74, 74, 74, 0.7);
+    text-transform: uppercase;
+    font-size: 10px;
+  }
+
+  /* tip */
+  .tip {
+    width: 3rem;
+    background-color: #eee;
+    text-align: center;
+    box-shadow: 0px 2px 10px -2px #aaa;
+    border: 2px solid #444;
+    transition: all 160ms cubic-bezier(0.455, 0.03, 0.515, 0.955);
+  }
+
+  .tip::after {
+    content: " ";
+    position: absolute;
+    bottom: -.5rem;
+    left: 50%;
+    margin-left: -.5rem;
+    border-style: solid;
+    border-width: .5rem .5rem 0 .5rem;
+    border-color: #444 transparent transparent transparent;
   }
 }
 
-#organization-bar-chart {
-  width: 250px;
+.organization-chart-container {
+  position: relative;
 
-  rect.chart-label-rect {
-    fill: rgba(137, 166, 255, 0.3);
+  svg {
+    box-shadow: 0 20px 50px -18px rgba(170, 170, 170, 0.3);
+    border-radius: .123rem;
+    background-color: #fff;
+  }
+
+  .bar {
+    fill: #89a6ff;
+    transition: all 150ms ease;
+  }
+
+  .bar:hover {
+    fill: #5d91ff;
+  }
+
+  .axis--x path {
+    visibility: hidden;
+  }
+
+  svg text {
+    fill: rgba(74, 74, 74, 0.7);
+    text-transform: uppercase;
+    font-size: 10px;
+  }
+
+  /* tip */
+  .tip {
+    width: 3rem;
+    background-color: #eee;
+    text-align: center;
+    box-shadow: 0px 2px 10px -2px #aaa;
+    border: 2px solid #444;
+    transition: all 160ms cubic-bezier(0.455, 0.03, 0.515, 0.955);
+  }
+
+  .tip::after {
+    content: " ";
+    position: absolute;
+    bottom: -.5rem;
+    left: 50%;
+    margin-left: -.5rem;
+    border-style: solid;
+    border-width: .5rem .5rem 0 .5rem;
+    border-color: #444 transparent transparent transparent;
   }
 }
 
-.axis path,
-.axis line {
-  fill: none;
-  stroke: black;
-  shape-rendering: crispEdges;
-}
-
-.axis text {
-  font-size: 1.3em;
-}
