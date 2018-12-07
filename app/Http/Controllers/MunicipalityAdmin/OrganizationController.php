@@ -89,8 +89,23 @@ class OrganizationController extends Controller
     public function dashboard()
     {
         $organizations = $this->adminManager->getOrganizationBySystemVersion(config('system-version.Np.id'));
+        $activities              = $this->activityService->listAll();
+        
+        $budget = [0];
+        foreach($activities as $activity){
+            if($activity->budget){
+                $value = getVal($activity->budget, [0, 'value', 0, 'amount']);
+                if($value){
+                    $budget[] = $value;
+                }    
+            }
+        };
+        rsort($budget);
+        
+        $stats                   = $this->activityService->getActivityStats();
+        $activitiesCount         = count($activities);
 
-        return view('np.mcpAdmin.index', compact('organizations', 'organizationName'));
+        return view('np.mcpAdmin.index', compact('organizations', 'organizationName', 'stats', 'activitiesCount','budget'));
     }
 
     /**
@@ -109,11 +124,11 @@ class OrganizationController extends Controller
     {
         $activities              = $this->activityService->listAll();
 
-        // $stats                   = $this->activityService->getActivityStats();
+        $stats                   = $this->activityService->getActivityStats();
         // $noOfPublishedActivities = $this->activityService->getNumberOfPublishedActivities($orgId);
         // $lastPublishedToIATI     = $this->activityService->lastPublishedToIATI($orgId);
         // return view('np.municipalityAdmin.listActivities', compact('activities'));
-        return view('np.mcpAdmin.activityList', compact('activities'));
+        return view('np.mcpAdmin.activityList', compact('activities', 'stats'));
 
     }
 
@@ -126,16 +141,24 @@ class OrganizationController extends Controller
     public function showActivity($activityId)
     {
         $activity = $this->activityService->find($activityId);
-        $count    = [];
-        $locationArray = \DB::table('activity_location')
-                    ->leftjoin('municipalities', 'activity_location.municipality_id', '=', 'municipalities.id')
-                    ->select('name', 'ward', 'municipality_id')
-                    ->where('activity_id', '=', $activityId)
-                    ->get();
 
-        // if (Gate::denies('ownership', $activity)) {
-        //     // return redirect()->route('np.activity.index')->withResponse($this->getNoPrivilegesMessage());
-        // }
+        $locationArray = collect(\DB::table('activity_location')
+        ->leftjoin('municipalities', 'activity_location.municipality_id', '=', 'municipalities.id')
+        ->select('name', 'ward')
+        ->where('activity_id', '=', $activityId)
+        ->get());
+
+        $locationArray = $locationArray->groupBy('name')
+                        ->map(function($location){
+                            $wards = $location->map(function($ward){
+                                return $ward->ward;
+                        });
+                    
+        return $wards->unique()->sort();
+        });
+        $locationArray = $locationArray->toArray();
+
+        $count    = [];
 
         $version            = 'V202';
         $documentLinks      = $this->activityService->documentLinks($activityId, $version);
