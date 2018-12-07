@@ -105,7 +105,7 @@
                     <div class="activity__element--info">
                         <li>Nepal</li>
                     </div>
-                    
+
                 @foreach($locationArray as $key => $value)
                 <div class="activity__element--info">
                     <li>Municipality - {{$value->name}}</li>
@@ -113,7 +113,7 @@
                     <li>Ward - {{($value->ward)}}</li>
                     @endif
                 </div>
-                @endforeach            
+                @endforeach
             </div>
         </div>
     @endif
