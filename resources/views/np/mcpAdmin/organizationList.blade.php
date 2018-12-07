@@ -26,7 +26,7 @@
             <div class="panel__body">
                 @if(count($organizations) > 0)
                     {{-- @include('lite.activity.activityStats') --}}
-                    <div class="sort-by-wrap pull-right">
+                    <div class="sort-by-wrap pull-right" style="visibility: hidden">
                         <select id="sortBy">
                             <option>Sort By</option>
                             <option value="1">@lang('lite/activityDashboard.title')</option>
@@ -99,9 +99,7 @@
                     </table>
                 @else
                     <div class="text-center no-data no-activity-data">
-                        <p>@lang('lite/global.not_added',['type' => trans('global.activity')]))</p>
-                        <a href="{{route('np.activity.create') }}"
-                           class="btn btn-primary">@lang('lite/global.add_an_activity')</a>
+                        <p>@lang('np/municipalityDashboard.no_organization')</p>
                     </div>
                 @endif
             </div>

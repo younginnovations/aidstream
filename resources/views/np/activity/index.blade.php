@@ -111,8 +111,8 @@
 @stop
 
 @section('script')
-    <script src="{{url('/lite/js/dashboard.js')}}"></script>
-    <script src="{{url('/lite/js/lite.js')}}"></script>
+    <script src="{{url('/np/js/dashboard.js')}}"></script>
+    <script src="{{url('/np/js/lite.js')}}"></script>
     <script>
         $(document).ready(function () {
             var data = [{!! implode(",",$stats) !!}];
