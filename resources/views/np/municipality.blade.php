@@ -29,7 +29,7 @@
 
 			<div class="col-md-6 d-none">
 				<div class="hero-image">
-					<img src="./images/np/ic_less_complexities.svg" alt="Banner Illustration">
+					<img src="{{asset('images/np/ic_less_complexities.svg')}}" alt="Banner Illustration">
 				</div>
 			</div>
 		</div>
@@ -45,7 +45,7 @@
 			</div>
 			<div class="body">
 				<div class="stats">
-					<h1 class="number">280</h1>
+					<h1 class="number">{{ $sectorCount }}</h1>
 					<span class="text">Total sectors</span>
 				</div>
 				<div class="bar-chat-wrapper">
@@ -63,7 +63,7 @@
 			</div>
 			<div class="body">
 				<div class="stats">
-					<h1 class="number">280</h1>
+					<h1 class="number">{{ $organizationCount }}</h1>
 					<span class="text">Total organizations</span>
 				</div>
 				<div class="bar-chat-wrapper">
@@ -91,14 +91,14 @@
 						</div>
 					</div>
 				</div>
-				<div class="sectors-block">
+				{{-- <div class="sectors-block">
 					<div class="card small-card">
 						<div class="card-header title">Regions</div>
 						<div class="card-body jspScrollable">
 							<div id="regions" class="checkbox checkbox-primary"></div>
 						</div>
 					</div>
-				</div>
+				</div> --}}
 			</div>
 		</div>
 	</div>
@@ -111,13 +111,13 @@
 				<h2>Projects</h2>
 				<div class="search">
 					<div class="search-input">
-						<input type="text" placeholder="Search"/>
+						<input type="text" id="projects-search" placeholder="Search"/>
 					</div>
 				</div>
 			</div>
 			<div class="body">
 				<div class="table">
-					<table id="data-table">
+					<table id="data-table" class="project-data-table">
 						<thead>
 						<tr>
 							<th>Title</th>
