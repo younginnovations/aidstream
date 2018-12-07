@@ -33,6 +33,7 @@
 
   .panel__body {
     min-height: calc(100vh - 155px);
+    background: #f6f8fa;
   }
 
   .panel__status {
@@ -42,7 +43,7 @@
   .panel__table {
     @include mq('tablet') {
       margin: 0 25px;
-      width: calc(100% - 50px)!important;
+      width: calc(100% - 50px) !important;
     }
     tr {
       border-top: 1px solid #f7f8ff !important;
@@ -57,7 +58,108 @@
     }
 
     tr:hover, tr:nth-child(even):hover {
-      background: #edeffb!important;
+      background: #edeffb !important;
+    }
+  }
+
+  .panel-chart-grid {
+    margin-top: 50px;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+  }
+
+  .panel-chart-section {
+    padding: 0 10px;
+    margin-bottom: 20px;
+
+    &.organization, &.sector {
+      max-width: 70%;
+      flex-basis: 70%;
+      .body {
+        justify-content: space-around;
+        align-items: center;
+      }
+    }
+
+    &.activities {
+      max-width: 100%;
+      flex-basis: 100%;
+      .body {
+        justify-content: space-around;
+        align-items: center;
+      }
+    }
+  }
+
+  .section-card {
+    padding: 16px;
+    background: #fff;
+
+    .header {
+      margin-bottom: 25px;
+    }
+
+    h3 {
+      font-size: 11px;
+      color: rgba(74, 74, 74, 0.5);
+      text-transform: uppercase;
+      margin: 0;
+    }
+
+    .body {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+
+    .stats {
+      .number {
+        font-size: 60px;
+        font-weight: 600;
+        color: #4a4a4a;
+        margin-bottom: 5px;
+      }
+
+      .text {
+        font-size: 10px;
+        color: rgba(74, 74, 74, .7);
+        text-transform: uppercase;
+      }
+    }
+  }
+
+  .secondary-stats {
+    li {
+      margin-bottom: 20px;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+
+    span {
+      display: block;
+    }
+
+    .sec-number {
+      font-size: 32px;
+      line-height: 32px;
+      color: #4a4a4a;
+      font-weight: 600;
+      margin-bottom: 5px;
+    }
+
+    .sec-text {
+      font-size: 10px;
+      text-transform: uppercase;
+      color: rgba(74, 74, 74, 0.7);
+    }
+  }
+
+  .sector-chart-container, .organization-chart-container {
+    svg {
+      background-color: #f8f9ff;
     }
   }
 }
