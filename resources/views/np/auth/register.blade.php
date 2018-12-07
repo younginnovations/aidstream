@@ -6,11 +6,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport'/>
 	<title>@lang('title.aidstream_register')</title>
-	@if(isTzSubDomain())
-		<link rel="shortcut icon" type="image/png" sizes="32*32" href="{{ asset('/images/favicon-tz.png') }}"/>
-	@else
-		<link rel="shortcut icon" type="image/png" sizes="32*32" href="{{ asset('/images/favicon.png') }}"/>
-	@endif
+	<link rel="shortcut icon" type="image/png" sizes="32*32" href="{{ asset('/images/np/favicon-np.png') }}"/>
 	<link href="{{ asset('/css/vendor.min.css') }}" rel="stylesheet">
 	<link href="{{ asset('/css/main.min.css') }}" rel="stylesheet">
 	<link href="{{ asset('/css/style.min.css') }}" rel="stylesheet">

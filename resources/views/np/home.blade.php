@@ -76,6 +76,50 @@
 </section>
 
 <section class="np-section">
+	<h1 class="section-title">AidStream Nepal</h1>
+	<div class="register-grid">
+		<div class="container">
+			<div class="register-row">
+				<div class="register-item">
+					<div class="content">
+						<h2><img src="/images/np/ic_government-logo.svg" alt="Local Government Logo">Local Government</h2>
+						<div class="info-list">
+							<ul>
+								<li>Overview of development project status in the region.</li>
+								<li>Present regional development status with accuracy.</li>
+								<li>Get early access to development projects for approval.</li>
+								<li>Gain insights of flow between donors and implementing NGOs.</li>
+								<li>Setup separate development projects page for local government.</li>
+							</ul>
+						</div>
+						<div class="register-btn">
+							<a href="mailto:support@aidstream.org" class="btn btn-primary get-started-btn outline">Get registered for free</a>
+						</div>
+					</div>
+				</div>
+				<div class="register-item">
+					<div class="content">
+						<h2><img src="/images/np/ic_ngo-logo.svg" alt="Implementing NGOs Logo">Implementing NGOs</h2>
+						<div class="info-list">
+							<ul>
+								<li>Manage projects data in a central repository.</li>
+								<li>Present yourself as open and transparent organisation.</li>
+								<li>Publish what you do to the benefit of the public.</li>
+								<li>Promote better visibility among donors and local government.</li>
+								<li>Platform to explain roles and contribution to the people.</li>
+							</ul>
+						</div>
+						<div class="register-btn">
+							<a href="{{ url('/register') }}" class="btn btn-primary get-started-btn outline">Contact Us</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<section class="np-section">
 	<h1 class="section-title">AidStream Nepal Premium User</h1>
 	<div class="container text-center">
 		<div class="feature-logo">
