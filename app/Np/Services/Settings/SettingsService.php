@@ -7,6 +7,7 @@ use App\Np\Services\Data\Traits\TransformsData;
 use App\Np\Services\Traits\ProvidesLoggerContext;
 use App\Np\Services\Users\UserService;
 use App\Models\UserOnBoarding;
+use App\Models\Organization\OrganizationLocation;
 use App\User;
 use Exception;
 use Illuminate\Database\DatabaseManager;
@@ -63,13 +64,15 @@ class SettingsService
         NpSettingsRepositoryInterface $settingsRepository,
         UserService $userService,
         DatabaseManager $database,
-        LoggerInterface $logger
+        LoggerInterface $logger,
+        OrganizationLocation $organizationLocation
     ) {
         $this->organisationRepository = $organisationRepository;
         $this->settingsRepository     = $settingsRepository;
         $this->database               = $database;
         $this->logger                 = $logger;
         $this->userService            = $userService;
+        $this->organizationLocation   = $organizationLocation;
     }
 
     /**
@@ -120,9 +123,12 @@ class SettingsService
                 }
             }
 
+            $municipalities = (getVal($rawData, ['municipality'], []));
+            $district  = getVal($rawData, ['working_district'], '');
             $settings = $this->transform($this->getMapping($rawData, 'Settings', $version));
 
             $this->database->beginTransaction();
+            $test = $this->updateOrganizationLocation($orgId,$district, $municipalities);
             $isUsernameUpdated = $this->updateUserName($rawData);
             $this->settingsRepository->saveWithOrgId($orgId, getVal($settings, ['settings'], []));
             $this->organisationRepository->update($orgId, getVal($settings, ['organisation'], []));
@@ -143,6 +149,17 @@ class SettingsService
         }
     }
 
+    public function updateOrganizationLocation($orgId, $district, array $data)
+    {
+        $this->organizationLocation->select()->where('organization_id', '=', $orgId)->delete();
+        foreach($data as $key => $value){
+            $this->organizationLocation->create([
+                'organization_id'   => $orgId,
+                'district_id'       => $district,
+                'municipality_id'   => $value
+            ]);
+        }
+    }
     /**
      * Uploads file
      *
