@@ -19,12 +19,9 @@
 				<div class="panel__status text-center">
 					<div class="col-sm-4">
 						<h2>Total Activities</h2>
-						<span class="count">
-                {{ $activitiesCount }}
-                </span>
+						<span class="count">{{ $activitiesCount }}</span>
 						<div class="published-num">
-							<span>No. of activities published to IATI:</span>
-							0
+							<span>No. of activities published to IATI:</span>0
 						</div>
 					</div>
 					<div class="col-sm-4">
@@ -48,18 +45,230 @@
 					<div class="col-sm-4">
 						<h2>Total Budget</h2>
 						<span class="count" id="budgetTotal"><small>$</small><span id="totalBudget">{{ array_sum($budget) }}</span><small id="placeValue"></small></span>
-					<div class="highest-budget">Highest budget in an activity: <span id="maxBudget">${{ $budget[0] }}</span></div>
+						<div class="highest-budget">Highest budget in an activity: <span id="maxBudget">${{ $budget[0] }}</span></div>
+					</div>
+				</div>
+				<div class="panel-chart-grid">
+					<div class="panel-chart-section organization">
+						<div class="section-card">
+							<div class="header">
+								<h3>Organization Type</h3>
+							</div>
+							<div class="body">
+								<div class="stats">
+									<h1 class="number">280</h1>
+									<span class="text">Total organizations</span>
+								</div>
+								<div class="bar-chat-wrapper">
+									<div class="organization-chart-container" id="organization-chart">
+										<svg width="250" height="320"></svg>
+									</div>
+								</div>
+								<div class="secondary-stats">
+									<ul>
+										<li>
+											<span class="sec-number">100</span>
+											<span class="sec-text">Community org.</span>
+										</li>
+										<li>
+											<span class="sec-number">180</span>
+											<span class="sec-text">Local NGO org.</span>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="panel-chart-section sector">
+						<div class="section-card">
+							<div class="header">
+								<h3>Sectors</h3>
+							</div>
+							<div class="body">
+								<div class="stats">
+									<h1 class="number">280</h1>
+									<span class="text">Total sectors</span>
+								</div>
+								<div class="bar-chat-wrapper">
+									<div class="sector-chart-container" id="sector-chart">
+										<svg width="460" height="320"></svg>
+									</div>
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-@stop
+		@stop
 
-@section('script')
-	<script src="{{url('/lite/js/dashboard.js')}}"></script>
-	<script src="{{url('/lite/js/lite.js')}}"></script>
-	<script>
+		@section('script')
+			<script src="{{url('/lite/js/dashboard.js')}}"></script>
+			<script src="{{url('/lite/js/lite.js')}}"></script>
+			<script type="text/javascript" src="https://d3js.org/d3.v4.min.js"></script>
+			<script>
+                //Sector-bar-chart
+                var sector_static_data = [{
+                    sector_area: 'Education',
+                    sector_count: 42
+                }, {
+                    sector_area: 'Health',
+                    sector_count: 102
+                }, {
+                    sector_area: 'Traning',
+                    sector_count: 160
+                }, {
+                    sector_area: 'Biodiversity',
+                    sector_count: 82
+                }, {
+                    sector_area: 'Preservation',
+                    sector_count: 48
+                }];
 
-	</script>
+                var tip = d3.select(".sector-chart-container")
+                    .append("div")
+                    .attr("class", "tip")
+                    .style("position", "absolute")
+                    .style("z-index", "10")
+                    .style("visibility", "hidden");
+
+                var svg = d3.select("#sector-chart svg").attr("class", "background-style"),
+                    margin = {top: 20, right: 20, bottom: 42, left: 40},
+                    width = +svg.attr("width") - margin.left - margin.right,
+                    height = +svg.attr("height") - margin.top - margin.bottom;
+
+                var x = d3.scaleBand().rangeRound([0, width]).padding(0.05),
+                    y = d3.scaleLinear().rangeRound([height, 0]);
+
+                var g = svg.append("g")
+                    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+                d3.json("apiPlaceholderURL", function (error, data) {
+                    //if (error) throw error;
+
+                    data = sector_static_data;
+
+                    x.domain(data.map(function (d) {
+                        return d.sector_area;
+                    }));
+                    y.domain([0, d3.max(data, function (d) {
+                        return d.sector_count;
+                    })]);
+
+                    g.append("g")
+                        .attr("class", "axis axis--x")
+                        .attr("transform", "translate(0," + height + ")")
+                        .call(d3.axisBottom(x))
+                        .append("text")
+                        .attr("y", 6)
+                        .attr("dy", "2.5em")
+                        .attr("dx", width / 2 - margin.left)
+                        .attr("text-anchor", "start")
+
+                    g.selectAll(".bar")
+                        .data(data)
+                        .enter().append("rect")
+                        .attr("class", "bar")
+                        .attr("x", function (d) {
+                            return x(d.sector_area);
+                        })
+                        .attr("y", function (d) {
+                            return y(d.sector_count);
+                        })
+                        .attr("width", x.bandwidth())
+                        .attr("height", function (d) {
+                            return height - y(d.sector_count)
+                        })
+                        .on("mouseenter", function (d) {
+                            return tip.text(d.sector_count).style("visibility", "visible").style("top", y(d.sector_count) - 13 + 'px').style("left", x(d.sector_area) + x.bandwidth() - 12 + 'px')
+                        })
+                        //.on("mousemove", function(){return tooltip.style("top", (d3.event.pageY-10)+"px").style("left",(d3.event.pageX+10)+"px");})
+                        .on("mouseout", function () {
+                            return tip.style("visibility", "hidden");
+                        });
+                });
+
+                //Organization-bar-chart
+                var organization_static_data = [{
+                    organization_area: 'Community',
+                    organization_count: 42
+                }, {
+                    organization_area: 'Local NGO',
+                    organization_count: 102
+                }];
+
+                var tip_org = d3.select(".organization-chart-container")
+                    .append("div")
+                    .attr("class", "tip")
+                    .style("position", "absolute")
+                    .style("z-index", "10")
+                    .style("visibility", "hidden");
+
+                var svg = d3.select("#organization-chart svg").attr("class", "background-style"),
+                    margin_org = {top: 20, right: 20, bottom: 42, left: 40},
+                    width_org = +svg.attr("width") - margin_org.left - margin_org.right,
+                    height_org = +svg.attr("height") - margin_org.top - margin_org.bottom;
+
+                var x_org = d3.scaleBand().rangeRound([0, width_org]).padding(0.05),
+                    y_org = d3.scaleLinear().rangeRound([height_org, 0]);
+
+                var g_org = svg.append("g")
+                    .attr("transform", "translate(" + margin_org.left + "," + margin_org.top + ")");
+
+                d3.json("apiPlaceholderURL", function (error, data) {
+                    //if (error) throw error;
+
+                    data = organization_static_data;
+
+                    x_org.domain(data.map(function (d) {
+                        return d.organization_area;
+                    }));
+                    y_org.domain([0, d3.max(data, function (d) {
+                        return d.organization_count;
+                    })]);
+
+                    g_org.append("g")
+                        .attr("class", "axis axis--x")
+                        .attr("transform", "translate(0," + height_org + ")")
+                        .call(d3.axisBottom(x_org))
+                        .append("text")
+                        .attr("y", 6)
+                        .attr("dy", "2.5em")
+                        .attr("dx", width_org / 2 - margin_org.left)
+                        .attr("text-anchor", "start")
+
+//        g.append("g")
+//            .attr("class", "axis axis--y")
+//            .call(d3.axisLeft(y).ticks(10))
+//            .append("text")
+//            .attr("transform", "rotate(-90)")
+//            .attr("y", 6)
+//            .attr("dy", "0.71em")
+//            .attr("text-anchor", "end")
+//            .text("Student Count");
+
+
+                    g_org.selectAll(".bar")
+                        .data(data)
+                        .enter().append("rect")
+                        .attr("class", "bar")
+                        .attr("x", function (d) {
+                            return x_org(d.organization_area);
+                        })
+                        .attr("y", function (d) {
+                            return y_org(d.organization_count);
+                        })
+                        .attr("width", x_org.bandwidth())
+                        .attr("height", function (d) {
+                            return height_org - y_org(d.organization_count)
+                        })
+                        .on("mouseenter", function (d) {
+                            return tip_org.text(d.organization_count).style("visibility", "visible").style("top", y_org(d.organization_count) - 13 + 'px').style("left", x_org(d.organization_area) + x_org.bandwidth() - 12 + 'px')
+                        })
+                        //.on("mousemove", function(){return tooltip.style("top", (d3.event.pageY-10)+"px").style("left",(d3.event.pageX+10)+"px");})
+                        .on("mouseout", function () {
+                            return tip_org.style("visibility", "hidden");
+                        });
+                });
+			</script>
 @stop

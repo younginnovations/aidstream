@@ -737,10 +737,14 @@ tr, td {
   .np-section .card-content h2 {
     font-size: 18px;
     margin-bottom: 16px;
-    color: #484848; }
+    color: #484848;
+    text-align: center; }
     @media only screen and (min-width: 768px) {
       .np-section .card-content h2 {
         font-size: 20px; } }
+    @media only screen and (min-width: 992px) {
+      .np-section .card-content h2 {
+        text-align: left; } }
   .np-section .card-content p {
     font-size: 14px;
     color: #484848;
@@ -914,6 +918,118 @@ tr, td {
   .highlight-content {
     max-width: 430px; } }
 
+.register-grid .container {
+  max-width: 800px; }
+
+.register-grid .register-row {
+  padding: 0 10px; }
+  @media only screen and (min-width: 768px) {
+    .register-grid .register-row {
+      display: -webkit-box;
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-flex-wrap: wrap;
+          -ms-flex-wrap: wrap;
+              flex-wrap: wrap;
+      margin: 0 -10px;
+      padding: 0; } }
+
+.register-grid .register-item {
+  margin-bottom: 20px; }
+  .register-grid .register-item:last-child {
+    margin-bottom: 0; }
+  @media only screen and (min-width: 768px) {
+    .register-grid .register-item {
+      -webkit-flex-basis: 50%;
+          -ms-flex-preferred-size: 50%;
+              flex-basis: 50%;
+      max-width: 50%;
+      padding: 0 10px;
+      margin: 0; } }
+
+.register-grid .get-started-btn {
+  padding: 14px 5px;
+  width: 100%;
+  -webkit-border-radius: 2px;
+          border-radius: 2px;
+  border: 2px solid #8690f3 !important; }
+  .register-grid .get-started-btn.outline {
+    background: transparent !important;
+    border: 2px solid #8690f3 !important;
+    color: #8690f3; }
+
+.register-grid .info-list {
+  margin-bottom: 46px; }
+
+.register-grid ul {
+  margin: 0;
+  padding: 0;
+  list-style: none; }
+  .register-grid ul li {
+    font-size: 14px;
+    color: #35383f;
+    margin-bottom: 20px;
+    padding-left: 30px;
+    background: url("/images/np/ic_tick.png") no-repeat left 5px;
+    background-size: 12px; }
+    .register-grid ul li:last-child {
+      margin-bottom: 0; }
+
+.register-grid h2 {
+  margin: 0 0 50px;
+  font-family: "Bree Serif", Serif;
+  color: #4a4a4a;
+  font-size: 20px; }
+  @media only screen and (min-width: 768px) {
+    .register-grid h2 {
+      font-size: 24px; } }
+
+.register-grid .content {
+  background: #ffffff;
+  padding: 30px;
+  height: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+      -ms-flex-wrap: wrap;
+          flex-wrap: wrap;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-transition: all 0.3s ease-in-out;
+          transition: all 0.3s ease-in-out;
+  outline: 2px solid #fff;
+  -webkit-border-radius: 2px;
+          border-radius: 2px; }
+  @media only screen and (min-width: 768px) {
+    .register-grid .content {
+      padding: 60px 30px; } }
+  .register-grid .content:hover, .register-grid .content:focus {
+    outline: 2px solid #8690f3;
+    -webkit-transition: all 0.3s ease-in-out;
+            transition: all 0.3s ease-in-out;
+    -webkit-transform: translateY(-3px);
+        -ms-transform: translateY(-3px);
+            transform: translateY(-3px); }
+    .register-grid .content:hover .get-started-btn.outline, .register-grid .content:focus .get-started-btn.outline {
+      background: #8690f3 !important;
+      color: #fff; }
+  .register-grid .content img {
+    height: 35px;
+    margin-right: 16px; }
+    @media only screen and (min-width: 768px) {
+      .register-grid .content img {
+        height: 51px; } }
+
 .feature-logo {
   max-width: 700px;
   margin: 0 10px 30px;
@@ -974,6 +1090,9 @@ tr, td {
 
 .municipality-login .login-container {
   padding: 0; }
+  .municipality-login .login-container input {
+    background: #F2F9FC !important;
+    border: 1px solid #BFDFEC !important; }
 
 .municipality-login .row {
   margin: 0; }
@@ -1168,24 +1287,85 @@ tr, td {
   background-image: -webkit-linear-gradient(91deg, #7b81f5 2%, #969aec 99%);
   background-image: linear-gradient(-1deg, #7b81f5 2%, #969aec 99%); }
 
-#sector-bar-chart {
-  width: 475px; }
-  #sector-bar-chart rect.chart-label-rect {
-    fill: rgba(253, 151, 137, 0.3); }
+.sector-chart-container {
+  position: relative;
+  /* tip */ }
+  .sector-chart-container svg {
+    -webkit-box-shadow: 0 20px 50px -18px rgba(170, 170, 170, 0.3);
+            box-shadow: 0 20px 50px -18px rgba(170, 170, 170, 0.3);
+    -webkit-border-radius: .123rem;
+            border-radius: .123rem;
+    background-color: #fff; }
+  .sector-chart-container .bar {
+    fill: #ff9786;
+    -webkit-transition: all 150ms ease;
+            transition: all 150ms ease; }
+  .sector-chart-container .bar:hover {
+    fill: #FF887A; }
+  .sector-chart-container .axis--x path {
+    visibility: hidden; }
+  .sector-chart-container svg text {
+    fill: rgba(74, 74, 74, 0.7);
+    text-transform: uppercase;
+    font-size: 10px; }
+  .sector-chart-container .tip {
+    width: 3rem;
+    background-color: #eee;
+    text-align: center;
+    -webkit-box-shadow: 0px 2px 10px -2px #aaa;
+            box-shadow: 0px 2px 10px -2px #aaa;
+    border: 2px solid #444;
+    -webkit-transition: all 160ms cubic-bezier(0.455, 0.03, 0.515, 0.955);
+            transition: all 160ms cubic-bezier(0.455, 0.03, 0.515, 0.955); }
+  .sector-chart-container .tip::after {
+    content: " ";
+    position: absolute;
+    bottom: -.5rem;
+    left: 50%;
+    margin-left: -.5rem;
+    border-style: solid;
+    border-width: .5rem .5rem 0 .5rem;
+    border-color: #444 transparent transparent transparent; }
 
-#organization-bar-chart {
-  width: 250px; }
-  #organization-bar-chart rect.chart-label-rect {
-    fill: rgba(137, 166, 255, 0.3); }
-
-.axis path,
-.axis line {
-  fill: none;
-  stroke: black;
-  shape-rendering: crispEdges; }
-
-.axis text {
-  font-size: 1.3em; }
+.organization-chart-container {
+  position: relative;
+  /* tip */ }
+  .organization-chart-container svg {
+    -webkit-box-shadow: 0 20px 50px -18px rgba(170, 170, 170, 0.3);
+            box-shadow: 0 20px 50px -18px rgba(170, 170, 170, 0.3);
+    -webkit-border-radius: .123rem;
+            border-radius: .123rem;
+    background-color: #fff; }
+  .organization-chart-container .bar {
+    fill: #89a6ff;
+    -webkit-transition: all 150ms ease;
+            transition: all 150ms ease; }
+  .organization-chart-container .bar:hover {
+    fill: #5d91ff; }
+  .organization-chart-container .axis--x path {
+    visibility: hidden; }
+  .organization-chart-container svg text {
+    fill: rgba(74, 74, 74, 0.7);
+    text-transform: uppercase;
+    font-size: 10px; }
+  .organization-chart-container .tip {
+    width: 3rem;
+    background-color: #eee;
+    text-align: center;
+    -webkit-box-shadow: 0px 2px 10px -2px #aaa;
+            box-shadow: 0px 2px 10px -2px #aaa;
+    border: 2px solid #444;
+    -webkit-transition: all 160ms cubic-bezier(0.455, 0.03, 0.515, 0.955);
+            transition: all 160ms cubic-bezier(0.455, 0.03, 0.515, 0.955); }
+  .organization-chart-container .tip::after {
+    content: " ";
+    position: absolute;
+    bottom: -.5rem;
+    left: 50%;
+    margin-left: -.5rem;
+    border-style: solid;
+    border-width: .5rem .5rem 0 .5rem;
+    border-color: #444 transparent transparent transparent; }
 
 .about-wrapper {
   padding: 80px 0 0; }
@@ -1792,7 +1972,8 @@ footer {
 
 .municipality-admin .panel__body {
   min-height: -webkit-calc(100vh - 155px);
-  min-height: calc(100vh - 155px); }
+  min-height: calc(100vh - 155px);
+  background: #f6f8fa; }
 
 .municipality-admin .panel__status {
   border-bottom: 1px solid #e8eaff; }
@@ -1812,5 +1993,106 @@ footer {
 
 .municipality-admin .panel__table tr:hover, .municipality-admin .panel__table tr:nth-child(even):hover {
   background: #edeffb !important; }
+
+.municipality-admin .panel-chart-grid {
+  margin-top: 50px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+      -ms-flex-wrap: wrap;
+          flex-wrap: wrap;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+      -ms-flex-direction: row;
+          flex-direction: row; }
+
+.municipality-admin .panel-chart-section {
+  padding: 0 10px;
+  margin-bottom: 20px; }
+  .municipality-admin .panel-chart-section.organization, .municipality-admin .panel-chart-section.sector {
+    max-width: 70%;
+    -webkit-flex-basis: 70%;
+        -ms-flex-preferred-size: 70%;
+            flex-basis: 70%; }
+    .municipality-admin .panel-chart-section.organization .body, .municipality-admin .panel-chart-section.sector .body {
+      -webkit-justify-content: space-around;
+          -ms-flex-pack: distribute;
+              justify-content: space-around;
+      -webkit-box-align: center;
+      -webkit-align-items: center;
+          -ms-flex-align: center;
+              align-items: center; }
+  .municipality-admin .panel-chart-section.activities {
+    max-width: 100%;
+    -webkit-flex-basis: 100%;
+        -ms-flex-preferred-size: 100%;
+            flex-basis: 100%; }
+    .municipality-admin .panel-chart-section.activities .body {
+      -webkit-justify-content: space-around;
+          -ms-flex-pack: distribute;
+              justify-content: space-around;
+      -webkit-box-align: center;
+      -webkit-align-items: center;
+          -ms-flex-align: center;
+              align-items: center; }
+
+.municipality-admin .section-card {
+  padding: 16px;
+  background: #fff; }
+  .municipality-admin .section-card .header {
+    margin-bottom: 25px; }
+  .municipality-admin .section-card h3 {
+    font-size: 11px;
+    color: rgba(74, 74, 74, 0.5);
+    text-transform: uppercase;
+    margin: 0; }
+  .municipality-admin .section-card .body {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+    -webkit-box-align: end;
+    -webkit-align-items: flex-end;
+        -ms-flex-align: end;
+            align-items: flex-end; }
+  .municipality-admin .section-card .stats .number {
+    font-size: 60px;
+    font-weight: 600;
+    color: #4a4a4a;
+    margin-bottom: 5px; }
+  .municipality-admin .section-card .stats .text {
+    font-size: 10px;
+    color: rgba(74, 74, 74, 0.7);
+    text-transform: uppercase; }
+
+.municipality-admin .secondary-stats li {
+  margin-bottom: 20px; }
+  .municipality-admin .secondary-stats li:last-child {
+    margin-bottom: 0; }
+
+.municipality-admin .secondary-stats span {
+  display: block; }
+
+.municipality-admin .secondary-stats .sec-number {
+  font-size: 32px;
+  line-height: 32px;
+  color: #4a4a4a;
+  font-weight: 600;
+  margin-bottom: 5px; }
+
+.municipality-admin .secondary-stats .sec-text {
+  font-size: 10px;
+  text-transform: uppercase;
+  color: rgba(74, 74, 74, 0.7); }
+
+.municipality-admin .sector-chart-container svg, .municipality-admin .organization-chart-container svg {
+  background-color: #f8f9ff; }
 
 /*# sourceMappingURL=maps/np.css.map */
