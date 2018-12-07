@@ -208,9 +208,13 @@ Route::group(
             ]
         );
 
-        Route::get("/municipality", function(){
-            return View::make("np.municipality");
-        });
+        Route::get(
+            '/municipality/{id}',
+            [
+                'as'    => 'municipality.view',
+                'uses'  => 'NpController@municipality'
+            ]
+        );
         
         Route::get('/api/activities', 'NpController@activities');
 

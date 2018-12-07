@@ -22,5 +22,7 @@ return [
     'status'                             => 'Status',
     'activities'                         => 'Activities',
     'organizations'                      => 'Organizations',
-    'find_organizations'                 => 'Find all Organizations here.'
+    'find_organizations'                 => 'Find all Organizations here.',
+    'no_activity'                        => 'No Activity to show.',
+    'no_organization'                    => 'No Organizations to show.'
 ];

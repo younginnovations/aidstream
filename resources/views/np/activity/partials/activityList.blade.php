@@ -201,6 +201,6 @@
             </div>
         </div>
     @endif
-    @include('lite.activity.partials.budget')
-    @include('lite.activity.partials.transaction')
+    @include('np.activity.partials.budget')
+    @include('np.activity.partials.transaction')
 </div>
