@@ -126,7 +126,16 @@
         var selectedRegistrationAgency = "{!! $registrationAgency !!}";
         var country = "{!! $country !!}";
     </script>
-    <script src="{{ asset('lite/js/settings.js') }}"></script>
+    <script>
+    $(document).ready(function(){
+        var country = $('.country > select').first();
+        var options = country.find('option');
+        options.remove();
+        country.append("<option value='NP'>NP - NEPAL</option>");
+
+    })
+    </script>
+    <script src="{{ asset('np/js/settings.js') }}"></script>
     <script src="{{ asset('js/chunk.js') }}"></script>
     <script>
         @if(session('status'))
@@ -145,5 +154,13 @@
                 }
             });
         });
+    </script>
+    <script>
+      $(document).ready(function(){
+        var registrationAgency = $('.organization_registration_agency > select').val()
+        if(registrationAgency != 'NP-DAO'){
+            $('.district').hide();
+        }
+    })
     </script>
 @stop
