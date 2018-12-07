@@ -14,6 +14,26 @@ class Settings extends BaseForm
      */
     public function buildForm()
     {
+        $municipalitiesArray = collect(\DB::table('municipalities')->get());
+        $municipalities = [];
+        foreach ($municipalitiesArray as $municipality) {
+                $municipalities[$municipality->id] = $municipality->name;
+        }
+
+        $orgId = session('org_id');
+        $organizationData = collect(\DB::table('organization_location')->select()->where('organization_id','=',$orgId)->get());
+        $municipality = [];
+
+        $districts = \DB::table('organization_location')->join('districts', 'organization_location.district_id', '=', 'districts.id')->select('district_id','name')->first();
+        // dd($districts);
+        $district["name"] = $districts->name;
+        $district["id"]   = $districts->district_id;
+        // dd($district);
+
+        foreach ($organizationData as $key => $value) {
+            $municipality[] = $value->municipality_id;
+        }
+
         return $this
             ->add('organisationName', 'text', ['label' => trans('lite/settings.organisation_name'), 'required' => true, 'wrapper' => ['class' => 'form-group col-sm-6'], ])
             ->addSelect(
@@ -50,13 +70,49 @@ class Settings extends BaseForm
                     'wrapper' => ['class' => 'form-group col-sm-6 country'],
                 ]
             )
+            ->addSelect(
+                'district',
+                $this->getCodeList('Districts','Organization'),
+                trans('np/global.district'),
+                null,
+                $district['id'],
+                true,
+                [
+                    'wrapper'    => ['class' => 'form-group col-sm-6 district']
+                ],
+                false
+            )
+            ->addSelect(
+                'working_district',
+                $this->getCodeList('Districts','Organization'),
+                trans('np/global.working_district'),
+                null,
+                $district['id'],
+                true,
+                [
+                    'wrapper'    => ['class' => 'form-group col-sm-6']
+                ],
+                false
+            )
+            ->addSelect(
+                'municipality',
+                $municipalities,
+                trans('np/global.working_municipality'),
+                null,
+                config('app.default_language'),
+                true,
+                [
+                    'attr'    =>['multiple' => 'multiple'],
+                    'wrapper' => ['class' => 'form-group col-sm-6 municipality'],
+                    'selected'=> $municipality
+                ]
+            )
             ->add(
                 'organisationRegistrationAgency',
                 'select',
                 [
                     'label' => trans('lite/settings.organisation_registration_agency'),
                     'required' => true,
-                    'empty_value' => 'Select an agency',
                     'wrapper' => ['class' => 'form-group col-sm-6 organization_registration_agency']
                 ]
             )
