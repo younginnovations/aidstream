@@ -96,7 +96,7 @@ class NpRegistration
             [
                 'name' => [
                     [
-                        "narrative" => $orgInfo['organization_name'], 
+                        "narrative" => $orgInfo['organization_name'],
                         "language" => ""
                     ],
                     [
@@ -114,7 +114,7 @@ class NpRegistration
                 'municipality_id' => $municipality
                 ]);
         }
-        
+
         $organization->settings()->create(['version' => '2.02']);
 
         return $organization;
@@ -135,19 +135,38 @@ class NpRegistration
         $orgData['address']             = $orgInfo['organization_address'];
         $orgData['country']             = $orgInfo['country'];
         $orgData['registration_agency'] = $orgInfo['organization_registration_agency'];
+        $orgData['registration_district']= $orgInfo['organization_registration_district'];
         $orgData['registration_number'] = $orgInfo['registration_number'];
-        $orgData['reporting_org']       = [
-            [
-                "reporting_organization_identifier" => sprintf('%s-%s', $orgInfo['organization_registration_agency'], $orgInfo['registration_number']),
-                "reporting_organization_type"       => $orgInfo['organization_type'],
-                "narrative"                         => [
-                    [
-                        "narrative" => $orgInfo['organization_name'],
-                        "language"  => ""
+        if($orgData['registration_agency'] == 'NP-DAO' ){
+            $orgData['reporting_org']       = [
+                [
+                    "reporting_organization_identifier" => sprintf('%s-%s-%s', $orgInfo['organization_registration_agency'], $orgData['registration_district'], $orgInfo['registration_number']),
+                    "reporting_organization_type"       => $orgInfo['organization_type'],
+                    "narrative"                         => [
+                        [
+                            "narrative" => $orgInfo['organization_name'],
+                            "language"  => ""
+                        ]
                     ]
                 ]
-            ]
-        ];
+            ];
+        }
+        else {
+            $orgData['reporting_org'] = [
+                [
+                    "reporting_organization_identifier" => sprintf('%s-%s', $orgInfo['organization_registration_agency'], $orgInfo['registration_number']),
+                    "reporting_organization_type" => $orgInfo['organization_type'],
+                    "narrative" => [
+                        [
+                            "narrative" => $orgInfo['organization_name'],
+                            "language" => "",
+                        ],
+                    ],
+                ],
+            ];
+
+        }
+
         $orgData['secondary_contact']   = [
             'first_name' => '',
             'last_name'  => '',
