@@ -58,7 +58,7 @@
                 <div class="logo">
                     @if($organizations['logo'])
                         <a href="#" class="organisation-logo">
-                            <img src="{{ $organizations['logo_url'] }}" alt="{{ $organizations['name'] }}" width="auto" height="68">
+                            <img src="{{ asset($organizations['logo_url']) }}" alt="{{ $organizations['name'] }}" width="auto" height="68">
                         </a>
                     @endif
                 </div>
