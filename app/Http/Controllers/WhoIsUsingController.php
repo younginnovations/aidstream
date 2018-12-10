@@ -256,11 +256,11 @@ class WhoIsUsingController extends Controller
 
         $activitySnapshot = $this->perfectViewerManager->getSnapshotWithOrgId($organizationIdExists[0]->org_id);
         $organizations = json_decode($organizationIdExists[0], true);
+
         $organizations['reporting_org'] = trimReportingOrg(json_decode(getVal($organizations, ['reporting_org']), true));
         $allActivities = json_decode($activitySnapshot, true);
         $recipientCountries = $this->getRecipientCountries($allActivities);
         $user = $this->user->getDataByOrgIdAndRoleId($organizationIdExists[0]->org_id, '1');
-
         $activities = [];
 
         if ($queryParamPublished) {
