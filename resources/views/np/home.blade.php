@@ -93,7 +93,7 @@
 							</ul>
 						</div>
 						<div class="register-btn">
-							<a href="mailto:support@aidstream.org" class="btn btn-primary get-started-btn outline">Get registered for free</a>
+							<a href="mailto:support@aidstream.org" class="btn btn-primary get-started-btn outline">Contact Us</a>
 						</div>
 					</div>
 				</div>
@@ -110,7 +110,7 @@
 							</ul>
 						</div>
 						<div class="register-btn">
-							<a href="{{ url('/register') }}" class="btn btn-primary get-started-btn outline">Contact Us</a>
+							<a href="{{ url('/register') }}" class="btn btn-primary get-started-btn outline">Get registered for free</a>
 						</div>
 					</div>
 				</div>
