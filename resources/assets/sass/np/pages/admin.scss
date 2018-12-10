@@ -78,18 +78,18 @@
   margin: 0;
 }
 
-.create-form .location > label {
-  background: url(../../../images/ic_tz-flag.svg) no-repeat 0 0;
-  float: left;
-  height: 40px;
-  text-indent: -9999px;
-  width: 60px;
-  & + .form-group {
-    float: left;
-    margin-bottom: 0 !important;
-    width: calc(100% - 60px) !important;
-  }
-}
+// .create-form .location > label {
+//   background: url(../../../images/ic_tz-flag.svg) no-repeat 0 0;
+//   float: left;
+//   height: 40px;
+//   text-indent: -9999px;
+//   width: 60px;
+//   & + .form-group {
+//     float: left;
+//     margin-bottom: 0 !important;
+//     width: calc(100% - 60px) !important;
+//   }
+// }
 
 #location {
   .location > .form-group:not(.new-location-block) > .country {
