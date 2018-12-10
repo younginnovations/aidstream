@@ -249,18 +249,18 @@ class WhoIsUsingController extends Controller
     {
         $queryParamPublished = $request->input('published');
         $organizationIdExists = $this->organizationQueryBuilder()->where('org_slug', $organizationId)->get();
-
+        dd($organizationIdExists);
         if (count($organizationIdExists) == 0) {
             return redirect()->back()->withResponse($this->getNotFoundResponse());
         }
 
         $activitySnapshot = $this->perfectViewerManager->getSnapshotWithOrgId($organizationIdExists[0]->org_id);
         $organizations = json_decode($organizationIdExists[0], true);
+
         $organizations['reporting_org'] = trimReportingOrg(json_decode(getVal($organizations, ['reporting_org']), true));
         $allActivities = json_decode($activitySnapshot, true);
         $recipientCountries = $this->getRecipientCountries($allActivities);
         $user = $this->user->getDataByOrgIdAndRoleId($organizationIdExists[0]->org_id, '1');
-
         $activities = [];
 
         if ($queryParamPublished) {

@@ -148,7 +148,11 @@ class Verification
                             ->orderBy('users.id', 'asc')
                             ->get();
         $this->sendVerificationEmailToUsers($users);
-        $this->sendSecondaryVerificationEmail($user->organization);
+
+        if($user->organization->system_version_id !== 4){
+            $this->sendSecondaryVerificationEmail($user->organization);
+        }
+        
         $message = view('verification.admin', compact('users', 'user'));
 
         return redirect()->to('/auth/login')->withVerificationMessage($message->__toString());

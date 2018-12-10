@@ -77,6 +77,7 @@
 
                                     {{--Use Delete Form to delete--}}
                                     {{--<a href="{{ url(sprintf('/lite/activity/%s/delete', $activity->id)) }}" class="delete">Delete</a>--}}
+                                    @if(!isMunicipalityAdmin())
                                     <div class="view-more">
                                         <a href="#">&ctdot;</a>
                                         <div class="view-more-actions">
@@ -93,6 +94,7 @@
                                             </ul>
                                         </div>
                                     </div>
+                                    @endif
                                 </td>
                             </tr>
                         @endforeach
@@ -100,9 +102,13 @@
                     </table>
                 @else
                     <div class="text-center no-data no-activity-data">
+                        @if(isMunicipalityAdmin())
+                        <p>@lang('np/municipalityDashboard.no_activity')</p>
+                        @else
                         <p>@lang('lite/global.not_added',['type' => trans('global.activity')]))</p>
                         <a href="{{route('np.activity.create') }}"
                            class="btn btn-primary">@lang('lite/global.add_an_activity')</a>
+                        @endif
                     </div>
                 @endif
             </div>
