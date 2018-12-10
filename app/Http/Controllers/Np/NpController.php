@@ -78,13 +78,23 @@ class NpController extends LiteController
         $sectors = [];
         foreach($activityData as $activity){
             $sectorCode = getVal($activity->sector, [0 , 'sector_code']);
-            if(!in_array($sectorCode, $sectors)){
                 $sectors[] = $sectorCode;
-            }
         }
-        
+        $sectors = array_count_values($sectors);
+
+        $sectorsArray = [];
+        foreach($sectors as $key => $sector){
+            $sectorsArray[] = [
+                "sector_count"  => $sector,
+                "sector_area"   => app('App\Helpers\GetCodeName')->getCodeName('Activity', 'Sector', $key, null)
+            ];
+        }
+
         $sectorCount = count($sectors);
-        return view('np.municipality', compact('organizationCount', 'sectorCount'));
+
+        $sectors = json_encode($sectorsArray);
+
+        return view('np.municipality', compact('organizationCount', 'sectorCount', 'sectors'));
     }
 
     /**
