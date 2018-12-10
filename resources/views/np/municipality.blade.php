@@ -191,22 +191,29 @@
     });
 
     //Sector-bar-chart
-    var sector_static_data = [{
+    // var sector_static_data = {!!$sectors!!};
+    var sector_static_data =
+    [{
         sector_area: 'Education',
-        sector_count: 42
-    }, {
+        sector_count: 12
+    }, 
+    {
         sector_area: 'Health',
-        sector_count: 102
-    }, {
+        sector_count: 40
+    }, 
+    {
         sector_area: 'Traning',
-        sector_count: 160
-    }, {
+        sector_count: 80
+    }, 
+    {
         sector_area: 'Biodiversity',
-        sector_count: 82
-    }, {
+        sector_count: 30
+    }, 
+    {
         sector_area: 'Preservation',
-        sector_count: 48
+        sector_count: 120
     }];
+
 
     var tip = d3.select(".sector-chart-container")
         .append("div")
@@ -272,13 +279,16 @@
     });
 
     //Organization-bar-chart
-    var organization_static_data = [{
+    var organization_static_data = [
+    {
         organization_area: 'Community',
         organization_count: 42
-    }, {
+    }, 
+    {
         organization_area: 'Local NGO',
         organization_count: 102
-    }];
+    }
+    ];
 
     var tip_org = d3.select(".organization-chart-container")
         .append("div")

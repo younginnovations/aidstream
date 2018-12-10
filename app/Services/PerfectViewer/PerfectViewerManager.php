@@ -423,6 +423,7 @@ class PerfectViewerManager
     protected function storeOrganizationSnapshot($orgId, $organization)
     {
         $transactions     = $this->perfectViewerRepo->getTransactions($orgId)->toArray();
+
         $totalTransaction = $this->calculateTransaction($transactions);
         $perfectOrg       = $this->makePerfectOrg($organization, $totalTransaction);
 
