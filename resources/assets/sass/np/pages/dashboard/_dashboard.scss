@@ -82,12 +82,38 @@
       }
     }
 
+    &.projects, &.budget {
+      max-width: 30%;
+      flex-basis: 30%;
+    }
+
+    &.budget {
+      .body {
+        display: flex;
+        text-align: center;
+        justify-content: center;
+        height: 300px;
+        align-items: center;
+      }
+    }
+
+    .body.pie-chart {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+    }
+
     &.activities {
       max-width: 100%;
       flex-basis: 100%;
-      .body {
-        justify-content: space-around;
-        align-items: center;
+
+      .section-card {
+        min-height: auto;
+      }
+
+      .pie-chart-wrap {
+        width: 200px;
+        display: inline-block;
       }
     }
   }
@@ -95,6 +121,7 @@
   .section-card {
     padding: 16px;
     background: #fff;
+    min-height: 390px;
 
     .header {
       margin-bottom: 25px;
@@ -125,6 +152,10 @@
         font-size: 10px;
         color: rgba(74, 74, 74, .7);
         text-transform: uppercase;
+      }
+
+      .highest-budget {
+        margin-top: 25px;
       }
     }
   }
@@ -160,6 +191,181 @@
   .sector-chart-container, .organization-chart-container {
     svg {
       background-color: #f8f9ff;
+    }
+  }
+}
+
+.pie-svg-wrap {
+  box-sizing: border-box;
+}
+
+.pie-chart {
+
+  // Set the SVG to 100% width to smooth responsive resizing (optional)
+  #pie, #donut, #bar {
+    max-height: 450px;
+  }
+
+  [data-id='s1'] {
+    fill: #ff9786;
+  }
+
+  [data-id='s0'] {
+    fill: #89a6ff;
+  }
+
+  #bar {
+    // height: 300px;
+  }
+
+  #svg {
+    width: 250px;
+    height: 250px;
+  }
+
+  svg {
+    width: 100%;
+    height: auto;
+  }
+
+  .tooltip {
+    margin-left: -5px;
+    border-radius: 3px;
+    padding: 5px;
+  }
+
+  .pie-chart-datalist {
+    flex: 0 0 25%;
+  }
+
+  #activities-svg {
+    [data-id='s0'] {
+      fill: #9b9b9b;
+    }
+
+    [data-id='s1'] {
+      fill: #ff9786;
+    }
+
+    [data-id='s2'] {
+      fill: #89a6ff;
+    }
+  }
+
+  [data-pie-id="activities-svg"] {
+    .text {
+      display: inline-block;
+      width: 75px;
+    }
+
+    li {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+
+      &.color-grey {
+        em {
+         background: #9b9b9b;
+        }
+      }
+
+      &.color-light-maroon {
+        em {
+         background: #ff9786;
+        }
+      }
+
+      &.color-purple {
+        em {
+         background: #89a6ff;
+        }
+      }
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+
+    .number {
+      display: inline-block;
+      position: relative;
+      width: calc(100% - 120px);
+      text-align: right;
+      font-size: 16px;
+      font-weight: 600;
+
+      &:before {
+        content: '';
+        background: #efefef;
+        height: 10px;
+        width: 100%;
+        display: inline-block;
+        border-radius: 30px;
+        position: absolute;
+        top: 6px;
+        left: -35px;
+      }
+
+      em {
+        background: red;
+        height: 10px;
+        display: inline-block;
+        border-radius: 30px;
+        position: absolute;
+        top: 6px;
+        left: -35px;
+        z-index: auto;
+      }
+    }
+  }
+
+  [data-pie-id="svg"] {
+    max-width: 150px;
+    margin: 0 auto;
+
+    li {
+      position: relative;
+      font-size: 10px;
+      color: #4a4a4a;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+      padding-left: 20px;
+
+      span {
+        font-size: 14px;
+        font-weight: 600;
+        display: inline-block;
+        margin-left: 8px;
+      }
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+
+      &:before {
+        content: '';
+        border-radius: 50%;
+        width: 10px;
+        height: 10px;
+        position: absolute;
+        background: transparent;
+        left: 0;
+        top: 6px;
+      }
+
+      &.color-light-maroon {
+        &:before {
+          background: #ff9786;
+        }
+      }
+
+      &.color-purple {
+        &:before {
+          background: #89a6ff;
+        }
+      }
     }
   }
 }
