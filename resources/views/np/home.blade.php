@@ -75,8 +75,9 @@
 	</div>
 </section>
 
-<section class="np-section">
-	<h1 class="section-title">AidStream Nepal</h1>
+<section class="np-section how-section">
+	<h1 class="section-title">How it works</h1>
+	<p class="section-description text-center">Suite of viable solutions for</p>
 	<div class="register-grid">
 		<div class="container">
 			<div class="register-row">
@@ -119,17 +120,21 @@
 	</div>
 </section>
 
-<section class="np-section">
-	<h1 class="section-title">AidStream Nepal Premium User</h1>
-	<div class="container text-center">
-		<div class="feature-logo">
-			<a href="{{ url('/municipality/dhangadi') }}"><img src="/images/np/ic_aidstream_dhangadhi.png" alt="AidStream Dhangadi Logo"/></a>
+<section class="np-section feature-section">
+	<h1 class="section-title">Featured User</h1>
+	<div class="container">
+		<div class="feature-bg">
+			<img src="/images/np/featured-dhangadi-screenshot.png" alt="AidStream Dhangadi Banner"/>
 		</div>
-
-		<div class="feature-content">
-			<p>Do you also want to get registered?</p>
-			<a class="btn btn-primary get-started-btn" href="{{ url('/register') }}">Get Started</a>
+		<div class="feature-description">
+			<h2>Dhangadhi Municipality</h2>
+			<p>Dhangadhi Sub-Metropolitan City has embraced open data policy and has published their development data using AidStream Nepal. <a href="{{ url('/municipality/dhangadhi') }}">Know
+					More</a></p>
 		</div>
+	</div>
+	<div class="feature-content">
+		<p>AidStream Nepal is growing</p>
+		<a class="btn btn-primary get-started-btn" href="{{ url('/register') }}">Join the community</a>
 	</div>
 </section>
 

@@ -223,7 +223,7 @@
                     return tip.style("visibility", "hidden");
                 });
         });
-        5//Organization-bar-chart
+        //Organization-bar-chart
         var organization_static_data = [{
             organization_area: 'Community',
             organization_count: 100
