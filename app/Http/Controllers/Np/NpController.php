@@ -67,7 +67,7 @@ class NpController extends LiteController
 
     public function municipality($municipalityId)
     {
-        if($municipalityId != 'dhangadi'){
+        if($municipalityId != 'dhangadhi'){
 
             return redirect()->back();
         }
