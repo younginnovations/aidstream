@@ -43,7 +43,7 @@
   align-items: center;
 }
 
-.navbar-default  {
+.navbar-default {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -368,6 +368,17 @@
   }
 }
 
+.how-section {
+  .section-title {
+    margin-bottom: 20px;
+  }
+}
+
+.section-description {
+  font-size: 16px;
+  margin-bottom: 50px;
+}
+
 .register-grid {
   .container {
     max-width: 800px;
@@ -484,31 +495,42 @@
   }
 }
 
-.feature-logo {
-  max-width: 700px;
-  margin: 0 10px 30px;
-  background: #fff;
-  border-radius: 4px;
-  transition: all 0.3s ease-in-out;
-  padding: 40px 20px;
-
-  @include mq('tablet') {
-    margin: 0 auto 66px;
-    padding: 87px;
+.feature-section {
+  .container {
+    display: flex;
+    align-items: center;
+    max-width: 800px;
+    justify-content: center;
   }
+}
 
-  &:hover, &:focus {
-    box-shadow: 0 3px 50px 0px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease-in-out;
-    transform: translateY(-3px);
-  }
+.feature-bg {
+  max-width: 50%;
+  flex-basis: 50%;
+  padding: 0 20px;
+  text-align: center;
 
   img {
-    height: 60px;
+    border-radius: 4px;
+    height: 270px;
+  }
+}
 
-    @include mq('tablet') {
-      height: 108px;
-    }
+.feature-description {
+  max-width: 50%;
+  flex-basis: 50%;
+  padding: 0 20px;
+
+  h2 {
+    margin: 0 0 25px;
+    font-family: 'Bree Serif', serif;
+  }
+
+  p {
+    margin: 0;
+    font-size: 14px;
+    line-height: 24px;
+    color: rgba(0,0,0,.7);
   }
 }
 
@@ -519,18 +541,34 @@
       flex-wrap: wrap;
     }
 
-
   }
 }
 
 .feature-content {
-   p {
-     font-family: "Bree Serif", Serif;
-     font-size: 32px;
-     color: #4a4a4a;
-     line-height: 40px;
-     margin: 0 0 55px;
-   }
+  max-width: 100%;
+  margin: 100px 0 0;
+  text-align: center;
+  background: #7a82f5;
+  padding: 60px 20px;
+  color: #fff;
+
+  p {
+    font-family: "Bree Serif", Serif;
+    font-size: 32px;
+    color: #fff;
+    line-height: 40px;
+    margin: 0 0 55px;
+  }
+
+  .get-started-btn {
+    background: #fff !important;
+    color: #7a82f5 !important;
+    width: auto;
+
+    &:hover, &:focus {
+      background-color: #e2e3fe !important
+    }
+  }
 }
 
 .get-started-btn {
