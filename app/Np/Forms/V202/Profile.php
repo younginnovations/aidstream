@@ -19,6 +19,7 @@ class Profile extends BaseForm
             ->add('email', 'text', ['label' => trans('lite/profile.email'), 'required' => true, 'wrapper' => ['class' => 'form-group col-sm-6']])
             ->add('firstName', 'text', ['label' => trans('lite/profile.first_name'), 'required' => true, 'wrapper' => ['class' => 'form-group col-sm-6']])
             ->add('lastName', 'text', ['label' => trans('lite/profile.last_name'), 'required' => true, 'wrapper' => ['class' => 'form-group col-sm-6']])
+            ->add('phoneNumber', 'number', ['label' => trans('np/global.phone_no'), 'required' => true, 'wrapper' => ['class' => 'form-group col-sm-6']])
             ->add('permission', 'text', ['label' => trans('lite/profile.permission'), 'required' => true, 'attr' => ['readonly'], 'wrapper' => ['class' => 'form-group col-sm-6']])
             ->addSelect(
                 'timeZone',

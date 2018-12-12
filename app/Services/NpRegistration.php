@@ -218,14 +218,15 @@ class NpRegistration
     {
         $userData = [];
 
-        $userData['first_name'] = getVal($user, ['first_name']);
-        $userData['last_name']  = getVal($user, ['last_name']);
-        $userData['email']      = getVal($user, ['email']);
-        $userData['username']   = getVal($user, ['username']);
-        $password               = getVal($user, ['password']);
-        $password               = $password ? bcrypt($password) : '';
-        $userData['password']   = $password;
-        $userData['role_id']    = getVal($user, ['role']);
+        $userData['first_name']     = getVal($user, ['first_name']);
+        $userData['last_name']      = getVal($user, ['last_name']);
+        $userData['email']          = getVal($user, ['email']);
+        $userData['username']       = getVal($user, ['username']);
+        $userData['phone_number']   = getVal($user, ['phone_number']);
+        $password                   = getVal($user, ['password']);
+        $password                   = $password ? bcrypt($password) : '';
+        $userData['password']       = $password;
+        $userData['role_id']        = getVal($user, ['role']);
 
         return $userData;
     }

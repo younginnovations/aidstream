@@ -32,6 +32,7 @@ class Organization extends Request
         $rules[sprintf('%s.first_name', $adminInfo)]               = 'required';
         $rules[sprintf('%s.last_name', $adminInfo)]                = 'required';
         $rules[sprintf('%s.email', $adminInfo)]                    = 'required|email';
+        $rules[sprintf('%s.phone_number', $adminInfo)]             = 'required|min:7|max:10';
         $rules[sprintf('%s.password', $adminInfo)]                 = 'required|confirmed|min:6';
         $rules[sprintf('%s.password_confirmation', $adminInfo)]    = 'required';
         $rules[sprintf('%s.default_currency', $defaultFieldValue)] = 'required';
@@ -61,6 +62,9 @@ class Organization extends Request
         $messages[sprintf('%s.last_name.required', $adminInfo)]                = 'Last name is required';
         $messages[sprintf('%s.email.required', $adminInfo)]                    = 'Email is required';
         $messages[sprintf('%s.email.email', $adminInfo)]                       = 'Email should be valid';
+        $messages[sprintf('%s.phone_number.required', $adminInfo)]             = 'Phone Number is required';
+        $messages[sprintf('%s.phone_number.min', $adminInfo)]                  = 'Phone Number minimum 7 character long';
+        $messages[sprintf('%s.phone_number.max', $adminInfo)]                  = 'Phone Number maximum 10 character long';
         $messages[sprintf('%s.password.required', $adminInfo)]                 = 'Password is required';
         $messages[sprintf('%s.password.min', $adminInfo)]                      = 'Password minimum 6 character long';
         $messages[sprintf('%s.password.confirmed', $adminInfo)]                = 'Password do not match';

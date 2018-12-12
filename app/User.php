@@ -72,7 +72,8 @@ class User extends Model implements AuthorizableContract, AuthenticatableContrac
         'time_zone',
         'verification_code',
         'verification_created_at',
-        'verified'
+        'verified',
+        'phone_number'
     ];
 
     /**

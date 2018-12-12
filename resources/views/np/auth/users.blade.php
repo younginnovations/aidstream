@@ -18,7 +18,7 @@
         </div>
         <div class="col-xs-12 col-md-12">
             {!! AsForm::email(['name' => 'users[email]', 'class' => 'email', 'label' => trans('user.email_address'), 'required' => true, 'parent' => 'col-xs-12 col-sm-6 col-md-6']) !!}
-            {{-- {!! AsForm::email(['name' => 'users[secondary_contact]', 'class' => 'secondary_contact', 'label' => trans('global.secondary_contact_at_organisation'), 'required' => true, 'parent' => 'col-xs-12 col-sm-6 col-md-6', 'html' => sprintf('<p class="help-block">%s: example@email.com</p>', trans('global.example'))]) !!} --}}
+            {!! AsForm::text(['name' => 'users[phone_number]', 'class' => 'phone_number', 'label' => trans('np/global.phone_no'), 'required' => true, 'parent' => 'col-xs-12 col-sm-6 col-md-6']) !!}
         </div>
     </div>
     <div class="user-blocks">

@@ -53,7 +53,7 @@ class ProfileController extends LiteController
         if (Gate::denies('belongsToOrganization', $organisation)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
-
+// dd($organisation);
         return view('np.profile.index', compact('organisation'));
     }
 

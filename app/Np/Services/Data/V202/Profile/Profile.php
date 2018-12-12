@@ -52,6 +52,7 @@ class Profile implements MapperInterface
             'first_name'   => getVal($this->rawData, ['firstName'], null),
             'last_name'    => getVal($this->rawData, ['lastName'], null),
             'email'        => getVal($this->rawData, ['email'], null),
+            'phone_number' => getVal($this->rawData, ['phoneNumber'],null),
             'time_zone_id' => $time_zone_id,
             'time_zone'    => $time_zone
         ];
@@ -86,6 +87,7 @@ class Profile implements MapperInterface
             'lastName'           => getVal($this->rawData, ['last_name'], ''),
             'userName'           => getVal($this->rawData, ['username'], ''),
             'email'              => getVal($this->rawData, ['email'], ''),
+            'phoneNumber'       => getVal($this->rawData, ['phone_number'], ''),
             'timeZone'           => getVal($this->rawData, ['time_zone_id'], '') . ' : ' . getVal($this->rawData, ['time_zone'], ''),
             'permission'         => getVal($roles, [getVal($this->rawData, ['role_id'], '')], ''),
             'secondaryFirstName' => getVal($this->rawData, ['secondary_contact', 'first_name'], ''),

@@ -145,7 +145,7 @@ function slash(value) {
                 var identifier = '';
                 if ($('.country').val() == '' || $('.organization_registration_agency').val() == '' || $('.registration_number').val() == '') {
                 } else if($('.organization_registration_agency').val() == 'NP-DAO'){
-                    identifier = $('.organization_registration_agency').val() + '-' + $('.registration_district').val() + '-' + $('.registration_number').val();    
+                    identifier = $('.organization_registration_agency').val() + '-' + $('.registration_district').val() + '-' + $('.registration_number').val();
                 } else {
                     identifier = $('.organization_registration_agency').val() + '-' + $('.registration_number').val();
                 }
@@ -250,11 +250,13 @@ function slash(value) {
                 '#first_name',
                 '#last_name',
                 '#email',
+                '#phone_number',
                 '#password',
                 '#confirm_password',
                 '#secondary_contact',
                 '[name$="[username]"]',
                 '[name$="[email]"]',
+                '[name$="[phone_numper]"]',
                 '[name$="[first_name]"]',
                 '[name$="[last_name]"]',
                 '[name$="[role]"]'
@@ -512,6 +514,10 @@ function slash(value) {
             $(slash('#users[first_name]'), form).rules('add', {required: true, messages: {required: localisedData['first_name_required']}});
             $(slash('#users[last_name]'), form).rules('add', {required: true, messages: {required: localisedData['last_name_required']}});
             $(slash('#users[email]'), form).rules('add', {required: true, email: true, messages: {required: localisedData['email_required']}});
+            $(slash('#users[phone_number]'), form).rules('add', {required: true, messages: {required: localisedData['phone_required']}});
+            $(slash('#users[phone_number]'), form).rules('add', {number: true, messages: {number: localisedData['phone_number']}});
+            $(slash('#users[phone_number]'), form).rules('add', {minlength: 7, messages: {minlength: localisedData['phone_minlength']}});
+            $(slash('#users[phone_number]'), form).rules('add', {maxlength: 10, messages: {maxlength: localisedData['phone_maxlength']}});
             $(slash('#users[password]'), form).rules('add', {required: true, minlength: 6, messages: {required: localisedData['password_required']}});
             $(slash('#users[confirm_password]'), form).rules('add', {required: true, equalTo: $(slash('#users[password]'), form), messages: {required: localisedData['confirm_password_required']}});
             /*$(slash('#users[secondary_contact]'), form).rules('add', {required: true, email: true, messages: {required: localisedData['secondary_contact_required']}});*/
