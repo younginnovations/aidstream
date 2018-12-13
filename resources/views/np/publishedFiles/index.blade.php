@@ -1,4 +1,4 @@
-@extends('np.base.sidebar')
+@extends('np.base.base')
 
 @section('title', 'Published Files')
 
@@ -12,7 +12,7 @@
             <h2 class="panel__sub__heading">@lang('global.activities_published_files')</h2>
             <div class="panel__body">
                 @if (!$publishedFiles->isEmpty())
-                    <form action="{{ route('lite.published-files.bulk-publish') }}" method="POST">
+                    <form action="{{ route('np.published-files.bulk-publish') }}" method="POST">
                         <div class="publish-btn"><input type="submit" value="{{trans('global.publish_activities_to_iati')}}"></div>
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                         <table class="panel__table table-header">

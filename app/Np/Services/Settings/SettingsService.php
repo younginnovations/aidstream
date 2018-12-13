@@ -1,7 +1,7 @@
 <?php namespace App\Np\Services\Settings;
 
 use App\Np\Contracts\NpSettingsRepositoryInterface;
-use App\Np\Contracts\NpOrganisationRepositoryInterface;
+use App\Np\Contracts\NpOrganizationRepositoryInterface;
 use App\Np\Repositories\Settings\NpSettingsRepository;
 use App\Np\Services\Data\Traits\TransformsData;
 use App\Np\Services\Traits\ProvidesLoggerContext;
@@ -53,14 +53,14 @@ class SettingsService
 
     /**
      * SettingsService constructor.
-     * @param NpOrganisationRepositoryInterface $organisationRepository
+     * @param NpOrganizationRepositoryInterface $organisationRepository
      * @param NpSettingsRepositoryInterface     $settingsRepository
      * @param UserService                     $userService
      * @param DatabaseManager                 $database
      * @param LoggerInterface                 $logger
      */
     public function __construct(
-        NpOrganisationRepositoryInterface $organisationRepository,
+        NpOrganizationRepositoryInterface $organisationRepository,
         NpSettingsRepositoryInterface $settingsRepository,
         UserService $userService,
         DatabaseManager $database,

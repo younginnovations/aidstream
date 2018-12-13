@@ -1,15 +1,8 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport'/>
-	<title>AidStream Nepal</title>
-	<link rel="shortcut icon" type="image/png" sizes="32*32" href="{{ asset('/images/favicon-tz.png') }}"/>
-	<link rel="stylesheet" href="{{ asset('/css/vendor.min.css') }}">
-	{!!  publicStylesheet() !!}
-</head>
-<body>
+@extends('np.main')
+
+@section('title', 'About')
+
+@section('content')
 <section class="header-banner">
 	@include('np.partials.header')
 	<div class="about-wrapper">
@@ -57,22 +50,4 @@
 		</div>
 	</div>
 </section>
-
-@include('np.partials.footer')
-
-<script src="js/jquery.js"></script>
-<script type="text/javascript" src="js/bootstrap.min.js"></script>
-<script>
-    $(document).ready(function () {
-        function hamburgerMenu() {
-            $('.navbar-toggle.collapsed').click(function () {
-                $('.navbar-collapse').toggleClass('out');
-                $(this).toggleClass('collapsed');
-            });
-        }
-
-        hamburgerMenu();
-    });
-</script>
-</body>
-</html>
+@endsection

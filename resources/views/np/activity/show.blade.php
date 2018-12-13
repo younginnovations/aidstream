@@ -1,4 +1,4 @@
-@extends('np.base.sidebar')
+@extends('np.base.base')
 
 @section('title', @trans('lite/title.activities'))
 
@@ -14,11 +14,9 @@
                 </div>
                 <a href="{{ route('np.activity.index') }}" class="back-to-activities-list">@lang('lite/global.back_to_activities_list')</a>
             </div>
-            @if(!isMunicipalityAdmin())
             <a href="{{ route('np.activity.edit', $activity->id) }}"
                class="edit-activity pull-right">@lang('lite/global.edit_activity')</a>
             <a href="" class="pull-right print">Print</a>
-            @endif
         </div>
         <div class="panel__body">
             <div class="col-xs-12 col-sm-9 panel__activity__detail">
@@ -29,14 +27,6 @@
                     <div class="pull-left iati-identifier-wrapper">@lang('lite/global.iati_identifier'):
                         <span class="iati-identifier">{{ $activity->identifier['activity_identifier'] }}</span>
                     </div>
-                    {{-- <div class="pull-right activity-publish-state">
-                        @if(@$activityPublishedStatus == 'Linked' || $activity->published_to_registry)
-                            <span class="pull-left published-in-iati">@lang('lite/global.published_in_iati')</span>
-                        @else
-                            <span class="pull-left unpublished-in-iati">@lang('lite/global.not_published_in_iati')</span>
-                        @endif
-                        <img src="{{asset('images/ic-iati-logo.png')}}" alt="IATI" width="27" height="25">
-                    </div> --}}
                 </div>
                 @if($activity->activity_date || $activity->activity_status)
                     <div class="activity-info activity-more-info">
@@ -69,19 +59,14 @@
             <div class="col-xs-12 col-sm-3 panel__activity__more--info">
                 <div class="activity__block activity__status activity-status-{{ $statusLabel[$activityWorkflow] }}">
                     <h4>@lang('lite/global.activity_status')</h4>
-                    {{--<div class="info-icon"></div>--}}
                     @foreach($statusLabel as $key => $value)
                         @if($key == $activityWorkflow)
                             <div class="active"><span>{{ trans(sprintf('lite/global.%s',strtolower($value)))}}</span>
                             </div>
                         @endif
                     @endforeach
-                    @if(!isMunicipalityAdmin())
                     @include('np.activity.partials.workflow')
-                    @endif
                 </div>
-                {{--<div class="activity__block activity__map" id="map"></div>--}}
-                @if(!isMunicipalityAdmin())
                 <div class="activity__block activity__detail__block">
                     <h4 data-toggle="collapse" data-target="#add-list"><span class="add-more">@lang('lite/global.add_other_elements')</span><span class="caret pull-right"></span></h4>
                     <ul id="add-list" class="collapse in">
@@ -91,7 +76,6 @@
                         <li><a href="{{ route('np.activity.transaction.create', [$activity->id, 1]) }}">@lang('lite/title.incoming_funds')</a></li>
                     </ul>
                 </div>
-                @endif
                 <div class="activity__block activity__updated__date">
                     <span class="last-updated-date"><i>@lang('lite/global.last_updated_on'): {{ changeTimeZone($activity['updated_at'], 'M d, Y H:i') }}</i></span>
                 </div>
@@ -125,14 +109,6 @@
             $(window).resize(function () {
                 fixedTop();
             });
-
-//            $('.activity__detail__block a').bind('click', function (event) {
-//                var $anchor = $(this);
-//                $('html, body').stop().animate({
-//                    scrollTop: $($anchor.attr('href')).offset().top - 60
-//                }, 1000);
-//                event.preventDefault();
-//            });
         });
     </script>
 @stop
