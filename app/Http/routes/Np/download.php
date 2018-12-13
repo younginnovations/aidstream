@@ -1,7 +1,7 @@
 <?php
 
 $router->group(
-    ['namespace' => 'Lite\CsvDownload'],
+    ['namespace' => 'Np'],
     function ($router) {
         $router->get(
             '/csv/download',

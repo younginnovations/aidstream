@@ -6,7 +6,6 @@
 	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport'/>
 	<title>AidStream - @yield('title', 'No Title')</title>
 	<link rel="stylesheet" href="//cdn.datatables.net/1.10.11/css/jquery.dataTables.min.css"/>
-	{{--<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2-rc.1/css/select2.min.css" rel="stylesheet"/>--}}
 	<link href="{{ asset('/css/vendor.min.css') }}" rel="stylesheet">
 	{!! authStyleSheets() !!}
 
@@ -14,18 +13,10 @@
 
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/intro.js/2.1.0/introjs.min.css" rel="stylesheet"/>
 
-	<!-- Fonts -->
 	<link href='//fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-	<!--[if lt IE 9]>
-	<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-	<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-	<![endif]-->
 
-	@yield('head')
 </head>
 <body class="municipality-admin">
 <nav class="navbar navbar-default navbar-fixed-top">
@@ -41,17 +32,9 @@
 	<div class="navbar-dropdown-block">
 		<div class="collapse navbar-collapse navbar-right" id="bs-example-navbar-collapse-1">
 			<input type="hidden" name="_token" value="{{csrf_token()}}"/>
-			@if(auth()->user() && !isSuperAdminRoute() && !isMunicipalityAdmin())
+			@if(auth()->user() && !isSuperAdminRoute())
 				<ul class="nav navbar-nav pull-left add-new-activity">
 					<li class="dropdown"><a href="{{route('np.activity.create') }}">Add a New Activity</a></li>
-					{{--<li class="dropdown" data-step="0">--}}
-					{{--<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"--}}
-					{{--aria-expanded="false">Add a New Activity<span--}}
-					{{--class="caret"></span></a>--}}
-					{{--<ul class="dropdown-menu" role="menu">--}}
-					{{--<li><a href="{{route('lite.activity.create') }}">Add Activity</a></li>--}}
-					{{--</ul>--}}
-					{{--</li>--}}
 				</ul>
 			@endif
 			<ul class="nav navbar-nav navbar-right navbar-admin-dropdown">
@@ -63,7 +46,7 @@
 						@if((session('role_id') == 3  || session('role_id') == 4 || session('role_id') == 8) && !isSuperAdminRoute())
 							@if(isMunicipalityAdminRoute())
 							@elseif(session('role_id') == 8)
-								<span><a href="{{ route('municipalityAdmin.switch-back') }}" class="pull-left">Switch Back</a></span>
+								<span><a href="{{ route('municipalityAdmin.switch-back') }}" class="pull-left hidden">Switch Back</a></span>
 							@else
 								<span><a href="{{ route('admin.switch-back') }}" class="pull-left">Switch Back</a></span>
 							@endif
@@ -85,7 +68,7 @@
 							<span class="caret"></span></a>
 						<ul class="dropdown-menu" role="menu">
 							@if(!isSuperAdminRoute() && !isMunicipalityAdmin())
-								<li><a href="{{url('/usr/profile')}}">@lang('trans.my_profile')</a></li>
+								<li><a href="{{route('np.user.profile.index')}}">@lang('trans.my_profile')</a></li>
 							@endif
 							<li><a href="{{ url('/auth/logout') }}" id="logout">@lang('trans.logout')</a></li>
 							@if (superAdminIsLoggedIn() &&  !isMunicipalityAdmin())
@@ -104,19 +87,19 @@
 								<div class="navbar-left version-wrap width-490">
 									@if(!isSuperAdminRoute() &&  !isMunicipalityAdmin())
 										<div class="version pull-right {{ (session('version') == 'V201') ? 'old' : 'new' }}">
-											@if ((session('version') == 'V201'))
+											{{-- @if ((session('version') == 'V201'))
 												<a class="version-text" href="{{route('upgrade-version.index')}}">Update
 													available</a>
 												<span class="old-version">
                                                  <a href="{{route('upgrade-version.index')}}">Upgrade to IATI version
 													 {{ session('next_version') }}</a>
                                               </span>
-											@else
+											@else --}}
 												<span class="version-text">IATI version {{session('current_version')}}</span>
 												<span class="new-version">
                                                You’re using latest IATI version
                                              </span>
-											@endif
+											{{-- @endif --}}
 										</div>
 									@endif
 								</div>
@@ -126,25 +109,24 @@
 				@endif
 			</ul>
 		</div>
-		@if(!isMunicipalityAdminRoute())
-			<div class="downloads pull-right" data-step="6"><a href="{{route('np.csv.download')}}">@lang('lite/global.download_as_csv')</a></div>
-		@endif
+		<div class="downloads pull-right" data-step="6"><a href="{{route('np.csv.download')}}">@lang('lite/global.download_as_csv')</a>
+		</div>
 
 		@if($loggedInUser && !isSuperAdminRoute() &&  !isMunicipalityAdmin())
 			<div class="navbar-right version-wrap">
 				<div class="version pull-right {{ (session('version') == 'V201') ? 'old' : 'new' }}">
-					@if (session('next_version'))
+					{{-- @if (session('next_version'))
 						<a class="version-text" href="{{route('upgrade-version.index')}}">Update available</a>
 						<span class="old-version">
                             <a href="{{route('upgrade-version.index')}}">Upgrade to IATI
                                 version {{ session('next_version') }} </a>
                       </span>
-					@else
+					@else --}}
 						<span class="version-text">IATI version {{ session('current_version') }}</span>
 						<span class="new-version">
                    You’re using latest IATI version
                  </span>
-					@endif
+					{{-- @endif --}}
 				</div>
 			</div>
 		@endif
@@ -153,7 +135,7 @@
 
 <div class="container main-container">
 	<div class="row">
-		@yield('sub-content')
+		@include('np.base.sidebar')
 		@yield('content')
 	</div>
 </div>

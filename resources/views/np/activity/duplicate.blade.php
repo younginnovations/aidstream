@@ -1,4 +1,4 @@
-@extends('np.base.sidebar')
+@extends('np.base.base')
 
 @section('title', @trans('lite/title.duplicate'))
 

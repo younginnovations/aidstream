@@ -1,6 +1,6 @@
 <?php namespace App\Http\Controllers\Np\Profile;
 
-use App\Http\Controllers\Lite\LiteController;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\Request;
 use App\Np\Services\Profile\ProfileService;
 use App\Np\Services\Validation\ValidationService;
@@ -12,7 +12,7 @@ use Kris\LaravelFormBuilder\FormBuilder;
  * Class ProfileController
  * @package App\Http\Controllers\Np\Profile
  */
-class ProfileController extends LiteController
+class ProfileController extends Controller
 {
     /**
      * @var FormBuilder
@@ -69,7 +69,7 @@ class ProfileController extends LiteController
         $organisation = auth()->user()->organization;
 
         if (Gate::denies('belongsToOrganization', $user->organization)) {
-            return redirect()->route('lite.activity.index')->withResponse($this->getNoPrivilegesMessage());
+            return redirect()->route('np.activity.index')->withResponse($this->getNoPrivilegesMessage());
         }
 
         $model = $this->profileService->getFormModel($user->toArray(), $organisation->toArray(), $version);

@@ -6,6 +6,8 @@ use App\SuperAdmin\Requests\Organization;
 use App\SuperAdmin\Services\OrganizationGroupManager;
 use App\SuperAdmin\Services\SuperAdminManager;
 use App\Services\Activity\ActivityManager;
+use App\Services\Organization\OrganizationManager;
+use App\Np\Services\Organization\OrganizationService;
 use Auth;
 use App\Models\Settings;
 use App\Np\Services\Activity\ActivityService;
@@ -15,6 +17,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Kris\LaravelFormBuilder\FormBuilder;
 use Illuminate\Database\DatabaseManager;
+use DB;
 
 /**
  * Class OrganizationController
@@ -39,6 +42,10 @@ class OrganizationController extends Controller
     protected $settings;
 
     protected $activityManager;
+
+    protected $organizationManager;
+
+    protected $organizationService;
     /**
      * @var SettingsManager
      */
@@ -55,11 +62,22 @@ class OrganizationController extends Controller
      * @param SettingsManager          $settingsManager
      * @param OrganizationGroupManager $groupManager
      */
-    function __construct(SuperAdminManager $adminManager,ActivityManager $activityManager, SettingsManager $settingsManager, OrganizationGroupManager $groupManager, ActivityService $activityService, TransactionService $transactionService, Settings $settings)
-    {
+    function __construct(
+        SuperAdminManager $adminManager,
+        ActivityManager $activityManager,
+        OrganizationManager $organizationManager,
+        OrganizationService $organizationService,
+        SettingsManager $settingsManager,
+        OrganizationGroupManager $groupManager,
+        ActivityService $activityService,
+        TransactionService $transactionService,
+        Settings $settings
+    ) {
         $this->middleware('auth.municipalityAdmin');
         $this->adminManager    = $adminManager;
         $this->settingsManager = $settingsManager;
+        $this->organizationManager = $organizationManager;
+        $this->organizationService = $organizationService;
         $this->groupManager    = $groupManager;
         $this->activityService = $activityService;
         $this->transactionService = $transactionService;
@@ -76,60 +94,80 @@ class OrganizationController extends Controller
     }
 
     /**
-     * get all organizations
-     * @return \Illuminate\View\View
+     * Get Municipality of admin
+     * @return municipality_id
      */
-    public function listOrganizations()
+    protected function getMunicipalityId()
     {
-        $organizations = (session('role_id') == 3) ? $this->adminManager->getOrganizations() : $this->groupManager->getGroupsByUserId(Auth::user()->id);
-
-        return view('superAdmin.listOrganization', compact('organizations'));
+        return Auth::User()->getMunicipalityIdOfAdmin();
     }
 
+    /**
+     * Display dashboard for Municipality Admin
+     * @return \Illuminate\View\View
+     */
+
     public function dashboard()
+
     {
-        $organizations = $this->adminManager->getOrganizationBySystemVersion(config('system-version.Np.id'));
-        $activities              = $this->activityService->listAll();
-        
+        $organizations = $this->organizationService->all($this->getMunicipalityId());
+        $activities    = $this->activityService->getAllActivities($this->getMunicipalityId());
+
+        $organizationsCount = count($organizations);
+        $activitiesCount    = count($activities);
+
         $budget = [0];
         foreach($activities as $activity){
             if($activity->budget){
                 $value = getVal($activity->budget, [0, 'value', 0, 'amount']);
                 if($value){
                     $budget[] = $value;
-                }    
+                }
+            }
+            if($activity->sector){
+                $sector = getVal($activity->sector,[0,'sector_code']);
             }
         };
         rsort($budget);
-        
-        $stats                   = $this->activityService->getActivityStats();
-        $activitiesCount         = count($activities);
 
-        return view('np.mcpAdmin.index', compact('organizations', 'organizationName', 'stats', 'activitiesCount','budget'));
+        $stats  = $this->activityService->getActivityStatsAdmin();
+
+        $totalStats = array_reduce($stats,function($acc,$value){ return ($acc+$value); });
+
+        return view('np.municipalityAdmin.index',
+                compact(
+                    'organizations',
+                    'organizationName',
+                    'stats',
+                    'activitiesCount',
+                    'organizationsCount',
+                    'budget',
+                    'totalStats'
+                )
+            );
     }
 
     /**
-     * get all organizations
-     * @param Request $request
+     * get all Organizations
      * @return \Illuminate\View\View
      */
-    public function oldListOrganizations(Request $request)
+    public function oldListOrganizations()
     {
-        $organizations = $this->adminManager->getOrganizationBySystemVersion(config('system-version.Np.id'));
+        $organizationList = $this->organizationService->all($this->getMunicipalityId());
 
-        return view('np.mcpAdmin.organizationList', compact('organizations'));
+        return view('np.municipalityAdmin.organizationList', compact('organizationList'));
     }
+    /**
+     * get all Activities
+     * @return \Illuminate\View\View
+     */
 
     public function listAllActivities()
     {
-        $activities              = $this->activityService->listAll();
+        $activitiesList = $this->activityService->getAllActivities($this->getMunicipalityId());
+        $stats = $this->activityService->getActivityStatsAdmin();
 
-        $stats                   = $this->activityService->getActivityStats();
-        // $noOfPublishedActivities = $this->activityService->getNumberOfPublishedActivities($orgId);
-        // $lastPublishedToIATI     = $this->activityService->lastPublishedToIATI($orgId);
-        // return view('np.municipalityAdmin.listActivities', compact('activities'));
-        return view('np.mcpAdmin.activityList', compact('activities', 'stats'));
-
+        return view('np.municipalityAdmin.activityList', compact('activitiesList', 'stats'));
     }
 
    /**
@@ -153,7 +191,7 @@ class OrganizationController extends Controller
                             $wards = $location->map(function($ward){
                                 return $ward->ward;
                         });
-                    
+
         return $wards->unique()->sort();
         });
         $locationArray = $locationArray->toArray();
@@ -393,6 +431,93 @@ class OrganizationController extends Controller
 
         return redirect()->route(config('system-version.' . $organization->system_version_id)['route']);
     }
+
+    /**
+     * View List of activities of an organization
+     * @param       @orgId
+     * @return      \Illuminate\View\View
+     */
+    public function organizationActivities($orgId)
+    {
+        $activities = $this->activityManager->getActivities($orgId);
+        $org = $this->organizationManager->getOrganization($orgId);
+        $org_name = $org->name;
+        $stats  = $this->activityService->getActivityStats();
+
+        return view('np.municipalityAdmin.organizationActivities', compact('activities', 'stats', 'org_name', 'orgId' ));
+    }
+
+    /**
+     * View Details of activity of an organization
+     * @param       @orgId
+     * @param       @activity_id
+     * @return      \Illuminate\View\View
+     */
+    public function showOrganizationActivity($orgId, $activityId)
+    {
+
+        $activity = $this->activityService->find($activityId);
+
+        $locationArray = collect(\DB::table('activity_location')
+        ->leftjoin('municipalities', 'activity_location.municipality_id', '=', 'municipalities.id')
+        ->select('name', 'ward')
+        ->where('activity_id', '=', $activityId)
+        ->get());
+
+        $locationArray = $locationArray->groupBy('name')
+                        ->map(function($location){
+                            $wards = $location->map(function($ward){
+                                return $ward->ward;
+                        });
+
+        return $wards->unique()->sort();
+        });
+        $locationArray = $locationArray->toArray();
+
+        $count    = [];
+
+        $version            = 'V202';
+        $documentLinks      = $this->activityService->documentLinks($activityId, $version);
+        $transaction        = $activity->transactions->toArray();
+        $transactions       = $this->transactionService->getFilteredTransactions($transaction);
+        $location           = $this->activityService->location($activity->toArray());
+        $disbursement       = getVal($transactions, ['disbursement'], '');
+        $expenditure        = getVal($transactions, ['expenditure'], '');
+        $incoming           = getVal($transactions, ['incoming'], '');
+        $defaultCurrency    = $this->transactionService->getDefaultCurrency($activity);
+        $statusLabel        = ['draft', 'completed', 'verified', 'published'];
+        $activityWorkflow   = $activity->activity_workflow;
+        $btn_status_label   = ['Completed', 'Verified', 'Published'];
+        $btn_text           = $activityWorkflow > 2 ? "" : $btn_status_label[$activityWorkflow];
+        $recipientCountries = $this->activityService->getRecipientCountry($activity->recipient_country);
+
+        if ($activity->activity_workflow == 3) {
+            $filename                = $this->getPublishedActivityFilename($activity->organization_id, $activity);
+            $activityPublishedStatus = $this->getPublishedActivityStatus($filename, $activity->organization_id);
+            $message                 = $this->getMessageForPublishedActivity($activityPublishedStatus, $filename, $activity->organization);
+        }
+
+        $stats  = $this->activityService->getActivityStats();
+        return view('np.municipalityAdmin.showOrganizationActivity',
+            compact(
+                'activity',
+                'statusLabel',
+                'activityWorkflow',
+                'disbursement',
+                'expenditure',
+                'incoming',
+                'defaultCurrency',
+                'activityPublishedStatus',
+                'documentLinks',
+                'location',
+                'recipientCountries',
+                'locationArray',
+                'orgId',
+                'stats'
+            )
+        );
+    }
+
 
     /**
      * switch back to superAdmin role

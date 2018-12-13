@@ -1,4 +1,4 @@
-<?php namespace App\Http\Controllers\Auth;
+<?php namespace App\Http\Controllers\Np\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Services\RequestManager\Password as PasswordRequestManager;
@@ -96,9 +96,18 @@ class PasswordController extends Controller
      */
     public function showCreatePasswordForm($code)
     {
-        $this->resetView = 'auth.createPassword';
+        $this->resetView = 'np.auth.createPassword';
 
         return $this->showResetForm(request(), session()->token())->with('verification_code', $code);
+    }
+
+    /**
+     * shows reset password view
+     * @return view
+     */
+    
+    public function showView(){
+        return view('np.auth.password');
     }
 
     /**

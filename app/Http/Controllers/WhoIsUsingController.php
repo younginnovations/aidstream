@@ -68,8 +68,8 @@ class WhoIsUsingController extends Controller
      * @param PerfectViewerManager $perfectViewerManager
      */
     function __construct(
-        ActivityManager             $activityManager, 
-        User                        $user, 
+        ActivityManager             $activityManager,
+        User                        $user,
         PerfectViewerManager        $perfectViewerManager,
         SettingsManager             $settingsManager,
         SessionManager              $sessionManager,
@@ -91,15 +91,13 @@ class WhoIsUsingController extends Controller
     public function index()
     {
         if (isTzSubDomain()) {
-            list($organizations, $isTz,$isNp) = [$this->organizationQueryBuilder()->where('system_version_id', config('system-version.Tz.id'))->get(), true,false];
-        }elseif(isNpSubDomain()){
-            list($organizations, $isNp,$isTz) = [$this->organizationQueryBuilder()->where('system_version_id', config('system-version.Np.id'))->get(), true,false];
+            list($organizations, $isTz) = [$this->organizationQueryBuilder()->where('system_version_id', config('system-version.Tz.id'))->get(), true];
         }
-         else {
-            list($organizations, $isTz, $isNp) = [$this->organizationQueryBuilder()->get(), false,false];
+        else {
+            list($organizations, $isTz) = [$this->organizationQueryBuilder()->get(), false];
         }
 
-        return view('who-is-using', compact('organizations', 'isTz', 'isNp'));
+        return view('who-is-using', compact('organizations', 'isTz'));
     }
 
     /**
