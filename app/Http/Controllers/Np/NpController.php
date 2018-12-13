@@ -1,16 +1,16 @@
 <?php namespace App\Http\Controllers\Np;
 
-use App\Http\Controllers\Lite\LiteController;
+use App\Http\Controllers\Controller;
 use App\Http\Controllers\Np\Traits\ProvidesDataForNp;
 use App\Models\Activity\Activity;
 use App\Models\ActivityPublished;
 use App\Models\Organization\Organization;
 
 /**
- * Class TzController
- * @package App\Http\Controllers\Tz
+ * Class NpController
+ * @package App\Http\Controllers\Np
  */
-class NpController extends LiteController
+class NpController extends Controller
 {
     use ProvidesDataForNp;
 
@@ -35,7 +35,7 @@ class NpController extends LiteController
     const NP_VERSION_ID = 4;
 
     /**
-     * TzController constructor.
+     * NpController constructor.
      * @param Organization      $organization
      * @param Activity          $activity
      * @param ActivityPublished $activityPublished
@@ -48,7 +48,7 @@ class NpController extends LiteController
     }
 
     /**
-     * Get the Tanzanian Version homepage.
+     * Get the Aidstream Nepal Version homepage.
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
@@ -98,7 +98,7 @@ class NpController extends LiteController
     }
 
     /**
-     * Get the data for the Tz homepage.
+     * Get the data for the Np homepage.
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
@@ -110,7 +110,7 @@ class NpController extends LiteController
     }
 
     /**
-     * Returns count of organisation registered for tz.
+     * Returns count of organisation registered for Np.
      *
      * @return mixed
      */
@@ -122,26 +122,13 @@ class NpController extends LiteController
     }
 
     /**
-     * Returns count of published activities of organisation registered for tz.
+     * Returns count of published activities of organisation registered for Np.
      *
      * @return mixed
      */
     protected function publishedActivities()
     {
         return count($this->getActivityDataForNp());
-
-        //        $activitiesCount = 0;
-//        $this->activityPublished->join('organizations', 'organizations.id', '=', 'activity_published.organization_id')
-//                                ->where('organizations.system_version_id', config('system-version.Tz.id'))
-//                                ->select('activity_published.published_activities')
-//                                ->get()
-//                                ->each(
-//                                    function ($publishedActivity) use (&$activitiesCount) {
-//                                        $activitiesCount += count($publishedActivity->published_activities);
-//                                    }
-//                                );
-//
-//        return $activitiesCount;
     }
 }
 

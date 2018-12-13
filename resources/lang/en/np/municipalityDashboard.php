@@ -22,7 +22,13 @@ return [
     'status'                             => 'Status',
     'activities'                         => 'Activities',
     'organizations'                      => 'Organizations',
+    'organization_name'                  => 'Organization Name',
+    'organization_list'                  => 'Organization List',
     'find_organizations'                 => 'Find all Organizations here.',
+    'organization_back'                  => 'Back to Organization List',
     'no_activity'                        => 'No Activity to show.',
-    'no_organization'                    => 'No Organizations to show.'
+    'activity_number'                    => 'Number of Activities',
+    'reporting_org'                      => 'Organization Type',
+    'no_organization'                    => 'No Organizations to show.',
+    'stats'                              => 'Find all your stats here'
 ];

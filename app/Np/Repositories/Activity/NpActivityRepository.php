@@ -2,8 +2,7 @@
 
 use App\Np\Contracts\NpActivityRepositoryInterface;
 use App\Models\Activity\Activity;
-use Auth;
-use DB;
+use App\Models\Activity\ActivityLocation;
 
 /**
  * Class ActivityRepository
@@ -17,12 +16,36 @@ class NpActivityRepository implements NpActivityRepositoryInterface
     protected $activity;
 
     /**
+     * @var ActivityLocation
+     */
+    protected $activityLocation;
+
+    /**
      * ActivityRepository constructor.
      * @param Activity $activity
+     * @param ActivityLocation $activityLocation
      */
-    public function __construct(Activity $activity)
+    public function __construct(Activity $activity , ActivityLocation $activityLocation)
     {
-        $this->activity = $activity;
+        $this->activity         = $activity;
+        $this->activityLocation = $activityLocation;
+    }
+
+    /**
+     * Get all the activities of the current municipality.
+     *
+     * @param $municipalityId
+     * @return Array $activity
+     */
+    public function allActivities($municipality_id)
+    {
+        $activity_ids = $this->activityLocation->where('municipality_id', $municipality_id)->distinct()->pluck('activity_id');
+
+        foreach($activity_ids as $key => $activity_id){
+            $activities[] = $this->find($activity_id);
+        }
+
+        return $activities;
     }
 
     /**
@@ -34,20 +57,6 @@ class NpActivityRepository implements NpActivityRepositoryInterface
     public function all($organizationId)
     {
         return $this->activity->where('organization_id', '=', $organizationId)->get();
-    }
-
-    public function listAll()
-    {
-        $organization = DB::table('organization_location')->where('municipality_id','=',Auth::User()->getMunicipalityByAdmin())->first();
-        $activityMunicipality = DB::table('activity_location')->where('municipality_id', '=', Auth::User()->getMunicipalityByAdmin())->get(['activity_id']);
-
-        $activityList =  $this->activity
-                    ->where('organization_id', '=', $organization->organization_id)
-                    // ->join('activity_location','activity_data.id','=','activity_location.activity_id')
-                    // ->join('municipalities','municipalities.id','=','activity_location.municipality_id')
-                    ->get();
-
-        return $activityList;
     }
 
     /**

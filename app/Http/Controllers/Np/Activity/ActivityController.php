@@ -1,7 +1,7 @@
 <?php namespace App\Http\Controllers\Np\Activity;
 
 use App\Np\Services\FormCreator\NpActivity;
-use App\Http\Controllers\Lite\LiteController;
+use App\Http\Controllers\Controller;
 use App\Np\Services\Activity\ActivityService;
 use App\Np\Services\FormCreator\Budget;
 use App\Np\Services\FormCreator\Transaction;
@@ -20,7 +20,7 @@ use Illuminate\Session\SessionManager;
  * Class ActivityController
  * @package App\Http\Controllers\Np\Activity
  */
-class ActivityController extends LiteController
+class ActivityController extends Controller
 {
     use GeocodeReverser;
     /**
@@ -236,7 +236,7 @@ class ActivityController extends LiteController
                                 $wards = $location->map(function($ward){
                                     return $ward->ward;
                              });
-                        
+
             return $wards->unique()->sort();
         });
         $locationArray = $locationArray->toArray();

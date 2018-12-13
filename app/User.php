@@ -130,7 +130,11 @@ class User extends Model implements AuthorizableContract, AuthenticatableContrac
         return self::SUPERADMIN_ROLE_ID === $this->role_id;
     }
 
-    public function getMunicipalityByAdmin()
+    /**
+     * Get Municipality Id of Admin
+     * @return $id
+     */
+    public function getMunicipalityIdOfAdmin()
     {
         $municipality = DB::table('user_municipality')->where('user_id', $this->id)->first();
 

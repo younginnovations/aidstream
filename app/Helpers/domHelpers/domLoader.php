@@ -18,7 +18,7 @@ function publicStylesheet()
 
         return $faviconLink . $baseStyleSheet . $styleSheet;
     } elseif (isNpSubDomain()) {
-        $faviconLink    = sprintf('<link rel="shortcut icon" type="image/png" sizes="32*32" href="%s"/>', asset('/images/np/favicon-np.png'));
+        $faviconLink    = sprintf('<link rel="shortcut icon" type="image/png" sizes="32*32" href="%s"/>', asset('/images/np/favicon-np.pngs'));
 
         $styleSheet = sprintf($link, asset('/np/css/np.min.css'));
         return $faviconLink . $baseStyleSheet . $styleSheet;
@@ -46,7 +46,7 @@ function authStyleSheets()
 
         return $favicon . $baseStyleSheet . $styleSheet;
     } else {
-        $favicon = sprintf($faviconLink, asset('/images/np/favicon-np.png'));
+        $favicon = sprintf($faviconLink, asset('/images/favicon.png'));
 
         return $favicon . $baseStyleSheet;
     }

@@ -33,6 +33,6 @@ class AddUserMunicipalityTable extends Migration
      */
     public function down()
     {
-        Schema::drop('activity_location');
+        Schema::drop('user_municipality');
     }
 }

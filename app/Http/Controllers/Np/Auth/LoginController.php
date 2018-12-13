@@ -26,21 +26,6 @@ class LoginController extends Controller
     protected $host;
 
     /**
-     * 'Core' System version id.
-     */
-    const CORE_VERSION_ID = 1;
-
-    /**
-     * 'Lite' System version id.
-     */
-    const LITE_VERSION_ID = 2;
-
-    /**
-     * 'Tz' System version id.
-     */
-    const TZ_VERSION_ID = 3;
-
-    /**
      * 'Np' System Version Id.
      */
     const NP_VERSION_ID = 4;
@@ -83,12 +68,12 @@ class LoginController extends Controller
                                        ->login();
 
             if ($user) {
-                if ($this->userIsRegisteredForSpecificVersion($user)) {
-                    return $this->redirectToCorrectVersion($user);
+                if ($user->isMunicipalityAdmin()) {
+                    return redirect()->intended(config('app.municipality_dashboard'));
                 }
 
-                if($user->isMunicipalityAdmin()){
-                    return redirect()->intended(config('app.municipality_dashboard'));
+                if ($this->userIsRegisteredForSpecificVersion($user)) {
+                    return $this->redirectToCorrectVersion($user);
                 }
 
                 $redirectPath = ($user->isSuperAdmin() || $user->isGroupAdmin())

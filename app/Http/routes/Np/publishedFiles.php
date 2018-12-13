@@ -1,7 +1,11 @@
 <?php
 
 $router->group(
-    ['namespace' => 'Np\PublishedFiles', 'middleware' => 'auth.systemVersion'],
+    [
+        'namespace' => 'Np\PublishedFiles',
+        'domain' => env('NP_DOMAIN'),
+        'middleware' => 'auth.systemVersion'
+    ],
     function ($router) {
         $router->get(
             '/published-files',

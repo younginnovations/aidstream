@@ -10,6 +10,7 @@ use App\Np\Services\Traits\ProvidesLoggerContext;
 use App\Models\ActivityPublished;
 use App\Models\Activity\ActivityLocation;
 use Exception;
+use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Database\DatabaseManager;
 use Psr\Log\LoggerInterface;
@@ -92,6 +93,26 @@ class ActivityService
     }
 
     /**
+     * get Municipality of admin
+     * @return municipality_id
+     */
+    protected function getMunicipalityId()
+    {
+        return Auth::User()->getMunicipalityIdOfAdmin();
+    }
+
+    /**
+     * Get all Activities of a Municipality
+     * @param municipality_id
+     * @return array $activities
+     */
+
+    public function getAllActivities($municipality_id)
+    {
+        return $this->activityRepository->allActivities($municipality_id);
+    }
+
+    /**
      * Get all Activities for the current Organization.
      *
      * @return \Illuminate\Database\Eloquent\Collection|array
@@ -100,25 +121,6 @@ class ActivityService
     {
         try {
             return $this->activityRepository->all(session('org_id'));
-        } catch (Exception $exception) {
-            $this->logger->error(
-                sprintf('Error due to %s', $exception->getMessage()),
-                $this->getContext($exception)
-            );
-
-            return [];
-        }
-    }
-
-    /**
-     * Get all Activities for the current Organization.
-     *
-     * @return \Illuminate\Database\Eloquent\Collection|array
-     */
-    public function listAll()
-    {
-        try {
-            return $this->activityRepository->listAll();
         } catch (Exception $exception) {
             $this->logger->error(
                 sprintf('Error due to %s', $exception->getMessage()),
@@ -261,6 +263,24 @@ class ActivityService
     {
         $stats        = ['draft' => 0, 'completed' => 0, 'verified' => 0, 'published' => 0];
         $activities   = $this->all();
+        $statsMapping = [0 => 'draft', 1 => 'completed', 2 => 'verified', 3 => 'published'];
+
+        foreach ($activities as $activity) {
+            $stats[$statsMapping[$activity->activity_workflow]] = $stats[$statsMapping[$activity->activity_workflow]] + 1;
+        }
+
+        return $stats;
+    }
+    /**
+     * Returns the status of the activity for Admin.
+     *
+     * @return array
+     */
+    public function getActivityStatsAdmin()
+    {
+        $stats        = ['draft' => 0, 'completed' => 0, 'verified' => 0, 'published' => 0];
+        $activities   = $this->getAllActivities($this->getMunicipalityId());
+
         $statsMapping = [0 => 'draft', 1 => 'completed', 2 => 'verified', 3 => 'published'];
 
         foreach ($activities as $activity) {
