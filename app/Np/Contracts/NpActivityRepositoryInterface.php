@@ -10,14 +10,20 @@ use Illuminate\Database\Eloquent\Collection;
 interface NpActivityRepositoryInterface
 {
     /**
+     * Get all the activities of the current municipality.
+     *
+     * @param $municipalityId
+     * @return Collection
+     */
+    public function allActivities($municipalityId);
+    
+    /**
      * Get all the activities of the current Organization.
      *
      * @param $organizationId
      * @return Collection
      */
     public function all($organizationId);
-
-    public function listAll();
 
     /**
      * Find an Activity by its id.

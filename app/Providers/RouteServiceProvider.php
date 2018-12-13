@@ -41,6 +41,7 @@ class RouteServiceProvider extends ServiceProvider
             function ($router) {
                 require app_path('Http/routes/Lite/lite.php');
                 require app_path('Http/routes/Np/np.php');
+                require app_path('Http/routes/Np/activity.php');
                 require app_path('Http/routes/Np/publishedFiles.php');
                 require app_path('Http/routes/Np/users.php');
                 require app_path('Http/routes/Np/settings.php');

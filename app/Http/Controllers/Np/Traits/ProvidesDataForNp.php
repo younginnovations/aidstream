@@ -5,19 +5,6 @@ use App\Models\Activity\Activity;
 
 trait ProvidesDataForNp
 {
-//    /**
-//     * Activities published by the Organizations having Tz as their system version.
-//     *
-//     * @return mixed
-//     */
-//    protected function getPublishedActivitiesForTanzania()
-//    {
-//        return $this->activity->join('organizations', 'organizations.id', '=', 'activity_data.organization_id')
-//                              ->where('organizations.system_version_id', '=', 3)
-//                              ->where('activity_data.published_to_registry', '=', 1)
-//                              ->get(['activity_data.*']);
-//    }
-
     /**
      * Generate meta data for Np homepage front end.
      *

@@ -32,6 +32,20 @@ $router->group(
             ]
         );
         $router->get(
+            'municipality/admin/{org_id}/activities',
+            [
+                'as'   => 'municipalityAdmin.organization-activities',
+                'uses' => 'OrganizationController@organizationActivities'
+            ]
+        );
+        $router->get(
+            'municipality/admin/{org_id}/activity/{activity_id}',
+            [
+                'as'   => 'municipalityAdmin.organization-activity',
+                'uses' => 'OrganizationController@showOrganizationActivity'
+            ]
+        );
+        $router->get(
             'municipality/admin/masquerade-organization/{orgId?}/user/{userId?}',
             [
                 'as'   => 'municipalityAdmin.masquerade-organization',
@@ -50,6 +64,13 @@ $router->group(
             [
                 'as'   => 'admin.search-organization',
                 'uses' => 'OrganizationController@searchOrganizations'
+            ]
+        );
+        $router->get(
+            'admin/municipality/organization',
+            [
+                'as'   => 'municipalityAdmin.organizationShow',
+                'uses' => 'OrganizationController@viewOrganization'
             ]
         );
     }

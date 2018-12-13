@@ -25,10 +25,9 @@ class Settings extends BaseForm
         $municipality = [];
 
         $districts = \DB::table('organization_location')->join('districts', 'organization_location.district_id', '=', 'districts.id')->select('district_id','name')->first();
-        // dd($districts);
+
         $district["name"] = $districts->name;
         $district["id"]   = $districts->district_id;
-        // dd($district);
 
         foreach ($organizationData as $key => $value) {
             $municipality[] = $value->municipality_id;

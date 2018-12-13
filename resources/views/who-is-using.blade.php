@@ -4,7 +4,7 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport'/>
-	<title>{{ $isTz ? trans('title.tz_aidstream'): $isNp? 'Aidstream Nepal' : trans('title.aidstream') }}</title>
+	<title>{{ $isTz ? trans('title.tz_aidstream'): trans('title.aidstream') }}</title>
 	<link rel="stylesheet" href="{{asset('/css/vendor.min.css')}}">
 	{!! publicStylesheet() !!}
 </head>
@@ -12,10 +12,6 @@
 
 @if($isTz)
 	@include('tz.partials.header')
-@elseif($isNp)
-	<section class="header-banner">
-		@include('np.partials.header')
-	</section>
 @else
 	@include('includes.header')
 @endif
@@ -25,7 +21,7 @@
 	<div class="organisation-list-wrapper">
 		<div class="col-md-12 text-center">
 			@include('includes.response')
-			<h2><strong>{{ count($organizations) }} @lang('global.organisations_have_published_their')
+			<h2><strong>{{ count($organizations) }} @lang('global.organisations_have_published_their')</strong></h2>
 					<div class="width-900">
 						<div class="search-org">
 							<label for="search" class="pull-left">@lang('perfectViewer.search'):</label>
@@ -53,20 +49,10 @@
 </section>
 @if($isTz)
 	@include('tz.partials.footer')
-@elseif($isNp)
-	@include('np.partials.footer')
 @else
 	@include('includes.footer')
 @endif
 
-{{--<div class="hidden">--}}
-{{--<ul class="no-image-logo">--}}
-{{--<li><span><a href=""></a></span></li>--}}
-{{--</ul>--}}
-{{--<ul class="has-image-logo">--}}
-{{--<li><a href=""><img/></a></li>--}}
-{{--</ul>--}}
-{{--</div>--}}
 <script type="text/javascript" src="{{url('/js/jquery.js')}}"></script>
 <script type="text/javascript" src="{{url('/js/bootstrap.min.js')}}"></script>
 <script type="text/javascript">

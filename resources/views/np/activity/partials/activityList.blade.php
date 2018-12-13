@@ -1,14 +1,4 @@
 <div class="panel panel-default panel-element-detail element-show">
-    {{--<div class="activity__detail">--}}
-    {{--<div class="activity__element__list">--}}
-    {{--<div class="activity__element--label">--}}
-    {{--@lang('lite/elementForm.activity_identifier')--}}
-    {{--</div>--}}
-    {{--<div class="activity__element--info">--}}
-    {{--{{getVal($activity->identifier,['iati_identifier_text'])}}--}}
-    {{--</div>--}}
-    {{--</div>--}}
-    {{--</div>--}}
 
     @foreach (getVal($activity->toArray(), ['description'], []) as $description)
         @if(getVal($description, ['type']) == 1)
@@ -49,17 +39,6 @@
         @endif
     @endforeach
 
-    {{--<div class="activity__detail">--}}
-    {{--<div class="activity__element__list">--}}
-    {{--<h3>--}}
-    {{--@lang('lite/elementForm.activity_status')--}}
-    {{--</h3>--}}
-    {{--<div class="activity__element--info">--}}
-    {{--{{ $getCode->getCodeNameOnly('ActivityStatus', $activity->activity_status) }}--}}
-    {{--</div>--}}
-    {{--</div>--}}
-    {{--</div>--}}
-
     @if((array) $activity->sector)
         <div class="activity__detail">
             <div class="activity__element__list">
@@ -77,25 +56,6 @@
         </div>
     @endif
 
-    {{-- @if(isRegisteredForTz())
-        @if($location)
-            <div class="activity__detail">
-                <div class="activity__element__list">
-                    <h3>
-                        @lang('lite/elementForm.location')
-                    </h3>
-                    @foreach($location as $index => $value)
-                        <div class="activity__element--info">
-                            <li>
-                                {{ getVal($value, ['district']) }}
-                                , {{ getVal($value,['region']) }}
-                            </li>
-                        </div>
-                    @endforeach
-                </div>
-            </div>
-        @endif
-    @endif --}}
     @if((array) $activity->recipient_country)
         <div class="activity__detail">
             <div class="activity__element__list">
