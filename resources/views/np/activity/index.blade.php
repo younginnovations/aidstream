@@ -1,4 +1,4 @@
-@extends('np.base.sidebar')
+@extends('np.base.base')
 
 @section('title', trans('lite/title.activities'))
 
@@ -37,11 +37,11 @@
                     <table class="panel__table no-header-table" id="dataTable">
                         <thead>
                         <tr>
-                            <th class="hidden"></th>
-                            <th class="hidden" width="45%">@lang('lite/global.activity_title')</th>
-                            <th class="default-sort hidden">@lang('lite/global.last_updated')</th>
-                            <th class="status hidden">@lang('lite/global.status')</th>
-                            <th class="no-sort hidden" style="width:100px!important">@lang('lite/global.actions')</th>
+                            <th rowspan="2"></th>
+                            <th width="45%">@lang('lite/global.activity_title')</th>
+                            <th class="default-sort">@lang('lite/global.last_updated')</th>
+                            <th class="status">@lang('lite/global.status')</th>
+                            <th class="no-sort" style="width:100px!important">@lang('lite/global.actions')</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -50,34 +50,19 @@
                         ?>
                         @foreach($activities as $key=>$activity)
                             <tr class="clickable-row" data-href="{{ route('np.activity.show', [$activity->id]) }}">
-                                {{--<td>{{ $key + 1 }}</td>--}}
-                                @if(!isMunicipalityAdmin())
-                                <td class="activity_edit"><a href="{{ route('np.activity.edit', [$activity->id]) }}"
-                                                             class="edit-activity"></a></td>
-                                @endif
+                                <td class="activity_edit">
+                                    <a href="{{ route('np.activity.edit', [$activity->id]) }}" class="edit-activity"></a>
+                                </td>
                                 <td class="activity_title">
                                     {{ $activity->title ? $activity->title[0]['narrative'] : 'No Title' }}
-                                    {{--<i class="{{ $activity->isImportedFromXml() ? 'imported-from-xml' : '' }}">icon</i>--}}
-                                    {{--<span>{{ $activity->identifier['activity_identifier'] }}</span>--}}
                                 </td>
-                                <td class="updated-date">{{ substr(changeTimeZone($activity->updated_at),0,12) }}</td>
+                                <td class="updated-date">
+                                    {{ substr(changeTimeZone($activity->updated_at),0,12) }}
+                                </td>
                                 <td>
                                     <span class="{{ $status_label[$activity->activity_workflow] }}">{{ $status_label[$activity->activity_workflow] }}</span>
-                                    {{--@if($activity->activity_workflow == 3)--}}
-                                    {{--<div class="popup-link-content">--}}
-                                    {{--<a href="#" title="{{ucfirst($activityPublishedStats[$activity->id])}}" class="{{ucfirst($activityPublishedStats[$activity->id])}}">{{ucfirst($activityPublishedStats[$activity->id])}}</a>--}}
-                                    {{--<div class="link-content-message">--}}
-                                    {{--{!!$messages[$activity->id]!!}--}}
-                                    {{--</div>--}}
-                                    {{--</div>--}}
-                                    {{--@endif--}}
                                 </td>
                                 <td>
-                                    {{--<a href="{{ route('lite.activity.show', [$activity->id]) }}" class="view"></a>--}}
-
-                                    {{--Use Delete Form to delete--}}
-                                    {{--<a href="{{ url(sprintf('/lite/activity/%s/delete', $activity->id)) }}" class="delete">Delete</a>--}}
-                                    @if(!isMunicipalityAdmin())
                                     <div class="view-more">
                                         <a href="#">&ctdot;</a>
                                         <div class="view-more-actions">
@@ -94,7 +79,6 @@
                                             </ul>
                                         </div>
                                     </div>
-                                    @endif
                                 </td>
                             </tr>
                         @endforeach
@@ -102,13 +86,10 @@
                     </table>
                 @else
                     <div class="text-center no-data no-activity-data">
-                        @if(isMunicipalityAdmin())
-                        <p>@lang('np/municipalityDashboard.no_activity')</p>
-                        @else
                         <p>@lang('lite/global.not_added',['type' => trans('global.activity')]))</p>
-                        <a href="{{route('np.activity.create') }}"
-                           class="btn btn-primary">@lang('lite/global.add_an_activity')</a>
-                        @endif
+                        <a href="{{route('np.activity.create') }}" class="btn btn-primary">
+                            @lang('lite/global.add_an_activity')
+                        </a>
                     </div>
                 @endif
             </div>
@@ -118,7 +99,7 @@
 
 @section('script')
     <script src="{{url('/np/js/dashboard.js')}}"></script>
-    <script src="{{url('/np/js/lite.js')}}"></script>
+    <script src="{{url('/np/js/np.js')}}"></script>
     <script>
         $(document).ready(function () {
             var data = [{!! implode(",",$stats) !!}];
@@ -126,9 +107,9 @@
             Dashboard.init(data, totalActivities);
 
             var searchPlaceholder = "{{trans('lite/activityDashboard.type_an_activity_title_to_search')}}";
-            Lite.dataTable(searchPlaceholder);
+            Np.dataTable(searchPlaceholder);
 
-            var ajaxRequest = Lite.budgetDetails();
+            var ajaxRequest = Np.budgetDetails();
 
             $('a').on('click', function (e) {
                 if (ajaxRequest && ajaxRequest.readyState != 4) {

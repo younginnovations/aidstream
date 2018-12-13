@@ -65,9 +65,7 @@ class RegistrationController extends Controller
         $orgType        = $this->baseForm->getCodeList('OrganizationType', 'Organization', false);
         $countries      = $this->baseForm->getCodeList('Country', 'Organization', false);
         $orgRegAgency   = $this->baseForm->getCodeList('NpOrganisationRegistrationAgency', 'Organization', false);
-        $dbRegAgency    = $this->regAgencyManager->getRegAgenciesCode();
-        // $orgRegAgency   = array_merge($orgRegAgency, $dbRegAgency);
-        $systemVersions = $this->systemVersion->where([ ['id', '<>', config('system-version.Tz.id')], ['id', '<>', config('system-version.Np.id')] ])->lists('system_version', 'id')->toArray();
+        $systemVersions = $this->systemVersion->where('id', '=', config('system-version.Np.id'))->lists('system_version', 'id')->toArray();
         $dbRoles = \DB::table('role')->whereNotNull('permissions')->orderBy('role', 'desc')->get();
         $districtsArray = \DB::table('districts')->get();
         $municipalitiesArray = \DB::table('municipalities')->get();
@@ -84,10 +82,6 @@ class RegistrationController extends Controller
             }
         }
 
-        // $districts = [];
-        // foreach($districtsArray as $district){
-        //     $districts[$district->id] = $district->name;
-        // }
         $districts = collect($districtsArray)->map(function($district){
             return [
                 "id"    => $district->id,
@@ -96,10 +90,6 @@ class RegistrationController extends Controller
         });
         $districts = json_encode($districts->toArray());
 
-        // $municipalities = [];
-        // foreach($municipalitiesArray as $municipality){
-        //     $municipalities[$municipality->id] = $municipality->name;
-        // }
         $municipalities = collect($districtsArray)->map(function($district){
             $municipalitiesArray = \DB::table('municipalities')->where('district_id','=',$district->id)->get();
             $municipalitiesArray = collect($municipalitiesArray)->map(function($municipality){
@@ -132,7 +122,7 @@ class RegistrationController extends Controller
     {
         $request = request();
 
-        $systemVersion = isTzSubDomain() ? 3 : isNpSubDomain() ? 4 : $request->get('systemVersion');
+        $systemVersion = $request->get('systemVersion');
         $users         = $request->get('users');
         $orgInfo       = $request->get('organization');
 
@@ -168,7 +158,7 @@ class RegistrationController extends Controller
         session()->put('reg_info', request()->except('_token'));
         $orgName = request('organization.organization_name');
 
-        return view('auth.similarOrg', compact('orgName', 'type'));
+        return view('np.auth.similarOrg', compact('orgName', 'type'));
     }
 
     /**
@@ -183,7 +173,7 @@ class RegistrationController extends Controller
         $adminName     = $orgInfo['admin_name'];
         session()->put('same_identifier_org_id', $orgInfo['org_id']);
 
-        return view('auth.sameOrgIdentifier', compact('orgName', 'adminName', 'orgIdentifier'));
+        return view('np.auth.sameOrgIdentifier', compact('orgName', 'adminName', 'orgIdentifier'));
     }
 
     /**

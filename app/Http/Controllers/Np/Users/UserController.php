@@ -1,6 +1,6 @@
 <?php namespace App\Http\Controllers\Np\Users;
 
-use App\Http\Controllers\Lite\LiteController;
+use App\Http\Controllers\Controller;
 use App\Np\Services\FormCreator\Users;
 use App\Np\Services\Users\UserService;
 use App\Np\Services\Validation\ValidationService;
@@ -14,9 +14,9 @@ use Illuminate\Support\Facades\Input;
 
 /**
  * Class UserController
- * @package App\Http\Controllers\Lite\Users
+ * @package App\Http\Controllers\Np\Users
  */
-class UserController extends LiteController
+class UserController extends Controller
 {
     /**
      * @var Users
@@ -101,7 +101,7 @@ class UserController extends LiteController
         }
 
         if ($this->userService->save($request->except(['_token', 'password_confirmation']))) {
-            return redirect()->route('lite.users.index')->withResponse(['type' => 'success', 'code' => ['created', ['name' => trans('lite/global.user')]]]);
+            return redirect()->route('np.users.index')->withResponse(['type' => 'success', 'code' => ['created', ['name' => trans('lite/global.user')]]]);
         }
 
         return redirect()->back()->withResponse(['type' => 'danger', 'code' => ['save_failed', ['name' => trans('lite/global.user')]]]);

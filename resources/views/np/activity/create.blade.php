@@ -1,4 +1,4 @@
-@extends('np.base.sidebar')
+@extends('np.base.base')
 
 @section('title', 'Activities')
 
@@ -41,7 +41,6 @@
                                     </li>
                                     <li><a href="#results-and-reports">@lang('lite/global.results_and_reports')</a>
                                     </li>
-
                                 </ul>
                             </nav>
                         </div>
@@ -85,21 +84,12 @@
                     <div class="implementing_organisations-container hidden"
                          data-prototype="{{ form_row($form->implementing_organisations->prototype()) }}">
                     </div>
-                    @if(isRegisteredForNp())
-                        <div class="administrative-container hidden">
-                            @include('np.partials.administrative')
-                        </div>
-                        <div class="location-container hidden">
-                            @include('np.partials.location')
-                        </div>
-                    @else
-                        <div class="location-container hidden"
-                             data-prototype="{{ form_row($form->location->prototype()) }}">
-                        </div>
-                        <div class="point-container hidden">
-                            @include('np.activity.partials.point')
-                        </div>
-                    @endif
+                    <div class="administrative-container hidden">
+                        @include('np.partials.administrative')
+                    </div>
+                    <div class="location-container hidden">
+                        @include('np.partials.location')
+                    </div>
                 </div>
             </div>
         </div>
@@ -131,13 +121,9 @@
     <script type="text/javascript" src="{{ url('/np/js/createActivity.js') }}"></script>
     <script type="text/javascript" src="{{url('/lite/js/progressBar.js')}}"></script>
     <script type="text/javascript" src="{{url('/js/leaflet.js')}}"></script>
-    @if(isRegisteredForNp())
-        <script type="text/javascript" src="{{url('/js/map.js')}}"></script>
-        <script type="text/javascript" src="{{ url('/np/js/location.js') }}"></script>
-        <script type="text/javascript" src="{{ url('/np/js/activity.js') }}"></script>
-    @else
-        <script type="text/javascript" src="{{url('/lite/js/map.js')}}"></script>
-    @endif
+    <script type="text/javascript" src="{{url('/js/map.js')}}"></script>
+    <script type="text/javascript" src="{{ url('/np/js/location.js') }}"></script>
+    <script type="text/javascript" src="{{ url('/np/js/activity.js') }}"></script>
     <script type="text/javascript" src="{{ url('/lite/js/location.js') }}"></script>
     <script>
 
@@ -145,44 +131,44 @@
     var municipalities = {!! $municipalities!!};
     var selectedLocation = {!!$locationArray!!};
     $(document).ready(function(){
-    $('.municipality').each(function(i, obj){
-        let municipality = obj.value;
-        let filterData = [];
-        wards.map(d => {
-            if(municipality.includes(String(d.id))){
-                filterData.push(d);
-            }
-        })
-        var wardsSelector = $(this).parent().siblings('.ward').find('select');
-        wardsSelector.empty().trigger('change');
-        wardsSelector.select2({
-			placeholder: 'Select Wards',
-			allowClear: true,
-			data: filterData,
-		})
-        var selectedWards = selectedLocation.filter(function(item){
-            if(item.municipality == municipality){
-                wardsSelector.val(item.wards).trigger('change');
-            }
+        $('.municipality').each(function(i, obj){
+            let municipality = obj.value;
+            let filterData = [];
+            wards.map(d => {
+                if(municipality.includes(String(d.id))){
+                    filterData.push(d);
+                }
+            });
+            var wardsSelector = $(this).parent().siblings('.ward').find('select');
+            wardsSelector.empty().trigger('change');
+            wardsSelector.select2({
+                placeholder: 'Select Wards',
+                allowClear: true,
+                data: filterData,
+            });
+            var selectedWards = selectedLocation.filter(function(item){
+                if(item.municipality == municipality){
+                    wardsSelector.val(item.wards).trigger('change');
+                }
+            });
         });
-    })
-    $('.location').on('change', '.municipality', function () {
-        let selectedMunicipality = $(this).val();
-        let filterData = [];
-        wards.map(d => {
-            if(selectedMunicipality.includes(String(d.id))){
-                filterData.push(d);
-            }
-        })
-        var wardsSelector = $(this).parent().siblings('.ward').find('select');
-        wardsSelector.empty().trigger('change');
-        wardsSelector.select2({
-			placeholder: 'Select Wards',
-			allowClear: true,
-			data: filterData
-		})
-    })
-})
+        $('.location').on('change', '.municipality', function () {
+            let selectedMunicipality = $(this).val();
+            let filterData = [];
+            wards.map(d => {
+                if(selectedMunicipality.includes(String(d.id))){
+                    filterData.push(d);
+                }
+            });
+            var wardsSelector = $(this).parent().siblings('.ward').find('select');
+            wardsSelector.empty().trigger('change');
+            wardsSelector.select2({
+                placeholder: 'Select Wards',
+                allowClear: true,
+                data: filterData
+            });
+        });
+    });
     </script>
     <script type="text/javascript">
         var countryElement;
@@ -200,16 +186,6 @@
                 selectElement.val(countryVal).change();
             });
             var countryDetails = [{!! $countryDetails !!}];
-            Location.prepareElements();
-            @if(isRegisteredForNp())
-            TzLocation.closeOpenedMap(countryDetails);
-            TzLocation.onCountryChanged();
-            @else
-            Location.closeOpenedMap(countryDetails);
-            Location.onCountryChange();
-            Location.onCountryDelete();
-            Map.reverseLocation();
-            @endif
         })
     </script>
     <script type="text/javascript">

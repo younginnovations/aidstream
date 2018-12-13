@@ -3,7 +3,7 @@
 use App\Http\Requests\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\RedirectResponse;
-use App\Http\Controllers\Lite\LiteController;
+use App\Http\Controllers\Controller;
 use App\Np\Services\PublishedFiles\PublishedFilesService;
 use Illuminate\Support\Facades\Session;
 
@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Session;
  * Class PublishedFilesController
  * @package App\Http\Controllers\Np\PublishedFiles
  */
-class PublishedFilesController extends LiteController
+class PublishedFilesController extends Controller
 {
     /**
      * @var PublishedFilesService
@@ -52,7 +52,7 @@ class PublishedFilesController extends LiteController
         $file = $this->getActivityPublishedFile($id);
 
         if (Gate::denies('ownership', $file)) {
-            return redirect()->route('lite.activity.index')->withResponse($this->getNoPrivilegesMessage());
+            return redirect()->route('np.activity.index')->withResponse($this->getNoPrivilegesMessage());
         }
 
         $this->authorize('delete_activity', $file);
@@ -83,7 +83,7 @@ class PublishedFilesController extends LiteController
         $organization = auth()->user()->organization;
 
         if (Gate::denies('belongsToOrganization', $organization)) {
-            return redirect()->route('lite.activity.index')->withResponse($this->getNoPrivilegesMessage());
+            return redirect()->route('np.activity.index')->withResponse($this->getNoPrivilegesMessage());
         }
 
         $this->authorize('publish_activity', $organization);

@@ -1,6 +1,6 @@
 <?php namespace App\Http\Controllers\Np\Settings;
 
-use App\Http\Controllers\Lite\LiteController;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\Request;
 use App\Np\Services\Settings\SettingsService;
 use App\Np\Services\Users\UserService;
@@ -12,7 +12,7 @@ use Kris\LaravelFormBuilder\FormBuilder;
  * Class SettingsController
  * @package App\Http\Controllers\Np\Settings
  */
-class SettingsController extends LiteController
+class SettingsController extends Controller
 {
     /**
      * @var FormBuilder

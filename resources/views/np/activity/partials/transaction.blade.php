@@ -1,3 +1,3 @@
-@include('lite.activity.partials.transactions.disbursement')
-@include('lite.activity.partials.transactions.expenditure')
-@include('lite.activity.partials.transactions.incoming')
+@include('np.activity.partials.transactions.disbursement')
+@include('np.activity.partials.transactions.expenditure')
+@include('np.activity.partials.transactions.incoming')

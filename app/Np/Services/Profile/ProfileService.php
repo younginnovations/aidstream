@@ -1,6 +1,6 @@
 <?php namespace App\Np\Services\Profile;
 
-use App\Np\Contracts\NpOrganisationRepositoryInterface;
+use App\Np\Contracts\NpOrganizationRepositoryInterface;
 use App\Np\Contracts\NpUserRepositoryInterface;
 use App\Np\Services\Data\Traits\TransformsData;
 use App\Np\Services\Traits\ProvidesLoggerContext;
@@ -63,7 +63,7 @@ class ProfileService
         Filesystem $fileSystem,
         ImageManager $imageManager,
         NpUserRepositoryInterface $userRepository,
-        NpOrganisationRepositoryInterface $organisationRepository,
+        NpOrganizationRepositoryInterface $organisationRepository,
         DatabaseManager $database,
         LoggerInterface $logger
     ) {

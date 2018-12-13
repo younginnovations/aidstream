@@ -152,7 +152,7 @@ class Verification
         if($user->organization->system_version_id !== 4){
             $this->sendSecondaryVerificationEmail($user->organization);
         }
-        
+
         $message = view('verification.admin', compact('users', 'user'));
 
         return redirect()->to('/auth/login')->withVerificationMessage($message->__toString());

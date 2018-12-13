@@ -1,31 +1,14 @@
+@extends('np.main')
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport'/>
-	<title>@lang('title.aidstream_register')</title>
-	<link rel="shortcut icon" type="image/png" sizes="32*32" href="{{ asset('/images/np/favicon-np.png') }}"/>
-	<link href="{{ asset('/css/vendor.min.css') }}" rel="stylesheet">
-	<link href="{{ asset('/css/main.min.css') }}" rel="stylesheet">
-	<link href="{{ asset('/css/style.min.css') }}" rel="stylesheet">
+@section('title', 'Register')
 
-	<!-- Fonts -->
+@section('links')
 	<link href='//fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
 	<link href="{{ asset('/css/select2.min.css') }}" rel="stylesheet">
-	<link href="{{ asset('/np/css/np.min.css') }}" rel="stylesheet">
+@endsection
 
-	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-	<!--[if lt IE 9]>
-	<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-	<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-	<![endif]-->
-
-	@yield('head')
-</head>
-<body class="municipality-login">
+@section('content')
+<div class="municipality-login">
 <section class="header-banner">
 	@include('np.partials.header')
 </section>
@@ -35,11 +18,9 @@
 			<h1 class="text-center">Get Started with AidStream Nepal</h1>
 			<p class="text-center">@lang('registration.register_your_organisation_text')</p>
 			<ul class="nav nav-tabs text-center" role="tablist">
-				<li role="presentation" class="active"><span>1</span><a href="#tab-organization" aria-controls="tab-organization" role="tab"
-																		data-toggle="tab">@lang('registration.organisation_information')</a></li>
+				<li role="presentation" class="active"><span>1</span><a href="#tab-organization" aria-controls="tab-organization" role="tab"	data-toggle="tab">@lang('registration.organisation_information')</a></li>
 				<li role="presentation"><span>2</span><a href="#tab-users" aria-controls="tab-users" role="tab" data-toggle="tab">@lang('registration.administrator_information')</a></li>
-				<li role="presentation"><span>3</span><a href="#tab-verification" aria-controls="tab-verification" role="tab" data-toggle="tab"
-														 class="disabled">@lang('registration.email_verification')</a></li>
+				<li role="presentation"><span>3</span><a href="#tab-verification" aria-controls="tab-verification" role="tab" data-toggle="tab" class="disabled">@lang('registration.email_verification')</a></li>
 			</ul>
 			<div class="col-lg-4 col-md-8 register-block">
 				<div class="panel panel-default">
@@ -235,12 +216,11 @@
 
 <div id="user_template" class="hidden">
 	{{--*/ $userIndex = '_index_'; /*--}}
-	@include('auth.partUsers')
+	@include('np.auth.partUsers')
 </div>
-
-@include('np.partials.footer')
-
-<script type="text/javascript" src="{{url('/js/jquery.js')}}"></script>
+</div>
+@endsection
+@section('script')
 <script type="text/javascript" src="{{url('/js/jquery.cookie.js')}}"></script>
 <script type="text/javascript" src="{{url('/js/jquery.jscrollpane.min.js')}}"></script>
 <script type="text/javascript" src="{{url('/js/select2.min.js')}}"></script>
@@ -309,10 +289,10 @@
             $(this).valid();
         });
 
-        Registration.similarOrgs();
-        Registration.sameIdentifier();
-        Registration.disableOrgSubmitButton();
-        Registration.disableUsersSubmitButton();
+        // Registration.similarOrgs();
+        // Registration.sameIdentifier();
+        // Registration.disableOrgSubmitButton();
+        // Registration.disableUsersSubmitButton();
     });
 </script>
 
@@ -321,5 +301,4 @@
 	<script type="text/javascript" src="{{url('/js/ga.js')}}"></script>
 	<!-- End Google Analytics -->
 @endif
-</body>
-</html>
+@endsection
