@@ -46,7 +46,7 @@ class Tag extends BaseForm
                     'required' => true
                 ]
             )
-            ->addNarrative('tag_narrative')
+            ->addNarrative('tag_narrative',null,['narrative_required' => false])
             ->addAddMoreButton('add', 'tag_narrative')
             ->addRemoveThisButton('remove');
     }

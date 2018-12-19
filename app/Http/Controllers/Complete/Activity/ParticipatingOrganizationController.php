@@ -8,6 +8,7 @@ use App\Services\Activity\ParticipatingOrganizationManager;
 use App\Services\FormCreator\Activity\ParticipatingOrganization as ParticipatingOrganizationForm;
 use App\Services\RequestManager\Activity\ParticipatingOrganization as ParticipatingOrganizationRequestManager;
 use Illuminate\Support\Facades\Gate;
+use App\Core\Form\BaseForm;
 
 /**
  * Class ParticipatingOrganizationController
@@ -30,6 +31,8 @@ class ParticipatingOrganizationController extends Controller
      */
     protected $participatingOrganizationManager;
 
+    protected $baseForm;
+
     /**
      * @param ParticipatingOrganizationManager $participatingOrganizationManager
      * @param ParticipatingOrganizationForm    $participatingOrganizationForm
@@ -38,12 +41,14 @@ class ParticipatingOrganizationController extends Controller
     function __construct(
         ParticipatingOrganizationManager $participatingOrganizationManager,
         ParticipatingOrganizationForm $participatingOrganizationForm,
-        ActivityManager $activityManager
+        ActivityManager $activityManager,
+        BaseForm $baseForm
     ) {
         $this->middleware('auth');
         $this->activityManager                  = $activityManager;
         $this->participatingOrganizationForm    = $participatingOrganizationForm;
         $this->participatingOrganizationManager = $participatingOrganizationManager;
+        $this->baseForm = $baseForm;
     }
 
     /**
@@ -60,7 +65,7 @@ class ParticipatingOrganizationController extends Controller
         }
         
         if(Session('version') == 'V203'){
-            $getCrsChannelCode = $this->getNameWithCode('Activity', 'CRSChannelCode');
+            $getCrsChannelCode = $this->baseForm->getCodeList('CRSChannelCode', 'Activity');
         } else {
             $getCrsChannelCode = [];
         }

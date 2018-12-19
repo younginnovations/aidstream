@@ -33,28 +33,11 @@ class Tag extends ActivityBaseRequest
         $rules = [];
         foreach ($formFields as $tagIndex => $tag) {
             $tagForm                                                = sprintf('tag.%s', $tagIndex);
-            // $rules[sprintf('%s.vocabulary_uri', $tagForm)]          = 'url';
             $rules[sprintf('%s.tag_vocabulary', $tagForm)]          = 'required';
-            $rules[sprintf('%s.narrative.0.narrative',$tagForm)]    = 'required';
+            // $rules[sprintf('%s.narrative.0.narrative',$tagForm)] = 'required';
             $rules[sprintf('%s.tag_code', $tagForm)]                = 'required';
-            // $rules[sprintf('%s.tag_code', $tagForm)] = 'required_with:' . $tagForm . '.tag_vocabulary';
-            // if ($tag['tag_vocabulary'] == 1) {
-                
-                // if ($tag['tag_code'] != "") {
-                //     $rules[sprintf('%s.tag_vocabulary', $tagForm)] = 'required_with:' . $tagForm . '.tag_code';
-                // }
             if($tag['tag_vocabulary'] == 99) {
-                // if ($tag['tag_vocabulary'] != "") {
-                    // $rules[sprintf('%s.tag_text', $tagForm)] = 'required_with:' . $tagForm . '.tag_vocabulary';
-                // }
-
-                // if ($tag['tag_text'] != "") {
-                //     $rules[sprintf('%s.tag_vocabulary', $tagForm)] = 'required_with:' . $tagForm . '.tag_text';
-                // }
-
-                // if ($tag['tag_vocabulary'] == "99" || $tag['tag_vocabulary'] == "98") {
-                    $rules[sprintf('%s.vocabulary_uri', $tagForm)] = 'url|required_with:' . $tagForm . '.tag_vocabulary';
-                // }
+                $rules[sprintf('%s.vocabulary_uri', $tagForm)] = 'url|required_with:' . $tagForm . '.tag_vocabulary';
             }
         }
 

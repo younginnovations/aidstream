@@ -28,7 +28,7 @@ class Result extends BaseForm
             ->addAggregationStatusList()
             ->addTitles(['class' => 'narrative', 'narrative_true' => true])
             ->addDescriptions(['class' => 'description_narrative'])
-            ->addCollection('document_link', 'Activity\DocumentLink','document_link')
+            ->addCollection('document_link', 'Activity\ResultDocumentLink','document_link')
             ->addAddMoreButton('add_document_link', 'document_link')
             ->addCollection('reference','Activity\ResultReference', '', [], trans('elementForm.reference'))
             ->addIndicators()

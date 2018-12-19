@@ -32,7 +32,7 @@ class ImportResultController extends Controller
     /**
      * Result Template file path.
      */
-    const RESULT_TEMPLATE_PATH = '/Services/CsvImporter/Templates/Activity/%s/result.csv';
+    const RESULT_TEMPLATE_PATH = '/Services/CsvImporter/Templates/Activity/%s/result_template.csv';
 
     /**
      * Current User's id.
