@@ -88,6 +88,10 @@ class DefaultAidTypeController extends Controller
 
         $this->authorizeByRequestType($activityData, 'default_aid_type');
         $defaultAidType = $request->all();
+        if(session('version') == 'V203'){
+            $defaultAidType['default_aid_type'] = array_map("unserialize", array_unique(array_map("serialize", $defaultAidType['default_aid_type'])));
+        }
+
         if ($this->defaultAidTypeManager->update($defaultAidType, $activityData)) {
             $this->activityManager->resetActivityWorkflow($id);
             $response = ['type' => 'success', 'code' => ['updated', ['name' => trans('element.default_aid_type')]]];

@@ -46,7 +46,7 @@ class DefaultAidType extends Request
         $rules = [];
         foreach ($formFields as $aidtypeIndex => $aidtype) {
             $aidtypeForm                                                    = sprintf('default_aid_type.%s', $aidtypeIndex);
-            // dd($aidtypeForm);
+
             $rules[sprintf('%s.default_aidtype_vocabulary', $aidtypeForm)]  = 'required';
  
             if ($aidtype['default_aidtype_vocabulary'] == 1) {

@@ -41,3 +41,20 @@
         </div>
     </div>
 @endsection
+@section('script')
+<script>
+    //remove duplicate aid type values
+    $(document).ready(function(){
+        var hidden = $.find('.create-form .hidden');
+        hidden.map(d => {
+            $(d).children('select').val('');
+        });
+        $(".create-form select").change(function(){
+            var hidden = $.find('.create-form .hidden');
+            hidden.map(d => {
+                $(d).children('select').val('');
+            });
+        });
+    });
+</script>
+@endsection
