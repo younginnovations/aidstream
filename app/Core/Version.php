@@ -60,7 +60,7 @@ class Version
         if(session('next_version')){
             Session::put('allowed_upgrade', true);
         }
-        if(session('next_version') == '2.03'){
+        /*if(session('next_version') == '2.03'){
             $fileExists = Storage::disk('storage')->exists('organizationUpgradeList.json');
             if($fileExists){
                 $contents = Storage::disk('storage')->get('organizationUpgradeList.json');
@@ -70,7 +70,7 @@ class Version
             } else {
                 Session::put('allowed_upgrade', false);
             }
-        }
+        }*/
 
         $this->activityElement     = App::make("App\Core\\$this->version\IatiActivity");
         $this->organizationElement = App::make("App\Core\\$this->version\IatiOrganization");
