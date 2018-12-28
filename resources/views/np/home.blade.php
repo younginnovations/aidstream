@@ -127,7 +127,7 @@
 			<img src="/images/np/featured-dhangadi-screenshot.png" alt="AidStream Dhangadi Banner"/>
 		</div>
 		<div class="feature-description">
-			<h2>Dhangadhi Municipality</h2>
+			<h2>Dhangadhi Sub-Metropolitan City</h2>
 			<p>Dhangadhi Sub-Metropolitan City has embraced open data policy and has published their development data using AidStream Nepal. <a href="{{ url('/municipality/dhangadhi') }}">Know
 					More</a></p>
 		</div>
