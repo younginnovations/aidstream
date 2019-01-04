@@ -75,7 +75,11 @@ class XmlValidator
         $rules['collaboration_type']   = sprintf('in:%s', $this->validCodeList('CollaborationType', 'V201'));
         $rules['default_flow_type']    = sprintf('in:%s', $this->validCodeList('FlowType', 'V201'));
         $rules['default_finance_type'] = sprintf('in:%s', $this->validCodeList('FinanceType', 'V201'));
-        $rules['default_aid_type']     = sprintf('in:%s', $this->validCodeList('AidType', 'V201'));
+        if(session('version') == 'V203'){
+            $rules                     = array_merge($rules, $this->rulesForDefaultAidType($activity));
+        } else {
+            $rules['default_aid_type'] = sprintf('in:%s', $this->validCodeList('AidType', 'V203'));
+        }
         $rules['default_tied_status']  = sprintf('in:%s', $this->validCodeList('TiedStatus', 'V201'));
         $rules                         = array_merge($rules, $this->rulesForBudget($activity));
         $rules                         = array_merge($rules, $this->rulesForPlannedDisbursement($activity));
@@ -120,7 +124,11 @@ class XmlValidator
         $messages['collaboration_type.in']    = trans('validation.code_list', ['attribute' => trans('element.collaboration_type')]);
         $messages['default_flow_type.in']     = trans('validation.code_list', ['attribute' => trans('element.default_flow_type')]);
         $messages['default_finance_type.in']  = trans('validation.code_list', ['attribute' => trans('element.default_finance_type')]);
-        $messages['default_aid_type.in']      = trans('validation.code_list', ['attribute' => trans('element.default_aid_type')]);
+        if(session('version') == 'V203'){
+            $messages                         = array_merge($messages, $this->messagesForDefaultAidType($activity));
+        } else {
+            $messages['default_aid_type.in']  = trans('validation.code_list', ['attribute' => trans('element.default_aid_type')]);
+        }
         $messages['default_tied_status.in']   = trans('validation.code_list', ['attribute' => trans('element.default_tied_status')]);
         $messages                             = array_merge($messages, $this->messagesForBudget($activity));
         $messages                             = array_merge($messages, $this->messagesForPlannedDisbursement($activity));
@@ -151,6 +159,26 @@ class XmlValidator
         }
 
         return $rules;
+    }
+
+    protected function rulesForDefaultAidType(array $activity)
+    {
+        $defaultAidType = getVal($activity, ['default_aid_type'], []);
+        foreach($defaultAidType as $index => $item){
+            $rules[sprintf('default_aid_type.%s.default_aid_type', $index)] = sprintf('in:%s', $this->validCodeList('AidType', 'V203'));
+        }
+
+        return $rules;
+    }
+
+    protected function messagesForDefaultAidType(array $activity)
+    {
+        $defaultAidType = getVal($activity, ['default_aid_type'], []);
+        foreach($defaultAidType as $index => $item){
+            $messages[sprintf('default_aid_type.%s.default_aid_type.in', $index)] = trans('validation.code_list', ['attribute' => trans('element.default_aid_type')]);
+        }
+
+        return $messages;
     }
 
     /**
