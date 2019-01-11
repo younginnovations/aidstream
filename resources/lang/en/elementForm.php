@@ -134,7 +134,7 @@ return [
     'recipient_country'                          => 'Recipient Country',
     'recipient_region'                           => 'Recipient Region',
     'recipient_region_code'                      => 'Recipient Region Code',
-    'recipient_country_code'                     => 'Recipient Region Code',
+    'recipient_country_code'                     => 'Recipient Country Code',
     'expense_line'                               => 'Expense Line',
     'select_text'                                => 'Select one of the following options',
     'remove_this'                                => 'Remove this',
@@ -245,6 +245,16 @@ return [
     'activity_file'                              => 'Activity File',
     'transaction_internal_reference'             => 'Transaction Internal Reference',
     'participating_organisation'                 => 'Participating Organization',
-    'participating_organisation_identifier'      => 'Participating Organization Identifier'
+    'participating_organisation_identifier'      => 'Participating Organization Identifier',
+    'tag'                                        => 'Tag',
+    'tag_vocabulary'                             => 'Tag Vocabulary',
+    'tag_code'                                   => 'Tag Code',
+    'budget_not_provided'                        => 'Budget Not Provided',
+    'document_link'                              => 'Document Link',
+    'crs_channel_code'                           => 'CRS Channel Code',
+    'default_aid_type_vocabulary'                => 'Default Aid Type Vocabulary',
+    'default_aid_type_code'                      => 'Default AidType Code',
+    'default_aid_type_earmarking_category_code'  => 'Earmarking Category Code',
+    'default_aid_type_text'                      => 'Default Aid Type Code'
 ];
 

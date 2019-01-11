@@ -164,7 +164,24 @@ class TransactionController extends Controller
 
         $this->authorize('edit_activity', $activity);
         $transaction = $this->transactionManager->getTransaction($transactionId);
-        $form        = $this->transactionForm->editForm($activity, $transactionId, $transaction->getTransaction());
+        $transactions = $transaction->getTransaction();
+        
+        if(session('version') == 'V203') {
+            if(!is_array(getVal($transactions, ['aid_type', 0, 'aid_type'])) && !empty(getVal($transactions, ['aid_type', 0, 'aid_type']))) {
+                $defaultAidType = [
+                    'default_aid_type' => getVal($transactions, ['aid_type', 0, 'aid_type']),
+                    'default_aidtype_vocabulary' => '1',
+                    'earmarking_category' => '',
+                    'default_aid_type_text' => ''
+                ];
+            
+                $transactions['aid_type'][0] = [
+                    'aid_type' => [$defaultAidType]
+                ];
+            }
+        }
+
+        $form        = $this->transactionForm->editForm($activity, $transactionId, $transactions);
 
         return view('Activity.transaction.edit', compact('form', 'activity', 'id'));
     }

@@ -29,6 +29,7 @@ class ResultRow extends Row
      *
      */
     const RESULT_TEMPLATE_FILE = '/Services/CsvImporter/Entities/Activity/Components/Elements/Foundation/Template/Result.json';
+
     /**
      * @var array
      */
@@ -54,9 +55,15 @@ class ResultRow extends Row
         'title_language',
         'description',
         'description_language',
+        'reference' => [
+            'vocabulary',
+            'code',
+            'vocabulary_uri'
+        ],
         'indicator' => [
             'measure',
             'ascending',
+            'indicator_aggregation_status',
             'indicator_title',
             'indicator_title_language',
             'indicator_description',
@@ -66,6 +73,9 @@ class ResultRow extends Row
             'reference_uri',
             'baseline_year',
             'baseline_value',
+            'baseline_location_ref',
+            'baseline_dimension_name',
+            'baseline_dimension_value',
             'baseline_comment',
             'baseline_comment_language',
             'period_start',
@@ -95,9 +105,13 @@ class ResultRow extends Row
         'title_language',
         'description',
         'description_language',
+        'results_reference_vocabulary',
+        'results_reference_code',
+        'results_reference_uri',
         'indicator',
         'measure',
         'ascending',
+        'indicator_aggregation_status',
         'indicator_title',
         'indicator_title_language',
         'indicator_description',
@@ -107,6 +121,9 @@ class ResultRow extends Row
         'reference_uri',
         'baseline_year',
         'baseline_value',
+        'baseline_location_ref',
+        'baseline_dimension_name',
+        'baseline_dimension_value',
         'baseline_comment',
         'baseline_comment_language',
         'period_start',
@@ -143,6 +160,19 @@ class ResultRow extends Row
         'actual_dimension_value',
         'actual_comment',
         'actual_comment_language'
+    ];
+
+    /**
+     * @var array
+     */
+    protected $baselineFields = [
+        'baseline_year',
+        'baseline_value',
+        'baseline_location_ref',
+        'baseline_dimension_name',
+        'baseline_dimension_value',
+        'baseline_comment',
+        'baseline_comment_language'
     ];
 
     /**
@@ -186,18 +216,26 @@ class ResultRow extends Row
     protected $narrative;
 
     /**
+     * System Version
+     *
+     * @var String
+     */
+    protected $version;
+
+    /**
      * ResultRow constructor.
      * @param            $fields
      * @param            $organizationId
      * @param            $userId
      * @param Validation $factory
      */
-    public function __construct($fields, $organizationId, $userId, Validation $factory)
+    public function __construct($fields, $organizationId, $userId, $version, Validation $factory)
     {
         $this->fields         = $fields;
         $this->organizationId = $organizationId;
         $this->userId         = $userId;
         $this->factory        = $factory;
+        $this->version        = $version;
     }
 
     /**
@@ -289,6 +327,7 @@ class ResultRow extends Row
              ->setAggregationStatus()
              ->setTitle()
              ->setDescription()
+             ->setReference()
              ->setIndicator();
     }
 
@@ -364,6 +403,22 @@ class ResultRow extends Row
                  ->setIndicatorBaseline($index)
                  ->setIndicatorPeriod($index);
         }
+
+        return $this;
+    }
+
+    protected function setReference()
+    {
+        if($this->version !== 'V203') {
+            return $this;
+        }
+        $referenceVocabulary = getVal($this->fields, ['results_reference_vocabulary'], null);
+        $referenceCode       = getVal($this->fields, ['results_reference_code'], null);
+        $referenceUri        = getVal($this->fields, ['results_reference_uri'], null);
+
+        $this->data['reference'][0]['vocabulary']     = $referenceVocabulary[0];
+        $this->data['reference'][0]['code']           = $referenceCode[0];
+        $this->data['reference'][0]['vocabulary_uri'] = $referenceUri[0];
 
         return $this;
     }
@@ -503,17 +558,129 @@ class ResultRow extends Row
 
     /**
      * Maps Result Indicator Baseline
-     * @param $index
+     * @param IndicatorIndex $index
      * @return $this
      */
     protected function setIndicatorBaseline($index)
     {
+        if($this->version == 'V203') {
+            $this->groupBaseline();
+            foreach(getVal($this->indicators, [$index, 'baseline'], []) as $i => $value) {
+                $this->setIndicatorBaseLineYearMultiple($index, $i)
+                     ->setIndicatorBaselineValueMultiple($index, $i)
+                     ->setIndicatorBaselineCommentMultiple($index, $i)
+                     ->setIndicatorBaselineLocationMultiple($index, $i)
+                     ->setIndicatorBaselineDimensionNameMultiple($index, $i)
+                     ->setIndicatorBaselineDimensionValueMultiple($index, $i);
+            }
+
+            return $this;
+        }
+
         $this->setIndicatorBaselineYear($index)
              ->setIndicatorBaselineValue($index)
-             ->setIndicatorBaselineComment($index);
+             ->setIndicatorBaselineComment($index)
+             ->setIndicatorBaselineLocation($index)
+             ->setIndicatorBaselineDimensionName($index)
+             ->setIndicatorBaselineDimensionValue($index);
 
         return $this;
     }
+
+    protected function setIndicatorBaselineYearMultiple($index, $i)
+    {
+        $values = getVal($this->indicators[$index], ['baseline', $i, 'baseline_year'], []);
+
+        foreach($values as $key => $value) {
+            if(!is_null($value)) {
+                $this->data['indicator'][$index]['baseline'][$i]['year'] = (string) $value;
+            }
+        }
+
+        return $this;
+    }
+
+    protected function setIndicatorBaselineValueMultiple($index, $i)
+    {
+        $values = getVal($this->indicators[$index], ['baseline', $i, 'baseline_value'], []);
+
+        foreach($values as $key => $value) {
+            if(!is_null($value)) {
+                $this->data['indicator'][$index]['baseline'][$i]['value'] = (string) $value;
+            }
+        }
+
+        return $this;
+    }
+
+    protected function setIndicatorBaselineDimensionNameMultiple($index, $i)
+    {
+        $values = getVal($this->indicators[$index], ['baseline', $i, 'baseline_dimension_name'], []);
+
+        foreach($values as $key => $value) {
+            if(!is_null($value)) {
+                $this->data['indicator'][$index]['baseline'][$i]['dimension'][$key]['name'] = (string) $value;
+            }
+        }
+
+        return $this;
+    }
+
+    protected function setIndicatorBaselineDimensionValueMultiple($index, $i)
+    {
+        $values = getVal($this->indicators[$index], ['baseline', $i, 'baseline_dimension_value'], []);
+
+        foreach($values as $key => $value) {
+            if(!is_null($value)) {
+                $this->data['indicator'][$index]['baseline'][$i]['dimension'][$key]['value'] = (string) $value;
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * Maps Result Indicator Baseline Comment
+     * @param $index
+     * @return $this
+     */
+    protected function setIndicatorBaselineCommentMultiple($index, $i)
+    {
+        $values = getVal($this->indicators[$index], ['baseline', $i, 'baseline_comment'], []);
+
+        if (!is_null($values)) {
+            foreach ($values as $baselineIndex => $value) {
+                if (!is_null($value)) {
+
+                    $this->data['indicator'][$index]['baseline'][$i]['comment'][0] = $this->narrative;
+                    $this->setNarrative(['indicator', $index, 'baseline', $i, 'comment'], 'baseline_comment', 'baseline_comment_language', $this->indicators[$index]['baseline'][$i]);
+                }
+            }
+        }
+
+        return $this;
+    }
+
+        /**
+     * Maps Result Indicator Baseline Location
+     * @param $index
+     * @return $this
+     */
+    protected function setIndicatorBaselineLocationMultiple($index, $i)
+    {
+        $values = getVal($this->indicators[$index], ['baseline', $i, 'baseline_location_ref'], []);
+
+        if (!is_null($values)) {
+            foreach ($values as $baselineIndex => $value) {
+                if (!is_null($value)) {
+                    $this->data['indicator'][$index]['baseline'][$i]['location_ref'] = (string) $value;
+                }
+            }
+        }
+
+        return $this;
+    }
+    
 
     /**
      * Maps Result Indicator Baseline Year
@@ -576,6 +743,67 @@ class ResultRow extends Row
         return $this;
     }
 
+        /**
+     * Maps Result Indicator Baseline Location
+     * @param $index
+     * @return $this
+     */
+    protected function setIndicatorBaselineLocation($index)
+    {
+        $values = getVal($this->indicators[$index], ['baseline_location_ref'], []);
+
+        if (!is_null($values)) {
+            foreach ($values as $baselineIndex => $value) {
+                if (!is_null($value)) {
+                    $this->data['indicator'][$index]['baseline'][$baselineIndex]['location_ref'] = (string) $value;
+                }
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * Maps Result Indicator Baseline Dimension Name
+     * @param $index
+     * @return $this
+     */
+    protected function setIndicatorBaselineDimensionName($index)
+    {
+        $values = getVal($this->indicators[$index], ['baseline_dimension_name'], []);
+
+        if (!is_null($values)) {
+            foreach ($values as $baselineIndex => $value) {
+                if (!is_null($value)) {
+                    $this->data['indicator'][$index]['baseline'][$baselineIndex]['dimension']['name'] = (string) $value;
+                }
+            }
+        }
+
+        return $this;
+    }
+
+        /**
+     * Maps Result Indicator Baseline Dimension Value
+     * @param $index
+     * @return $this
+     */
+    protected function setIndicatorBaselineDimensionValue($index)
+    {
+        $values = getVal($this->indicators[$index], ['baseline_dimension_value'], []);
+
+        if (!is_null($values)) {
+            foreach ($values as $baselineIndex => $value) {
+                if (!is_null($value)) {
+                    $this->data['indicator'][$index]['baseline'][$baselineIndex]['dimension']['value'] = (string) $value;
+                }
+            }
+        }
+
+        return $this;
+    }
+
+
     /**
      * Maps Result Indicator Period
      * @param $index
@@ -586,12 +814,14 @@ class ResultRow extends Row
         $this->groupPeriods();
 
         foreach (getVal($this->indicators, [$index, 'period'], []) as $i => $value) {
+
             $this->data['indicator'][$index]['period'][$i] = getVal($this->template, ['indicator', 0, 'period', 0]);
             $this->setIndicatorPeriodStart($index, $i)
                  ->setIndicatorPeriodEnd($index, $i)
                  ->setIndicatorPeriodTarget($index, $i)
                  ->setIndicatorPeriodActual($index, $i);
         }
+
 
         return $this;
     }
@@ -600,13 +830,25 @@ class ResultRow extends Row
      * Grouping of Result Indicator Periods
      */
     protected function groupPeriods()
-    {
+    {   
         foreach ($this->indicators as $indicatorIndex => $values) {
             if (!array_diff_key(array_flip($this->periodFields), $this->indicators[$indicatorIndex])) {
                 $grouping                                    = app()->make(Grouping::class, [$this->indicators[$indicatorIndex], $this->periodFields])->groupValues();
                 $this->indicators[$indicatorIndex]['period'] = $grouping;
             }
         }
+
+    }
+
+    protected function groupBaseline()
+    {
+        foreach($this->indicators as $indicatorIndex => $values) {
+            if(!array_diff_key(array_flip($this->baselineFields), $this->indicators[$indicatorIndex])) {
+                $grouping                                      = app()->make(Grouping::class, [$this->indicators[$indicatorIndex], $this->baselineFields])->groupValues();
+                $this->indicators[$indicatorIndex]['baseline'] = $grouping;
+            }
+        }
+        // dd($this->indicators);
     }
 
     /**
@@ -960,11 +1202,14 @@ class ResultRow extends Row
     public function rules()
     {
         $rules = [];
-
+        
         foreach ($this->data['indicator'] as $indicatorIndex => $indicators) {
             $rules['indicator.' . $indicatorIndex . '.title']       = 'unique_lang|unique_default_lang';
             $rules['indicator.' . $indicatorIndex . '.description'] = 'unique_lang|unique_default_lang';
-            $rules['indicator.' . $indicatorIndex . '.baseline']    = 'size:1';
+
+            if($this->version !== 'V203') {
+               $rules['indicator.' . $indicatorIndex . '.baseline']    = 'size:1';
+            }
 
             foreach (getVal($indicators, ['reference'], []) as $referenceIndex => $reference) {
                 $rules['indicator.' . $indicatorIndex . '.reference.' . $referenceIndex . '.vocabulary'] = sprintf(

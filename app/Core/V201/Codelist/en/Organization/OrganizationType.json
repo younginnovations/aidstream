@@ -6,53 +6,72 @@
   "OrganizationType": [
     {
       "code": "10",
-      "name": "Government",
-      "language": "en"
+      "name": "Government"
+    },
+    {
+      "code": "11",
+      "name": "Local Government",
+      "description": "Any local (sub national) government organisation in either donor or recipient country."
     },
     {
       "code": "15",
-      "name": "Other Public Sector",
-      "language": "en"
+      "name": "Other Public Sector"
     },
     {
       "code": "21",
-      "name": "International NGO",
-      "language": "en"
+      "name": "International NGO"
     },
     {
       "code": "22",
-      "name": "National NGO",
-      "language": "en"
+      "name": "National NGO"
     },
     {
       "code": "23",
-      "name": "Regional NGO",
-      "language": "en"
+      "name": "Regional NGO"
+    },
+    {
+      "code": "24",
+      "name": "Partner Country based NGO",
+      "description": "Partner country based NGO- NGOs not based in an aid recipient country and carrying out operations in one or more aid recipient countries."
     },
     {
       "code": "30",
-      "name": "Public Private Partnership",
-      "language": "en"
+      "name": "Public Private Partnership"
     },
     {
       "code": "40",
-      "name": "Multilateral",
-      "language": "en"
+      "name": "Multilateral"
     },
     {
       "code": "60",
-      "name": "Foundation",
-      "language": "en"
+      "name": "Foundation"
     },
     {
       "code": "70",
-      "name": "Private Sector",
-      "language": "en"
+      "name": "Private Sector"
+    },
+    {
+      "code": "71",
+      "name": "Private Sector in Provider Country",
+      "description": "Is in provider / donor country."
+    },
+    {
+      "code": "72",
+      "name": "Private Sector in Aid Recipient Country",
+      "description": "Is in aid recipient country."
+    },
+    {
+      "code": "73",
+      "name": "Private Sector in Third Country",
+      "description": "Is not in either a donor or aid recipient country."
     },
     {
       "code": "80",
-      "name": "Academic, Training and Research",
-      "language": "en"
+      "name": "Academic, Training and Research"
+    },
+    {
+      "code": "90",
+      "name": "Other"
     }
   ]
 }

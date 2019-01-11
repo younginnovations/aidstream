@@ -191,15 +191,13 @@ class Upgrade
             foreach ($transactions as $eachTransaction) {
                 $transactionField = $eachTransaction->transaction;
                 $sectors          = $transactionField['sector'];
-
-                foreach ($sectors as $sectorIndex => $sector) {
-                    $transactionField['sector'][$sectorIndex]['vocabulary_uri'] = "";
-                }
+                $transactionField['sector'][$sectorIndex]['vocabulary_uri'] = "";                
 
                 $regions = $transactionField['recipient_region'];
                 foreach ($regions as $regionIndex => $region) {
                     $transactionField['recipient_region'][$regionIndex]['vocabulary_uri'] = "";
                 }
+
                 $eachTransaction->transaction = $transactionField;
                 $eachTransaction->save();
             }

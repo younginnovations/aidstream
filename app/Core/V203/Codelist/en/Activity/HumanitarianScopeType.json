@@ -1,0 +1,18 @@
+{
+  "date-last-modified": "2017-07-03T16:35:12.744902+00:00",
+  "version": "",
+  "name": "HumanitarianScopeType",
+  "xml:lang": "en",
+  "HumanitarianScopeType": [
+    {
+      "code": "1",
+      "name": "Emergency",
+      "language": "en"
+    },
+    {
+      "code": "2",
+      "name": "Appeal",
+      "language": "en"
+    }
+  ]
+}

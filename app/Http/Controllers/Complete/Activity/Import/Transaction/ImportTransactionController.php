@@ -81,6 +81,7 @@ class ImportTransactionController extends Controller
 
         if ($this->transactionManager->storeCsvTemporarily($file)) {
             $filename = str_replace(' ', '', $file->getClientOriginalName());
+
             $this->transactionManager->startImport($filename)
                                      ->fireCsvUploadEvent($filename, $id);
 

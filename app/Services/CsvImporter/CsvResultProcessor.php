@@ -35,6 +35,11 @@ class CsvResultProcessor
     const CSV_HEADERS_COUNT = 33;
 
     /**
+     * Total no. of header present in basic csv version 203
+     */
+    const CSV_HEADERS_COUNT_V203 = 40;
+
+    /**
      * CsvProcessor constructor.
      * @param $csv
      */
@@ -48,13 +53,14 @@ class CsvResultProcessor
      * @param $organizationId
      * @param $userId
      */
-    public function handle($organizationId, $userId)
+    public function handle($organizationId, $userId, $version)
     {
-        if ($this->isCorrectCsv()) {
+        if ($this->isCorrectCsv($version)) {
             $this->groupValues();
 
             $this->initResult(['organization_id' => $organizationId, 'user_id' => $userId]);
-            $this->result->process();
+
+            $this->result->process($version);
         } else {
             $filepath = storage_path('csvImporter/tmp/result/' . $organizationId . '/' . $userId);
             $filename = 'header_mismatch.json';
@@ -158,13 +164,13 @@ class CsvResultProcessor
      * Check if the headers are correct according to the provided template.
      * @return bool
      */
-    protected function isCorrectCsv()
+    protected function isCorrectCsv($version)
     {
         if (!$this->csv) {
             return false;
         }
 
-        return $this->hasCorrectHeaders();
+        return $this->hasCorrectHeaders($version);
     }
 
     //ChecksCsvHeaders
@@ -204,7 +210,7 @@ class CsvResultProcessor
      * @param string $version
      * @return bool
      */
-    protected function checkHeadersFor($csvHeaders, $templateFileName, $version = 'V201')
+    protected function checkHeadersFor($csvHeaders, $templateFileName, $version)
     {
         $templateHeaders = $this->loadTemplate($version, $templateFileName);
         $templateHeaders = array_keys($templateHeaders[0]);
@@ -230,12 +236,17 @@ class CsvResultProcessor
      *
      * @return bool
      */
-    protected function hasCorrectHeaders()
+    protected function hasCorrectHeaders($version)
     {
         $csvHeaders = array_keys($this->csv[0]);
 
-        if ($this->headerCountMatches($csvHeaders, self::CSV_HEADERS_COUNT)) {
-            return $this->checkHeadersFor($csvHeaders, 'result', 'V201');
+        $headerCount = self::CSV_HEADERS_COUNT;
+        if($version == 'V203') {
+            $headerCount = self::CSV_HEADERS_COUNT_V203;
+        }
+
+        if ($this->headerCountMatches($csvHeaders, $headerCount)) {
+            return $this->checkHeadersFor($csvHeaders, 'result', $version);
         }
 
         return false;

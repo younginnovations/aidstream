@@ -458,7 +458,7 @@ function slash(value) {
                 return this.optional(element) || /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+\@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])\.[.a-zA-Z0-9](?:[.a-zA-Z0-9-]{0,61}[a-zA-Z0-9])*$/.test($.trim(value));
             });
             $.validator.addMethod("regNumber", function (value, element) {
-                return this.optional(element) || /^[0-9a-zA-Z-_]+$/.test($.trim(value));
+                return this.optional(element) || /^[0-9a-zA-Z-_.]+$/.test($.trim(value));
             });
             $.validator.addMethod("uniqueAbbr", function (value, element) {
                 var validated = false;

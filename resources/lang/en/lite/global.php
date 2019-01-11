@@ -21,6 +21,7 @@ return [
     'add_an_activity'                 => 'Add an activity',
     'not_added'                       => 'You haven’t added any :type yet.',
     'add_an_activity_in_simple_steps' => 'Add an activity in these simple 4 steps',
+    'edit_this_activity'                => 'Edit this activity in these simple 4 steps',
     'basics'                          => 'Basics',
     'location'                        => 'Location',
     'involved_organisations'          => 'Involved Organisations',

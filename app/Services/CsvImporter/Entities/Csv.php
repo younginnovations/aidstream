@@ -41,9 +41,9 @@ abstract class Csv
      * @param $activityIdentifiers
      * @return ActivityRow
      */
-    protected function initialize($row, $activityIdentifiers)
+    protected function initialize($row, $activityIdentifiers, $version)
     {
-        return app()->make(ActivityRow::class, [$row, $this->organizationId, $this->userId, $activityIdentifiers]);
+        return app()->make(ActivityRow::class, [$row, $this->organizationId, $this->userId, $activityIdentifiers, $version]);
     }
 
     /**

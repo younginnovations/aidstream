@@ -1,0 +1,29 @@
+{
+    "date-last-modified": "2018-06-21T16:35:13.050941+00:00",
+    "version": "",
+    "name": "EarmarkingCategory",
+    "xml:lang": "en",
+    "EarmarkingCategory": [
+    {
+        "code": "1",
+        "name": "Unearmarked",
+        "description": "Any or all of the Earmarking Modality codes A,B or C."
+        },
+        {
+        "code": "2",
+        "name": "Softly Earmarked",
+        "description": "Any or all of the Earmarking Modality codes D,E or F."
+        },
+        {
+        "code": "3",
+        "name": "Earmarked",
+        "description": "Any or all of the Earmarking Modality codes G or H."
+        },
+        {
+        "code": "4",
+        "name": "Tightly Earmarked",
+        "description": "Any or all of the Earmarking Modality codes I,J or K."
+        }
+    ]
+  }
+  

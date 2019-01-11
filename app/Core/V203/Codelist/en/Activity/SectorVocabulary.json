@@ -1,0 +1,80 @@
+{
+  "date-last-modified": "2017-07-03T16:35:13.050941+00:00",
+  "version": "",
+  "name": "SectorVocabulary",
+  "xml:lang": "en",
+  "SectorVocabulary": [
+    {
+      "code": "1",
+      "name": "OECD DAC CRS Purpose Codes (5 digit)",
+      "language": "en",
+      "description": "The sector reported corresponds to an OECD DAC CRS 5-digit purpose code"
+    },
+    {
+      "code": "2",
+      "name": "OECD DAC CRS Purpose Codes (3 digit)",
+      "language": "en",
+      "description": "The sector reported corresponds to an OECD DAC CRS 3-digit purpose code"
+    },
+    {
+      "code": "3",
+      "name": "Classification of the Functions of Government (UN)",
+      "language": "en",
+      "description": "The sector reported corresponds to the UN Classification of the Functions of Government (CoFoG)"
+    },
+    {
+      "code": "4",
+      "name": "Statistical classification of economic activities in the European Community",
+      "language": "en",
+      "description": "The sector reported corresponds to the statistical classifications of economic activities in the European Community"
+    },
+    {
+      "code": "5",
+      "name": "National Taxonomy for Exempt Entities (USA)",
+      "language": "en",
+      "description": "The sector reported corresponds to the National Taxonomy for Exempt Entities (NTEE) - USA"
+    },
+    {
+      "code": "6",
+      "name": "AidData",
+      "language": "en",
+      "description": "The sector reported corresponds to AidData classifications"
+    },
+    {
+      "code": "7",
+      "name": "SDG Goal",
+      "language": "en",
+      "description": "A value from the top-level list of UN sustainable development goals (SDGs) (e.g. \u20181\u2019)"
+    },
+    {
+      "code": "8",
+      "name": "SDG Target",
+      "language": "en",
+      "description": "A value from the second-level list of UN sustainable development goals (SDGs) (e.g. \u20181.1\u2019)"
+    },
+    {
+      "code": "9",
+      "name": "SDG Indicator",
+      "language": "en",
+      "description": "A value from the second-level list of UN sustainable development (SDG) indicators"
+    },
+    {
+      "code": "10",
+      "name": "Humanitarian Global Clusters (Inter-Agency Standing Committee)",
+      "language": "en",
+      "description": "The sector reported corresponds to an Inter-Agency Standard Committee Humanitarian Global Cluster code"
+    },
+    {
+      "code": "99",
+      "name": "Reporting Organisation",
+      "language": "en",
+      "description": "The sector reported corresponds to a sector vocabulary maintained by the reporting organisation for this activity"
+    },
+    {
+      "code": "98",
+      "name": "Reporting Organisation 2",
+      "language": "en",
+      "description": "The sector reported corresponds to a sector vocabulary maintained by the reporting organisation for this activity (if they are referencing more than one)"
+    }
+  ]
+}

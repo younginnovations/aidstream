@@ -45,6 +45,16 @@ class TransactionCsvProcessor
     const V202_DETAILED_TRANSACTION_HEADERS_COUNT = 25;
 
     /**
+     * Header count of V203 simple transaction
+     */
+    const V203_SIMPLE_TRANSACTION_HEADERS_COUNT = 20;
+
+    /**
+     * Header count of V203 detailed transaction
+     */
+    const V203_DETAILED_TRANSACTION_HEADERS_COUNT = 25;
+
+    /**
      * TransactionCsvProcessor constructor.
      * @param array $csv
      */
@@ -103,7 +113,6 @@ class TransactionCsvProcessor
      */
     protected function isCorrectCsv()
     {
-
         return $this->hasCorrectTransactionHeaders();
     }
 
@@ -130,6 +139,14 @@ class TransactionCsvProcessor
 
         if ($this->headerCountMatches($csvHeaders, self::V202_DETAILED_TRANSACTION_HEADERS_COUNT)) {
             return $this->checkHeadersFor($csvHeaders, 'detailed_transaction_headers', 'V202');
+        }
+
+        if($this->headerCountMatches($csvHeaders, self::V203_SIMPLE_TRANSACTION_HEADERS_COUNT)) {
+            return $this->checkHeadersFor($csvHeaders, 'simple_transaction_headers', 'V203');
+        }
+
+        if($this->headerCountMatches($csvHeaders, self::V203_DETAILED_TRANSACTION_HEADERS_COUNT)) {
+            return $this->checkHeadersFor($csvHeaders, 'detailed_transaction_headers', 'V203');
         }
 
         return false;

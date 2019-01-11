@@ -4,6 +4,7 @@ use App\Services\CsvImporter\Entities\Activity\Components\ActivityRow;
 use App\Services\CsvImporter\Entities\Activity\Components\Elements\Foundation\Iati\Element;
 use App\Services\CsvImporter\Entities\Activity\Components\Elements\Transaction\PreparesTransactionData;
 use App\Services\CsvImporter\Entities\Activity\Components\Factory\Validation;
+use Illuminate\Support\Facades\Log;
 
 /**
  * Class Transaction
@@ -82,6 +83,8 @@ class Transaction extends Element
      */
     protected $activityRow;
 
+    private $version;
+
     /**
      * Transaction constructor.
      * @param            $transactionRow
@@ -93,6 +96,7 @@ class Transaction extends Element
         $this->prepare($transactionRow);
         $this->factory     = $factory;
         $this->activityRow = $activityRow;
+        // $this->version     = $version;
     }
 
     /**
@@ -163,7 +167,7 @@ class Transaction extends Element
 
         $rules = [
             'transaction'                                          => 'check_recipient_region_country',
-            'transaction.transaction_type.*.transaction_type_code' => sprintf('required|in:%s', $this->validCodeOrName('TransactionType', 'V201')),
+            'transaction.transaction_type.*.transaction_type_code' => sprintf('required|in:%s', $this->validCodeOrName('TransactionType', $this->activityRow->version)),
             'transaction.transaction_date.*.date'                  => 'required|date_format:Y-m-d',
             'transaction.value.*.amount'                           => 'required|numeric',
             'transaction.value.*.date'                             => 'required|date_format:Y-m-d',

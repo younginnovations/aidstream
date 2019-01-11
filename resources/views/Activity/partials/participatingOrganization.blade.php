@@ -43,6 +43,14 @@
                                     </div>
                                 @endif
                             @endif
+                            @if(session('version') == 'V203')
+                                @if(array_key_exists('crs_channel_code', $organization))
+                                <div class="element-info">
+                                    <div class="activity-element-label">@lang('elementForm.crs_channel_code')</div>
+                                    <div class="activity-element-info">{!! checkIfEmpty($organization['crs_channel_code']) !!}</div>
+                                </div>
+                                @endif
+                            @endif
                         </div>
                     @endforeach
                 </div>

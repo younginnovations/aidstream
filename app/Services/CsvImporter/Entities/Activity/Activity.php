@@ -1,6 +1,7 @@
 <?php namespace App\Services\CsvImporter\Entities\Activity;
 
 use App\Services\CsvImporter\Entities\Csv;
+use Illuminate\Support\Facades\Log;
 
 /**
  * Class Activity
@@ -13,6 +14,8 @@ class Activity extends Csv
      */
     protected $activityIdentifiers;
 
+    private $version;
+
     /**
      * Activity constructor.
      * @param $rows
@@ -20,13 +23,14 @@ class Activity extends Csv
      * @param $userId
      * @param $activityIdentifiers
      */
-    public function __construct($rows, $organizationId, $userId, $activityIdentifiers)
+    public function __construct($rows, $organizationId, $userId, $activityIdentifiers, $version)
     {
         $this->csvRows             = $rows;
         $this->organizationId      = $organizationId;
         $this->userId              = $userId;
         $this->rows                = $rows;
         $this->activityIdentifiers = $activityIdentifiers;
+        $this->version             = $version;
     }
 
     /**
@@ -37,7 +41,7 @@ class Activity extends Csv
     public function process()
     {
         foreach ($this->rows() as $row) {
-            $this->initialize($row, $this->activityIdentifiers)
+            $this->initialize($row, $this->activityIdentifiers, $this->version)
                  ->process()
                  ->validate()
                  ->validateUnique($this->csvRows)

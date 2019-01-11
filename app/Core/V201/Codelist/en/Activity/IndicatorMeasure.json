@@ -15,6 +15,24 @@
       "name": "Percentage",
       "language": "en",
       "description": "The indicator is measured in percentages"
+    },
+    {
+      "code": "3", 
+      "name": "Nominal", 
+      "language": "en",
+      "description": "The indicator is measured as a quantitative nominal scale."
+    }, 
+    {
+      "code": "4", 
+      "name": "Ordinal", 
+      "language": "en",
+      "description": "The indicator is measured as a quantitative ordinal scale."
+    }, 
+    {
+      "code": "5", 
+      "name": "Qualitative", 
+      "language": "en",
+      "description": "The indicator is qualitative."
     }
   ]
 }

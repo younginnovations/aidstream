@@ -54,6 +54,7 @@ return [
     'edit_result'                       => 'Edit Result',
     'activity_results'                  => 'Activity Results',
     'create_activity'                   => 'Create Activity',
+    'create_result'                     => 'Create Result',
     'activities'                        => 'Activities',
     'upload_activities'                 => 'Upload Activities',
     'list_of_activities'                => 'List of Activities',
@@ -96,6 +97,7 @@ return [
     'activity_viewer'                   => 'Activity Viewer',
     'import_transactions'               => 'Import Transactions',
     'page_not_found'                    => 'Page Not Found',
-    'tz_aidstream'                      => 'AidStream Tanzania'
+    'tz_aidstream'                      => 'AidStream Tanzania',
+    'tag'                               => 'Activity Tag'
 ];
 

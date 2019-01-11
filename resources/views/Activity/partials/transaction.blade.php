@@ -108,7 +108,27 @@
                             </div>
                             <div class="element-info">
                                 <div class="activity-element-label">@lang('elementForm.aid_type')</div>
+                                @if(session('version') == 'V203')
+                                    <div class="activity-element-info">
+                                    @if(is_array(getVal($transaction, ['aid_type', 0, 'aid_type'])))
+                                        @foreach(getVal($transaction, ['aid_type', 0, 'aid_type']) as $data)
+                                        @if($data['default_aidtype_vocabulary'] == '1')
+                                        <li>{{ substr($getCode->getActivityCodeName('AidType', getVal($data, ['default_aid_type'], [])) , 0 , -5)}}</li>
+                                        @elseif($data['default_aidtype_vocabulary'] == '2')
+                                        <li>{{ substr($getCode->getActivityCodeName('EarmarkingCategory', getVal($data, ['earmarking_category'], [])) , 0 , -5)}}</li>
+                                        @elseif($data['default_aidtype_vocabulary'] == '3')
+                                        <li>{{ $data['default_aid_type_text']}}</li>
+                                        @else 
+                                        <em>Not Available</em>
+                                        @endif
+                                        @endforeach
+                                    @else 
+                                    {!! getCodeNameWithCodeValue('AidType' , getVal($transaction,['aid_type',0,'aid_type'] ), -5) !!}
+                                    @endif
+                                    </div>
+                                @else 
                                 <div class="activity-element-info">{!! getCodeNameWithCodeValue('AidType' , getVal($transaction,['aid_type',0,'aid_type'] ), -5) !!}</div>
+                                @endif
                             </div>
                             <div class="element-info">
                                 <div class="activity-element-label">@lang('elementForm.tied_status_code')</div>

@@ -109,8 +109,8 @@
                             <li class="pull-left width-491">
                                 <div class="navbar-left version-wrap width-490">
                                     @if(!isSuperAdminRoute())
-                                        <div class="version pull-right {{ (session('version') == 'V201') ? 'old' : 'new' }}">
-                                            @if ((session('version') == 'V201'))
+                                    <div class="version pull-right {{ (in_array(session('version'),['V201','V202']) && session('allowed_upgrade') == true) ? 'old' : 'new' }}">
+                                        @if (session('next_version') && session('allowed_upgrade') == true)
                                                 <a class="version-text" href="{{route('upgrade-version.index')}}">Update
                                                     available</a>
                                                 <span class="old-version">
@@ -135,8 +135,8 @@
         <div class="downloads pull-right" data-step="6"><a href="{{route('lite.csv.download')}}">@lang('lite/global.download_as_csv')</a></div>
         <div class="navbar-right version-wrap">
             @if($loggedInUser && !isSuperAdminRoute())
-                <div class="version pull-right {{ (session('version') == 'V201') ? 'old' : 'new' }}">
-                    @if (session('next_version'))
+            <div class="version pull-right {{ (in_array(session('version'),['V201','V202']) && session('allowed_upgrade') == true) ? 'old' : 'new' }}">
+                @if (in_array(session('version'),['V201','V202']) && session('allowed_upgrade') == true)
                         <a class="version-text" href="{{route('upgrade-version.index')}}">Update available</a>
                         <span class="old-version">
                             <a href="{{route('upgrade-version.index')}}">Upgrade to IATI

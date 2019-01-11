@@ -142,7 +142,9 @@ $router->get(
         'uses'       => 'Complete\AdminController@viewData'
     ]
 );
-
+$router->get('upgrade-version/complete', function () {
+    return view('Upgrade/complete');
+});
 $router->resource('upgrade-version', 'Complete\UpgradeController');
 $router->get(
     'documents',

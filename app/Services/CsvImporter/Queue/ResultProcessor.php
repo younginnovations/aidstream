@@ -42,12 +42,14 @@ class ResultProcessor
      * @param $file
      * @param $filename
      */
-    public function pushIntoQueue($file, $filename)
+    public function pushIntoQueue($file, $filename, $version)
     {
         $csv = $this->csvReader->load($file)->toArray();
-
         $this->dispatch(
-            new ImportResult(new CsvResultProcessor($csv), $filename)
+            new ImportResult(new CsvResultProcessor($csv), $filename, $version)   
         );
+            // dd($csv);
+        // $importResult = new ImportResult(new CsvResultProcessor($csv), $filename, $version);
+        // $importResult->handle();
     }
 }

@@ -8,6 +8,7 @@ use App\Services\Activity\ParticipatingOrganizationManager;
 use App\Services\FormCreator\Activity\ParticipatingOrganization as ParticipatingOrganizationForm;
 use App\Services\RequestManager\Activity\ParticipatingOrganization as ParticipatingOrganizationRequestManager;
 use Illuminate\Support\Facades\Gate;
+use App\Core\Form\BaseForm;
 
 /**
  * Class ParticipatingOrganizationController
@@ -30,6 +31,8 @@ class ParticipatingOrganizationController extends Controller
      */
     protected $participatingOrganizationManager;
 
+    protected $baseForm;
+
     /**
      * @param ParticipatingOrganizationManager $participatingOrganizationManager
      * @param ParticipatingOrganizationForm    $participatingOrganizationForm
@@ -38,12 +41,14 @@ class ParticipatingOrganizationController extends Controller
     function __construct(
         ParticipatingOrganizationManager $participatingOrganizationManager,
         ParticipatingOrganizationForm $participatingOrganizationForm,
-        ActivityManager $activityManager
+        ActivityManager $activityManager,
+        BaseForm $baseForm
     ) {
         $this->middleware('auth');
         $this->activityManager                  = $activityManager;
         $this->participatingOrganizationForm    = $participatingOrganizationForm;
         $this->participatingOrganizationManager = $participatingOrganizationManager;
+        $this->baseForm = $baseForm;
     }
 
     /**
@@ -58,7 +63,13 @@ class ParticipatingOrganizationController extends Controller
         if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
-
+        
+        if(Session('version') == 'V203'){
+            $getCrsChannelCode = $this->baseForm->getCodeList('CRSChannelCode', 'Activity');
+        } else {
+            $getCrsChannelCode = [];
+        }
+        
 //        $participatingOrganization  = $this->participatingOrganizationManager->getParticipatingOrganizationData($id);
 //        $form                       = $this->participatingOrganizationForm->editForm($participatingOrganization, $id);
         $organizationTypes     = $this->getNameWithCode('Activity', 'OrganisationType');
@@ -89,7 +100,7 @@ class ParticipatingOrganizationController extends Controller
 
         return view(
             'Activity.participatingOrganization.edit',
-            compact('form', 'activityData', 'id', 'participatingOrganizations', 'organizationRoles', 'organizationTypes', 'countries', 'partnerOrganizations')
+            compact('form', 'activityData', 'id', 'participatingOrganizations', 'organizationRoles', 'organizationTypes', 'countries', 'partnerOrganizations','getCrsChannelCode')
         );
     }
 

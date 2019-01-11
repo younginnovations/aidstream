@@ -331,14 +331,15 @@ class OrganizationController extends Controller
         $url                = route('organization-information.update');
         $settings           = $this->settingsManager->getSettings(session('org_id'));
         $users              = $this->userManager->getAllUsersOfOrganization();
-
+        // dd($settings);
         $formOptions = [
             'method' => 'PUT',
             'url'    => $url,
             'model'  => ['narrative' => $organization->reporting_org[0]['narrative']]
         ];
         $form        = $this->organizationManager->viewOrganizationInformation($formOptions);
-
+        // dd($form);
+        // dd($organization);
         return view('settings.organizationInformation', compact('form', 'organizationTypes', 'countries', 'organization', 'registrationAgency', 'settings', 'users'));
     }
 

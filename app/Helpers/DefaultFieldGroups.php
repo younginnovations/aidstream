@@ -98,6 +98,10 @@ class DefaultFieldGroups
             if (session('version') === "V202") {
                 $filledStatus["Classifications"]["humanitarian_scope"] = $activityData['humanitarian_scope'];
             }
+            if(session('version') === "V203"){
+                $filledStatus["Classifications"]["humanitarian_scope"] = $activityData['humanitarian_scope'];
+                $filledStatus["Classifications"]["tag"] = $activityData["tag"];
+            }
         }
 
         return $filledStatus;

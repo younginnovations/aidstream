@@ -44,6 +44,15 @@ class BudgetController extends Controller
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
 
+        if(session('version') == 'V203'){
+            $budget_not_provided = @$activityData["default_field_values"][0]["budget_not_provided"];
+            if($budget_not_provided !== null && $budget_not_provided !== ""){
+                $response = ['type' => 'danger', 'code' => ['budget_not_provided', ['link' => route('change-activity-default',$id)]]];
+
+                return redirect()->to(sprintf('/activity/%s', $id))->withResponse($response);
+            }
+        }
+
         $budget = $this->budgetManager->getbudgetData($id);
         $form   = $this->budgetForm->editForm($budget, $id);
 

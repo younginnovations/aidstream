@@ -10,7 +10,11 @@
                 @include('includes.response')
                 <div class="element-panel-heading">
                     <div>
+                    @if(isset($resultId))
                         <span>@lang('title.edit_result')</span>
+                    @else
+                        <span>@lang('title.create_result')</span>
+                    @endif
                         <div class="element-panel-heading-info"><span>{{$activityData->IdentifierTitle}}</span></div>
                         <div class="panel-action-btn btn-action-wrap">
                             <a href="{{route('activity.result.show',[$id, $resultId])}}" class="btn btn-primary btn-view-it">@lang('global.view_result')</a>

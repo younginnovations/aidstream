@@ -1,0 +1,26 @@
+{
+  "date-last-modified": "2017-07-03T16:35:13.062892+00:00",
+  "version": "",
+  "name": "RegionVocabulary",
+  "xml:lang": "en",
+  "RegionVocabulary": [
+    {
+      "code": "1",
+      "name": "OECD DAC",
+      "language": "en",
+      "description": "Supra-national regions according to OECD DAC CRS recipient codes"
+    },
+    {
+      "code": "2",
+      "name": "UN",
+      "language": "en",
+      "description": "Supra-national regions maintained by UN Statistics Division"
+    },
+    {
+      "code": "99",
+      "name": "Reporting Organisation",
+      "language": "en",
+      "description": "The region reported corresponds to a region vocabulary maintained by the reporting organisation for this activity."
+    }
+  ]
+}

@@ -14,6 +14,7 @@
         @include('Activity.partials.recipientRegion')
         @include('Activity.partials.location')
         @include('Activity.partials.sector')
+        @include('Activity.partials.tag')
         @include('Activity.partials.policyMarker')
         @include('Activity.partials.collaborationType')
         @include('Activity.partials.defaultFlowType')

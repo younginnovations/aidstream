@@ -905,6 +905,27 @@
       "code": "PK-SEC",
       "name": "Securities and Exchange Commission of Pakistan",
       "language": "en"
+    },
+    {
+      "category": "IQ",
+      "category-name": "",
+      "code": "IQ-NGO",
+      "name": "NGO Directorate (Republic of Iraq)",
+      "language": "en"
+    },
+    {
+      "category": "NE",
+      "category-name": "",
+      "code": "NE-DGI",
+      "name": "Tax Directorate (Niger)",
+      "language": "en"
+    },
+    {
+      "category": "SE",
+      "category-name": "SWEDEN",
+      "code": "SE-ON",
+      "name": "Business Registration Number (Organisationsnummer), Sweden",
+      "language": "en"
     }
   ]
 }

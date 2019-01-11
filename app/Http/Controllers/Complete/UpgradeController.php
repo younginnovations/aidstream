@@ -5,6 +5,7 @@ use App\Services\UpgradeManager;
 use Illuminate\Database\DatabaseManager;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 
 /**
  * Class UpgradeController
@@ -61,7 +62,8 @@ class UpgradeController extends Controller
      */
     public function index()
     {
-        if (!$this->version) {
+        if (!$this->version || !session('allowed_upgrade')) {
+
             return redirect()->back();
         }
 
@@ -95,9 +97,11 @@ class UpgradeController extends Controller
 
         } else {
             $response = ['type' => 'danger', 'code' => ['upgrade_failed']];
+
+            return redirect('/settings')->withResponse($response);
         }
 
-        return redirect('/settings')->withResponse($response);
+        return redirect('/upgrade-version/complete')->withResponse($response);
     }
 
     /**

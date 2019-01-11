@@ -16,4 +16,9 @@ class IatiSettings extends V201
     {
         return 'App\Core\V202\Forms\Settings\DefaultValues';
     }
+
+    public function getUpgradeRepository()
+    {
+        return app('App\Core\V202\Repositories\Upgrade');
+    }
 }

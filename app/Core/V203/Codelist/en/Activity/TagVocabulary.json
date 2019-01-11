@@ -1,0 +1,21 @@
+{
+    "date-last-modified": "2018-06-21T16:35:13.050941+00:00",
+    "version": "",
+    "name": "TagVocabulary",
+    "xml:lang": "en",
+    "TagVocabulary": [
+      {
+        "code": "1",
+        "name": "Agrovoc",
+        "language": "en",
+        "description": "A controlled vocabulary covering all areas of interest of the Food and Agriculture Organization (FAO) of the United Nations, including food, nutrition, agriculture, fisheries, forestry, environment etc."
+      },
+      {
+        "code": "99",
+        "name": "Reporting Organisation",
+        "language": "en",
+        "description": ""
+      }
+    ]
+  }
+  

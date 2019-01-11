@@ -1,0 +1,86 @@
+{
+  "date-last-modified": "2017-07-03T16:29:55.515804+00:00",
+  "version": "",
+  "name": "TransactionType",
+  "xml:lang": "en",
+  "TransactionType": [
+    {
+      "status": "active",
+      "code": "1",
+      "name": "Incoming Funds",
+      "description": "Funds recieved for use on the activity, which can be from an external or internal source."
+    },
+    {
+      "status": "active",
+      "code": "2",
+      "name": "Outgoing Commitment",
+      "description": "A firm, written obligation from a donor or provider to provide a specified amount of funds, under particular terms and conditions, for specific purposes, for the benefit of the recipient."
+    },
+    {
+      "status": "active",
+      "code": "3",
+      "name": "Disbursement",
+      "description": "Outgoing funds that are placed at the disposal of a recipient government or organisation, or funds transferred between two separately reported activities."
+    },
+    {
+      "status": "active",
+      "code": "4",
+      "name": "Expenditure",
+      "description": "Outgoing funds that are spent on goods and services for the activity."
+    },
+    {
+      "status": "active",
+      "code": "5",
+      "name": "Interest Payment",
+      "description": "The actual amount of interest paid on a loan or line of credit, including fees."
+    },
+    {
+      "status": "active",
+      "code": "6",
+      "name": "Loan Repayment",
+      "description": "The actual amount of principal (amortisation) repaid, including any arrears."
+    },
+    {
+      "status": "active",
+      "code": "7",
+      "name": "Reimbursement",
+      "description": "A type of disbursement that covers funds that have already been spent by the recipient, as agreed in the terms of the grant or loan"
+    },
+    {
+      "status": "active",
+      "code": "8",
+      "name": "Purchase of Equity",
+      "description": "Outgoing funds that are used to purchase equity in a business"
+    },
+    {
+      "status": "active",
+      "code": "9",
+      "name": "Sale of Equity",
+      "description": "Incoming funds from the sale of equity."
+    },
+    {
+      "status": "active",
+      "code": "10",
+      "name": "Credit Guarantee",
+      "description": "A commitment made by a funding organisation to underwrite a loan or line of credit entered into by a third party."
+    },
+    {
+      "status": "active",
+      "code": "11",
+      "name": "Incoming Commitment",
+      "description": "A firm, written obligation from a donor or provider to provide a specified amount of funds, under particular terms and conditions, reported by a recipient for this activity."
+    },
+    {
+      "status": "active",
+      "code": "12",
+      "name": "Outgoing Pledge",
+      "description": "Indicative, non-binding advice of an intended outgoing commitment."
+    },
+    {
+      "status": "active",
+      "code": "13",
+      "name": "Incoming Pledge",
+      "description": "Indicative, non-binding advice of an intended incoming commitment."
+    }
+  ]
+}

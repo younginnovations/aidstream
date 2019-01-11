@@ -494,6 +494,18 @@ function getSectorInformation(array $sector, $percentage)
 }
 
 /**
+ * Get Tag information when tag array is provided.
+ * @param array $tag
+ * @return string
+ */
+function getTagInformation(array $tag)
+{
+    $tagVocabulary = app('App\Helpers\GetCodeName')->getCodeNameOnly('TagVocabulary', $tag['tag_vocabulary']);
+
+    return $tag['tag_vocabulary'].' - '.$tagVocabulary;
+}
+
+/**
  * Returns the clickable link when the link is provided
  * @param $url
  * @return string

@@ -1,0 +1,34 @@
+<?php namespace App\Core\V203\Element\Activity;
+
+use App\Core\V201\Element\Activity\PolicyMarker as V201PolicyMarker;
+use App\Models\Activity\Activity;
+
+/**
+ * Class PolicyMarker
+ * @package App\Core\V202\Element\Activity
+ */
+class PolicyMarker extends V201PolicyMarker
+{
+    /**
+     * @param $activity
+     * @return array
+     */
+    public function getXmlData(Activity $activity)
+    {
+        $activityData  = [];
+        $policyMarkers = (array) $activity->policy_marker;
+        foreach ($policyMarkers as $policyMarker) {
+            $activityData[] = [
+                '@attributes' => [
+                    'vocabulary'     => $policyMarker['vocabulary'],
+                    'vocabulary-uri' => getVal($policyMarker, ['vocabulary_uri']),
+                    'code'           => getVal($policyMarker, ['policy_marker']),
+                    'significance'   => getVal($policyMarker, ['significance'])
+                ],
+                'narrative'   => $this->buildNarrative(getVal($policyMarker, ['narrative'], []))
+            ];
+        }
+
+        return $activityData;
+    }
+}

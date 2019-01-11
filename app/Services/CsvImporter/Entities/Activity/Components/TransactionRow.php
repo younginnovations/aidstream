@@ -59,7 +59,6 @@ class TransactionRow
         'disbursement_channel_code'                 => ['disbursement_channel' => ['disbursement_channel_code']],
         'flow_type_code'                            => ['flow_type' => ['flow_type']],
         'finance_type_code'                         => ['finance_type' => ['finance_type']],
-        'aid_type_code'                             => ['aid_type' => ['aid_type']],
         'tied_status_code'                          => ['tied_status' => ['tied_status_code']]
     ];
 
@@ -76,7 +75,7 @@ class TransactionRow
      * @var array
      */
     protected $allowedHumanitarianValues = ['yes' => '1', 'no' => '0', 'true' => '1', 'false' => '0'];
-    protected $allowedBothCasesField = ['country_code', 'currency', 'aid_type'];
+    protected $allowedBothCasesField = ['country_code', 'currency'];
     protected $allowedDoubleValue = ['amount'];
     protected $dateField = ['date'];
     /* Fields that can have multiple rows of value */
@@ -104,11 +103,18 @@ class TransactionRow
      */
     public function init()
     {
-        $this->transactionRow['transaction'] = $this->loadTemplate($this->version, 'transaction');
+        if($this->version == 'V203') {
+            array_push($this->allowedMultipleValues, "aid_type_code");
+            $this->headerToFieldMap['aid_type_code']  = 'aid_type';
+        } else {
+            $this->headerToFieldMap['aid_type_code']  = ['aid_type' => ['aid_type']];
+            array_push($this->allowedBothCasesField, "aid_type");
+        }
 
+        $this->transactionRow['transaction'] = $this->loadTemplate($this->version, 'transaction');
         foreach ($this->fields as $csvHeader => $value) {
-            if (array_key_exists($csvHeader, $this->headerToFieldMap) && $value !== "") {
-                $this->headerMapper($csvHeader, $value);
+            if (array_key_exists($csvHeader, $this->headerToFieldMap) && $value !== "") { 
+                    $this->headerMapper($csvHeader, $value);
             }
         }
 
@@ -152,7 +158,7 @@ class TransactionRow
             $this->transactionRow['transaction'][$this->headerToFieldMap[$csvHeader]][$index] = $template;
             foreach ($template as $key => $item) {
                 if (array_key_exists($key, $value)) {
-                    $this->transactionRow['transaction'][$this->headerToFieldMap[$csvHeader]][$index][$key] = (string) $this->filterValue($value[$key], $this->headerToFieldMap[$csvHeader]);
+                    $this->transactionRow['transaction'][$this->headerToFieldMap[$csvHeader]][$index][$key] = $this->filterValue($value[$key], $this->headerToFieldMap[$csvHeader]);
                 }
             }
         }
@@ -166,7 +172,7 @@ class TransactionRow
      * @param $value
      */
     public function map($arrayKey, $field, $value)
-    {
+    {   
         if (is_array($field)) {
             foreach ($field as $index => $item) {
                 if (is_array($item)) {
@@ -206,11 +212,11 @@ class TransactionRow
     protected function filterValue($value, $field)
     {
         if (in_array($field, $this->allowedDoubleValue)) {
-            return str_replace(',', '', $value);
+            return (string) str_replace(',', '', $value);
         }
 
         if (in_array($field, $this->dateField)) {
-            return dateFormat('Y-m-d', $value);
+            return (string) dateFormat('Y-m-d', $value);
         }
 
         if (gettype($value) == 'double') {
@@ -218,7 +224,7 @@ class TransactionRow
         }
 
         if (in_array($field, $this->allowedBothCasesField)) {
-            return strtoupper($value);
+            return (string) strtoupper($value);
         }
 
         return $value;
@@ -273,7 +279,6 @@ class TransactionRow
         $transactionType = getVal((array) $this->transactionRow, ['transaction', 'transaction_type', 0, 'transaction_type_code']);
 
         $validTransactionType = $this->loadCodeList('TransactionType', 'V201');
-
         foreach ($validTransactionType['TransactionType'] as $type) {
             if (ucwords($transactionType) == $type['name']) {
                 $this->transactionRow['transaction']['transaction_type'][0]['transaction_type_code'] = $type['code'];
@@ -374,21 +379,21 @@ class TransactionRow
             'transaction.receiver_organization.*.type'                     => sprintf('in:%s', $this->validCodeList('OrganisationType', 'V201')),
             'transaction.receiver_organization'                            => 'only_one_among',
             'transaction.sector'                                           => 'check_sector',
-            'transaction.sector.0.sector_vocabulary'                       => sprintf('required_if:%s,%s|in:%s', 'transaction.sector.0.activitySector', '', $sectorVocabulary),
-            'transaction.sector.0.sector_code'                             => sprintf('required_if:%s,%s|in:%s', 'transaction.sector.0.sector_vocabulary', '1', $sectorCode),
-            'transaction.sector.0.sector_category_code'                    => sprintf('required_if:%s,%s|in:%s', 'transaction.sector.0.sector_vocabulary', '2', $sectorCategoryCode),
-            'transaction.sector.0.sector_text'                             => sprintf(
-                'required_unless:%s,%s,%s,%s,%s,%s',
-                'transaction.sector.0.sector_vocabulary',
-                '1',
-                'transaction.sector.0.sector_vocabulary',
-                '2',
-                'activitySector',
-                ''
-            ),
+            // 'transaction.sector.*.sector_vocabulary'                       => sprintf('required_if:%s,%s|in:%s', 'transaction.sector.*.activitySector', '', $sectorVocabulary),
+            // 'transaction.sector.*.sector_code'                             => sprintf('required_if:%s,%s|in:%s', 'transaction.sector.*.sector_vocabulary', '1', $sectorCode),
+            // 'transaction.sector.*.sector_category_code'                    => sprintf('required_if:%s,%s|in:%s', 'transaction.sector.*.sector_vocabulary', '2', $sectorCategoryCode),
+            // 'transaction.sector.*.sector_text'                             => sprintf(
+            //     'required_unless:%s,%s,%s,%s,%s,%s',
+            //     'transaction.sector.*.sector_vocabulary',
+            //     '1',
+            //     'transaction.sector.*.sector_vocabulary',
+            //     '2',
+            //     'activitySector',
+            //     ''
+            // ),
             'transaction.recipient_country.0.country_code'                 => sprintf('in:%s', $countryCode),
             'transaction.recipient_region.0.region_code'                   => sprintf('in:%s', $regionCode),
-            'transaction.aid_type.*.aid_type'                              => sprintf('in:%s', $this->validCodeList('AidType', 'V201')),
+            'transaction.aid_type.*.aid_type'                              => sprintf('in:%s', $this->validCodeList('AidType', $this->version)),
             'transaction.finance_type.*.finance_type'                      => sprintf('in:%s', $this->validCodeList('FinanceType', 'V201')),
             'transaction.flow_type.*.flow_type'                            => sprintf('in:%s', $this->validCodeList('FlowType', 'V201')),
             'transaction.tied_status.*.tied_status_code'                   => sprintf('in:%s', $this->validCodeList('TiedStatus', 'V201')),

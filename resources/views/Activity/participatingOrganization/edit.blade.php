@@ -26,7 +26,9 @@
                                 <div class="loading-div"></div>
                                 <div v-cloak class="create-form" id="participatingContainer" data-organization="{{json_encode($participatingOrganizations)}}"
                                      data-partnerOrganization="{{json_encode($partnerOrganizations)}}" data-activityId="{{$id}}"
-                                     data-organizationRoles="{{json_encode($organizationRoles)}}">
+                                     data-organizationRoles="{{json_encode($organizationRoles)}}"
+                                     data-crsChannelCode="{{json_encode($getCrsChannelCode)}}"
+                                     >
                                     <div v-if="display_server_error_message" class="alert alert-danger">
                                         Please fix the following validation errors:
                                         <div v-if="server_error_message">
@@ -45,7 +47,8 @@
                                                        :organisation_roles="organisationRoles"
                                                        :partner_organisations="partnerOrganisations"
                                                        v-if="organisations"
-                                                       :key="index">
+                                                       :key="index"
+                                                       :crs_channel_code="getCrsChannelCode">
                                     </participating-org>
                                     <button class="addMore" type="button" @click="addOrganisations()">Add another organisation</button>
                                     <modal v-show="showModal" v-on:close="closeModal" :organisation="currentOrganisation"
@@ -207,6 +210,13 @@
                     {{Form::label('activity_id',trans('elementForm.activity_id'),['class' => 'control-label'])}}
                     {{Form::text('activity_id',null,['class' => 'form-control','v-model:value' => 'organisation.activity_id' ])}}
                 </div>
+                @if(Session('version') == 'V203')
+                <div class="form-group">
+                  {{Form::label('Crs Channel Code','Crs Channel Code',['class' => 'control-label'])}}
+                  <vue-select2 :bind_variable='organisation' name='crs_channel_code' attr_name='Crs Channel Code' options='{{json_encode($getCrsChannelCode)}}' :disable_options='disable_options[index]'></vue-select2>
+                  {{-- <div v-if="(organisation.country == '' && display_error)" class="text-danger">Country is required.</div> --}}
+                </div>
+                @endif
                 <button class="remove_organisation" type="button" @click="remove()" v-bind:index="index">Remove Organisation</button>
             </div>
         </div>
@@ -344,7 +354,7 @@
           this.disable_options[this.index] = (this.organisation.is_publisher) ? true : false;
           this.matchingPartnerOrg.push(this.partner_organisations);
         },
-        props: ['partner_organisations', 'organisation', 'index', 'display_error', 'organisation_roles'],
+        props: ['partner_organisations', 'organisation', 'index', 'display_error', 'organisation_roles','crs_channel_code'],
         methods: {
           displaySuggestion: function (event) {
             this.keywords.splice(this.index, 1);
@@ -683,7 +693,9 @@
           display_error: false,
           display_server_error_message: false,
           server_error_message: '',
-          organisationRoles: []
+          organisationRoles: [],
+          getCrsChannelCode:[],
+
         },
         mounted: function () {
           $("div.loading-div").hide();
@@ -708,6 +720,9 @@
 
           if (JSON.parse(this.$el.getAttribute('data-partnerOrganization'))) {
             this.partnerOrganisations = JSON.parse(this.$el.getAttribute('data-partnerOrganization'));
+          }
+          if (JSON.parse(this.$el.getAttribute('data-getCrsChannelCode'))) {
+            this.getCrsChannelCode = JSON.parse(this.$el.getAttribute('data-getCrsChannelCode'));
           }
         },
         methods: {

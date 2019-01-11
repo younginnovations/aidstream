@@ -193,6 +193,7 @@ class ActivityController extends Controller
         }
 
         $input  = $request->all();
+
         $result = $this->activityManager->store($input, $this->organization_id, $defaultFieldValues);
 
         if (!$result) {
@@ -214,7 +215,6 @@ class ActivityController extends Controller
     public function show($id)
     {
         $activityData = $this->activityManager->getActivityData($id);
-
         if ($activityData->activity_workflow == 3) {
             $filename                = $this->getPublishedActivityFilename($this->organization_id, $activityData);
             $activityPublishedStatus = $this->getPublishedActivityStatus($filename, $this->organization_id);
@@ -226,6 +226,7 @@ class ActivityController extends Controller
         }
 
         $activityDataList = $this->getActivityAsArray($activityData);
+
 
         if ($activityData->isImportedFromXml()) {
             $activityId = $activityData->id;
@@ -447,6 +448,7 @@ class ActivityController extends Controller
     public function updateActivityDefault($activityId, Request $request, ChangeActivityDefaultRequest $changeActivityDefaultRequest)
     {
         $activityData = $this->activityManager->getActivityData($activityId);
+        // dd($activityData['budget']);
 
         if (Gate::denies('ownership', $activityData)) {
             return redirect()->route('activity.index')->withResponse($this->getNoPrivilegesMessage());
@@ -457,6 +459,15 @@ class ActivityController extends Controller
         $SettingsDefaultFieldValues = $settings->default_field_values;
         $defaultFieldValues         = ($activityData->default_field_values[0]) ? $activityData->default_field_values[0] : $SettingsDefaultFieldValues[0];
         $defaultFieldValues         = [array_merge($defaultFieldValues, $request->except(['_method', '_token']))];
+
+        if(session('version') == 'V203'){
+            if(!empty($defaultFieldValues[0]['budget_not_provided']) && $activityData['budget'] !== NULL){
+                $response = ['type' => 'danger', 'code' => ['budget_not_provided_activity_default']];
+
+                return redirect()->to(sprintf('/change-activity-default/%s', $activityId))->withResponse($response);
+            }
+        }
+
         $result                     = $this->changeActivityDefaultManager->update($defaultFieldValues, $activityData);
         if (!$result) {
             $response = ['type' => 'danger', 'code' => ['save_failed', ['name' => 'Activity Defaults']]];
