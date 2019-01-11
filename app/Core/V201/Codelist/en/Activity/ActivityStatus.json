@@ -18,13 +18,13 @@
     },
     {
       "code": "3",
-      "name": "Completion",
+      "name": "Finalisation",
       "language": "en",
       "description": "Physical activity is complete or the final disbursement has been made."
     },
     {
       "code": "4",
-      "name": "Post-completion",
+      "name": "Closed",
       "language": "en",
       "description": "Physical activity is complete or the final disbursement has been made, but the activity remains open pending financial sign off or M&E"
     },
