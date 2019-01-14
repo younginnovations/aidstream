@@ -250,7 +250,6 @@ function slash(value) {
                 '#email',
                 '#password',
                 '#confirm_password',
-                '#secondary_contact',
                 '[name$="[username]"]',
                 '[name$="[email]"]',
                 '[name$="[first_name]"]',
@@ -510,7 +509,8 @@ function slash(value) {
             $(slash('#users[email]'), form).rules('add', {required: true, email: true, messages: {required: localisedData['email_required']}});
             $(slash('#users[password]'), form).rules('add', {required: true, minlength: 6, messages: {required: localisedData['password_required']}});
             $(slash('#users[confirm_password]'), form).rules('add', {required: true, equalTo: $(slash('#users[password]'), form), messages: {required: localisedData['confirm_password_required']}});
-            $(slash('#users[secondary_contact]'), form).rules('add', {required: true, email: true, messages: {required: localisedData['secondary_contact_required']}});
+            $(slash('#users[secondary_contact]'), form).rules('add', {email: true});
+
             $('.user-blocks .user-block').each(function () {
                 Registration.usersValidationRules($(this).index());
             });

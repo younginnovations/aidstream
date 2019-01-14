@@ -64,7 +64,7 @@ class RegisterUsers extends Request
         $rules['email']             = 'required|email|unique_email';
         $rules['password']          = 'required|min:6';
         $rules['confirm_password']  = 'required|min:6|same:password';
-        $rules['secondary_contact'] = 'required|email|unique_email';
+        $rules['secondary_contact'] = 'email|unique_email';
 
         $rules = array_merge($rules, $this->getRulesForUsers($this->get('user')));
 
@@ -89,7 +89,6 @@ class RegisterUsers extends Request
         $messages['confirm_password.required']      = trans('validation.required', ['attribute' => trans('user.confirm_password')]);
         $messages['confirm_password.min']           = trans('validation.min.string', ['attribute' => trans('user.confirm_password'), 'min' => 6]);
         $messages['confirm_password.same']          = trans('validation.match', ['attribute' => trans('user.password')]);
-        $messages['secondary_contact.required']     = trans('validation.required', ['attribute' => trans('user.secondary_contact')]);
         $messages['secondary_contact.email']        = trans('validation.code_list', ['attribute' => trans('user.secondary_contact_email')]);
         $messages['secondary_contact.unique_email'] = trans('validation.custom_unique', ['attribute' => trans('user.secondary_contact_email')]);
 
