@@ -87,7 +87,7 @@
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-md-12">
-                                    {!! AsForm::text(['name' => 'secondary_email', 'label' => trans('user.email_address'),'value'=>getVal((array)$organization->secondary_contact,['email']),'parent' => 'col-sm-6 col-md-6 col-xs-12', 'required' => true]) !!}
+                                    {!! AsForm::text(['name' => 'secondary_email', 'label' => trans('user.email_address'),'value'=>getVal((array)$organization->secondary_contact,['email']),'parent' => 'col-sm-6 col-md-6 col-xs-12']) !!}
                                 </div>
                             @endif
                             <div class="form-group">

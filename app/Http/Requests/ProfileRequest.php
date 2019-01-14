@@ -33,7 +33,7 @@ class ProfileRequest extends Request
 
         if (Auth::user()->isAdmin()) {
             $secondary_user_id    = User::where('role_id', 7)->where('org_id', session('org_id'))->first();
-            $secondary_email_rule = 'required|email|unique:users,email';
+            $secondary_email_rule = 'email|unique:users,email';
             (!$secondary_user_id) ?: $secondary_email_rule = sprintf('%s,%s', $secondary_email_rule, $secondary_user_id->id);
         }
 
@@ -63,7 +63,7 @@ class ProfileRequest extends Request
         $messages['time_zone.required']       = 'Time Zone is required';
         $messages['profile_url.url']          = 'Please provide valid profile picture';
         $messages['profile_picture.image']    = 'Profile picture must be image';
-        $messages['secondary_email.required'] = 'Secondary Contact email address is required';
+        $messages['secondary_email.email']    = 'Please enter valid email address';
 
         return $messages;
     }
