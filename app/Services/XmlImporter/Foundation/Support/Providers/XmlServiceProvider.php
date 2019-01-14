@@ -23,7 +23,7 @@ class XmlServiceProvider
      *
      * @var array
      */
-    protected $allowedXmlVersion = ['V103', 'V105', 'V201', 'V202'];
+    protected $allowedXmlVersion = ['V103', 'V105', 'V201', 'V202', 'V203'];
 
     /**
      * Xml constructor.

@@ -164,7 +164,9 @@ class XmlValidator
     protected function rulesForDefaultAidType(array $activity)
     {
         $defaultAidType = getVal($activity, ['default_aid_type'], []);
-        foreach($defaultAidType as $index => $item){
+        $rules = [];
+
+        foreach($defaultAidType = [] as $index => $item){
             $rules[sprintf('default_aid_type.%s.default_aid_type', $index)] = sprintf('in:%s', $this->validCodeList('AidType', 'V203'));
         }
 
@@ -174,7 +176,9 @@ class XmlValidator
     protected function messagesForDefaultAidType(array $activity)
     {
         $defaultAidType = getVal($activity, ['default_aid_type'], []);
-        foreach($defaultAidType as $index => $item){
+        $messages = [];
+        
+        foreach($defaultAidType = [] as $index => $item){
             $messages[sprintf('default_aid_type.%s.default_aid_type.in', $index)] = trans('validation.code_list', ['attribute' => trans('element.default_aid_type')]);
         }
 

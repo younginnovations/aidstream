@@ -49,7 +49,7 @@ class XmlProcessor
     {
         if ($this->xmlMapper->isValidActivityFile($xml)) {
             $this->xmlMapper->assign($version)
-                            ->map($xml, $this->templateServiceProvider->load(), $userId, $orgId, $dbIatiIdentifiers);
+                            ->map($xml, $this->templateServiceProvider->load($version), $userId, $orgId, $dbIatiIdentifiers);
 
             return true;
         }
