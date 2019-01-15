@@ -230,8 +230,9 @@ class Verification
 
         $data             = $secondary;
         $data['admin']    = $organization->users->where('role_id', 1)->first()->toArray();
-        $orgName          = $organization->orgData()->first()->name[0]['narrative'];
+        $orgName          = getVal($organization->reporting_org,[0,'narrative',0,'narrative']);
         $data['org_name'] = $orgName;
+
         $callback         = function ($message) use ($data) {
             $message->subject(sprintf('%s is now live on AidStream', $data['org_name']));
             $message->from(config('mail.from.address'), config('mail.from.name'));

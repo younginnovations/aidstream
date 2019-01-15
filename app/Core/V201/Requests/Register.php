@@ -165,7 +165,7 @@ class Register extends Request
         $rules[sprintf('%s.email', $formBase)]             = 'required|email|unique_email';
         $rules[sprintf('%s.password', $formBase)]          = 'required|min:6';
         $rules[sprintf('%s.confirm_password', $formBase)]  = sprintf('required|min:6|same:%s.password', $formBase);
-        $rules[sprintf('%s.secondary_contact', $formBase)] = 'required|email|unique_email';
+        $rules[sprintf('%s.secondary_contact', $formBase)] = 'email|unique_email';
 
         $rules = array_merge($rules, $this->getRulesForOrgUsers(getVal($users, ['user'], [])));
 
@@ -193,7 +193,6 @@ class Register extends Request
         $messages[sprintf('%s.confirm_password.required', $formBase)]      = trans('validation.required', ['attribute' => trans('user.confirm_password')]);
         $messages[sprintf('%s.confirm_password.min', $formBase)]           = trans('validation.min.string', ['attribute' => trans('user.confirm_password'), 'min' => 6]);
         $messages[sprintf('%s.confirm_password.same', $formBase)]          = trans('validation.match', ['attribute' => trans('user.password')]);
-        $messages[sprintf('%s.secondary_contact.required', $formBase)]     = trans('validation.required', ['attribute' => trans('user.secondary_contact')]);
         $messages[sprintf('%s.secondary_contact.email', $formBase)]        = trans('validation.code_list', ['attribute' => trans('user.secondary_contact_email')]);
         $messages[sprintf('%s.secondary_contact.unique_email', $formBase)] = trans('validation.custom_unique', ['attribute' => trans('user.secondary_contact_email')]);
 
