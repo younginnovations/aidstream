@@ -357,7 +357,7 @@ class OrganizationRepository implements OrganizationRepositoryInterface
         $organization->telephone        = $organizationInfo['telephone'];
         $organization->organization_url = $organizationInfo['organization_url'];
         $organization->user_identifier  = $organizationInfo['user_identifier'];
-        $organization->secondary_reporter = $organizationInfo['secondary_reporter'];
+        $organization->secondary_reporter = ($organizationInfo['secondary_reporter']) ? $organizationInfo['secondary_reporter'] : null;
         $file                           = array_key_exists('organization_logo', $organizationInfo) ? $organizationInfo['organization_logo'] : null;
 
         if ($file) {
