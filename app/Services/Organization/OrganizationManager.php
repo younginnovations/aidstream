@@ -109,6 +109,25 @@ class OrganizationManager
     }
 
     /**
+     * Get first (original) Organization Data of an Organization
+     * @param $id
+     * @return OrganizationData
+     */
+    public function getOriginalOrganization($id)
+    {
+        return $this->orgData
+                    ->where('organization_id', '=', $id)
+                    ->orderBy('id')
+                    ->first();
+    }
+
+    public function updateOrganizationName(array $input, OrganizationData $organizationData)
+    {
+        $organizationData->name = $input;
+
+        return $organizationData->save();
+    }
+    /**
      * @param array        $input
      * @param Organization $organization
      */
