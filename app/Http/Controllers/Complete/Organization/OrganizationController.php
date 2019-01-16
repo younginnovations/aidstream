@@ -123,7 +123,6 @@ class OrganizationController extends Controller
             return redirect('/settings')->withResponse($response);
         }
 
-//        $organizationData              = $this->nameManager->getOrganizationData($id);
         $reporting_org                 = (array) $organization->reporting_org[0];
         $org_name                      = (array) $organizationData->name;
         $total_budget                  = (array) $organizationData->total_budget;
@@ -331,15 +330,14 @@ class OrganizationController extends Controller
         $url                = route('organization-information.update');
         $settings           = $this->settingsManager->getSettings(session('org_id'));
         $users              = $this->userManager->getAllUsersOfOrganization();
-        // dd($settings);
+
         $formOptions = [
             'method' => 'PUT',
             'url'    => $url,
             'model'  => ['narrative' => $organization->reporting_org[0]['narrative']]
         ];
         $form        = $this->organizationManager->viewOrganizationInformation($formOptions);
-        // dd($form);
-        // dd($organization);
+
         return view('settings.organizationInformation', compact('form', 'organizationTypes', 'countries', 'organization', 'registrationAgency', 'settings', 'users'));
     }
 
@@ -350,7 +348,9 @@ class OrganizationController extends Controller
      */
     public function saveOrganizationInformation(OrganizationInfoRequest $request)
     {
+        $name = $request->get('narrative');
         $organization = $this->organizationManager->getOrganization(session('org_id'));
+        $organizationData   = $this->organizationManager->getOriginalOrganization(session('org_id'));
         $this->authorize('settings', $organization->settings);
         $organizationInfoResponse = $this->organizationManager->saveOrganizationInformation($request->all(), $organization);
 
@@ -358,6 +358,8 @@ class OrganizationController extends Controller
             return redirect()->route('settings')->with('status', 'changed');
         }
         $response = $this->getResponse($organizationInfoResponse, trans('organisation.organisation_information'));
+
+        $this->organizationManager->updateOrganizationName($name, $organizationData);
 
         return redirect()->back()->withResponse($response);
 
