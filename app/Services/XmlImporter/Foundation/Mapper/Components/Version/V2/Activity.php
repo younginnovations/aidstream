@@ -167,6 +167,11 @@ class Activity
     protected $relatedActivity = [];
 
     /**
+     * @var array
+     */
+    protected $defaultAidType = [];
+
+    /**
      * @var int
      */
     protected $index = 0;

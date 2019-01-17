@@ -353,13 +353,13 @@ class OrganizationController extends Controller
         $organizationData   = $this->organizationManager->getOriginalOrganization(session('org_id'));
         $this->authorize('settings', $organization->settings);
         $organizationInfoResponse = $this->organizationManager->saveOrganizationInformation($request->all(), $organization);
+        $this->organizationManager->updateOrganizationName($name, $organizationData);
 
         if ($organizationInfoResponse === "Username updated") {
             return redirect()->route('settings')->with('status', 'changed');
         }
-        $response = $this->getResponse($organizationInfoResponse, trans('organisation.organisation_information'));
 
-        $this->organizationManager->updateOrganizationName($name, $organizationData);
+        $response = $this->getResponse($organizationInfoResponse, trans('organisation.organisation_information'));
 
         return redirect()->back()->withResponse($response);
 
