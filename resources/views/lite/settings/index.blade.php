@@ -12,7 +12,7 @@
             <div class="panel__heading">
                 <div>
                     <div class="panel__title">@lang('lite/title.settings')</div>
-                    @if ($loggedInUser->isAdmin() && session('version') == 'V202')
+                    @if ($loggedInUser->isAdmin() && (session('version') == 'V202' || session('version') == 'V203'))
                         <button class="btn btn-sm pull-right" data-toggle="modal"
                                 data-target="#system-upgrade-modal">@lang('lite/settings.version_upgrade')</button>
                     @endif
