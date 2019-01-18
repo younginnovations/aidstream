@@ -255,6 +255,7 @@ return [
     'default_aid_type_vocabulary'                => 'Default Aid Type Vocabulary',
     'default_aid_type_code'                      => 'Default AidType Code',
     'default_aid_type_earmarking_category_code'  => 'Earmarking Category Code',
-    'default_aid_type_text'                      => 'Default Aid Type Code'
+    'default_aid_type_text'                      => 'Default Aid Type Code',
+    'unique_vocabulary'                          => 'Reference Vocabulary cannot be same for the same Indicator'
 ];
 

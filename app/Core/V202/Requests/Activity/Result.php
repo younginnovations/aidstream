@@ -45,13 +45,21 @@ class Result extends V201Result
     {
         $rules = [];
 
+        if (count($formFields) > 1) {
+            $referenceForm          = sprintf('%s.reference', $formBase);
+            $rules[$referenceForm]  = 'unique_vocabulary:' . $referenceForm;
+        }
+
         foreach ($formFields as $referenceIndex => $reference) {
-            $referenceForm                                      = sprintf(
-                '%s.reference.%s',
-                $formBase,
-                $referenceIndex
-            );
+            $referenceForm  = sprintf('%s.reference.%s', $formBase, $referenceIndex);
+
+            $rules[sprintf('%s.vocabulary', $referenceForm)]    = 'required';
+            $rules[sprintf('%s.code', $referenceForm)]          = 'required';
             $rules[sprintf('%s.indicator_uri', $referenceForm)] = 'url';
+
+            if ($reference['vocabulary'] == "99") {
+                $rules[sprintf('%s.indicator_uri', $referenceForm)] = 'url|required_with:' . $referenceForm . '.vocabulary';
+            }
         }
 
         return $rules;
@@ -120,13 +128,30 @@ class Result extends V201Result
     {
         $messages = [];
 
+        if (count($formFields > 1)) {
+            $referenceForm = sprintf('%s.reference', $formBase);
+            $messages[sprintf('%s.unique_vocabulary', $referenceForm)] = trans('elementForm.unique_vocabulary');
+        }
+
         foreach ($formFields as $referenceIndex => $reference) {
             $referenceForm                                             = sprintf(
                 '%s.reference.%s',
                 $formBase,
                 $referenceIndex
             );
+            $messages[sprintf('%s.vocabulary.required', $referenceForm)] = trans('validation.required', ['attribute' => trans('elementForm.vocabulary')]);
+            $messages[sprintf('%s.code.required', $referenceForm)] = trans('validation.required', ['attribute' => trans('elementForm.code')]);
             $messages[sprintf('%s.indicator_uri.url', $referenceForm)] = trans('validation.url');
+
+            if ( $reference['vocabulary'] == "99" ) {
+                $messages[sprintf('%s.indicator_uri.%s', $referenceForm, 'required_with')] = trans(
+                    'validation.required_with',
+                    [
+                        'attribute' => trans('elementForm.indicator_uri'),
+                        'values'    => trans('elementForm.indicator_reference_vocabulary')
+                    ]
+                );
+            }
         }
 
         return $messages;
