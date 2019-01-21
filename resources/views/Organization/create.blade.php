@@ -28,6 +28,9 @@
                                             </li>
                                         </div>
                                     </div>
+                                    <div v-if="display_success" class="alert alert-success">
+                                            @{{ success }}
+                                    </div>
 
                                     {{Form::open()}}
                                     <participating-org v-for="(organisation,index) in organisations"
@@ -35,6 +38,7 @@
                                                        :organisation="organisation"
                                                        v-on:display="displayModal($event)"
                                                        :display_error="display_error"
+                                                       :display_success="display_success"
                                                        v-if="organisations"
                                                        :key="index">
                                     </participating-org>
@@ -42,7 +46,7 @@
                                     <modal v-show="showModal" v-on:close="closeModal"
                                            :organisation="currentOrganisation"
                                            :registrar_list="registrarList"></modal>
-                                    <button class="btn btn-submit btn-form" type="submit" v-on:click="onSubmit">
+                                    <button class="btn btn-submit btn-form" type="submit" v-on:click.prevent="onSubmit">
                                         Save
                                     </button>
                                     <a class="btn btn-cancel" href="{{route('organization.index', $id)}}">Cancel</a>
@@ -66,7 +70,6 @@
                     {{Form::label('type',trans('elementForm.organisation_type'),['class' => 'control-label'])}}
                     <vue-select2 :bind_variable='organisation' name='type' attr_name='typeText' options='{{json_encode($organizationTypes)}}' :disable_options='disable_options'></vue-select2>
 
-                    
                     <div v-if="(organisation.type == '' && display_error)" class="text-danger">Organisation Type is
                         required.
                     </div>
@@ -180,18 +183,18 @@
                         <div class="form-group">
                             <!-- {{Form::label('country','Country the organization is based in',['class' => 'control-label'])}} -->
                             <label for="country" v-bind:class="[{'text-danger': inputErrors.selectedOrgCountry}, 'control-label']">Country the organization is based in *</label>
-                            
+
                             <vue-select2 :bind_variable='organisation' name='country' attr_name='countryText' options='{{json_encode($countries)}}' v-on:change='getRegistrars($event)'></vue-select2>
                         </div>
                         <div class="form-group">
                                 {{Form::label('Organisation Name',trans('elementForm.organisation_name'),['class' => 'control-label'])}}
                                 {{Form::text('name', null,['class' => 'form-control ignore_change', 'v-bind:value' => 'organisation.tempName', '@blur' => 'updateOrgName($event)'])}}
-                            </div>
-                            <div class="form-group" v-if="display_registrar_list">
+                        </div>
+                        <div class="form-group" v-if="display_registrar_list">
                           <label for="use-organisation-number">
                           <input type="checkbox" v-model="useOrganisationNumber" id="use-organisation-number" />
                           I have organisation registration number for above organisation.
-                        </label> 
+                          </label>
                         </div>
 
                         <div class="suggestions" v-if="useOrganisationNumber">
@@ -213,21 +216,16 @@
                                     </li>
                                 </ul>
                             </div>
-                            
-                                
-
-                                <div class="form-group">
-                                <div v-if="selectedOrg">
-                                    {{Form::label('Identifier','Organisation Registration Number',['class' => 'control-label'])}}
-                                    {{Form::text('identifier', null,['class' => 'form-control ignore_change', 'v-bind:value' => 'organisation.tempIdentifier', '@blur' => 'updateOrgIdentifier($event)'])}}
-                                  </div>
-                                </div>
-                                
-                            
+                            <div class="form-group">
+                              <div v-if="selectedOrg">
+                                {{Form::label('Identifier','Organisation Registration Number',['class' => 'control-label'])}}
+                                {{Form::text('identifier', null,['class' => 'form-control ignore_change', 'v-bind:value' => 'organisation.tempIdentifier', '@blur' => 'updateOrgIdentifier($event)'])}}
+                              </div>
+                            </div>
                         </div>
                         <div class="form-group">
-                                    <button class="btn btn-form" type="button" @click="close(true)">Use this organisation</button>
-                                </div>
+                          <button class="btn btn-form" type="button" @click="close(true)">Use this organisation</button>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <div class="reset-form-option">
@@ -236,7 +234,6 @@
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </script>
@@ -251,7 +248,7 @@
       var countries = {!! json_encode($countries) !!};
       var types = {!! json_encode($organizationTypes) !!};
     </script>
-    
+
     <script>
       Vue.component('participating-org', {
         template: '#participating-form',
@@ -318,8 +315,9 @@
                     self.suggestions = []
                     self.display_org_finder = true;
                     self.searching = false;
+
                   });
-                }, 1000);
+                }, 0);
               }
             } else {
               this.suggestions = []
@@ -551,7 +549,9 @@
           currentOrganisation: [],
           registrarList: [],
           display_error: false,
-          error: ''
+          display_success: false,
+          error: '',
+          success:''
         },
         mounted: function () {
           $("div.loading-div").hide();
@@ -584,7 +584,7 @@
               "identifier": "",
               "type": "",
               "country": "",
-              "name": [{ "narrative": "" }] 
+              "name": [{ "narrative": "" }]
             });
           },
           closeModal: function () {
@@ -597,7 +597,11 @@
             if (this.isValid()) {
               axios.post(route, { organisation: self.organisations })
                 .then(function (response) {
+                    self.success = 'Organization Successfully Created';
+                    self.display_success= true;
+                    setTimeout(() => {
                   window.location.href = '/organization/';
+                    }, 800);
                 }).catch(function (error) {
                   if (error.response.status == 400) {
                     self.error = error.response.data;
