@@ -35,6 +35,23 @@ class Result extends ActivityBaseRequest
         );
 
         Validator::extendImplicit(
+            'unique_vocabulary',
+            function($attribute, $value, $parameters, $validator){
+                foreach ($value as $key => $reference) {
+                    $vocabulary[] = $reference['vocabulary'];
+                }
+                $original_length = count($vocabulary);
+                $new_length = count(array_unique($vocabulary));
+
+                if($original_length !== $new_length){
+                    return false;
+                }
+
+                return true;
+            }
+        );
+
+        Validator::extendImplicit(
             'value_ref_dimension_narrative_validation',
             function ($attribute, $value, $parameters, $validator) {
                 if (getVal($value, ['value']) != "") {
@@ -196,8 +213,8 @@ class Result extends ActivityBaseRequest
         foreach ($formFields as $baselineIndex => $baseline) {
             $baselineForm                              = sprintf('%s.baseline.%s', $formBase, $baselineIndex);
             $rules[$baselineForm]                      = 'year_value_narrative_validation:' . $baselineForm . '.comment.0.narrative';
-            $rules[sprintf('%s.year', $baselineForm)]  = sprintf('numeric|required_with:%s.value', $baselineForm);
-            $rules[sprintf('%s.value', $baselineForm)] = sprintf('numeric|required_with:%s.year', $baselineForm);
+            $rules[sprintf('%s.year', $baselineForm)]  = sprintf('numeric|required', $baselineForm);
+            $rules[sprintf('%s.value', $baselineForm)] = sprintf('numeric|required', $baselineForm);
             $rules                                     = array_merge(
                 $rules,
                 $this->getRulesForNarrative($baseline['comment'][0]['narrative'], sprintf('%s.comment.0', $baselineForm))
@@ -227,12 +244,9 @@ class Result extends ActivityBaseRequest
                     'narrative' => trans('elementForm.narrative')
                 ]
             );
-            $messages[sprintf('%s.year.required_with', $baselineForm)]              = trans(
-                'validation.required_with',
-                ['attribute' => trans('elementForm.year'), 'value' => trans('elementForm.value')]
-            );
+            $messages[sprintf('%s.year.required', $baselineForm)]                   = trans( 'validation.required', ['attribute' => trans('elementForm.year')]);
             $messages[sprintf('%s.year.numeric', $baselineForm)]                    = trans('validation.numeric', ['attribute' => trans('elementForm.year')]);
-            $messages[sprintf('%s.value.required_with', $baselineForm)]             = trans('validation.required', ['attribute' => trans('elementForm.value'), 'value' => trans('elementForm.year')]);
+            $messages[sprintf('%s.value.required', $baselineForm)]                  = trans('validation.required', ['attribute' => trans('elementForm.value')]);
             $messages[sprintf('%s.value.numeric', $baselineForm)]                   = trans('validation.numeric', ['attribute' => trans('elementForm.value')]);
             $messages                                                               = array_merge(
                 $messages,
@@ -302,7 +316,7 @@ class Result extends ActivityBaseRequest
         $rules = [];
         foreach ($formFields as $targetIndex => $target) {
             $targetForm         = sprintf('%s.%s', $formBase, $targetIndex);
-            $rules[$targetForm] = 'value_ref_dimension_narrative_validation';
+            $rules[sprintf('%s.value', $targetForm)] = 'required';
 
             $rules = array_merge(
                 $rules,
@@ -325,16 +339,8 @@ class Result extends ActivityBaseRequest
 
         foreach ($formFields as $targetIndex => $target) {
             $targetForm                                                          = sprintf('%s.%s', $formBase, $targetIndex);
-            $messages[$targetForm . '.value_ref_dimension_narrative_validation'] = trans(
-                'validation.required_with_all',
-                [
-                    'attribute' => trans('elementForm.value'),
-                    'values'    => '' . trans('elementForm.location_reference') . ', ' . trans('elementForm.name') . ', ' . trans('elementForm.value') . ', ' . trans(
-                            'elementForm.narrative'
-                        ) . ', ' . trans('elementForm.language')
-                ]
-            );
 
+            $messages[sprintf('%s.value.required', $targetForm)] = trans('validation.required', ['attribute' => trans('elementForm.value')]);
             $messages = array_merge(
                 $messages,
                 $this->getMessagesForNarrative($target['comment'][0]['narrative'], sprintf('%s.comment.0', $targetForm))
@@ -355,6 +361,7 @@ class Result extends ActivityBaseRequest
         $rules = [];
         foreach ($formFields as $periodStartKey => $periodStartVal) {
             $periodEndLocation = $formBase . '.period_end.' . $periodStartKey . '.date';
+            $rules[$formBase . '.period_start.' . $periodStartKey . '.date'] = 'required';
             if ($periodEnd[$periodStartKey]['date'] != "") {
                 $rules[$formBase . '.period_start.' . $periodStartKey . '.date'] = sprintf('required_with:%s|date', $periodEndLocation);
             }
@@ -373,10 +380,14 @@ class Result extends ActivityBaseRequest
     {
         $messages = [];
         foreach ($formFields as $periodStartKey => $periodStartVal) {
+            $messages[$formBase . '.period_start.' . $periodStartKey . '.date.required'] = trans(
+                'validation.required',
+                ['attribute' => trans('elementForm.period_start')]
+            );
             if ($periodEnd[$periodStartKey]['date'] != "") {
                 $messages[$formBase . '.period_start.' . $periodStartKey . '.date.required_with'] = trans(
                     'validation.required_with',
-                    ['attribute' => trans('elementForm.period_start'), 'values' => trans('elementForm.period_date')]
+                    ['attribute' => trans('elementForm.period_start'), 'values' => trans('elementForm.period_end')]
                 );
             }
             $messages[$formBase . '.period_end.' . $periodStartKey . '.date.date'] = trans('validation.date', ['attribute' => trans('elementForm.period_start')]);
@@ -396,8 +407,9 @@ class Result extends ActivityBaseRequest
         $rules = [];
         foreach ($formFields as $periodEndKey => $periodEndVal) {
             $periodStartLocation = $formBase . '.period_start.' . $periodEndKey . '.date';
-            if ($periodStart[$periodEndKey]['date'] != "") {
-                $rules[$formBase . '.period_end.' . $periodEndKey . '.date'] = sprintf('required_with:%s|date|after:%s', $periodStartLocation, $formBase . '.period_start.' . $periodEndKey . '.date');
+            $rules[$formBase . '.period_end.' . $periodEndKey . '.date'] = 'required';
+            if ($periodStart[$periodEndKey]['date'] > $periodEndVal['date']) {
+                $rules[$formBase. '.period_end.' . $periodEndKey . '.date'] = sprintf('required_with:%s|date|after:%s', $periodStartLocation, $formBase . '.period_start.' . $periodEndKey . '.date');
             }
         }
 
@@ -414,6 +426,10 @@ class Result extends ActivityBaseRequest
     {
         $messages = [];
         foreach ($formFields as $periodEndKey => $periodEndVal) {
+            $messages[$formBase . '.period_end.' . $periodEndKey . '.date.required'] = trans(
+                'validation.required',
+                ['attribute' => trans('elementForm.period_end')]
+            );
             if ($periodStart[$periodEndKey]['date'] != "") {
                 $messages[$formBase . '.period_end.' . $periodEndKey . '.date.required_with'] = trans(
                     'validation.required_with',

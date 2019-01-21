@@ -18,7 +18,7 @@ class Actual extends BaseForm
     public function buildForm()
     {
         $this
-            ->add('value', 'text', ['label' => trans('elementForm.value')])
+            ->add('value', 'text', ['label' => trans('elementForm.value'), 'required' => true])
             ->addCollection('location', 'Activity\TargetLocation', 'actual_location', [], trans('elementForm.location'))
             ->addAddMoreButton('add_target_location', 'actual_location')
             ->addCollection('dimension', 'Activity\TargetDimension', 'actual_dimension', [], trans('elementForm.dimension'))
