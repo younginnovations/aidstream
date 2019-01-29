@@ -46,7 +46,7 @@ class IatiActivity extends V201
     {
         return app('App\Core\V203\Element\Activity\UploadActivity');
     }
-    
+
     public function getRecipientRegionRequest()
     {
         return app('App\Core\V202\Requests\Activity\RecipientRegion');
@@ -114,7 +114,7 @@ class IatiActivity extends V201
 
     public function getResultRequest()
     {
-        return app('App\Core\V202\Requests\Activity\Result');
+        return app('App\Core\V203\Requests\Activity\Result');
     }
 
     public function getChangeActivityDefault()

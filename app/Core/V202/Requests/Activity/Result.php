@@ -53,8 +53,8 @@ class Result extends V201Result
         foreach ($formFields as $referenceIndex => $reference) {
             $referenceForm  = sprintf('%s.reference.%s', $formBase, $referenceIndex);
 
-            $rules[sprintf('%s.vocabulary', $referenceForm)]    = 'required';
-            $rules[sprintf('%s.code', $referenceForm)]          = 'required';
+            $rules[sprintf('%s.vocabulary', $referenceForm)]    = sprintf('required_with:%s,%s', $referenceForm . '.code', $referenceForm. '.indicator_uri');
+            $rules[sprintf('%s.code', $referenceForm)]          = 'required_with:' . $referenceForm . '.vocabulary';
             $rules[sprintf('%s.indicator_uri', $referenceForm)] = 'url';
 
             if ($reference['vocabulary'] == "99") {
@@ -139,8 +139,22 @@ class Result extends V201Result
                 $formBase,
                 $referenceIndex
             );
-            $messages[sprintf('%s.vocabulary.required', $referenceForm)] = trans('validation.required', ['attribute' => trans('elementForm.vocabulary')]);
-            $messages[sprintf('%s.code.required', $referenceForm)] = trans('validation.required', ['attribute' => trans('elementForm.code')]);
+
+            $messages[sprintf('%s.vocabulary.required_with', $referenceForm)] = trans(
+                'validation.required_with',
+                [
+                    'attribute' => trans('elementForm.vocabulary'),
+                    'values'    => trans('elementForm.indicator_or_code')
+                ]
+            );
+            $messages[sprintf('%s.code.required_with', $referenceForm)] = trans(
+                'validation.required_with',
+                [
+                    'attribute' => trans('elementForm.code'),
+                    'values'    => trans('elementForm.vocabulary')
+                ]
+            );
+
             $messages[sprintf('%s.indicator_uri.url', $referenceForm)] = trans('validation.url');
 
             if ( $reference['vocabulary'] == "99" ) {
@@ -148,7 +162,7 @@ class Result extends V201Result
                     'validation.required_with',
                     [
                         'attribute' => trans('elementForm.indicator_uri'),
-                        'values'    => trans('elementForm.indicator_reference_vocabulary')
+                        'values'    => trans('elementForm.reference_indicator_uri_if')
                     ]
                 );
             }
