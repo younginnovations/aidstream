@@ -82,8 +82,8 @@ class Upgrade
         $this->upgradeSettings($settings);
         $this->upgradeOrganizationData($organizationData);
         $this->upgradeActivities($activities);
-        $this->updateVersion($orgId, $version);
         $this->upgradeActivityTransaction($activities);
+        $this->updateVersion($orgId, $version);
     }
 
     /**
@@ -191,7 +191,10 @@ class Upgrade
             foreach ($transactions as $eachTransaction) {
                 $transactionField = $eachTransaction->transaction;
                 $sectors          = $transactionField['sector'];
-                $transactionField['sector'][$sectorIndex]['vocabulary_uri'] = "";                
+
+                foreach ($sectors as $sectorIndex => $sector) {
+                    $transactionField['sector'][$sectorIndex]['vocabulary_uri'] = "";
+                }          
 
                 $regions = $transactionField['recipient_region'];
                 foreach ($regions as $regionIndex => $region) {
