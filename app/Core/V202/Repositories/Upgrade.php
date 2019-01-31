@@ -82,8 +82,8 @@ class Upgrade
         // $this->upgradeSettings($settings);
         // $this->upgradeOrganizationData($organizationData);
         $this->upgradeActivities($activities);
-        $this->updateVersion($orgId, $version);
         $this->upgradeActivityTransaction($activities);
+        $this->updateVersion($orgId, $version);
     }
 
     /**
