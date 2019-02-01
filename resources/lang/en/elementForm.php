@@ -256,6 +256,11 @@ return [
     'default_aid_type_code'                      => 'Default AidType Code',
     'default_aid_type_earmarking_category_code'  => 'Earmarking Category Code',
     'default_aid_type_text'                      => 'Default Aid Type Code',
-    'unique_vocabulary'                          => 'Reference Vocabulary cannot be same for the same Indicator'
+    'unique_vocabulary'                          => 'Reference Vocabulary cannot be same for the same Indicator',
+    'date_present'                               => 'Date must not be in future',
+    'reference_indicator_uri_if'                 => 'Reference Indicator URI if Referece Vocabulary is 99',
+    'reference_vocabulary'                       => 'Reference Vocabulary',
+    'vacab_or_code'                              => 'Vocabulary URI or Code',
+    'indicator_or_code'                          => 'Indicator URI or Code',
 ];
 
