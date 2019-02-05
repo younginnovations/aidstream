@@ -239,7 +239,9 @@ class Verification
             $message->to($data['email']);
         };
 
-        $this->mailer->send('emails.secondary', $data, $callback);
+        if($data['email']){
+            $this->mailer->send('emails.secondary', $data, $callback);
+        }
     }
 
     /**
