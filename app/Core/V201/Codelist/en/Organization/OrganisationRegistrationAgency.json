@@ -926,6 +926,27 @@
       "code": "SE-ON",
       "name": "Business Registration Number (Organisationsnummer), Sweden",
       "language": "en"
+    },
+    {
+      "category": "ES",
+      "category-name": "SPAIN",
+      "code": "ES-MDJ",
+      "name": "Ministerio de Justicia",
+      "language": "en"
+    },
+    {
+      "category": "LK",
+      "category-name": "SRI LANKA",
+      "code": "LK-NGO",
+      "name": "Sri Lanka - National Secretariat for Non-Governmental Organisations",
+      "language": "en"
+    },
+    {
+      "category": "LK",
+      "category-name": "SRI LANKA",
+      "code": "LK-DRC",
+      "name": "Department of the Registrar of Companies (Sri Lanka)",
+      "language": "en"
     }
   ]
 }

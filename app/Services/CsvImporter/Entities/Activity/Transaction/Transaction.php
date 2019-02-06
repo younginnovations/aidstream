@@ -124,6 +124,9 @@ class Transaction extends TransactionCsv
     public function groupByAidType($transactions)
     {
         foreach ($transactions as $index => $row) {
+            if(!array_key_exists('aid_type_code', $row)){
+                return $transactions;
+            }
 
             $rows = [];
             $aidTypeArray = [];
