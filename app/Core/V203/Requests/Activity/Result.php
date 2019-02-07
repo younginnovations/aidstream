@@ -1,14 +1,53 @@
 <?php namespace App\Core\V203\Requests\Activity;
 
-use App\Core\V201\Requests\Activity\Result as V201Result;
+use App\Core\V202\Requests\Activity\Result as V202Result;
 use Illuminate\Database\DatabaseManager;
+use Illuminate\Support\Facades\Validator;
 
 /**
  * Class Result
  * @package App\Core\V202\Requests\Activity
  */
-class Result extends V201Result
+class Result extends V202Result
 {
+    function __construct()
+    {
+        parent::__construct();
+        Validator::extendImplicit(
+            'baseline_indicator_with_value_nonqualitative_validation',
+            function ($attribute, $value, $parameters, $validator)
+            {
+                if($parameters[0] == null){
+                    return true;
+                }
+                if ($parameters[0] != "5") {
+                    if ($value == '' || !is_numeric($value)) {
+                        return false;
+                    }
+                }
+
+                return true;
+            }
+        );
+        Validator::extendImplicit(
+            'baseline_indicator_with_value_qualitative_validation',
+            function ($attribute, $value, $parameters, $validator)
+            {
+                if($parameters[0] == null){
+                    return true;
+                }
+
+                if ($parameters[0] == "5") {
+                    if($value != ''){
+                        return false;
+                    }
+                }
+
+                return true;
+            }
+        );
+    }
+
     /**
      * returns rules for result
      * @param $formFields
@@ -44,7 +83,7 @@ class Result extends V201Result
 
         foreach ($formFields as $resultIndex => $result) {
             $resultForm                                         = sprintf('result.%s', $resultIndex);
-            $messages[sprintf('%s.type.required', $resultForm)] = 'Type is required.';
+            $messages[sprintf('%s.type.required', $resultForm)] = trans('validation.required', ['attribute' => trans('elementForm.type')]);
             $messages                                           = array_merge(
                 $messages,
                 $this->getMessagesForRequiredNarrative($result['title'][0]['narrative'], sprintf('%s.title.0', $resultForm)),
@@ -133,8 +172,8 @@ class Result extends V201Result
                 $this->getRulesForResultNarrative($indicator['title'], sprintf('%s.title.0', $indicatorForm)),
                 $this->getRulesForNarrative($indicator['description'], sprintf('%s.description.0', $indicatorForm)),
                 $this->getRulesForReference($indicator['reference'], $indicatorForm),
-                $this->getRulesForBaseline($indicator['baseline'], $indicatorForm),
-                $this->getRulesForPeriod($indicator['period'], $indicatorForm)
+                $this->getRulesForBaseline($indicator['baseline'], $indicatorForm, $indicator['measure']),
+                $this->getRulesForPeriod($indicator['period'], $indicatorForm, $indicator['measure'])
             );
         }
 
@@ -175,16 +214,42 @@ class Result extends V201Result
      * @param $formBase
      * @return array|mixed
      */
-    protected function getRulesForBaseline($formFields, $formBase)
+    protected function getRulesForBaseline($formFields, $formBase, $measure)
     {
         $rules = [];
 
         foreach ($formFields as $baselineIndex => $baseline) {
-            $baselineForm                              = sprintf('%s.baseline.%s', $formBase, $baselineIndex);
-            $rules[$baselineForm]                      = 'year_value_narrative_validation:' . $baselineForm . '.comment.0.narrative';
-            $rules[sprintf('%s.year', $baselineForm)]  = sprintf('numeric|required', $baselineForm);
-            $rules[sprintf('%s.value', $baselineForm)] = sprintf('numeric', $baselineForm);
-            $rules                                     = array_merge(
+            $baselineForm                                   = sprintf('%s.baseline.%s', $formBase, $baselineIndex);
+
+            $rules[sprintf('%s.year', $baselineForm)][]     = 'required_with:' . $baselineForm . '.date';
+
+            $rules[sprintf('%s.year', $baselineForm)][]     = 'required_with:' . $baselineForm . '.value';
+
+            foreach ($baseline['ref'] as $key => $value) {
+                $rules[sprintf('%s.year', $baselineForm)][] = 'required_with:' .$baselineForm. '.location.' . $key . '.ref';
+            }
+
+            foreach ($baseline['dimension'] as $key => $value) {
+                $rules[sprintf('%s.year', $baselineForm)][] = 'required_with:' . $baselineForm . '.dimension.' . $key . '.name';
+                $rules[sprintf('%s.year', $baselineForm)][] = 'required_with:' . $baselineForm . '.dimension.' . $key . '.value';
+            }
+
+            foreach ($baseline['comment'] as $narrativeIndex => $narrative) {
+                foreach ($narrative as $key => $value) {
+                    foreach ($value as $k => $v) {
+                        $rules[sprintf('%s.year', $baselineForm)][] = 'required_with:' . $baselineForm . '.comment.' . $narrativeIndex . '.'. $key .'.'. $k. '.narrative';
+                        $rules[sprintf('%s.year', $baselineForm)][] = 'required_with:' . $baselineForm . '.comment.' . $narrativeIndex . '.'. $key . '.' . $k. '.language';
+                    }
+                }
+            }
+
+            $rules[sprintf('%s.year', $baselineForm)][]     = 'date_format:Y';
+            $rules[sprintf('%s.year', $baselineForm)][]     = 'digits:4';
+
+            $rules[sprintf('%s.value', $baselineForm)][]    = 'baseline_indicator_with_value_nonqualitative_validation:'.$measure;
+            $rules[sprintf('%s.value', $baselineForm)][]    = 'baseline_indicator_with_value_qualitative_validation:'. $measure;
+
+            $rules                                          = array_merge(
                 $rules,
                 $this->getRulesForNarrative($baseline['comment'][0]['narrative'], sprintf('%s.comment.0', $baselineForm))
             );
@@ -205,17 +270,22 @@ class Result extends V201Result
 
         foreach ($formFields as $baselineIndex => $baseline) {
             $baselineForm                                                           = sprintf('%s.baseline.%s', $formBase, $baselineIndex);
-            $messages[sprintf('%s.year_value_narrative_validation', $baselineForm)] = trans(
-                'validation.year_value_narrative_validation',
+
+            $messages[sprintf('%s.year.required_with', $baselineForm)] = trans(
+                'validation.required_with_all',
                 [
-                    'year'      => trans('elementForm.year'),
-                    'value'     => trans('elementForm.value'),
-                    'narrative' => trans('elementForm.narrative')
+                    'attribute' => trans('elementForm.year'),
+                    'values'    => ''. trans('elementForm.date') . ', '
+                                     . trans('elementForm.value') . ', '
+                                     . trans('elementForm.location') . ', '
+                                     . trans('elementForm.dimension'). ' or '
+                                     . trans('elementForm.comment')
                 ]
             );
-            $messages[sprintf('%s.year.required', $baselineForm)]                   = trans( 'validation.required', ['attribute' => trans('elementForm.year')]);
-            $messages[sprintf('%s.year.numeric', $baselineForm)]                    = trans('validation.numeric', ['attribute' => trans('elementForm.year')]);
-            $messages[sprintf('%s.value.numeric', $baselineForm)]                   = trans('validation.numeric', ['attribute' => trans('elementForm.value')]);
+            $messages[sprintf('%s.value.baseline_indicator_with_value_nonqualitative_validation', $baselineForm)] = trans('elementForm.value_if_nonqualitative');
+            $messages[sprintf('%s.value.baseline_indicator_with_value_qualitative_validation', $baselineForm)] = trans('elementForm.value_if_qualitative');
+            $messages[sprintf('%s.year.date_format', $baselineForm)]                = trans('validation.enter_valid',['attribute' => trans('elementForm.year')]);
+            $messages[sprintf('%s.year.digits', $baselineForm)]                = trans('validation.digits',['attribute' => trans('elementForm.year')]);
             $messages                                                               = array_merge(
                 $messages,
                 $this->getMessagesForNarrative($baseline['comment'][0]['narrative'], sprintf('%s.comment.0', $baselineForm))
@@ -225,13 +295,13 @@ class Result extends V201Result
         return $messages;
     }
 
-        /**
+    /**
      * returns rules for period
      * @param $formFields
      * @param $formBase
      * @return array|mixed
      */
-    protected function getRulesForPeriod($formFields, $formBase)
+    protected function getRulesForPeriod($formFields, $formBase, $measure)
     {
         $rules = [];
 
@@ -241,8 +311,30 @@ class Result extends V201Result
                 $rules,
                 $this->getRulesForResultPeriodStart($period['period_start'], $periodForm, $period['period_end']),
                 $this->getRulesForResultPeriodEnd($period['period_end'], $periodForm, $period['period_start']),
-                $this->getRulesForTarget($period['target'], sprintf('%s.target', $periodForm)),
-                $this->getRulesForTarget($period['actual'], sprintf('%s.actual', $periodForm))
+                $this->getRulesForTarget($period['target'], sprintf('%s.target', $periodForm), $measure),
+                $this->getRulesForTarget($period['actual'], sprintf('%s.actual', $periodForm), $measure)
+            );
+        }
+
+        return $rules;
+    }
+
+     /**
+     * returns rules for Target
+     * @param $formFields
+     * @return array|mixed
+     */
+
+    protected function getRulesForTarget($formFields, $formBase, $measure)
+    {
+        $rules = [];
+        foreach ($formFields as $targetIndex => $target) {
+            $targetForm         = sprintf('%s.%s', $formBase, $targetIndex);
+            $rules[sprintf('%s.value', $targetForm)][] = 'baseline_indicator_with_value_nonqualitative_validation:'. $measure;
+            $rules[sprintf('%s.value', $targetForm)][] = 'baseline_indicator_with_value_qualitative_validation:'. $measure;
+            $rules = array_merge(
+                $rules,
+                $this->getRulesForNarrative($target['comment'][0]['narrative'], sprintf('%s.comment.0', $targetForm))
             );
         }
 
@@ -273,27 +365,6 @@ class Result extends V201Result
         return $messages;
     }
 
-        /**
-     * returns rules for target
-     * @param $formFields
-     * @param $formBase
-     * @return array|mixed
-     */
-    protected function getRulesForTarget($formFields, $formBase)
-    {
-        $rules = [];
-        foreach ($formFields as $targetIndex => $target) {
-            $targetForm = sprintf('%s.%s', $formBase, $targetIndex);
-
-            $rules      = array_merge(
-                $rules,
-                $this->getRulesForNarrative($target['comment'][0]['narrative'], sprintf('%s.comment.0', $targetForm))
-            );
-        }
-
-        return $rules;
-    }
-
     /**
      * returns messages for target
      * @param $formFields
@@ -305,8 +376,9 @@ class Result extends V201Result
         $messages = [];
 
         foreach ($formFields as $targetIndex => $target) {
-            $targetForm                      = sprintf('%s.%s', $formBase, $targetIndex);
-
+            $targetForm                                                          = sprintf('%s.%s', $formBase, $targetIndex);
+            $messages[sprintf('%s.value.baseline_indicator_with_value_nonqualitative_validation', $targetForm)] = trans('elementForm.value_if_nonqualitative');
+            $messages[sprintf('%s.value.baseline_indicator_with_value_qualitative_validation', $targetForm)] = trans('elementForm.value_if_qualitative');
             $messages = array_merge(
                 $messages,
                 $this->getMessagesForNarrative($target['comment'][0]['narrative'], sprintf('%s.comment.0', $targetForm))
@@ -332,7 +404,7 @@ class Result extends V201Result
                 $formBase,
                 $indicatorIndex
             );
-            $messages[sprintf('%s.measure.required', $indicatorForm)] = 'Measure is required.';
+            $messages[sprintf('%s.measure.required', $indicatorForm)] = trans('validation.required', ['attribute' => trans('elementForm.measure')]);
             $messages                                                 = array_merge(
                 $messages,
                 $this->getMessagesForNarrative($indicator['title'], sprintf('%s.title.0', $indicatorForm)),

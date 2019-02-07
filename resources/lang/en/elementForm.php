@@ -120,6 +120,7 @@ return [
     'ascending'                                  => 'Ascending',
     'indicator_uri'                              => 'Indicator URI',
     'baseline'                                   => 'Baseline',
+    'baseline_year'                              => 'Baseline year',
     'year'                                       => 'Year',
     'comment'                                    => 'Comment',
     'period'                                     => 'Period',
@@ -262,5 +263,7 @@ return [
     'reference_vocabulary'                       => 'Reference Vocabulary',
     'vacab_or_code'                              => 'Vocabulary URI or Code',
     'indicator_or_code'                          => 'Indicator URI or Code',
+    'value_if_nonqualitative'                    => 'Numeric Value must be included for Non-qualitative Indicator Measure',
+    'value_if_qualitative'                       => 'Value must be empty for Qualitative Indicator Measure',
 ];
 
