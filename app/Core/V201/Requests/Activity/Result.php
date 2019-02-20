@@ -35,39 +35,10 @@ class Result extends ActivityBaseRequest
         );
 
         Validator::extendImplicit(
-            'unique_vocabulary',
-            function($attribute, $value, $parameters, $validator){
-                foreach ($value as $key => $reference) {
-                    $vocabulary[] = $reference['vocabulary'];
-                }
-                $original_length = count($vocabulary);
-                $new_length = count(array_unique($vocabulary));
-
-                if($original_length !== $new_length){
-                    return false;
-                }
-
-                return true;
-            }
-        );
-
-        Validator::extendImplicit(
-            'value_ref_dimension_narrative_validation',
+            'value_narrative_validation',
             function ($attribute, $value, $parameters, $validator) {
                 if (getVal($value, ['value']) != "") {
                     return true;
-                }
-
-                foreach (getVal($value, ['location'], []) as $location) {
-                    if (getVal($location, ['ref']) != '') {
-                        return false;
-                    }
-                }
-
-                foreach (getVal($value, ['dimension'], []) as $dimension) {
-                    if (getVal($dimension, ['name']) != '' || getVal($dimension, ['value']) != '') {
-                        return false;
-                    }
                 }
 
                 foreach (getVal($value, ['comment', 0, 'narrative'], []) as $narrative) {
@@ -166,7 +137,7 @@ class Result extends ActivityBaseRequest
                 $this->getRulesForNarrative($indicator['title'][0]['narrative'], sprintf('%s.title.0', $indicatorForm)),
                 $this->getRulesForNarrative($indicator['description'][0]['narrative'], sprintf('%s.description.0', $indicatorForm)),
                 $this->getRulesForBaseline($indicator['baseline'], $indicatorForm),
-                $this->getRulesForPeriod($indicator['period'], $indicatorForm)
+                $this->getRulesForPeriod($indicator['period'], $indicatorForm, $indicator)
             );
             $rules[sprintf('%s.title.0.narrative.0.narrative', $indicatorForm)][] = 'required';
         }
@@ -206,15 +177,16 @@ class Result extends ActivityBaseRequest
      * @param $formBase
      * @return array|mixed
      */
-    protected function getRulesForBaseline($formFields, $formBase)
+
+    protected function getRulesForBaseline($formFields, $formBase, $measure)
     {
         $rules = [];
 
         foreach ($formFields as $baselineIndex => $baseline) {
             $baselineForm                              = sprintf('%s.baseline.%s', $formBase, $baselineIndex);
             $rules[$baselineForm]                      = 'year_value_narrative_validation:' . $baselineForm . '.comment.0.narrative';
-            $rules[sprintf('%s.year', $baselineForm)]  = sprintf('numeric|required', $baselineForm);
-            $rules[sprintf('%s.value', $baselineForm)] = sprintf('numeric|required', $baselineForm);
+            $rules[sprintf('%s.year', $baselineForm)]  = sprintf('required_with:%s.value|date_format:Y|digits:4', $baselineForm);
+            $rules[sprintf('%s.value', $baselineForm)] = sprintf('required_with:%s.year', $baselineForm);
             $rules                                     = array_merge(
                 $rules,
                 $this->getRulesForNarrative($baseline['comment'][0]['narrative'], sprintf('%s.comment.0', $baselineForm))
@@ -241,14 +213,26 @@ class Result extends ActivityBaseRequest
                 [
                     'year'      => trans('elementForm.year'),
                     'value'     => trans('elementForm.value'),
-                    'narrative' => trans('elementForm.narrative')
+                    'narrative' => trans('elementForm.comment')
                 ]
             );
-            $messages[sprintf('%s.year.required', $baselineForm)]                   = trans( 'validation.required', ['attribute' => trans('elementForm.year')]);
-            $messages[sprintf('%s.year.numeric', $baselineForm)]                    = trans('validation.numeric', ['attribute' => trans('elementForm.year')]);
-            $messages[sprintf('%s.value.required', $baselineForm)]                  = trans('validation.required', ['attribute' => trans('elementForm.value')]);
-            $messages[sprintf('%s.value.numeric', $baselineForm)]                   = trans('validation.numeric', ['attribute' => trans('elementForm.value')]);
-            $messages                                                               = array_merge(
+            $messages[sprintf('%s.year.required_with', $baselineForm)] = trans(
+                'validation.required_with',
+                [
+                    'attribute' => trans('elementForm.year'),
+                    'values'    => trans('elementForm.value')
+                ]
+            );
+            $messages[sprintf('%s.value.required_with', $baselineForm)] = trans(
+                'validation.required_with',
+                [
+                    'attribute' => trans('elementForm.value'),
+                    'values'    => trans('elementForm.year')
+                ]
+            );
+            $messages[sprintf('%s.year.date_format', $baselineForm)]    = trans('validation.enter_valid', ['attribute' => trans('elementForm.year')]);
+            $messages[sprintf('%s.year.digits', $baselineForm)]                = trans('validation.digits',['attribute' => trans('elementForm.year')]);
+            $messages                                                   = array_merge(
                 $messages,
                 $this->getMessagesForNarrative($baseline['comment'][0]['narrative'], sprintf('%s.comment.0', $baselineForm))
             );
@@ -263,7 +247,7 @@ class Result extends ActivityBaseRequest
      * @param $formBase
      * @return array|mixed
      */
-    protected function getRulesForPeriod($formFields, $formBase)
+    protected function getRulesForPeriod($formFields, $formBase, $indicator)
     {
         $rules = [];
 
@@ -273,8 +257,8 @@ class Result extends ActivityBaseRequest
                 $rules,
                 $this->getRulesForResultPeriodStart($period['period_start'], $periodForm, $period['period_end']),
                 $this->getRulesForResultPeriodEnd($period['period_end'], $periodForm, $period['period_start']),
-                $this->getRulesForTarget($period['target'], sprintf('%s.target', $periodForm)),
-                $this->getRulesForTarget($period['actual'], sprintf('%s.actual', $periodForm))
+                $this->getRulesForTarget($period['target'], sprintf('%s.target', $periodForm), $indicator),
+                $this->getRulesForTarget($period['actual'], sprintf('%s.actual', $periodForm), $indicator)
             );
         }
 
@@ -311,12 +295,12 @@ class Result extends ActivityBaseRequest
      * @param $formBase
      * @return array|mixed
      */
-    protected function getRulesForTarget($formFields, $formBase)
+    protected function getRulesForTarget($formFields, $formBase, $measure)
     {
         $rules = [];
         foreach ($formFields as $targetIndex => $target) {
             $targetForm         = sprintf('%s.%s', $formBase, $targetIndex);
-            $rules[sprintf('%s.value', $targetForm)] = 'required';
+            $rules[$targetForm] = 'value_narrative_validation';
 
             $rules = array_merge(
                 $rules,
@@ -338,9 +322,16 @@ class Result extends ActivityBaseRequest
         $messages = [];
 
         foreach ($formFields as $targetIndex => $target) {
-            $targetForm                                                          = sprintf('%s.%s', $formBase, $targetIndex);
-
-            $messages[sprintf('%s.value.required', $targetForm)] = trans('validation.required', ['attribute' => trans('elementForm.value')]);
+            $targetForm                                            = sprintf('%s.%s', $formBase, $targetIndex);
+            $messages[$targetForm . '.value_narrative_validation'] = trans(
+                'validation.required_with_all',
+                [
+                    'attribute' => trans('elementForm.value'),
+                    'values'    => ''. trans(
+                            'elementForm.narrative'
+                        ) . ', ' . trans('elementForm.language')
+                ]
+            );
             $messages = array_merge(
                 $messages,
                 $this->getMessagesForNarrative($target['comment'][0]['narrative'], sprintf('%s.comment.0', $targetForm))

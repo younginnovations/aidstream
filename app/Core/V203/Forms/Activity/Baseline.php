@@ -18,7 +18,7 @@ class Baseline extends BaseForm
     public function buildForm()
     {
         $this
-            ->add('year', 'text', ['label' => trans('elementForm.year'), 'help_block' => $this->addHelpText('Activity_Result_Indicator_Baseline-year'), 'required' => true])
+            ->add('year', 'text', ['label' => trans('elementForm.year'), 'help_block' => $this->addHelpText('Activity_Result_Indicator_Baseline-year')])
             ->add('date','date',['label' => trans('elementForm.date'), 'help_block' => $this->addHelpText('Activity_Budget_PeriodStart-iso_date'), 'required' => false, 'attr' => ['placeholder' => 'YYYY-MM-DD']])
             ->add('value', 'text', ['label' => trans('elementForm.value'), 'help_block' => $this->addHelpText('Activity_Result_Indicator_Baseline-value')])
             ->addCollection('ref', 'Activity\ResultLocation', 'location', [], trans('elementForm.location'))
