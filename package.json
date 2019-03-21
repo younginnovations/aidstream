@@ -19,7 +19,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@gitlab.yipl.com.np:web-apps/aidstream-new.git"
+    "url": "https://github.com/DFID/aidstream-ogd.git"
   },
   "author": "",
   "license": "BSD-2-Clause",
