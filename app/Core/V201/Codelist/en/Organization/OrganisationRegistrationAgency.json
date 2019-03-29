@@ -947,6 +947,20 @@
       "code": "LK-DRC",
       "name": "Department of the Registrar of Companies (Sri Lanka)",
       "language": "en"
+    },
+    {
+      "category": "AR",
+      "category-name": "ARGENTINA",
+      "code": "AR-CENOC",
+      "name": "The National Centre of Community Organisations",
+      "language": "en"
+    },
+    {
+      "category": "JE",
+      "category-name": "JERSEY",
+      "code": "JE-FSC",
+      "name": "Jersey Financial Services Commission",
+      "language": "en"
     }
   ]
 }
