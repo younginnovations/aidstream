@@ -117,7 +117,7 @@ class Register extends Request
         $rules[sprintf('%s.organization_address', $formBase)]             = 'required';
         $rules[sprintf('%s.country', $formBase)]                          = 'required|code_list:Organization,Country';
         $rules[sprintf('%s.organization_registration_agency', $formBase)] = 'required|in:' . $regAgencies;
-        $rules[sprintf('%s.registration_number', $formBase)]              = 'required|regex:/^[0-9a-zA-Z-_.]+$/';
+        $rules[sprintf('%s.registration_number', $formBase)]              = 'required|regex:/^[0-9a-zA-Z-_.\/]+$/';
         $rules[sprintf('%s.organization_identifier', $formBase)]          = 'required|unique_org_identifier';
 
         return $rules;
@@ -143,7 +143,7 @@ class Register extends Request
         $messages[sprintf('%s.organization_registration_agency.required', $formBase)]     = trans('validation.required', ['attribute' => trans('organisation.organisation_registration_agency')]);
         $messages[sprintf('%s.organization_registration_agency.reg_agency', $formBase)]   = trans('validation.code_list', ['attribute' => trans('organisation.organisation_registration_agency')]);
         $messages[sprintf('%s.registration_number.required', $formBase)]                  = trans('validation.required', ['attribute' => trans('organisation.registration_number')]);
-        $messages[sprintf('%s.registration_number.regex', $formBase)]                     = trans('validation.alpha_num', ['attribute' => '-' . ',' . '_' . ',']);
+        $messages[sprintf('%s.registration_number.regex', $formBase)]                     = trans('validation.alpha_num', ['attribute' => '-' . ',' . '_' . ',' . '/']);
         $messages[sprintf('%s.organization_identifier.required', $formBase)]              = trans('validation.required', ['attribute' => trans('organisation.organisational_iati_identifier')]);
         $messages[sprintf('%s.organization_identifier.unique_org_identifier', $formBase)] = trans('validation.custom_unique', ['attribute' => trans('organisation.organisational_iati_identifier')]);
 

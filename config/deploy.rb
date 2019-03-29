@@ -233,7 +233,7 @@ namespace :php_fpm do
 end
 
 namespace :deploy do
-    after :starting, "hipchat:start"
+    # after :starting, "hipchat:start"
     after :updated, "vendor:copy"
     after :updated, "composer:install"
     after :updated, "environment:set_variables"
