@@ -265,5 +265,6 @@ return [
     'indicator_or_code'                          => 'Indicator URI or Code',
     'value_if_nonqualitative'                    => 'Numeric Value must be included for Non-qualitative Indicator Measure',
     'value_if_qualitative'                       => 'Value must be empty for Qualitative Indicator Measure',
+    'secondary_reporter'                         => 'Secondary Reporter'
 ];
 
