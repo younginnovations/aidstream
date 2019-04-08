@@ -81,7 +81,9 @@ class OrganizationInfoRequest extends Request
         $rules['registration_number']   = 'required|regex:/^[0-9a-zA-Z-_\/:.]+$/';
         $rules['logo']                  = 'image';
         $rules['organization_url']      = 'url';
-
+        if(session('version') == 'V203'){
+            $rules['secondary_reporter'] = 'required';
+        }
         return $rules;
     }
 
@@ -101,6 +103,9 @@ class OrganizationInfoRequest extends Request
         $messages['registration_agency.required']   = trans('validation.required', ['attribute' => trans('organisation.organisation_registration_agency')]);
         $messages['logo.image']                     = trans('validation.image');
         $messages['organization_url.url']           = trans('validation.enter_valid', ['attribute' => trans('organisation.organisation_url')]);
+        if(session('version') == 'V203'){
+            $messages['secondary_reporter']         = trans('validation.required', ['attribute' => trans('elementForm.secondary_reporter')]);
+        }
 
         return $messages;
     }
