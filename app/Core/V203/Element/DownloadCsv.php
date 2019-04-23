@@ -1,25 +1,15 @@
 <?php namespace App\Core\V203\Element;
 
-use App\Core\V201\Element\DownloadCsv as V201DownloadCsv;
-use App\Core\V202\Formatter\CompleteCsvDataFormatter;
-use App\Core\V202\Formatter\SimpleCsvDataFormatter;
-
-class DownloadCsv extends V201DownloadCsv
+use App\Core\V202\Element\DownloadCsv as V202DownloadCsv;
+use App\Core\V203\Formatter\TransactionCsvDataFormatter;
+class DownloadCsv extends V202DownloadCsv
 {
     /**
-     * Get CompleteCsvDataFormatter instance.
+     * Get TransactionCSvDataFormatter instance
      * @return \Illuminate\Foundation\Application|mixed
      */
-    public function getCompleteCsvDataFormatter()
+    public function getTransactionCsvDataFormatter()
     {
-        return app(CompleteCsvDataFormatter::class);
-    }
-
-    /**
-     * @return SimpleCsvDataFormatter instance
-     */
-    public function getSimpleCsvDataFormatter()
-    {
-        return App(SimpleCsvDataFormatter::class);
+        return app(TransactionCsvDataFormatter::class);
     }
 }

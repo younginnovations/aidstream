@@ -90,6 +90,28 @@ trait TransactionDataMapper
         return $transactionData;
     }
 
+    public function formatTransactionsV203($transaction)
+    {
+        $v202Transaction = $this->formatTransactionsV202($transaction);
+
+        $aidType = getVal($v202Transaction, ['Aid Type Code']);
+        $aidTypeCode = [];
+
+        if(is_array($aidType)){
+            foreach($aidType as $item){
+                $value = getVal($item, ['default_aid_type']);
+                $aidTypeCode[] = $value;
+            }   
+        } else {
+            $aidTypeCode[] = $aidType;
+        }
+        $aidTypeCode = implode(";", $aidTypeCode);
+
+        $v202Transaction['Aid Type Code'] = $aidTypeCode;
+
+        return $v202Transaction;
+    }
+
     /**
      * Format data version wise.
      *

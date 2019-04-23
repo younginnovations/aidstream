@@ -129,7 +129,7 @@ class IatiActivity extends V201
 
     public function getDownloadCsv()
     {
-        return app('App\Core\V202\Element\DownloadCsv');
+        return app('App\Core\V203\Element\DownloadCsv');
     }
 
     public function getDefaultAidType()
