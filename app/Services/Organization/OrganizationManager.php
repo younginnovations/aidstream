@@ -124,6 +124,7 @@ class OrganizationManager
     public function updateOrganizationName(array $input, OrganizationData $organizationData)
     {
         $organizationData->name = $input;
+        $this->repo->updateStatus(['status' => 0], $organizationData);
 
         return $organizationData->save();
     }
