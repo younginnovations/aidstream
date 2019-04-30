@@ -69,6 +69,8 @@ class OrganisationFinder extends Controller
         $file = collect2(json_decode(file_get_contents(public_path(self::ORG_FILE)), true)['lists']);
         if ($request->has('country')) {
             $countryRegistrars = $file->matchRegistrar('coverage', $request->get('country'));
+            $countryRegistrarsRegional = $file->matchRegistrar('coverage', 'XI');
+            $countryRegistrars = $countryRegistrars->merge($countryRegistrarsRegional);
             $file = $countryRegistrars->merge($file->where('coverage', null));
         }
 

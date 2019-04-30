@@ -669,7 +669,7 @@
     },
     {
       "category": "XM",
-      "code": "XM-OCHA",
+      "code": "XM-OCHAS",
       "name": "United Nations Office for the Coordination of Humanitarian Affairs",
       "language": "en",
       "category-name": "",
@@ -961,6 +961,14 @@
       "code": "JE-FSC",
       "name": "Jersey Financial Services Commission",
       "language": "en"
+    },
+    {
+      "category": "XR",
+      "code": "XR-EUCB",
+      "name": "European Union Corporate Bodies authority list",
+      "language": "en",
+      "category-name": "",
+      "description": "The European Union Publications Office maintain a list of 'Corporate Bodies' covering offices and bodies of the European Union (labelled EU), as well as external bodies referenced regularly in European Systems (labelled INT).\n\nThe list is more authoritative for EU Institutions, than for International institutions the EU works with. \n\nNote that not all of the bodies in the list are legal entities: some represent 'projects' as opposed to organizations that the European Union institutions have worked with.\n\nThe list contains some meta-data on organisational hierarchy, and succession where one organization has replaced another."
     }
   ]
 }
