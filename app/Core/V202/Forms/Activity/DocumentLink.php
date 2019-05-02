@@ -7,7 +7,7 @@ class DocumentLink extends V201DocumentLink
     public function buildForm()
     {
         $this
-            ->add('url', 'text', ['label' => trans('elementForm.url'), 'attr' => ['class' => 'document_link'], 'help_block' => $this->addHelpText('Activity_DocumentLink-url'), 'required' => true])
+            ->add('url', 'text', ['label' => trans('elementForm.url'), 'attr' => ['class' => 'document_link form-control'], 'help_block' => $this->addHelpText('Activity_DocumentLink-url'), 'required' => true])
             ->addSelect('format', $this->getCodeList('FileFormat', 'Activity'), trans('elementForm.format'), $this->addHelpText('Activity_DocumentLink-format'), null, true)
             ->add(
                 'upload_text',
@@ -18,7 +18,7 @@ class DocumentLink extends V201DocumentLink
                     'default_value' => trans('elementForm.url_text')
                 ]
             )
-            ->addCollection('title', 'Activity\Title', '', [], trans('elementForm.title'))
+            ->addCollection('title', 'Activity\Title', '', [ 'narrative_true' => true ], trans('elementForm.title'))
             ->addCollection('category', 'Activity\CategoryCode', 'category', [], trans('elementForm.category'))
             ->addAddMoreButton('add_category', 'category')
             ->addCollection('language', 'Activity\LanguageCode', 'language', [], trans('elementForm.language'))

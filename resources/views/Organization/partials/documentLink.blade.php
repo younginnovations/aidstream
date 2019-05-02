@@ -13,8 +13,8 @@
                         <div class="element-info">
                             <div class="activity-element-label">@lang('elementForm.title')</div>
                             <div class="activity-element-info">
-                                {!! getFirstNarrative($documentLink) !!}
-                                @include('Activity.partials.viewInOtherLanguage', ['otherLanguages' => getOtherLanguages($documentLink['narrative'])])
+                                {!! getFirstNarrative(getVal($documentLink, ['title', 0], [])) !!}
+                                @include('Activity.partials.viewInOtherLanguage', ['otherLanguages' => getOtherLanguages(getVal($documentLink,['title',0,'narrative'],[]))])
                             </div>
                         </div>
                         <div class="element-info">

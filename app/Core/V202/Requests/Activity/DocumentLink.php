@@ -17,7 +17,7 @@ class DocumentLink extends V201DocumentLink
         $rules = [];
         foreach ($formFields as $documentLinkIndex => $documentLink) {
             $documentLinkForm                                                        = sprintf('document_link.%s', $documentLinkIndex);
-            $rules[sprintf('document_link.%s.url', $documentLinkIndex)]              = 'required|url';
+            $rules[sprintf('document_link.%s.url', $documentLinkIndex)][]              = 'required|url';
             $rules[sprintf('document_link.%s.format', $documentLinkIndex)]           = 'required';
             $rules                                                                   = array_merge(
                 $rules,

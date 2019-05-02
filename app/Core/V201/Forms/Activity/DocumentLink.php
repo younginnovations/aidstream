@@ -29,7 +29,7 @@ class DocumentLink extends BaseForm
                     'default_value' => trans('elementForm.url_text')
                 ]
             )
-            ->addCollection('title', 'Activity\Title', '', [], trans('elementForm.title'))
+            ->addCollection('title', 'Activity\Title', '', [ 'narrative_true' => true ], trans('elementForm.title'))
             ->addCollection('category', 'Activity\CategoryCode', 'category', [], trans('elementForm.category'))
             ->addAddMoreButton('add_category', 'category')
             ->addCollection('language', 'Activity\LanguageCode', 'language', [], trans('elementForm.language'))

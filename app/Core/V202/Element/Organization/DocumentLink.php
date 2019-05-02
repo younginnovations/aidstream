@@ -25,7 +25,7 @@ class DocumentLink extends V201DocumentLink
                     'url'    => $orgDocumentLink['url']
                 ],
                 'title'             => [
-                    'narrative' => $this->buildNarrative($orgDocumentLink['narrative'])
+                    'narrative' => $this->buildNarrative($orgDocumentLink['title'][0]['narrative'])
                 ],
                 'category'          => [
                     '@attributes' => ['code' => $orgDocumentLink['category'][0]['code']],

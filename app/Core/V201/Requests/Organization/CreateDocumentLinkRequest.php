@@ -52,10 +52,11 @@ class CreateDocumentLinkRequest extends OrganizationBaseRequest
             $rules[sprintf('document_link.%s.format', $documentLinkIndex)] = 'required';
             $rules                                                         = array_merge(
                 $rules,
-                $this->getRulesForNarrative($documentLink['narrative'], $documentLinkForm),
+                $this->getRulesForNarrative($documentLink['title'][0]['narrative'], sprintf('%s.title.0', $documentLinkForm)),
                 $this->getRulesForDocumentCategory($documentLink['category'], $documentLinkForm),
                 $this->getRulesForRecipientCountry($documentLink['recipient_country'], $documentLinkForm)
             );
+            $rules[sprintf('%s.title.0.narrative.0.narrative', $documentLinkForm)][] = 'required';
         }
 
         return $rules;
@@ -81,10 +82,11 @@ class CreateDocumentLinkRequest extends OrganizationBaseRequest
             $messages[sprintf('document_link.%s.format.required', $documentLinkIndex)] = trans('validation.required', ['attribute' => trans('elementForm.format')]);
             $messages                                                                  = array_merge(
                 $messages,
-                $this->getMessagesForNarrative($documentLink['narrative'], $documentLinkForm),
+                $this->getMessagesForNarrative($documentLink['title'][0]['narrative'], sprintf('%s.title.0', $documentLinkForm)),
                 $this->getMessagesForDocumentCategory($documentLink['category'], $documentLinkForm),
                 $this->getMessagesForRecipientCountry($documentLink['recipient_country'], $documentLinkForm)
             );
+            $messages[sprintf('%s.title.0.narrative.0.narrative.required', $documentLinkForm)] = trans('validation.required', ['attribute' => trans('elementForm.narrative')]);
         }
 
         return $messages;
