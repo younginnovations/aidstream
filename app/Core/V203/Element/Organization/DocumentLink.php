@@ -23,27 +23,27 @@ class DocumentLink extends V201DocumentLink
 
             $orgDocumentLinkData[] = [
                 '@attributes'       => [
-                    'format' => $orgDocumentLink['format'],
-                    'url'    => $orgDocumentLink['url']
+                    'format' => getVal($orgDocumentLink, ['format']),
+                    'url'    => getVal($orgDocumentLink, ['url'])
                 ],
                 'title'             => [
-                    'narrative' => $this->buildNarrative($orgDocumentLink['narrative'])
+                    'narrative' => $this->buildNarrative(getVal($orgDocumentLink,['narrative']))
                 ],
                 'description'       => [
-                    'narrative' => $this->buildNarrative($orgDocumentLink['description'][0]['narrative'])
+                    'narrative' => $this->buildNarrative(getVal($orgDocumentLink, ['description', 0, 'narrative']))
                 ],
                 'category'          => [
-                    '@attributes' => ['code' => $orgDocumentLink['category'][0]['code']],
+                    '@attributes' => ['code' => getVal($orgDocumentLink, ['category', 0, 'code'])],
                 ],
                 'language'          => [
-                    '@attributes' => ['code' => $orgDocumentLink['language'][0]['language']],
+                    '@attributes' => ['code' => getVal($orgDocumentLink, ['language', 0, 'language'])],
                 ],
                 'document-date'     => [
-                    '@attributes' => ['iso-date' => $orgDocumentLink['document_date'][0]['date']],
+                    '@attributes' => ['iso-date' => getVal($orgDocumentLink, ['document_date', 0, 'date'])],
                 ],
                 'recipient-country' => [
-                    '@attributes' => ['code' => $orgDocumentLink['recipient_country'][0]['code']],
-                    'narrative'   => $this->buildNarrative($orgDocumentLink['recipient_country'][0]['narrative'])
+                    '@attributes' => ['code' => getVal($orgDocumentLink, ['recipient_country', 0, 'code'])],
+                    'narrative'   => $this->buildNarrative(getVal($orgDocumentLink, ['recipient_country', 0, 'narrative']))
                 ]
             ];
         }
