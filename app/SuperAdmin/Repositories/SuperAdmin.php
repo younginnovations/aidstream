@@ -79,7 +79,7 @@ class SuperAdmin implements SuperAdminInterface
                         $query->where('role_id', 1);
                     }
                 ]
-            )->orderBy('name', 'asc')->paginate(15);
+            )->orderBy('name', 'asc')->get();
         }
 
         return $this->organization

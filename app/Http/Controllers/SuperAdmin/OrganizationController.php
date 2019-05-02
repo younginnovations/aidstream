@@ -79,16 +79,12 @@ class OrganizationController extends Controller
     {
         if (isTzSubDomain()) {
             $organizations = $this->adminManager->getOrganizationBySystemVersion(config('system-version.Tz.id'));
-        } else {
-            if ($request->has('organization')) {
-                $organizationName = $request->get('organization');
-                $organizations    = $this->adminManager->getOrganizations($organizationName);
-            } else {
-                $organizations = (session('role_id') == 3) ? $this->adminManager->getOrganizations() : $this->groupManager->getGroupsByUserId(Auth::user()->id);
-            }
+        }
+        else {
+            $organizations = $this->adminManager->getOrganizations();
         }
 
-        return view('superAdmin.oldListOrganization', compact('organizations', 'organizationName'));
+        return view('superAdmin.oldListOrganization', compact('organizations'));
     }
 
     /**

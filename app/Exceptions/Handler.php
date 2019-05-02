@@ -71,8 +71,8 @@ class Handler extends ExceptionHandler
                     (!array_key_exists($systemVersion, $this->systemVersionRedirectPath)) ?: $route = $this->systemVersionRedirectPath[$systemVersion];
                 }
             }
-            
-            return response()->view('errors.errors', compact('route', 'message'));
+
+            return response()->view('errors.errors', compact('route', 'message'), $e->getStatusCode());
         }
 
         if ($e instanceof QueryException) {
