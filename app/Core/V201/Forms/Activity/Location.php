@@ -20,7 +20,7 @@ class Location extends BaseForm
             ->addCollection('location_reach', 'Activity\LocationReach', '', [], trans('elementForm.location_reach'))
             ->addCollection('location_id', 'Activity\LocationId', 'location_id', [], trans('elementForm.location_id'))
             ->addAddMoreButton('add', 'location_id')
-            ->addCollection('name', 'Activity\Name', '', [], trans('elementForm.name'))
+            ->addCollection('name', 'Activity\Title', '', [ 'narrative_true'=>true ], trans('elementForm.name'))
             ->addCollection('location_description', 'Activity\LocationDescription', '', [], trans('elementForm.location_description'))
             ->addCollection('activity_description', 'Activity\ActivityDescription', '', [], trans('elementForm.activity_description'))
             ->addCollection('administrative', 'Activity\Administrative', 'administrative', [], trans('elementForm.administrative'))
