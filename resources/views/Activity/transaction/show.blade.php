@@ -118,7 +118,6 @@
             </div>
             <div class="activity-element-list">
                 <div class="activity-element-label">@lang('elementForm.aid_type')</div>
-                {{-- <div class="activity-element-info">{!! getCodeNameWithCodeValue('AidType' , getVal($transactionDetail,['aid_type',0,'aid_type'] ), -5) !!}</div> --}}
                 @if(session('version') == 'V203')
                     <div class="activity-element-info">
                     @if(is_array(getVal($transactionDetail, ['aid_type', 0, 'aid_type'])))
@@ -127,17 +126,17 @@
                         <li>{{ substr($getCode->getActivityCodeName('AidType', getVal($data, ['default_aid_type'], [])) , 0 , -5)}}</li>
                         @elseif($data['default_aidtype_vocabulary'] == '2')
                         <li>{{ substr($getCode->getActivityCodeName('EarmarkingCategory', getVal($data, ['aidtype_earmarking_category'], [])) , 0 , -5)}}</li>
-                        @elseif($data['default_aidtype_vocabulary'] == '3') 
-                        <li>{{ $data['default_aid_type_text']}}</li>
-                        @else 
+                        @elseif($data['default_aidtype_vocabulary'] == '3')
+                        <li>{{ substr($getCode->getActivityCodeName('EarmarkingModality', getVal($data, ['default_aid_type_text'], [])) , 0 , -5) }}</li>
+                        @else
                         <em>Not Available</em>
                         @endif
                         @endforeach
-                    @else 
+                    @else
                     {!! getCodeNameWithCodeValue('AidType' , getVal($transactionDetail,['aid_type',0,'aid_type'] ), -5) !!}
                     @endif
                     </div>
-                @else 
+                @else
                 <div class="activity-element-info">{!! getCodeNameWithCodeValue('AidType' , getVal($transactionDetail,['aid_type',0,'aid_type'] ), -5) !!}</div>
                 @endif
             </div>

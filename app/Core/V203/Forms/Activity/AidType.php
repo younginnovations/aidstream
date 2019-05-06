@@ -1,4 +1,4 @@
-<?php 
+<?php
 namespace App\Core\V203\Forms\Activity;
 
 use App\Core\Form\BaseForm;
@@ -42,7 +42,7 @@ class AidType extends BaseForm
                 'earmarking_category',
                 'select',
                 [
-                    'choices'       => $this->getCodeList('EarmarkingCategory', 'Activity'),
+                    'choices'     => $this->getCodeList('EarmarkingCategory', 'Activity'),
                     'empty_value' => trans('elementForm.select_text'),
                     'label'       => trans('elementForm.default_aid_type'),
                     'wrapper'     => ['class' => 'form-group hidden default_aidtypes aidtype_earmarking_category'],
@@ -52,12 +52,14 @@ class AidType extends BaseForm
             )
             ->add(
                 'default_aid_type_text',
-                'text',
+                'select',
                 [
-                    'label'      => trans('elementForm.default_aid_type'),
-                    'wrapper'    => ['class' => 'form-group hidden default_aidtypes aidtype_text'],
-                    'help_block' => $this->addHelpText('Activity_DefaultAidType-code'),
-                    'required'   => true
+                    'choices'     => $this->getCodeList('EarmarkingModality', 'Activity'),
+                    'empty_value' => trans('elementForm.select_text'),
+                    'label'       => trans('elementForm.default_aid_type'),
+                    'wrapper'     => ['class' => 'form-group hidden default_aidtypes aidtype_text earmarking_modality'],
+                    'help_block'  => $this->addHelpText('Activity_DefaultAidType-code'),
+                    'required'    => true
                 ]
             )
             ->addRemoveThisButton('remove_default_aid_type');
