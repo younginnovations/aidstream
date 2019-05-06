@@ -15,7 +15,7 @@ class DocumentLink extends V201DocumentLink
      * @return array
      */
     public function getXmlData(OrganizationData $organizationData)
-    {   
+    {
         $orgDocumentLinkData = [];
         $documentLink        = (array) $organizationData->document_link;
 
@@ -27,7 +27,7 @@ class DocumentLink extends V201DocumentLink
                     'url'    => getVal($orgDocumentLink, ['url'])
                 ],
                 'title'             => [
-                    'narrative' => $this->buildNarrative(getVal($orgDocumentLink,['narrative']))
+                    'narrative' => $this->buildNarrative(getVal($orgDocumentLink, ['title', 0, 'narrative']))
                 ],
                 'description'       => [
                     'narrative' => $this->buildNarrative(getVal($orgDocumentLink, ['description', 0, 'narrative']))

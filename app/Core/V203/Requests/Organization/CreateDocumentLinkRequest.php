@@ -25,7 +25,7 @@ class CreateDocumentLinkRequest extends V201CreateDocumentLinkRequest
             $rules[sprintf('document_link.%s.document_date.0.date', $documentLinkIndex)] = 'date';
             $rules                                                                       = array_merge(
                 $rules,
-                $this->getRulesForNarrative($documentLink['narrative'], $documentLinkForm),
+                $this->getRulesForNarrative($documentLink['title'][0]['narrative'], sprintf('%s.title.0', $documentLinkForm)),
                 $this->getRulesForDocumentCategory($documentLink['category'], $documentLinkForm),
                 $this->getRulesForRecipientCountry($documentLink['recipient_country'], $documentLinkForm)
             );
@@ -55,7 +55,7 @@ class CreateDocumentLinkRequest extends V201CreateDocumentLinkRequest
             $messages[sprintf('document_link.%s.document_date.0.date.date', $documentLinkIndex)] = trans('validation.date', ['attribute' => trans('elementForm.date')]);
             $messages                                                                            = array_merge(
                 $messages,
-                $this->getMessagesForNarrative($documentLink['narrative'], $documentLinkForm),
+                $this->getMessagesForNarrative($documentLink['title'][0]['narrative'], sprintf('%s.title.0', $documentLinkForm)),
                 $this->getMessagesForDocumentCategory($documentLink['category'], $documentLinkForm),
                 $this->getMessagesForRecipientCountry($documentLink['recipient_country'], $documentLinkForm)
             );
