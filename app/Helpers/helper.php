@@ -653,7 +653,8 @@ function getDisbursementOrganizationDetails(array $disbursement, $type)
     $organization = getVal($disbursement, [$type, 0], []);
     $ref          = getVal($organization, ['ref']);
     $activity_id  = getVal($organization, ['activity_id']);
-    $type         = getVal($organization, ['type']);
+    $orgType      = getVal($organization, ['type']);
+    $type         = sprintf('%s - %s', $orgType, app('App\Helpers\GetCodeName')->getCodeNameOnly('OrganizationType', $orgType, -5, 'Organization') );
 
     $details = sprintf(
         '<em>(%s: %s , %s: %s , Type: %s)</em >;',

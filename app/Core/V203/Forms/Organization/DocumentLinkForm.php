@@ -22,7 +22,7 @@ class DocumentLinkForm extends BaseForm
             ->addAddMoreButton('add_category', 'category')
             ->addCollection('language', 'Organization\LanguageCodeForm', 'language', [], trans('elementForm.language'))
             ->addAddMoreButton('add_language', 'language')
-            ->addCollection('document_date', 'Organization\PeriodStart', '', [], trans('elementForm.document_date'))
+            ->addCollection('document_date', 'Activity\Date', '', [], trans('elementForm.document_date'))
             ->addCollection('recipient_country', 'Organization\RecipientCountryForm', 'recipient_country', [], trans('elementForm.recipient_country'))
             ->addAddMoreButton('add_recipient_country', 'recipient_country')
             ->addRemoveThisButton('remove_document_link');

@@ -3,7 +3,9 @@
         <div class="title">@lang('element.other_identifier') @if(array_key_exists('Other Identifier',$errors)) <i class='imported-from-xml'>icon</i>@endif </div>
         @foreach(groupActivityElements(getVal($activityDataList, ['other_identifier'], []) , 'type') as $key => $groupedIdentifiers)
             <div class="activity-element-list">
-                <div class="activity-element-label col-md-4">{{$key}} @lang('elementForm.reporting_org_internal_activity_identifier')</div>
+                <div class="activity-element-label col-md-4">{{$key}}
+                {!! $getCode->getCodeNameOnly('OtherIdentifierType' , $key) !!}
+                </div>
                 <div class="activity-element-info">
                     @foreach($groupedIdentifiers as $identifiers)
                         <li>{{ getVal($identifiers, ['reference']) }}</li>
