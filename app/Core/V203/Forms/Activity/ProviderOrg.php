@@ -14,9 +14,14 @@ class ProviderOrg extends BaseForm
     public function buildForm()
     {
         $this
-            ->add('ref', 'text', ['label' => trans('elementForm.ref')])
+            ->add('ref', 'text', ['label' => trans('elementForm.ref'), 'help_block' => $this->addHelpText('organisation-ref')])
             ->add('activity_id', 'text', ['label' => trans('elementForm.activity_id')])
-            ->add('type', 'text', ['label' => trans('elementForm.type')])
+            ->addSelect(
+                'type',
+                $this->getCodeList('OrganizationType', 'Organization'),
+                trans('elementForm.type'),
+                $this->addHelpText('provider_org-type')
+            )
             ->addNarrative('provider_org_narrative')
             ->addAddMoreButton('add_provider_org_narrative', 'provider_org_narrative');
     }
