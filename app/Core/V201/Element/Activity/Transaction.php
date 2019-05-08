@@ -37,25 +37,29 @@ class Transaction extends BaseElement
             $transaction = $totalTransaction->transaction;
 
             $sector = [];
-            if (getVal($transaction, ['sector'])) {
-                $vocabulary = $transaction['sector'][0]['sector_vocabulary'];
-                if ($vocabulary == 1) {
-                    $sectorValue = $transaction['sector'][0]['sector_code'];
-                } elseif ($vocabulary == 2) {
-                    $sectorValue = $transaction['sector'][0]['sector_category_code'];
-                } elseif ($vocabulary == "") {
-                    $sectorValue = $transaction['sector'][0]['sector_code'];
-                } else {
-                    $sectorValue = $transaction['sector'][0]['sector_text'];
-                }
 
-                $sector = [
-                    '@attributes' => [
-                        'vocabulary' => $vocabulary,
-                        'code'       => $sectorValue
-                    ],
-                    'narrative'   => $this->buildNarrative(getVal($transaction, ['sector', 0, 'narrative'], []))
-                ];
+            foreach (getVal($transaction, ['sector'] ) as $sectorData) {
+                if ($sectorData) {
+                    $vocabulary = getVal($sectorData, ['sector_vocabulary']);
+                    if ($vocabulary == 1) {
+                        $sectorValue = getVal($sectorData, ['sector_code']);
+                    } elseif ($vocabulary == 2) {
+                        $sectorValue = getVal($sectorData, ['sector_category_code']);
+                    } elseif ($vocabulary == "") {
+                        $sectorValue = getVal($sectorData, ['sector_code']);
+                    } else {
+                        $sectorValue = getVal($sectorData, ['sector_text']);
+                    }
+
+                    $sector[] = [
+                        '@attributes' => [
+                            'vocabulary'     => $vocabulary,
+                            'vocabulary-uri' => getVal($sectorData, ['vocabulary_uri']),
+                            'code'           => $sectorValue
+                        ],
+                        'narrative'   => $this->buildNarrative(getVal($sectorData, ['narrative'], []))
+                    ];
+                }
             }
 
             $recipientCountry = [];
