@@ -60,6 +60,7 @@ class Sector extends BaseForm
                 ]
             )
             ->addNarrative('sector_narrative')
-            ->addAddMoreButton('add', 'sector_narrative');
+            ->addAddMoreButton('add', 'sector_narrative')
+            ->addRemoveThisButton('remove');
     }
 }

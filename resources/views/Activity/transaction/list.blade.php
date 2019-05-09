@@ -54,7 +54,7 @@
                                             class="clickable-row">
                                             <td>{{ $transaction['reference'] }}</td>
                                             <td>{{ $code->getActivityCodeName('TransactionType', $transaction['transaction_type'][0]['transaction_type_code'])}}</td>
-                                            <td>{{ $transaction['value'][0]['amount'] }}</td>
+                                            <td>{{ round($transaction['value'][0]['amount'], 2) }}</td>
                                             <td>{{ formatDate($transaction['transaction_date'][0]['date']) }}</td>
                                             <td>
                                                 <a class="view" href="{{ route('activity.transaction.show', [$activity->id, $transaction['id']]) }}"></a>
@@ -86,3 +86,17 @@
         </div>
     </div>
 @stop
+@section('script')
+    <script>
+        $(document).ready( function () {
+            $('#data-table').DataTable(
+                {
+                    "paging":   false,
+                    "info":     false
+                }
+            );
+            $('#data-table_filter').addClass('pull-left');
+            $('#data-table_filter').css('margin-left', '35px');
+        });
+    </script>
+@endsection

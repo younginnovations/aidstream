@@ -159,7 +159,7 @@ class Transaction extends ActivityBaseRequest
         $rules = [];
         foreach ($formFields as $dateIndex => $date) {
             $dateForm                             = sprintf('%s.transaction_date.%s', $formBase, $dateIndex);
-            $rules[sprintf('%s.date', $dateForm)] = 'required';
+            $rules[sprintf('%s.date', $dateForm)] = 'required|before:tomorrow';
         }
 
         return $rules;
@@ -177,6 +177,7 @@ class Transaction extends ActivityBaseRequest
         foreach ($formFields as $dateIndex => $date) {
             $dateForm                                         = sprintf('%s.transaction_date.%s', $formBase, $dateIndex);
             $messages[sprintf('%s.date.required', $dateForm)] = trans('validation.required', ['attribute' => trans('elementForm.date')]);
+            $messages[sprintf('%s.date.before', $dateForm)]   = trans('elementForm.date_present');
         }
 
         return $messages;
@@ -194,7 +195,7 @@ class Transaction extends ActivityBaseRequest
         foreach ($formFields as $valueIndex => $value) {
             $valueForm                               = sprintf('%s.value.%s', $formBase, $valueIndex);
             $rules[sprintf('%s.amount', $valueForm)] = 'required|numeric';
-            $rules[sprintf('%s.date', $valueForm)]   = 'required';
+            $rules[sprintf('%s.date', $valueForm)]   = 'required|before:tomorrow';
         }
 
         return $rules;
@@ -214,6 +215,7 @@ class Transaction extends ActivityBaseRequest
             $messages[sprintf('%s.amount.required', $valueForm)] = trans('validation.required', ['attribute' => trans('elementForm.amount')]);
             $messages[sprintf('%s.amount.numeric', $valueForm)]  = trans('validation.numeric', ['attribute' => trans('elementForm.amount')]);
             $messages[sprintf('%s.date.required', $valueForm)]   = trans('validation.required', ['attribute' => trans('elementForm.date')]);
+            $messages[sprintf('%s.date.before', $valueForm)]     = trans('elementForm.date_present');
         }
 
         return $messages;
