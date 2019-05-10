@@ -342,7 +342,7 @@ class SettingsManager
     {
         $apiKeyVerificationUri = "3/action/dashboard_activity_list";
         $url                   = sprintf("%s%s", config('filesystems.iati_registry_api_base_url'), $apiKeyVerificationUri);
-        $response              = json_decode(shell_exec("curl -H 'Authorization:$apiKey' $url"), true);
+        $response              = json_decode(shell_exec("curl -H 'Authorization:$apiKey' --request POST $url"), true);
         $status                = $response['success'];
 
         return $status;
