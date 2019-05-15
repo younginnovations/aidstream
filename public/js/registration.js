@@ -130,7 +130,7 @@ function slash(value) {
             var filteredAgencies = '<option value="" selected="selected">' + localisedData['select_an_agency'] + '</option>';
             var selected = '';
             for (var i in agencies) {
-                if (i.indexOf(country) == 0 || i.indexOf('XI') == 0 || i.indexOf('XM') == 0) {
+                if (i.indexOf(country) == 0 || i.indexOf('XI') == 0 || i.indexOf('XM') == 0 || i.indexOf('XR') == 0) {
                     filteredAgencies += '<option value="' + i + '">' + agencies[i] + '</option>';
                     if (i == $('.agencies').attr('data-agency')) {
                         selected = i;
