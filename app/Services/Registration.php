@@ -93,7 +93,7 @@ class Registration
         $orgData      = $this->prepareOrganization($orgInfo, $systemVersion);
         $organization = $this->orgRepo->createOrganization($orgData);
         $organization->orgData()->create(['name' => [["narrative" => $orgInfo['organization_name'], "language" => ""]]]);
-        $organization->settings()->create(['version' => '2.02']);
+        $organization->settings()->create(['version' => '2.03']);
 
         return $organization;
     }
