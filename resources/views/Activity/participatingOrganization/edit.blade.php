@@ -22,6 +22,28 @@
                 <div class="col-xs-12 col-md-8 col-lg-8 element-content-wrapper">
                     <div class="panel panel-default">
                         <div class="panel-body">
+                             <style>
+                                .create-form .btn-submit{
+                                  width: 218px;
+                                }
+                                @media (max-width: 480px){
+                                 .create-form .btn-submit {
+                                    width: 92%;
+                                  }
+                                }
+
+                                @media (max-width: 820px){
+                                    .create-form .btn-cancel {
+                                      left: 233px;
+                                  }
+                                }
+                                @media (max-width: 580px){
+                                  .create-form .btn-cancel{
+                                    left: -5px;
+                                    bottom: 25px;
+                                  }
+                                }
+                            </style>
                             <div class="create-form">
                                 <div class="loading-div"></div>
                                 <div v-cloak class="create-form" id="participatingContainer" data-organization="{{json_encode($participatingOrganizations)}}"
@@ -53,7 +75,7 @@
                                     <button class="addMore" type="button" @click="addOrganisations()">Add another organisation</button>
                                     <modal v-show="showModal" v-on:close="closeModal" :organisation="currentOrganisation"
                                            :registrar_list="registrarList"></modal>
-                                    <button class="btn btn-submit btn-form" type="button" v-on:click="onSubmit">Save</button>
+                                    <button class="btn btn-submit btn-form" type="button" v-on:click.prevent="onSubmit">Save</button>
                                     <a class="btn btn-cancel" href="{{route('activity.show', $id)}}">Cancel</a>
                                 </div>
                                 {{Form::close()}}
@@ -114,7 +136,7 @@
                             <li><p class="publisher-description">Choose an organisation from below</p></li>
                             <li class="publishers-list scroll-list">
                                 <div v-for="(publisher, index) in suggestions" v-if="suggestions" :key="index">
-                                    <a href="javascript:void(0)" v-on:click="selected(publisher, index)" v-bind:selectedSuggestion="index" v-if="typeof index === 'number'">
+                                    <a href="#" @mousedown.prevent="selected(publisher, index)" v-bind:selectedSuggestion="index" v-if="typeof index === 'number'">
                                         <p>
                                             <strong v-bind:selectedSuggestion="index">@{{publisher.names[0].name}}</strong>
                                             <span class="language" v-if="key.language" v-for="(key,indx) in publisher.names" :key="indx">@{{ key.language }}</span>
@@ -128,10 +150,6 @@
                                                     @{{publisher.type | getOrganisationType}}, @{{ publisher.country }}
                                                 </span>
                                             </div>
-                                            <div class="pull-right">
-                                                <a target="_blank" v-bind:href="'{{ env('PO_API_URL') }}' + '/suggestion/' + publisher.identifier + '/suggest'" class="suggest-edit"
-                                                   v-if="publisher.is_publisher || publisher.is_org_file">@lang('global.suggest')</a>
-                                            </div>
                                         </div>
                                     </a>
                                 </div>
@@ -139,9 +157,9 @@
                             <li>
                                 <p class="publisher-description" style="margin-bottom:5px;padding-bottom:5px;border-bottom: 1px solid #DFEDF2;">The above list is pulled from IATI Registry publisher's
                                     list.</p>
-                                <p class="publisher-description" v-on:click="display()">
+                                <p class="publisher-description" @mousedown.prevent="display()">
                                     <strong>
-                                        <a href="javascript:void(0)" v-on:click="display()">
+                                        <a href="#" @mousedown.prevent="display()">
                                             Didn't find what you are looking for? Go to Organisation Finder" to search for the organisation you are looking for.
                                         </a>
                                     </strong>
@@ -153,7 +171,7 @@
                             <li><p class="publisher-description">From your Partner Organization List</p></li>
                             <li class="publishers-list scroll-list">
                                 <div v-for="(partnerOrganization, index) in matchingPartnerOrg[0]" v-if="matchingPartnerOrg[0]" :key="index">
-                                    <a style="display: block;" href="javascript:void(0)" v-on:click="partnerSelected(partnerOrganization, index)" v-bind:selectedPartner="index">
+                                    <a style="display: block;" href="#" @mousedown.prevent="partnerSelected(partnerOrganization, index)" v-bind:selectedPartner="index">
                                         <p>
                                             <strong v-bind:selectedPartner="index">@{{ partnerOrganization.name ? partnerOrganization.name[0].narrative : 'No name' }}</strong>
                                             <span class="language" v-if="key.language" v-for="(key,index) in partnerOrganization.name">@{{ key.language }}</span>
@@ -165,10 +183,6 @@
                                             <div class="pull-left">
                                                 <span v-bind:selectedPartner="index" v-bind:class="{'tick' : (partnerOrganization.is_publisher || partnerOrganization.is_org_file)}">@{{partnerOrganization.type | getOrganisationType}}, @{{ partnerOrganization.country }}</span>
                                             </div>
-                                            <div class="pull-right">
-                                                <a target="_blank" v-bind:href="'{{ env('PO_API_URL') }}' + '/suggestion/' + partnerOrganization.identifier + '/suggest'" class="suggest-edit"
-                                                   v-if="partnerOrganization.is_publisher || partnerOrganization.is_org_file">@lang('global.suggest')</a>
-                                            </div>
                                         </div>
                                     </a>
                                 </div>
@@ -178,21 +192,15 @@
 
                         <ul v-show="display_org_finder" class="not-found-publisher">
                             <li><p>It seems there's no matching organisation in IATI Registry of publishers. You may do one of the following at this point.</p></li>
-                            <li class="contact-org" id="orgFinder">
-                                <a href="javascript:void(0)">
-                                    <p class="contact-heading">Contact Organisation</p>
-                                    <p>Send them a message letting them know about this.</p>
-                                </a>
-                            </li>
-                            <li class="or">Or</li>
                             <li id="orgFinder">
                                 <a href="#" @mousedown.prevent="display()">
-                                    <h3 class="contact-heading">Use Organization Finder <span> (org-id.guide)</span></h3>
-                                    <p>Use our organization finder helper to get a new identifier for this.</p>
-                                    <p><span class="caution">Caution:</span> Please beware that this can be a long and
-                                        tedious process. It may be the case that you will not
-                                        find the organization even with this. In this case, leave the identifier field blank
-                                        and just mention organisation name only.</p>
+                                  <h3 class="contact-heading">Use Organization Finder <span> (org-id.guide)</span></h3>
+                                  <p>Use our organization finder helper to get a new identifier for this.</p>
+                                  <p><span class="caution">Caution:</span> Please beware that this can be a long and
+                                      tedious process. It may be the case that you will not
+                                      find the organization even with this. In this case, leave the identifier field blank
+                                      and just mention organisation name only.
+                                  </p>
                                 </a>
                             </li>
                         </ul>
@@ -234,14 +242,14 @@
                     <div class="modal-body clearfix">
                           <div class="form-group">
                               <label for="organization_type" v-bind:class="[{'text-danger': inputErrors.selectedOrgType}, 'control-label']">Organisation Type *</label>
-                              
+
                               <vue-select2 :bind_variable='organisation' name='organization_type' attr_name='typeText' options='{{json_encode($organizationTypes)}}'
                                           v-on:change='getRegistrars($event)'></vue-select2>
                           </div>
 
                           <div class="form-group">
                               <label for="country" v-bind:class="[{'text-danger': inputErrors.selectedOrgCountry}, 'control-label']">Country the organization is based in *</label>
-                              
+
                               <vue-select2 :bind_variable='organisation' name='country' attr_name='countryText' options='{{json_encode($countries)}}' v-on:change='getRegistrars($event)'></vue-select2>
                           </div>
                             <div class="form-group">
@@ -249,14 +257,14 @@
                                 {{Form::text('name', null,['class' => 'form-control ignore_change', 'v-bind:value' => 'organisation.tempName', '@blur' => 'updateOrgName($event)'])}}
                             </div>
 
-                            
+
                         <div class="form-group" v-if="display_registrar_list">
                           <label for="use-organisation-number">
                           <input type="checkbox" v-model="useOrganisationNumber" id="use-organisation-number" />
                           I have organisation registration number for above organisation.
-                        </label> 
+                        </label>
                         </div>
-                        
+
                           <div class="suggestions" v-if="useOrganisationNumber">
                               <p v-bind:class="{'text-danger':inputErrors.selectedOrg}">PLEASE CHOOSE A LIST FROM BELOW *:</p>
                               <div class="lists scroll-list">
@@ -373,13 +381,12 @@
             if (event.target.value.trim().length > 3) {
               if (!self.searching) {
                 self.searching = true;
-                this.suggestions = []
+                this.suggestions = [];
                 setTimeout(function () {
                   self.checkKeywordInPartnerOrg(event.target.value);
                   axios({
                     method: 'GET',
-                    url: apiUrl + '/api/suggestions?name=' + event.target.value + '&identifier=' + event.target.value,
-                    // headers: { 'Origin': '*' }
+                    url: '/get-org-data/'+event.target.value
                   }).then(function (response) {
                     self.searching = false;
                     self.display_org_finder = false;
@@ -389,7 +396,7 @@
                     });
                     self.display_partner_org = true;
                   }).catch(function (error) {
-                    self.suggestions = []
+                    self.suggestions = [];
                     if (self.matchingPartnerOrg[0].length > 0) {
                       self.display_partner_org = true;
                     } else {
@@ -402,9 +409,9 @@
                 }, 1000);
               }
             } else {
-              this.matchingPartnerOrg = []
+              this.matchingPartnerOrg = [];
               this.matchingPartnerOrg.push(this.partner_organisations);
-              this.suggestions = []
+              this.suggestions = [];
               this.display_org_finder = false;
               this.display_partner_org = true;
             }

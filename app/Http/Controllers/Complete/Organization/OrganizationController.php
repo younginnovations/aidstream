@@ -14,6 +14,8 @@ use App\Services\SettingsManager;
 use App\Services\UserManager;
 use Illuminate\Contracts\Mail\Mailer;
 use Illuminate\Support\Facades\Gate;
+use App\Models\ParticipatingOrganization;
+use Illuminate\Http\Response;
 
 /**
  * Class OrganizationController
@@ -53,6 +55,7 @@ class OrganizationController extends Controller
 
     protected $activityManager;
 
+    protected $participatingOrganization;
     /**
      * Create a new controller instance.
      *
@@ -75,7 +78,8 @@ class OrganizationController extends Controller
         UserManager $userManager,
         ActivityManager $activityManager,
         Mailer $mailer,
-        BaseForm $baseForm
+        BaseForm $baseForm,
+        ParticipatingOrganization $participatingOrganization
     ) {
         $this->middleware('auth');
         $this->middleware('auth.systemVersion');
@@ -88,6 +92,7 @@ class OrganizationController extends Controller
         $this->baseForm                   = $baseForm;
         $this->userManager                = $userManager;
         $this->mailer                     = $mailer;
+        $this->participatingOrganization  = $participatingOrganization;
     }
 
     /**
@@ -557,6 +562,35 @@ class OrganizationController extends Controller
 
 
         return view('Organization.create', compact('organizationTypes', 'organizationRoles', 'organizations', 'countries', 'id', 'formRoute'));
+    }
+
+    /**
+     * Get participating organisation data from ajax request
+     *
+     * @param $orgData
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getOrgData($orgData)
+    {
+        $poData = $this->participatingOrganization->select()->where('name', 'ILIKE', '%'.$orgData.'%')->get();
+        if (count($poData)) {
+            $data   = [];
+            foreach ($poData as $key => $value) {
+                $data[$key]['id'] = $value['id'];
+                $data[$key]['country'] = $value['country_code'];
+                $data[$key]['type'] = $value['type'];
+                $data[$key]['identifier'] = $value['identifier'];
+                $data[$key]['names'][] = [
+                    'language' => 'en',
+                    'name'  => $value['name'],
+                    'is_primary' => true
+                ];
+            }
+            return $data;
+        } else {
+            return response()->json([], 404);
+        }
+
     }
 
     /**

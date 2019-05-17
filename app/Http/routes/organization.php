@@ -109,5 +109,7 @@ $router->group(
             'as'   => 'organization.merge-organization-data',
             'uses' => 'OrganizationController@mergeOrganizations'
         ]);
+
+        $router->get('/get-org-data/{orgData}', 'OrganizationController@getOrgData');
     }
 );
