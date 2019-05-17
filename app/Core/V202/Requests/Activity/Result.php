@@ -50,8 +50,8 @@ class Result extends V201Result
                 $this->getRulesForResultNarrative($indicator['title'], sprintf('%s.title.0', $indicatorForm)),
                 $this->getRulesForNarrative($indicator['description'], sprintf('%s.description.0', $indicatorForm)),
                 $this->getRulesForReference($indicator['reference'], $indicatorForm),
-                $this->getRulesForBaseline($indicator['baseline'], $indicatorForm, $indicator['measure']),
-                $this->getRulesForPeriod($indicator['period'], $indicatorForm, $indicator['measure'])
+                $this->getRulesForBaseline($indicator['baseline'], $indicatorForm),
+                $this->getRulesForPeriod($indicator['period'], $indicatorForm)
             );
         }
 
@@ -94,7 +94,7 @@ class Result extends V201Result
      * @param $formBase
      * @return array|mixed
      */
-    protected function getRulesForPeriod($formFields, $formBase, $indicator)
+    protected function getRulesForPeriod($formFields, $formBase)
     {
         $rules = [];
 
@@ -104,8 +104,8 @@ class Result extends V201Result
                 $rules,
                 $this->getRulesForResultPeriodStart($period['period_start'], $periodForm, $period['period_end']),
                 $this->getRulesForResultPeriodEnd($period['period_end'], $periodForm, $period['period_start']),
-                $this->getRulesForTarget($period['target'], sprintf('%s.target', $periodForm), $indicator),
-                $this->getRulesForTarget($period['actual'], sprintf('%s.actual', $periodForm), $indicator)
+                $this->getRulesForTarget($period['target'], sprintf('%s.target', $periodForm)),
+                $this->getRulesForTarget($period['actual'], sprintf('%s.actual', $periodForm))
             );
         }
 
@@ -237,74 +237,6 @@ class Result extends V201Result
                     ]
                 );
             }
-        }
-
-        return $messages;
-    }
-
-    /**
-     * returns rules for target
-     * @param $formFields
-     * @param $formBase
-     * @return array|mixed
-     */
-    protected function getRulesForTarget($formFields, $formBase, $measure)
-    {
-        $rules = [];
-        foreach ($formFields as $targetIndex => $target) {
-            $targetForm         = sprintf('%s.%s', $formBase, $targetIndex);
-            foreach ($target['location'] as $key => $value) {
-                $rules[sprintf('%s.value', $targetForm)][]  = 'required_with:' .$targetForm. '.location.' . $key . '.ref';
-            }
-            foreach ($target['dimension'] as $key => $value) {
-                $rules[sprintf('%s.value', $targetForm)][]  = 'required_with:' .$targetForm. '.dimension.' . $key. '.name';
-                $rules[sprintf('%s.value', $targetForm)][]  = 'required_with:' .$targetForm. '.dimension.' . $key. '.value';
-            }
-
-            foreach ($target['comment'] as $narrativeIndex => $narrative) {
-                foreach ($narrative as $key => $value) {
-                    foreach ($value as $k => $v) {
-                        $rules[sprintf('%s.value', $targetForm)][] = 'required_with:' .$targetForm. '.comment.' . $narrativeIndex . '.'. $key .'.'. $k. '.narrative';
-                        $rules[sprintf('%s.value', $targetForm)][] = 'required_with:' .$targetForm. '.comment.' . $narrativeIndex . '.'. $key .'.'. $k. '.language';
-                    }
-                }
-            }
-
-            $rules = array_merge(
-                $rules,
-                $this->getRulesForNarrative($target['comment'][0]['narrative'], sprintf('%s.comment.0', $targetForm))
-            );
-        }
-
-        return $rules;
-    }
-
-    /**
-     * returns messages for target
-     * @param $formFields
-     * @param $formBase
-     * @return array|mixed
-     */
-    protected function getMessagesForTarget($formFields, $formBase)
-    {
-        $messages = [];
-
-        foreach ($formFields as $targetIndex => $target) {
-            $targetForm                                               = sprintf('%s.%s', $formBase, $targetIndex);
-            $messages[sprintf('%s.value.required_with', $targetForm)] = trans(
-                'validation.required_with_all',
-                [
-                    'attribute' => trans('elementForm.value'),
-                    'values'    => ''. trans('elementForm.narrative') . ', '
-                                     . trans('elementForm.dimension'). ' or '
-                                     . trans('elementForm.comment')
-                ]
-            );
-
-            $messages = array_merge(
-                $messages,
-                $this->getMessagesForNarrative($target['comment'][0]['narrative'], sprintf('%s.comment.0', $targetForm))
-            );
         }
 
         return $messages;
