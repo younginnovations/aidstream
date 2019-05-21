@@ -2252,7 +2252,7 @@ $(document).ready(function () {
             fieldNames = $.unique(fieldNames);
 
             for (var i = 0; i < fieldNames.length; i++) {
-                var fieldName = fieldNames[i];
+                var fieldName = fieldNames[i] + ']';
                 var fields = $('[name^="' + fieldName + '"]');
                 var labels = $('[for^="' + fieldName + '"]');
                 var pattern = new RegExp('(' + stringUpToBracket.replace(/\[/g, '\\[').replace(/\]]/g, '\\]') + ')' + '([\\d]+)' + '([^.]+)', 'g');
