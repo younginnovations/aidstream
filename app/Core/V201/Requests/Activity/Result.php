@@ -33,25 +33,6 @@ class Result extends ActivityBaseRequest
                 return ($hasNarrative && ($value['year'] || $value['value']));
             }
         );
-
-        Validator::extendImplicit(
-            'value_narrative_validation',
-            function ($attribute, $value, $parameters, $validator) {
-                if (getVal($value, ['value']) != "") {
-                    return true;
-                }
-
-                foreach (getVal($value, ['comment', 0, 'narrative'], []) as $narrative) {
-                    if (getVal($narrative, ['narrative']) != '' || getVal($narrative, ['language']) != '') {
-                        return false;
-                    }
-                }
-
-                return true;
-            }
-        );
-
-
     }
 
     /**
@@ -178,7 +159,7 @@ class Result extends ActivityBaseRequest
      * @return array|mixed
      */
 
-    protected function getRulesForBaseline($formFields, $formBase, $measure)
+    protected function getRulesForBaseline($formFields, $formBase)
     {
         $rules = [];
 
@@ -247,7 +228,7 @@ class Result extends ActivityBaseRequest
      * @param $formBase
      * @return array|mixed
      */
-    protected function getRulesForPeriod($formFields, $formBase, $indicator)
+    protected function getRulesForPeriod($formFields, $formBase)
     {
         $rules = [];
 
@@ -257,8 +238,8 @@ class Result extends ActivityBaseRequest
                 $rules,
                 $this->getRulesForResultPeriodStart($period['period_start'], $periodForm, $period['period_end']),
                 $this->getRulesForResultPeriodEnd($period['period_end'], $periodForm, $period['period_start']),
-                $this->getRulesForTarget($period['target'], sprintf('%s.target', $periodForm), $indicator),
-                $this->getRulesForTarget($period['actual'], sprintf('%s.actual', $periodForm), $indicator)
+                $this->getRulesForTarget($period['target'], sprintf('%s.target', $periodForm)),
+                $this->getRulesForTarget($period['actual'], sprintf('%s.actual', $periodForm))
             );
         }
 
@@ -295,12 +276,11 @@ class Result extends ActivityBaseRequest
      * @param $formBase
      * @return array|mixed
      */
-    protected function getRulesForTarget($formFields, $formBase, $measure)
+    protected function getRulesForTarget($formFields, $formBase)
     {
         $rules = [];
         foreach ($formFields as $targetIndex => $target) {
             $targetForm         = sprintf('%s.%s', $formBase, $targetIndex);
-            $rules[$targetForm] = 'value_narrative_validation';
 
             $rules = array_merge(
                 $rules,
@@ -323,15 +303,7 @@ class Result extends ActivityBaseRequest
 
         foreach ($formFields as $targetIndex => $target) {
             $targetForm                                            = sprintf('%s.%s', $formBase, $targetIndex);
-            $messages[$targetForm . '.value_narrative_validation'] = trans(
-                'validation.required_with_all',
-                [
-                    'attribute' => trans('elementForm.value'),
-                    'values'    => ''. trans(
-                            'elementForm.narrative'
-                        ) . ', ' . trans('elementForm.language')
-                ]
-            );
+
             $messages = array_merge(
                 $messages,
                 $this->getMessagesForNarrative($target['comment'][0]['narrative'], sprintf('%s.comment.0', $targetForm))
