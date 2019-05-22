@@ -89,7 +89,7 @@ class IatiActivity extends V201
 
     public function getDocumentLinkRequest()
     {
-        return app('App\Core\V202\Requests\Activity\DocumentLink');
+        return app('App\Core\V201\Requests\Activity\DocumentLink');
     }
 
     public function getResult()

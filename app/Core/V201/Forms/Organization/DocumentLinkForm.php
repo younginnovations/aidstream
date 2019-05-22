@@ -15,7 +15,7 @@ class DocumentLinkForm extends BaseForm
     {
         $this
             ->add('url', 'text', ['help_block' => $this->addHelpText('Organisation_DocumentLink-url'), 'required' => true])
-            ->addSelect('format', $this->getCodeList('FileFormat', 'Organization'), trans('elementForm.format'), $this->addHelpText('Organisation_DocumentLink-format'), null, true)
+            ->addSelect('format', $this->getCodeList('FileFormat', 'Organization'), trans('elementForm.format'), $this->addHelpText('Organisation_DocumentLink-format'), null, true, ['attr' => ['class' => 'document_link_format form-control']])
             ->addCollection('title', 'Activity\Title', '', ['narrative_true' => true], trans('elementForm.title'))
             ->addCollection('category', 'Organization\CategoryCodeForm', 'category', [], trans('elementForm.category'))
             ->addAddMoreButton('add_category', 'category')

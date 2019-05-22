@@ -22,13 +22,12 @@ class DocumentLink extends V201DocumentLink
             $rules                                                                   = array_merge(
                 $rules,
                 $this->getRulesForNarrative($documentLink['title'][0]['narrative'], sprintf('%s.title.0', $documentLinkForm)),
-                // $this->getRulesForNarrative($documentLink['description'][0]['narrative'], sprintf('%s.description.0', $documentLinkForm)),
+                $this->getRulesForNarrative($documentLink['description'][0]['narrative'], sprintf('%s.description.0', $documentLinkForm)),
                 $this->getRulesForDocumentCategory($documentLink['category'], $documentLinkForm)
             );
             $rules[sprintf('%s.title.0.narrative.0.narrative', $documentLinkForm)][] = 'required';
-            // $rules[sprintf('%s.description.0.narrative.0.narrative', $documentLinkForm)][] = 'required';
         }
-        
+
         return $rules;
 
     }
@@ -52,7 +51,6 @@ class DocumentLink extends V201DocumentLink
                 $this->getMessagesForDocumentCategory($documentLink['category'], $documentLinkForm)
             );
             $messages[sprintf('%s.title.0.narrative.0.narrative.required', $documentLinkForm)] = trans('validation.required', ['attribute' => trans('elementForm.narrative')]);
-            $messages[sprintf('%s.description.0.narrative.0.narrative.required', $documentLinkForm)] = trans('validation.required', ['attribute' => trans('elementForm.narrative')]);
         }
 
         return $messages;

@@ -26,6 +26,7 @@ class CreateDocumentLinkRequest extends V201CreateDocumentLinkRequest
             $rules                                                                       = array_merge(
                 $rules,
                 $this->getRulesForNarrative($documentLink['title'][0]['narrative'], sprintf('%s.title.0', $documentLinkForm)),
+                $this->getRulesForNarrative($documentLink['description'][0]['narrative'], sprintf('%s.description.0', $documentLinkForm)),
                 $this->getRulesForDocumentCategory($documentLink['category'], $documentLinkForm),
                 $this->getRulesForRecipientCountry($documentLink['recipient_country'], $documentLinkForm)
             );
@@ -56,6 +57,7 @@ class CreateDocumentLinkRequest extends V201CreateDocumentLinkRequest
             $messages                                                                            = array_merge(
                 $messages,
                 $this->getMessagesForNarrative($documentLink['title'][0]['narrative'], sprintf('%s.title.0', $documentLinkForm)),
+                $this->getMessagesForNarrative($documentLink['description'][0]['narrative'], sprintf('%s.description.0', $documentLinkForm)),
                 $this->getMessagesForDocumentCategory($documentLink['category'], $documentLinkForm),
                 $this->getMessagesForRecipientCountry($documentLink['recipient_country'], $documentLinkForm)
             );

@@ -92,6 +92,11 @@
             </div>
         </div>
     </div>
-    
+
     <script type="text/javascript" src="{{url('js/upload-document.js')}}"></script>
+    <script>
+        $(document).ready(function () {
+            $('.document_link_format').select2();
+        });
+    </script>
 @endsection
