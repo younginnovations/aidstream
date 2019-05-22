@@ -29,7 +29,7 @@ class IatiOrganization extends V201
 
     public function getDocumentLinkRequest()
     {
-        return app('App\Core\V202\Requests\Organization\CreateDocumentLinkRequest');
+        return app('App\Core\V203\Requests\Organization\CreateDocumentLinkRequest');
     }
 
     public function getOrgXmlService()

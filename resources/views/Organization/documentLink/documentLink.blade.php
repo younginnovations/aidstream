@@ -34,3 +34,10 @@
     </div>
 @endsection
 
+@section('script')
+    <script>
+        $(document).ready(function () {
+            $('.document_link_format').select2();
+        });
+    </script>
+@endsection
