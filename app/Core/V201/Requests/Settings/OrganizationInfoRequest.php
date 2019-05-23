@@ -104,7 +104,7 @@ class OrganizationInfoRequest extends Request
         $messages['logo.image']                     = trans('validation.image');
         $messages['organization_url.url']           = trans('validation.enter_valid', ['attribute' => trans('organisation.organisation_url')]);
         if(session('version') == 'V203'){
-            $messages['secondary_reporter']         = trans('validation.required', ['attribute' => trans('elementForm.secondary_reporter')]);
+            $messages['secondary_reporter.required']= trans('validation.required', ['attribute' => trans('elementForm.secondary_reporter')]);
         }
 
         return $messages;

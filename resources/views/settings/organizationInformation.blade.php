@@ -7,7 +7,7 @@
             {!! form_rest($form) !!}
             @if(session('version') == 'V203')
             <div class="col-md-12 col-xs-12">
-                {!! AsForm::select(['name'=>'secondary_reporter', 'class' => 'organization_name_abbr','empty_value' => trans('global.select_one_of_the_following_options') ,'data'=>["1"=>'Yes',"0"=>'No'],'label'=>trans('organisation.secondary_reporter'), 'parent'=>'col-xs-12 col-sm-6 col-md-6', 'required' => true]) !!}
+                {!! AsForm::select(['name'=>'secondary_reporter', 'class' => 'secondary_reporter','empty_value' => trans('global.select_one_of_the_following_options') ,'data'=>["1"=>'Yes',"0"=>'No'], 'label'=>trans('organisation.secondary_reporter'), 'parent'=>'col-xs-12 col-sm-6 col-md-6', 'required' => true]) !!}
             </div>
             @endif
             <div class="col-md-12 col-xs-12">
