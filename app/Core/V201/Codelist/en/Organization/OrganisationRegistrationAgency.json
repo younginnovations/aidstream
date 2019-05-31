@@ -969,6 +969,14 @@
       "language": "en",
       "category-name": "",
       "description": "The European Union Publications Office maintain a list of 'Corporate Bodies' covering offices and bodies of the European Union (labelled EU), as well as external bodies referenced regularly in European Systems (labelled INT).\n\nThe list is more authoritative for EU Institutions, than for International institutions the EU works with. \n\nNote that not all of the bodies in the list are legal entities: some represent 'projects' as opposed to organizations that the European Union institutions have worked with.\n\nThe list contains some meta-data on organisational hierarchy, and succession where one organization has replaced another."
+    },
+    {
+      "category": "BJ",
+      "category-name": "BENIN",
+      "code": "BJ-IFU",
+      "name": "The Benin 'Unique Fiscal Identifier'",
+      "language": "en",
+      "description": "The Benin 'Unique Fiscal Identifier' was created by Decree No 2006-201 of 8 May 2006, and is linked to a national directory of persons, institutions and associations."
     }
   ]
 }
