@@ -46,9 +46,8 @@ class ResultProcessor
     {
         $csv = $this->csvReader->load($file)->toArray();
         $this->dispatch(
-            new ImportResult(new CsvResultProcessor($csv), $filename, $version)   
+            new ImportResult(new CsvResultProcessor($csv), $filename, $version)
         );
-            // dd($csv);
         // $importResult = new ImportResult(new CsvResultProcessor($csv), $filename, $version);
         // $importResult->handle();
     }

@@ -680,7 +680,7 @@ class ResultRow extends Row
 
         return $this;
     }
-    
+
 
     /**
      * Maps Result Indicator Baseline Year
@@ -830,7 +830,7 @@ class ResultRow extends Row
      * Grouping of Result Indicator Periods
      */
     protected function groupPeriods()
-    {   
+    {
         foreach ($this->indicators as $indicatorIndex => $values) {
             if (!array_diff_key(array_flip($this->periodFields), $this->indicators[$indicatorIndex])) {
                 $grouping                                    = app()->make(Grouping::class, [$this->indicators[$indicatorIndex], $this->periodFields])->groupValues();
@@ -1202,7 +1202,7 @@ class ResultRow extends Row
     public function rules()
     {
         $rules = [];
-        
+
         foreach ($this->data['indicator'] as $indicatorIndex => $indicators) {
             $rules['indicator.' . $indicatorIndex . '.title']       = 'unique_lang|unique_default_lang';
             $rules['indicator.' . $indicatorIndex . '.description'] = 'unique_lang|unique_default_lang';
@@ -1224,45 +1224,17 @@ class ResultRow extends Row
             }
 
             foreach ($indicators['baseline'] as $baselineIndex => $baselines) {
-                $rules['indicator.' . $indicatorIndex . '.baseline.' . $baselineIndex . '.year']    = sprintf(
-                    'integer|required_with:%s',
-                    'indicator.' . $indicatorIndex . '.baseline.' . $baselineIndex . '.value'
-                );
-                $rules['indicator.' . $indicatorIndex . '.baseline.' . $baselineIndex . '.value']   = sprintf(
-                    'string|required_with:%s',
-                    'indicator.' . $indicatorIndex . '.baseline.' . $baselineIndex . '.year'
-                );
+                $rules['indicator.' . $indicatorIndex . '.baseline.' . $baselineIndex . '.year']    = 'integer';
                 $rules['indicator.' . $indicatorIndex . '.baseline.' . $baselineIndex . '.comment'] = 'unique_lang|unique_default_lang';
             }
 
             if (!empty($indicators['period'])) {
                 foreach ($indicators['period'] as $periodIndex => $periods) {
                     $rules['indicator.' . $indicatorIndex . '.period.' . $periodIndex . '.period_end.0.date']   = sprintf(
-                        'required_with:%s|date_format:Y-m-d|after:%s',
-                        'indicator.' . $indicatorIndex . '.period.' . $periodIndex . '.period_start.0.date',
+                        'required|date_format:Y-m-d|after:%s',
                         'indicator.' . $indicatorIndex . '.period.' . $periodIndex . '.period_start.0.date'
                     );
-                    $rules['indicator.' . $indicatorIndex . '.period.' . $periodIndex . '.period_start.0.date'] = sprintf(
-                        'required_with:%s|date_format:Y-m-d',
-                        'indicator.' . $indicatorIndex . '.period.' . $periodIndex . '.period_end.0.date'
-                    );
-                    $rules['indicator.' . $indicatorIndex . '.period.' . $periodIndex . '.target']              = 'size:1';
-                    $rules['indicator.' . $indicatorIndex . '.period.' . $periodIndex . '.target.0.value']      = sprintf(
-                        'required_with:%s,%s,%s,%s',
-                        'indicator.' . $indicatorIndex . '.period.' . $periodIndex . '.target.0.location.0.ref',
-                        'indicator.' . $indicatorIndex . '.period.' . $periodIndex . '.target.0.dimension.0.name',
-                        'indicator.' . $indicatorIndex . '.period.' . $periodIndex . '.target.0.dimension.0.value',
-                        'indicator.' . $indicatorIndex . '.period.' . $periodIndex . '.target.0.comment.0.narrative.0.narrative'
-                    );
-                    $rules['indicator.' . $indicatorIndex . '.period.' . $periodIndex . '.actual']              = 'size:1';
-                    $rules['indicator.' . $indicatorIndex . '.period.' . $periodIndex . '.actual.0.value']      = sprintf(
-                        'required_with:%s,%s,%s,%s',
-                        'indicator.' . $indicatorIndex . '.period.' . $periodIndex . '.actual.0.location.0.ref',
-                        'indicator.' . $indicatorIndex . '.period.' . $periodIndex . '.actual.0.dimension.0.name',
-                        'indicator.' . $indicatorIndex . '.period.' . $periodIndex . '.actual.0.dimension.0.value',
-                        'indicator.' . $indicatorIndex . '.period.' . $periodIndex . '.actual.0.comment.0.narrative.0.narrative'
-                    );
-
+                    $rules['indicator.' . $indicatorIndex . '.period.' . $periodIndex . '.period_start.0.date'] = 'required|date_format:Y-m-d';
                     $rules['indicator.' . $indicatorIndex . '.period.' . $periodIndex . '.target.0.comment'] = 'unique_lang|unique_default_lang';
                     $rules['indicator.' . $indicatorIndex . '.period.' . $periodIndex . '.actual.0.comment'] = 'unique_lang|unique_default_lang';
                 }
@@ -1283,7 +1255,6 @@ class ResultRow extends Row
         $rules['indicator.*.description.*.narrative.0.language']               = sprintf('in:%s', $this->languageCodeList());
         $rules['indicator.*.reference.*.indicator_uri']                        = 'url';
         $rules['indicator.*.baseline.0.comment.*.narrative.0.language']        = sprintf('in:%s', $this->languageCodeList());
-        $rules['indicator.*.period.*.period_start.0.date']                     = 'required|date_format:Y-m-d';
         $rules['indicator.*.period.*.target.0.comment.*.narrative.0.language'] = sprintf('in:%s', $this->languageCodeList());
         $rules['indicator.*.period.*.actual.0.comment.*.narrative.0.language'] = sprintf('in:%s', $this->languageCodeList());
 
@@ -1329,29 +1300,9 @@ class ResultRow extends Row
         );
         $messages['indicator.*.reference.*.indicator_uri.url']                       = trans('validation.code_list', ['attribute' => trans('elementForm.reference_url')]);
         $messages['indicator.*.baseline.0.year.integer']                             = trans('validation.integer', ['attribute' => trans('elementForm.indicator_baseline_year')]);
-        $messages['indicator.*.baseline.0.year.required_with']                       = trans(
-            'validation.required_with',
-            ['attribute' => trans('elementForm.indicator_baseline_year'), 'values' => trans('elementForm.indicator_baseline_value')]
-        );
-        $messages['indicator.*.baseline.0.value.string']                             = trans('validation.string', ['attribute' => trans('elementForm.indicator_baseline_value')]);
-        $messages['indicator.*.baseline.0.value.required_with']                      = trans(
-            'validation.required_with',
-            [
-                'attribute' => trans('elementForm.indicator_baseline_value'),
-                'values'    => trans('elementForm.indicator_baseline_year')
-            ]
-        );
         $messages['indicator.*.baseline.size']                                       = trans('validation.indicator_size');
         $messages['indicator.*.baseline.0.comment.*.narrative.0.narrative.required'] = trans('validation.narrative_required', ['attribute' => trans('elementForm.baseline_comment')]);
         $messages['indicator.*.baseline.0.comment.*.narrative.0.language.in']        = trans('validation.invalid_language', ['attribute' => trans('elementForm.baseline_comment')]);
-        $messages['indicator.*.period.*.period_start.0.date.required_with']          = trans(
-            'validation.required_with',
-            ['attribute' => trans('elementForm.period_start_date'), 'values' => trans('elementForm.period_end_date')]
-        );
-        $messages['indicator.*.period.*.period_end.0.date.required_with']            = trans(
-            'validation.required_with',
-            ['attribute' => trans('elementForm.period_end_date'), 'values' => trans('elementForm.period_start_date')]
-        );
         $messages['indicator.*.period.*.target.size']                                = trans(
             'validation.no_more_than_once',
             ['attribute' => trans('elementForm.period_target_value'), 'values' => trans('elementForm.period')]
@@ -1360,6 +1311,7 @@ class ResultRow extends Row
             'validation.no_more_than_once',
             ['attribute' => trans('elementForm.period_actual_value'), 'values' => trans('elementForm.period')]
         );
+        $messages['indicator.*.period.*.period_start.0.date.required']                 = trans('validation.required', ['attribute' => trans('elementForm.period_start_date')]);
         $messages['indicator.*.period.*.period_start.0.date.date_format']            = trans('validation.csv_date', ['attribute' => trans('elementForm.period_start_date')]);
         $messages['indicator.*.period.*.period_end.0.date.required']                 = trans('validation.required', ['attribute' => trans('elementForm.period_end_date')]);
         $messages['indicator.*.period.*.period_end.0.date.date_format']              = trans('validation.csv_date', ['attribute' => trans('elementForm.period_start_date')]);
