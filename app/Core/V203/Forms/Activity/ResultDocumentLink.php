@@ -20,7 +20,7 @@ class ResultDocumentLink extends V201DocumentLink
             )
             ->addCollection('title', 'Activity\Title', '', [], trans('elementForm.title'))
             ->addCollection('description', 'Activity\Title', '', [], trans('elementForm.description'))
-            ->addCollection('category', 'Activity\CategoryCode', 'category', [], trans('elementForm.category'))
+            ->addCollection('category', 'Activity\CategoryCode', 'category', ['optional' => true], trans('elementForm.category'))
             ->addAddMoreButton('add_category', 'category')
             ->addCollection('language', 'Activity\LanguageCode', 'language', [], trans('elementForm.language'))
             ->addAddMoreButton('add_language', 'language')
