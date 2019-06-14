@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -62,7 +61,7 @@
                 <div class="panel panel-default">
                     <div class="panel-body">
 
-                        @include('includes.response')
+                        @include('includes.response')       
                         {{--*/ $regInfo = (array) (old() ? old() : session('reg_info')); /*--}}
                         {{ Form::model($regInfo, ['url' => route('registration.register'), 'method' => 'post', 'id' => 'from-registration']) }}
 
@@ -290,6 +289,12 @@ $('form select').select2();
         //        Registration.disableOrgSubmitButton();
         //        Registration.disableUsersSubmitButton();
     });
+
+    $('.country').on('select2:select', function() {
+        $('.organization_registration_agency').select2({
+        placeholder: "Select an Agency"
+    })
+});
 </script>
 
 @if(env('APP_ENV') != 'local')
