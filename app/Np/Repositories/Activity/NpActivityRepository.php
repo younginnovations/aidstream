@@ -41,6 +41,8 @@ class NpActivityRepository implements NpActivityRepositoryInterface
     {
         $activity_ids = $this->activityLocation->where('municipality_id', $municipality_id)->distinct()->pluck('activity_id');
 
+        $activities = [];
+        
         foreach($activity_ids as $key => $activity_id){
             $activities[] = $this->find($activity_id);
         }
