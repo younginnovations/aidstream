@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Kris\LaravelFormBuilder\FormBuilder;
 use Illuminate\Database\DatabaseManager;
+use Illuminate\Support\Facades\Input;
 
 /**
  * Class OrganizationController
@@ -87,7 +88,7 @@ class OrganizationController extends Controller
                 $organizations = (session('role_id') == 3) ? $this->adminManager->getOrganizations() : $this->groupManager->getGroupsByUserId(Auth::user()->id);
             }
         }
-
+        $organizations->appends(Input::except('page'));
         return view('superAdmin.oldListOrganization', compact('organizations', 'organizationName'));
     }
 
