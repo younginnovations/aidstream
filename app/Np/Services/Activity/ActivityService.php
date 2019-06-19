@@ -144,6 +144,15 @@ class ActivityService
             $activityMappedData = $this->transform($this->getMapping($rawData, 'Activity', $version));
             $documentLinkData   = $this->transform($this->getMapping($rawData, 'DocumentLink', $version));
             $settings           = $this->settingsService->find(session('org_id'))->toArray();
+            $activityMappedData['recipient_country'] = null;
+            $activityMappedData['recipient_country'][] = [
+                'country_code' => "NP",
+                'percentage'   => 100,
+                ];
+            $activityMappedData['recipient_country'][0]['narrative'][] = [
+                'narrative' => '',
+                'language'  => '',
+            ];
 
             $this->databaseManager->beginTransaction();
             (!($defaultFieldValues = getVal((array) $settings, [0, 'default_field_values'], []))) ?: $activityMappedData['default_field_values'] = $defaultFieldValues;
@@ -238,7 +247,18 @@ class ActivityService
             $documentLinkData = $this->transform($this->getMapping($rawData, 'DocumentLink', $version));
 
             $this->databaseManager->beginTransaction();
-            $this->activityRepository->update($activityId, $this->transform($this->getMapping($rawData, 'Activity', $version)));
+            $mappedActivity = $this->transform($this->getMapping($rawData, 'Activity', $version));
+            $mappedActivity['recipient_country'] = null;
+            $mappedActivity['recipient_country'][] = [
+                'country_code' => "NP",
+                'percentage'   => 100,
+                ];
+            $mappedActivity['recipient_country'][0]['narrative'][] = [
+                'narrative' => '',
+                'language'  => '',
+            ];
+
+            $this->activityRepository->update($activityId, $mappedActivity);
             if ($documentLinkData) {
                 $this->documentLinkRepository->update($documentLinkData, $activityId);
             }

@@ -387,6 +387,7 @@ class ActivityController extends Controller
             ];
         });
 
+        $activity['location'] = null;
         foreach($locationArray as $key=>$activityLocation){
             $activity["location"][$key]['municipality'] = $activityLocation['municipality'];
             $activity["location"][$key]['wards']        = $activityLocation['wards'];

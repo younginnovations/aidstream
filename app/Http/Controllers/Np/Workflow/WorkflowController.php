@@ -72,7 +72,7 @@ class WorkflowController extends MainWorkflowController
         $this->authorize('publish_activity', $activity);
 
         if ($this->hasNoPublisherInfo($activity->organization->settings)) {
-            return redirect()->route('np.settings.edit')->withResponse(['type' => 'warning', 'code' => ['settings_registry_info', ['name' => '']]]);
+            // return redirect()->route('np.settings.edit')->withResponse(['type' => 'warning', 'code' => ['settings_registry_info', ['name' => '']]]);
         }
 
         $result = $this->workFlowManager->publish($activity, $request->all());
