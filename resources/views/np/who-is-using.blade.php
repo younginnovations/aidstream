@@ -26,9 +26,9 @@
 						@foreach($organizations as $index => $organization)
 							<li style="line-height:unset;">
 								<a href="{{ url('/who-is-using/'.$organization->org_slug)}}">
-									@if($organization->image->profile_url)
+									@if($organization->image)
 									<div>{{$organization->name}}</div>
-										<img id="org_logo" src="{{ $organization->image->profile_url }}" alt="{{ $organization->name }}">
+										<img id="org_logo" src="{{ $organization->image }}" alt="{{ $organization->name }}">
 										<label for="org_logo">{{ $organization->name }}</label>
 									@else
 										<label for="org_logo">{{ $organization->name }}</label>
