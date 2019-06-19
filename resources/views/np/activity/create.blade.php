@@ -88,7 +88,7 @@
                         @include('np.partials.administrative')
                     </div>
                     <div class="location-container hidden">
-                        @include('np.partials.location')
+                        {{-- @include('np.partials.location') --}}
                     </div>
                 </div>
             </div>
@@ -130,6 +130,7 @@
     var wards = {!! $wards !!};
     var municipalities = {!! $municipalities!!};
     var selectedLocation = {!!$locationArray!!};
+
     $(document).ready(function(){
         $('.municipality').each(function(i, obj){
             let municipality = obj.value;
