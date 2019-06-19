@@ -199,27 +199,4 @@ class Profile
         return $this;
     }
 
-    /**
-     * Rules for Secondary Email Address
-     *
-     * @return $this
-     */
-    protected function rulesForSecondaryEmailAddress()
-    {
-        $this->profileRules['secondaryEmail'] = 'required';
-
-        return $this;
-    }
-
-    /**
-     * Rules for Secondary Email Address
-     *
-     * @return $this
-     */
-    protected function messagesForSecondaryEmailAddress()
-    {
-        $this->profileMessages['secondaryEmail.required'] = trans('validation.required', ['attribute' => trans('lite/profile.secondary') . ' ' . trans('lite/profile.email')]);
-
-        return $this;
-    }
 }

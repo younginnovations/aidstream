@@ -92,6 +92,9 @@ class WhoIsUsingController extends Controller
     public function index()
     {
         list($organizations) = [$this->organizationQueryBuilder()->where('system_version_id', config('system-version.Np.id'))->get(), true];
+        foreach ($organizations as $key => $organization) {
+            $organization->image = $this->user->getProfilePictureOfOrgId($organization->org_id);
+        }
         return view('np.who-is-using', compact('organizations'));
     }
 

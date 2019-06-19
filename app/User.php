@@ -376,4 +376,12 @@ class User extends Model implements AuthorizableContract, AuthenticatableContrac
     {
         return $this->organization ? $this->organization->systemVersion->system_version : 'Core';
     }
+
+    public function getProfilePictureOfOrgId($orgId)
+    {
+        return DB::table('users')
+                    ->select('users.profile_url')
+                    ->where('users.org_id', '=', $orgId)
+                    ->first();
+    }
 }
