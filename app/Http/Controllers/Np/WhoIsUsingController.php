@@ -11,7 +11,7 @@ use App\Services\SettingsManager;
 use Illuminate\Session\SessionManager;
 use App\Models\Settings;
 use App\User;
-
+use App\Models\Organization\Organization;
 /**
  * Class WhoIsUsingController
  * @package App\Http\Controllers
@@ -60,7 +60,7 @@ class WhoIsUsingController extends Controller
      * @var Integer
      */
     protected $organization_id;
-
+    protected $organization;
     /**
      * WhoIsUsingController constructor.
      *
@@ -74,7 +74,8 @@ class WhoIsUsingController extends Controller
         PerfectViewerManager        $perfectViewerManager,
         SettingsManager             $settingsManager,
         SessionManager              $sessionManager,
-        Settings                    $settings
+        Settings                    $settings,
+        Organization                $organization
     ) {
         $this->activityManager      = $activityManager;
         $this->user                 = $user;
@@ -82,6 +83,7 @@ class WhoIsUsingController extends Controller
         $this->settingsManager      = $settingsManager;
         $this->sessionManager       = $sessionManager;
         $this->settings             = $settings;
+        $this->organization         = $organization;
     }
 
     /**
@@ -93,7 +95,7 @@ class WhoIsUsingController extends Controller
     {
         list($organizations) = [$this->organizationQueryBuilder()->where('system_version_id', config('system-version.Np.id'))->get(), true];
         foreach ($organizations as $key => $organization) {
-            $organization->image = $this->user->getProfilePictureOfOrgId($organization->org_id);
+            $organization->image = $this->organization->find($organization->id)['logo_url'];
         }
         return view('np.who-is-using', compact('organizations'));
     }
