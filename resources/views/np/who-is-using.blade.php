@@ -24,10 +24,11 @@
 				<div class="organisations-list width-900">
 					<ul class="org_list">
 						@foreach($organizations as $index => $organization)
-							<li>
+							<li style="line-height:unset;">
 								<a href="{{ url('/who-is-using/'.$organization->org_slug)}}">
-									@if($organization->logo_url)
-										<img id="org_logo" src="{{ $organization->logo_url }}" alt="{{ $organization->name }}">
+									@if($organization->image->profile_url)
+									<div>{{$organization->name}}</div>
+										<img id="org_logo" src="{{ $organization->image->profile_url }}" alt="{{ $organization->name }}">
 										<label for="org_logo">{{ $organization->name }}</label>
 									@else
 										<label for="org_logo">{{ $organization->name }}</label>
