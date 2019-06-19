@@ -25,19 +25,11 @@
             </div>
             <div class="panel__body">
                 @if(count($activities) > 0)
-                    @include('lite.activity.activityStats')
-                    <div class="sort-by-wrap pull-right">
-                        <select id="sortBy">
-                            <option>Sort By</option>
-                            <option value="1">@lang('lite/activityDashboard.title')</option>
-                            <option value="2">@lang('lite/activityDashboard.status')</option>
-                            <option value="3">@lang('lite/activityDashboard.date')</option>
-                        </select>
-                    </div>
+                    @include('np.activity.activityStats')
                     <table class="panel__table no-header-table" id="dataTable">
                         <thead>
                         <tr>
-                            <th rowspan="2"></th>
+                            <th></th>
                             <th width="45%">@lang('lite/global.activity_title')</th>
                             <th class="default-sort">@lang('lite/global.last_updated')</th>
                             <th class="status">@lang('lite/global.status')</th>
@@ -116,6 +108,8 @@
                     ajaxRequest.abort();
                 }
             });
+
+            $('#dataTable_filter').css('margin', '0 0 20px 20px');
         });
     </script>
 @stop

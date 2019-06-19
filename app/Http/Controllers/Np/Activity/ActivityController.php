@@ -120,12 +120,13 @@ class ActivityController extends Controller
             return redirect()->route('np.activity.index')->withResponse($this->getNoPrivilegesMessage());
         }
 
+        $budgetData = $this->activityService->getBudgetDetails();
         $activities              = $this->activityService->all();
         $stats                   = $this->activityService->getActivityStats();
         $noOfPublishedActivities = $this->activityService->getNumberOfPublishedActivities($orgId);
         $lastPublishedToIATI     = $this->activityService->lastPublishedToIATI($orgId);
 
-        return view('np.activity.index', compact('activities', 'form', 'stats', 'noOfPublishedActivities', 'lastPublishedToIATI', 'orgIdentifier'));
+        return view('np.activity.index', compact('activities', 'form', 'stats', 'noOfPublishedActivities', 'lastPublishedToIATI', 'orgIdentifier', 'budgetData'));
     }
 
     /**
