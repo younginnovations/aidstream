@@ -977,6 +977,14 @@
       "name": "The Benin 'Unique Fiscal Identifier'",
       "language": "en",
       "description": "The Benin 'Unique Fiscal Identifier' was created by Decree No 2006-201 of 8 May 2006, and is linked to a national directory of persons, institutions and associations."
+    },
+    {
+      "category": "",
+      "category-name": "NEPAL",
+      "code": "NP-IRD",
+      "name": "Nepal Inland Revenue Department",
+      "language": "",
+      "description": "The Inland Revenue Department is responsible for the administration of Value Added Tax, Income Tax, and Excise Duty. In the performance of these duties it maintains a register of Permanent Account Numbers (PANs) the unique taxpayer identification number for Nepal."
     }
   ]
 }
