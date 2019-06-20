@@ -3521,6 +3521,62 @@
       }
     },
     {
+      "structure": [
+        "company"
+      ],
+      "data": {
+        "licenseDetails": "http://index.okfn.org/place/nepal/companies/",
+        "features": null,
+        "licenseStatus": "closed_license",
+        "dataAccessDetails": null,
+        "availability": [
+          "html"
+        ]
+      },
+      "name": {
+        "local": "",
+        "en": "Company Registrar Office"
+      },
+      "access": {
+        "publicDatabase": "http://www.ocr.gov.np/index.php/en/",
+        "guidanceOnLocatingIds": "Users can search for identifiers using the simple, searchable database on the Office website. Identifiers will be under the column heading 'Registration No' on the search results.\n\nCompany numbers are sometimes reported in the format: 45995-063-064\n\nThis is made up of two parts. A CRO number and a registration year.\n\nFor example:\n\nSearching for 45995 in the Registrar database returns Young Innovations. This is their CRO number.\n\n063-064 refers to the financial year that Young Innovations was registered. When included within the identifier, this could be reported with a dash-separator, and not slash. ",
+        "exampleIdentifiers": "45995, 34774, 105299",
+        "onlineAccessDetails": "Data available for free from search on Office website homepage",
+        "languages": [
+          "en",
+          "ne"
+        ],
+        "availableOnline": false
+      },
+      "url": "http://org-id.guide/list/NP-IRD",
+      "listType": "primary",
+      "links": {
+        "opencorporates": null,
+        "wikipedia": null
+      },
+      "code": "NP-IRD",
+      "subnationalCoverage": null,
+      "quality_explained": {
+        "License: Closed License": 0,
+        "List type: Primary": 75
+      },
+      "quality": 75,
+      "formerPrefixes": null,
+      "meta": {
+        "lastUpdated": "2016-12-02",
+        "source": "Desk research"
+      },
+      "sector": null,
+      "coverage": [
+        "NP"
+      ],
+      "deprecated": null,
+      "confirmed": true,
+      "description": {
+        "en": "The Inland Revenue Department is responsible for the administration of Value Added Tax, Income Tax, and Excise Duty. In the performance of these duties it maintains a register of Permanent Account Numbers (PANs) the unique taxpayer identification number for Nepal."
+      }
+    },
+    {
       "structure": [],
       "data": {
         "licenseDetails": "",
