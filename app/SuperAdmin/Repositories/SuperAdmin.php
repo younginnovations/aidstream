@@ -8,6 +8,8 @@ use Exception;
 use Illuminate\Contracts\Logging\Log as DbLogger;
 use Psr\Log\LoggerInterface as Logger;
 use Illuminate\Database\DatabaseManager;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
 
 /**
  * Class SuperAdmin
@@ -82,7 +84,9 @@ class SuperAdmin implements SuperAdminInterface
             )->orderBy('name', 'asc')->paginate(15);
         }
 
-        return $this->organization
+        else{
+
+            return $this->organization
             ->with(
                 [
                     'activities',
@@ -91,11 +95,15 @@ class SuperAdmin implements SuperAdminInterface
                         $query->where('role_id', 1);
                     }
                 ]
-            )
-            ->where('name', 'ilike', '%' . $organizationName . '%')
-            ->orderBy('name', 'asc')
-            ->paginate(15);
+            )->whereHas('users', function($q) use ($organizationName){
+                $q->where('email', 'like', '%'. $organizationName . '%');
+                })-> orWhere('name', 'ilike', '%' . $organizationName . '%')->orderBy('name', 'asc')->paginate(15);
+                
+        }                    
     }
+
+    
+
 
     /**
      * get organization by its id

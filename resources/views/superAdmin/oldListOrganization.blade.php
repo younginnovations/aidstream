@@ -22,7 +22,7 @@
                         @if(count($organizations) > 0)
                             <div class="col-md-4 pull-right search-org">
                                 <form action="{{ route('admin.list-organization') }}" method="GET">
-                                    <input type="text" name="organization" placeholder="Search Organizations" value="{{ isset($organizationName) ? $organizationName : '' }}">
+                                    <input type="text" name="organization" placeholder="{{ isset($organizationName) ? $organizationName : 'Search organizations or email' }}" value="{{ isset($organizationName) ? $organizationName : '' }}">
                                     <input type="submit" value="Search">
                                 </form>
                             </div>
