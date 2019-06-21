@@ -77,9 +77,9 @@ class SuperAdmin implements SuperAdminInterface
                 [
                     'activities',
                     'settings',
-                    'users' => function ($query) {
-                        $query->where('role_id', 1);
-                    }
+                    'users'=> function ($query) {
+                        $query->orderBy('role_id');
+                    },
                 ]
             )->orderBy('name', 'asc')->paginate(15);
         }
@@ -92,8 +92,8 @@ class SuperAdmin implements SuperAdminInterface
                     'activities',
                     'settings',
                     'users' => function ($query) {
-                        $query->where('role_id', 1);
-                    }
+                        $query->orderBy('role_id');
+                    },
                 ]
             )->whereHas('users', function($q) use ($organizationName){
                 $q->where('email', 'like', '%'. $organizationName . '%');
