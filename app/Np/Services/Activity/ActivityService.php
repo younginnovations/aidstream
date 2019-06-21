@@ -318,9 +318,14 @@ class ActivityService
     public function getBudgetDetails()
     {
         $activities    = $this->all();
-        $budgetDetails = $this->exchangeRateService->budgetDetails($activities);
 
-        return $budgetDetails;
+        if(count($activities)){
+            $budgetDetails = $this->exchangeRateService->budgetDetails($activities);
+
+            return $budgetDetails;
+        }
+
+        return;
     }
 
     /**
