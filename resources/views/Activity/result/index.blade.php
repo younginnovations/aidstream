@@ -75,4 +75,20 @@
             </div>
         </div>
     </div>
+
+@endsection
+
+@section('script')
+    <script>
+        $(document).ready( function () {
+            $('#data-table').DataTable(
+                {
+                    "paging":   false,
+                    "info":     false
+                }
+            );
+            $('#data-table_filter').addClass('pull-left');
+            $('#data-table_filter').css('margin-left', '35px');
+        });
+    </script>
 @endsection
