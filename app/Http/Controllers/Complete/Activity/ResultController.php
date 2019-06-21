@@ -49,7 +49,6 @@ class ResultController extends Controller
     public function index($id)
     {
         $activityData = $this->activityManager->getActivityData($id);
-
         if (Gate::denies('ownership', $activityData)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
