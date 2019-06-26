@@ -560,8 +560,7 @@ class OrganizationController extends Controller
         $organizations     = null;
         $formRoute         = sprintf('/organization/%s/store', session('org_id'));
 
-
-        return view('Organization.create', compact('organizationTypes', 'organizationRoles', 'organizations', 'countries', 'id', 'formRoute'));
+        return view('Organization.create', compact('organizationTypes', 'organizations', 'countries', 'id', 'formRoute'));
     }
 
     /**

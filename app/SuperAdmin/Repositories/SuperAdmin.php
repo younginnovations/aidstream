@@ -119,14 +119,14 @@ class SuperAdmin implements SuperAdminInterface
                 {
                 $q->where('email', 'like', '%'. $organizationName . '%');
                 });
-            
-            if($version){
-                    $result->whereHas('settings', function($q) use ($version){
+
+                if($version){
+                   $result = $result->whereHas('settings', function($q) use ($version){
                     $q->where('version', '=' , $version);
                 });
             }
             $result = $result->orderBy('name', 'asc')->paginate(15);
-            
+
             return $result;
         }                    
     }
