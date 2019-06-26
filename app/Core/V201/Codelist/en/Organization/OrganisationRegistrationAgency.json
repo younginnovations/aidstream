@@ -985,6 +985,14 @@
       "name": "Nepal Inland Revenue Department",
       "language": "",
       "description": "The Inland Revenue Department is responsible for the administration of Value Added Tax, Income Tax, and Excise Duty. In the performance of these duties it maintains a register of Permanent Account Numbers (PANs) the unique taxpayer identification number for Nepal."
+    },
+    {
+      "category": "XI",
+      "category-name": "",
+      "code": "XI-BRIDGE",
+      "name": "Basic Registry of Identified Global Entities",
+      "language": "",
+      "description": "Led by three nonprofit partners – Foundation Center, GlobalGiving, and GuideStar – BRIDGE assigns a unique identification number, known as a BRIDGE number, to individual social sector entities around the world. Each 10-digit BRIDGE number is randomly generated and unique to an organization."
     }
   ]
 }

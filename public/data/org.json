@@ -10374,7 +10374,7 @@
         "source": "Information and copy provided by a member of the consortium responsible for the list. See this [github issue](https://github.com/org-id/register/issues/276) along with the pages it links to for full details."
       },
       "url": "https://bridge-registry.org/",
-      "coverage": [],
+      "coverage": null,
       "deprecated": false,
       "confirmed": true,
       "formerPrefixes": []
