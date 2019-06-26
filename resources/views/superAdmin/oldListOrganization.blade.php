@@ -10,6 +10,12 @@
             max-width: 100px;
             white-space: nowrap;
         }
+
+        .filterWrapper {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+        }
     </style>
     <div class="container main-container admin-container">
         <div class="row">
@@ -19,9 +25,18 @@
             <div class="col-xs-12 col-lg-8 organization-wrapper">
                 <div class="panel panel-default">
                     <div class="panel-body">
+                        <form action="{{ route('admin.list-organization') }}" class="filterWrapper" method="GET">
+                            <div id="verSelect">
+                            <select name="version">
+                                <option value="">All version
+                                </option>
+                                @foreach($versions as $version)
+                                <option value="{{ $version->version  }}" {{ $version->version == $selectedVersion ? 'selected' : ''}}>{{ $version->version  }}</option>
+                                @endforeach
+                            </select>
+                        </div>
                         @if(count($organizations) > 0)
                             <div class="col-md-4 pull-right search-org">
-                                <form action="{{ route('admin.list-organization') }}" method="GET">
                                     <input type="text" name="organization" placeholder="{{ isset($organizationName) ? $organizationName : 'Search organizations or email' }}" value="{{ isset($organizationName) ? $organizationName : '' }}">
                                     <input type="submit" value="Search">
                                 </form>
@@ -93,14 +108,25 @@
                             @endif
                         @endif
                     </div>
+
+                    <div class="wrapper-datatable">
                     <div class="text-center">
                         {!! $organizations->render() !!}
                     </div>
+
+                    <div class="text-center" id="TotalResult">
+                            Total results: {{ $organizations->total() }}
+                    </div>
+                </div>
+
                 </div>
             </div>
             @include('includes.superAdmin.side_bar_menu')
         </div>
     </div>
+
+
+
 @endsection
 
 @section('script')

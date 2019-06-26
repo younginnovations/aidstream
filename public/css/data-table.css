@@ -26,3 +26,13 @@ select {
 select[name="data-table_length"] {
   margin: 0 3px;
 }
+
+.wrapper-datatable{
+  position: relative;
+}
+
+#TotalResult{
+  position:absolute; 
+  top: 26px; 
+  right:20px
+}

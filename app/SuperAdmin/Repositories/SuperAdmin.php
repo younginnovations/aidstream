@@ -1,6 +1,7 @@
 <?php namespace App\SuperAdmin\Repositories;
 
 use App\Models\Organization\Organization;
+use App\Models\Version;
 use App\Models\Settings;
 use App\SuperAdmin\Repositories\SuperAdminInterfaces\SuperAdmin as SuperAdminInterface;
 use App\User;
@@ -41,6 +42,10 @@ class SuperAdmin implements SuperAdminInterface
      * @var DbLogger
      */
     protected $dbLogger;
+    /**
+     * @var Versions
+     */
+    protected $versions;
 
     /**
      * @param User            $user
@@ -49,6 +54,7 @@ class SuperAdmin implements SuperAdminInterface
      * @param DatabaseManager $database
      * @param Logger          $logger
      * @param DbLogger        $dbLogger
+     * @param Versions        $versions
      */
     public function __construct(
         User $user,
@@ -56,7 +62,8 @@ class SuperAdmin implements SuperAdminInterface
         Organization $organization,
         DatabaseManager $database,
         Logger $logger,
-        DbLogger $dbLogger
+        DbLogger $dbLogger,
+        Version $version
     ) {
         $this->organization = $organization;
         $this->database     = $database;
@@ -64,16 +71,18 @@ class SuperAdmin implements SuperAdminInterface
         $this->settings     = $settings;
         $this->user         = $user;
         $this->dbLogger     = $dbLogger;
+        $this->version     = $version;
     }
 
     /**
      * get all organization data with their users and activities
      * @return \Illuminate\Database\Eloquent\Collection|static[]
      */
-    public function getOrganizations($organizationName = null)
+    public function getOrganizations($organizationName = null, $version = null)
     {
         if (!$organizationName) {
-            return $this->organization->with(
+            
+            $organization = $this->organization->with(
                 [
                     'activities',
                     'settings',
@@ -81,12 +90,22 @@ class SuperAdmin implements SuperAdminInterface
                         $query->orderBy('role_id');
                     },
                 ]
-            )->orderBy('name', 'asc')->paginate(15);
+                );
+            if($version == ""){
+                
+                $organization = $organization->orderBy('name', 'asc')->paginate(15);
+            }
+
+            else{
+                $organization = $organization->whereHas('settings', function($q) use ($version){
+                    $q -> where('version', '=' , $version);
+                })->orderBy('name', 'asc')->paginate(15);
+            }
+            return $organization;
         }
 
         else{
-
-            return $this->organization
+            $result = $this->organization
             ->with(
                 [
                     'activities',
@@ -95,15 +114,32 @@ class SuperAdmin implements SuperAdminInterface
                         $query->orderBy('role_id');
                     },
                 ]
-            )->whereHas('users', function($q) use ($organizationName){
+            )->where('name', 'ilike', '%' . $organizationName . '%')-> 
+                whereHas('users', function($q) use ($organizationName)
+                {
                 $q->where('email', 'like', '%'. $organizationName . '%');
-                })-> orWhere('name', 'ilike', '%' . $organizationName . '%')->orderBy('name', 'asc')->paginate(15);
-                
+                });
+            
+            if($version){
+                    $result->whereHas('settings', function($q) use ($version){
+                    $q->where('version', '=' , $version);
+                });
+            }
+            $result = $result->orderBy('name', 'asc')->paginate(15);
+            
+            return $result;
         }                    
     }
+   
 
-    
+     /**
+     * get all version
+     * @param $version
+     */
+    public function getVersions(){
 
+        return $this->version->get();
+    }
 
     /**
      * get organization by its id
