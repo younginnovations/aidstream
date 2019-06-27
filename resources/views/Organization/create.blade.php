@@ -171,7 +171,7 @@
       <div class="form-group organisation-identifier">
           {{Form::label('organisation_identifier','Organisation Identifier:',['class' => 'control-label'])}}
           @{{organisation.identifier}}
-          <div v-if="(organisation.identifier.match(/[\/\&\|\?|]+/) && display_error)" class="text-danger">Special characters are not allowed.</div>
+          <div v-if="(organisation.identifier.match(/[\&\|\?|]+/) && display_error)" class="text-danger">Special characters are not allowed.</div>
       </div>
     </div>
   </div>
