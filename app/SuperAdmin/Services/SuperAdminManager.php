@@ -3,6 +3,7 @@
 use App\Models\Activity\Activity;
 use App\Models\ActivityPublished;
 use App\Models\Organization\Organization;
+use App\Models\Version;
 use App\Models\Organization\OrganizationData;
 use App\Models\OrganizationPublished;
 use App\Services\Export\CsvGenerator;
@@ -50,6 +51,11 @@ class SuperAdminManager
     protected $logger;
 
     /**
+     * @var Versions
+     */
+    protected $versions;
+
+    /**
      * @param SuperAdminInterface   $adminInterface
      * @param CsvGenerator          $generator
      * @param User                  $user
@@ -57,6 +63,7 @@ class SuperAdminManager
      * @param OrganizationPublished $organizationPublished
      * @param Activity              $activity
      * @param LoggerInterface       $logger
+     * @param Version               $version
      */
     function __construct(
         SuperAdminInterface $adminInterface,
@@ -65,7 +72,8 @@ class SuperAdminManager
         ActivityPublished $activityPublished,
         OrganizationPublished $organizationPublished,
         Activity $activity,
-        LoggerInterface $logger
+        LoggerInterface $logger,
+        Version $version
     ) {
         $this->adminInterface        = $adminInterface;
         $this->user                  = $user;
@@ -74,15 +82,25 @@ class SuperAdminManager
         $this->organizationPublished = $organizationPublished;
         $this->generator             = $generator;
         $this->logger                = $logger;
+        $this->version              = $version;
     }
 
     /**
      * return all organizations
      * @return mixed
      */
-    public function getOrganizations($organizationName = null)
+    public function getOrganizations($organizationName = null, $version =null)
     {
-        return $this->adminInterface->getOrganizations($organizationName);
+        return $this->adminInterface->getOrganizations($organizationName, $version);
+    }
+
+    /**
+     * return all organizations
+     * @return mixed
+     */
+    public function getVersions()
+    {
+        return $this->adminInterface->getVersions();
     }
 
     /**
@@ -94,7 +112,7 @@ class SuperAdminManager
     {
         return $this->adminInterface->getOrganizationById($id);
     }
-
+    
     /**
      * get organization with user information
      * @param $id
