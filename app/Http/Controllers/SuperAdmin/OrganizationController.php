@@ -82,16 +82,19 @@ class OrganizationController extends Controller
             $organizations = $this->adminManager->getOrganizationBySystemVersion(config('system-version.Tz.id'));
         } else {
             $versions = $this->adminManager->getVersions();
+            $sysVersions = $this->adminManager->getSysVersions();
             $selectedVersion = $request->get('version') ? $request->get('version') : "";
+            $selectedSysVersion = $request->get('sysVersion') ? $request->get('sysVersion') : "";
+            
             if ($request->has('organization')) {
                 $organizationName = $request->get('organization');
-                $organizations    = $this->adminManager->getOrganizations($organizationName, $selectedVersion);
+                $organizations    = $this->adminManager->getOrganizations($organizationName, $selectedVersion, $selectedSysVersion);
             } else {
-                $organizations = (session('role_id') == 3) ? $this->adminManager->getOrganizations( null, $selectedVersion) : $this->groupManager->getGroupsByUserId(Auth::user()->id);
+                $organizations = (session('role_id') == 3) ? $this->adminManager->getOrganizations( null, $selectedVersion, $selectedSysVersion) : $this->groupManager->getGroupsByUserId(Auth::user()->id);
             }
         }
         $organizations->appends(Input::except('page'));
-        return view('superAdmin.oldListOrganization', compact('organizations', 'organizationName', 'versions', 'selectedVersion'));
+        return view('superAdmin.oldListOrganization', compact('organizations', 'organizationName', 'versions', 'selectedVersion', 'sysVersions', 'selectedSysVersion'));
     }
 
     /**

@@ -14,13 +14,19 @@ interface SuperAdmin
      * get all organization details
      * @return mixed
      */
-    public function getOrganizations($organizationName = null, $version = null);
+    public function getOrganizations($organizationName = null, $version = null, $sysVersion = null);
 
     /**
-     * get all organization details
+     * get all Versions
      * @return mixed
      */
     public function getVersions();
+
+    /**
+     * get all system Versions
+     * @return mixed
+     */
+    public function getSysVersions();
 
     /**
      * get organization details with specific id

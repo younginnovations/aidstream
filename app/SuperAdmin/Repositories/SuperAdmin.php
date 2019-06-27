@@ -2,6 +2,7 @@
 
 use App\Models\Organization\Organization;
 use App\Models\Version;
+use App\Models\SystemVersion;
 use App\Models\Settings;
 use App\SuperAdmin\Repositories\SuperAdminInterfaces\SuperAdmin as SuperAdminInterface;
 use App\User;
@@ -55,6 +56,7 @@ class SuperAdmin implements SuperAdminInterface
      * @param Logger          $logger
      * @param DbLogger        $dbLogger
      * @param Versions        $versions
+     * @param SystemVersion   $sysVersion
      */
     public function __construct(
         User $user,
@@ -63,7 +65,8 @@ class SuperAdmin implements SuperAdminInterface
         DatabaseManager $database,
         Logger $logger,
         DbLogger $dbLogger,
-        Version $version
+        Version $version,
+        SystemVersion $sysVersion
     ) {
         $this->organization = $organization;
         $this->database     = $database;
@@ -71,41 +74,46 @@ class SuperAdmin implements SuperAdminInterface
         $this->settings     = $settings;
         $this->user         = $user;
         $this->dbLogger     = $dbLogger;
-        $this->version     = $version;
+        $this->version      = $version;
+        $this->sysVersion   = $sysVersion;
+
     }
 
     /**
      * get all organization data with their users and activities
      * @return \Illuminate\Database\Eloquent\Collection|static[]
      */
-    public function getOrganizations($organizationName = null, $version = null)
+    public function getOrganizations($organizationName = null, $version = null, $sysVersion = null)
     {
         if (!$organizationName) {
             
             $organization = $this->organization->with(
                 [
                     'activities',
-                    'settings',
+                    'settings',                    
                     'users'=> function ($query) {
                         $query->orderBy('role_id');
                     },
                 ]
                 );
-            if($version == ""){
-                
-                $organization = $organization->orderBy('name', 'asc')->paginate(15);
+
+            if($version){
+                $organization->whereHas('settings', function($q) use ($version){
+                    $q -> where('version', '=' , $version);
+                });
             }
 
-            else{
-                $organization = $organization->whereHas('settings', function($q) use ($version){
-                    $q -> where('version', '=' , $version);
-                })->orderBy('name', 'asc')->paginate(15);
+            if($sysVersion){
+                $organization->where('system_version_id', '=',$sysVersion );
             }
+
+            $organization = $organization->orderBy('name', 'asc')->paginate(15);
+
             return $organization;
         }
 
         else{
-            $result = $this->organization
+            $organization = $this->organization
             ->with(
                 [
                     'activities',
@@ -114,24 +122,30 @@ class SuperAdmin implements SuperAdminInterface
                         $query->orderBy('role_id');
                     },
                 ]
-            )->where('name', 'ilike', '%' . $organizationName . '%')-> 
-                whereHas('users', function($q) use ($organizationName)
-                {
-                $q->where('email', 'like', '%'. $organizationName . '%');
+                )
+                ->where(function($query) use ($organizationName) {
+                    $query->where('name', 'ilike', '%'. $organizationName . '%s')
+                    ->orWhereHas('users', function($q) use ($organizationName){
+                        $q->where('email', 'ilike', '%' . $organizationName . '%');
+                    });
                 });
             
             if($version){
-                    $result->whereHas('settings', function($q) use ($version){
+                $organization->whereHas('settings', function($q) use ($version){
                     $q->where('version', '=' , $version);
                 });
             }
-            $result = $result->orderBy('name', 'asc')->paginate(15);
+
+            if($sysVersion){
+                $organization->where('system_version_id', '=',$sysVersion );
+            }
+
+            $organization = $organization->orderBy('name', 'asc')->paginate(15);
             
-            return $result;
+            return $organization;
         }                    
     }
    
-
      /**
      * get all version
      * @param $version
@@ -139,6 +153,15 @@ class SuperAdmin implements SuperAdminInterface
     public function getVersions(){
 
         return $this->version->get();
+    }
+
+    /**
+     * get all system version
+     * @param $sysVersion
+     */
+    public function getSysVersions(){
+
+        return $this->sysVersion->get();
     }
 
     /**
