@@ -115,7 +115,7 @@ class SuperAdmin implements SuperAdminInterface
                     },
                 ]
             )->where('name', 'ilike', '%' . $organizationName . '%')-> 
-                whereHas('users', function($q) use ($organizationName)
+                orWhereHas('users', function($q) use ($organizationName)
                 {
                 $q->where('email', 'like', '%'. $organizationName . '%');
                 });
