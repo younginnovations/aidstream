@@ -4,6 +4,7 @@ use App\Models\Activity\Activity;
 use App\Models\ActivityPublished;
 use App\Models\Organization\Organization;
 use App\Models\Version;
+use App\Models\SystemVersion;
 use App\Models\Organization\OrganizationData;
 use App\Models\OrganizationPublished;
 use App\Services\Export\CsvGenerator;
@@ -64,6 +65,7 @@ class SuperAdminManager
      * @param Activity              $activity
      * @param LoggerInterface       $logger
      * @param Version               $version
+     * @param SystemVersion         $sysVersion
      */
     function __construct(
         SuperAdminInterface $adminInterface,
@@ -73,7 +75,8 @@ class SuperAdminManager
         OrganizationPublished $organizationPublished,
         Activity $activity,
         LoggerInterface $logger,
-        Version $version
+        Version $version,
+        SystemVersion $sysVersion
     ) {
         $this->adminInterface        = $adminInterface;
         $this->user                  = $user;
@@ -82,25 +85,35 @@ class SuperAdminManager
         $this->organizationPublished = $organizationPublished;
         $this->generator             = $generator;
         $this->logger                = $logger;
-        $this->version              = $version;
+        $this->version               = $version;
+        $this->sysVersion            = $sysVersion;
     }
 
     /**
      * return all organizations
      * @return mixed
      */
-    public function getOrganizations($organizationName = null, $version =null)
+    public function getOrganizations($organizationName = null, $version = null, $sysVersion = null)
     {
-        return $this->adminInterface->getOrganizations($organizationName, $version);
+        return $this->adminInterface->getOrganizations($organizationName, $version, $sysVersion);
     }
 
     /**
-     * return all organizations
+     * return all versions
      * @return mixed
      */
     public function getVersions()
     {
         return $this->adminInterface->getVersions();
+    }
+
+     /**
+     * return all system Versions
+     * @return mixed
+     */
+    public function getSysVersions()
+    {
+        return $this->adminInterface->getSysVersions();
     }
 
     /**

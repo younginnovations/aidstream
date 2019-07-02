@@ -16,6 +16,10 @@
             justify-content: flex-end;
             align-items: center;
         }
+
+        .system-version {
+            margin-right: 12px;
+        }
     </style>
     <div class="container main-container admin-container">
         <div class="row">
@@ -26,6 +30,15 @@
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <form action="{{ route('admin.list-organization') }}" class="filterWrapper" method="GET">
+                            <div id="sysVerSelect" class="system-version">
+                                <select name="sysVersion">
+                                    <option value="">All System version</option>
+                                    @foreach($sysVersions as $sysversion)
+                                    <option value="{{ $sysversion->id  }}" {{ $sysversion->id == $selectedSysVersion ? 'selected' : ''}}>{{ $sysversion->system_version  }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            
                             <div id="verSelect">
                             <select name="version">
                                 <option value="">All version
@@ -50,6 +63,7 @@
                                     <th width="100px">S.N.</th>
                                     <th width="30%">Organisation Name</th>
                                     <th>Version</th>
+                                    <th>System Version</th>
                                     <th>Users</th>
                                     <th>Activities</th>
                                     <th width="180px">Action</th>
@@ -63,6 +77,16 @@
                                             <div>{{getVal($organization->users->toArray(), [0, 'email'])}}</div>
                                         </td>
                                         <td>{{ $organization->settings ? $organization->settings->version : '' }}</td>
+                                        <td> @if($organization->system_version_id == 1)
+                                                    Core
+                                                @elseif($organization->system_version_id == 2)
+                                                    Lite
+                                                @elseif($organization->system_version_id == 3)
+                                                    Tz
+                                                @elseif($organization->system_version_id == 4)
+                                                    Np 
+                                                @endif
+                                        </td>
                                         <td>{{ count($organization->users) }}</td>
                                         <td>{{ count($organization->activities) }}</td>
                                         <td>
