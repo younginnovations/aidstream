@@ -628,7 +628,7 @@
             if (organisation.hasOwnProperty('countryText')) {
               delete organisation.countryText;
             }
-            if ((organisation.type === '') || (organisation.name[0]['narrative'] === '') || (organisation.country === '') || organisation.identifier.match(/[\/\&\|\?|]+/)) {
+            if ((organisation.type === '') || (organisation.name[0]['narrative'] === '') || (organisation.country === '') || organisation.identifier.match(/[\&\|\?|]+/)) {
               this.display_error = true;
               return false;
             }

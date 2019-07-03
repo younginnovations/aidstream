@@ -122,9 +122,11 @@ class SuperAdmin implements SuperAdminInterface
                         $query->orderBy('role_id');
                     },
                 ]
+
+
                 )
                 ->where(function($query) use ($organizationName) {
-                    $query->where('name', 'ilike', '%'. $organizationName . '%s')
+                    $query->where('name', 'ilike', '%'. $organizationName . '%')
                     ->orWhereHas('users', function($q) use ($organizationName){
                         $q->where('email', 'ilike', '%' . $organizationName . '%');
                     });
