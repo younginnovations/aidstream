@@ -69,7 +69,7 @@ class ImportActivityController extends Controller
             return redirect('/settings')->withResponse($response);
         }
         $form = $this->formCreator->createForm();
-
+        
         return view('Activity.uploader', compact('form'));
     }
 

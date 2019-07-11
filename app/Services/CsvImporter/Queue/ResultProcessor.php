@@ -48,6 +48,7 @@ class ResultProcessor
         $this->dispatch(
             new ImportResult(new CsvResultProcessor($csv), $filename, $version)
         );
+
         // $importResult = new ImportResult(new CsvResultProcessor($csv), $filename, $version);
         // $importResult->handle();
     }

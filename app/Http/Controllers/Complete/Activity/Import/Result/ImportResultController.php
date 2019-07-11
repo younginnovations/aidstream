@@ -100,7 +100,6 @@ class ImportResultController extends Controller
     public function results($activityId, ImportResult $request)
     {
         $file = $request->file('result');
-
         $this->importManager->clearImport();
 
         if ($this->importManager->storeCsv($file)) {
