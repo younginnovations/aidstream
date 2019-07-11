@@ -13,7 +13,7 @@ class ImportActivity extends ActivityBaseRequest
         Validator::extend(
             'activity_file',
             function ($attribute, $value, $parameters, $validator) {
-                $mimes    = ['application/excel', 'application/vnd.ms-excel', 'application/msexcel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'text/csv'];
+                $mimes    = ['application/excel', 'application/vnd.ms-excel', 'application/msexcel','text/csv'];
                 $fileMime = $value->getClientMimeType();
 
                 return in_array($fileMime, $mimes);
@@ -41,7 +41,7 @@ class ImportActivity extends ActivityBaseRequest
     public function messages()
     {
         $messages['activity.required']      = trans('validation.required', ['attribute' => trans('elementForm.activity_file')]);
-        $messages['activity.activity_file'] = trans('validation.mime', ['attribute' => trans('global.activity'), 'values' => 'csv']);
+        $messages['activity.activity_file'] = trans('validation.mimes', ['attribute' => trans('global.activity'), 'values' => 'csv']);
 
         return $messages;
     }
