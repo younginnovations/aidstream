@@ -25,8 +25,7 @@ class Profile
         'Email',
         'FirstName',
         'LastName',
-        'Permission',
-        'SecondaryEmailAddress'
+        'Permission'
     ];
 
     /**
