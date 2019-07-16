@@ -64,6 +64,9 @@ class BaseForm extends Form
     protected function addAddMoreButton($buttonId, $formClass, $label = 'Add More')
     {
         $label = ($label == 'Add More') ? trans('elementForm.add_more') : $label;
+        $hoverContent       =   $formClass;
+        $hoverContent       =   explode("_", $hoverContent);
+        $hoverContent       =   implode(" ",array_slice($hoverContent, -3,3));
 
         return $this->add(
             $buttonId,
@@ -73,6 +76,8 @@ class BaseForm extends Form
                 'attr'  => [
                     'class'           => 'add_to_collection',
                     'data-collection' => $formClass,
+                    'data-toggle'     => 'tooltip',
+                    'title'           => 'Add more '. $hoverContent ,
                 ],
             ]
         );
