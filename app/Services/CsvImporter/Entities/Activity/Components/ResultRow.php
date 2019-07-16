@@ -812,9 +812,8 @@ class ResultRow extends Row
     protected function setIndicatorPeriod($index)
     {
         $this->groupPeriods();
-
+        
         foreach (getVal($this->indicators, [$index, 'period'], []) as $i => $value) {
-
             $this->data['indicator'][$index]['period'][$i] = getVal($this->template, ['indicator', 0, 'period', 0]);
             $this->setIndicatorPeriodStart($index, $i)
                  ->setIndicatorPeriodEnd($index, $i)
@@ -831,6 +830,7 @@ class ResultRow extends Row
      */
     protected function groupPeriods()
     {
+        
         foreach ($this->indicators as $indicatorIndex => $values) {
             if (!array_diff_key(array_flip($this->periodFields), $this->indicators[$indicatorIndex])) {
                 $grouping                                    = app()->make(Grouping::class, [$this->indicators[$indicatorIndex], $this->periodFields])->groupValues();
@@ -848,7 +848,6 @@ class ResultRow extends Row
                 $this->indicators[$indicatorIndex]['baseline'] = $grouping;
             }
         }
-        // dd($this->indicators);
     }
 
     /**
@@ -1030,7 +1029,6 @@ class ResultRow extends Row
     protected function setIndicatorPeriodActualValue($index, $i)
     {
         $values = getVal($this->indicators[$index], ['period', $i, 'actual_value'], []);
-
         foreach ($values as $value) {
             if (!is_null($value)) {
                 $this->data['indicator'][$index]['period'][$i]['actual'][0]['value'] = (string) $value;
@@ -1173,7 +1171,6 @@ class ResultRow extends Row
         $this->setValidity();
 
         $this->recordErrors();
-
         return $this;
     }
 
@@ -1203,12 +1200,23 @@ class ResultRow extends Row
     {
         $rules = [];
 
+        if($this->version == 'V203') {
+        foreach($this->data['reference'] as $referenceIndex => $references){
+            $refIndex = $this->data['reference'][$referenceIndex]['vocabulary'];  
+            if($refIndex == 99){
+                $rules['reference.' . $referenceIndex . '.indicator_uri'] = sprintf(
+                    'url|required_with:%s', 'reference.' . $referenceIndex .  '.vocabulary'
+                );
+            }
+        }
+    }
+
         foreach ($this->data['indicator'] as $indicatorIndex => $indicators) {
             $rules['indicator.' . $indicatorIndex . '.title']       = 'unique_lang|unique_default_lang';
             $rules['indicator.' . $indicatorIndex . '.description'] = 'unique_lang|unique_default_lang';
 
             if($this->version !== 'V203') {
-               $rules['indicator.' . $indicatorIndex . '.baseline']    = 'size:1';
+                $rules['indicator.' . $indicatorIndex . '.baseline']    = 'size:1';
             }
 
             foreach (getVal($indicators, ['reference'], []) as $referenceIndex => $reference) {
@@ -1221,8 +1229,15 @@ class ResultRow extends Row
                     'required_with:%s',
                     'indicator.' . $indicatorIndex . '.reference.' . $referenceIndex . '.vocabulary'
                 );
+                
+                $vocabindex = $this->data['indicator'][$indicatorIndex]['reference'][$referenceIndex]['vocabulary'] ;
+                
+                if($vocabindex == 99){
+                    $rules['indicator.' . $indicatorIndex . '.reference.'. $referenceIndex . '.indicator_uri' ] =sprintf(
+                        'url|required_with:%s', 'indicator.' . $indicatorIndex . '.reference.'. $referenceIndex . '.vocabulary'
+                    );
+                }
             }
-
             foreach ($indicators['baseline'] as $baselineIndex => $baselines) {
                 $rules['indicator.' . $indicatorIndex . '.baseline.' . $baselineIndex . '.year']    = 'integer';
                 $rules['indicator.' . $indicatorIndex . '.baseline.' . $baselineIndex . '.comment'] = 'unique_lang|unique_default_lang';
@@ -1339,6 +1354,20 @@ class ResultRow extends Row
                     . ', ' . trans('elementForm.period_target_location_ref')
                     . ', ' . trans('elementForm.period_target_dimension_value')
                     . ', ' . trans('elementForm.period_target_dimension_name')
+            ]
+        );
+        $messages['indicator.*.reference.*.indicator_uri.required_with']        = trans(
+            'validation.required_with',
+            [
+                'attribute' => trans('elementForm.indicator_uri'),
+                'values'    => trans('elementForm.reference_indicator_uri_if')
+            ]
+        );
+        $messages['reference.*.indicator_uri.required_with']        = trans(
+            'validation.required_with',
+            [
+                'attribute' => trans('elementForm.indicator_uri'),
+                'values'    => trans('elementForm.reference_indicator_uri_if')
             ]
         );
 

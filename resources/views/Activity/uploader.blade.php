@@ -9,10 +9,9 @@
             @include('includes.side_bar_menu')
             <div class="col-xs-9 col-md-9 col-lg-9 content-wrapper upload-activity-wrapper">
                 @include('includes.response')
-
                 @if (isset($mismatch))
-                    <div class="alert alert-{{$mismatch['type']}}">
-                        <span>{!! message($mismatch) !!}</span>
+                <div class="alert alert-{{$mismatch['type']}}">
+                    <span>{!! message($mismatch) !!}</span>
                     </div>
                 @endif
                 <div id="import-status-placeholder"></div>

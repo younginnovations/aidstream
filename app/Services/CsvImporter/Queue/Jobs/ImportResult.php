@@ -75,11 +75,11 @@ class ImportResult extends Job implements ShouldQueue
             $this->fixStagingPermission($path);
             $uploadedFilepath = $this->getStoredCsvFilePath($this->filename);
 
-            if (file_exists($uploadedFilepath)) {
-                unlink($uploadedFilepath);
-            }
+            // if (file_exists($uploadedFilepath)) {
+            //     unlink($uploadedFilepath);
+            // }
 
-            $this->delete();
+            // $this->delete();
         } catch (\Exception $exception) {
             file_put_contents($path, json_encode(['status' => 'Complete']));
 
