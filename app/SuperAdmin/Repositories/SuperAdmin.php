@@ -114,18 +114,13 @@ class SuperAdmin implements SuperAdminInterface
 
         else{
             $organization = $this->organization
-            ->with(
-                [
+            ->with([
                     'activities',
                     'settings',
                     'users' => function ($query) {
                         $query->orderBy('role_id');
                     },
-                ]
-
-
-                )
-                ->where(function($query) use ($organizationName) {
+                ])->where(function($query) use ($organizationName) {
                     $query->where('name', 'ilike', '%'. $organizationName . '%')
                     ->orWhereHas('users', function($q) use ($organizationName){
                         $q->where('email', 'ilike', '%' . $organizationName . '%');
@@ -196,7 +191,7 @@ class SuperAdmin implements SuperAdminInterface
      * @param $id
      * @return mixed
      */
-    public function getOrganizationBySystemVersion($id)
+    public function getOrganizationBySystemVersion($id, $version = null, $sysVersion = null)
     {
         $organisations = $this->organization->with(
             [
@@ -206,8 +201,19 @@ class SuperAdmin implements SuperAdminInterface
                     $query->where('role_id', 1);
                 }
             ]
-        )->orderBy('name', 'asc')->where('system_version_id', $id)->paginate(15);
+            )->orderBy('name', 'asc')->where('system_version_id', $id);
+            
+            if($version){
+                $organisations = $organisations->whereHas('settings', function($q) use ($version){
+                    $q -> where('version', '=' , $version);
+                });
+            }
 
+            if($sysVersion){
+                $organisations = $organisations->where('system_version_id', '=',$sysVersion );
+            }
+            
+            $organisations = $organisations->paginate(15);
         return $organisations;
     }
 

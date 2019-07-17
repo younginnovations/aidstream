@@ -78,19 +78,20 @@ class OrganizationController extends Controller
      */
     public function oldListOrganizations(Request $request)
     {
+        $versions           =   $this->adminManager->getVersions();
+        $sysVersions        =   $this->adminManager->getSysVersions();
+        $selectedVersion    =   $request->get('version') ? $request->get('version') : "";
+        $selectedSysVersion =   $request->get('sysVersion') ? $request->get('sysVersion') : "";
+
         if(session('user_permission') == 8){
             return redirect()->intended(config('app.municipality_dashboard'));
         }
         if (isTzSubDomain()) {
-            $organizations = $this->adminManager->getOrganizationBySystemVersion(config('system-version.Tz.id'));
+            $organizations      = $this->adminManager->getOrganizationBySystemVersion(config('system-version.Tz.id'), $selectedVersion, $selectedSysVersion);
         } else if (isNpSubDomain()) {
-            $organizations = $this->adminManager->getOrganizationBySystemVersion(config('system-version.Np.id'));
-        } else {
-            $versions = $this->adminManager->getVersions();
-            $sysVersions = $this->adminManager->getSysVersions();
-            $selectedVersion = $request->get('version') ? $request->get('version') : "";
-            $selectedSysVersion = $request->get('sysVersion') ? $request->get('sysVersion') : "";
+            $organizations      = $this->adminManager->getOrganizationBySystemVersion(config('system-version.Np.id'), $selectedVersion, $selectedSysVersion);
             
+        } else {
             if ($request->has('organization')) {
                 $organizationName = $request->get('organization');
                 $organizations    = $this->adminManager->getOrganizations($organizationName, $selectedVersion, $selectedSysVersion);

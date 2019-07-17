@@ -142,9 +142,9 @@ class SuperAdminManager
      * @param $id
      * @return mixed
      */
-    public function getOrganizationBySystemVersion($id)
+    public function getOrganizationBySystemVersion($id, $version = null, $sysVersion = null)
     {
-        return $this->adminInterface->getOrganizationBySystemVersion($id);
+        return $this->adminInterface->getOrganizationBySystemVersion($id, $version , $sysVersion);
     }
 
     /**

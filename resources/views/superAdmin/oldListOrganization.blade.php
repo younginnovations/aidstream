@@ -48,12 +48,12 @@
                                 @endforeach
                             </select>
                         </div>
-                        @if(count($organizations) > 0)
-                            <div class="col-md-4 pull-right search-org">
-                                    <input type="text" name="organization" placeholder="{{ isset($organizationName) ? $organizationName : 'Search organizations or email' }}" value="{{ isset($organizationName) ? $organizationName : '' }}">
-                                    <input type="submit" value="Search">
-                                </form>
-                            </div>
+                        <div class="col-md-4 pull-right search-org">
+                            <input type="text" name="organization" placeholder="{{ isset($organizationName) ? $organizationName : 'Search organizations or email' }}" value="{{ isset($organizationName) ? $organizationName : '' }}">
+                            <input type="submit" value="Search">
+                        </form>
+                    </div>
+                    @if(count($organizations) > 0)
                             @if (request()->has('organization'))
                                 <a href="{{ route('admin.list-organization') }}" class="pull-left back-to-admin-dashboard">Back To Organisations List</a>
                             @endif
