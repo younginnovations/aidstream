@@ -56,5 +56,5 @@ interface SuperAdmin
      * @param $id
      * @return mixed
      */
-    public function getOrganizationBySystemVersion($id);
+    public function getOrganizationBySystemVersion($id, $version = null, $sysVersion = null);
 }
