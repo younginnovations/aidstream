@@ -64,11 +64,11 @@ class RegistrationController extends Controller
         $regInfo        = session()->pull('reg_info');
         $orgType        = $this->baseForm->getCodeList('OrganizationType', 'Organization', false);
         $countries      = $this->baseForm->getCodeList('Country', 'Organization', false);
-        $orgRegAgency   = $this->baseForm->getCodeList('OrganisationRegistrationAgency', 'Organization', false);
+        $orgRegAgency   = $this->baseForm->getRegistrationCodeList(false);
         $dbRegAgency    = $this->regAgencyManager->getRegAgenciesCode();
         $orgRegAgency   = array_merge($orgRegAgency, $dbRegAgency);
         $systemVersions = $this->systemVersion->where('id', '<>', config('system-version.Tz.id'))->lists('system_version', 'id')->toArray();
-
+        
         $dbRoles = \DB::table('role')->whereNotNull('permissions')->orderBy('role', 'desc')->get();
         $roles   = [];
         foreach ($dbRoles as $role) {

@@ -70,8 +70,8 @@ class ParticipatingOrganizationController extends Controller
             $getCrsChannelCode = [];
         }
         
-//        $participatingOrganization  = $this->participatingOrganizationManager->getParticipatingOrganizationData($id);
-//        $form                       = $this->participatingOrganizationForm->editForm($participatingOrganization, $id);
+        //        $participatingOrganization  = $this->participatingOrganizationManager->getParticipatingOrganizationData($id);
+        //        $form                       = $this->participatingOrganizationForm->editForm($participatingOrganization, $id);
         $organizationTypes     = $this->getNameWithCode('Activity', 'OrganisationType');
         $organizationRoles     = $this->getNameWithCode('Activity', 'OrganisationRole');
         $partnerOrganizations  = $this->participatingOrganizationManager->getPartnerOrganizations(session('org_id'))->toArray();
@@ -97,7 +97,7 @@ class ParticipatingOrganizationController extends Controller
         if ($participatingOrganizations) {
             $participatingOrganizations = array_values($participatingOrganizations);
         }
-
+        
         return view(
             'Activity.participatingOrganization.edit',
             compact('form', 'activityData', 'id', 'participatingOrganizations', 'organizationRoles', 'organizationTypes', 'countries', 'partnerOrganizations','getCrsChannelCode')

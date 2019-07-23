@@ -2,6 +2,7 @@
 
 use App\Console\Commands\AddTzToSystemVersions;
 use App\Console\Commands\SyncPartnerOrganizations;
+use App\Console\Commands\RegistrationAgencyData;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -17,6 +18,7 @@ class Kernel extends ConsoleKernel
         'App\Console\Commands\Inspire',
         AddTzToSystemVersions::class,
         SyncPartnerOrganizations::class,
+        Commands\RegistrationAgencyData::class,
     ];
 
     /**
