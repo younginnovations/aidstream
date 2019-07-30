@@ -460,7 +460,7 @@ class OrganizationController extends Controller
 
         $xmlLines = $xmlService->getFormattedXml($xml);
         $messages = $xmlService->getSchemaErrors($xml, session('version'));
-
+        
         return view('Organization.xmlView', compact('xmlLines', 'messages', 'orgId', 'viewErrors'));
     }
 
