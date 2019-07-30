@@ -26,7 +26,7 @@
         </div>
         <div class="col-xs-12 col-md-12">
             {!! AsForm::text(['name' => 'organization[organization_address]', 'label' => trans('organisation.organisation_address'), 'class' => 'organization_address', 'required' => true, 'parent' => 'col-xs-12 col-sm-6 col-md-6']) !!}
-            {!! AsForm::select(['name' => 'organization[organization_registration_agency]', 'label' => trans('organisation.organisation_registration_agency'), 'class' => 'organization_registration_agency', 'data' =>$orgRegAgency, 'required' => true , 'parent' => 'col-xs-12 col-sm-6 col-md-6', 'empty_value' => trans('global.select_an_agency'), 'html' => sprintf('<button type="button" class="btn-xs btn-link add_agency">%s</button>', trans('global.add_agency'))]) !!}
+            {!! AsForm::select(['name' => 'organization[organization_registration_agency]', 'label' => trans('organisation.organisation_registration_agency'), 'class' => 'organization_registration_agency', 'data' =>$orgRegAgency, 'required' => true , 'parent' => 'col-xs-12 col-sm-6 col-md-6', 'empty_value' => trans('global.select_an_agency')]) !!}
             {{ Form::hidden('organization[agencies]', ($agencies = getVal($regInfo, ['organization', 'agencies'], [])) ? $agencies : json_encode($orgRegAgency), ['class' => 'form-control agencies', 'id' => 'agencies', 'data-agency' => getVal($regInfo, ['organization', 'organization_registration_agency'])]) }}
             {{ Form::hidden('organization[new_agencies]', null, ['class' => 'form-control new_agencies', 'id' => 'organization[new_agencies]']) }}
             {{ Form::hidden('organization[agency_name]', null, ['class' => 'form-control agency_name', 'id' => 'organization[agency_name]']) }}
