@@ -20,7 +20,13 @@ class DocumentLink extends V201DocumentLink
         $documentLink        = (array) $organizationData->document_link;
 
         foreach ($documentLink as $orgDocumentLink) {
-
+            foreach(getVal($orgDocumentLink, ['category']) as $value){
+            $categories[] = [
+                '@attributes' => ['code' => getVal($value, ['code'])]
+            ];
+            
+        }
+            
             $orgDocumentLinkData[] = [
                 '@attributes'       => [
                     'format' => getVal($orgDocumentLink, ['format']),
@@ -32,9 +38,8 @@ class DocumentLink extends V201DocumentLink
                 'description'       => [
                     'narrative' => $this->buildNarrative(getVal($orgDocumentLink, ['description', 0, 'narrative']))
                 ],
-                'category'          => [
-                    '@attributes' => ['code' => getVal($orgDocumentLink, ['category', 0, 'code'])],
-                ],
+                'category'          => $categories,
+                                
                 'language'          => [
                     '@attributes' => ['code' => getVal($orgDocumentLink, ['language', 0, 'language'])],
                 ],

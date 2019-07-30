@@ -148,12 +148,12 @@
                             {{--*/ $number = $key + 1; /*--}}
                             @if($viewErrors)
                                 <div id="{{ $number }}" style="{{ array_key_exists($number, $messages) ? 'background:#F1D3D3;': ''  }}">
-                        @else
+                            @else
                                         <div>
-                        @endif
+                            @endif
                                             <strong>{{ $number }} </strong>{{ $line }}</div>
-                                @endforeach
-                            </pre>
+                    @endforeach
+                    </pre>
                 </div>
             </div>
         </div>
