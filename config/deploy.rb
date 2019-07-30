@@ -155,6 +155,15 @@ namespace :aidstream do
         end
     end
 
+    desc "Fetch latest org-id guide data"
+    task :fetch_reg_agency do
+        on roles(:app) do
+            within release_path do
+                execute :php, "artisan add:regAgency"
+            end
+        end
+    end
+
     desc " Set up project "
     task :set_up do
         on roles(:all) do
@@ -238,7 +247,7 @@ namespace :deploy do
     after :updated, "composer:install"
     after :updated, "environment:set_variables"
     after :published, "aidstream:create_symlink"
-    #after :finished, "hipchat:deployed"
+    after :finished, "aidstream:fetch_reg_agency"
     after :finished, "aidstream:queue_restart"
     after :finished, "aidstream:create_ver_txt"
     #after :failed, "hipchat:notify_deploy_failed"
