@@ -46,12 +46,38 @@ class BaseForm extends Form
 
         foreach ($codeList as $list) {
             $data[$list['code']] = ($code) ? $list['code'] . (array_key_exists(
-                    'name',
-                    $list
+                'name',
+                $list
                 ) ? ' - ' . $list['name'] : '') : $list['name'];
-        }
-
+            }
         return $data;
+    }
+
+    /**
+     * return codeList array from json codeList
+     * @param bool $code
+     * @return array
+     */
+    public function getRegistrationCodeList($code = true)
+    {
+        $defaultVersion     = config('app.default_version_name');
+        $defaultLocale      = config('app.fallback_locale');
+        $version            = session()->get('version');
+        $locale             = config('app.locale');
+        $filePath           = public_path("data/org.json");
+        $codeListFromFile   = file_get_contents($filePath);
+        $codeLists          = json_decode($codeListFromFile, true);
+        $codeList           = $codeLists['lists'];
+        $data               = [];
+
+        foreach ($codeList as $list) {
+            $data[$list['code']] = ($code) ? $list['code'] . (array_key_exists(
+                'name',
+                $list
+                ) ? ' - ' . $list['name'] : '') : $list['name'];
+                $returnData[$list['code']] = $data[$list['code']]['en'];
+            }
+        return $returnData;
     }
 
     /**
