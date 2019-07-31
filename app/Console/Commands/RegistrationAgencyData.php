@@ -42,16 +42,38 @@ class RegistrationAgencyData extends Command
     {
         $currentFilePath    = public_path('data/org.json');
         $newFilePath        = public_path('data/new-org.json');
-        
+        $content = $this->getRegistrationAgencyData();
         try{
-            $regAgency      = file_get_contents('http://org-id.guide/download.json');
-            File::put( $newFilePath, $regAgency);
-            File::delete(public_path('data/org.json'));
-            rename($newFilePath, $currentFilePath);
-        }
+            if($content['status'] == 200){
+                File::put( $newFilePath, $content['data']);
+                File::delete(public_path('data/org.json'));
+                rename($newFilePath, $currentFilePath);
 
-        catch(exception $e){
-            Log::info('Error while importing json file');
+                echo "Imported Successfully";
+            } else {
+                throw new \Exception("Import Failed");
+            }
+            
         }
+        catch(exception $e){
+            echo $e->getMessage();
+        }
+    }
+
+    public function getRegistrationAgencyData()
+    {
+        $url = 'http://org-id.guide/download.json';
+        $curl = curl_init();
+        curl_setopt($curl, CURLOPT_URL, $url);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, CURLOPT_HEADER, false);
+        $content = curl_exec($curl);
+        $statusCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+        curl_close($curl);
+        
+        return [
+            'data' => $content,
+            'status' => $statusCode
+        ];
     }
 }
