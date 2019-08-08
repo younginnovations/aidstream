@@ -186,7 +186,7 @@ class XmlGenerator
             'default-currency'      => $settings->default_field_values[0]['default_currency'],
             'xmlns:aidstream'       => 'http://example.org/aidstream/ns#'
         ];
-
+        
         return $this->arrayToXml->createXML('iati-organisations', $xmlData);
     }
 

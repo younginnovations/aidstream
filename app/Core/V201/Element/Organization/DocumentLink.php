@@ -43,6 +43,13 @@ class DocumentLink extends BaseElement
         $orgDocumentLinkData = [];
         $documentLink        = (array) $organizationData->document_link;
         foreach ($documentLink as $orgDocumentLink) {
+            $categories = [];
+            foreach(getVal($orgDocumentLink, ['category']) as $value){
+                $categories[] = [
+                    '@attributes' => ['code' => getVal($value, ['code'])]
+                ];
+            }
+
             $orgDocumentLinkData[] = [
                 '@attributes'       => [
                     'format' => $orgDocumentLink['format'],
@@ -51,9 +58,7 @@ class DocumentLink extends BaseElement
                 'title'             => [
                     'narrative' => $this->buildNarrative(getVal($orgDocumentLink, ['title', 0, 'narrative']))
                 ],
-                'category'          => [
-                    '@attributes' => ['code' => $orgDocumentLink['category'][0]['code']],
-                ],
+                'category'          => $categories,
                 'language'          => [
                     '@attributes' => ['code' => $orgDocumentLink['language'][0]['language']],
                 ],

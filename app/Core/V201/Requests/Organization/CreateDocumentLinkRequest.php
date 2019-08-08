@@ -103,7 +103,7 @@ class CreateDocumentLinkRequest extends OrganizationBaseRequest
         foreach ($formFields as $documentCategoryIndex => $documentCategory) {
             $rules[sprintf('%s.category.%s.code', $formIndex, $documentCategoryIndex)] = 'required';
         }
-
+        
         return $rules;
     }
 
