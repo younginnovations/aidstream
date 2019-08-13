@@ -133,6 +133,10 @@ class LoginService
         $loginValue = $credentials['login'];
         $loginField = filter_var($credentials['login'], FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
 
+        if($loginField == 'email'){
+            $loginValue = strtolower($loginValue);
+        }
+
         unset($credentials['login']);
 
         $this->setCredentials(array_merge($credentials, [$loginField => $loginValue]));
