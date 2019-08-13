@@ -66,10 +66,12 @@ class PasswordController extends Controller
     {
         $this->validate($request, ['email' => 'required|email']);
         $this->subject = 'AidStream Account Password Reset';
-
+        $email = $request->only('email');
+        $email['email'] = strtolower($request->get('email'));
+        
         try {
             $response = Password::sendResetLink(
-                $request->only('email'),
+                $email,
                 function (Message $message) {
                     $message->subject($this->getEmailSubject());
                 }

@@ -180,6 +180,7 @@ class Registration
         $userData['first_name'] = getVal($user, ['first_name']);
         $userData['last_name']  = getVal($user, ['last_name']);
         $userData['email']      = getVal($user, ['email']);
+        $userData['email']      = strtolower($userData['email']);
         $userData['username']   = getVal($user, ['username']);
         $password               = getVal($user, ['password']);
         $password               = $password ? bcrypt($password) : '';
