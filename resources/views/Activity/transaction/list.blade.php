@@ -55,7 +55,7 @@
                                             <td>{{ $transaction['reference'] }}</td>
                                             <td>{{ $code->getActivityCodeName('TransactionType', $transaction['transaction_type'][0]['transaction_type_code'])}}</td>
                                             <td>{{ round($transaction['value'][0]['amount'], 2) }}</td>
-                                            <td>{{ formatDate($transaction['transaction_date'][0]['date']) }}</td>
+                                            <td data-sort ="{{$transaction['transaction_date'][0]['date'].strftime("%Y%m%d")}}">{{ formatDate($transaction['transaction_date'][0]['date']) }}</td>
                                             <td>
                                                 <a class="view" href="{{ route('activity.transaction.show', [$activity->id, $transaction['id']]) }}"></a>
                                                 <a class="edit"
