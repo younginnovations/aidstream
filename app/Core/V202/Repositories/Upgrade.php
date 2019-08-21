@@ -138,8 +138,8 @@ class Upgrade
             $defaultAidType     = $activity->default_aid_type;
 
             $defaultAidTypeData = [
-                "default_aidtype_vocabulary" => 1,
-                "default_aid_type"           => $defaultAidType,
+                "default_aidtype_vocabulary" => $defaultAidType ? 1 : '',
+                "default_aid_type"           => (!is_array($defaultAidType)) ? $defaultAidType : '',
                 "aidtype_earmarking_category" => '',
                 "default_aid_type_text" => ''
             ];
@@ -173,17 +173,16 @@ class Upgrade
             foreach ($transactions as $eachTransaction) {
                 $transactionField = $eachTransaction->transaction;
 
-                $default_aid_type = @$transactionField['aid_type'][0]['aid_type'];
-
+                $default_aid_type = getVal($transactionField, ['aid_type', 0, 'aid_type'], null);
+                $default_aid_type = (!is_array($default_aid_type)) ? $default_aid_type : '';
                 $defaultAidTypeData = [
-                    "default_aidtype_vocabulary" => 1,
-                    "default_aid_type"           => $default_aid_type,
+                    "default_aidtype_vocabulary" => $default_aid_type ? 1 : '',
+                    "default_aid_type"           => $default_aid_type ? $default_aid_type : '',
                     "aidtype_earmarking_category" => '',
                     "default_aid_type_text" => ''
                 ];
-    
                 $defaultAidTypeArray = [$defaultAidTypeData];
-                (!$default_aid_type) ?: $transactionField['aid_type'][0]['aid_type'] = $defaultAidTypeArray;
+                $transactionField['aid_type'][0]['aid_type'] = $defaultAidTypeArray;
 
                 $eachTransaction->transaction = $transactionField;
                 $eachTransaction->save();

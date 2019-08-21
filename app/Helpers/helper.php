@@ -832,7 +832,7 @@ function getDimension($target)
             if (empty($name)) {
                 return $dimension = sprintf('<em>%s</em>', trans('global.not_available'));
             } else {
-                $value        = $dimension['value'];
+                $value        = getVal($dimension, ['value']);
                 $dimensions[] = sprintf('%s (%s)', $name, $value);
             }
         }

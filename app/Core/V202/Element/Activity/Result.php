@@ -114,8 +114,8 @@ class Result extends V201Result
         foreach ($dimensions as $dimension) {
             $dimensionData[] = [
                 '@attributes' => [
-                    'name'  => $dimension['name'],
-                    'value' => $dimension['value']
+                    'name'  => getVal($dimension, ['name']),
+                    'value' => getVal($dimension, ['value'])
                 ]
             ];
         }

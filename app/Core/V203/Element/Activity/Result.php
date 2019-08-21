@@ -184,11 +184,11 @@ class Result extends BaseElement
             if($measure == 5){
                 $dimensionValue = NULL;
             } else {
-                $dimensionValue = $dimension['value'];
+                $dimensionValue = getVal($dimension, ['value']);
             }
             $dimensionData[] = [
                 '@attributes' => [
-                    'name'  => $dimension['name'],
+                    'name'  => getVal($dimension, ['name']),
                     'value' => $dimensionValue
                 ]
             ];
