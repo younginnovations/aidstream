@@ -37,8 +37,7 @@ class Transaction extends V201Transaction
         foreach ($transactions as $totalTransaction) {
             $transaction = $totalTransaction->transaction;
             $sector      = [];
-
-            foreach (getVal($transaction, ['sector'] ) as $sectorData) {
+            foreach (getVal($transaction, ['sector'], []) as $sectorData) {
                 if ($sectorData) {
                     $vocabulary = getVal($sectorData, ['sector_vocabulary']);
                     if ($vocabulary == 1) {
@@ -101,6 +100,7 @@ class Transaction extends V201Transaction
                         $code = getVal($aidType, ['default_aid_type_text']);
                     } else {
                         $code = getVal($aidType, ['default_aid_type']);
+                        $code = (is_array($code)) ? getVal($code, [0, 'default_aid_type']) : $code;
                     }
                     $defaultAidType[] = [
                         '@attributes' => [
