@@ -98,9 +98,11 @@ class Transaction extends V201Transaction
                         $code = getVal($aidType, ['aidtype_earmarking_category']);
                     } else if ($vocabulary == 3) {
                         $code = getVal($aidType, ['default_aid_type_text']);
-                    } else {
+                    } else if($vocabulary == 1){
                         $code = getVal($aidType, ['default_aid_type']);
                         $code = (is_array($code)) ? getVal($code, [0, 'default_aid_type']) : $code;
+                    } else if($vocabulary == 4){
+                        $code = getVal($aidType, ['cash_and_voucher_modalities']);
                     }
                     $defaultAidType[] = [
                         '@attributes' => [

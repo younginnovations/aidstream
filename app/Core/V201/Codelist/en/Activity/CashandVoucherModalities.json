@@ -1,0 +1,19 @@
+{
+    "date-last-modified": "2019-08-22T16:29:56.850470+00:00",
+    "version": "",
+    "name": "CashandVoucherModalities",
+    "xml:lang": "en",
+    "CashandVoucherModalities": [
+        {
+            "code": "1",
+            "status": "active",
+            "name": "Cash Transfer"
+        },
+        {
+            "code": "2",
+            "status": "active",
+            "name": "Voucher"
+        }
+    ]
+}
+  

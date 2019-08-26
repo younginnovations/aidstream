@@ -60,7 +60,8 @@ class DefaultAidTypeController extends Controller
                     'default_aid_type' => $defaultAidType,
                     'default_aidtype_vocabulary' => '1',
                     'earmarking_category' => '',
-                    'default_aid_type_text' => ''
+                    'default_aid_type_text' => '',
+                    'cash_and_voucher_modalities' => ''
                 ];
                 $defaultAidType = [$defaultAidType];
             }

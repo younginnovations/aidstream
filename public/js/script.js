@@ -351,7 +351,7 @@ $(document).ready(function () {
         if (aidtypeVocabulary == '') {
             aidtypeVocabulary = 1;
         }
-        var aidtypeClass = ['','.aidtype_select', '.aidtype_earmarking_category', '.aidtype_text'];
+        var aidtypeClass = ['','.aidtype_select', '.aidtype_earmarking_category', '.aidtype_text', '.aidtype_cash_and_voucher_modalities'];
         var selectedAidtype = aidtypeClass[aidtypeVocabulary] ? aidtypeClass[aidtypeVocabulary] : aidtypeClass[0];
         parent.siblings('.default_aidtypes').addClass('hidden').children('.form-control').removeAttr('required');
         parent.siblings(selectedAidtype).removeClass('hidden').children('.form-control').attr('required', 'required');
