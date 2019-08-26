@@ -48,13 +48,15 @@ class DefaultAidType extends Request
             $aidtypeForm                                                    = sprintf('default_aid_type.%s', $aidtypeIndex);
 
             $rules[sprintf('%s.default_aidtype_vocabulary', $aidtypeForm)]  = 'required';
- 
-            if ($aidtype['default_aidtype_vocabulary'] == 1) {
+            $vocabulary = getVal($aidtype, ['default_aidtype_vocabulary']);
+            if ($vocabulary == 1) {
                 $rules[sprintf('%s.default_aid_type', $aidtypeForm)] = 'required_with:' . $aidtypeForm . '.default_aidtype_vocabulary';
-            } else if($aidtype['default_aidtype_vocabulary'] == 2) {
+            } else if($vocabulary == 2) {
                 $rules[sprintf('%s.earmarking_category', $aidtypeForm)] = 'required_with:' . $aidtypeForm . '.default_aidtype_vocabulary';
-            } else if($aidtype['default_aidtype_vocabulary'] == 3) {
+            } else if($vocabulary == 3) {
                 $rules[sprintf('%s.default_aid_type_text', $aidtypeForm)] = 'required_with:' . $aidtypeForm. '.default_aidtype_vocabulary';
+            } else if($vocabulary == 4) {
+                $rules[sprintf('%s.cash_and_voucher_modalities', $aidtypeForm)] = 'required_with:'. $aidtypeForm. '.default_aidtype_vocabulary';
             }
         }
 
@@ -72,21 +74,26 @@ class DefaultAidType extends Request
         foreach ($formFields as $aidtypeIndex => $aidtype) {
             $aidtypeForm                                                    = sprintf('default_aid_type.%s', $aidtypeIndex);
             $messages[sprintf('%s.default_aidtype_vocabulary.required', $aidtypeForm)] = trans('validation.required', ['attribute' => trans('elementForm.default_aid_type')]);
- 
-            if ($aidtype['default_aidtype_vocabulary'] == 1) {
+            $vocabulary = getVal($aidtype, ['default_aidtype_vocabulary']);
+            if ($vocabulary == 1) {
                 $messages[sprintf('%s.default_aid_type.%s', $aidtypeForm, 'required_with')] = trans(
                     'validation.required_with',
                     ['attribute' => trans('elementForm.default_aid_type_code'), 'values' => trans('elementForm.default_aid_type_vocabulary')]
                 );
-            } else if($aidtype['default_aidtype_vocabulary'] == 2) {
-                $messages[sprintf('%s.default_aid_type.%s', $aidtypeForm, 'required_with')] = trans(
+            } else if($vocabulary == 2) {
+                $messages[sprintf('%s.earmarking_category.%s', $aidtypeForm, 'required_with')] = trans(
                     'validation.required_with',
-                    ['attribute' => trans('elementForm.default_aid_type_earmarking_category_code'), 'values' => trans('elementForm.default_aid_type_vocabulary')]
+                    ['attribute' => trans('elementForm.default_aid_type_code'), 'values' => trans('elementForm.default_aid_type_vocabulary')]
                 );
-            } else if($aidtype['default_aidtype_vocabulary'] == 3) {
-                $messages[sprintf('%s.default_aid_type.%s', $aidtypeForm, 'required_with')] = trans(
+            } else if($vocabulary == 3) {
+                $messages[sprintf('%s.default_aid_type_text.%s', $aidtypeForm, 'required_with')] = trans(
                     'validation.required_with',
                     ['attribute' => trans('elementForm.default_aid_type_text'), 'values' => trans('elementForm.default_aid_type_vocabulary')]
+                );
+            } else if($vocabulary == 4){
+                $messages[sprintf('%s.cash_and_voucher_modalities.%s', $aidtypeForm, 'required_with')] = trans(
+                    'validation.required_with',
+                    ['attribute' => trans('elementForm.default_aid_type_code'), 'values' => trans('elementForm.default_aid_type_vocabulary')]
                 );
             }
         }

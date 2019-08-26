@@ -141,7 +141,8 @@ class Upgrade
                 "default_aidtype_vocabulary" => $defaultAidType ? 1 : '',
                 "default_aid_type"           => (!is_array($defaultAidType)) ? $defaultAidType : '',
                 "aidtype_earmarking_category" => '',
-                "default_aid_type_text" => ''
+                "default_aid_type_text" => '',
+                "cash_and_voucher_modalities" => ''
             ];
 
             $defaultAidTypeArray = [$defaultAidTypeData];

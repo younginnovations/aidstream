@@ -21,6 +21,12 @@
             "code":"3",
             "name":"Earmarking Modality",
             "description":"Codes A to L replicated directly from Grand Bargain document found in Annex 1 (pg.16)"
+         },
+         {
+            "url": "http://reference.iatistandard.org/codelists/CashandVoucherModalities/",
+            "code": "4",
+            "name": "Cash and Voucher Modalities",
+            "description": "This vocabulary has been created by IATI, following agreements and recommendations of the Tracking Cash and Voucher Assistance (CVA) Working Group."
          }
     ]
   }

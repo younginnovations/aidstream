@@ -118,7 +118,9 @@
                                         <li>{{ substr($getCode->getActivityCodeName('EarmarkingCategory', getVal($data, ['earmarking_category'], [])) , 0 , -5)}}</li>
                                         @elseif($data['default_aidtype_vocabulary'] == '3')
                                         <li>{{ $data['default_aid_type_text']}}</li>
-                                        @else 
+                                        @elseif($data['default_aidtype_vocabulary'] == '4')
+                                        <li>{{ substr($getCode->getActivityCodeName('CashandVoucherModalities', getVal($data, ['cash_and_voucher_modalities'], [])) , 0 , -3)}}</li>
+                                        @else
                                         <em>Not Available</em>
                                         @endif
                                         @endforeach

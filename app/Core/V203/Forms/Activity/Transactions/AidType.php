@@ -47,6 +47,17 @@ class AidType extends BaseForm
                 ]
             )
             ->add(
+                'cash_and_voucher_modalities',
+                'select',
+                [
+                    'choices'     => $this->getCodeList('CashandVoucherModalities', 'Activity'),
+                    'empty_value' => trans('elementForm.select_text'),
+                    'label'       => trans('elementForm.default_aid_type'),
+                    'wrapper'     => ['class' => 'form-group hidden default_aidtypes aidtype_cash_and_voucher_modalities'],
+                    'help_block'  => $this->addHelpText('Activity_DefaultAidType-code'),
+                ]
+            )
+            ->add(
                 'default_aid_type_text',
                 'select',
                 [

@@ -40,7 +40,8 @@ class DefaultAidType
                 'default_aid_type' => $aidTypeArray,
                 'default_aidtype_vocabulary' => '1',
                 'earmarking_category' => '',
-                'default_aid_type_text' => ''
+                'default_aid_type_text' => '',
+                'cash_and_voucher_modalities' => ''
             ];
             $aidTypeArray = [$data];
         }
@@ -52,9 +53,11 @@ class DefaultAidType
                 $code = $aidType['default_aid_type'];
             } else if ($vocabulary == 2) {
                 $code = $aidType['earmarking_category'];
-            } else {
+            } else if ($vocabulary == 3) {
                 $code = $aidType['default_aid_type_text'];
-            } 
+            } else if($vocabulary == 4){
+                $code = getVal($aidType, ['cash_and_voucher_modalities']);
+            }
             $activityData[] = [
                 '@attributes' => [
                     'code' => $code,

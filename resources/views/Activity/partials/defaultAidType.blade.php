@@ -10,8 +10,10 @@
                         <li>{{ substr($getCode->getActivityCodeName('AidType', getVal($data, ['default_aid_type'], [])) , 0 , -5)}}</li>
                         @elseif($data['default_aidtype_vocabulary'] == '2')
                         <li>{{ substr($getCode->getActivityCodeName('EarmarkingCategory', getVal($data, ['earmarking_category'], [])) , 0 , -5)}}</li>
-                        @else
+                        @elseif($data['default_aidtype_vocabulary'] == '3')
                         <li>{{ substr($getCode->getActivityCodeName('EarmarkingModality', getVal($data, ['default_aid_type_text'], [])) , 0 , -5)}}</li>
+                        @elseif($data['default_aidtype_vocabulary'] == '4')
+                        <li>{{ substr($getCode->getActivityCodeName('CashandVoucherModalities', getVal($data, ['cash_and_voucher_modalities'], [])), 0, -3)}}</li>
                         @endif
                         @endforeach
                     @else
