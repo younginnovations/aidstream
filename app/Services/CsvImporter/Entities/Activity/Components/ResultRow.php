@@ -812,7 +812,7 @@ class ResultRow extends Row
     protected function setIndicatorPeriod($index)
     {
         $this->groupPeriods();
-        
+
         foreach (getVal($this->indicators, [$index, 'period'], []) as $i => $value) {
             $this->data['indicator'][$index]['period'][$i] = getVal($this->template, ['indicator', 0, 'period', 0]);
             $this->setIndicatorPeriodStart($index, $i)
@@ -830,7 +830,6 @@ class ResultRow extends Row
      */
     protected function groupPeriods()
     {
-        
         foreach ($this->indicators as $indicatorIndex => $values) {
             if (!array_diff_key(array_flip($this->periodFields), $this->indicators[$indicatorIndex])) {
                 $grouping                                    = app()->make(Grouping::class, [$this->indicators[$indicatorIndex], $this->periodFields])->groupValues();
@@ -1202,9 +1201,9 @@ class ResultRow extends Row
 
         if($this->version == 'V203') {
         foreach($this->data['reference'] as $referenceIndex => $references){
-            $refIndex = $this->data['reference'][$referenceIndex]['vocabulary'];  
+            $refIndex = $this->data['reference'][$referenceIndex]['vocabulary'];
             if($refIndex == 99){
-                $rules['reference.' . $referenceIndex . '.indicator_uri'] = sprintf(
+                $rules['reference.' . $referenceIndex . '.vocabulary_uri'] = sprintf(
                     'url|required_with:%s', 'reference.' . $referenceIndex .  '.vocabulary'
                 );
             }
@@ -1229,9 +1228,9 @@ class ResultRow extends Row
                     'required_with:%s',
                     'indicator.' . $indicatorIndex . '.reference.' . $referenceIndex . '.vocabulary'
                 );
-                
+
                 $vocabindex = $this->data['indicator'][$indicatorIndex]['reference'][$referenceIndex]['vocabulary'] ;
-                
+
                 if($vocabindex == 99){
                     $rules['indicator.' . $indicatorIndex . '.reference.'. $referenceIndex . '.indicator_uri' ] =sprintf(
                         'url|required_with:%s', 'indicator.' . $indicatorIndex . '.reference.'. $referenceIndex . '.vocabulary'
@@ -1292,6 +1291,7 @@ class ResultRow extends Row
         $messages['title.*.narrative.0.language.in']                                 = trans('validation.invalid_language', ['attribute' => trans('elementForm.title')]);
         $messages['title.unique_lang']                                               = trans('validation.unique_lang', ['attribute' => trans('elementForm.title')]);
         $messages['description.unique_lang']                                         = trans('validation.unique_lang', ['attribute' => trans('elementForm.description')]);
+        $messages['reference.*.vocabulary_uri.url']                                  = trans('validation.code_list', ['attribute' => trans('elementForm.results_reference_url')]);
         $messages['indicator.*.title.unique_lang']                                   = trans('validation.unique_lang', ['attribute' => trans('elementForm.indicator_title')]);
         $messages['indicator.*.description.unique_lang']                             = trans('validation.unique_lang', ['attribute' => trans('elementForm.indicator_description')]);
         $messages['indicator.*.baseline.0.comment.unique_lang']                      = trans('validation.unique_lang', ['attribute' => trans('elementForm.baseline_comment')]);
@@ -1363,14 +1363,13 @@ class ResultRow extends Row
                 'values'    => trans('elementForm.reference_indicator_uri_if')
             ]
         );
-        $messages['reference.*.indicator_uri.required_with']        = trans(
+        $messages['reference.*.vocabulary_uri.required_with']        = trans(
             'validation.required_with',
             [
-                'attribute' => trans('elementForm.indicator_uri'),
+                'attribute' => trans('elementForm.reference_vocabulary_uri'),
                 'values'    => trans('elementForm.reference_indicator_uri_if')
             ]
         );
-
         return $messages;
     }
 
@@ -1556,7 +1555,7 @@ class ResultRow extends Row
      */
     protected function indicatorVocabularyCodeList()
     {
-        $list = $this->loadCodeList('IndicatorVocabulary', 'V201');
+        $list = $this->loadCodeList('IndicatorVocabulary', $this->version);
 
         $codes = [];
         foreach ($list['IndicatorVocabulary'] as $code) {

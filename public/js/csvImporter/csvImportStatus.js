@@ -149,7 +149,7 @@ $(document).ready(function () {
                     submitButton.addClass('hidden');
                     $('#dontOverwrite').addClass('hidden');
                     cancelButton.addClass('hidden');
-                    $('#go_back').removeClass('hidden').css({ "position": "relative", "color": "white", "left": "800px", "top": "-27px" });
+                    $('#go_back').removeClass('hidden').css({ "position": "relative", "color": "white", "left": "790px", "top": "-27px", "text-decoration": "underline"});
                 }
             }, 3000);
         } else {
