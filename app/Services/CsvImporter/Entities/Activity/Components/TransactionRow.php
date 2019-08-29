@@ -113,7 +113,7 @@ class TransactionRow
 
         $this->transactionRow['transaction'] = $this->loadTemplate($this->version, 'transaction');
         foreach ($this->fields as $csvHeader => $value) {
-            if (array_key_exists($csvHeader, $this->headerToFieldMap) && $value !== "") { 
+            if (array_key_exists($csvHeader, $this->headerToFieldMap) && $value !== "") {
                     $this->headerMapper($csvHeader, $value);
             }
         }
@@ -172,7 +172,7 @@ class TransactionRow
      * @param $value
      */
     public function map($arrayKey, $field, $value)
-    {   
+    {
         if (is_array($field)) {
             foreach ($field as $index => $item) {
                 if (is_array($item)) {
@@ -278,7 +278,7 @@ class TransactionRow
     {
         $transactionType = getVal((array) $this->transactionRow, ['transaction', 'transaction_type', 0, 'transaction_type_code']);
 
-        $validTransactionType = $this->loadCodeList('TransactionType', 'V201');
+        $validTransactionType = $this->loadCodeList('TransactionType', $this->version);
         foreach ($validTransactionType['TransactionType'] as $type) {
             if (ucwords($transactionType) == $type['name']) {
                 $this->transactionRow['transaction']['transaction_type'][0]['transaction_type_code'] = $type['code'];
@@ -360,7 +360,7 @@ class TransactionRow
      */
     protected function rules()
     {
-        $sectorVocabulary   = $this->validCodeList('SectorVocabulary', 'V201');
+        $sectorVocabulary   = $this->validCodeList('SectorVocabulary', $this->version);
         $sectorCode         = $this->validCodeList('Sector', 'V201');
         $sectorCategoryCode = $this->validCodeList('SectorCategory', 'V201');
         $regionCode         = $this->validCodeList('Region', 'V201');
@@ -379,18 +379,18 @@ class TransactionRow
             'transaction.receiver_organization.*.type'                     => sprintf('in:%s', $this->validCodeList('OrganisationType', 'V201')),
             'transaction.receiver_organization'                            => 'only_one_among',
             'transaction.sector'                                           => 'check_sector',
-            // 'transaction.sector.*.sector_vocabulary'                       => sprintf('required_if:%s,%s|in:%s', 'transaction.sector.*.activitySector', '', $sectorVocabulary),
-            // 'transaction.sector.*.sector_code'                             => sprintf('required_if:%s,%s|in:%s', 'transaction.sector.*.sector_vocabulary', '1', $sectorCode),
-            // 'transaction.sector.*.sector_category_code'                    => sprintf('required_if:%s,%s|in:%s', 'transaction.sector.*.sector_vocabulary', '2', $sectorCategoryCode),
-            // 'transaction.sector.*.sector_text'                             => sprintf(
-            //     'required_unless:%s,%s,%s,%s,%s,%s',
-            //     'transaction.sector.*.sector_vocabulary',
-            //     '1',
-            //     'transaction.sector.*.sector_vocabulary',
-            //     '2',
-            //     'activitySector',
-            //     ''
-            // ),
+            'transaction.sector.*.sector_vocabulary'                       => sprintf('required_if:%s,%s|in:%s', 'transaction.sector.*.activitySector', '', $sectorVocabulary),
+            'transaction.sector.*.sector_code'                             => sprintf('required_if:%s,%s|in:%s', 'transaction.sector.*.sector_vocabulary', '1', $sectorCode),
+            'transaction.sector.*.sector_category_code'                    => sprintf('required_if:%s,%s|in:%s', 'transaction.sector.*.sector_vocabulary', '2', $sectorCategoryCode),
+            'transaction.sector.*.sector_text'                             => sprintf(
+                'required_unless:%s,%s,%s,%s,%s,%s',
+                'transaction.sector.*.sector_vocabulary',
+                '1',
+                'transaction.sector.*.sector_vocabulary',
+                '2',
+                'activitySector',
+                ''
+            ),
             'transaction.recipient_country.0.country_code'                 => sprintf('in:%s', $countryCode),
             'transaction.recipient_region.0.region_code'                   => sprintf('in:%s', $regionCode),
             'transaction.aid_type.*.aid_type'                              => sprintf('in:%s', $this->validCodeList('AidType', $this->version)),

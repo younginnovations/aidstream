@@ -12,6 +12,14 @@ $(document).ready(function () {
                 if (response.status == null) {
                     return;
                 }
+                if (response.status == 'Error') {
+                    placeHolder.empty().append($('<a/>', {
+                        href: '/activity/' + activity + '/import-result/import-status',
+                        text: "Csv File Processing " + response.status
+                    }));
+
+                    return;
+                }
 
                 if (response.status == 'Complete') {
                     placeHolder.empty().append($('<a/>', {

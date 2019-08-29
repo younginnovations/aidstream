@@ -229,7 +229,7 @@ class ImportResultManager
     {
         $this->sessionManager->put(['import-result-status' => 'Processing']);
         $this->sessionManager->put(['filename' => $filename]);
-        
+
         return $this;
     }
 
@@ -327,6 +327,14 @@ class ImportResultManager
      */
     public function getSessionStatus()
     {
+        if($this->checkStatusFile()){
+            $status = file_get_contents($this->getTemporaryFilepath('status.json'));
+
+            if (json_decode($status, true)['status'] == 'Error') {
+                return 'Error';
+            }
+        }
+
         if ($this->sessionManager->has('import-result-status')) {
             return $this->sessionManager->get('import-result-status');
         }
@@ -569,7 +577,6 @@ class ImportResultManager
     public function isInUTF8Encoding($filename)
     {
         $file = new File($this->getStoredCsvPath($filename));
-
 
         if (getEncodingType($file) == self::DEFAULT_ENCODING) {
             return true;
