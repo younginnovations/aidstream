@@ -1,7 +1,7 @@
 <?php namespace App\Services\CsvImporter\Entities\Activity\Components;
 
 use App\Services\CsvImporter\Entities\Row;
-use Illuminate\Support\Facades\Log;
+
 /**
  * Class ActivityRow
  * @package App\Services\CsvImporter\Entities\Activity\Components
@@ -348,6 +348,10 @@ class ActivityRow extends Row
             if (class_exists($namespace = $this->getNamespace($element, self::BASE_NAMESPACE))) {
                 $this->$element = $this->make($namespace, $this->fields());
 
+                if($element === 'sector') {
+                    $this->$element->setVersion($this->version);
+                }
+
                 if ($element === 'identifier') {
                     $this->$element->setOrganization($this->organizationId);
                 }
@@ -372,7 +376,7 @@ class ActivityRow extends Row
                 $this->transaction[] = $this->make($namespace, $transactionRow, $this);
             }
         }
-
+        $this->transaction[0]->setVersion($this->version);
         $this->elements[] = $this->transactionElement();
 
         return $this;

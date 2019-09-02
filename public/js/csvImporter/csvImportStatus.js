@@ -39,15 +39,14 @@ var CsvImportStatusManager = {
             var r = JSON.parse(response);
 
             if (r.status == 'Error') {
+                transferComplete = 'error';
                 cancelButton.fadeIn('slow').removeClass('hidden');
-
-                transferComplete = null;
+                placeHolder.empty().append("<a href='/import-activity/import-status'>" + CsvImportStatusManager.localisedData['error_processing_csv'] + "</a>");
             }
-            // var placeHolder = $('div#import-status-placeholder');
 
             if (r.status == 'Complete') {
                 transferComplete = true;
-                placeHolder.empty().append("<a href='/import-activity/import-status'>" + CsvImportStatusManager.localisedData['csv_file_processing'] + r.status + ".</a>");
+                placeHolder.empty().append("<a href='/import-activity/import-status'>" + CsvImportStatusManager.localisedData['csv_file_processing'] + ' ' + r.status + ".</a>");
                 cancelButton.fadeIn('slow').removeClass('hidden');
                 checkAll.fadeIn('slow').removeClass('hidden');
             } else if (r.status == 'Incomplete' || r.status == 'Processing') {
@@ -145,6 +144,12 @@ $(document).ready(function () {
                     accordionInit();
                     CsvImportStatusManager.enableImport();
                     clearInterval(interval);
+                }
+                if (transferComplete == 'error') {
+                    submitButton.addClass('hidden');
+                    $('#dontOverwrite').addClass('hidden');
+                    cancelButton.addClass('hidden');
+                    $('#go_back').removeClass('hidden').css({ "position": "relative", "color": "white", "left": "800px", "top": "-27px" });
                 }
             }, 3000);
         } else {

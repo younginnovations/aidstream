@@ -40,6 +40,8 @@ class Sector extends Element
      */
     protected $percentage = [];
 
+    protected $version;
+
     /**
      * File path for the english IATI code list for an Activity.
      */
@@ -259,7 +261,7 @@ class Sector extends Element
      */
     public function rules()
     {
-        $sectorVocabulary   = implode(",", $this->validSectorCodeList('SectorVocabulary', 'V201'));
+        $sectorVocabulary   = implode(",", $this->validSectorCodeList('SectorVocabulary', $this->version));
         $sectorCode         = implode(",", $this->validSectorCodeList('Sector', 'V201'));
         $sectorCategoryCode = implode(",", $this->validSectorCodeList('SectorCategory', 'V201'));
 
@@ -354,5 +356,10 @@ class Sector extends Element
         }
 
         return null;
+    }
+
+    public function setVersion($version)
+    {
+        $this->version = $version;
     }
 }

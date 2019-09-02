@@ -1,4 +1,6 @@
-<?php namespace App\Http\Controllers\Complete\Activity\Import;
+<?php
+
+namespace App\Http\Controllers\Complete\Activity\Import;
 
 use App\Http\Requests\Request;
 use App\Http\Controllers\Controller;
@@ -8,7 +10,6 @@ use App\Services\CsvImporter\ImportManager;
 use App\Services\Organization\OrganizationManager;
 use App\Core\V201\Requests\Activity\ImportActivity;
 use App\Services\FormCreator\Activity\ImportActivity as ImportActivityForm;
-
 
 /**
  * Class ImportController
@@ -151,7 +152,7 @@ class ImportController extends Controller
         if ($this->importManager->storeCsv($file)) {
             $filename = str_replace(' ', '', $file->getClientOriginalName());
             $this->importManager->startImport($filename)
-                                ->fireCsvUploadEvent($filename);
+                ->fireCsvUploadEvent($filename);
 
             $this->fixPermission(storage_path('csvImporter/tmp'));
 
@@ -211,7 +212,7 @@ class ImportController extends Controller
     {
         if ($this->importManager->caughtExceptions()) {
             $this->importManager->deleteFile('header_mismatch.json')
-                                ->reportHeaderMismatch();
+                ->reportHeaderMismatch();
 
             return response()->json(json_encode(['status' => 'Error', 'message' => trans('error.header_mismatch')]));
         }
