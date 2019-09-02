@@ -10,6 +10,7 @@
             <div class="col-xs-9 col-md-9 col-lg-9 content-wrapper upload-activity-wrapper">
                 @include('includes.response')
                 <div id="import-status-placeholder" class="status-nolink"></div>
+                <a class="hidden" id="go_back" href="{{route('activity.upload-csv')}}">Go Back</a>
                 <div class="element-panel-heading">
                     <div>
                         @lang('title.import_activities')
@@ -117,11 +118,11 @@
 @stop
 @section('script')
     <script>
-                @if (isset($data))
+    @if (isset($data))
         var alreadyProcessed = true;
-                @else
+    @else
         var alreadyProcessed = false;
-        @endif
+    @endif
     </script>
     <script src="{{ asset('js/csvImporter/accordion.js') }}"></script>
     <script src="{{ asset('js/csvImporter/csvImportStatus.js') }}"></script>

@@ -1,9 +1,12 @@
-<?php namespace App\Services\CsvImporter\Queue\Jobs;
+<?php
+
+namespace App\Services\CsvImporter\Queue\Jobs;
 
 use App\Jobs\Job;
 use App\Services\CsvImporter\Queue\CsvProcessor;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Support\Facades\Log;
+use Log;
+
 /**
  * Class ImportActivity
  * @package App\Services\CsvImporter\Queue\Jobs
@@ -66,13 +69,13 @@ class ImportActivity extends Job implements ShouldQueue
      */
     public function handle()
     {
+        $directoryPath = storage_path(sprintf('%s/%s/%s', 'csvImporter/tmp', $this->organizationId, $this->userId));
+        if (!is_dir($directoryPath)) {
+            mkdir($directoryPath, 0777, true);
+        }
+        $path = sprintf('%s/%s', $directoryPath, 'status.json');
         try {
-            $path = storage_path(sprintf('%s/%s/%s/%s', 'csvImporter/tmp/', $this->organizationId, $this->userId, 'status.json'));
-
             $this->csvProcessor->handle($this->organizationId, $this->userId, $this->activityIdentifiers, $this->version);
-            $directoryPath = storage_path(sprintf('%s/%s/%s', 'csvImporter/tmp/', $this->organizationId, $this->userId));
-            shell_exec(sprintf('chmod 777 -R %s', $directoryPath));
-
             file_put_contents($path, json_encode(['status' => 'Complete']));
 
             $uploadedFilepath = $this->getStoredCsvFilePath($this->filename);
@@ -83,11 +86,10 @@ class ImportActivity extends Job implements ShouldQueue
 
             $this->delete();
         } catch (\Exception $exception) {
-            file_put_contents($path, json_encode(['status' => 'Complete']));
-
+            file_put_contents($path, json_encode(['status' => 'Error']));
+            Log::error($exception->getMessage() . ' in ' . $exception->getFile() . ':' . $exception->getLine());
             $this->delete();
         }
-
     }
 
     /**

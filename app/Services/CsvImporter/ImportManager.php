@@ -1,4 +1,6 @@
-<?php namespace App\Services\CsvImporter;
+<?php
+
+namespace App\Services\CsvImporter;
 
 use App\Services\Activity\ParticipatingOrganizations\PartnerOrganizationData;
 use Exception;
@@ -190,7 +192,7 @@ class ImportManager
             $partnerOrganization = app()->make(PartnerOrganizationData::class);
 
             $partnerOrganization->init($createdActivity, array_get($activity, 'data.participating_organization', []), $this->organizationRepo)
-                                ->sync();
+                ->sync();
 
             if (array_key_exists('transaction', $activity['data'])) {
                 $this->createTransaction(getVal($activity['data'], ['transaction'], []), $createdActivity->id);
@@ -369,6 +371,9 @@ class ImportManager
 
             if (json_decode($status, true)['status'] == 'Complete') {
                 return 'Complete';
+            }
+            if (json_decode($status, true)['status'] == 'Error') {
+                return 'Error';
             }
         }
 
@@ -686,4 +691,3 @@ class ImportManager
         return false;
     }
 }
-

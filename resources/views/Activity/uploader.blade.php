@@ -55,11 +55,11 @@
 @stop
 @section('script')
     <script>
-                @if (isset($importing))
+    @if (isset($importing))
         var importing = true;
-                @else
+    @else
         var importing = false;
-        @endif
+    @endif
     </script>
     <script>
         var checkSessionRoute = '{{ route('activity.check-session-status')}}';

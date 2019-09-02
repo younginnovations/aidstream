@@ -96,7 +96,6 @@ class Transaction extends Element
         $this->prepare($transactionRow);
         $this->factory     = $factory;
         $this->activityRow = $activityRow;
-        // $this->version     = $version;
     }
 
     /**
@@ -159,7 +158,7 @@ class Transaction extends Element
      */
     public function rules()
     {
-        $sectorVocabulary   = $this->validCodeList('SectorVocabulary', 'V201');
+        $sectorVocabulary   = $this->validCodeList('SectorVocabulary', $this->version);
         $sectorCode         = $this->validCodeList('Sector', 'V201');
         $sectorCategoryCode = $this->validCodeList('SectorCategory', 'V201');
         $regionCode         = $this->validCodeList('Region', 'V201');
@@ -311,5 +310,10 @@ class Transaction extends Element
     protected function activityLevelRecipientRegion()
     {
         return $this->activityRow->recipientRegion->data;
+    }
+    
+    public function setVersion($version)
+    {
+        $this->version = $version;
     }
 }
