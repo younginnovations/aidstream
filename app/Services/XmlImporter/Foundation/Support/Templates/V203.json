@@ -125,12 +125,13 @@
     },
     "default_flow_type": "",
     "default_finance_type": "",
-    "default_aid_type": 
+    "default_aid_type":
         {
         "default_aid_type":"",
         "default_aidtype_vocabulary":"",
-        "aidtype_earmarking_category":"",
-        "default_aid_type_text":""
+        "earmarking_category":"",
+        "default_aid_type_text":"",
+        "cash_and_voucher_modalities":""
         },
     "default_tied_status": "",
     "budget": {
@@ -379,7 +380,11 @@
       ],
       "aid_type": [
         {
-          "aid_type": ""
+          "default_aid_type":"",
+          "default_aidtype_vocabulary":"",
+          "aidtype_earmarking_category":"",
+          "default_aid_type_text":"",
+          "cash_and_voucher_modalities":""
         }
       ],
       "tied_status": [
@@ -684,4 +689,3 @@
       "humanitarian": ""
     }
   }
-  

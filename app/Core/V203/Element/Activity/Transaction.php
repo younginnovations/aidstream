@@ -95,7 +95,11 @@ class Transaction extends V201Transaction
                 foreach(getVal($transaction, ['aid_type', 0, 'aid_type']) as $aidType){
                     $vocabulary = getVal($aidType, ['default_aidtype_vocabulary']);
                     if ($vocabulary == 2) {
-                        $code = getVal($aidType, ['aidtype_earmarking_category']);
+                        if(array_key_exists('aidtype_earmarking_category', $aidType)){
+                            $code = getVal($aidType, ['aidtype_earmarking_category']);
+                        } else if(array_key_exists('earmarking_category', $aidType)){
+                            $code = getVal($aidType, ['earmarking_category']);
+                        }
                     } else if ($vocabulary == 3) {
                         $code = getVal($aidType, ['default_aid_type_text']);
                     } else if($vocabulary == 4){

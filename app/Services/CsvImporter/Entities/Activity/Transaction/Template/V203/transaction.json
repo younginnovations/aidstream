@@ -110,7 +110,11 @@
   ],
   "aid_type": [
     {
-      "aid_type": ""
+      "default_aid_type":"",
+      "default_aidtype_vocabulary":"",
+      "aidtype_earmarking_category":"",
+      "default_aid_type_text":"",
+      "cash_and_voucher_modalities":""
     }
   ],
   "tied_status": [

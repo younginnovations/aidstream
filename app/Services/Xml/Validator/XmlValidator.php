@@ -1,4 +1,6 @@
-<?php namespace App\Services\Xml\Validator;
+<?php
+
+namespace App\Services\Xml\Validator;
 
 
 /**
@@ -44,8 +46,8 @@ class XmlValidator
     public function validateActivity($activityId, $shouldBeUnique = false)
     {
         return $this->factory->initialize($this->activity, $this->rules(), $this->messages())
-                             ->passes()
-                             ->withErrors($activityId, $shouldBeUnique);
+            ->passes()
+            ->withErrors($activityId, $shouldBeUnique);
     }
 
     /**
@@ -75,7 +77,7 @@ class XmlValidator
         $rules['collaboration_type']   = sprintf('in:%s', $this->validCodeList('CollaborationType', 'V201'));
         $rules['default_flow_type']    = sprintf('in:%s', $this->validCodeList('FlowType', 'V201'));
         $rules['default_finance_type'] = sprintf('in:%s', $this->validCodeList('FinanceType', 'V201'));
-        if(session('version') == 'V203'){
+        if (session('version') == 'V203') {
             $rules                     = array_merge($rules, $this->rulesForDefaultAidType($activity));
         } else {
             $rules['default_aid_type'] = sprintf('in:%s', $this->validCodeList('AidType', 'V203'));
@@ -124,7 +126,7 @@ class XmlValidator
         $messages['collaboration_type.in']    = trans('validation.code_list', ['attribute' => trans('element.collaboration_type')]);
         $messages['default_flow_type.in']     = trans('validation.code_list', ['attribute' => trans('element.default_flow_type')]);
         $messages['default_finance_type.in']  = trans('validation.code_list', ['attribute' => trans('element.default_finance_type')]);
-        if(session('version') == 'V203'){
+        if (session('version') == 'V203') {
             $messages                         = array_merge($messages, $this->messagesForDefaultAidType($activity));
         } else {
             $messages['default_aid_type.in']  = trans('validation.code_list', ['attribute' => trans('element.default_aid_type')]);
@@ -166,8 +168,19 @@ class XmlValidator
         $defaultAidType = getVal($activity, ['default_aid_type'], []);
         $rules = [];
 
-        foreach($defaultAidType = [] as $index => $item){
-            $rules[sprintf('default_aid_type.%s.default_aid_type', $index)] = sprintf('in:%s', $this->validCodeList('AidType', 'V203'));
+        foreach ($defaultAidType as $index => $aidtype) {
+            $aidtypeForm = sprintf('default_aid_type.%s', $index);
+            $rules[sprintf('%s.default_aidtype_vocabulary', $aidtypeForm)]  = 'required|in:1,2,3,4';
+            $vocabulary = getVal($aidtype, ['default_aidtype_vocabulary']);
+            if ($vocabulary == 1) {
+                $rules[sprintf('%s.default_aid_type', $aidtypeForm)] = sprintf('required_with:%s|in:%s', $aidtypeForm . '.default_aidtype_vocabulary', $this->validCodeList('AidType', 'V203'));
+            } else if ($vocabulary == 2) {
+                $rules[sprintf('%s.earmarking_category', $aidtypeForm)] = sprintf('required_with:%s|in:%s', $aidtypeForm . '.default_aidtype_vocabulary', $this->validCodeList('EarmarkingCategory', 'V203'));
+            } else if ($vocabulary == 3) {
+                $rules[sprintf('%s.default_aid_type_text', $aidtypeForm)] = sprintf('required_with:%s|in:%s', $aidtypeForm . '.default_aidtype_vocabulary', $this->validCodeList('EarmarkingModality', 'V203'));
+            } else if ($vocabulary == 4) {
+                $rules[sprintf('%s.cash_and_voucher_modalities', $aidtypeForm)] = sprintf('required_with:%s|in:%s', $aidtypeForm . '.default_aidtype_vocabulary', $this->validCodeList('CashandVoucherModalities', 'V203'));
+            }
         }
 
         return $rules;
@@ -177,9 +190,49 @@ class XmlValidator
     {
         $defaultAidType = getVal($activity, ['default_aid_type'], []);
         $messages = [];
-        
-        foreach($defaultAidType = [] as $index => $item){
-            $messages[sprintf('default_aid_type.%s.default_aid_type.in', $index)] = trans('validation.code_list', ['attribute' => trans('element.default_aid_type')]);
+
+        foreach ($defaultAidType as $index => $aidtype) {
+            $aidtypeForm = sprintf('default_aid_type.%s', $index);
+
+            $messages[sprintf('%s.default_aidtype_vocabulary.required', $aidtypeForm)] = trans('validation.required', ['attribute' => trans('elementForm.default_aid_type_vocabulary')]);
+            $messages[sprintf('%s.default_aidtype_vocabulary.in', $aidtypeForm)] = trans('validation.code_list', ['attribute' => trans('elementForm.default_aid_type_vocabulary')]);
+
+            $vocabulary = getVal($aidtype, ['default_aidtype_vocabulary']);
+
+            if ($vocabulary == 1) {
+                $messages[sprintf('%s.default_aid_type.%s', $aidtypeForm, 'required_with')] = trans(
+                    'validation.required_with',
+                    ['attribute' => trans('elementForm.default_aid_type'), 'values' => trans('elementForm.default_aid_type_vocabulary')]
+                );
+                $messages[sprintf('%s.default_aid_type.in', $aidtypeForm)] = trans('validation.code_list', ['attribute' => trans('element.default_aid_type')]);
+            } else if ($vocabulary == 2) {
+                $messages[sprintf('%s.earmarking_category.%s', $aidtypeForm, 'required_with')] = trans(
+                    'validation.required_with',
+                    ['attribute' => trans('elementForm.default_aid_type'), 'values' => trans('elementForm.default_aid_type_vocabulary')]
+                );
+                $messages[sprintf('%s.earmarking_category.in', $aidtypeForm)] = trans(
+                    'validation.code_list',
+                    ['attribute' => trans('elementForm.default_aid_type')]
+                );
+            } else if ($vocabulary == 3) {
+                $messages[sprintf('%s.default_aid_type_text.%s', $aidtypeForm, 'required_with')] = trans(
+                    'validation.required_with',
+                    ['attribute' => trans('elementForm.default_aid_type'), 'values' => trans('elementForm.default_aid_type_vocabulary')]
+                );
+                $messages[sprintf('%s.default_aid_type_text.in', $aidtypeForm)] = trans(
+                    'validation.code_list',
+                    ['attribute' => trans('elementForm.default_aid_type')]
+                );
+            } else if ($vocabulary == 4) {
+                $messages[sprintf('%s.cash_and_voucher_modalities.%s', $aidtypeForm, 'required_with')] = trans(
+                    'validation.required_with',
+                    ['attribute' => trans('elementForm.default_aid_type'), 'values' => trans('elementForm.default_aid_type_vocabulary')]
+                );
+                $messages[sprintf('%s.cash_and_voucher_modalities.in', $aidtypeForm)] = trans(
+                    'validation.code_list',
+                    ['attribute' => trans('elementForm.default_aid_type')]
+                );
+            }
         }
 
         return $messages;
@@ -1372,7 +1425,6 @@ class XmlValidator
                     $totalPercentage                              = $array[$sectorVocabulary] + $percentage;
                     $array[$sectorVocabulary]                     = $totalPercentage;
                     $array[sprintf('%s.percentage', $sectorForm)] = $sectorVocabulary;
-
                 } else {
                     $array[$sectorVocabulary] = $percentage;
 
@@ -1694,7 +1746,6 @@ class XmlValidator
             if ($newDate) {
                 $rules[$budgetBase . '.period_end.0.date'][] = sprintf('before:%s', $newDate);
             }
-
         }
 
         return $rules;
@@ -1724,7 +1775,6 @@ class XmlValidator
                 $this->getMessagesForValue($budget['value'], $budgetBase)
             );
             $messages[$budgetBase . '.period_end.0.date.before']  = trans('validation.before', ['attribute' => trans('elementForm.period_end'), 'date' => trans('elementForm.period_start')]);
-
         }
 
         return $messages;
@@ -1925,7 +1975,6 @@ class XmlValidator
 
 
         return $rules;
-
     }
 
     /**
@@ -2391,10 +2440,8 @@ class XmlValidator
                     ['attribute' => trans('elementForm.sector_vocabulary'), 'values' => trans('sector_code')]
                 );
             }
-
         }
         $messages = array_merge($messages, $this->factory->getMessagesForTransactionSectorNarrative($sector, $sector['narrative'], $sectorBase));
-
 
         return $messages;
     }
@@ -3006,7 +3053,6 @@ class XmlValidator
         }
 
         return $messages;
-
     }
 
     /**
