@@ -1,4 +1,4 @@
-<?php namespace App\Http\Controllers\Complete;
+<?php namespace App\Http\Controllers\Np\Complete;
 
 use App\Core\V201\Requests\UserPermission;
 use App\Http\Controllers\Controller;

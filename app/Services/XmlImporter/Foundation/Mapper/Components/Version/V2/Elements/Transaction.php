@@ -186,7 +186,19 @@ class Transaction
      */
     protected function aidType($subElement, $index)
     {
-        $this->transaction[$index]['aid_type'][0]['aid_type'] = $this->attributes($subElement, 'code');
+
+        $vocabulary = $this->attributes($subElement, 'vocabulary');
+        if($vocabulary == 1){
+            $this->transaction[$index]['aid_type'][0]['default_aid_type']             = $this->attributes($subElement, 'code');
+        } else if ($vocabulary == 2) {
+            $this->transaction[$index]['aid_type'][0]['aidtype_earmarking_category']  = $this->attributes($subElement, 'code');
+        } else if ($vocabulary == 3) {
+            $this->transaction[$index]['aid_type'][0]['default_aid_type_text']        = $this->attributes($subElement, 'code');
+        } else if($vocabulary == 4){
+            $this->transaction[$index]['aid_type'][0]['cash_and_voucher_modalities']  = $this->attributes($subElement, 'code');
+        }
+
+        $this->transaction[$index]['aid_type'][0]['default_aidtype_vocabulary'] = $vocabulary;
     }
 
     /**

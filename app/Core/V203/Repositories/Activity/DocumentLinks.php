@@ -1,4 +1,4 @@
-<?php namespace App\Core\V203\Forms\Activity;
+<?php namespace App\Core\V203\Repositories\Activity;
 
 use App\Core\Form\BaseForm;
 

@@ -32,10 +32,10 @@ class DefaultAidType
     {
         $activityData = [];
         $aidTypeArray = $activity->default_aid_type;
-        if(empty($aidTypeArray)){
+        if (empty($aidTypeArray)) {
             return;
         }
-        if(!is_array($aidTypeArray)) {
+        if (!is_array($aidTypeArray)) {
             $data = [
                 'default_aid_type' => $aidTypeArray,
                 'default_aidtype_vocabulary' => '1',
@@ -46,16 +46,20 @@ class DefaultAidType
             $aidTypeArray = [$data];
         }
 
-        foreach($aidTypeArray as $aidType){
+        foreach ($aidTypeArray as $aidType) {
 
             $vocabulary = $aidType['default_aidtype_vocabulary'];
-            if($vocabulary == 1){
+            if ($vocabulary == 1) {
                 $code = $aidType['default_aid_type'];
             } else if ($vocabulary == 2) {
-                $code = $aidType['earmarking_category'];
+                if(array_key_exists('aidtype_earmarking_category', $aidType)){
+                    $code = getVal($aidType, ['aidtype_earmarking_category']);
+                } else if(array_key_exists('earmarking_category', $aidType)){
+                    $code = getVal($aidType, ['earmarking_category']);
+                }
             } else if ($vocabulary == 3) {
                 $code = $aidType['default_aid_type_text'];
-            } else if($vocabulary == 4){
+            } else if ($vocabulary == 4) {
                 $code = getVal($aidType, ['cash_and_voucher_modalities']);
             }
             $activityData[] = [

@@ -113,22 +113,22 @@
                                     @if(is_array(getVal($transaction, ['aid_type', 0, 'aid_type'])))
                                         @foreach(getVal($transaction, ['aid_type', 0, 'aid_type']) as $data)
                                         @if($data['default_aidtype_vocabulary'] == '1')
-                                        <li>{{ substr($getCode->getActivityCodeName('AidType', getVal($data, ['default_aid_type'], [])) , 0 , -5)}}</li>
+                                            <li>{{ substr($getCode->getActivityCodeName('AidType', getVal($data, ['default_aid_type'], [])) , 0 , -5)}}</li>
                                         @elseif($data['default_aidtype_vocabulary'] == '2')
-                                        <li>{{ substr($getCode->getActivityCodeName('EarmarkingCategory', getVal($data, ['earmarking_category'], [])) , 0 , -5)}}</li>
+                                            <li>{{ substr($getCode->getActivityCodeName('EarmarkingCategory', getVal($data, ['aidtype_earmarking_category'], [])) , 0 , -4)}}</li>
                                         @elseif($data['default_aidtype_vocabulary'] == '3')
-                                        <li>{{ $data['default_aid_type_text']}}</li>
+                                            <li>{{ substr($getCode->getActivityCodeName('EarmarkingModality', getVal($data, ['default_aid_type_text'], [])) , 0 , -4)}}</li>
                                         @elseif($data['default_aidtype_vocabulary'] == '4')
-                                        <li>{{ substr($getCode->getActivityCodeName('CashandVoucherModalities', getVal($data, ['cash_and_voucher_modalities'], [])) , 0 , -3)}}</li>
+                                            <li>{{ substr($getCode->getActivityCodeName('CashandVoucherModalities', getVal($data, ['cash_and_voucher_modalities'], [])) , 0 , -4)}}</li>
                                         @else
-                                        <em>Not Available</em>
+                                            <em>Not Available</em>
                                         @endif
                                         @endforeach
-                                    @else 
+                                    @else
                                     {!! getCodeNameWithCodeValue('AidType' , getVal($transaction,['aid_type',0,'aid_type'] ), -5) !!}
                                     @endif
                                     </div>
-                                @else 
+                                @else
                                 <div class="activity-element-info">{!! getCodeNameWithCodeValue('AidType' , getVal($transaction,['aid_type',0,'aid_type'] ), -5) !!}</div>
                                 @endif
                             </div>

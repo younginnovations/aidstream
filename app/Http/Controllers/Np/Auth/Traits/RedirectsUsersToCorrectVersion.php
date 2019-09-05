@@ -1,4 +1,4 @@
-<?php namespace App\Http\Controllers\Auth\Traits;
+<?php namespace App\Http\Controllers\Np\Auth\Traits;
 
 use App\Http\Requests\Request;
 use App\Models\SystemVersion;

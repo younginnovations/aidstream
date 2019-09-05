@@ -1,4 +1,4 @@
-<?php namespace App\Http\Controllers\SuperAdmin;
+<?php namespace App\Http\Controllers\MunicipalityAdmin;
 
 use App\Core\SuperAdmin\CorrectionService;
 use App\Core\SuperAdmin\OrganizationService;

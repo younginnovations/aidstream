@@ -1,4 +1,4 @@
-<?php namespace App\Http\Controllers\Auth\Traits;
+<?php namespace App\Http\Controllers\Np\Auth\Traits;
 
 use App\Exceptions\Aidstream\InvalidUserException;
 use Illuminate\Support\Facades\Hash;

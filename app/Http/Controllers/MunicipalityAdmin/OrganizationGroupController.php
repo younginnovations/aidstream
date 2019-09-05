@@ -1,4 +1,4 @@
-<?php namespace App\Http\Controllers\SuperAdmin;
+<?php namespace App\Http\Controllers\MunicipalityAdmin;
 
 use App\Http\Controllers\Controller;
 use App\Models\SuperAdmin\UserGroup;

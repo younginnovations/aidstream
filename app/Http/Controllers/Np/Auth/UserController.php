@@ -1,4 +1,4 @@
-<?php namespace App\Http\Controllers\Auth;
+<?php namespace App\Http\Controllers\Np\Auth;
 
 use App\Core\Form\BaseForm;
 use App\Http\Controllers\Controller;

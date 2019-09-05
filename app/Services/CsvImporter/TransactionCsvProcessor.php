@@ -52,7 +52,7 @@ class TransactionCsvProcessor
     /**
      * Header count of V203 detailed transaction
      */
-    const V203_DETAILED_TRANSACTION_HEADERS_COUNT = 25;
+    const V203_DETAILED_TRANSACTION_HEADERS_COUNT = 26;
 
     /**
      * TransactionCsvProcessor constructor.
