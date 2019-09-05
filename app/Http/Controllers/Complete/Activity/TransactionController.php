@@ -165,16 +165,17 @@ class TransactionController extends Controller
         $this->authorize('edit_activity', $activity);
         $transaction = $this->transactionManager->getTransaction($transactionId);
         $transactions = $transaction->getTransaction();
-        
+
         if(session('version') == 'V203') {
             if(!is_array(getVal($transactions, ['aid_type', 0, 'aid_type'])) && !empty(getVal($transactions, ['aid_type', 0, 'aid_type']))) {
                 $defaultAidType = [
                     'default_aid_type' => getVal($transactions, ['aid_type', 0, 'aid_type']),
                     'default_aidtype_vocabulary' => '1',
-                    'earmarking_category' => '',
-                    'default_aid_type_text' => ''
+                    'aidtype_earmarking_category' => '',
+                    'default_aid_type_text' => '',
+                    "cash_and_voucher_modalities" => ''
                 ];
-            
+
                 $transactions['aid_type'][0] = [
                     'aid_type' => [$defaultAidType]
                 ];

@@ -64,18 +64,18 @@ class Transaction extends TransactionCsv
 
         $transactions = $this->groupBySector();
 
-        if($this->version == 'V203') {
+        if ($this->version == 'V203') {
             $transactions = $this->groupByAidType($transactions);
         }
 
         foreach ($transactions as $index => $row) {
             $this->data = $this->initialize($row)
-                               ->process()
-                               ->validate();
+                ->process()
+                ->validate();
 
             $dataWriter->extractDetails($this->data)
-                       ->storeValidJson()
-                       ->storeInvalidJson();
+                ->storeValidJson()
+                ->storeInvalidJson();
         }
 
         $dataWriter->storeStatus('Completed');
@@ -110,7 +110,6 @@ class Transaction extends TransactionCsv
                         unset($transactions[$index]['sector_code']);
                     }
                 }
-
             }
             if ($shouldMerge && $index != 0) {
                 array_push($transactions[$index - 1]['sector'], $transactions[$index]['sector'][0]);
@@ -123,31 +122,28 @@ class Transaction extends TransactionCsv
 
     public function groupByAidType($transactions)
     {
-        foreach ($transactions as $index => $row) {
-            if(!array_key_exists('aid_type_code', $row)){
+        foreach ($transactions as &$row) {
+            if (!array_key_exists('aid_type_code', $row)) {
                 return $transactions;
             }
 
-            $rows = [];
-            $aidTypeArray = [];
-            if($row['aid_type_code'] !== null){
+            if ($row['aid_type_code'] !== null) {
                 $rows = explode(';', $row['aid_type_code']);
-                $rows = collect($rows)->map(
-                    function($rows) {
+                $row['aid_type_code'] = collect($rows)->map(
+                    function ($rows) use ($row) {
                         return [
-                            "default_aid_type"              => $rows,
-                            "default_aidtype_vocabulary"    => ($rows ? "1" : ""),
-                            "aidtype_earmarking_category"   => "",
-                            "default_aid_type_text"         => ""
+                            "default_aid_type"              => $row['aid_type_vocabulary'] == 1 ? $rows : '',
+                            "default_aidtype_vocabulary"    => (int) ($row['aid_type_vocabulary'] ?: '1'),
+                            "aidtype_earmarking_category"   => $row['aid_type_vocabulary'] == 2 ? $rows : '',
+                            "default_aid_type_text"         => $row['aid_type_vocabulary'] == 3 ? $rows : '',
+                            "cash_and_voucher_modalities"   => $row['aid_type_vocabulary'] == 4 ? $rows : '',
                         ];
                     }
                 )->toArray();
-
-            $aidTypeArray[]['aid_type'] = $rows;
-            $transactions[$index]['aid_type_code'] = $aidTypeArray;
             } else {
-                $transactions[$index]['aid_type_code'] = [];
+                $row['aid_type_code'] = [];
             }
+            unset($row['aid_type_vocabulary']);
         }
 
         return $transactions;

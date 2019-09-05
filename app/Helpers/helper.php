@@ -457,7 +457,7 @@ function getSectorInformation(array $sector, $percentage)
         );
 
     } else {
-        if ($sectorVocabulary === "2") {
+        if ($sectorVocabulary == "2") {
             $sectorCodeValue = app('App\Helpers\GetCodeName')->getCodeNameOnly(
                 'SectorCategory',
                 $sector['sector_category_code'],
@@ -475,7 +475,7 @@ function getSectorInformation(array $sector, $percentage)
                 '%s - %s (%s)',
                 checkIfEmpty($sector['sector_category_code'], trans('global.sector_code_not_available')),
                 checkIfEmpty($sectorCodeValue, trans('global.sector_code_value_not_available')),
-                $percentage . " %"
+                $percentage . "%"
             );
 
         } else {
