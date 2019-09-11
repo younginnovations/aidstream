@@ -59,7 +59,7 @@ class Registration
     {
         try {
             $this->database->beginTransaction();
-            $orgInfo['secondary_contact'] = $users['secondary_contact'];
+            $orgInfo['secondary_contact'] = isset($users['secondary_contact'])?$users['secondary_contact']:'';
             $organization                 = $this->saveOrganization($orgInfo, $systemVersion);
             $users                        = $this->saveUsers($users, $organization);
 

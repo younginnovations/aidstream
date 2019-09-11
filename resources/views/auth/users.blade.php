@@ -18,7 +18,6 @@
         </div>
         <div class="col-xs-12 col-md-12">
             {!! AsForm::email(['name' => 'users[email]', 'class' => 'email', 'label' => trans('user.email_address'), 'required' => true, 'parent' => 'col-xs-12 col-sm-6 col-md-6']) !!}
-            {!! AsForm::email(['name' => 'users[secondary_contact]', 'class' => 'secondary_contact', 'label' => trans('global.secondary_contact_at_organisation'), 'parent' => 'col-xs-12 col-sm-6 col-md-6', 'html' => sprintf('<p class="help-block">%s: example@email.com</p>', trans('global.example'))]) !!}
         </div>
     </div>
     <div class="user-blocks">
@@ -26,9 +25,6 @@
         @foreach($users as $userIndex => $user)
             @include('auth.partUsers')
         @endforeach
-    </div>
-    <div class="auth-info-wrapper">
-        @lang('global.aidstream_supports_multiple')
     </div>
 </div>
 {{ Form::button(trans('global.back_to_organisation_information'), ['class' => 'btn btn-primary btn-back btn-tab pull-left', 'type' => 'button',  'data-tab-trigger' => '#tab-organization']) }}
