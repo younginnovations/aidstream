@@ -18,6 +18,9 @@
                 </thead>
                 <tbody>
                 @foreach($users as $key => $value)
+                    <?php
+                    $user_id = $value->id;
+                    ?>
                     <tr>
                         <td><span id="name">{{ $value->first_name}} {{$value->last_name}}</span>
                             <p><em>{{$value->username}}</em></p>
@@ -40,7 +43,8 @@
                             @if (auth()->user()->isAdmin() || auth()->user()->role_id == 5)
                                 @if($value->role_id != 1)
                                     <a href="{{ url(sprintf('organization-user/%s/delete', $value->id)) }}" class="delete">@lang('global.delete')</a>
-                                @endif
+									<a href="{{ url(sprintf("/user/edit-profile/$user_id")) }}" class="edit">@lang('global.edit')</a>
+								@endif
                             @endif
                         </td>
                     </tr>

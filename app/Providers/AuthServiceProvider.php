@@ -81,7 +81,7 @@ class AuthServiceProvider extends ServiceProvider
         $gate->define(
             'isValidUser',
             function ($user, $currentUser) {
-                return ($user->id == $currentUser->id);
+                return ($user->isAdmin() || $user->isSuperAdmin() ($user->id == $currentUser->id));
             }
         );
 
