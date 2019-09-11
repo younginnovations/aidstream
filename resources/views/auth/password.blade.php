@@ -87,20 +87,6 @@
                                     @lang('global.send_password_reset_link')
                                 </button>
                             </div>
-                            <div class="organisation-account-wrapper">
-                                <p class="text-center">
-                                   @lang('registration.email_address_forgotten_text')
-                                </p>
-                                <p>
-                                    @if(session('same_identifier_org_id'))
-                                        <a href="{{ route('submit-similar-organization', 'user') }}" class="btn btn-primary btn-submit">@lang('global.user_account')</a>
-                                        <a href="{{ route('submit-similar-organization', 'admin') }}" class="btn btn-primary btn-submit">@lang('global.administrator_account')</a>
-                                    @else
-                                        <a class="btn btn-primary btn-submit btn-type" data-type="user">@lang('global.user_account')</a>
-                                        <a class="btn btn-primary btn-submit btn-type" data-type="admin">@lang('global.administrator_account')</a>
-                                    @endif
-                                </p>
-                            </div>
                         </form>
                     </div>
                 </div>
