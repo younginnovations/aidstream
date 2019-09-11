@@ -36,15 +36,6 @@
                                             href="mailto:{{Auth::user()->email}}">{{Auth::user()->email}}</a></span>
                                         </div>
                                     </div>
-                                    @if((Auth::user()->isAdmin()) && $organization->secondary_contact)
-                                        <div class="secondary-contact-block">
-                                            <span>@lang('user.secondary_contact')</span>
-                                            <div>
-                                                <span class="profile-name">{{ getVal((array)$organization->secondary_contact,['first_name']) }} {{getVal((array)$organization->secondary_contact,['last_name'])}}</span>
-                                                <a href="mailto:{{ getVal((array)$organization->secondary_contact,['email']) }}"> {{getVal((array)$organization->secondary_contact,['email'])}} </a>
-                                            </div>
-                                        </div>
-                                    @endif
                                 </div>
                             </div>
                             <div class="profile-bottom-wrapper">
@@ -52,10 +43,6 @@
                                     <dl>
                                         <dt>@lang('user.timezone')</dt>
                                         <dd>{{Auth::user()->time_zone}}</dd>
-                                    </dl>
-                                    <dl>
-                                        <dt>@lang('user.language')</dt>
-                                        <dd>English</dd>
                                     </dl>
                                     <dl>
                                         <dt>@lang('user.permission')</dt>
