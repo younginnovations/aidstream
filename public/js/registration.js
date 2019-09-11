@@ -584,9 +584,9 @@ function slash(value) {
                     }
                     if (currentTab.attr('href') == '#tab-organization' && nextTab.attr('href') != '#tab-verification') {
                         setIdentifier();
-                        if (!(Registration.verifyOrgIdentifier() && Registration.verifySimilarOrgs())) {
-                            return false;
-                        }
+                        // if (!(Registration.verifyOrgIdentifier() && Registration.verifySimilarOrgs())) {
+                        //     return false;
+                        // }
                     }
                 }
                 $('.nav-tabs li').removeClass('complete');
