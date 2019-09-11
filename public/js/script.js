@@ -674,21 +674,21 @@ $(document).ready(function () {
         window.print();
     });
 
-    if ($(window).width() > 768) {
+    /*if ($(window).width() > 768) {
         $('.steps-wrapper').addClass('is-open');
     }
     else {
         $('.steps-wrapper').removeClass('is-open');
-    }
+    }*/
 
-    $(window).resize(function () {
+    /*$(window).resize(function () {
         if ($(window).width() > 768) {
             $('.steps-wrapper').addClass('is-open');
         }
         else {
             $('.steps-wrapper').removeClass('is-open');
         }
-    });
+    });*/
 
     $('.show-less').click(function () {
         $('.steps-wrapper').removeClass('has-opened').removeClass('is-open');
