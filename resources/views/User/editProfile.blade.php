@@ -43,9 +43,6 @@
                                 {!! AsForm::text(['name' => 'last_name','parent' => 'col-md-6 col-xs-12 col-sm-6', 'required' => true]) !!}
                             </div>
                             <div class="col-md-12 col-xs-12">
-                                {!! AsForm::text(['name' => 'permission', 'value' => $user_permission,'label' => 'Permission' ,'parent' => 'col-md-6 col-xs-12 col-sm-6', 'required' => true, 'attr' => ['readonly' => 'readonly']]) !!}
-                            </div>
-                            <div class="col-md-12 col-xs-12">
                                 {!! AsForm::select(['name' => 'time_zone','data'=> $timeZone, 'empty_value' => 'Select Time Zone','value'  => $user['time_zone_id'] . ' : '. $user['time_zone'],'parent' => 'col-md-6 col-xs-12 col-sm-6']) !!}
                             </div>
                             <div class="col-md-6 col-xs-12 upload-logo-block edit-profile-block edit-profile-form-block">
@@ -70,26 +67,6 @@
                                 <div class="description"><span>@lang('global.image_criteria')</span></div>
                             </div>
                             <hr/>
-                            @if(Auth::user()->isAdmin())
-                                <h2>@lang('user.organisation_secondary_contact')</h2>
-                                <div class="col-md-12 col-xs-12">
-                                    <div class="form-group col-md-6 col-xs-12 col-sm-6">
-                                        {{ Form::label(null, trans('user.first_name')) }}
-                                        <div class="col-md-12">
-                                            {{ Form::text('secondary_first_name',getVal((array)$organization->secondary_contact,['first_name']),['form-control']) }}
-                                        </div>
-                                    </div>
-                                    <div class="form-group col-md-6 col-xs-12 col-sm-6">
-                                        {{ Form::label(null, trans('user.last_name')) }}
-                                        <div class="col-md-12">
-                                            {{ Form::text('secondary_last_name',getVal((array)$organization->secondary_contact,['last_name']),['form-control']) }}
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-xs-12 col-md-12">
-                                    {!! AsForm::text(['name' => 'secondary_email', 'label' => trans('user.email_address'),'value'=>getVal((array)$organization->secondary_contact,['email']),'parent' => 'col-sm-6 col-md-6 col-xs-12']) !!}
-                                </div>
-                            @endif
                             <div class="form-group">
                                 <button type="submit" class="btn btn-primary btn-form btn-submit">@lang('global.save_your_profile')</button>
                             </div>
