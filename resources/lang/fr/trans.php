@@ -10,4 +10,5 @@ return [
     "password"         => "Mot de passe",
     "logout"           => "Se déconnecter",
     "activity_default" => "Activité défaut",
+    "password_reset"   => "Réinitialiser le mot de passe",
 ];

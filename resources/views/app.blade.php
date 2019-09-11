@@ -85,6 +85,13 @@
                             @if(!isSuperAdminRoute())
                                 <li><a href="{{url('user/profile')}}">@lang('trans.my_profile')</a></li>
                             @endif
+							<?php $user_id = Auth::user()->id;?>
+							<li>
+								<a href="{{ url("/user/reset-user-password/$user_id") }}"
+								   id="reset-password">
+									@lang ('trans.password_reset')
+								</a>
+							</li>
                             <li><a href="{{ url('/auth/logout') }}" id="logout">@lang('trans.logout')</a></li>
                             @if (superAdminIsLoggedIn())
                                 <li>

@@ -11,4 +11,5 @@ return [
     "logout"           => "Logout",
     "my_profile"       => "My Profile",
     "activity_default" => "Activity Default",
+    "password_reset"   => "Reset Password",
 ];
