@@ -33,7 +33,18 @@ function bindTooltip() {
     });
 }
 
+function initializeSelect2()
+{
+    $('#country').select2();
+    $('#organization_type').select2();
+    $('.collection_form, .organisation_name, .narrative').find('select').select2();
+    $('#default_currency').select2();
+    $('#default_language').select2();
+}
+
 $(document).ready(function () {
+
+    initializeSelect2();
 
     var removedAll = false;
 

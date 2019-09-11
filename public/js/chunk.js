@@ -55,7 +55,7 @@ if (typeof(Chunk) == "undefined") var Chunk = {};
                 }
             });
         }, changeCountry: function () {
-            var country = $('#country')
+            var country = $('#country');
             country.change(function () {
                 Chunk.filterAgency($(this).val());
             });
