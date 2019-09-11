@@ -4801,6 +4801,9 @@ body > .skiptranslate iframe {
   padding-bottom: 0; }
   .edit-profile-form .input-wrapper > .form-group:last-of-type {
     clear: both; }
+  .edit-profile-form .input-wrapper input.form-control:read-only {
+    background-color: #d8d8d8 !important;
+    cursor: not-allowed; }
 
 .edit-profile-form-block {
   padding-bottom: 30px; }

@@ -3437,6 +3437,15 @@ body > .skiptranslate iframe {
     > .form-group:last-of-type {
       clear: both;
     }
+
+    input {
+      &.form-control {
+        &:read-only {
+          background-color: #d8d8d8!important;
+          cursor: not-allowed;
+        }
+      }
+    }
   }
 }
 
