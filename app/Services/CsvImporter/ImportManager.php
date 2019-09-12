@@ -372,9 +372,7 @@ class ImportManager
             if (json_decode($status, true)['status'] == 'Complete') {
                 return 'Complete';
             }
-            if (json_decode($status, true)['status'] == 'Error') {
-                return 'Error';
-            }
+
         }
 
         if ($this->sessionManager->has('import-status')) {

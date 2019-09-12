@@ -10,7 +10,6 @@
             <div class="col-xs-9 col-md-9 col-lg-9 content-wrapper upload-activity-wrapper">
                 @include('includes.response')
                 <div id="import-status-placeholder" class="status-nolink"></div>
-                <a class="hidden" id="go_back" href="{{ route('activity.result.upload-csv', $activityId)}}">Go Back</a>
                 <div class="element-panel-heading">
                     <div>
                         @lang('title.import_results')

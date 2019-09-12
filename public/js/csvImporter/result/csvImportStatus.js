@@ -32,10 +32,9 @@ var CsvImportStatusManager = {
             var r = JSON.parse(response);
 
             if (r.status == 'Error') {
-                var placeHolder = $('div#import-status-placeholder');
-                placeHolder.empty().append("<a href='/import-activity/import-status'>Failed to process csv. Please make sure everything is correct and try again.</a>");
-                transferComplete = 'error';
                 cancelButton.fadeIn('slow').removeClass('hidden');
+
+                transferComplete = null;
             }
 
             if (r.status == 'Complete') {
@@ -124,12 +123,6 @@ $(document).ready(function () {
             accordionInit();
             clearInterval(interval);
             CsvImportStatusManager.enableImport();
-        }
-        if (transferComplete == 'error') {
-            submitButton.addClass('hidden');
-            $('#dontOverwrite').addClass('hidden');
-            cancelButton.addClass('hidden');
-            $('#go_back').removeClass('hidden').css({ "position": "relative", "color": "white", "left": "790px", "top": "-27px", "text-decoration": "underline" });
         }
     }, 3000);
 });

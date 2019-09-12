@@ -87,7 +87,7 @@ class ImportResult extends Job implements ShouldQueue
 
             $this->delete();
         } catch (\Exception $exception) {
-            file_put_contents($path, json_encode(['status' => 'Error']));
+            file_put_contents($path, json_encode(['status' => 'Complete']));
             Log::error($exception->getMessage() . ' in ' . $exception->getFile() . ':' . $exception->getLine());
             $this->delete();
         }

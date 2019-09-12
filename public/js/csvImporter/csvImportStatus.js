@@ -39,9 +39,9 @@ var CsvImportStatusManager = {
             var r = JSON.parse(response);
 
             if (r.status == 'Error') {
-                transferComplete = 'error';
                 cancelButton.fadeIn('slow').removeClass('hidden');
-                placeHolder.empty().append("<a href='/import-activity/import-status'>" + CsvImportStatusManager.localisedData['error_processing_csv'] + "</a>");
+
+                transferComplete = null;
             }
 
             if (r.status == 'Complete') {
@@ -144,12 +144,6 @@ $(document).ready(function () {
                     accordionInit();
                     CsvImportStatusManager.enableImport();
                     clearInterval(interval);
-                }
-                if (transferComplete == 'error') {
-                    submitButton.addClass('hidden');
-                    $('#dontOverwrite').addClass('hidden');
-                    cancelButton.addClass('hidden');
-                    $('#go_back').removeClass('hidden').css({ "position": "relative", "color": "white", "left": "790px", "top": "-27px", "text-decoration": "underline"});
                 }
             }, 3000);
         } else {

@@ -327,14 +327,6 @@ class ImportResultManager
      */
     public function getSessionStatus()
     {
-        if($this->checkStatusFile()){
-            $status = file_get_contents($this->getTemporaryFilepath('status.json'));
-
-            if (json_decode($status, true)['status'] == 'Error') {
-                return 'Error';
-            }
-        }
-
         if ($this->sessionManager->has('import-result-status')) {
             return $this->sessionManager->get('import-result-status');
         }
