@@ -2,7 +2,7 @@ var className = (hintStatus == 1) ? 'pull-right display Yes' : 'pull-right displ
 
 $('#logout').before(
     "<li class='dashboard-tour'>" +
-    "<span>Dashboard tour</span><a href='#' class='" + className + "' id='hints'></a></li>");
+    "<span>Dashboard Tour</span><a href='#' class='" + className + "' id='hints'></a></li>");
 
 var endTour = function () {
     introJs().exit();
