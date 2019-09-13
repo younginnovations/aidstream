@@ -71,7 +71,7 @@
                     <li><a href="{{ url('/auth/register') }}">@lang('trans.register')</a></li>
                 @else
                     <li>
-                        @if((session('role_id') == 3  || session('role_id') == 4) && !isSuperAdminRoute())
+                        @if((session('role_id') == 3  || session('role_id') == 4 || session('role_id') == '9') && !isSuperAdminRoute())
                             <span><a href="{{ route('admin.switch-back') }}" class="pull-left">Switch Back</a></span>
                         @endif
                     </li>

@@ -153,7 +153,7 @@ function isSuperAdminRoute()
  */
 function isUserOrAdmin(User $user)
 {
-    if (!$user->isSuperAdmin() && !$user->isGroupAdmin()) {
+    if (!$user->isSuperAdmin() && !$user->isGroupAdmin() && !$user()->isDiAdmin()) {
         return true;
     }
 

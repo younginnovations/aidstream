@@ -70,7 +70,7 @@ class AuthServiceProvider extends ServiceProvider
         $gate->define(
             'update-status',
             function ($user, $activity) {
-                if ($user->isAdmin() || $user->isSuperAdmin()) {
+                if ($user->isAdmin() || $user->isSuperAdmin() || $user->isDiAdmin()) {
                     return true;
                 }
 
@@ -87,7 +87,7 @@ class AuthServiceProvider extends ServiceProvider
 
         $gate->before(
             function ($user, $ability, $model) {
-                if ($user->isSuperAdmin()) {
+                if ($user->isSuperAdmin() || $user->isDiAdmin()) {
                     return true;
                 }
 
@@ -106,7 +106,7 @@ class AuthServiceProvider extends ServiceProvider
             $gate->define(
                 $permission,
                 function ($user) use ($permission) {
-                    if (($user->isSuperAdmin() || $user->isAdmin())) {
+                    if (($user->isSuperAdmin() || $user->isAdmin() || $user->isDiAdmin())) {
                         return true;
                     } else {
                         return $user->hasPermission($permission);

@@ -38,26 +38,27 @@
                                     @endforeach
                                 </select>
                             </div>
-                            
+
                             <div id="verSelect">
-                            <select name="version">
-                                <option value="">All version
-                                </option>
-                                @foreach($versions as $version)
-                                <option value="{{ $version->version  }}" {{ $version->version == $selectedVersion ? 'selected' : ''}}>{{ $version->version  }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="col-md-4 pull-right search-org">
-                            <input type="text" name="organization" placeholder="{{ isset($organizationName) ? $organizationName : 'Search organizations or email' }}" value="{{ isset($organizationName) ? $organizationName : '' }}">
-                            <input type="submit" value="Search">
-                        </form>
+								<select name="version">
+									<option value="">All version
+									</option>
+									@foreach($versions as $version)
+									<option value="{{ $version->version  }}" {{ $version->version == $selectedVersion ? 'selected' : ''}}>{{ $version->version  }}</option>
+									@endforeach
+								</select>
+							</div>
+							<div class="col-md-4 pull-right search-org">
+								<input type="text" name="organization" placeholder="{{ isset($organizationName) ? $organizationName : 'Search organizations or email' }}" value="{{ isset($organizationName) ? $organizationName : '' }}">
+								<input type="submit" value="Search">
+							</div>
+						</form>
                     </div>
                     @if(count($organizations) > 0)
-                            @if (request()->has('organization'))
-                                <a href="{{ route('admin.list-organization') }}" class="pull-left back-to-admin-dashboard">Back To Organisations List</a>
-                            @endif
-                            <table class="table table-striped">
+						@if (request()->has('organization'))
+							<a href="{{ route('admin.list-organization') }}" class="pull-left back-to-admin-dashboard">Back To Organisations List</a>
+						@endif
+						<table class="table table-striped">
                                 <thead>
                                 <tr>
                                     <th width="100px">S.N.</th>
@@ -84,7 +85,7 @@
                                                 @elseif($organization->system_version_id == 3)
                                                     Tz
                                                 @elseif($organization->system_version_id == 4)
-                                                    Np 
+                                                    Np
                                                 @endif
                                         </td>
                                         <td>{{ count($organization->users) }}</td>
@@ -124,27 +125,24 @@
                             @else
                                 <div class="text-center no-data">No Organisation Registered Yet ::</div>
                             @endif
-                        @endif
-                    </div>
+					@endif
 
                     <div class="wrapper-datatable">
-                    <div class="text-center">
-                        {!! $organizations->render() !!}
-                    </div>
+						<div class="text-center">
+							{!! $organizations->render() !!}
+						</div>
 
-                    <div class="text-center" id="TotalResult">
-                            Total results: {{ $organizations->total() }}
-                    </div>
-                </div>
-
+						<div class="text-center" id="TotalResult">
+								Total results: {{ $organizations->total() }}
+						</div>
+                	</div>
                 </div>
             </div>
+		@if(Auth::user()->isSuperAdmin())
             @include('includes.superAdmin.side_bar_menu')
+		@endif
         </div>
     </div>
-
-
-
 @endsection
 
 @section('script')

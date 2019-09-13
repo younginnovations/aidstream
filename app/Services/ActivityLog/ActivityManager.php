@@ -71,7 +71,7 @@ class ActivityManager
             'data'   => $data
         ];
         if ($userId = getVal($data, ['user_id'])) {
-        } elseif (session('role_id') == '3' || session('role_id') == '4') {
+        } elseif (session('role_id') == '3' || session('role_id') == '4' || session('role_id') == '9') {
             $userId = session('admin_id');
         } else {
             $userId = $this->auth->id();

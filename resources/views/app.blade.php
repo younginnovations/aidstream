@@ -63,7 +63,7 @@
                     <li><a href="{{ url('/auth/register') }}">@lang('trans.register')</a></li>
                 @else
                     <li>
-                        @if((session('role_id') == 3  || session('role_id') == 4) && !isSuperAdminRoute())
+                        @if((session('role_id') == 3  || session('role_id') == 4|| session('role_id') == '9') && !isSuperAdminRoute())
                             <span><a href="{{ route('admin.switch-back') }}" class="pull-left">Switch Back</a></span>
                         @endif
                     </li>
@@ -195,7 +195,7 @@
 <script>
     var roleId = "{!! $loggedInUser->role_id!!}";
 </script>
-@if($loggedInUser && $loggedInUser->userOnBoarding && (session('role_id')!= 3 && session('role_id')!= 4))
+@if($loggedInUser && $loggedInUser->userOnBoarding && (session('role_id')!= 3 && session('role_id')!= 4 && session('role_id') != '9'))
     <script>
         var hintStatus = "{!! ($loggedInUser->userOnBoarding->display_hints) ? 1 : 0 !!}";
         var completedTour = "{!! ($loggedInUser->userOnBoarding->completed_tour) ? 1 : 0 !!}";

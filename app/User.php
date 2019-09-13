@@ -39,6 +39,11 @@ class User extends Model implements AuthorizableContract, AuthenticatableContrac
     const ADMINISTRATOR_ROLE_ID = 5;
 
     /**
+     * DiAdmin Role Id.
+     */
+    const DIADMIN_ROLE_ID = 9;
+
+    /**
      * The database table used by the model.
      *
      * @var string
@@ -171,6 +176,15 @@ class User extends Model implements AuthorizableContract, AuthenticatableContrac
     }
 
     /**
+     * Check if user is diadmin or not
+     * @return bool
+     */
+    public function isDiAdmin()
+    {
+        return (self::DIADMIN_ROLE_ID == $this->role_id);
+    }
+
+    /**
      * Get the role id
      * @param $role
      * @return mixed
@@ -208,7 +222,7 @@ class User extends Model implements AuthorizableContract, AuthenticatableContrac
      */
     public function isNotAdmin()
     {
-        return (!$this->isAdmin() && !$this->isGroupAdmin() && !$this->isSuperAdmin());
+        return (!$this->isAdmin() && !$this->isGroupAdmin() && !$this->isSuperAdmin() && !$this->isDiAdmin());
     }
 
     /**
@@ -230,7 +244,7 @@ class User extends Model implements AuthorizableContract, AuthenticatableContrac
      */
     public function getEnabledAttribute()
     {
-        return ($this->isGroupAdmin() || $this->isSuperAdmin() || $this->organization->status);
+        return ($this->isGroupAdmin() || $this->isSuperAdmin() || $this->isDiAdmin() || $this->organization->status);
     }
 
     /**
@@ -238,7 +252,7 @@ class User extends Model implements AuthorizableContract, AuthenticatableContrac
      */
     public function getVerifiedStatusAttribute()
     {
-        return ($this->isGroupAdmin() || $this->isSuperAdmin() || $this->verified);
+        return ($this->isGroupAdmin() || $this->isSuperAdmin() || $this->isDiAdmin() || $this->verified);
     }
 
     /**

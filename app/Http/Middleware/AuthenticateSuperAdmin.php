@@ -33,6 +33,7 @@ class AuthenticateSuperAdmin
      */
     public function handle($request, Closure $next)
     {
+
         if ($this->auth->guest()) {
             if ($request->ajax()) {
                 return response('Unauthorized.', 401);
@@ -40,6 +41,12 @@ class AuthenticateSuperAdmin
                 return redirect()->guest('auth/login');
             }
         } elseif (session('role_id') == 3 || session('role_id') == 4) {
+            return $next($request);
+        }elseif(session('role_id') == 9
+            && ($request->route()->getName() == 'admin.list-organization'
+                || $request->route()->getName() == 'admin.masquerade-organization'
+                || $request->route()->getName() == 'admin.switch-back'))
+        {
             return $next($request);
         }
         $response = ['type' => 'warning', 'code' => ['message', ['message' => "You don't have correct privilege"]]];

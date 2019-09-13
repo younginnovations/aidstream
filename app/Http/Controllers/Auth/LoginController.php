@@ -82,7 +82,7 @@ class LoginController extends Controller
                     return $this->redirectToCorrectVersion($user);
                 }
 
-                $redirectPath = ($user->isSuperAdmin() || $user->isGroupAdmin())
+                $redirectPath = ($user->isSuperAdmin() || $user->isGroupAdmin() || $user->isDiAdmin())
                     ? config('app.super_admin_dashboard')
                     : config('app.admin_dashboard');
 
@@ -90,7 +90,9 @@ class LoginController extends Controller
 
                 $redirectPath = $this->userOnBoardingRedirectPath($user, $redirectPath);
 
-                !(($user->role_id == 3 || $user->role_id == 4) && strpos($intendedUrl, '/admin') === false) ?: $intendedUrl = url('/');
+                !(($user->role_id == 3 || $user->role_id == 4 || $user->role_id == 9) && strpos($intendedUrl, '/admin')
+                    === false) ?:
+                    $intendedUrl = url('/');
                 !($intendedUrl == url('/')) ?: session()->set('url.intended', $redirectPath);
 
                 return redirect()->intended($redirectPath);
@@ -142,14 +144,14 @@ class LoginController extends Controller
     {
         if ($user->userOnBoarding) {
             if ($user->userOnBoarding->has_logged_in_once) {
-                $redirectPath   = ($user->role_id == 3 || $user->role_id == 4) ? config('app.super_admin_dashboard') : config('app.admin_dashboard');
+                $redirectPath   = ($user->role_id == 3 || $user->role_id == 4|| $user->role_id == 9) ? config('app.super_admin_dashboard') : config('app.admin_dashboard');
                 $completedSteps = (array) $user->userOnBoarding->settings_completed_steps;
                 (count($completedSteps) == 5) ?: session()->put('first_login', true);
             } else {
                 session()->put('first_login', true);
                 $redirectPath = 'welcome';
             }
-        } elseif ($user->role_id == 3 || $user->role_id == 4) {
+        } elseif ($user->role_id == 3 || $user->role_id == 4 || $user->role_id == 9) {
             $redirectPath = config('app.super_admin_dashboard');
         }
 
